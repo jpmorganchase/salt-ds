@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Semantic Icon Provider",
+  "description": "Context provider that centralizes semantic icon mapping and allows partial icon overrides for descendant Salt components.",
+  "package": "@salt-ds/core",
+  "import": "import { SemanticIconProvider } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "iconMap": {
+      "type": "Partial<SemanticIconMap>",
+      "description": "Optional partial mapping of semantic icon keys to icon components. Provided keys override defaults; unspecified keys fall back to default icon map."
+    },
+    "children": {
+      "type": "ReactNode",
+      "required": true,
+      "description": "Child elements that consume semantic icons through Salt components or the `useIcon` hook."
+    }
+  },
+  "slots": {
+    "default": "Child content rendered within the semantic icon context."
+  },
+  "states": [
+    "default-icon-map",
+    "partially-overridden-icon-map",
+    "fully-overridden-icon-map"
+  ],
+  "tokens": {},
+  "accessibility": {
+    "role": "none",
+    "keyboard": [],
+    "aria": [
+      "Provider itself adds no ARIA semantics",
+      "Accessibility depends on icon components supplied in `iconMap` and consuming components"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Dropdown",
+      "Option",
+      "Rating",
+      "StatusAdornment",
+      "useIcon"
+    ],
+    "inside": [
+      "SaltProvider",
+      "Application root",
+      "Feature-level subtree"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/semantic-icon-provider/examples"
+}

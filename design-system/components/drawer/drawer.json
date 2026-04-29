@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Drawer",
+  "description": "Displays modal supporting content from screen edges with dismissible focus-trapped behavior.",
+  "package": "@salt-ds/core",
+  "import": "import { Drawer, DrawerCloseButton } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "position": {
+      "type": "'left' | 'top' | 'right' | 'bottom'",
+      "default": "'left'",
+      "description": "Defines the edge where the drawer is anchored."
+    },
+    "open": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Controls whether the drawer is visible."
+    },
+    "onOpenChange": {
+      "type": "(newOpen: boolean) => void",
+      "description": "Callback fired when drawer open state changes."
+    },
+    "variant": {
+      "type": "'primary' | 'secondary' | 'tertiary'",
+      "default": "'primary'",
+      "description": "Changes drawer background palette emphasis."
+    },
+    "disableDismiss": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Prevents click-away dismiss behavior."
+    },
+    "disableScrim": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Prevents scrim from rendering behind the drawer."
+    }
+  },
+  "slots": {
+    "children": "Drawer body content, commonly including `DrawerCloseButton` and heading/content blocks."
+  },
+  "states": [
+    "closed",
+    "open",
+    "position-left",
+    "position-right",
+    "position-top",
+    "position-bottom",
+    "variant-primary",
+    "variant-secondary",
+    "variant-tertiary"
+  ],
+  "tokens": {
+    "backgroundPrimary": "--salt-container-primary-background",
+    "backgroundSecondary": "--salt-container-secondary-background",
+    "backgroundTertiary": "--salt-container-tertiary-background",
+    "shadow": "--salt-overlayable-shadow-modal",
+    "zIndex": "--salt-zIndex-drawer"
+  },
+  "accessibility": {
+    "role": "dialog",
+    "keyboard": [
+      "Enter / Space — activates trigger to open and activates close/content actions",
+      "Tab — moves to next focusable element within the drawer",
+      "Shift + Tab — moves to previous focusable element within the drawer",
+      "Escape — closes drawer and returns focus to trigger"
+    ],
+    "aria": [
+      "Provide accessible name (for example via `aria-labelledby`)",
+      "Drawer content remains modal while open; background is inert",
+      "Use labeled close action, e.g., `DrawerCloseButton` (`aria-label=\"Close Drawer\"`)"
+    ]
+  },
+  "composition": {
+    "with": [
+      "DrawerCloseButton (dismiss control)",
+      "FormField/Input/ComboBox (common drawer content)",
+      "StackLayout/FlexLayout/FlowLayout (content arrangement)",
+      "Scrim (modal obscuring layer, unless disabled)"
+    ],
+    "inside": [
+      "Top-level application overlays",
+      "Task-oriented flows requiring temporary supporting UI"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/drawer/examples"
+}

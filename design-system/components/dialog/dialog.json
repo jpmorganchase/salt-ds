@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Dialog",
+  "description": "Displays a modal overlay for critical information or decisions requiring immediate user attention.",
+  "package": "@salt-ds/core",
+  "import": "import { Dialog, DialogHeader, DialogActions, DialogContent } from \"@salt-ds/core\";",
+  "status": "stable",
+  "subComponents": {
+    "Dialog": {
+      "description": "Root modal container. Controls open state and status.",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the dialog is visible"
+        },
+        "onOpenChange": {
+          "type": "(open: boolean) => void",
+          "description": "Callback fired when the dialog open state changes"
+        },
+        "status": {
+          "type": "'info' | 'warning' | 'error' | 'success'",
+          "description": "Sets the semantic status, which controls the icon shown in DialogHeader"
+        },
+        "size": {
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'",
+          "description": "Size of the dialog"
+        },
+        "initialFocus": {
+          "type": "number | MutableRefObject<HTMLElement | null>",
+          "default": "0",
+          "description": "Initial focus target when dialog opens (tabbable index or element ref)"
+        },
+        "disableDismiss": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Prevents dialog from closing on click-away"
+        },
+        "disableScrim": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Prevents scrim from rendering behind the dialog"
+        },
+        "idProp": {
+          "type": "string",
+          "description": "Deprecated: optional id used for ARIA labeling"
+        },
+        "children": {
+          "type": "ReactNode",
+          "required": true,
+          "description": "Dialog sub-components (DialogHeader, DialogContent, DialogActions, DialogCloseButton)"
+        }
+      }
+    },
+    "DialogHeader": {
+      "description": "Displays the dialog title and optional preheader text. Shows a status icon when the parent Dialog has a status prop.",
+      "props": {
+        "header": {
+          "type": "ReactNode",
+          "required": true,
+          "description": "Main heading text for the dialog"
+        },
+        "preheader": {
+          "type": "ReactNode",
+          "description": "Optional smaller text displayed above the header"
+        },
+        "description": {
+          "type": "ReactNode",
+          "description": "Optional supporting text shown below the header"
+        },
+        "actions": {
+          "type": "ReactNode",
+          "description": "Optional action element(s), typically a close action"
+        },
+        "status": {
+          "type": "'info' | 'warning' | 'error' | 'success'",
+          "description": "Optional header status when used outside Dialog context"
+        },
+        "disableAccent": {
+          "type": "boolean",
+          "description": "Hides header accent styling"
+        }
+      }
+    },
+    "DialogContent": {
+      "description": "Scrollable body area for the dialog's main content.",
+      "props": {
+        "children": {
+          "type": "ReactNode",
+          "required": true,
+          "description": "Body content of the dialog"
+        }
+      }
+    },
+    "DialogActions": {
+      "description": "Footer area for action buttons. Typically contains Button components.",
+      "props": {
+        "children": {
+          "type": "ReactNode",
+          "required": true,
+          "description": "Action buttons for the dialog"
+        }
+      }
+    },
+    "DialogCloseButton": {
+      "description": "Deprecated. Use DialogHeader actions instead for close behavior.",
+      "props": {}
+    }
+  },
+  "tokens": {
+    "background": "--salt-overlayable-background",
+    "borderColor": "--salt-overlayable-borderColor",
+    "shadow": "--salt-overlayable-shadow",
+    "containerPadding": "--salt-container-padding"
+  },
+  "accessibility": {
+    "role": "dialog",
+    "keyboard": [
+      "Escape \u2014 closes the dialog",
+      "Tab \u2014 cycles focus within the dialog (focus trap)",
+      "Shift+Tab \u2014 cycles focus backward within the dialog",
+      "Enter \u2014 activates focused button actions in the dialog"
+    ],
+    "aria": [
+      "aria-modal=\"true\" \u2014 set automatically, indicates the dialog is modal",
+      "aria-labelledby \u2014 should reference the DialogHeader for screen readers",
+      "aria-label \u2014 provide when no visible DialogHeader is rendered",
+      "role=\"alertdialog\" \u2014 use for alert dialogs requiring explicit acknowledgment"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Button (inside DialogActions)",
+      "FlexLayout or StackLayout (to arrange action buttons)",
+      "FormField (inside DialogContent)"
+    ],
+    "inside": [
+      "Page-level overlays \u2014 Dialog is a top-level overlay, not nested inside other components"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/dialog/examples"
+}

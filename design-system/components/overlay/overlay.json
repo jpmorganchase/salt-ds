@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Overlay",
+  "description": "A floating surface for contextual content that appears above the page, such as popovers and floating panels. Powered by floating-ui for intelligent placement, automatic repositioning, and focus management.",
+  "package": "@salt-ds/core",
+  "import": "import { Overlay, OverlayTrigger, OverlayPanel, OverlayPanelContent, OverlayHeader, OverlayPanelCloseButton } from \"@salt-ds/core\";",
+  "status": "stable",
+  "subComponents": {
+    "Overlay": {
+      "description": "Root component managing overlay state, positioning via floating-ui, focus trap, and interactions. Provides context to child components.",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Controlled: whether overlay is visible. When undefined, overlay is uncontrolled with initial closed state."
+        },
+        "onOpenChange": {
+          "type": "(open: boolean) => void",
+          "description": "Callback when overlay open state changes (trigger activation, ESC key, click outside, or close button)."
+        },
+        "placement": {
+          "type": "'top' | 'bottom' | 'left' | 'right'",
+          "default": "'top'",
+          "description": "Preferred placement of overlay relative to trigger. Automatically repositions via flip() middleware if overflow detected."
+        },
+        "children": {
+          "type": "ReactNode",
+          "required": true,
+          "description": "Must contain OverlayTrigger and OverlayPanel as children."
+        }
+      },
+      "internals": {
+        "middleware": ["offset(11)", "flip()", "shift({ limiter: limitShift() })"],
+        "interactions": "Uses floating-ui useClick (trigger activation), useDismiss (ESC, click outside), useRole (dialog role), focus management"
+      }
+    },
+    "OverlayTrigger": {
+      "description": "Wraps the trigger element (typically Button). Clones single React child with floating ref and interaction handlers attached.",
+      "props": {
+        "children": {
+          "type": "ReactNode (single valid React element)",
+          "required": true,
+          "description": "The element that opens the overlay on activation. Must be a Button or similar focusable interactive element."
+        }
+      }
+    },
+    "OverlayPanel": {
+      "description": "Floating panel container positioned via floating-ui. Renders FloatingArrow. Should contain OverlayHeader/OverlayPanelContent and optional close button.",
+      "props": {
+        "children": {
+          "type": "ReactNode",
+          "required": true,
+          "description": "Panel content: typically OverlayHeader or OverlayPanelContent, and OverlayPanelCloseButton or actions in OverlayHeader."
+        }
+      }
+    },
+    "OverlayPanelContent": {
+      "description": "Wrapper for the main content area within OverlayPanel.",
+      "props": {
+        "children": {
+          "type": "ReactNode",
+          "required": true,
+          "description": "The overlay content"
+        }
+      }
+    },
+    "OverlayHeader": {
+      "description": "Structured header component for overlay panel (recommended over manual header). Includes title, description, and action buttons.",
+      "props": {
+        "header": {
+          "type": "ReactNode",
+          "description": "Title text (rendered as H2)."
+        },
+        "description": {
+          "type": "ReactNode",
+          "description": "Description text rendered below header."
+        },
+        "actions": {
+          "type": "ReactNode",
+          "description": "Action buttons (close button, etc.) rendered in header. Preferred over deprecated OverlayPanelCloseButton."
+        },
+        "children": {
+          "type": "ReactNode",
+          "description": "Additional header content."
+        }
+      }
+    },
+    "OverlayPanelCloseButton": {
+      "description": "DEPRECATED. Close button for overlay. Use OverlayHeader with actions prop instead.",
+      "deprecated": true
+    }
+  },
+  "states": {
+    "open": "Overlay visible, focus entered into panel, overlay content accessible, ESC/click-outside/close-button closes.",
+    "closed": "Overlay hidden, trigger receives focus, overlay not in DOM (portal removed).",
+    "placement_variants": ["top (default preferred)", "bottom (common for dropdowns)", "left (side panels)", "right (side panels)"]
+  },
+  "tokens": {
+    "background": "--salt-overlayable-background",
+    "shadow": "--salt-overlayable-shadow",
+    "borderColor": "--salt-overlayable-borderColor"
+  },
+  "accessibility": {
+    "role": "dialog (implicit from floating-ui useRole)",
+    "focusManagement": {
+      "onOpen": "Focus automatically enters overlay panel (OverlayHeader close button receives initial focus if present).",
+      "onClose": "Focus returns to trigger element. Overlay removed from viewport/DOM.",
+      "focusTrap": "Tab/Shift+Tab cycles within overlay; focus does not escape to page during open state."
+    },
+    "keyboard": {
+      "Escape": "Closes overlay from anywhere in content, returns focus to trigger.",
+      "Enter/Space (close button focused)": "Closes overlay (OverlayHeader actions or deprecated OverlayPanelCloseButton).",
+      "Tab (close button focused)": "Moves focus to first focusable content element. From last content element, wraps to close button.",
+      "Shift+Tab (close button focused)": "Moves focus to last focusable content element. From first content element, wraps to close button.",
+      "Click outside panel": "Closes overlay (dismiss behavior via floating-ui useDismiss)."
+    },
+    "aria": [
+      "aria-expanded: set on trigger (managed by Overlay context, indicates open/closed state)",
+      "aria-haspopup: inferred by floating-ui for dialog role",
+      "id: use id on Overlay for form association with screen readers",
+      "id-header: on OverlayHeader or content header for screen reader heading semantics",
+      "id-content: on content description for screen reader context linking"
+    ]
+  },
+  "composition": {
+    "typical_structure": "Overlay > { OverlayTrigger (Button), OverlayPanel > { OverlayHeader (or OverlayPanelContent), optional close actions } }",
+    "with": [
+      "Button (trigger element)",
+      "OverlayHeader (structured header with actions)",
+      "StackLayout (panel content layout)",
+      "FlowLayout (action buttons layout)",
+      "Text, Divider (header content)",
+      "Checkbox, Radio, Input (form controls in content)"
+    ],
+    "inside": [
+      "App root (via portal rendering)",
+      "Toolbar (trigger button in toolbar)",
+      "Card (overlay triggered from card header)",
+      "Header, Navigation (trigger in header region)"
+    ],
+    "nesting": "Do not nest Overlay inside Overlay. Use Dialog for modal confirmation instead. Use Drawer for persistent side panels."
+  },
+  "patterns": {
+    "filter_panel": "Overlay shows filterable options, user selects/applies, overlay remains open until explicit close or action.",
+    "dropdown_panel": "Overlay shows options, selection auto-closes overlay.",
+    "popover_info": "Overlay shows supplemental info or related actions. User-initiated close (button or ESC).",
+    "contextual_menu": "Overlay positioned near trigger, shows related actions. Close via selection or dismiss."
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/overlay/examples",
+  "sourceLinks": {
+    "source": "https://github.com/jpmorganchase/salt-ds/tree/main/packages/core/src/overlay",
+    "usage": "https://github.com/jpmorganchase/salt-ds/blob/main/site/docs/components/overlay/usage.mdx",
+    "examples": "https://github.com/jpmorganchase/salt-ds/blob/main/site/docs/components/overlay/examples.mdx",
+    "accessibility": "https://github.com/jpmorganchase/salt-ds/blob/main/site/docs/components/overlay/accessibility.mdx",
+    "stories": "https://storybook.saltdesignsystem.com/?path=/story/core-overlay--default"
+  }
+}

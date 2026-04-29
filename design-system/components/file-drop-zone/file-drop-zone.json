@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "FileDropZone",
+  "description": "Accept files via drag-and-drop or file browser selection.",
+  "package": "@salt-ds/core",
+  "import": "import { FileDropZone, FileDropZoneIcon, FileDropZoneTrigger } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables drop and file selection interactions."
+    },
+    "status": {
+      "type": "'error' | 'success'",
+      "description": "Applies validation feedback styling and status icon behavior."
+    },
+    "onDrop": {
+      "type": "(event: DragEvent<HTMLDivElement>, files: File[]) => void",
+      "description": "Receives dropped files for custom validation and handling."
+    },
+    "accept": {
+      "type": "string",
+      "description": "Passed via `FileDropZoneTrigger`; hints acceptable file types in native picker."
+    },
+    "multiple": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Passed via `FileDropZoneTrigger`; allows selecting multiple files."
+    },
+    "onChange": {
+      "type": "(event: ChangeEvent<HTMLInputElement>, files: File[]) => void",
+      "description": "Passed via `FileDropZoneTrigger`; handles files selected in the native picker."
+    }
+  },
+  "slots": {
+    "children": "Compose with `FileDropZoneIcon`, instructional text, `FileDropZoneTrigger`, and optional validation/help text."
+  },
+  "states": [
+    "default",
+    "active-drag",
+    "disabled",
+    "error",
+    "success"
+  ],
+  "tokens": {
+    "textColor": "--saltFileDropZone-text-color",
+    "background": "--saltFileDropZone-background",
+    "border": "--saltFileDropZone-border",
+    "borderRadius": "--saltFileDropZone-borderRadius",
+    "fontSize": "--saltFileDropZone-fontSize",
+    "fontFamily": "--saltFileDropZone-fontFamily",
+    "lineHeight": "--saltFileDropZone-lineHeight"
+  },
+  "accessibility": {
+    "role": "group region containing a button trigger and hidden native file input",
+    "keyboard": [
+      "Tab — moves focus to the Browse files button and onward in tab order",
+      "Shift + Tab — moves focus to previous focusable element",
+      "Space / Enter — activates Browse files and opens the native file explorer"
+    ],
+    "aria": [
+      "Provide clear instructional text for accepted file types and size constraints",
+      "Ensure error/success messages explain outcome and required user action",
+      "Treat `accept` as picker guidance only; enforce file validation in event handlers"
+    ]
+  },
+  "composition": {
+    "with": [
+      "FileDropZoneIcon",
+      "FileDropZoneTrigger",
+      "Text",
+      "Banner (for result summaries)"
+    ],
+    "inside": [
+      "Form workflows that require file attachment",
+      "Dialog-based upload experiences with custom file lists/progress"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/file-drop-zone/examples"
+}

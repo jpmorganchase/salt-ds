@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Stack Layout",
+  "description": "One-dimensional non-wrapping layout for stacking items in row/column directions with responsive control and optional separators.",
+  "package": "@salt-ds/core",
+  "import": "import { StackLayout } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "as": {
+      "type": "ElementType",
+      "default": "div",
+      "description": "Polymorphic root element for semantic markup."
+    },
+    "align": {
+      "type": "\"start\" | \"end\" | \"center\" | \"stretch\" | \"baseline\"",
+      "default": "stretch",
+      "description": "Cross-axis alignment of items."
+    },
+    "direction": {
+      "type": "ResponsiveProp<\"row\" | \"column\" | \"row-reverse\" | \"column-reverse\">",
+      "default": "column",
+      "description": "Main-axis direction; supports responsive breakpoint values."
+    },
+    "gap": {
+      "type": "ResponsiveProp<number | string>",
+      "default": "3",
+      "description": "Spacing between items. Numeric values map to Salt spacing units."
+    },
+    "separators": {
+      "type": "\"start\" | \"center\" | \"end\" | boolean",
+      "default": "false",
+      "description": "Adds separators between items. `true` maps to centered separators."
+    },
+    "margin": {
+      "type": "ResponsiveProp<number | string>",
+      "default": "0",
+      "description": "Outer spacing around layout container."
+    },
+    "padding": {
+      "type": "ResponsiveProp<number | string>",
+      "default": "0",
+      "description": "Inner spacing within layout container."
+    }
+  },
+  "slots": {
+    "children": "Stacked content items rendered in order."
+  },
+  "states": [
+    "column",
+    "row",
+    "reverse-direction",
+    "with-separators",
+    "responsive-direction",
+    "non-wrapping"
+  ],
+  "tokens": {
+    "gap-base-unit": "--salt-spacing-100"
+  },
+  "accessibility": {
+    "role": "none",
+    "keyboard": [
+      "No layout-specific keyboard interaction; keyboard behavior comes from interactive descendants"
+    ],
+    "aria": [
+      "Use semantic HTML via `as` when StackLayout represents meaningful structure",
+      "Ensure child content provides its own labels/roles where needed"
+    ]
+  },
+  "composition": {
+    "with": [
+      "FlexItem",
+      "FormField",
+      "Button",
+      "Card",
+      "Text"
+    ],
+    "inside": [
+      "Panels",
+      "Toolbars",
+      "Card groups",
+      "Section subsections"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/stack-layout/examples"
+}

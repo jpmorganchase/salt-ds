@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Input",
+  "description": "A single-line text field for user input.",
+  "package": "@salt-ds/core",
+  "import": "import { Input } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "value": {
+      "type": "string",
+      "description": "Controlled input value."
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Uncontrolled initial value."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder text shown when empty."
+    },
+    "variant": {
+      "type": "'primary' | 'secondary' | 'tertiary'",
+      "default": "'primary'",
+      "description": "Visual variant of the input field."
+    },
+    "textAlign": {
+      "type": "'left' | 'center' | 'right'",
+      "default": "'left'",
+      "description": "Alignment of text within the field."
+    },
+    "validationStatus": {
+      "type": "'error' | 'warning' | 'success'",
+      "description": "Validation state displayed by status adornment (can also be provided by FormField context)."
+    },
+    "startAdornment": {
+      "type": "ReactNode",
+      "description": "Content rendered at the start of the input."
+    },
+    "endAdornment": {
+      "type": "ReactNode",
+      "description": "Content rendered at the end of the input."
+    },
+    "emptyReadOnlyMarker": {
+      "type": "string",
+      "default": "'—'",
+      "description": "Marker shown when read-only input has no value."
+    },
+    "inputProps": {
+      "type": "Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes",
+      "description": "Attributes passed to the inner input element."
+    },
+    "inputRef": {
+      "type": "Ref<HTMLInputElement>",
+      "description": "Ref for the inner input element."
+    },
+    "onChange": {
+      "type": "(event: ChangeEvent<HTMLInputElement>) => void"
+    },
+    "bordered": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Renders the input with a full border."
+    }
+  },
+  "slots": {
+    "startAdornment": "Optional leading adornment content.",
+    "endAdornment": "Optional trailing adornment content."
+  },
+  "composition": {
+    "with": [
+      "FormField",
+      "FormFieldLabel",
+      "FormFieldHelperText",
+      "StatusAdornment"
+    ],
+    "inside": [
+      "Forms",
+      "Search bars",
+      "Data entry workflows"
+    ]
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "readOnly",
+    "error",
+    "warning",
+    "success"
+  ],
+  "tokens": {
+    "background": "--salt-editable-primary-background",
+    "borderColor": "--salt-editable-primary-border-color",
+    "foreground": "--salt-content-primary-foreground"
+  },
+  "accessibility": {
+    "role": "textbox",
+    "keyboard": [
+      "Tab/Shift+Tab to move focus",
+      "Arrow keys for cursor movement",
+      "Backspace and character keys for text editing",
+      "Enter/Space activate interactive adornments when they are focused"
+    ],
+    "aria": [
+      "Prefer wrapping with FormField to provide visible labels and descriptive text",
+      "Do not rely on adornments for labeling; screen readers may not announce static adornments",
+      "Use emptyReadOnlyMarker for empty read-only fields to communicate intentional emptiness"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/input/examples"
+}

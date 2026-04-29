@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Toggletip",
+  "description": "Persistent, click-activated supplementary information panel composed from trigger and panel subcomponents.",
+  "package": "@salt-ds/core",
+  "import": "import { Toggletip, ToggletipTrigger, ToggletipPanel } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "open": {
+      "type": "boolean",
+      "description": "Controlled open state"
+    },
+    "onOpenChange": {
+      "type": "(open: boolean) => void",
+      "description": "Called when open state changes"
+    },
+    "placement": {
+      "type": "'top' | 'bottom' | 'left' | 'right'",
+      "default": "'top'",
+      "description": "Preferred panel placement relative to trigger"
+    },
+    "ToggletipTrigger.children": {
+      "type": "ReactNode",
+      "description": "Trigger content, commonly an icon button"
+    },
+    "ToggletipPanel.children": {
+      "type": "ReactNode",
+      "description": "Supplementary content shown in the panel"
+    }
+  },
+  "slots": {
+    "trigger": "`ToggletipTrigger` interactive control",
+    "panel": "`ToggletipPanel` floating content"
+  },
+  "states": [
+    "closed",
+    "open"
+  ],
+  "tokens": {
+    "panelBackground": "--salt-container-primary-background",
+    "panelBorderColor": "--salt-container-primary-borderColor",
+    "panelShadow": "--salt-overlayable-shadow-popout",
+    "panelBorderRadius": "--salt-palette-corner-weak",
+    "panelTextColor": "--salt-content-primary-foreground",
+    "panelZIndex": "--salt-zIndex-flyover",
+    "triggerTextColor": "--salt-content-primary-foreground",
+    "textFontFamily": "--salt-text-fontFamily",
+    "textFontSize": "--salt-text-fontSize",
+    "textLineHeight": "--salt-text-lineHeight"
+  },
+  "accessibility": {
+    "role": "dialog",
+    "keyboard": [
+      "Tab",
+      "Shift+Tab",
+      "Enter",
+      "Space",
+      "Escape"
+    ],
+    "aria": [
+      "Provide a meaningful accessible name on `ToggletipTrigger` (`aria-label` or `aria-labelledby`)",
+      "`ToggletipPanel` content is labelled by trigger id via `aria-labelledby`",
+      "Do not auto-dismiss on timers",
+      "Keep trigger visually close to the content it describes"
+    ]
+  },
+  "composition": {
+    "with": [
+      "ToggletipTrigger",
+      "ToggletipPanel",
+      "Text",
+      "Link",
+      "Icon"
+    ],
+    "inside": [
+      "Section headers",
+      "Metrics and labels",
+      "Dense information layouts"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/toggletip/examples"
+}

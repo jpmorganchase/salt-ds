@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Number Input",
+  "description": "Numeric input with steppers, keyboard increments, range handling, and optional parsing/formatting controls.",
+  "package": "@salt-ds/core",
+  "import": "import { NumberInput } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "value": {
+      "type": "number | string",
+      "description": "Controlled value."
+    },
+    "defaultValue": {
+      "type": "number | string",
+      "description": "Initial value for uncontrolled usage."
+    },
+    "onChange": {
+      "type": "(event: SyntheticEvent | null, value: string) => void",
+      "description": "Called on input edits and stepper changes with string value."
+    },
+    "onNumberChange": {
+      "type": "(event: SyntheticEvent | null, value: number | null) => void",
+      "description": "Called on committed numeric updates (blur, increment, decrement)."
+    },
+    "step": {
+      "type": "number",
+      "default": "1",
+      "description": "Base increment/decrement amount."
+    },
+    "stepMultiplier": {
+      "type": "number",
+      "default": "2",
+      "description": "Multiplier for accelerated changes (Shift+Arrow, PageUp/PageDown)."
+    },
+    "min": {
+      "type": "number",
+      "default": "Number.MIN_SAFE_INTEGER",
+      "description": "Lower bound for stepper and keyboard controls."
+    },
+    "max": {
+      "type": "number",
+      "default": "Number.MAX_SAFE_INTEGER",
+      "description": "Upper bound for stepper and keyboard controls."
+    },
+    "clamp": {
+      "type": "boolean",
+      "default": "false",
+      "description": "When true, out-of-range values are clamped into `[min, max]` on blur/commit."
+    },
+    "decimalScale": {
+      "type": "number",
+      "description": "Decimal precision used by default parser/formatter."
+    },
+    "format": {
+      "type": "(value: string) => string",
+      "description": "Custom formatter for display value."
+    },
+    "parse": {
+      "type": "(value: string) => number | null",
+      "description": "Custom parser from display string to numeric value."
+    },
+    "pattern": {
+      "type": "(inputValue: string) => boolean",
+      "description": "Validation callback deciding whether typed input is accepted."
+    },
+    "increment": {
+      "type": "(value: string, step: number, stepMultiplier: number) => string",
+      "description": "Custom increment strategy for high precision/special arithmetic."
+    },
+    "decrement": {
+      "type": "(value: string, step: number, stepMultiplier: number) => string",
+      "description": "Custom decrement strategy for high precision/special arithmetic."
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Read-only mode; editable interactions disabled while value remains copyable."
+    },
+    "emptyReadOnlyMarker": {
+      "type": "string",
+      "default": "'—'",
+      "description": "Displayed marker when read-only value is empty."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables input and controls."
+    },
+    "hideButtons": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Hides built-in increment/decrement buttons."
+    },
+    "textAlign": {
+      "type": "'left' | 'center' | 'right'",
+      "default": "'left'",
+      "description": "Alignment of numeric text within input field."
+    },
+    "variant": {
+      "type": "'primary' | 'secondary' | 'tertiary'",
+      "default": "'primary'",
+      "description": "Visual variant."
+    },
+    "bordered": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Full border style variant."
+    },
+    "validationStatus": {
+      "type": "'error' | 'warning' | 'success'",
+      "description": "Validation state styling/status adornment."
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder shown when value is empty."
+    },
+    "startAdornment": {
+      "type": "ReactNode",
+      "description": "Leading adornment content."
+    },
+    "endAdornment": {
+      "type": "ReactNode",
+      "description": "Trailing adornment content."
+    },
+    "inputProps": {
+      "type": "InputHTMLAttributes<HTMLInputElement>",
+      "description": "Native input attributes forwarded to inner input."
+    },
+    "inputRef": {
+      "type": "Ref<HTMLInputElement>",
+      "description": "Ref to inner input element."
+    }
+  },
+  "slots": {
+    "startAdornment": "Optional leading visual/action content.",
+    "endAdornment": "Optional trailing visual/action content."
+  },
+  "states": [
+    "default",
+    "focused",
+    "editing",
+    "disabled",
+    "read-only",
+    "error",
+    "warning",
+    "success",
+    "variant-primary",
+    "variant-secondary",
+    "variant-tertiary",
+    "bordered",
+    "hidden-buttons"
+  ],
+  "tokens": {},
+  "accessibility": {
+    "role": "spinbutton (default), textbox (read-only workaround)",
+    "keyboard": [
+      "ArrowUp/ArrowDown increment/decrement by `step`",
+      "Shift+ArrowUp/Shift+ArrowDown increment/decrement by `step * stepMultiplier`",
+      "PageUp/PageDown increment/decrement by block step (`step * stepMultiplier`)",
+      "Home commits minimum value",
+      "End commits maximum value",
+      "Tab/Shift+Tab follow normal input focus order"
+    ],
+    "aria": [
+      "Prefer wrapping in `FormField` to provide visible label, help text, and validation messaging",
+      "Spinbutton semantics expose `aria-valuemin`, `aria-valuemax`, and `aria-valuenow` when applicable",
+      "In read-only state, role is switched to `textbox` for assistive technology compatibility",
+      "When using clamp or dynamic adornment actions, provide live announcements where needed"
+    ]
+  },
+  "composition": {
+    "with": [
+      "FormField",
+      "FormFieldLabel",
+      "FormFieldHelperText",
+      "Button",
+      "useAriaAnnouncer"
+    ],
+    "inside": [
+      "Quantity selectors",
+      "Config ranges and thresholds",
+      "Data-entry forms requiring precise numeric adjustments"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/number-input/examples"
+}

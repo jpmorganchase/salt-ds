@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Checkbox",
+  "description": "Salt Core Checkbox and CheckboxGroup components allow users to select or deselect one or more options from a set of independent choices.",
+  "package": "@salt-ds/core",
+  "import": "import { Checkbox, CheckboxGroup } from \"@salt-ds/core\";",
+  "status": "stable",
+  "components": {
+    "Checkbox": {
+      "description": "A single checkbox option that can be selected or deselected.",
+      "props": {
+        "checked": "If true, the checkbox will be checked. Use for controlled components.",
+        "defaultChecked": "Whether the checkbox is checked by default (uncontrolled). Disregarded if checked is already set.",
+        "disabled": "If true, the checkbox will be disabled and not interactive.",
+        "indeterminate": "If true, the checkbox appears indeterminate (neither selected nor deselected). Common use: parent checkbox in hierarchical groups.",
+        "label": "ReactNode displayed next to the checkbox.",
+        "name": "The name attribute applied to the input element.",
+        "value": "The value of the checkbox (used in forms and CheckboxGroup).",
+        "readOnly": "If true, the checkbox is read-only; user can read but not change state.",
+        "validationStatus": "One of \"error\" | \"warning\" | \"success\". Checkbox has visual styling for error and warning.",
+        "onChange": "Callback when checked state changes. Signature: (event: ChangeEvent<HTMLInputElement>) => void",
+        "onBlur": "Callback when checkbox loses focus.",
+        "onFocus": "Callback when checkbox gains focus.",
+        "inputProps": "Additional props to pass to the underlying input element; supports data attributes.",
+        "inputRef": "Ref to access the hidden input element."
+      }
+    },
+    "CheckboxGroup": {
+      "description": "A group of checkboxes allowing selection of multiple independent options.",
+      "props": {
+        "checkedValues": "Array of string values representing currently checked checkboxes (controlled component).",
+        "defaultCheckedValues": "Array of string values for initially checked checkboxes (uncontrolled).",
+        "direction": "Layout direction: \"horizontal\" | \"vertical\" (default: \"vertical\").",
+        "disabled": "If true, all checkboxes in the group are disabled.",
+        "readOnly": "If true, all checkboxes in the group are read-only.",
+        "name": "The name attribute applied to each checkbox in the group.",
+        "wrap": "For horizontal direction only. If true (default), text wraps; if false, checkboxes wrap to next line.",
+        "validationStatus": "One of \"error\" | \"warning\" | \"success\". Applied to all checkboxes in group.",
+        "onChange": "Callback fired when any checkbox is clicked. Signature: (event: ChangeEvent<HTMLInputElement>) => void"
+      }
+    }
+  },
+  "slots": {},
+  "states": [
+    "unchecked",
+    "checked",
+    "indeterminate",
+    "disabled",
+    "readOnly",
+    "error (validationStatus=error)",
+    "warning (validationStatus=warning)"
+  ],
+  "tokens": {},
+  "accessibility": {
+    "role": "checkbox (for Checkbox), group (for CheckboxGroup when used semantically)",
+    "keyboard": [
+      "Tab — Focus moves to the checkbox or first checkbox in group",
+      "Shift+Tab — Focus moves to previous element",
+      "Space — Toggles checked state of focused checkbox",
+      "Arrow keys — Within group, can move between checkboxes (Tab+Space pattern also supported)"
+    ],
+    "aria": [
+      "aria-label — Required if checkbox has no visible text label",
+      "aria-describedby — Can be used to describe the checkbox or group",
+      "aria-labelledby — Can be used to associate with a label element",
+      "aria-checked — Automatically managed; reflects checked/indeterminate/unchecked state"
+    ]
+  },
+  "composition": {
+    "with": [
+      "FormField — Wrap CheckboxGroup for label and validation messaging",
+      "StackLayout — Compose with descriptions or additional content in label prop",
+      "Text — For secondary labels or descriptions within CheckboxGroup"
+    ],
+    "inside": [
+      "FormField — CheckboxGroup can be child of FormField",
+      "FlexLayout, StackLayout — For responsive layout of grouped checkboxes",
+      "Dialog, Panel — Checkboxes can appear in modal sections"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/checkbox/usage"
+}

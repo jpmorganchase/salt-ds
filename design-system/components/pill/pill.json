@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Pill",
+  "description": "Small interactive label element used for quick actions, selections, and removable tokens; supports grouped and selectable behavior via PillGroup.",
+  "package": "@salt-ds/core",
+  "import": "import { Pill, PillGroup } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "value": {
+      "type": "string",
+      "description": "Unique value for the pill; required for selectable behavior inside PillGroup."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables pill interaction. In a group, inherited group disabled state also applies."
+    },
+    "onClick": {
+      "type": "(event: MouseEvent<HTMLButtonElement>) => void",
+      "description": "Called when the pill is activated by click, Enter, or Space."
+    },
+    "pillGroup.selectionVariant": {
+      "type": "'none' | 'multiple'",
+      "default": "'none'",
+      "description": "Determines whether pills behave as standard buttons or selectable checkboxes."
+    },
+    "pillGroup.selected": {
+      "type": "string[]",
+      "description": "Controlled selected values when selectionVariant is multiple."
+    },
+    "pillGroup.defaultSelected": {
+      "type": "string[]",
+      "default": "[]",
+      "description": "Uncontrolled initial selected values when selectionVariant is multiple."
+    },
+    "pillGroup.onSelectionChange": {
+      "type": "(event: SyntheticEvent, newSelected: string[]) => void",
+      "description": "Called when selectable group values are toggled."
+    },
+    "pillGroup.disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables all pills in the group."
+    }
+  },
+  "slots": {
+    "children": "Pill label content and optional icons.",
+    "pillGroup.children": "One or more Pill elements rendered inside the group fieldset."
+  },
+  "states": [
+    "default",
+    "disabled",
+    "selectable",
+    "selected"
+  ],
+  "tokens": {
+    "pillGroupGap": "--salt-spacing-50"
+  },
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [
+      "Pill: Enter / Space — activate pill",
+      "Pill: Tab / Shift+Tab — move focus into/out of pill in tab order",
+      "Selectable PillGroup: Space — toggle selected state of focused pill",
+      "Selectable PillGroup: Tab enters first pill; Shift+Tab enters last pill"
+    ],
+    "aria": [
+      "In selectable groups, each Pill uses role='checkbox' with aria-checked",
+      "Provide an accessible group label using visible FormField label or aria-label / aria-labelledby",
+      "For closable pill patterns with icon-only affordance, provide an explicit aria-label describing removal action"
+    ]
+  },
+  "composition": {
+    "with": [
+      "PillGroup",
+      "FormField",
+      "ComboBox",
+      "PillInput"
+    ],
+    "inside": [
+      "Filters",
+      "Selection controls",
+      "Tokenized inputs",
+      "Quick-action panels"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/pill/examples"
+}

@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "App Header",
+  "description": "A persistent top-level header pattern containing branding, primary navigation, and utility actions across desktop and mobile layouts.",
+  "status": "stable",
+  "sourceOfTruth": {
+    "docs": "https://github.com/jpmorganchase/salt-ds/tree/main/site/docs/patterns/app-header.mdx",
+    "stories": "https://github.com/jpmorganchase/salt-ds/tree/main/packages/core/stories/patterns/app-header/app-header.stories.tsx",
+    "storybook": "https://storybook.saltdesignsystem.com/?path=/story/patterns-app-header--app-header"
+  },
+  "componentsUsed": [
+    "BorderLayout",
+    "BorderItem",
+    "FlexLayout",
+    "FlexItem",
+    "StackLayout",
+    "VerticalNavigation",
+    "Button",
+    "Drawer",
+    "Text",
+    "SkipLink"
+  ],
+  "composition": {
+    "tree": [
+      "BorderLayout (page shell)",
+      "BorderItem north (sticky app header container)",
+      "Desktop: header > FlexLayout (brand | nav | utilities)",
+      "Mobile: header > StackLayout row (menu button + brand) + Drawer (vertical nav + utilities)",
+      "BorderItem center (main content offset below fixed header)",
+      "BorderItem south (optional footer)"
+    ],
+    "orderRules": [
+      "Branding appears first and links to app home.",
+      "Desktop layout positions brand, navigation, and utilities with space-between.",
+      "Mobile layout places menu button left of brand and moves nav/utilities into Drawer.",
+      "In mobile Drawer, navigation items appear above utility actions.",
+      "Header remains sticky/fixed while content scrolls."
+    ]
+  },
+  "variantAxes": {
+    "viewport": [
+      "desktop (sm and above)",
+      "mobile (xs)"
+    ],
+    "headerLayout": [
+      "header-only",
+      "header-with-vertical-navigation"
+    ],
+    "scrollState": [
+      "top",
+      "scrolled"
+    ],
+    "menuState": [
+      "closed",
+      "open"
+    ],
+    "accessibility": [
+      "with-skip-link",
+      "without-skip-link"
+    ]
+  },
+  "variantMatrix": [
+    {
+      "name": "Desktop header shell",
+      "viewport": "desktop (sm and above)",
+      "headerLayout": "header-only",
+      "scrollState": "top|scrolled",
+      "menuState": "closed",
+      "accessibility": "with-skip-link",
+      "evidence": "Stories: Patterns/App Header -> AppHeader (DesktopAppHeader branch)",
+      "evidenceType": "story",
+      "inferred": false
+    },
+    {
+      "name": "Mobile header shell",
+      "viewport": "mobile (xs)",
+      "headerLayout": "header-only",
+      "scrollState": "top|scrolled",
+      "menuState": "closed|open",
+      "accessibility": "with-skip-link",
+      "evidence": "Stories: Patterns/App Header -> AppHeader (MobileAppHeader branch)",
+      "evidenceType": "story",
+      "inferred": false
+    },
+    {
+      "name": "Header with vertical navigation",
+      "viewport": "desktop (sm and above)",
+      "headerLayout": "header-with-vertical-navigation",
+      "scrollState": "top|scrolled",
+      "menuState": "closed",
+      "accessibility": "with-skip-link",
+      "evidence": "Docs: App header -> Header with vertical navigation",
+      "evidenceType": "docs",
+      "inferred": true
+    },
+    {
+      "name": "Responsive collapse to hamburger",
+      "viewport": "mobile (xs)",
+      "headerLayout": "header-only|header-with-vertical-navigation",
+      "scrollState": "top|scrolled",
+      "menuState": "open",
+      "accessibility": "with-skip-link",
+      "evidence": "Docs: App header -> Responsive behavior",
+      "evidenceType": "docs",
+      "inferred": true
+    }
+  ],
+  "tokens": {
+    "size": {
+      "headerHeight": "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+      "logoHeight": "calc(var(--salt-size-base) - var(--salt-spacing-150))",
+      "contentTopOffset": "calc(var(--salt-size-base) + var(--salt-spacing-200))"
+    },
+    "spacing": {
+      "headerPaddingInline": "var(--salt-spacing-300)",
+      "desktopSectionGap": "var(--salt-spacing-300)",
+      "utilityGap": "var(--salt-spacing-100)",
+      "mobileMenuButtonLeftPadding": "var(--salt-spacing-100)",
+      "mobileDrawerPadding": "var(--salt-spacing-300)"
+    },
+    "surface": {
+      "headerBackground": "var(--salt-container-primary-background)",
+      "contentSurface": "var(--salt-container-secondary-background)",
+      "headerBorderBottom": "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)"
+    },
+    "elevation": {
+      "desktopScrolled": "var(--salt-overlayable-shadow-scroll)",
+      "mobileScrolled": "var(--salt-shadow-1)",
+      "mobileZIndex": "calc(var(--salt-zIndex-drawer) + 1)"
+    }
+  },
+  "layoutRules": [
+    "Place app header in the north region and keep it sticky/fixed across page scroll.",
+    "Default branding to JPM logo in the app header unless the user prompt explicitly specifies another approved brand.",
+    "Download logo assets from the logo documentation source and copy them into public/assets/logos before wiring app-header branding.",
+    "If a selected logo asset is unavailable at runtime, use simple Amplitude fallback text matching brand (JPM, Chase, or JPMC).",
+    "In mobile view, the drawer must render the menu using the VerticalNavigation component with appearance defaulting to bordered.",
+    "Mobile drawer padding must be var(--salt-spacing-300) applied equally on all sides (top, right, bottom, left).",
+    "When vertical navigation is paired with app header, default its appearance to bordered unless the user prompt explicitly requests another approved variant.",
+    "When vertical navigation is used, ensure the container wrapping it has no left padding (padding-left: 0).",
+    "Always position logo in the top-left and preserve logo aspect ratio.",
+    "Use desktop horizontal navigation for larger viewports and collapse to hamburger + drawer on mobile.",
+    "Keep navigation entries above utility actions in mobile drawer hierarchy.",
+    "Offset main content by header height so fixed header does not overlap content.",
+    "Use skip link before complex header content to bypass navigation and utilities."
+  ],
+  "sizeScaleMappings": [
+    {
+      "density": "all",
+      "baseSizeSource": "var(--salt-size-base)",
+      "headerHeightRule": "base + spacing-200",
+      "logoHeightRule": "base - spacing-150"
+    }
+  ],
+  "dataRequirements": [
+    "brand: logo asset and optional application name text; brand links to home route and defaults to JPM unless user prompt specifies otherwise.",
+    "logoAssetFolder: local folder for installed branding assets (public/assets/logos) and runtime URL mapping under /assets/logos/.",
+    "logoFallbackText: simple Amplitude fallback text for missing assets (JPM|Chase|JPMC).",
+    "mobileMenuComponent: must use VerticalNavigation component with appearance defaulting to bordered for mobile drawer navigation.",
+    "verticalNavigationAppearance: bordered by default for app-header layouts that include vertical navigation.",
+    "verticalNavigationContainerPadding: must be 0 whenever vertical navigation component is rendered.",
+    "utilityActions: ordered list of global actions (icon, label, handler/route).",
+    "activeNavigationKey: currently selected top-level navigation item.",
+    "mobileMenuState: open/closed state for drawer presentation.",
+    "responsiveBreakpointPolicy: rules for switching desktop vs mobile composition."
+  ],
+  "gaps": [
+    {
+      "type": "Missing token",
+      "evidence": "Some story styles use literal values like width: 100% and z-index arithmetic tied to drawer.",
+      "recommendation": "Prefer explicit layout tokens or documented semantic roles for width/stacking in implementation guides.",
+      "label": "SOURCE_GAP"
+    },
+    {
+      "type": "Undocumented variant combination",
+      "evidence": "Docs define header-only and header-with-vertical-navigation layouts, while stories primarily demonstrate one shell with responsive branch.",
+      "recommendation": "Represent vertical-navigation pairing as a documented variant inferred from docs plus related navigation pattern evidence.",
+      "label": "SOURCE_GAP"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Border Layout",
+  "description": "Arranges content into north, west, center, east, and south layout regions.",
+  "package": "@salt-ds/core",
+  "import": "import { BorderItem, BorderLayout } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "children": {
+      "type": "ReactNode",
+      "required": true,
+      "description": "Border item components to be rendered."
+    },
+    "gap": {
+      "type": "GridLayoutProps<T>[\"gap\"]",
+      "default": "0",
+      "description": "Sets row and column gutter size using a density multiplier."
+    },
+    "columnGap": {
+      "type": "GridLayoutProps<T>[\"columnGap\"]",
+      "default": "0",
+      "description": "Sets column gutter size using a density multiplier."
+    },
+    "rowGap": {
+      "type": "GridLayoutProps<T>[\"rowGap\"]",
+      "default": "0",
+      "description": "Sets row gutter size using a density multiplier."
+    },
+    "margin": {
+      "type": "ResponsiveProp<number | string>",
+      "default": "0",
+      "description": "Sets outer spacing using a multiplier or CSS margin value."
+    },
+    "padding": {
+      "type": "ResponsiveProp<number | string>",
+      "default": "0",
+      "description": "Sets inner spacing using a multiplier or CSS padding value."
+    }
+  },
+  "slots": {},
+  "states": [],
+  "tokens": {},
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [],
+    "aria": [
+      "Use the polymorphic `as` prop to apply semantic HTML for layout regions."
+    ]
+  },
+  "composition": {
+    "with": [
+      "BorderItem"
+    ],
+    "inside": [
+      "Top-level app or page layout containers"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/layouts/border-layout/examples"
+}
