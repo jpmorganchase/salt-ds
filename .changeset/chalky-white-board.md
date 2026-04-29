@@ -1,6 +1,6 @@
 ---
 "@salt-ds/lab": minor
-"@salt-ds/date-components": patch
+"@salt-ds/date-components": minor
 ---
 
 Date components and related utilities have been extracted into a new package: `@salt-ds/date-components`. This package is intended to be the long-term home for these components.
