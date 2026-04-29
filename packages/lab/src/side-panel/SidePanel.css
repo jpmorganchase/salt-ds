@@ -1,33 +1,33 @@
 .saltSidePanel {
-  background-color: var(--side-panel-background, var(--salt-container-primary-background));
+  background-color: var(--sidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 300px;
-  --side-panel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--side-panel-borderColor, var(--salt-container-primary-borderColor));
+  --sidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--sidePanel-borderColor, var(--salt-container-primary-borderColor));
 }
 
 .saltSidePanel-primary {
-  --side-panel-background: var(--salt-container-primary-background);
-  --side-panel-borderColor: var(--salt-container-primary-borderColor);
+  --sidePanel-background: var(--salt-container-primary-background);
+  --sidePanel-borderColor: var(--salt-container-primary-borderColor);
 }
 
 .saltSidePanel-secondary {
-  --side-panel-background: var(--salt-container-secondary-background);
-  --side-panel-borderColor: var(--salt-container-secondary-borderColor);
+  --sidePanel-background: var(--salt-container-secondary-background);
+  --sidePanel-borderColor: var(--salt-container-secondary-borderColor);
 }
 
 .saltSidePanel-tertiary {
-  --side-panel-background: var(--salt-container-tertiary-background);
-  --side-panel-borderColor: var(--salt-container-tertiary-borderColor);
+  --sidePanel-background: var(--salt-container-tertiary-background);
+  --sidePanel-borderColor: var(--salt-container-tertiary-borderColor);
 }
 
 .saltSidePanel-left {
-  border-right: var(--side-panel-border);
+  border-right: var(--sidePanel-border);
 }
 .saltSidePanel-right {
-  border-left: var(--side-panel-border);
+  border-left: var(--sidePanel-border);
 }
 
 .saltSidePanel-none {
-  --side-panel-background: none;
+  --sidePanel-background: none;
   border: none;
 }
 
