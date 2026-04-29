@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Stepper",
+  "description": "Displays ordered process steps with optional nested substeps and stage/status indicators.",
+  "package": "@salt-ds/core",
+  "import": "import { Stepper, Step } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "orientation": {
+      "type": "'horizontal' | 'vertical'",
+      "default": "'horizontal'",
+      "description": "Stepper layout orientation"
+    },
+    "step.label": {
+      "type": "ReactNode",
+      "description": "Primary step label text"
+    },
+    "step.description": {
+      "type": "ReactNode",
+      "description": "Optional secondary description under the label"
+    },
+    "step.stage": {
+      "type": "'pending' | 'locked' | 'completed' | 'inprogress' | 'active'",
+      "default": "'pending'",
+      "description": "Step stage appearance when no status override is provided"
+    },
+    "step.status": {
+      "type": "'warning' | 'error'",
+      "description": "Status override that takes precedence over stage styling"
+    },
+    "step.expanded": {
+      "type": "boolean",
+      "description": "Controlled expanded state for steps with nested substeps"
+    },
+    "step.defaultExpanded": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Initial expanded state for uncontrolled nested substeps"
+    },
+    "step.onToggle": {
+      "type": "(event: React.MouseEvent<HTMLButtonElement>) => void",
+      "description": "Callback fired when a nested step expand trigger is toggled"
+    }
+  },
+  "slots": {
+    "children": "Render Step elements as ordered items; nested Step children are supported in vertical orientation only"
+  },
+  "states": [
+    "horizontal",
+    "vertical",
+    "pending",
+    "locked",
+    "completed",
+    "inprogress",
+    "active",
+    "warning",
+    "error",
+    "expanded",
+    "collapsed"
+  ],
+  "tokens": {
+    "trackColor": "--salt-separable-secondary-borderColor",
+    "labelColor": "--salt-content-primary-foreground",
+    "descriptionColor": "--salt-content-secondary-foreground",
+    "errorColor": "--salt-status-error-foreground",
+    "warningColor": "--salt-status-warning-foreground"
+  },
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [
+      "Tab — moves focus to the next expand button for steps with nested substeps",
+      "Shift + Tab — moves focus to the previous expand button",
+      "Enter / Space — toggles expand/collapse on nested-step expand buttons"
+    ],
+    "aria": [
+      "aria-label — provide contextual label on Stepper for process name",
+      "aria-current=\"step\" is applied to active steps",
+      "When steps are decorative/non-interactive, do not use Stepper as page navigation"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Step",
+      "StackLayout",
+      "Tooltip (advanced/custom usage)"
+    ],
+    "inside": [
+      "Form",
+      "Dialog",
+      "Panel",
+      "Wizard-style workflows"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/stepper/examples"
+}

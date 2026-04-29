@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "List Box",
+  "description": "Scrollable listbox for selecting one or more options from a visible list.",
+  "package": "@salt-ds/core",
+  "import": "import { ListBox, Option, OptionGroup } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "multiselect": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Allows selecting multiple options. Adds listbox multiselect semantics."
+    },
+    "defaultSelected": {
+      "type": "Item[]",
+      "description": "Initial selected option values for uncontrolled usage."
+    },
+    "selected": {
+      "type": "Item[]",
+      "description": "Controlled selected option values."
+    },
+    "onSelectionChange": {
+      "type": "(event: SyntheticEvent, newSelected: Item[]) => void",
+      "description": "Callback fired when selected values change."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables listbox focus and selection interactions."
+    },
+    "bordered": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Adds bordered visual treatment to the listbox container."
+    },
+    "valueToString": {
+      "type": "(item: Item) => string",
+      "description": "Maps non-string option values for matching/typeahead behavior."
+    },
+    "Option.value": {
+      "type": "unknown",
+      "required": true,
+      "description": "Unique option value used for selection."
+    },
+    "Option.disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Marks an option as not selectable."
+    },
+    "Option.children": {
+      "type": "ReactNode",
+      "description": "Visible option content; supports simple or complex layouts."
+    },
+    "OptionGroup.label": {
+      "type": "string",
+      "description": "Group label announced for options in the group."
+    }
+  },
+  "slots": {
+    "children": "Compose with `Option` and optional `OptionGroup` children."
+  },
+  "states": [
+    "single-select",
+    "multi-select",
+    "default-selected",
+    "disabled-listbox",
+    "disabled-option",
+    "grouped-options",
+    "bordered"
+  ],
+  "tokens": {},
+  "accessibility": {
+    "role": "listbox (container), option (items), group (option groups)",
+    "keyboard": [
+      "Tab focuses listbox and lands on selected option when present, otherwise first option",
+      "Shift+Tab moves focus out of listbox in reverse tab order",
+      "ArrowDown/ArrowUp move active option without wrapping",
+      "PageDown/PageUp move active option by visible page",
+      "Home/End move active option to first/last",
+      "Enter/Space select the active option",
+      "Printable characters perform typeahead matching"
+    ],
+    "aria": [
+      "ListBox sets `role=listbox` and manages `aria-activedescendant`",
+      "Set an accessible name using `aria-label` or `aria-labelledby`",
+      "When `multiselect` is true, listbox exposes `aria-multiselectable=true`",
+      "Disabled listbox exposes `aria-disabled=true` and is removed from tab order",
+      "Disabled options expose `aria-disabled=true` and cannot be selected"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Option",
+      "OptionGroup",
+      "StackLayout",
+      "Text"
+    ],
+    "inside": [
+      "Filters and settings panels with always-visible choices",
+      "Selection panes where users compare options before choosing",
+      "Scrollable lists where options exceed available vertical space"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/list-box/examples"
+}

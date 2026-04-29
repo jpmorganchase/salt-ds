@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Card",
+  "description": "A container pattern for grouped content, supporting static (`Card`), selectable (`InteractableCard`), and navigational (`LinkCard`) variants.",
+  "package": "@salt-ds/core",
+  "import": "import { Card, InteractableCard, InteractableCardGroup, LinkCard } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "accent": {
+      "type": "'bottom' | 'top' | 'left' | 'right'",
+      "description": "Accent border position for card variants that support accents."
+    },
+    "variant": {
+      "type": "Card: 'primary' | 'secondary' | 'tertiary' | 'ghost'; InteractableCard/LinkCard: 'primary' | 'secondary' | 'tertiary'",
+      "description": "Visual variant controlling hierarchy emphasis."
+    },
+    "hoverable": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Applies hover styling (`Card` only)."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables `InteractableCard` or entire `InteractableCardGroup` interaction."
+    },
+    "value": {
+      "type": "InteractableCardValue",
+      "description": "Selection value for `InteractableCard` and controlled value for `InteractableCardGroup`."
+    },
+    "multiSelect": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Enables checkbox-like multi-select behavior in `InteractableCardGroup`."
+    },
+    "href": {
+      "type": "string",
+      "description": "Navigation target (`LinkCard` only)."
+    },
+    "children": {
+      "type": "ReactNode",
+      "required": true,
+      "description": "Content rendered inside the card variant."
+    }
+  },
+  "variants": {
+    "Card": "Static container for grouping related content and optional nested actions.",
+    "InteractableCard": "Selectable or activatable card surface (standalone or grouped).",
+    "LinkCard": "Card rendered as a link for whole-card navigation."
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "selected",
+    "disabled"
+  ],
+  "tokens": {
+    "background": "--salt-container-primary-background",
+    "borderColor": "--salt-container-primary-border-color",
+    "padding": "--salt-spacing-200"
+  },
+  "accessibility": {
+    "role": "Card: none/semantic container; LinkCard: link; InteractableCard: button (standalone) or radio/checkbox (in group)",
+    "keyboard": [
+      "Tab/Shift+Tab — move focus to interactive card elements",
+      "Enter — activates LinkCard and standalone InteractableCard",
+      "Space — selects/deselects InteractableCard within group",
+      "Arrow keys — move/select in single-select InteractableCardGroup"
+    ],
+    "aria": [
+      "Provide an accessible name for interactive cards via visible text or explicit labeling.",
+      "Use InteractableCardGroup for grouped selection semantics instead of custom role wiring."
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/card/examples"
+}

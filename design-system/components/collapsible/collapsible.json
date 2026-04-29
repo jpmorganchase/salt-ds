@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Collapsible",
+  "description": "Salt Core Collapsible enables content to be collapsed (hidden) or expanded (visible) with a single trigger button. It consists of three sub-components: Collapsible (container/state manager), CollapsibleTrigger (button wrapper), and CollapsiblePanel (content container).",
+  "package": "@salt-ds/core",
+  "import": "import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from \"@salt-ds/core\";",
+  "status": "stable",
+  "components": {
+    "Collapsible": {
+      "description": "Root container managing open/closed state. Provides context to CollapsibleTrigger and CollapsiblePanel children.",
+      "props": {
+        "open": "Whether the collapsible is open (controlled). Use with onOpenChange for controlled state.",
+        "defaultOpen": "Whether the collapsible is open by default (uncontrolled). Defaults to false.",
+        "onOpenChange": "Callback fired when open state changes. Signature: (event: SyntheticEvent<HTMLButtonElement>, open: boolean) => void",
+        "children": "ReactNode. Should contain CollapsibleTrigger and CollapsiblePanel components."
+      }
+    },
+    "CollapsibleTrigger": {
+      "description": "Wraps a button or other interactive element to control open/closed state. Auto-applies aria-expanded and aria-controls attributes.",
+      "props": {
+        "children": "Button or interactive element to be wrapped. Receives aria-expanded and aria-controls props automatically.",
+        "className": "Optional CSS class to apply to the trigger wrapper.",
+        "onClick": "Optional click handler. Signature: (event: MouseEvent<HTMLButtonElement>) => void"
+      }
+    },
+    "CollapsiblePanel": {
+      "description": "Content container that shows/hides based on open state. Auto-applies aria-hidden and hidden attributes.",
+      "props": {
+        "children": "Content to be shown/hidden.",
+        "id": "Optional ID. If not provided, one will be auto-generated. Used for aria-controls relationship with trigger.",
+        "className": "Optional CSS class to apply to the panel container."
+      }
+    }
+  },
+  "slots": {},
+  "states": [
+    "open (content visible)",
+    "closed/collapsed (content hidden, aria-hidden=true)"
+  ],
+  "tokens": {},
+  "accessibility": {
+    "role": "button (trigger), varies (panel is a div container)",
+    "keyboard": [
+      "Tab — If focus is above the trigger, focus moves to the trigger",
+      "Shift+Tab — If focus is below the trigger, focus moves to the trigger",
+      "Enter or Space — Expands or collapses the panel"
+    ],
+    "aria": [
+      "aria-expanded — Auto-applied to trigger; reflects open/closed state",
+      "aria-controls — Auto-applied to trigger; points to panel ID for screen reader association",
+      "aria-hidden — Auto-applied to panel when closed; true when open=false, removed when open=true",
+      "hidden attribute — Auto-applied to panel when closed for DOM visibility control"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Button — Commonly wrapped by CollapsibleTrigger as the interactive element",
+      "Card — Can wrap collapsible content sections within cards",
+      "StackLayout — For organizing collapsible sections vertically"
+    ],
+    "inside": [
+      "VerticalNavigation — Collapsible submenus in navigation trees",
+      "Dialog — Collapsible sections within modal content",
+      "FormField — Collapsible sections for complex form layouts"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/collapsible/usage"
+}

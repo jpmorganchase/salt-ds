@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Dropdown",
+  "description": "Select-only combobox for choosing one or more options from a list.",
+  "package": "@salt-ds/core",
+  "import": "import { Dropdown, Option, OptionGroup } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "open": {
+      "type": "boolean",
+      "description": "Controlled open state for the option list."
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Initial open state for uncontrolled usage."
+    },
+    "onOpenChange": {
+      "type": "(newOpen: boolean, reason?: 'input' | 'manual') => void",
+      "description": "Callback fired when open state changes."
+    },
+    "selected": {
+      "type": "Item[]",
+      "description": "Controlled selected options."
+    },
+    "defaultSelected": {
+      "type": "Item[]",
+      "description": "Initial selected options for uncontrolled usage."
+    },
+    "onSelectionChange": {
+      "type": "(event: SyntheticEvent, newSelected: Item[]) => void",
+      "description": "Callback fired when selection changes."
+    },
+    "multiselect": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Allows selecting more than one option."
+    },
+    "value": {
+      "type": "string",
+      "description": "Controlled text shown in the trigger button."
+    },
+    "valueToString": {
+      "type": "(item: Item) => string",
+      "description": "Maps option values to display text; required when value is not a simple display string."
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Text displayed when there is no value."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables interaction and focus."
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Prevents changing selection while still allowing focus."
+    },
+    "required": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Marks the dropdown as required for form semantics."
+    },
+    "variant": {
+      "type": "'primary' | 'secondary' | 'tertiary'",
+      "default": "'primary'",
+      "description": "Visual emphasis variant for the trigger."
+    },
+    "bordered": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Adds a full border around the trigger."
+    },
+    "validationStatus": {
+      "type": "'error' | 'warning' | 'success'",
+      "description": "Applies validation styling and status adornment."
+    },
+    "startAdornment": {
+      "type": "ReactNode",
+      "description": "Renders leading visual content in the trigger."
+    },
+    "emptyReadOnlyMarker": {
+      "type": "string",
+      "default": "'—'",
+      "description": "Marker shown for empty read-only dropdowns."
+    },
+    "OverlayProps": {
+      "type": "object",
+      "description": "Props passed to the list overlay container."
+    }
+  },
+  "slots": {
+    "children": "Use `Option` and optional `OptionGroup` children to define the option list."
+  },
+  "states": [
+    "closed",
+    "open",
+    "single-select",
+    "multi-select",
+    "disabled",
+    "read-only",
+    "required",
+    "error",
+    "warning",
+    "success",
+    "variant-primary",
+    "variant-secondary",
+    "variant-tertiary",
+    "bordered"
+  ],
+  "tokens": {
+    "backgroundPrimary": "--salt-container-primary-background",
+    "backgroundSecondary": "--salt-container-secondary-background",
+    "backgroundTertiary": "--salt-container-tertiary-background"
+  },
+  "accessibility": {
+    "role": "combobox (trigger), listbox (popup), option (items)",
+    "keyboard": [
+      "Tab / Shift+Tab — moves focus in tab order; when leaving dropdown, current active option is selected",
+      "Space / Enter — selects active option (single-select closes list; multiselect keeps list open)",
+      "Escape — closes list and keeps focus on dropdown",
+      "ArrowDown / ArrowUp — opens list when closed; navigates options when open",
+      "Home / End — moves active option to first/last",
+      "PageUp / PageDown — moves active option by visible page",
+      "Printable characters — typeahead matching across options"
+    ],
+    "aria": [
+      "Trigger uses `role=combobox` with `aria-expanded`, `aria-controls`, and active descendant semantics",
+      "Set accessible label via FormField label or `aria-labelledby`/`aria-label`",
+      "Use OptionGroup labels for grouped options",
+      "Set `aria-multiselectable` semantics when `multiselect` is enabled"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Option",
+      "OptionGroup",
+      "FormField",
+      "FormFieldLabel",
+      "FormFieldHelperText"
+    ],
+    "inside": [
+      "Form layouts requiring single or multi selection from a bounded list",
+      "Toolbars and settings panels where selected value remains visible"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/dropdown/examples"
+}

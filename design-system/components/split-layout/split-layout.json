@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "SplitLayout",
+  "description": "Positions start and end items at opposite ends of a container with responsive direction and spacing control.",
+  "package": "@salt-ds/core",
+  "import": "import { SplitLayout } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "as": {
+      "type": "ElementType",
+      "default": "'div'",
+      "description": "Polymorphic root element for semantic HTML rendering."
+    },
+    "startItem": {
+      "type": "ReactNode",
+      "description": "Start component rendered at the beginning of layout main axis."
+    },
+    "endItem": {
+      "type": "ReactNode",
+      "description": "End component rendered at the opposite end of layout main axis."
+    },
+    "direction": {
+      "type": "ResponsiveProp<'row' | 'column' | 'row-reverse' | 'column-reverse'>",
+      "default": "'row'",
+      "description": "Main-axis direction for arranging start and end items."
+    },
+    "align": {
+      "type": "'start' | 'center' | 'end' | 'stretch' | 'baseline'",
+      "description": "Cross-axis alignment of layout items."
+    },
+    "gap": {
+      "type": "ResponsiveProp<string | number>",
+      "description": "Space between start and end items."
+    },
+    "margin": {
+      "type": "ResponsiveProp<string | number>",
+      "default": "0",
+      "description": "Outer spacing around the layout."
+    },
+    "padding": {
+      "type": "ResponsiveProp<string | number>",
+      "default": "0",
+      "description": "Inner spacing within the layout."
+    }
+  },
+  "slots": {
+    "startItem": "Content aligned to start side of SplitLayout.",
+    "endItem": "Content aligned to end side of SplitLayout."
+  },
+  "states": [
+    "default"
+  ],
+  "tokens": {
+    "spacingBase": "--salt-spacing-100"
+  },
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [
+      "Tab / Shift+Tab — move focus between interactive descendants in layout order"
+    ],
+    "aria": [
+      "Use semantic HTML via the as prop for meaningful structure (for example ul/li patterns)",
+      "Ensure child items provide their own accessible names and semantics"
+    ]
+  },
+  "composition": {
+    "with": [
+      "FlowLayout",
+      "Button",
+      "FlexItem"
+    ],
+    "inside": [
+      "Headers",
+      "Toolbars",
+      "Action bars",
+      "Responsive sections"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/layouts/split-layout/examples"
+}

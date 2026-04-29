@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Avatar",
+  "description": "Displays an identity marker using an image, initials, or fallback icon.",
+  "package": "@salt-ds/core",
+  "import": "import { Avatar } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "name": {
+      "type": "string",
+      "description": "Name represented by the avatar; used to derive initials and an accessible label."
+    },
+    "nameToInitials": {
+      "type": "(name?: string) => string",
+      "description": "Custom function for converting a name into initials."
+    },
+    "src": {
+      "type": "string",
+      "description": "Image source URL for the avatar."
+    },
+    "size": {
+      "type": "number",
+      "default": "2",
+      "description": "Multiplier for the base avatar size."
+    },
+    "fallbackIcon": {
+      "type": "ReactNode",
+      "description": "Custom icon used when image and initials are unavailable."
+    },
+    "color": {
+      "type": "'accent' | 'category-1' | 'category-2' | 'category-3' | 'category-4' | 'category-5' | 'category-6' | 'category-7' | 'category-8' | 'category-9' | 'category-10' | 'category-11' | 'category-12' | 'category-13' | 'category-14' | 'category-15' | 'category-16' | 'category-17' | 'category-18' | 'category-19' | 'category-20'",
+      "default": "'accent'",
+      "description": "Background color category for the avatar."
+    }
+  },
+  "slots": {
+    "children": "Optional custom fallback content (for example, custom SVG or image element)."
+  },
+  "states": [
+    "image",
+    "initials",
+    "fallback-icon"
+  ],
+  "tokens": {},
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [],
+    "aria": [
+      "When `name` is provided, Avatar applies `role=\"img\"` and `aria-label` with the name.",
+      "For decorative avatars that duplicate nearby text, use `aria-hidden`.",
+      "For alternative fallback icons, provide a context-appropriate `aria-label`."
+    ]
+  },
+  "composition": {
+    "with": [],
+    "inside": []
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/avatar/examples"
+}

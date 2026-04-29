@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Kbd",
+  "description": "Decorative element used to represent keyboard keys and shortcuts.",
+  "package": "@salt-ds/core",
+  "import": "import { Kbd } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "variant": {
+      "type": "'primary' | 'secondary' | 'tertiary'",
+      "default": "'primary'",
+      "description": "Visual variant used to match surrounding background and emphasis."
+    }
+  },
+  "slots": {
+    "children": "Keyboard key text or short key combinations."
+  },
+  "states": [
+    "primary",
+    "secondary",
+    "tertiary",
+    "inline-with-text",
+    "nested-in-input",
+    "nested-in-menu"
+  ],
+  "tokens": {
+    "backgroundVar": "--kbd-background",
+    "textColor": "--salt-content-primary-foreground",
+    "codeFontFamily": "--salt-text-code-fontFamily",
+    "borderColor": "--salt-container-primary-borderColor"
+  },
+  "accessibility": {
+    "role": "semantic `kbd` element",
+    "keyboard": [
+      "Kbd itself is not focusable",
+      "When nested in interactive controls, keyboard handling is owned by the parent control"
+    ],
+    "aria": [
+      "Screen readers announce Kbd content as plain text",
+      "Use descriptive surrounding text to explain the action represented by each key",
+      "Use explicit separators such as '+' for multi-key shortcuts"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Text",
+      "Input",
+      "MenuItem"
+    ],
+    "inside": [
+      "Instructional copy",
+      "Shortcut labels in menus",
+      "Input adornments"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/kbd/examples"
+}

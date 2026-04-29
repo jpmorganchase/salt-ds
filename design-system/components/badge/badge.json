@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Badge",
+  "description": "Displays a compact numeric, string, or dot annotation for related content.",
+  "package": "@salt-ds/core",
+  "import": "import { Badge } from \"@salt-ds/core\";",
+  "status": "stable",
+  "props": {
+    "value": {
+      "type": "number | string",
+      "description": "Displayed badge value; omit to render a dot badge"
+    },
+    "max": {
+      "type": "number",
+      "default": 999,
+      "description": "Maximum numeric value before appending a plus suffix"
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "Anchor content; when provided, badge renders top-right"
+    }
+  },
+  "slots": {
+    "children": "Anchor element or inline content the badge annotates."
+  },
+  "states": [
+    "default"
+  ],
+  "tokens": {},
+  "accessibility": {
+    "role": "varies",
+    "keyboard": [],
+    "aria": [
+      "aria-label — use on the focusable anchored element to describe badge meaning",
+      "When badge is inline, use aria-label when extra context is needed"
+    ]
+  },
+  "composition": {
+    "with": [
+      "Button",
+      "TabsNext"
+    ],
+    "inside": [
+      "NavigationItem",
+      "MenuItem"
+    ]
+  },
+  "docsUrl": "https://www.saltdesignsystem.com/salt/components/badge/examples"
+}
