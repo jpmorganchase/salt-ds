@@ -296,6 +296,31 @@ function NamedOverflowFocusReentryTestCase() {
   );
 }
 
+function OverflowTextInputKeyboardTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 180, flexDirection: "column" }}
+    >
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Overflow text input toolbar">
+        <TooltrayNext
+          overflowGroup="Filters"
+          overflowLabel="Filters"
+          overflowMode="grouped"
+          overflowPriority={5}
+          role="group"
+          aria-label="Filters"
+        >
+          <Input bordered placeholder="Overflow search" />
+          <Button appearance="transparent">Apply</Button>
+        </TooltrayNext>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
 function setFixtureWidth(width: number) {
   cy.get(".Flexbox").invoke("css", "width", `${width}px`);
 }
@@ -601,6 +626,21 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("button", { name: "Columns" }).should("be.focused");
 
     cy.realPress("Tab");
+    cy.findByTestId("toolbar-after").should("be.focused");
+  });
+
+  it("keeps overflow panel text inputs on native left/right behavior and uses Tab to leave them", () => {
+    cy.mount(<OverflowTextInputKeyboardTestCase />);
+
+    cy.findByRole("button", { name: /Open Filters overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
+    cy.findByPlaceholderText("Overflow search").should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByPlaceholderText("Overflow search").should("be.focused");
+
+    cy.realPress("Tab");
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("not.exist");
     cy.findByTestId("toolbar-after").should("be.focused");
   });
 

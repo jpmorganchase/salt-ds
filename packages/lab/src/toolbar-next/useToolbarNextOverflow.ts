@@ -218,6 +218,210 @@ function areOverflowStatesEqual(previous: OverflowState, next: OverflowState) {
   });
 }
 
+interface ComputeToolbarNextOverflowStateArgs {
+  collapseUnits: CollapseUnit[];
+  containerWidth: number;
+  groupDefinitions: OverflowGroupDefinition[];
+  itemWidths: Map<string, number>;
+  items: ToolbarNextOverflowItem[];
+  namedTriggerWidths: Map<string, number>;
+  regions: ToolbarNextRegionModel[];
+  regionGaps: Map<string, number>;
+  rootGap: number;
+  triggerWidths: Map<string, number>;
+  bandGaps: Map<ToolbarRegionPosition, number>;
+}
+
+function computeToolbarNextOverflowState({
+  bandGaps,
+  collapseUnits,
+  containerWidth,
+  groupDefinitions,
+  itemWidths,
+  items,
+  namedTriggerWidths,
+  regions,
+  regionGaps,
+  rootGap,
+  triggerWidths,
+}: ComputeToolbarNextOverflowStateArgs): OverflowState {
+  const hasCenteredLayout = regions.some(
+    (region) => region.position === "center",
+  );
+  const regionsByPosition = bandPositions.reduce<
+    Record<ToolbarRegionPosition, ToolbarNextRegionModel[]>
+  >(
+    (bands, position) => {
+      bands[position] = regions.filter(
+        (region) => region.position === position,
+      );
+      return bands;
+    },
+    {
+      start: [],
+      center: [],
+      end: [],
+    },
+  );
+  const overflowedIds = new Set<string>();
+  const activeGroups = new Set<string>();
+
+  const getRegionWidth = (region: ToolbarNextRegionModel) => {
+    const renderSlots = buildRegionOverflowRenderSlots(
+      region.items,
+      overflowedIds,
+      new Set(
+        groupDefinitions
+          .filter((group) => {
+            return (
+              group.named &&
+              group.regionKey === region.key &&
+              activeGroups.has(group.key)
+            );
+          })
+          .map((group) => group.key),
+      ),
+    );
+    const slotWidths: number[] = [];
+
+    for (const slot of renderSlots) {
+      const width =
+        slot.triggerGroupKey != null
+          ? namedTriggerWidths.get(slot.item.id)
+          : itemWidths.get(slot.item.id);
+
+      if (width == null || width <= 0) {
+        return null;
+      }
+
+      slotWidths.push(width);
+    }
+
+    return sumFlexWidths(slotWidths, regionGaps.get(region.key) ?? 0);
+  };
+
+  const getBandWidth = (position: ToolbarRegionPosition) => {
+    const bandChildWidths: number[] = [];
+
+    for (const region of regionsByPosition[position]) {
+      const regionWidth = getRegionWidth(region);
+
+      if (regionWidth == null) {
+        return null;
+      }
+
+      if (regionWidth > 0) {
+        bandChildWidths.push(regionWidth);
+      }
+    }
+
+    if (position === "end") {
+      for (const group of groupDefinitions) {
+        if (!group.named && activeGroups.has(group.key)) {
+          const width = triggerWidths.get(group.key);
+
+          if (width == null || width <= 0) {
+            return null;
+          }
+
+          bandChildWidths.push(width);
+        }
+      }
+    }
+
+    return sumFlexWidths(bandChildWidths, bandGaps.get(position) ?? 0);
+  };
+
+  const getTotalWidth = () => {
+    if (hasCenteredLayout) {
+      const startBandWidth = getBandWidth("start");
+      const centerBandWidth = getBandWidth("center");
+      const endBandWidth = getBandWidth("end");
+
+      if (
+        startBandWidth == null ||
+        centerBandWidth == null ||
+        endBandWidth == null
+      ) {
+        return null;
+      }
+
+      return centerBandWidth + Math.max(startBandWidth, endBandWidth) * 2;
+    }
+
+    const visibleBandWidths: number[] = [];
+
+    for (const position of bandPositions) {
+      const bandWidth = getBandWidth(position);
+
+      if (bandWidth == null) {
+        return null;
+      }
+
+      if (bandWidth > 0) {
+        visibleBandWidths.push(bandWidth);
+      }
+    }
+
+    return sumFlexWidths(visibleBandWidths, rootGap);
+  };
+
+  const initialWidth = getTotalWidth();
+
+  if (initialWidth == null) {
+    return emptyOverflowState;
+  }
+
+  if (initialWidth > containerWidth) {
+    for (const unit of collapseUnits) {
+      for (const itemId of unit.itemIds) {
+        overflowedIds.add(itemId);
+      }
+
+      activeGroups.add(unit.groupKey);
+
+      const nextWidth = getTotalWidth();
+
+      if (nextWidth == null) {
+        return emptyOverflowState;
+      }
+
+      if (nextWidth <= containerWidth) {
+        break;
+      }
+    }
+  }
+
+  const overflowGroups = groupDefinitions.reduce<ToolbarNextOverflowGroup[]>(
+    (groups, group) => {
+      const hiddenItems = items.filter(
+        (item) =>
+          item.overflowGroupKey === group.key && overflowedIds.has(item.id),
+      );
+
+      if (hiddenItems.length > 0) {
+        groups.push({
+          id: group.id,
+          items: hiddenItems,
+          key: group.key,
+          label: group.label,
+          named: group.named,
+          overflowGroup: group.overflowGroup,
+          regionKey: group.regionKey,
+        });
+      }
+
+      return groups;
+    },
+    [],
+  );
+
+  return {
+    overflowGroups,
+    overflowedIds,
+  };
+}
+
 export function useToolbarNextOverflow({
   regions,
 }: UseToolbarNextOverflowProps) {
@@ -317,25 +521,7 @@ export function useToolbarNextOverflow({
     const rootGap = readGap(
       containerStyles.columnGap || containerStyles.gap || "0",
     );
-    const hasCenteredLayout = regions.some(
-      (region) => region.position === "center",
-    );
     const bandGaps = new Map<ToolbarRegionPosition, number>();
-    const regionsByPosition = bandPositions.reduce<
-      Record<ToolbarRegionPosition, ToolbarNextRegionModel[]>
-    >(
-      (bands, position) => {
-        bands[position] = regions.filter(
-          (region) => region.position === position,
-        );
-        return bands;
-      },
-      {
-        start: [],
-        center: [],
-        end: [],
-      },
-    );
     const regionGaps = new Map<string, number>();
     const itemWidths = new Map<string, number>();
     const namedTriggerWidths = new Map<string, number>();
@@ -441,163 +627,19 @@ export function useToolbarNextOverflow({
       cachedSharedTriggerWidths.current[group.key] = width;
     }
 
-    const overflowedIds = new Set<string>();
-    const activeGroups = new Set<string>();
-
-    const getRegionWidth = (region: ToolbarNextRegionModel) => {
-      const renderSlots = buildRegionOverflowRenderSlots(
-        region.items,
-        overflowedIds,
-        new Set(
-          groupDefinitions
-            .filter((group) => {
-              return (
-                group.named &&
-                group.regionKey === region.key &&
-                activeGroups.has(group.key)
-              );
-            })
-            .map((group) => group.key),
-        ),
-      );
-      const slotWidths: number[] = [];
-
-      for (const slot of renderSlots) {
-        const width =
-          slot.triggerGroupKey != null
-            ? namedTriggerWidths.get(slot.item.id)
-            : itemWidths.get(slot.item.id);
-
-        if (width == null || width <= 0) {
-          return null;
-        }
-
-        slotWidths.push(width);
-      }
-
-      return sumFlexWidths(slotWidths, regionGaps.get(region.key) ?? 0);
-    };
-
-    const getBandWidth = (position: ToolbarRegionPosition) => {
-      const bandChildWidths: number[] = [];
-
-      for (const region of regionsByPosition[position]) {
-        const regionWidth = getRegionWidth(region);
-
-        if (regionWidth == null) {
-          return null;
-        }
-
-        if (regionWidth > 0) {
-          bandChildWidths.push(regionWidth);
-        }
-      }
-
-      if (position === "end") {
-        for (const group of groupDefinitions) {
-          if (!group.named && activeGroups.has(group.key)) {
-            const width = triggerWidths.get(group.key);
-
-            if (width == null || width <= 0) {
-              return null;
-            }
-
-            bandChildWidths.push(width);
-          }
-        }
-      }
-
-      return sumFlexWidths(bandChildWidths, bandGaps.get(position) ?? 0);
-    };
-
-    const getTotalWidth = () => {
-      if (hasCenteredLayout) {
-        const startBandWidth = getBandWidth("start");
-        const centerBandWidth = getBandWidth("center");
-        const endBandWidth = getBandWidth("end");
-
-        if (
-          startBandWidth == null ||
-          centerBandWidth == null ||
-          endBandWidth == null
-        ) {
-          return null;
-        }
-
-        return centerBandWidth + Math.max(startBandWidth, endBandWidth) * 2;
-      }
-
-      const visibleBandWidths: number[] = [];
-
-      for (const position of bandPositions) {
-        const bandWidth = getBandWidth(position);
-
-        if (bandWidth == null) {
-          return null;
-        }
-
-        if (bandWidth > 0) {
-          visibleBandWidths.push(bandWidth);
-        }
-      }
-
-      return sumFlexWidths(visibleBandWidths, rootGap);
-    };
-
-    const initialWidth = getTotalWidth();
-
-    if (initialWidth == null) {
-      return emptyOverflowState;
-    }
-
-    if (initialWidth > containerWidth) {
-      for (const unit of collapseUnits) {
-        for (const itemId of unit.itemIds) {
-          overflowedIds.add(itemId);
-        }
-
-        activeGroups.add(unit.groupKey);
-
-        const nextWidth = getTotalWidth();
-
-        if (nextWidth == null) {
-          return emptyOverflowState;
-        }
-
-        if (nextWidth <= containerWidth) {
-          break;
-        }
-      }
-    }
-
-    const overflowGroups = groupDefinitions.reduce<ToolbarNextOverflowGroup[]>(
-      (groups, group) => {
-        const hiddenItems = items.filter(
-          (item) =>
-            item.overflowGroupKey === group.key && overflowedIds.has(item.id),
-        );
-
-        if (hiddenItems.length > 0) {
-          groups.push({
-            id: group.id,
-            items: hiddenItems,
-            key: group.key,
-            label: group.label,
-            named: group.named,
-            overflowGroup: group.overflowGroup,
-            regionKey: group.regionKey,
-          });
-        }
-
-        return groups;
-      },
-      [],
-    );
-
-    return {
-      overflowGroups,
-      overflowedIds,
-    };
+    return computeToolbarNextOverflowState({
+      bandGaps,
+      collapseUnits,
+      containerWidth,
+      groupDefinitions,
+      itemWidths,
+      items,
+      namedTriggerWidths,
+      regions,
+      regionGaps,
+      rootGap,
+      triggerWidths,
+    });
   }, [collapseUnits, groupDefinitions, items, namedTriggerItems, regions]);
 
   const scheduleMeasure = useCallback(() => {

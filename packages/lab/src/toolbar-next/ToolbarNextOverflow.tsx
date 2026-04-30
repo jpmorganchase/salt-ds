@@ -23,10 +23,9 @@ import { clsx } from "clsx";
 import {
   Children,
   cloneElement,
-  type FocusEvent,
   isValidElement,
-  type KeyboardEvent,
   type ReactElement,
+  type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
   useCallback,
   useEffect,
@@ -39,10 +38,14 @@ import toolbarNextOverflowCss from "./ToolbarNextOverflow.css";
 import { ToolbarRegion } from "./ToolbarRegion";
 import {
   getToolbarNextFocusMemory,
+  getToolbarNextScopeFocusableElements,
+  getToolbarNextTabMoveTarget,
+  scheduleToolbarNextFocus,
   TOOLBAR_NEXT_GROUP_KEY_ATTR,
   TOOLBAR_NEXT_ITEM_ATTR,
   TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR,
   TOOLBAR_NEXT_SCOPE_ROOT_ATTR,
+  toolbarNextFocusableSelector,
 } from "./toolbarNextKeyboardUtils";
 import type {
   ToolbarNextOverflowItem,
@@ -104,7 +107,7 @@ function ToolbarNextOverflowItemOwner({
 
       if (isMainToolbarHost) {
         const focusableElements = Array.from(
-          mountNode.querySelectorAll<HTMLElement>(focusableSelector),
+          mountNode.querySelectorAll<HTMLElement>(toolbarNextFocusableSelector),
         );
 
         for (const element of focusableElements) {
@@ -210,70 +213,6 @@ function getOverflowTriggerLabel(group: ToolbarNextOverflowGroup) {
     : `Open overflow. ${hiddenCount} ${hiddenLabel}.`;
 }
 
-const focusableSelector = [
-  "button",
-  "[href]",
-  "input",
-  "select",
-  "textarea",
-  "[tabindex]",
-].join(", ");
-
-function isFocusable(
-  target: HTMLElement,
-  { includeTabIndexMinusOne = false } = {},
-) {
-  if (
-    target.matches(":disabled") ||
-    target.getAttribute("aria-hidden") === "true" ||
-    target.hidden
-  ) {
-    return false;
-  }
-
-  if (!includeTabIndexMinusOne && target.getAttribute("tabindex") === "-1") {
-    return false;
-  }
-
-  const win = target.ownerDocument.defaultView;
-  if (!win) {
-    return false;
-  }
-
-  const styles = win.getComputedStyle(target);
-  return (
-    styles.display !== "none" &&
-    styles.visibility !== "hidden" &&
-    target.getClientRects().length > 0
-  );
-}
-
-function getNextFocusableAfterToolbar(trigger: HTMLElement) {
-  const toolbarRoot = trigger.closest<HTMLElement>(
-    `[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`,
-  );
-
-  if (!toolbarRoot) {
-    return null;
-  }
-
-  const focusableElements = Array.from(
-    trigger.ownerDocument.querySelectorAll<HTMLElement>(focusableSelector),
-  ).filter((element) => isFocusable(element));
-
-  return (
-    focusableElements.find((element) => {
-      return (
-        !toolbarRoot.contains(element) &&
-        !!(
-          toolbarRoot.compareDocumentPosition(element) &
-          Node.DOCUMENT_POSITION_FOLLOWING
-        )
-      );
-    }) ?? null
-  );
-}
-
 interface ToolbarNextOverflowMenuProps {
   getItemHostRef: (id: string) => (node: HTMLDivElement | null) => void;
   group: ToolbarNextOverflowGroup;
@@ -296,9 +235,9 @@ export function ToolbarNextOverflowMenu({
   const focusedOpenPanelRef = useRef(false);
   const {
     focusEntryTarget,
-    handleBlurCapture,
-    handleFocusCapture,
-    handleKeyDownCapture,
+    handleScopeBlur,
+    handleScopeFocus,
+    handleScopeKeyDown,
   } = useToolbarNextKeyboardNavigation({
     includeTabIndexMinusOne: true,
     items: group.items,
@@ -311,9 +250,7 @@ export function ToolbarNextOverflowMenu({
       setOpen(nextOpen);
 
       if (!nextOpen && reason === "escape-key") {
-        queueMicrotask(() => {
-          triggerRef.current?.focus({ preventScroll: true });
-        });
+        scheduleToolbarNextFocus(triggerRef.current);
       }
     },
     placement: "bottom-end",
@@ -337,12 +274,8 @@ export function ToolbarNextOverflowMenu({
     useDismiss(context),
   ]);
 
-  const closeMenu = useCallback(() => {
-    setOpen(false);
-  }, []);
-
   const handleTriggerKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLButtonElement>) => {
+    (event: ReactKeyboardEvent<HTMLButtonElement>) => {
       if (!open && ["ArrowDown", "Enter", " "].includes(event.key)) {
         event.preventDefault();
         setOpen(true);
@@ -352,51 +285,46 @@ export function ToolbarNextOverflowMenu({
       if (open && event.key === "Escape") {
         event.preventDefault();
         setOpen(false);
-        queueMicrotask(() => {
-          triggerRef.current?.focus({ preventScroll: true });
-        });
+        scheduleToolbarNextFocus(triggerRef.current);
       }
     },
     [open],
   );
 
-  const handlePanelKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "Tab" && !event.shiftKey) {
-        const nextFocusTarget = triggerRef.current
-          ? getNextFocusableAfterToolbar(triggerRef.current)
-          : null;
+  const handlePanelKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === "Tab" && !event.shiftKey) {
+      const toolbarRoot = triggerRef.current?.closest<HTMLElement>(
+        `[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`,
+      );
+      const nextFocusTarget = toolbarRoot
+        ? getToolbarNextTabMoveTarget(toolbarRoot, false)
+        : null;
 
-        if (nextFocusTarget) {
-          event.preventDefault();
-          setOpen(false);
-          queueMicrotask(() => {
-            nextFocusTarget.focus({ preventScroll: true });
-          });
-        }
-
-        return;
-      }
-
-      if (event.key === "Tab" && event.shiftKey) {
+      if (nextFocusTarget) {
         event.preventDefault();
+        event.stopPropagation();
         setOpen(false);
-        queueMicrotask(() => {
-          triggerRef.current?.focus({ preventScroll: true });
-        });
-        return;
+        scheduleToolbarNextFocus(nextFocusTarget);
       }
 
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeMenu();
-        queueMicrotask(() => {
-          triggerRef.current?.focus({ preventScroll: true });
-        });
-      }
-    },
-    [closeMenu],
-  );
+      return;
+    }
+
+    if (event.key === "Tab" && event.shiftKey) {
+      event.preventDefault();
+      event.stopPropagation();
+      setOpen(false);
+      scheduleToolbarNextFocus(triggerRef.current);
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      setOpen(false);
+      scheduleToolbarNextFocus(triggerRef.current);
+    }
+  }, []);
 
   const handleTriggerRef = useForkRef<HTMLButtonElement>(
     triggerRef,
@@ -407,9 +335,9 @@ export function ToolbarNextOverflowMenu({
     panelContentRef,
     setPanelContentNode,
   );
-  const handlePanelFocusCapture = useCallback(
-    (event: FocusEvent<HTMLElement>) => {
-      handleFocusCapture(event);
+  const handlePanelFocus = useCallback(
+    (event: FocusEvent) => {
+      handleScopeFocus(event);
 
       const panelContent = panelContentRef.current;
       const target = event.target;
@@ -428,7 +356,7 @@ export function ToolbarNextOverflowMenu({
 
       onItemFocus?.(focusMemory.itemId, focusMemory.controlIndex);
     },
-    [handleFocusCapture, onItemFocus],
+    [handleScopeFocus, onItemFocus],
   );
   const { Component: FloatingComponent } = useFloatingComponent();
 
@@ -440,6 +368,50 @@ export function ToolbarNextOverflowMenu({
     wasOpenRef.current = open;
   }, [focusEntryTarget, open]);
 
+  useEffect(() => {
+    if (!open || !panelContentNode) {
+      return;
+    }
+
+    const handleFocusIn = (event: FocusEvent) => {
+      handlePanelFocus(event);
+    };
+    const handleFocusOut = (event: FocusEvent) => {
+      handleScopeBlur(event);
+    };
+    const handleKeyDownCapture = (event: KeyboardEvent) => {
+      handleScopeKeyDown(event);
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!event.defaultPrevented) {
+        handlePanelKeyDown(event);
+      }
+    };
+
+    panelContentNode.addEventListener("focusin", handleFocusIn);
+    panelContentNode.addEventListener("focusout", handleFocusOut);
+    panelContentNode.addEventListener("keydown", handleKeyDownCapture, true);
+    panelContentNode.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      panelContentNode.removeEventListener("focusin", handleFocusIn);
+      panelContentNode.removeEventListener("focusout", handleFocusOut);
+      panelContentNode.removeEventListener(
+        "keydown",
+        handleKeyDownCapture,
+        true,
+      );
+      panelContentNode.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [
+    handlePanelFocus,
+    handlePanelKeyDown,
+    handleScopeBlur,
+    handleScopeKeyDown,
+    open,
+    panelContentNode,
+  ]);
+
   useIsomorphicLayoutEffect(() => {
     if (!open) {
       focusedOpenPanelRef.current = false;
@@ -450,13 +422,10 @@ export function ToolbarNextOverflowMenu({
       return;
     }
 
-    const getPanelFocusables = () => {
-      return Array.from(
-        panelContentNode.querySelectorAll<HTMLElement>(focusableSelector),
-      ).filter((element) =>
-        isFocusable(element, { includeTabIndexMinusOne: true }),
-      );
-    };
+    const getPanelFocusables = () =>
+      getToolbarNextScopeFocusableElements(panelContentNode, {
+        includeTabIndexMinusOne: true,
+      });
     const focusEntryWhenReady = () => {
       const panelFocusables = getPanelFocusables();
 
@@ -539,7 +508,6 @@ export function ToolbarNextOverflowMenu({
       </Button>
       <FloatingComponent
         {...getFloatingProps({
-          onKeyDown: handlePanelKeyDown,
           role: "presentation",
         })}
         className={withBaseName("panel")}
@@ -568,9 +536,6 @@ export function ToolbarNextOverflowMenu({
           aria-orientation="horizontal"
           className={withBaseName("panelContent")}
           {...{ [TOOLBAR_NEXT_SCOPE_ROOT_ATTR]: group.key }}
-          onBlurCapture={handleBlurCapture}
-          onFocusCapture={handlePanelFocusCapture}
-          onKeyDownCapture={handleKeyDownCapture}
           role="toolbar"
           ref={handlePanelContentRef}
         >

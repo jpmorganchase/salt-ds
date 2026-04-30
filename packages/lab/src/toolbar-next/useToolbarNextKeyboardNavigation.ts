@@ -7,6 +7,7 @@ import {
   useRef,
 } from "react";
 import {
+  focusToolbarNextElement,
   getClosestToolbarNextScopeRoot,
   getToolbarNextDirectionalMoveTarget,
   getToolbarNextFocusMemory,
@@ -27,6 +28,22 @@ interface UseToolbarNextKeyboardNavigationProps {
   items?: ToolbarNextOverflowItem[];
   overflowedIds?: Set<string>;
   scopeRef: RefObject<HTMLElement | null>;
+}
+
+interface ToolbarNextFocusEvent {
+  relatedTarget: EventTarget | null;
+  target: EventTarget | null;
+}
+
+interface ToolbarNextKeyDownEvent {
+  altKey: boolean;
+  ctrlKey: boolean;
+  key: string;
+  metaKey: boolean;
+  preventDefault: () => void;
+  shiftKey: boolean;
+  stopPropagation: () => void;
+  target: EventTarget | null;
 }
 
 export function useToolbarNextKeyboardNavigation({
@@ -166,12 +183,12 @@ export function useToolbarNextKeyboardNavigation({
     }
 
     queueMicrotask(() => {
-      target.focus({ preventScroll: true });
+      focusToolbarNextElement(target);
     });
   }, [includeTabIndexMinusOne, items, overflowedIds, scopeRef]);
 
-  const handleFocusCapture = useCallback<FocusEventHandler<HTMLElement>>(
-    (event) => {
+  const handleScopeFocus = useCallback(
+    (event: ToolbarNextFocusEvent) => {
       const scopeRoot = scopeRef.current;
       const target = event.target;
 
@@ -227,9 +244,7 @@ export function useToolbarNextKeyboardNavigation({
         const restoreFocus = () => {
           restoreFrameRef.current = null;
 
-          if (restoreTarget.isConnected) {
-            restoreTarget.focus({ preventScroll: true });
-          }
+          focusToolbarNextElement(restoreTarget);
         };
         const win = restoreTarget.ownerDocument.defaultView;
 
@@ -259,8 +274,15 @@ export function useToolbarNextKeyboardNavigation({
     ],
   );
 
-  const handleBlurCapture = useCallback<FocusEventHandler<HTMLElement>>(
+  const handleFocusCapture = useCallback<FocusEventHandler<HTMLElement>>(
     (event) => {
+      handleScopeFocus(event);
+    },
+    [handleScopeFocus],
+  );
+
+  const handleScopeBlur = useCallback(
+    (event: ToolbarNextFocusEvent) => {
       const scopeRoot = scopeRef.current;
       const target = event.target;
 
@@ -284,8 +306,15 @@ export function useToolbarNextKeyboardNavigation({
     [rememberTarget, scopeRef],
   );
 
-  const handleKeyDownCapture = useCallback<KeyboardEventHandler<HTMLElement>>(
+  const handleBlurCapture = useCallback<FocusEventHandler<HTMLElement>>(
     (event) => {
+      handleScopeBlur(event);
+    },
+    [handleScopeBlur],
+  );
+
+  const handleScopeKeyDown = useCallback(
+    (event: ToolbarNextKeyDownEvent) => {
       const scopeRoot = scopeRef.current;
       const target = event.target;
 
@@ -316,7 +345,7 @@ export function useToolbarNextKeyboardNavigation({
         rememberTarget(target);
         queueMicrotask(() => {
           if (moveTarget?.isConnected) {
-            moveTarget.focus({ preventScroll: true });
+            focusToolbarNextElement(moveTarget);
           } else {
             target.blur();
           }
@@ -339,9 +368,16 @@ export function useToolbarNextKeyboardNavigation({
       event.stopPropagation();
 
       rememberTarget(moveTarget);
-      moveTarget.focus({ preventScroll: true });
+      focusToolbarNextElement(moveTarget);
     },
     [includeTabIndexMinusOne, rememberTarget, scopeRef],
+  );
+
+  const handleKeyDownCapture = useCallback<KeyboardEventHandler<HTMLElement>>(
+    (event) => {
+      handleScopeKeyDown(event);
+    },
+    [handleScopeKeyDown],
   );
 
   const getEntryFocusable = useCallback(() => {
@@ -370,6 +406,9 @@ export function useToolbarNextKeyboardNavigation({
     handleBlurCapture,
     handleFocusCapture,
     handleKeyDownCapture,
+    handleScopeBlur,
+    handleScopeFocus,
+    handleScopeKeyDown,
     rememberItemFocus,
     rememberedFocusRef,
   };

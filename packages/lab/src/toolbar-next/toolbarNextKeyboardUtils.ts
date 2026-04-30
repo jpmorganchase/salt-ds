@@ -7,7 +7,7 @@ export const TOOLBAR_NEXT_GROUP_KEY_ATTR =
 export const TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR =
   "data-salt-toolbar-next-overflow-trigger";
 
-const focusableSelector = [
+export const toolbarNextFocusableSelector = [
   "button",
   "[href]",
   "input",
@@ -49,7 +49,7 @@ export type ToolbarNextFocusMemory =
       type: "scope";
     };
 
-interface ToolbarNextFocusableOptions {
+export interface ToolbarNextFocusableOptions {
   includeTabIndexMinusOne?: boolean;
 }
 
@@ -66,7 +66,7 @@ export function getToolbarNextScopeFocusableElements(
   options: ToolbarNextFocusableOptions = {},
 ) {
   return Array.from(
-    scopeRoot.querySelectorAll<HTMLElement>(focusableSelector),
+    scopeRoot.querySelectorAll<HTMLElement>(toolbarNextFocusableSelector),
   ).filter((element) => {
     return (
       getClosestToolbarNextScopeRoot(element) === scopeRoot &&
@@ -325,7 +325,7 @@ function getToolbarNextItemFocusableElements(
   options: ToolbarNextFocusableOptions = {},
 ) {
   return Array.from(
-    itemRoot.querySelectorAll<HTMLElement>(focusableSelector),
+    itemRoot.querySelectorAll<HTMLElement>(toolbarNextFocusableSelector),
   ).filter((element) => {
     return (
       getClosestToolbarNextScopeRoot(element) === scopeRoot &&
@@ -458,7 +458,7 @@ function isPlainTextInput(target: HTMLElement) {
   );
 }
 
-function isToolbarNextFocusable(
+export function isToolbarNextFocusable(
   target: HTMLElement,
   { includeTabIndexMinusOne = false }: ToolbarNextFocusableOptions = {},
 ) {
@@ -493,8 +493,41 @@ function isToolbarNextFocusable(
   return target.getClientRects().length > 0;
 }
 
-function getDocumentFocusableElements(ownerDocument: Document) {
+export function focusToolbarNextElement(
+  target: HTMLElement | null | undefined,
+) {
+  if (target?.isConnected) {
+    target.focus({ preventScroll: true });
+  }
+}
+
+export function scheduleToolbarNextFocus(
+  target: HTMLElement | null | undefined,
+  targetWindow = target?.ownerDocument.defaultView,
+) {
+  if (!target) {
+    return () => undefined;
+  }
+
+  if (targetWindow?.requestAnimationFrame) {
+    const frame = targetWindow.requestAnimationFrame(() => {
+      focusToolbarNextElement(target);
+    });
+
+    return () => {
+      targetWindow.cancelAnimationFrame(frame);
+    };
+  }
+
+  queueMicrotask(() => {
+    focusToolbarNextElement(target);
+  });
+
+  return () => undefined;
+}
+
+export function getDocumentFocusableElements(ownerDocument: Document) {
   return Array.from(
-    ownerDocument.querySelectorAll<HTMLElement>(focusableSelector),
+    ownerDocument.querySelectorAll<HTMLElement>(toolbarNextFocusableSelector),
   ).filter((element) => isToolbarNextFocusable(element));
 }
