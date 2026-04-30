@@ -6,6 +6,7 @@ export * from "./BulletChart";
 export * from "./CandlestickChart";
 export * from "./ColumnChart";
 export * from "./DonutChart";
+export * from "./HeatmapChart";
 export * from "./LineChart";
 export * from "./PieChart";
 export * from "./ScatterChart";
