@@ -31,8 +31,6 @@ import { clsx } from "clsx";
 import { ContentExample } from "src/examples/side-panel/ContentExample";
 
 const DesktopAppHeader = () => {
-  const { openState } = useSidePanelContext();
-
   return (
     <header>
       <FlexLayout
@@ -61,12 +59,7 @@ const DesktopAppHeader = () => {
           <StackLayout direction="row" gap={1}>
             <Tooltip content="Toggle help panel" hideArrow>
               <SidePanelTrigger>
-                <Button
-                  appearance="transparent"
-                  aria-label={
-                    openState ? "Close help panel" : "Open help panel"
-                  }
-                >
+                <Button appearance="transparent" aria-label="Open help panel">
                   <HelpCircleIcon aria-hidden />
                 </Button>
               </SidePanelTrigger>
