@@ -1,4 +1,4 @@
-import { Button, FlexLayout, H2, Text, useIcon } from "@salt-ds/core";
+import { Button, FlexLayout, H2, Text, useIcon, useId } from "@salt-ds/core";
 import {
   SidePanel,
   SidePanelContent,
@@ -8,6 +8,7 @@ import {
   SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
+import { clsx } from "clsx";
 import { ContentExample } from "./ContentExample";
 
 const Nav = () => (
@@ -44,6 +45,9 @@ const WithNavContent = () => {
   const { CloseIcon } = useIcon();
   const { openState, setOpen } = useSidePanelContext();
 
+  const headerId = useId();
+  const closeButtonId = useId();
+
   return (
     <FlexLayout
       style={{
@@ -59,10 +63,12 @@ const WithNavContent = () => {
       <SidePanel position="left">
         <SidePanelHeader>
           <SidePanelTitle>
-            <H2>Section Title</H2>
+            <H2 id={headerId}>Section Title</H2>
           </SidePanelTitle>
           <Button
+            id={closeButtonId}
             aria-label="Close"
+            aria-labelledby={clsx(closeButtonId, headerId) || undefined}
             appearance="transparent"
             onClick={() => setOpen(false)}
           >

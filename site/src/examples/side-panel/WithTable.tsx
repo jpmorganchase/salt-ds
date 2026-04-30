@@ -14,6 +14,7 @@ import {
   THead,
   TR,
   useIcon,
+  useId,
 } from "@salt-ds/core";
 import {
   SidePanel,
@@ -23,6 +24,7 @@ import {
   SidePanelTitle,
   useSidePanelContext,
 } from "@salt-ds/lab";
+import { clsx } from "clsx";
 import React, { type CSSProperties, useState } from "react";
 
 interface TeamMember {
@@ -75,7 +77,19 @@ const SidePanelExample = () => {
   const { setOpen, setReference, openState, getReferenceProps, panelId } =
     useSidePanelContext();
 
+  const headerId = useId();
+  const closeButtonId = useId();
+
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
+    const isExpanded = openState && selectedRow?.id === row.id;
+
+    if (isExpanded) {
+      setSelectedRow(null);
+      setReference(null);
+      setOpen(false);
+      return;
+    }
+
     setSelectedRow(row);
     setReference(target);
     setOpen(true);
@@ -142,7 +156,7 @@ const SidePanelExample = () => {
           <>
             <SidePanelHeader>
               <SidePanelTitle>
-                <H2>
+                <H2 id={headerId}>
                   <span className="salt-visuallyHidden">
                     {selectedRow.name}
                   </span>
@@ -150,7 +164,9 @@ const SidePanelExample = () => {
                 </H2>
               </SidePanelTitle>
               <Button
+                id={closeButtonId}
                 aria-label="Close"
+                aria-labelledby={clsx(closeButtonId, headerId) || undefined}
                 appearance="transparent"
                 onClick={() => setOpen(false)}
               >

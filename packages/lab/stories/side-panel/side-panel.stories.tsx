@@ -483,6 +483,14 @@ const WithTableContent = () => {
     useSidePanelContext();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
+    const isExpanded = openState && selectedRow?.id === row.id;
+
+    if (isExpanded) {
+      setSelectedRow(null);
+      setReference(null);
+      setOpen(false);
+      return;
+    }
     setSelectedRow(row);
     setReference(target);
     setOpen(true);

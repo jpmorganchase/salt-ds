@@ -9,6 +9,7 @@ import {
   StackLayout,
   Text,
   useIcon,
+  useId,
 } from "@salt-ds/core";
 import {
   SidePanel,
@@ -20,6 +21,7 @@ import {
   SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
+import { clsx } from "clsx";
 import { type ChangeEventHandler, useState } from "react";
 import { ContentExample } from "./ContentExample";
 
@@ -37,6 +39,9 @@ const VariantsContent = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const { CloseIcon } = useIcon();
   const { openState, setOpen } = useSidePanelContext();
+
+  const headerId = useId();
+  const closeButtonId = useId();
 
   const handleVariantChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setVariant(event.target.value as SidePanelProps["variant"]);
@@ -84,10 +89,12 @@ const VariantsContent = () => {
       <SidePanel position="right" variant={variant}>
         <SidePanelHeader>
           <SidePanelTitle>
-            <H2>Section Title</H2>
+            <H2 id={headerId}>Section Title</H2>
           </SidePanelTitle>
           <Button
+            id={closeButtonId}
             aria-label="Close"
+            aria-labelledby={clsx(closeButtonId, headerId) || undefined}
             appearance="transparent"
             onClick={() => setOpen(false)}
           >

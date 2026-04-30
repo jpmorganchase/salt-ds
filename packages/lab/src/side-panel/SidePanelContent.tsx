@@ -88,7 +88,7 @@ export const SidePanelContent = forwardRef<
 
   return (
     <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-      <span id={contentSuffixId} className="salt-visuallyHidden">
+      <span id={contentSuffixId} className="salt-visuallyHidden" aria-hidden>
         content
       </span>
       <div

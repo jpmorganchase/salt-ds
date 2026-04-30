@@ -10,6 +10,7 @@ import {
   Text,
   Tooltip,
   useIcon,
+  useId,
 } from "@salt-ds/core";
 import {
   ChattingIcon,
@@ -26,10 +27,12 @@ import {
   SidePanelTrigger,
   useSidePanelContext,
 } from "@salt-ds/lab";
+import { clsx } from "clsx";
 import { ContentExample } from "src/examples/side-panel/ContentExample";
 
 const DesktopAppHeader = () => {
   const { openState } = useSidePanelContext();
+
   return (
     <header>
       <FlexLayout
@@ -88,14 +91,20 @@ const DesktopAppHeader = () => {
 const HelpPanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanelContext();
+
+  const headerId = useId();
+  const closeButtonId = useId();
+
   return (
     <SidePanel>
       <SidePanelHeader>
         <SidePanelTitle>
-          <H2>Help & support</H2>
+          <H2 id={headerId}>Help & support</H2>
         </SidePanelTitle>
         <Button
+          id={closeButtonId}
           aria-label="Close"
+          aria-labelledby={clsx(closeButtonId, headerId) || undefined}
           appearance="transparent"
           onClick={() => setOpen(false)}
         >
