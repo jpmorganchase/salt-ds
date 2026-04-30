@@ -3,23 +3,22 @@ import Highcharts, { type Options } from "highcharts";
 import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
-import { areaOptions } from "./dependencies";
+import { dualAxisOptions } from "./dependencies";
 
 patternFill(Highcharts);
 
-export interface AreaChartProps {
+export interface DualAxisChartProps {
   fillPatterns?: boolean;
   options: Options;
 }
 
-const AreaChart: FC<AreaChartProps> = ({
+const DualAxisChart: FC<DualAxisChartProps> = ({
   fillPatterns = false,
-  options = areaOptions,
+  options = dualAxisOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
-  const chartOptions = useChart(chartRef, options, {
-    fillPatterns,
-  });
+
+  const chartOptions = useChart(chartRef, options, { fillPatterns });
 
   return (
     <HighchartsReact
@@ -30,4 +29,4 @@ const AreaChart: FC<AreaChartProps> = ({
   );
 };
 
-export default AreaChart;
+export default DualAxisChart;
