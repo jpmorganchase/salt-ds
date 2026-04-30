@@ -4144,6 +4144,7 @@ __metadata:
     clsx: "npm:^2.0.0"
     compute-scroll-into-view: "npm:^3.0.0"
     deepmerge: "npm:^4.2.2"
+    dom-accessibility-api: "npm:^0.7.1"
     react-color: "npm:^2.19.3"
     react-window: "npm:^1.8.6"
     rifm: "npm:^0.12.0"
