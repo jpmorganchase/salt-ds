@@ -269,6 +269,56 @@ export function getToolbarNextDirectionalMoveTarget(
   return scopeElements[nextIndex] ?? null;
 }
 
+export function getToolbarNextTabMoveTarget(
+  scopeRoot: HTMLElement,
+  shiftKey: boolean,
+) {
+  const focusableElements = getDocumentFocusableElements(
+    scopeRoot.ownerDocument,
+  );
+
+  if (shiftKey) {
+    for (let index = focusableElements.length - 1; index >= 0; index -= 1) {
+      const element = focusableElements[index];
+
+      if (!element || scopeRoot.contains(element)) {
+        continue;
+      }
+
+      if (
+        element.compareDocumentPosition(scopeRoot) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+      ) {
+        return element;
+      }
+    }
+
+    return null;
+  }
+
+  return (
+    focusableElements.find((element) => {
+      return (
+        !scopeRoot.contains(element) &&
+        !!(
+          scopeRoot.compareDocumentPosition(element) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+        )
+      );
+    }) ?? null
+  );
+}
+
+export function shouldToolbarNextPreserveNativeTab(target: HTMLElement) {
+  return (
+    target.isContentEditable ||
+    isPlainTextInput(target) ||
+    isSelectLikeControl(target) ||
+    target.closest(".saltToggleButtonGroup") != null ||
+    target.closest(".saltDatePickerTrigger") != null
+  );
+}
+
 function getToolbarNextItemFocusableElements(
   itemRoot: HTMLElement,
   scopeRoot: HTMLElement,
@@ -383,6 +433,13 @@ function isComboBoxInput(target: HTMLElement) {
   );
 }
 
+function isSelectLikeControl(target: HTMLElement) {
+  return (
+    target.tagName === "SELECT" ||
+    target.closest('[role="combobox"], .saltComboBox, .saltDropdown') != null
+  );
+}
+
 function isPlainTextInput(target: HTMLElement) {
   if (target.tagName === "TEXTAREA") {
     return true;
@@ -434,4 +491,10 @@ function isToolbarNextFocusable(
   }
 
   return target.getClientRects().length > 0;
+}
+
+function getDocumentFocusableElements(ownerDocument: Document) {
+  return Array.from(
+    ownerDocument.querySelectorAll<HTMLElement>(focusableSelector),
+  ).filter((element) => isToolbarNextFocusable(element));
 }

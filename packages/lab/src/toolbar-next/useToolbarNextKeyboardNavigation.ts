@@ -11,10 +11,13 @@ import {
   getToolbarNextDirectionalMoveTarget,
   getToolbarNextFocusMemory,
   getToolbarNextScopeFocusableElements,
+  getToolbarNextTabMoveTarget,
   resolveToolbarNextFocusTarget,
+  shouldToolbarNextPreserveNativeTab,
   TOOLBAR_NEXT_GROUP_KEY_ATTR,
   TOOLBAR_NEXT_ITEM_ATTR,
   TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR,
+  TOOLBAR_NEXT_SCOPE_ROOT_ATTR,
   type ToolbarNextFocusMemory,
 } from "./toolbarNextKeyboardUtils";
 import type { ToolbarNextOverflowItem } from "./toolbarNextUtils";
@@ -294,6 +297,30 @@ export function useToolbarNextKeyboardNavigation({
         event.ctrlKey ||
         event.metaKey
       ) {
+        return;
+      }
+
+      if (
+        event.key === "Tab" &&
+        scopeRoot.getAttribute(TOOLBAR_NEXT_SCOPE_ROOT_ATTR) === "main" &&
+        !shouldToolbarNextPreserveNativeTab(target)
+      ) {
+        const moveTarget = getToolbarNextTabMoveTarget(
+          scopeRoot,
+          event.shiftKey,
+        );
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        rememberTarget(target);
+        queueMicrotask(() => {
+          if (moveTarget?.isConnected) {
+            moveTarget.focus({ preventScroll: true });
+          } else {
+            target.blur();
+          }
+        });
         return;
       }
 

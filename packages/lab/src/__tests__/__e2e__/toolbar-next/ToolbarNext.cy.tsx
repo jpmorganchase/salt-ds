@@ -81,6 +81,25 @@ function SharedIntrinsicWidthTestCase() {
   );
 }
 
+function OverflowPrioritiesKeyboardTestCase() {
+  return (
+    <ToolbarNext aria-label="Toolbar with overflow priorities">
+      <TooltrayNext overflowMode="independent" overflowPriority={1}>
+        <Button appearance="transparent">Pinned</Button>
+      </TooltrayNext>
+      <TooltrayNext overflowMode="independent" overflowPriority={1}>
+        <Button appearance="transparent">Views</Button>
+      </TooltrayNext>
+      <TooltrayNext overflowMode="independent" overflowPriority={3}>
+        <Button appearance="transparent">Status</Button>
+      </TooltrayNext>
+      <TooltrayNext align="end" overflowMode="independent" overflowPriority={5}>
+        <Button appearance="transparent">Export</Button>
+      </TooltrayNext>
+    </ToolbarNext>
+  );
+}
+
 function NamedGroupCollapseTestCase({
   overflowMode,
 }: {
@@ -536,13 +555,27 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("button", { name: "Copy" }).should("be.focused");
 
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Run" }).should("be.focused");
-
-    cy.realPress("Tab");
     cy.findByTestId("toolbar-after").should("be.focused");
 
     cy.realPress(["Shift", "Tab"]);
-    cy.findByRole("button", { name: "Run" }).should("be.focused");
+    cy.findByRole("button", { name: "Copy" }).should("be.focused");
+  });
+
+  it("moves focus before the toolbar on Shift+Tab from a button", () => {
+    cy.mount(<KeyboardButtonsFixture />);
+
+    cy.findByRole("button", { name: "Run" }).focus();
+    cy.realPress(["Shift", "Tab"]);
+    cy.findByTestId("toolbar-before").should("be.focused");
+  });
+
+  it("does not tab between buttons when no focus target follows the toolbar", () => {
+    cy.mount(<OverflowPrioritiesKeyboardTestCase />);
+
+    cy.findByRole("button", { name: "Pinned" }).focus();
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "Pinned" }).should("not.be.focused");
+    cy.findByRole("button", { name: "Views" }).should("not.be.focused");
   });
 
   it("wraps horizontal navigation from the last control back to the first", () => {
@@ -566,6 +599,9 @@ describe("Given ToolbarNext keyboard navigation", () => {
 
     cy.realPress("Tab");
     cy.findByRole("button", { name: "Columns" }).should("be.focused");
+
+    cy.realPress("Tab");
+    cy.findByTestId("toolbar-after").should("be.focused");
   });
 
   it("lets combo boxes keep Up and Down while using Left and Right to move through the toolbar", () => {
@@ -592,6 +628,9 @@ describe("Given ToolbarNext keyboard navigation", () => {
     }).within(() => {
       cy.findByRole("button", { name: "Apply" }).should("be.focused");
     });
+
+    cy.realPress("Tab");
+    cy.findByTestId("toolbar-after").should("be.focused");
   });
 
   it("hands off from the last toggle button to the next toolbar control", () => {
