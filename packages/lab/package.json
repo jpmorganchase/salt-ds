@@ -27,6 +27,7 @@
     "clsx": "^2.0.0",
     "compute-scroll-into-view": "^3.0.0",
     "deepmerge": "^4.2.2",
+    "dom-accessibility-api": "^0.7.1",
     "react-color": "^2.19.3",
     "react-window": "^1.8.6",
     "rifm": "^0.12.0",
