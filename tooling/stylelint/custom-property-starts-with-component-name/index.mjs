@@ -47,15 +47,27 @@ const allowedNamesFormatted = allowedNames.map(
   (component) => `${component[0].toLowerCase()}${component.slice(1)}`,
 );
 
+const allowedNamesSet = new Set(allowedNames);
+const allowedNamesFormattedSet = new Set(allowedNamesFormatted);
+
+const readTokenSegment = (property, prefix) => {
+  if (!property.startsWith(prefix)) return null;
+
+  const remainder = property.slice(prefix.length);
+  const separatorIndex = remainder.indexOf("-");
+
+  if (separatorIndex <= 0) return null;
+
+  return remainder.slice(0, separatorIndex);
+};
+
 /**
  * Test whether a property value is component custom property
  *
  * Starts with `--componentName-`
  */
 const isComponentCustomProperty = (property) =>
-  allowedNamesFormatted.some((component) =>
-    property.startsWith(`--${component}-`),
-  );
+  allowedNamesFormattedSet.has(readTokenSegment(property, "--"));
 
 /**
  * Test whether a property value is CSS API variables
@@ -63,7 +75,7 @@ const isComponentCustomProperty = (property) =>
  * Starts with `--saltComponentName-`
  */
 const isCssApi = (property) =>
-  allowedNames.some((component) => property.startsWith(`--salt${component}-`));
+  allowedNamesSet.has(readTokenSegment(property, "--salt"));
 
 function check(property, verboseLog) {
   const checkResult = isCssApi(property) || isComponentCustomProperty(property);
@@ -89,30 +101,32 @@ const ruleFunction = (primary) => {
     root.walkDecls((decl) => {
       const { prop, value } = decl;
 
-      const parsedValue = valueParser(value);
+      if (value.includes("var(")) {
+        const parsedValue = valueParser(value);
 
-      parsedValue.walk((node) => {
-        if (!isVarFunction(node)) return;
+        parsedValue.walk((node) => {
+          if (!isVarFunction(node)) return;
 
-        const { nodes } = node;
+          const { nodes } = node;
 
-        const firstNode = nodes[0];
+          const firstNode = nodes[0];
 
-        verboseLog && console.log({ nodes });
+          verboseLog && console.log({ nodes });
 
-        if (
-          !firstNode ||
-          firstNode.value.startsWith("--salt-") ||
-          check(firstNode.value)
-        )
-          return;
+          if (
+            !firstNode ||
+            firstNode.value.startsWith("--salt-") ||
+            check(firstNode.value)
+          )
+            return;
 
-        complain(
-          declarationValueIndex(decl) + firstNode.sourceIndex,
-          firstNode.value.length,
-          decl,
-        );
-      });
+          complain(
+            declarationValueIndex(decl) + firstNode.sourceIndex,
+            firstNode.value.length,
+            decl,
+          );
+        });
+      }
 
       verboseLog && console.log({ prop });
 

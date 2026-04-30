@@ -6,6 +6,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, labeled]
 
+permissions: {}
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -15,9 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: "24"
           cache: "yarn"
@@ -28,29 +32,8 @@ jobs:
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
       - name: Upload Storybook Static
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: storybook-build
           path: ./storybook-static
-          retention-days: 1
-      - name: Save branch metadata for Chromatic
-        run: |
-          mkdir METADATA
-          echo $BRANCH_NAME > ./METADATA/branch-name
-          echo $DRAFT > ./METADATA/draft
-          echo $BASE > ./METADATA/base
-          echo $RUN_CHROMATIC > ./METADATA/run-chromatic
-          echo $NO_TURBOSNAP > ./METADATA/no-turbosnap
-          echo $ISSUE_NUMBER > ./METADATA/issue-number
-        env:
-          DRAFT: ${{ github.event.pull_request.draft }}
-          BRANCH_NAME: ${{ github.event.pull_request.head.label || github.ref_name }}
-          BASE: ${{ github.event.pull_request.base.ref || github.ref_name }}
-          RUN_CHROMATIC: ${{ contains(github.event.pull_request.labels.*.name, 'chromatic') }}
-          NO_TURBOSNAP: ${{ contains(github.event.pull_request.labels.*.name, 'no turbosnap') }}
-          ISSUE_NUMBER: ${{ github.event.pull_request.number }}
-      - uses: actions/upload-artifact@v7
-        with:
-          name: metadata
-          path: ./METADATA
           retention-days: 1

@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.59.1
+
+### Patch Changes
+
+- e131baa: Improved `useEventCallback`'s stability.
+- 2d2d62b: Changed Accordion's value prop to be optional.
+
 ## 1.59.0
 
 ### Minor Changes
