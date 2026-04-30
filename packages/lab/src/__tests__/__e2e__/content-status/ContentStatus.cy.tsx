@@ -9,14 +9,14 @@ describe("GIVEN Content Status", () => {
   });
 
   it("renders the spinner WHEN the LOADING status is passed", () => {
-    cy.get('[aria-live="assertive"]').should("not.exist");
+    cy.get('[aria-live="polite"]').should("not.exist");
 
     cy.mount(<ContentStatus id="1" status="loading" />);
 
     cy.findByRole("region").should("not.exist"); // the content
     cy.findByTestId("spinner-1").should("exist");
 
-    cy.get('[aria-live="assertive"]').should("contain", "loading");
+    cy.get('[aria-live="polite"]').should("contain", "loading");
   });
 
   it("renders the correct icon WHEN the WARNING status is passed", () => {
@@ -25,7 +25,7 @@ describe("GIVEN Content Status", () => {
     cy.findByRole("region").should("not.exist"); // the content
     cy.findByRole("img", { name: "warning" }).should("exist");
 
-    cy.get('[aria-live="assertive"]').should("contain", "warning");
+    cy.get('[aria-live="polite"]').should("contain", "warning");
   });
 
   it("renders the correct icon WHEN the ERROR status is passed", () => {
@@ -34,7 +34,7 @@ describe("GIVEN Content Status", () => {
     cy.findByRole("region").should("not.exist"); // the content
     cy.findByRole("img", { name: "error" }).should("exist");
 
-    cy.get('[aria-live="assertive"]').should("contain", "error");
+    cy.get('[aria-live="polite"]').should("contain", "error");
   });
 
   it("renders the correct icon WHEN the SUCCESS status is passed", () => {
@@ -43,7 +43,7 @@ describe("GIVEN Content Status", () => {
     cy.findByRole("region").should("not.exist"); // the content
     cy.findByRole("img", { name: "success" }).should("exist");
 
-    cy.get('[aria-live="assertive"]').should("contain", "success");
+    cy.get('[aria-live="polite"]').should("contain", "success");
   });
 
   it("renders the correct title WHEN it is passed", () => {
@@ -53,7 +53,7 @@ describe("GIVEN Content Status", () => {
     cy.findByText("Test Title").should("exist");
     cy.findByRole("img", { name: "info" }).should("exist");
 
-    cy.get('[aria-live="assertive"]').should("contain", "Test Title info");
+    cy.get('[aria-live="polite"]').should("contain", "Test Title info");
   });
 
   it("renders the correct message WHEN it is passed", () => {
@@ -63,7 +63,7 @@ describe("GIVEN Content Status", () => {
     cy.findByText("Test message").should("exist");
     cy.findByRole("img", { name: "info" }).should("exist");
 
-    cy.get('[aria-live="assertive"]').should("contain", "Test message info");
+    cy.get('[aria-live="polite"]').should("contain", "Test message info");
   });
 
   it("render default actions WHEN actionLabel and onActionClick are passed", () => {
@@ -82,7 +82,7 @@ describe("GIVEN Content Status", () => {
     cy.findByText("My Label").click();
     cy.get("@onActionClickSpy").should("have.been.calledOnce");
 
-    cy.get('[aria-live="assertive"]').should("contain", "info");
+    cy.get('[aria-live="polite"]').should("contain", "info");
   });
 
   it("DOES NOT render actions WHEN actionLabel IS NOT passed", () => {
@@ -137,22 +137,19 @@ describe("GIVEN Content Status", () => {
   it("announces when new prop is passed in", () => {
     cy.mount(<ContentStatus id="1" status="loading" />);
 
-    cy.get('[aria-live="assertive"]').should("announce", "loading");
+    cy.get('[aria-live="polite"]').should("announce", "loading");
 
     cy.mount(<ContentStatus id="1" status="success" />);
 
     // Disabled completion announcement from spinner
-    cy.get('[aria-live="assertive"]').should(
-      "not.announce",
-      "finished loading",
-    );
-    cy.get('[aria-live="assertive"]').should("contain", "success");
+    cy.get('[aria-live="polite"]').should("not.announce", "finished loading");
+    cy.get('[aria-live="polite"]').should("contain", "success");
   });
 
   it("disableAnnouncer will disable the announcement", () => {
     cy.mount(<ContentStatus disableAnnouncer id="1" status="loading" />);
 
-    cy.get('[aria-live="assertive"]').should("not.announce", "loading");
+    cy.get('[aria-live="polite"]').should("not.announce", "loading");
   });
 
   describe("indeterminate loading", () => {
@@ -165,10 +162,7 @@ describe("GIVEN Content Status", () => {
           status="loading"
         />,
       );
-
-      cy.wait(2500);
-
-      cy.get('[aria-live="assertive"]').should("contain", "Loading component");
+      cy.get('[aria-live="polite"]').should("contain", "Loading component");
     });
   });
 });

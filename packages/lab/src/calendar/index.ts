@@ -1,11 +1,57 @@
-export * from "./Calendar";
-export * from "./CalendarGrid";
-export * from "./CalendarNavigation";
-export * from "./CalendarWeekHeader";
+import { warnOnce } from "../utils/deprecate";
+
+warnOnce({
+  key: "@salt-ds/lab/calendar",
+  message:
+    "@salt-ds/lab 'calendar' exports are deprecated and will be removed in a future release. Import from @salt-ds/date-components instead.",
+});
+
 export type {
+  CalendarBaseProps,
   CalendarDayProps,
+  CalendarGridProps,
+  CalendarMultiselectOffsetProps,
+  CalendarMultiselectRangeProps,
+  CalendarMultiselectSingleProps,
+  CalendarNavigationProps,
+  CalendarOffsetProps,
+  CalendarProps,
+  CalendarRangeProps,
+  CalendarSingleProps,
+  CalendarWeekHeaderProps,
+  CreateAnnouncement,
+  DateRangeSelection,
+  DayStatus,
   renderCalendarDayProps,
-} from "./internal/CalendarDay";
-export * from "./useCalendar";
-export * from "./useCalendarDay";
-export * from "./useCalendarSelection";
+  SelectionVariant,
+  SingleDateSelection,
+  UseCalendarMultiselectOffsetProps,
+  UseCalendarMultiselectRangeProps,
+  UseCalendarMultiselectSingleProps,
+  UseCalendarOffsetProps,
+  UseCalendarProps,
+  UseCalendarRangeProps,
+  UseCalendarReturn,
+  UseCalendarSelectionBaseProps,
+  UseCalendarSelectionMultiselectOffsetProps,
+  UseCalendarSelectionMultiselectRangeProps,
+  UseCalendarSelectionMultiselectSingleProps,
+  UseCalendarSelectionOffsetProps,
+  UseCalendarSelectionProps,
+  UseCalendarSelectionRangeProps,
+  UseCalendarSelectionSingleProps,
+  UseCalendarSingleProps,
+  useCalendarDayProps,
+} from "@salt-ds/date-components";
+export {
+  Calendar,
+  CalendarGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+  isDateRangeSelection,
+  useCalendar,
+  useCalendarDay,
+  useCalendarSelection,
+  useCalendarSelectionDay,
+  useDateSelectionAnnouncer,
+} from "@salt-ds/date-components";

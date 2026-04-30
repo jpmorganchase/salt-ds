@@ -1,0 +1,26 @@
+.saltCalendarNavigation {
+  --calendarNavigation-calendarWidth: calc(var(--calendar-day-size) * 7 + var(--calendar-gap) * 6);
+
+  display: grid;
+  grid-template-columns: min-content auto min-content;
+  padding-bottom: var(--salt-spacing-100);
+  grid-gap: var(--salt-spacing-fixed-200);
+  align-items: center;
+  box-sizing: border-box;
+  max-width: var(--calendarNavigation-maxWidth, none);
+}
+
+.saltDropdown.saltCalendarNavigation-yearDropdown {
+  min-width: min-content;
+}
+
+.saltCalendarNavigation-hideYearDropdown {
+  grid-template-columns: min-content auto min-content;
+  grid-gap: var(--salt-spacing-300);
+}
+
+.saltCalendarNavigation-dropdowns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: var(--salt-spacing-fixed-400);
+}
