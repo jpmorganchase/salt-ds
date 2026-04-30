@@ -43,7 +43,7 @@ export const WithNav = () => {
 
 const WithNavContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanel();
+  const { setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();
@@ -81,9 +81,7 @@ const WithNavContent = () => {
       </SidePanel>
       <ContentExample>
         <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} side panel
-          </Button>
+          <Button style={{ width: "fit-content" }}>Open side panel</Button>
         </SidePanelTrigger>
       </ContentExample>
     </FlexLayout>

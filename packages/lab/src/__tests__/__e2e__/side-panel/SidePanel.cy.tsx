@@ -22,7 +22,7 @@ describe("GIVEN a SidePanel component", () => {
       );
 
       cy.findByRole("button", { name: "Open left panel" }).click();
-      cy.findByRole("button", { name: "Close left panel" }).should(
+      cy.findByRole("button", { name: "Open left panel" }).should(
         "have.attr",
         "aria-expanded",
         "true",
@@ -31,7 +31,7 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Section Title" })
         .invoke("attr", "id")
         .then((panelId) => {
-          cy.findByRole("button", { name: "Close left panel" }).should(
+          cy.findByRole("button", { name: "Open left panel" }).should(
             "have.attr",
             "aria-controls",
             panelId,
@@ -71,7 +71,7 @@ describe("GIVEN a SidePanel component", () => {
       );
 
       cy.findByRole("button", { name: "Open right panel" }).click();
-      cy.findByRole("button", { name: "Close right panel" }).should(
+      cy.findByRole("button", { name: "Open right panel" }).should(
         "have.attr",
         "aria-expanded",
         "true",
@@ -83,7 +83,7 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Section Title" })
         .invoke("attr", "id")
         .then((panelId) => {
-          cy.findByRole("button", { name: "Close right panel" }).should(
+          cy.findByRole("button", { name: "Open right panel" }).should(
             "have.attr",
             "aria-controls",
             panelId,

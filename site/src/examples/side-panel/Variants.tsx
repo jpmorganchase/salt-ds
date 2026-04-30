@@ -38,7 +38,7 @@ export const Variants = () => {
 const VariantsContent = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanel();
+  const { setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();
@@ -62,7 +62,7 @@ const VariantsContent = () => {
         <StackLayout direction="column" gap={1}>
           <SidePanelTrigger>
             <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
-              {openState ? "Close" : "Open"} right panel
+              Open right panel
             </Button>
           </SidePanelTrigger>
           <FormField>

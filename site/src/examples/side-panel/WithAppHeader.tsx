@@ -57,7 +57,7 @@ const DesktopAppHeader = () => {
 
         <FlexItem align="center">
           <StackLayout direction="row" gap={1}>
-            <Tooltip content="Toggle help panel" hideArrow>
+            <Tooltip content="Open help panel" hideArrow>
               <SidePanelTrigger>
                 <Button appearance="transparent" aria-label="Open help panel">
                   <HelpCircleIcon aria-hidden />

@@ -117,7 +117,7 @@ export const Default: StoryFn = () => {
 
 const DefaultContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanel();
+  const { setOpen } = useSidePanel();
 
   return (
     <FlexLayout
@@ -132,9 +132,7 @@ const DefaultContent = () => {
     >
       <ContentExample>
         <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} right panel
-          </Button>
+          <Button style={{ width: "fit-content" }}>Open right panel</Button>
         </SidePanelTrigger>
       </ContentExample>
 
@@ -169,7 +167,7 @@ export const Left: StoryFn = () => {
 
 const LeftContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanel();
+  const { setOpen } = useSidePanel();
 
   return (
     <FlexLayout
@@ -202,9 +200,7 @@ const LeftContent = () => {
 
       <ContentExample>
         <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} left panel
-          </Button>
+          <Button style={{ width: "fit-content" }}>Open left panel</Button>
         </SidePanelTrigger>
       </ContentExample>
     </FlexLayout>
@@ -357,7 +353,7 @@ export const Variants: StoryFn = () => {
 const VariantsContent = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanel();
+  const { setOpen } = useSidePanel();
 
   const handleVariantChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setVariant(event.target.value as SidePanelProps["variant"]);
@@ -378,7 +374,7 @@ const VariantsContent = () => {
         <StackLayout direction="column" gap={1}>
           <SidePanelTrigger>
             <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
-              {openState ? "Close" : "Open"} right panel
+              Open right panel
             </Button>
           </SidePanelTrigger>
           <FormField>
@@ -642,7 +638,7 @@ const DesktopAppHeader = () => {
 
         <FlexItem align="center">
           <StackLayout direction="row" gap={1}>
-            <Tooltip content="Toggle help panel" hideArrow>
+            <Tooltip content="Open help panel" hideArrow>
               <SidePanelTrigger>
                 <Button appearance="transparent" aria-label="Open help panel">
                   <HelpCircleIcon aria-hidden />
@@ -1058,7 +1054,7 @@ export const Resizable: StoryFn = () => {
             <ContentExample>
               <SidePanelTrigger>
                 <Button style={{ width: "fit-content" }}>
-                  {expanded ? "Close" : "Open"} right panel
+                  Open right panel
                 </Button>
               </SidePanelTrigger>
             </ContentExample>
@@ -1119,7 +1115,7 @@ export const WithNav: StoryFn = () => {
 
 const WithNavContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanel();
+  const { setOpen } = useSidePanel();
 
   return (
     <FlexLayout
@@ -1152,9 +1148,7 @@ const WithNavContent = () => {
       </SidePanel>
       <ContentExample>
         <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} side panel
-          </Button>
+          <Button style={{ width: "fit-content" }}>Open side panel</Button>
         </SidePanelTrigger>
       </ContentExample>
     </FlexLayout>

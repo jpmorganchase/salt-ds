@@ -21,7 +21,7 @@ export const LeftPanel = () => {
 
 const LeftPanelContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanel();
+  const { setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();
@@ -59,9 +59,7 @@ const LeftPanelContent = () => {
 
       <ContentExample>
         <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>
-            {openState ? "Close" : "Open"} left panel
-          </Button>
+          <Button style={{ width: "fit-content" }}>Open left panel</Button>
         </SidePanelTrigger>
       </ContentExample>
     </FlexLayout>

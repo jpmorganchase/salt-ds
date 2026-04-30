@@ -35,7 +35,7 @@ const ScrollableContent = () => (
   >
     <SidePanelTrigger>
       <Button style={{ width: "fit-content", flexShrink: 0 }}>
-        Toggle right panel
+        Open right panel
       </Button>
     </SidePanelTrigger>
     <div
