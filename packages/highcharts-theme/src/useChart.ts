@@ -3,13 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import type { Options } from "highcharts";
 import type HighchartsReact from "highcharts-react-official";
-import {
-  type RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type RefObject, useCallback, useEffect, useState } from "react";
 import { resolveSaltColorAxis, type SaltColorAxis } from "./color-axis";
 import { getDefaultOptions } from "./default-options";
 import {
@@ -41,8 +35,6 @@ export const useChart = (
     css: highchartsThemeCss,
     window: targetWindow,
   });
-
-  const hostElementRef = useRef<Element | null>(null);
 
   const getMergedOptions = useCallback(
     (hostElement?: Element | null): Options => {
@@ -85,12 +77,7 @@ export const useChart = (
     const chart = chartRef.current?.chart as Highcharts.Chart | null;
     const container = chart?.container ?? null;
 
-    if (container) {
-      hostElementRef.current = container;
-    }
-
-    const elementUsed =
-      hostElementRef.current ?? targetWindow?.document?.documentElement;
+    const elementUsed = container ?? targetWindow?.document?.documentElement;
 
     setMergedOptions(getMergedOptions(elementUsed));
   }, [chartRef, getMergedOptions, mode, targetWindow]);
