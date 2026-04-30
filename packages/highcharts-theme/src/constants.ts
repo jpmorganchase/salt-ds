@@ -1,0 +1,1 @@
+export const TRANSLUCENT_FILL_OPACITY = 0.75;
