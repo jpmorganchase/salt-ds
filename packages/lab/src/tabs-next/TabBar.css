@@ -2,9 +2,21 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: var(--salt-spacing-100);
   position: relative;
   box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.saltTabBar-strip {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex: 1 1 auto;
+  gap: var(--salt-spacing-100);
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .saltTabBar-divider::before {
