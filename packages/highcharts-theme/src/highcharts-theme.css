@@ -1,0 +1,4 @@
+.highcharts-legend-item-hidden .highcharts-point {
+  /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline marker fill for hidden legend series. */
+  fill: var(--salt-content-secondary-foreground-disabled) !important;
+}
