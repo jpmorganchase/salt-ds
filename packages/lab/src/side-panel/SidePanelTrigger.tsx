@@ -7,7 +7,7 @@ import {
   type MouseEvent,
   type ReactNode,
 } from "react";
-import { useSidePanelContext } from "./SidePanelContext";
+import { useSidePanelContext } from "./internal";
 
 export interface SidePanelTriggerProps
   extends ComponentPropsWithoutRef<"button"> {

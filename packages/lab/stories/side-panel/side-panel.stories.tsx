@@ -40,7 +40,7 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanelContext,
+  useSidePanel,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "@salt-ds/react-resizable-panels-theme/index.css";
@@ -117,7 +117,7 @@ export const Default: StoryFn = () => {
 
 const DefaultContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanelContext();
+  const { openState, setOpen } = useSidePanel();
 
   return (
     <FlexLayout
@@ -169,7 +169,7 @@ export const Left: StoryFn = () => {
 
 const LeftContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanelContext();
+  const { openState, setOpen } = useSidePanel();
 
   return (
     <FlexLayout
@@ -219,11 +219,11 @@ const manualPanelStyle = {
   "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
-type ManualPanelContext = ReturnType<typeof useSidePanelContext>;
+type ManualPanelContext = ReturnType<typeof useSidePanel>;
 
 const ManualRightPanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
   return (
     <SidePanel style={manualPanelStyle} variant="secondary">
       <SidePanelHeader>
@@ -247,7 +247,7 @@ const ManualRightPanel = () => {
 
 const ManualLeftPanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
   return (
     <SidePanel position="left" style={manualPanelStyle} variant="secondary">
       <SidePanelHeader>
@@ -276,17 +276,16 @@ const ManualTriggerButton = ({
   children: string;
   context: ManualPanelContext;
 }) => {
-  const { openState, setOpen, getReferenceProps, setReference, panelId } =
-    context;
+  const { openState, setOpen, getTriggerProps, triggerRef, panelId } = context;
 
   return (
     <Button
-      {...(getReferenceProps({
+      {...(getTriggerProps({
         "aria-expanded": openState,
         "aria-controls": openState ? panelId : undefined,
         onClick: () => setOpen(!openState),
       }) as Record<string, unknown>)}
-      ref={setReference as React.Ref<HTMLButtonElement>}
+      ref={triggerRef as React.Ref<HTMLButtonElement>}
       style={{ width: "fit-content", whiteSpace: "nowrap" }}
     >
       {children}
@@ -295,7 +294,7 @@ const ManualTriggerButton = ({
 };
 
 const ManualRightPanelTriggerButton = () => {
-  const rightPanelContext = useSidePanelContext();
+  const rightPanelContext = useSidePanel();
 
   return (
     <ManualTriggerButton context={rightPanelContext}>
@@ -305,7 +304,7 @@ const ManualRightPanelTriggerButton = () => {
 };
 
 const ManualContentArea = () => {
-  const leftPanelContext = useSidePanelContext();
+  const leftPanelContext = useSidePanel();
 
   return (
     <SidePanelProvider>
@@ -358,7 +357,7 @@ export const Variants: StoryFn = () => {
 const VariantsContent = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanelContext();
+  const { openState, setOpen } = useSidePanel();
 
   const handleVariantChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setVariant(event.target.value as SidePanelProps["variant"]);
@@ -479,27 +478,27 @@ export const WithTable: StoryFn = () => {
 const WithTableContent = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const { CloseIcon } = useIcon();
-  const { setOpen, setReference, getReferenceProps, openState, panelId } =
-    useSidePanelContext();
+  const { setOpen, triggerRef, getTriggerProps, openState, panelId } =
+    useSidePanel();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
     const isExpanded = openState && selectedRow?.id === row.id;
 
     if (isExpanded) {
       setSelectedRow(null);
-      setReference(null);
+      triggerRef(null);
       setOpen(false);
       return;
     }
     setSelectedRow(row);
-    setReference(target);
+    triggerRef(target);
     setOpen(true);
   };
 
-  const getTriggerProps = (row: TeamMember) => {
+  const getRowTriggerProps = (row: TeamMember) => {
     const isExpanded = openState && selectedRow?.id === row.id;
 
-    return getReferenceProps({
+    return getTriggerProps({
       "aria-expanded": isExpanded,
       "aria-controls": isExpanded ? panelId : undefined,
       "aria-label": `Edit details for ${row.name}`,
@@ -539,7 +538,7 @@ const WithTableContent = () => {
                   <TD>{row.phone}</TD>
                   <TD>
                     <Button
-                      {...getTriggerProps(row)}
+                      {...getRowTriggerProps(row)}
                       style={{ minWidth: "auto" }}
                     >
                       Edit
@@ -672,7 +671,7 @@ const DesktopAppHeader = () => {
 
 const WithAppHeaderPanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
   return (
     <SidePanel>
       <SidePanelHeader>
@@ -743,7 +742,7 @@ const innerPanelStyle = {
 
 const InnerPanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
   return (
     <SidePanel style={innerPanelStyle} variant="tertiary">
       <SidePanelHeader>
@@ -767,7 +766,7 @@ const InnerPanel = () => {
 
 const OuterPanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
   const headingId = useId();
 
   return (
@@ -904,7 +903,7 @@ const ScrollableContent = () => (
 
 const ScrollablePanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
   return (
     <SidePanel position="right">
       <SidePanelHeader>
@@ -1011,7 +1010,7 @@ const resizableSidePanelStyle = {
 
 const ResizablePanel = ({ style }: { style?: CSSProperties }) => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
   return (
     <SidePanel
       disableAnimation
@@ -1120,7 +1119,7 @@ export const WithNav: StoryFn = () => {
 
 const WithNavContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanelContext();
+  const { openState, setOpen } = useSidePanel();
 
   return (
     <FlexLayout
@@ -1272,7 +1271,7 @@ const HelpPanelCard = ({
 
 const CardsContent = () => {
   const headingId = useId();
-  const { openState, setOpen } = useSidePanelContext();
+  const { openState, setOpen } = useSidePanel();
 
   return (
     <FlexLayout

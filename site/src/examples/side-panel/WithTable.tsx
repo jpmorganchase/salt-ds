@@ -22,7 +22,7 @@ import {
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
-  useSidePanelContext,
+  useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import React, { type CSSProperties, useState } from "react";
@@ -74,8 +74,8 @@ const panelStyle = {
 const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const { CloseIcon } = useIcon();
-  const { setOpen, setReference, openState, getReferenceProps, panelId } =
-    useSidePanelContext();
+  const { setOpen, triggerRef, openState, getTriggerProps, panelId } =
+    useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();
@@ -85,20 +85,20 @@ const SidePanelExample = () => {
 
     if (isExpanded) {
       setSelectedRow(null);
-      setReference(null);
+      triggerRef(null);
       setOpen(false);
       return;
     }
 
     setSelectedRow(row);
-    setReference(target);
+    triggerRef(target);
     setOpen(true);
   };
 
-  const getTriggerProps = (row: TeamMember) => {
+  const getRowTriggerProps = (row: TeamMember) => {
     const isExpanded = openState && selectedRow?.id === row.id;
 
-    return getReferenceProps({
+    return getTriggerProps({
       "aria-expanded": isExpanded,
       "aria-controls": isExpanded ? panelId : undefined,
       "aria-label": `Edit details for ${row.name}`,
@@ -138,7 +138,7 @@ const SidePanelExample = () => {
                   <TD>{row.phone}</TD>
                   <TD>
                     <Button
-                      {...getTriggerProps(row)}
+                      {...getRowTriggerProps(row)}
                       style={{ minWidth: "auto" }}
                     >
                       Edit

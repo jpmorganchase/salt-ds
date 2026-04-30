@@ -1,8 +1,4 @@
-import {
-  useDismiss,
-  useFloatingRootContext,
-  useInteractions,
-} from "@floating-ui/react";
+import { useFloatingRootContext, useInteractions } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
 import {
   type ReactNode,
@@ -11,7 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { SidePanelContext } from "./SidePanelContext";
+import { SidePanelContext } from "./internal";
 
 export interface SidePanelProviderProps {
   /**
@@ -64,15 +60,7 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
     },
   });
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    useDismiss(floatingRootContext, {
-      // Escape is handled below so only the currently focused panel (or trigger)
-      // can close, preventing unrelated open panels from dismissing.
-      escapeKey: false,
-      outsidePress: false,
-      bubbles: false,
-    }),
-  ]);
+  const { getReferenceProps, getFloatingProps } = useInteractions();
 
   useEffect(() => {
     if (!openState) {

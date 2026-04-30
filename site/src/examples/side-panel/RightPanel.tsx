@@ -6,7 +6,7 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanelContext,
+  useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import { ContentExample } from "./ContentExample";
@@ -21,7 +21,7 @@ export const RightPanel = () => {
 
 const RightPanelContent = () => {
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanelContext();
+  const { openState, setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();

@@ -14,7 +14,7 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanelContext,
+  useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 
@@ -67,7 +67,7 @@ const ScrollableContent = () => (
 
 const ScrollablePanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();

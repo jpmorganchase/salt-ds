@@ -3,7 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithRef, forwardRef } from "react";
-import { useSidePanelContext } from "./SidePanelContext";
+import { useSidePanelContext } from "./internal";
 import sidePanelHeaderCss from "./SidePanelHeader.css";
 
 const withBaseName = makePrefixer("saltSidePanelTitle");

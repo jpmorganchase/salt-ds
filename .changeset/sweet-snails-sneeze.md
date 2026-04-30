@@ -6,12 +6,12 @@ Added `SidePanel`.
 
 `SidePanel` is a collapsible container that slides in from an edge of its parent, providing supplementary content or controls without disrupting the main layout.
 
-Use `SidePanelProvider` to manage open state, `SidePanelTrigger` to toggle the panel, `SidePanelTitle` provides the accessible name for the panel region automatically and `useSidePanelContext` to access `setOpen` for programmatic close.
+Use `SidePanelProvider` to manage open state, `SidePanelTrigger` to toggle the panel, `SidePanelTitle` provides the accessible name for the panel region automatically and `useSidePanel` to access `setOpen` for programmatic close.
 
 ```tsx
 const PanelContent = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
   return (
     <SidePanel>
       <SidePanelHeader>

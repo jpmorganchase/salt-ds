@@ -5,7 +5,8 @@ import {
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
-  useSidePanelContext,
+  type SidePanelValue,
+  useSidePanel,
 } from "@salt-ds/lab";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
@@ -15,11 +16,11 @@ const panelStyle = {
   "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
-type PanelContext = ReturnType<typeof useSidePanelContext>;
+type PanelContext = SidePanelValue;
 
 const RightPanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();
@@ -49,7 +50,7 @@ const RightPanel = () => {
 
 const LeftPanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();
@@ -84,17 +85,16 @@ const TriggerButton = ({
   children: string;
   context: PanelContext;
 }) => {
-  const { openState, setOpen, panelId, getReferenceProps, setReference } =
-    context;
+  const { openState, setOpen, panelId, getTriggerProps, triggerRef } = context;
 
   return (
     <Button
-      {...(getReferenceProps({
+      {...(getTriggerProps({
         "aria-expanded": openState,
         "aria-controls": openState ? panelId : undefined,
         onClick: () => setOpen(!openState),
       }) as Record<string, unknown>)}
-      ref={setReference as React.Ref<HTMLButtonElement>}
+      ref={triggerRef as React.Ref<HTMLButtonElement>}
       style={{ width: "fit-content", whiteSpace: "nowrap" }}
     >
       {children}
@@ -103,7 +103,7 @@ const TriggerButton = ({
 };
 
 const RightPanelTriggerButton = () => {
-  const rightPanelContext = useSidePanelContext();
+  const rightPanelContext = useSidePanel();
 
   return (
     <TriggerButton context={rightPanelContext}>
@@ -113,7 +113,7 @@ const RightPanelTriggerButton = () => {
 };
 
 const ContentArea = () => {
-  const leftPanelContext = useSidePanelContext();
+  const leftPanelContext = useSidePanel();
 
   return (
     <SidePanelProvider>

@@ -11,8 +11,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { useSidePanelContext } from "./internal";
 import sidePanelCss from "./SidePanel.css";
-import { useSidePanelContext } from "./SidePanelContext";
 
 const withBaseName = makePrefixer("saltSidePanel");
 

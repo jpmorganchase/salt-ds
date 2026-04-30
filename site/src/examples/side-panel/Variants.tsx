@@ -19,7 +19,7 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanelContext,
+  useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import { type ChangeEventHandler, useState } from "react";
@@ -38,7 +38,7 @@ export const Variants = () => {
 const VariantsContent = () => {
   const [variant, setVariant] = useState<SidePanelProps["variant"]>("primary");
   const { CloseIcon } = useIcon();
-  const { openState, setOpen } = useSidePanelContext();
+  const { openState, setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();

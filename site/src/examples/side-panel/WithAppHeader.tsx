@@ -25,7 +25,7 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanelContext,
+  useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import { ContentExample } from "src/examples/side-panel/ContentExample";
@@ -83,7 +83,7 @@ const DesktopAppHeader = () => {
 
 const HelpPanel = () => {
   const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanelContext();
+  const { setOpen } = useSidePanel();
 
   const headerId = useId();
   const closeButtonId = useId();

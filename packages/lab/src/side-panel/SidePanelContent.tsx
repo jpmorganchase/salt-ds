@@ -9,8 +9,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { useSidePanelContext } from "./internal";
 import sidePanelContentCss from "./SidePanelContent.css";
-import { useSidePanelContext } from "./SidePanelContext";
 
 const withBaseName = makePrefixer("saltSidePanelContent");
 
