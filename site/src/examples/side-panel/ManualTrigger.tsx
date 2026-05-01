@@ -5,7 +5,6 @@ import {
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
-  type SidePanelValue,
   useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
@@ -28,7 +27,6 @@ const RightPanel = () => {
       <SidePanelHeader>
         <SidePanelTitle id={titleId}>Right Panel</SidePanelTitle>
         <Button
-          id={closeButtonId}
           aria-label="Close"
           aria-labelledby={clsx(closeButtonId, titleId) || undefined}
           appearance="transparent"
@@ -56,7 +54,6 @@ const LeftPanel = () => {
       <SidePanelHeader>
         <SidePanelTitle id={titleId}>Left Panel</SidePanelTitle>
         <Button
-          id={closeButtonId}
           aria-label="Close"
           aria-labelledby={clsx(closeButtonId, titleId) || undefined}
           appearance="transparent"
@@ -99,7 +96,9 @@ const RightPanelTriggerButton = () => {
   const rightPanelContext = useSidePanel();
 
   return (
-    <TriggerButton context={rightPanelContext}>Open right panel</TriggerButton>
+    <TriggerButton context={rightPanelContext}>
+      Toggle right panel
+    </TriggerButton>
   );
 };
 
@@ -111,7 +110,7 @@ const ContentArea = () => {
       <ContentExample>
         <FlexLayout gap={1} justify="space-between">
           <TriggerButton context={leftPanelContext}>
-            Open left panel
+            Toggle left panel
           </TriggerButton>
           <RightPanelTriggerButton />
         </FlexLayout>

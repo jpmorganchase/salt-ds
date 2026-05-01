@@ -166,7 +166,6 @@ const SidePanelExample = () => {
                 Employee Details
               </SidePanelTitle>
               <Button
-                id={closeButtonId}
                 aria-label="Close"
                 aria-labelledby={clsx(closeButtonId, titleId) || undefined}
                 appearance="transparent"

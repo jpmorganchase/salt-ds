@@ -1,4 +1,5 @@
 import { StackLayout, Text } from "@salt-ds/core";
+
 import {
   SidePanel,
   SidePanelContent,
@@ -7,6 +8,7 @@ import {
   SidePanelProvider,
   SidePanelTitle,
 } from "@salt-ds/lab";
+
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import type { ReactNode } from "react";
