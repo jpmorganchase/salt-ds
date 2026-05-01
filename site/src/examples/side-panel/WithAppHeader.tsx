@@ -84,17 +84,17 @@ const HelpPanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
 
-  const titelId = useId();
+  const titleId = useId();
   const closeButtonId = useId();
 
   return (
     <SidePanel>
       <SidePanelHeader>
-        <SidePanelTitle id={titelId}>Help & support</SidePanelTitle>
+        <SidePanelTitle id={titleId}>Help & support</SidePanelTitle>
         <Button
           id={closeButtonId}
           aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, titelId) || undefined}
+          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
           appearance="transparent"
           onClick={() => setOpen(false)}
         >

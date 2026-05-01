@@ -25,6 +25,7 @@ import {
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import React, { type CSSProperties, useState } from "react";
+import styles from "./WithTable.module.css";
 
 interface TeamMember {
   id: string;
@@ -162,7 +163,7 @@ const SidePanelExample = () => {
           <>
             <SidePanelHeader>
               <SidePanelTitle id={titleId}>
-                <span className="salt-visuallyHidden">{formValues.name}</span>
+                <span className={styles.visuallyHidden}>{formValues.name}</span>
                 Employee Details
               </SidePanelTitle>
               <Button

@@ -58,6 +58,7 @@ import {
   PanelGroup,
   PanelResizeHandle,
 } from "react-resizable-panels";
+import "./side-panel.stories.css";
 
 export default {
   title: "Lab/Side Panel",
@@ -556,7 +557,7 @@ const WithTableContent = () => {
           <>
             <SidePanelHeader>
               <SidePanelTitle>
-                <span className="salt-visuallyHidden">{formValues.name}</span>
+                <span className="visuallyHidden">{formValues.name}</span>
                 Employee Details
               </SidePanelTitle>
               <Button
