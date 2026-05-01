@@ -4,7 +4,6 @@ import {
   Button,
   FlexItem,
   FlexLayout,
-  H2,
   Input,
   StackLayout,
   Text,
@@ -85,19 +84,17 @@ const HelpPanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
 
-  const headerId = useId();
+  const titleId = useId();
   const closeButtonId = useId();
 
   return (
     <SidePanel>
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2 id={headerId}>Help & support</H2>
-        </SidePanelTitle>
+        <SidePanelTitle id={titleId}>Help & support</SidePanelTitle>
         <Button
           id={closeButtonId}
           aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, headerId) || undefined}
+          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
           appearance="transparent"
           onClick={() => setOpen(false)}
         >

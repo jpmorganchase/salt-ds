@@ -1,7 +1,6 @@
 .saltSidePanelContent {
   display: flex;
   flex-direction: column;
-  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
   flex: 1;
   min-height: 0;
   box-sizing: border-box;
@@ -10,5 +9,4 @@
 .saltSidePanelContent-body {
   flex: 1;
   overflow: auto;
-  padding-right: var(--salt-spacing-300);
 }

@@ -20,9 +20,15 @@ export const SidePanelContent = forwardRef<
   HTMLDivElement,
   SidePanelContentProps
 >(function SidePanelContent(props, ref) {
-  const { children, className, ...rest } = props;
+  const {
+    children,
+    className,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-label": ariaLabel,
+    ...rest
+  } = props;
 
-  const { headerId } = useSidePanelContext();
+  const { titleId } = useSidePanelContext();
   const targetWindow = useWindow();
   const contentSuffixId = useId();
   const bodyRef = useRef<HTMLDivElement | null>(null);
@@ -70,8 +76,8 @@ export const SidePanelContent = forwardRef<
     window: targetWindow,
   });
 
-  const explicitLabelledBy = rest["aria-labelledby"] as string | undefined;
-  const explicitLabel = rest["aria-label"] as string | undefined;
+  const explicitLabelledBy = ariaLabelledBy;
+  const explicitLabel = ariaLabel;
 
   let bodyAriaLabelledBy: string | undefined;
   let bodyAriaLabel: string | undefined;
@@ -79,8 +85,8 @@ export const SidePanelContent = forwardRef<
   if (isScrollable) {
     if (explicitLabelledBy) {
       bodyAriaLabelledBy = explicitLabelledBy;
-    } else if (headerId) {
-      bodyAriaLabelledBy = `${headerId} ${contentSuffixId}`;
+    } else if (titleId) {
+      bodyAriaLabelledBy = clsx(titleId, contentSuffixId) || undefined;
     } else {
       bodyAriaLabel = explicitLabel ?? "Content";
     }
@@ -88,9 +94,11 @@ export const SidePanelContent = forwardRef<
 
   return (
     <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-      <span id={contentSuffixId} hidden>
-        content
-      </span>
+      {isScrollable ? (
+        <span id={contentSuffixId} hidden>
+          content
+        </span>
+      ) : null}
       <div
         ref={bodyRef}
         className={withBaseName("body")}

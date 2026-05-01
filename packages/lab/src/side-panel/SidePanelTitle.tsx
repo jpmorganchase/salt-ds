@@ -1,49 +1,56 @@
-import { makePrefixer, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import {
+  makePrefixer,
+  Text,
+  type TextProps,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithRef, forwardRef } from "react";
+import { forwardRef } from "react";
 import { useSidePanelContext } from "./internal";
-import sidePanelHeaderCss from "./SidePanelHeader.css";
+import sidePanelTitleCss from "./SidePanelTitle.css";
 
 const withBaseName = makePrefixer("saltSidePanelTitle");
 
-export interface SidePanelTitleProps extends ComponentPropsWithRef<"div"> {}
+export interface SidePanelTitleProps extends TextProps<"div"> {}
 
 export const SidePanelTitle = forwardRef<HTMLDivElement, SidePanelTitleProps>(
   function SidePanelTitle(props, ref) {
-    const { children, className, id: idProp, ...rest } = props;
+    const { children, className, id, styleAs = "h2", ...rest } = props;
 
-    const { setHeaderId, headerId: contextHeaderId } = useSidePanelContext();
+    const { setTitleId } = useSidePanelContext();
     const targetWindow = useWindow();
 
     useComponentCssInjection({
-      testId: "salt-side-panel-header",
-      css: sidePanelHeaderCss,
+      testId: "salt-side-panel-title",
+      css: sidePanelTitleCss,
       window: targetWindow,
     });
 
-    const headerId = useId(contextHeaderId ?? idProp);
+    const titleId = useId(id);
 
     useIsomorphicLayoutEffect(() => {
-      if (headerId) {
-        setHeaderId(headerId);
+      if (titleId) {
+        setTitleId(titleId);
       }
 
       return () => {
-        setHeaderId(undefined);
+        setTitleId(undefined);
       };
-    }, [headerId, setHeaderId]);
+    }, [titleId, setTitleId]);
 
     return (
-      <div
+      <Text
         ref={ref}
-        id={headerId}
+        id={titleId}
+        styleAs={styleAs}
         className={clsx(withBaseName(), className)}
         {...rest}
       >
         {children}
-      </div>
+      </Text>
     );
   },
 );

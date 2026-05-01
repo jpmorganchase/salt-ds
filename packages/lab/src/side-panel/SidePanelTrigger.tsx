@@ -19,29 +19,28 @@ export const SidePanelTrigger = forwardRef<
   SidePanelTriggerProps
 >(function SidePanelTrigger(props, ref) {
   const { children, onClick, ...rest } = props;
-  const { setReference, getReferenceProps, openState, setOpen, panelId } =
-    useSidePanelContext();
+  const { setReference, openState, setOpen, panelId } = useSidePanelContext();
 
-  const handleRef = useForkRef(setReference, ref);
+  const childRef = (children as { ref?: React.Ref<HTMLButtonElement> })?.ref;
+  const combinedRef = useForkRef(setReference, ref);
+  const handleRef = useForkRef(combinedRef, childRef);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
-    if (!event.defaultPrevented) {
-      setOpen(!openState);
-    }
+    setOpen(!openState);
   };
 
-  if (!children || !isValidElement<{ ref?: unknown }>(children)) {
+  if (!children || !isValidElement(children)) {
     return <>{children}</>;
   }
 
   const mergedProps = mergeProps(
-    getReferenceProps({
+    {
       "aria-expanded": openState,
       "aria-controls": openState ? panelId : undefined,
       ...rest,
       onClick: handleClick,
-    }) as Record<string, unknown>,
+    },
     children.props,
   );
 

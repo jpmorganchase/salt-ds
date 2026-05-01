@@ -1,4 +1,4 @@
-import { useFloatingRootContext, useInteractions } from "@floating-ui/react";
+import { useFloatingRootContext } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
 import {
   type ReactNode,
@@ -49,7 +49,7 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLDivElement | null>(null);
   const [panelId, setPanelId] = useState<string | undefined>(undefined);
-  const [headerId, setHeaderId] = useState<string | undefined>(undefined);
+  const [titleId, setTitleId] = useState<string | undefined>(undefined);
 
   const floatingRootContext = useFloatingRootContext({
     open: openState,
@@ -60,15 +60,8 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
     },
   });
 
-  const { getReferenceProps, getFloatingProps } = useInteractions();
-
   useEffect(() => {
-    if (!openState) {
-      return;
-    }
-
-    const targetDocument = floating?.ownerDocument ?? reference?.ownerDocument;
-    if (!targetDocument) {
+    if (!openState || !floating) {
       return;
     }
 
@@ -77,50 +70,30 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
         return;
       }
 
-      const activeElement = targetDocument.activeElement;
-      const focusOwnedByPanel =
-        activeElement != null &&
-        (floating?.contains(activeElement) ||
-          reference?.contains(activeElement));
-
-      if (!focusOwnedByPanel) {
-        return;
-      }
-
       event.preventDefault();
       event.stopPropagation();
       handleOpenChange(false);
     };
 
-    targetDocument.addEventListener("keydown", onKeyDown);
+    floating.addEventListener("keydown", onKeyDown);
     return () => {
-      targetDocument.removeEventListener("keydown", onKeyDown);
+      floating.removeEventListener("keydown", onKeyDown);
     };
-  }, [floating, reference, openState, handleOpenChange]);
+  }, [floating, openState, handleOpenChange]);
 
   const context = useMemo(
     () => ({
       openState,
       floatingRootContext,
-      getFloatingProps,
-      getReferenceProps,
       setFloating,
       setReference,
       setOpen: handleOpenChange,
       panelId,
       setPanelId,
-      headerId,
-      setHeaderId,
+      titleId,
+      setTitleId,
     }),
-    [
-      openState,
-      floatingRootContext,
-      getFloatingProps,
-      getReferenceProps,
-      handleOpenChange,
-      panelId,
-      headerId,
-    ],
+    [openState, floatingRootContext, handleOpenChange, panelId, titleId],
   );
 
   return (

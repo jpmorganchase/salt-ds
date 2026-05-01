@@ -2,6 +2,9 @@
   background-color: var(--sidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 300px;
   --sidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--sidePanel-borderColor, var(--salt-container-primary-borderColor));
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .saltSidePanel-primary {
@@ -31,11 +34,16 @@
   border: none;
 }
 
+.saltSidePanel-none .saltSidePanel-inner {
+  padding: 0;
+}
+
 .saltSidePanel-left,
 .saltSidePanel-right {
   width: var(--saltSidePanel-width);
   height: 100%;
   min-height: 0;
+  align-self: stretch;
 }
 
 .saltSidePanel-enterAnimation,
@@ -61,7 +69,9 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  flex: 1;
   min-height: 0;
+  padding: var(--salt-spacing-300);
 }
 
 .saltSidePanel-left .saltSidePanel-inner,
