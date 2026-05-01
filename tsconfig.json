@@ -23,6 +23,7 @@
         "./packages/ag-grid-theme/stories/*",
         "./packages/core/stories/*",
         "./packages/data-grid/stories/*",
+        "./packages/date-components/stories/*",
         "./packages/icons/stories/*",
         "./packages/lab/stories/*",
         "./packages/embla-carousel/stories/*",

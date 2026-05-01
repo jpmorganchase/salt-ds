@@ -1,4 +1,3 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -8,7 +7,7 @@ import {
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { type ReactElement, type SyntheticEvent, useCallback } from "react";
 
 export const Single = (): ReactElement => {
@@ -16,7 +15,7 @@ export const Single = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};

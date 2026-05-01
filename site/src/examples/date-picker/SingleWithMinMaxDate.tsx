@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { FormField, FormFieldLabel as FormLabel, useId } from "@salt-ds/core";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -10,7 +9,7 @@ import {
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -29,7 +28,7 @@ export const SingleWithMinMaxDate = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -61,11 +60,12 @@ export const SingleWithMinMaxDate = (): ReactElement => {
     dateAdapter.parse("15/01/2030", "DD/MM/YYYY").date ?? undefined;
   const maxDate =
     dateAdapter.parse("15/01/2031", "DD/MM/YYYY").date ?? undefined;
-  const defaultVisibleMonth =
-    dateAdapter.parse("01/01/2030", "DD/MM/YYYY").date ?? undefined;
+
+  const labelId = useId();
+
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}
         minDate={minDate}
@@ -73,13 +73,10 @@ export const SingleWithMinMaxDate = (): ReactElement => {
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSingleGridPanel
-            defaultVisibleMonth={defaultVisibleMonth}
-            helperText={helperText}
-          />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>

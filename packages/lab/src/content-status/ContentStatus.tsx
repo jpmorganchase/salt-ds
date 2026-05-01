@@ -80,7 +80,7 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
         toBeAnnounced.push(status);
       }
       if (toBeAnnounced.length > 0) {
-        announce(toBeAnnounced.join(" "));
+        announce(toBeAnnounced.join(" "), { ariaLive: "polite" });
       }
     }, [announce, disableAnnouncer, message, status, title]);
 

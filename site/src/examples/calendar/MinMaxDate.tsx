@@ -1,14 +1,13 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import type { ReactElement } from "react";
 
 export const MinMaxDate = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
   const defaultSelectedDate = dateAdapter.today();
   const minDate = dateAdapter.startOf(defaultSelectedDate, "month");
   const maxDate = dateAdapter.endOf(defaultSelectedDate, "month");
