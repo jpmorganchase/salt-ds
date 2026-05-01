@@ -5,6 +5,7 @@ import {
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
+  type SidePanelValue,
   useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
