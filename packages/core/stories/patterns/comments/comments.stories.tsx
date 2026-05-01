@@ -11,9 +11,10 @@ import {
   Label,
   MultilineInput,
   StackLayout,
+  StatusIndicator,
   Text,
 } from "@salt-ds/core";
-import { CloseIcon, InfoIcon, RefreshIcon, SendIcon } from "@salt-ds/icons";
+import { CloseIcon, RefreshIcon, SendIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import { useState } from "react";
 
@@ -21,19 +22,31 @@ export default {
   title: "Patterns/Comments",
 } as Meta;
 
+const formatDate = (timestamp: number) =>
+  new Date(timestamp)
+    .toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    })
+    .replace(",", " •");
+
 export const Default = () => {
   const [inputValue, setInputValue] = useState("");
   const [comments, setComments] = useState([
     {
       name: "Alex Rivera",
       role: "Data Analyst",
-      date: "01 Apr 2026, 09:26 AM",
+      date: 1775035560000,
       text: "Date range + status. Also the saved views are super helpful.",
     },
     {
       name: "Jordan Lee",
       role: "Product Manager",
-      date: "01 Apr 2026, 09:20 AM",
+      date: 1775035200000,
       text: "Has anyone tried filtering by region and date?",
     },
   ]);
@@ -44,16 +57,7 @@ export const Default = () => {
       {
         name: "Sam Patel",
         role: "UX Designer",
-        date: new Date()
-          .toLocaleString("en-GB", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          })
-          .replace(",", " •"),
+        date: Date.now(),
         text: inputValue,
       },
       ...comments,
@@ -63,34 +67,41 @@ export const Default = () => {
 
   return (
     <StackLayout gap={0} style={{ width: "420px" }}>
-      <div style={{ padding: "var(--salt-spacing-100)" }}>
+      <form
+        style={{ padding: "var(--salt-spacing-100)" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <FormField>
           <FormFieldLabel>Write a comment</FormFieldLabel>
           <Input
             bordered
             placeholder="Add a comment..."
             endAdornment={
-              <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
-                <SendIcon />
+              <Button
+                aria-label="Send comment"
+                type="submit"
+                disabled={!inputValue.trim()}
+              >
+                <SendIcon aria-hidden />
               </Button>
             }
             value={inputValue}
             onChange={(e) =>
               setInputValue((e.target as HTMLInputElement).value)
             }
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit();
-            }}
           />
         </FormField>
-      </div>
+      </form>
       <StackLayout gap={0} separators>
         {comments.map((c) => (
           <StackLayout padding={1} gap={1} key={`${c.name}-${c.date}`}>
             <StackLayout gap={0.5}>
               <Text styleAs="h4">{c.name}</Text>
               <Text styleAs="label" color="secondary">
-                {c.role} • {c.date}
+                {c.role} • {formatDate(c.date)}
               </Text>
             </StackLayout>
             <Text>{c.text}</Text>
@@ -106,16 +117,14 @@ export const WithAvatar = () => {
   const [comments, setComments] = useState([
     {
       name: "Alex Rivera",
-      initials: "AR",
       role: "Data Analyst",
-      date: "01 Apr 2026, 09:26 AM",
+      date: 1775035560000,
       text: "Date range + status. Also the saved views are super helpful.",
     },
     {
       name: "Jordan Lee",
-      initials: "JL",
       role: "Product Manager",
-      date: "01 Apr 2026, 09:20 AM",
+      date: 1775035200000,
       text: "Has anyone tried filtering by region and date?",
     },
   ]);
@@ -125,18 +134,8 @@ export const WithAvatar = () => {
     setComments([
       {
         name: "Sam Patel",
-        initials: "SP",
         role: "UX Designer",
-        date: new Date()
-          .toLocaleString("en-GB", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          })
-          .replace(",", " •"),
+        date: Date.now(),
         text: inputValue,
       },
       ...comments,
@@ -146,37 +145,44 @@ export const WithAvatar = () => {
 
   return (
     <StackLayout gap={0} style={{ width: "420px" }}>
-      <div style={{ padding: "var(--salt-spacing-100)" }}>
+      <form
+        style={{ padding: "var(--salt-spacing-100)" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <FormField>
           <FormFieldLabel>Write a comment</FormFieldLabel>
           <Input
             bordered
             placeholder="Add a comment..."
             endAdornment={
-              <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
-                <SendIcon />
+              <Button
+                aria-label="Send comment"
+                type="submit"
+                disabled={!inputValue.trim()}
+              >
+                <SendIcon aria-hidden />
               </Button>
             }
             value={inputValue}
             onChange={(e) =>
               setInputValue((e.target as HTMLInputElement).value)
             }
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit();
-            }}
           />
         </FormField>
-      </div>
+      </form>
       <StackLayout gap={0} separators>
         {comments.map((c) => (
           <StackLayout padding={1} gap={1} key={`${c.name}-${c.date}`}>
             <FlexLayout gap={1}>
-              <Avatar size={1} color="accent" name={c.initials} />
+              <Avatar size={1} color="accent" name={c.name} />
               <StackLayout gap={1}>
                 <StackLayout gap={0.5}>
                   <Text styleAs="h4">{c.name}</Text>
                   <Text styleAs="label" color="secondary">
-                    {c.role} • {c.date}
+                    {c.role} • {formatDate(c.date)}
                   </Text>
                 </StackLayout>
                 <Text>{c.text}</Text>
@@ -195,16 +201,14 @@ export const WithMultilineInput = () => {
   const [comments, setComments] = useState([
     {
       name: "Alex Rivera",
-      initials: "AR",
       role: "Data Analyst",
-      date: "01 Apr 2026, 09:26 AM",
+      date: 1775035560000,
       text: "Date range + status. Also the saved views are super helpful.",
     },
     {
       name: "Jordan Lee",
-      initials: "JL",
       role: "Product Manager",
-      date: "01 Apr 2026, 09:20 AM",
+      date: 1775035200000,
       text: "Has anyone tried filtering by region and date?",
     },
   ]);
@@ -214,18 +218,8 @@ export const WithMultilineInput = () => {
     setComments([
       {
         name: "Sam Patel",
-        initials: "SP",
         role: "UX Designer",
-        date: new Date()
-          .toLocaleString("en-GB", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          })
-          .replace(",", " •"),
+        date: Date.now(),
         text: inputValue,
       },
       ...comments,
@@ -235,7 +229,13 @@ export const WithMultilineInput = () => {
 
   return (
     <StackLayout gap={0} style={{ width: "420px" }}>
-      <div style={{ padding: "var(--salt-spacing-100)" }}>
+      <form
+        style={{ padding: "var(--salt-spacing-100)" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <FormField>
           <FormFieldLabel>Write a comment</FormFieldLabel>
           <MultilineInput
@@ -244,8 +244,12 @@ export const WithMultilineInput = () => {
             endAdornment={
               <>
                 <Label>{`${inputValue.length}/${MAX_CHARS}`}</Label>
-                <Button onClick={handleSubmit} disabled={!inputValue.trim()}>
-                  <SendIcon />
+                <Button
+                  aria-label="Send comment"
+                  type="submit"
+                  disabled={!inputValue.trim()}
+                >
+                  <SendIcon aria-hidden />
                 </Button>
               </>
             }
@@ -253,22 +257,19 @@ export const WithMultilineInput = () => {
             onChange={(e) =>
               setInputValue((e.target as HTMLInputElement).value)
             }
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit();
-            }}
           />
         </FormField>
-      </div>
+      </form>
       <StackLayout gap={0} separators>
         {comments.map((c) => (
           <StackLayout padding={1} gap={1} key={`${c.name}-${c.date}`}>
             <FlexLayout gap={1}>
-              <Avatar size={1} color="accent" name={c.initials} />
+              <Avatar size={1} color="accent" name={c.name} />
               <StackLayout gap={1}>
                 <StackLayout gap={0.5}>
                   <Text styleAs="h4">{c.name}</Text>
                   <Text styleAs="label" color="secondary">
-                    {c.role} • {c.date}
+                    {c.role} • {formatDate(c.date)}
                   </Text>
                 </StackLayout>
                 <Text>{c.text}</Text>
@@ -291,21 +292,15 @@ export const WithEmptyState = () => {
             bordered
             placeholder="Add a comment..."
             endAdornment={
-              <Button disabled>
-                <SendIcon />
+              <Button aria-label="Send comment" disabled>
+                <SendIcon aria-hidden />
               </Button>
             }
           />
         </FormField>
       </div>
       <StackLayout gap={3} align="center">
-        <InfoIcon
-          style={{
-            color: "white",
-            backgroundColor: "var(--salt-status-info-foreground-decorative)",
-          }}
-          size={2}
-        />
+        <StatusIndicator status="info" size={2} />
         <FlexLayout direction="column" align="center" gap={0}>
           <Text>No comments yet.</Text>
           <Text>Be the first to comment.</Text>
@@ -319,16 +314,14 @@ export const WithSubmissionError = () => {
   const [comments, _setComments] = useState([
     {
       name: "Alex Rivera",
-      initials: "AR",
       role: "Data Analyst",
-      date: "01 Apr 2026, 09:26 AM",
+      date: 1775035560000,
       text: "Date range + status. Also the saved views are super helpful.",
     },
     {
       name: "Jordan Lee",
-      initials: "JL",
       role: "Product Manager",
-      date: "01 Apr 2026, 09:20 AM",
+      date: 1775035200000,
       text: "Has anyone tried filtering by region and date?",
     },
   ]);
@@ -342,8 +335,8 @@ export const WithSubmissionError = () => {
             bordered
             placeholder="Add a comment..."
             endAdornment={
-              <Button disabled>
-                <SendIcon />
+              <Button aria-label="Send comment" disabled>
+                <SendIcon aria-hidden />
               </Button>
             }
           />
@@ -366,11 +359,15 @@ export const WithSubmissionError = () => {
           </StackLayout>
         </BannerContent>
         <BannerActions>
-          <Button sentiment="neutral" appearance="transparent">
-            <RefreshIcon />
+          <Button
+            aria-label="Retry"
+            sentiment="neutral"
+            appearance="transparent"
+          >
+            <RefreshIcon aria-hidden />
           </Button>
-          <Button aria-label="close" appearance="transparent">
-            <CloseIcon />
+          <Button aria-label="Close" appearance="transparent">
+            <CloseIcon aria-hidden />
           </Button>
         </BannerActions>
       </Banner>
@@ -378,12 +375,12 @@ export const WithSubmissionError = () => {
         {comments.map((c) => (
           <StackLayout padding={1} gap={1} key={`${c.name}-${c.date}`}>
             <FlexLayout gap={1}>
-              <Avatar size={1} color="accent" name={c.initials} />
+              <Avatar size={1} color="accent" name={c.name} />
               <StackLayout gap={1}>
                 <StackLayout gap={0.5}>
                   <Text styleAs="h4">{c.name}</Text>
                   <Text styleAs="label" color="secondary">
-                    {c.role} • {c.date}
+                    {c.role} • {formatDate(c.date)}
                   </Text>
                 </StackLayout>
                 <Text>{c.text}</Text>
