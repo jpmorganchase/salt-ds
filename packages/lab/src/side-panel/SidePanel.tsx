@@ -159,7 +159,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       }
 
       initialRender.current = false;
-    }, [openState, targetWindow, disableAnimation]);
+    }, [openState, targetWindow, disableAnimation, floatingRootContext.elements.reference]);
 
     if (!showComponent) return null;
 

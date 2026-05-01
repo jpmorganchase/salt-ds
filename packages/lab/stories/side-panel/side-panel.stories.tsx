@@ -38,6 +38,7 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
+  type SidePanelValue,
   useSidePanel,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -212,8 +213,6 @@ const manualPanelStyle = {
   "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
-type ManualPanelContext = ReturnType<typeof useSidePanel>;
-
 const ManualRightPanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
@@ -263,7 +262,7 @@ const ManualTriggerButton = ({
   context,
 }: {
   children: string;
-  context: ManualPanelContext;
+  context: SidePanelValue;
 }) => {
   const { openState, setOpen, getTriggerProps, panelId } = context;
 
