@@ -552,6 +552,7 @@ const WithTableContent = () => {
         position="right"
         style={withTablePanelStyle}
         key={selectedRow?.id}
+        disableAnimation
       >
         {formValues && (
           <>

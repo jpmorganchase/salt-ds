@@ -121,9 +121,9 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     useEffect(() => {
       if (disableAnimation) {
-        // When animation is disabled the panel is always kept mounted so the parent can
-        // control sizing (e.g. flex-grow transition in a splitter).
-        setShowComponent(true);
+        // When animation is disabled, show/hide immediately since there is
+        // no exit animation to wait for before unmounting.
+        setShowComponent(openState);
         setAnimating(false);
         initialRender.current = false;
         return;

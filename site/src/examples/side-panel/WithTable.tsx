@@ -158,7 +158,12 @@ const SidePanelExample = () => {
         </TableContainer>
       </div>
 
-      <SidePanel position="right" style={panelStyle} key={selectedRow?.id}>
+      <SidePanel
+        position="right"
+        style={panelStyle}
+        key={selectedRow?.id}
+        disableAnimation
+      >
         {formValues && (
           <>
             <SidePanelHeader>
