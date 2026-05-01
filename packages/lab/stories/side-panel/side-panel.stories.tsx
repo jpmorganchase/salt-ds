@@ -7,7 +7,6 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  H2,
   Input,
   Link,
   RadioButton,
@@ -23,7 +22,6 @@ import {
   Tooltip,
   TR,
   useIcon,
-  useId,
 } from "@salt-ds/core";
 import {
   ChattingIcon,
@@ -44,9 +42,12 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "@salt-ds/react-resizable-panels-theme/index.css";
-import React, {
+import type React from "react";
+import {
+  type ChangeEvent,
   type ChangeEventHandler,
   type CSSProperties,
+  Fragment,
   type ReactNode,
   useCallback,
   useRef,
@@ -138,9 +139,7 @@ const DefaultContent = () => {
 
       <SidePanel position="right">
         <SidePanelHeader>
-          <SidePanelTitle>
-            <H2>Section Title</H2>
-          </SidePanelTitle>
+          <SidePanelTitle>Section Title</SidePanelTitle>
           <Button
             aria-label="Close"
             appearance="transparent"
@@ -182,9 +181,7 @@ const LeftContent = () => {
     >
       <SidePanel position="left">
         <SidePanelHeader>
-          <SidePanelTitle>
-            <H2>Section Title</H2>
-          </SidePanelTitle>
+          <SidePanelTitle>Section Title</SidePanelTitle>
           <Button
             aria-label="Close"
             appearance="transparent"
@@ -223,9 +220,7 @@ const ManualRightPanel = () => {
   return (
     <SidePanel style={manualPanelStyle} variant="secondary">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2>Right Panel</H2>
-        </SidePanelTitle>
+        <SidePanelTitle>Right Panel</SidePanelTitle>
         <Button
           aria-label="Close"
           appearance="transparent"
@@ -247,9 +242,7 @@ const ManualLeftPanel = () => {
   return (
     <SidePanel position="left" style={manualPanelStyle} variant="secondary">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2>Left Panel</H2>
-        </SidePanelTitle>
+        <SidePanelTitle>Left Panel</SidePanelTitle>
         <Button
           aria-label="Close"
           appearance="transparent"
@@ -272,16 +265,15 @@ const ManualTriggerButton = ({
   children: string;
   context: ManualPanelContext;
 }) => {
-  const { openState, setOpen, getTriggerProps, triggerRef, panelId } = context;
+  const { openState, setOpen, getTriggerProps, panelId } = context;
 
   return (
     <Button
-      {...(getTriggerProps({
+      {...getTriggerProps({
         "aria-expanded": openState,
         "aria-controls": openState ? panelId : undefined,
         onClick: () => setOpen(!openState),
-      }) as Record<string, unknown>)}
-      ref={triggerRef as React.Ref<HTMLButtonElement>}
+      })}
       style={{ width: "fit-content", whiteSpace: "nowrap" }}
     >
       {children}
@@ -305,10 +297,6 @@ const ManualContentArea = () => {
   return (
     <SidePanelProvider>
       <ContentExample>
-        <Text style={{ marginBottom: "var(--salt-spacing-100)" }}>
-          Each side panel needs its own provider context. The left panel uses
-          the outer provider, and the right panel uses this nested provider.
-        </Text>
         <FlexLayout gap={1} justify="space-between">
           <ManualTriggerButton context={leftPanelContext}>
             Toggle left panel
@@ -400,9 +388,7 @@ const VariantsContent = () => {
 
       <SidePanel position="right" variant={variant}>
         <SidePanelHeader>
-          <SidePanelTitle>
-            <H2>Section Title</H2>
-          </SidePanelTitle>
+          <SidePanelTitle>Section Title</SidePanelTitle>
           <Button
             aria-label="Close"
             appearance="transparent"
@@ -473,48 +459,63 @@ export const WithTable: StoryFn = () => {
 
 const WithTableContent = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
+  const [data, setData] = useState(tableData);
+  const [formValues, setFormValues] = useState<TeamMember | null>(null);
   const { CloseIcon } = useIcon();
-  const { setOpen, triggerRef, getTriggerProps, openState, panelId } =
-    useSidePanel();
+  const { setOpen, openState, setTriggerRef, panelId } = useSidePanel();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
-    const isExpanded = openState && selectedRow?.id === row.id;
-
-    if (isExpanded) {
-      setSelectedRow(null);
-      triggerRef(null);
+    if (openState && selectedRow?.id === row.id) {
       setOpen(false);
       return;
     }
+    setTriggerRef(target);
     setSelectedRow(row);
-    triggerRef(target);
+    setFormValues({ ...row });
     setOpen(true);
+  };
+
+  const handleSave = () => {
+    if (formValues) {
+      setData((prev) =>
+        prev.map((r) => (r.id === formValues.id ? formValues : r)),
+      );
+    }
+    setOpen(false);
   };
 
   const getRowTriggerProps = (row: TeamMember) => {
     const isExpanded = openState && selectedRow?.id === row.id;
 
-    return getTriggerProps({
+    return {
       "aria-expanded": isExpanded,
       "aria-controls": isExpanded ? panelId : undefined,
       "aria-label": `Edit details for ${row.name}`,
       onClick: (e: React.MouseEvent<HTMLElement>) => {
         handleRowClick(row, e.currentTarget);
       },
-    }) as Record<string, unknown>;
+    };
   };
 
   return (
     <FlexLayout
       style={{
         width: "100%",
-        height: "100%",
+        height: 350,
         border:
           "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        overflow: "hidden",
       }}
       gap={0}
     >
-      <div style={{ flex: 1, minWidth: 0, padding: "var(--salt-spacing-300)" }}>
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          padding: "var(--salt-spacing-300)",
+          boxSizing: "border-box",
+        }}
+      >
         <TableContainer>
           <Table>
             <caption>Users</caption>
@@ -527,7 +528,7 @@ const WithTableContent = () => {
               </TR>
             </THead>
             <TBody>
-              {tableData.map((row) => (
+              {data.map((row) => (
                 <TR key={row.id}>
                   <TD>{row.name}</TD>
                   <TD>{row.email}</TD>
@@ -552,16 +553,12 @@ const WithTableContent = () => {
         style={withTablePanelStyle}
         key={selectedRow?.id}
       >
-        {selectedRow && (
-          <>
+        {formValues && (
+          <Fragment>
             <SidePanelHeader>
               <SidePanelTitle>
-                <H2>
-                  <span className="salt-visuallyHidden">
-                    {selectedRow.name}
-                  </span>
-                  Employee Details
-                </H2>
+                <span className="salt-visuallyHidden">{formValues.name}</span>
+                Employee Details
               </SidePanelTitle>
               <Button
                 aria-label="Close"
@@ -575,15 +572,36 @@ const WithTableContent = () => {
               <StackLayout style={{ width: "100%" }}>
                 <FormField>
                   <FormFieldLabel>Name</FormFieldLabel>
-                  <Input defaultValue={selectedRow.name} />
+                  <Input
+                    value={formValues.name}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      setFormValues(
+                        (v) => v && { ...v, name: event.target.value },
+                      )
+                    }
+                  />
                 </FormField>
                 <FormField>
                   <FormFieldLabel>Email</FormFieldLabel>
-                  <Input defaultValue={selectedRow.email} />
+                  <Input
+                    value={formValues.email}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      setFormValues(
+                        (v) => v && { ...v, email: event.target.value },
+                      )
+                    }
+                  />
                 </FormField>
                 <FormField>
                   <FormFieldLabel>Phone</FormFieldLabel>
-                  <Input defaultValue={selectedRow.phone} />
+                  <Input
+                    value={formValues.phone}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      setFormValues(
+                        (v) => v && { ...v, phone: event.target.value },
+                      )
+                    }
+                  />
                 </FormField>
                 <FlexLayout gap={1}>
                   <Button
@@ -597,14 +615,14 @@ const WithTableContent = () => {
                   <Button
                     sentiment="accented"
                     style={{ width: "100%" }}
-                    onClick={() => setOpen(false)}
+                    onClick={handleSave}
                   >
                     Save
                   </Button>
                 </FlexLayout>
               </StackLayout>
             </SidePanelContent>
-          </>
+          </Fragment>
         )}
       </SidePanel>
     </FlexLayout>
@@ -671,9 +689,7 @@ const WithAppHeaderPanel = () => {
   return (
     <SidePanel>
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2>Help &amp; support</H2>
-        </SidePanelTitle>
+        <SidePanelTitle>Help & support</SidePanelTitle>
         <Button
           aria-label="Close"
           appearance="transparent"
@@ -724,125 +740,6 @@ export const WithAppHeader: StoryFn = () => {
     </SidePanelProvider>
   );
 };
-
-const OUTER_PANEL_WIDTH = 500;
-const INNER_PANEL_WIDTH = 200;
-
-const outerPanelStyle = {
-  "--saltSidePanel-width": `${OUTER_PANEL_WIDTH}px`,
-} as CSSProperties;
-
-const innerPanelStyle = {
-  "--saltSidePanel-width": `${INNER_PANEL_WIDTH}px`,
-} as CSSProperties;
-
-const InnerPanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-  return (
-    <SidePanel style={innerPanelStyle} variant="tertiary">
-      <SidePanelHeader>
-        <SidePanelTitle>
-          <H2>Nested Panel</H2>
-        </SidePanelTitle>
-        <Button
-          aria-label="Close"
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
-      </SidePanelHeader>
-      <SidePanelContent>
-        <Text>This panel is nested inside the right panel.</Text>
-      </SidePanelContent>
-    </SidePanel>
-  );
-};
-
-const OuterPanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-  const headingId = useId();
-
-  return (
-    <SidePanel
-      aria-labelledby={headingId}
-      style={outerPanelStyle}
-      variant="secondary"
-    >
-      <SidePanelProvider>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            height: "calc(100% + 2 * var(--salt-spacing-300))",
-            margin: "calc(-1 * var(--salt-spacing-300))",
-            marginLeft: 0,
-          }}
-        >
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              overflow: "auto",
-              padding: "var(--salt-spacing-300)",
-            }}
-          >
-            <StackLayout gap={1}>
-              <FlexLayout align="center">
-                <H2 id={headingId} style={{ flex: 1 }}>
-                  Right Panel
-                </H2>
-                <Button
-                  aria-label="Close"
-                  appearance="transparent"
-                  onClick={() => setOpen(false)}
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-              </FlexLayout>
-              <Text>Content of the right panel.</Text>
-              <SidePanelTrigger>
-                <Button style={{ width: "fit-content" }}>
-                  Toggle nested panel
-                </Button>
-              </SidePanelTrigger>
-            </StackLayout>
-          </div>
-          <InnerPanel />
-        </div>
-      </SidePanelProvider>
-    </SidePanel>
-  );
-};
-
-export const Nested: StoryFn = () => (
-  <div
-    style={{
-      width: "100%",
-      height: 300,
-      display: "flex",
-      border:
-        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-      borderRadius: "var(--salt-palette-corner-weak)",
-      overflow: "hidden",
-    }}
-  >
-    <SidePanelProvider>
-      <ContentExample>
-        <FlexLayout justify="end">
-          <SidePanelTrigger>
-            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
-              Toggle right panel
-            </Button>
-          </SidePanelTrigger>
-        </FlexLayout>
-      </ContentExample>
-      <OuterPanel />
-    </SidePanelProvider>
-  </div>
-);
 
 // ---------------------------------------------------------------------------
 // Scrollable
@@ -903,9 +800,7 @@ const ScrollablePanel = () => {
   return (
     <SidePanel position="right">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2>Section Title</H2>
-        </SidePanelTitle>
+        <SidePanelTitle>Section Title</SidePanelTitle>
         <Button
           aria-label="Close"
           appearance="transparent"
@@ -1014,9 +909,7 @@ const ResizablePanel = ({ style }: { style?: CSSProperties }) => {
       variant="primary"
     >
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2>Section Title</H2>
-        </SidePanelTitle>
+        <SidePanelTitle>Section Title</SidePanelTitle>
         <Button
           aria-label="Close"
           appearance="transparent"
@@ -1131,9 +1024,7 @@ const WithNavContent = () => {
       <Nav />
       <SidePanel position="left">
         <SidePanelHeader>
-          <SidePanelTitle>
-            <H2>Section Title</H2>
-          </SidePanelTitle>
+          <SidePanelTitle>Section Title</SidePanelTitle>
           <Button
             aria-label="Close"
             appearance="transparent"
@@ -1206,12 +1097,10 @@ const CardsAppHeader = () => {
 };
 
 const HelpPanelCard = ({
-  headingId,
   open,
   onToggle,
   style,
 }: {
-  headingId: string | undefined;
   open: boolean;
   onToggle: () => void;
   style?: CSSProperties;
@@ -1233,9 +1122,7 @@ const HelpPanelCard = ({
       >
         <DoubleChevronRightIcon aria-hidden />
       </Button>
-      <H2 id={headingId} style={{ flex: 1 }}>
-        Help &amp; support
-      </H2>
+      <SidePanelTitle>Help & support</SidePanelTitle>
     </FlexLayout>
     <FlexItem
       role="region"
@@ -1264,7 +1151,6 @@ const HelpPanelCard = ({
 );
 
 const CardsContent = () => {
-  const headingId = useId();
   const { openState, setOpen } = useSidePanel();
 
   return (
@@ -1302,7 +1188,6 @@ const CardsContent = () => {
         </FlexItem>
 
         <SidePanel
-          aria-labelledby={headingId}
           style={
             {
               position: "sticky",
@@ -1314,7 +1199,6 @@ const CardsContent = () => {
           variant="none"
         >
           <HelpPanelCard
-            headingId={headingId}
             open={openState}
             onToggle={() => setOpen(!openState)}
             style={{ flex: 1 }}
@@ -1342,8 +1226,6 @@ export const ResizableCards: StoryFn = () => {
     panelTransition,
     handleOpenChange,
   } = useResizableSidePanel({ defaultExpanded: true });
-
-  const headingId = useId();
 
   return (
     <FlexLayout
@@ -1405,12 +1287,10 @@ export const ResizableCards: StoryFn = () => {
             >
               <SidePanel
                 disableAnimation
-                aria-labelledby={headingId}
                 style={resizableSidePanelStyle}
                 variant="none"
               >
                 <HelpPanelCard
-                  headingId={headingId}
                   open={expanded}
                   onToggle={toggle}
                   style={{

@@ -1,4 +1,4 @@
-import { Button, FlexLayout, H2, Text, useIcon, useId } from "@salt-ds/core";
+import { Button, FlexLayout, Text, useIcon, useId } from "@salt-ds/core";
 import {
   SidePanel,
   SidePanelContent,
@@ -8,7 +8,7 @@ import {
   type SidePanelValue,
   useSidePanel,
 } from "@salt-ds/lab";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 import { ContentExample } from "./ContentExample";
 
@@ -16,25 +16,21 @@ const panelStyle = {
   "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
-type PanelContext = SidePanelValue;
-
 const RightPanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
 
-  const headerId = useId();
+  const titleId = useId();
   const closeButtonId = useId();
 
   return (
     <SidePanel style={panelStyle} variant="secondary">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2 id={headerId}>Right Panel</H2>
-        </SidePanelTitle>
+        <SidePanelTitle id={titleId}>Right Panel</SidePanelTitle>
         <Button
           id={closeButtonId}
           aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, headerId) || undefined}
+          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
           appearance="transparent"
           onClick={() => setOpen(false)}
         >
@@ -52,19 +48,17 @@ const LeftPanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
 
-  const headerId = useId();
+  const titleId = useId();
   const closeButtonId = useId();
 
   return (
     <SidePanel position="left" style={panelStyle} variant="secondary">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2 id={headerId}>Left Panel</H2>
-        </SidePanelTitle>
+        <SidePanelTitle id={titleId}>Left Panel</SidePanelTitle>
         <Button
           id={closeButtonId}
           aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, headerId) || undefined}
+          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
           appearance="transparent"
           onClick={() => setOpen(false)}
         >
@@ -83,18 +77,17 @@ const TriggerButton = ({
   context,
 }: {
   children: string;
-  context: PanelContext;
+  context: SidePanelValue;
 }) => {
-  const { openState, setOpen, panelId, getTriggerProps, triggerRef } = context;
+  const { openState, setOpen, panelId, getTriggerProps } = context;
 
   return (
     <Button
-      {...(getTriggerProps({
+      {...getTriggerProps({
         "aria-expanded": openState,
         "aria-controls": openState ? panelId : undefined,
         onClick: () => setOpen(!openState),
-      }) as Record<string, unknown>)}
-      ref={triggerRef as React.Ref<HTMLButtonElement>}
+      })}
       style={{ width: "fit-content", whiteSpace: "nowrap" }}
     >
       {children}

@@ -3,7 +3,6 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  H2,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
@@ -40,7 +39,7 @@ const VariantsContent = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
 
-  const headerId = useId();
+  const titleId = useId();
   const closeButtonId = useId();
 
   const handleVariantChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -88,13 +87,11 @@ const VariantsContent = () => {
 
       <SidePanel position="right" variant={variant}>
         <SidePanelHeader>
-          <SidePanelTitle>
-            <H2 id={headerId}>Section Title</H2>
-          </SidePanelTitle>
+          <SidePanelTitle id={titleId}>Section Title</SidePanelTitle>
           <Button
             id={closeButtonId}
             aria-label="Close"
-            aria-labelledby={clsx(closeButtonId, headerId) || undefined}
+            aria-labelledby={clsx(closeButtonId, titleId) || undefined}
             appearance="transparent"
             onClick={() => setOpen(false)}
           >

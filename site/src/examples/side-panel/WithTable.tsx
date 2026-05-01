@@ -3,7 +3,6 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  H2,
   Input,
   StackLayout,
   Table,
@@ -25,7 +24,7 @@ import {
   useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
-import React, { type CSSProperties, useState } from "react";
+import React, { type CSSProperties, Fragment, useState } from "react";
 
 interface TeamMember {
   id: string;
@@ -73,39 +72,46 @@ const panelStyle = {
 
 const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
+  const [data, setData] = useState(tableData);
+  const [formValues, setFormValues] = useState<TeamMember | null>(null);
   const { CloseIcon } = useIcon();
-  const { setOpen, triggerRef, openState, getTriggerProps, panelId } =
-    useSidePanel();
+  const { setOpen, openState, setTriggerRef, panelId } = useSidePanel();
 
-  const headerId = useId();
+  const titleId = useId();
   const closeButtonId = useId();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
-    const isExpanded = openState && selectedRow?.id === row.id;
-
-    if (isExpanded) {
-      setSelectedRow(null);
-      triggerRef(null);
+    if (openState && selectedRow?.id === row.id) {
       setOpen(false);
       return;
     }
 
+    setTriggerRef(target);
     setSelectedRow(row);
-    triggerRef(target);
+    setFormValues({ ...row });
     setOpen(true);
+  };
+
+  const handleSave = () => {
+    if (formValues) {
+      setData((prev) =>
+        prev.map((r) => (r.id === formValues.id ? formValues : r)),
+      );
+    }
+    setOpen(false);
   };
 
   const getRowTriggerProps = (row: TeamMember) => {
     const isExpanded = openState && selectedRow?.id === row.id;
 
-    return getTriggerProps({
+    return {
       "aria-expanded": isExpanded,
       "aria-controls": isExpanded ? panelId : undefined,
       "aria-label": `Edit details for ${row.name}`,
       onClick: (e: React.MouseEvent<HTMLElement>) => {
         handleRowClick(row, e.currentTarget);
       },
-    }) as Record<string, unknown>;
+    };
   };
 
   return (
@@ -131,7 +137,7 @@ const SidePanelExample = () => {
               </TR>
             </THead>
             <TBody>
-              {tableData.map((row) => (
+              {data.map((row) => (
                 <TR key={row.id}>
                   <TD>{row.name}</TD>
                   <TD>{row.email}</TD>
@@ -152,21 +158,17 @@ const SidePanelExample = () => {
       </div>
 
       <SidePanel position="right" style={panelStyle} key={selectedRow?.id}>
-        {selectedRow && (
-          <>
+        {formValues && (
+          <Fragment>
             <SidePanelHeader>
-              <SidePanelTitle>
-                <H2 id={headerId}>
-                  <span className="salt-visuallyHidden">
-                    {selectedRow.name}
-                  </span>
-                  Employee Details
-                </H2>
+              <SidePanelTitle id={titleId}>
+                <span className="salt-visuallyHidden">{formValues.name}</span>
+                Employee Details
               </SidePanelTitle>
               <Button
                 id={closeButtonId}
                 aria-label="Close"
-                aria-labelledby={clsx(closeButtonId, headerId) || undefined}
+                aria-labelledby={clsx(closeButtonId, titleId) || undefined}
                 appearance="transparent"
                 onClick={() => setOpen(false)}
               >
@@ -177,15 +179,36 @@ const SidePanelExample = () => {
               <StackLayout style={{ width: "100%" }}>
                 <FormField>
                   <FormFieldLabel>Name</FormFieldLabel>
-                  <Input defaultValue={selectedRow.name} />
+                  <Input
+                    value={formValues.name}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormValues(
+                        (v) => v && { ...v, name: event.target.value },
+                      )
+                    }
+                  />
                 </FormField>
                 <FormField>
                   <FormFieldLabel>Email</FormFieldLabel>
-                  <Input defaultValue={selectedRow.email} />
+                  <Input
+                    value={formValues.email}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormValues(
+                        (v) => v && { ...v, email: event.target.value },
+                      )
+                    }
+                  />
                 </FormField>
                 <FormField>
                   <FormFieldLabel>Phone</FormFieldLabel>
-                  <Input defaultValue={selectedRow.phone} />
+                  <Input
+                    value={formValues.phone}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormValues(
+                        (v) => v && { ...v, phone: event.target.value },
+                      )
+                    }
+                  />
                 </FormField>
                 <FlexLayout gap={1}>
                   <Button
@@ -199,14 +222,14 @@ const SidePanelExample = () => {
                   <Button
                     sentiment="accented"
                     style={{ width: "100%" }}
-                    onClick={() => setOpen(false)}
+                    onClick={handleSave}
                   >
                     Save
                   </Button>
                 </FlexLayout>
               </StackLayout>
             </SidePanelContent>
-          </>
+          </Fragment>
         )}
       </SidePanel>
     </FlexLayout>

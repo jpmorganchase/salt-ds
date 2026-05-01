@@ -4,6 +4,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type AnimationEvent,
   type ComponentProps,
   type ComponentPropsWithRef,
   forwardRef,
@@ -55,19 +56,21 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       ...rest
     } = props;
 
-    const {
-      openState,
-      floatingRootContext,
-      setFloating,
-      getFloatingProps,
-      setPanelId,
-      headerId,
-    } = useSidePanelContext();
+    const { openState, floatingRootContext, setFloating, setPanelId, titleId } =
+      useSidePanelContext();
 
     const id = useId(idProp);
 
     const [showComponent, setShowComponent] = useState(openState);
-    const [animating, setAnimating] = useState(false);
+    const [animating, setAnimating] = useState(() => {
+      if (!openState || disableAnimation) return false;
+      // Animate on first mount only when the trigger has focus, indicating a
+      // user-initiated open.
+      const reference = floatingRootContext.elements.reference;
+      if (!(reference instanceof Element)) return false;
+      const activeElement = reference.ownerDocument?.activeElement;
+      return !!activeElement && reference.contains(activeElement);
+    });
     // On first mount while open, skip moving focus when focus did not come from the trigger.
     const [skipInitialFocus, setSkipInitialFocus] = useState(() => {
       if (!openState) return false;
@@ -92,7 +95,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
-    const handleAnimationEnd = () => {
+    const handleAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
+      if (event.currentTarget !== event.target) return;
       setAnimating(false);
       if (!openState) {
         setShowComponent(false);
@@ -126,11 +130,15 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       }
 
       // Skip animation on initial render when panel is already open
+      // without a trigger interaction (i.e. defaultOpen scenario).
       if (initialRender.current && openState) {
-        setShowComponent(true);
-        setAnimating(false);
-        initialRender.current = false;
-        return;
+        const reference = floatingRootContext.elements.reference;
+        if (!(reference instanceof Element)) {
+          setShowComponent(true);
+          setAnimating(false);
+          initialRender.current = false;
+          return;
+        }
       }
 
       const prefersReducedMotion = targetWindow?.matchMedia?.(
@@ -161,7 +169,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const panelDiv = (
       <div
         role="region"
-        aria-labelledby={clsx(ariaLabelledBy, headerId) || undefined}
+        aria-labelledby={clsx(ariaLabelledBy, titleId) || undefined}
         ref={handleRef}
         className={clsx(
           withBaseName(),
@@ -176,16 +184,14 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           className,
         )}
         onAnimationEnd={disableAnimation ? undefined : handleAnimationEnd}
-        {...getFloatingProps({
-          ...rest,
-          id,
-        })}
+        {...rest}
+        id={id}
       >
         <div className={withBaseName("inner")}>{children}</div>
       </div>
     );
 
-    if (openState) {
+    if (openState || animating) {
       return (
         <FloatingFocusManager
           context={context}

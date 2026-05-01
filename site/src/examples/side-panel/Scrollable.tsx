@@ -1,7 +1,6 @@
 import {
   Button,
   FlexLayout,
-  H2,
   StackLayout,
   Text,
   useIcon,
@@ -69,19 +68,17 @@ const ScrollablePanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
 
-  const headerId = useId();
+  const titleId = useId();
   const closeButtonId = useId();
 
   return (
     <SidePanel position="right">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2 id={headerId}>Section Title</H2>
-        </SidePanelTitle>
+        <SidePanelTitle id={titleId}>Section Title</SidePanelTitle>
         <Button
           id={closeButtonId}
           aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, headerId) || undefined}
+          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
           appearance="transparent"
           onClick={() => setOpen(false)}
         >
