@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/lab",
-  "version": "1.0.0-alpha.89",
+  "version": "1.0.0-alpha.90",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "tinycolor2": "^1.4.2"
   },
   "peerDependencies": {
-    "@salt-ds/date-adapters": ">=0.1.0-alpha.6",
+    "@salt-ds/date-adapters": ">=0.1.0-alpha.7",
     "@types/react": ">=16.14.0",
     "react": ">=16.14.0",
     "react-dom": ">=16.14.0"

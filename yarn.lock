@@ -4151,7 +4151,7 @@ __metadata:
     tabbable: "npm:^6.0.0"
     tinycolor2: "npm:^1.4.2"
   peerDependencies:
-    "@salt-ds/date-adapters": ">=0.1.0-alpha.6"
+    "@salt-ds/date-adapters": ">=0.1.0-alpha.7"
     "@types/react": ">=16.14.0"
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
