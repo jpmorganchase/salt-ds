@@ -13,11 +13,7 @@
     "css"
   ],
   "sideEffects": [
-    "*.css",
-    "**/calendar/index.js",
-    "**/date-input/index.js",
-    "**/date-picker/index.js",
-    "**/localization-provider/index.js"
+    "*.css"
   ],
   "dependencies": {
     "@floating-ui/react": "^0.26.28",
