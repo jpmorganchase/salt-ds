@@ -1,14 +1,12 @@
-import { Button, FlexLayout, H2, Text, useIcon, useId } from "@salt-ds/core";
+import { Button, FlexLayout, Text, useIcon } from "@salt-ds/core";
 import {
   SidePanel,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
-  type SidePanelValue,
   useSidePanel,
 } from "@salt-ds/lab";
-import clsx from "clsx";
 import type { CSSProperties } from "react";
 import { ContentExample } from "./ContentExample";
 
@@ -16,25 +14,18 @@ const panelStyle = {
   "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
-type PanelContext = SidePanelValue;
+type PanelContext = ReturnType<typeof useSidePanel>;
 
 const RightPanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
 
-  const headerId = useId();
-  const closeButtonId = useId();
-
   return (
     <SidePanel style={panelStyle} variant="secondary">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2 id={headerId}>Right Panel</H2>
-        </SidePanelTitle>
+        <SidePanelTitle>Right Panel</SidePanelTitle>
         <Button
-          id={closeButtonId}
           aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, headerId) || undefined}
           appearance="transparent"
           onClick={() => setOpen(false)}
         >
@@ -52,19 +43,12 @@ const LeftPanel = () => {
   const { CloseIcon } = useIcon();
   const { setOpen } = useSidePanel();
 
-  const headerId = useId();
-  const closeButtonId = useId();
-
   return (
     <SidePanel position="left" style={panelStyle} variant="secondary">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2 id={headerId}>Left Panel</H2>
-        </SidePanelTitle>
+        <SidePanelTitle>Left Panel</SidePanelTitle>
         <Button
-          id={closeButtonId}
           aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, headerId) || undefined}
           appearance="transparent"
           onClick={() => setOpen(false)}
         >
@@ -85,16 +69,13 @@ const TriggerButton = ({
   children: string;
   context: PanelContext;
 }) => {
-  const { openState, setOpen, panelId, getTriggerProps, triggerRef } = context;
+  const { openState, setOpen, getTriggerProps } = context;
 
   return (
     <Button
-      {...(getTriggerProps({
-        "aria-expanded": openState,
-        "aria-controls": openState ? panelId : undefined,
+      {...getTriggerProps({
         onClick: () => setOpen(!openState),
-      }) as Record<string, unknown>)}
-      ref={triggerRef as React.Ref<HTMLButtonElement>}
+      })}
       style={{ width: "fit-content", whiteSpace: "nowrap" }}
     >
       {children}
@@ -106,7 +87,9 @@ const RightPanelTriggerButton = () => {
   const rightPanelContext = useSidePanel();
 
   return (
-    <TriggerButton context={rightPanelContext}>Open right panel</TriggerButton>
+    <TriggerButton context={rightPanelContext}>
+      Toggle right panel
+    </TriggerButton>
   );
 };
 
@@ -118,7 +101,7 @@ const ContentArea = () => {
       <ContentExample>
         <FlexLayout gap={1} justify="space-between">
           <TriggerButton context={leftPanelContext}>
-            Open left panel
+            Toggle left panel
           </TriggerButton>
           <RightPanelTriggerButton />
         </FlexLayout>

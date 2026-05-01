@@ -5,8 +5,3 @@
   gap: var(--salt-spacing-100);
   padding: var(--salt-spacing-300) var(--salt-spacing-300) 0 var(--salt-spacing-300);
 }
-
-.saltSidePanelTitle {
-  flex: 1;
-  min-width: 0;
-}

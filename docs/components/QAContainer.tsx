@@ -21,13 +21,13 @@ const withBaseName = makePrefixer("saltQAContainer");
 export interface QAContainerProps extends ComponentPropsWithoutRef<"div"> {
   cols?: number;
   densities?: Array<(typeof DensityValues)[number]>;
-  height?: number;
+  height?: number | string;
   enableStyleInjection?: boolean;
   itemPadding?: number;
   itemWidthAuto?: boolean;
   transposeDensity?: boolean;
   vertical?: boolean;
-  width?: number;
+  width?: number | string;
 }
 
 const BackgroundBlock = ({ children }: ComponentPropsWithoutRef<"div">) => (
@@ -82,8 +82,18 @@ export const QAContainer = ({
 }: QAContainerProps) => {
   const style = {
     "--qaContainer-cols": cols,
-    "--qaContainer-height": height === undefined ? undefined : `${height}px`,
-    "--qaContainer-width": width === undefined ? undefined : `${width}px`,
+    "--qaContainer-height":
+      height === undefined
+        ? undefined
+        : typeof height === "number"
+          ? `${height}px`
+          : height,
+    "--qaContainer-width":
+      width === undefined
+        ? undefined
+        : typeof width === "number"
+          ? `${width}px`
+          : width,
     "--qaContainer-item-padding":
       itemPadding === undefined ? undefined : `${itemPadding}px`,
     "--qaContainer-item-width": itemWidthAuto ? "auto" : undefined,
