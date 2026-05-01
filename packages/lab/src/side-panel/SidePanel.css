@@ -34,6 +34,10 @@
   border: none;
 }
 
+.saltSidePanel-none .saltSidePanel-inner {
+  padding: 0;
+}
+
 .saltSidePanel-left,
 .saltSidePanel-right {
   width: var(--saltSidePanel-width);
