@@ -24,7 +24,7 @@ import {
   useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
-import React, { type CSSProperties, Fragment, useState } from "react";
+import React, { type CSSProperties, useState } from "react";
 
 interface TeamMember {
   id: string;
@@ -159,7 +159,7 @@ const SidePanelExample = () => {
 
       <SidePanel position="right" style={panelStyle} key={selectedRow?.id}>
         {formValues && (
-          <Fragment>
+          <>
             <SidePanelHeader>
               <SidePanelTitle id={titleId}>
                 <span className="salt-visuallyHidden">{formValues.name}</span>
@@ -228,7 +228,7 @@ const SidePanelExample = () => {
                 </FlexLayout>
               </StackLayout>
             </SidePanelContent>
-          </Fragment>
+          </>
         )}
       </SidePanel>
     </FlexLayout>

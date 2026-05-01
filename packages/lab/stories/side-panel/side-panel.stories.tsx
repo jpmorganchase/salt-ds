@@ -47,7 +47,6 @@ import {
   type ChangeEvent,
   type ChangeEventHandler,
   type CSSProperties,
-  Fragment,
   type ReactNode,
   useCallback,
   useRef,
@@ -554,7 +553,7 @@ const WithTableContent = () => {
         key={selectedRow?.id}
       >
         {formValues && (
-          <Fragment>
+          <>
             <SidePanelHeader>
               <SidePanelTitle>
                 <span className="salt-visuallyHidden">{formValues.name}</span>
@@ -622,7 +621,7 @@ const WithTableContent = () => {
                 </FlexLayout>
               </StackLayout>
             </SidePanelContent>
-          </Fragment>
+          </>
         )}
       </SidePanel>
     </FlexLayout>
