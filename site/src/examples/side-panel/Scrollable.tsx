@@ -1,21 +1,13 @@
-import {
-  Button,
-  FlexLayout,
-  StackLayout,
-  Text,
-  useIcon,
-  useId,
-} from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanel,
 } from "@salt-ds/lab";
-import { clsx } from "clsx";
 
 const ScrollableContent = () => (
   <div
@@ -65,24 +57,11 @@ const ScrollableContent = () => (
 );
 
 const ScrollablePanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
-
   return (
     <SidePanel position="right">
       <SidePanelHeader>
-        <SidePanelTitle id={titleId}>Section Title</SidePanelTitle>
-        <Button
-          aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
+        <SidePanelTitle>Section Title</SidePanelTitle>
+        <SidePanelCloseButton />
       </SidePanelHeader>
       <SidePanelContent>
         <StackLayout>

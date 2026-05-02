@@ -12,18 +12,16 @@ import {
   TH,
   THead,
   TR,
-  useIcon,
-  useId,
 } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
   useSidePanel,
 } from "@salt-ds/lab";
-import { clsx } from "clsx";
 import React, { type CSSProperties, useState } from "react";
 import styles from "./WithTable.module.css";
 
@@ -75,11 +73,7 @@ const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const [data, setData] = useState(tableData);
   const [formValues, setFormValues] = useState<TeamMember | null>(null);
-  const { CloseIcon } = useIcon();
   const { setOpen, openState, setTriggerRef, panelId } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
     if (openState && selectedRow?.id === row.id) {
@@ -162,18 +156,11 @@ const SidePanelExample = () => {
         {formValues && (
           <>
             <SidePanelHeader>
-              <SidePanelTitle id={titleId}>
+              <SidePanelTitle>
                 <span className={styles.visuallyHidden}>{formValues.name}</span>
                 Employee Details
               </SidePanelTitle>
-              <Button
-                aria-label="Close"
-                aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-                appearance="transparent"
-                onClick={() => setOpen(false)}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
+              <SidePanelCloseButton />
             </SidePanelHeader>
             <SidePanelContent>
               <StackLayout style={{ width: "100%" }}>

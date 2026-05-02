@@ -1,6 +1,7 @@
-import { Button, FlexLayout, Text, useIcon, useId } from "@salt-ds/core";
+import { Button, FlexLayout, Text } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
@@ -8,7 +9,6 @@ import {
   SidePanelTrigger,
   useSidePanel,
 } from "@salt-ds/lab";
-import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 import { ContentExample } from "./ContentExample";
 
@@ -17,24 +17,11 @@ const panelStyle = {
 } as CSSProperties;
 
 const RightPanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
-
   return (
     <SidePanel style={panelStyle} variant="secondary">
       <SidePanelHeader>
-        <SidePanelTitle id={titleId}>Right Panel</SidePanelTitle>
-        <Button
-          aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
+        <SidePanelTitle>Right Panel</SidePanelTitle>
+        <SidePanelCloseButton />
       </SidePanelHeader>
       <SidePanelContent>
         <Text>Right panel content.</Text>
@@ -44,24 +31,11 @@ const RightPanel = () => {
 };
 
 const LeftPanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
-
   return (
     <SidePanel position="left" style={panelStyle} variant="secondary">
       <SidePanelHeader>
-        <SidePanelTitle id={titleId}>Left Panel</SidePanelTitle>
-        <Button
-          aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
+        <SidePanelTitle>Left Panel</SidePanelTitle>
+        <SidePanelCloseButton />
       </SidePanelHeader>
       <SidePanelContent>
         <Text>Left panel content.</Text>

@@ -8,8 +8,6 @@ import {
   StackLayout,
   Text,
   Tooltip,
-  useIcon,
-  useId,
 } from "@salt-ds/core";
 import {
   ChattingIcon,
@@ -19,14 +17,13 @@ import {
 } from "@salt-ds/icons";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanel,
 } from "@salt-ds/lab";
-import { clsx } from "clsx";
 import { ContentExample } from "src/examples/side-panel/ContentExample";
 
 const DesktopAppHeader = () => {
@@ -81,25 +78,11 @@ const DesktopAppHeader = () => {
 };
 
 const HelpPanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
-
   return (
     <SidePanel>
       <SidePanelHeader>
-        <SidePanelTitle id={titleId}>Help & support</SidePanelTitle>
-        <Button
-          id={closeButtonId}
-          aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
+        <SidePanelTitle>Help & support</SidePanelTitle>
+        <SidePanelCloseButton />
       </SidePanelHeader>
       <SidePanelContent>
         <Text>

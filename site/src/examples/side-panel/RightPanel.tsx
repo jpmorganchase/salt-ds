@@ -1,14 +1,13 @@
-import { Button, FlexLayout, Text, useIcon, useId } from "@salt-ds/core";
+import { Button, FlexLayout, Text } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanel,
 } from "@salt-ds/lab";
-import { clsx } from "clsx";
 import { ContentExample } from "./ContentExample";
 
 export const RightPanel = () => {
@@ -20,12 +19,6 @@ export const RightPanel = () => {
 };
 
 const RightPanelContent = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
-
   return (
     <FlexLayout
       style={{
@@ -45,16 +38,8 @@ const RightPanelContent = () => {
 
       <SidePanel position="right">
         <SidePanelHeader>
-          <SidePanelTitle id={titleId}>Section Title</SidePanelTitle>
-          <Button
-            id={closeButtonId}
-            aria-label="Close"
-            aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-            appearance="transparent"
-            onClick={() => setOpen(false)}
-          >
-            <CloseIcon aria-hidden />
-          </Button>
+          <SidePanelTitle>Section Title</SidePanelTitle>
+          <SidePanelCloseButton />
         </SidePanelHeader>
         <SidePanelContent>
           <Text>Side panel content goes here.</Text>

@@ -48,7 +48,7 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("region").should("have.class", "saltSidePanel-left");
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Close Section Title" }).click();
       cy.findByRole("button", { name: "Open left panel" }).should(
         "have.attr",
         "aria-expanded",
@@ -97,16 +97,20 @@ describe("GIVEN a SidePanel component", () => {
           );
         });
 
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
+      cy.findByRole("button", { name: "Close Section Title" }).should(
+        "have.focus",
+      );
 
       cy.realPress("Escape");
       cy.findByRole("region").should("not.exist");
       cy.focused().should("have.text", "Open right panel");
 
       cy.findByRole("button", { name: "Open right panel" }).click();
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
+      cy.findByRole("button", { name: "Close Section Title" }).should(
+        "have.focus",
+      );
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Close Section Title" }).click();
       cy.findByRole("button", { name: "Open right panel" }).should(
         "have.attr",
         "aria-expanded",
@@ -204,7 +208,9 @@ describe("GIVEN a SidePanel component", () => {
         cy.findByDisplayValue("+1 212 555 0101").should("be.visible");
       });
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", {
+        name: "Close Alex Morgan Employee Details",
+      }).click();
       cy.findByRole("region", {
         name: "Alex Morgan Employee Details",
       }).should("not.exist");
@@ -235,18 +241,22 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", {
         name: "Alex Morgan Employee Details",
       }).should("be.visible");
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
+      cy.findByRole("button", {
+        name: "Close Alex Morgan Employee Details",
+      }).should("have.focus");
 
-      // Switch rows while panel is open — focus moves into the new panel
+      // Switch rows while panel is open — panel updates content
       cy.findByRole("button", {
         name: "Edit details for Taylor Reed",
       }).click();
       cy.findByRole("region", {
         name: "Taylor Reed Employee Details",
       }).should("be.visible");
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
 
       // Close via Escape — focus returns to the trigger
+      cy.findByRole("button", {
+        name: "Close Taylor Reed Employee Details",
+      }).focus();
       cy.realPress("Escape");
       cy.findByRole("region").should("not.exist");
       cy.focused().should(
@@ -259,7 +269,9 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("button", {
         name: "Edit details for Alex Morgan",
       }).click();
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", {
+        name: "Close Alex Morgan Employee Details",
+      }).click();
       cy.findByRole("region").should("not.exist");
       cy.focused().should(
         "have.attr",
@@ -309,9 +321,11 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("region", { name: "Main content" }).should("be.visible");
 
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
+      cy.findByRole("button", { name: "Close Section Title" }).should(
+        "have.focus",
+      );
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Close Section Title" }).click();
       cy.findByRole("region", { name: "Section Title" }).should("not.exist");
 
       cy.findByRole("button", { name: "Toggle right panel" }).click();
@@ -327,7 +341,7 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("navigation").should("be.visible");
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Close Section Title" }).click();
       cy.findByRole("region", { name: "Section Title" }).should("not.exist");
       cy.findByRole("navigation").should("be.visible");
     });
