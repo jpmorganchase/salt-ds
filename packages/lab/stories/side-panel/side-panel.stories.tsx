@@ -520,12 +520,7 @@ const WithTableContent = () => {
         </TableContainer>
       </div>
 
-      <SidePanel
-        position="right"
-        style={withTablePanelStyle}
-        key={selectedRow?.id}
-        disableAnimation
-      >
+      <SidePanel position="right" style={withTablePanelStyle}>
         {formValues && (
           <>
             <SidePanelHeader>

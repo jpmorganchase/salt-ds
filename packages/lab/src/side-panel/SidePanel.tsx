@@ -1,5 +1,5 @@
 import { FloatingFocusManager } from "@floating-ui/react";
-import { makePrefixer, useFloatingUI, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, useFloatingUI, useForkRef, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -62,15 +62,8 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const id = useId(idProp);
 
     const [showComponent, setShowComponent] = useState(openState);
-    const [animating, setAnimating] = useState(() => {
-      if (!openState || disableAnimation) return false;
-      // Animate on first mount only when the trigger has focus, indicating a
-      // user-initiated open.
-      const reference = floatingRootContext.elements.reference;
-      if (!(reference instanceof Element)) return false;
-      const activeElement = reference.ownerDocument?.activeElement;
-      return !!activeElement && reference.contains(activeElement);
-    });
+    const [animating, setAnimating] = useState(false);
+    const shouldAnimateOpen = useRef(!openState);
     // On first mount while open, skip moving focus when focus did not come from the trigger.
     const [skipInitialFocus, setSkipInitialFocus] = useState(() => {
       if (!openState) return false;
@@ -79,8 +72,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       const activeElement = reference.ownerDocument?.activeElement;
       return !activeElement || !reference.contains(activeElement);
     });
-    // Track whether this is the initial render to skip the open animation.
-    const initialRender = useRef(true);
     const targetWindow = useWindow();
 
     useComponentCssInjection({
@@ -104,10 +95,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     };
 
     useEffect(() => {
-      // Keep this as state (not ref): setPanelId causes a context re-render and
-      // this value is consumed as a prop for initial focus behavior.
       setPanelId(id);
-
       return () => {
         setPanelId(undefined);
       };
@@ -119,26 +107,23 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       }
     }, [openState]);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (disableAnimation) {
-        // When animation is disabled, show/hide immediately since there is
-        // no exit animation to wait for before unmounting.
         setShowComponent(openState);
         setAnimating(false);
-        initialRender.current = false;
+        if (!openState) shouldAnimateOpen.current = true;
         return;
       }
 
-      // Skip animation on initial render when panel is already open
-      // without a trigger interaction (i.e. defaultOpen scenario).
-      if (initialRender.current && openState) {
-        const reference = floatingRootContext.elements.reference;
-        if (!(reference instanceof Element)) {
-          setShowComponent(true);
-          setAnimating(false);
-          initialRender.current = false;
-          return;
-        }
+      if (!openState) {
+        shouldAnimateOpen.current = true;
+      }
+
+      // Don't animate if the panel has never been closed (defaultOpen scenario).
+      if (openState && !shouldAnimateOpen.current) {
+        setShowComponent(true);
+        setAnimating(false);
+        return;
       }
 
       const prefersReducedMotion = targetWindow?.matchMedia?.(
@@ -157,18 +142,11 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       } else {
         setAnimating(true);
       }
-
-      initialRender.current = false;
-    }, [
-      openState,
-      targetWindow,
-      disableAnimation,
-      floatingRootContext.elements.reference,
-    ]);
+      // biome-ignore lint/correctness/useExhaustiveDependencies: Excluding floatingRootContext.elements.reference is safe because when the trigger changes while the panel is already open (e.g. table row switching), openState remains true so no visual update is needed.
+    }, [openState, targetWindow, disableAnimation]);
 
     if (!showComponent) return null;
 
-    // `-1` skips initial focus movement but preserves focus guards/return focus handling.
     const resolvedInitialFocus = skipInitialFocus ? -1 : (initialFocus ?? 0);
 
     const panelDiv = (

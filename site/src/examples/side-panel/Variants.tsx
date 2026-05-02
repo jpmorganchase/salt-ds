@@ -89,6 +89,7 @@ const VariantsContent = () => {
         <SidePanelHeader>
           <SidePanelTitle id={titleId}>Section Title</SidePanelTitle>
           <Button
+            id={closeButtonId}
             aria-label="Close"
             aria-labelledby={clsx(closeButtonId, titleId) || undefined}
             appearance="transparent"
