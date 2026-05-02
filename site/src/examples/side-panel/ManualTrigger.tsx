@@ -5,7 +5,7 @@ import {
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
-  type SidePanelValue,
+  SidePanelTrigger,
   useSidePanel,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
@@ -70,50 +70,24 @@ const LeftPanel = () => {
   );
 };
 
-const TriggerButton = ({
-  children,
-  context,
-}: {
-  children: string;
-  context: SidePanelValue;
-}) => {
-  const { openState, setOpen, panelId, getTriggerProps } = context;
-
-  return (
-    <Button
-      {...getTriggerProps({
-        "aria-expanded": openState,
-        "aria-controls": openState ? panelId : undefined,
-        onClick: () => setOpen(!openState),
-      })}
-      style={{ width: "fit-content", whiteSpace: "nowrap" }}
-    >
-      {children}
-    </Button>
-  );
-};
-
-const RightPanelTriggerButton = () => {
-  const rightPanelContext = useSidePanel();
-
-  return (
-    <TriggerButton context={rightPanelContext}>
-      Toggle right panel
-    </TriggerButton>
-  );
-};
-
 const ContentArea = () => {
-  const leftPanelContext = useSidePanel();
+  const { getTriggerProps } = useSidePanel();
 
   return (
     <SidePanelProvider>
       <ContentExample>
         <FlexLayout gap={1} justify="space-between">
-          <TriggerButton context={leftPanelContext}>
+          <Button
+            {...getTriggerProps()}
+            style={{ width: "fit-content", whiteSpace: "nowrap" }}
+          >
             Toggle left panel
-          </TriggerButton>
-          <RightPanelTriggerButton />
+          </Button>
+          <SidePanelTrigger>
+            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
+              Toggle right panel
+            </Button>
+          </SidePanelTrigger>
         </FlexLayout>
       </ContentExample>
       <RightPanel />

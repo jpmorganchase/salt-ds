@@ -38,7 +38,6 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  type SidePanelValue,
   useSidePanel,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -257,50 +256,24 @@ const ManualLeftPanel = () => {
   );
 };
 
-const ManualTriggerButton = ({
-  children,
-  context,
-}: {
-  children: string;
-  context: SidePanelValue;
-}) => {
-  const { openState, setOpen, getTriggerProps, panelId } = context;
-
-  return (
-    <Button
-      {...getTriggerProps({
-        "aria-expanded": openState,
-        "aria-controls": openState ? panelId : undefined,
-        onClick: () => setOpen(!openState),
-      })}
-      style={{ width: "fit-content", whiteSpace: "nowrap" }}
-    >
-      {children}
-    </Button>
-  );
-};
-
-const ManualRightPanelTriggerButton = () => {
-  const rightPanelContext = useSidePanel();
-
-  return (
-    <ManualTriggerButton context={rightPanelContext}>
-      Toggle right panel
-    </ManualTriggerButton>
-  );
-};
-
 const ManualContentArea = () => {
-  const leftPanelContext = useSidePanel();
+  const { getTriggerProps } = useSidePanel();
 
   return (
     <SidePanelProvider>
       <ContentExample>
         <FlexLayout gap={1} justify="space-between">
-          <ManualTriggerButton context={leftPanelContext}>
+          <Button
+            {...getTriggerProps()}
+            style={{ width: "fit-content", whiteSpace: "nowrap" }}
+          >
             Toggle left panel
-          </ManualTriggerButton>
-          <ManualRightPanelTriggerButton />
+          </Button>
+          <SidePanelTrigger>
+            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
+              Toggle right panel
+            </Button>
+          </SidePanelTrigger>
         </FlexLayout>
       </ContentExample>
       <ManualRightPanel />
