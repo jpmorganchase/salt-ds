@@ -1,4 +1,5 @@
-import { type KeyboardEvent, useCallback } from "react";
+import type { ElementProps, FloatingRootContext } from "@floating-ui/react";
+import { useMemo } from "react";
 
 const COLUMN_SELECTOR = "[data-mega-menu-column]";
 const ITEM_SELECTOR = "[data-mega-menu-item]";
@@ -59,139 +60,199 @@ function findPosition(
   return null;
 }
 
-interface UseMegaMenuKeyboardProps {
-  isOpen: boolean;
-  onFocusTrigger: () => void;
-  onClose: () => void;
-  onCloseAndFocusNext: (panel: HTMLElement) => void;
+function focusTrigger(context: FloatingRootContext) {
+  const reference = context.elements.reference as HTMLElement | null;
+  const focusable =
+    reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? reference;
+  focusable?.focus();
+}
+
+function focusNextAfterPanel(context: FloatingRootContext, panel: HTMLElement) {
+  const reference = context.elements.reference as HTMLElement | null;
+  const refFocusable =
+    reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? reference;
+
+  const nextSibling = refFocusable
+    ?.closest("li")
+    ?.nextElementSibling?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+
+  const nextOutside =
+    nextSibling ||
+    (() => {
+      const allFocusable = Array.from(
+        panel.ownerDocument.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      ).filter((el) => !panel.contains(el));
+      const idx = refFocusable ? allFocusable.indexOf(refFocusable) : -1;
+      return idx >= 0 ? allFocusable[idx + 1] : undefined;
+    })();
+
+  if (nextOutside) {
+    const view = panel.ownerDocument.defaultView;
+    view?.requestAnimationFrame(() => {
+      view?.requestAnimationFrame(() => {
+        nextOutside.focus();
+      });
+    });
+  }
+}
+
+export interface UseMegaMenuKeyboardProps {
+  /**
+   * Whether the interaction is enabled.
+   * @default true
+   */
+  enabled?: boolean;
 }
 
 /**
- * Keyboard navigation for a mega menu laid out as a grid of columns.
+ * Floating-ui custom interaction hook for mega menu grid keyboard navigation.
+ *
+ * Returns `ElementProps` that get merged via `useInteractions`, handling
+ * keyboard events on both the reference (trigger) and floating (panel) elements.
  *
  * - **↑ / ↓** move within the current column.
- * - **← / →** jump to the **top** of the previous / next column.
+ * - **← / →** jump to the top of the previous / next column.
  * - **Tab / Shift+Tab** move linearly through every item.
  * - **Home / End** jump to the first / last item in the column.
  * - **↑ from the first item** or **← from the first column** returns
  *   focus to the trigger.
  */
-export function useMegaMenuKeyboard({
-  isOpen,
-  onFocusTrigger,
-  onClose,
-  onCloseAndFocusNext,
-}: UseMegaMenuKeyboardProps) {
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLElement>) => {
-      if (!isOpen) return;
+export function useMegaMenuKeyboard(
+  context: FloatingRootContext,
+  props: UseMegaMenuKeyboardProps = {},
+): ElementProps {
+  const { enabled = true } = props;
+  const { open, onOpenChange } = context;
 
-      const panel = event.currentTarget;
-      const target = event.target as HTMLElement;
+  return useMemo(() => {
+    if (!enabled) {
+      return {};
+    }
 
-      // Find the navigable item that contains the focused element
-      const focusedItem =
-        target.closest<HTMLElement>(ITEM_SELECTOR) ??
-        target.closest<HTMLElement>(FOCUSABLE_SELECTOR);
-      if (!focusedItem) return;
-
-      const grid = buildGrid(panel);
-      const pos = findPosition(grid, focusedItem);
-      if (!pos) return;
-
-      const allItems = grid.flat();
-      const linearIndex = allItems.indexOf(focusedItem);
-
-      switch (event.key) {
-        case "ArrowDown": {
-          event.preventDefault();
-          const next = pos.row + 1;
-          if (next < grid[pos.col].length) {
-            grid[pos.col][next].focus();
-          } else {
-            // Wrap to first item of next column
-            const nextCol = pos.col + 1;
-            if (nextCol < grid.length) {
-              grid[nextCol][0].focus();
+    return {
+      reference: {
+        onKeyDown(event: React.KeyboardEvent) {
+          if (event.key === "ArrowDown" && open) {
+            event.preventDefault();
+            const floating = context.elements.floating;
+            if (floating) {
+              const firstItem =
+                floating.querySelector<HTMLElement>(ITEM_SELECTOR) ??
+                floating
+                  .querySelector<HTMLElement>(COLUMN_SELECTOR)
+                  ?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+              firstItem?.focus();
             }
           }
-          break;
-        }
+        },
+      },
+      floating: {
+        onKeyDown(event: React.KeyboardEvent) {
+          if (!open) return;
 
-        case "ArrowUp": {
-          event.preventDefault();
-          if (pos.row > 0) {
-            grid[pos.col][pos.row - 1].focus();
-          } else {
-            // Wrap to last item of previous column
-            const prevCol = pos.col - 1;
-            if (prevCol >= 0) {
-              grid[prevCol][grid[prevCol].length - 1].focus();
-            } else {
-              onFocusTrigger();
+          const panel = event.currentTarget as HTMLElement;
+          const target = event.target as HTMLElement;
+
+          const focusedItem =
+            target.closest<HTMLElement>(ITEM_SELECTOR) ??
+            target.closest<HTMLElement>(FOCUSABLE_SELECTOR);
+          if (!focusedItem) return;
+
+          const grid = buildGrid(panel);
+          const pos = findPosition(grid, focusedItem);
+          if (!pos) return;
+
+          const allItems = grid.flat();
+          const linearIndex = allItems.indexOf(focusedItem);
+
+          switch (event.key) {
+            case "ArrowDown": {
+              event.preventDefault();
+              const next = pos.row + 1;
+              if (next < grid[pos.col].length) {
+                grid[pos.col][next].focus();
+              } else {
+                const nextCol = pos.col + 1;
+                if (nextCol < grid.length) {
+                  grid[nextCol][0].focus();
+                }
+              }
+              break;
             }
-          }
-          break;
-        }
 
-        case "ArrowRight": {
-          event.preventDefault();
-          const nextCol = pos.col + 1;
-          if (nextCol < grid.length) {
-            grid[nextCol][0].focus();
-          }
-          break;
-        }
-
-        case "ArrowLeft": {
-          event.preventDefault();
-          const prevCol = pos.col - 1;
-          if (prevCol >= 0) {
-            grid[prevCol][0].focus();
-          } else {
-            onFocusTrigger();
-          }
-          break;
-        }
-
-        case "Tab": {
-          event.preventDefault();
-          if (event.shiftKey) {
-            if (linearIndex === 0) {
-              onFocusTrigger();
-            } else {
-              allItems[linearIndex - 1]?.focus();
+            case "ArrowUp": {
+              event.preventDefault();
+              if (pos.row > 0) {
+                grid[pos.col][pos.row - 1].focus();
+              } else {
+                const prevCol = pos.col - 1;
+                if (prevCol >= 0) {
+                  grid[prevCol][grid[prevCol].length - 1].focus();
+                } else {
+                  focusTrigger(context);
+                }
+              }
+              break;
             }
-          } else {
-            if (linearIndex === allItems.length - 1) {
-              onCloseAndFocusNext(panel);
-            } else {
-              allItems[linearIndex + 1]?.focus();
+
+            case "ArrowRight": {
+              event.preventDefault();
+              const nextCol = pos.col + 1;
+              if (nextCol < grid.length) {
+                grid[nextCol][0].focus();
+              }
+              break;
             }
+
+            case "ArrowLeft": {
+              event.preventDefault();
+              const prevCol = pos.col - 1;
+              if (prevCol >= 0) {
+                grid[prevCol][0].focus();
+              } else {
+                focusTrigger(context);
+              }
+              break;
+            }
+
+            case "Tab": {
+              event.preventDefault();
+              if (event.shiftKey) {
+                if (linearIndex === 0) {
+                  focusTrigger(context);
+                } else {
+                  allItems[linearIndex - 1]?.focus();
+                }
+              } else {
+                if (linearIndex === allItems.length - 1) {
+                  onOpenChange(false);
+                  focusNextAfterPanel(context, panel);
+                } else {
+                  allItems[linearIndex + 1]?.focus();
+                }
+              }
+              break;
+            }
+
+            case "Home": {
+              event.preventDefault();
+              grid[pos.col][0]?.focus();
+              break;
+            }
+
+            case "End": {
+              event.preventDefault();
+              grid[pos.col][grid[pos.col].length - 1]?.focus();
+              break;
+            }
+
+            default:
+              break;
           }
-          break;
-        }
-
-        case "Home": {
-          event.preventDefault();
-          grid[pos.col][0]?.focus();
-          break;
-        }
-
-        case "End": {
-          event.preventDefault();
-          grid[pos.col][grid[pos.col].length - 1]?.focus();
-          break;
-        }
-
-        default:
-          break;
-      }
-    },
-    [isOpen, onFocusTrigger, onClose, onCloseAndFocusNext],
-  );
-
-  return { handleKeyDown };
+        },
+      },
+    };
+  }, [enabled, open, context, onOpenChange]);
 }
 
 /**

@@ -12,12 +12,10 @@ import {
   forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  useCallback,
   useEffect,
 } from "react";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
 import { useMegaMenu } from "./useMegaMenu";
-import { FOCUSABLE_SELECTOR, useMegaMenuKeyboard } from "./useMegaMenuKeyboard";
 
 const withBaseName = makePrefixer("saltMegaMenuPanel");
 
@@ -46,7 +44,6 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       placement,
       getFloatingProps,
       setFloating,
-      setOpen,
       focusFirstItemOnOpen,
       setPanelId,
     } = megaMenu;
@@ -76,62 +73,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       ],
     });
 
-    const focusTrigger = useCallback(() => {
-      const reference = floatingRootContext.elements
-        .reference as HTMLElement | null;
-      const focusable =
-        reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? reference;
-      focusable?.focus();
-    }, [floatingRootContext.elements.reference]);
-
-    const closeAndFocusNext = useCallback(
-      (panel: HTMLElement) => {
-        const reference = floatingRootContext.elements
-          .reference as HTMLElement | null;
-        const refFocusable =
-          reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ??
-          reference;
-
-        const nextSibling = refFocusable
-          ?.closest("li")
-          ?.nextElementSibling?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
-
-        const nextOutside =
-          nextSibling ||
-          (() => {
-            const allFocusable = Array.from(
-              panel.ownerDocument.querySelectorAll<HTMLElement>(
-                FOCUSABLE_SELECTOR,
-              ),
-            ).filter((el) => !panel.contains(el));
-            const idx = refFocusable ? allFocusable.indexOf(refFocusable) : -1;
-            return idx >= 0 ? allFocusable[idx + 1] : undefined;
-          })();
-
-        setOpen(false);
-
-        if (nextOutside) {
-          const view = panel.ownerDocument.defaultView;
-          view?.requestAnimationFrame(() => {
-            view?.requestAnimationFrame(() => {
-              nextOutside.focus();
-            });
-          });
-        }
-      },
-      [floatingRootContext.elements.reference, setOpen],
-    );
-
-    const { handleKeyDown } = useMegaMenuKeyboard({
-      isOpen,
-      onFocusTrigger: focusTrigger,
-      onClose: useCallback(() => setOpen(false), [setOpen]),
-      onCloseAndFocusNext: closeAndFocusNext,
-    });
-
-    const floatingProps = getFloatingProps({
-      onKeyDown: handleKeyDown,
-    });
+    const floatingProps = getFloatingProps();
 
     // floating-ui adds aria-orientation for listbox-style widgets,
     // but mega menus are not listboxes — strip it to avoid confusing AT.

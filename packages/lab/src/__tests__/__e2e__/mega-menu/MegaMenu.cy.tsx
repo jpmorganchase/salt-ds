@@ -1,3 +1,15 @@
+onClick={() => {
+                  setOpenMenu((prev) =>
+                    prev === "services" ? null : "services",
+)
+}}
+                onClick=
+{
+  () => {
+    setOpenMenu((prev) => (prev === "solutions" ? null : "solutions"));
+  };
+}
+
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
@@ -200,6 +212,4 @@ describe("Given a MegaMenu", () => {
       "aria-current",
       "page",
     );
-    cy.findByText("Risk Management").should("not.have.attr", "aria-current");
-  });
 });

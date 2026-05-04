@@ -18,6 +18,7 @@ import {
   MegaMenuContext,
   type MegaMenuCustomInteractions,
 } from "./MegaMenuContext";
+import { useMegaMenuKeyboard } from "./useMegaMenuKeyboard";
 
 export interface MegaMenuProps extends MegaMenuCustomInteractions {
   /**
@@ -119,13 +120,18 @@ export function MegaMenu({
     elements: { reference, floating },
   });
 
+  const megaMenuKeyboard = useMegaMenuKeyboard(floatingRootContext);
+
   const defaultInteractions = [
     useClick(floatingRootContext, { toggle: true }),
     useDismiss(floatingRootContext, { bubbles: true }),
+    megaMenuKeyboard,
   ];
 
   const { getReferenceProps, getFloatingProps } = useInteractions(
-    interactions ? interactions(floatingRootContext) : defaultInteractions,
+    interactions
+      ? [...interactions(floatingRootContext), megaMenuKeyboard]
+      : defaultInteractions,
   );
 
   const contextValue = useMemo(
