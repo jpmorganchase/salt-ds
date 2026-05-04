@@ -67,23 +67,14 @@ describe("sourceAttribution", () => {
     );
   });
 
-  it("adds the design tokens index as the default token docs source", () => {
+  it("does not add token docs sources when token payload lacks registry docs", () => {
     const structuredContent = buildStructuredToolContent({
       tokens: [],
       total_matches: 0,
       truncated: false,
     });
 
-    expect(structuredContent).toMatchObject({
-      sources: expect.arrayContaining([
-        {
-          original: "/salt/themes/design-tokens/index",
-          resolved:
-            "https://www.saltdesignsystem.com/salt/themes/design-tokens/index",
-          kind: "site",
-        },
-      ]),
-    });
+    expect(structuredContent.sources).toEqual([]);
   });
 
   it("does not add transport sources to public workflow contract content", () => {

@@ -1,7 +1,10 @@
+import { buildTokenPolicyStructuralRoleRulePack } from "@salt-ds/semantic-core";
 import type { SaltRegistry } from "../../types.js";
 
 export const TIMESTAMP = "2026-03-10T00:00:00Z";
 
+// Test-only fixture registry. Salt-looking facts in this file exist only to
+// exercise validator behavior and are not a canonical source.
 export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
   generated_at: TIMESTAMP,
   version: "1.0.0",
@@ -67,12 +70,20 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
         },
       ],
       accessibility: {
-        summary: ["Must have an accessible name."],
+        summary: [
+          "Must have an accessible name.",
+          "Fixture mirrors source-backed Button icon accessibility evidence from the generated registry.",
+        ],
         rules: [
           {
             id: "button-name",
             severity: "error",
             rule: "Provide visible text or another accessible name.",
+          },
+          {
+            id: "button-decorative-icon-hidden",
+            severity: "warning",
+            rule: "When a button has both an icon and text, use aria-hidden on the icon so that screen readers don't announce its text.",
           },
         ],
       },
@@ -105,7 +116,7 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
       category: ["navigation"],
       tags: ["navigation"],
       when_to_use: ["Navigate to another route."],
-      when_not_to_use: [],
+      when_not_to_use: ["Use Button for actions."],
       alternatives: [{ use: "Button", reason: "Use for action execution." }],
       props: [],
       accessibility: {
@@ -123,6 +134,80 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
       source: {
         repo_path: "packages/core/src/link",
         export_name: "Link",
+      },
+      deprecations: [],
+      last_verified_at: TIMESTAMP,
+    },
+    {
+      id: "component.table",
+      name: "Table",
+      aliases: [],
+      package: {
+        name: "@salt-ds/core",
+        status: "stable",
+        since: "1.0.0",
+      },
+      summary: "Displays simple, structured tabular data.",
+      status: "stable",
+      category: ["data display"],
+      tags: ["table", "tabular"],
+      when_to_use: ["Use Table for structured tabular data."],
+      when_not_to_use: ["Use Data grid for richer grid behavior."],
+      alternatives: [
+        { use: "Data grid", reason: "Use for richer grid behavior." },
+      ],
+      props: [],
+      accessibility: {
+        summary: [],
+        rules: [],
+      },
+      patterns: [],
+      examples: [],
+      related_docs: {
+        overview: "/salt/components/table",
+        usage: "/salt/components/table/usage",
+        accessibility: "/salt/components/table/accessibility",
+        examples: "/salt/components/table/examples",
+      },
+      source: {
+        repo_path: "packages/core/src/table",
+        export_name: "Table",
+      },
+      deprecations: [],
+      last_verified_at: TIMESTAMP,
+    },
+    {
+      id: "component.data-grid",
+      name: "Data grid",
+      aliases: ["DataGrid"],
+      package: {
+        name: "@salt-ds/core",
+        status: "stable",
+        since: "1.0.0",
+      },
+      summary: "Displays tabular rows and columns with richer grid behavior.",
+      status: "stable",
+      category: ["data display"],
+      tags: ["data grid", "table"],
+      when_to_use: ["Use Data grid for tabular rows with richer behavior."],
+      when_not_to_use: ["Use Table for simple tabular data."],
+      alternatives: [{ use: "Table", reason: "Use for simple tabular data." }],
+      props: [],
+      accessibility: {
+        summary: [],
+        rules: [],
+      },
+      patterns: [],
+      examples: [],
+      related_docs: {
+        overview: "/salt/components/data-grid",
+        usage: "/salt/components/data-grid/usage",
+        accessibility: "/salt/components/data-grid/accessibility",
+        examples: "/salt/components/data-grid/examples",
+      },
+      source: {
+        repo_path: "packages/core/src/data-grid",
+        export_name: "DataGrid",
       },
       deprecations: [],
       last_verified_at: TIMESTAMP,
@@ -371,6 +456,38 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
       last_verified_at: TIMESTAMP,
     },
     {
+      name: "--salt-size-fixed-100",
+      category: "size",
+      type: "dimension",
+      value: "1px",
+      semantic_intent: "Fixed border thickness token.",
+      themes: ["salt", "next"],
+      densities: [],
+      applies_to: [],
+      guidance: ["Fixed border thickness token."],
+      aliases: [],
+      policy: {
+        usage_tier: "foundation",
+        direct_component_use: "conditional",
+        preferred_for: [
+          "border thickness",
+          "separator thickness",
+          "constant dimensions across densities",
+        ],
+        avoid_for: [
+          "semantic component styling when a characteristic token fits",
+        ],
+        notes: [
+          "Fixed size tokens remain constant across densities and are the correct choice for border and separator thickness.",
+        ],
+        docs: ["/salt/foundations/size", "/salt/themes/design-tokens/index"],
+        structural_roles: ["border-thickness", "separator-thickness"],
+        pairing: null,
+      },
+      deprecated: false,
+      last_verified_at: TIMESTAMP,
+    },
+    {
       name: "--salt-container-primary-background",
       category: "container",
       type: "color",
@@ -397,6 +514,39 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
         pairing: {
           family: "container",
           role: "container-background",
+          level: "primary",
+        },
+      },
+      deprecated: false,
+      last_verified_at: TIMESTAMP,
+    },
+    {
+      name: "--salt-container-primary-borderColor",
+      category: "container",
+      type: "color",
+      value: "#d0d7de",
+      semantic_intent: "Primary container border color.",
+      themes: ["salt", "next"],
+      densities: [],
+      applies_to: [],
+      guidance: ["Primary container border color."],
+      aliases: [],
+      policy: {
+        usage_tier: "characteristic",
+        direct_component_use: "always",
+        preferred_for: ["semantic component styling", "pattern styling"],
+        avoid_for: ["choosing by visual similarity alone"],
+        notes: [
+          "Pair container background and border tokens from the same level to keep surfaces visually coherent.",
+        ],
+        docs: [
+          "/salt/themes/design-tokens/container-characteristic",
+          "/salt/themes/design-tokens/index",
+        ],
+        structural_roles: ["container-border-color"],
+        pairing: {
+          family: "container",
+          role: "container-border-color",
           level: "primary",
         },
       },
@@ -541,4 +691,57 @@ export const CODE_ANALYSIS_REGISTRY: SaltRegistry = {
   examples: [],
   changes: [],
   search_index: [],
+  token_policy_structural_role_rule_pack:
+    buildTokenPolicyStructuralRoleRulePack({
+      structural_role_rules: [
+        {
+          id: "/fixture/docs/token-rules#fixed-size",
+          category: "size",
+          kind: "fixed-size",
+          source: {
+            route: "/fixture/docs/token-rules",
+            repo_path: "fixture/docs/token-rules.mdx",
+          },
+          evidence_text:
+            "Fixture source says --salt-size-fixed-100 supports border and separator thickness.",
+          evidence_terms: ["border", "separator"],
+          token_family: "size",
+          token_modifier: "fixed",
+        },
+        {
+          id: "/fixture/docs/token-rules#container-pairing",
+          category: "container",
+          kind: "container-pairing",
+          source: {
+            route: "/fixture/docs/token-rules",
+            repo_path: "fixture/docs/token-rules.mdx",
+          },
+          evidence_text:
+            "Fixture source says container backgrounds and border colors are paired by level.",
+          evidence_terms: ["container", "color"],
+          token_family: "container",
+        },
+        {
+          id: "/fixture/docs/token-rules#separable",
+          category: "separable",
+          kind: "separable-token",
+          source: {
+            route: "/fixture/docs/token-rules",
+            repo_path: "fixture/docs/token-rules.mdx",
+          },
+          evidence_text:
+            "Fixture source says separable tokens provide separator color.",
+          evidence_terms: ["separator"],
+          token_family: "separable",
+        },
+      ],
+      generated_at: TIMESTAMP,
+      generator: {
+        name: "mcp code-analysis fixture",
+      },
+      registry: {
+        version: "1.0.0",
+        generated_at: TIMESTAMP,
+      },
+    }),
 };

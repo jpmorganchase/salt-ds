@@ -5,23 +5,24 @@ import {
 import type { ComponentRecord } from "@salt-ds/semantic-core/types";
 import { describe, expect, it } from "vitest";
 
-const LEGACY_PROVIDER_PATTERN = /\bSaltProvider\b(?!Next)/;
+// Fixture-only records: names, packages, imports, and provider-like tags below
+// are synthetic and are not sources of Salt truth.
 
-function makeComponentWithExample(code: string): ComponentRecord {
+function makeFixtureComponentWithExample(code: string): ComponentRecord {
   return {
-    id: "component.banner",
-    name: "Banner",
+    id: "component.fixture-notice",
+    name: "FixtureNotice",
     aliases: [],
     package: {
-      name: "@salt-ds/core",
+      name: "@fixture/ui",
       status: "stable",
       since: null,
     },
-    summary: "Banner displays contextual feedback.",
+    summary: "Fixture component for starter-code tests.",
     status: "stable",
-    category: ["feedback"],
+    category: ["fixture"],
     tags: [],
-    when_to_use: ["Use for contextual feedback."],
+    when_to_use: ["Use for fixture coverage."],
     when_not_to_use: [],
     alternatives: [],
     props: [],
@@ -32,27 +33,27 @@ function makeComponentWithExample(code: string): ComponentRecord {
     patterns: [],
     examples: [
       {
-        id: "banner.theme-example",
-        title: "Themed banner",
-        description: "A banner example with a local provider.",
-        intent: ["banner"],
+        id: "fixture-notice.theme-example",
+        title: "Fixture themed notice",
+        description: "A fixture example with local wrapper code.",
+        intent: ["fixture"],
         complexity: "intermediate",
         code,
-        source_url: "/salt/components/banner/examples",
-        package: "@salt-ds/core",
+        source_url: "/fixture/components/notice/examples",
+        package: "@fixture/ui",
         target_type: "component",
-        target_name: "Banner",
+        target_name: "FixtureNotice",
       },
     ],
     related_docs: {
       overview: null,
       usage: null,
       accessibility: null,
-      examples: "/salt/components/banner/examples",
+      examples: "/fixture/components/notice/examples",
     },
     source: {
       repo_path: null,
-      export_name: "Banner",
+      export_name: "FixtureNotice",
     },
     deprecations: [],
     last_verified_at: "2026-03-10T00:00:00Z",
@@ -60,88 +61,55 @@ function makeComponentWithExample(code: string): ComponentRecord {
 }
 
 describe("starter code theme bootstrap", () => {
-  it("normalizes example-backed recipe starters to the new-work SaltProviderNext theme", () => {
+  it("preserves example-backed recipe starters and reports theme bootstrap as unsupported", () => {
+    const sourceBackedCode = [
+      'import { FixtureButton, FixtureShell } from "@fixture/ui";',
+      'import "@fixture/theme.css";',
+      "",
+      "export function FixtureExample() {",
+      "  return (",
+      '    <FixtureShell mode="source-backed">',
+      "      <FixtureButton>Save</FixtureButton>",
+      "    </FixtureShell>",
+      "  );",
+      "}",
+    ].join("\n");
+
     const snippets = createRecipeStarterCode({
-      recipeName: "Profile header",
+      recipeName: "Fixture recipe",
       components: [
-        { name: "Button", package: "@salt-ds/core", role: "action" },
+        { name: "FixtureButton", package: "@fixture/ui", role: "action" },
       ],
       supporting_example: {
-        title: "Legacy themed example",
-        source_url: "/salt/patterns/profile-header/examples",
-        code: [
-          "import {",
-          "  Button,",
-          "  SaltProvider,",
-          '} from "@salt-ds/core";',
-          'import "@salt-ds/theme/index.css";',
-          "",
-          "export function LegacyExample() {",
-          "  return (",
-          '    <SaltProvider density="high">',
-          "      <Button>Save</Button>",
-          "    </SaltProvider>",
-          "  );",
-          "}",
-        ].join("\n"),
+        title: "Fixture source example",
+        source_url: "/fixture/patterns/recipe/examples",
+        code: sourceBackedCode,
       },
     });
 
-    const code = snippets[0]?.code ?? "";
-    expect(code).toContain("SaltProviderNext");
-    expect(code).toContain('import "@salt-ds/theme/index.css";');
-    expect(code).toContain('import "@salt-ds/theme/css/theme-next.css";');
-    expect(code).toContain('accent="teal"');
-    expect(code).toContain('corner="rounded"');
-    expect(code).toContain('headingFont="Amplitude"');
-    expect(code).toContain('actionFont="Amplitude"');
-    expect(code).toContain('density="high"');
-    expect(code).not.toMatch(LEGACY_PROVIDER_PATTERN);
+    expect(snippets[0]?.code).toBe(sourceBackedCode);
     expect(snippets[0]?.notes).toContain(
-      "Theme bootstrap normalized to the recommended JPM Brand setup for new Salt work.",
+      "Theme bootstrap is unsupported until provider, import, prop, and font facts resolve from registry-backed context, project policy, workflow evidence, or explicit workflow input.",
     );
+    expect(snippets[0]?.notes?.join("\n")).not.toMatch(/normalized/i);
   });
 
-  it("normalizes attached component examples that choose between legacy and next providers", () => {
+  it("preserves attached component examples without injecting theme bootstrap", () => {
+    const sourceBackedCode = [
+      'import { FixtureNotice, FixtureShell } from "@fixture/ui";',
+      "",
+      "export const ThemedFixtureNotice = () => (",
+      '  <FixtureShell density="fixture-high">',
+      "    <FixtureNotice>Saved</FixtureNotice>",
+      "  </FixtureShell>",
+      ");",
+    ].join("\n");
+
     const snippets = createComponentStarterCode(
-      makeComponentWithExample(
-        [
-          "import {",
-          "  Banner,",
-          "  SaltProvider,",
-          "  SaltProviderNext,",
-          "  StackLayout,",
-          "  useTheme,",
-          '} from "@salt-ds/core";',
-          "",
-          "export const ThemedBanner = () => {",
-          "  const { themeNext } = useTheme();",
-          "  const Provider = themeNext ? SaltProviderNext : SaltProvider;",
-          "  return (",
-          '    <Provider density="high" applyClassesTo="scope">',
-          "      <StackLayout>",
-          "        <Banner>Saved</Banner>",
-          "      </StackLayout>",
-          "    </Provider>",
-          "  );",
-          "};",
-        ].join("\n"),
-      ),
+      makeFixtureComponentWithExample(sourceBackedCode),
     );
 
-    const exampleCode = snippets[1]?.code ?? "";
-    expect(exampleCode).toContain("SaltProviderNext");
-    expect(exampleCode).toContain(
-      'import "@salt-ds/theme/css/theme-next.css";',
-    );
-    expect(exampleCode).toContain('accent="teal"');
-    expect(exampleCode).toContain('density="high"');
-    expect(exampleCode).toContain('applyClassesTo="scope"');
-    expect(exampleCode).not.toContain("<Provider");
-    expect(exampleCode).not.toContain("useTheme");
-    expect(exampleCode).not.toMatch(LEGACY_PROVIDER_PATTERN);
-    expect(snippets[1]?.notes).toContain(
-      "Theme bootstrap normalized to the recommended JPM Brand setup for new Salt work.",
-    );
+    expect(snippets[1]?.code).toBe(sourceBackedCode);
+    expect(snippets[1]?.notes?.join("\n")).not.toMatch(/normalized/i);
   });
 });

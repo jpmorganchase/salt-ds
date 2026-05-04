@@ -57,6 +57,37 @@
               "docs": {
                 "type": "array",
                 "items": { "type": "string" }
+              },
+              "evidence_refs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "contract",
+                    "id",
+                    "source_kind",
+                    "claim_kind",
+                    "confidence"
+                  ],
+                  "properties": {
+                    "contract": { "const": "salt_evidence_ref_v1" },
+                    "id": { "type": "string", "minLength": 1 },
+                    "source_kind": { "enum": ["docs"] },
+                    "claim_kind": { "enum": ["token"] },
+                    "source": {
+                      "type": "object",
+                      "properties": {
+                        "url": { "type": ["string", "null"] },
+                        "repo_path": { "type": ["string", "null"] },
+                        "section": { "type": ["string", "null"] },
+                        "line_start": { "type": ["integer", "null"] },
+                        "line_end": { "type": ["integer", "null"] }
+                      }
+                    },
+                    "confidence": { "enum": ["high", "medium", "low"] },
+                    "note": { "type": ["string", "null"] }
+                  }
+                }
               }
             }
           }

@@ -125,11 +125,11 @@ describe("registry integration", () => {
     expect(fixedSizeToken?.policy).toMatchObject({
       usage_tier: "foundation",
       direct_component_use: "conditional",
-      preferred_for: expect.arrayContaining([
-        "border thickness",
-        "separator thickness",
-      ]),
     });
+    expect(fixedSizeToken?.policy?.docs).toContain("/salt/foundations/size");
+    expect(fixedSizeToken?.policy?.evidence_refs?.length).toBe(
+      fixedSizeToken?.policy?.docs.length,
+    );
   });
 
   it("derives component and pattern guidance from category maps and usage docs", () => {

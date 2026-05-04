@@ -2,17 +2,19 @@ import {
   buildThemeSetupSnippet,
   createFoundationStarterCode,
   DEFAULT_NEW_WORK_THEME_PRESET_ID,
+  formatThemePresetImports,
   formatThemePresetPropAssignments,
   getThemePreset,
+  listThemePresets,
   type PageRecord,
 } from "@salt-ds/semantic-core";
 import { describe, expect, it } from "vitest";
 
 const PAGE_BASE: Omit<PageRecord, "title"> = {
-  id: "page.density",
-  route: "/salt/foundations/density",
+  id: "page.fixture-density",
+  route: "/fixture/foundations/density",
   page_kind: "foundation",
-  summary: "Density guidance",
+  summary: "Fixture density guidance.",
   keywords: [],
   content: [],
   section_headings: [],
@@ -20,51 +22,47 @@ const PAGE_BASE: Omit<PageRecord, "title"> = {
 };
 
 describe("theme presets", () => {
-  it("models the default JPM Brand mapping explicitly", () => {
+  it("reports theme bootstrap as unsupported until evidence supplies facts", () => {
     const preset = getThemePreset(DEFAULT_NEW_WORK_THEME_PRESET_ID);
 
     expect(preset).toMatchObject({
-      provider: "SaltProviderNext",
-      imports: [
-        "@salt-ds/theme/index.css",
-        "@salt-ds/theme/css/theme-next.css",
-      ],
-      props: [
-        { name: "accent", value: "teal" },
-        { name: "corner", value: "rounded" },
-        { name: "headingFont", value: "Amplitude" },
-        { name: "actionFont", value: "Amplitude" },
-      ],
+      status: "unsupported",
+      evidence_ref_ids: [],
+      provider: null,
+      imports: [],
+      props: [],
     });
-    expect(formatThemePresetPropAssignments(preset)).toContain(
-      'headingFont="Amplitude"',
+    expect(preset.missing).toEqual(
+      expect.arrayContaining([
+        "provider name evidence",
+        "theme import evidence",
+        "provider prop evidence",
+        "font setup evidence",
+      ]),
     );
+    expect(listThemePresets()).toEqual([preset]);
+    expect(formatThemePresetPropAssignments(preset)).toBe("");
+    expect(formatThemePresetImports(preset)).toBe("");
   });
 
-  it("renders the exact JPM Brand guide snippet", () => {
+  it("renders an unsupported snippet instead of static provider code", () => {
     const snippet = buildThemeSetupSnippet(DEFAULT_NEW_WORK_THEME_PRESET_ID);
 
-    expect(snippet).toContain(
-      'import { SaltProviderNext } from "@salt-ds/core";',
-    );
-    expect(snippet).toContain('import "@salt-ds/theme/css/theme-next.css";');
-    expect(snippet).toContain('accent="teal"');
-    expect(snippet).toContain('corner="rounded"');
-    expect(snippet).toContain('headingFont="Amplitude"');
-    expect(snippet).toContain('actionFont="Amplitude"');
+    expect(snippet).toContain("unsupported");
+    expect(snippet).toContain("EvidenceRefs");
+    expect(snippet).not.toMatch(/\bimport\s+\{/);
+    expect(snippet).not.toMatch(/<\w+/);
   });
 
-  it("uses the default theme preset in density starters", () => {
+  it("keeps density starters degraded when theme facts are missing", () => {
     const snippets = createFoundationStarterCode({
       ...PAGE_BASE,
       title: "Density",
     });
 
-    expect(snippets[0]?.code).toContain("SaltProviderNext");
-    expect(snippets[0]?.code).toContain('accent="teal"');
-    expect(snippets[0]?.code).toContain('density="medium"');
+    expect(snippets[0]?.code).toContain("pending evidence");
     expect(snippets[0]?.notes).toContain(
-      "Use the recommended JPM Brand theme bootstrap for new work, then layer density or size choices on top.",
+      "Theme, density, and size starter code is unsupported until provider and related prop facts resolve from evidence.",
     );
   });
 });

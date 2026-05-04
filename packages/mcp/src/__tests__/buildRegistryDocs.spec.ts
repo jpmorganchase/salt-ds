@@ -7,6 +7,9 @@ import { extractGuides } from "../build/buildRegistryDocs.js";
 const TIMESTAMP = "2026-03-10T00:00:00Z";
 const tempRoots: string[] = [];
 
+// Fixture-only documentation snippets in this file are synthetic source inputs
+// for registry extraction tests; they are not sources of Salt truth.
+
 async function createTempRepo(structure: Record<string, string>) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "salt-guide-docs-"));
   tempRoots.push(root);
@@ -43,11 +46,11 @@ Install Salt in a React app.
 
 ### 1. Install packages
 
-Install \`@salt-ds/core\` and \`@salt-ds/theme\`.
+Install \`@salt-ds/fixture-core\` and \`@salt-ds/fixture-theme\`.
 
 ### 2. Add the theme
 
-Import the theme and start with [Button](/salt/components/button).
+Import the fixture theme and start with [Fixture Button](/salt/components/fixture-button).
 `,
       "site/docs/getting-started/choosing-the-right-primitive.mdx": `---
 title: Choosing the right primitive
@@ -59,13 +62,13 @@ Choose the best primitive for the user intent.
 
 ## Start with user intent
 
-Use [Button](/salt/components/button) for actions and [Link](/salt/components/link) for navigation.
+Use [Fixture Button](/salt/components/fixture-button) for actions and [Fixture Link](/salt/components/fixture-link) for navigation.
 
 ## Common decisions
 
-### Button or Link
+### Fixture Button or Fixture Link
 
-Use Button for actions and Link for navigation.
+Use Fixture Button for actions and Fixture Link for navigation.
 `,
       "site/docs/getting-started/not-for-ai.mdx": `---
 title: Visual polish notes
@@ -86,13 +89,16 @@ This page should not become an AI guide.
 
     expect(developingGuide).toMatchObject({
       summary: "Learn how to bootstrap a React app with Salt.",
-      packages: expect.arrayContaining(["@salt-ds/core", "@salt-ds/theme"]),
+      packages: expect.arrayContaining([
+        "@salt-ds/fixture-core",
+        "@salt-ds/fixture-theme",
+      ]),
       related_docs: {
         overview: "/salt/getting-started/developing",
-        related_components: ["Button"],
+        related_components: ["FixtureButton"],
         related_packages: expect.arrayContaining([
-          "@salt-ds/core",
-          "@salt-ds/theme",
+          "@salt-ds/fixture-core",
+          "@salt-ds/fixture-theme",
         ]),
       },
     });
@@ -143,7 +149,7 @@ Check whether the wrapper adds behavior or only renames a component.
     );
   });
 
-  it("extracts the explicit theme-to-code mapping for AI guidance", async () => {
+  it("extracts only source-backed theme statements for AI guidance", async () => {
     const repoRoot = await createTempRepo({
       "site/docs/themes/index.mdx": `---
 title: Themes
@@ -152,43 +158,36 @@ description: Learn how to apply Salt themes in code.
 
 ## Which theme to pick
 
-### JPM Brand theme
+### Fixture current theme
 
-The JPM Brand theme is Salt's long-term visual style for new work.
+Fixture current theme guidance comes from this source document.
 
-### Legacy (UITK) theme
+### Fixture migration theme
 
-The Legacy theme supports migration and compatibility work.
+Fixture migration theme guidance comes from this source document.
 `,
     });
 
     const guides = await extractGuides(repoRoot, TIMESTAMP);
     const themesGuide = guides.find((guide) => guide.id === "guide.themes");
-    const jpmBrandStep = themesGuide?.steps.find(
-      (step) => step.title === "Apply the JPM Brand theme",
+    const sourceBackedStep = themesGuide?.steps.find(
+      (step) => step.title === "Fixture current theme",
     );
 
     expect(themesGuide).toMatchObject({
       name: "Themes",
+      packages: [],
       related_docs: {
         overview: "/salt/themes",
+        related_components: [],
+        related_packages: [],
       },
     });
-    expect(jpmBrandStep?.statements).toEqual(
+    expect(sourceBackedStep?.statements).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("SaltProviderNext"),
-        expect.stringContaining('accent="teal"'),
-        expect.stringContaining("@salt-ds/theme/css/theme-next.css"),
+        "Fixture current theme guidance comes from this source document.",
       ]),
     );
-    expect(jpmBrandStep?.snippets).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          title: "JPM Brand theme",
-          language: "tsx",
-          code: expect.stringContaining('headingFont="Amplitude"'),
-        }),
-      ]),
-    );
+    expect(sourceBackedStep?.snippets).toEqual([]);
   });
 });

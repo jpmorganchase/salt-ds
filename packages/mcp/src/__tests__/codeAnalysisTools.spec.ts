@@ -177,6 +177,12 @@ describe("validateSaltUsage", () => {
     const paletteIssue = result.issues.find(
       (issue) => issue.id === "tokens.palette-direct-use",
     );
+    const borderIssue = result.issues.find(
+      (issue) => issue.id === "tokens.border-thickness-not-fixed",
+    );
+    const containerIssue = result.issues.find(
+      (issue) => issue.id === "tokens.container-level-mismatch",
+    );
 
     expect(issueIds).toContain("tokens.palette-direct-use");
     expect(issueIds).toContain("tokens.border-thickness-not-fixed");
@@ -185,7 +191,49 @@ describe("validateSaltUsage", () => {
       category: "tokens",
       rule: "no-direct-palette-token-use",
       canonical_source: "/salt/themes/design-tokens/index",
+      evidence_refs: expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "registry",
+          claim_kind: "token",
+          registry: expect.objectContaining({
+            entity_id: "--salt-palette-accent-border",
+          }),
+        }),
+        expect.objectContaining({
+          source_kind: "workflow_input",
+          claim_kind: "workflow",
+        }),
+      ]),
     });
+    expect(borderIssue?.evidence_refs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "registry",
+          claim_kind: "token",
+          registry: expect.objectContaining({
+            entity_id: "--salt-size-fixed-100",
+          }),
+        }),
+      ]),
+    );
+    expect(containerIssue?.evidence_refs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "registry",
+          claim_kind: "token",
+          registry: expect.objectContaining({
+            entity_id: "--salt-container-primary-background",
+          }),
+        }),
+        expect.objectContaining({
+          source_kind: "registry",
+          claim_kind: "token",
+          registry: expect.objectContaining({
+            entity_id: "--salt-container-secondary-borderColor",
+          }),
+        }),
+      ]),
+    );
   });
 
   it("flags unrecognized canonical-looking Salt token names", () => {
@@ -212,7 +260,13 @@ describe("validateSaltUsage", () => {
           id: "tokens.unknown-salt-token",
           category: "tokens",
           rule: "only-use-known-salt-token-names",
-          canonical_source: "/salt/themes/design-tokens/index",
+          canonical_source: null,
+          evidence_refs: [
+            expect.objectContaining({
+              source_kind: "workflow_input",
+              claim_kind: "workflow",
+            }),
+          ],
         }),
       ]),
     );
@@ -279,6 +333,19 @@ describe("validateSaltUsage", () => {
       category: "deprecated",
       rule: "no-deprecated-token-use",
       canonical_source: "/salt/themes/design-tokens/index",
+      evidence_refs: expect.arrayContaining([
+        expect.objectContaining({
+          source_kind: "registry",
+          claim_kind: "token",
+          registry: expect.objectContaining({
+            entity_id: "--salt-size-border",
+          }),
+        }),
+        expect.objectContaining({
+          source_kind: "workflow_input",
+          claim_kind: "workflow",
+        }),
+      ]),
     });
     expect(deprecatedIssue?.evidence.join(" ")).toContain("--salt-size-border");
   });
@@ -322,7 +389,25 @@ describe("validateSaltUsage", () => {
         expect.objectContaining({
           id: "primitive-choice.link-action",
           category: "primitive-choice",
-          rule: "link-without-navigation-target-should-prefer-button",
+          rule: "navigation-component-used-as-action",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_id: "component.link",
+                field_path: "when_not_to_use.0",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_id: "component.button",
+                field_path: "when_to_use.0",
+              }),
+            }),
+          ]),
         }),
       ]),
     );
@@ -436,6 +521,32 @@ describe("validateSaltUsage", () => {
           id: "primitive-choice.native-table",
           category: "primitive-choice",
           rule: "native-table-should-prefer-salt-table-or-data-grid",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_id: "component.table",
+                field_path: "when_to_use.0",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_id: "component.data-grid",
+                field_path: "when_to_use.0",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "composition",
+              registry: expect.objectContaining({
+                entity_id: "guide.choosing-the-right-primitive",
+                field_path: "summary",
+              }),
+            }),
+          ]),
         }),
       ]),
     );
@@ -466,6 +577,32 @@ describe("validateSaltUsage", () => {
           category: "composition",
           rule: "avoid-nesting-interactive-salt-primitives",
           severity: "error",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "composition",
+              registry: expect.objectContaining({
+                entity_id: "guide.composition-pitfalls",
+                field_path: "summary",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_id: "component.button",
+                field_path: "when_to_use.0",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_id: "component.link",
+                field_path: "when_to_use.0",
+              }),
+            }),
+          ]),
         }),
       ]),
     );
@@ -489,6 +626,36 @@ describe("validateSaltUsage", () => {
           id: "composition.pass-through-wrapper",
           category: "composition",
           rule: "avoid-pass-through-wrapper-over-salt-primitive",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "composition",
+              registry: expect.objectContaining({
+                entity_id: "guide.custom-wrappers",
+                field_path: "steps.0.statements.0",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "composition",
+              registry: expect.objectContaining({
+                entity_id: "guide.composition-pitfalls",
+                field_path: "steps.0.statements.1",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_id: "component.button",
+                field_path: "name",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "workflow_input",
+              claim_kind: "workflow",
+            }),
+          ]),
         }),
       ]),
     );
