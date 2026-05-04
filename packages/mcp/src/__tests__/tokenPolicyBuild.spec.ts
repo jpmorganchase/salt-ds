@@ -2,12 +2,12 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import {
-  SALT_PATTERN_VALIDATION_RULE_PACK_CONTRACT,
   buildTokenPolicyStructuralRoleRulePack,
   getToken,
   loadRegistry,
   recommendTokens,
   SALT_EVIDENCE_REF_CONTRACT,
+  SALT_PATTERN_VALIDATION_RULE_PACK_CONTRACT,
   SALT_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_CONTRACT,
   type SaltGeneratedArtifact,
   type SaltPatternValidationRulePack,
@@ -97,7 +97,10 @@ beforeAll(async () => {
     REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.key
   ] as SaltTokenPolicyStructuralRoleRulePack;
   const patternRulePackArtifact = readJsonFile(
-    path.join(outputDir, REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.file_name),
+    path.join(
+      outputDir,
+      REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.file_name,
+    ),
   );
   builtPatternRulePack = patternRulePackArtifact[
     REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.key
@@ -540,6 +543,7 @@ describe("generated token policy", () => {
       characteristic_docs_by_category: new Map(),
       foundation_docs_by_category: new Map(),
       foundation_categories: new Set(["fixture"]),
+      deprecated_replacements_by_token: new Map(),
       structural_role_rules: [],
     };
 

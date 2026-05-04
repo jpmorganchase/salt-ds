@@ -505,6 +505,18 @@ Current state:
   records 45 explicit unsupported docs/registry gaps: 11 component gaps, 28
   pattern gaps, and 6 foundation gaps. Remaining foundation token policy gaps
   are differential, draggable, measured, opacity, taggable, and track.
+- Deprecated token replacement indexing now also reads source-backed package
+  changelog replacement tables, direct replacement diff blocks, and deprecated
+  token CSS `Use --salt-*` comments into the semantic-core policy source
+  registry. Replacement chains only resolve when the final token has cited
+  docs. This closes the `differential` and `draggable` token families, and
+  partially closes source-backed `measured`, `taggable`, and `track` tokens.
+  `opacity` remains unsupported because the replacement evidence does not
+  resolve to current token policy docs.
+- A fresh production coverage audit after changelog-backed replacement
+  indexing records 43 explicit unsupported docs/registry gaps: 11 component
+  gaps, 28 pattern gaps, and 4 foundation gaps. Remaining foundation token
+  policy gaps are measured, opacity, taggable, and track.
 - Review public-contract evidence degradation is now checked for both CLI and
   MCP compact output using the same semantic-core serializer path, so unresolved
   EvidenceRefs cannot appear complete in one transport and partial in the other.
@@ -619,12 +631,18 @@ Current state:
 - Final verification on May 4, 2026 reran the Salt AI guardrail suite and a
   fresh production context coverage audit. Supported generated context,
   reports, validators, CLI/MCP serializers, and skill surfaces remained
-  evidence-gated. The audit now reports 45 explicit unsupported
+  evidence-gated. That audit reported 45 explicit unsupported
   docs/registry gaps: 11 component gaps, 28 pattern gaps, and 6 foundation
   gaps. The remaining selected pattern contexts with unsupported claims are
   `Header block`, `Indication`, and `List filtering`; the remaining foundation
   token-policy gaps are `differential`, `draggable`, `measured`, `opacity`,
   `taggable`, and `track`.
+- Final token-gap verification on May 4, 2026 reran the semantic-core
+  token-policy fixtures, rebuilt the production registry, and reran the
+  production context coverage audit. The audit now reports 43 explicit
+  unsupported docs/registry gaps: 11 component gaps, 28 pattern gaps, and 4
+  foundation gaps. The remaining foundation token-policy gaps are `measured`,
+  `opacity`, `taggable`, and `track`.
 
 Why this matters:
 

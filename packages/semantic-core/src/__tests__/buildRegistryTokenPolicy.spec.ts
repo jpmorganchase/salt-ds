@@ -36,7 +36,22 @@ title: Fixture area
 Fixture tokens help manage fixture spacing in fixture layouts.
 
 - Use the \`--salt-fixture-gap\` token to set fixture gaps.
+- Use the \`--salt-fixture-primary-gap\` token to set primary fixture gaps.
 `,
+    "utf8",
+  );
+}
+
+async function writeFixtureThemeChangelog(
+  repoRoot: string,
+  content: string,
+): Promise<void> {
+  await fs.mkdir(path.join(repoRoot, "packages/theme"), {
+    recursive: true,
+  });
+  await fs.writeFile(
+    path.join(repoRoot, "packages/theme/CHANGELOG.md"),
+    content,
     "utf8",
   );
 }
@@ -302,6 +317,207 @@ describe("token policy source registry", () => {
         }),
       );
       expect(unsupportedToken?.policy).toBeNull();
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("extracts fixture deprecated replacement tables from source-backed changelog evidence", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-changelog-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureThemeChangelog(
+        repoRoot,
+        `## Fixture
+
+| Name                         | Replacement          |
+| ---------------------------- | -------------------- |
+| \`--salt-legacyfixture-gap\` | \`--salt-fixture-gap\` |
+`,
+      );
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const policy = getTokenPolicy(
+        {
+          name: "--salt-legacyfixture-gap",
+          category: "legacyfixture",
+        },
+        sources,
+      );
+
+      expect(policy).toEqual(
+        expect.objectContaining({
+          usage_tier: "foundation",
+          direct_component_use: "conditional",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "docs",
+              claim_kind: "token",
+              source: expect.objectContaining({
+                repo_path: "packages/theme/CHANGELOG.md",
+                line_start: 5,
+                line_end: 5,
+              }),
+            }),
+          ]),
+        }),
+      );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("resolves fixture deprecated replacement chains through source-backed CSS and changelog evidence", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-chain-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureThemeChangelog(
+        repoRoot,
+        `## Fixture
+
+| Name                                  | Replacement          |
+| ------------------------------------- | -------------------- |
+| \`--salt-intermediatefixture-gap\`    | \`--salt-fixture-gap\` |
+`,
+      );
+      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+        recursive: true,
+      });
+      await fs.writeFile(
+        path.join(repoRoot, "packages/theme/css/deprecated/fixture.css"),
+        `.salt-theme {
+  --salt-legacyfixture-gap: 10px; /* Use --salt-intermediatefixture-gap */
+}
+`,
+        "utf8",
+      );
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const policy = getTokenPolicy(
+        {
+          name: "--salt-legacyfixture-gap",
+          category: "legacyfixture",
+        },
+        sources,
+      );
+
+      expect(policy).toEqual(
+        expect.objectContaining({
+          docs: [
+            "/salt/foundations/fixture-area/index",
+            "/salt/themes/design-tokens/index",
+          ],
+          notes: expect.arrayContaining([
+            expect.stringContaining(
+              "Use the --salt-fixture-gap token to set fixture gaps",
+            ),
+          ]),
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "token",
+              source: expect.objectContaining({
+                repo_path: "packages/theme/css/deprecated/fixture.css",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "docs",
+              source: expect.objectContaining({
+                repo_path: "packages/theme/CHANGELOG.md",
+              }),
+            }),
+          ]),
+        }),
+      );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("extracts fixture direct replacement diff blocks without using fallback facts", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-diff-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureThemeChangelog(
+        repoRoot,
+        `## Fixture
+
+- fixture: Deprecated old fixture tokens; replaced tokens with below
+
+  \`\`\`diff
+  - --salt-oldfixture-primary-gap
+  + --salt-fixture-primary-gap
+  + --salt-fixture-extra-gap
+  \`\`\`
+`,
+      );
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const policy = getTokenPolicy(
+        {
+          name: "--salt-oldfixture-primary-gap",
+          category: "oldfixture",
+        },
+        sources,
+      );
+
+      expect(policy).toEqual(
+        expect.objectContaining({
+          docs: [
+            "/salt/foundations/fixture-area/index",
+            "/salt/themes/design-tokens/index",
+          ],
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "docs",
+              source: expect.objectContaining({
+                repo_path: "packages/theme/CHANGELOG.md",
+              }),
+            }),
+          ]),
+        }),
+      );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("keeps fixture changelog replacements unsupported when replacement docs are missing", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-changelog-gap-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureThemeChangelog(
+        repoRoot,
+        `## Fixture
+
+| Name                         | Replacement                |
+| ---------------------------- | -------------------------- |
+| \`--salt-legacyfixture-gap\` | \`--salt-undocumented-gap\` |
+`,
+      );
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+
+      expect(
+        getTokenPolicy(
+          {
+            name: "--salt-legacyfixture-gap",
+            category: "legacyfixture",
+          },
+          sources,
+        ),
+      ).toBeNull();
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }
