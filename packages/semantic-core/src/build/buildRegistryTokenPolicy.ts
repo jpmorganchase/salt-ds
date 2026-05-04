@@ -36,6 +36,13 @@ interface TokenNameParts {
   property: string | null;
 }
 
+interface TokenPolicyInput {
+  name: string;
+  category: string;
+  source_paths?: string[];
+  deprecated_replacements?: string[];
+}
+
 export interface TokenStructuralRoleRule {
   id: string;
   category: string;
@@ -654,19 +661,40 @@ function buildPolicyEvidenceRefs(
   }));
 }
 
+function buildTokenSourceEvidenceRefs(
+  tokenName: string,
+  sourcePaths: string[],
+): SaltEvidenceRef[] {
+  return uniqueStrings(sourcePaths).map((sourcePath, index) => ({
+    contract: SALT_EVIDENCE_REF_CONTRACT,
+    id: `${slugify(tokenName)}.policy.token-source.${index}.source-ref`,
+    source_kind: "token",
+    claim_kind: "token",
+    source: {
+      repo_path: sourcePath,
+    },
+    confidence: "high",
+    note: "Source-backed token evidence for generated token policy metadata.",
+  }));
+}
+
 function withPolicyEvidence(
   tokenName: string,
   policy: Omit<NonNullable<TokenRecord["policy"]>, "docs" | "evidence_refs">,
   docs: TokenPolicyDocSource[],
+  extraEvidenceRefs: SaltEvidenceRef[] = [],
 ): NonNullable<TokenRecord["policy"]> | null {
-  if (docs.length === 0) {
+  if (docs.length === 0 && extraEvidenceRefs.length === 0) {
     return null;
   }
 
   return {
     ...policy,
     docs: uniqueStrings(docs.map((doc) => doc.route)),
-    evidence_refs: buildPolicyEvidenceRefs(tokenName, docs),
+    evidence_refs: [
+      ...buildPolicyEvidenceRefs(tokenName, docs),
+      ...extraEvidenceRefs,
+    ],
   };
 }
 
@@ -1096,8 +1124,114 @@ function buildFoundationPolicy(
   );
 }
 
+function findPolicyDocForTokenName(
+  tokenName: string,
+  sources: TokenPolicySourceRegistry,
+): TokenPolicyDocSource | null {
+  const category = normalizeCategory(
+    tokenName.replace("--salt-", "").split("-")[0] ?? "",
+  );
+
+  const candidates = [
+    sources.characteristic_docs_by_category.get(category) ?? null,
+    sources.foundation_docs_by_category.get(category) ?? null,
+  ].filter((source): source is TokenPolicyDocSource => Boolean(source));
+
+  return (
+    candidates.find((source) =>
+      Boolean(findTokenMentionedBlock(source, tokenName)),
+    ) ?? null
+  );
+}
+
+function replacementTokenTier(
+  tokenName: string,
+  sources: TokenPolicySourceRegistry,
+): TokenPolicyUsageTier | null {
+  const category = normalizeCategory(
+    tokenName.replace("--salt-", "").split("-")[0] ?? "",
+  );
+
+  if (tokenName.startsWith("--salt-palette-") || category === "palette") {
+    return "palette";
+  }
+  if (sources.characteristic_docs_by_category.has(category)) {
+    return "characteristic";
+  }
+  if (
+    sources.foundation_categories.has(category) ||
+    sources.foundation_docs_by_category.has(category)
+  ) {
+    return "foundation";
+  }
+
+  return null;
+}
+
+function buildDeprecatedReplacementPolicy(
+  token: TokenPolicyInput,
+  sources: TokenPolicySourceRegistry,
+): NonNullable<TokenRecord["policy"]> | null {
+  const replacements = uniqueStrings(token.deprecated_replacements ?? []);
+  if (replacements.length === 0) {
+    return null;
+  }
+
+  const replacementDocs = replacements.map((replacement) =>
+    findPolicyDocForTokenName(replacement, sources),
+  );
+  if (replacementDocs.some((doc) => doc == null)) {
+    return null;
+  }
+
+  const replacementTiers = uniqueStrings(
+    replacements
+      .map((replacement) => replacementTokenTier(replacement, sources))
+      .filter((tier): tier is TokenPolicyUsageTier => Boolean(tier)),
+  );
+  if (replacementTiers.length !== 1) {
+    return null;
+  }
+
+  const tierEvidence = getTierPolicyEvidence(sources, replacementTiers[0]);
+  if (!tierEvidence) {
+    return null;
+  }
+
+  const docs = sourceBackedPolicyDocs(
+    tierEvidence,
+    ...(replacementDocs as TokenPolicyDocSource[]),
+  );
+  const replacementBlocks = uniquePolicyText(
+    replacements.map((replacement, index) =>
+      findTokenMentionedBlock(replacementDocs[index] ?? null, replacement),
+    ),
+  );
+
+  return withPolicyEvidence(
+    token.name,
+    {
+      usage_tier: tierEvidence.usage_tier,
+      direct_component_use: tierEvidence.direct_component_use,
+      preferred_for: [],
+      avoid_for:
+        tierEvidence.usage_tier === "palette"
+          ? matchingSentences(
+              tierEvidence.text,
+              /\bnever referenced directly\b/i,
+            )
+          : [],
+      notes: uniquePolicyText([tierEvidence.text, ...replacementBlocks]),
+      structural_roles: [],
+      pairing: null,
+    },
+    docs,
+    buildTokenSourceEvidenceRefs(token.name, token.source_paths ?? []),
+  );
+}
+
 export function getTokenPolicy(
-  token: Pick<TokenRecord, "name" | "category">,
+  token: TokenPolicyInput,
   sources: TokenPolicySourceRegistry,
 ): NonNullable<TokenRecord["policy"]> | null {
   const category = normalizeCategory(token.category);
@@ -1117,5 +1251,5 @@ export function getTokenPolicy(
     return buildFoundationPolicy(token.name, category, sources);
   }
 
-  return null;
+  return buildDeprecatedReplacementPolicy(token, sources);
 }

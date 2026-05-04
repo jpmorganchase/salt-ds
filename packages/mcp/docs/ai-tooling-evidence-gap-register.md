@@ -484,6 +484,17 @@ Current state:
   token families that still lack token policy docs or source-backed policy
   evidence: delay, differential, draggable, icon, measured, opacity, taggable,
   and track.
+- Deprecated token policy extraction now reads inline source-backed token
+  replacement comments of the form `Use --salt-*` and only generates replacement
+  policy metadata when the replacement token resolves to cited docs. Deprecated
+  icon-size tokens now resolve through the size foundation docs, design-token
+  overview docs, and token CSS source EvidenceRefs instead of leaving the
+  `icon` token family as an unsupported policy gap.
+- A fresh production coverage audit after deprecated replacement policy
+  extraction records 46 explicit unsupported docs/registry gaps: 11 component
+  gaps, 28 pattern gaps, and 7 foundation gaps. Remaining foundation token
+  policy gaps are delay, differential, draggable, measured, opacity, taggable,
+  and track.
 - Review public-contract evidence degradation is now checked for both CLI and
   MCP compact output using the same semantic-core serializer path, so unresolved
   EvidenceRefs cannot appear complete in one transport and partial in the other.
@@ -598,12 +609,12 @@ Current state:
 - Final verification on May 4, 2026 reran the Salt AI guardrail suite and a
   fresh production context coverage audit. Supported generated context,
   reports, validators, CLI/MCP serializers, and skill surfaces remained
-  evidence-gated. The audit still reports 47 explicit unsupported
-  docs/registry gaps: 11 component gaps, 28 pattern gaps, and 8 foundation
+  evidence-gated. The audit now reports 46 explicit unsupported
+  docs/registry gaps: 11 component gaps, 28 pattern gaps, and 7 foundation
   gaps. The remaining selected pattern contexts with unsupported claims are
   `Header block`, `Indication`, and `List filtering`; the remaining foundation
-  token-policy gaps are `delay`, `differential`, `draggable`, `icon`,
-  `measured`, `opacity`, `taggable`, and `track`.
+  token-policy gaps are `delay`, `differential`, `draggable`, `measured`,
+  `opacity`, `taggable`, and `track`.
 
 Why this matters:
 
