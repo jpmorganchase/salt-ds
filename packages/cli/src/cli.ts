@@ -1,4 +1,5 @@
 import { runDoctorCommand } from "./commands/doctor.js";
+import { runExportContextCommand } from "./commands/exportContext.js";
 import { runInfoCommand } from "./commands/info.js";
 import { runInitCommand } from "./commands/init.js";
 import { runRuntimeInspectCommand } from "./commands/runtimeInspect.js";
@@ -67,6 +68,10 @@ export async function runCli(
 
   if (command === "upgrade") {
     return runUpgradeCommand(positionals, flags, normalizedIo);
+  }
+
+  if (command === "export-context") {
+    return runExportContextCommand(positionals, flags, normalizedIo);
   }
 
   if (command === "get_salt_entity" || command === "get-salt-entity") {

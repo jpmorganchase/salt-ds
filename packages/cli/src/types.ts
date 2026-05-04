@@ -1,3 +1,4 @@
+import type { SaltGeneratedContextHealth } from "@salt-ds/semantic-core";
 import type { SaltCapabilityManifest } from "@salt-ds/semantic-core/tools/capabilityManifest";
 import type {
   CreateCatalogEntityLookupResult,
@@ -269,6 +270,7 @@ export interface SaltInfoResult {
     entity: CreateCatalogEntityLookupResult | null;
     family: CreateCatalogFamilyLookupResult | null;
   };
+  generatedContext: SaltGeneratedContextHealth;
   workflows: {
     bootstrapConventions: boolean;
     create: boolean;

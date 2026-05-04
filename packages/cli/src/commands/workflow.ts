@@ -2,6 +2,14 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { inspectUrl } from "@salt-ds/runtime-inspector-core";
 import {
+  buildSaltWorkflowFollowupReport,
+  buildSaltReviewReport,
+  type SaltReviewReport,
+  type SaltReviewReportValidationResult,
+  type SaltWorkflowFollowupReport,
+  validateSaltReviewReport,
+} from "@salt-ds/semantic-core";
+import {
   type CreateSaltUiResult,
   createSaltUi,
 } from "@salt-ds/semantic-core/tools/createSaltUi";
@@ -177,10 +185,12 @@ interface ReviewWorkflowResult {
     issueClasses: WorkflowIssueClass[];
     ruleIds: ReviewRuleId[];
     fixCandidates: ReviewFixCandidatesResult;
+    reviewReport: SaltReviewReport;
     expectedTargetReview: {
       reportPath: string;
       expectedTargets: ReviewExpectedTargets;
       issues: Array<Record<string, unknown>>;
+      missingData: string[];
     } | null;
     migrationVerification: MigrationVerificationSummary | null;
     runtimeEvidence: {
@@ -352,6 +362,7 @@ interface MigrateWorkflowResult {
       suggestedWorkflow: "review";
       suggestedCommand: string;
     };
+    workflowFollowupReport: SaltWorkflowFollowupReport;
     runtimeEvidence: {
       requested: boolean;
       url: string | null;
@@ -505,6 +516,7 @@ interface UpgradeWorkflowResult {
   artifacts: {
     context: SaltInfoResult;
     ruleIds: UpgradeRuleId[];
+    workflowFollowupReport: SaltWorkflowFollowupReport;
     notes: string[];
   };
 }
@@ -1852,9 +1864,11 @@ function toCreateAgentWorkflowJson(
 function toReviewAgentWorkflowJson(
   result: ReviewSaltUiResult,
   contract: ReviewSaltUiWorkflowContract,
+  registry: Awaited<ReturnType<typeof resolveSemanticRegistry>>["registry"],
 ): PublicContract {
   return buildReviewPublicContract(result, contract, {
     transport_used: "cli",
+    registry,
   });
 }
 
@@ -1873,6 +1887,25 @@ function toUpgradeAgentWorkflowJson(
 ): PublicContract {
   return buildUpgradePublicContract(result, contract, {
     transport_used: "cli",
+  });
+}
+
+async function loadAttachedReviewReportValidation(input: {
+  cwd: string;
+  registry: Awaited<ReturnType<typeof resolveSemanticRegistry>>["registry"];
+  reviewReportPath?: string | null;
+}): Promise<SaltReviewReportValidationResult | null> {
+  if (!input.reviewReportPath) {
+    return null;
+  }
+
+  const reportPath = path.resolve(input.cwd, input.reviewReportPath);
+  const report = JSON.parse(await fs.readFile(reportPath, "utf8")) as unknown;
+
+  return validateSaltReviewReport({
+    report,
+    registry: input.registry,
+    report_path: reportPath,
   });
 }
 
@@ -2478,6 +2511,53 @@ export async function runMigrateCommand(
       });
     }
     const currentExperience = buildMigrationExperienceSummary(runtimeResult);
+    const postMigrationVerification = buildPostMigrationVerification(
+      translation,
+      Boolean(requestedUrl),
+      derivedOutline,
+      visualEvidence,
+      currentExperience,
+      projectConventionsCheck,
+    );
+    const reviewReportValidation = await loadAttachedReviewReportValidation({
+      cwd: io.cwd,
+      registry,
+      reviewReportPath: flags["review-report"],
+    });
+    const reviewReportPath = flags["review-report"]
+      ? path.resolve(io.cwd, flags["review-report"])
+      : null;
+    const workflowFollowupReport = buildSaltWorkflowFollowupReport({
+      registry,
+      generated_at: new Date().toISOString(),
+      generator: {
+        name: "salt-ds migrate",
+      },
+      workflow: "migration",
+      transport_used: "cli",
+      source_command: "salt-ds migrate",
+      workflow_input: {
+        request: query,
+        source_outline_path: sourceOutline?.path ?? null,
+        runtime_url: requestedUrl,
+      },
+      runtime: {
+        requested: Boolean(requestedUrl),
+        captured: Boolean(runtimeResult),
+        url: requestedUrl,
+        section: runtimeResult ? "migration runtime inspection" : null,
+      },
+      followup: {
+        verification_check_count:
+          postMigrationVerification.sourceChecks.length +
+          postMigrationVerification.runtimeChecks.length +
+          postMigrationVerification.preserveChecks.length +
+          postMigrationVerification.confirmationChecks.length,
+        review_report_path:
+          reviewReportValidation?.report_path ?? reviewReportPath,
+        review_report_validation: reviewReportValidation,
+      },
+    });
 
     const result: MigrateWorkflowResult = {
       workflow: {
@@ -2546,14 +2626,8 @@ export async function runMigrateCommand(
           requestedUrl,
           runtimeResult,
         ),
-        postMigrationVerification: buildPostMigrationVerification(
-          translation,
-          Boolean(requestedUrl),
-          derivedOutline,
-          visualEvidence,
-          currentExperience,
-          projectConventionsCheck,
-        ),
+        postMigrationVerification,
+        workflowFollowupReport,
         runtimeEvidence: {
           requested: Boolean(requestedUrl),
           url: requestedUrl,
@@ -2623,6 +2697,12 @@ export async function runMigrateCommand(
       policyTranslation as MigrateToSaltResult,
       canonicalContract,
     );
+    if (flags.report) {
+      await writeJsonFile(
+        path.resolve(io.cwd, flags.report),
+        workflowFollowupReport,
+      );
+    }
     await writeWorkflowOutput(
       result,
       flags,
@@ -2665,9 +2745,7 @@ export async function runUpgradeCommand(
   try {
     const context = await collectSaltInfo(io.cwd, flags["registry-dir"]);
     const inferredPackage =
-      flags.package ??
-      context.salt.packages.find((pkg) => pkg.name === "@salt-ds/core")?.name ??
-      context.salt.packages[0]?.name;
+      flags.package ?? context.salt.packages[0]?.name;
     const fromVersionWasInferred = !flags["from-version"];
     const inferredFromVersion =
       flags["from-version"] ?? normalizeVersion(context.salt.packageVersion);
@@ -2712,6 +2790,39 @@ export async function runUpgradeCommand(
       flags.component ??
       "unknown";
     const upgradeContract = buildUpgradeSaltUiWorkflowContract(comparison);
+    const reviewReportValidation = await loadAttachedReviewReportValidation({
+      cwd: io.cwd,
+      registry,
+      reviewReportPath: flags["review-report"],
+    });
+    const reviewReportPath = flags["review-report"]
+      ? path.resolve(io.cwd, flags["review-report"])
+      : null;
+    const workflowFollowupReport = buildSaltWorkflowFollowupReport({
+      registry,
+      generated_at: new Date().toISOString(),
+      generator: {
+        name: "salt-ds upgrade",
+      },
+      workflow: "upgrade",
+      transport_used: "cli",
+      source_command: "salt-ds upgrade",
+      target: {
+        package_name: inferredPackage ?? null,
+        package_name_source: flags.package ? "workflow_input" : "package",
+        component_name: flags.component ?? null,
+        from_version: inferredFromVersion,
+        from_version_source: fromVersionWasInferred
+          ? "package"
+          : "workflow_input",
+        to_version: flags["to-version"] ?? null,
+      },
+      followup: {
+        review_report_path:
+          reviewReportValidation?.report_path ?? reviewReportPath,
+        review_report_validation: reviewReportValidation,
+      },
+    });
     const result: UpgradeWorkflowResult = {
       workflow: {
         id: "upgrade",
@@ -2742,6 +2853,7 @@ export async function runUpgradeCommand(
       artifacts: {
         context,
         ruleIds: getUpgradeRuleIds(),
+        workflowFollowupReport,
         notes: Array.from(
           new Set([
             ...context.notes,
@@ -2762,6 +2874,12 @@ export async function runUpgradeCommand(
     };
 
     const compactJson = toUpgradeAgentWorkflowJson(comparison, upgradeContract);
+    if (flags.report) {
+      await writeJsonFile(
+        path.resolve(io.cwd, flags.report),
+        workflowFollowupReport,
+      );
+    }
     await writeWorkflowOutput(result, flags, io, formatUpgradeReport, {
       compactJsonOverride: compactJson,
     });
@@ -2779,6 +2897,79 @@ async function runReviewLikeCommand(
   flags: Record<string, string>,
   io: RequiredCliIo,
 ): Promise<number> {
+  if (flags.resume) {
+    try {
+      const reportPath = path.resolve(io.cwd, flags.resume);
+      const { registry } = await resolveSemanticRegistry(
+        io.cwd,
+        flags["registry-dir"],
+      );
+      const validation = validateSaltReviewReport({
+        report: JSON.parse(await fs.readFile(reportPath, "utf8")) as unknown,
+        registry,
+        report_path: reportPath,
+      });
+
+      if (flags.json === "true") {
+        io.writeStdout(`${JSON.stringify(validation.resume, null, 2)}\n`);
+      } else {
+        io.writeStdout(
+          [
+            "Salt Review Resume",
+            `Status: ${validation.resume.status}`,
+            `Reusable EvidenceRefs: ${validation.resume.reusable_evidence_ref_ids.length}`,
+            `Unsupported claims: ${validation.resume.unsupported_claim_ids.length}`,
+            `Missing: ${validation.resume.missing.length}`,
+            "",
+          ].join("\n"),
+        );
+      }
+
+      return validation.resume.status === "ready" ? 0 : 10;
+    } catch (error) {
+      io.writeStderr(
+        `${error instanceof Error ? error.message : "Failed to resume the Salt review report."}\n`,
+      );
+      return 30;
+    }
+  }
+
+  if (flags.validate) {
+    try {
+      const reportPath = path.resolve(io.cwd, flags.validate);
+      const { registry } = await resolveSemanticRegistry(
+        io.cwd,
+        flags["registry-dir"],
+      );
+      const validation = validateSaltReviewReport({
+        report: JSON.parse(await fs.readFile(reportPath, "utf8")) as unknown,
+        registry,
+        report_path: reportPath,
+      });
+
+      if (flags.json === "true") {
+        io.writeStdout(`${JSON.stringify(validation, null, 2)}\n`);
+      } else {
+        io.writeStdout(
+          [
+            "Salt Review Report Validation",
+            `Status: ${validation.status}`,
+            `Mismatches: ${validation.mismatches.length}`,
+            `Missing: ${validation.missing.length}`,
+            "",
+          ].join("\n"),
+        );
+      }
+
+      return validation.current ? 0 : 10;
+    } catch (error) {
+      io.writeStderr(
+        `${error instanceof Error ? error.message : "Failed to validate the Salt review report."}\n`,
+      );
+      return 30;
+    }
+  }
+
   if (flags.fix === "true") {
     io.writeStderr(
       "salt-ds review no longer writes files directly. Use --json and apply the returned fixCandidates through the agent workflow.\n",
@@ -2821,17 +3012,21 @@ async function runReviewLikeCommand(
       flags["create-report"],
       registry,
     );
-    const expectedTargetReviewIssues =
+    const expectedTargetReviewResult =
       loadedCreateReviewTargets == null
+        ? null
+        : reviewSaltUi(registry, {
+            code: Array.from(codeByPath.values()).join("\n\n"),
+            framework: "react",
+            package_version: sourceValidation.packageVersion ?? undefined,
+            expected_targets: loadedCreateReviewTargets.expectedTargets,
+          });
+    const expectedTargetReviewIssues =
+      expectedTargetReviewResult == null
         ? []
-        : extractWorkflowExpectedIssues(
-            reviewSaltUi(registry, {
-              code: Array.from(codeByPath.values()).join("\n\n"),
-              framework: "react",
-              package_version: sourceValidation.packageVersion ?? undefined,
-              expected_targets: loadedCreateReviewTargets.expectedTargets,
-            }).issues,
-          );
+        : extractWorkflowExpectedIssues(expectedTargetReviewResult.issues);
+    const expectedTargetReviewMissingData =
+      expectedTargetReviewResult?.missing_data ?? [];
     const loadedMigrationVerification = await loadMigrationVerificationContract(
       io.cwd,
       flags["migration-report"],
@@ -2896,6 +3091,7 @@ async function runReviewLikeCommand(
     const mergedIssueSummary = summarizeIssueRecords(mergedIssues);
     const mergedSourceUrls = uniqueStrings([
       ...sourceValidation.files.flatMap((file) => file.sourceUrls),
+      ...(expectedTargetReviewResult?.source_urls ?? []),
       ...expectedTargetReviewIssues.flatMap((issue) =>
         readStringArrayRecordValue(issue, "source_urls"),
       ),
@@ -2910,52 +3106,53 @@ async function runReviewLikeCommand(
       sourceValidation.summary.filesNeedingAttention > 0 ||
       runtimeIssues > 0 ||
       expectedTargetReviewIssues.length > 0;
-    const reviewContract = buildReviewSaltUiWorkflowContract(
-      {
-        guidance_boundary: sourceValidation.files[0]?.guidanceBoundary ?? {
-          guidance_source: "canonical_salt",
-          scope: "official_salt_only",
-          project_conventions: {
-            supported: true,
-            contract: "project_conventions_v1",
-            check_recommended:
-              projectConventionsCheck?.checkRecommended ?? false,
-            reason:
-              "Repo policy may still refine the final remediation choice.",
-            topics: projectConventionsCheck?.topics ?? [],
-          },
+    const reviewResultForContract: ReviewSaltUiResult = {
+      guidance_boundary: sourceValidation.files[0]?.guidanceBoundary ?? {
+        guidance_source: "canonical_salt",
+        scope: "official_salt_only",
+        project_conventions: {
+          supported: true,
+          contract: "project_conventions_v1",
+          check_recommended: projectConventionsCheck?.checkRecommended ?? false,
+          reason: "Repo policy may still refine the final remediation choice.",
+          topics: projectConventionsCheck?.topics ?? [],
         },
-        decision: {
-          status: canonicalNeedsAttention ? "needs_attention" : "clean",
-          why:
-            topMergedIssue ??
-            sourceValidation.files[0]?.decision.why ??
-            "Review results are available.",
-        },
-        summary: {
-          errors: mergedIssueSummary.errors,
-          warnings: mergedIssueSummary.warnings,
-          infos: mergedIssueSummary.infos,
-          fix_count: sourceValidation.summary.fixCount,
-          migration_count: sourceValidation.summary.migrationCount,
-        },
-        fixes: sourceValidation.files.flatMap((file) => file.fixes ?? []),
-        issues: mergedIssues,
-        migrations: sourceValidation.files.flatMap(
-          (file) => file.migrations ?? [],
-        ),
-        missing_data: sourceValidation.files.flatMap(
-          (file) => file.missingData,
-        ),
-        next_step:
-          sourceValidation.files[0]?.nextStep ??
-          (loadedCreateReviewTargets
-            ? "Follow the saved create report's canonical Salt direction, then rerun salt-ds review."
-            : undefined),
-        source_urls: mergedSourceUrls,
       },
+      decision: {
+        status: canonicalNeedsAttention ? "needs_attention" : "clean",
+        why:
+          topMergedIssue ??
+          sourceValidation.files[0]?.decision.why ??
+          "Review results are available.",
+      },
+      summary: {
+        errors: mergedIssueSummary.errors,
+        warnings: mergedIssueSummary.warnings,
+        infos: mergedIssueSummary.infos,
+        fix_count: sourceValidation.summary.fixCount,
+        migration_count: sourceValidation.summary.migrationCount,
+      },
+      fixes: sourceValidation.files.flatMap((file) => file.fixes ?? []),
+      issues: mergedIssues,
+      migrations: sourceValidation.files.flatMap(
+        (file) => file.migrations ?? [],
+      ),
+      missing_data: [
+        ...sourceValidation.files.flatMap((file) => file.missingData),
+        ...expectedTargetReviewMissingData,
+      ],
+      next_step:
+        sourceValidation.files[0]?.nextStep ??
+        (loadedCreateReviewTargets
+          ? "Follow the saved create report's canonical Salt direction, then rerun salt-ds review."
+          : undefined),
+      source_urls: mergedSourceUrls,
+    };
+    const reviewContract = buildReviewSaltUiWorkflowContract(
+      reviewResultForContract,
       {
         code: Array.from(codeByPath.values()).join("\n\n"),
+        expected_targets: loadedCreateReviewTargets?.expectedTargets,
         project_policy: projectPolicy,
       },
     );
@@ -3002,6 +3199,40 @@ async function runReviewLikeCommand(
       0,
       sourceValidation.files.length - filesNeedingAttention,
     );
+    const compactJson = toReviewAgentWorkflowJson(
+      reviewResultForContract,
+      reviewContract,
+      registry,
+    );
+    const reviewReport = buildSaltReviewReport({
+      registry,
+      generated_at: new Date().toISOString(),
+      generator: {
+        name: "salt-ds review",
+      },
+      profile: "auto",
+      transport_used: "cli",
+      review: reviewResultForContract,
+      contract: reviewContract,
+      public_contract: compactJson,
+      scope: {
+        root_dir: sourceValidation.rootDir,
+        targets: sourceValidation.targets.map((target) => target.input),
+        file_count: sourceValidation.fileCount,
+        files: sourceValidation.files.map((file) => ({
+          path: file.path,
+          relative_path: file.relativePath,
+          status: file.decision.status,
+          errors: file.summary.errors,
+          warnings: file.summary.warnings,
+          infos: file.summary.infos,
+        })),
+      },
+      runtime: {
+        requested: Boolean(requestedUrl),
+        checked: Boolean(runtimeResult),
+      },
+    });
     const result: ReviewWorkflowResult = {
       workflow: {
         id: "review",
@@ -3030,11 +3261,13 @@ async function runReviewLikeCommand(
         issueClasses: reviewIssueClasses,
         ruleIds: collectReviewRuleIds(reviewIssueClasses),
         fixCandidates,
+        reviewReport,
         expectedTargetReview: loadedCreateReviewTargets
           ? {
               reportPath: loadedCreateReviewTargets.reportPath,
               expectedTargets: loadedCreateReviewTargets.expectedTargets,
               issues: expectedTargetReviewIssues,
+              missingData: expectedTargetReviewMissingData,
             }
           : null,
         migrationVerification,
@@ -3088,52 +3321,9 @@ async function runReviewLikeCommand(
       },
     };
 
-    const compactJson = toReviewAgentWorkflowJson(
-      {
-        guidance_boundary: sourceValidation.files[0]?.guidanceBoundary ?? {
-          guidance_source: "canonical_salt",
-          scope: "official_salt_only",
-          project_conventions: {
-            supported: true,
-            contract: "project_conventions_v1",
-            check_recommended:
-              projectConventionsCheck?.checkRecommended ?? false,
-            reason:
-              "Repo policy may still refine the final remediation choice.",
-            topics: projectConventionsCheck?.topics ?? [],
-          },
-        },
-        decision: {
-          status: canonicalNeedsAttention ? "needs_attention" : "clean",
-          why:
-            topMergedIssue ??
-            sourceValidation.files[0]?.decision.why ??
-            "Review results are available.",
-        },
-        summary: {
-          errors: mergedIssueSummary.errors,
-          warnings: mergedIssueSummary.warnings,
-          infos: mergedIssueSummary.infos,
-          fix_count: sourceValidation.summary.fixCount,
-          migration_count: sourceValidation.summary.migrationCount,
-        },
-        fixes: sourceValidation.files.flatMap((file) => file.fixes ?? []),
-        issues: mergedIssues,
-        migrations: sourceValidation.files.flatMap(
-          (file) => file.migrations ?? [],
-        ),
-        missing_data: sourceValidation.files.flatMap(
-          (file) => file.missingData,
-        ),
-        next_step:
-          sourceValidation.files[0]?.nextStep ??
-          (loadedCreateReviewTargets
-            ? "Follow the saved create report's canonical Salt direction, then rerun salt-ds review."
-            : undefined),
-        source_urls: mergedSourceUrls,
-      },
-      reviewContract,
-    );
+    if (flags.report) {
+      await writeJsonFile(path.resolve(io.cwd, flags.report), reviewReport);
+    }
     await writeWorkflowOutput(result, flags, io, formatReviewReport, {
       compactJsonOverride: compactJson,
     });

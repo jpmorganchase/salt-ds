@@ -89,6 +89,7 @@ export function buildSaltCliCapabilityManifest(input: {
         "review",
         "migrate",
         "upgrade",
+        "export-context",
         "get_salt_entity",
         "get_salt_examples",
         "discover_salt",
@@ -129,6 +130,14 @@ export function buildSaltCliCapabilityManifest(input: {
       catalog_entity_template_uri: null,
       catalog_candidates_template_uri: null,
       catalog_family_template_uri: null,
+      context_manifest_uri: null,
+      context_health_uri: null,
+      context_coverage_uri: null,
+      context_pack_uri: null,
+      context_component_template_uri: null,
+      context_component_markdown_template_uri: null,
+      context_pattern_template_uri: null,
+      context_foundation_template_uri: null,
     },
   });
 }

@@ -42,6 +42,7 @@ function formatInfoReport(result: SaltInfoResult): string {
         ? `${result.capabilityManifest.support_surface.retrieval_catalog.contract_version} via ${result.capabilityManifest.support_surface.retrieval_catalog.access.join(", ")}`
         : "unavailable"
     }`,
+    `Generated context: ${result.generatedContext.status} (${result.generatedContext.entryCount} entr${result.generatedContext.entryCount === 1 ? "y" : "ies"})`,
     `Policy: ${
       result.policy.mode === "none"
         ? "not detected"

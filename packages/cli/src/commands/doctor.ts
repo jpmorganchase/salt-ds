@@ -1,17 +1,218 @@
+import fs from "node:fs/promises";
 import path from "node:path";
-import { runDoctor } from "@salt-ds/runtime-inspector-core";
+import {
+  type ArtifactDescriptor,
+  type DoctorCheck,
+  runDoctor,
+} from "@salt-ds/runtime-inspector-core";
+import {
+  buildSaltAiSetupSummary,
+  buildSaltAiEvidenceClosureReport,
+  buildDefaultPromptHostInstructionSurfaces,
+  type SaltAiEvidenceClosureReport,
+  type SaltAiSetupSummary,
+  type SaltGeneratedContextHealth,
+  type SaltRegistry,
+} from "@salt-ds/semantic-core";
 import {
   createDefaultBundleDir,
   formatStatus,
   writeJsonFile,
 } from "../lib/common.js";
+import { inspectGeneratedContext } from "../lib/generatedContext.js";
+import { resolveSemanticRegistry } from "../lib/registry.js";
 import type { RequiredCliIo } from "../types.js";
 
-type DoctorCommandResult = Awaited<ReturnType<typeof runDoctor>>;
+type DoctorCommandResult = Awaited<ReturnType<typeof runDoctor>> & {
+  generatedContext: SaltGeneratedContextHealth;
+  aiSetup?: SaltAiSetupSummary | null;
+  aiEvidenceClosure?: SaltAiEvidenceClosureReport | null;
+};
 
-function formatDoctorReport(
-  result: Awaited<ReturnType<typeof runDoctor>>,
-): string {
+const GENERATED_CONTEXT_HEALTH_BUNDLE_FILE = "generated-context-health.json";
+const GENERATED_CONTEXT_MANIFEST_BUNDLE_FILE =
+  "generated-context-manifest.json";
+const GENERATED_CONTEXT_CHECK_SUMMARY_BUNDLE_FILE =
+  "generated-context-check-summary.json";
+const GENERATED_CONTEXT_PROMPT_INSTRUCTION_SURFACES_BUNDLE_FILE =
+  "generated-context-prompt-instruction-surfaces.json";
+const AI_EVIDENCE_CLOSURE_BUNDLE_FILE = "ai-evidence-closure-report.json";
+
+function createGeneratedContextCheck(
+  health: SaltGeneratedContextHealth,
+): DoctorCheck {
+  switch (health.status) {
+    case "current":
+      return {
+        id: "generated-context-current",
+        status: "pass",
+        summary: "Generated context manifest is current",
+        details: health.manifestPath,
+      };
+    case "missing":
+      return {
+        id: "generated-context-missing",
+        status: "info",
+        summary: "Generated context manifest is not present",
+        details: health.recommendedAction,
+      };
+    case "stale":
+      return {
+        id: "generated-context-stale",
+        status: "warn",
+        summary: "Generated context manifest is stale",
+        details: `${health.recommendedAction}: ${health.missingOutputs.join(", ") || health.manifestPath}`,
+      };
+    case "unsupported":
+      return {
+        id: "generated-context-unsupported",
+        status: "warn",
+        summary: "Generated context has unsupported evidence gaps",
+        details: [
+          ...health.entries.flatMap((entry) => entry.missing),
+          ...health.coverageGaps.flatMap((gap) => gap.missing),
+        ].join(", "),
+      };
+    case "invalid":
+      return {
+        id: "generated-context-invalid",
+        status: "warn",
+        summary: "Generated context manifest is invalid",
+        details: health.recommendedAction,
+      };
+  }
+}
+
+function createGeneratedContextCheckSummary(
+  health: SaltGeneratedContextHealth,
+  check: DoctorCheck,
+) {
+  return {
+    contract: "salt_generated_context_check_summary_v1",
+    status: health.status,
+    manifestPath: health.manifestPath,
+    entryCount: health.entryCount,
+    unsupportedEntries: health.unsupportedEntries,
+    unsupportedCoverageGaps: health.unsupportedCoverageGaps,
+    staleEntries: health.staleEntries,
+    missingOutputs: health.missingOutputs,
+    coverageGaps: health.coverageGaps,
+    recommendedAction: health.recommendedAction,
+    check,
+  };
+}
+
+function inferPolicyMode(
+  policyLayers: Awaited<ReturnType<typeof runDoctor>>["policyLayers"],
+): "team" | "stack" | "none" {
+  if (policyLayers.stackConfigPath) {
+    return "stack";
+  }
+
+  if (policyLayers.teamConfigPath) {
+    return "team";
+  }
+
+  return "none";
+}
+
+async function pathExists(targetPath: string): Promise<boolean> {
+  try {
+    await fs.access(targetPath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function writeGeneratedContextBundle(input: {
+  supportBundleDir: string;
+  rootDir: string;
+  generatedContext: SaltGeneratedContextHealth;
+  generatedContextCheck: DoctorCheck;
+  registry: SaltRegistry | null;
+}): Promise<ArtifactDescriptor[]> {
+  const healthPath = path.join(
+    input.supportBundleDir,
+    GENERATED_CONTEXT_HEALTH_BUNDLE_FILE,
+  );
+  const manifestBundlePath = path.join(
+    input.supportBundleDir,
+    GENERATED_CONTEXT_MANIFEST_BUNDLE_FILE,
+  );
+  const checkSummaryPath = path.join(
+    input.supportBundleDir,
+    GENERATED_CONTEXT_CHECK_SUMMARY_BUNDLE_FILE,
+  );
+  const promptInstructionSurfacesPath = path.join(
+    input.supportBundleDir,
+    GENERATED_CONTEXT_PROMPT_INSTRUCTION_SURFACES_BUNDLE_FILE,
+  );
+  const manifestPath = path.join(
+    input.rootDir,
+    ".salt",
+    "context",
+    "manifest.json",
+  );
+  const artifacts: ArtifactDescriptor[] = [
+    {
+      kind: "json",
+      path: healthPath,
+      label: "generated-context-health",
+    },
+    {
+      kind: "json",
+      path: checkSummaryPath,
+      label: "generated-context-check-summary",
+    },
+  ];
+
+  await writeJsonFile(healthPath, input.generatedContext);
+  await writeJsonFile(
+    checkSummaryPath,
+    createGeneratedContextCheckSummary(
+      input.generatedContext,
+      input.generatedContextCheck,
+    ),
+  );
+  if (input.registry) {
+    await writeJsonFile(
+      promptInstructionSurfacesPath,
+      buildDefaultPromptHostInstructionSurfaces({
+        registry: input.registry,
+        generated_at: input.registry.generated_at,
+        generator: {
+          name: "salt-ds doctor generated-context bundle",
+        },
+      }),
+    );
+    artifacts.push({
+      kind: "json",
+      path: promptInstructionSurfacesPath,
+      label: "generated-context-prompt-instruction-surfaces",
+    });
+  }
+
+  if (await pathExists(manifestPath)) {
+    try {
+      await writeJsonFile(
+        manifestBundlePath,
+        JSON.parse(await fs.readFile(manifestPath, "utf8")) as unknown,
+      );
+      artifacts.push({
+        kind: "json",
+        path: manifestBundlePath,
+        label: "generated-context-manifest",
+      });
+    } catch {
+      // Invalid manifests are already represented by generatedContext.status.
+    }
+  }
+
+  return artifacts;
+}
+
+function formatDoctorReport(result: DoctorCommandResult): string {
   const lines = [
     "Salt Doctor",
     `Root: ${result.rootDir}`,
@@ -44,6 +245,11 @@ function formatDoctorReport(
     `Repo signals: Storybook=${result.repoSignals.storybookDetected ? "yes" : "no"}, app runtime=${result.repoSignals.appRuntimeDetected ? "yes" : "no"}, team config=${result.repoSignals.saltTeamConfigFound ? "yes" : "no"}, stack config=${result.repoSignals.saltStackConfigFound ? "yes" : "no"}`,
     `Runtime targets: ${result.runtimeTargets.length > 0 ? result.runtimeTargets.length : "none checked"}`,
     `Policy layers: ${result.policyLayers.layers.length > 0 ? result.policyLayers.layers.length : "none detected"}`,
+    `Generated context: ${result.generatedContext.status} (${result.generatedContext.entryCount} entr${result.generatedContext.entryCount === 1 ? "y" : "ies"})`,
+    ...(result.aiSetup ? [`AI setup: ${result.aiSetup.status}`] : []),
+    ...(result.aiEvidenceClosure
+      ? [`AI evidence closure: ${result.aiEvidenceClosure.status}`]
+      : []),
   ];
 
   if (result.runtimeTargets.length > 0) {
@@ -209,17 +415,93 @@ export async function runDoctorCommand(
     reachabilityTimeoutMs: Number.isFinite(timeoutMs) ? timeoutMs : undefined,
     supportBundleDir,
   });
+  let resolvedRegistry: Awaited<
+    ReturnType<typeof resolveSemanticRegistry>
+  > | null = null;
+  try {
+    resolvedRegistry = await resolveSemanticRegistry(
+      rootDir,
+      flags["registry-dir"],
+    );
+  } catch {
+    resolvedRegistry = null;
+  }
+  const generatedContext = await inspectGeneratedContext(
+    result.rootDir,
+    resolvedRegistry?.registry ?? null,
+  );
+  const generatedContextCheck = createGeneratedContextCheck(generatedContext);
+  const generatedContextBundleArtifacts = supportBundleDir
+    ? await writeGeneratedContextBundle({
+        supportBundleDir,
+        rootDir: result.rootDir,
+        generatedContext,
+        generatedContextCheck,
+        registry: resolvedRegistry?.registry ?? null,
+      })
+    : [];
+  const aiSetup =
+    flags.ai === "true"
+      ? buildSaltAiSetupSummary({
+          root_dir: result.rootDir,
+          policy_mode: inferPolicyMode(result.policyLayers),
+          repo_instructions_path: null,
+          host_adapters: [],
+          ui_verify_command: null,
+          generated_context: generatedContext,
+          include_release_gate: true,
+        })
+      : null;
+  const aiEvidenceClosure =
+    flags.ai === "true" && resolvedRegistry
+      ? buildSaltAiEvidenceClosureReport({
+          registry: resolvedRegistry.registry,
+          generated_at: resolvedRegistry.registry.generated_at,
+          generator: {
+            name: "salt-ds doctor --ai",
+          },
+          generated_context: generatedContext,
+        })
+      : null;
+  const resultWithGeneratedContext: DoctorCommandResult = {
+    ...result,
+    generatedContext,
+    aiSetup,
+    aiEvidenceClosure,
+    checks: [...result.checks, generatedContextCheck],
+    artifacts: [...result.artifacts, ...generatedContextBundleArtifacts],
+  };
+  if (supportBundleDir) {
+    if (aiEvidenceClosure) {
+      const aiEvidenceClosurePath = path.join(
+        supportBundleDir,
+        AI_EVIDENCE_CLOSURE_BUNDLE_FILE,
+      );
+      await writeJsonFile(aiEvidenceClosurePath, aiEvidenceClosure);
+      resultWithGeneratedContext.artifacts.push({
+        kind: "json",
+        path: aiEvidenceClosurePath,
+        label: "ai-evidence-closure-report",
+      });
+    }
+    await writeJsonFile(
+      path.join(supportBundleDir, "doctor-report.json"),
+      resultWithGeneratedContext,
+    );
+  }
   const outputPath = flags.output
     ? path.resolve(io.cwd, flags.output)
     : undefined;
   const wantsJson = flags.json === "true";
   const resultWithArtifacts =
     outputPath &&
-    !result.artifacts.some((artifact) => artifact.path === outputPath)
+    !resultWithGeneratedContext.artifacts.some(
+      (artifact) => artifact.path === outputPath,
+    )
       ? {
-          ...result,
+          ...resultWithGeneratedContext,
           artifacts: [
-            ...result.artifacts,
+            ...resultWithGeneratedContext.artifacts,
             {
               kind: "json",
               path: outputPath,
@@ -227,7 +509,7 @@ export async function runDoctorCommand(
             },
           ],
         }
-      : result;
+      : resultWithGeneratedContext;
 
   if (outputPath) {
     await writeJsonFile(outputPath, resultWithArtifacts);
