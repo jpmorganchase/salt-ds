@@ -5,20 +5,48 @@ import { normalizeObjectSchema } from "@modelcontextprotocol/sdk/server/zod-comp
 import { toJsonSchemaCompat } from "@modelcontextprotocol/sdk/server/zod-json-schema-compat.js";
 import type { JsonSchemaType } from "@modelcontextprotocol/sdk/validation";
 import { AjvJsonSchemaValidator } from "@modelcontextprotocol/sdk/validation/ajv";
+import {
+  selectDefaultContextPackFoundationTokenGroups,
+  selectDefaultContextPackPatterns,
+} from "@salt-ds/semantic-core";
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { describe, expect, it } from "vitest";
 import * as z from "zod/v4";
+import { validateSaltGeneratedContextHealthSchema } from "../../../semantic-core/src/__tests__/contextCheckSchemaTestUtils.js";
+import { validateSaltAiEvidenceClosureReportSchema } from "../../../semantic-core/src/__tests__/aiEvidenceClosureReportSchemaTestUtils.js";
+import { validateSaltAiSetupSchema } from "../../../semantic-core/src/__tests__/aiSetupSchemaTestUtils.js";
+import { validateSaltContextComponentSchema } from "../../../semantic-core/src/__tests__/contextComponentSchemaTestUtils.js";
+import { validateSaltContextCoverageAuditSchema } from "../../../semantic-core/src/__tests__/contextCoverageAuditSchemaTestUtils.js";
+import { validateSaltContextFoundationSchema } from "../../../semantic-core/src/__tests__/contextFoundationSchemaTestUtils.js";
+import { validateSaltContextPackBundleSchema } from "../../../semantic-core/src/__tests__/contextPackBundleSchemaTestUtils.js";
+import { validateSaltContextPackPersistenceCheckSchema } from "../../../semantic-core/src/__tests__/contextPackBundleSchemaTestUtils.js";
+import { validateSaltContextPackManifestSchema } from "../../../semantic-core/src/__tests__/contextManifestSchemaTestUtils.js";
+import { validateSaltContextPatternSchema } from "../../../semantic-core/src/__tests__/contextPatternSchemaTestUtils.js";
+import { validateSaltContextPromptHostInstructionSurfaceSchema } from "../../../semantic-core/src/__tests__/promptHostInstructionSurfaceSchemaTestUtils.js";
+import { validateSaltGeneratedArtifactPersistenceSchema } from "../../../semantic-core/src/__tests__/artifactPersistenceSchemaTestUtils.js";
+import { validateSaltGeneratedArtifactReleaseGateBatchSchema } from "../../../semantic-core/src/__tests__/generatedArtifactReleaseGateSchemaTestUtils.js";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import { createSaltMcpServer } from "../server/createServer.js";
 import {
   buildSaltMcpInstructions,
   buildSaltMcpServerInfo,
   getSaltMcpRuntimeMetadata,
+  SALT_MCP_AI_SETUP_URI,
+  SALT_MCP_AI_EVIDENCE_CLOSURE_URI,
   SALT_MCP_CAPABILITY_MANIFEST_URI,
   SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
   SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
   SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
   SALT_MCP_CATALOG_MANIFEST_URI,
+  SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_COVERAGE_URI,
+  SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_HEALTH_URI,
+  SALT_MCP_CONTEXT_MANIFEST_URI,
+  SALT_MCP_CONTEXT_PACK_URI,
+  SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_RELEASE_GATE_URI,
 } from "../server/serverMetadata.js";
 import { buildStructuredToolContent } from "../server/sourceAttribution.js";
 import {
@@ -38,11 +66,15 @@ const EXPECTED_TOOL_NAMES = [
   "discover_salt",
   "get_salt_entity",
   "get_salt_examples",
+  "resume_salt_review",
   "review_salt_ui",
   "create_salt_ui",
   "upgrade_salt_ui",
+  "validate_salt_review_report",
   "get_salt_project_context",
   "migrate_to_salt",
+  "persist_salt_context_pack",
+  "persist_salt_generated_artifact",
 ].sort();
 
 const EXPECTED_DEFAULT_TOOL_ORDER = [
@@ -521,6 +553,237 @@ describe("createSaltMcpServer", () => {
     ).toBe(true);
   });
 
+  it("validates and resumes durable review reports through shared MCP support tools", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await writeBaseArtifacts(registryDir);
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const rootDir = await createTempDir("salt-mcp-review-resume");
+        const reportPath = path.join(rootDir, "invalid-review-report.json");
+        await fs.writeFile(reportPath, JSON.stringify({}, null, 2), "utf8");
+
+        const validateTool = TOOL_DEFINITIONS.find(
+          (definition) =>
+            definition.name === "validate_salt_review_report",
+        );
+        const resumeTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "resume_salt_review",
+        );
+        const validation = await validateTool?.execute(registry, {
+          root_dir: rootDir,
+          report_path: "invalid-review-report.json",
+        });
+        const resume = await resumeTool?.execute(registry, {
+          root_dir: rootDir,
+          report_path: "invalid-review-report.json",
+        });
+
+        expect(
+          (validateTool?.outputSchema as z.ZodType).safeParse(validation)
+            .success,
+        ).toBe(true);
+        expect(
+          (resumeTool?.outputSchema as z.ZodType).safeParse(resume).success,
+        ).toBe(true);
+        expect(validation).toEqual(
+          expect.objectContaining({
+            contract: "salt_review_report_validation_v1",
+            status: "invalid",
+            current: false,
+            supported: false,
+            resume: expect.objectContaining({
+              contract: "salt_review_resume_v1",
+              status: "invalid",
+              reusable_evidence_ref_ids: [],
+            }),
+          }),
+        );
+        expect(resume).toEqual(
+          expect.objectContaining({
+            contract: "salt_review_resume_v1",
+            status: "invalid",
+            reusable_evidence_ref_ids: [],
+          }),
+        );
+      },
+    );
+  });
+
+  it("persists release-gated context packs and generated report artifacts through MCP tools", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const rootDir = await createTempDir("salt-mcp-artifact-persistence");
+        const persistContextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "persist_salt_context_pack",
+        );
+        const persistArtifactTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "persist_salt_generated_artifact",
+        );
+
+        const persistedContext = (await persistContextTool?.execute(registry, {
+          root_dir: rootDir,
+        })) as Record<string, unknown>;
+
+        expect(
+          (persistContextTool?.outputSchema as z.ZodType).safeParse(
+            persistedContext,
+          ).success,
+        ).toBe(true);
+        expect(persistedContext).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pack_persistence_write_v1",
+            status: "written",
+            written: true,
+            output_dir: ".salt/context/components",
+            manifest_path: ".salt/context/manifest.json",
+            release_gate: expect.objectContaining({
+              contract: "salt_generated_artifact_release_gate_batch_v1",
+              status: "passed",
+              releasable: true,
+            }),
+          }),
+        );
+        expect(
+          validateSaltContextPackPersistenceCheckSchema(
+            persistedContext.persistence_check,
+          ),
+        ).toEqual([]);
+        expect(persistedContext.persistence_check).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pack_persistence_check_v1",
+            status: "current",
+            current: true,
+            host_action_required: false,
+            missing_outputs: [],
+            stale_outputs: [],
+          }),
+        );
+
+        const manifestPath = path.join(
+          rootDir,
+          ".salt",
+          "context",
+          "manifest.json",
+        );
+        const manifest = JSON.parse(
+          await fs.readFile(manifestPath, "utf8"),
+        ) as Record<string, unknown>;
+        expect(validateSaltContextPackManifestSchema(manifest)).toEqual([]);
+        for (const entry of manifest.entries as Array<{
+          output_path?: string;
+        }>) {
+          expect(entry.output_path).toEqual(expect.any(String));
+          await expect(
+            fs.readFile(path.resolve(rootDir, entry.output_path ?? ""), "utf8"),
+          ).resolves.toEqual(expect.any(String));
+        }
+
+        // Fixture-only generated report payload: no production Salt facts.
+        const reportPayload = {
+          contract: "salt_review_report_v1",
+          generated_artifact: {
+            contract: "salt_generated_artifact_v1",
+            artifact_kind: "review-report",
+            id: "fixture-review-report",
+            generated_at: GENERATED_AT,
+            generator: { name: "fixture MCP persistence test" },
+            registry: {
+              version: registry.version,
+              generated_at: registry.generated_at,
+            },
+            claims: [],
+            evidence_refs: [],
+            unsupported_claims: [],
+          },
+        };
+        const persistedReport = (await persistArtifactTool?.execute(registry, {
+          root_dir: rootDir,
+          artifact_path: ".salt/reports/fixture-review-report.json",
+          artifact: reportPayload,
+        })) as Record<string, unknown>;
+
+        expect(
+          validateSaltGeneratedArtifactPersistenceSchema(persistedReport),
+        ).toEqual([]);
+        expect(
+          (persistArtifactTool?.outputSchema as z.ZodType).safeParse(
+            persistedReport,
+          ).success,
+        ).toBe(true);
+        expect(persistedReport).toEqual(
+          expect.objectContaining({
+            contract: "salt_generated_artifact_persistence_v1",
+            status: "written",
+            written: true,
+            artifact_path: ".salt/reports/fixture-review-report.json",
+            release_gate: expect.objectContaining({
+              status: "passed",
+              artifact_kind: "review-report",
+            }),
+          }),
+        );
+        await expect(
+          fs.readFile(
+            path.join(rootDir, ".salt", "reports", "fixture-review-report.json"),
+            "utf8",
+          ),
+        ).resolves.toBe(JSON.stringify(reportPayload, null, 2));
+
+        // Fixture-only unsupported claim used to prove blocked reports are not written.
+        const blockedPayload = {
+          generated_artifact: {
+            ...reportPayload.generated_artifact,
+            id: "fixture-blocked-review-report",
+            unsupported_claims: [
+              {
+                id: "fixture.unsupported",
+                kind: "prop",
+                text: "Fixture unsupported prop claim.",
+                reason: "Fixture unsupported claims must not be persisted.",
+              },
+            ],
+          },
+        };
+        const blockedReport = (await persistArtifactTool?.execute(registry, {
+          root_dir: rootDir,
+          artifact_path: ".salt/reports/blocked-review-report.json",
+          artifact: blockedPayload,
+        })) as Record<string, unknown>;
+
+        expect(
+          validateSaltGeneratedArtifactPersistenceSchema(blockedReport),
+        ).toEqual([]);
+        expect(blockedReport).toEqual(
+          expect.objectContaining({
+            status: "blocked",
+            written: false,
+            release_gate: expect.objectContaining({
+              status: "blocked",
+              artifact_kind: "review-report",
+              unsupported_claim_count: 1,
+            }),
+          }),
+        );
+        await expect(
+          fs.readFile(
+            path.join(rootDir, ".salt", "reports", "blocked-review-report.json"),
+            "utf8",
+          ),
+        ).rejects.toMatchObject({ code: "ENOENT" });
+      },
+    );
+  }, 120_000);
+
   it("publishes an MCP output schema that accepts install dependency actions", async () => {
     await withRegistryDir(
       async (registryDir) => {
@@ -647,6 +910,36 @@ describe("createSaltMcpServer", () => {
       async (registryDir) => {
         const server = await createSaltMcpServer({ registryDir });
         const registry = await loadRegistry({ registryDir });
+        const contextComponentRecord = registry.components[0];
+        if (!contextComponentRecord) {
+          throw new Error("Expected at least one source-backed component.");
+        }
+        const contextPatternRecord = selectDefaultContextPackPatterns(registry)[0];
+        if (!contextPatternRecord) {
+          throw new Error("Expected at least one source-backed pattern.");
+        }
+        const contextFoundationGroup =
+          selectDefaultContextPackFoundationTokenGroups(registry)[0];
+        if (!contextFoundationGroup) {
+          throw new Error(
+            "Expected at least one source-backed foundation token group.",
+          );
+        }
+        const contextComponentUri = `salt://context/component/${encodeURIComponent(
+          contextComponentRecord.name,
+        )}`;
+        const contextComponentMarkdownUri = `${contextComponentUri}.context.md`;
+        const contextPatternUri = `salt://context/pattern/${encodeURIComponent(
+          contextPatternRecord.name,
+        )}`;
+        const contextFoundationUri = `salt://context/foundation/tokens/${encodeURIComponent(
+          contextFoundationGroup.category,
+        )}`;
+        const contextComponentNameEvidenceRef = `${contextComponentRecord.id}.name.ref`;
+        const contextPatternNameEvidenceRef = `${contextPatternRecord.id}.name.ref`;
+        const contextFoundationCategoryCount = new Set(
+          registry.tokens.map((token) => token.category),
+        ).size;
         const runtimeMetadata = getSaltMcpRuntimeMetadata(registry);
         const transportRegistrations = server as unknown as {
           _registeredResources: Record<
@@ -695,11 +988,22 @@ describe("createSaltMcpServer", () => {
         expect(Object.keys(registeredResources)).toEqual([
           SALT_MCP_CAPABILITY_MANIFEST_URI,
           SALT_MCP_CATALOG_MANIFEST_URI,
+          SALT_MCP_CONTEXT_MANIFEST_URI,
+          SALT_MCP_CONTEXT_HEALTH_URI,
+          SALT_MCP_CONTEXT_COVERAGE_URI,
+          SALT_MCP_CONTEXT_PACK_URI,
+          SALT_MCP_CONTEXT_RELEASE_GATE_URI,
+          SALT_MCP_AI_SETUP_URI,
+          SALT_MCP_AI_EVIDENCE_CLOSURE_URI,
         ]);
         expect(Object.keys(registeredResourceTemplates).sort()).toEqual([
           "salt_catalog_candidates",
           "salt_catalog_entity",
           "salt_catalog_family",
+          "salt_context_component",
+          "salt_context_component_markdown",
+          "salt_context_foundation",
+          "salt_context_pattern",
         ]);
         expect(
           registeredResources[SALT_MCP_CAPABILITY_MANIFEST_URI]?.metadata,
@@ -743,6 +1047,19 @@ describe("createSaltMcpServer", () => {
                 required?: Record<string, unknown>;
               };
             };
+          };
+          resources?: {
+            context_manifest_uri?: string | null;
+            context_health_uri?: string | null;
+            context_coverage_uri?: string | null;
+            context_pack_uri?: string | null;
+            context_release_gate_uri?: string | null;
+            ai_setup_uri?: string | null;
+            ai_evidence_closure_uri?: string | null;
+            context_component_template_uri?: string | null;
+            context_component_markdown_template_uri?: string | null;
+            context_pattern_template_uri?: string | null;
+            context_foundation_template_uri?: string | null;
           };
         };
         const actionContract =
@@ -797,13 +1114,33 @@ describe("createSaltMcpServer", () => {
         );
         expect(capabilityManifest.support_tools).toEqual(
           expect.objectContaining({
-            policy: "default_read_only_host_surface",
+            policy: "optional_advanced_host_surface",
             default_exposed: true,
             tool_ids: expect.arrayContaining([
               "get_salt_entity",
               "get_salt_examples",
               "discover_salt",
+              "persist_salt_context_pack",
+              "persist_salt_generated_artifact",
             ]),
+          }),
+        );
+        expect(capabilityManifest.resources).toEqual(
+          expect.objectContaining({
+            context_manifest_uri: SALT_MCP_CONTEXT_MANIFEST_URI,
+            context_health_uri: SALT_MCP_CONTEXT_HEALTH_URI,
+            context_coverage_uri: SALT_MCP_CONTEXT_COVERAGE_URI,
+            context_pack_uri: SALT_MCP_CONTEXT_PACK_URI,
+            context_release_gate_uri: SALT_MCP_CONTEXT_RELEASE_GATE_URI,
+            ai_setup_uri: SALT_MCP_AI_SETUP_URI,
+            ai_evidence_closure_uri: SALT_MCP_AI_EVIDENCE_CLOSURE_URI,
+            context_component_template_uri:
+              SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI,
+            context_component_markdown_template_uri:
+              SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI,
+            context_pattern_template_uri: SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI,
+            context_foundation_template_uri:
+              SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
           }),
         );
 
@@ -823,6 +1160,450 @@ describe("createSaltMcpServer", () => {
               candidates_template_uri: SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
               family_template_uri: SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
             },
+          }),
+        );
+
+        const contextManifestResult = await registeredResources[
+          SALT_MCP_CONTEXT_MANIFEST_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_MANIFEST_URI), {});
+        const contextManifest = JSON.parse(
+          contextManifestResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextPackManifestSchema(contextManifest)).toEqual(
+          [],
+        );
+        expect(contextManifest).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pack_manifest_v1",
+            status: "validated",
+            registry: expect.objectContaining({
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            coverage_gaps: [],
+            entries: expect.arrayContaining([
+              expect.objectContaining({
+                kind: "component",
+                name: contextComponentRecord.name,
+                output_path: contextComponentUri,
+                evidence_ref_ids: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "component_markdown",
+                name: contextComponentRecord.name,
+                output_path: contextComponentMarkdownUri,
+                contract: "salt_context_component_markdown_v1",
+                generated_artifact_kind: "component-markdown-bridge",
+                evidence_ref_ids: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "pattern",
+                name: contextPatternRecord.name,
+                output_path: contextPatternUri,
+                contract: "salt_context_pattern_v1",
+                generated_artifact_kind: "pattern-context",
+                evidence_ref_ids: expect.arrayContaining([
+                  contextPatternNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "foundation",
+                name: contextFoundationGroup.category,
+                output_path: contextFoundationUri,
+                contract: "salt_context_foundation_v1",
+                generated_artifact_kind: "foundation-context",
+                evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+              }),
+              expect.objectContaining({
+                kind: "prompt",
+                id: "workflow-prompts",
+                contract: "salt_context_prompt_instruction_surface_v1",
+                generated_artifact_kind: "prompt",
+                evidence_ref_ids: expect.arrayContaining([
+                  "prompt.workflow-prompts.salt-ds-skill-first-load.ref",
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "instruction",
+                id: "host-instructions",
+                contract: "salt_context_prompt_instruction_surface_v1",
+                generated_artifact_kind: "instruction",
+                evidence_ref_ids: expect.arrayContaining([
+                  "instruction.host-instructions.salt-repo-instructions-template.ref",
+                ]),
+              }),
+            ]),
+          }),
+        );
+        expect(
+          (contextManifest.coverage_gaps as Array<{ kind?: string }>).some(
+            (gap) => ["pattern", "foundation"].includes(gap.kind ?? ""),
+          ),
+        ).toBe(false);
+
+        const contextHealthResult = await registeredResources[
+          SALT_MCP_CONTEXT_HEALTH_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_HEALTH_URI), {});
+        const contextHealth = JSON.parse(
+          contextHealthResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltGeneratedContextHealthSchema(contextHealth)).toEqual(
+          [],
+        );
+        expect(contextHealth).toEqual(
+          expect.objectContaining({
+            contract: "salt_generated_context_health_v1",
+            manifestPath: SALT_MCP_CONTEXT_MANIFEST_URI,
+            present: true,
+            status: "current",
+            registry: expect.objectContaining({
+              version: registry.version,
+              hash: expect.stringMatching(/^sha256:/),
+              current_version: registry.version,
+              current_hash: expect.stringMatching(/^sha256:/),
+            }),
+            unsupportedCoverageGaps: 0,
+            coverageGaps: [],
+            missingOutputs: [],
+            entries: expect.arrayContaining([
+              expect.objectContaining({
+                kind: "component",
+                name: contextComponentRecord.name,
+                outputPath: contextComponentUri,
+                outputExists: true,
+                outputStatus: "current",
+                outputContract: "salt_context_component_v1",
+                mismatches: [],
+                evidenceRefIds: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "component_markdown",
+                name: contextComponentRecord.name,
+                outputPath: contextComponentMarkdownUri,
+                outputExists: true,
+                outputStatus: "current",
+                outputContract: "salt_context_component_markdown_v1",
+                mismatches: [],
+                evidenceRefIds: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "pattern",
+                name: contextPatternRecord.name,
+                outputPath: contextPatternUri,
+                outputExists: true,
+                outputStatus: "current",
+                outputContract: "salt_context_pattern_v1",
+                mismatches: [],
+                evidenceRefIds: expect.arrayContaining([
+                  contextPatternNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "foundation",
+                name: contextFoundationGroup.category,
+                outputPath: contextFoundationUri,
+                outputExists: true,
+                outputStatus: "current",
+                outputContract: "salt_context_foundation_v1",
+                mismatches: [],
+                evidenceRefIds: expect.arrayContaining([expect.any(String)]),
+              }),
+            ]),
+          }),
+        );
+
+        const contextCoverageResult = await registeredResources[
+          SALT_MCP_CONTEXT_COVERAGE_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_COVERAGE_URI), {});
+        const contextCoverage = JSON.parse(
+          contextCoverageResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextCoverageAuditSchema(contextCoverage)).toEqual(
+          [],
+        );
+        expect(contextCoverage).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_coverage_audit_v1",
+            status: expect.stringMatching(/^(validated|unsupported)$/),
+            registry: expect.objectContaining({
+              version: registry.version,
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            component_contexts: expect.objectContaining({
+              total_records: registry.components.length,
+              selected_records: expect.any(Number),
+              validated_contexts: expect.any(Number),
+              unsupported_contexts: expect.any(Number),
+              source_gap_count: expect.any(Number),
+              unsupported_records: expect.any(Array),
+            }),
+            pattern_contexts: expect.objectContaining({
+              total_records: registry.patterns.length,
+              selected_records: expect.any(Number),
+              validated_contexts: expect.any(Number),
+              unsupported_contexts: expect.any(Number),
+              source_gap_count: expect.any(Number),
+              unsupported_records: expect.any(Array),
+            }),
+            foundation_contexts: expect.objectContaining({
+              total_records: contextFoundationCategoryCount,
+              selected_records: expect.any(Number),
+              validated_contexts: expect.any(Number),
+              unsupported_contexts: expect.any(Number),
+              source_gap_count: expect.any(Number),
+              unsupported_records: expect.any(Array),
+            }),
+            docs_registry_gaps: expect.any(Array),
+          }),
+        );
+        for (const gap of contextCoverage.docs_registry_gaps as Array<{
+          kind?: string;
+          status?: string;
+          evidence_ref_ids?: unknown;
+        }>) {
+          expect(["component", "pattern", "foundation"]).toContain(gap.kind);
+          expect(gap.status).toBe("unsupported");
+          expect(gap.evidence_ref_ids).toEqual(expect.any(Array));
+        }
+
+        const contextBundleResult = await registeredResources[
+          SALT_MCP_CONTEXT_PACK_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_PACK_URI), {});
+        const contextBundle = JSON.parse(
+          contextBundleResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextPackBundleSchema(contextBundle)).toEqual([]);
+        expect(contextBundle).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pack_bundle_v1",
+            manifest: expect.objectContaining({
+              contract: "salt_context_pack_manifest_v1",
+            }),
+            persistence: expect.objectContaining({
+              status: "host_action_required",
+              output_dir: null,
+            }),
+            unsupported_surfaces: [],
+            files: expect.arrayContaining([
+              expect.objectContaining({
+                kind: "pattern",
+                output_path: contextPatternUri,
+                mime_type: "application/json",
+                evidence_ref_ids: expect.arrayContaining([
+                  contextPatternNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "foundation",
+                output_path: contextFoundationUri,
+                mime_type: "application/json",
+                evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+              }),
+              expect.objectContaining({
+                kind: "prompt",
+                id: "workflow-prompts",
+                mime_type: "application/json",
+                generated_artifact_kind: "prompt",
+              }),
+              expect.objectContaining({
+                kind: "instruction",
+                id: "host-instructions",
+                mime_type: "application/json",
+                generated_artifact_kind: "instruction",
+              }),
+            ]),
+          }),
+        );
+        const contextBundleUnsupportedSurfaces =
+          contextBundle.unsupported_surfaces as Array<Record<string, unknown>>;
+        expect(contextBundleUnsupportedSurfaces).toHaveLength(0);
+
+        const contextBundleFiles = contextBundle.files as Array<{
+          kind?: string;
+          output_path?: string;
+          mime_type?: string;
+          contract?: string;
+          generated_artifact_kind?: string;
+          evidence_ref_ids?: string[];
+          text?: string;
+        }>;
+        const contextBundleEntries = (
+          (contextBundle.manifest as { entries?: unknown[] }).entries ?? []
+        ) as Array<{
+          kind?: string;
+          output_path?: string;
+          contract?: string;
+          generated_artifact_kind?: string;
+          evidence_ref_ids?: string[];
+        }>;
+
+        expect(contextBundleFiles).toHaveLength(contextBundleEntries.length);
+        for (const entry of contextBundleEntries) {
+          const matchingFile = contextBundleFiles.find(
+            (file) => file.output_path === entry.output_path,
+          );
+
+          expect(matchingFile).toEqual(
+            expect.objectContaining({
+              kind: entry.kind,
+              output_path: entry.output_path,
+              contract: entry.contract,
+              generated_artifact_kind: entry.generated_artifact_kind,
+            }),
+          );
+          expect(matchingFile?.evidence_ref_ids).toEqual(
+            entry.evidence_ref_ids,
+          );
+
+          if (!matchingFile?.text) {
+            throw new Error(
+              `Missing bundled context text for ${String(entry.output_path)}`,
+            );
+          }
+
+          if (entry.contract === "salt_context_component_markdown_v1") {
+            expect(matchingFile.mime_type).toBe("text/markdown");
+            expect(matchingFile.text).toContain(
+              "<!-- Contract: salt_context_component_markdown_v1 -->",
+            );
+            continue;
+          }
+
+          expect(matchingFile.mime_type).toBe("application/json");
+          const bundledPayload = JSON.parse(matchingFile.text) as Record<
+            string,
+            unknown
+          >;
+          if (entry.contract === "salt_context_component_v1") {
+            expect(validateSaltContextComponentSchema(bundledPayload)).toEqual(
+              [],
+            );
+          } else if (entry.contract === "salt_context_pattern_v1") {
+            expect(validateSaltContextPatternSchema(bundledPayload)).toEqual(
+              [],
+            );
+          } else if (entry.contract === "salt_context_foundation_v1") {
+            expect(validateSaltContextFoundationSchema(bundledPayload)).toEqual(
+              [],
+            );
+          } else if (
+            entry.contract === "salt_context_prompt_instruction_surface_v1"
+          ) {
+            expect(
+              validateSaltContextPromptHostInstructionSurfaceSchema(
+                bundledPayload,
+              ),
+            ).toEqual([]);
+          } else {
+            throw new Error(
+              `Unsupported bundled context contract ${String(entry.contract)}`,
+            );
+          }
+        }
+
+        const contextReleaseGateResult = await registeredResources[
+          SALT_MCP_CONTEXT_RELEASE_GATE_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_RELEASE_GATE_URI), {});
+        const contextReleaseGate = JSON.parse(
+          contextReleaseGateResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(
+          validateSaltGeneratedArtifactReleaseGateBatchSchema(
+            contextReleaseGate,
+          ),
+        ).toEqual([]);
+        expect(contextReleaseGate).toEqual(
+          expect.objectContaining({
+            contract: "salt_generated_artifact_release_gate_batch_v1",
+            status: "passed",
+            releasable: true,
+            artifact_path: SALT_MCP_CONTEXT_PACK_URI,
+            target_count: expect.any(Number),
+            gates: expect.arrayContaining([
+              expect.objectContaining({
+                artifact_kind: "prompt",
+                status: "passed",
+              }),
+              expect.objectContaining({
+                artifact_kind: "instruction",
+                status: "passed",
+              }),
+            ]),
+          }),
+        );
+        expect(
+          ((contextReleaseGate.coverage_gaps ?? []) as Array<{
+            kind?: string;
+          }>).filter(
+            (gap) => gap.kind === "prompt" || gap.kind === "instruction",
+          ),
+        ).toEqual([]);
+
+        const aiSetupResult = await registeredResources[
+          SALT_MCP_AI_SETUP_URI
+        ].readCallback(new URL(SALT_MCP_AI_SETUP_URI), {});
+        const aiSetup = JSON.parse(
+          aiSetupResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltAiSetupSchema(aiSetup)).toEqual([]);
+        expect(aiSetup).toEqual(
+          expect.objectContaining({
+            contract: "salt_ai_setup_v1",
+            status: "degraded",
+            steps: expect.arrayContaining([
+              expect.objectContaining({
+                id: "generated-context",
+                evidence_source: "generated_context",
+              }),
+              expect.objectContaining({
+                id: "release-gate",
+                status: "current",
+              }),
+            ]),
+          }),
+        );
+
+        const aiEvidenceClosureResult = await registeredResources[
+          SALT_MCP_AI_EVIDENCE_CLOSURE_URI
+        ].readCallback(new URL(SALT_MCP_AI_EVIDENCE_CLOSURE_URI), {});
+        const aiEvidenceClosure = JSON.parse(
+          aiEvidenceClosureResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltAiEvidenceClosureReportSchema(aiEvidenceClosure)).toEqual(
+          [],
+        );
+        expect(aiEvidenceClosure).toEqual(
+          expect.objectContaining({
+            contract: "salt_ai_evidence_closure_report_v1",
+            status: "degraded",
+            evidence_refs: [],
+            release_gate: expect.objectContaining({
+              status: "blocked",
+              releasable: false,
+            }),
+            slices: expect.arrayContaining([
+              expect.objectContaining({
+                id: "prompt-host-instruction-closure",
+                status: "ready",
+              }),
+              expect.objectContaining({
+                id: "context-coverage-closure",
+              }),
+            ]),
           }),
         );
 
@@ -896,9 +1677,120 @@ describe("createSaltMcpServer", () => {
             ],
           }),
         );
+
+        const contextComponentResult =
+          await registeredResourceTemplates.salt_context_component.readCallback(
+            new URL(contextComponentUri),
+            { name: encodeURIComponent(contextComponentRecord.name) },
+            {},
+          );
+        const contextComponent = JSON.parse(
+          contextComponentResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextComponentSchema(contextComponent)).toEqual(
+          [],
+        );
+        expect(contextComponent).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_component_v1",
+            registry: expect.objectContaining({
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            component: expect.objectContaining({
+              id: contextComponentRecord.id,
+              name: expect.objectContaining({
+                value: contextComponentRecord.name,
+                evidence_ref_ids: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+            }),
+          }),
+        );
+
+        const contextComponentMarkdownResult =
+          await registeredResourceTemplates.salt_context_component_markdown.readCallback(
+            new URL(contextComponentMarkdownUri),
+            { name: encodeURIComponent(contextComponentRecord.name) },
+            {},
+          );
+        const contextComponentMarkdown =
+          contextComponentMarkdownResult.contents[0]?.text ?? "";
+
+        expect(contextComponentMarkdownResult.contents).toEqual([
+          expect.objectContaining({
+            uri: contextComponentMarkdownUri,
+            mimeType: "text/markdown",
+          }),
+        ]);
+        expect(contextComponentMarkdown).toContain(
+          "<!-- Contract: salt_context_component_markdown_v1 -->",
+        );
+        expect(contextComponentMarkdown).toContain(
+          `${contextComponentRecord.name} [EvidenceRef: ${contextComponentNameEvidenceRef}]`,
+        );
+
+        const contextPatternResult =
+          await registeredResourceTemplates.salt_context_pattern.readCallback(
+            new URL(contextPatternUri),
+            { name: encodeURIComponent(contextPatternRecord.name) },
+            {},
+          );
+        const contextPattern = JSON.parse(
+          contextPatternResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextPatternSchema(contextPattern)).toEqual([]);
+        expect(contextPattern).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pattern_v1",
+            registry: expect.objectContaining({
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            pattern: expect.objectContaining({
+              id: contextPatternRecord.id,
+              name: expect.objectContaining({
+                value: contextPatternRecord.name,
+                evidence_ref_ids: expect.arrayContaining([
+                  contextPatternNameEvidenceRef,
+                ]),
+              }),
+            }),
+          }),
+        );
+
+        const contextFoundationResult =
+          await registeredResourceTemplates.salt_context_foundation.readCallback(
+            new URL(contextFoundationUri),
+            { category: encodeURIComponent(contextFoundationGroup.category) },
+            {},
+          );
+        const contextFoundation = JSON.parse(
+          contextFoundationResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextFoundationSchema(contextFoundation)).toEqual(
+          [],
+        );
+        expect(contextFoundation).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_foundation_v1",
+            registry: expect.objectContaining({
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            foundation: expect.objectContaining({
+              id: contextFoundationGroup.id,
+              category: expect.objectContaining({
+                value: contextFoundationGroup.category,
+                evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+              }),
+            }),
+          }),
+        );
       },
     );
-  }, 20_000);
+  }, 120_000);
 
   it("registers output schemas and workflow annotations for the default workflow tools", async () => {
     await withRegistryDir(
@@ -921,7 +1813,11 @@ describe("createSaltMcpServer", () => {
 
         for (const toolName of EXPECTED_TOOL_NAMES) {
           expect(registeredTools[toolName]).toBeTruthy();
-          if (toolName === "bootstrap_salt_repo") {
+          if (
+            toolName === "bootstrap_salt_repo" ||
+            toolName === "persist_salt_context_pack" ||
+            toolName === "persist_salt_generated_artifact"
+          ) {
             expect(registeredTools[toolName]?.annotations).toEqual(
               expect.objectContaining({
                 readOnlyHint: false,
@@ -1028,7 +1924,10 @@ describe("createSaltMcpServer", () => {
           "Keep the product workflows stable across transports",
         );
         expect(internalServer._instructions).toContain(
-          "The default beta MCP surface exposes six repo-aware workflow tools plus read-only Salt support tools",
+          "The default beta MCP surface exposes repo-aware workflow tools, Salt support tools",
+        );
+        expect(internalServer._instructions).toContain(
+          "Use persist_salt_context_pack or persist_salt_generated_artifact only when the host needs durable files",
         );
         expect(internalServer._instructions).toContain(
           "Only call tools that are actually present in the current session tool list.",

@@ -1,3 +1,7 @@
+import {
+  buildSaltReviewReport,
+  type SaltReviewReportScope,
+} from "@salt-ds/semantic-core";
 import type { CreateSaltUiResult } from "@salt-ds/semantic-core/tools/createSaltUi";
 import type { MigrateToSaltResult } from "@salt-ds/semantic-core/tools/migrateToSalt";
 import {
@@ -7,7 +11,10 @@ import {
   buildReviewPublicContract,
   buildUpgradePublicContract,
 } from "@salt-ds/semantic-core/tools/publicContract";
-import type { ReviewSaltUiResult } from "@salt-ds/semantic-core/tools/reviewSaltUi";
+import type {
+  ReviewExpectedTargets,
+  ReviewSaltUiResult,
+} from "@salt-ds/semantic-core/tools/reviewSaltUi";
 import type {
   NormalizedVisualEvidenceInput,
   SourceUiOutlineInput,
@@ -184,16 +191,47 @@ function buildCreateWorkflowEnvelope(
   });
 }
 
+function buildReviewReportScope(
+  result: ReviewSaltUiResult,
+  input: {
+    root_dir?: string | null;
+    target?: string | null;
+  },
+): SaltReviewReportScope {
+  const target = input.target?.trim() || "inline-code";
+
+  return {
+    root_dir: input.root_dir ?? null,
+    targets: [target],
+    file_count: 1,
+    files: [
+      {
+        path: target,
+        relative_path: target === "inline-code" ? null : target,
+        status: result.decision.status,
+        errors: result.summary.errors,
+        warnings: result.summary.warnings,
+        infos: result.summary.infos,
+      },
+    ],
+  };
+}
+
 function buildReviewWorkflowEnvelope(
+  registry: SaltRegistry,
   result: ReviewSaltUiResult,
   input: {
     code?: string;
+    expected_targets?: ReviewExpectedTargets;
     project_policy?: WorkflowProjectPolicyArtifact | null;
+    root_dir?: string | null;
+    target?: string | null;
     view?: "compact" | "full";
   } = {},
 ) {
   const contract = buildReviewSaltUiWorkflowContract(result, {
     code: input.code,
+    expected_targets: input.expected_targets,
     project_policy: input.project_policy,
   });
   const {
@@ -210,6 +248,7 @@ function buildReviewWorkflowEnvelope(
   ).length;
   const compactContract = buildReviewPublicContract(result, contract, {
     transport_used: "mcp",
+    registry,
   });
 
   if (!isFullView(input.view)) {
@@ -236,6 +275,26 @@ function buildReviewWorkflowEnvelope(
       fix_candidates,
       issue_classes,
       rule_ids,
+      review_report: buildSaltReviewReport({
+        registry,
+        generated_at: new Date().toISOString(),
+        generator: {
+          name: "review_salt_ui",
+        },
+        profile: "auto",
+        transport_used: "mcp",
+        review: result,
+        contract,
+        public_contract: compactContract,
+        scope: buildReviewReportScope(result, {
+          root_dir: input.root_dir,
+          target: input.target,
+        }),
+        runtime: {
+          requested: false,
+          checked: false,
+        },
+      }),
       raw,
     },
   });
@@ -379,14 +438,18 @@ export function withChooseWorkflowGuidance(
 }
 
 export function withAnalyzeWorkflowGuidance(
+  registry: SaltRegistry,
   result: ReviewSaltUiResult,
   input: {
     code?: string;
+    expected_targets?: ReviewExpectedTargets;
     project_policy?: WorkflowProjectPolicyArtifact | null;
+    root_dir?: string | null;
+    target?: string | null;
     view?: "compact" | "full";
   } = {},
 ) {
-  return buildReviewWorkflowEnvelope(result, input);
+  return buildReviewWorkflowEnvelope(registry, result, input);
 }
 
 export function withTranslateWorkflowGuidance(

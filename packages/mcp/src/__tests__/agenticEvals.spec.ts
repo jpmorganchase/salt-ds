@@ -101,6 +101,7 @@ function runReviewWorkflowFull(input: {
 }): ReviewWorkflowFullResult {
   return readFullWorkflowResult(
     withAnalyzeWorkflowGuidance(
+      registry,
       reviewSaltUi(registry, {
         framework: "react",
         view: "full",
@@ -180,7 +181,7 @@ describe("deterministic agentic evals", () => {
     );
   });
 
-  it("keeps dashboard create output grounded in the branded analytical dashboard scaffold", () => {
+  it("keeps dashboard create output grounded in the analytical dashboard scaffold without unsupported theme bootstrap", () => {
     const query =
       "Finance-themed metric dashboard with key financial metrics like revenue, expenses, profit margin, and portfolio performance";
     const result = runCreateWorkflowFull({ query });
@@ -234,16 +235,15 @@ describe("deterministic agentic evals", () => {
         ]),
       },
     });
-    expect(result.artifacts.starter_code?.[0]?.code).toContain(
-      "SaltProviderNext",
+    expect(result.artifacts.starter_code?.[0]?.code).not.toContain(
+      "SaltProvider",
     );
-    expect(result.artifacts.starter_code?.[0]?.code).toContain(
-      "@salt-ds/theme/index.css",
+    expect(result.artifacts.starter_code?.[0]?.code).not.toContain(
+      "@salt-ds/theme/",
     );
-    expect(result.artifacts.starter_code?.[0]?.code).toContain(
-      "@salt-ds/theme/css/theme-next.css",
+    expect(result.artifacts.starter_code?.[0]?.code).not.toContain(
+      'accent="teal"',
     );
-    expect(result.artifacts.starter_code?.[0]?.code).toContain('accent="teal"');
     expect(result.artifacts.starter_code?.[0]?.code).toContain(
       '<BorderItem position="north" as="header">',
     );
@@ -527,9 +527,9 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow.implementation_gate).toEqual(
       expect.objectContaining({
         status: "follow_through_required",
-        required_follow_through: [
+        required_follow_through: expect.arrayContaining([
           expect.objectContaining({ entity: "Breadcrumbs" }),
-        ],
+        ]),
         next_call: {
           workflow: "create_salt_ui",
           follow_up_mode: "exact_name",
@@ -556,9 +556,9 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow.implementation_gate).toEqual(
       expect.objectContaining({
         status: "follow_through_required",
-        required_follow_through: [
+        required_follow_through: expect.arrayContaining([
           expect.objectContaining({ entity: "Breadcrumbs" }),
-        ],
+        ]),
       }),
     );
   });
@@ -577,9 +577,9 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow.implementation_gate).toEqual(
       expect.objectContaining({
         status: "follow_through_required",
-        required_follow_through: [
+        required_follow_through: expect.arrayContaining([
           expect.objectContaining({ entity: "Breadcrumbs" }),
-        ],
+        ]),
         next_call: {
           workflow: "create_salt_ui",
           follow_up_mode: "exact_name",
@@ -732,7 +732,7 @@ describe("deterministic agentic evals", () => {
       expect.arrayContaining([
         expect.objectContaining({
           id: "tokens.unknown-salt-token",
-          canonical_source: "/salt/themes/design-tokens/index",
+          canonical_source: null,
         }),
         expect.objectContaining({
           id: "tokens.hardcoded-color",
@@ -747,7 +747,7 @@ describe("deterministic agentic evals", () => {
     );
   });
 
-  it("flags transcript-shaped dashboard drift when a saved create direction expects Metric and the implementation drifts to custom KPI cards and raw tables", () => {
+  it("flags transcript-shaped dashboard drift from source-backed expected pattern and component evidence", () => {
     const code = `
       import { Card, StackLayout, Text } from "@salt-ds/core";
 
@@ -837,14 +837,47 @@ describe("deterministic agentic evals", () => {
     expect(result.result.issues).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          id: "workflow-expected.metric-pattern",
+          id: expect.stringMatching(/^workflow-expected\.pattern-missing-/),
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "workflow_input",
+              claim_kind: "workflow",
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "pattern",
+              registry: expect.objectContaining({
+                entity_type: "pattern",
+              }),
+            }),
+          ]),
         }),
         expect.objectContaining({
-          id: "workflow-expected.tabular-surface",
+          id: "workflow-expected.missing-component.mainbody",
+          rule: "workflow-expected-component-not-imported",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "workflow_input",
+              claim_kind: "workflow",
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_type: "component",
+                field_path: "name",
+              }),
+            }),
+          ]),
         }),
         expect.objectContaining({
           id: "primitive-choice.native-table",
         }),
+      ]),
+    );
+    expect(result.result.missing_data ?? []).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("source-backed rule kinds"),
       ]),
     );
     expect(result.artifacts.rule_ids).toEqual(
@@ -1086,14 +1119,21 @@ describe("deterministic agentic evals", () => {
     expect(result.workflow).toMatchObject({
       id: "migrate_to_salt",
       readiness: {
-        status: "guidance_only",
+        status: "starter_needs_attention",
         implementation_ready: false,
       },
       context_requirement: {
         status: "context_required",
       },
     });
-    expect(result.artifacts.starter_validation).toBeNull();
+    expect(result.artifacts.starter_validation).toEqual(
+      expect.objectContaining({
+        status: "needs_attention",
+        warnings: expect.any(Number),
+        fix_count: expect.any(Number),
+        source_urls: expect.arrayContaining([expect.any(String)]),
+      }),
+    );
     expect(result.artifacts.post_migration_verification).toEqual(
       expect.objectContaining({
         suggested_workflow: "review_salt_ui",

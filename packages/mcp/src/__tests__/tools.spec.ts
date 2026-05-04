@@ -2384,12 +2384,13 @@ describe("getToken", () => {
       semantic_intent: "warning",
     });
 
-    expect(result.source_url).toBe("/salt/themes/design-tokens/index");
+    expect(result.source_url).toBeNull();
     expect(result.tokens).toHaveLength(1);
     expect(result.tokens[0]).toMatchObject({
       name: "--salt-color-warning-foreground",
       category: "color",
       semantic_intent: "warning",
+      docs: [],
     });
   });
 
@@ -2429,7 +2430,7 @@ describe("getToken", () => {
     expect(exactResult.total_matches).toBe(1);
     expect(containsResult.total_matches).toBe(2);
     expect(containsResult.truncated).toBe(true);
-    expect(containsResult.source_url).toBe("/salt/themes/design-tokens/index");
+    expect(containsResult.source_url).toBeNull();
     expect(containsResult.tokens).toHaveLength(1);
   });
 
@@ -2797,14 +2798,10 @@ describe("consumer tools", () => {
       language: "tsx",
       label: "Split button starter",
     });
-    expect(result.starter_code?.[0]?.code).toContain("SaltProviderNext");
-    expect(result.starter_code?.[0]?.code).toContain(
-      'import "@salt-ds/theme/css/theme-next.css";',
-    );
-    expect(result.starter_code?.[0]?.code).toContain('accent="teal"');
     expect(result.starter_code?.[0]?.code).toContain("Button, Menu");
+    expect(result.starter_code?.[0]?.code).toContain("<>");
     expect(result.starter_code?.[0]?.notes).toContain(
-      "Use the recommended JPM Brand theme bootstrap for new Salt work. Only fall back to legacy SaltProvider when migration compatibility or repo policy explicitly requires it.",
+      "Theme bootstrap is unsupported until provider, import, prop, and font facts resolve from registry-backed context, project policy, workflow evidence, or explicit workflow input.",
     );
     expect(result.starter_code?.[1]).toMatchObject({
       label: "Basic split button example",
@@ -2982,7 +2979,7 @@ describe("consumer tools", () => {
     const starterCode = toRecipeStarterCode(recipe);
 
     expect(starterCode?.[0]?.code).toContain(
-      'import { Button, Link, SaltProviderNext } from "@salt-ds/core";',
+      'import { Button, Link } from "@salt-ds/core";',
     );
     expect(starterCode?.[0]?.code).toContain("<Button>Primary action</Button>");
     expect(starterCode?.[0]?.code).toContain(
@@ -3335,7 +3332,11 @@ describe("consumer tools", () => {
     });
 
     expect(result.compared.length).toBeGreaterThan(0);
-    expect(result.compared.some((c: any) => c.name === "Button")).toBe(true);
+    expect(
+      result.compared.some(
+        (candidate: { name?: string }) => candidate.name === "Button",
+      ),
+    ).toBe(true);
     expect(result.unresolved_names).toEqual(["MadeUp"]);
     expect(result.next_step).toBe(
       "Retry with exact component names or start from create_salt_ui.",

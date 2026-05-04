@@ -10,7 +10,6 @@ const DIRECT_SOURCE_KEYS = new Set([
 const SOURCE_COLLECTION_KEYS = new Set(["source_urls", "sourceUrls", "docs"]);
 const RELATED_DOCS_KEYS = new Set(["related_docs"]);
 const LINK_KEYS = new Set(["href"]);
-const DESIGN_TOKENS_SOURCE_URL = "/salt/themes/design-tokens/index";
 
 export type ToolSourceKind = "site" | "external" | "repo";
 
@@ -113,17 +112,6 @@ function collectSourceLikeValues(
   for (const nestedValue of Object.values(value)) {
     collectSourceLikeValues(nestedValue, addSource);
   }
-}
-
-function hasTokenQueryShape(
-  payload: unknown,
-): payload is Record<string, unknown> {
-  return (
-    isRecord(payload) &&
-    Array.isArray(payload.tokens) &&
-    typeof payload.total_matches === "number" &&
-    typeof payload.truncated === "boolean"
-  );
 }
 
 function hasWorkflowProvenanceShape(payload: unknown): payload is {
@@ -271,10 +259,6 @@ export function collectToolSources(
   }
 
   visit(payload);
-
-  if (hasTokenQueryShape(payload)) {
-    addSource(DESIGN_TOKENS_SOURCE_URL);
-  }
 
   return [...deduped.values()];
 }

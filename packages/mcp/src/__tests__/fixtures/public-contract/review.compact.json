@@ -11,13 +11,11 @@
   "safety": {
     "canonical_complete": true,
     "exact_request_safe": false,
-    "blocking_reasons": [
-      "Use Link for navigation and keep Button for in-place actions."
-    ]
+    "blocking_reasons": ["Use Link for navigation targets instead of Button."]
   },
   "action": {
     "kind": "ask_user",
-    "question": "Use Link for navigation and keep Button for in-place actions.",
+    "question": "Use Link for navigation targets instead of Button.",
     "rule_ids": ["review-canonical-mismatch"],
     "post_action": null
   },

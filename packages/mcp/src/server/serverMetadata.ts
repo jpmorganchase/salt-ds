@@ -16,6 +16,23 @@ export const SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI =
   "salt://catalog/candidates/{query}";
 export const SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI =
   "salt://catalog/family/{family}";
+export const SALT_MCP_CONTEXT_MANIFEST_URI = "salt://context/manifest";
+export const SALT_MCP_CONTEXT_HEALTH_URI = "salt://context/health";
+export const SALT_MCP_CONTEXT_COVERAGE_URI = "salt://context/coverage";
+export const SALT_MCP_CONTEXT_PACK_URI = "salt://context/pack";
+export const SALT_MCP_CONTEXT_RELEASE_GATE_URI =
+  "salt://context/release-gate";
+export const SALT_MCP_AI_SETUP_URI = "salt://setup/ai";
+export const SALT_MCP_AI_EVIDENCE_CLOSURE_URI =
+  "salt://setup/ai/evidence-closure";
+export const SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI =
+  "salt://context/component/{name}";
+export const SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI =
+  "salt://context/component/{name}.context.md";
+export const SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI =
+  "salt://context/pattern/{name}";
+export const SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI =
+  "salt://context/foundation/tokens/{category}";
 
 interface SaltMcpPackageManifest {
   name: string;
@@ -96,11 +113,13 @@ export function getSaltMcpRuntimeMetadata(
         "get_salt_entity",
         "get_salt_examples",
         "discover_salt",
+        "validate_salt_review_report",
+        "resume_salt_review",
       ],
       advanced_output_ids: ["view:full"],
     },
     support_tools: {
-      policy: "default_read_only_host_surface",
+      policy: "optional_advanced_host_surface",
       default_exposed: true,
     },
     support_surface: {
@@ -124,7 +143,7 @@ export function getSaltMcpRuntimeMetadata(
         normalized_adapter_contract: null,
       },
       handoff: {
-        portable_bundle: false,
+        portable_bundle: true,
       },
     },
     resources: {
@@ -133,6 +152,19 @@ export function getSaltMcpRuntimeMetadata(
       catalog_entity_template_uri: SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
       catalog_candidates_template_uri: SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
       catalog_family_template_uri: SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
+      context_manifest_uri: SALT_MCP_CONTEXT_MANIFEST_URI,
+      context_health_uri: SALT_MCP_CONTEXT_HEALTH_URI,
+      context_coverage_uri: SALT_MCP_CONTEXT_COVERAGE_URI,
+      context_pack_uri: SALT_MCP_CONTEXT_PACK_URI,
+      context_release_gate_uri: SALT_MCP_CONTEXT_RELEASE_GATE_URI,
+      ai_setup_uri: SALT_MCP_AI_SETUP_URI,
+      ai_evidence_closure_uri: SALT_MCP_AI_EVIDENCE_CLOSURE_URI,
+      context_component_template_uri: SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI,
+      context_component_markdown_template_uri:
+        SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI,
+      context_pattern_template_uri: SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI,
+      context_foundation_template_uri:
+        SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
     },
   });
 
@@ -167,6 +199,8 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     `Machine-readable capability manifest resource: ${metadata.capability_manifest_uri}.`,
     `Machine-readable retrieval catalog resources: ${SALT_MCP_CATALOG_MANIFEST_URI}, ${SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI}, ${SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI}.`,
     `Catalog family browsing is available through ${SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI}.`,
+    `Generated context resources are available through ${SALT_MCP_CONTEXT_MANIFEST_URI}, ${SALT_MCP_CONTEXT_HEALTH_URI}, ${SALT_MCP_CONTEXT_COVERAGE_URI}, ${SALT_MCP_CONTEXT_PACK_URI}, ${SALT_MCP_CONTEXT_RELEASE_GATE_URI}, ${SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI}, ${SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI}, ${SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI}, and ${SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI}.`,
+    `AI setup state is available through ${SALT_MCP_AI_SETUP_URI}; final-pass evidence closure state is available through ${SALT_MCP_AI_EVIDENCE_CLOSURE_URI}.`,
     "When asked for the MCP version, use the runtime version.",
     "When asked about the Salt content version, use the registry version.",
     "This MCP only provides canonical Salt guidance from official Salt sources.",
@@ -182,8 +216,9 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     "A partial or blocked workflow result is not complete. Follow the returned action or report the incomplete state explicitly.",
     "migrate_to_salt returns post_migration_verification so the agent can carry a deterministic follow-up loop back into local review work.",
     "review_salt_ui returns fix_candidates as agent-applied remediation guidance rather than as direct file mutation.",
+    "Use persist_salt_context_pack or persist_salt_generated_artifact only when the host needs durable files; both write inside the requested root_dir after semantic-core release-gate validation.",
     "Keep the visible MCP front door workflow-first: get_salt_project_context first, bootstrap via bootstrap_salt_repo when required, then create via create_salt_ui, review via review_salt_ui, migrate via migrate_to_salt, and upgrade via upgrade_salt_ui.",
-    "The default beta MCP surface exposes six repo-aware workflow tools plus read-only Salt support tools for entity, example, and discovery grounding.",
+    "The default beta MCP surface exposes repo-aware workflow tools, Salt support tools for entity/example/discovery grounding, and explicit persistence tools; use the capability manifest and current tool list for exact availability.",
     "Keep the product workflows stable across transports: create maps to create_salt_ui, review maps to review_salt_ui, migrate maps to migrate_to_salt, upgrade maps to upgrade_salt_ui and then review_salt_ui on changed code, and review --url combines source analysis with local runtime evidence outside MCP when needed.",
     "For non-Salt UI adoption, foreign-library conversion, or mockup-to-Salt planning, prefer migrate_to_salt before review_salt_ui.",
     "Only call tools that are actually present in the current session tool list.",

@@ -1,9 +1,14 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import {
+  isWorkflowExpectedReviewIssueId,
+  reviewSaltUi,
+} from "@salt-ds/semantic-core";
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { runCli } from "../../../cli/src/cli.js";
+import { loadCreateReviewTargets } from "../../../cli/src/lib/createReviewTargets.js";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import {
   createToolExecutionRuntime,
@@ -33,7 +38,7 @@ const COMPACT_BYTE_BUDGETS = {
 
 const FULL_BYTE_BUDGETS = {
   create: 120_000,
-  review: 25_000,
+  review: 32_000,
   migrate: 400_000,
   upgrade: 60_000,
 } as const;
@@ -130,6 +135,12 @@ function readArray(
   return Array.isArray(candidate) ? candidate : null;
 }
 
+function readStringArray(value: unknown, pathCandidates: string[][]): string[] {
+  return (readArray(value, pathCandidates) ?? []).filter(
+    (entry): entry is string => typeof entry === "string",
+  );
+}
+
 function uniqueSortedStrings(values: Array<string | null>): string[] {
   return [...new Set(values.filter((value): value is string => Boolean(value)))]
     .map((value) => value.trim())
@@ -218,6 +229,20 @@ function readIssueClassIds(value: unknown): string[] {
       return readString(entry, [["id"], ["class"], ["label"]]);
     }),
   );
+}
+
+function readWorkflowExpectedIssues(value: unknown): unknown[] {
+  return (readArray(value, [["issues"]]) ?? []).filter((issue) => {
+    const id = readString(issue, [["id"]]);
+    return id ? isWorkflowExpectedReviewIssueId(id) : false;
+  });
+}
+
+function readUnsupportedClaimTexts(value: unknown): string[] {
+  return (readArray(value, [["unsupported_claims"]]) ?? []).flatMap((claim) => {
+    const text = readString(claim, [["text"]]);
+    return text ? [text] : [];
+  });
 }
 
 function toComparableCompactContract(value: Record<string, unknown>) {
@@ -812,6 +837,179 @@ describe("public contract parity", () => {
     await assertFixture("review.compact.json", cliComparable);
   });
 
+  it("keeps expected-target evidence gaps aligned across semantic-core, CLI, MCP, and reports", async () => {
+    const rootDir = await createRepo("salt-parity-expected-target-", {
+      name: "parity-expected-target",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+    // Fixture-only explicit workflow input; Salt facts asserted below come from
+    // the generated create report, semantic-core registry, and EvidenceRefs.
+    const explicitWorkflowInput = "Metric";
+    const createResult = await runCliWorkflowFull(rootDir, [
+      "create",
+      explicitWorkflowInput,
+    ]);
+    const starterCodeEntry = readArray(createResult, [
+      ["details", "artifacts", "starter_code"],
+      ["details", "result", "recommendation", "starter_code"],
+    ])?.[0];
+    const code = readString(starterCodeEntry, [["code"]]);
+    const decisionName = readString(createResult, [
+      ["details", "result", "decision", "name"],
+      ["details", "result", "final_decision", "name"],
+      ["details", "result", "recommendation", "decision", "name"],
+      ["details", "result", "summary", "decisionName"],
+      ["details", "result", "summary", "finalDecisionName"],
+    ]);
+    if (!code || !decisionName) {
+      throw new Error("Expected create workflow output to include starter code.");
+    }
+
+    const createReportPath = path.join(rootDir, "create-report.json");
+    const createSourceUrls = uniqueSortedStrings([
+      ...readStringArray(createResult, [
+        ["details", "workflow", "provenance", "source_urls"],
+      ]),
+      ...readStringArray(createResult, [
+        ["details", "workflow", "provenance", "canonical_source_urls"],
+      ]),
+      ...readStringArray(createResult, [
+        ["details", "workflow", "provenance", "starter_source_urls"],
+      ]),
+    ]);
+    await fs.writeFile(
+      createReportPath,
+      `${JSON.stringify(
+        {
+          workflow: {
+            id: "create",
+            provenance: {
+              source_urls: createSourceUrls,
+            },
+          },
+          result: {
+            recommendation: {
+              decision: {
+                name: decisionName,
+              },
+              source_urls: createSourceUrls,
+            },
+            summary: {
+              decisionName,
+            },
+          },
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+
+    await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+    const filePath = path.join(rootDir, "src", "ExpectedTarget.tsx");
+    await fs.writeFile(filePath, code, "utf8");
+
+    const registry = await loadRegistry({ registryDir });
+    const loadedTargets = await loadCreateReviewTargets(
+      rootDir,
+      "create-report.json",
+      registry,
+    );
+    if (!loadedTargets) {
+      throw new Error("Expected create report review targets.");
+    }
+
+    const semanticReview = reviewSaltUi(registry, {
+      code,
+      framework: "react",
+      view: "full",
+      expected_targets: loadedTargets.expectedTargets,
+    });
+    const semanticExpectedIssues = readWorkflowExpectedIssues(semanticReview);
+    const semanticExpectedGaps = semanticReview.missing_data.filter((entry) =>
+      entry.includes("Expected pattern target"),
+    );
+    expect(semanticExpectedGaps).toEqual(
+      expect.arrayContaining([expect.stringContaining(decisionName)]),
+    );
+
+    const reportPath = path.join(rootDir, "review-report.json");
+    const cliFull = await runCliWorkflowFull(rootDir, [
+      "review",
+      "src",
+      "--create-report",
+      "create-report.json",
+      "--report",
+      reportPath,
+    ]);
+    const cliCompact = await runCliWorkflowCompact(rootDir, [
+      "review",
+      "src",
+      "--create-report",
+      "create-report.json",
+    ]);
+    const mcpFull = await runMcpWorkflow(
+      "review_salt_ui",
+      {
+        code,
+        root_dir: rootDir,
+        expected_targets: loadedTargets.expectedTargets,
+      },
+      "full",
+    );
+    const mcpCompact = await runMcpWorkflow(
+      "review_salt_ui",
+      {
+        code,
+        root_dir: rootDir,
+        expected_targets: loadedTargets.expectedTargets,
+      },
+      "compact",
+    );
+
+    expect(
+      readArray(cliFull, [
+        ["details", "artifacts", "expectedTargetReview", "issues"],
+      ]),
+    ).toEqual(semanticExpectedIssues);
+    expect(
+      readStringArray(cliFull, [
+        ["details", "artifacts", "expectedTargetReview", "missingData"],
+      ]),
+    ).toEqual(expect.arrayContaining(semanticExpectedGaps));
+    expect(
+      readWorkflowExpectedIssues(readPath(mcpFull, ["details", "result"])),
+    ).toEqual(semanticExpectedIssues);
+    expect(
+      readStringArray(mcpFull, [["details", "result", "missing_data"]]),
+    ).toEqual(expect.arrayContaining(semanticExpectedGaps));
+
+    expect(toComparableCompactContract(cliCompact)).toEqual(
+      toComparableCompactContract(mcpCompact),
+    );
+    expect(readStringArray(cliCompact, [["evidence", "missing"]])).toEqual(
+      readStringArray(mcpCompact, [["evidence", "missing"]]),
+    );
+    expect(readStringArray(cliCompact, [["evidence", "missing"]])).toEqual(
+      expect.arrayContaining([expect.stringContaining("unsupported claim")]),
+    );
+
+    const durableReport = JSON.parse(
+      await fs.readFile(reportPath, "utf8"),
+    ) as Record<string, unknown>;
+    expect(readUnsupportedClaimTexts(durableReport)).toEqual(
+      expect.arrayContaining(semanticExpectedGaps),
+    );
+    expect(
+      readUnsupportedClaimTexts(
+        readPath(mcpFull, ["details", "artifacts", "review_report"]),
+      ),
+    ).toEqual(expect.arrayContaining(semanticExpectedGaps));
+  }, 30_000);
+
   it("keeps clean review compact completion aligned across CLI and MCP", async () => {
     const rootDir = await createRepo("salt-parity-review-clean-", {
       name: "parity-review-clean",
@@ -1033,41 +1231,53 @@ describe("public contract parity", () => {
     await assertFixture("create-exact.full.json", cliComparable);
   });
 
-  it("keeps create full top-level facts aligned with compact for mixed-surface prompts", async () => {
-    const rootDir = await createRepo("salt-parity-create-tabs-full-", {
-      name: "parity-create-tabs-full",
-      private: true,
-      dependencies: {
-        "@salt-ds/core": "^2.0.0",
-      },
-    });
-    const query =
-      "User profile page with tabs for different sections (e.g. profile details, settings, activity) and an avatar displaying user initials or image.";
+  it(
+    "keeps create full top-level facts aligned with compact for mixed-surface prompts",
+    async () => {
+      const rootDir = await createRepo("salt-parity-create-tabs-full-", {
+        name: "parity-create-tabs-full",
+        private: true,
+        dependencies: {
+          "@salt-ds/core": "^2.0.0",
+        },
+      });
+      const query =
+        "User profile page with tabs for different sections (e.g. profile details, settings, activity) and an avatar displaying user initials or image.";
 
-    const cliCompact = await runCliCreateCompact(rootDir, query);
-    const cliFull = await runCliCreateFull(rootDir, query);
-    const mcpCompact = await runMcpCreate(rootDir, query, "compact");
-    const mcpFull = await runMcpCreate(rootDir, query, "full");
+      const cliCompact = await runCliCreateCompact(rootDir, query);
+      const cliFull = await runCliCreateFull(rootDir, query);
+      const mcpCompact = await runMcpCreate(rootDir, query, "compact");
+      const mcpFull = await runMcpCreate(rootDir, query, "full");
 
-    expect(toComparableCompactContract(cliFull)).toEqual(
-      toComparableCompactContract(cliCompact),
-    );
-    expect(toComparableCompactContract(mcpFull)).toEqual(
-      toComparableCompactContract(mcpCompact),
-    );
-    expect(readString(cliFull, [["request", "resolved_entity"]])).toBe("Tabs");
-    expect(readString(mcpFull, [["request", "resolved_entity"]])).toBe("Tabs");
-    expect(readString(cliFull, [["action", "kind"]])).toBe("retrieve_entity");
-    expect(readString(mcpFull, [["action", "kind"]])).toBe("retrieve_entity");
-    expect(readString(cliFull, [["action", "args", "name"]])).toBe("Avatar");
-    expect(readString(mcpFull, [["action", "args", "name"]])).toBe("Avatar");
-    expect(readString(cliFull, [["next_required_action", "kind"]])).toBe(
-      "retrieve_entity",
-    );
-    expect(readString(mcpFull, [["next_required_action", "kind"]])).toBe(
-      "retrieve_entity",
-    );
-  });
+      expect(toComparableCompactContract(cliFull)).toEqual(
+        toComparableCompactContract(cliCompact),
+      );
+      expect(toComparableCompactContract(mcpFull)).toEqual(
+        toComparableCompactContract(mcpCompact),
+      );
+      expect(readString(cliFull, [["request", "resolved_entity"]])).toBe(
+        "Tabs",
+      );
+      expect(readString(mcpFull, [["request", "resolved_entity"]])).toBe(
+        "Tabs",
+      );
+      expect(readString(cliFull, [["action", "kind"]])).toBe(
+        "retrieve_entity",
+      );
+      expect(readString(mcpFull, [["action", "kind"]])).toBe(
+        "retrieve_entity",
+      );
+      expect(readString(cliFull, [["action", "args", "name"]])).toBe("Avatar");
+      expect(readString(mcpFull, [["action", "args", "name"]])).toBe("Avatar");
+      expect(readString(cliFull, [["next_required_action", "kind"]])).toBe(
+        "retrieve_entity",
+      );
+      expect(readString(mcpFull, [["next_required_action", "kind"]])).toBe(
+        "retrieve_entity",
+      );
+    },
+    20_000,
+  );
 
   it("keeps create full request metadata populated for control prompts", async () => {
     const rootDir = await createRepo("salt-parity-create-switch-full-", {

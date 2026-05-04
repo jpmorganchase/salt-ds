@@ -1,3 +1,15 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+import {
+  buildContextPackBundleReleaseGate,
+  buildGeneratedArtifactPersistenceResult,
+  checkContextPackBundlePersistence,
+  DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
+  DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
+  toContextPackOutputPathForManifest,
+  validateGeneratedArtifactReleaseGate,
+  validateSaltReviewReport,
+} from "@salt-ds/semantic-core";
 import {
   createSaltUi,
   discoverSalt,
@@ -10,6 +22,7 @@ import {
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import * as z from "zod/v4";
 import { bootstrapSaltRepo } from "./bootstrapRepo.js";
+import { buildMcpFileContextPack } from "./contextPack.js";
 import {
   buildSaltProjectContextId,
   collectSaltProjectContextData,
@@ -177,6 +190,151 @@ async function resolveOrCollectProjectContext(
   return context;
 }
 
+async function validateReviewReportFromPath(input: {
+  registry: SaltRegistry;
+  root_dir?: string;
+  report_path: string;
+}) {
+  const rootDir = path.resolve(process.cwd(), input.root_dir ?? ".");
+  const reportPath = path.resolve(rootDir, input.report_path);
+  const report = JSON.parse(await fs.readFile(reportPath, "utf8")) as unknown;
+
+  return validateSaltReviewReport({
+    report,
+    registry: input.registry,
+    report_path: reportPath,
+  });
+}
+
+function isInsideDirectory(parentDir: string, targetPath: string): boolean {
+  const relativePath = path.relative(parentDir, targetPath);
+  return (
+    relativePath.length === 0 ||
+    (!relativePath.startsWith("..") && !path.isAbsolute(relativePath))
+  );
+}
+
+function resolveWritablePathInsideRoot(input: {
+  rootDir: string;
+  targetPath: string;
+  label: string;
+}): string {
+  const resolvedPath = path.resolve(input.rootDir, input.targetPath);
+  if (!isInsideDirectory(input.rootDir, resolvedPath)) {
+    throw new Error(
+      `${input.label} must resolve inside root_dir for MCP artifact persistence.`,
+    );
+  }
+
+  return resolvedPath;
+}
+
+async function writeExactText(filePath: string, text: string): Promise<void> {
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
+  await fs.writeFile(filePath, text, "utf8");
+}
+
+async function readTextIfPresent(filePath: string): Promise<string | null> {
+  try {
+    return await fs.readFile(filePath, "utf8");
+  } catch (error) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "ENOENT"
+    ) {
+      return null;
+    }
+    throw error;
+  }
+}
+
+async function persistContextPack(input: {
+  registry: SaltRegistry;
+  rootDir: string;
+  outputDir: string;
+  manifestPath: string;
+}) {
+  const outputDirForManifest = toContextPackOutputPathForManifest(
+    input.rootDir,
+    input.outputDir,
+  );
+  const manifestPathForCheck = toContextPackOutputPathForManifest(
+    input.rootDir,
+    input.manifestPath,
+  );
+  const { bundle } = buildMcpFileContextPack({
+    registry: input.registry,
+    rootDir: input.rootDir,
+    outputDir: input.outputDir,
+    outputDirForManifest,
+  });
+  const releaseGate = buildContextPackBundleReleaseGate({
+    bundle,
+    registry: input.registry,
+    artifact_path: manifestPathForCheck,
+  });
+
+  if (!releaseGate.releasable) {
+    return {
+      contract: "salt_context_pack_persistence_write_v1" as const,
+      status: releaseGate.status,
+      written: false,
+      root_dir: input.rootDir,
+      output_dir: outputDirForManifest,
+      manifest_path: manifestPathForCheck,
+      release_gate: releaseGate,
+      persistence_check: checkContextPackBundlePersistence({
+        bundle,
+        manifest_path: manifestPathForCheck,
+        persisted_text_by_path: {},
+        output_dir: outputDirForManifest,
+      }),
+    };
+  }
+
+  for (const file of bundle.files) {
+    const filePath = resolveWritablePathInsideRoot({
+      rootDir: input.rootDir,
+      targetPath: file.output_path,
+      label: `context pack output ${file.output_path}`,
+    });
+    await writeExactText(filePath, file.text);
+  }
+  await writeExactText(input.manifestPath, JSON.stringify(bundle.manifest, null, 2));
+
+  const persistedTextByPath: Record<string, string | null> = {
+    [manifestPathForCheck]: await readTextIfPresent(input.manifestPath),
+  };
+  for (const file of bundle.files) {
+    const filePath = resolveWritablePathInsideRoot({
+      rootDir: input.rootDir,
+      targetPath: file.output_path,
+      label: `context pack output ${file.output_path}`,
+    });
+    persistedTextByPath[file.output_path] = await readTextIfPresent(filePath);
+  }
+
+  const persistenceCheck = checkContextPackBundlePersistence({
+    bundle,
+    manifest_path: manifestPathForCheck,
+    persisted_text_by_path: persistedTextByPath,
+    output_dir: outputDirForManifest,
+  });
+
+  return {
+    contract: "salt_context_pack_persistence_write_v1" as const,
+    status: persistenceCheck.status === "current" ? "written" : persistenceCheck.status,
+    written: persistenceCheck.current,
+    root_dir: input.rootDir,
+    output_dir: outputDirForManifest,
+    manifest_path: manifestPathForCheck,
+    release_gate: releaseGate,
+    persistence_check: persistenceCheck,
+  };
+}
+
 function defineTool<Args extends object>(
   definition: Omit<ToolDefinition, "execute"> & {
     execute: (
@@ -195,6 +353,41 @@ const READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS = {
   idempotentHint: true,
   openWorldHint: false,
 } as const;
+
+const WORKFLOW_COMPOSITION_CONTRACT_SCHEMA = z.object({
+  primary_target: z.object({
+    solution_type: z.enum(["component", "pattern", "foundation", "token"]),
+    name: z.string().nullable(),
+  }),
+  expected_patterns: z.array(z.string()),
+  expected_components: z.array(z.string()),
+  slots: z.array(
+    z.object({
+      id: z.string(),
+      label: z.string(),
+      certainty: z.enum([
+        "explicitly_requested",
+        "strongly_implied",
+        "optional",
+        "confirmation_needed",
+      ]),
+      preferred_patterns: z.array(z.string()),
+      preferred_components: z.array(z.string()),
+      reason: z.string(),
+      source_urls: z.array(z.string()),
+      notes: z.array(z.string()),
+    }),
+  ),
+  avoid: z.array(z.string()),
+  source_urls: z.array(z.string()),
+});
+
+const REVIEW_EXPECTED_TARGETS_SCHEMA = z.object({
+  components: z.array(z.string()).optional(),
+  patterns: z.array(z.string()).optional(),
+  composition_contract: WORKFLOW_COMPOSITION_CONTRACT_SCHEMA.nullable().optional(),
+  source: z.enum(["create_report", "workflow_context"]).optional(),
+});
 
 const TOOL_SOURCE_SCHEMA = z.object({
   original: z.string(),
@@ -524,6 +717,51 @@ const BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA = z.object({
   }),
   sources: z.array(TOOL_SOURCE_SCHEMA),
 });
+
+const REVIEW_RESUME_OUTPUT_SCHEMA = z
+  .object({
+    contract: z.literal("salt_review_resume_v1"),
+    status: z.enum(["ready", "stale", "unsupported", "invalid"]),
+    report_path: z.string().min(1),
+    reusable_evidence_ref_ids: z.array(z.string().min(1)),
+    unsupported_claim_ids: z.array(z.string().min(1)),
+    next_command: z.string().min(1),
+    missing: z.array(z.string().min(1)),
+  })
+  .strict();
+
+const REVIEW_REPORT_VALIDATION_OUTPUT_SCHEMA = z
+  .object({
+    contract: z.literal("salt_review_report_validation_v1"),
+    status: z.enum(["current", "stale", "unsupported", "invalid"]),
+    current: z.boolean(),
+    supported: z.boolean(),
+    report_path: z.string().min(1),
+    registry: z
+      .object({
+        version: z.string().nullable(),
+        hash: z.string().nullable(),
+        generated_at: z.string().nullable(),
+        current_version: z.string().nullable(),
+        current_hash: z.string().nullable(),
+        current_generated_at: z.string().nullable(),
+      })
+      .strict(),
+    validation_issues: z.array(
+      z
+        .object({
+          code: z.string().min(1),
+          message: z.string().min(1),
+          path: z.string().min(1),
+        })
+        .strict(),
+    ),
+    unsupported_claim_count: z.number().int().nonnegative(),
+    mismatches: z.array(z.string().min(1)),
+    missing: z.array(z.string().min(1)),
+    resume: REVIEW_RESUME_OUTPUT_SCHEMA,
+  })
+  .strict();
 
 const CONTEXT_OUTPUT_SCHEMA = CONTEXT_WORKFLOW_ENVELOPE_SCHEMA;
 const BOOTSTRAP_OUTPUT_SCHEMA = BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA;
@@ -880,15 +1118,44 @@ const CHOOSE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const ANALYZE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const TRANSLATE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const COMPARE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
+const CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA = z
+  .object({
+    contract: z.literal("salt_context_pack_persistence_write_v1"),
+    status: z.enum(["written", "passed", "blocked", "invalid", "missing", "stale"]),
+    written: z.boolean(),
+    root_dir: z.string(),
+    output_dir: z.string(),
+    manifest_path: z.string(),
+    release_gate: z.unknown(),
+    persistence_check: z.unknown(),
+  })
+  .strict();
+const GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA = z
+  .object({
+    contract: z.literal("salt_generated_artifact_persistence_v1"),
+    status: z.enum(["written", "blocked", "invalid"]),
+    written: z.boolean(),
+    artifact_path: z.string(),
+    release_gate: z.unknown(),
+    missing: z.array(z.string()),
+  })
+  .strict();
 
 const SUPPORT_TOOL_ORDER = [
   "get_salt_entity",
   "get_salt_examples",
   "discover_salt",
+  "validate_salt_review_report",
+  "resume_salt_review",
+] as const;
+const PERSISTENCE_TOOL_ORDER = [
+  "persist_salt_context_pack",
+  "persist_salt_generated_artifact",
 ] as const;
 const DEFAULT_TOOL_ORDER = [
   ...PUBLIC_WORKFLOW_TOOL_IDS,
   ...SUPPORT_TOOL_ORDER,
+  ...PERSISTENCE_TOOL_ORDER,
 ] as const;
 
 const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
@@ -983,6 +1250,179 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         );
       }
       return bootstrapped.result;
+    },
+  }),
+  defineTool<{ report_path: string; root_dir?: string }>({
+    name: "validate_salt_review_report",
+    description:
+      "Validate a durable salt_review_report_v1 JSON file against the current semantic-core registry. Recomputes evidence, mirror, and release-gate state before reporting current, stale, unsupported, or invalid.",
+    inputSchema: {
+      report_path: z
+        .string()
+        .min(1)
+        .describe(
+          "Path to a salt_review_report_v1 JSON file. Relative paths resolve from root_dir or the MCP current working directory.",
+        ),
+      root_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Optional repo root for resolving report_path. Defaults to the MCP current working directory.",
+        ),
+    },
+    outputSchema: REVIEW_REPORT_VALIDATION_OUTPUT_SCHEMA,
+    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
+    execute: async (registry, args) =>
+      validateReviewReportFromPath({
+        registry,
+        report_path: args.report_path,
+        root_dir: args.root_dir,
+      }),
+  }),
+  defineTool<{ report_path: string; root_dir?: string }>({
+    name: "resume_salt_review",
+    description:
+      "Return the conservative resume state for a durable Salt review report. Only current source-backed reports expose reusable EvidenceRef ids; stale, unsupported, and invalid reports return missing data instead.",
+    inputSchema: {
+      report_path: z
+        .string()
+        .min(1)
+        .describe(
+          "Path to a salt_review_report_v1 JSON file. Relative paths resolve from root_dir or the MCP current working directory.",
+        ),
+      root_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Optional repo root for resolving report_path. Defaults to the MCP current working directory.",
+        ),
+    },
+    outputSchema: REVIEW_RESUME_OUTPUT_SCHEMA,
+    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
+    execute: async (registry, args) =>
+      (
+        await validateReviewReportFromPath({
+          registry,
+          report_path: args.report_path,
+          root_dir: args.root_dir,
+        })
+      ).resume,
+  }),
+  defineTool<{
+    root_dir?: string;
+    output_dir?: string;
+    manifest_path?: string;
+  }>({
+    name: "persist_salt_context_pack",
+    description:
+      "Write the default release-gated Salt generated context pack to durable project files and return the shared semantic-core persistence check.",
+    inputSchema: {
+      root_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Project root to write within. Defaults to the MCP current working directory.",
+        ),
+      output_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Directory inside root_dir for generated context files. Defaults to .salt/context/components.",
+        ),
+      manifest_path: z
+        .string()
+        .optional()
+        .describe(
+          "Manifest path inside root_dir. Defaults to .salt/context/manifest.json.",
+        ),
+    },
+    outputSchema: CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA,
+    annotations: {
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+    execute: async (registry, args) => {
+      const rootDir = path.resolve(process.cwd(), args.root_dir ?? ".");
+      const outputDir = resolveWritablePathInsideRoot({
+        rootDir,
+        targetPath: args.output_dir ?? DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
+        label: "output_dir",
+      });
+      const manifestPath = resolveWritablePathInsideRoot({
+        rootDir,
+        targetPath: args.manifest_path ?? DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
+        label: "manifest_path",
+      });
+
+      return persistContextPack({
+        registry,
+        rootDir,
+        outputDir,
+        manifestPath,
+      });
+    },
+  }),
+  defineTool<{
+    root_dir?: string;
+    artifact_path: string;
+    artifact: Record<string, unknown>;
+  }>({
+    name: "persist_salt_generated_artifact",
+    description:
+      "Write one generated Salt report or artifact JSON payload only after the shared semantic-core release gate validates its EvidenceRefs.",
+    inputSchema: {
+      root_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Project root to write within. Defaults to the MCP current working directory.",
+        ),
+      artifact_path: z
+        .string()
+        .min(1)
+        .describe("Output JSON path inside root_dir for the generated artifact."),
+      artifact: UNKNOWN_RECORD_SCHEMA.describe(
+        "Generated Salt artifact payload to persist. It must be a salt_generated_artifact_v1 object or contain generated_artifact.",
+      ),
+    },
+    outputSchema: GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA,
+    annotations: {
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+    execute: async (registry, args) => {
+      const rootDir = path.resolve(process.cwd(), args.root_dir ?? ".");
+      const artifactPath = resolveWritablePathInsideRoot({
+        rootDir,
+        targetPath: args.artifact_path,
+        label: "artifact_path",
+      });
+      const artifactPathForResult = toContextPackOutputPathForManifest(
+        rootDir,
+        artifactPath,
+      );
+      const releaseGate = validateGeneratedArtifactReleaseGate({
+        artifact: args.artifact,
+        registry,
+        artifact_path: artifactPathForResult,
+      });
+
+      if (releaseGate.releasable) {
+        await writeExactText(
+          artifactPath,
+          JSON.stringify(args.artifact, null, 2),
+        );
+      }
+
+      return buildGeneratedArtifactPersistenceResult({
+        artifact_path: artifactPathForResult,
+        release_gate: releaseGate,
+        written: releaseGate.releasable,
+      });
     },
   }),
   defineTool<Parameters<typeof discoverSalt>[1]>({
@@ -1406,6 +1846,9 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .describe(
           "Use full to include raw validation, fix, and migration payloads.",
         ),
+      expected_targets: REVIEW_EXPECTED_TARGETS_SCHEMA.optional().describe(
+        "Optional source-backed or workflow-input targets from a previous Salt workflow. Missing evidence is returned as unsupported review data.",
+      ),
       context_id: z
         .string()
         .optional()
@@ -1431,14 +1874,17 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       const semanticView = normalizeWorkflowView(workflowArgs.view);
 
       return withAnalyzeWorkflowGuidance(
+        registry,
         reviewSaltUi(registry, {
           ...workflowArgs,
           view: semanticView,
         }),
         {
           code: workflowArgs.code,
+          expected_targets: workflowArgs.expected_targets,
           project_policy:
             await loadWorkflowProjectPolicyArtifactForContext(projectContext),
+          root_dir: projectContext.root_dir,
           view: workflowArgs.view,
         },
       );
@@ -1524,17 +1970,31 @@ const INTERNAL_SUPPORT_TOOL_DEFINITIONS: readonly ToolDefinition[] =
       definition.name as (typeof SUPPORT_TOOL_ORDER)[number],
     ),
   );
+const INTERNAL_PERSISTENCE_TOOL_DEFINITIONS: readonly ToolDefinition[] =
+  ALL_TOOL_DEFINITIONS.filter((definition) =>
+    PERSISTENCE_TOOL_ORDER.includes(
+      definition.name as (typeof PERSISTENCE_TOOL_ORDER)[number],
+    ),
+  );
 
 const toolPriorityByName = new Map<string, number>([
   ...PUBLIC_WORKFLOW_TOOL_IDS.map((name, index) => [name, index] as const),
   ...SUPPORT_TOOL_ORDER.map(
     (name, index) => [name, PUBLIC_WORKFLOW_TOOL_IDS.length + index] as const,
   ),
+  ...PERSISTENCE_TOOL_ORDER.map(
+    (name, index) =>
+      [
+        name,
+        PUBLIC_WORKFLOW_TOOL_IDS.length + SUPPORT_TOOL_ORDER.length + index,
+      ] as const,
+  ),
 ]);
 
 const ORDERED_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   ...WORKFLOW_TOOL_DEFINITIONS,
   ...INTERNAL_SUPPORT_TOOL_DEFINITIONS,
+  ...INTERNAL_PERSISTENCE_TOOL_DEFINITIONS,
 ]
   .map((definition, index) => ({
     definition,

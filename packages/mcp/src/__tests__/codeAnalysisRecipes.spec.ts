@@ -6,6 +6,114 @@ import {
   TIMESTAMP,
 } from "./fixtures/codeAnalysisRegistry.js";
 
+const PRIMITIVE_GUIDE = REGISTRY.guides.find(
+  (guide) => guide.name === "Choosing the right primitive",
+);
+const PRIMITIVE_GUIDE_NAME =
+  PRIMITIVE_GUIDE?.name ?? "Choosing the right primitive";
+const PRIMITIVE_GUIDE_SUMMARY =
+  PRIMITIVE_GUIDE?.summary ?? "Fixture primitive choice summary.";
+const PRIMITIVE_GUIDE_STEP = PRIMITIVE_GUIDE
+  ? `Use ${PRIMITIVE_GUIDE_NAME}: ${PRIMITIVE_GUIDE_SUMMARY}`
+  : "Use the registry-backed primitive choice guide.";
+
+function buildFixtureExpectedPatternRegistry(): SaltRegistry {
+  // Fixture-only records: these prove expected-pattern review behavior without
+  // adding production Salt pattern or component facts to the test.
+  const fixtureComponent: SaltRegistry["components"][number] = {
+    id: "fixture-action",
+    name: "FixtureAction",
+    aliases: [],
+    package: {
+      name: "@salt-ds/fixture",
+      status: "stable",
+      since: null,
+    },
+    summary: "Fixture source-backed action component.",
+    status: "stable",
+    category: ["fixture"],
+    tags: [],
+    when_to_use: [],
+    when_not_to_use: [],
+    alternatives: [],
+    props: [],
+    accessibility: {
+      summary: [],
+      rules: [],
+    },
+    patterns: ["FixtureWorkflow"],
+    examples: [],
+    related_docs: {
+      overview: "https://example.test/salt/fixture-action",
+      usage: "https://example.test/salt/fixture-action/usage",
+      accessibility: null,
+      examples: null,
+    },
+    source: {
+      repo_path: "packages/fixture/src/FixtureAction.tsx",
+      export_name: "FixtureAction",
+    },
+    deprecations: [],
+    last_verified_at: TIMESTAMP,
+  };
+  const fixturePattern: SaltRegistry["patterns"][number] = {
+    id: "fixture-workflow",
+    name: "FixtureWorkflow",
+    aliases: [],
+    summary: "Fixture source-backed workflow pattern.",
+    status: "stable",
+    category: ["fixture"],
+    when_to_use: ["Use FixtureWorkflow for fixture workflow tests."],
+    when_not_to_use: [],
+    composed_of: [
+      {
+        component: "FixtureAction",
+        role: "fixture action",
+      },
+    ],
+    related_patterns: [],
+    how_to_build: ["Compose FixtureWorkflow from fixture starter scaffold."],
+    how_it_works: [
+      "FixtureWorkflow is validated from fixture starter import evidence.",
+    ],
+    accessibility: {
+      summary: [],
+    },
+    resources: [],
+    examples: [],
+    starter_scaffold: {
+      fidelity: "canonical",
+      source_urls: ["https://example.test/salt/fixture-workflow/source"],
+      example_source_urls: [],
+      semantics: {
+        regions: [],
+        build_around: [],
+        preserve_constraints: [],
+      },
+      template: {
+        kind: "fallback-template",
+        imports: [
+          {
+            name: "FixtureAction",
+            package: "@salt-ds/fixture",
+          },
+        ],
+        jsx_lines: ["<FixtureAction />"],
+      },
+    },
+    related_docs: {
+      overview: "https://example.test/salt/fixture-workflow",
+    },
+    last_verified_at: TIMESTAMP,
+  };
+
+  return {
+    ...REGISTRY,
+    components: [...REGISTRY.components, fixtureComponent],
+    patterns: [fixturePattern],
+  };
+}
+
 describe("recommendFixRecipes", () => {
   it("builds remediation recipes from validation issues, migrations, and examples", () => {
     const recipeRegistry: SaltRegistry = {
@@ -38,6 +146,20 @@ describe("recommendFixRecipes", () => {
             "Use fixed size tokens for border and separator thickness.",
           ],
           aliases: [],
+          policy: {
+            usage_tier: "foundation",
+            direct_component_use: "conditional",
+            preferred_for: ["border thickness", "separator thickness"],
+            avoid_for: [
+              "semantic component styling when a characteristic token fits",
+            ],
+            notes: [
+              "Fixed size tokens remain constant across densities and are the correct choice for border and separator thickness.",
+            ],
+            docs: ["/salt/foundations/size", "/salt/themes/design-tokens/index"],
+            structural_roles: ["border-thickness", "separator-thickness"],
+            pairing: null,
+          },
           deprecated: false,
           last_verified_at: TIMESTAMP,
         },
@@ -54,6 +176,25 @@ describe("recommendFixRecipes", () => {
             "Palette tokens should be mapped through characteristic tokens.",
           ],
           aliases: [],
+          policy: {
+            usage_tier: "palette",
+            direct_component_use: "never",
+            preferred_for: [
+              "internal theme and mode mapping inside the Salt token system",
+            ],
+            avoid_for: [
+              "direct component styling",
+              "pattern styling",
+              "custom UI color selection",
+            ],
+            notes: [
+              "Palette tokens sit between foundations and characteristics and should not be referenced directly in components or patterns.",
+              "Choose a semantic characteristic token instead of applying a palette token to UI code.",
+            ],
+            docs: ["/salt/themes/design-tokens/index"],
+            structural_roles: [],
+            pairing: null,
+          },
           deprecated: false,
           last_verified_at: TIMESTAMP,
         },
@@ -68,6 +209,21 @@ describe("recommendFixRecipes", () => {
           applies_to: ["Button"],
           guidance: ["Use actionable tokens for action control borders."],
           aliases: [],
+          policy: {
+            usage_tier: "characteristic",
+            direct_component_use: "always",
+            preferred_for: ["action control states", "action affordances"],
+            avoid_for: ["choosing by visual similarity alone"],
+            notes: [
+              "Use characteristic tokens directly in components and patterns, choosing by semantic intent rather than by appearance.",
+            ],
+            docs: [
+              "/salt/themes/design-tokens/actionable-characteristic",
+              "/salt/themes/design-tokens/index",
+            ],
+            structural_roles: [],
+            pairing: null,
+          },
           deprecated: false,
           last_verified_at: TIMESTAMP,
         },
@@ -84,6 +240,25 @@ describe("recommendFixRecipes", () => {
             "Use primary container background tokens for primary surfaces.",
           ],
           aliases: [],
+          policy: {
+            usage_tier: "characteristic",
+            direct_component_use: "always",
+            preferred_for: ["surface backgrounds", "container border colors"],
+            avoid_for: ["mixing container background and border levels"],
+            notes: [
+              "Pair container background and border tokens from the same level to keep surfaces visually coherent.",
+            ],
+            docs: [
+              "/salt/themes/design-tokens/container-characteristic",
+              "/salt/themes/design-tokens/index",
+            ],
+            structural_roles: ["container-background"],
+            pairing: {
+              family: "container",
+              role: "container-background",
+              level: "primary",
+            },
+          },
           deprecated: false,
           last_verified_at: TIMESTAMP,
         },
@@ -100,6 +275,25 @@ describe("recommendFixRecipes", () => {
             "Match primary container borders with primary container backgrounds.",
           ],
           aliases: [],
+          policy: {
+            usage_tier: "characteristic",
+            direct_component_use: "always",
+            preferred_for: ["surface backgrounds", "container border colors"],
+            avoid_for: ["mixing container background and border levels"],
+            notes: [
+              "Pair container background and border tokens from the same level to keep surfaces visually coherent.",
+            ],
+            docs: [
+              "/salt/themes/design-tokens/container-characteristic",
+              "/salt/themes/design-tokens/index",
+            ],
+            structural_roles: ["container-border-color"],
+            pairing: {
+              family: "container",
+              role: "container-border-color",
+              level: "primary",
+            },
+          },
           deprecated: false,
           last_verified_at: TIMESTAMP,
         },
@@ -116,6 +310,25 @@ describe("recommendFixRecipes", () => {
             "Use secondary container border tokens with secondary surfaces.",
           ],
           aliases: [],
+          policy: {
+            usage_tier: "characteristic",
+            direct_component_use: "always",
+            preferred_for: ["surface backgrounds", "container border colors"],
+            avoid_for: ["mixing container background and border levels"],
+            notes: [
+              "Pair container background and border tokens from the same level to keep surfaces visually coherent.",
+            ],
+            docs: [
+              "/salt/themes/design-tokens/container-characteristic",
+              "/salt/themes/design-tokens/index",
+            ],
+            structural_roles: ["container-border-color"],
+            pairing: {
+              family: "container",
+              role: "container-border-color",
+              level: "secondary",
+            },
+          },
           deprecated: false,
           last_verified_at: TIMESTAMP,
         },
@@ -130,6 +343,21 @@ describe("recommendFixRecipes", () => {
           applies_to: ["Divider", "Separator"],
           guidance: ["Use separable tokens for divider and separator lines."],
           aliases: [],
+          policy: {
+            usage_tier: "characteristic",
+            direct_component_use: "always",
+            preferred_for: ["divider colors", "separator colors"],
+            avoid_for: ["borrowing container or content colors for separators"],
+            notes: [
+              "Use separable tokens to divide sections and groups rather than reusing unrelated border colors.",
+            ],
+            docs: [
+              "/salt/themes/design-tokens/separable-characteristic",
+              "/salt/themes/design-tokens/index",
+            ],
+            structural_roles: ["separator-color"],
+            pairing: null,
+          },
           deprecated: false,
           last_verified_at: TIMESTAMP,
         },
@@ -223,28 +451,23 @@ describe("recommendFixRecipes", () => {
     expect(result.fixes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          problem:
-            "This interaction looks like navigation rather than an in-place action.",
+          problem: "Button: Use Link for navigation. Link: Navigate to another route.",
           category: "primitive-choice",
-          rule: "button-must-not-handle-navigation",
-          recommended_fix:
-            "Use Link for navigation and keep Button for in-place actions.",
+          rule: "navigation-target-uses-navigation-component",
+          recommended_fix: "Use Link for navigation targets instead of Button.",
         }),
         expect.objectContaining({
-          problem:
-            "Hard-coded sizing values were detected. Prefer semantic Salt tokens for control size and spacing.",
+          rule: "no-hardcoded-size-values",
           token_recommendations: expect.arrayContaining(["--salt-size-base"]),
         }),
         expect.objectContaining({
-          problem:
-            "Styling references palette tokens directly. Palette tokens are internal mapping tokens; choose a semantic characteristic token instead.",
+          rule: "no-direct-palette-token-use",
           token_recommendations: expect.arrayContaining([
             "--salt-actionable-borderColor",
           ]),
         }),
         expect.objectContaining({
-          problem:
-            "Border styling uses a hard-coded value or a non-fixed size token. Use fixed size tokens for border and separator thickness so line weight stays stable across densities.",
+          rule: "border-thickness-uses-fixed-size-token",
           token_recommendations: expect.arrayContaining([
             "--salt-size-fixed-100",
           ]),
@@ -258,6 +481,41 @@ describe("recommendFixRecipes", () => {
       ...REGISTRY,
       tokens: [
         {
+          name: "--salt-container-primary-borderColor",
+          category: "container",
+          type: "color",
+          value: "#d0d7de",
+          semantic_intent: "primary container border",
+          themes: ["salt"],
+          densities: ["medium"],
+          applies_to: ["Divider", "Separator"],
+          guidance: [
+            "Pair primary container borders with primary container backgrounds.",
+          ],
+          aliases: [],
+          policy: {
+            usage_tier: "characteristic",
+            direct_component_use: "always",
+            preferred_for: ["semantic component styling", "pattern styling"],
+            avoid_for: ["choosing by visual similarity alone"],
+            notes: [
+              "Pair container background and border tokens from the same level to keep surfaces visually coherent.",
+            ],
+            docs: [
+              "/salt/themes/design-tokens/container-characteristic",
+              "/salt/themes/design-tokens/index",
+            ],
+            structural_roles: ["container-border-color"],
+            pairing: {
+              family: "container",
+              role: "container-border-color",
+              level: "primary",
+            },
+          },
+          deprecated: false,
+          last_verified_at: TIMESTAMP,
+        },
+        {
           name: "--salt-separable-secondary-borderColor",
           category: "separable",
           type: "color",
@@ -268,6 +526,21 @@ describe("recommendFixRecipes", () => {
           applies_to: ["Divider", "Separator"],
           guidance: ["Use separable tokens for divider and separator lines."],
           aliases: [],
+          policy: {
+            usage_tier: "characteristic",
+            direct_component_use: "always",
+            preferred_for: ["divider colors", "separator colors"],
+            avoid_for: ["borrowing container or content colors for separators"],
+            notes: [
+              "Use separable tokens to divide sections and groups rather than reusing unrelated border colors.",
+            ],
+            docs: [
+              "/salt/themes/design-tokens/separable-characteristic",
+              "/salt/themes/design-tokens/index",
+            ],
+            structural_roles: ["separator-color"],
+            pairing: null,
+          },
           deprecated: false,
           last_verified_at: TIMESTAMP,
         },
@@ -288,8 +561,7 @@ describe("recommendFixRecipes", () => {
     expect(result.fixes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          problem:
-            "Separator or divider styling appears to use a non-separable color token. Use separable tokens for separator and divider lines.",
+          rule: "separators-use-separable-tokens",
           token_recommendations: expect.arrayContaining([
             "--salt-separable-secondary-borderColor",
           ]),
@@ -390,15 +662,11 @@ describe("recommendFixRecipes", () => {
     expect(result.fixes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          problem:
-            "This interaction looks action-oriented rather than navigational.",
+          problem: "Link: Use Button for actions. Button: Trigger an immediate action.",
           category: "primitive-choice",
-          rule: "link-without-navigation-target-should-prefer-button",
+          rule: "navigation-component-used-as-action",
           recommended_fix:
-            "Use Button for actions, or add a real navigation target if this element is meant to navigate.",
-          next_steps: expect.arrayContaining([
-            "Replace Link with Button when the element triggers work instead of navigation.",
-          ]),
+            "Use Button for actions instead of Link, or add a navigation target when this component is meant to navigate.",
           docs: expect.arrayContaining([
             "/salt/components/button/usage",
             "/salt/components/link/usage",
@@ -412,13 +680,13 @@ describe("recommendFixRecipes", () => {
         }),
         expect.objectContaining({
           problem:
-            "Wrapper component PrimaryButton only forwards props to Salt primitive Button without adding structure or behavior.",
+            "Custom wrappers: Avoid wrappers that only forward props to a single Salt primitive. Wrapped component: Button.",
           category: "composition",
           rule: "avoid-pass-through-wrapper-over-salt-primitive",
           recommended_fix:
-            "Use the underlying Salt primitive directly unless the wrapper is establishing meaningful shared behavior, semantics, or a stable public API.",
+            "Custom wrappers: Avoid wrappers that only forward props to a single Salt primitive.",
           next_steps: expect.arrayContaining([
-            "Use Button directly where possible.",
+            "Use Custom wrappers: Learn when a wrapper over a Salt primitive adds value and when it is only hiding the underlying component behind prop forwarding.",
           ]),
           related_guides: expect.arrayContaining([
             expect.objectContaining({
@@ -527,26 +795,20 @@ describe("recommendFixRecipes", () => {
       expect.arrayContaining([
         expect.objectContaining({
           problem:
-            "This Salt UI recreates a standard button with a native element.",
+            `Button: Trigger an immediate action. ${PRIMITIVE_GUIDE_NAME}: ${PRIMITIVE_GUIDE_SUMMARY}`,
           category: "primitive-choice",
           rule: "native-button-should-prefer-salt-button",
           recommended_fix:
-            "Replace native button elements with Salt Button unless a native-only behavior is required.",
-          next_steps: expect.arrayContaining([
-            "Use Choosing the right primitive to keep actions on Button and navigation on Link before accepting a custom or native alternative.",
-            "Replace the button-like element with Salt Button so interaction, semantics, and styling come from the design system.",
-          ]),
+            "Use Button for action intent instead of recreating that primitive with a native button element.",
+          next_steps: expect.arrayContaining([PRIMITIVE_GUIDE_STEP]),
         }),
         expect.objectContaining({
-          problem: "This Salt UI recreates a standard link with a custom role.",
+          problem: `Link: Navigate to another route. ${PRIMITIVE_GUIDE_NAME}: ${PRIMITIVE_GUIDE_SUMMARY}`,
           category: "primitive-choice",
           rule: "custom-link-role-should-prefer-salt-link",
           recommended_fix:
-            "Replace the custom link-like element with Salt Link unless there is a strong reason to manage link semantics manually.",
-          next_steps: expect.arrayContaining([
-            "Use Choosing the right primitive to keep actions on Button and navigation on Link before accepting a custom or native alternative.",
-            "Replace the link-like element with Salt Link so interaction, semantics, and styling come from the design system.",
-          ]),
+            'Use Link for navigation intent instead of recreating that primitive with a custom element with role="link".',
+          next_steps: expect.arrayContaining([PRIMITIVE_GUIDE_STEP]),
         }),
       ]),
     );
@@ -571,7 +833,7 @@ describe("recommendFixRecipes", () => {
       issue: expect.objectContaining({
         id: "component-choice.navigation",
         category: "primitive-choice",
-        rule: "button-must-not-handle-navigation",
+        rule: "navigation-target-uses-navigation-component",
       }),
       related_guides: expect.arrayContaining([
         expect.objectContaining({
@@ -610,11 +872,10 @@ describe("reviewSaltUi", () => {
     expect(result.issues?.[0]).toMatchObject({
       id: "component-choice.navigation",
       category: "primitive-choice",
-      rule: "button-must-not-handle-navigation",
-      canonical_source: "/salt/getting-started/choosing-the-right-primitive",
+      rule: "navigation-target-uses-navigation-component",
+      canonical_source: "/salt/components/button/usage",
       fix_hints: {
         related_components: ["Button", "Link"],
-        guide_lookups: ["choosing-the-right-primitive"],
       },
     });
   });
@@ -646,19 +907,13 @@ describe("reviewSaltUi", () => {
     );
   });
 
-  it("flags metric-pattern drift only when review is given an explicit expected target", () => {
+  it("records unsupported pattern validation only when review is given an explicit fixture expected target", () => {
+    // Fixture-only expected target: this verifies provenance behavior without
+    // adding production Salt pattern facts to the test.
+    const fixturePattern = "FixtureWorkflowPattern";
     const code = `
-      import { Card, StackLayout, Text } from "@salt-ds/core";
-
-      export function MetricSurface() {
-        return (
-          <Card>
-            <StackLayout gap={1}>
-              <Text styleAs="label">PnL</Text>
-              <Text styleAs="h3">+12.5%</Text>
-            </StackLayout>
-          </Card>
-        );
+      export function FixtureSurface() {
+        return <div />;
       }
     `;
 
@@ -670,7 +925,7 @@ describe("reviewSaltUi", () => {
       code,
       framework: "react",
       expected_targets: {
-        patterns: ["Metric"],
+        patterns: [fixturePattern],
         source: "create_report",
       },
     });
@@ -678,16 +933,283 @@ describe("reviewSaltUi", () => {
     expect(withoutExpectedTarget.issues).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          id: "workflow-expected.metric-pattern",
+          id: "workflow-expected.unsupported-pattern.fixtureworkflowpattern",
         }),
       ]),
     );
     expect(withExpectedTarget.issues).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          id: "workflow-expected.metric-pattern",
-          category: "primitive-choice",
-          rule: "workflow-expected-metric-pattern",
+          id: "workflow-expected.unsupported-pattern.fixtureworkflowpattern",
+          category: "composition",
+          rule: "workflow-expected-pattern-validation-unsupported",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "workflow_input",
+              claim_kind: "workflow",
+            }),
+          ]),
+        }),
+      ]),
+    );
+    expect(withExpectedTarget.missing_data).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Expected pattern target 'FixtureWorkflowPattern'",
+        ),
+        expect.stringContaining("no matching semantic-core registry pattern"),
+      ]),
+    );
+  });
+
+  it("validates expected fixture pattern imports from source-backed starter scaffold evidence", () => {
+    const fixtureRegistry = buildFixtureExpectedPatternRegistry();
+    const result = reviewSaltUi(fixtureRegistry, {
+      code: `
+        export function FixtureSurface() {
+          return <div />;
+        }
+      `,
+      framework: "react",
+      expected_targets: {
+        patterns: ["FixtureWorkflow"],
+        source: "create_report",
+      },
+    });
+
+    expect(result.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "workflow-expected.pattern-missing-import.fixtureworkflow.fixtureaction",
+          category: "composition",
+          rule: "workflow-expected-pattern-import-not-found",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "workflow_input",
+              claim_kind: "workflow",
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "import",
+              registry: expect.objectContaining({
+                entity_type: "pattern",
+                entity_id: "fixture-workflow",
+                field_path: "starter_scaffold.template.imports.0.name",
+              }),
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "component",
+              registry: expect.objectContaining({
+                entity_type: "component",
+                entity_id: "fixture-action",
+                field_path: "name",
+              }),
+            }),
+          ]),
+        }),
+      ]),
+    );
+    expect(result.missing_data).not.toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("FixtureWorkflow"),
+      ]),
+    );
+  });
+
+  it("treats imported fixture pattern starter import as satisfied when source-backed imports are present", () => {
+    const fixtureRegistry = buildFixtureExpectedPatternRegistry();
+    const result = reviewSaltUi(fixtureRegistry, {
+      code: `
+        import { FixtureAction } from "@salt-ds/fixture";
+
+        export function FixtureSurface() {
+          return <FixtureAction />;
+        }
+      `,
+      framework: "react",
+      expected_targets: {
+        patterns: ["FixtureWorkflow"],
+        source: "create_report",
+      },
+    });
+
+    expect(result.issues).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          rule: "workflow-expected-pattern-import-not-found",
+        }),
+      ]),
+    );
+    expect(result.missing_data).not.toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("FixtureWorkflow"),
+      ]),
+    );
+  });
+
+  it("validates expected fixture pattern starter regions from source-backed rule evidence", () => {
+    const fixtureRegistry = buildFixtureExpectedPatternRegistry();
+    fixtureRegistry.patterns = fixtureRegistry.patterns.map((pattern) =>
+      pattern.id === "fixture-workflow"
+        ? {
+            ...pattern,
+            starter_scaffold: {
+              ...pattern.starter_scaffold,
+              semantics: {
+                ...pattern.starter_scaffold?.semantics,
+                regions: ["fixture header"],
+                build_around:
+                  pattern.starter_scaffold?.semantics.build_around ?? [],
+                preserve_constraints:
+                  pattern.starter_scaffold?.semantics.preserve_constraints ??
+                  [],
+              },
+            },
+          }
+        : pattern,
+    );
+
+    const missingRegion = reviewSaltUi(fixtureRegistry, {
+      code: `
+        import { FixtureAction } from "@salt-ds/fixture";
+
+        export function FixtureSurface() {
+          return <FixtureAction />;
+        }
+      `,
+      framework: "react",
+      expected_targets: {
+        patterns: ["FixtureWorkflow"],
+        source: "create_report",
+      },
+    });
+    const regionSatisfied = reviewSaltUi(fixtureRegistry, {
+      code: `
+        import { FixtureAction } from "@salt-ds/fixture";
+
+        export function FixtureSurface() {
+          return <section data-region="fixture-header"><FixtureAction /></section>;
+        }
+      `,
+      framework: "react",
+      expected_targets: {
+        patterns: ["FixtureWorkflow"],
+        source: "create_report",
+      },
+    });
+
+    expect(missingRegion.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "workflow-expected.pattern-missing-region.fixtureworkflow.fixtureheader",
+          category: "composition",
+          rule: "workflow-expected-pattern-region-not-found",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "workflow_input",
+              claim_kind: "workflow",
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "pattern",
+              registry: expect.objectContaining({
+                entity_type: "pattern",
+                entity_id: "fixture-workflow",
+                field_path: "starter_scaffold.semantics.regions.0",
+              }),
+            }),
+          ]),
+        }),
+      ]),
+    );
+    expect(regionSatisfied.issues).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          rule: "workflow-expected-pattern-region-not-found",
+        }),
+      ]),
+    );
+  });
+
+  it("validates expected fixture pattern build-around markers from source-backed rule evidence", () => {
+    const fixtureRegistry = buildFixtureExpectedPatternRegistry();
+    fixtureRegistry.patterns = fixtureRegistry.patterns.map((pattern) =>
+      pattern.id === "fixture-workflow"
+        ? {
+            ...pattern,
+            starter_scaffold: {
+              ...pattern.starter_scaffold,
+              semantics: {
+                ...pattern.starter_scaffold?.semantics,
+                regions: pattern.starter_scaffold?.semantics.regions ?? [],
+                build_around: ["fixture shell"],
+                preserve_constraints:
+                  pattern.starter_scaffold?.semantics.preserve_constraints ??
+                  [],
+              },
+            },
+          }
+        : pattern,
+    );
+
+    const missingBuildAround = reviewSaltUi(fixtureRegistry, {
+      code: `
+        import { FixtureAction } from "@salt-ds/fixture";
+
+        export function FixtureSurface() {
+          return <FixtureAction />;
+        }
+      `,
+      framework: "react",
+      expected_targets: {
+        patterns: ["FixtureWorkflow"],
+        source: "create_report",
+      },
+    });
+    const buildAroundSatisfied = reviewSaltUi(fixtureRegistry, {
+      code: `
+        import { FixtureAction } from "@salt-ds/fixture";
+
+        export function FixtureSurface() {
+          return <section data-region="fixture-shell"><FixtureAction /></section>;
+        }
+      `,
+      framework: "react",
+      expected_targets: {
+        patterns: ["FixtureWorkflow"],
+        source: "create_report",
+      },
+    });
+
+    expect(missingBuildAround.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "workflow-expected.pattern-missing-build-around.fixtureworkflow.fixtureshell",
+          category: "composition",
+          rule: "workflow-expected-pattern-build-around-not-found",
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "workflow_input",
+              claim_kind: "workflow",
+            }),
+            expect.objectContaining({
+              source_kind: "registry",
+              claim_kind: "pattern",
+              registry: expect.objectContaining({
+                entity_type: "pattern",
+                entity_id: "fixture-workflow",
+                field_path: "starter_scaffold.semantics.build_around.0",
+              }),
+            }),
+          ]),
+        }),
+      ]),
+    );
+    expect(buildAroundSatisfied.issues).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          rule: "workflow-expected-pattern-build-around-not-found",
         }),
       ]),
     );
