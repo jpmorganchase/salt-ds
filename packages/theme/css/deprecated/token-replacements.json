@@ -587,9 +587,9 @@
     },
     {
       "deprecated": "--salt-track-fontWeight",
-      "replacement_kind": "manual",
-      "note": "Track fontWeight source names a token value, but final generated policy docs do not resolve.",
-      "unsupported_reason": "No source-backed policy docs resolve the replacement token for generated policy.",
+      "replacements": ["--salt-typography-fontWeight-semiBold"],
+      "replacement_kind": "direct",
+      "note": "Track fontWeight source names a typography foundation replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
         "line_start": 1823,

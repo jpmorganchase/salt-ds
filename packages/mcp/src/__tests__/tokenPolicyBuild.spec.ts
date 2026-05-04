@@ -544,6 +544,7 @@ describe("generated token policy", () => {
       foundation_docs_by_category: new Map(),
       foundation_categories: new Set(["fixture"]),
       deprecated_replacements_by_token: new Map(),
+      token_declarations_by_token: new Map(),
       structural_role_rules: [],
     };
 

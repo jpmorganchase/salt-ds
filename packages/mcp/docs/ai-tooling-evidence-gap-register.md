@@ -663,6 +663,18 @@ Current state:
   explicit unsupported docs/registry gaps: 11 component gaps, 28 pattern gaps,
   and 4 foundation gaps. The remaining foundation gaps are `measured`,
   `opacity`, `taggable`, and `track`.
+- CSS token declaration evidence validation on May 5, 2026 added a generic
+  semantic-core index of current theme CSS token declarations for final
+  deprecated replacement targets. The index can support replacement policy only
+  when the final token has a current CSS declaration plus policy docs; deprecated
+  final declarations, raw literal replacements, and manual or unsupported
+  metadata states remain unsupported. A fresh production audit still reports 43
+  explicit unsupported docs/registry gaps: 11 component gaps, 28 pattern gaps,
+  and 4 foundation gaps. `track` and `measured` each gained source-backed
+  typography replacement evidence for their `fontWeight` tokens, and one
+  `taggable` palette replacement now resolves through current CSS token
+  declarations. Raw-value, deprecated-only, and non-exact replacement cases
+  remain unsupported.
 
 Why this matters:
 
