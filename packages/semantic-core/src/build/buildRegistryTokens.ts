@@ -85,7 +85,12 @@ export async function extractTokens(
 
   const tokenMap = new Map<
     string,
-    TokenRecord & { themeSet: Set<string>; guidanceSet: Set<string> }
+    TokenRecord & {
+      themeSet: Set<string>;
+      guidanceSet: Set<string>;
+      sourcePathSet: Set<string>;
+      deprecatedReplacementSet: Set<string>;
+    }
   >();
 
   for (const cssPath of cssPaths) {
@@ -104,6 +109,16 @@ export async function extractTokens(
       const semanticIntent = tokenDescriptions.get(tokenCategory) ?? null;
       const tokenThemes = inferThemeFromTokenPath(cssPath);
       const isDeprecated = toPosixPath(cssPath).includes("/deprecated/");
+      const sourcePath = toPosixPath(path.relative(repoRoot, cssPath));
+      const lineStart = content.lastIndexOf("\n", declarationMatch.index) + 1;
+      const lineEnd = content.indexOf("\n", declarationMatch.index);
+      const declarationLine = content.slice(
+        lineStart,
+        lineEnd === -1 ? content.length : lineEnd,
+      );
+      const deprecatedReplacement =
+        /\/\*\s*Use\s+(--salt-[\w-]+)\s*\*\//i.exec(declarationLine)?.[1] ??
+        null;
 
       const existing = tokenMap.get(tokenName);
       if (!existing) {
@@ -121,11 +136,19 @@ export async function extractTokens(
           guidanceSet: semanticIntent
             ? new Set([semanticIntent])
             : new Set<string>(),
+          sourcePathSet: new Set([sourcePath]),
+          deprecatedReplacementSet: new Set(
+            deprecatedReplacement ? [deprecatedReplacement] : [],
+          ),
           aliases: [],
           deprecated: isDeprecated,
           last_verified_at: verifiedAt,
         });
       } else {
+        existing.sourcePathSet.add(sourcePath);
+        if (deprecatedReplacement) {
+          existing.deprecatedReplacementSet.add(deprecatedReplacement);
+        }
         for (const themeName of tokenThemes) {
           existing.themeSet.add(themeName);
         }
@@ -150,7 +173,15 @@ export async function extractTokens(
     applies_to: token.applies_to,
     guidance: [...token.guidanceSet],
     aliases: token.aliases,
-    policy: getTokenPolicy(token, resolvedTokenPolicySources),
+    policy: getTokenPolicy(
+      {
+        name: token.name,
+        category: token.category,
+        source_paths: [...token.sourcePathSet].sort(),
+        deprecated_replacements: [...token.deprecatedReplacementSet].sort(),
+      },
+      resolvedTokenPolicySources,
+    ),
     deprecated: token.deprecated,
     last_verified_at: token.last_verified_at,
   }));
