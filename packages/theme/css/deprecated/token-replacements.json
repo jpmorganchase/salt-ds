@@ -1,0 +1,419 @@
+{
+  "schema": "salt_theme_deprecated_token_replacements_v1",
+  "entries": [
+    {
+      "deprecated": "--salt-differential-positive-foreground",
+      "replacements": ["--salt-status-positive-foreground"],
+      "replacement_kind": "direct",
+      "note": "Differential characteristic tokens moved to status characteristic tokens.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2467,
+        "line_end": 2471
+      }
+    },
+    {
+      "deprecated": "--salt-differential-negative-foreground",
+      "replacements": ["--salt-status-negative-foreground"],
+      "replacement_kind": "direct",
+      "note": "Differential characteristic tokens moved to status characteristic tokens.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2467,
+        "line_end": 2471
+      }
+    },
+    {
+      "deprecated": "--salt-status-positive-foreground",
+      "replacements": ["--salt-sentiment-positive-foreground-decorative"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 453,
+        "line_end": 453
+      }
+    },
+    {
+      "deprecated": "--salt-status-negative-foreground",
+      "replacements": ["--salt-sentiment-negative-foreground-decorative"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 454,
+        "line_end": 454
+      }
+    },
+    {
+      "deprecated": "--salt-draggable-horizontal-cursor-hover",
+      "replacements": ["--salt-cursor-drag-ns"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 595,
+        "line_end": 595
+      }
+    },
+    {
+      "deprecated": "--salt-draggable-horizontal-cursor-active",
+      "replacements": ["--salt-cursor-drag-ns"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 596,
+        "line_end": 596
+      }
+    },
+    {
+      "deprecated": "--salt-draggable-vertical-cursor-hover",
+      "replacements": ["--salt-cursor-drag-ew"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 597,
+        "line_end": 597
+      }
+    },
+    {
+      "deprecated": "--salt-draggable-vertical-cursor-active",
+      "replacements": ["--salt-cursor-drag-ew"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 598,
+        "line_end": 598
+      }
+    },
+    {
+      "deprecated": "--salt-draggable-grab-cursor-hover",
+      "replacements": ["--salt-cursor-grab"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 599,
+        "line_end": 599
+      }
+    },
+    {
+      "deprecated": "--salt-draggable-grab-cursor-active",
+      "replacements": ["--salt-cursor-grab-active"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 600,
+        "line_end": 600
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-cursor-hover",
+      "replacements": ["--salt-cursor-hover"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 584,
+        "line_end": 584
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-cursor-active",
+      "replacements": ["--salt-cursor-active"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 585,
+        "line_end": 585
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-cursor-disabled",
+      "replacements": ["--salt-cursor-disabled"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 586,
+        "line_end": 586
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderStyle",
+      "replacements": ["--salt-track-borderStyle"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2340,
+        "line_end": 2344
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderStyle-active",
+      "replacements": ["--salt-track-borderStyle-active"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2340,
+        "line_end": 2344
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderStyle-complete",
+      "replacements": ["--salt-track-borderStyle-complete"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2340,
+        "line_end": 2344
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderStyle-incomplete",
+      "replacements": ["--salt-track-borderStyle-incomplete"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2340,
+        "line_end": 2344
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderWidth",
+      "replacements": ["--salt-track-borderWidth"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2348,
+        "line_end": 2355
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderWidth-active",
+      "replacements": ["--salt-track-borderWidth-active"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2348,
+        "line_end": 2355
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderWidth-complete",
+      "replacements": ["--salt-track-borderWidth-complete"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2348,
+        "line_end": 2355
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderWidth-incomplete",
+      "replacements": ["--salt-track-borderWidth-incomplete"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2348,
+        "line_end": 2355
+      }
+    },
+    {
+      "deprecated": "--salt-measured-background",
+      "replacements": ["--salt-track-background"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2358,
+        "line_end": 2366
+      }
+    },
+    {
+      "deprecated": "--salt-measured-background-disabled",
+      "replacements": ["--salt-track-background-disabled"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2358,
+        "line_end": 2366
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderColor",
+      "replacements": ["--salt-track-borderColor"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2358,
+        "line_end": 2366
+      }
+    },
+    {
+      "deprecated": "--salt-measured-borderColor-disabled",
+      "replacements": ["--salt-track-borderColor-disabled"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2358,
+        "line_end": 2366
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderStyle",
+      "replacements": ["--salt-borderStyle-solid"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 406,
+        "line_end": 406
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderStyle-active",
+      "replacements": ["--salt-borderStyle-solid"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 407,
+        "line_end": 407
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderStyle-complete",
+      "replacements": ["--salt-borderStyle-solid"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 408,
+        "line_end": 408
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderStyle-incomplete",
+      "replacements": ["--salt-borderStyle-dotted"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 409,
+        "line_end": 409
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderWidth",
+      "replacements": ["--salt-size-border-strong"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1759,
+        "line_end": 1763
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderWidth-active",
+      "replacements": ["--salt-size-border-strong"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1759,
+        "line_end": 1763
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderWidth-complete",
+      "replacements": ["--salt-size-border-strong"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1759,
+        "line_end": 1763
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderWidth-incomplete",
+      "replacements": ["--salt-size-border-strong"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1759,
+        "line_end": 1763
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderColor",
+      "replacements": ["--salt-sentiment-neutral-track"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 451,
+        "line_end": 451
+      }
+    },
+    {
+      "deprecated": "--salt-track-borderColor-disabled",
+      "replacements": ["--salt-sentiment-neutral-track-disabled"],
+      "replacement_kind": "direct",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 452,
+        "line_end": 452
+      }
+    },
+    {
+      "deprecated": "--salt-size-border-strong",
+      "replacements": ["--salt-spacing-fixed-200", "--salt-size-fixed-200"],
+      "replacement_kind": "alternative",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 562,
+        "line_end": 562
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-1",
+      "replacements": ["--salt-opacity-15"],
+      "replacement_kind": "scale",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2033,
+        "line_end": 2033
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-2",
+      "replacements": ["--salt-opacity-25"],
+      "replacement_kind": "scale",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2034,
+        "line_end": 2034
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-3",
+      "replacements": ["--salt-opacity-40"],
+      "replacement_kind": "scale",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2035,
+        "line_end": 2035
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-4",
+      "replacements": ["--salt-opacity-70"],
+      "replacement_kind": "scale",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2036,
+        "line_end": 2036
+      }
+    }
+  ]
+}

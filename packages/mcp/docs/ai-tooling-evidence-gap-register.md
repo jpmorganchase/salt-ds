@@ -517,6 +517,13 @@ Current state:
   indexing records 43 explicit unsupported docs/registry gaps: 11 component
   gaps, 28 pattern gaps, and 4 foundation gaps. Remaining foundation token
   policy gaps are measured, opacity, taggable, and track.
+- Theme-owned deprecated token replacement metadata now lives in
+  `packages/theme/css/deprecated/token-replacements.json` and is read by
+  semantic-core before legacy changelog/CSS parsing. The metadata entries are
+  backed by existing changelog or token CSS sources, and generated policy
+  EvidenceRefs cite the metadata file as token source evidence. Legacy
+  changelog/CSS extraction remains as a transition fallback for replacements
+  not yet represented in metadata.
 - Review public-contract evidence degradation is now checked for both CLI and
   MCP compact output using the same semantic-core serializer path, so unresolved
   EvidenceRefs cannot appear complete in one transport and partial in the other.
@@ -643,6 +650,10 @@ Current state:
   unsupported docs/registry gaps: 11 component gaps, 28 pattern gaps, and 4
   foundation gaps. The remaining foundation token-policy gaps are `measured`,
   `opacity`, `taggable`, and `track`.
+- Theme metadata verification on May 4, 2026 confirmed source-backed generated
+  policies cite `packages/theme/css/deprecated/token-replacements.json`
+  EvidenceRefs, while unresolved replacements such as opacity remain
+  unsupported rather than becoming generated token policy claims.
 
 Why this matters:
 

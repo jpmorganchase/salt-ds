@@ -56,6 +56,30 @@ async function writeFixtureThemeChangelog(
   );
 }
 
+async function writeFixtureTokenReplacementMetadata(
+  repoRoot: string,
+  entries: unknown[],
+): Promise<void> {
+  await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+    recursive: true,
+  });
+  await fs.writeFile(
+    path.join(
+      repoRoot,
+      "packages/theme/css/deprecated/token-replacements.json",
+    ),
+    `${JSON.stringify(
+      {
+        schema: "salt_theme_deprecated_token_replacements_v1",
+        entries,
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+}
+
 describe("token policy source registry", () => {
   it("indexes fixture foundation docs by exact token families and preserves EvidenceRefs", async () => {
     const repoRoot = await fs.mkdtemp(
@@ -360,6 +384,62 @@ describe("token policy source registry", () => {
                 repo_path: "packages/theme/CHANGELOG.md",
                 line_start: 5,
                 line_end: 5,
+              }),
+            }),
+          ]),
+        }),
+      );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("extracts fixture deprecated replacements from theme-owned token metadata", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-metadata-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureTokenReplacementMetadata(repoRoot, [
+        {
+          deprecated: "--salt-legacyfixture-gap",
+          replacements: ["--salt-fixture-gap"],
+          replacement_kind: "direct",
+          note: "Fixture replacement metadata.",
+          basis: {
+            source_path: "packages/theme/CHANGELOG.md",
+            line_start: 5,
+            line_end: 5,
+          },
+        },
+      ]);
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const policy = getTokenPolicy(
+        {
+          name: "--salt-legacyfixture-gap",
+          category: "legacyfixture",
+        },
+        sources,
+      );
+
+      expect(policy).toEqual(
+        expect.objectContaining({
+          docs: [
+            "/salt/foundations/fixture-area/index",
+            "/salt/themes/design-tokens/index",
+          ],
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              source_kind: "token",
+              claim_kind: "token",
+              source: expect.objectContaining({
+                repo_path:
+                  "packages/theme/css/deprecated/token-replacements.json",
+                section: expect.stringContaining(
+                  "--salt-legacyfixture-gap -> --salt-fixture-gap",
+                ),
               }),
             }),
           ]),
