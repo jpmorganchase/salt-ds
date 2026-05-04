@@ -4,6 +4,7 @@ This guide is for agents and maintainers working on the Salt AI stack inside thi
 
 Use it to keep the architecture stable as the MCP, skills, docs extraction, and project conventions evolve.
 
+For the reviewer/operator workflow map, see [`./ai-tooling-operator-runbook.md`](./ai-tooling-operator-runbook.md).
 For the target architecture Salt should now protect, see [`./ai-tooling-winning-foundation.md`](./ai-tooling-winning-foundation.md).
 For the approval rubric future AI tooling work should pass, see [`./ai-tooling-change-review-rubric.md`](./ai-tooling-change-review-rubric.md).
 For the active implementation path, use [`./ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md).

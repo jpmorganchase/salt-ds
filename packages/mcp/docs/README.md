@@ -6,6 +6,8 @@ Use this folder as the minimal maintainer set for the current Salt AI direction.
 
 - [`maintaining-salt-ai-tooling.md`](./maintaining-salt-ai-tooling.md)
   - architectural maintainer guide
+- [`ai-tooling-operator-runbook.md`](./ai-tooling-operator-runbook.md)
+  - reviewer and operator map for evidence-backed Salt AI workflow changes
 - [`ai-tooling-winning-foundation.md`](./ai-tooling-winning-foundation.md)
   - target product shape: registry-first for context, workflow-first for safety
 - [`ai-tooling-change-review-rubric.md`](./ai-tooling-change-review-rubric.md)
