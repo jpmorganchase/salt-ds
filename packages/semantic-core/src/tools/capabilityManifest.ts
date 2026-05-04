@@ -30,6 +30,10 @@ export const SALT_SUPPORT_TOOL_IDS = [
   "discover_salt",
   "get_salt_entity",
   "get_salt_examples",
+  "validate_salt_review_report",
+  "resume_salt_review",
+  "persist_salt_context_pack",
+  "persist_salt_generated_artifact",
 ] as const;
 
 export const SALT_PUBLIC_ACTION_KINDS = [
@@ -184,6 +188,17 @@ export interface SaltCapabilityManifest {
     catalog_entity_template_uri: string | null;
     catalog_candidates_template_uri: string | null;
     catalog_family_template_uri: string | null;
+    context_manifest_uri: string | null;
+    context_health_uri: string | null;
+    context_coverage_uri: string | null;
+    context_pack_uri: string | null;
+    context_release_gate_uri: string | null;
+    ai_setup_uri: string | null;
+    ai_evidence_closure_uri: string | null;
+    context_component_template_uri: string | null;
+    context_component_markdown_template_uri: string | null;
+    context_pattern_template_uri: string | null;
+    context_foundation_template_uri: string | null;
   };
 }
 
@@ -383,6 +398,23 @@ export function buildSaltCapabilityManifest(
         options.resources?.catalog_candidates_template_uri ?? null,
       catalog_family_template_uri:
         options.resources?.catalog_family_template_uri ?? null,
+      context_manifest_uri: options.resources?.context_manifest_uri ?? null,
+      context_health_uri: options.resources?.context_health_uri ?? null,
+      context_coverage_uri: options.resources?.context_coverage_uri ?? null,
+      context_pack_uri: options.resources?.context_pack_uri ?? null,
+      context_release_gate_uri:
+        options.resources?.context_release_gate_uri ?? null,
+      ai_setup_uri: options.resources?.ai_setup_uri ?? null,
+      ai_evidence_closure_uri:
+        options.resources?.ai_evidence_closure_uri ?? null,
+      context_component_template_uri:
+        options.resources?.context_component_template_uri ?? null,
+      context_component_markdown_template_uri:
+        options.resources?.context_component_markdown_template_uri ?? null,
+      context_pattern_template_uri:
+        options.resources?.context_pattern_template_uri ?? null,
+      context_foundation_template_uri:
+        options.resources?.context_foundation_template_uri ?? null,
     },
   };
 }

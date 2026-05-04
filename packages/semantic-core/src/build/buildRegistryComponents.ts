@@ -22,6 +22,7 @@ import {
 import {
   extractFencedCodeBlocks,
   extractFirstParagraph,
+  extractStatementsFromSection,
   parseMarkdownSections,
   parseSectionStatements,
   parseStructuredGuidanceCallouts,
@@ -97,6 +98,27 @@ function parsePackageNameFromRepoPath(repoPath: string | null): string | null {
   }
 
   return `@salt-ds/${match[1]}`;
+}
+
+function removeKeyboardReferenceContent(content: string): string {
+  return content
+    .replace(/^#{2,4}\s+Keyboard interactions?\s*$/gim, "")
+    .replace(/<KeyboardControls\b[\s\S]*?<\/KeyboardControls>/gi, "")
+    .replace(/<KeyboardControl\b[\s\S]*?<\/KeyboardControl>/gi, "");
+}
+
+function parseAccessibilitySummaryStatements(content: string | null): string[] {
+  const bestPractices = parseSectionStatements(content, "Best practices");
+  if (bestPractices.length > 0 || !content) {
+    return bestPractices;
+  }
+
+  const parsed = matter(content);
+  const bodyWithoutKeyboardControls = removeKeyboardReferenceContent(
+    parsed.content,
+  );
+
+  return extractStatementsFromSection(bodyWithoutKeyboardControls).slice(0, 12);
 }
 
 function parseLivePreviewTags(mdx: string): Array<{
@@ -734,10 +756,8 @@ export async function extractComponents(
       })
       .filter((item): item is { use: string; reason: string } => item !== null);
 
-    const accessibilityBestPractices = parseSectionStatements(
-      accessibilityContent,
-      "Best practices",
-    );
+    const accessibilityBestPractices =
+      parseAccessibilitySummaryStatements(accessibilityContent);
     const accessibilityRules: AccessibilityRule[] =
       accessibilityBestPractices.map((ruleText, index) => ({
         id: `${toKebabCase(title)}-a11y-${index + 1}`,

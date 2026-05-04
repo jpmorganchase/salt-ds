@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-context-pack-bundle.schema.json",
+  "title": "Salt Context Pack Bundle",
+  "description": "Portable bundle of generated Salt context pack files and manifest content.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "generated_at",
+    "generator",
+    "registry",
+    "manifest",
+    "files",
+    "unsupported_surfaces",
+    "persistence"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_context_pack_bundle_v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "manifest": {
+      "$ref": "salt-context-pack-manifest.schema.json"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file"
+      }
+    },
+    "unsupported_surfaces": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-context-unsupported-surface.schema.json"
+      }
+    },
+    "persistence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason", "output_dir"],
+      "properties": {
+        "status": {
+          "enum": ["host_action_required", "written"]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_dir": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "output_path",
+        "mime_type",
+        "contract",
+        "generated_artifact_kind",
+        "evidence_ref_ids",
+        "text"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "component",
+            "component_markdown",
+            "pattern",
+            "foundation",
+            "prompt",
+            "instruction"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mime_type": {
+          "enum": ["application/json", "text/markdown"]
+        },
+        "contract": {
+          "enum": [
+            "salt_context_component_v1",
+            "salt_context_component_markdown_v1",
+            "salt_context_pattern_v1",
+            "salt_context_foundation_v1",
+            "salt_context_prompt_instruction_surface_v1"
+          ]
+        },
+        "generated_artifact_kind": {
+          "enum": [
+            "component-context",
+            "component-markdown-bridge",
+            "pattern-context",
+            "foundation-context",
+            "prompt",
+            "instruction"
+          ]
+        },
+        "evidence_ref_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

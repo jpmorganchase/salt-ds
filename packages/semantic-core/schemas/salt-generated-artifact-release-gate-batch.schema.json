@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-generated-artifact-release-gate-batch.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "status",
+    "releasable",
+    "target_count",
+    "passed_count",
+    "blocked_count",
+    "invalid_count",
+    "unsupported_claim_count",
+    "validation_issue_count",
+    "coverage_gap_count",
+    "coverage_gaps",
+    "missing",
+    "gates"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_generated_artifact_release_gate_batch_v1"
+    },
+    "status": {
+      "enum": ["passed", "blocked", "invalid"]
+    },
+    "releasable": {
+      "type": "boolean"
+    },
+    "artifact_path": {
+      "type": ["string", "null"]
+    },
+    "target_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "passed_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "blocked_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "invalid_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unsupported_claim_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "validation_issue_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "coverage_gap_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "coverage_gaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/coverageGap"
+      }
+    },
+    "missing": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-generated-artifact-release-gate.schema.json"
+      }
+    }
+  },
+  "$defs": {
+    "coverageGap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "status", "missing", "evidence_ref_ids"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "unsupported"
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidence_ref_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

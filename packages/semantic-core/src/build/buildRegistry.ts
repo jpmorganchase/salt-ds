@@ -5,13 +5,17 @@ import {
   REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
   REGISTRY_METADATA_ARTIFACT,
   REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT,
+  REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT,
   REGISTRY_SEARCH_INDEX_ARTIFACT,
+  REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT,
   type RegistryArrayCollections,
   serializeJsonLines,
   writeJsonFile,
 } from "../registry/artifacts.js";
 import { findSaltRepoRoot, getPackageRoot } from "../registry/paths.js";
+import { buildPatternValidationRulePack } from "../patternValidationRulePacks.js";
 import { buildSerializedPageSearchIndex } from "../search/pageSearchIndex.js";
+import { buildTokenPolicyStructuralRoleRulePack } from "../tokenPolicyStructuralRoleRules.js";
 import { buildCreateRetrievalIndex } from "../tools/createRetrieval.js";
 import type { BuildRegistryOptions, SaltRegistry } from "../types.js";
 import { extractCountrySymbols, extractIcons } from "./buildRegistryAssets.js";
@@ -30,6 +34,7 @@ import {
   extractPatternExamplesFromStories,
   extractPatterns,
 } from "./buildRegistryPatterns.js";
+import { buildTokenPolicySourceRegistry } from "./buildRegistryTokenPolicy.js";
 import {
   extractTokens,
   linkTokensToComponents,
@@ -59,11 +64,13 @@ export async function buildRegistry(
       : path.join(packageRoot, "generated");
   const generatedAt = options.timestamp ?? new Date().toISOString();
   const version = options.version ?? REGISTRY_VERSION;
-  const [buildInfo, packages, propMetadata] = await Promise.all([
-    buildRegistryBuildInfo(sourceRoot),
-    extractPackages(sourceRoot, EXCLUDED_REGISTRY_PACKAGES),
-    loadPropMetadata(sourceRoot),
-  ]);
+  const [buildInfo, packages, propMetadata, tokenPolicySources] =
+    await Promise.all([
+      buildRegistryBuildInfo(sourceRoot),
+      extractPackages(sourceRoot, EXCLUDED_REGISTRY_PACKAGES),
+      loadPropMetadata(sourceRoot),
+      buildTokenPolicySourceRegistry(sourceRoot),
+    ]);
   const packageByName = new Map(packages.map((pkg) => [pkg.name, pkg]));
   const components = await extractComponents(
     sourceRoot,
@@ -75,7 +82,7 @@ export async function buildRegistry(
     await Promise.all([
       extractPatterns(sourceRoot, generatedAt),
       extractGuides(sourceRoot, generatedAt),
-      extractTokens(sourceRoot, generatedAt),
+      extractTokens(sourceRoot, generatedAt, tokenPolicySources),
       extractDeprecations(sourceRoot, packages, EXCLUDED_REGISTRY_PACKAGES),
       extractChanges(sourceRoot, packages, components, generatedAt),
     ]);
@@ -156,10 +163,31 @@ export async function buildRegistry(
   const search_index = buildSearchIndex(baseRegistry);
   const create_retrieval_index = buildCreateRetrievalIndex(baseRegistry);
   const page_search_index = buildSerializedPageSearchIndex(pages);
+  const token_policy_structural_role_rule_pack =
+    buildTokenPolicyStructuralRoleRulePack({
+      structural_role_rules: tokenPolicySources.structural_role_rules,
+      generated_at: generatedAt,
+      generator: {
+        name: "semantic-core buildRegistry",
+      },
+      registry: {
+        version,
+        generated_at: generatedAt,
+      },
+    });
+  const pattern_validation_rule_pack = buildPatternValidationRulePack({
+    registry: baseRegistry,
+    generated_at: generatedAt,
+    generator: {
+      name: "semantic-core buildRegistry",
+    },
+  });
   const registry: SaltRegistry = {
     ...baseRegistry,
     search_index,
     create_retrieval_index,
+    pattern_validation_rule_pack,
+    token_policy_structural_role_rule_pack,
   };
 
   await fs.mkdir(outputDir, { recursive: true });
@@ -183,6 +211,30 @@ export async function buildRegistry(
         generated_at: generatedAt,
         version,
         [REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT.key]: page_search_index,
+      },
+    ),
+    writeJsonFile(
+      path.join(
+        outputDir,
+        REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.file_name,
+      ),
+      {
+        generated_at: generatedAt,
+        version,
+        [REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.key]:
+          pattern_validation_rule_pack,
+      },
+    ),
+    writeJsonFile(
+      path.join(
+        outputDir,
+        REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.file_name,
+      ),
+      {
+        generated_at: generatedAt,
+        version,
+        [REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.key]:
+          token_policy_structural_role_rule_pack,
       },
     ),
     fs.writeFile(

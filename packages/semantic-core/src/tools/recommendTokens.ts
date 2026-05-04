@@ -3,8 +3,6 @@ import { getTokenQueryFields, scoreQueryFields } from "./consumerSignals.js";
 import { getTokenNextStep } from "./getToken.js";
 import { containsWholeWordPhrase, normalizeQuery } from "./utils.js";
 
-const TOKEN_DOCS_SOURCE_URL = "/salt/themes/design-tokens/index";
-
 export interface RecommendTokensInput {
   query: string;
   category?: string;
@@ -17,11 +15,15 @@ export interface RecommendTokensInput {
 }
 
 export interface RecommendTokensResult {
-  source_url: string;
+  source_url: string | null;
   recommended?: Record<string, unknown> | null;
   alternatives?: Array<Record<string, unknown>>;
   recommendations?: Array<Record<string, unknown>>;
   next_step?: string;
+}
+
+function getTokenDocs(token: SaltRegistry["tokens"][number]): string[] {
+  return [...new Set(token.policy?.docs ?? [])];
 }
 
 function toCompactTokenRecommendation(candidate: {
@@ -45,12 +47,7 @@ function toCompactTokenRecommendation(candidate: {
     ...(candidate.token.densities.length > 0
       ? { densities: candidate.token.densities }
       : {}),
-    docs: [
-      ...new Set([
-        TOKEN_DOCS_SOURCE_URL,
-        ...(candidate.token.policy?.docs ?? []),
-      ]),
-    ],
+    docs: getTokenDocs(candidate.token),
     policy: candidate.token.policy ?? null,
     ...(candidate.token.deprecated ? { status: "deprecated" } : {}),
   };
@@ -115,12 +112,7 @@ export function recommendTokens(
       densities: candidate.token.densities,
       applies_to: candidate.token.applies_to,
       guidance: candidate.token.guidance,
-      docs: [
-        ...new Set([
-          TOKEN_DOCS_SOURCE_URL,
-          ...(candidate.token.policy?.docs ?? []),
-        ]),
-      ],
+      docs: getTokenDocs(candidate.token),
       policy: candidate.token.policy ?? null,
       deprecated: candidate.token.deprecated,
     },
@@ -131,7 +123,9 @@ export function recommendTokens(
 
   if (view === "full") {
     return {
-      source_url: TOKEN_DOCS_SOURCE_URL,
+      source_url: rankedCandidates.flatMap((candidate) =>
+        getTokenDocs(candidate.token),
+      )[0] ?? null,
       recommendations,
       next_step: getTokenNextStep(rankedCandidates[0]?.token),
     };
@@ -140,7 +134,9 @@ export function recommendTokens(
   const [recommended, ...alternatives] = rankedCandidates;
 
   return {
-    source_url: TOKEN_DOCS_SOURCE_URL,
+    source_url: rankedCandidates.flatMap((candidate) =>
+      getTokenDocs(candidate.token),
+    )[0] ?? null,
     recommended: recommended ? toCompactTokenRecommendation(recommended) : null,
     alternatives: alternatives.map((candidate) =>
       toCompactTokenRecommendation(candidate),

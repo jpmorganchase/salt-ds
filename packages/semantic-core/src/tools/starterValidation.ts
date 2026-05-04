@@ -2,8 +2,6 @@ import type { SaltRegistry } from "../types.js";
 import { reviewSaltUi } from "./reviewSaltUi.js";
 import type { StarterCodeSnippet } from "./starterCode.js";
 
-const DESIGN_TOKENS_DOC_URL = "/salt/themes/design-tokens/index";
-
 export interface StarterValidationSummary {
   status: "clean" | "needs_attention";
   snippets_checked: number;
@@ -15,6 +13,7 @@ export interface StarterValidationSummary {
   top_issue: string | null;
   next_step: string | null;
   source_urls: string[];
+  missing_data: string[];
 }
 
 function unique(values: string[]): string[] {
@@ -57,6 +56,7 @@ export function validateStarterCodeSnippets(
   let topIssue: string | null = null;
   let nextStep: string | null = null;
   const sourceUrls: string[] = [];
+  const missingData: string[] = [];
   let needsAttention = false;
 
   for (const snippet of candidateSnippets) {
@@ -91,8 +91,10 @@ export function validateStarterCodeSnippets(
           ? `Starter code references an unverified Salt token name: ${ungroundedTokenNames[0]}.`
           : `Starter code references unverified Salt token names: ${ungroundedTokenNames.join(", ")}.`;
       nextStep ??=
-        "Replace or verify the Salt token names against canonical Salt token guidance before editing.";
-      sourceUrls.push(DESIGN_TOKENS_DOC_URL);
+        "Resolve the token evidence through the registry before treating starter styling as validated.";
+      missingData.push(
+        `Starter code contains Salt-looking token names with no registry token evidence: ${ungroundedTokenNames.join(", ")}.`,
+      );
     }
   }
 
@@ -107,5 +109,6 @@ export function validateStarterCodeSnippets(
     top_issue: topIssue,
     next_step: nextStep,
     source_urls: unique(sourceUrls),
+    missing_data: unique(missingData),
   };
 }

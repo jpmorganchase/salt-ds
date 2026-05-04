@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-generated-artifact-persistence.schema.json",
+  "title": "Salt Generated Artifact Persistence Result",
+  "description": "Result for a host writing one release-gated generated Salt artifact to durable storage.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "status",
+    "written",
+    "artifact_path",
+    "release_gate",
+    "missing"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_generated_artifact_persistence_v1"
+    },
+    "status": {
+      "enum": ["written", "blocked", "invalid"]
+    },
+    "written": {
+      "type": "boolean"
+    },
+    "artifact_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_gate": {
+      "$ref": "salt-generated-artifact-release-gate.schema.json"
+    },
+    "missing": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

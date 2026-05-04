@@ -1,12 +1,22 @@
+import {
+  buildReviewReportEvidenceGate,
+  type ReviewReportEvidenceGate,
+} from "../reviewReportArtifacts.js";
+import {
+  serializeGeneratedSaltArtifactSurfaceGate,
+  type SerializedGeneratedSaltArtifactSurfaceGate,
+} from "../generatedArtifactSurface.js";
 import type { SaltRegistry } from "../types.js";
 import {
   type CreateRequestMatch,
   deriveCreateRequestMatch,
 } from "./createResolve.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
+import { appendProjectConventionsCheckNextStep } from "./guidanceBoundary.js";
 import type { MigrateToSaltResult } from "./migrateToSalt.js";
 import type { ReviewSaltUiResult } from "./reviewSaltUi.js";
 import type { UpgradeSaltUiResult } from "./upgradeSaltUi.js";
+import type { ValidationIssue } from "./validation/shared.js";
 import type {
   CreateSaltUiWorkflowContract,
   FollowThroughItem,
@@ -165,6 +175,9 @@ export interface PublicEvidenceSummary {
   missing: string[];
   heuristic_fallback: boolean;
   input_context?: PublicEvidenceInputContext;
+  surface_gate?: SerializedGeneratedSaltArtifactSurfaceGate;
+  unsupported_claim_count?: number;
+  validation_issue_count?: number;
 }
 
 export interface PublicEvidenceInputContext {
@@ -1270,12 +1283,16 @@ function buildReviewNextStep(
     };
   }
 
+  const nextStep = appendProjectConventionsCheckNextStep(
+    result.next_step ?? contract.ide_summary.safest_next_fix ?? undefined,
+    contract.project_conventions_check,
+  );
+
   return {
     kind: "review",
     tool: "review_salt_ui",
     args: {
-      next_step:
-        result.next_step ?? contract.ide_summary.safest_next_fix ?? null,
+      next_step: nextStep ?? null,
     },
   };
 }
@@ -1619,6 +1636,55 @@ function buildWorkflowEvidenceFromProvenance(input: {
       (item) => item.kind === "heuristic_fallback",
     ),
     ...(input.input_context ? { input_context: input.input_context } : {}),
+  };
+}
+
+function buildReviewEvidenceGate(
+  result: ReviewSaltUiResult,
+  registry: SaltRegistry | undefined,
+): ReviewReportEvidenceGate | null {
+  if (!registry) {
+    return null;
+  }
+
+  return buildReviewReportEvidenceGate({
+    registry,
+    issues: (result.issues ?? []) as unknown as ValidationIssue[],
+    missing_data: result.missing_data,
+    generated_at: registry.generated_at,
+    generator: {
+      name: "semantic-core.review-public-contract",
+    },
+  });
+}
+
+function applyReviewEvidenceGate(
+  evidence: PublicEvidenceSummary,
+  gate: ReviewReportEvidenceGate | null,
+): PublicEvidenceSummary {
+  if (!gate) {
+    return evidence;
+  }
+
+  const surfaceGate = serializeGeneratedSaltArtifactSurfaceGate(gate);
+  const evidenceWithGate = {
+    ...evidence,
+    surface_gate: surfaceGate,
+    unsupported_claim_count: surfaceGate.unsupported_claim_count,
+    validation_issue_count: surfaceGate.validation_issues.length,
+  };
+
+  if (gate.status === "validated") {
+    return evidenceWithGate;
+  }
+
+  const missing = uniqueNonEmptyStrings([...evidence.missing, ...gate.missing]);
+
+  return {
+    ...evidenceWithGate,
+    status: evidence.items.length > 0 ? "partial" : "missing",
+    missing:
+      missing.length > 0 ? missing : ["review report evidence is incomplete"],
   };
 }
 
@@ -2151,9 +2217,13 @@ export function buildReviewPublicContract(
   contract: ReviewSaltUiWorkflowContract,
   options: PublicContractBuildOptions,
 ): PublicContract {
-  const evidence = buildWorkflowEvidenceFromProvenance({
-    provenance: contract.provenance,
-  });
+  const evidenceGate = buildReviewEvidenceGate(result, options.registry);
+  const evidence = applyReviewEvidenceGate(
+    buildWorkflowEvidenceFromProvenance({
+      provenance: contract.provenance,
+    }),
+    evidenceGate,
+  );
   const implementationReady =
     contract.decision.status === "clean" &&
     countProjectPolicyFixCandidates(contract.fix_candidates.candidates) === 0;

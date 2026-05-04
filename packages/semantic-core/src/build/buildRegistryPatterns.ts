@@ -709,6 +709,65 @@ function extractPatternTopicSignals(
   );
 }
 
+function extractPatternBehaviorStatements(
+  patternTitle: string,
+  content: string,
+): string[] {
+  const sections = parseMarkdownSections(content, 2);
+  const statements: string[] = [];
+
+  for (const section of sections) {
+    const sectionTitle = normalizePatternHeadingLabel(section.title);
+    if (!sectionTitle || shouldIgnorePatternSectionHeading(sectionTitle)) {
+      continue;
+    }
+
+    const subsections = parseMarkdownSections(section.content, 3).filter(
+      (subsection) =>
+        !shouldIgnorePatternSectionHeading(
+          normalizePatternHeadingLabel(subsection.title),
+        ),
+    );
+
+    if (subsections.length > 0) {
+      for (const subsection of subsections) {
+        const subsectionTitle = normalizePatternHeadingLabel(subsection.title);
+        if (!subsectionTitle) {
+          continue;
+        }
+
+        const subsectionTopic = formatPatternTopicLabel(
+          patternTitle,
+          `${sectionTitle} ${subsectionTitle}`,
+        );
+
+        statements.push(
+          ...extractStatementsFromSection(subsection.content)
+            .slice(0, 2)
+            .map((statement) =>
+              prefixPatternTopicStatement(subsectionTopic, statement),
+            ),
+        );
+      }
+
+      continue;
+    }
+
+    const sectionTopic = formatPatternTopicLabel(patternTitle, sectionTitle);
+    statements.push(
+      ...extractStatementsFromSection(section.content)
+        .slice(0, 4)
+        .map((statement) =>
+          prefixPatternTopicStatement(sectionTopic, statement),
+        ),
+    );
+  }
+
+  return uniqueStrings(
+    statements.filter((statement) => statement.trim().length > 0),
+  );
+}
+
 function normalizePatternDocsRoute(route: string): string {
   return route.replace(/\/index$/, "");
 }
@@ -937,6 +996,14 @@ export async function extractPatterns(
       parsed.content,
       "When not to use",
     );
+    const explicitHowItWorks = parseSectionStatements(
+      parsed.content,
+      "How it works",
+    );
+    const howItWorks =
+      explicitHowItWorks.length > 0
+        ? explicitHowItWorks
+        : extractPatternBehaviorStatements(title, parsed.content);
     const structuredGuidance = parseStructuredGuidanceCallouts(parsed.content);
     const topicSignals = extractPatternTopicSignals(title, parsed.content);
     const componentRoles = inferComponentRoles(parsed.content, components);
@@ -1009,7 +1076,7 @@ export async function extractPatterns(
       })),
       related_patterns: relatedPatterns,
       how_to_build: parseSectionStatements(parsed.content, "How to build"),
-      how_it_works: parseSectionStatements(parsed.content, "How it works"),
+      how_it_works: howItWorks,
       accessibility: {
         summary: parseSectionStatements(parsed.content, "Accessibility"),
       },

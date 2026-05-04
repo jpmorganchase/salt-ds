@@ -1,3 +1,7 @@
+import type { SaltEvidenceRef } from "./evidence.js";
+import type { SaltPatternValidationRulePack } from "./patternValidationRulePacks.js";
+import type { SaltTokenPolicyStructuralRoleRulePack } from "./tokenPolicyStructuralRoleRules.js";
+
 export type SaltStatus = "stable" | "beta" | "lab" | "deprecated";
 
 export type SearchArea =
@@ -395,6 +399,7 @@ export interface TokenRecord {
       role: string;
       level?: string | null;
     } | null;
+    evidence_refs?: SaltEvidenceRef[];
   } | null;
   deprecated: boolean;
   last_verified_at: string;
@@ -534,6 +539,8 @@ export interface SaltRegistry {
   changes: ChangeRecord[];
   search_index: SearchIndexEntry[];
   create_retrieval_index?: CreateRetrievalDocument[];
+  pattern_validation_rule_pack?: SaltPatternValidationRulePack | null;
+  token_policy_structural_role_rule_pack?: SaltTokenPolicyStructuralRoleRulePack | null;
 }
 
 export interface BuildRegistryOptions {

@@ -58,6 +58,25 @@ const PATTERN_KEYWORDS = [
   "wizard",
 ] as const;
 
+function hasSingleControlIntent(query: string): boolean {
+  const binaryControlIntent =
+    /\b(toggle|toggled|toggling|enable|enabled|disable|disabled|switch on|switch off)\b/.test(
+      query,
+    ) ||
+    (/\bturn\b/.test(query) && /\b(on|off)\b/.test(query)) ||
+    (/\bon\b/.test(query) && /\boff\b/.test(query));
+  const controlSurfaceIntent =
+    /\b(control|controls|setting|settings|alert|alerts|preference|preferences)\b/.test(
+      query,
+    );
+  const pageOrFlowIntent =
+    /\b(page|screen|dashboard|wizard|workflow|app shell|workspace|overview)\b/.test(
+      query,
+    );
+
+  return binaryControlIntent && controlSurfaceIntent && !pageOrFlowIntent;
+}
+
 export function getCreateSaltUiRelatedGuides(
   registry: SaltRegistry,
   records: unknown[],
@@ -104,6 +123,12 @@ export function resolveSolutionType(
 
   if (
     hasSingleDestinationNavigationIntent(query) &&
+    structuralPatternIntent.score < 4
+  ) {
+    return "component";
+  }
+  if (
+    hasSingleControlIntent(query) &&
     structuralPatternIntent.score < 4
   ) {
     return "component";

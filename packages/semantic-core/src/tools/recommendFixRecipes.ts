@@ -21,11 +21,6 @@ import {
   unique,
 } from "./utils.js";
 import { validateSaltUsage } from "./validateSaltUsage.js";
-import {
-  CHOOSING_PRIMITIVE_GUIDE_LOOKUP,
-  COMPOSITION_PITFALLS_GUIDE_LOOKUP,
-  CUSTOM_WRAPPERS_GUIDE_LOOKUP,
-} from "./validation/issueCatalog.js";
 import type { ValidationIssue } from "./validation/shared.js";
 
 export interface RecommendFixRecipesInput {
@@ -124,54 +119,28 @@ function collectRelatedComponentsForIssue(
 function getIssueSpecificSteps(
   registry: SaltRegistry,
   issue: ValidationIssue,
-  relatedComponents: ComponentRecord[],
 ): string[] {
   const guideBackedSteps = unique(
     (issue.fix_hints?.guide_lookups ?? []).flatMap((lookup) => {
       const guide = findGuideByIdentifier(registry.guides, lookup);
-      const guideName = guide?.name ?? lookup;
-
-      if (lookup === CHOOSING_PRIMITIVE_GUIDE_LOOKUP) {
-        return [
-          `Use ${guideName} to keep actions on Button and navigation on Link before accepting a custom or native alternative.`,
-        ];
+      if (!guide) {
+        return [];
       }
 
-      if (lookup === COMPOSITION_PITFALLS_GUIDE_LOOKUP) {
-        return [
-          `Use ${guideName} to keep one interactive primitive per interaction and remove extra wrapper layers before preserving the current structure.`,
-        ];
+      if (guide.summary) {
+        return [`Use ${guide.name}: ${guide.summary}`];
       }
 
-      if (lookup === CUSTOM_WRAPPERS_GUIDE_LOOKUP) {
-        return [
-          `Use ${guideName} to confirm that the wrapper adds a stable API, semantics, or shared behavior beyond prop forwarding.`,
-        ];
-      }
-
-      return [];
+      const statement = guide.steps
+        .flatMap((step) => step.statements)
+        .find((value) => value.trim().length > 0);
+      return statement ? [`Use ${guide.name}: ${statement}`] : [];
     }),
   );
-  const extraSteps = unique([
+  return unique([
     ...guideBackedSteps,
     ...(issue.fix_hints?.extra_steps ?? []),
   ]);
-
-  if (issue.id === "composition.pass-through-wrapper") {
-    const relatedNames = relatedComponents.map((component) => component.name);
-    const targetText =
-      relatedNames.length > 0
-        ? `Use ${relatedNames.join(" or ")} directly where possible.`
-        : "Use the underlying Salt primitive directly where possible.";
-
-    return [
-      ...extraSteps,
-      targetText,
-      "If the wrapper must remain, make it add meaningful shared behavior, semantics, or a stable public API beyond prop forwarding.",
-    ];
-  }
-
-  return extraSteps;
 }
 
 function getIssueGuideRoutes(
@@ -390,11 +359,7 @@ export function recommendFixRecipes(
       registry,
       issue,
     );
-    const issueSpecificSteps = getIssueSpecificSteps(
-      registry,
-      issue,
-      relatedComponents,
-    );
+    const issueSpecificSteps = getIssueSpecificSteps(registry, issue);
     const docs = unique([
       ...issue.source_urls,
       ...relatedComponents.flatMap((component) =>

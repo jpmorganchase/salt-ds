@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-generated-artifact-release-gate.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "status",
+    "releasable",
+    "artifact_id",
+    "artifact_kind",
+    "target_kind",
+    "surface_gate",
+    "validation_issues",
+    "unsupported_claim_count",
+    "missing"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_generated_artifact_release_gate_v1"
+    },
+    "status": {
+      "enum": ["passed", "blocked", "invalid"]
+    },
+    "releasable": {
+      "type": "boolean"
+    },
+    "artifact_path": {
+      "type": ["string", "null"]
+    },
+    "artifact_id": {
+      "type": ["string", "null"]
+    },
+    "artifact_kind": {
+      "type": ["string", "null"]
+    },
+    "target_kind": {
+      "type": ["string", "null"]
+    },
+    "surface_gate": {
+      "anyOf": [
+        { "$ref": "#/$defs/surfaceGate" },
+        { "type": "null" }
+      ]
+    },
+    "validation_issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceValidationIssue"
+      }
+    },
+    "unsupported_claim_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "missing": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "surfaceGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "validation_issues",
+        "missing",
+        "unsupported_claim_count",
+        "artifact_id",
+        "artifact_kind"
+      ],
+      "properties": {
+        "status": {
+          "enum": ["validated", "unsupported"]
+        },
+        "validation_issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceValidationIssue"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unsupported_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_kind": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "evidenceValidationIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "path"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

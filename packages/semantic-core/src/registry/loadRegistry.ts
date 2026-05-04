@@ -1,6 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import type { SaltPatternValidationRulePack } from "../patternValidationRulePacks.js";
 import type { SerializedPageSearchIndex } from "../search/pageSearchIndex.js";
+import type { SaltTokenPolicyStructuralRoleRulePack } from "../tokenPolicyStructuralRoleRules.js";
 import type {
   CreateRetrievalDocument,
   LoadRegistryOptions,
@@ -15,10 +17,14 @@ import {
   REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
   REGISTRY_METADATA_ARTIFACT,
   REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT,
+  REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT,
   REGISTRY_SEARCH_INDEX_ARTIFACT,
+  REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT,
+  type PatternValidationRulePackArtifact,
   type RegistryArrayArtifactDefinition,
   type RegistryArrayArtifactKey,
   readJsonFile,
+  type TokenPolicyStructuralRoleRulePackArtifact,
 } from "./artifacts.js";
 import { getPackageRoot } from "./paths.js";
 import { setSerializedPageSearchIndex } from "./runtimeCache.js";
@@ -214,6 +220,98 @@ async function loadPageSearchIndex(
   }
 }
 
+async function loadTokenPolicyStructuralRoleRulePack(
+  registryDir: string,
+): Promise<LoadedArtifact<SaltTokenPolicyStructuralRoleRulePack> | null> {
+  const rulePackPath = path.join(
+    registryDir,
+    REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.file_name,
+  );
+  try {
+    const artifact =
+      await readJsonFile<TokenPolicyStructuralRoleRulePackArtifact>(
+        rulePackPath,
+      );
+    const rulePack =
+      artifact[REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.key];
+    if (
+      typeof artifact.generated_at !== "string" ||
+      artifact.generated_at.length === 0
+    ) {
+      throw new Error(
+        "token-policy-structural-role-rules.json is missing a valid generated_at field.",
+      );
+    }
+    if (typeof artifact.version !== "string" || artifact.version.length === 0) {
+      throw new Error(
+        "token-policy-structural-role-rules.json is missing a valid version field.",
+      );
+    }
+    if (typeof rulePack !== "object" || rulePack == null) {
+      throw new Error(
+        "token-policy-structural-role-rules.json is missing a valid token_policy_structural_role_rule_pack object.",
+      );
+    }
+
+    return {
+      file_name:
+        REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.file_name,
+      generated_at: artifact.generated_at,
+      version: artifact.version,
+      values: [rulePack],
+    };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return null;
+    }
+    throw error;
+  }
+}
+
+async function loadPatternValidationRulePack(
+  registryDir: string,
+): Promise<LoadedArtifact<SaltPatternValidationRulePack> | null> {
+  const rulePackPath = path.join(
+    registryDir,
+    REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.file_name,
+  );
+  try {
+    const artifact =
+      await readJsonFile<PatternValidationRulePackArtifact>(rulePackPath);
+    const rulePack = artifact[REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.key];
+    if (
+      typeof artifact.generated_at !== "string" ||
+      artifact.generated_at.length === 0
+    ) {
+      throw new Error(
+        "pattern-validation-rules.json is missing a valid generated_at field.",
+      );
+    }
+    if (typeof artifact.version !== "string" || artifact.version.length === 0) {
+      throw new Error(
+        "pattern-validation-rules.json is missing a valid version field.",
+      );
+    }
+    if (typeof rulePack !== "object" || rulePack == null) {
+      throw new Error(
+        "pattern-validation-rules.json is missing a valid pattern_validation_rule_pack object.",
+      );
+    }
+
+    return {
+      file_name: REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.file_name,
+      generated_at: artifact.generated_at,
+      version: artifact.version,
+      values: [rulePack],
+    };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return null;
+    }
+    throw error;
+  }
+}
+
 async function loadRegistryArrayArtifact<Key extends RegistryArrayArtifactKey>(
   registryDir: string,
   definition: RegistryArrayArtifactDefinition<Key>,
@@ -240,6 +338,8 @@ export async function loadRegistry(
     createRetrievalIndex,
     metadataArtifact,
     pageSearchIndexArtifact,
+    patternValidationRulePackArtifact,
+    tokenPolicyStructuralRoleRulePackArtifact,
   ] = await Promise.all([
     Promise.all(
       REGISTRY_ARRAY_ARTIFACTS.map((definition) =>
@@ -250,6 +350,8 @@ export async function loadRegistry(
     loadCreateRetrievalIndex(registryDir),
     loadMetadata(registryDir),
     loadPageSearchIndex(registryDir),
+    loadPatternValidationRulePack(registryDir),
+    loadTokenPolicyStructuralRoleRulePack(registryDir),
   ]);
   const arrayArtifacts = Object.fromEntries(arrayArtifactEntries) as {
     [Key in RegistryArrayArtifactKey]: LoadedArtifact<
@@ -260,6 +362,12 @@ export async function loadRegistry(
     ...Object.values(arrayArtifacts),
     ...(metadataArtifact ? [metadataArtifact] : []),
     ...(pageSearchIndexArtifact ? [pageSearchIndexArtifact] : []),
+    ...(patternValidationRulePackArtifact
+      ? [patternValidationRulePackArtifact]
+      : []),
+    ...(tokenPolicyStructuralRoleRulePackArtifact
+      ? [tokenPolicyStructuralRoleRulePackArtifact]
+      : []),
   ]);
 
   const registry: SaltRegistry = {
@@ -280,6 +388,10 @@ export async function loadRegistry(
     search_index: searchIndex,
     create_retrieval_index:
       createRetrievalIndex.length > 0 ? createRetrievalIndex : undefined,
+    pattern_validation_rule_pack:
+      patternValidationRulePackArtifact?.values[0] ?? null,
+    token_policy_structural_role_rule_pack:
+      tokenPolicyStructuralRoleRulePackArtifact?.values[0] ?? null,
   };
 
   setSerializedPageSearchIndex(

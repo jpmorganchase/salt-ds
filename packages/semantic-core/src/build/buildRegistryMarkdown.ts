@@ -40,14 +40,17 @@ function parseSection(content: string | null, heading: string): string {
 
   const lines = content.split(/\r?\n/);
   const headingMatcher = new RegExp(
-    `^#{2,4}\\s+${escapeRegExp(heading)}\\s*$`,
+    `^(#{2,4})\\s+${escapeRegExp(heading)}\\s*$`,
     "i",
   );
   let startIndex = -1;
+  let headingLevel = 0;
 
   for (let index = 0; index < lines.length; index += 1) {
-    if (headingMatcher.test(lines[index].trim())) {
+    const match = lines[index].trim().match(headingMatcher);
+    if (match) {
       startIndex = index + 1;
+      headingLevel = match[1].length;
       break;
     }
   }
@@ -59,7 +62,8 @@ function parseSection(content: string | null, heading: string): string {
   const sectionLines: string[] = [];
   for (let index = startIndex; index < lines.length; index += 1) {
     const trimmedLine = lines[index].trim();
-    if (/^#{2,4}\s+/.test(trimmedLine)) {
+    const nextHeading = trimmedLine.match(/^(#{2,6})\s+/);
+    if (nextHeading && nextHeading[1].length <= headingLevel) {
       break;
     }
     sectionLines.push(lines[index]);
@@ -95,6 +99,13 @@ export function extractStatementsFromSection(content: string): string[] {
     const statement = cleanMarkdownText(activeParagraph.join(" "));
     if (statement.length > 0 && /[.!?]$/.test(statement)) {
       statements.push(statement);
+    } else {
+      const exampleLeadIn = statement.match(
+        /^(.+[.!?])\s+(?:For example|For instance|Examples?)[:.]?$/i,
+      );
+      if (exampleLeadIn) {
+        statements.push(exampleLeadIn[1].trim());
+      }
     }
     activeParagraph = [];
   };

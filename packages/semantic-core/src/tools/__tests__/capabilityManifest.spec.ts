@@ -151,5 +151,12 @@ describe("Salt capability manifest", () => {
       unresolved_regions_surface_as_required_actions: true,
       questions_block_implementation: true,
     });
+    expect(manifest.resources).toEqual(
+      expect.objectContaining({
+        context_component_markdown_template_uri: null,
+        context_release_gate_uri: null,
+        ai_setup_uri: null,
+      }),
+    );
   });
 });

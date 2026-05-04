@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-review-report-validation.schema.json",
+  "title": "Salt Review Report Validation",
+  "description": "Validation result for durable Salt review report artifacts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "status",
+    "current",
+    "supported",
+    "report_path",
+    "registry",
+    "validation_issues",
+    "unsupported_claim_count",
+    "mismatches",
+    "missing",
+    "resume"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_review_report_validation_v1"
+    },
+    "status": {
+      "enum": ["current", "stale", "unsupported", "invalid"]
+    },
+    "current": {
+      "type": "boolean"
+    },
+    "supported": {
+      "type": "boolean"
+    },
+    "report_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "hash",
+        "generated_at",
+        "current_version",
+        "current_hash",
+        "current_generated_at"
+      ],
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        },
+        "current_version": {
+          "type": ["string", "null"]
+        },
+        "current_hash": {
+          "type": ["string", "null"]
+        },
+        "current_generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "validation_issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceValidationIssue"
+      }
+    },
+    "unsupported_claim_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "mismatches": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "missing": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "resume": {
+      "$ref": "#/$defs/resume"
+    }
+  },
+  "$defs": {
+    "resume": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "status",
+        "report_path",
+        "reusable_evidence_ref_ids",
+        "unsupported_claim_ids",
+        "next_command",
+        "missing"
+      ],
+      "properties": {
+        "contract": {
+          "const": "salt_review_resume_v1"
+        },
+        "status": {
+          "enum": ["ready", "stale", "unsupported", "invalid"]
+        },
+        "report_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reusable_evidence_ref_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unsupported_claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "next_command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "evidenceValidationIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "path"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

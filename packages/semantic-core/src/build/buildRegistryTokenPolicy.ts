@@ -1,292 +1,1120 @@
+import path from "node:path";
+import fg from "fast-glob";
+import {
+  SALT_EVIDENCE_REF_CONTRACT,
+  type SaltEvidenceRef,
+} from "../evidence.js";
+import { toPosixPath } from "../registry/paths.js";
 import type { TokenRecord } from "../types.js";
-import { uniqueStrings } from "./buildRegistryShared.js";
+import {
+  cleanMarkdownText,
+  normalizeWhitespace,
+  readFileOrNull,
+  uniqueStrings,
+} from "./buildRegistryShared.js";
 
-const DESIGN_TOKENS_DOC = "/salt/themes/design-tokens/index";
-const FOUNDATIONS_INDEX_DOC = "/salt/foundations/index";
+export interface TokenPolicyDocSource {
+  route: string;
+  repo_path: string;
+  content: string;
+}
 
-const CHARACTERISTIC_DOC_BY_CATEGORY: Record<string, string> = {
-  accent: "/salt/themes/design-tokens/brand",
-  actionable: "/salt/themes/design-tokens/actionable-characteristic",
-  category: "/salt/themes/design-tokens/category-characteristic",
-  container: "/salt/themes/design-tokens/container-characteristic",
-  content: "/salt/themes/design-tokens/content-characteristic",
-  editable: "/salt/themes/design-tokens/editable-characteristic",
-  focused: "/salt/themes/design-tokens/how-to-read-tokens",
-  navigable: "/salt/themes/design-tokens/navigable-characteristic",
-  overlayable: "/salt/themes/design-tokens/overlayable-characteristic",
-  selectable: "/salt/themes/design-tokens/selectable-characteristic",
-  sentiment: "/salt/themes/design-tokens/sentiment-characteristic",
-  separable: "/salt/themes/design-tokens/separable-characteristic",
-  status: "/salt/themes/design-tokens/status-characteristic",
-  target: "/salt/themes/design-tokens/container-characteristic",
-  text: "/salt/themes/design-tokens/how-to-read-tokens",
-};
+type TokenPolicy = NonNullable<TokenRecord["policy"]>;
+type TokenPolicyUsageTier = TokenPolicy["usage_tier"];
+type TokenPolicyDirectUse = TokenPolicy["direct_component_use"];
 
-const FOUNDATION_DOC_BY_CATEGORY: Record<string, string> = {
-  alpha: FOUNDATIONS_INDEX_DOC,
-  animation: FOUNDATIONS_INDEX_DOC,
-  borderstyle: "/salt/foundations/borderStyle",
-  color: "/salt/foundations/color/index",
-  cursor: "/salt/foundations/cursor",
-  curve: FOUNDATIONS_INDEX_DOC,
-  duration: "/salt/foundations/duration",
-  size: "/salt/foundations/size",
-  spacing: "/salt/foundations/spacing",
-  typography: "/salt/foundations/typography",
-  zindex: "/salt/foundations/elevation/z-index",
-};
+interface TokenTierPolicyEvidence {
+  usage_tier: TokenPolicyUsageTier;
+  direct_component_use: TokenPolicyDirectUse;
+  text: string;
+  source: TokenPolicyDocSource;
+}
+
+interface TokenNameParts {
+  family: string;
+  modifiers: string[];
+  property: string | null;
+}
+
+export interface TokenStructuralRoleRule {
+  id: string;
+  category: string;
+  kind: "container-pairing" | "separable-token" | "fixed-size" | "border-style";
+  source: TokenPolicyDocSource;
+  evidence_text: string;
+  evidence_terms: string[];
+  token_family?: string;
+  token_property?: string;
+  token_modifier?: string;
+}
+
+export interface TokenPolicySourceRegistry {
+  design_tokens_overview: TokenPolicyDocSource | null;
+  foundations_index: TokenPolicyDocSource | null;
+  characteristic_docs_by_category: ReadonlyMap<string, TokenPolicyDocSource>;
+  foundation_docs_by_category: ReadonlyMap<string, TokenPolicyDocSource>;
+  foundation_categories: ReadonlySet<string>;
+  structural_role_rules: readonly TokenStructuralRoleRule[];
+}
 
 function normalizeCategory(category: string): string {
   return category.trim().toLowerCase();
 }
 
-function withDocs(...docs: Array<string | null | undefined>): string[] {
-  return uniqueStrings(docs.filter((value): value is string => Boolean(value)));
+function routeCategorySegment(route: string): string | null {
+  const segments = route.split("/").filter(Boolean);
+  const last = segments.at(-1);
+  if (!last) {
+    return null;
+  }
+
+  return last === "index" ? (segments.at(-2) ?? null) : last;
 }
 
-function buildPalettePolicy(): NonNullable<TokenRecord["policy"]> {
+function normalizeRouteCategory(route: string): string | null {
+  const segment = routeCategorySegment(route);
+  return segment ? normalizeCategory(segment.replace(/-/g, "")) : null;
+}
+
+function toSiteDocsRoute(repoRoot: string, filePath: string): string | null {
+  const docsRoot = path.join(repoRoot, "site", "docs");
+  const relativePath = toPosixPath(path.relative(docsRoot, filePath));
+  if (relativePath.startsWith("..")) {
+    return null;
+  }
+
+  return `/salt/${relativePath.replace(/\.mdx$/i, "")}`;
+}
+
+async function createDocSource(
+  repoRoot: string,
+  filePath: string,
+): Promise<TokenPolicyDocSource | null> {
+  const route = toSiteDocsRoute(repoRoot, filePath);
+  const content = await readFileOrNull(filePath);
+  if (!route || !content) {
+    return null;
+  }
+
   return {
-    usage_tier: "palette",
-    direct_component_use: "never",
-    preferred_for: [
-      "internal theme and mode mapping inside the Salt token system",
-    ],
-    avoid_for: [
-      "direct component styling",
-      "pattern styling",
-      "custom UI color selection",
-    ],
-    notes: [
-      "Palette tokens sit between foundations and characteristics and should not be referenced directly in components or patterns.",
-      "Choose a semantic characteristic token instead of applying a palette token to UI code.",
-    ],
-    docs: withDocs(DESIGN_TOKENS_DOC),
-    structural_roles: [],
-    pairing: null,
+    route,
+    repo_path: toPosixPath(path.relative(repoRoot, filePath)),
+    content,
   };
+}
+
+function stripFrontmatter(source: string): string {
+  return source.replace(/^---[\s\S]*?---\s*/u, "");
+}
+
+function extractMarkdownTextBlocks(source: string): string[] {
+  const blocks: string[] = [];
+  const current: string[] = [];
+  let insideMdxElement = false;
+
+  const flush = () => {
+    const text = cleanMarkdownText(current.join(" "));
+    current.length = 0;
+    if (text) {
+      blocks.push(text);
+    }
+  };
+
+  for (const line of stripFrontmatter(source).split(/\r?\n/u)) {
+    const trimmed = line.trim();
+    if (insideMdxElement) {
+      if (trimmed.endsWith(">") || trimmed.endsWith("/>")) {
+        insideMdxElement = false;
+      }
+      continue;
+    }
+
+    if (!trimmed) {
+      flush();
+      continue;
+    }
+
+    if (/^#{1,6}\s+/u.test(trimmed)) {
+      flush();
+      continue;
+    }
+
+    if (
+      /^<[A-Z][A-Za-z0-9]*(?:\s|>|\/>)/u.test(trimmed) ||
+      /^<\/[A-Z][A-Za-z0-9]*>/u.test(trimmed)
+    ) {
+      flush();
+      if (!trimmed.endsWith(">") && !trimmed.endsWith("/>")) {
+        insideMdxElement = true;
+      }
+      continue;
+    }
+
+    if (
+      /^:fragment/u.test(trimmed) ||
+      /^\|/u.test(trimmed) ||
+      /^\{\/\*/u.test(trimmed)
+    ) {
+      flush();
+      continue;
+    }
+
+    current.push(trimmed);
+  }
+  flush();
+
+  return uniqueStrings(blocks);
+}
+
+function textMatchesAll(
+  text: string,
+  patterns: ReadonlyArray<string | RegExp>,
+): boolean {
+  const lowerText = text.toLowerCase();
+  return patterns.every((pattern) =>
+    typeof pattern === "string"
+      ? lowerText.includes(pattern.toLowerCase())
+      : pattern.test(text),
+  );
+}
+
+function findTextBlock(
+  source: string,
+  patterns: ReadonlyArray<string | RegExp>,
+): string | null {
+  return (
+    extractMarkdownTextBlocks(source).find((block) =>
+      textMatchesAll(block, patterns),
+    ) ?? null
+  );
+}
+
+function findFirstTextBlock(source: string): string | null {
+  return extractMarkdownTextBlocks(source)[0] ?? null;
+}
+
+function extractSectionTextBlocks(
+  source: string,
+  headingPattern: RegExp,
+): string[] {
+  const sectionLines: string[] = [];
+  let isInSection = false;
+  let sectionDepth = 0;
+
+  for (const line of stripFrontmatter(source).split(/\r?\n/u)) {
+    const heading = /^(#{1,6})\s+(.+)$/u.exec(line.trim());
+    if (heading) {
+      const depth = heading[1].length;
+      const headingText = cleanMarkdownText(heading[2] ?? "");
+      if (isInSection && depth <= sectionDepth) {
+        break;
+      }
+      if (headingPattern.test(headingText)) {
+        isInSection = true;
+        sectionDepth = depth;
+        continue;
+      }
+    }
+
+    if (isInSection) {
+      sectionLines.push(line);
+    }
+  }
+
+  return extractMarkdownTextBlocks(sectionLines.join("\n"));
+}
+
+function extractMarkdownHeadings(source: string): string[] {
+  return stripFrontmatter(source)
+    .split(/\r?\n/u)
+    .map((line) => /^(#{1,6})\s+(.+)$/u.exec(line.trim())?.[2] ?? null)
+    .filter((heading): heading is string => Boolean(heading))
+    .map(cleanMarkdownText)
+    .filter(Boolean);
+}
+
+function extractTokenCategoriesFromSource(source: string): string[] {
+  const categories: string[] = [];
+  const tokenRegex = /--salt-([a-z][a-z0-9]*)(?:-[\w-]+)?/giu;
+  let match = tokenRegex.exec(source);
+
+  while (match) {
+    const category = match[1];
+    if (category) {
+      categories.push(normalizeCategory(category));
+    }
+    match = tokenRegex.exec(source);
+  }
+
+  return uniqueStrings(categories);
+}
+
+function splitSentences(text: string): string[] {
+  return uniqueStrings(
+    text
+      .split(/(?<=[.!?])\s+/u)
+      .map((sentence) => normalizeWhitespace(sentence))
+      .filter(Boolean),
+  );
+}
+
+function matchingSentences(text: string, pattern: RegExp): string[] {
+  return splitSentences(text).filter((sentence) => pattern.test(sentence));
+}
+
+function tokenSegment(tokenName: string, prefix: string): string | null {
+  const match = new RegExp(`^--salt-${prefix}-([a-z0-9]+)`, "i").exec(
+    tokenName,
+  );
+  return match?.[1]?.toLowerCase() ?? null;
+}
+
+function parseTokenName(tokenName: string): TokenNameParts | null {
+  if (!tokenName.startsWith("--salt-")) {
+    return null;
+  }
+
+  const [family, ...rest] = tokenName.slice("--salt-".length).split("-");
+  if (!family) {
+    return null;
+  }
+
+  const property = rest.at(-1) ?? null;
+  return {
+    family: normalizeCategory(family),
+    modifiers: rest.slice(0, -1).map(normalizeCategory),
+    property,
+  };
+}
+
+function toRoleSegment(value: string): string {
+  return normalizeWhitespace(value)
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
+}
+
+function singularizeRoleTerm(value: string): string {
+  const normalized = toRoleSegment(value);
+  return normalized.endsWith("s") ? normalized.slice(0, -1) : normalized;
+}
+
+function extractSourceTerms(
+  text: string,
+  patterns: ReadonlyArray<RegExp>,
+): string[] {
+  const terms: string[] = [];
+  for (const pattern of patterns) {
+    const match = pattern.exec(text);
+    if (match?.[1]) {
+      terms.push(match[1]);
+    }
+  }
+  return uniqueStrings(terms.map(singularizeRoleTerm).filter(Boolean));
+}
+
+function extractCharacteristicGroups(source: string): string[] {
+  const groups = new Set<string>();
+  const groupRegex =
+    /<CharacteristicsTokenTable\b[^>]*\bgroup=["']([^"']+)["'][^>]*>/g;
+  let match = groupRegex.exec(source);
+  while (match) {
+    const group = match[1];
+    if (group) {
+      groups.add(normalizeCategory(group));
+    }
+    match = groupRegex.exec(source);
+  }
+  return [...groups];
+}
+
+function preferSpecificCharacteristicDoc(
+  current: TokenPolicyDocSource | undefined,
+  candidate: TokenPolicyDocSource,
+  category: string,
+): boolean {
+  if (!current) {
+    return true;
+  }
+
+  return candidate.route.endsWith(`/${category}-characteristic`);
+}
+
+async function collectCharacteristicDocSources(
+  repoRoot: string,
+): Promise<Map<string, TokenPolicyDocSource>> {
+  const docs = new Map<string, TokenPolicyDocSource>();
+  const docPaths = (
+    await fg("site/docs/themes/design-tokens/*.mdx", {
+      cwd: repoRoot,
+      absolute: true,
+      onlyFiles: true,
+    })
+  ).sort((left, right) => left.localeCompare(right));
+
+  for (const docPath of docPaths) {
+    const docSource = await createDocSource(repoRoot, docPath);
+    if (!docSource) {
+      continue;
+    }
+
+    const routeCategory = docSource.route.match(
+      /\/salt\/themes\/design-tokens\/([a-z0-9-]+)-characteristic$/i,
+    )?.[1];
+    if (routeCategory) {
+      docs.set(normalizeCategory(routeCategory), docSource);
+    }
+
+    for (const group of extractCharacteristicGroups(docSource.content)) {
+      if (preferSpecificCharacteristicDoc(docs.get(group), docSource, group)) {
+        docs.set(group, docSource);
+      }
+    }
+  }
+
+  return docs;
+}
+
+async function collectFoundationDocSources(
+  repoRoot: string,
+): Promise<Map<string, TokenPolicyDocSource>> {
+  const docs = new Map<string, TokenPolicyDocSource>();
+  const docPaths = (
+    await fg("site/docs/foundations/**/*.mdx", {
+      cwd: repoRoot,
+      absolute: true,
+      onlyFiles: true,
+    })
+  ).sort((left, right) => left.localeCompare(right));
+
+  for (const docPath of docPaths) {
+    const docSource = await createDocSource(repoRoot, docPath);
+    const category = docSource ? normalizeRouteCategory(docSource.route) : null;
+    if (!docSource || !category || category === "foundations") {
+      continue;
+    }
+
+    docs.set(category, docSource);
+    for (const tokenCategory of extractTokenCategoriesFromSource(
+      docSource.content,
+    )) {
+      if (!docs.has(tokenCategory)) {
+        docs.set(tokenCategory, docSource);
+      }
+    }
+  }
+
+  return docs;
+}
+
+async function collectFoundationCategories(
+  repoRoot: string,
+): Promise<Set<string>> {
+  const cssPaths = await fg("packages/theme/css/**/foundations/*.css", {
+    cwd: repoRoot,
+    onlyFiles: true,
+  });
+
+  return new Set(
+    cssPaths.map((cssPath) =>
+      normalizeCategory(path.basename(cssPath, ".css")),
+    ),
+  );
+}
+
+function buildContainerStructuralRoleRules(
+  source: TokenPolicyDocSource | null,
+): TokenStructuralRoleRule[] {
+  if (!source) {
+    return [];
+  }
+
+  const evidenceText = findTextBlock(source.content, [
+    /\bcontainer background\b/i,
+    /\bcorresponding border color\b/i,
+    /\bused together\b/i,
+  ]);
+  if (!evidenceText) {
+    return [];
+  }
+
+  const terms = extractSourceTerms(evidenceText, [
+    /\b(container)\s+background\b/i,
+    /\bborder\s+(color)\b/i,
+  ]);
+
+  return [
+    {
+      id: `${source.route}#container-pairing`,
+      category: "container",
+      kind: "container-pairing",
+      source,
+      evidence_text: evidenceText,
+      evidence_terms: terms,
+      token_family: "container",
+    },
+  ];
+}
+
+function buildSeparableStructuralRoleRules(
+  source: TokenPolicyDocSource | null,
+): TokenStructuralRoleRule[] {
+  if (!source) {
+    return [];
+  }
+
+  return findTokenMentionedSections(source, "--salt-separable-")
+    .filter((evidenceText) => /\bseparator/i.test(evidenceText))
+    .map((evidenceText, index) => ({
+      id: `${source.route}#separable-token${index === 0 ? "" : `-${index + 1}`}`,
+      category: "separable",
+      kind: "separable-token" as const,
+      source,
+      evidence_text: evidenceText,
+      evidence_terms: extractSourceTerms(evidenceText, [/\b(separator)s?\b/i]),
+      token_family: "separable",
+    }))
+    .filter((rule) => rule.evidence_terms.length > 0);
+}
+
+function buildSizeStructuralRoleRules(
+  source: TokenPolicyDocSource | null,
+): TokenStructuralRoleRule[] {
+  if (!source) {
+    return [];
+  }
+
+  const evidenceText =
+    extractSectionTextBlocks(source.content, /^Borders$/iu).find((block) =>
+      /--salt-size-fixed-100|--salt-size-fixed-200/u.test(block),
+    ) ?? null;
+  if (!evidenceText) {
+    return [];
+  }
+
+  return [
+    {
+      id: `${source.route}#fixed-size-border-separator`,
+      category: "size",
+      kind: "fixed-size",
+      source,
+      evidence_text: evidenceText,
+      evidence_terms: extractSourceTerms(evidenceText, [
+        /\b(border)s?\b/i,
+        /\b(separator)s?\b/i,
+      ]),
+      token_family: "size",
+      token_modifier: "fixed",
+    },
+  ];
+}
+
+function buildBorderStyleStructuralRoleRules(
+  source: TokenPolicyDocSource | null,
+): TokenStructuralRoleRule[] {
+  if (!source) {
+    return [];
+  }
+
+  const rules: TokenStructuralRoleRule[] = [];
+  const variants = extractMarkdownHeadings(source.content)
+    .map((heading) => toRoleSegment(heading))
+    .filter(Boolean);
+  for (const variant of variants) {
+    const evidenceText =
+      extractSectionTextBlocks(
+        source.content,
+        new RegExp(`^${variant}$`, "i"),
+      )[0] ?? null;
+    if (!evidenceText) {
+      continue;
+    }
+
+    const terms = extractSourceTerms(evidenceText, [
+      /\b(border)\s+style\b/i,
+      /\b(divider)s?\b/i,
+      /\b(drag\/drop target)s?\b/i,
+      /\b(temporary)\b/i,
+    ]);
+    if (terms.length === 0) {
+      continue;
+    }
+
+    rules.push({
+      id: `${source.route}#${variant}`,
+      category: "borderstyle",
+      kind: "border-style",
+      source,
+      evidence_text: evidenceText,
+      evidence_terms: terms,
+      token_family: "borderstyle",
+      token_modifier: variant,
+    });
+  }
+
+  return rules;
+}
+
+function buildStructuralRoleRules(input: {
+  characteristicDocs: ReadonlyMap<string, TokenPolicyDocSource>;
+  foundationDocs: ReadonlyMap<string, TokenPolicyDocSource>;
+}): TokenStructuralRoleRule[] {
+  return [
+    ...buildContainerStructuralRoleRules(
+      input.characteristicDocs.get("container") ?? null,
+    ),
+    ...buildSeparableStructuralRoleRules(
+      input.characteristicDocs.get("separable") ?? null,
+    ),
+    ...buildSizeStructuralRoleRules(input.foundationDocs.get("size") ?? null),
+    ...buildBorderStyleStructuralRoleRules(
+      input.foundationDocs.get("borderstyle") ?? null,
+    ),
+  ];
+}
+
+export async function buildTokenPolicySourceRegistry(
+  repoRoot: string,
+): Promise<TokenPolicySourceRegistry> {
+  const [
+    characteristicDocs,
+    foundationDocs,
+    foundationCategories,
+    designTokensOverview,
+    foundationsIndex,
+  ] = await Promise.all([
+    collectCharacteristicDocSources(repoRoot),
+    collectFoundationDocSources(repoRoot),
+    collectFoundationCategories(repoRoot),
+    createDocSource(
+      repoRoot,
+      path.join(
+        repoRoot,
+        "site",
+        "docs",
+        "themes",
+        "design-tokens",
+        "index.mdx",
+      ),
+    ),
+    createDocSource(
+      repoRoot,
+      path.join(repoRoot, "site", "docs", "foundations", "index.mdx"),
+    ),
+  ]);
+
+  return {
+    design_tokens_overview: designTokensOverview,
+    foundations_index: foundationsIndex,
+    characteristic_docs_by_category: characteristicDocs,
+    foundation_docs_by_category: foundationDocs,
+    foundation_categories: foundationCategories,
+    structural_role_rules: buildStructuralRoleRules({
+      characteristicDocs,
+      foundationDocs,
+    }),
+  };
+}
+
+function withSources(
+  ...sources: Array<TokenPolicyDocSource | null | undefined>
+): TokenPolicyDocSource[] {
+  const byRoute = new Map<string, TokenPolicyDocSource>();
+  for (const source of sources) {
+    if (source && !byRoute.has(source.route)) {
+      byRoute.set(source.route, source);
+    }
+  }
+  return [...byRoute.values()];
+}
+
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function buildPolicyEvidenceRefs(
+  tokenName: string,
+  docs: TokenPolicyDocSource[],
+): SaltEvidenceRef[] {
+  return docs.map((doc, index) => ({
+    contract: SALT_EVIDENCE_REF_CONTRACT,
+    id: `${slugify(tokenName)}.policy.docs.${index}.source-ref`,
+    source_kind: "docs",
+    claim_kind: "token",
+    source: {
+      url: doc.route,
+      repo_path: doc.repo_path,
+    },
+    confidence: "high",
+    note: "Source-backed docs evidence for generated token policy metadata.",
+  }));
+}
+
+function withPolicyEvidence(
+  tokenName: string,
+  policy: Omit<NonNullable<TokenRecord["policy"]>, "docs" | "evidence_refs">,
+  docs: TokenPolicyDocSource[],
+): NonNullable<TokenRecord["policy"]> | null {
+  if (docs.length === 0) {
+    return null;
+  }
+
+  return {
+    ...policy,
+    docs: uniqueStrings(docs.map((doc) => doc.route)),
+    evidence_refs: buildPolicyEvidenceRefs(tokenName, docs),
+  };
+}
+
+function getTierPolicyEvidence(
+  sources: TokenPolicySourceRegistry,
+  usageTier: TokenPolicyUsageTier,
+): TokenTierPolicyEvidence | null {
+  const overview = sources.design_tokens_overview;
+  if (!overview) {
+    return null;
+  }
+
+  if (usageTier === "palette") {
+    const text = findTextBlock(overview.content, [
+      /\bPalette tokens\b/u,
+      /\bnever referenced directly\b/u,
+      /\bcomponents or patterns\b/u,
+    ]);
+    return text
+      ? {
+          usage_tier: usageTier,
+          direct_component_use: "never",
+          text,
+          source: overview,
+        }
+      : null;
+  }
+
+  if (usageTier === "characteristic") {
+    const text = findTextBlock(overview.content, [
+      /\bCharacteristics\b/u,
+      /\balways referenced\b/u,
+      /\bcomponents and patterns\b/u,
+    ]);
+    return text
+      ? {
+          usage_tier: usageTier,
+          direct_component_use: "always",
+          text,
+          source: overview,
+        }
+      : null;
+  }
+
+  const text = findTextBlock(overview.content, [
+    /\bFoundation tokens\b/u,
+    /\bsometimes be referenced directly\b/u,
+  ]);
+  return text
+    ? {
+        usage_tier: usageTier,
+        direct_component_use: "conditional",
+        text,
+        source: overview,
+      }
+    : null;
+}
+
+function sourceBackedPolicyDocs(
+  tierEvidence: TokenTierPolicyEvidence,
+  ...sources: Array<TokenPolicyDocSource | null | undefined>
+): TokenPolicyDocSource[] {
+  return withSources(...sources, tierEvidence.source);
+}
+
+function findTokenMentionedBlock(
+  source: TokenPolicyDocSource | null,
+  tokenName: string,
+): string | null {
+  return source ? findTextBlock(source.content, [tokenName]) : null;
+}
+
+function findTokenMentionedSection(
+  source: TokenPolicyDocSource | null,
+  tokenName: string,
+): string | null {
+  return findTokenMentionedSections(source, tokenName)[0] ?? null;
+}
+
+function findTokenMentionedSections(
+  source: TokenPolicyDocSource | null,
+  tokenName: string,
+): string[] {
+  if (!source) {
+    return [];
+  }
+
+  const sections: string[] = [];
+  let currentHeading = "";
+  let currentLines: string[] = [];
+
+  const flush = () => {
+    if (currentLines.join("\n").includes(tokenName)) {
+      sections.push(
+        uniquePolicyText([
+          currentHeading,
+          ...extractMarkdownTextBlocks(currentLines.join("\n")),
+        ]).join(" "),
+      );
+    }
+    currentLines = [];
+  };
+
+  for (const line of stripFrontmatter(source.content).split(/\r?\n/u)) {
+    const heading = /^(#{1,6})\s+(.+)$/u.exec(line.trim());
+    if (heading) {
+      flush();
+      currentHeading = heading[2] ?? "";
+      continue;
+    }
+
+    currentLines.push(line);
+  }
+  flush();
+
+  return sections.filter((section) => section.length > 0);
+}
+
+function categoryDescription(
+  source: TokenPolicyDocSource | null,
+  category: string,
+): string | null {
+  if (!source) {
+    return null;
+  }
+
+  return (
+    extractSectionTextBlocks(
+      source.content,
+      new RegExp(`^${category}$`, "i"),
+    )[0] ??
+    findTextBlock(source.content, [
+      new RegExp(`\\b${category}\\b`, "i"),
+      /\btokens?\b/i,
+    ]) ??
+    findFirstTextBlock(source.content)
+  );
+}
+
+function uniquePolicyText(values: Array<string | null | undefined>): string[] {
+  return uniqueStrings(
+    values
+      .map((value) => (value ? normalizeWhitespace(value) : ""))
+      .filter(Boolean),
+  );
+}
+
+function structuralRoleRulesForCategory(
+  sources: TokenPolicySourceRegistry,
+  category: string,
+): TokenStructuralRoleRule[] {
+  return sources.structural_role_rules.filter(
+    (rule) => normalizeCategory(rule.category) === category,
+  );
+}
+
+function tokenPropertyRoleSegment(
+  property: string | null,
+  options: { collapseBorderColor?: boolean } = {},
+): string | null {
+  if (!property) {
+    return null;
+  }
+
+  const segment = toRoleSegment(property);
+  return options.collapseBorderColor && segment === "border-color"
+    ? "color"
+    : segment;
+}
+
+function buildContainerPolicyStructure(
+  tokenName: string,
+  sources: TokenPolicySourceRegistry,
+): Pick<TokenPolicy, "structural_roles" | "pairing"> {
+  const tokenParts = parseTokenName(tokenName);
+  const rule = structuralRoleRulesForCategory(sources, "container").find(
+    (candidate) =>
+      candidate.kind === "container-pairing" &&
+      candidate.token_family === tokenParts?.family,
+  );
+  const property = tokenPropertyRoleSegment(tokenParts?.property ?? null);
+
+  if (!rule || !tokenParts || !property || tokenParts.modifiers.length === 0) {
+    return { structural_roles: [], pairing: null };
+  }
+
+  const role = `${tokenParts.family}-${property}`;
+  return {
+    structural_roles: [role],
+    pairing: {
+      family: tokenParts.family,
+      role,
+      level: tokenParts.modifiers[0] ?? null,
+    },
+  };
+}
+
+function buildSeparableStructuralRoles(
+  tokenName: string,
+  sources: TokenPolicySourceRegistry,
+): string[] {
+  const tokenParts = parseTokenName(tokenName);
+  const rule = structuralRoleRulesForCategory(sources, "separable").find(
+    (candidate) =>
+      candidate.kind === "separable-token" &&
+      candidate.token_family === tokenParts?.family,
+  );
+  const source = rule?.source ?? null;
+  const mentionedSection = findTokenMentionedSection(source, tokenName);
+  const roleTerm = rule?.evidence_terms[0] ?? null;
+  const property = tokenPropertyRoleSegment(tokenParts?.property ?? null, {
+    collapseBorderColor: true,
+  });
+
+  if (!rule || !mentionedSection || !roleTerm || !property) {
+    return [];
+  }
+
+  return mentionedSection.includes("feedback") &&
+    ["background", "foreground"].includes(property)
+    ? [`${roleTerm}-feedback-${property}`]
+    : [`${roleTerm}-${property}`];
+}
+
+function buildFixedSizeStructuralRoles(
+  tokenName: string,
+  sources: TokenPolicySourceRegistry,
+): string[] {
+  const tokenParts = parseTokenName(tokenName);
+  const rule = structuralRoleRulesForCategory(sources, "size").find(
+    (candidate) =>
+      candidate.kind === "fixed-size" &&
+      candidate.token_family === tokenParts?.family &&
+      candidate.token_modifier &&
+      tokenParts?.modifiers.includes(candidate.token_modifier),
+  );
+  if (!rule || !rule.evidence_text.includes(tokenName)) {
+    return [];
+  }
+
+  return rule.evidence_terms.map((term) => `${term}-thickness`);
+}
+
+function buildBorderStyleStructuralRoles(
+  tokenName: string,
+  sources: TokenPolicySourceRegistry,
+): string[] {
+  const tokenParts = parseTokenName(tokenName);
+  const rule = structuralRoleRulesForCategory(sources, "borderstyle").find(
+    (candidate) =>
+      candidate.kind === "border-style" &&
+      candidate.token_family === tokenParts?.family &&
+      candidate.token_modifier ===
+        normalizeCategory(tokenParts?.property ?? ""),
+  );
+  if (!rule) {
+    return [];
+  }
+
+  const roles: string[] = [];
+  const styleSegment = toRoleSegment(
+    rule.category.replace(/style$/i, " style"),
+  );
+  for (const term of rule.evidence_terms) {
+    if (term === "border") {
+      if (/\bdefault value\b/i.test(rule.evidence_text)) {
+        roles.push(`${styleSegment}-default`);
+      }
+      continue;
+    }
+    if (term === "divider" && /\bdefault value\b/i.test(rule.evidence_text)) {
+      roles.push(`${term}-style-default`);
+      continue;
+    }
+    roles.push(`${term}-${styleSegment}`);
+  }
+
+  return roles;
+}
+
+function buildPalettePolicy(
+  tokenName: string,
+  sources: TokenPolicySourceRegistry,
+): NonNullable<TokenRecord["policy"]> | null {
+  const tierEvidence = getTierPolicyEvidence(sources, "palette");
+  if (!tierEvidence) {
+    return null;
+  }
+
+  const docs = sourceBackedPolicyDocs(tierEvidence);
+  const avoidFor = matchingSentences(
+    tierEvidence.text,
+    /\bnever referenced directly\b/i,
+  );
+
+  return withPolicyEvidence(
+    tokenName,
+    {
+      usage_tier: tierEvidence.usage_tier,
+      direct_component_use: tierEvidence.direct_component_use,
+      preferred_for: [tierEvidence.text],
+      avoid_for: avoidFor,
+      notes: [tierEvidence.text],
+      structural_roles: [],
+      pairing: null,
+    },
+    docs,
+  );
 }
 
 function buildCharacteristicPolicy(
   tokenName: string,
   category: string,
-): NonNullable<TokenRecord["policy"]> {
+  sources: TokenPolicySourceRegistry,
+): NonNullable<TokenRecord["policy"]> | null {
+  const tierEvidence = getTierPolicyEvidence(sources, "characteristic");
+  if (!tierEvidence) {
+    return null;
+  }
+
   const characteristicDoc =
-    CHARACTERISTIC_DOC_BY_CATEGORY[category] ??
-    "/salt/themes/design-tokens/how-to-read-tokens";
-  const preferredFor = ["semantic component styling", "pattern styling"];
-  const avoidFor = ["choosing by visual similarity alone"];
-  const notes = [
-    "Use characteristic tokens directly in components and patterns, choosing by semantic intent rather than by appearance.",
-  ];
+    sources.characteristic_docs_by_category.get(category) ?? null;
+  const docs = sourceBackedPolicyDocs(tierEvidence, characteristicDoc);
+  const description = categoryDescription(characteristicDoc, category);
+  const tokenBlock = findTokenMentionedBlock(characteristicDoc, tokenName);
+  const containerBorderGuidance =
+    category === "container" && characteristicDoc
+      ? findTextBlock(characteristicDoc.content, [
+          /\bcontainer background\b/i,
+          /\bcorresponding border color\b/i,
+        ])
+      : null;
+  const preferredFor = uniquePolicyText([description, tokenBlock]);
+  const avoidFor = containerBorderGuidance
+    ? matchingSentences(containerBorderGuidance, /\bAvoid\b/i)
+    : [];
+  const notes = uniquePolicyText([
+    tierEvidence.text,
+    description,
+    tokenBlock,
+    containerBorderGuidance,
+  ]);
 
-  if (category === "content") {
-    preferredFor.push(
-      "text foreground",
-      "icon foreground",
-      "default static foreground",
-    );
-    notes.unshift(
-      "Use content tokens for standard text and icon foregrounds unless another characteristic takes precedence.",
-    );
-  } else if (category === "container") {
-    preferredFor.push("surface backgrounds", "container border colors");
-    avoidFor.push("mixing container background and border levels");
-    notes.unshift(
-      "Pair container background and border tokens from the same level to keep surfaces visually coherent.",
-    );
-  } else if (category === "separable") {
-    preferredFor.push("divider colors", "separator colors");
-    avoidFor.push("borrowing container or content colors for separators");
-    notes.unshift(
-      "Use separable tokens to divide sections and groups rather than reusing unrelated border colors.",
-    );
-  } else if (category === "navigable") {
-    preferredFor.push(
-      "navigation states",
-      "navigation indicators",
-      "navigation emphasis",
-    );
-  } else if (category === "actionable") {
-    preferredFor.push("action control states", "action affordances");
-  } else if (category === "selectable") {
-    preferredFor.push("selection states", "selectable controls");
-  } else if (category === "editable") {
-    preferredFor.push("editable field states", "input control styling");
-  } else if (category === "status") {
-    preferredFor.push(
-      "error states",
-      "warning states",
-      "success states",
-      "informational states",
-    );
-  } else if (category === "sentiment") {
-    preferredFor.push("tone and emotional emphasis");
-  } else if (category === "target") {
-    preferredFor.push("drop target feedback");
-  } else if (category === "overlayable") {
-    preferredFor.push("shadow", "scrim", "overlay styling");
-  } else if (category === "text") {
-    preferredFor.push("typographic styling");
-  }
+  const { structural_roles: containerRoles, pairing } =
+    category === "container"
+      ? buildContainerPolicyStructure(tokenName, sources)
+      : { structural_roles: [], pairing: null };
+  const structuralRoles =
+    category === "separable"
+      ? buildSeparableStructuralRoles(tokenName, sources)
+      : containerRoles;
 
-  let structuralRoles: string[] = [];
-  let pairing: NonNullable<TokenRecord["policy"]>["pairing"] = null;
-
-  if (category === "container") {
-    const containerMatch = tokenName.match(
-      /^--salt-container-([a-z0-9]+)-(background|borderColor)(?:-|$)/i,
-    );
-
-    if (containerMatch) {
-      const level = containerMatch[1]?.toLowerCase() ?? null;
-      const role =
-        containerMatch[2] === "background"
-          ? "container-background"
-          : "container-border-color";
-
-      structuralRoles = [role];
-      pairing = {
-        family: "container",
-        role,
-        level,
-      };
-    }
-  } else if (category === "separable") {
-    if (/bordercolor/i.test(tokenName)) {
-      structuralRoles = ["separator-color"];
-    } else if (/background/i.test(tokenName)) {
-      structuralRoles = ["separator-feedback-background"];
-    } else if (/foreground/i.test(tokenName)) {
-      structuralRoles = ["separator-feedback-foreground"];
-    }
-  }
-
-  return {
-    usage_tier: "characteristic",
-    direct_component_use: "always",
-    preferred_for: preferredFor,
-    avoid_for: avoidFor,
-    notes,
-    docs: withDocs(characteristicDoc, DESIGN_TOKENS_DOC),
-    structural_roles: structuralRoles,
-    pairing,
-  };
+  return withPolicyEvidence(
+    tokenName,
+    {
+      usage_tier: tierEvidence.usage_tier,
+      direct_component_use: tierEvidence.direct_component_use,
+      preferred_for: preferredFor,
+      avoid_for: avoidFor,
+      notes,
+      structural_roles: structuralRoles,
+      pairing,
+    },
+    docs,
+  );
 }
 
 function buildFoundationPolicy(
   tokenName: string,
   category: string,
-): NonNullable<TokenRecord["policy"]> {
+  sources: TokenPolicySourceRegistry,
+): NonNullable<TokenRecord["policy"]> | null {
+  const tierEvidence = getTierPolicyEvidence(sources, "foundation");
+  if (!tierEvidence) {
+    return null;
+  }
+
   const foundationDoc =
-    FOUNDATION_DOC_BY_CATEGORY[category] ?? FOUNDATIONS_INDEX_DOC;
-  const preferredFor = ["low-level structural styling"];
-  const avoidFor = [
-    "semantic component styling when a characteristic token fits",
-  ];
-  const notes = [
-    "Foundation tokens are low-level primitives. Use them directly for structural values, not as a substitute for semantic characteristic tokens.",
-  ];
+    sources.foundation_docs_by_category.get(category) ??
+    sources.foundations_index;
+  const docs = sourceBackedPolicyDocs(tierEvidence, foundationDoc);
+  const description = categoryDescription(foundationDoc, category);
+  const tokenBlock = findTokenMentionedBlock(foundationDoc, tokenName);
+  const sizeBordersBlock =
+    category === "size" && foundationDoc
+      ? (extractSectionTextBlocks(foundationDoc.content, /^Borders$/iu).find(
+          (block) => /--salt-size-fixed-100|--salt-size-fixed-200/u.test(block),
+        ) ?? null)
+      : null;
+  const borderStyleVariant =
+    category === "borderstyle" && foundationDoc
+      ? (extractSectionTextBlocks(
+          foundationDoc.content,
+          new RegExp(`^${tokenSegment(tokenName, "borderStyle") ?? ""}$`, "i"),
+        )[0] ?? null)
+      : null;
+  const preferredFor = uniquePolicyText([
+    description,
+    tokenBlock,
+    sizeBordersBlock,
+    borderStyleVariant,
+  ]);
+  const notes = uniquePolicyText([
+    tierEvidence.text,
+    description,
+    tokenBlock,
+    sizeBordersBlock,
+    borderStyleVariant,
+  ]);
+  const structuralRoles = uniqueStrings([
+    ...buildFixedSizeStructuralRoles(tokenName, sources),
+    ...buildBorderStyleStructuralRoles(tokenName, sources),
+  ]);
 
-  if (category === "size") {
-    preferredFor.push("structural sizing", "component dimensions");
-    notes.push(
-      "Use density-responsive size tokens by default and reserve fixed-size tokens for dimensions that must remain constant.",
-    );
-
-    if (tokenName.includes("--salt-size-fixed-")) {
-      preferredFor.push(
-        "border thickness",
-        "separator thickness",
-        "constant dimensions across densities",
-      );
-      notes.unshift(
-        "Fixed size tokens remain constant across densities and are the correct choice for border and separator thickness.",
-      );
-    }
-    if (tokenName.includes("--salt-size-indicator")) {
-      preferredFor.push("indicator thickness");
-    }
-    if (tokenName.includes("--salt-size-bar")) {
-      preferredFor.push("track thickness", "accent bar thickness");
-    }
-  } else if (category === "spacing") {
-    preferredFor.push("padding", "layout gaps", "spatial separation");
-    if (tokenName.includes("--salt-spacing-fixed-")) {
-      preferredFor.push("constant spacing across densities");
-      notes.unshift(
-        "Fixed spacing tokens are only for spacing that must stay constant across densities; otherwise prefer responsive spacing tokens.",
-      );
-    }
-  } else if (category === "borderstyle") {
-    preferredFor.push("border style", "separator style");
-    notes.unshift(
-      "Use border style foundations for line style. Solid is the standard baseline; dashed is reserved for special cases such as drop targets.",
-    );
-  } else if (category === "color") {
-    preferredFor.push(
-      "low-level color infrastructure",
-      "cases without a semantic characteristic equivalent",
-    );
-    avoidFor.push("direct semantic UI color decisions");
-    notes.unshift(
-      "Color foundation tokens are raw values. Prefer characteristic tokens when styling component or pattern states semantically.",
-    );
-  } else if (category === "typography") {
-    preferredFor.push(
-      "type scale",
-      "font family",
-      "font weight",
-      "text metrics",
-    );
-  } else if (category === "duration") {
-    preferredFor.push("motion duration");
-  } else if (category === "cursor") {
-    preferredFor.push("cursor behavior");
-  } else if (category === "zindex") {
-    preferredFor.push("layer ordering");
-  }
-
-  let structuralRoles: string[] = [];
-
-  if (category === "size" && tokenName.includes("--salt-size-fixed-")) {
-    structuralRoles = ["border-thickness", "separator-thickness"];
-  } else if (category === "borderstyle") {
-    if (tokenName === "--salt-borderStyle-solid") {
-      structuralRoles = ["border-style-default", "separator-style-default"];
-    } else if (tokenName === "--salt-borderStyle-dashed") {
-      structuralRoles = ["drop-target-border-style"];
-    } else if (tokenName === "--salt-borderStyle-dotted") {
-      structuralRoles = ["temporary-border-style"];
-    }
-  }
-
-  return {
-    usage_tier: "foundation",
-    direct_component_use: "conditional",
-    preferred_for: preferredFor,
-    avoid_for: avoidFor,
-    notes,
-    docs: withDocs(foundationDoc, DESIGN_TOKENS_DOC),
-    structural_roles: structuralRoles,
-    pairing: null,
-  };
+  return withPolicyEvidence(
+    tokenName,
+    {
+      usage_tier: tierEvidence.usage_tier,
+      direct_component_use: tierEvidence.direct_component_use,
+      preferred_for: preferredFor,
+      avoid_for: [],
+      notes,
+      structural_roles: structuralRoles,
+      pairing: null,
+    },
+    docs,
+  );
 }
 
 export function getTokenPolicy(
   token: Pick<TokenRecord, "name" | "category">,
+  sources: TokenPolicySourceRegistry,
 ): NonNullable<TokenRecord["policy"]> | null {
   const category = normalizeCategory(token.category);
 
   if (token.name.startsWith("--salt-palette-") || category === "palette") {
-    return buildPalettePolicy();
+    return buildPalettePolicy(token.name, sources);
   }
 
-  if (Object.hasOwn(CHARACTERISTIC_DOC_BY_CATEGORY, category)) {
-    return buildCharacteristicPolicy(token.name, category);
+  if (sources.characteristic_docs_by_category.has(category)) {
+    return buildCharacteristicPolicy(token.name, category, sources);
   }
 
-  if (Object.hasOwn(FOUNDATION_DOC_BY_CATEGORY, category)) {
-    return buildFoundationPolicy(token.name, category);
+  if (
+    sources.foundation_categories.has(category) ||
+    sources.foundation_docs_by_category.has(category)
+  ) {
+    return buildFoundationPolicy(token.name, category, sources);
   }
 
   return null;
