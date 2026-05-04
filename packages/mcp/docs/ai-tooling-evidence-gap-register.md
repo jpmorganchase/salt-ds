@@ -495,6 +495,16 @@ Current state:
   gaps, 28 pattern gaps, and 7 foundation gaps. Remaining foundation token
   policy gaps are delay, differential, draggable, measured, opacity, taggable,
   and track.
+- Deprecated token replacement extraction now also supports source-backed
+  section-scoped category replacement comments. The deprecated delay tokens
+  resolve to current duration tokens only when the derived replacement token
+  exists in the registry and its docs can be cited. `delay` now resolves through
+  the duration foundation docs, design-token overview docs, and deprecated
+  token CSS source EvidenceRefs.
+- A fresh production coverage audit after section-scoped replacement extraction
+  records 45 explicit unsupported docs/registry gaps: 11 component gaps, 28
+  pattern gaps, and 6 foundation gaps. Remaining foundation token policy gaps
+  are differential, draggable, measured, opacity, taggable, and track.
 - Review public-contract evidence degradation is now checked for both CLI and
   MCP compact output using the same semantic-core serializer path, so unresolved
   EvidenceRefs cannot appear complete in one transport and partial in the other.
@@ -609,12 +619,12 @@ Current state:
 - Final verification on May 4, 2026 reran the Salt AI guardrail suite and a
   fresh production context coverage audit. Supported generated context,
   reports, validators, CLI/MCP serializers, and skill surfaces remained
-  evidence-gated. The audit now reports 46 explicit unsupported
-  docs/registry gaps: 11 component gaps, 28 pattern gaps, and 7 foundation
+  evidence-gated. The audit now reports 45 explicit unsupported
+  docs/registry gaps: 11 component gaps, 28 pattern gaps, and 6 foundation
   gaps. The remaining selected pattern contexts with unsupported claims are
   `Header block`, `Indication`, and `List filtering`; the remaining foundation
-  token-policy gaps are `delay`, `differential`, `draggable`, `measured`,
-  `opacity`, `taggable`, and `track`.
+  token-policy gaps are `differential`, `draggable`, `measured`, `opacity`,
+  `taggable`, and `track`.
 
 Why this matters:
 

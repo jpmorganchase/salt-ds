@@ -767,6 +767,22 @@ function findTokenMentionedBlock(
   return source ? findTextBlock(source.content, [tokenName]) : null;
 }
 
+function findTokenMentionedSourceText(
+  source: TokenPolicyDocSource | null,
+  tokenName: string,
+): string | null {
+  const block = findTokenMentionedBlock(source, tokenName);
+  if (block) {
+    return block;
+  }
+
+  const line = source?.content
+    .split(/\r?\n/u)
+    .find((candidate) => candidate.includes(tokenName));
+
+  return line ? cleanMarkdownText(line) : null;
+}
+
 function findTokenMentionedSection(
   source: TokenPolicyDocSource | null,
   tokenName: string,
@@ -1139,7 +1155,7 @@ function findPolicyDocForTokenName(
 
   return (
     candidates.find((source) =>
-      Boolean(findTokenMentionedBlock(source, tokenName)),
+      Boolean(findTokenMentionedSourceText(source, tokenName)),
     ) ?? null
   );
 }
@@ -1204,7 +1220,7 @@ function buildDeprecatedReplacementPolicy(
   );
   const replacementBlocks = uniquePolicyText(
     replacements.map((replacement, index) =>
-      findTokenMentionedBlock(replacementDocs[index] ?? null, replacement),
+      findTokenMentionedSourceText(replacementDocs[index] ?? null, replacement),
     ),
   );
 
