@@ -8,61 +8,92 @@ import {
   cloneElement,
   forwardRef,
   isValidElement,
+  type KeyboardEvent,
   type ReactNode,
   type Ref,
   useCallback,
-  useContext,
 } from "react";
-import { MegaMenuContext } from "./MegaMenuContext";
-import {
-  moveFocusToAdjacentTriggerAndSyncMenuState,
-  useMegaMenuTriggerKeyboardNavigation,
-} from "./useMegaMenuTriggerKeyboardNavigation";
+import { useMegaMenu } from "./useMegaMenu";
+import { FOCUSABLE_SELECTOR, focusFirstItem } from "./useMegaMenuKeyboard";
 
 export interface MegaMenuTriggerProps {
+  /**
+   * The trigger element for the mega menu, typically a `NavigationItem` or `Button`.
+   */
   children?: ReactNode;
+}
+
+function getAdjacentTrigger(
+  currentTarget: HTMLElement,
+  direction: "next" | "previous",
+): HTMLElement | null {
+  const li = currentTarget.closest("li");
+  if (!li) return null;
+  const sibling =
+    direction === "next" ? li.nextElementSibling : li.previousElementSibling;
+  if (!(sibling instanceof HTMLElement)) return null;
+  return sibling.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
 }
 
 export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
   function MegaMenuTrigger(props, ref) {
     const { children, ...rest } = props;
-    const megaMenu = useContext(MegaMenuContext);
-
-    if (!megaMenu) {
-      throw new Error("MegaMenuTrigger must be used within a MegaMenu");
-    }
+    const megaMenu = useMegaMenu();
 
     const {
       getReferenceProps,
       setReference,
       setOpen,
       openState,
-      setRequestFocusFirstItemOnOpen,
+      setFocusFirstItemOnOpen,
+      floatingRootContext,
+      panelId,
     } = megaMenu;
 
-    const handleMoveToAdjacentTrigger = useCallback(
-      (direction: "next" | "previous", currentTarget: HTMLElement) => {
-        moveFocusToAdjacentTriggerAndSyncMenuState({
-          direction,
-          currentTarget,
-          isOpen: openState,
-          setOpen,
-          setRequestFocusFirstItemOnOpen,
-        });
-      },
-      [openState, setOpen, setRequestFocusFirstItemOnOpen],
-    );
+    const handleKeyDown = useCallback(
+      (event: KeyboardEvent<HTMLElement>) => {
+        const { key, shiftKey } = event;
 
-    const { handleKeyDown } = useMegaMenuTriggerKeyboardNavigation({
-      isOpen: openState,
-      floating: megaMenu.floatingRootContext.elements
-        .floating as HTMLElement | null,
-      onOpenMenu: (intent) => {
-        setRequestFocusFirstItemOnOpen(intent === "focus-first-item");
-        setOpen(true);
+        // ArrowLeft/Right: move to adjacent trigger in nav bar
+        if (key === "ArrowRight" || key === "ArrowLeft") {
+          event.preventDefault();
+          const direction = key === "ArrowRight" ? "next" : "previous";
+          const adjacent = getAdjacentTrigger(event.currentTarget, direction);
+          if (adjacent) {
+            if (openState) setOpen(false);
+            setFocusFirstItemOnOpen(false);
+            adjacent.focus();
+          }
+          return;
+        }
+
+        // When menu is open: ArrowDown or Tab moves focus into the menu
+        if (
+          openState &&
+          (key === "ArrowDown" || (key === "Tab" && !shiftKey))
+        ) {
+          event.preventDefault();
+          const floating = floatingRootContext.elements
+            .floating as HTMLElement | null;
+          if (floating) focusFirstItem(floating);
+          return;
+        }
+
+        // When menu is closed: ArrowDown opens and focuses first item
+        if (!openState && key === "ArrowDown") {
+          event.preventDefault();
+          setFocusFirstItemOnOpen(true);
+          setOpen(true);
+          return;
+        }
       },
-      onMoveToAdjacentTrigger: handleMoveToAdjacentTrigger,
-    });
+      [
+        openState,
+        setOpen,
+        setFocusFirstItemOnOpen,
+        floatingRootContext.elements.floating,
+      ],
+    );
 
     const handleFloatingRef = useForkRef(
       getRefFromChildren(children),
@@ -82,7 +113,12 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
     return cloneElement(children, {
       ...mergeProps(
         getReferenceProps({
-          ...(shouldSyncExpanded ? { expanded: openState } : null),
+          // For NavigationItem, sync via the `expanded` prop (which maps to aria-expanded internally).
+          // For all other elements, set aria-expanded directly.
+          ...(shouldSyncExpanded
+            ? { expanded: openState }
+            : { "aria-expanded": openState }),
+          ...(panelId ? { "aria-controls": panelId } : null),
           onKeyDown: handleKeyDown,
           ...rest,
         }),

@@ -13,9 +13,13 @@ data:
 ### Triggering mega menu
 
 - Any button that triggers a Mega menu container.
-- It should be wrapped in a `<nav>` element to establish a navigation landmark.
-- The group of buttons should be structured as a `<ul>` or `<ol>`, with each button placed inside an `<li>`.
-- Include the **aria-expanded** attribute to reflect their expanded or collapsed state, and the **aria-controls** attribute to reference the associated mega menu region.
+- It should be wrapped in a `<nav>` element to establish a navigation landmark.
+- The group of buttons should be structured as a `<ul>` or `<ol>`, with each button placed inside an `<li>`.
+- `MegaMenuTrigger` automatically applies **aria-expanded** to reflect the expanded or collapsed state, and **aria-controls** to reference the associated mega menu panel.
+
+### Mega menu panel
+
+- `MegaMenuPanel` renders a `<div>` with `role="region"`. Always provide an `aria-label` on `MegaMenuPanel` that describes the menu content, for example `aria-label="Solutions menu"`. This ensures assistive technology users can distinguish the panel from other landmarks on the page.
 
 ### Custom region
 

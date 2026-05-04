@@ -2,10 +2,10 @@ import { Button, StackLayout } from "@salt-ds/core";
 import { MenuIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuContainer,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -33,15 +33,11 @@ export const InSmallViewport = (): ReactElement => {
               }}
             >
               <MegaMenuTrigger>
-                <Button
-                  onClick={() => setIsOpen((prev) => !prev)}
-                  sentiment="neutral"
-                  appearance="solid"
-                >
+                <Button sentiment="neutral" appearance="solid">
                   <MenuIcon />
                 </Button>
               </MegaMenuTrigger>
-              <MegaMenuContainer className={styles.smallViewportContainer}>
+              <MegaMenuPanel className={styles.smallViewportContainer}>
                 <MegaMenuSection className={styles.smallViewportSection}>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -216,7 +212,7 @@ export const InSmallViewport = (): ReactElement => {
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
-              </MegaMenuContainer>
+              </MegaMenuPanel>
             </MegaMenu>
           </li>
         </StackLayout>

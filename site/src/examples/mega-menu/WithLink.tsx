@@ -1,11 +1,10 @@
 import { Link, NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuContainer,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuLinkRow,
+  MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -43,18 +42,11 @@ export const WithLink = (): ReactElement => {
             }
           >
             <MegaMenuTrigger>
-              <NavigationItem
-                active={activeMenu === "solutions"}
-                onClick={() => {
-                  setOpenMenu((prev) =>
-                    prev === "solutions" ? null : "solutions",
-                  );
-                }}
-              >
+              <NavigationItem active={activeMenu === "solutions"}>
                 Solutions
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer
+            <MegaMenuPanel
               className={styles.withLinkMenuContainer}
               aria-label="Solutions menu"
             >
@@ -118,10 +110,14 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuLinkRow>
-                <Link href="#">See all solutions</Link>
-              </MegaMenuLinkRow>
-            </MegaMenuContainer>
+              <MegaMenuSection>
+                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  <MegaMenuItem>
+                    <Link>See all solutions</Link>
+                  </MegaMenuItem>
+                </ol>
+              </MegaMenuSection>
+            </MegaMenuPanel>
           </MegaMenu>
         </li>
         <li>
@@ -134,18 +130,11 @@ export const WithLink = (): ReactElement => {
             }
           >
             <MegaMenuTrigger>
-              <NavigationItem
-                active={activeMenu === "services"}
-                onClick={() => {
-                  setOpenMenu((prev) =>
-                    prev === "services" ? null : "services",
-                  );
-                }}
-              >
+              <NavigationItem active={activeMenu === "services"}>
                 Services
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer
+            <MegaMenuPanel
               className={styles.withLinkMenuContainer}
               aria-label="Services menu"
             >
@@ -182,10 +171,14 @@ export const WithLink = (): ReactElement => {
                   <MegaMenuItem value="Guides">Guides</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuLinkRow>
-                <Link href="#">See all services</Link>
-              </MegaMenuLinkRow>
-            </MegaMenuContainer>
+              <MegaMenuSection>
+                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  <MegaMenuItem>
+                    <Link>See all services</Link>
+                  </MegaMenuItem>
+                </ol>
+              </MegaMenuSection>
+            </MegaMenuPanel>
           </MegaMenu>
         </li>
         <li>
@@ -198,18 +191,11 @@ export const WithLink = (): ReactElement => {
             }
           >
             <MegaMenuTrigger>
-              <NavigationItem
-                active={activeMenu === "resources"}
-                onClick={() => {
-                  setOpenMenu((prev) =>
-                    prev === "resources" ? null : "resources",
-                  );
-                }}
-              >
+              <NavigationItem active={activeMenu === "resources"}>
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer
+            <MegaMenuPanel
               className={styles.withLinkMenuContainer}
               aria-label="Resources menu"
             >
@@ -238,10 +224,14 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuLinkRow>
-                <Link href="#">See all resources</Link>
-              </MegaMenuLinkRow>
-            </MegaMenuContainer>
+              <MegaMenuSection>
+                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  <MegaMenuItem>
+                    <Link>See all resources</Link>
+                  </MegaMenuItem>
+                </ol>
+              </MegaMenuSection>
+            </MegaMenuPanel>
           </MegaMenu>
         </li>
       </StackLayout>

@@ -1,10 +1,10 @@
 import { Badge, NavigationItem, StackLayout, Tag } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuContainer,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -42,18 +42,11 @@ export const WithStaticAdornment = (): ReactElement => {
             }
           >
             <MegaMenuTrigger>
-              <NavigationItem
-                active={activeMenu === "solutions"}
-                onClick={() => {
-                  setOpenMenu((prev) =>
-                    prev === "solutions" ? null : "solutions",
-                  );
-                }}
-              >
+              <NavigationItem active={activeMenu === "solutions"}>
                 Solutions
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer aria-label="Solutions menu">
+            <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -130,7 +123,7 @@ export const WithStaticAdornment = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-            </MegaMenuContainer>
+            </MegaMenuPanel>
           </MegaMenu>
         </li>
         <li>
@@ -143,18 +136,11 @@ export const WithStaticAdornment = (): ReactElement => {
             }
           >
             <MegaMenuTrigger>
-              <NavigationItem
-                active={activeMenu === "services"}
-                onClick={() => {
-                  setOpenMenu((prev) =>
-                    prev === "services" ? null : "services",
-                  );
-                }}
-              >
+              <NavigationItem active={activeMenu === "services"}>
                 Services
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer aria-label="Services menu">
+            <MegaMenuPanel aria-label="Services menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -194,7 +180,7 @@ export const WithStaticAdornment = (): ReactElement => {
                   <MegaMenuItem value="Guides">Guides</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-            </MegaMenuContainer>
+            </MegaMenuPanel>
           </MegaMenu>
         </li>
         <li>
@@ -207,18 +193,11 @@ export const WithStaticAdornment = (): ReactElement => {
             }
           >
             <MegaMenuTrigger>
-              <NavigationItem
-                active={activeMenu === "resources"}
-                onClick={() => {
-                  setOpenMenu((prev) =>
-                    prev === "resources" ? null : "resources",
-                  );
-                }}
-              >
+              <NavigationItem active={activeMenu === "resources"}>
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuContainer aria-label="Resources menu">
+            <MegaMenuPanel aria-label="Resources menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
@@ -251,7 +230,7 @@ export const WithStaticAdornment = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-            </MegaMenuContainer>
+            </MegaMenuPanel>
           </MegaMenu>
         </li>
       </StackLayout>
