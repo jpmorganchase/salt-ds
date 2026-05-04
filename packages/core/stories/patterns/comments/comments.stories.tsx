@@ -6,6 +6,7 @@ import {
   Button,
   FlexLayout,
   FormField,
+  FormFieldHelperText,
   FormFieldLabel,
   Input,
   Label,
@@ -36,6 +37,9 @@ const formatDate = (timestamp: number) =>
 
 export const Default = () => {
   const [inputValue, setInputValue] = useState("");
+  const [validationStatus, setValidationStatus] = useState<
+    "error" | "success" | undefined
+  >(undefined);
   const [comments, setComments] = useState([
     {
       name: "Alex Rivera",
@@ -52,7 +56,11 @@ export const Default = () => {
   ]);
 
   const handleSubmit = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim()) {
+      setValidationStatus("error");
+      return;
+    }
+    setValidationStatus(undefined);
     setComments([
       {
         name: "Sam Patel",
@@ -79,20 +87,31 @@ export const Default = () => {
           <Input
             bordered
             placeholder="Add a comment..."
+            validationStatus={validationStatus}
             endAdornment={
-              <Button
-                aria-label="Send comment"
-                type="submit"
-                disabled={!inputValue.trim()}
-              >
-                <SendIcon aria-hidden />
-              </Button>
+              inputValue && (
+                <Button aria-label="Send comment" type="submit">
+                  <SendIcon aria-hidden />
+                </Button>
+              )
             }
             value={inputValue}
-            onChange={(e) =>
-              setInputValue((e.target as HTMLInputElement).value)
-            }
+            onChange={(e) => {
+              const value = (e.target as HTMLInputElement).value;
+              setInputValue(value);
+              if (value.trim()) {
+                setValidationStatus(undefined);
+              }
+            }}
           />
+          {validationStatus === "error" && (
+            <FormFieldHelperText color="error">
+              <FlexLayout gap={0.75} align="center">
+                <StatusIndicator status="error" />
+                Comment can't be blank
+              </FlexLayout>
+            </FormFieldHelperText>
+          )}
         </FormField>
       </form>
       <StackLayout gap={0} separators>
@@ -114,6 +133,9 @@ export const Default = () => {
 
 export const WithAvatar = () => {
   const [inputValue, setInputValue] = useState("");
+  const [validationStatus, setValidationStatus] = useState<
+    "error" | "success" | undefined
+  >(undefined);
   const [comments, setComments] = useState([
     {
       name: "Alex Rivera",
@@ -130,7 +152,11 @@ export const WithAvatar = () => {
   ]);
 
   const handleSubmit = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim()) {
+      setValidationStatus("error");
+      return;
+    }
+    setValidationStatus(undefined);
     setComments([
       {
         name: "Sam Patel",
@@ -157,20 +183,31 @@ export const WithAvatar = () => {
           <Input
             bordered
             placeholder="Add a comment..."
+            validationStatus={validationStatus}
             endAdornment={
-              <Button
-                aria-label="Send comment"
-                type="submit"
-                disabled={!inputValue.trim()}
-              >
-                <SendIcon aria-hidden />
-              </Button>
+              inputValue && (
+                <Button aria-label="Send comment" type="submit">
+                  <SendIcon aria-hidden />
+                </Button>
+              )
             }
             value={inputValue}
-            onChange={(e) =>
-              setInputValue((e.target as HTMLInputElement).value)
-            }
+            onChange={(e) => {
+              const value = (e.target as HTMLInputElement).value;
+              setInputValue(value);
+              if (value.trim()) {
+                setValidationStatus(undefined);
+              }
+            }}
           />
+          {validationStatus === "error" && (
+            <FormFieldHelperText color="error">
+              <FlexLayout gap={0.75} align="center">
+                <StatusIndicator status="error" />
+                Comment can't be blank
+              </FlexLayout>
+            </FormFieldHelperText>
+          )}
         </FormField>
       </form>
       <StackLayout gap={0} separators>
@@ -197,6 +234,10 @@ export const WithAvatar = () => {
 
 export const WithMultilineInput = () => {
   const [inputValue, setInputValue] = useState("");
+  const [validationStatus, setValidationStatus] = useState<
+    "error" | "success" | undefined
+  >(undefined);
+  const [errorMessage, setErrorMessage] = useState("");
   const MAX_CHARS = 1000;
   const [comments, setComments] = useState([
     {
@@ -214,7 +255,18 @@ export const WithMultilineInput = () => {
   ]);
 
   const handleSubmit = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim()) {
+      setValidationStatus("error");
+      setErrorMessage("Comment can't be blank");
+      return;
+    }
+    if (inputValue.length > MAX_CHARS) {
+      setValidationStatus("error");
+      setErrorMessage("Comment is too long. Maximum is 1000 characters.");
+      return;
+    }
+    setValidationStatus(undefined);
+    setErrorMessage("");
     setComments([
       {
         name: "Sam Patel",
@@ -241,23 +293,40 @@ export const WithMultilineInput = () => {
           <MultilineInput
             bordered
             placeholder="Add a comment..."
+            validationStatus={validationStatus}
             endAdornment={
               <>
                 <Label>{`${inputValue.length}/${MAX_CHARS}`}</Label>
-                <Button
-                  aria-label="Send comment"
-                  type="submit"
-                  disabled={!inputValue.trim()}
-                >
-                  <SendIcon aria-hidden />
-                </Button>
+                {inputValue && (
+                  <Button aria-label="Send comment" type="submit">
+                    <SendIcon aria-hidden />
+                  </Button>
+                )}
               </>
             }
             value={inputValue}
-            onChange={(e) =>
-              setInputValue((e.target as HTMLInputElement).value)
-            }
+            onChange={(e) => {
+              const value = (e.target as HTMLInputElement).value;
+              setInputValue(value);
+              if (value.length > MAX_CHARS) {
+                setValidationStatus("error");
+                setErrorMessage(
+                  "Comment is too long. Maximum is 1000 characters.",
+                );
+              } else if (value.trim()) {
+                setValidationStatus(undefined);
+                setErrorMessage("");
+              }
+            }}
           />
+          {validationStatus === "error" && (
+            <FormFieldHelperText color="error">
+              <FlexLayout gap={0.75} align="center">
+                <StatusIndicator status="error" />
+                {errorMessage}
+              </FlexLayout>
+            </FormFieldHelperText>
+          )}
         </FormField>
       </form>
       <StackLayout gap={0} separators>
