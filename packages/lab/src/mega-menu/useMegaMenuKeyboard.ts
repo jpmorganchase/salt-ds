@@ -119,6 +119,8 @@ export interface UseMegaMenuKeyboardProps {
  * - **Home / End** jump to the first / last item in the column.
  * - **↑ from the first item** or **← from the first column** returns
  *   focus to the trigger.
+ * - **→ from the last column** closes the panel and moves focus to the
+ *   next sibling trigger.
  */
 export function useMegaMenuKeyboard(
   context: FloatingRootContext,

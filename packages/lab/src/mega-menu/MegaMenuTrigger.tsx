@@ -118,7 +118,7 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
           ...(shouldSyncExpanded
             ? { expanded: openState }
             : { "aria-expanded": openState }),
-          ...(panelId ? { "aria-controls": panelId } : null),
+          ...(panelId && openState ? { "aria-controls": panelId } : null),
           onKeyDown: handleKeyDown,
           ...rest,
         }),
