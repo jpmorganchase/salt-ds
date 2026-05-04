@@ -16,10 +16,11 @@ Before naming or implementing Salt-specific structure, fetch canonical Salt evid
 If evidence is missing, follow `next_required_action`, retrieve the required entity or examples, ask the user, or stop with the blocker.
 Do not fill gaps from generic React, CSS, HTML, copied repo code, or model memory.
 
-## Theme Default
+## Theme Evidence Rule
 
-For new Salt-native work, the default bootstrap is `SaltProviderNext` from `@salt-ds/core` with `@salt-ds/theme/index.css`, `@salt-ds/theme/css/theme-next.css`, `accent="teal"`, `corner="rounded"`, `headingFont="Amplitude"`, and `actionFont="Amplitude"`.
-Use legacy `SaltProvider` only when workflow evidence or explicit repo policy says migration compatibility requires it.
+Do not name Salt provider or theme imports, provider props, fonts, accent/corner values, package paths, or compatibility paths from this skill.
+When provider or theme bootstrap matters, obtain those facts from workflow output, registry-backed generated context with evidence refs, `.salt` project policy, or explicit user input.
+If that evidence is missing, report theme bootstrap as pending or unsupported and continue only with workflow steps that do not require the missing theme facts.
 
 ## Hard Gate
 

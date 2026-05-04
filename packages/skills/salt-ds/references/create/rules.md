@@ -24,7 +24,7 @@ Use this file only for `create` work after project context is known.
 - choose one composition direction before writing code
 - prefer Salt patterns and compositions before custom UI structure
 - keep the first scaffold centered on the main task, not on optional embellishment
-- when provider or theme bootstrap matters, use `references/shared/theme.md`; prefer the shared new-work path only when repo policy does not override it and the required assets are available
+- when provider or theme bootstrap matters, use `references/shared/theme.md`; name provider/theme facts only when workflow evidence, registry-backed generated context, `.salt` policy, or explicit user input supplies them
 - keep visual choices Salt-native; do not chase novelty outside the design system
 - use workflow confidence to decide whether to proceed or ask a follow-up question
 - verify any named Salt token, prop, or API against canonical Salt guidance before you put it in the plan or code
@@ -86,6 +86,6 @@ Use this file only for `create` work after project context is known.
 
 - if canonical create output is partial, semantically off-target, truncated, or repeated-conflict noise, stop before implementation and use `references/shared/degraded-tooling.md`
 - after two noisy follow-up attempts for the same required item, do not keep fishing for a better result while coding around the gap
-- for page-level work, do not treat one valid anchor such as `Analytical dashboard` as permission to improvise unresolved peer regions such as header, navigation, chart, or table surfaces
+- for page-level work, do not treat one valid registry-backed anchor as permission to improvise unresolved peer regions such as header, navigation, chart, or table surfaces
 - if a concrete region remains unresolved, either keep that region pending or ask instead of inventing a bespoke composition
 - do not let successful TypeScript build or generic rendering override an incomplete Salt create contract

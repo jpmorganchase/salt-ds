@@ -1,35 +1,16 @@
 # Theme Bootstrap
 
-## Default new work
+## Evidence Required
 
-Default new-work visual style aligned to the JPMorgan brand and long-term Salt direction. Use this for new Salt-native work unless migration compatibility or explicit repo policy requires the legacy path.
+Provider and theme bootstrap guidance is unsupported in this static skill reference until the specific names, imports, props, fonts, package paths, and compatibility paths are backed by workflow evidence, registry-backed generated context with evidence refs, `.salt` project policy, or explicit user input.
 
-```tsx
-import { SaltProviderNext } from "@salt-ds/core";
-import "@salt-ds/theme/index.css";
-import "@salt-ds/theme/css/theme-next.css";
+Do not fill this gap from skill prose, generated prompt text, generic React guidance, copied repo code, or model memory.
 
-<SaltProviderNext
-  accent="teal"
-  corner="rounded"
-  headingFont="Amplitude"
-  actionFont="Amplitude"
->
-  <App />
-</SaltProviderNext>;
-```
+If provider or theme bootstrap matters and no evidence source supplies it, mark the theme decision as pending or unsupported and continue only with workflow steps that do not require those facts.
 
-Ensure the host app loads Amplitude when using headingFont="Amplitude" and actionFont="Amplitude".
+## Accepted Evidence Sources
 
-## Compatibility path
-
-Compatibility theme for UITK migration work and staged transitions. Use this only when migration compatibility or explicit repo policy requires it.
-
-```tsx
-import { SaltProvider } from "@salt-ds/core";
-import "@salt-ds/theme/index.css";
-
-<SaltProvider>
-  <App />
-</SaltProvider>;
-```
+- workflow output with complete evidence
+- registry-backed generated context with evidence refs
+- `.salt` project policy
+- explicit user input captured as workflow input
