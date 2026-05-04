@@ -40,7 +40,7 @@ export const MegaMenuCustomRegion = forwardRef<
         variant && withBaseName(variant),
         className,
       )}
-      data-salt-mega-menu-region="true"
+      data-mega-menu-column=""
       ref={ref}
       {...rest}
     >

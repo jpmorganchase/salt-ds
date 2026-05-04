@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
-  min-height: var(--salt-size-base);
   font-family: var(--salt-text-label-fontFamily);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);

@@ -1,10 +1,10 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuContainer,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -17,7 +17,7 @@ const KeyboardMegaMenu = () => (
           <MegaMenuTrigger>
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
-          <MegaMenuContainer>
+          <MegaMenuPanel>
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
@@ -30,7 +30,7 @@ const KeyboardMegaMenu = () => (
                 <MegaMenuItem>Telemedicine</MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-          </MegaMenuContainer>
+          </MegaMenuPanel>
         </MegaMenu>
       </li>
 
@@ -39,7 +39,7 @@ const KeyboardMegaMenu = () => (
           <MegaMenuTrigger>
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
-          <MegaMenuContainer>
+          <MegaMenuPanel>
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -47,12 +47,38 @@ const KeyboardMegaMenu = () => (
                 <MegaMenuItem>Operations</MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-          </MegaMenuContainer>
+          </MegaMenuPanel>
         </MegaMenu>
       </li>
     </StackLayout>
 
     <button type="button">After Nav</button>
+  </nav>
+);
+
+const OrphanedItemMegaMenu = () => (
+  <nav>
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel>
+            <MegaMenuSection>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem>Digital Banking</MegaMenuItem>
+                <MegaMenuItem>Risk Management</MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuSection>
+            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+              <MegaMenuItem>See all solutions</MegaMenuItem>
+            </ol>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
   </nav>
 );
 
@@ -63,7 +89,7 @@ const focusSolutionsTrigger = () => {
 const openSolutionsWithEnter = () => {
   focusSolutionsTrigger();
   cy.realPress("Enter");
-  cy.get(".saltMegaMenuContainer").should("exist");
+  cy.get(".saltMegaMenuPanel").should("exist");
 };
 
 describe("Given a MegaMenu", () => {
@@ -73,7 +99,7 @@ describe("Given a MegaMenu", () => {
         cy.mount(<KeyboardMegaMenu />);
         focusSolutionsTrigger();
         cy.realPress(key);
-        cy.get(".saltMegaMenuContainer").should("exist");
+        cy.get(".saltMegaMenuPanel").should("exist");
       });
     });
 
@@ -81,7 +107,7 @@ describe("Given a MegaMenu", () => {
       cy.mount(<KeyboardMegaMenu />);
       focusSolutionsTrigger();
       cy.realPress("Tab");
-      cy.get(".saltMegaMenuContainer").should("not.exist");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
     it("moves focus to next trigger on ArrowRight", () => {
@@ -90,7 +116,7 @@ describe("Given a MegaMenu", () => {
 
       cy.realPress("ArrowRight");
       cy.findByRole("button", { name: "Services" }).should("be.focused");
-      cy.get(".saltMegaMenuContainer").should("not.exist");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
     it("moves focus to previous trigger on ArrowLeft", () => {
@@ -101,7 +127,7 @@ describe("Given a MegaMenu", () => {
 
       cy.realPress("ArrowLeft");
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
-      cy.get(".saltMegaMenuContainer").should("not.exist");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
     });
   });
 
@@ -185,11 +211,11 @@ describe("Given a MegaMenu", () => {
 
       cy.realPress("ArrowRight");
       cy.findByText("Telemedicine").should("be.focused");
-      cy.get(".saltMegaMenuContainer").should("exist");
+      cy.get(".saltMegaMenuPanel").should("exist");
 
       cy.realPress("ArrowDown");
       cy.findByText("Telemedicine").should("be.focused");
-      cy.get(".saltMegaMenuContainer").should("exist");
+      cy.get(".saltMegaMenuPanel").should("exist");
     });
 
     it("supports Tab and Shift+Tab inside menu", () => {
@@ -228,7 +254,7 @@ describe("Given a MegaMenu", () => {
       cy.findByText("Digital Banking").should("be.focused");
 
       cy.realPress("Escape");
-      cy.get(".saltMegaMenuContainer").should("not.exist");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
     it("activates item on Enter and closes menu", () => {
@@ -239,7 +265,7 @@ describe("Given a MegaMenu", () => {
       cy.findByText("Digital Banking").should("be.focused");
 
       cy.realPress("Enter");
-      cy.get(".saltMegaMenuContainer").should("not.exist");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
     it("tabs from the last item to the next trigger", () => {
@@ -254,6 +280,53 @@ describe("Given a MegaMenu", () => {
 
       cy.realPress("Tab");
       cy.findByRole("button", { name: "Services" }).should("be.focused");
+    });
+
+    it("supports Home to jump to first item in column", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowDown"); // Risk Management
+      cy.findByText("Risk Management").should("be.focused");
+
+      cy.realPress("Home");
+      cy.findByText("Digital Banking").should("be.focused");
+    });
+
+    it("supports End to jump to last item in column", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.findByText("Digital Banking").should("be.focused");
+
+      cy.realPress("End");
+      cy.findByText("Risk Management").should("be.focused");
+    });
+
+    it("returns focus to trigger on Escape", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab");
+      cy.findByText("Digital Banking").should("be.focused");
+
+      cy.realPress("Escape");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+    });
+
+    it("can navigate to orphaned items outside groups", () => {
+      cy.mount(<OrphanedItemMegaMenu />);
+      cy.findByRole("button", { name: "Solutions" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management
+      cy.realPress("Tab"); // See all solutions
+      cy.findByText("See all solutions").should("be.focused");
     });
   });
 });

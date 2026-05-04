@@ -32,4 +32,7 @@ export const MegaMenuHeader = forwardRef<HTMLDivElement, MegaMenuHeaderProps>(
   },
 );
 
+MegaMenuHeader.displayName = "MegaMenuHeader";
+
+/** @internal Marker used by MegaMenuGroup to identify header children. */
 (MegaMenuHeader as any).__isMegaMenuHeader = true;

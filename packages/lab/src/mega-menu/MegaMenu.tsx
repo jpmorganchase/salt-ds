@@ -1,10 +1,11 @@
 import {
   type Placement,
+  useClick,
   useDismiss,
   useFloatingRootContext,
   useInteractions,
 } from "@floating-ui/react";
-import { useControlled, useId } from "@salt-ds/core";
+import { useControlled } from "@salt-ds/core";
 import {
   type Dispatch,
   type ReactNode,
@@ -19,38 +20,65 @@ import {
 } from "./MegaMenuContext";
 
 export interface MegaMenuProps extends MegaMenuCustomInteractions {
+  /**
+   * The content of the mega menu, typically `MegaMenuTrigger` and `MegaMenuPanel`.
+   */
   children?: ReactNode;
+  /**
+   * Whether the mega menu is open. Use for controlled mode.
+   */
   open?: boolean;
+  /**
+   * Whether the mega menu is initially open. Use for uncontrolled mode.
+   * @default false
+   */
+  defaultOpen?: boolean;
+  /**
+   * Callback fired when the open state changes.
+   */
   onOpenChange?: (open: boolean) => void;
+  /**
+   * The currently selected item value. Use for controlled mode.
+   */
   selectedItem?: string;
+  /**
+   * The initially selected item value. Use for uncontrolled mode.
+   */
   defaultSelectedItem?: string;
+  /**
+   * Callback fired when the selected item changes.
+   */
   onSelectedItemChange?: (selectedItem: string | undefined) => void;
+  /**
+   * The placement of the mega menu panel relative to the trigger.
+   * @default "bottom"
+   */
   placement?: Placement;
 }
 
-export const MegaMenu = ({
+export function MegaMenu({
   children,
   open,
+  defaultOpen = false,
   onOpenChange,
   selectedItem: selectedItemProp,
   defaultSelectedItem,
   onSelectedItemChange,
   placement = "bottom",
   interactions,
-}: MegaMenuProps) => {
-  const menuRegionId = useId() ?? "salt-mega-menu-region";
-
+}: MegaMenuProps) {
   const [openState, setOpenState] = useControlled({
     controlled: open,
-    default: false,
+    default: defaultOpen,
     name: "MegaMenu",
     state: "open",
   });
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
-  const [requestFocusFirstItemOnOpen, setRequestFocusFirstItemOnOpen] =
-    useState(false);
+  const [focusFirstItemOnOpen, setFocusFirstItemOnOpen] = useState(false);
+  const [panelId, setPanelId] = useState<string | undefined>(undefined);
+
   const [selectedItem, setSelectedItemState] = useControlled({
     controlled: selectedItemProp,
     default: defaultSelectedItem,
@@ -62,14 +90,13 @@ export const MegaMenu = ({
     Dispatch<SetStateAction<string | undefined>>
   >(
     (newSelectedItem) => {
-      setSelectedItemState((currentSelectedItem) => {
-        const nextSelectedItem =
+      setSelectedItemState((current) => {
+        const next =
           typeof newSelectedItem === "function"
-            ? newSelectedItem(currentSelectedItem)
+            ? newSelectedItem(current)
             : newSelectedItem;
-
-        onSelectedItemChange?.(nextSelectedItem);
-        return nextSelectedItem;
+        onSelectedItemChange?.(next);
+        return next;
       });
     },
     [onSelectedItemChange, setSelectedItemState],
@@ -77,6 +104,9 @@ export const MegaMenu = ({
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
+      if (!newOpen) {
+        setFocusFirstItemOnOpen(false);
+      }
       setOpenState(newOpen);
       onOpenChange?.(newOpen);
     },
@@ -86,13 +116,11 @@ export const MegaMenu = ({
   const floatingRootContext = useFloatingRootContext({
     open: openState,
     onOpenChange: setOpen,
-    elements: {
-      reference,
-      floating,
-    },
+    elements: { reference, floating },
   });
 
   const defaultInteractions = [
+    useClick(floatingRootContext, { toggle: true }),
     useDismiss(floatingRootContext, { bubbles: true }),
   ];
 
@@ -105,27 +133,33 @@ export const MegaMenu = ({
       openState,
       floatingRootContext,
       placement,
-      menuRegionId,
       getFloatingProps,
       getReferenceProps,
       setFloating,
       setReference,
       setOpen,
-      requestFocusFirstItemOnOpen,
-      setRequestFocusFirstItemOnOpen,
       selectedItem,
       setSelectedItem,
+      focusFirstItemOnOpen,
+      setFocusFirstItemOnOpen,
+      panelId,
+      setPanelId,
     }),
     [
       openState,
       floatingRootContext,
       placement,
-      menuRegionId,
       getFloatingProps,
       getReferenceProps,
+      setFloating,
+      setReference,
       setOpen,
-      requestFocusFirstItemOnOpen,
       selectedItem,
+      setSelectedItem,
+      focusFirstItemOnOpen,
+      setFocusFirstItemOnOpen,
+      panelId,
+      setPanelId,
     ],
   );
 
@@ -134,4 +168,4 @@ export const MegaMenu = ({
       {children}
     </MegaMenuContext.Provider>
   );
-};
+}

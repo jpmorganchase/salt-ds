@@ -3,5 +3,5 @@
   grid-template-columns: repeat(auto-fit, var(--saltMegaMenuSection-columnWidth, 12rem));
   gap: var(--salt-spacing-300);
   padding: var(--salt-spacing-300);
-  max-inline-size: var(--saltMegaMenuContainer-availableWidth, calc(100vw - var(--salt-spacing-600)));
+  max-inline-size: var(--saltMegaMenuPanel-availableWidth, calc(100vw - var(--salt-spacing-600)));
 }

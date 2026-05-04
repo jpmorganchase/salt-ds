@@ -20,8 +20,8 @@
 }
 
 .smallViewportContainer {
-  --saltMegaMenuContainer-inlineSize: 320px;
-  --saltMegaMenuContainer-maxInlineSize: 320px;
+  --saltMegaMenuPanel-inlineSize: 320px;
+  --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
 .smallViewportSection {

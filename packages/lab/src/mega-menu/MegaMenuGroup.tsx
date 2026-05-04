@@ -16,7 +16,7 @@ import megaMenuGroupCss from "./MegaMenuGroup.css";
 const withBaseName = makePrefixer("saltMegaMenuGroup");
 
 function isMegaMenuHeader(child: ReactElement): boolean {
-  return (child.type as any).__isMegaMenuHeader === true;
+  return !!(child.type as { __isMegaMenuHeader?: boolean })?.__isMegaMenuHeader;
 }
 
 export interface MegaMenuGroupProps extends HTMLAttributes<HTMLDivElement> {
@@ -40,15 +40,20 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
     const items: ReactNode[] = [];
 
     Children.forEach(children, (child) => {
-      if (isValidElement(child) && isMegaMenuHeader(child)) {
-        header = cloneElement(child, { id: headerId } as any);
+      if (isValidElement(child) && isMegaMenuHeader(child) && !header) {
+        header = cloneElement(child, { id: headerId });
       } else {
         items.push(child);
       }
     });
 
     return (
-      <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
+      <div
+        className={clsx(withBaseName(), className)}
+        data-mega-menu-column=""
+        ref={ref}
+        {...rest}
+      >
         {header}
         <ol
           className={withBaseName("list")}

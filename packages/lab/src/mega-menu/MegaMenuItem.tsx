@@ -1,5 +1,4 @@
-import { useListItem } from "@floating-ui/react";
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -9,10 +8,9 @@ import {
   type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
-  useContext,
 } from "react";
-import { MegaMenuContext } from "./MegaMenuContext";
 import megaMenuItemCss from "./MegaMenuItem.css";
+import { useMegaMenu } from "./useMegaMenu";
 
 const withBaseName = makePrefixer("saltMegaMenuItem");
 
@@ -26,14 +24,20 @@ export interface MegaMenuItemProps extends HTMLAttributes<HTMLLIElement> {
    * When omitted, this item will not participate in selected/active state tracking.
    */
   value?: string;
+  /**
+   * Whether selecting this item closes the mega menu.
+   * @default true
+   */
+  closeOnSelect?: boolean;
 }
 
 export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
-  function MegaMenuItem({ children, className, value, ...rest }, ref) {
+  function MegaMenuItem(
+    { children, className, value, closeOnSelect = true, ...rest },
+    ref,
+  ) {
     const targetWindow = useWindow();
-    const megaMenu = useContext(MegaMenuContext);
-    const { ref: listItemRef } = useListItem();
-    const handleRef = useForkRef<HTMLLIElement>(ref, listItemRef);
+    const megaMenu = useMegaMenu();
 
     useComponentCssInjection({
       testId: "salt-mega-menu-item",
@@ -41,27 +45,23 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
       window: targetWindow,
     });
 
-    const isSelected = value != null && megaMenu?.selectedItem === value;
+    const isSelected = value != null && megaMenu.selectedItem === value;
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
       rest.onClick?.(event);
       if (value != null) {
-        megaMenu?.setSelectedItem(value);
+        megaMenu.setSelectedItem(value);
       }
-      megaMenu?.setOpen(false);
+      if (closeOnSelect) {
+        megaMenu.setOpen(false);
+      }
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLLIElement>) => {
       rest.onKeyDown?.(event);
-
       if (event.key === " " || event.key === "Enter") {
         event.preventDefault();
-        const element = event.currentTarget;
-        const { view, ...eventInit } = event;
-        queueMicrotask(() => {
-          element.dispatchEvent(new window.MouseEvent("click", eventInit));
-        });
-        return;
+        event.currentTarget.click();
       }
     };
 
@@ -72,8 +72,9 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
           { [withBaseName("active")]: isSelected },
           className,
         )}
-        ref={handleRef}
+        ref={ref}
         tabIndex={0}
+        data-mega-menu-item=""
         aria-current={isSelected ? "page" : undefined}
         {...rest}
         onClick={handleClick}

@@ -2,12 +2,11 @@ import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuContainer,
   MegaMenuCustomRegion,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuLinkRow,
+  MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -28,15 +27,9 @@ export const WithCustomRegion = (): ReactElement => {
       >
         <div className={styles.customRegionWrapper}>
           <MegaMenuTrigger>
-            <Button
-              onClick={() =>
-                setOpenMenu((prev) => (prev === "right" ? null : "right"))
-              }
-            >
-              Custom Region on Right
-            </Button>
+            <Button>Custom Region on Right</Button>
           </MegaMenuTrigger>
-          <MegaMenuContainer className={styles.customRegionNoContainerPadding}>
+          <MegaMenuPanel className={styles.customRegionNoContainerPadding}>
             <div className={styles.customRegionContent}>
               <MegaMenuSection>
                 <MegaMenuGroup>
@@ -77,9 +70,9 @@ export const WithCustomRegion = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuLinkRow>
-                <Link href="#">Explore details</Link>
-              </MegaMenuLinkRow>
+              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                <MegaMenuItem>Explore details</MegaMenuItem>
+              </ol>
             </div>
             <MegaMenuCustomRegion
               variant="tertiary"
@@ -111,7 +104,7 @@ export const WithCustomRegion = (): ReactElement => {
                 </StackLayout>
               </FlexLayout>
             </MegaMenuCustomRegion>
-          </MegaMenuContainer>
+          </MegaMenuPanel>
         </div>
       </MegaMenu>
 
@@ -121,16 +114,10 @@ export const WithCustomRegion = (): ReactElement => {
       >
         <div className={styles.customRegionWrapper}>
           <MegaMenuTrigger>
-            <Button
-              onClick={() =>
-                setOpenMenu((prev) => (prev === "left" ? null : "left"))
-              }
-            >
-              Custom Region on Left
-            </Button>
+            <Button>Custom Region on Left</Button>
           </MegaMenuTrigger>
 
-          <MegaMenuContainer className={styles.customRegionNoContainerPadding}>
+          <MegaMenuPanel className={styles.customRegionNoContainerPadding}>
             <MegaMenuCustomRegion variant="secondary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
@@ -198,11 +185,11 @@ export const WithCustomRegion = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuLinkRow>
-                <Link href="#">Explore details</Link>
-              </MegaMenuLinkRow>
+              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                <MegaMenuItem>Explore details</MegaMenuItem>
+              </ol>
             </div>
-          </MegaMenuContainer>
+          </MegaMenuPanel>
         </div>
       </MegaMenu>
 
@@ -212,16 +199,10 @@ export const WithCustomRegion = (): ReactElement => {
       >
         <div className={styles.customRegionWrapper}>
           <MegaMenuTrigger>
-            <Button
-              onClick={() =>
-                setOpenMenu((prev) => (prev === "top" ? null : "top"))
-              }
-            >
-              Custom Region on Top
-            </Button>
+            <Button>Custom Region on Top</Button>
           </MegaMenuTrigger>
 
-          <MegaMenuContainer
+          <MegaMenuPanel
             className={styles.customRegionNoContainerPadding}
             style={{ flexDirection: "column" }}
           >
@@ -291,10 +272,10 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <MegaMenuLinkRow>
-              <Link href="#">Explore details</Link>
-            </MegaMenuLinkRow>
-          </MegaMenuContainer>
+            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+              <MegaMenuItem>Explore details</MegaMenuItem>
+            </ol>
+          </MegaMenuPanel>
         </div>
       </MegaMenu>
 
@@ -304,16 +285,10 @@ export const WithCustomRegion = (): ReactElement => {
       >
         <div className={styles.customRegionWrapper}>
           <MegaMenuTrigger>
-            <Button
-              onClick={() =>
-                setOpenMenu((prev) => (prev === "bottom" ? null : "bottom"))
-              }
-            >
-              Custom Region on Bottom
-            </Button>
+            <Button>Custom Region on Bottom</Button>
           </MegaMenuTrigger>
 
-          <MegaMenuContainer
+          <MegaMenuPanel
             className={styles.customRegionNoContainerPadding}
             style={{ flexDirection: "column" }}
           >
@@ -356,9 +331,9 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <MegaMenuLinkRow>
-              <Link href="#">Explore details</Link>
-            </MegaMenuLinkRow>
+            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+              <MegaMenuItem>Explore details</MegaMenuItem>
+            </ol>
             <MegaMenuCustomRegion variant="tertiary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
@@ -386,7 +361,7 @@ export const WithCustomRegion = (): ReactElement => {
                 </StackLayout>
               </FlexLayout>
             </MegaMenuCustomRegion>
-          </MegaMenuContainer>
+          </MegaMenuPanel>
         </div>
       </MegaMenu>
     </StackLayout>

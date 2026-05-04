@@ -1,9 +1,9 @@
-.saltMegaMenuContainer {
+.saltMegaMenuPanel {
   display: flex;
   flex-wrap: wrap;
-  inline-size: var(--saltMegaMenuContainer-inlineSize, fit-content);
-  max-inline-size: var(--saltMegaMenuContainer-maxInlineSize, var(--saltMegaMenuContainer-availableWidth, calc(100vw - var(--salt-spacing-600))));
-  max-height: 90%;
+  inline-size: var(--saltMegaMenuPanel-inlineSize, fit-content);
+  max-inline-size: var(--saltMegaMenuPanel-maxInlineSize, var(--saltMegaMenuPanel-availableWidth, calc(100vw - var(--salt-spacing-600))));
+  max-height: var(--saltMegaMenuPanel-maxHeight, 90%);
   overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
