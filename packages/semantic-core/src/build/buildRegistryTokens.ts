@@ -44,6 +44,114 @@ function inferThemeFromTokenPath(cssPath: string): string[] {
   return ["salt", "next"];
 }
 
+function normalizeCategory(value: string): string {
+  return value.trim().replace(/\s+/g, "").toLowerCase();
+}
+
+interface CssSectionReplacement {
+  category: string;
+  replacementCategory: string | null;
+  start: number;
+}
+
+function cleanCssCommentText(value: string): string {
+  return normalizeWhitespace(
+    value
+      .split(/\r?\n/u)
+      .map((line) => line.replace(/^\s*\*\s?/u, "").trim())
+      .join(" "),
+  )
+    .replace(/\*\*/g, "")
+    .trim();
+}
+
+function parseDeprecatedReplacementCategory(
+  commentText: string,
+): string | null {
+  const match = /\bDeprecated:?\s*Use\s+([a-z][a-z0-9-]*)\s+instead\b/i.exec(
+    commentText,
+  );
+
+  return match?.[1] ? normalizeCategory(match[1]) : null;
+}
+
+function parseSectionCategory(commentText: string): string | null {
+  if (
+    /\bDeprecated\b/i.test(commentText) ||
+    /\bUse\s+--salt-[\w-]+/i.test(commentText)
+  ) {
+    return null;
+  }
+
+  return /^[A-Za-z][A-Za-z0-9 ]*$/u.test(commentText)
+    ? normalizeCategory(commentText)
+    : null;
+}
+
+function extractCssSectionReplacements(
+  content: string,
+): CssSectionReplacement[] {
+  const sections: CssSectionReplacement[] = [];
+  const commentRegex = /\/\*([\s\S]*?)\*\//g;
+  let pendingReplacementCategory: string | null = null;
+  let match = commentRegex.exec(content);
+
+  while (match) {
+    const commentText = cleanCssCommentText(match[1] ?? "");
+    const replacementCategory = parseDeprecatedReplacementCategory(commentText);
+    if (replacementCategory) {
+      pendingReplacementCategory = replacementCategory;
+      match = commentRegex.exec(content);
+      continue;
+    }
+
+    const sectionCategory = parseSectionCategory(commentText);
+    if (sectionCategory) {
+      sections.push({
+        category: sectionCategory,
+        replacementCategory: pendingReplacementCategory,
+        start: match.index,
+      });
+      pendingReplacementCategory = null;
+    }
+
+    match = commentRegex.exec(content);
+  }
+
+  return sections;
+}
+
+function findCssSectionAtOffset(
+  sections: CssSectionReplacement[],
+  offset: number,
+): CssSectionReplacement | null {
+  let current: CssSectionReplacement | null = null;
+
+  for (const section of sections) {
+    if (section.start > offset) {
+      break;
+    }
+    current = section;
+  }
+
+  return current;
+}
+
+function buildCategoryReplacementTokenName(
+  tokenName: string,
+  category: string,
+  replacementCategory: string | null,
+): string | null {
+  if (!replacementCategory) {
+    return null;
+  }
+
+  const prefix = `--salt-${category}`;
+  return tokenName.startsWith(prefix)
+    ? `--salt-${replacementCategory}${tokenName.slice(prefix.length)}`
+    : null;
+}
+
 async function extractTokenDescriptions(
   repoRoot: string,
 ): Promise<Map<string, string>> {
@@ -99,6 +207,7 @@ export async function extractTokens(
       continue;
     }
 
+    const cssSectionReplacements = extractCssSectionReplacements(content);
     const declarationRegex = /(--salt-[\w-]+)\s*:\s*([^;]+);/g;
     let declarationMatch = declarationRegex.exec(content);
     while (declarationMatch) {
@@ -106,6 +215,7 @@ export async function extractTokens(
       const tokenValue = normalizeWhitespace(declarationMatch[2]);
       const tokenCategory =
         tokenName.replace("--salt-", "").split("-")[0] ?? "misc";
+      const normalizedTokenCategory = normalizeCategory(tokenCategory);
       const semanticIntent = tokenDescriptions.get(tokenCategory) ?? null;
       const tokenThemes = inferThemeFromTokenPath(cssPath);
       const isDeprecated = toPosixPath(cssPath).includes("/deprecated/");
@@ -118,6 +228,12 @@ export async function extractTokens(
       );
       const deprecatedReplacement =
         /\/\*\s*Use\s+(--salt-[\w-]+)\s*\*\//i.exec(declarationLine)?.[1] ??
+        buildCategoryReplacementTokenName(
+          tokenName,
+          normalizedTokenCategory,
+          findCssSectionAtOffset(cssSectionReplacements, declarationMatch.index)
+            ?.replacementCategory ?? null,
+        ) ??
         null;
 
       const existing = tokenMap.get(tokenName);
@@ -162,6 +278,7 @@ export async function extractTokens(
     }
   }
 
+  const tokenNameSet = new Set(tokenMap.keys());
   const tokens = [...tokenMap.values()].map((token) => ({
     name: token.name,
     category: token.category,
@@ -178,7 +295,9 @@ export async function extractTokens(
         name: token.name,
         category: token.category,
         source_paths: [...token.sourcePathSet].sort(),
-        deprecated_replacements: [...token.deprecatedReplacementSet].sort(),
+        deprecated_replacements: [...token.deprecatedReplacementSet]
+          .filter((replacement) => tokenNameSet.has(replacement))
+          .sort(),
       },
       resolvedTokenPolicySources,
     ),
