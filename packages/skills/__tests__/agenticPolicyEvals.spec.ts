@@ -265,7 +265,7 @@ describe("deterministic agentic policy evals", () => {
     ]);
   });
 
-  it("keeps the default new-work theme bootstrap aligned across first-load agent surfaces", async () => {
+  it("keeps provider and theme bootstrap evidence-gated across first-load agent surfaces", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
     const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
     const themeReference = await readSkill(
@@ -284,15 +284,23 @@ describe("deterministic agentic policy evals", () => {
       "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
     );
 
-    const requiredThemeConcepts = [
+    const requiredThemeGuardrails = [
+      /provider(?: and| or) theme bootstrap/i,
+      /workflow (?:evidence|output)/i,
+      /registry-backed generated context/i,
+      /\.salt(?:`)? policy|\.salt(?:`)? project policy/i,
+      /explicit user input/i,
+      /pending or unsupported/i,
+    ];
+    const bannedStaticThemeFacts = [
       /SaltProviderNext/,
       /@salt-ds\/theme\/index\.css/,
       /@salt-ds\/theme\/css\/theme-next\.css/,
       /accent(?:=\\?")?teal/i,
       /corner(?:=\\?")?rounded/i,
-      /headingFont(?:=\\?")?Amplitude/i,
-      /actionFont(?:=\\?")?Amplitude/i,
-      /legacy[\s\S]+SaltProvider[\s\S]+(?:migration compatibility|repo policy)/i,
+      /headingFont/i,
+      /actionFont/i,
+      /Amplitude/,
     ];
 
     for (const source of [
@@ -304,7 +312,10 @@ describe("deterministic agentic policy evals", () => {
       consumerCopilotInstructions,
       consumerSaltUiAgent,
     ]) {
-      expectAllConcepts(source, requiredThemeConcepts);
+      expectAllConcepts(source, requiredThemeGuardrails);
+      for (const bannedFact of bannedStaticThemeFacts) {
+        expect(source).not.toMatch(bannedFact);
+      }
     }
   });
 

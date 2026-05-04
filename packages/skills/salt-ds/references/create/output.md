@@ -17,7 +17,7 @@
 ## implementation plan
 
 - Outline the shortest sensible path from structure choice to implementation.
-- If provider or theme bootstrap matters, name the chosen path from `references/shared/theme.md` or state that the theme decision remains pending.
+- If provider or theme bootstrap matters, cite the evidence source for the chosen path or state that the theme decision remains pending.
 - If some regions are grounded and others are not, return a clearly-labeled partial scaffold only for the grounded regions.
 
 ## chosen Salt building blocks

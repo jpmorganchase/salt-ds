@@ -25,9 +25,9 @@ Use when the screen must summarize a workflow before the user drills into detail
 - primary interaction should feel like:
   - scan first, act second, drill into the main body without losing context
 - usual Salt direction:
-  - page-level dashboard pattern
-  - metric pattern for summary signals
-  - a clear shell and a separate main analytical body
+  - retrieve source-backed page-level pattern context before naming the Salt target
+  - keep summary signals grounded in the returned workflow output
+  - keep shell and main analytical body decisions pending until the workflow evidence names them
 - common mistakes:
   - turning the page into disconnected cards
   - treating every metric as equally loud
@@ -42,8 +42,8 @@ Use when data review, filtering, selection, and follow-up actions are the main j
 - primary interaction should feel like:
   - filter and orient quickly without losing the main table as the detail owner
 - usual Salt direction:
-  - filters clearly subordinate to the data region
-  - actions grouped by row, selection, or page ownership instead of scattered across the shell
+  - keep filters subordinate to the source-backed data region
+  - group actions by row, selection, or page ownership only when workflow evidence supports that ownership
 - common mistakes:
   - oversized summary regions that demote the table
   - filters and actions competing for the same emphasis
@@ -58,9 +58,9 @@ Use when data entry, editing, validation, and status feedback are the core workf
 - primary interaction should feel like:
   - predictable, calm, and structured around the next decision
 - usual Salt direction:
-  - form pattern first
-  - supporting text and status close to the fields they affect
-  - action area aligned with completion and recovery paths
+  - retrieve source-backed form workflow context before naming the Salt target
+  - keep supporting text and status close to the fields only when the workflow evidence supports that structure
+  - align actions with completion and recovery paths from registry-backed or project-policy evidence
 - common mistakes:
   - treating the form as a loose stack of controls
   - burying validation or status feedback away from the fields
@@ -75,9 +75,9 @@ Use when the task is confirmation, announcement, preferences, or a bounded decis
 - primary interaction should feel like:
   - constrained, obvious, and hard to misread
 - usual Salt direction:
-  - dialog or related bounded overlay pattern
-  - action ordering that makes the safest path obvious
-  - minimal supporting structure around the primary decision
+  - retrieve source-backed bounded-workflow context before naming the Salt target
+  - use action ordering only when it is backed by workflow output, registry context, or project policy
+  - keep supporting structure minimal unless source evidence requires more context
 - common mistakes:
   - overloading the dialog with page-level content
   - making secondary actions visually equal to the main decision
@@ -92,9 +92,9 @@ Use when the user needs stable landmarks, orientation, and movement between majo
 - primary interaction should feel like:
   - navigable, legible, and stable under frequent reuse
 - usual Salt direction:
-  - app header and navigation patterns first
-  - shell regions separated from content regions
-  - navigation structure that matches task grouping instead of implementation grouping
+  - retrieve source-backed shell and navigation context before naming Salt targets
+  - separate shell regions from content regions only when workflow evidence supports the boundary
+  - match navigation structure to task grouping from source evidence or project policy
 - common mistakes:
   - mixing shell actions with content actions
   - recreating a custom rail before checking canonical navigation patterns
@@ -109,8 +109,8 @@ Use when the supporting states materially affect trust and usability.
 - primary interaction should feel like:
   - clear about status, clear about next step, and still recognisably the same workflow
 - usual Salt direction:
-  - state content subordinate to the owning workflow surface
-  - actions tied to recovery, retry, or onward progression
+  - keep state content subordinate to the owning workflow surface named by evidence
+  - tie actions to recovery, retry, or onward progression only when the source evidence supports that flow
 - common mistakes:
   - replacing workflow structure with generic placeholder blocks
   - using decorative messaging without a clear action path

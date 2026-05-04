@@ -16,7 +16,7 @@
 - Pick the page, panel, form, navigation, or content pattern that best matches the job.
 - If the user asks for a dashboard, page, screen, workspace, overview, or another multi-region surface, keep that page-level framing in the first Salt create call instead of paraphrasing it into a single metric, card, or other sub-pattern.
 - For greenfield dashboards, metric cards, navigation shells, and layout fixes, treat the request as Salt UI by default instead of starting from generic React/CSS composition.
-- For new Salt-native work, consult `references/shared/theme.md` when provider or theme bootstrap is part of the task. Prefer the shared new-work path only when repo policy does not override it and the required assets are available.
+- For new Salt-native work, consult `references/shared/theme.md` when provider or theme bootstrap is part of the task. Name provider/theme facts only when workflow evidence, registry-backed generated context, `.salt` policy, or explicit user input supplies them.
 - Before changing centering, spacing, or alignment on existing Salt UI, confirm the intended Salt primitive or pattern first instead of guessing with local CSS.
 - Prefer the most constrained primitive or pattern that can carry the interaction.
 - Before creating a custom component, wrapper, or layout helper, check whether an existing Salt primitive, pattern, or foundation already covers the need.
@@ -34,7 +34,7 @@
   - CLI: `salt-ds info --json --catalog-query "<prompt>"`, `salt-ds info --json --entity "<name>"`, then `salt-ds info --json --family "<category>"`
 - Use retrieval support to confirm the owner and supporting surfaces, then continue with exact named follow-through. For create entity follow-through, rerun with MCP `resolved_entities` or CLI `--resolved-entity`. Do not jump to `full` just to re-run selection.
 - Request `full` output only when `action` or `safety.blocking_reasons` indicate you need deeper artifacts such as `composition_contract`, starter snippets, or expanded validation detail.
-- For exact named asks, keep the first create call close to the named Salt target. Do not paraphrase `Metric`, `Tabs`, or similar exact requests into broader descriptive text before the first grounded call.
+- For exact named asks, keep the first create call close to the named Salt target. Do not paraphrase exact requested entity names into broader descriptive text before the first grounded call.
 - If the host already knows the workspace root, get project context first and reuse `context_id` on repeated repo-aware calls instead of recollecting context each time.
 - If the canonical Salt result recommends a project conventions check, confirm repo-specific wrappers or local patterns before you commit to the final structure.
 
@@ -65,7 +65,7 @@
 - Confirm the chosen direction against canonical Salt guidance through the Salt MCP or the docs it points to.
 - Do not stop after a plausible first scaffold if the request is a Salt UI task; complete the selection, validation, and any workflow-directed grounding follow-ups before finishing.
 - Do not substitute custom KPI cards, raw tables, bespoke headers, or other guessed sub-patterns when the contract already named a canonical Salt target that still needs follow-through.
-- Once the owner is grounded, keep supporting follow-through exact. Do not paraphrase a grounded `Tabs`, `Breadcrumbs`, `Avatar`, `Switch`, or `Content status` follow-up back into a broad prompt.
+- Once the owner is grounded, keep supporting follow-through exact. Do not paraphrase a grounded follow-up entity back into a broad prompt.
 - Keep canonical Salt guidance separate from repo-specific conventions. Use project conventions or explicit repo guidance for local overrides instead of assuming the core MCP already knows them.
 - If you mention a specific Salt token, prop, or API name, verify that the exact name exists in canonical Salt guidance before returning it.
 - When token choices affect surfaces, borders, separators, or semantic color, confirm the token family and direct-use policy before finalizing the styling.
@@ -84,7 +84,7 @@
 
 - For non-Salt inputs, start with a short translation checkpoint that names the detected source regions, grouped workstreams, direct swaps, pattern rewrites, and manual review points.
 - Then show the scaffold handoff: what to start with, what grouped structure to build around, and what to validate after the first pass.
-- For new Salt-native work, state the theme/bootstrap decision explicitly only when it affects the scaffold or implementation plan.
+- State the theme/bootstrap decision explicitly only when it affects the scaffold or implementation plan and the required evidence is available.
 - Then summarize the implementation plan, list the chosen building blocks, surface assumptions, include Salt compliance checks, and include starter code when it will accelerate implementation.
 
 ## 8. prove completion before finalizing

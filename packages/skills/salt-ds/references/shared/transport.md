@@ -119,7 +119,7 @@ It is a support layer for choosing the next exact follow-up or confirming the ow
 
 When citing canonical Salt guidance in an answer, use `top_source_urls` from `ide_summary` as the grounding links instead of fabricating documentation URLs.
 When evaluating component fit, use `key_props` from compact component output to check prop availability without requesting the full prop list.
-When a component is compound (e.g., Dialog, Accordion, Form field), compact output includes `sub_component_names` listing the child exports and `composition` with `required_children` and `optional_children`. When MCP support tools are available in the session, request `include: ["props"]` on `get_salt_entity` to get full props for both the root component and its sub-components. When they are not available, use `salt-ds create "<component>" --json --include-starter-code --starter-only` to get the resolved component with starter code.
+When compact output indicates a component is compound, use `sub_component_names` and `composition` from that output as evidence for child exports and slot structure. When MCP support tools are available in the session, request `include: ["props"]` on `get_salt_entity` to get full props for both the root component and its sub-components. When they are not available, use `salt-ds create "<component>" --json --include-starter-code --starter-only` to get the resolved component with starter code.
 
 Treat these as blocking items when they affect the regions you plan to implement or review:
 
@@ -172,7 +172,7 @@ When MCP is the transport:
 - `migrate`: start with `migrate_to_salt`; read returned `confidence`, `post_migration_verification`, and `visual_evidence_contract`; use `source_outline` for structured mockup-style regions, actions, states, and notes.
 - `upgrade`: start with `upgrade_salt_ui`; read returned workflow `confidence`; run `review_salt_ui` on updated code when it is available.
 
-The default MCP surface exposes six repo-aware workflow tools first, followed by read-only support tools: `get_salt_entity`, `get_salt_examples`, and `discover_salt`. `salt_workflow_v1` actions such as `retrieve_entity` and `retrieve_examples` are directly followable in the default MCP surface. In constrained hosts, still verify the session tool list before calling a support tool; if a support tool is unavailable, use the workflow fallback for entity grounding (for example, `create_salt_ui` with an exact entity name as `query`). After create entity follow-through succeeds, rerun the original create workflow with `resolved_entities`.
+The default MCP surface exposes repo-aware workflow tools first, followed by read-only support tools for entity, example, and discovery grounding. Use the capability manifest and current tool list for exact availability. `salt_workflow_v1` actions such as `retrieve_entity` and `retrieve_examples` are directly followable when those support tools are present. In constrained hosts, still verify the session tool list before calling a support tool; if a support tool is unavailable, use the workflow fallback for entity grounding with an exact entity name as workflow input. After create entity follow-through succeeds, rerun the original create workflow with `resolved_entities`.
 
 When CLI is the transport:
 
@@ -205,7 +205,7 @@ salt-ds get_salt_entity "<entity name>" --json --include examples,accessibility
 salt-ds create "<original prompt>" --json --resolved-entity "<entity name>"
 ```
 
-Do not force `--type component` on follow-through calls unless you are certain the entity is a component. Named entities from `required_follow_through` may be patterns (e.g., Metric, App header, Analytical dashboard) or components (e.g., Table, Card). Omit `--type` to let the resolution find the best match across all solution types.
+Do not force `--type component` on follow-through calls unless you are certain the entity is a component. Named entities from `required_follow_through` may be patterns or components. Omit `--type` to let the resolution find the best match across all solution types.
 
 The `--resolved-entity` rerun is the CLI evidence bridge for create entity follow-through. MCP hosts use the same bridge as `resolved_entities: ["<entity name>"]` on the rerun of the original `create_salt_ui` call.
 

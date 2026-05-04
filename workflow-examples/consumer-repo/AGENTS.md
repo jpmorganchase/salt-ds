@@ -12,7 +12,7 @@ Do not complete Salt UI tasks with generic React/CSS output if a canonical Salt 
 
 Do not guess or hallucinate Salt APIs, props, imports, package names, tokens, component capabilities, composition rules, examples, or documentation links.
 
-For new Salt-native work, default to `SaltProviderNext` from `@salt-ds/core` with `@salt-ds/theme/index.css`, `@salt-ds/theme/css/theme-next.css`, `accent="teal"`, `corner="rounded"`, `headingFont="Amplitude"`, and `actionFont="Amplitude"`; use legacy `SaltProvider` only when workflow evidence or explicit repo policy says migration compatibility requires it.
+Provider and theme bootstrap names, imports, props, fonts, and package paths must come from workflow evidence, registry-backed generated context, `.salt` policy, or explicit user input. If that evidence is missing, report theme bootstrap as pending or unsupported instead of naming defaults.
 
 For Salt UI tasks, complete:
 

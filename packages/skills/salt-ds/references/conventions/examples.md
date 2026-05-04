@@ -54,10 +54,10 @@ Use when the repo replaces a canonical Salt answer with one approved local compo
 
 ```json
 {
-  "salt_name": "Button",
-  "prefer": "AppButton",
-  "reason": "Product actions use AppButton for analytics and approved defaults.",
-  "docs": ["./docs/app-button.md"]
+  "salt_name": "<canonical-salt-name>",
+  "prefer": "<repo-wrapper-name>",
+  "reason": "<repo policy reason>",
+  "docs": ["./docs/<repo-wrapper>.md"]
 }
 ```
 
@@ -67,17 +67,17 @@ Use when the repo wants the canonical Salt primitive to stay visible, but wrappe
 
 ```json
 {
-  "name": "AppButton",
-  "wraps": "Button",
+  "name": "<repo-wrapper-name>",
+  "wraps": "<canonical-salt-name>",
   "import": {
-    "from": "@/components/AppButton",
-    "name": "AppButton"
+    "from": "@/components/<RepoWrapper>",
+    "name": "<repo-wrapper-name>"
   },
-  "reason": "Adds analytics and approved defaults without changing the underlying Salt primitive.",
-  "use_when": ["primary product actions", "toolbar actions"],
-  "avoid_when": ["sandbox examples"],
+  "reason": "<repo policy reason>",
+  "use_when": ["<repo-approved use>"],
+  "avoid_when": ["<repo-specific avoid>"],
   "migration_shim": false,
-  "docs": ["./docs/app-button.md"]
+  "docs": ["./docs/<repo-wrapper>.md"]
 }
 ```
 
@@ -87,11 +87,11 @@ Use when the repo has one approved shell or page pattern:
 
 ```json
 {
-  "intent": "workspace shell navigation",
-  "prefer": "WorkspaceShell",
-  "canonical_salt_start": "VerticalNavigation",
-  "reason": "The repo composes canonical Salt navigation primitives into one approved shell wrapper.",
-  "docs": ["./docs/workspace-shell.md"]
+  "intent": "<repo intent>",
+  "prefer": "<repo-pattern-name>",
+  "canonical_salt_start": "<canonical-salt-pattern-name>",
+  "reason": "<repo policy reason>",
+  "docs": ["./docs/<repo-pattern>.md"]
 }
 ```
 
@@ -101,10 +101,10 @@ Use when a repo bans one canonical choice:
 
 ```json
 {
-  "name": "UNSTABLE_SaltProviderNext",
-  "reason": "The repo is standardized on SaltProvider only.",
-  "replacement": "SaltProvider",
-  "docs": ["./docs/platform-conventions.md"]
+  "name": "<canonical-salt-name>",
+  "reason": "<repo policy reason>",
+  "replacement": "<repo-approved-replacement>",
+  "docs": ["./docs/<policy-doc>.md"]
 }
 ```
 
