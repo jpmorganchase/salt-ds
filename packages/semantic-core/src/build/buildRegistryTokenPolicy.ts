@@ -52,6 +52,20 @@ export interface DeprecatedTokenReplacementSource {
   line_end?: number | null;
 }
 
+interface DeprecatedTokenReplacementMetadataEntry {
+  deprecated?: unknown;
+  replacements?: unknown;
+  replacement_kind?: unknown;
+  note?: unknown;
+  basis?: unknown;
+}
+
+interface DeprecatedTokenReplacementMetadataBasis {
+  source_path?: unknown;
+  line_start?: unknown;
+  line_end?: unknown;
+}
+
 export interface TokenStructuralRoleRule {
   id: string;
   category: string;
@@ -487,6 +501,102 @@ function addDeprecatedReplacementSource(
   replacementsByToken.set(tokenName, [...existing, source]);
 }
 
+function isObject(value: unknown): value is Record<string, unknown> {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
+
+function asNullableLineNumber(value: unknown): number | null {
+  return typeof value === "number" && Number.isInteger(value) && value > 0
+    ? value
+    : null;
+}
+
+function metadataEntrySourceText(input: {
+  deprecated: string;
+  replacements: string[];
+  replacementKind: string | null;
+  note: string | null;
+  basis: DeprecatedTokenReplacementMetadataBasis | null;
+}): string {
+  const basisLineStart = asNullableLineNumber(input.basis?.line_start);
+
+  return normalizeWhitespace(
+    [
+      `${input.deprecated} -> ${input.replacements.join(", ")}`,
+      input.replacementKind ? `kind: ${input.replacementKind}` : null,
+      input.note,
+      typeof input.basis?.source_path === "string"
+        ? `basis: ${input.basis.source_path}`
+        : null,
+      basisLineStart ? `line ${basisLineStart}` : null,
+    ]
+      .filter((text): text is string => Boolean(text))
+      .join("; "),
+  );
+}
+
+function collectMetadataDeprecatedReplacements(
+  replacementsByToken: Map<string, DeprecatedTokenReplacementSource[]>,
+  input: {
+    sourcePath: string;
+    content: string;
+  },
+): void {
+  const metadata = JSON.parse(input.content) as unknown;
+  if (
+    !isObject(metadata) ||
+    metadata.schema !== "salt_theme_deprecated_token_replacements_v1"
+  ) {
+    return;
+  }
+
+  const entries = Array.isArray(metadata.entries) ? metadata.entries : [];
+  for (const entry of entries) {
+    if (!isObject(entry)) {
+      continue;
+    }
+
+    const metadataEntry = entry as DeprecatedTokenReplacementMetadataEntry;
+    const deprecated =
+      typeof metadataEntry.deprecated === "string"
+        ? metadataEntry.deprecated
+        : null;
+    const replacements = Array.isArray(metadataEntry.replacements)
+      ? metadataEntry.replacements.filter(
+          (replacement): replacement is string =>
+            typeof replacement === "string" &&
+            replacement.startsWith("--salt-"),
+        )
+      : [];
+    if (!deprecated?.startsWith("--salt-") || replacements.length === 0) {
+      continue;
+    }
+
+    const basis = isObject(metadataEntry.basis)
+      ? (metadataEntry.basis as DeprecatedTokenReplacementMetadataBasis)
+      : null;
+    const sourceText = metadataEntrySourceText({
+      deprecated,
+      replacements,
+      replacementKind:
+        typeof metadataEntry.replacement_kind === "string"
+          ? metadataEntry.replacement_kind
+          : null,
+      note: typeof metadataEntry.note === "string" ? metadataEntry.note : null,
+      basis,
+    });
+
+    for (const replacement of replacements) {
+      addDeprecatedReplacementSource(replacementsByToken, deprecated, {
+        replacement,
+        source_kind: "token",
+        source_path: input.sourcePath,
+        source_text: sourceText,
+      });
+    }
+  }
+}
+
 function splitMarkdownTableCells(line: string): string[] | null {
   const trimmed = line.trim();
   if (!trimmed.startsWith("|") || !trimmed.endsWith("|")) {
@@ -756,6 +866,15 @@ async function collectDeprecatedTokenReplacements(
     string,
     DeprecatedTokenReplacementSource[]
   >();
+  const metadataPath = "packages/theme/css/deprecated/token-replacements.json";
+  const metadata = await readFileOrNull(path.join(repoRoot, metadataPath));
+  if (metadata) {
+    collectMetadataDeprecatedReplacements(replacementsByToken, {
+      sourcePath: metadataPath,
+      content: metadata,
+    });
+  }
+
   const changelogPath = "packages/theme/CHANGELOG.md";
   const changelog = await readFileOrNull(path.join(repoRoot, changelogPath));
   if (changelog) {
