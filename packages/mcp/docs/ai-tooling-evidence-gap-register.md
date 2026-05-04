@@ -654,6 +654,15 @@ Current state:
   policies cite `packages/theme/css/deprecated/token-replacements.json`
   EvidenceRefs, while unresolved replacements such as opacity remain
   unsupported rather than becoming generated token policy claims.
+- Deprecated token replacement metadata validation on May 5, 2026 added a
+  shared semantic-core schema for `token-replacements.json` and explicit
+  `manual` or `unsupported` metadata states for remaining raw-value,
+  non-exact, or missing-doc token replacement cases. Manual and unsupported
+  metadata records are gap evidence only; they do not emit generated token
+  policy replacement facts. The fresh production audit still reports 43
+  explicit unsupported docs/registry gaps: 11 component gaps, 28 pattern gaps,
+  and 4 foundation gaps. The remaining foundation gaps are `measured`,
+  `opacity`, `taggable`, and `track`.
 
 Why this matters:
 
