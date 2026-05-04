@@ -158,7 +158,7 @@ export function useMegaMenuKeyboard({
           event.preventDefault();
           if (event.shiftKey) {
             if (linearIndex === 0) {
-              onClose();
+              onFocusTrigger();
             } else {
               allItems[linearIndex - 1]?.focus();
             }
