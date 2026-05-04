@@ -43,6 +43,15 @@ interface TokenPolicyInput {
   deprecated_replacements?: string[];
 }
 
+export interface DeprecatedTokenReplacementSource {
+  replacement: string;
+  source_kind: "docs" | "token";
+  source_path: string;
+  source_text: string;
+  line_start?: number | null;
+  line_end?: number | null;
+}
+
 export interface TokenStructuralRoleRule {
   id: string;
   category: string;
@@ -61,6 +70,10 @@ export interface TokenPolicySourceRegistry {
   characteristic_docs_by_category: ReadonlyMap<string, TokenPolicyDocSource>;
   foundation_docs_by_category: ReadonlyMap<string, TokenPolicyDocSource>;
   foundation_categories: ReadonlySet<string>;
+  deprecated_replacements_by_token: ReadonlyMap<
+    string,
+    readonly DeprecatedTokenReplacementSource[]
+  >;
   structural_role_rules: readonly TokenStructuralRoleRule[];
 }
 
@@ -430,6 +443,360 @@ async function collectFoundationCategories(
   );
 }
 
+function extractSaltTokensFromText(value: string): string[] {
+  return uniqueStrings(
+    [...value.matchAll(/--salt-[\w-]+/g)].map((match) => match[0]),
+  );
+}
+
+function lineNumberAtOffset(content: string, offset: number): number {
+  return content.slice(0, Math.max(0, offset)).split(/\r?\n/u).length;
+}
+
+function addDeprecatedReplacementSource(
+  replacementsByToken: Map<string, DeprecatedTokenReplacementSource[]>,
+  tokenName: string,
+  source: DeprecatedTokenReplacementSource,
+): void {
+  if (!tokenName || !source.replacement || tokenName === source.replacement) {
+    return;
+  }
+
+  const existing = replacementsByToken.get(tokenName) ?? [];
+  const key = [
+    source.replacement,
+    source.source_kind,
+    source.source_path,
+    source.line_start ?? "",
+    source.line_end ?? "",
+  ].join("|");
+  const hasSource = existing.some(
+    (candidate) =>
+      [
+        candidate.replacement,
+        candidate.source_kind,
+        candidate.source_path,
+        candidate.line_start ?? "",
+        candidate.line_end ?? "",
+      ].join("|") === key,
+  );
+  if (hasSource) {
+    return;
+  }
+
+  replacementsByToken.set(tokenName, [...existing, source]);
+}
+
+function splitMarkdownTableCells(line: string): string[] | null {
+  const trimmed = line.trim();
+  if (!trimmed.startsWith("|") || !trimmed.endsWith("|")) {
+    return null;
+  }
+
+  return trimmed
+    .slice(1, -1)
+    .split("|")
+    .map((cell) => cell.trim());
+}
+
+function isMarkdownTableSeparator(cells: string[]): boolean {
+  return cells.every((cell) => /^:?-{3,}:?$/u.test(cell.trim()));
+}
+
+function normalizeMarkdownHeader(cell: string): string {
+  return cleanMarkdownText(cell)
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function findDeprecatedTokenColumn(headers: string[]): number {
+  return headers.findIndex(
+    (header) =>
+      header === "name" ||
+      header === "token" ||
+      header === "deprecatedtoken" ||
+      header.endsWith("tokendeprecated"),
+  );
+}
+
+function findReplacementTokenColumn(headers: string[]): number {
+  return headers.findIndex(
+    (header) =>
+      header === "replacement" ||
+      header === "replacementtoken" ||
+      header === "replacementtokens" ||
+      header === "useinstead",
+  );
+}
+
+function collectMarkdownTableDeprecatedReplacements(
+  replacementsByToken: Map<string, DeprecatedTokenReplacementSource[]>,
+  input: {
+    sourcePath: string;
+    content: string;
+  },
+): void {
+  const lines = input.content.split(/\r?\n/u);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const headerCells = splitMarkdownTableCells(lines[index] ?? "");
+    const separatorCells = splitMarkdownTableCells(lines[index + 1] ?? "");
+    if (
+      !headerCells ||
+      !separatorCells ||
+      !isMarkdownTableSeparator(separatorCells)
+    ) {
+      continue;
+    }
+
+    const headers = headerCells.map(normalizeMarkdownHeader);
+    const tokenColumn = findDeprecatedTokenColumn(headers);
+    const replacementColumn = findReplacementTokenColumn(headers);
+    if (tokenColumn === -1 || replacementColumn === -1) {
+      continue;
+    }
+
+    let rowIndex = index + 2;
+    while (rowIndex < lines.length) {
+      const rowLine = lines[rowIndex] ?? "";
+      const rowCells = splitMarkdownTableCells(rowLine);
+      if (!rowCells) {
+        break;
+      }
+
+      const deprecatedTokens = extractSaltTokensFromText(
+        rowCells[tokenColumn] ?? "",
+      );
+      const replacementTokens = extractSaltTokensFromText(
+        rowCells[replacementColumn] ?? "",
+      );
+      for (const tokenName of deprecatedTokens) {
+        for (const replacement of replacementTokens) {
+          addDeprecatedReplacementSource(replacementsByToken, tokenName, {
+            replacement,
+            source_kind: "docs",
+            source_path: input.sourcePath,
+            source_text: cleanMarkdownText(rowLine),
+            line_start: rowIndex + 1,
+            line_end: rowIndex + 1,
+          });
+        }
+      }
+
+      rowIndex += 1;
+    }
+
+    index = rowIndex;
+  }
+}
+
+function tokenFamilySuffix(tokenName: string): string | null {
+  const parts = tokenName.replace("--salt-", "").split("-");
+  return parts.length > 1 ? parts.slice(1).join("-") : null;
+}
+
+function directReplacementContext(lines: string[], startIndex: number): string {
+  const contextLines: string[] = [];
+  let foundContext = false;
+
+  for (
+    let index = startIndex - 1;
+    index >= 0 && contextLines.length < 8;
+    index -= 1
+  ) {
+    const line = lines[index]?.trim() ?? "";
+    if (line.startsWith("```")) {
+      break;
+    }
+    if (!line) {
+      if (foundContext) {
+        break;
+      }
+      continue;
+    }
+
+    if (line) {
+      contextLines.unshift(line);
+      foundContext = true;
+    }
+  }
+
+  return cleanMarkdownText(contextLines.join(" "));
+}
+
+function collectDiffBlockDeprecatedReplacements(
+  replacementsByToken: Map<string, DeprecatedTokenReplacementSource[]>,
+  input: {
+    sourcePath: string;
+    content: string;
+  },
+): void {
+  const lines = input.content.split(/\r?\n/u);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    if (!/^```diff\s*$/u.test(lines[index]?.trim() ?? "")) {
+      continue;
+    }
+
+    const context = directReplacementContext(lines, index);
+    if (
+      !/\b(direct replacement mapping|replaced tokens with below|replaced with below)\b/i.test(
+        context,
+      )
+    ) {
+      continue;
+    }
+
+    const removed: Array<{ token: string; line: number; text: string }> = [];
+    const added: Array<{ token: string; line: number; text: string }> = [];
+    let blockEnd = index + 1;
+    while (
+      blockEnd < lines.length &&
+      !/^```\s*$/u.test(lines[blockEnd] ?? "")
+    ) {
+      const line = lines[blockEnd] ?? "";
+      const match = /^\s*([+-])\s*(--salt-[\w-]+)/u.exec(line);
+      if (match?.[1] === "-") {
+        removed.push({
+          token: match[2] ?? "",
+          line: blockEnd + 1,
+          text: line,
+        });
+      } else if (match?.[1] === "+") {
+        added.push({
+          token: match[2] ?? "",
+          line: blockEnd + 1,
+          text: line,
+        });
+      }
+      blockEnd += 1;
+    }
+
+    const usedAddedTokens = new Set<string>();
+    for (const removedToken of removed) {
+      const removedSuffix = tokenFamilySuffix(removedToken.token);
+      const addedToken =
+        added.find((candidate) => {
+          const candidateKey = `${candidate.token}:${candidate.line}`;
+          return (
+            !usedAddedTokens.has(candidateKey) &&
+            removedSuffix &&
+            tokenFamilySuffix(candidate.token) === removedSuffix
+          );
+        }) ??
+        (removed.length === added.length
+          ? added[removed.indexOf(removedToken)]
+          : null);
+      if (!addedToken) {
+        continue;
+      }
+
+      usedAddedTokens.add(`${addedToken.token}:${addedToken.line}`);
+      addDeprecatedReplacementSource(replacementsByToken, removedToken.token, {
+        replacement: addedToken.token,
+        source_kind: "docs",
+        source_path: input.sourcePath,
+        source_text: cleanMarkdownText(
+          `${context} ${removedToken.text} ${addedToken.text}`,
+        ),
+        line_start: removedToken.line,
+        line_end: addedToken.line,
+      });
+    }
+
+    index = blockEnd;
+  }
+}
+
+function collectInlineDeprecatedReplacements(
+  replacementsByToken: Map<string, DeprecatedTokenReplacementSource[]>,
+  input: {
+    sourcePath: string;
+    content: string;
+  },
+): void {
+  const declarationRegex = /(--salt-[\w-]+)\s*:\s*([^;]+);/g;
+  let declarationMatch = declarationRegex.exec(input.content);
+
+  while (declarationMatch) {
+    const tokenName = declarationMatch[1] ?? "";
+    const lineStartOffset =
+      input.content.lastIndexOf("\n", declarationMatch.index) + 1;
+    const lineEndOffset = input.content.indexOf("\n", declarationMatch.index);
+    const declarationLine = input.content.slice(
+      lineStartOffset,
+      lineEndOffset === -1 ? input.content.length : lineEndOffset,
+    );
+    const replacement =
+      /\/\*\s*Use\s+(--salt-[\w-]+)\s*\*\//i.exec(declarationLine)?.[1] ?? null;
+
+    if (replacement) {
+      const lineNumber = lineNumberAtOffset(
+        input.content,
+        declarationMatch.index,
+      );
+      addDeprecatedReplacementSource(replacementsByToken, tokenName, {
+        replacement,
+        source_kind: "token",
+        source_path: input.sourcePath,
+        source_text: normalizeWhitespace(declarationLine),
+        line_start: lineNumber,
+        line_end: lineNumber,
+      });
+    }
+
+    declarationMatch = declarationRegex.exec(input.content);
+  }
+}
+
+async function collectDeprecatedTokenReplacements(
+  repoRoot: string,
+): Promise<Map<string, DeprecatedTokenReplacementSource[]>> {
+  const replacementsByToken = new Map<
+    string,
+    DeprecatedTokenReplacementSource[]
+  >();
+  const changelogPath = "packages/theme/CHANGELOG.md";
+  const changelog = await readFileOrNull(path.join(repoRoot, changelogPath));
+  if (changelog) {
+    collectMarkdownTableDeprecatedReplacements(replacementsByToken, {
+      sourcePath: changelogPath,
+      content: changelog,
+    });
+    collectDiffBlockDeprecatedReplacements(replacementsByToken, {
+      sourcePath: changelogPath,
+      content: changelog,
+    });
+  }
+
+  const cssPaths = (
+    await fg("packages/theme/css/**/*.css", {
+      cwd: repoRoot,
+      absolute: true,
+      onlyFiles: true,
+    })
+  ).sort((left, right) => left.localeCompare(right));
+
+  for (const cssPath of cssPaths) {
+    const sourcePath = toPosixPath(path.relative(repoRoot, cssPath));
+    if (!sourcePath.includes("/deprecated/")) {
+      continue;
+    }
+
+    const content = await readFileOrNull(cssPath);
+    if (!content) {
+      continue;
+    }
+
+    collectInlineDeprecatedReplacements(replacementsByToken, {
+      sourcePath,
+      content,
+    });
+  }
+
+  return replacementsByToken;
+}
+
 function buildContainerStructuralRoleRules(
   source: TokenPolicyDocSource | null,
 ): TokenStructuralRoleRule[] {
@@ -588,12 +955,14 @@ export async function buildTokenPolicySourceRegistry(
     characteristicDocs,
     foundationDocs,
     foundationCategories,
+    deprecatedReplacementSources,
     designTokensOverview,
     foundationsIndex,
   ] = await Promise.all([
     collectCharacteristicDocSources(repoRoot),
     collectFoundationDocSources(repoRoot),
     collectFoundationCategories(repoRoot),
+    collectDeprecatedTokenReplacements(repoRoot),
     createDocSource(
       repoRoot,
       path.join(
@@ -617,6 +986,7 @@ export async function buildTokenPolicySourceRegistry(
     characteristic_docs_by_category: characteristicDocs,
     foundation_docs_by_category: foundationDocs,
     foundation_categories: foundationCategories,
+    deprecated_replacements_by_token: deprecatedReplacementSources,
     structural_role_rules: buildStructuralRoleRules({
       characteristicDocs,
       foundationDocs,
@@ -1184,11 +1554,137 @@ function replacementTokenTier(
   return null;
 }
 
+function buildDeprecatedReplacementSourceEvidenceRefs(
+  tokenName: string,
+  replacementSources: readonly DeprecatedTokenReplacementSource[],
+): SaltEvidenceRef[] {
+  const uniqueSources = new Map<string, DeprecatedTokenReplacementSource>();
+  for (const source of replacementSources) {
+    uniqueSources.set(
+      [
+        source.replacement,
+        source.source_kind,
+        source.source_path,
+        source.line_start ?? "",
+        source.line_end ?? "",
+      ].join("|"),
+      source,
+    );
+  }
+
+  return [...uniqueSources.values()].map((source, index) => ({
+    contract: SALT_EVIDENCE_REF_CONTRACT,
+    id: `${slugify(tokenName)}.policy.deprecated-replacement.${index}.source-ref`,
+    source_kind: source.source_kind,
+    claim_kind: "token",
+    source: {
+      repo_path: source.source_path,
+      section: source.source_text,
+      line_start: source.line_start ?? null,
+      line_end: source.line_end ?? null,
+    },
+    confidence: "high",
+    note: "Source-backed deprecated token replacement evidence for generated token policy metadata.",
+  }));
+}
+
+interface ResolvedDeprecatedReplacement {
+  replacement: string;
+  evidenceSources: DeprecatedTokenReplacementSource[];
+}
+
+function hasPolicyBackedReplacement(
+  replacement: string,
+  sources: TokenPolicySourceRegistry,
+): boolean {
+  return (
+    replacementTokenTier(replacement, sources) !== null &&
+    findPolicyDocForTokenName(replacement, sources) !== null
+  );
+}
+
+function resolveDeprecatedReplacement(
+  candidate: ResolvedDeprecatedReplacement,
+  sources: TokenPolicySourceRegistry,
+  visited: ReadonlySet<string>,
+  depth: number,
+): ResolvedDeprecatedReplacement[] {
+  if (hasPolicyBackedReplacement(candidate.replacement, sources)) {
+    return [candidate];
+  }
+
+  if (depth >= 4 || visited.has(candidate.replacement)) {
+    return [];
+  }
+
+  const nextSources =
+    sources.deprecated_replacements_by_token.get(candidate.replacement) ?? [];
+  if (nextSources.length === 0) {
+    return [];
+  }
+
+  const nextVisited = new Set([...visited, candidate.replacement]);
+  return nextSources.flatMap((nextSource) =>
+    resolveDeprecatedReplacement(
+      {
+        replacement: nextSource.replacement,
+        evidenceSources: [...candidate.evidenceSources, nextSource],
+      },
+      sources,
+      nextVisited,
+      depth + 1,
+    ),
+  );
+}
+
+function resolveDeprecatedReplacements(
+  token: TokenPolicyInput,
+  sources: TokenPolicySourceRegistry,
+): ResolvedDeprecatedReplacement[] {
+  const candidates: ResolvedDeprecatedReplacement[] = [
+    ...uniqueStrings(token.deprecated_replacements ?? []).map(
+      (replacement) => ({
+        replacement,
+        evidenceSources: [],
+      }),
+    ),
+    ...(sources.deprecated_replacements_by_token.get(token.name) ?? []).map(
+      (source) => ({
+        replacement: source.replacement,
+        evidenceSources: [source],
+      }),
+    ),
+  ];
+  const byReplacement = new Map<string, DeprecatedTokenReplacementSource[]>();
+
+  for (const candidate of candidates) {
+    for (const resolved of resolveDeprecatedReplacement(
+      candidate,
+      sources,
+      new Set([token.name]),
+      0,
+    )) {
+      byReplacement.set(resolved.replacement, [
+        ...(byReplacement.get(resolved.replacement) ?? []),
+        ...resolved.evidenceSources,
+      ]);
+    }
+  }
+
+  return [...byReplacement.entries()].map(([replacement, evidenceSources]) => ({
+    replacement,
+    evidenceSources,
+  }));
+}
+
 function buildDeprecatedReplacementPolicy(
   token: TokenPolicyInput,
   sources: TokenPolicySourceRegistry,
 ): NonNullable<TokenRecord["policy"]> | null {
-  const replacements = uniqueStrings(token.deprecated_replacements ?? []);
+  const resolvedReplacements = resolveDeprecatedReplacements(token, sources);
+  const replacements = uniqueStrings(
+    resolvedReplacements.map((replacement) => replacement.replacement),
+  );
   if (replacements.length === 0) {
     return null;
   }
@@ -1242,7 +1738,15 @@ function buildDeprecatedReplacementPolicy(
       pairing: null,
     },
     docs,
-    buildTokenSourceEvidenceRefs(token.name, token.source_paths ?? []),
+    [
+      ...buildTokenSourceEvidenceRefs(token.name, token.source_paths ?? []),
+      ...buildDeprecatedReplacementSourceEvidenceRefs(
+        token.name,
+        resolvedReplacements.flatMap(
+          (replacement) => replacement.evidenceSources,
+        ),
+      ),
+    ],
   );
 }
 
