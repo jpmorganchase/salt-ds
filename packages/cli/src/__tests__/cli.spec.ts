@@ -6,6 +6,10 @@ import { fileURLToPath } from "node:url";
 import { upsertSaltRepoInstructions } from "@salt-ds/semantic-core/bootstrapScaffolding";
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import { validateSaltAiSetupSchema } from "../../../semantic-core/src/__tests__/aiSetupSchemaTestUtils.js";
+import { validateSaltReviewReportSchema } from "../../../semantic-core/src/__tests__/reviewReportSchemaTestUtils.js";
+import { validateSaltReviewReportValidationSchema } from "../../../semantic-core/src/__tests__/reviewReportValidationSchemaTestUtils.js";
+import { validateSaltWorkflowFollowupReportSchema } from "../../../semantic-core/src/__tests__/workflowFollowupReportSchemaTestUtils.js";
 import { runCli } from "../cli.js";
 
 const tempDirs: string[] = [];
@@ -304,7 +308,9 @@ describe("salt cli", () => {
     expect(createHelp).toContain(
       "Compact JSON is a workflow contract only and does not include starter code.",
     );
-    expect(createHelp).toContain("salt-ds get_salt_entity Avatar --json");
+    expect(createHelp).toContain(
+      "salt-ds get_salt_entity <entity-name> --json",
+    );
     expect(createHelp).not.toContain(
       "salt-ds create <query> [--json] [--full] [--include-starter-code]",
     );
@@ -437,6 +443,7 @@ describe("salt cli", () => {
             "review",
             "migrate",
             "upgrade",
+            "export-context",
             "get_salt_entity",
             "get_salt_examples",
             "discover_salt",
@@ -446,7 +453,15 @@ describe("salt cli", () => {
         support_tools: expect.objectContaining({
           policy: "default_read_only_host_surface",
           default_exposed: true,
-          tool_ids: ["discover_salt", "get_salt_entity", "get_salt_examples"],
+          tool_ids: expect.arrayContaining([
+            "discover_salt",
+            "get_salt_entity",
+            "get_salt_examples",
+            "validate_salt_review_report",
+            "resume_salt_review",
+            "persist_salt_context_pack",
+            "persist_salt_generated_artifact",
+          ]),
         }),
         support_surface: expect.objectContaining({
           retrieval_catalog: expect.objectContaining({
@@ -669,8 +684,7 @@ describe("salt cli", () => {
       },
     });
 
-    expect(exitCode).toBe(0);
-    expect(stderr).toBe("");
+    expect({ exitCode, stderr }).toEqual({ exitCode: 0, stderr: "" });
     const payload = JSON.parse(stdout);
     expect(payload.salt.installation.versionHealth).toEqual(
       expect.objectContaining({
@@ -856,8 +870,7 @@ describe("salt cli", () => {
       },
     });
 
-    expect(exitCode).toBe(0);
-    expect(stderr).toBe("");
+    expect({ exitCode, stderr }).toEqual({ exitCode: 0, stderr: "" });
     const payload = JSON.parse(stdout);
     expect(payload.policy).toEqual(
       expect.objectContaining({
@@ -1242,6 +1255,76 @@ describe("salt cli", () => {
       fs.access(path.join(rootDir, ".github", "agents", "salt-ui.agent.md")),
     ).resolves.toBeUndefined();
 
+    const packageJson = JSON.parse(
+      await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
+    ) as { scripts?: Record<string, string> };
+    expect(packageJson.scripts?.["ui:verify"]).toBe("salt-ds review src");
+  });
+
+  it("bootstraps the fact-free Salt AI setup path through init --ai", async () => {
+    const rootDir = await createTempDir("salt-cli-init-ai");
+    await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          name: "salt-cli-init-ai",
+          dependencies: {
+            react: "^18.3.1",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(withRegistry(["init", ".", "--ai", "--json"]), {
+      cwd: rootDir,
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+    expect({ exitCode, stderr }).toEqual({ exitCode: 0, stderr: "" });
+    const payload = JSON.parse(stdout);
+    expect(validateSaltAiSetupSchema(payload.aiSetup)).toEqual([]);
+    expect(payload.aiSetup).toEqual(
+      expect.objectContaining({
+        contract: "salt_ai_setup_v1",
+        status: "degraded",
+        next_command: "salt-ds export-context . --manifest --json",
+        steps: expect.arrayContaining([
+          expect.objectContaining({
+            id: "repo-policy",
+            status: "current",
+          }),
+          expect.objectContaining({
+            id: "host-adapters",
+            status: "current",
+          }),
+          expect.objectContaining({
+            id: "ui-verify",
+            status: "current",
+          }),
+          expect.objectContaining({
+            id: "generated-context",
+            status: "action_required",
+            missing: ["generated context health check"],
+          }),
+        ]),
+      }),
+    );
+    await expect(
+      fs.access(path.join(rootDir, ".github", "copilot-instructions.md")),
+    ).resolves.toBeUndefined();
+    await expect(
+      fs.access(path.join(rootDir, ".github", "agents", "salt-ui.agent.md")),
+    ).resolves.toBeUndefined();
     const packageJson = JSON.parse(
       await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
     ) as { scripts?: Record<string, string> };
@@ -1873,7 +1956,7 @@ describe("salt cli", () => {
     );
   });
 
-  it("uses the default JPM Brand theme bootstrap in pattern starter code for new create work", async () => {
+  it("does not inject theme bootstrap facts in pattern starter code without workflow or policy evidence", async () => {
     const rootDir = await createTempDir("salt-cli-create-dashboard");
     await fs.writeFile(
       path.join(rootDir, "package.json"),
@@ -1920,34 +2003,31 @@ describe("salt cli", () => {
     expect(payload.result.recommendation.recommended.name).toBe(
       "Analytical dashboard",
     );
-    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
-      "SaltProviderNext",
-    );
-    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
+    const starter = payload.result.recommendation.starter_code?.[0];
+    expect(starter?.code).not.toContain("SaltProvider");
+    expect(starter?.code).not.toContain(
       'accent="teal"',
     );
-    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
+    expect(starter?.code).toContain(
       "<BorderLayout>",
     );
-    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
+    expect(starter?.code).toContain(
       '<BorderItem position="north" as="header">',
     );
-    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
+    expect(starter?.code).toContain(
       '<BorderItem position="center" as="main">',
     );
-    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
+    expect(starter?.code).toContain(
       '<GridLayout columns={12} gap={3} aria-label="Dashboard modules">',
     );
-    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
+    expect(starter?.code).toContain(
       "Metric subtitle or subvalue",
     );
-    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
+    expect(starter?.code).toContain(
       "Fixed panel: filters, toggles, and controls",
     );
-    expect(payload.result.recommendation.starter_code?.[0]?.notes).toEqual(
-      expect.arrayContaining([
-        expect.stringContaining("JPM Brand theme bootstrap"),
-      ]),
+    expect(starter?.notes ?? []).not.toEqual(
+      expect.arrayContaining([expect.stringContaining("theme bootstrap")]),
     );
     expect(payload.artifacts.starterValidation).toEqual(
       expect.objectContaining({
@@ -3151,11 +3231,19 @@ describe("salt cli", () => {
       ].join("\n"),
       "utf8",
     );
+    const reportPath = path.join(rootDir, ".salt", "reports", "review.json");
 
     let stdout = "";
     let stderr = "";
     const exitCode = await runCli(
-      withRegistry(["review", "src", "--json", "--full"]),
+      withRegistry([
+        "review",
+        "src",
+        "--json",
+        "--full",
+        "--report",
+        reportPath,
+      ]),
       {
         cwd: rootDir,
         writeStdout: (message) => {
@@ -3199,6 +3287,20 @@ describe("salt cli", () => {
         available: true,
       }),
     );
+    expect(
+      validateSaltReviewReportSchema(payload.artifacts.reviewReport),
+    ).toEqual([]);
+    expect(payload.artifacts.reviewReport).toEqual(
+      expect.objectContaining({
+        contract: "salt_review_report_v1",
+        workflow: expect.objectContaining({
+          transport_used: "cli",
+        }),
+        registry: expect.objectContaining({
+          hash: expect.stringMatching(/^sha256:/),
+        }),
+      }),
+    );
     expect(payload.result.sourceValidation.files[0]?.issues).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -3206,7 +3308,214 @@ describe("salt cli", () => {
         }),
       ]),
     );
-  });
+    const reportPayload = JSON.parse(await fs.readFile(reportPath, "utf8"));
+    expect(validateSaltReviewReportSchema(reportPayload)).toEqual([]);
+    expect(reportPayload).toEqual(
+      expect.objectContaining({
+        contract: "salt_review_report_v1",
+        status: "needs_attention",
+        registry: expect.objectContaining({
+          hash: expect.stringMatching(/^sha256:/),
+        }),
+        workflow: expect.objectContaining({
+          id: "review",
+          transport_used: "cli",
+        }),
+        surface_gate: expect.objectContaining({
+          status: "validated",
+          validation_issues: [],
+          unsupported_claim_count: 0,
+          artifact_id: "review-report.validation",
+          artifact_kind: "review-report",
+        }),
+        evidence_validation: expect.objectContaining({
+          status: "validated",
+          issues: [],
+        }),
+        unsupported_claims: [],
+      }),
+    );
+    expect(reportPayload.evidence_validation).toEqual({
+      status: reportPayload.surface_gate.status,
+      issues: reportPayload.surface_gate.validation_issues,
+      missing: reportPayload.surface_gate.missing,
+      unsupported_claim_count:
+        reportPayload.surface_gate.unsupported_claim_count,
+    });
+    expect(reportPayload.findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "component-choice.navigation",
+          status: "source_backed",
+          evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+        }),
+      ]),
+    );
+    expect(reportPayload.generated_artifact.claims).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field_path: "issues.component-choice.navigation",
+          evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+        }),
+      ]),
+    );
+    expect(payload.artifacts.reviewReport).toEqual(reportPayload);
+
+    let validationStdout = "";
+    expect(
+      await runCli(
+        withRegistry(["review", "--validate", reportPath, "--json"]),
+        {
+          cwd: rootDir,
+          writeStdout: (message) => {
+            validationStdout += message;
+          },
+          writeStderr: (message) => {
+            stderr += message;
+          },
+        },
+      ),
+    ).toBe(0);
+    const validationPayload = readCliJson(validationStdout);
+    expect(validateSaltReviewReportValidationSchema(validationPayload)).toEqual(
+      [],
+    );
+    expect(validationPayload).toEqual(
+      expect.objectContaining({
+        contract: "salt_review_report_validation_v1",
+        status: "current",
+        current: true,
+        supported: true,
+        report_path: reportPath,
+        mismatches: [],
+        missing: [],
+        resume: expect.objectContaining({
+          contract: "salt_review_resume_v1",
+          status: "ready",
+          report_path: reportPath,
+          reusable_evidence_ref_ids: expect.arrayContaining([
+            expect.any(String),
+          ]),
+          unsupported_claim_ids: [],
+        }),
+      }),
+    );
+
+    let resumeStdout = "";
+    expect(
+      await runCli(withRegistry(["review", "--resume", reportPath, "--json"]), {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          resumeStdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      }),
+    ).toBe(0);
+    expect(readCliJson(resumeStdout)).toEqual(
+      expect.objectContaining({
+        contract: "salt_review_resume_v1",
+        status: "ready",
+        report_path: reportPath,
+        reusable_evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+        unsupported_claim_ids: [],
+      }),
+    );
+
+    const tamperedReportPath = path.join(
+      rootDir,
+      ".salt",
+      "reports",
+      "review-undocumented.json",
+    );
+    const tamperedReport = JSON.parse(JSON.stringify(reportPayload)) as {
+      generated_artifact?: {
+        evidence_refs?: Array<{
+          registry?: { field_path?: string };
+        }>;
+      };
+    };
+    const tamperedEvidenceRef =
+      tamperedReport.generated_artifact?.evidence_refs?.find(
+        (ref) => ref.registry,
+      );
+    if (!tamperedEvidenceRef?.registry) {
+      throw new Error("Expected report fixture to include registry evidence.");
+    }
+    tamperedEvidenceRef.registry.field_path = "__invalid_test_fixture_field__";
+    await fs.writeFile(
+      tamperedReportPath,
+      JSON.stringify(tamperedReport, null, 2),
+      "utf8",
+    );
+
+    let tamperedValidationStdout = "";
+    expect(
+      await runCli(
+        withRegistry(["review", "--validate", tamperedReportPath, "--json"]),
+        {
+          cwd: rootDir,
+          writeStdout: (message) => {
+            tamperedValidationStdout += message;
+          },
+          writeStderr: (message) => {
+            stderr += message;
+          },
+        },
+      ),
+    ).toBe(10);
+    const tamperedValidationPayload = readCliJson(tamperedValidationStdout);
+    expect(
+      validateSaltReviewReportValidationSchema(tamperedValidationPayload),
+    ).toEqual([]);
+    expect(tamperedValidationPayload).toEqual(
+      expect.objectContaining({
+        contract: "salt_review_report_validation_v1",
+        status: "unsupported",
+        current: false,
+        supported: false,
+        validation_issues: expect.arrayContaining([
+          expect.objectContaining({
+            code: "missing_registry_field",
+          }),
+        ]),
+        mismatches: expect.arrayContaining([
+          "surface_gate",
+          "evidence_validation",
+          "release_gate",
+        ]),
+        resume: expect.objectContaining({
+          contract: "salt_review_resume_v1",
+          status: "unsupported",
+          reusable_evidence_ref_ids: [],
+        }),
+      }),
+    );
+
+    let tamperedResumeStdout = "";
+    expect(
+      await runCli(
+        withRegistry(["review", "--resume", tamperedReportPath, "--json"]),
+        {
+          cwd: rootDir,
+          writeStdout: (message) => {
+            tamperedResumeStdout += message;
+          },
+          writeStderr: (message) => {
+            stderr += message;
+          },
+        },
+      ),
+    ).toBe(10);
+    expect(readCliJson(tamperedResumeStdout)).toEqual(
+      expect.objectContaining({
+        contract: "salt_review_resume_v1",
+        status: "unsupported",
+        reusable_evidence_ref_ids: [],
+      }),
+    );
+  }, 20000);
 
   it("prints compact create json output", async () => {
     const rootDir = await createTempDir("salt-cli-create-compact-json");
@@ -3863,6 +4172,8 @@ describe("salt cli", () => {
       }),
       summary: "Salt review found issues that still need attention.",
     });
+    expect(payload.evidence.status).toBe("complete");
+    expect(payload.evidence.missing).toEqual([]);
     expect(payload).not.toHaveProperty("result");
     expect(payload).not.toHaveProperty("artifacts");
   });
@@ -3997,6 +4308,7 @@ describe("salt cli", () => {
 
   it("migrates UI through the public workflow command", async () => {
     const rootDir = await createTempDir("salt-cli-migrate");
+    const reportPath = path.join(rootDir, ".salt", "reports", "migrate.json");
     const query = (
       await readVisualMigrationFixture("legacy-orders.query.txt")
     ).trim();
@@ -4010,6 +4322,8 @@ describe("salt cli", () => {
         "--json",
         "--full",
         "--include-starter-code",
+        "--report",
+        reportPath,
       ]),
       {
         cwd: rootDir,
@@ -4033,6 +4347,50 @@ describe("salt cli", () => {
         "migrate-move-toward-canonical-salt",
       ]),
     );
+    expect(
+      validateSaltWorkflowFollowupReportSchema(
+        payload.artifacts.workflowFollowupReport,
+      ),
+    ).toEqual([]);
+    expect(payload.artifacts.workflowFollowupReport).toEqual(
+      expect.objectContaining({
+        contract: "salt_workflow_followup_report_v1",
+        status: "degraded",
+        workflow: expect.objectContaining({
+          id: "migration",
+          transport_used: "cli",
+        }),
+        source: expect.objectContaining({
+          request_provided: true,
+          evidence_ref_ids: expect.arrayContaining([
+            "migration.workflow-input.request",
+          ]),
+        }),
+        review_evidence: null,
+        evidence_refs: expect.arrayContaining([
+          expect.objectContaining({
+            id: "migration.workflow-input.request",
+            source_kind: "workflow_input",
+          }),
+        ]),
+        checks: expect.arrayContaining([
+          expect.objectContaining({
+            id: "migration_review_followup",
+            status: "action_required",
+          }),
+        ]),
+        release_gate: expect.objectContaining({
+          status: "blocked",
+          releasable: false,
+        }),
+      }),
+    );
+    const savedMigrationReport = readCliJson(
+      await fs.readFile(reportPath, "utf8"),
+    );
+    expect(validateSaltWorkflowFollowupReportSchema(savedMigrationReport)).toEqual(
+      [],
+    );
     expect(payload.workflow.confidence).toEqual(
       expect.objectContaining({
         level: expect.any(String),
@@ -4044,15 +4402,13 @@ describe("salt cli", () => {
         translationCount: expect.any(Number),
         manualReviews: expect.any(Number),
         confirmationRequired: expect.any(Number),
-        starterValidationStatus: expect.stringMatching(
-          /^(clean|needs_attention)$/,
-        ),
+        starterValidationStatus: "needs_attention",
       }),
     );
     expect(payload.workflow.readiness).toEqual(
       expect.objectContaining({
-        status: "starter_validated",
-        implementationReady: true,
+        status: "starter_needs_attention",
+        implementationReady: false,
         reason: expect.any(String),
       }),
     );
@@ -4771,6 +5127,7 @@ describe("salt cli", () => {
 
   it("upgrades Salt usage through the public workflow command and infers from-version", async () => {
     const rootDir = await createTempDir("salt-cli-upgrade");
+    const reportPath = path.join(rootDir, ".salt", "reports", "upgrade.json");
     await fs.writeFile(
       path.join(rootDir, "package.json"),
       JSON.stringify(
@@ -4788,7 +5145,14 @@ describe("salt cli", () => {
     let stdout = "";
     let stderr = "";
     const exitCode = await runCli(
-      withRegistry(["upgrade", "--include-deprecations", "--json", "--full"]),
+      withRegistry([
+        "upgrade",
+        "--include-deprecations",
+        "--json",
+        "--full",
+        "--report",
+        reportPath,
+      ]),
       {
         cwd: rootDir,
         writeStdout: (message) => {
@@ -4806,6 +5170,52 @@ describe("salt cli", () => {
     expect(payload.workflow.id).toBe("upgrade");
     expect(payload.workflow.transportUsed).toBe("cli");
     expect(payload.artifacts.ruleIds).toEqual(["upgrade-review-version-risks"]);
+    expect(
+      validateSaltWorkflowFollowupReportSchema(
+        payload.artifacts.workflowFollowupReport,
+      ),
+    ).toEqual([]);
+    expect(payload.artifacts.workflowFollowupReport).toEqual(
+      expect.objectContaining({
+        contract: "salt_workflow_followup_report_v1",
+        status: "degraded",
+        workflow: expect.objectContaining({
+          id: "upgrade",
+          transport_used: "cli",
+        }),
+        target: expect.objectContaining({
+          package_name: "@salt-ds/core",
+          from_version: "1.1.0",
+          evidence_ref_ids: expect.arrayContaining([
+            "upgrade.package.target",
+            "upgrade.package.from-version",
+          ]),
+        }),
+        review_evidence: null,
+        evidence_refs: expect.arrayContaining([
+          expect.objectContaining({
+            id: "upgrade.package.target",
+            source_kind: "package",
+          }),
+        ]),
+        checks: expect.arrayContaining([
+          expect.objectContaining({
+            id: "upgrade_review_followup",
+            status: "action_required",
+          }),
+        ]),
+        release_gate: expect.objectContaining({
+          status: "blocked",
+          releasable: false,
+        }),
+      }),
+    );
+    const savedUpgradeReport = readCliJson(
+      await fs.readFile(reportPath, "utf8"),
+    );
+    expect(validateSaltWorkflowFollowupReportSchema(savedUpgradeReport)).toEqual(
+      [],
+    );
     expect(payload.workflow.confidence).toEqual(
       expect.objectContaining({
         level: expect.any(String),
@@ -4832,6 +5242,244 @@ describe("salt cli", () => {
       ]),
     );
   });
+
+  it("attaches review report evidence to migration and upgrade follow-up reports", async () => {
+    const rootDir = await createTempDir("salt-cli-workflow-review-evidence");
+    const reportsDir = path.join(rootDir, ".salt", "reports");
+    const reviewPath = path.join(reportsDir, "post-action-review.json");
+    const migrateReportPath = path.join(reportsDir, "migrate-followup.json");
+    const upgradeReportPath = path.join(reportsDir, "upgrade-followup.json");
+    const invalidReviewPath = path.join(reportsDir, "invalid-review.json");
+    await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            // Fixture-only package metadata used to exercise upgrade evidence.
+            "@salt-ds/core": "^1.1.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, "src", "FixtureApp.tsx"),
+      [
+        "// Fixture-only Salt source used to mint source-backed review report evidence.",
+        'import { Button } from "@salt-ds/core";',
+        "",
+        "export function FixtureApp() {",
+        '  return <Button href="/fixture">Fixture</Button>;',
+        "}",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+
+    let reviewStdout = "";
+    let stderr = "";
+    const reviewExitCode = await runCli(
+      withRegistry([
+        "review",
+        "src",
+        "--json",
+        "--full",
+        "--report",
+        reviewPath,
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          reviewStdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+    expect(stderr).toBe("");
+    const reviewPayload = readCliJson(reviewStdout);
+    expectWorkflowExitCode(reviewPayload, reviewExitCode);
+    expect(validateSaltReviewReportSchema(reviewPayload.artifacts.reviewReport)).toEqual(
+      [],
+    );
+
+    let migrateStdout = "";
+    stderr = "";
+    expect(
+      await runCli(
+        withRegistry([
+          "migrate",
+          "Fixture-only migration request for attached review evidence.",
+          "--json",
+          "--full",
+          "--review-report",
+          reviewPath,
+          "--report",
+          migrateReportPath,
+        ]),
+        {
+          cwd: rootDir,
+          writeStdout: (message) => {
+            migrateStdout += message;
+          },
+          writeStderr: (message) => {
+            stderr += message;
+          },
+        },
+      ),
+    ).toBe(20);
+    expect(stderr).toBe("");
+    const migratePayload = readCliJson(migrateStdout);
+    expect(
+      validateSaltWorkflowFollowupReportSchema(
+        migratePayload.artifacts.workflowFollowupReport,
+      ),
+    ).toEqual([]);
+    expect(migratePayload.artifacts.workflowFollowupReport).toEqual(
+      expect.objectContaining({
+        status: "ready",
+        review_evidence: expect.objectContaining({
+          report_path: reviewPath,
+          validation_status: "current",
+          current: true,
+          supported: true,
+          evidence_ref_ids: ["migration.review-report.validation"],
+        }),
+        checks: expect.arrayContaining([
+          expect.objectContaining({
+            id: "migration_review_followup",
+            status: "passed",
+          }),
+        ]),
+        release_gate: expect.objectContaining({
+          status: "passed",
+          releasable: true,
+        }),
+      }),
+    );
+
+    let upgradeStdout = "";
+    stderr = "";
+    expect(
+      await runCli(
+        withRegistry([
+          "upgrade",
+          "--include-deprecations",
+          "--json",
+          "--full",
+          "--review-report",
+          reviewPath,
+          "--report",
+          upgradeReportPath,
+        ]),
+        {
+          cwd: rootDir,
+          writeStdout: (message) => {
+            upgradeStdout += message;
+          },
+          writeStderr: (message) => {
+            stderr += message;
+          },
+        },
+      ),
+    ).toBe(20);
+    expect(stderr).toBe("");
+    const upgradePayload = readCliJson(upgradeStdout);
+    expect(
+      validateSaltWorkflowFollowupReportSchema(
+        upgradePayload.artifacts.workflowFollowupReport,
+      ),
+    ).toEqual([]);
+    expect(upgradePayload.artifacts.workflowFollowupReport).toEqual(
+      expect.objectContaining({
+        status: "ready",
+        review_evidence: expect.objectContaining({
+          report_path: reviewPath,
+          validation_status: "current",
+          current: true,
+          supported: true,
+          evidence_ref_ids: ["upgrade.review-report.validation"],
+        }),
+        checks: expect.arrayContaining([
+          expect.objectContaining({
+            id: "upgrade_review_followup",
+            status: "passed",
+          }),
+        ]),
+        release_gate: expect.objectContaining({
+          status: "passed",
+          releasable: true,
+        }),
+      }),
+    );
+
+    await fs.writeFile(
+      invalidReviewPath,
+      JSON.stringify({ contract: "fixture_invalid_review_report" }, null, 2),
+      "utf8",
+    );
+
+    let invalidUpgradeStdout = "";
+    stderr = "";
+    expect(
+      await runCli(
+        withRegistry([
+          "upgrade",
+          "--include-deprecations",
+          "--json",
+          "--full",
+          "--review-report",
+          invalidReviewPath,
+        ]),
+        {
+          cwd: rootDir,
+          writeStdout: (message) => {
+            invalidUpgradeStdout += message;
+          },
+          writeStderr: (message) => {
+            stderr += message;
+          },
+        },
+      ),
+    ).toBe(20);
+    expect(stderr).toBe("");
+    const invalidUpgradePayload = readCliJson(invalidUpgradeStdout);
+    expect(
+      validateSaltWorkflowFollowupReportSchema(
+        invalidUpgradePayload.artifacts.workflowFollowupReport,
+      ),
+    ).toEqual([]);
+    expect(invalidUpgradePayload.artifacts.workflowFollowupReport).toEqual(
+      expect.objectContaining({
+        status: "unsupported",
+        review_evidence: expect.objectContaining({
+          report_path: invalidReviewPath,
+          validation_status: "invalid",
+          current: false,
+          supported: false,
+          evidence_ref_ids: ["upgrade.review-report.validation"],
+          missing: expect.arrayContaining([
+            "report is not a salt_review_report_v1 payload",
+            "valid post-upgrade review report evidence",
+          ]),
+        }),
+        checks: expect.arrayContaining([
+          expect.objectContaining({
+            id: "upgrade_review_followup",
+            status: "unsupported",
+          }),
+        ]),
+        release_gate: expect.objectContaining({
+          status: "blocked",
+          releasable: false,
+        }),
+      }),
+    );
+  }, 60000);
 
   it("prints compact upgrade json output", async () => {
     const rootDir = await createTempDir("salt-cli-upgrade-compact-json");
@@ -5049,9 +5697,9 @@ describe("salt cli", () => {
       },
     );
 
-    expect(exitCode).toBe(20);
     expect(stderr).toBe("");
     const payload = readCliJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
     expect(payload.result.summary).toEqual(
       expect.objectContaining({
         status: "needs_attention",
@@ -5066,14 +5714,28 @@ describe("salt cli", () => {
         }),
         issues: expect.arrayContaining([
           expect.objectContaining({
-            id: "workflow-expected.metric-pattern",
+            rule: expect.stringMatching(/^workflow-expected-pattern-/),
+            evidence_refs: expect.arrayContaining([
+              expect.objectContaining({
+                source_kind: "workflow_input",
+              }),
+              expect.objectContaining({
+                source_kind: "registry",
+              }),
+            ]),
           }),
+        ]),
+        missingData: expect.arrayContaining([
+          expect.stringContaining(
+            "Expected pattern target 'Metric' has source-backed rule kinds that semantic-core records as unsupported",
+          ),
         ]),
       }),
     );
     expect(payload.artifacts.notes).toEqual(
       expect.arrayContaining([
         expect.stringContaining("Loaded create report expectations"),
+        "Review compared the current implementation against the saved create report and found workflow-expected drift.",
       ]),
     );
   });

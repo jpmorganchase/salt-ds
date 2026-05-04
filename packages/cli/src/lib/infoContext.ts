@@ -6,6 +6,7 @@ import {
   detectLocalRuntimeTargets,
   runDoctor,
 } from "@salt-ds/runtime-inspector-core";
+import type { SaltRegistry } from "@salt-ds/semantic-core";
 import {
   detectProjectPolicy,
   type ProjectPolicyDetailLevel,
@@ -21,6 +22,7 @@ import {
 import { getTsconfig } from "get-tsconfig";
 import type { SaltInfoResult } from "../types.js";
 import { pathExists } from "./common.js";
+import { inspectGeneratedContext } from "./generatedContext.js";
 import {
   detectSaltPackageVersion,
   findAncestorWithChild,
@@ -297,6 +299,7 @@ export async function collectSaltInfo(
     registry_version: null,
     registry_generated_at: null,
   });
+  let generatedContextRegistry: SaltRegistry | null = null;
 
   try {
     const resolvedRegistry = await resolveSemanticRegistry(
@@ -315,6 +318,7 @@ export async function collectSaltInfo(
       registry_version: resolvedRegistry.registry.version,
       registry_generated_at: resolvedRegistry.registry.generated_at,
     });
+    generatedContextRegistry = resolvedRegistry.registry;
     if (options.catalogQuery || options.entityName || options.familyName) {
       catalog = {
         manifest: buildCreateCatalogSupportManifest(),
@@ -382,6 +386,10 @@ export async function collectSaltInfo(
   const repoAwareWorkflowAvailability = buildRepoAwareSaltWorkflowAvailability(
     doctor.saltInstallation.healthSummary.blockingWorkflows,
   );
+  const generatedContext = await inspectGeneratedContext(
+    doctor.rootDir,
+    generatedContextRegistry,
+  );
 
   return {
     toolVersion: cliRuntimeMetadata.cli_version,
@@ -419,6 +427,7 @@ export async function collectSaltInfo(
     },
     registry,
     catalog,
+    generatedContext,
     workflows: {
       bootstrapConventions: true,
       create: registry.available && repoAwareWorkflowAvailability.create,

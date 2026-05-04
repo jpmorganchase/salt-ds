@@ -1,6 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
+  buildSaltAiSetupSummary,
+  type SaltAiSetupSummary,
+} from "@salt-ds/semantic-core";
+import {
   SALT_REPO_INSTRUCTIONS_TEMPLATE,
   upsertMarkedBlock,
   upsertSaltRepoInstructions,
@@ -39,6 +43,7 @@ interface InitWorkflowResult {
     nextStep: string;
   };
   notes: string[];
+  aiSetup?: SaltAiSetupSummary | null;
 }
 
 function toPosix(inputPath: string): string {
@@ -341,6 +346,9 @@ function formatInitReport(result: InitWorkflowResult): string {
     `Policy: ${result.policy.action}${result.policy.path ? ` (${result.policy.path})` : ""}`,
     `Stack: ${result.stack.action}${result.stack.path ? ` (${result.stack.path})` : ""}`,
     `Repo instructions: ${result.repoInstructions.action} (${result.repoInstructions.path})`,
+    ...(result.aiSetup
+      ? [`AI setup: ${result.aiSetup.status}`]
+      : []),
     `Next step: ${result.summary.nextStep}`,
   ]
     .join("\n")
@@ -434,12 +442,16 @@ export async function runInitCommand(
       flags.project,
     );
     const createStack = flags["create-stack"] === "true";
+    const aiSetupRequested = flags.ai === "true";
     const conventionsPack = parseConventionsPackSource(
       createStack,
       flags["conventions-pack"],
     );
     const hostAdapters = parseHostAdapters(flags["host-adapters"]);
-    const addUiVerify = flags["add-ui-verify"] === "true";
+    if (aiSetupRequested) {
+      hostAdapters.add("vscode");
+    }
+    const addUiVerify = flags["add-ui-verify"] === "true" || aiSetupRequested;
     const teamConfigPath = path.join(rootDir, ".salt", "team.json");
     const stackConfigPath = path.join(rootDir, ".salt", "stack.json");
     const stackConfigExists = await pathExists(stackConfigPath);
@@ -643,6 +655,17 @@ export async function runInitCommand(
                       ]),
         ]),
       ),
+      aiSetup: aiSetupRequested
+        ? buildSaltAiSetupSummary({
+            root_dir: context.rootDir,
+            policy_mode: context.policy.mode,
+            repo_instructions_path: context.repoInstructions.path,
+            host_adapters: [...hostAdapters],
+            ui_verify_command: verifyScript?.command ?? null,
+            generated_context: null,
+            include_release_gate: true,
+          })
+        : null,
     };
 
     const outputPath = flags.output
