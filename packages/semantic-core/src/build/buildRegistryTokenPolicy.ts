@@ -52,6 +52,15 @@ export interface DeprecatedTokenReplacementSource {
   line_end?: number | null;
 }
 
+export interface TokenDeclarationSource {
+  token: string;
+  source_path: string;
+  source_text: string;
+  line_start: number;
+  line_end: number;
+  deprecated: boolean;
+}
+
 interface DeprecatedTokenReplacementMetadataEntry {
   deprecated?: unknown;
   replacements?: unknown;
@@ -88,6 +97,10 @@ export interface TokenPolicySourceRegistry {
   deprecated_replacements_by_token: ReadonlyMap<
     string,
     readonly DeprecatedTokenReplacementSource[]
+  >;
+  token_declarations_by_token: ReadonlyMap<
+    string,
+    readonly TokenDeclarationSource[]
   >;
   structural_role_rules: readonly TokenStructuralRoleRule[];
 }
@@ -456,6 +469,61 @@ async function collectFoundationCategories(
       normalizeCategory(path.basename(cssPath, ".css")),
     ),
   );
+}
+
+async function collectTokenDeclarationSources(
+  repoRoot: string,
+): Promise<Map<string, TokenDeclarationSource[]>> {
+  const declarationsByToken = new Map<string, TokenDeclarationSource[]>();
+  const cssPaths = (
+    await fg("packages/theme/css/**/*.css", {
+      cwd: repoRoot,
+      absolute: true,
+      onlyFiles: true,
+    })
+  ).sort((left, right) => left.localeCompare(right));
+
+  for (const cssPath of cssPaths) {
+    const content = await readFileOrNull(cssPath);
+    if (!content) {
+      continue;
+    }
+
+    const sourcePath = toPosixPath(path.relative(repoRoot, cssPath));
+    const isDeprecated = sourcePath.includes("/deprecated/");
+    const declarationRegex = /(--salt-[\w-]+)\s*:\s*([^;]+);/g;
+    let declarationMatch = declarationRegex.exec(content);
+
+    while (declarationMatch) {
+      const token = declarationMatch[1];
+      const lineStart = lineNumberAtOffset(content, declarationMatch.index);
+      const lineOffset = content.lastIndexOf("\n", declarationMatch.index) + 1;
+      const lineEndOffset = content.indexOf("\n", declarationMatch.index);
+      const sourceText = normalizeWhitespace(
+        content.slice(
+          lineOffset,
+          lineEndOffset === -1 ? content.length : lineEndOffset,
+        ),
+      );
+      const existing = declarationsByToken.get(token) ?? [];
+
+      declarationsByToken.set(token, [
+        ...existing,
+        {
+          token,
+          source_path: sourcePath,
+          source_text: sourceText,
+          line_start: lineStart,
+          line_end: lineStart,
+          deprecated: isDeprecated,
+        },
+      ]);
+
+      declarationMatch = declarationRegex.exec(content);
+    }
+  }
+
+  return declarationsByToken;
 }
 
 function extractSaltTokensFromText(value: string): string[] {
@@ -1094,6 +1162,7 @@ export async function buildTokenPolicySourceRegistry(
     foundationDocs,
     foundationCategories,
     deprecatedReplacementSources,
+    tokenDeclarationSources,
     designTokensOverview,
     foundationsIndex,
   ] = await Promise.all([
@@ -1101,6 +1170,7 @@ export async function buildTokenPolicySourceRegistry(
     collectFoundationDocSources(repoRoot),
     collectFoundationCategories(repoRoot),
     collectDeprecatedTokenReplacements(repoRoot),
+    collectTokenDeclarationSources(repoRoot),
     createDocSource(
       repoRoot,
       path.join(
@@ -1125,6 +1195,7 @@ export async function buildTokenPolicySourceRegistry(
     foundation_docs_by_category: foundationDocs,
     foundation_categories: foundationCategories,
     deprecated_replacements_by_token: deprecatedReplacementSources,
+    token_declarations_by_token: tokenDeclarationSources,
     structural_role_rules: buildStructuralRoleRules({
       characteristicDocs,
       foundationDocs,
@@ -1726,6 +1797,110 @@ function buildDeprecatedReplacementSourceEvidenceRefs(
   }));
 }
 
+interface ReplacementPolicySupport {
+  replacement: string;
+  tier: TokenPolicyUsageTier;
+  docs: TokenPolicyDocSource[];
+  sourceTexts: string[];
+  tokenDeclarations: TokenDeclarationSource[];
+}
+
+function currentTokenDeclarations(
+  tokenName: string,
+  sources: TokenPolicySourceRegistry,
+): TokenDeclarationSource[] {
+  return (sources.token_declarations_by_token.get(tokenName) ?? []).filter(
+    (source) => !source.deprecated,
+  );
+}
+
+function findPolicyDocsForTokenName(
+  tokenName: string,
+  tierEvidence: TokenTierPolicyEvidence,
+  sources: TokenPolicySourceRegistry,
+): TokenPolicyDocSource[] {
+  const category = normalizeCategory(
+    tokenName.replace("--salt-", "").split("-")[0] ?? "",
+  );
+  const exactDoc = findPolicyDocForTokenName(tokenName, sources);
+  if (exactDoc) {
+    return sourceBackedPolicyDocs(tierEvidence, exactDoc);
+  }
+
+  const categoryDoc =
+    sources.characteristic_docs_by_category.get(category) ??
+    sources.foundation_docs_by_category.get(category) ??
+    null;
+
+  return sourceBackedPolicyDocs(tierEvidence, categoryDoc);
+}
+
+function findReplacementPolicySupport(
+  replacement: string,
+  sources: TokenPolicySourceRegistry,
+): ReplacementPolicySupport | null {
+  const tier = replacementTokenTier(replacement, sources);
+  if (!tier) {
+    return null;
+  }
+
+  const tierEvidence = getTierPolicyEvidence(sources, tier);
+  if (!tierEvidence) {
+    return null;
+  }
+
+  const exactDoc = findPolicyDocForTokenName(replacement, sources);
+  const tokenDeclarations = currentTokenDeclarations(replacement, sources);
+  if (!exactDoc && tokenDeclarations.length === 0) {
+    return null;
+  }
+
+  return {
+    replacement,
+    tier,
+    docs: findPolicyDocsForTokenName(replacement, tierEvidence, sources),
+    sourceTexts: exactDoc
+      ? uniquePolicyText([findTokenMentionedSourceText(exactDoc, replacement)])
+      : [],
+    tokenDeclarations,
+  };
+}
+
+function buildReplacementTokenDeclarationEvidenceRefs(
+  tokenName: string,
+  replacementSupports: readonly ReplacementPolicySupport[],
+): SaltEvidenceRef[] {
+  const uniqueDeclarations = new Map<string, TokenDeclarationSource>();
+  for (const support of replacementSupports) {
+    for (const declaration of support.tokenDeclarations) {
+      uniqueDeclarations.set(
+        [
+          support.replacement,
+          declaration.source_path,
+          declaration.line_start,
+          declaration.line_end,
+        ].join("|"),
+        declaration,
+      );
+    }
+  }
+
+  return [...uniqueDeclarations.values()].map((source, index) => ({
+    contract: SALT_EVIDENCE_REF_CONTRACT,
+    id: `${slugify(tokenName)}.policy.replacement-token-source.${index}.source-ref`,
+    source_kind: "token",
+    claim_kind: "token",
+    source: {
+      repo_path: source.source_path,
+      section: source.source_text,
+      line_start: source.line_start,
+      line_end: source.line_end,
+    },
+    confidence: "high",
+    note: "Source-backed current token declaration evidence for generated deprecated token policy metadata.",
+  }));
+}
+
 interface ResolvedDeprecatedReplacement {
   replacement: string;
   evidenceSources: DeprecatedTokenReplacementSource[];
@@ -1735,10 +1910,7 @@ function hasPolicyBackedReplacement(
   replacement: string,
   sources: TokenPolicySourceRegistry,
 ): boolean {
-  return (
-    replacementTokenTier(replacement, sources) !== null &&
-    findPolicyDocForTokenName(replacement, sources) !== null
-  );
+  return findReplacementPolicySupport(replacement, sources) !== null;
 }
 
 function resolveDeprecatedReplacement(
@@ -1827,17 +1999,17 @@ function buildDeprecatedReplacementPolicy(
     return null;
   }
 
-  const replacementDocs = replacements.map((replacement) =>
-    findPolicyDocForTokenName(replacement, sources),
+  const replacementSupports = replacements.map((replacement) =>
+    findReplacementPolicySupport(replacement, sources),
   );
-  if (replacementDocs.some((doc) => doc == null)) {
+  if (replacementSupports.some((support) => support == null)) {
     return null;
   }
+  const supportedReplacements =
+    replacementSupports as ReplacementPolicySupport[];
 
   const replacementTiers = uniqueStrings(
-    replacements
-      .map((replacement) => replacementTokenTier(replacement, sources))
-      .filter((tier): tier is TokenPolicyUsageTier => Boolean(tier)),
+    supportedReplacements.map((support) => support.tier),
   );
   if (replacementTiers.length !== 1) {
     return null;
@@ -1848,14 +2020,11 @@ function buildDeprecatedReplacementPolicy(
     return null;
   }
 
-  const docs = sourceBackedPolicyDocs(
-    tierEvidence,
-    ...(replacementDocs as TokenPolicyDocSource[]),
+  const docs = withSources(
+    ...supportedReplacements.flatMap((support) => support.docs),
   );
   const replacementBlocks = uniquePolicyText(
-    replacements.map((replacement, index) =>
-      findTokenMentionedSourceText(replacementDocs[index] ?? null, replacement),
-    ),
+    supportedReplacements.flatMap((support) => support.sourceTexts),
   );
 
   return withPolicyEvidence(
@@ -1883,6 +2052,10 @@ function buildDeprecatedReplacementPolicy(
         resolvedReplacements.flatMap(
           (replacement) => replacement.evidenceSources,
         ),
+      ),
+      ...buildReplacementTokenDeclarationEvidenceRefs(
+        token.name,
+        supportedReplacements,
       ),
     ],
   );
