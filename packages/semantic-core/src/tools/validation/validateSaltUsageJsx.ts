@@ -370,7 +370,7 @@ export function hasInteractiveHandlerAttribute(
   });
 }
 
-export function hasNestedInteractiveSaltPrimitive(
+export function findNestedSaltJsxElement(
   children: Array<
     | t.JSXText
     | t.JSXExpressionContainer
@@ -380,7 +380,8 @@ export function hasNestedInteractiveSaltPrimitive(
   >,
   directImportByLocal: Map<string, ImportedSaltSymbol>,
   namespaceImportByLocal: Map<string, ImportedSaltSymbol>,
-): boolean {
+  predicate: (imported: ImportedSaltSymbol) => boolean,
+): ImportedSaltSymbol | null {
   for (const child of children) {
     if (t.isJSXElement(child)) {
       const imported = resolveImportedSaltSymbol(
@@ -388,38 +389,36 @@ export function hasNestedInteractiveSaltPrimitive(
         directImportByLocal,
         namespaceImportByLocal,
       );
-      if (
-        imported &&
-        (imported.imported === "Button" || imported.imported === "Link")
-      ) {
-        return true;
+      if (imported && predicate(imported)) {
+        return imported;
       }
 
-      if (
-        hasNestedInteractiveSaltPrimitive(
-          child.children,
-          directImportByLocal,
-          namespaceImportByLocal,
-        )
-      ) {
-        return true;
+      const nested = findNestedSaltJsxElement(
+        child.children,
+        directImportByLocal,
+        namespaceImportByLocal,
+        predicate,
+      );
+      if (nested) {
+        return nested;
       }
       continue;
     }
 
-    if (
-      t.isJSXFragment(child) &&
-      hasNestedInteractiveSaltPrimitive(
+    if (t.isJSXFragment(child)) {
+      const nested = findNestedSaltJsxElement(
         child.children,
         directImportByLocal,
         namespaceImportByLocal,
-      )
-    ) {
-      return true;
+        predicate,
+      );
+      if (nested) {
+        return nested;
+      }
     }
   }
 
-  return false;
+  return null;
 }
 
 export function isComponentLikeName(name: string): boolean {

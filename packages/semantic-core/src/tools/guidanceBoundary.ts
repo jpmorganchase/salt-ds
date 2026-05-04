@@ -89,6 +89,18 @@ function uniqueTopics(
   return [...new Set(topics.filter(Boolean))] as ProjectConventionsTopic[];
 }
 
+function isProjectConventionsTopic(
+  topic: string,
+): topic is ProjectConventionsTopic {
+  return (
+    topic === "wrappers" ||
+    topic === "page-patterns" ||
+    topic === "navigation-shell" ||
+    topic === "local-layout" ||
+    topic === "migration-shims"
+  );
+}
+
 export function describeProjectConventionsTopics(
   topics: ProjectConventionsTopic[],
 ): string | null {
@@ -137,16 +149,33 @@ export function appendProjectConventionsNextStep(
   nextStep: string | undefined,
   boundary: GuidanceBoundary,
 ): string | undefined {
+  return appendProjectConventionsCheckNextStep(
+    nextStep,
+    boundary.project_conventions,
+  );
+}
+
+export function appendProjectConventionsCheckNextStep(
+  nextStep: string | undefined,
+  projectConventions: {
+    check_recommended: boolean;
+    topics: readonly string[];
+  },
+): string | undefined {
   if (!nextStep) {
     return nextStep;
   }
 
-  if (!boundary.project_conventions.check_recommended) {
+  if (!projectConventions.check_recommended) {
+    return nextStep;
+  }
+
+  if (/\bproject[- ]conventions\b/i.test(nextStep)) {
     return nextStep;
   }
 
   const topicSummary = describeProjectConventionsChecks(
-    boundary.project_conventions.topics,
+    projectConventions.topics.filter(isProjectConventionsTopic),
   );
 
   if (!topicSummary) {

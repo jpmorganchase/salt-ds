@@ -182,7 +182,12 @@ export function toCompactTokenOptions(
           ? token.semantic_intent
           : "Matches the requested styling need."),
       applies_to: toStringArray(token?.applies_to),
-      docs: [result.source_url],
+      docs:
+        toStringArray(token?.docs).length > 0
+          ? toStringArray(token?.docs)
+          : result.source_url
+            ? [result.source_url]
+            : [],
       ...(token?.deprecated ? { status: "deprecated" } : {}),
     };
   });

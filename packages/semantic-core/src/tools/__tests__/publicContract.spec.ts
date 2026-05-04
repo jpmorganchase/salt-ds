@@ -1,4 +1,8 @@
 import { describe, expect, it } from "vitest";
+import {
+  SALT_EVIDENCE_REF_CONTRACT,
+  type SaltEvidenceRef,
+} from "../../evidence.js";
 import type { SaltRegistry } from "../../types.js";
 import type { CreateSaltUiResult } from "../createSaltUi.js";
 import {
@@ -160,6 +164,34 @@ function buildComponent(
       export_name: name.replace(/\s+/g, ""),
     },
     deprecations: [],
+    last_verified_at: "2026-04-10T00:00:00Z",
+  };
+}
+
+function buildFixtureStructuralRoleToken(): SaltRegistry["tokens"][number] {
+  // Fixture-only token record for evidence-gate contract tests.
+  return {
+    name: "--fixture-review-token",
+    category: "fixture",
+    type: "color",
+    value: "#000000",
+    semantic_intent: "Fixture token for review public-contract tests.",
+    themes: [],
+    densities: [],
+    applies_to: [],
+    guidance: [],
+    aliases: [],
+    policy: {
+      usage_tier: "foundation",
+      direct_component_use: "conditional",
+      preferred_for: [],
+      avoid_for: [],
+      notes: [],
+      docs: ["/fixture/docs/token-policy"],
+      structural_roles: ["fixture-review-role"],
+      pairing: null,
+    },
+    deprecated: false,
     last_verified_at: "2026-04-10T00:00:00Z",
   };
 }
@@ -1568,6 +1600,110 @@ describe("publicContract workflow adapters", () => {
     );
   });
 
+  it("degrades review compact output when report evidence does not resolve", () => {
+    const registry = {
+      ...buildRegistryFixture(),
+      tokens: [buildFixtureStructuralRoleToken()],
+    };
+    const evidenceRef: SaltEvidenceRef = {
+      contract: SALT_EVIDENCE_REF_CONTRACT,
+      id: "fixture-review-token-structural-role",
+      source_kind: "registry",
+      claim_kind: "token",
+      registry: {
+        entity_type: "token",
+        entity_id: "--fixture-review-token",
+        entity_name: "--fixture-review-token",
+        field_path: "policy.structural_roles.0",
+        registry_version: registry.version,
+      },
+      confidence: "high",
+    };
+    const result = {
+      guidance_boundary: {
+        workflow: "review_salt_ui",
+      },
+      decision: {
+        status: "clean",
+        why: "No significant Salt usage issues were detected.",
+      },
+      summary: {
+        errors: 0,
+        warnings: 0,
+        infos: 0,
+        fix_count: 0,
+        migration_count: 0,
+      },
+      fixes: [],
+      issues: [
+        {
+          id: "fixture.review-token-claim",
+          category: "tokens",
+          rule: "fixture-review-token-rule",
+          severity: "warning",
+          title: "Fixture review token claim",
+          message: "Fixture review token claim needs source-backed evidence.",
+          evidence: ["Fixture issue emitted from a test fixture."],
+          canonical_source: "/fixture/docs/token-policy",
+          suggested_fix: null,
+          confidence: 1,
+          matches: 1,
+          source_urls: ["/fixture/docs/token-policy"],
+          evidence_refs: [evidenceRef],
+        },
+      ],
+      migrations: [],
+      missing_data: [],
+      source_urls: ["/fixture/docs/token-policy"],
+    } as unknown as ReviewSaltUiResult;
+    const contract = buildReviewWorkflowContract({
+      provenance: {
+        canonical_source_urls: ["/fixture/docs/token-policy"],
+        related_guide_urls: [],
+        starter_source_urls: [],
+        source_urls: ["/fixture/docs/token-policy"],
+        guidance_signals: [],
+        project_conventions_contract: "project_conventions_v1",
+      },
+    });
+
+    const compact = buildReviewPublicContract(result, contract, {
+      transport_used: "cli",
+      registry,
+    });
+    const mcpCompact = buildReviewPublicContract(result, contract, {
+      transport_used: "mcp",
+      registry,
+    });
+
+    expect(toComparablePublicContract(compact)).toEqual(
+      expect.objectContaining({
+        workflow: "review",
+        workflow_status: "partial",
+        canonical_complete: false,
+        safe_to_implement_exact_request: false,
+        next_step: expect.objectContaining({
+          kind: "review",
+          tool: "review_salt_ui",
+        }),
+      }),
+    );
+    expect(compact.evidence).toEqual(
+      expect.objectContaining({
+        status: "partial",
+        missing: expect.arrayContaining([
+          expect.stringContaining("missing_structural_role_rule_evidence"),
+        ]),
+      }),
+    );
+    expect(mcpCompact.evidence).toEqual(compact.evidence);
+    expect(mcpCompact.safety).toEqual(compact.safety);
+    expect({
+      ...toComparablePublicContract(mcpCompact),
+      transport: "cli",
+    }).toEqual(toComparablePublicContract(compact));
+  });
+
   it("treats create ask_user as a stop for updated workflow input, not an evidence bridge", () => {
     const registry = buildRegistryFixture();
     const result = {
@@ -1580,7 +1716,7 @@ describe("publicContract workflow adapters", () => {
     } as unknown as CreateSaltUiResult;
     const contract = buildCreateWorkflowContract({
       implementation_gate: buildCreateImplementationGate({
-        status: "blocked",
+        status: "follow_through_required",
         reason: "Clarification is required.",
         blocking_questions: [
           "Should tabs switch in-page content or navigate between pages?",

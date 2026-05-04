@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://salt-ds.dev/schemas/salt-validation-rule-pack.schema.json",
+  "title": "Salt validation rule pack",
+  "type": "object",
+  "required": [
+    "contract",
+    "id",
+    "generated_at",
+    "generator",
+    "registry",
+    "rules"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_validation_rule_pack_v1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "registry": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/rule"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "evidenceRef": {
+      "$ref": "./salt-evidence-ref.schema.json"
+    },
+    "rule": {
+      "type": "object",
+      "required": [
+        "id",
+        "category",
+        "rule",
+        "severity",
+        "title",
+        "message",
+        "suggested_fix",
+        "confidence",
+        "match",
+        "evidence_refs"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "enum": [
+            "primitive-choice",
+            "composition",
+            "accessibility",
+            "tokens",
+            "deprecated",
+            "catalog-status"
+          ]
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "enum": ["info", "warning", "error"]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "suggested_fix": {
+          "type": ["string", "null"]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "match": {
+          "$ref": "#/$defs/componentJsxAttributeMatch"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/evidenceRef"
+          }
+        },
+        "canonical_source": {
+          "type": ["string", "null"]
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "componentJsxAttributeMatch": {
+      "type": "object",
+      "required": ["kind", "component_id", "attribute_names"],
+      "properties": {
+        "kind": {
+          "const": "component_jsx_attribute"
+        },
+        "component_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attribute_names": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -9,10 +9,16 @@ import {
 import { startsWithCreateReferencePhrase } from "./createReferenceQueries.js";
 import { retrieveCreateSupportCandidates } from "./createRetrieval.js";
 import type { CreateSaltUiResult } from "./createSaltUi.js";
-import type { GuidanceBoundary } from "./guidanceBoundary.js";
+import type {
+  GuidanceBoundary,
+  ProjectConventionsTopic,
+} from "./guidanceBoundary.js";
 import type { GuideReference } from "./guideAwareness.js";
 import type { MigrateToSaltResult } from "./migrateToSalt.js";
-import type { ReviewSaltUiResult } from "./reviewSaltUi.js";
+import type {
+  ReviewExpectedTargets,
+  ReviewSaltUiResult,
+} from "./reviewSaltUi.js";
 import type { StarterCodeSnippet } from "./starterCode.js";
 import type { StarterValidationSummary } from "./starterValidation.js";
 import { validateStarterCodeSnippets } from "./starterValidation.js";
@@ -22,7 +28,7 @@ import type {
   VisualEvidenceInputType,
 } from "./translation/sourceUiTypes.js";
 import type { UpgradeSaltUiResult } from "./upgradeSaltUi.js";
-import { normalizeQuery } from "./utils.js";
+import { containsWholeWordPhrase, normalizeQuery } from "./utils.js";
 import {
   getWorkflowProjectPolicyStarterBlockers,
   type WorkflowProjectPolicyArtifact,
@@ -109,6 +115,7 @@ export interface WorkflowStarterValidation {
   top_issue: string | null;
   next_step: string | null;
   source_urls: string[];
+  missing_data?: string[];
 }
 
 export interface WorkflowIssueClass {
@@ -434,18 +441,26 @@ function buildWorkflowReadiness(
     };
   }
 
+  const policyStarterBlockers =
+    getWorkflowProjectPolicyStarterBlockers(projectPolicy);
+
   if (starterValidation.status === "needs_attention") {
+    const reasons = unique([
+      starterValidation.top_issue,
+      ...policyStarterBlockers,
+    ]);
+    const reason =
+      reasons.length > 0
+        ? reasons.join(" ")
+        : "Starter code was generated but still has Salt validation issues to correct before implementation continues.";
+
     return {
       status: "starter_needs_attention",
       implementation_ready: false,
-      reason:
-        starterValidation.top_issue ??
-        "Starter code was generated but still has Salt validation issues to correct before implementation continues.",
+      reason,
     };
   }
 
-  const policyStarterBlockers =
-    getWorkflowProjectPolicyStarterBlockers(projectPolicy);
   if (policyStarterBlockers.length > 0) {
     return {
       status: "starter_needs_attention",
@@ -661,6 +676,14 @@ function getCreateFollowThroughTargets(
               candidate.support_score >=
               Math.max(10, Math.round(candidate.owner_score * 0.2)),
           )
+          .filter(
+            (candidate) =>
+              !candidate.evidence.some(
+                (entry) =>
+                  entry.evidence_role === "caution" &&
+                  containsWholeWordPhrase(entry.text, primaryTarget),
+              ),
+          )
           .filter((candidate) => {
             const candidateCategories = new Set(
               candidate.categories.map((category) => normalizeQuery(category)),
@@ -863,6 +886,7 @@ export function toWorkflowStarterValidation(
     top_issue: starterValidation.top_issue,
     next_step: starterValidation.next_step,
     source_urls: starterValidation.source_urls,
+    missing_data: starterValidation.missing_data,
   };
 }
 
@@ -903,6 +927,47 @@ export function buildProjectConventionsCheck(
     suggested_follow_up_tool: "get_salt_project_context",
     suggested_follow_up_cli: "salt-ds info --json",
     next_step: nextStep,
+  };
+}
+
+function hasReviewExpectedPatternTarget(
+  expectedTargets: ReviewExpectedTargets | undefined,
+): boolean {
+  return Boolean(
+    expectedTargets?.patterns?.some((pattern) => pattern.trim().length > 0) ||
+      expectedTargets?.composition_contract?.expected_patterns.some(
+        (pattern) => pattern.trim().length > 0,
+      ) ||
+      expectedTargets?.composition_contract?.slots.some((slot) =>
+        slot.preferred_patterns.some((pattern) => pattern.trim().length > 0),
+      ),
+  );
+}
+
+function withReviewExpectedTargetProjectConventions(
+  guidanceBoundary: GuidanceBoundary,
+  expectedTargets: ReviewExpectedTargets | undefined,
+): GuidanceBoundary {
+  if (!hasReviewExpectedPatternTarget(expectedTargets)) {
+    return guidanceBoundary;
+  }
+
+  const topics = unique([
+    ...guidanceBoundary.project_conventions.topics,
+    "wrappers",
+    "page-patterns",
+  ]) as ProjectConventionsTopic[];
+
+  return {
+    ...guidanceBoundary,
+    project_conventions: {
+      ...guidanceBoundary.project_conventions,
+      check_recommended: true,
+      topics,
+      reason: guidanceBoundary.project_conventions.check_recommended
+        ? guidanceBoundary.project_conventions.reason
+        : "Expected pattern targets came from explicit workflow input. Confirm repo-level wrappers or page patterns through project conventions before finalizing the fix plan.",
+    },
   };
 }
 
@@ -2096,14 +2161,19 @@ export function buildReviewSaltUiWorkflowContract(
   result: ReviewSaltUiResult,
   input: {
     code?: string;
+    expected_targets?: ReviewExpectedTargets;
     project_policy?: WorkflowProjectPolicyArtifact | null;
   } = {},
 ): ReviewSaltUiWorkflowContract {
   const fixCandidates = buildReviewFixCandidates(result, input);
   const issueClasses = buildToolIssueClasses(result);
   const decision = buildReviewDecision(result, fixCandidates);
-  const projectConventionsCheck = buildProjectConventionsCheck(
+  const guidanceBoundary = withReviewExpectedTargetProjectConventions(
     result.guidance_boundary,
+    input.expected_targets,
+  );
+  const projectConventionsCheck = buildProjectConventionsCheck(
+    guidanceBoundary,
     input.project_policy,
   );
 

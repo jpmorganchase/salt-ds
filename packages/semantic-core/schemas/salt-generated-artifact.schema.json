@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-generated-artifact.schema.json",
+  "title": "Salt Generated Artifact",
+  "description": "Evidence-aware envelope for generated Salt context, prompts, reports, and validation artifacts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "artifact_kind",
+    "id",
+    "generated_at",
+    "generator",
+    "registry",
+    "claims",
+    "evidence_refs"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_generated_artifact_v1"
+    },
+    "artifact_kind": {
+      "enum": [
+        "context-pack-manifest",
+        "component-context",
+        "component-markdown-bridge",
+        "component-facts",
+        "component-guidance",
+        "pattern-context",
+        "pattern-facts",
+        "pattern-guidance",
+        "foundation-context",
+        "prompt",
+        "instruction",
+        "review-report",
+        "validation-report"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/claim"
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-evidence-ref.schema.json"
+      }
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unsupportedClaim"
+      }
+    }
+  },
+  "$defs": {
+    "claimKind": {
+      "enum": [
+        "component",
+        "pattern",
+        "prop",
+        "token",
+        "import",
+        "package",
+        "provider",
+        "accessibility",
+        "example",
+        "composition",
+        "status",
+        "workflow",
+        "project_policy"
+      ]
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "text", "evidence_ref_ids"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "$ref": "#/$defs/claimKind"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field_path": {
+          "type": ["string", "null"]
+        },
+        "evidence_ref_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "unsupportedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "text", "reason"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "$ref": "#/$defs/claimKind"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field_path": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}

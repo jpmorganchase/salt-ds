@@ -223,8 +223,10 @@ export {
 } from "./upgradeSaltUi.js";
 export {
   type ValidateSaltUsageInput,
+  type ValidateSaltUsageEvidenceValidation,
   type ValidateSaltUsageResult,
   type ValidationIssue,
+  buildValidateSaltUsageResult,
   validateSaltUsage,
 } from "./validateSaltUsage.js";
 export {

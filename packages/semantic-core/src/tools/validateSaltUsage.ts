@@ -1,5 +1,18 @@
 import * as t from "@babel/types";
+import {
+  type SaltEvidenceRef,
+  type SaltEvidenceValidationIssue,
+  type SaltGeneratedArtifact,
+  type SaltGeneratedArtifactGenerator,
+  type SaltUnsupportedClaim,
+} from "../evidence.js";
+import {
+  type SerializedGeneratedSaltArtifactSurfaceGate,
+  serializeGeneratedSaltArtifactSurfaceGate,
+} from "../generatedArtifactSurface.js";
 import type { DeprecationRecord, SaltRegistry } from "../types.js";
+import { buildValidationReportEvidenceGate } from "../validationReportArtifacts.js";
+import type { SaltValidationRulePack } from "../validationRulePacks.js";
 import {
   analyzeParsedSaltCode,
   buildPropDeprecationIndex,
@@ -12,22 +25,52 @@ import {
   type SaltCodeAnalysis,
   traverseAst,
 } from "./codeAnalysisCommon.js";
-import { unique } from "./utils.js";
-import { buildCatalogValidationIssue } from "./validation/issueCatalog.js";
 import type { ValidationIssue } from "./validation/shared.js";
 import {
+  buildAccessibleNameValidationIssue,
+  buildActionNavigationHandlerValidationIssue,
+  buildActionNavigationValidationIssue,
+  buildComponentRegistryEvidenceRef,
+  buildDecorativeIconValidationIssue,
+  buildDeprecationEvidenceRefs,
   buildDeprecationFix,
   buildEvidence,
-  buildValidationIssueSources,
+  buildNavigationActionValidationIssue,
+  buildNestedInteractiveValidationIssue,
+  buildPassThroughWrapperValidationIssue,
+  buildPrimitiveRecreationValidationIssue,
+  buildTabularRecreationValidationIssue,
+  type ComponentAccessibilityRuleEvidence,
+  type ComponentNestedInteractiveEvidence,
+  type ComponentPassThroughWrapperEvidence,
+  type ComponentPrimitiveRecreationEvidence,
+  type ComponentTabularRecreationEvidence,
+  type ComponentUsageContrastEvidence,
   clamp,
   componentDocUrls,
   createIssueCollector,
   deprecationSeverity,
   finalizeValidationIssues,
+  findAccessibleNameRuleEvidence,
+  findActionNavigationRuleEvidence,
+  findDecorativeIconRuleEvidence,
+  findNavigationActionRuleEvidence,
+  findNestedInteractiveRuleEvidence,
+  findPassThroughWrapperRuleEvidence,
+  findPrimitiveRecreationRuleEvidence,
+  findTabularRecreationRuleEvidence,
+  hasActionNavigationRuleCandidate,
+  hasInteractiveComponentCandidate,
+  hasNavigationActionRuleCandidate,
+  hasNestedInteractiveRuleCandidate,
+  hasPrimitiveRecreationRuleCandidate,
+  hasTabularRecreationRuleCandidate,
+  type PrimitiveRecreationSurface,
   slugify,
 } from "./validation/validateSaltUsageHelpers.js";
 import {
   expressionContainsNavigationCall,
+  findNestedSaltJsxElement,
   getJsxAttributeName,
   getJsxTagName,
   getReturnedJsxElement,
@@ -38,7 +81,6 @@ import {
   hasIconIndicator,
   hasInteractiveHandlerAttribute,
   hasNavigationTargetAttribute,
-  hasNestedInteractiveSaltPrimitive,
   isComponentLikeName,
   isPurePassThroughWrapper,
 } from "./validation/validateSaltUsageJsx.js";
@@ -50,6 +92,7 @@ import {
   createEmptyTokenPolicyCounts,
   mergeTokenPolicyCounts,
 } from "./validation/validateSaltUsageStyle.js";
+import { addValidationRulePackIssues } from "./validation/validationRulePackApplication.js";
 
 export type { ValidationIssue } from "./validation/shared.js";
 
@@ -59,6 +102,17 @@ export interface ValidateSaltUsageInput {
   package_version?: string;
   max_issues?: number;
   analysis?: SaltCodeAnalysis;
+  validation_rule_pack?: SaltValidationRulePack;
+  generated_at?: string;
+  generator?: SaltGeneratedArtifactGenerator;
+  registry_hash?: string | null;
+}
+
+export interface ValidateSaltUsageEvidenceValidation {
+  status: SerializedGeneratedSaltArtifactSurfaceGate["status"];
+  issues: SaltEvidenceValidationIssue[];
+  missing: string[];
+  unsupported_claim_count: number;
 }
 
 export interface ValidateSaltUsageResult {
@@ -69,12 +123,61 @@ export interface ValidateSaltUsageResult {
   };
   issues: ValidationIssue[];
   missing_data: string[];
+  evidence_refs: SaltEvidenceRef[];
+  unsupported_claims: SaltUnsupportedClaim[];
+  surface_gate: SerializedGeneratedSaltArtifactSurfaceGate;
+  evidence_validation: ValidateSaltUsageEvidenceValidation;
+  generated_artifact: SaltGeneratedArtifact;
 }
 
 const PROP_DEPRECATION_EXCLUDES = new Set(["error", "unknown"]);
 
 function getImportedSaltSymbolKey(symbol: ImportedSaltSymbol): string {
   return `${symbol.packageName}:${symbol.imported}`;
+}
+
+function toEvidenceValidationMirror(
+  surfaceGate: SerializedGeneratedSaltArtifactSurfaceGate,
+): ValidateSaltUsageEvidenceValidation {
+  return {
+    status: surfaceGate.status,
+    issues: surfaceGate.validation_issues,
+    missing: surfaceGate.missing,
+    unsupported_claim_count: surfaceGate.unsupported_claim_count,
+  };
+}
+
+export function buildValidateSaltUsageResult(input: {
+  registry: SaltRegistry;
+  summary: ValidateSaltUsageResult["summary"];
+  issues: ValidationIssue[];
+  missing_data: string[];
+  generated_at?: string;
+  generator?: SaltGeneratedArtifactGenerator;
+  registry_hash?: string | null;
+}): ValidateSaltUsageResult {
+  const evidenceGate = buildValidationReportEvidenceGate({
+    registry: input.registry,
+    registry_hash: input.registry_hash,
+    issues: input.issues,
+    missing_data: input.missing_data,
+    generated_at: input.generated_at ?? input.registry.generated_at,
+    generator: input.generator ?? {
+      name: "validateSaltUsage",
+    },
+  });
+  const surfaceGate = serializeGeneratedSaltArtifactSurfaceGate(evidenceGate);
+
+  return {
+    summary: input.summary,
+    issues: input.issues,
+    missing_data: input.missing_data,
+    evidence_refs: evidenceGate.artifact.evidence_refs,
+    unsupported_claims: evidenceGate.artifact.unsupported_claims ?? [],
+    surface_gate: surfaceGate,
+    evidence_validation: toEvidenceValidationMirror(surfaceGate),
+    generated_artifact: evidenceGate.artifact,
+  };
 }
 
 export function validateSaltUsage(
@@ -88,11 +191,15 @@ export function validateSaltUsage(
   const versionContext = createVersionContext(input.package_version);
 
   if (code.trim().length === 0) {
-    return {
+    return buildValidateSaltUsageResult({
+      registry,
       summary: { errors: 0, warnings: 0, infos: 0 },
       issues: [],
       missing_data: ["No code was provided."],
-    };
+      generated_at: input.generated_at,
+      generator: input.generator,
+      registry_hash: input.registry_hash,
+    });
   }
 
   if (framework !== "react") {
@@ -125,14 +232,23 @@ export function validateSaltUsage(
       error instanceof Error ? error.message : String(error),
     );
 
-    addTokenPolicyIssues(addIssue, tokenCounts);
+    addTokenPolicyIssues({
+      registry,
+      addIssue,
+      counts: tokenCounts,
+      missingData,
+    });
     const { summary, issues } = finalizeValidationIssues(issueMap, maxIssues);
 
-    return {
+    return buildValidateSaltUsageResult({
+      registry,
       summary,
       issues,
       missing_data: missingData,
-    };
+      generated_at: input.generated_at,
+      generator: input.generator,
+      registry_hash: input.registry_hash,
+    });
   }
 
   const { ast, saltImports, directImportByLocal, namespaceImportByLocal } =
@@ -238,9 +354,28 @@ export function validateSaltUsage(
         "overview",
         "usage",
       ]),
+      evidence_refs: [
+        buildComponentRegistryEvidenceRef({
+          registry,
+          component,
+          claim_kind: "status",
+          field_path: "status",
+          id_suffix: "status",
+        }),
+      ],
       matches: 1,
     });
   }
+
+  addValidationRulePackIssues({
+    registry,
+    rulePack: input.validation_rule_pack,
+    ast,
+    directImportByLocal,
+    namespaceImportByLocal,
+    addIssue,
+    missingData,
+  });
 
   const nonPropDeprecations = registry.deprecations.filter(
     (deprecation) =>
@@ -282,6 +417,12 @@ export function validateSaltUsage(
         suggested_fix: buildDeprecationFix(deprecation),
         confidence: 0.96,
         source_urls: deprecation.source_urls,
+        evidence_refs: buildDeprecationEvidenceRefs({
+          registry,
+          deprecation,
+          primary_claim_kind: "import",
+          id_suffix: "deprecated-import",
+        }),
         matches: 1,
       });
     }
@@ -295,20 +436,242 @@ export function validateSaltUsage(
     },
   );
   const hasSaltImports = saltImports.length > 0;
-  let navigationMatches = 0;
-  let imperativeNavigationMatches = 0;
-  let linkActionMatches = 0;
-  let nativeButtonMatches = 0;
-  let nativeLinkMatches = 0;
+  const actionNavigationMatchesByComponentId = new Map<string, number>();
+  const actionNavigationEvidenceByComponentId = new Map<
+    string,
+    ComponentUsageContrastEvidence
+  >();
+  const unsupportedActionNavigationComponentIds = new Set<string>();
+  const actionNavigationHandlerMatchesByComponentId = new Map<string, number>();
+  const unsupportedActionNavigationHandlerComponentIds = new Set<string>();
+  const navigationActionMatchesByComponentId = new Map<string, number>();
+  const navigationActionEvidenceByComponentId = new Map<
+    string,
+    ComponentUsageContrastEvidence
+  >();
+  const unsupportedNavigationActionComponentIds = new Set<string>();
+  const primitiveRecreationMatchesBySurface = new Map<
+    PrimitiveRecreationSurface,
+    number
+  >();
+  const primitiveRecreationEvidenceBySurface = new Map<
+    PrimitiveRecreationSurface,
+    ComponentPrimitiveRecreationEvidence
+  >();
   let nativeTableMatches = 0;
-  let customButtonRoleMatches = 0;
-  let customLinkRoleMatches = 0;
-  let iconOnlyMatches = 0;
-  let decorativeIconMatches = 0;
-  let nestedInteractiveMatches = 0;
-  const passThroughWrapperNames = new Set<string>();
-  const passThroughWrapperTargets = new Set<string>();
+  let tabularRecreationEvidence: ComponentTabularRecreationEvidence | null =
+    null;
+  const iconOnlyAccessibleNameMatchesByComponentId = new Map<string, number>();
+  const accessibleNameEvidenceByComponentId = new Map<
+    string,
+    ComponentAccessibilityRuleEvidence
+  >();
+  const unsupportedIconOnlyAccessibleNameComponentIds = new Set<string>();
+  const decorativeIconMatchesByComponentId = new Map<string, number>();
+  const decorativeIconEvidenceByComponentId = new Map<
+    string,
+    ComponentAccessibilityRuleEvidence
+  >();
+  const unsupportedDecorativeIconComponentIds = new Set<string>();
+  const nestedInteractiveMatchesByPairKey = new Map<string, number>();
+  const nestedInteractivePairComponents = new Map<
+    string,
+    {
+      outer: SaltRegistry["components"][number];
+      inner: SaltRegistry["components"][number];
+    }
+  >();
+  const nestedInteractiveEvidenceByPairKey = new Map<
+    string,
+    ComponentNestedInteractiveEvidence
+  >();
+  const passThroughWrappersByComponentId = new Map<
+    string,
+    {
+      component: SaltRegistry["components"][number];
+      wrapperNames: Set<string>;
+    }
+  >();
   const deprecatedPropUsageCounts = new Map<string, number>();
+
+  const getImportedComponent = (
+    imported: ImportedSaltSymbol,
+  ): SaltRegistry["components"][number] | null =>
+    registry.components.find(
+      (record) =>
+        record.package.name === imported.packageName &&
+        (record.name === imported.imported ||
+          record.aliases.includes(imported.imported)),
+    ) ?? null;
+
+  const getAccessibleNameEvidence = (
+    component: SaltRegistry["components"][number],
+  ): ComponentAccessibilityRuleEvidence | null => {
+    const cached = accessibleNameEvidenceByComponentId.get(component.id);
+    if (cached) {
+      return cached;
+    }
+
+    const evidence = findAccessibleNameRuleEvidence(registry, component);
+    if (!evidence) {
+      return null;
+    }
+
+    accessibleNameEvidenceByComponentId.set(component.id, evidence);
+    return evidence;
+  };
+
+  const getActionNavigationEvidence = (
+    component: SaltRegistry["components"][number],
+  ): ComponentUsageContrastEvidence | null => {
+    const cached = actionNavigationEvidenceByComponentId.get(component.id);
+    if (cached) {
+      return cached;
+    }
+
+    const evidence = findActionNavigationRuleEvidence(registry, component);
+    if (!evidence) {
+      return null;
+    }
+
+    actionNavigationEvidenceByComponentId.set(component.id, evidence);
+    return evidence;
+  };
+
+  const getNavigationActionEvidence = (
+    component: SaltRegistry["components"][number],
+  ): ComponentUsageContrastEvidence | null => {
+    const cached = navigationActionEvidenceByComponentId.get(component.id);
+    if (cached) {
+      return cached;
+    }
+
+    const evidence = findNavigationActionRuleEvidence(registry, component);
+    if (!evidence) {
+      return null;
+    }
+
+    navigationActionEvidenceByComponentId.set(component.id, evidence);
+    return evidence;
+  };
+
+  const incrementPrimitiveRecreationMatches = (
+    surface: PrimitiveRecreationSurface,
+  ): void => {
+    primitiveRecreationMatchesBySurface.set(
+      surface,
+      (primitiveRecreationMatchesBySurface.get(surface) ?? 0) + 1,
+    );
+  };
+
+  const getPrimitiveRecreationEvidence = (
+    surface: PrimitiveRecreationSurface,
+  ): ComponentPrimitiveRecreationEvidence | null => {
+    const cached = primitiveRecreationEvidenceBySurface.get(surface);
+    if (cached) {
+      return cached;
+    }
+
+    const evidence = findPrimitiveRecreationRuleEvidence(registry, surface);
+    if (!evidence) {
+      return null;
+    }
+
+    primitiveRecreationEvidenceBySurface.set(surface, evidence);
+    return evidence;
+  };
+
+  const getTabularRecreationEvidence =
+    (): ComponentTabularRecreationEvidence | null => {
+      if (tabularRecreationEvidence) {
+        return tabularRecreationEvidence;
+      }
+
+      const evidence = findTabularRecreationRuleEvidence(registry);
+      if (!evidence) {
+        return null;
+      }
+
+      tabularRecreationEvidence = evidence;
+      return evidence;
+    };
+
+  const getNestedInteractivePairKey = (
+    outer: SaltRegistry["components"][number],
+    inner: SaltRegistry["components"][number],
+  ): string => `${outer.id}::${inner.id}`;
+
+  const incrementNestedInteractiveMatches = (
+    outer: SaltRegistry["components"][number],
+    inner: SaltRegistry["components"][number],
+  ): void => {
+    const pairKey = getNestedInteractivePairKey(outer, inner);
+    nestedInteractiveMatchesByPairKey.set(
+      pairKey,
+      (nestedInteractiveMatchesByPairKey.get(pairKey) ?? 0) + 1,
+    );
+    nestedInteractivePairComponents.set(pairKey, { outer, inner });
+  };
+
+  const getNestedInteractiveEvidence = (
+    outer: SaltRegistry["components"][number],
+    inner: SaltRegistry["components"][number],
+  ): ComponentNestedInteractiveEvidence | null => {
+    const pairKey = getNestedInteractivePairKey(outer, inner);
+    const cached = nestedInteractiveEvidenceByPairKey.get(pairKey);
+    if (cached) {
+      return cached;
+    }
+
+    const evidence = findNestedInteractiveRuleEvidence(registry, outer, inner);
+    if (!evidence) {
+      return null;
+    }
+
+    nestedInteractiveEvidenceByPairKey.set(pairKey, evidence);
+    return evidence;
+  };
+
+  const getDecorativeIconEvidence = (
+    component: SaltRegistry["components"][number],
+  ): ComponentAccessibilityRuleEvidence | null => {
+    const cached = decorativeIconEvidenceByComponentId.get(component.id);
+    if (cached) {
+      return cached;
+    }
+
+    const evidence = findDecorativeIconRuleEvidence(registry, component);
+    if (!evidence) {
+      return null;
+    }
+
+    decorativeIconEvidenceByComponentId.set(component.id, evidence);
+    return evidence;
+  };
+
+  const recordPassThroughWrapper = (
+    wrapperName: string,
+    imported: ImportedSaltSymbol,
+  ): void => {
+    const component = getImportedComponent(imported);
+    if (!component) {
+      missingData.push(
+        `Skipped pass-through wrapper validation for '${wrapperName}' because imported Salt symbol '${imported.imported}' was absent from the registry.`,
+      );
+      return;
+    }
+
+    const existing = passThroughWrappersByComponentId.get(component.id);
+    if (existing) {
+      existing.wrapperNames.add(wrapperName);
+      return;
+    }
+
+    passThroughWrappersByComponentId.set(component.id, {
+      component,
+      wrapperNames: new Set([wrapperName]),
+    });
+  };
 
   traverseAst(ast, {
     JSXOpeningElement(path) {
@@ -328,20 +691,20 @@ export function validateSaltUsage(
         const hasHandlers = hasInteractiveHandlerAttribute(attributes);
 
         if (tagName === "button") {
-          nativeButtonMatches += 1;
+          incrementPrimitiveRecreationMatches("native-button");
         } else if (
           tagName === "a" &&
           hasNavigationTargetAttribute(attributes)
         ) {
-          nativeLinkMatches += 1;
+          incrementPrimitiveRecreationMatches("native-link");
         } else if (tagName === "table") {
           nativeTableMatches += 1;
         } else if (/^[a-z]/.test(tagName)) {
           if (roleValue === "button" && hasHandlers) {
-            customButtonRoleMatches += 1;
+            incrementPrimitiveRecreationMatches("custom-button-role");
           }
           if (roleValue === "link" && hasHandlers) {
-            customLinkRoleMatches += 1;
+            incrementPrimitiveRecreationMatches("custom-link-role");
           }
         }
       }
@@ -349,6 +712,7 @@ export function validateSaltUsage(
       if (!imported) {
         return;
       }
+      const component = getImportedComponent(imported);
 
       const styleAttribute = attributes.find(
         (attribute) => getJsxAttributeName(attribute) === "style",
@@ -360,31 +724,53 @@ export function validateSaltUsage(
         );
       }
 
-      if (imported.imported === "Button") {
-        if (hasNavigationTargetAttribute(attributes)) {
-          navigationMatches += 1;
+      if (component && hasNavigationTargetAttribute(attributes)) {
+        const navigationEvidence = getActionNavigationEvidence(component);
+        if (navigationEvidence) {
+          actionNavigationMatchesByComponentId.set(
+            component.id,
+            (actionNavigationMatchesByComponentId.get(component.id) ?? 0) + 1,
+          );
+        } else if (hasActionNavigationRuleCandidate(registry, component)) {
+          unsupportedActionNavigationComponentIds.add(component.id);
         }
+      }
 
-        const onClickAttribute = attributes.find(
-          (attribute) => getJsxAttributeName(attribute) === "onClick",
-        );
-        if (
-          onClickAttribute?.value &&
-          t.isJSXExpressionContainer(onClickAttribute.value) &&
-          expressionContainsNavigationCall(
-            code,
-            onClickAttribute.value.expression,
-          )
-        ) {
-          imperativeNavigationMatches += 1;
+      const onClickAttribute = attributes.find(
+        (attribute) => getJsxAttributeName(attribute) === "onClick",
+      );
+      const onClickValue = onClickAttribute?.value;
+      const onClickContainsNavigation =
+        Boolean(onClickValue) &&
+        t.isJSXExpressionContainer(onClickValue) &&
+        expressionContainsNavigationCall(code, onClickValue.expression);
+
+      if (component && onClickContainsNavigation) {
+        const navigationEvidence = getActionNavigationEvidence(component);
+        if (navigationEvidence) {
+          actionNavigationHandlerMatchesByComponentId.set(
+            component.id,
+            (actionNavigationHandlerMatchesByComponentId.get(component.id) ??
+              0) + 1,
+          );
+        } else if (hasActionNavigationRuleCandidate(registry, component)) {
+          unsupportedActionNavigationHandlerComponentIds.add(component.id);
         }
-      } else if (imported.imported === "Link") {
-        const hasNavigationProp = hasNavigationTargetAttribute(attributes);
-        const onClickAttribute = attributes.find(
-          (attribute) => getJsxAttributeName(attribute) === "onClick",
-        );
-        if (onClickAttribute?.value && !hasNavigationProp) {
-          linkActionMatches += 1;
+      }
+
+      if (
+        component &&
+        onClickAttribute?.value &&
+        !hasNavigationTargetAttribute(attributes)
+      ) {
+        const navigationActionEvidence = getNavigationActionEvidence(component);
+        if (navigationActionEvidence) {
+          navigationActionMatchesByComponentId.set(
+            component.id,
+            (navigationActionMatchesByComponentId.get(component.id) ?? 0) + 1,
+          );
+        } else if (hasNavigationActionRuleCandidate(registry, component)) {
+          unsupportedNavigationActionComponentIds.add(component.id);
         }
       }
 
@@ -431,9 +817,27 @@ export function validateSaltUsage(
       const attributes = opening.attributes.filter(
         (attribute): attribute is t.JSXAttribute => t.isJSXAttribute(attribute),
       );
-      if (imported.imported === "Button") {
+      const component = getImportedComponent(imported);
+      if (component) {
         const hasA11yLabel = hasAccessibleLabelAttribute(attributes);
         const textLength = getStaticTextLength(path.node.children);
+        if (
+          !hasA11yLabel &&
+          textLength === 0 &&
+          hasIconIndicator(path.node, attributes)
+        ) {
+          const accessibleNameEvidence = getAccessibleNameEvidence(component);
+          if (accessibleNameEvidence) {
+            iconOnlyAccessibleNameMatchesByComponentId.set(
+              component.id,
+              (iconOnlyAccessibleNameMatchesByComponentId.get(component.id) ??
+                0) + 1,
+            );
+          } else {
+            unsupportedIconOnlyAccessibleNameComponentIds.add(component.id);
+          }
+        }
+
         if (
           (hasA11yLabel || textLength > 0) &&
           hasDecorativeIconWithoutAriaHidden(
@@ -442,27 +846,37 @@ export function validateSaltUsage(
             namespaceImportByLocal,
           )
         ) {
-          decorativeIconMatches += 1;
-        }
-
-        if (
-          !hasA11yLabel &&
-          textLength === 0 &&
-          hasIconIndicator(path.node, attributes)
-        ) {
-          iconOnlyMatches += 1;
+          const decorativeIconEvidence = getDecorativeIconEvidence(component);
+          if (decorativeIconEvidence) {
+            decorativeIconMatchesByComponentId.set(
+              component.id,
+              (decorativeIconMatchesByComponentId.get(component.id) ?? 0) + 1,
+            );
+          } else {
+            unsupportedDecorativeIconComponentIds.add(component.id);
+          }
         }
       }
 
-      if (
-        (imported.imported === "Button" || imported.imported === "Link") &&
-        hasNestedInteractiveSaltPrimitive(
+      if (component && hasInteractiveComponentCandidate(component)) {
+        const nestedImported = findNestedSaltJsxElement(
           path.node.children,
           directImportByLocal,
           namespaceImportByLocal,
-        )
-      ) {
-        nestedInteractiveMatches += 1;
+          (candidate) => {
+            const nestedComponent = getImportedComponent(candidate);
+            return Boolean(
+              nestedComponent &&
+                hasInteractiveComponentCandidate(nestedComponent),
+            );
+          },
+        );
+        if (nestedImported) {
+          const nestedComponent = getImportedComponent(nestedImported);
+          if (nestedComponent) {
+            incrementNestedInteractiveMatches(component, nestedComponent);
+          }
+        }
       }
     },
     FunctionDeclaration(path) {
@@ -486,8 +900,7 @@ export function validateSaltUsage(
         return;
       }
 
-      passThroughWrapperNames.add(path.node.id.name);
-      passThroughWrapperTargets.add(imported.imported);
+      recordPassThroughWrapper(path.node.id.name, imported);
     },
     VariableDeclarator(path) {
       if (
@@ -516,255 +929,239 @@ export function validateSaltUsage(
         return;
       }
 
-      passThroughWrapperNames.add(path.node.id.name);
-      passThroughWrapperTargets.add(imported.imported);
+      recordPassThroughWrapper(path.node.id.name, imported);
     },
   });
 
-  if (navigationMatches > 0) {
+  for (const [componentId, matches] of actionNavigationMatchesByComponentId) {
+    const evidence = actionNavigationEvidenceByComponentId.get(componentId);
+    if (!evidence) {
+      missingData.push(
+        `Skipped action-vs-navigation validation for registry component '${componentId}' because source-backed component usage evidence was missing.`,
+      );
+      continue;
+    }
+
     addIssue(
-      buildCatalogValidationIssue("component-choice.navigation", {
-        evidence: buildEvidence(
-          "Detected Button usage with href or to props",
-          navigationMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "component-choice.navigation",
-          [
-            ...componentDocUrls(registry, "Button", ["usage"]),
-            ...componentDocUrls(registry, "Link", ["usage"]),
-          ],
-        ),
-        matches: navigationMatches,
+      buildActionNavigationValidationIssue({
+        evidence,
+        matches,
       }),
     );
   }
 
-  if (imperativeNavigationMatches > 0) {
+  for (const componentId of unsupportedActionNavigationComponentIds) {
+    missingData.push(
+      `Skipped action-vs-navigation validation for registry component '${componentId}' because source-backed component usage evidence was missing.`,
+    );
+  }
+
+  for (const [
+    componentId,
+    matches,
+  ] of actionNavigationHandlerMatchesByComponentId) {
+    const evidence = actionNavigationEvidenceByComponentId.get(componentId);
+    if (!evidence) {
+      missingData.push(
+        `Skipped action-vs-navigation handler validation for registry component '${componentId}' because source-backed component usage evidence was missing.`,
+      );
+      continue;
+    }
+
     addIssue(
-      buildCatalogValidationIssue("component-choice.navigation-handler", {
-        evidence: buildEvidence(
-          "Detected Button click handlers that appear to trigger navigation",
-          imperativeNavigationMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "component-choice.navigation-handler",
-          [
-            ...componentDocUrls(registry, "Button", ["usage"]),
-            ...componentDocUrls(registry, "Link", ["usage"]),
-          ],
-        ),
-        matches: imperativeNavigationMatches,
+      buildActionNavigationHandlerValidationIssue({
+        evidence,
+        matches,
       }),
     );
   }
 
-  if (linkActionMatches > 0) {
+  for (const componentId of unsupportedActionNavigationHandlerComponentIds) {
+    missingData.push(
+      `Skipped action-vs-navigation handler validation for registry component '${componentId}' because source-backed component usage evidence was missing.`,
+    );
+  }
+
+  for (const [componentId, matches] of navigationActionMatchesByComponentId) {
+    const evidence = navigationActionEvidenceByComponentId.get(componentId);
+    if (!evidence) {
+      missingData.push(
+        `Skipped navigation-as-action validation for registry component '${componentId}' because source-backed component usage evidence was missing.`,
+      );
+      continue;
+    }
+
     addIssue(
-      buildCatalogValidationIssue("primitive-choice.link-action", {
-        evidence: buildEvidence(
-          "Detected Link usage with onClick but without a navigation target",
-          linkActionMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "primitive-choice.link-action",
-          [
-            ...componentDocUrls(registry, "Link", ["usage"]),
-            ...componentDocUrls(registry, "Button", ["usage"]),
-          ],
-        ),
-        matches: linkActionMatches,
+      buildNavigationActionValidationIssue({
+        evidence,
+        matches,
       }),
     );
   }
 
-  if (nativeButtonMatches > 0) {
-    addIssue(
-      buildCatalogValidationIssue("primitive-choice.native-button", {
-        evidence: buildEvidence(
-          "Detected native button elements in code that already uses Salt",
-          nativeButtonMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "primitive-choice.native-button",
-          componentDocUrls(registry, "Button", ["usage", "overview"]),
-        ),
-        matches: nativeButtonMatches,
-      }),
+  for (const componentId of unsupportedNavigationActionComponentIds) {
+    missingData.push(
+      `Skipped navigation-as-action validation for registry component '${componentId}' because source-backed component usage evidence was missing.`,
     );
   }
 
-  if (nativeLinkMatches > 0) {
+  for (const [surface, matches] of primitiveRecreationMatchesBySurface) {
+    const evidence = getPrimitiveRecreationEvidence(surface);
+    if (!evidence) {
+      const hasCandidate = hasPrimitiveRecreationRuleCandidate(
+        registry,
+        surface,
+      );
+      missingData.push(
+        `Skipped ${surface} primitive recreation validation because ${
+          hasCandidate
+            ? "source-backed component or guide evidence was missing"
+            : "registry component or guide evidence was missing"
+        }.`,
+      );
+      continue;
+    }
+
     addIssue(
-      buildCatalogValidationIssue("primitive-choice.native-link", {
-        evidence: buildEvidence(
-          "Detected native anchor elements with navigation targets in code that already uses Salt",
-          nativeLinkMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "primitive-choice.native-link",
-          componentDocUrls(registry, "Link", ["usage", "overview"]),
-        ),
-        matches: nativeLinkMatches,
+      buildPrimitiveRecreationValidationIssue({
+        surface,
+        evidence,
+        matches,
       }),
     );
   }
 
   if (nativeTableMatches > 0) {
+    const evidence = getTabularRecreationEvidence();
+    if (!evidence) {
+      const hasCandidate = hasTabularRecreationRuleCandidate(registry);
+      missingData.push(
+        `Skipped native-table primitive recreation validation because ${
+          hasCandidate
+            ? "source-backed component or guide evidence was missing"
+            : "registry component or guide evidence was missing"
+        }.`,
+      );
+    } else {
+      addIssue(
+        buildTabularRecreationValidationIssue({
+          evidence,
+          matches: nativeTableMatches,
+        }),
+      );
+    }
+  }
+
+  for (const [pairKey, matches] of nestedInteractiveMatchesByPairKey) {
+    const pair = nestedInteractivePairComponents.get(pairKey);
+    if (!pair) {
+      continue;
+    }
+
+    const evidence = getNestedInteractiveEvidence(pair.outer, pair.inner);
+    if (!evidence) {
+      const hasCandidate = hasNestedInteractiveRuleCandidate(
+        registry,
+        pair.outer,
+        pair.inner,
+      );
+      missingData.push(
+        `Skipped nested-interactive validation for registry components '${pair.outer.id}' and '${pair.inner.id}' because ${
+          hasCandidate
+            ? "source-backed component or guide evidence was missing"
+            : "registry component or guide evidence was missing"
+        }.`,
+      );
+      continue;
+    }
+
     addIssue(
-      buildCatalogValidationIssue("primitive-choice.native-table", {
-        evidence: buildEvidence(
-          "Detected raw HTML table markup in code that already uses Salt",
-          nativeTableMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "primitive-choice.native-table",
-          [
-            ...componentDocUrls(registry, "Table", [
-              "overview",
-              "usage",
-              "examples",
-            ]),
-            ...componentDocUrls(registry, "Data grid", [
-              "overview",
-              "usage",
-              "examples",
-            ]),
-          ],
-        ),
-        matches: nativeTableMatches,
+      buildNestedInteractiveValidationIssue({
+        evidence,
+        matches,
       }),
     );
   }
 
-  if (customButtonRoleMatches > 0) {
+  for (const [
+    componentId,
+    matches,
+  ] of iconOnlyAccessibleNameMatchesByComponentId.entries()) {
+    const evidence = accessibleNameEvidenceByComponentId.get(componentId);
+    if (!evidence) {
+      missingData.push(
+        `Skipped icon-only accessible-name validation for registry component '${componentId}' because source-backed accessibility rule evidence was missing.`,
+      );
+      continue;
+    }
+
     addIssue(
-      buildCatalogValidationIssue("primitive-choice.custom-button-role", {
-        evidence: buildEvidence(
-          'Detected non-native elements with role="button" and interactive handlers',
-          customButtonRoleMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "primitive-choice.custom-button-role",
-          componentDocUrls(registry, "Button", ["usage", "accessibility"]),
-        ),
-        matches: customButtonRoleMatches,
+      buildAccessibleNameValidationIssue({
+        evidence,
+        matches,
       }),
     );
   }
 
-  if (customLinkRoleMatches > 0) {
+  for (const componentId of unsupportedIconOnlyAccessibleNameComponentIds) {
+    missingData.push(
+      `Skipped icon-only accessible-name validation for registry component '${componentId}' because source-backed accessibility rule evidence was missing.`,
+    );
+  }
+
+  for (const [componentId, matches] of decorativeIconMatchesByComponentId) {
+    const evidence = decorativeIconEvidenceByComponentId.get(componentId);
+    if (!evidence) {
+      missingData.push(
+        `Skipped decorative-icon accessibility validation for registry component '${componentId}' because source-backed accessibility rule evidence was missing.`,
+      );
+      continue;
+    }
+
     addIssue(
-      buildCatalogValidationIssue("primitive-choice.custom-link-role", {
-        evidence: buildEvidence(
-          'Detected non-native elements with role="link" and interactive handlers',
-          customLinkRoleMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "primitive-choice.custom-link-role",
-          componentDocUrls(registry, "Link", ["usage", "accessibility"]),
-        ),
-        matches: customLinkRoleMatches,
+      buildDecorativeIconValidationIssue({
+        evidence,
+        matches,
       }),
     );
   }
 
-  if (nestedInteractiveMatches > 0) {
-    addIssue(
-      buildCatalogValidationIssue("composition.nested-interactive-primitives", {
-        evidence: buildEvidence(
-          "Detected Button or Link elements containing another interactive Salt primitive",
-          nestedInteractiveMatches,
-        ),
-        ...buildValidationIssueSources(
-          registry,
-          "composition.nested-interactive-primitives",
-          [
-            ...componentDocUrls(registry, "Button", ["usage", "accessibility"]),
-            ...componentDocUrls(registry, "Link", ["usage", "accessibility"]),
-          ],
-        ),
-        matches: nestedInteractiveMatches,
-      }),
+  for (const componentId of unsupportedDecorativeIconComponentIds) {
+    missingData.push(
+      `Skipped decorative-icon accessibility validation for registry component '${componentId}' because source-backed accessibility rule evidence was missing.`,
     );
   }
 
-  if (iconOnlyMatches > 0) {
-    addIssue(
-      buildCatalogValidationIssue("a11y.button-accessible-name", {
-        evidence: buildEvidence(
-          "Detected icon-only Button content without an accessible label",
-          iconOnlyMatches,
-        ),
-        canonical_source:
-          componentDocUrls(registry, "Button", ["accessibility", "usage"])[0] ??
-          null,
-        source_urls: componentDocUrls(registry, "Button", [
-          "accessibility",
-          "usage",
-        ]),
-        matches: iconOnlyMatches,
-      }),
-    );
+  const passThroughWrapperEntries: Array<{
+    evidence: ComponentPassThroughWrapperEvidence;
+    wrapper_names: string[];
+  }> = [];
+  for (const {
+    component,
+    wrapperNames,
+  } of passThroughWrappersByComponentId.values()) {
+    const evidence = findPassThroughWrapperRuleEvidence(registry, component);
+    if (!evidence) {
+      missingData.push(
+        `Skipped pass-through wrapper validation for registry component '${component.id}' because source-backed component or custom-wrapper guide evidence was missing.`,
+      );
+      continue;
+    }
+
+    passThroughWrapperEntries.push({
+      evidence,
+      wrapper_names: [...wrapperNames].sort(),
+    });
   }
 
-  if (decorativeIconMatches > 0) {
+  if (passThroughWrapperEntries.length > 0) {
     addIssue(
-      buildCatalogValidationIssue("a11y.button-decorative-icon-hidden", {
-        evidence: buildEvidence(
-          "Detected decorative Button icons without aria-hidden",
-          decorativeIconMatches,
+      buildPassThroughWrapperValidationIssue({
+        entries: passThroughWrapperEntries,
+        matches: passThroughWrapperEntries.reduce(
+          (count, entry) => count + entry.wrapper_names.length,
+          0,
         ),
-        canonical_source:
-          componentDocUrls(registry, "Button", ["accessibility", "usage"])[0] ??
-          null,
-        source_urls: unique([
-          ...componentDocUrls(registry, "Button", ["accessibility", "usage"]),
-          ...componentDocUrls(registry, "Icon", ["accessibility"]),
-        ]),
-        matches: decorativeIconMatches,
-      }),
-    );
-  }
-
-  if (passThroughWrapperNames.size > 0) {
-    const wrapperNames = [...passThroughWrapperNames].sort();
-    const wrapperTargets = [...passThroughWrapperTargets].sort();
-    const targetDocs = unique(
-      wrapperTargets.flatMap((componentName) =>
-        componentDocUrls(registry, componentName, ["overview", "usage"]),
-      ),
-    );
-
-    addIssue(
-      buildCatalogValidationIssue("composition.pass-through-wrapper", {
-        message: `Wrapper component${wrapperNames.length === 1 ? "" : "s"} ${wrapperNames.join(
-          ", ",
-        )} only forward${wrapperNames.length === 1 ? "s" : ""} props to Salt primitive${wrapperTargets.length === 1 ? "" : "s"} ${wrapperTargets.join(
-          ", ",
-        )} without adding structure or behavior.`,
-        evidence: [
-          `Detected pass-through wrapper component${wrapperNames.length === 1 ? "" : "s"}: ${wrapperNames.join(
-            ", ",
-          )}.`,
-        ],
-        ...buildValidationIssueSources(
-          registry,
-          "composition.pass-through-wrapper",
-          targetDocs,
-        ),
-        fix_hints: {
-          related_components: wrapperTargets,
-        },
-        matches: wrapperNames.length,
       }),
     );
   }
@@ -798,11 +1195,22 @@ export function validateSaltUsage(
       suggested_fix: buildDeprecationFix(deprecation),
       confidence: 0.9,
       source_urls: deprecation.source_urls,
+      evidence_refs: buildDeprecationEvidenceRefs({
+        registry,
+        deprecation,
+        primary_claim_kind: "prop",
+        id_suffix: "deprecated-prop",
+      }),
       matches,
     });
   }
 
-  addTokenPolicyIssues(addIssue, tokenCounts);
+  addTokenPolicyIssues({
+    registry,
+    addIssue,
+    counts: tokenCounts,
+    missingData,
+  });
   const { summary, issues } = finalizeValidationIssues(issueMap, maxIssues);
 
   if (versionContext.normalized && incompleteVersionMetadata) {
@@ -811,9 +1219,13 @@ export function validateSaltUsage(
     );
   }
 
-  return {
+  return buildValidateSaltUsageResult({
+    registry,
     summary,
     issues,
     missing_data: missingData,
-  };
+    generated_at: input.generated_at,
+    generator: input.generator,
+    registry_hash: input.registry_hash,
+  });
 }

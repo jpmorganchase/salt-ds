@@ -8,7 +8,11 @@ import {
   normalizeWhitespace,
   readFileOrNull,
 } from "./buildRegistryShared.js";
-import { getTokenPolicy } from "./buildRegistryTokenPolicy.js";
+import {
+  buildTokenPolicySourceRegistry,
+  getTokenPolicy,
+  type TokenPolicySourceRegistry,
+} from "./buildRegistryTokenPolicy.js";
 
 function inferTokenType(tokenValue: string): string {
   if (/^#[a-f0-9]{3,8}$/i.test(tokenValue) || /^rgb/i.test(tokenValue)) {
@@ -66,8 +70,11 @@ async function extractTokenDescriptions(
 export async function extractTokens(
   repoRoot: string,
   verifiedAt: string,
+  tokenPolicySources?: TokenPolicySourceRegistry,
 ): Promise<TokenRecord[]> {
   const tokenDescriptions = await extractTokenDescriptions(repoRoot);
+  const resolvedTokenPolicySources =
+    tokenPolicySources ?? (await buildTokenPolicySourceRegistry(repoRoot));
   const cssPaths = (
     await fg("packages/theme/css/**/*.css", {
       cwd: repoRoot,
@@ -143,7 +150,7 @@ export async function extractTokens(
     applies_to: token.applies_to,
     guidance: [...token.guidanceSet],
     aliases: token.aliases,
-    policy: getTokenPolicy(token),
+    policy: getTokenPolicy(token, resolvedTokenPolicySources),
     deprecated: token.deprecated,
     last_verified_at: token.last_verified_at,
   }));

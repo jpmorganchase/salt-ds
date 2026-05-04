@@ -2,13 +2,6 @@ import path from "node:path";
 import fg from "fast-glob";
 import matter from "gray-matter";
 import { toPosixPath } from "../registry/paths.js";
-import {
-  buildThemeSetupSnippet,
-  DEFAULT_NEW_WORK_THEME_PRESET_ID,
-  formatThemePresetImports,
-  formatThemePresetPropAssignments,
-  getThemePreset,
-} from "../themePresets.js";
 import type {
   GuideRecord,
   GuideSnippet,
@@ -45,13 +38,6 @@ interface MarkdownPageMetadata {
 
 interface MarkdownPageSource extends MarkdownPageMetadata {
   content: string[];
-}
-
-function findMarkdownSection(
-  sections: Array<{ title: string; content: string }>,
-  matcher: (title: string) => boolean,
-): string {
-  return sections.find((section) => matcher(section.title))?.content ?? "";
 }
 
 function buildGuideStep(
@@ -596,76 +582,45 @@ export async function extractGuides(
   if (themesSource) {
     const parsed = matter(themesSource);
     const sections = parseMarkdownSections(parsed.content, 3);
-    const jpmBrandSection = findMarkdownSection(sections, (title) =>
-      title.includes("JPM Brand theme"),
-    );
-    const legacySection = findMarkdownSection(sections, (title) =>
-      title.includes("Legacy (UITK) theme"),
-    );
-    const defaultThemePreset = getThemePreset(DEFAULT_NEW_WORK_THEME_PRESET_ID);
-    const legacyThemePreset = getThemePreset("legacy");
+    const sourceBackedSteps = sections
+      .map((section) =>
+        buildGuideStep(
+          section.title,
+          extractStatementsFromSection(section.content),
+          [],
+        ),
+      )
+      .filter((step) => step.statements.length > 0);
 
     guides.push({
       id: "guide.themes",
       name: "Themes",
-      aliases: ["theme", "theming", "jpm brand", "legacy", "uitk"],
+      aliases: uniqueStrings([
+        "theme",
+        "theming",
+        ...sections.map((section) => section.title.toLowerCase()),
+      ]),
       kind: "theming",
       summary:
         asString(parsed.data.description) ??
         extractFirstParagraph(parsed.content),
-      packages: ["@salt-ds/core", "@salt-ds/theme"],
-      steps: [
-        buildGuideStep(
-          "Choose a Salt theme",
-          [
-            "Salt offers the default JPM Brand theme for new work and a Legacy theme for UITK migration paths.",
-            "Salt recommends the JPM Brand theme for accessibility and long-term brand alignment.",
-          ],
-          [],
-        ),
-        buildGuideStep(
-          "Apply the JPM Brand theme",
-          [
-            ...extractStatementsFromSection(jpmBrandSection),
-            `Use ${defaultThemePreset.provider} with ${formatThemePresetPropAssignments(defaultThemePreset)} for the default new-project brand mapping.`,
-            `Import ${formatThemePresetImports(defaultThemePreset)} before rendering the provider.`,
-            ...(defaultThemePreset.fontSetup?.note
-              ? [defaultThemePreset.fontSetup.note]
-              : []),
-          ],
-          [
-            createGuideSnippet(
-              "JPM Brand theme",
-              "tsx",
-              buildThemeSetupSnippet(defaultThemePreset),
-            ),
-            createGuideSnippet(
-              defaultThemePreset.fontSetup?.title ??
-                "Amplitude font-face declarations",
-              defaultThemePreset.fontSetup?.language ?? "css",
-              defaultThemePreset.fontSetup?.code,
-            ),
-          ].filter((snippet): snippet is GuideSnippet => snippet !== null),
-        ),
-        buildGuideStep(
-          "Apply the Legacy theme",
-          [
-            ...extractStatementsFromSection(legacySection),
-            `Use ${legacyThemePreset.provider} with ${formatThemePresetImports(legacyThemePreset)} when compatibility or migration work must stay on the Legacy theme.`,
-          ],
-          [
-            createGuideSnippet(
-              "Legacy theme",
-              "tsx",
-              buildThemeSetupSnippet(legacyThemePreset),
-            ),
-          ].filter((snippet): snippet is GuideSnippet => snippet !== null),
-        ),
-      ],
+      packages: [],
+      steps:
+        sourceBackedSteps.length > 0
+          ? sourceBackedSteps
+          : [
+              buildGuideStep(
+                "Theme evidence unavailable",
+                [
+                  "Theme provider, import, prop, font, package, and compatibility claims are unsupported until source-backed documentation or project policy supplies evidence.",
+                ],
+                [],
+              ),
+            ],
       related_docs: {
         overview: "/salt/themes",
-        related_components: ["SaltProvider", "SaltProviderNext"],
-        related_packages: ["@salt-ds/core", "@salt-ds/theme"],
+        related_components: [],
+        related_packages: [],
       },
       last_verified_at: verifiedAt,
     });

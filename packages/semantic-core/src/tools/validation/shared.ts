@@ -1,3 +1,5 @@
+import type { SaltEvidenceRef } from "../../evidence.js";
+
 export type ValidationSeverity = "info" | "warning" | "error";
 
 export type ValidationCategory =
@@ -33,6 +35,7 @@ export interface ValidationIssue {
   suggested_fix: string | null;
   confidence: number;
   source_urls: string[];
+  evidence_refs?: SaltEvidenceRef[];
   matches: number;
   fix_hints?: ValidationIssueFixHints;
 }

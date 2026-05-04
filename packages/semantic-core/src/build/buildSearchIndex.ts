@@ -158,7 +158,7 @@ export function buildSearchIndex(
       package: "@salt-ds/theme",
       status: token.deprecated ? "deprecated" : "stable",
       summary: token.semantic_intent ?? `${token.category} token`,
-      source_url: "/salt/themes/design-tokens/index",
+      source_url: token.policy?.docs[0] ?? null,
       keywords: uniqueStrings([
         token.name,
         token.category,

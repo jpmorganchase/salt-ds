@@ -1,3 +1,13 @@
+import {
+  SALT_EVIDENCE_REF_CONTRACT,
+  type SaltEvidenceRef,
+} from "../evidence.js";
+import {
+  buildPatternValidationRulePack,
+  getPatternValidationRules,
+  type SaltPatternValidationRulePack,
+  validatePatternValidationRulePackEvidence,
+} from "../patternValidationRulePacks.js";
 import type { SaltRegistry } from "../types.js";
 import {
   analyzeParsedSaltCode,
@@ -10,22 +20,22 @@ import {
   appendProjectConventionsNextStep,
   buildGuidanceBoundary,
   type GuidanceBoundary,
+  type ProjectConventionsTopic,
 } from "./guidanceBoundary.js";
 import { recommendFixRecipes } from "./recommendFixRecipes.js";
 import { suggestMigration } from "./suggestMigration.js";
-import { validateSaltUsage } from "./validateSaltUsage.js";
+import {
+  buildValidateSaltUsageResult,
+  validateSaltUsage,
+} from "./validateSaltUsage.js";
 import type { ValidationIssue } from "./validation/shared.js";
 import {
   buildEvidence,
+  buildComponentRegistryEvidenceRef,
   componentDocUrls,
   createIssueCollector,
   finalizeValidationIssues,
 } from "./validation/validateSaltUsageHelpers.js";
-import {
-  getJsxAttributeName,
-  getJsxTagName,
-  getStaticStringAttributeValue,
-} from "./validation/validateSaltUsageJsx.js";
 
 export interface ReviewSaltUiInput {
   code: string;
@@ -152,36 +162,92 @@ function normalizeTargetName(value: string): string {
   return value.replace(/[\s-]+/g, "").toLowerCase();
 }
 
-function collectExpectedPatternNames(
-  expectedTargets: ReviewExpectedTargets | undefined,
-): string[] {
-  return normalizeExpectedTargetNames([
-    ...(expectedTargets?.patterns ?? []),
-    ...(expectedTargets?.composition_contract?.expected_patterns ?? []),
-    ...(expectedTargets?.composition_contract?.slots ?? []).flatMap((slot) =>
-      slot.certainty === "optional" ? [] : slot.preferred_patterns,
-    ),
-  ]);
+interface ExpectedPatternTarget {
+  name: string;
+  field_path: string;
 }
 
-function collectExpectedComponentNames(
-  expectedTargets: ReviewExpectedTargets | undefined,
-): string[] {
-  return normalizeExpectedTargetNames([
-    ...(expectedTargets?.components ?? []),
-    ...(expectedTargets?.composition_contract?.expected_components ?? []),
-    ...(expectedTargets?.composition_contract?.slots ?? []).flatMap((slot) =>
-      slot.certainty === "optional" ? [] : slot.preferred_components,
-    ),
-  ]);
+interface ExpectedComponentTarget {
+  names: string[];
+  field_path: string;
+  slot_id?: string | null;
+  slot_label?: string | null;
 }
 
-function getPatternDocUrls(registry: SaltRegistry, name: string): string[] {
-  const pattern = registry.patterns.find((record) => record.name === name);
-  if (!pattern) {
-    return [];
+function collectExpectedPatternTargets(
+  expectedTargets: ReviewExpectedTargets | undefined,
+): ExpectedPatternTarget[] {
+  const targets: ExpectedPatternTarget[] = [];
+  for (const name of normalizeExpectedTargetNames(expectedTargets?.patterns)) {
+    targets.push({ name, field_path: "expected_targets.patterns" });
   }
 
+  for (const name of normalizeExpectedTargetNames(
+    expectedTargets?.composition_contract?.expected_patterns,
+  )) {
+    targets.push({
+      name,
+      field_path: "expected_targets.composition_contract.expected_patterns",
+    });
+  }
+
+  for (const slot of expectedTargets?.composition_contract?.slots ?? []) {
+    if (slot.certainty === "optional") {
+      continue;
+    }
+    for (const name of normalizeExpectedTargetNames(slot.preferred_patterns)) {
+      targets.push({
+        name,
+        field_path: "expected_targets.composition_contract.slots",
+      });
+    }
+  }
+
+  return targets.filter(
+    (target, index) =>
+      targets.findIndex(
+        (candidate) =>
+          normalizeTargetName(candidate.name) ===
+            normalizeTargetName(target.name) &&
+          candidate.field_path === target.field_path,
+      ) === index,
+  );
+}
+
+function buildWorkflowInputExpectedTargetEvidenceRef(input: {
+  id: string;
+  field_path: string;
+  note: string;
+}): SaltEvidenceRef {
+  return {
+    contract: SALT_EVIDENCE_REF_CONTRACT,
+    id: `${input.id}.workflow-input.expected-target.validation-ref`,
+    source_kind: "workflow_input",
+    claim_kind: "workflow",
+    workflow_input: {
+      field_path: input.field_path,
+    },
+    confidence: "high",
+    verified_at: null,
+    note: input.note,
+  };
+}
+
+function findExpectedPatternRecord(
+  registry: SaltRegistry,
+  name: string,
+): SaltRegistry["patterns"][number] | null {
+  const normalized = normalizeTargetName(name);
+  return (
+    registry.patterns.find(
+      (pattern) =>
+        normalizeTargetName(pattern.name) === normalized ||
+        pattern.aliases.some((alias) => normalizeTargetName(alias) === normalized),
+    ) ?? null
+  );
+}
+
+function patternSourceUrls(pattern: SaltRegistry["patterns"][number]): string[] {
   return unique(
     [
       pattern.related_docs.overview,
@@ -193,146 +259,512 @@ function getPatternDocUrls(registry: SaltRegistry, name: string): string[] {
   );
 }
 
-function buildExpectedMetricPatternIssue(
+function buildPatternRegistryEvidenceRef(input: {
+  registry: Pick<SaltRegistry, "version" | "generated_at">;
+  pattern: SaltRegistry["patterns"][number];
+  claim_kind?: SaltEvidenceRef["claim_kind"];
+  field_path?: string;
+  id_suffix: string;
+}): SaltEvidenceRef {
+  const sourceUrl = input.pattern.related_docs.overview;
+  return {
+    contract: SALT_EVIDENCE_REF_CONTRACT,
+    id: `${input.pattern.id}.${input.id_suffix}.validation-ref`,
+    source_kind: "registry",
+    claim_kind: input.claim_kind ?? "pattern",
+    registry: {
+      entity_type: "pattern",
+      entity_id: input.pattern.id,
+      entity_name: input.pattern.name,
+      field_path: input.field_path ?? "name",
+      registry_version: input.registry.version,
+    },
+    source: sourceUrl ? { url: sourceUrl } : null,
+    confidence: "high",
+    verified_at: input.pattern.last_verified_at,
+  };
+}
+
+function buildExpectedPatternUnsupportedIssue(
   registry: SaltRegistry,
-  input: {
-    expectedTargets: ReviewExpectedTargets;
-    usesCard: boolean;
-  },
+  target: ExpectedPatternTarget,
+  reason: "missing_pattern_record" | "missing_rule_pack_evidence",
 ): ValidationIssue {
-  const sourceUrls = unique([
-    ...getPatternDocUrls(registry, "Metric"),
-    ...componentDocUrls(registry, "Text", ["overview", "usage"]),
-    ...componentDocUrls(registry, "Link", ["overview", "usage"]),
-  ]);
-  const title = "Expected Metric pattern not followed";
-  const message =
-    input.expectedTargets.source === "create_report"
-      ? "The saved create report selected or sourced the Salt Metric pattern, but the reviewed implementation does not show the expected metric value structure."
-      : "The reviewed implementation does not show the expected Salt Metric pattern value structure.";
-  const evidence = [
-    ...buildEvidence(
-      "Review expected the Metric pattern from a prior Salt workflow decision",
-      1,
-    ),
-    "No Salt Display1/Display2/Display3 usage or display-style Text was found for the metric value.",
-    ...(input.usesCard
-      ? [
-          "Salt Card composition was also detected, which suggests the metric surface was rebuilt instead of following the Metric pattern.",
-        ]
-      : []),
-  ];
+  const pattern = findExpectedPatternRecord(registry, target.name);
+  const sourceUrls = pattern ? patternSourceUrls(pattern) : [];
+  const id = `workflow-expected.unsupported-pattern.${normalizeTargetName(
+    target.name,
+  )}`;
+  const reasonMessage =
+    reason === "missing_pattern_record"
+      ? "No matching semantic-core registry pattern record was found."
+      : "The matching semantic-core registry pattern record has no supported source-backed pattern validation rules.";
 
   return {
-    id: "workflow-expected.metric-pattern",
-    category: "primitive-choice",
-    rule: "workflow-expected-metric-pattern",
+    id,
+    category: "composition",
+    rule: "workflow-expected-pattern-validation-unsupported",
     severity: "warning",
-    title,
-    message,
-    evidence,
-    canonical_source: sourceUrls[0] ?? "/salt/patterns/metric",
+    title: `Expected workflow pattern ${target.name} was not validated`,
+    message: `The workflow expected ${target.name}, but semantic-core cannot validate that pattern implementation from registry evidence. ${reasonMessage}`,
+    evidence: buildEvidence(
+      `Workflow input expected pattern ${target.name}`,
+      1,
+    ),
+    canonical_source: sourceUrls[0] ?? null,
     suggested_fix:
-      "Follow the Salt Metric pattern for the value emphasis and supporting context instead of improvising a custom KPI structure.",
-    confidence: input.usesCard ? 0.92 : 0.84,
-    source_urls: sourceUrls.length > 0 ? sourceUrls : ["/salt/patterns/metric"],
+      "Add source-backed registry pattern validation rule evidence before treating the pattern implementation check as complete.",
+    confidence: 0.8,
+    source_urls: sourceUrls,
+    evidence_refs: [
+      buildWorkflowInputExpectedTargetEvidenceRef({
+        id,
+        field_path: target.field_path,
+        note: "Review expected the pattern from explicit workflow input.",
+      }),
+      ...(pattern
+        ? [
+            buildPatternRegistryEvidenceRef({
+              registry,
+              pattern,
+              id_suffix: "workflow-expected-pattern",
+            }),
+          ]
+        : []),
+    ],
     matches: 1,
     fix_hints: {
       guide_lookups: [],
-      related_components: ["Text", "Link"],
-      extra_steps: [
-        "Use Display1, Display2, Display3, or display-style Text for the metric value.",
-        "Keep the title, value, and optional subtitle or subvalue in the Metric pattern shape instead of burying them inside a generic card.",
-      ],
+      related_components: [],
+      extra_steps: [],
     },
   };
 }
 
-function buildExpectedTabularSurfaceIssue(
+function findExpectedComponentRecord(
   registry: SaltRegistry,
-  input: {
-    expectedTargets: ReviewExpectedTargets;
-    rawTableMatches: number;
-  },
-): ValidationIssue {
+  name: string,
+): SaltRegistry["components"][number] | null {
+  const normalized = normalizeTargetName(name);
+  return (
+    registry.components.find(
+      (component) =>
+        normalizeTargetName(component.name) === normalized ||
+        normalizeTargetName(component.source.export_name ?? "") === normalized ||
+        component.aliases.some(
+          (alias) => normalizeTargetName(alias) === normalized,
+        ),
+    ) ?? null
+  );
+}
+
+function componentImportKeys(
+  registry: SaltRegistry,
+  name: string,
+): { component: SaltRegistry["components"][number] | null; keys: string[] } {
+  const component = findExpectedComponentRecord(registry, name);
+  return {
+    component,
+    keys: unique(
+      [
+        name,
+        component?.name,
+        component?.source.export_name,
+        ...(component?.aliases ?? []),
+      ]
+        .filter((value): value is string => Boolean(value))
+        .map(normalizeTargetName),
+    ),
+  };
+}
+
+function buildImportRuleKey(packageName: string, importName: string): string {
+  return `${packageName}:${normalizeTargetName(importName)}`;
+}
+
+function normalizeTextPresence(value: string): string {
+  return value.replace(/[^a-z0-9]+/gi, "").toLowerCase();
+}
+
+function hasTextPresenceMarker(code: string, marker: string): boolean {
+  const normalizedMarker = normalizeTextPresence(marker);
+  if (!normalizedMarker) {
+    return false;
+  }
+
+  return normalizeTextPresence(code).includes(normalizedMarker);
+}
+
+function buildExpectedPatternImportIssue(input: {
+  registry: SaltRegistry;
+  target: ExpectedPatternTarget;
+  pattern: SaltRegistry["patterns"][number];
+  rule: ReturnType<typeof getPatternValidationRules>[number];
+}): ValidationIssue {
+  const id = `workflow-expected.pattern-missing-import.${normalizeTargetName(
+    input.target.name,
+  )}.${normalizeTargetName(input.rule.value)}`;
+  const importMatch =
+    input.rule.match?.kind === "salt_import" ? input.rule.match : null;
+  const component = importMatch
+    ? findExpectedComponentRecord(input.registry, importMatch.name)
+    : null;
+  const componentSourceUrls = component
+    ? componentDocUrls(input.registry, component.name, [
+        "overview",
+        "usage",
+      ])
+    : [];
   const sourceUrls = unique([
-    ...getPatternDocUrls(registry, "Analytical dashboard"),
-    ...componentDocUrls(registry, "Table", ["overview", "usage", "examples"]),
-    ...componentDocUrls(registry, "Data grid", [
-      "overview",
-      "usage",
-      "examples",
-    ]),
+    ...(input.rule.source_urls ?? []),
+    ...componentSourceUrls,
   ]);
-  const message =
-    input.expectedTargets.source === "create_report"
-      ? "The saved create report expected a Salt tabular surface, but the reviewed implementation fell back to raw HTML table markup."
-      : "The reviewed implementation fell back to raw HTML table markup instead of the expected Salt tabular surface.";
+  const expectedImport = importMatch
+    ? `${importMatch.name} from ${importMatch.package}`
+    : input.rule.value;
 
   return {
-    id: "workflow-expected.tabular-surface",
-    category: "primitive-choice",
-    rule: "workflow-expected-tabular-surface",
+    id,
+    category: "composition",
+    rule: "workflow-expected-pattern-import-not-found",
     severity: "warning",
-    title: "Expected Salt tabular surface not followed",
-    message,
+    title: `Expected workflow pattern import not found`,
+    message: `The workflow expected the ${input.pattern.name} pattern, and source-backed pattern rule evidence lists ${expectedImport}, but no matching @salt-ds import was found.`,
     evidence: [
       ...buildEvidence(
-        "Review expected a Salt tabular surface from a prior workflow decision",
+        `Workflow input expected pattern ${input.target.name}`,
         1,
       ),
-      ...buildEvidence(
-        "Raw HTML table markup was detected instead of a Salt table component",
-        input.rawTableMatches,
-      ),
+      `Registry pattern rule '${input.rule.id}' lists ${expectedImport}.`,
+      `No matching @salt-ds import was detected for ${expectedImport}.`,
     ],
-    canonical_source: sourceUrls[0] ?? "/salt/components/table",
+    canonical_source: sourceUrls[0] ?? null,
     suggested_fix:
-      "Use Salt Table or Data grid for the tabular surface instead of raw HTML table markup.",
-    confidence: 0.92,
-    source_urls:
-      sourceUrls.length > 0 ? sourceUrls : ["/salt/components/table"],
-    matches: input.rawTableMatches,
+      "Resolve the expected pattern through source-backed workflow output and include the registry-backed starter import before treating the pattern as complete.",
+    confidence: 0.82,
+    source_urls: sourceUrls,
+    evidence_refs: [
+      buildWorkflowInputExpectedTargetEvidenceRef({
+        id,
+        field_path: input.target.field_path,
+        note: "Review expected the pattern from explicit workflow input.",
+      }),
+      ...input.rule.evidence_refs,
+      ...(component
+        ? [
+            buildComponentRegistryEvidenceRef({
+              registry: input.registry,
+              component,
+              claim_kind: "component",
+              field_path: "name",
+              id_suffix: "workflow-expected-pattern-import",
+            }),
+          ]
+        : []),
+    ],
+    matches: 1,
     fix_hints: {
       guide_lookups: [],
-      related_components: ["Table", "Data grid"],
-      extra_steps: [
-        "Choose Table for simpler tabular layouts and Data grid for richer interactive tables.",
-      ],
+      related_components: component ? [component.name] : [],
+      extra_steps: [],
     },
   };
 }
 
-function buildExpectedTargetIssues(
-  registry: SaltRegistry,
-  input: {
-    expectedTargets: ReviewExpectedTargets | undefined;
-    analysis: SaltCodeAnalysis | null;
-  },
-): ValidationIssue[] {
-  const expectedTargets = input.expectedTargets;
-  if (!expectedTargets || !input.analysis) {
-    return [];
+function buildExpectedPatternRegionIssue(input: {
+  target: ExpectedPatternTarget;
+  pattern: SaltRegistry["patterns"][number];
+  rule: ReturnType<typeof getPatternValidationRules>[number];
+}): ValidationIssue {
+  const id = `workflow-expected.pattern-missing-region.${normalizeTargetName(
+    input.target.name,
+  )}.${normalizeTargetName(input.rule.value)}`;
+  const sourceUrls = unique(input.rule.source_urls ?? []);
+
+  return {
+    id,
+    category: "composition",
+    rule: "workflow-expected-pattern-region-not-found",
+    severity: "warning",
+    title: `Expected workflow pattern region not found`,
+    message: `The workflow expected the ${input.pattern.name} pattern, and source-backed pattern rule evidence lists the ${input.rule.value} starter region, but no matching region marker was found in the reviewed code.`,
+    evidence: [
+      ...buildEvidence(
+        `Workflow input expected pattern ${input.target.name}`,
+        1,
+      ),
+      `Registry pattern rule '${input.rule.id}' lists starter region ${input.rule.value}.`,
+      `No matching region marker was detected for ${input.rule.value}.`,
+    ],
+    canonical_source: sourceUrls[0] ?? null,
+    suggested_fix:
+      "Resolve the expected pattern through source-backed workflow output and include a code marker or scaffold region that preserves the registry-backed starter region.",
+    confidence: 0.74,
+    source_urls: sourceUrls,
+    evidence_refs: [
+      buildWorkflowInputExpectedTargetEvidenceRef({
+        id,
+        field_path: input.target.field_path,
+        note: "Review expected the pattern from explicit workflow input.",
+      }),
+      ...input.rule.evidence_refs,
+    ],
+    matches: 1,
+    fix_hints: {
+      guide_lookups: [],
+      related_components: [],
+      extra_steps: [],
+    },
+  };
+}
+
+function buildExpectedPatternBuildAroundIssue(input: {
+  target: ExpectedPatternTarget;
+  pattern: SaltRegistry["patterns"][number];
+  rule: ReturnType<typeof getPatternValidationRules>[number];
+}): ValidationIssue {
+  const id = `workflow-expected.pattern-missing-build-around.${normalizeTargetName(
+    input.target.name,
+  )}.${normalizeTargetName(input.rule.value)}`;
+  const sourceUrls = unique(input.rule.source_urls ?? []);
+
+  return {
+    id,
+    category: "composition",
+    rule: "workflow-expected-pattern-build-around-not-found",
+    severity: "warning",
+    title: `Expected workflow pattern build-around marker not found`,
+    message: `The workflow expected the ${input.pattern.name} pattern, and source-backed pattern rule evidence lists ${input.rule.value} as build-around guidance, but no matching marker was found in the reviewed code.`,
+    evidence: [
+      ...buildEvidence(
+        `Workflow input expected pattern ${input.target.name}`,
+        1,
+      ),
+      `Registry pattern rule '${input.rule.id}' lists build-around guidance ${input.rule.value}.`,
+      `No matching build-around marker was detected for ${input.rule.value}.`,
+    ],
+    canonical_source: sourceUrls[0] ?? null,
+    suggested_fix:
+      "Resolve the expected pattern through source-backed workflow output and include a code marker or scaffold element that preserves the registry-backed build-around guidance.",
+    confidence: 0.72,
+    source_urls: sourceUrls,
+    evidence_refs: [
+      buildWorkflowInputExpectedTargetEvidenceRef({
+        id,
+        field_path: input.target.field_path,
+        note: "Review expected the pattern from explicit workflow input.",
+      }),
+      ...input.rule.evidence_refs,
+    ],
+    matches: 1,
+    fix_hints: {
+      guide_lookups: [],
+      related_components: [],
+      extra_steps: [],
+    },
+  };
+}
+
+function buildExpectedPatternIssues(input: {
+  registry: SaltRegistry;
+  target: ExpectedPatternTarget;
+  importedSaltImportKeys: Set<string>;
+  rulePack: SaltPatternValidationRulePack;
+  code: string;
+}): { issues: ValidationIssue[]; missing_data: string[] } {
+  const pattern = findExpectedPatternRecord(input.registry, input.target.name);
+  if (!pattern) {
+    return {
+      issues: [
+        buildExpectedPatternUnsupportedIssue(
+          input.registry,
+          input.target,
+          "missing_pattern_record",
+        ),
+      ],
+      missing_data: [
+        `Expected pattern target '${input.target.name}' was not structurally validated because no matching semantic-core registry pattern record was found.`,
+      ],
+    };
   }
 
-  const expectedPatterns = collectExpectedPatternNames(expectedTargets);
-  const expectedComponents = collectExpectedComponentNames(expectedTargets);
-  const expectsMetric = expectedPatterns.some(
-    (name) => normalizeTargetName(name) === "metric",
-  );
-  const expectsTabularSurface = expectedComponents.some((name) => {
-    const normalized = normalizeTargetName(name);
-    return normalized === "table" || normalized === "datagrid";
+  const supportedImportRules = getPatternValidationRules({
+    rule_pack: input.rulePack,
+    pattern,
+    kind: "starter-template-import",
+    status: "supported",
   });
-  if (!expectsMetric && !expectsTabularSurface) {
-    return [];
+  const supportedRegionRules = getPatternValidationRules({
+    rule_pack: input.rulePack,
+    pattern,
+    kind: "starter-region",
+    status: "supported",
+  });
+  const supportedBuildAroundRules = getPatternValidationRules({
+    rule_pack: input.rulePack,
+    pattern,
+    kind: "starter-build-around",
+    status: "supported",
+  });
+  const unsupportedRules = getPatternValidationRules({
+    rule_pack: input.rulePack,
+    pattern,
+    status: "unsupported",
+  });
+  const unsupportedRuleKinds = unique(unsupportedRules.map((rule) => rule.kind));
+
+  if (
+    supportedImportRules.length === 0 &&
+    supportedRegionRules.length === 0 &&
+    supportedBuildAroundRules.length === 0
+  ) {
+    return {
+      issues: [
+        buildExpectedPatternUnsupportedIssue(
+          input.registry,
+          input.target,
+          "missing_rule_pack_evidence",
+        ),
+      ],
+      missing_data: [
+        `Expected pattern target '${input.target.name}' was not structurally validated because the matching registry pattern has no supported starter-template import, starter-region, or starter-build-around rule evidence.`,
+        ...(unsupportedRuleKinds.length > 0
+          ? [
+              `Expected pattern target '${input.target.name}' has source-backed rule kinds that semantic-core records as unsupported: ${unsupportedRuleKinds.join(", ")}.`,
+            ]
+          : []),
+      ],
+    };
   }
 
-  const analysis = input.analysis;
-  let usesMetricDisplayValue = false;
-  let usesCard = false;
-  let usesSaltTabularSurface = false;
-  let rawTableMatches = 0;
+  const issues: ValidationIssue[] = [];
+  const missingData =
+    unsupportedRuleKinds.length > 0
+      ? [
+          `Expected pattern target '${input.target.name}' has source-backed rule kinds that semantic-core records as unsupported: ${unsupportedRuleKinds.join(", ")}.`,
+        ]
+      : [];
+
+  for (const rule of supportedImportRules) {
+    const importMatch =
+      rule.match?.kind === "salt_import" ? rule.match : null;
+    if (
+      importMatch &&
+      input.importedSaltImportKeys.has(
+        buildImportRuleKey(importMatch.package, importMatch.name),
+      )
+    ) {
+      continue;
+    }
+
+    issues.push(
+      buildExpectedPatternImportIssue({
+        registry: input.registry,
+        target: input.target,
+        pattern,
+        rule,
+      }),
+    );
+  }
+
+  for (const rule of supportedRegionRules) {
+    if (
+      rule.match?.kind === "text_presence" &&
+      hasTextPresenceMarker(input.code, rule.match.text)
+    ) {
+      continue;
+    }
+
+    issues.push(
+      buildExpectedPatternRegionIssue({
+        target: input.target,
+        pattern,
+        rule,
+      }),
+    );
+  }
+
+  for (const rule of supportedBuildAroundRules) {
+    if (
+      rule.match?.kind === "text_presence" &&
+      hasTextPresenceMarker(input.code, rule.match.text)
+    ) {
+      continue;
+    }
+
+    issues.push(
+      buildExpectedPatternBuildAroundIssue({
+        target: input.target,
+        pattern,
+        rule,
+      }),
+    );
+  }
+
+  return { issues, missing_data: missingData };
+}
+
+function collectExpectedComponentTargets(
+  expectedTargets: ReviewExpectedTargets | undefined,
+): ExpectedComponentTarget[] {
+  const slotComponentNames = new Set(
+    (expectedTargets?.composition_contract?.slots ?? [])
+      .filter((slot) => slot.certainty !== "optional")
+      .flatMap((slot) => slot.preferred_components)
+      .map(normalizeTargetName),
+  );
+  const targets: ExpectedComponentTarget[] = [];
+
+  for (const name of normalizeExpectedTargetNames(expectedTargets?.components)) {
+    if (!slotComponentNames.has(normalizeTargetName(name))) {
+      targets.push({ names: [name], field_path: "expected_targets.components" });
+    }
+  }
+
+  for (const name of normalizeExpectedTargetNames(
+    expectedTargets?.composition_contract?.expected_components,
+  )) {
+    if (!slotComponentNames.has(normalizeTargetName(name))) {
+      targets.push({
+        names: [name],
+        field_path: "expected_targets.composition_contract.expected_components",
+      });
+    }
+  }
+
+  for (const slot of expectedTargets?.composition_contract?.slots ?? []) {
+    if (slot.certainty === "optional") {
+      continue;
+    }
+    const names = normalizeExpectedTargetNames(slot.preferred_components);
+    if (names.length > 0) {
+      targets.push({
+        names,
+        field_path: "expected_targets.composition_contract.slots",
+        slot_id: slot.id,
+        slot_label: slot.label,
+      });
+    }
+  }
+
+  return targets.filter(
+    (target, index) =>
+      targets.findIndex(
+        (candidate) =>
+          candidate.field_path === target.field_path &&
+          candidate.slot_id === target.slot_id &&
+          candidate.names.map(normalizeTargetName).join("|") ===
+            target.names.map(normalizeTargetName).join("|"),
+      ) === index,
+  );
+}
+
+function collectImportedSaltNames(analysis: SaltCodeAnalysis): Set<string> {
+  const importedNames = new Set(
+    [...analysis.directImportByLocal.values()].map((symbol) =>
+      normalizeTargetName(symbol.imported),
+    ),
+  );
 
   traverseAst(analysis.ast, {
     JSXOpeningElement(path) {
@@ -341,130 +773,224 @@ function buildExpectedTargetIssues(
         analysis.directImportByLocal,
         analysis.namespaceImportByLocal,
       );
-      const tagName = getJsxTagName(path.node.name);
-      if (!imported && tagName === "table") {
-        rawTableMatches += 1;
-      }
-      if (
-        imported?.imported === "Display1" ||
-        imported?.imported === "Display2" ||
-        imported?.imported === "Display3"
-      ) {
-        usesMetricDisplayValue = true;
-      }
-
-      if (imported?.imported === "Card") {
-        usesCard = true;
-      }
 
       if (imported) {
-        const normalizedImported = normalizeTargetName(imported.imported);
-        if (
-          normalizedImported === "table" ||
-          normalizedImported === "datagrid"
-        ) {
-          usesSaltTabularSurface = true;
-        }
-      }
-
-      if (tagName !== "Text") {
-        return;
-      }
-
-      const styleAttribute = path.node.attributes.find(
-        (attribute) =>
-          attribute.type === "JSXAttribute" &&
-          getJsxAttributeName(attribute) === "styleAs",
-      );
-      if (
-        styleAttribute?.type === "JSXAttribute" &&
-        /^display[123]$/i.test(
-          getStaticStringAttributeValue(styleAttribute) ?? "",
-        )
-      ) {
-        usesMetricDisplayValue = true;
+        importedNames.add(normalizeTargetName(imported.imported));
       }
     },
   });
 
-  const issues: ValidationIssue[] = [];
+  return importedNames;
+}
 
-  if (expectsMetric && !usesMetricDisplayValue) {
-    issues.push(
-      buildExpectedMetricPatternIssue(registry, {
-        expectedTargets,
-        usesCard,
-      }),
-    );
-  }
-
-  if (expectsTabularSurface && rawTableMatches > 0 && !usesSaltTabularSurface) {
-    issues.push(
-      buildExpectedTabularSurfaceIssue(registry, {
-        expectedTargets,
-        rawTableMatches,
-      }),
-    );
-  }
-
-  // Generalized primitive coverage check: for each slot-bound expected
-  // component, verify that a matching Salt import exists. This catches cases
-  // like LinearProgress, where the scaffold expects the primitive but the
-  // agent used custom CSS instead.
-  const compositionSlots =
-    expectedTargets.composition_contract?.slots.filter(
-      (slot) => slot.certainty !== "optional",
-    ) ?? [];
-  const importedSaltNames = new Set(
-    [...(input.analysis?.directImportByLocal.values() ?? [])].map((sym) =>
-      normalizeTargetName(sym.imported),
+function collectImportedSaltImportKeys(analysis: SaltCodeAnalysis): Set<string> {
+  const importedKeys = new Set(
+    [...analysis.directImportByLocal.values()].map((symbol) =>
+      buildImportRuleKey(symbol.packageName, symbol.imported),
     ),
   );
 
-  for (const slot of compositionSlots) {
-    for (const expectedComponent of slot.preferred_components) {
-      const normalized = normalizeTargetName(expectedComponent);
-      // Skip components already covered by the specific checks above
-      if (normalized === "table" || normalized === "datagrid") {
-        continue;
+  traverseAst(analysis.ast, {
+    JSXOpeningElement(path) {
+      const imported = resolveImportedSaltSymbol(
+        path.node.name,
+        analysis.directImportByLocal,
+        analysis.namespaceImportByLocal,
+      );
+
+      if (imported) {
+        importedKeys.add(buildImportRuleKey(imported.packageName, imported.imported));
       }
-      if (!importedSaltNames.has(normalized)) {
-        issues.push({
-          id: `workflow-expected.missing-primitive.${normalized}`,
-          category: "composition",
-          rule: "scaffold-expected-primitive-not-imported",
-          severity: "warning",
-          title: `Expected Salt primitive ${expectedComponent} not found`,
-          message: `The scaffold expected ${expectedComponent} for the "${slot.label || slot.id}" region, but no corresponding Salt import was found. Custom markup may be duplicating an existing Salt component.`,
-          evidence: [
-            ...buildEvidence(
-              `Scaffold slot "${slot.id}" expected ${expectedComponent}`,
-              1,
-            ),
-            `No import of ${expectedComponent} from a @salt-ds/* package was detected.`,
-          ],
-          canonical_source: null,
-          suggested_fix: `Run a targeted create follow-up for ${expectedComponent} and replace custom markup with the canonical Salt component.`,
-          confidence: 0.82,
-          source_urls: componentDocUrls(registry, expectedComponent, [
-            "overview",
-            "usage",
-          ]),
-          matches: 1,
-          fix_hints: {
-            guide_lookups: [],
-            related_components: [expectedComponent],
-            extra_steps: [
-              `Run salt-ds create "${expectedComponent}" to get canonical guidance.`,
-              `Replace custom HTML or CSS in the "${slot.label || slot.id}" region with the resolved Salt primitive.`,
-            ],
-          },
-        });
-      }
+    },
+  });
+
+  return importedKeys;
+}
+
+function buildExpectedComponentIssue(
+  registry: SaltRegistry,
+  target: ExpectedComponentTarget,
+): { issue: ValidationIssue; unresolved_components: string[] } {
+  const componentMatches = target.names.map((name) => ({
+    name,
+    ...componentImportKeys(registry, name),
+  }));
+  const components: Array<SaltRegistry["components"][number]> = [];
+  for (const match of componentMatches) {
+    if (
+      match.component &&
+      !components.some((component) => component.id === match.component?.id)
+    ) {
+      components.push(match.component);
+    }
+  }
+  const unresolvedComponents = componentMatches.flatMap((match) =>
+    match.component ? [] : [match.name],
+  );
+  const displayName = target.names.join(", ");
+  const regionName = target.slot_label ?? target.slot_id ?? null;
+  const id = target.slot_id
+    ? `workflow-expected.missing-component.${normalizeTargetName(
+        target.slot_id,
+      )}`
+    : `workflow-expected.missing-component.${normalizeTargetName(
+        target.names[0],
+      )}`;
+  const sourceUrls = unique(
+    components.flatMap((component) =>
+      componentDocUrls(registry, component.name, ["overview", "usage"]),
+    ),
+  );
+  const regionMessage = regionName ? ` for the "${regionName}" region` : "";
+  const expectationText =
+    target.names.length === 1
+      ? target.names[0]
+      : `one of ${target.names.join(", ")}`;
+
+  return {
+    unresolved_components: unresolvedComponents,
+    issue: {
+      id,
+      category: "composition",
+      rule: "workflow-expected-component-not-imported",
+      severity: "warning",
+      title: `Expected workflow component target not found`,
+      message: `The workflow expected ${expectationText}${regionMessage}, but no corresponding @salt-ds import was found.`,
+      evidence: [
+        ...buildEvidence(
+          `Workflow input expected component target ${displayName}`,
+          1,
+        ),
+        `No matching @salt-ds import was detected for ${displayName}.`,
+      ],
+      canonical_source: sourceUrls[0] ?? null,
+      suggested_fix:
+        "Resolve the expected target from the source-backed workflow output and replace custom markup with the matching Salt component.",
+      confidence: 0.82,
+      source_urls: sourceUrls,
+      evidence_refs: [
+        buildWorkflowInputExpectedTargetEvidenceRef({
+          id,
+          field_path: target.field_path,
+          note: `Review expected ${displayName} from explicit workflow input.`,
+        }),
+        ...components.map((component) =>
+          buildComponentRegistryEvidenceRef({
+            registry,
+            component,
+            claim_kind: "component",
+            field_path: "name",
+            id_suffix: "workflow-expected-component",
+          }),
+        ),
+      ],
+      matches: 1,
+      fix_hints: {
+        guide_lookups: [],
+        related_components: components.map((component) => component.name),
+        extra_steps: [],
+      },
+    },
+  };
+}
+
+function buildExpectedTargetValidation(
+  registry: SaltRegistry,
+  input: {
+    expectedTargets: ReviewExpectedTargets | undefined;
+    analysis: SaltCodeAnalysis | null;
+    code: string;
+  },
+): { issues: ValidationIssue[]; missing_data: string[] } {
+  const expectedTargets = input.expectedTargets;
+  if (!expectedTargets || !input.analysis) {
+    return { issues: [], missing_data: [] };
+  }
+
+  const issues: ValidationIssue[] = [];
+  const missingData: string[] = [];
+
+  const importedSaltNames = collectImportedSaltNames(input.analysis);
+  const importedSaltImportKeys = collectImportedSaltImportKeys(input.analysis);
+  const expectedPatternTargets = collectExpectedPatternTargets(expectedTargets);
+  let patternRulePack: SaltPatternValidationRulePack | null = null;
+  let patternRulePackEvidenceValid = true;
+
+  if (expectedPatternTargets.length > 0) {
+    patternRulePack =
+      registry.pattern_validation_rule_pack ??
+      buildPatternValidationRulePack({
+        registry,
+        generated_at: registry.generated_at,
+        generator: {
+          name: "semantic-core.review-salt-ui.expected-patterns",
+        },
+      });
+    const rulePackEvidenceIssues = validatePatternValidationRulePackEvidence(
+      patternRulePack,
+      registry,
+    );
+    if (rulePackEvidenceIssues.length > 0) {
+      patternRulePackEvidenceValid = false;
+      missingData.push(
+        ...rulePackEvidenceIssues.map(
+          (issue) =>
+            `Expected pattern validation rule pack evidence gap at ${issue.path}: ${issue.message}`,
+        ),
+      );
     }
   }
 
-  return issues;
+  for (const target of expectedPatternTargets) {
+    if (!patternRulePack || !patternRulePackEvidenceValid) {
+      issues.push(
+        buildExpectedPatternUnsupportedIssue(
+          registry,
+          target,
+          "missing_rule_pack_evidence",
+        ),
+      );
+      continue;
+    }
+
+    const patternValidation = buildExpectedPatternIssues({
+      registry,
+      target,
+      importedSaltImportKeys,
+      rulePack: patternRulePack,
+      code: input.code,
+    });
+    issues.push(...patternValidation.issues);
+    missingData.push(...patternValidation.missing_data);
+  }
+
+  for (const target of collectExpectedComponentTargets(expectedTargets)) {
+    const targetKeys = target.names.flatMap(
+      (name) => componentImportKeys(registry, name).keys,
+    );
+    if (targetKeys.some((key) => importedSaltNames.has(key))) {
+      continue;
+    }
+
+    const { issue, unresolved_components: unresolvedComponents } =
+      buildExpectedComponentIssue(registry, target);
+    issues.push(issue);
+    for (const unresolvedComponent of unresolvedComponents) {
+      missingData.push(
+        `Expected component target '${unresolvedComponent}' could not be resolved to a semantic-core registry component record.`,
+      );
+    }
+  }
+
+  return { issues, missing_data: unique(missingData) };
+}
+
+function expectedTargetProjectConventionsTopics(
+  expectedTargets: ReviewExpectedTargets | undefined,
+): ProjectConventionsTopic[] {
+  return collectExpectedPatternTargets(expectedTargets).length > 0
+    ? ["wrappers", "page-patterns"]
+    : [];
 }
 
 export function isWorkflowExpectedReviewIssueId(issueId: string): boolean {
@@ -493,27 +1019,36 @@ export function reviewSaltUi(
     max_issues: maxIssues,
     analysis: analysis ?? undefined,
   });
-  const contextualIssues = buildExpectedTargetIssues(registry, {
+  const contextualValidation = buildExpectedTargetValidation(registry, {
     expectedTargets: input.expected_targets,
     analysis,
+    code: input.code,
   });
   const validation =
-    contextualIssues.length === 0
+    contextualValidation.issues.length === 0 &&
+    contextualValidation.missing_data.length === 0
       ? rawValidation
       : (() => {
           const { issueMap, addIssue } = createIssueCollector();
           for (const issue of rawValidation.issues) {
             addIssue(issue);
           }
-          for (const issue of contextualIssues) {
+          for (const issue of contextualValidation.issues) {
             addIssue(issue);
           }
           const finalized = finalizeValidationIssues(issueMap, maxIssues);
 
-          return {
-            ...rawValidation,
+          return buildValidateSaltUsageResult({
+            registry,
             ...finalized,
-          };
+            missing_data: unique([
+              ...rawValidation.missing_data,
+              ...contextualValidation.missing_data,
+            ]),
+            generated_at: rawValidation.generated_artifact.generated_at,
+            generator: rawValidation.generated_artifact.generator,
+            registry_hash: rawValidation.generated_artifact.registry.hash,
+          });
         })();
   const migrations = suggestMigration(registry, {
     code: input.code,
@@ -575,6 +1110,9 @@ export function reviewSaltUi(
     has_deprecations:
       validation.issues.some((issue) => issue.category === "deprecated") ||
       migrations.migrations.length > 0,
+    project_conventions_topics: expectedTargetProjectConventionsTopics(
+      input.expected_targets,
+    ),
   });
 
   return {
@@ -607,6 +1145,7 @@ export function reviewSaltUi(
       confidence: issue.confidence,
       matches: issue.matches,
       source_urls: issue.source_urls,
+      evidence_refs: issue.evidence_refs ?? [],
       fix_hints: issue.fix_hints,
     })),
     migrations: migrations.migrations.map((migration) => ({

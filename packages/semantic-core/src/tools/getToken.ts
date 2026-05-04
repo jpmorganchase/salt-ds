@@ -1,8 +1,6 @@
 import type { SaltRegistry, TokenRecord } from "../types.js";
 import { containsWholeWordPhrase } from "./utils.js";
 
-const TOKEN_DOCS_SOURCE_URL = "/salt/themes/design-tokens/index";
-
 export interface GetTokenInput {
   name?: string;
   category?: string;
@@ -16,7 +14,11 @@ export interface GetTokenResult {
   tokens: Array<Record<string, unknown>>;
   total_matches: number;
   truncated: boolean;
-  source_url: string;
+  source_url: string | null;
+}
+
+function getTokenDocs(token: TokenRecord): string[] {
+  return [...new Set(token.policy?.docs ?? [])];
 }
 
 function toCompactToken(token: TokenRecord): Record<string, unknown> {
@@ -29,7 +31,7 @@ function toCompactToken(token: TokenRecord): Record<string, unknown> {
     guidance: token.guidance,
     applies_to: token.applies_to,
     ...(token.aliases.length > 0 ? { aliases: token.aliases } : {}),
-    docs: [...new Set([TOKEN_DOCS_SOURCE_URL, ...(token.policy?.docs ?? [])])],
+    docs: getTokenDocs(token),
     policy: token.policy ?? null,
     themes: token.themes,
     ...(token.densities.length > 0 ? { densities: token.densities } : {}),
@@ -84,11 +86,12 @@ export function getToken(
     );
 
   const tokens = matchedTokens.slice(0, maxResults);
+  const sourceUrl = tokens.flatMap(getTokenDocs)[0] ?? null;
 
   return {
     tokens: tokens.map(toCompactToken),
     total_matches: matchedTokens.length,
     truncated: matchedTokens.length > maxResults,
-    source_url: TOKEN_DOCS_SOURCE_URL,
+    source_url: sourceUrl,
   };
 }

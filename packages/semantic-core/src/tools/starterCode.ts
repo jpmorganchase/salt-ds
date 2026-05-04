@@ -1,8 +1,3 @@
-import {
-  buildThemeAppStarterCode,
-  DEFAULT_NEW_WORK_THEME_PRESET_ID,
-  getThemePreset,
-} from "../themePresets.js";
 import type { ComponentRecord, PageRecord } from "../types.js";
 import { inferComponentCapabilities } from "./consumerSignals.js";
 
@@ -106,328 +101,8 @@ function toImportLines(importMap: Map<string, Set<string>>): string[] {
     });
 }
 
-function escapeRegExp(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function hasDefaultThemeBootstrapSignal(code: string): boolean {
-  return (
-    /\b(?:UNSTABLE_)?SaltProviderNext\b|\bSaltProvider\b/.test(code) ||
-    /@salt-ds\/theme\/(?:index\.css|css\/theme-next\.css)/.test(code)
-  );
-}
-
-function splitImportPreamble(code: string): {
-  preamble: string;
-  body: string;
-} {
-  const lines = code.split(/\r?\n/);
-  let index = 0;
-  let inImport = false;
-
-  for (; index < lines.length; index += 1) {
-    const line = lines[index];
-    const trimmed = line.trim();
-
-    if (inImport) {
-      if (trimmed.endsWith(";")) {
-        inImport = false;
-      }
-      continue;
-    }
-
-    if (trimmed === "") {
-      continue;
-    }
-
-    if (trimmed.startsWith("import ")) {
-      if (!trimmed.endsWith(";")) {
-        inImport = true;
-      }
-      continue;
-    }
-
-    break;
-  }
-
-  return {
-    preamble: lines.slice(0, index).join("\n"),
-    body: lines.slice(index).join("\n"),
-  };
-}
-
-function parseNamedImports(importedNames: string): string[] {
-  return importedNames
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter(Boolean);
-}
-
-function renderNamedImport(
-  importedNames: string[],
-  multiline: boolean,
-): string {
-  if (!multiline && importedNames.length <= 4) {
-    return `import { ${importedNames.join(", ")} } from "@salt-ds/core";`;
-  }
-
-  return [
-    "import {",
-    ...importedNames.map((name) => `  ${name},`),
-    '} from "@salt-ds/core";',
-  ].join("\n");
-}
-
-function rewriteSaltCoreProviderImports(input: {
-  preamble: string;
-  body: string;
-  provider: string;
-  needsProviderImport: boolean;
-}): string {
-  let hasCoreImport = false;
-  let hasProviderImport = false;
-  const bodyUsesThemeHook = /\buseTheme\b/.test(input.body);
-  const bodyUsesProviderAlias = /<Provider(?=[\s>])/.test(input.body);
-  const bodyUsesLegacyProviderIdentifier = /\bSaltProvider\b(?!Next)/.test(
-    input.body,
-  );
-  const bodyUsesStableNextProviderIdentifier = /\bSaltProviderNext\b/.test(
-    input.body,
-  );
-  const bodyUsesUnstableNextProviderIdentifier =
-    /\bUNSTABLE_SaltProviderNext\b/.test(input.body);
-
-  const rewritten = input.preamble.replace(
-    /import\s+\{([\s\S]*?)\}\s+from\s+["']@salt-ds\/core["'];?/g,
-    (match, importedNames: string) => {
-      hasCoreImport = true;
-      const names = parseNamedImports(importedNames).filter((name) => {
-        if (name === "SaltProvider" && !bodyUsesLegacyProviderIdentifier) {
-          return false;
-        }
-
-        if (
-          name === "SaltProviderNext" &&
-          !bodyUsesStableNextProviderIdentifier
-        ) {
-          return false;
-        }
-
-        if (
-          name === "UNSTABLE_SaltProviderNext" &&
-          !bodyUsesUnstableNextProviderIdentifier
-        ) {
-          return false;
-        }
-
-        if (name === "useTheme" && !bodyUsesThemeHook) {
-          return false;
-        }
-
-        return true;
-      });
-
-      if (input.needsProviderImport || bodyUsesProviderAlias) {
-        names.push(input.provider);
-        hasProviderImport = true;
-      }
-
-      const uniqueNames = [...new Set(names)].sort((left, right) =>
-        left.localeCompare(right),
-      );
-      if (uniqueNames.length === 0) {
-        return "";
-      }
-
-      return renderNamedImport(uniqueNames, match.includes("\n"));
-    },
-  );
-
-  if (
-    input.needsProviderImport &&
-    (!hasCoreImport || !hasProviderImport) &&
-    !new RegExp(
-      `import\\s+\\{[^}]*\\b${escapeRegExp(input.provider)}\\b[^}]*\\}\\s+from\\s+["']@salt-ds/core["']`,
-      "m",
-    ).test(rewritten)
-  ) {
-    return [
-      `import { ${input.provider} } from "@salt-ds/core";`,
-      rewritten.trimStart(),
-    ]
-      .filter(Boolean)
-      .join("\n");
-  }
-
-  return rewritten;
-}
-
-function removeThemeSideEffectImports(preamble: string): string {
-  return preamble
-    .split(/\r?\n/)
-    .filter(
-      (line) =>
-        !/^import\s+["']@salt-ds\/theme\/(?:index\.css|css\/theme-next\.css)["'];?\s*$/.test(
-          line.trim(),
-        ),
-    )
-    .join("\n");
-}
-
-function ensureThemeSideEffectImports(
-  preamble: string,
-  importPaths: string[],
-): string {
-  const lines = preamble
-    .split(/\r?\n/)
-    .map((line) => line.trimEnd())
-    .filter((line, index, allLines) => {
-      if (line.trim() !== "") {
-        return true;
-      }
-
-      return index > 0 && index < allLines.length - 1;
-    });
-
-  for (const importPath of importPaths) {
-    const importLine = `import "${importPath}";`;
-    if (!lines.includes(importLine)) {
-      lines.push(importLine);
-    }
-  }
-
-  return lines.join("\n");
-}
-
-function removeDefaultThemePropAssignments(
-  attributes: string,
-  propNames: string[],
-): string {
-  let updated = attributes;
-
-  for (const propName of propNames) {
-    updated = updated.replace(
-      new RegExp(
-        `\\s+${escapeRegExp(propName)}\\s*=\\s*(?:"[^"]*"|'[^']*'|\\{[\\s\\S]*?\\})`,
-        "g",
-      ),
-      "",
-    );
-  }
-
-  return updated.trim();
-}
-
-function renderDefaultThemeProviderOpening(input: {
-  indent: string;
-  provider: string;
-  defaultProps: Array<{ name: string; value: string }>;
-  preservedAttributes: string;
-  selfClosing: boolean;
-}): string {
-  const preservedAttributeLines = input.preservedAttributes
-    ? input.preservedAttributes
-        .split(/\r?\n/)
-        .map((line) => line.trim())
-        .filter(Boolean)
-    : [];
-
-  if (input.defaultProps.length === 0 && preservedAttributeLines.length === 0) {
-    return input.selfClosing
-      ? `${input.indent}<${input.provider} />`
-      : `${input.indent}<${input.provider}>`;
-  }
-
-  return [
-    `${input.indent}<${input.provider}`,
-    ...input.defaultProps.map(
-      (prop) => `${input.indent}  ${prop.name}="${prop.value}"`,
-    ),
-    ...preservedAttributeLines.map((line) => `${input.indent}  ${line}`),
-    input.selfClosing ? `${input.indent}/>` : `${input.indent}>`,
-  ].join("\n");
-}
-
-function rewriteProviderTagsToDefaultTheme(code: string): string {
-  const defaultThemePreset = getThemePreset(DEFAULT_NEW_WORK_THEME_PRESET_ID);
-  const providerNames = [
-    "SaltProvider",
-    "SaltProviderNext",
-    "UNSTABLE_SaltProviderNext",
-  ];
-  const providerPattern = providerNames.map(escapeRegExp).join("|");
-  const propNames = defaultThemePreset.props.map((prop) => prop.name);
-  const dynamicProviderAliasPattern =
-    /\n\s*const\s+\{\s*themeNext\s*\}\s*=\s*useTheme\(\);\s*\n\s*const\s+Provider\s*=\s*themeNext\s*\?\s*SaltProviderNext\s*:\s*SaltProvider;\s*/g;
-  const hasDynamicProviderAlias = dynamicProviderAliasPattern.test(code);
-
-  let updated = code.replace(dynamicProviderAliasPattern, "\n");
-
-  if (hasDynamicProviderAlias) {
-    updated = updated
-      .replace(/<Provider(?=[\s>])/g, `<${defaultThemePreset.provider}`)
-      .replace(/<\/Provider>/g, `</${defaultThemePreset.provider}>`);
-  }
-
-  updated = updated.replace(
-    new RegExp(`^(\\s*)<(${providerPattern})\\b([\\s\\S]*?)>`, "gm"),
-    (_match, indent: string, _providerName: string, attributes: string) => {
-      const trimmedAttributes = attributes.trim();
-      const selfClosing = trimmedAttributes.endsWith("/");
-      const attributesWithoutSelfClosing = selfClosing
-        ? trimmedAttributes.slice(0, -1)
-        : attributes;
-      const preservedAttributes = removeDefaultThemePropAssignments(
-        attributesWithoutSelfClosing,
-        propNames,
-      );
-
-      return renderDefaultThemeProviderOpening({
-        indent,
-        provider: defaultThemePreset.provider,
-        defaultProps: defaultThemePreset.props,
-        preservedAttributes,
-        selfClosing,
-      });
-    },
-  );
-
-  return updated.replace(
-    new RegExp(`</(?:${providerPattern})>`, "g"),
-    `</${defaultThemePreset.provider}>`,
-  );
-}
-
 function normalizeDefaultThemeStarterCode(code: string): string {
-  if (!hasDefaultThemeBootstrapSignal(code)) {
-    return code;
-  }
-
-  const defaultThemePreset = getThemePreset(DEFAULT_NEW_WORK_THEME_PRESET_ID);
-  const rewrittenBody = rewriteProviderTagsToDefaultTheme(code);
-  const hasProviderTag = new RegExp(
-    `<${escapeRegExp(defaultThemePreset.provider)}(?=[\\s>])`,
-  ).test(rewrittenBody);
-  const hasThemeCssImport =
-    /@salt-ds\/theme\/(?:index\.css|css\/theme-next\.css)/.test(code);
-
-  if (!hasProviderTag && !hasThemeCssImport) {
-    return rewrittenBody;
-  }
-
-  const { preamble, body } = splitImportPreamble(rewrittenBody);
-  const coreImports = rewriteSaltCoreProviderImports({
-    preamble: removeThemeSideEffectImports(preamble),
-    body,
-    provider: defaultThemePreset.provider,
-    needsProviderImport: hasProviderTag,
-  });
-  const importBlock = ensureThemeSideEffectImports(
-    coreImports,
-    defaultThemePreset.imports,
-  );
-
-  return [importBlock, body.trimStart()].filter(Boolean).join("\n\n");
+  return code;
 }
 
 function getComponentCategories(component: ComponentRecord): Set<string> {
@@ -682,11 +357,6 @@ export function createComponentStarterCode(
       notes: [
         "Derived from the closest example currently attached to this component in the registry.",
         ...(example.source_url ? [`Source: ${example.source_url}`] : []),
-        ...(normalizedExampleCode !== example.code
-          ? [
-              "Theme bootstrap normalized to the recommended JPM Brand setup for new Salt work.",
-            ]
-          : []),
       ],
     });
   }
@@ -701,7 +371,7 @@ function buildRecipeElement(component: RecipeStarterComponent): string[] {
   const attributes: string[] = [];
   let children: string | null = null;
 
-  if (/navigation|link/i.test(roleLabel) || exportName === "Link") {
+  if (/navigation|link/i.test(roleLabel)) {
     attributes.push('href="/next"');
     children = "Go to next page";
   } else if (/primary|action|command/i.test(roleLabel)) {
@@ -774,9 +444,6 @@ export function createRecipeStarterCode(input: {
     }
   }
 
-  const defaultThemePreset = getThemePreset(DEFAULT_NEW_WORK_THEME_PRESET_ID);
-  addImport(importMap, "@salt-ds/core", defaultThemePreset.provider);
-
   const structuredFallbackLines = fallbackTemplate?.jsx_lines ?? [];
   const body = structuredScaffold
     ? structuredFallbackLines.length > 0
@@ -795,21 +462,12 @@ export function createRecipeStarterCode(input: {
     ? normalizedExampleBackedStarterCode
     : [
         ...toImportLines(importMap),
-        ...defaultThemePreset.imports.map(
-          (importPath) => `import "${importPath}";`,
-        ),
         "",
         "export function Example() {",
         "  return (",
-        `    <${defaultThemePreset.provider}`,
-        ...defaultThemePreset.props.map(
-          (prop) => `      ${prop.name}="${prop.value}"`,
-        ),
-        "    >",
-        "      <>",
+        "    <>",
         ...body,
-        "      </>",
-        `    </${defaultThemePreset.provider}>`,
+        "    </>",
         "  );",
         "}",
       ].join("\n");
@@ -865,15 +523,9 @@ export function createRecipeStarterCode(input: {
         ...(exampleBackedStarter
           ? [
               "Starter code is based on the closest extracted pattern story example rather than a private fallback template.",
-              ...(normalizedExampleBackedStarterCode !==
-              exampleBackedStarter.code
-                ? [
-                    "Theme bootstrap normalized to the recommended JPM Brand setup for new Salt work.",
-                  ]
-                : []),
             ]
           : []),
-        "Use the recommended JPM Brand theme bootstrap for new Salt work. Only fall back to legacy SaltProvider when migration compatibility or repo policy explicitly requires it.",
+        "Theme bootstrap is unsupported until provider, import, prop, and font facts resolve from registry-backed context, project policy, workflow evidence, or explicit workflow input.",
         ...(fallbackTemplate?.notes ?? []),
         ...(input.starter_scaffold && !structuredScaffold
           ? [
@@ -900,11 +552,6 @@ export function createRecipeStarterCode(input: {
         "Derived from the closest example currently attached to this pattern or recipe.",
         ...(input.supporting_example.source_url
           ? [`Source: ${input.supporting_example.source_url}`]
-          : []),
-        ...(normalizedSupportingExampleCode !== input.supporting_example.code
-          ? [
-              "Theme bootstrap normalized to the recommended JPM Brand setup for new Salt work.",
-            ]
           : []),
       ],
     });
@@ -985,11 +632,15 @@ export function createFoundationStarterCode(
       {
         label: `${page.title} starter`,
         language: "tsx",
-        code: buildThemeAppStarterCode(DEFAULT_NEW_WORK_THEME_PRESET_ID, {
-          additionalProps: [{ name: "density", value: "medium" }],
-        }),
+        code: [
+          "export function Example() {",
+          "  return (",
+          "    <section>{/* Theme, density, and size bootstrap pending evidence. */}</section>",
+          "  );",
+          "}",
+        ].join("\n"),
         notes: [
-          "Use the recommended JPM Brand theme bootstrap for new work, then layer density or size choices on top.",
+          "Theme, density, and size starter code is unsupported until provider and related prop facts resolve from evidence.",
         ],
       },
     ];
