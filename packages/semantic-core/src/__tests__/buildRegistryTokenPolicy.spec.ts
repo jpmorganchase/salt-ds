@@ -440,11 +440,87 @@ describe("token policy source registry", () => {
                 section: expect.stringContaining(
                   "--salt-legacyfixture-gap -> --salt-fixture-gap",
                 ),
+                line_start: 5,
+                line_end: 5,
               }),
             }),
           ]),
         }),
       );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("keeps fixture manual replacement metadata unsupported even if replacements are present", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-manual-metadata-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureTokenReplacementMetadata(repoRoot, [
+        {
+          deprecated: "--salt-legacyfixture-gap",
+          replacements: ["--salt-fixture-gap"],
+          replacement_kind: "manual",
+          unsupported_reason:
+            "Fixture manual replacement metadata must not emit policy.",
+          basis: {
+            source_path: "packages/theme/CHANGELOG.md",
+            line_start: 5,
+            line_end: 5,
+          },
+        },
+      ]);
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+
+      expect(
+        getTokenPolicy(
+          {
+            name: "--salt-legacyfixture-gap",
+            category: "legacyfixture",
+          },
+          sources,
+        ),
+      ).toBeNull();
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("keeps fixture metadata replacements unsupported when replacement docs are missing", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-metadata-gap-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureTokenReplacementMetadata(repoRoot, [
+        {
+          deprecated: "--salt-legacyfixture-gap",
+          replacements: ["--salt-undocumented-gap"],
+          replacement_kind: "direct",
+          basis: {
+            source_path: "packages/theme/CHANGELOG.md",
+            line_start: 5,
+            line_end: 5,
+          },
+        },
+      ]);
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+
+      expect(
+        getTokenPolicy(
+          {
+            name: "--salt-legacyfixture-gap",
+            category: "legacyfixture",
+          },
+          sources,
+        ),
+      ).toBeNull();
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }

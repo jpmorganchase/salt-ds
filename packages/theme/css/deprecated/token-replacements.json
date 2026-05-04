@@ -134,6 +134,94 @@
       }
     },
     {
+      "deprecated": "--salt-taggable-background",
+      "replacement_kind": "manual",
+      "note": "Taggable background source gives literal value guidance instead of a documented replacement token.",
+      "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1798,
+        "line_end": 1798
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-background-hover",
+      "replacement_kind": "manual",
+      "note": "Taggable background-hover source gives literal value guidance instead of a documented replacement token.",
+      "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1799,
+        "line_end": 1799
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-background-active",
+      "replacements": ["--salt-palette-interact-primary-background-active"],
+      "replacement_kind": "direct",
+      "note": "Taggable background-active source names a palette replacement, but generated policy still requires final replacement docs.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1800,
+        "line_end": 1800
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-background-disabled",
+      "replacements": ["--salt-palette-interact-primary-background-disabled"],
+      "replacement_kind": "direct",
+      "note": "Taggable background-disabled source names a palette replacement, but generated policy still requires final replacement docs.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1801,
+        "line_end": 1801
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-foreground",
+      "replacement_kind": "manual",
+      "note": "Taggable foreground source gives literal value guidance instead of a documented replacement token.",
+      "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1803,
+        "line_end": 1803
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-foreground-hover",
+      "replacement_kind": "manual",
+      "note": "Taggable foreground-hover source gives literal value guidance instead of a documented replacement token.",
+      "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1804,
+        "line_end": 1804
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-foreground-active",
+      "replacement_kind": "manual",
+      "note": "Taggable foreground-active source gives literal value guidance instead of a documented replacement token.",
+      "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1805,
+        "line_end": 1805
+      }
+    },
+    {
+      "deprecated": "--salt-taggable-foreground-disabled",
+      "replacement_kind": "manual",
+      "note": "Taggable foreground-disabled source gives literal value guidance instead of a documented replacement token.",
+      "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1806,
+        "line_end": 1806
+      }
+    },
+    {
       "deprecated": "--salt-measured-borderStyle",
       "replacements": ["--salt-track-borderStyle"],
       "replacement_kind": "direct",
@@ -222,6 +310,28 @@
       }
     },
     {
+      "deprecated": "--salt-measured-fontWeight",
+      "replacements": ["--salt-track-fontWeight"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track; final generated policy still depends on replacement token docs.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2356,
+        "line_end": 2358
+      }
+    },
+    {
+      "deprecated": "--salt-measured-textAlign",
+      "replacements": ["--salt-track-textAlign"],
+      "replacement_kind": "direct",
+      "note": "Measured characteristic replaced with Track; final generated policy still depends on replacement token docs.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2357,
+        "line_end": 2359
+      }
+    },
+    {
       "deprecated": "--salt-measured-background",
       "replacements": ["--salt-track-background"],
       "replacement_kind": "direct",
@@ -256,13 +366,101 @@
     },
     {
       "deprecated": "--salt-measured-borderColor-disabled",
-      "replacements": ["--salt-track-borderColor-disabled"],
-      "replacement_kind": "direct",
-      "note": "Measured characteristic replaced with Track.",
+      "replacement_kind": "unsupported",
+      "note": "Measured borderColor-disabled source points to corresponding selectable tokens without an exact replacement token name.",
+      "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2358,
-        "line_end": 2366
+        "line_start": 2385,
+        "line_end": 2385
+      }
+    },
+    {
+      "deprecated": "--salt-measured-foreground",
+      "replacement_kind": "unsupported",
+      "note": "Measured foreground source points to corresponding selectable tokens without an exact replacement token name.",
+      "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2380,
+        "line_end": 2380
+      }
+    },
+    {
+      "deprecated": "--salt-measured-foreground-disabled",
+      "replacement_kind": "unsupported",
+      "note": "Measured foreground-disabled source points to corresponding selectable tokens without an exact replacement token name.",
+      "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2381,
+        "line_end": 2381
+      }
+    },
+    {
+      "deprecated": "--salt-measured-foreground-hover",
+      "replacement_kind": "unsupported",
+      "note": "Measured foreground-hover source points to corresponding selectable tokens without an exact replacement token name.",
+      "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2382,
+        "line_end": 2382
+      }
+    },
+    {
+      "deprecated": "--salt-measured-foreground-active",
+      "replacement_kind": "unsupported",
+      "note": "Measured foreground-active source points to corresponding selectable tokens without an exact replacement token name.",
+      "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2383,
+        "line_end": 2383
+      }
+    },
+    {
+      "deprecated": "--salt-measured-foreground-activeDisabled",
+      "replacement_kind": "unsupported",
+      "note": "Measured foreground-activeDisabled source points to corresponding selectable tokens without an exact replacement token name.",
+      "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2384,
+        "line_end": 2384
+      }
+    },
+    {
+      "deprecated": "--salt-measured-fill",
+      "replacement_kind": "unsupported",
+      "note": "Measured fill source points to corresponding accent background tokens without an exact replacement token name.",
+      "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2391,
+        "line_end": 2391
+      }
+    },
+    {
+      "deprecated": "--salt-measured-fill-disabled",
+      "replacement_kind": "unsupported",
+      "note": "Measured fill-disabled source points to corresponding accent background tokens without an exact replacement token name.",
+      "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2392,
+        "line_end": 2392
+      }
+    },
+    {
+      "deprecated": "--salt-measured-foreground-undo",
+      "replacement_kind": "manual",
+      "note": "Measured foreground-undo source gives literal value guidance instead of a documented replacement token.",
+      "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2400,
+        "line_end": 2400
       }
     },
     {
@@ -346,6 +544,28 @@
       }
     },
     {
+      "deprecated": "--salt-track-background",
+      "replacements": ["--salt-palette-track-background"],
+      "replacement_kind": "direct",
+      "note": "Track background source names a palette replacement, but generated policy still requires final replacement docs.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2360,
+        "line_end": 2363
+      }
+    },
+    {
+      "deprecated": "--salt-track-background-disabled",
+      "replacements": ["--salt-palette-track-background-disabled"],
+      "replacement_kind": "direct",
+      "note": "Track background-disabled source names a palette replacement, but generated policy still requires final replacement docs.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 2361,
+        "line_end": 2364
+      }
+    },
+    {
       "deprecated": "--salt-track-borderColor",
       "replacements": ["--salt-sentiment-neutral-track"],
       "replacement_kind": "direct",
@@ -363,6 +583,28 @@
         "source_path": "packages/theme/CHANGELOG.md",
         "line_start": 452,
         "line_end": 452
+      }
+    },
+    {
+      "deprecated": "--salt-track-fontWeight",
+      "replacement_kind": "manual",
+      "note": "Track fontWeight source names a token value, but final generated policy docs do not resolve.",
+      "unsupported_reason": "No source-backed policy docs resolve the replacement token for generated policy.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1823,
+        "line_end": 1823
+      }
+    },
+    {
+      "deprecated": "--salt-track-textAlign",
+      "replacement_kind": "manual",
+      "note": "Track textAlign source gives a literal value instead of a documented replacement token.",
+      "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
+      "basis": {
+        "source_path": "packages/theme/CHANGELOG.md",
+        "line_start": 1824,
+        "line_end": 1824
       }
     },
     {
@@ -413,6 +655,83 @@
         "source_path": "packages/theme/CHANGELOG.md",
         "line_start": 2036,
         "line_end": 2036
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-0",
+      "replacement_kind": "unsupported",
+      "note": "Opacity scale token exists in deprecated token CSS, but no generated policy docs resolve it.",
+      "unsupported_reason": "No source-backed policy docs resolve this opacity token for generated policy.",
+      "basis": {
+        "source_path": "packages/theme/css/deprecated/foundations.css",
+        "line_start": 20,
+        "line_end": 20
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-8",
+      "replacement_kind": "unsupported",
+      "note": "Opacity scale token exists in deprecated token CSS, but no generated policy docs resolve it.",
+      "unsupported_reason": "No source-backed policy docs resolve this opacity token for generated policy.",
+      "basis": {
+        "source_path": "packages/theme/css/deprecated/foundations.css",
+        "line_start": 19,
+        "line_end": 19
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-15",
+      "replacement_kind": "unsupported",
+      "note": "Opacity scale token exists in deprecated token CSS, but no generated policy docs resolve it.",
+      "unsupported_reason": "No source-backed policy docs resolve this opacity token for generated policy.",
+      "basis": {
+        "source_path": "packages/theme/css/deprecated/foundations.css",
+        "line_start": 21,
+        "line_end": 21
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-25",
+      "replacement_kind": "unsupported",
+      "note": "Opacity scale token exists in deprecated token CSS, but no generated policy docs resolve it.",
+      "unsupported_reason": "No source-backed policy docs resolve this opacity token for generated policy.",
+      "basis": {
+        "source_path": "packages/theme/css/deprecated/foundations.css",
+        "line_start": 22,
+        "line_end": 22
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-40",
+      "replacement_kind": "unsupported",
+      "note": "Opacity scale token exists in deprecated token CSS, but no generated policy docs resolve it.",
+      "unsupported_reason": "No source-backed policy docs resolve this opacity token for generated policy.",
+      "basis": {
+        "source_path": "packages/theme/css/deprecated/foundations.css",
+        "line_start": 23,
+        "line_end": 23
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-45",
+      "replacement_kind": "unsupported",
+      "note": "Opacity scale token exists in deprecated token CSS, but no generated policy docs resolve it.",
+      "unsupported_reason": "No source-backed policy docs resolve this opacity token for generated policy.",
+      "basis": {
+        "source_path": "packages/theme/css/deprecated/foundations.css",
+        "line_start": 24,
+        "line_end": 24
+      }
+    },
+    {
+      "deprecated": "--salt-opacity-70",
+      "replacement_kind": "unsupported",
+      "note": "Opacity scale token exists in deprecated token CSS, but no generated policy docs resolve it.",
+      "unsupported_reason": "No source-backed policy docs resolve this opacity token for generated policy.",
+      "basis": {
+        "source_path": "packages/theme/css/deprecated/foundations.css",
+        "line_start": 25,
+        "line_end": 25
       }
     }
   ]

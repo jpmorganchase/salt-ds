@@ -57,6 +57,7 @@ interface DeprecatedTokenReplacementMetadataEntry {
   replacements?: unknown;
   replacement_kind?: unknown;
   note?: unknown;
+  unsupported_reason?: unknown;
   basis?: unknown;
 }
 
@@ -535,6 +536,12 @@ function metadataEntrySourceText(input: {
   );
 }
 
+const METADATA_POLICY_REPLACEMENT_KINDS = new Set([
+  "direct",
+  "alternative",
+  "scale",
+]);
+
 function collectMetadataDeprecatedReplacements(
   replacementsByToken: Map<string, DeprecatedTokenReplacementSource[]>,
   input: {
@@ -561,6 +568,18 @@ function collectMetadataDeprecatedReplacements(
       typeof metadataEntry.deprecated === "string"
         ? metadataEntry.deprecated
         : null;
+    const replacementKind =
+      typeof metadataEntry.replacement_kind === "string"
+        ? metadataEntry.replacement_kind
+        : null;
+    if (
+      !deprecated?.startsWith("--salt-") ||
+      !replacementKind ||
+      !METADATA_POLICY_REPLACEMENT_KINDS.has(replacementKind)
+    ) {
+      continue;
+    }
+
     const replacements = Array.isArray(metadataEntry.replacements)
       ? metadataEntry.replacements.filter(
           (replacement): replacement is string =>
@@ -568,20 +587,18 @@ function collectMetadataDeprecatedReplacements(
             replacement.startsWith("--salt-"),
         )
       : [];
-    if (!deprecated?.startsWith("--salt-") || replacements.length === 0) {
+    if (replacements.length === 0) {
       continue;
     }
 
     const basis = isObject(metadataEntry.basis)
       ? (metadataEntry.basis as DeprecatedTokenReplacementMetadataBasis)
       : null;
+    const lineStart = asNullableLineNumber(basis?.line_start);
     const sourceText = metadataEntrySourceText({
       deprecated,
       replacements,
-      replacementKind:
-        typeof metadataEntry.replacement_kind === "string"
-          ? metadataEntry.replacement_kind
-          : null,
+      replacementKind,
       note: typeof metadataEntry.note === "string" ? metadataEntry.note : null,
       basis,
     });
@@ -592,6 +609,8 @@ function collectMetadataDeprecatedReplacements(
         source_kind: "token",
         source_path: input.sourcePath,
         source_text: sourceText,
+        line_start: lineStart,
+        line_end: asNullableLineNumber(basis?.line_end) ?? lineStart,
       });
     }
   }
