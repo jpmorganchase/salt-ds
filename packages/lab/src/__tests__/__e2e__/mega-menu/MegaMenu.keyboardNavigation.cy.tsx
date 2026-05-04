@@ -199,7 +199,7 @@ describe("Given a MegaMenu", () => {
       cy.findByText("Digital Banking").should("be.focused");
     });
 
-    it("has no effect on ArrowRight or ArrowDown from last item", () => {
+    it("ArrowRight from last column closes menu and moves to next trigger", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
@@ -210,8 +210,19 @@ describe("Given a MegaMenu", () => {
       cy.findByText("Telemedicine").should("be.focused");
 
       cy.realPress("ArrowRight");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
+    });
+
+    it("has no effect on ArrowDown from last item in last column", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management
+      cy.realPress("Tab"); // Patient Management
+      cy.realPress("Tab"); // Telemedicine
       cy.findByText("Telemedicine").should("be.focused");
-      cy.get(".saltMegaMenuPanel").should("exist");
 
       cy.realPress("ArrowDown");
       cy.findByText("Telemedicine").should("be.focused");

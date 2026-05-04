@@ -23,26 +23,29 @@ function getColumnItems(column: HTMLElement): HTMLElement[] {
  * Build a 2D grid of navigable items from the panel DOM.
  * Each column is a `[data-mega-menu-column]` wrapper; items within each
  * column are discovered via `getColumnItems`.
- * Items not inside any column are appended as their own single-item columns
- * so they remain reachable by keyboard navigation.
+ * Items not inside any column (orphans) are inserted at their DOM position
+ * as single-item columns so keyboard navigation follows visual order.
  */
 function buildGrid(panel: HTMLElement): HTMLElement[][] {
-  const columns = Array.from(
-    panel.querySelectorAll<HTMLElement>(COLUMN_SELECTOR),
-  );
-  const grid = columns
-    .map((col) => getColumnItems(col))
-    .filter((items) => items.length > 0);
+  const columns = new Set(panel.querySelectorAll<HTMLElement>(COLUMN_SELECTOR));
+  const grid: HTMLElement[][] = [];
+  const processedColumns = new Set<HTMLElement>();
 
-  // Collect items that sit outside any column
-  const allItems = Array.from(
-    panel.querySelectorAll<HTMLElement>(ITEM_SELECTOR),
+  // Walk columns and items in DOM order so orphans are interleaved correctly.
+  const all = panel.querySelectorAll<HTMLElement>(
+    `${COLUMN_SELECTOR}, ${ITEM_SELECTOR}`,
   );
-  const columnSet = new Set(columns);
-  for (const item of allItems) {
-    const inColumn = item.closest(COLUMN_SELECTOR);
-    if (!inColumn || !columnSet.has(inColumn as HTMLElement)) {
-      grid.push([item]);
+
+  for (const el of all) {
+    if (columns.has(el) && !processedColumns.has(el)) {
+      processedColumns.add(el);
+      const items = getColumnItems(el);
+      if (items.length > 0) grid.push(items);
+    } else if (el.matches(ITEM_SELECTOR)) {
+      const parentCol = el.closest(COLUMN_SELECTOR);
+      if (!parentCol || !columns.has(parentCol as HTMLElement)) {
+        grid.push([el]);
+      }
     }
   }
 
@@ -135,13 +138,8 @@ export function useMegaMenuKeyboard(
           if (event.key === "ArrowDown" && open) {
             event.preventDefault();
             const floating = context.elements.floating;
-            if (floating) {
-              const firstItem =
-                floating.querySelector<HTMLElement>(ITEM_SELECTOR) ??
-                floating
-                  .querySelector<HTMLElement>(COLUMN_SELECTOR)
-                  ?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
-              firstItem?.focus();
+            if (floating instanceof HTMLElement) {
+              focusFirstItem(floating);
             }
           }
         },
@@ -200,6 +198,24 @@ export function useMegaMenuKeyboard(
               const nextCol = pos.col + 1;
               if (nextCol < grid.length) {
                 grid[nextCol][0].focus();
+              } else {
+                // On the last column — close panel and move to next trigger
+                const reference = context.elements
+                  .reference as HTMLElement | null;
+                const trigger =
+                  reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ??
+                  reference;
+                const li = trigger?.closest("li");
+                const nextSibling =
+                  li?.nextElementSibling instanceof HTMLElement
+                    ? li.nextElementSibling.querySelector<HTMLElement>(
+                        FOCUSABLE_SELECTOR,
+                      )
+                    : null;
+                if (nextSibling) {
+                  onOpenChange(false);
+                  nextSibling.focus();
+                }
               }
               break;
             }
@@ -260,11 +276,8 @@ export function useMegaMenuKeyboard(
  * Retries with `requestAnimationFrame` if content has not yet rendered.
  */
 export function focusFirstItem(panel: HTMLElement, attempt = 0): void {
-  const firstItem =
-    panel.querySelector<HTMLElement>(ITEM_SELECTOR) ??
-    panel
-      .querySelector<HTMLElement>(COLUMN_SELECTOR)
-      ?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+  const grid = buildGrid(panel);
+  const firstItem = grid[0]?.[0];
 
   if (firstItem) {
     firstItem.focus();
