@@ -1,11 +1,15 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
+  AnnouncementIcon,
   ApiIcon,
   CallIcon,
   CartIcon,
+  ChartBubbleIcon,
   ChatGroupIcon,
+  DatasetManagerIcon,
   DevicesIcon,
   DisplayIcon,
+  DocumentEditIcon,
   DocumentIcon,
   GuideClosedIcon,
   GuideOpenIcon,
@@ -14,6 +18,7 @@ import {
   KeyIcon,
   LaptopIcon,
   LinkedIcon,
+  MaintenanceIcon,
   MarkerIcon,
   NotificationIcon,
   PasteIcon,
@@ -23,6 +28,7 @@ import {
   SwapIcon,
   UserGroupIcon,
   UserIcon,
+  UserSearchIcon,
 } from "@salt-ds/icons";
 import {
   MegaMenu,
@@ -80,12 +86,14 @@ export const WithIcons = (): ReactElement => {
                     Digital Banking
                   </MegaMenuItem>
                   <MegaMenuItem value="Risk Management">
+                    <DatasetManagerIcon aria-hidden />
                     Risk Management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem value="Patient Management">
+                    <UserSearchIcon aria-hidden />
                     Patient Management
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
@@ -167,7 +175,10 @@ export const WithIcons = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy">Strategy</MegaMenuItem>
+                  <MegaMenuItem value="Strategy">
+                    <ChartBubbleIcon aria-hidden />
+                    Strategy
+                  </MegaMenuItem>
                   <MegaMenuItem value="IT">
                     <LaptopIcon aria-hidden />
                     IT
@@ -207,7 +218,10 @@ export const WithIcons = (): ReactElement => {
                     <InfoIcon aria-hidden />
                     Support
                   </MegaMenuItem>
-                  <MegaMenuItem value="Testing">Testing</MegaMenuItem>
+                  <MegaMenuItem value="Testing">
+                    <MaintenanceIcon aria-hidden />
+                    Testing
+                  </MegaMenuItem>
                   <MegaMenuItem value="Rollout">
                     <SaveIcon aria-hidden />
                     Rollout
@@ -231,7 +245,10 @@ export const WithIcons = (): ReactElement => {
                     <DocumentIcon aria-hidden />
                     Certifications
                   </MegaMenuItem>
-                  <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
+                  <MegaMenuItem value="Tutorials">
+                    <DocumentEditIcon aria-hidden />
+                    Tutorials
+                  </MegaMenuItem>
                   <MegaMenuItem value="Guides">
                     <GuideOpenIcon aria-hidden /> Guides
                   </MegaMenuItem>
@@ -258,7 +275,10 @@ export const WithIcons = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User Guides">User Guides</MegaMenuItem>
+                  <MegaMenuItem value="User Guides">
+                    <GuideClosedIcon aria-hidden />
+                    User Guides
+                  </MegaMenuItem>
                   <MegaMenuItem value="API Reference">
                     <ApiIcon aria-hidden />
                     API Reference
@@ -283,6 +303,7 @@ export const WithIcons = (): ReactElement => {
                     Community Forum
                   </MegaMenuItem>
                   <MegaMenuItem value="Troubleshooting">
+                    <AnnouncementIcon aria-hidden />
                     Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>

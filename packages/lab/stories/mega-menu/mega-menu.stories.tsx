@@ -9,13 +9,17 @@ import {
   Text,
 } from "@salt-ds/core";
 import {
+  AnnouncementIcon,
   ApiIcon,
   CallIcon,
   CartIcon,
+  ChartBubbleIcon,
   ChatGroupIcon,
   ChevronRightIcon,
+  DatasetManagerIcon,
   DevicesIcon,
   DisplayIcon,
+  DocumentEditIcon,
   DocumentIcon,
   GuideClosedIcon,
   GuideOpenIcon,
@@ -24,6 +28,7 @@ import {
   KeyIcon,
   LaptopIcon,
   LinkedIcon,
+  MaintenanceIcon,
   MarkerIcon,
   MenuIcon,
   NotificationIcon,
@@ -34,6 +39,7 @@ import {
   SwapIcon,
   UserGroupIcon,
   UserIcon,
+  UserSearchIcon,
 } from "@salt-ds/icons";
 import {
   MegaMenu,
@@ -107,12 +113,14 @@ export const WithIcons: StoryFn = () => {
                     Digital Banking
                   </MegaMenuItem>
                   <MegaMenuItem value="Risk Management">
+                    <DatasetManagerIcon aria-hidden />
                     Risk Management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem value="Patient Management">
+                    <UserSearchIcon aria-hidden />
                     Patient Management
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
@@ -195,7 +203,10 @@ export const WithIcons: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy">Strategy</MegaMenuItem>
+                  <MegaMenuItem value="Strategy">
+                    <ChartBubbleIcon aria-hidden />
+                    Strategy
+                  </MegaMenuItem>
                   <MegaMenuItem value="IT">
                     <LaptopIcon aria-hidden />
                     IT
@@ -235,7 +246,11 @@ export const WithIcons: StoryFn = () => {
                     <InfoIcon aria-hidden />
                     Support
                   </MegaMenuItem>
-                  <MegaMenuItem value="Testing">Testing</MegaMenuItem>
+                  <MegaMenuItem value="Testing">
+                    {" "}
+                    <MaintenanceIcon aria-hidden />
+                    Testing
+                  </MegaMenuItem>
                   <MegaMenuItem value="Rollout">
                     <SaveIcon aria-hidden />
                     Rollout
@@ -259,7 +274,11 @@ export const WithIcons: StoryFn = () => {
                     <DocumentIcon aria-hidden />
                     Certifications
                   </MegaMenuItem>
-                  <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
+                  <MegaMenuItem value="Tutorials">
+                    {" "}
+                    <DocumentEditIcon aria-hidden />
+                    Tutorials
+                  </MegaMenuItem>
                   <MegaMenuItem value="Guides">
                     <GuideOpenIcon aria-hidden /> Guides
                   </MegaMenuItem>
@@ -286,7 +305,11 @@ export const WithIcons: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User Guides">User Guides</MegaMenuItem>
+                  <MegaMenuItem value="User Guides">
+                    {" "}
+                    <GuideClosedIcon aria-hidden />
+                    User Guides
+                  </MegaMenuItem>
                   <MegaMenuItem value="API Reference">
                     <ApiIcon aria-hidden />
                     API Reference
@@ -311,6 +334,7 @@ export const WithIcons: StoryFn = () => {
                     Community Forum
                   </MegaMenuItem>
                   <MegaMenuItem value="Troubleshooting">
+                    <AnnouncementIcon aria-hidden />
                     Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>
@@ -461,73 +485,41 @@ export const WithStaticAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
                   <MegaMenuItem value="Strategy">Strategy</MegaMenuItem>
-                  <MegaMenuItem value="IT">
-                    <LaptopIcon aria-hidden />
-                    IT
-                  </MegaMenuItem>
-                  <MegaMenuItem value="HR">
-                    <UserGroupIcon aria-hidden />
-                    HR
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Marketing">
-                    <MarkerIcon aria-hidden />
-                    Marketing
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Operations">
-                    <SettingsIcon aria-hidden />
-                    Operations
-                  </MegaMenuItem>
+                  <MegaMenuItem value="IT">IT</MegaMenuItem>
+                  <MegaMenuItem value="HR">HR</MegaMenuItem>
+                  <MegaMenuItem value="Marketing">Marketing</MegaMenuItem>
+                  <MegaMenuItem value="Operations">Operations</MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem value="Onboarding">
-                    <PasteIcon aria-hidden />
-                    Onboarding
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Migration">
-                    <SwapIcon aria-hidden />
-                    Migration
-                  </MegaMenuItem>
+                  <MegaMenuItem value="Onboarding">Onboarding</MegaMenuItem>
+                  <MegaMenuItem value="Migration">Migration</MegaMenuItem>
                   <MegaMenuItem value="Customization">
-                    <PinIcon aria-hidden />
                     Customization
                   </MegaMenuItem>
                   <MegaMenuItem value="Training">
-                    <GuideClosedIcon aria-hidden />
+                    {" "}
                     Training
+                    <Badge value="1" className="menu-item-adornment" />
                   </MegaMenuItem>
-                  <MegaMenuItem value="Support">
-                    <InfoIcon aria-hidden />
-                    Support
-                  </MegaMenuItem>
+                  <MegaMenuItem value="Support">Support</MegaMenuItem>
                   <MegaMenuItem value="Testing">Testing</MegaMenuItem>
-                  <MegaMenuItem value="Rollout">
-                    <SaveIcon aria-hidden />
-                    Rollout
-                  </MegaMenuItem>
+                  <MegaMenuItem value="Rollout">Rollout</MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem value="Online">
-                    <DisplayIcon aria-hidden />
-                    Online
-                  </MegaMenuItem>
+                  <MegaMenuItem value="Online">Online</MegaMenuItem>
                   <MegaMenuItem value="In-Person">
-                    <UserIcon aria-hidden />
+                    {" "}
                     In-Person
+                    <Badge value="3" className="menu-item-adornment" />
                   </MegaMenuItem>
-                  <MegaMenuItem value="Workshops">
-                    <KeyIcon aria-hidden />
-                    Workshops
-                  </MegaMenuItem>
+                  <MegaMenuItem value="Workshops">Workshops</MegaMenuItem>
                   <MegaMenuItem value="Certifications">
-                    <DocumentIcon aria-hidden />
                     Certifications
                   </MegaMenuItem>
                   <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
-                  <MegaMenuItem value="Guides">
-                    <GuideOpenIcon aria-hidden /> Guides
-                  </MegaMenuItem>
+                  <MegaMenuItem value="Guides">Guides</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
