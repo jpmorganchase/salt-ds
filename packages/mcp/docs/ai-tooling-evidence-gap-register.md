@@ -751,6 +751,14 @@ Current state:
   focus/layout prose are not promoted into accessibility summaries. Analytical
   dashboard, Search, and the remaining undocumented pattern accessibility
   surfaces stay as docs/registry gaps.
+- Remaining context coverage triage on May 5, 2026 added
+  `ai-tooling-context-gap-catalog.md`, a semantic-core audit-derived catalog of
+  the 35 current docs/registry gaps and their cause codes. No additional
+  production Salt facts were added. The pass found no source-closeable extractor
+  cluster: the remaining component gaps reduce to keyboard-only accessibility
+  docs, the remaining pattern gaps lack explicit docs/registry fields for the
+  missing guidance, and the foundation gaps are deprecated token policy evidence
+  gaps.
 
 Why this matters:
 
