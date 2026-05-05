@@ -121,6 +121,114 @@ function parseAccessibilitySummaryStatements(content: string | null): string[] {
   return extractStatementsFromSection(bodyWithoutKeyboardControls).slice(0, 12);
 }
 
+interface ComponentSourceAccessibilitySignals {
+  ariaAttributes: string[];
+  roles: string[];
+  usesAriaAnnouncer: boolean;
+}
+
+async function readComponentSourceFiles(
+  repoRoot: string,
+  sourceRepoPath: string | null,
+): Promise<string[]> {
+  if (!sourceRepoPath) {
+    return [];
+  }
+
+  const sourcePath = path.join(repoRoot, sourceRepoPath);
+  const sourceFile = await readFileOrNull(sourcePath);
+  if (sourceFile) {
+    return [sourceFile];
+  }
+
+  const sourceFilePaths = await fg("**/*.{ts,tsx}", {
+    cwd: sourcePath,
+    absolute: true,
+    onlyFiles: true,
+    ignore: [
+      "**/*.spec.*",
+      "**/*.test.*",
+      "**/*.stories.*",
+      "**/*.css.ts",
+      "**/*.d.ts",
+    ],
+  });
+
+  const files = await Promise.all(
+    sourceFilePaths.sort((left, right) => left.localeCompare(right)).map(
+      async (filePath) => readFileOrNull(filePath),
+    ),
+  );
+
+  return files.filter((file): file is string => file !== null);
+}
+
+function collectSourceAccessibilitySignals(
+  sourceFiles: string[],
+): ComponentSourceAccessibilitySignals {
+  const source = sourceFiles.join("\n");
+  const ariaAttributes = uniqueStrings(
+    [...source.matchAll(/["']?(aria-[a-z0-9-]+)["']?\s*[:=]/gi)].map(
+      (match) => match[1],
+    ),
+  ).sort((left, right) => left.localeCompare(right));
+  const roles = uniqueStrings(
+    [...source.matchAll(/\brole\s*(?:=|:)\s*\{?\s*["']([^"']+)["']/g)].map(
+      (match) => match[1],
+    ),
+  ).sort((left, right) => left.localeCompare(right));
+
+  return {
+    ariaAttributes,
+    roles,
+    usesAriaAnnouncer: /\buseAriaAnnouncer\s*\(/.test(source),
+  };
+}
+
+function formatInlineCodeList(values: string[]): string {
+  return values.map((value) => `\`${value}\``).join(", ");
+}
+
+function formatPlural(label: string, values: string[]): string {
+  return values.length === 1 ? label : `${label}s`;
+}
+
+async function extractComponentSourceAccessibilitySummary(
+  repoRoot: string,
+  sourceRepoPath: string | null,
+  componentName: string,
+): Promise<string[]> {
+  const sourceFiles = await readComponentSourceFiles(repoRoot, sourceRepoPath);
+  if (sourceFiles.length === 0) {
+    return [];
+  }
+
+  const signals = collectSourceAccessibilitySignals(sourceFiles);
+  const summaries: string[] = [];
+
+  if (signals.roles.length > 0) {
+    summaries.push(
+      `${componentName} source declares ARIA ${formatPlural(
+        "role",
+        signals.roles,
+      )}: ${formatInlineCodeList(signals.roles)}.`,
+    );
+  }
+  if (signals.ariaAttributes.length > 0) {
+    summaries.push(
+      `${componentName} source declares ARIA ${formatPlural(
+        "attribute",
+        signals.ariaAttributes,
+      )}: ${formatInlineCodeList(signals.ariaAttributes)}.`,
+    );
+  }
+  if (signals.usesAriaAnnouncer) {
+    summaries.push(`${componentName} source uses the ARIA announcer utility.`);
+  }
+
+  return summaries;
+}
+
 function parseLivePreviewTags(mdx: string): Array<{
   componentName: string;
   exampleName: string;
@@ -756,10 +864,22 @@ export async function extractComponents(
       })
       .filter((item): item is { use: string; reason: string } => item !== null);
 
-    const accessibilityBestPractices =
+    const docsAccessibilitySummaries =
       parseAccessibilitySummaryStatements(accessibilityContent);
+    const sourceAccessibilitySummaries =
+      docsAccessibilitySummaries.length === 0
+        ? await extractComponentSourceAccessibilitySummary(
+            repoRoot,
+            sourceRepoPath,
+            title,
+          )
+        : [];
+    const accessibilitySummaries = uniqueStrings([
+      ...docsAccessibilitySummaries,
+      ...sourceAccessibilitySummaries,
+    ]);
     const accessibilityRules: AccessibilityRule[] =
-      accessibilityBestPractices.map((ruleText, index) => ({
+      docsAccessibilitySummaries.map((ruleText, index) => ({
         id: `${toKebabCase(title)}-a11y-${index + 1}`,
         severity: "warning",
         rule: ruleText,
@@ -789,7 +909,7 @@ export async function extractComponents(
       sub_components: subComponents.length > 0 ? subComponents : undefined,
       composition,
       accessibility: {
-        summary: accessibilityBestPractices,
+        summary: accessibilitySummaries,
         rules: accessibilityRules,
       },
       patterns: relatedPatterns,
