@@ -110,7 +110,7 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection>
+              <MegaMenuSection className={styles.linkSection}>
                 <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
                   <MegaMenuItem>
                     <Link>See all solutions</Link>
@@ -171,7 +171,7 @@ export const WithLink = (): ReactElement => {
                   <MegaMenuItem value="Guides">Guides</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection>
+              <MegaMenuSection className={styles.linkSection}>
                 <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
                   <MegaMenuItem>
                     <Link>See all services</Link>
@@ -224,7 +224,7 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection>
+              <MegaMenuSection className={styles.linkSection}>
                 <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
                   <MegaMenuItem>
                     <Link>See all resources</Link>

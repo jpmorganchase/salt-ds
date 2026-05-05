@@ -78,3 +78,7 @@ nav > ol {
 .small-viewport-container .saltMegaMenuSection {
   max-inline-size: 100%;
 }
+
+.withLink-container {
+  padding-top: 0;
+}

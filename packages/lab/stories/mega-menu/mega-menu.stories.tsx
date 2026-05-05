@@ -60,549 +60,6 @@ export default {
   component: MegaMenu,
 };
 
-const WithNavigationItems: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined,
-  );
-
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-  };
-
-  const handleSelectedItemChange = (
-    menu: string,
-    value: string | undefined,
-  ) => {
-    const nextValue = selectedItem === value ? undefined : value;
-    setSelectedItem(nextValue);
-    setActiveMenu(nextValue ? menu : null);
-  };
-
-  return (
-    <nav>
-      <StackLayout as="ol" direction="row" gap={1}>
-        <li>
-          <MegaMenu
-            open={openMenu === "solutions"}
-            onOpenChange={handleOpenChange("solutions")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("solutions", value)
-            }
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "solutions"}>
-                Solutions
-              </NavigationItem>
-            </MegaMenuTrigger>
-
-            <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuSection>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Digital Banking"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Digital Banking",
-                      );
-                    }}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Risk Management"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Risk Management",
-                      );
-                    }}
-                  >
-                    Risk Management
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Patient Management"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Patient Management",
-                      );
-                    }}
-                  >
-                    Patient Management
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Telemedicine"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Telemedicine",
-                      );
-                    }}
-                  >
-                    Telemedicine
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Compliance Solutions"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Compliance Solutions",
-                      );
-                    }}
-                  >
-                    Compliance Solutions
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="E-Commerce Platforms"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "E-Commerce Platforms",
-                      );
-                    }}
-                  >
-                    E-Commerce Platforms
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Supply Chain Optimization"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Supply Chain Optimization",
-                      );
-                    }}
-                  >
-                    Supply Chain Optimization
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Quality Control"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Quality Control",
-                      );
-                    }}
-                  >
-                    Quality Control
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Production Planning"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Production Planning",
-                      );
-                    }}
-                  >
-                    Production Planning
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Learning Management Systems"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Learning Management Systems",
-                      );
-                    }}
-                  >
-                    Learning Management Systems
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Virtual Classrooms"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Virtual Classrooms",
-                      );
-                    }}
-                  >
-                    Virtual Classrooms
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Document Management"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Document Management",
-                      );
-                    }}
-                  >
-                    Document Management
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Citizen Services"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Citizen Services",
-                      );
-                    }}
-                  >
-                    Citizen Services
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Public Safety Solutions"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Public Safety Solutions",
-                      );
-                    }}
-                  >
-                    Public Safety Solutions
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-              </MegaMenuSection>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "services"}
-            onOpenChange={handleOpenChange("services")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("services", value)
-            }
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "services"}>
-                Services
-              </NavigationItem>
-            </MegaMenuTrigger>
-
-            <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuSection>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Strategy"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Strategy",
-                      );
-                    }}
-                  >
-                    Strategy
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="IT"
-                    onClick={() => {
-                      console.log("[Default MegaMenu] selected value:", "IT");
-                    }}
-                  >
-                    IT
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="HR"
-                    onClick={() => {
-                      console.log("[Default MegaMenu] selected value:", "HR");
-                    }}
-                  >
-                    HR
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Marketing"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Marketing",
-                      );
-                    }}
-                  >
-                    Marketing
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Operations"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Operations",
-                      );
-                    }}
-                  >
-                    Operations
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Onboarding"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Onboarding",
-                      );
-                    }}
-                  >
-                    Onboarding
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Migration"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Migration",
-                      );
-                    }}
-                  >
-                    Migration
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Customization"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Customization",
-                      );
-                    }}
-                  >
-                    Customization
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Training"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Training",
-                      );
-                    }}
-                  >
-                    Training
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Support"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Support",
-                      );
-                    }}
-                  >
-                    Support
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Testing"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Testing",
-                      );
-                    }}
-                  >
-                    Testing
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Rollout"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Rollout",
-                      );
-                    }}
-                  >
-                    Rollout
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Online"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Online",
-                      );
-                    }}
-                  >
-                    Online
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="In-Person"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "In-Person",
-                      );
-                    }}
-                  >
-                    In-Person
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Workshops"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Workshops",
-                      );
-                    }}
-                  >
-                    Workshops
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Certifications"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Certifications",
-                      );
-                    }}
-                  >
-                    Certifications
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Tutorials"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Tutorials",
-                      );
-                    }}
-                  >
-                    Tutorials
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Guides"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Guides",
-                      );
-                    }}
-                  >
-                    Guides
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-              </MegaMenuSection>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "resources"}
-            onOpenChange={handleOpenChange("resources")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("resources", value)
-            }
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "resources"}>
-                Resources
-              </NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuSection>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="User Guides"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "User Guides",
-                      );
-                    }}
-                  >
-                    User Guides
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="API Reference"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "API Reference",
-                      );
-                    }}
-                  >
-                    API Reference
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Release Notes"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Release Notes",
-                      );
-                    }}
-                  >
-                    Release Notes
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="FAQs"
-                    onClick={() => {
-                      console.log("[Default MegaMenu] selected value:", "FAQs");
-                    }}
-                  >
-                    FAQs
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Support & Help</MegaMenuHeader>
-                  <MegaMenuItem
-                    value="Contact Support"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Contact Support",
-                      );
-                    }}
-                  >
-                    Contact Support
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Community Forum"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Community Forum",
-                      );
-                    }}
-                  >
-                    Community Forum
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    value="Troubleshooting"
-                    onClick={() => {
-                      console.log(
-                        "[Default MegaMenu] selected value:",
-                        "Troubleshooting",
-                      );
-                    }}
-                  >
-                    Troubleshooting
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-              </MegaMenuSection>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-      </StackLayout>
-    </nav>
-  );
-};
-
 export const WithIcons: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -1495,9 +952,13 @@ export const WithCustomRegion: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem>Explore details</MegaMenuItem>
-              </ol>
+              <MegaMenuSection className="withLink-container">
+                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  <MegaMenuItem>
+                    <Link>Explore details</Link>
+                  </MegaMenuItem>
+                </ol>
+              </MegaMenuSection>
             </div>
             <MegaMenuCustomRegion
               variant="tertiary"
@@ -1610,9 +1071,14 @@ export const WithCustomRegion: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem>Explore details</MegaMenuItem>
-              </ol>
+              <MegaMenuSection className="withLink-container">
+                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  <MegaMenuItem>
+                    {" "}
+                    <Link>Explore details</Link>
+                  </MegaMenuItem>
+                </ol>
+              </MegaMenuSection>
             </div>
           </MegaMenuPanel>
         </div>
@@ -1697,9 +1163,14 @@ export const WithCustomRegion: StoryFn = () => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              <MegaMenuItem>Explore details</MegaMenuItem>
-            </ol>
+            <MegaMenuSection className="withLink-container">
+              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                <MegaMenuItem>
+                  {" "}
+                  <Link>Explore details</Link>
+                </MegaMenuItem>
+              </ol>
+            </MegaMenuSection>
           </MegaMenuPanel>
         </div>
       </MegaMenu>
@@ -1756,9 +1227,14 @@ export const WithCustomRegion: StoryFn = () => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              <MegaMenuItem>Explore details</MegaMenuItem>
-            </ol>
+            <MegaMenuSection className="withLink-container">
+              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                <MegaMenuItem>
+                  {" "}
+                  <Link>Explore details</Link>
+                </MegaMenuItem>
+              </ol>
+            </MegaMenuSection>
             <MegaMenuCustomRegion variant="tertiary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
@@ -2006,7 +1482,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection>
+              <MegaMenuSection className="withLink-container">
                 <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
                   <MegaMenuItem>
                     <Link>See all solutions</Link>
@@ -2235,7 +1711,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection>
+              <MegaMenuSection className="withLink-container">
                 <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
                   <MegaMenuItem>
                     <Link>See all services</Link>
@@ -2345,7 +1821,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection>
+              <MegaMenuSection className="withLink-container">
                 <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
                   <MegaMenuItem>
                     <Link>See all resources</Link>

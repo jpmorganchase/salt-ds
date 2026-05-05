@@ -70,9 +70,11 @@ export const WithCustomRegion = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem>Explore details</MegaMenuItem>
-              </ol>
+              <MegaMenuSection className={styles.linkSection}>
+                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  <MegaMenuItem>Explore details</MegaMenuItem>
+                </ol>
+              </MegaMenuSection>
             </div>
             <MegaMenuCustomRegion
               variant="tertiary"
@@ -185,9 +187,11 @@ export const WithCustomRegion = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem>Explore details</MegaMenuItem>
-              </ol>
+              <MegaMenuSection className={styles.linkSection}>
+                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  <MegaMenuItem>Explore details</MegaMenuItem>
+                </ol>
+              </MegaMenuSection>
             </div>
           </MegaMenuPanel>
         </div>
@@ -272,9 +276,11 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              <MegaMenuItem>Explore details</MegaMenuItem>
-            </ol>
+            <MegaMenuSection className={styles.linkSection}>
+              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                <MegaMenuItem>Explore details</MegaMenuItem>
+              </ol>
+            </MegaMenuSection>
           </MegaMenuPanel>
         </div>
       </MegaMenu>
@@ -331,9 +337,11 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              <MegaMenuItem>Explore details</MegaMenuItem>
-            </ol>
+            <MegaMenuSection className={styles.linkSection}>
+              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                <MegaMenuItem>Explore details</MegaMenuItem>
+              </ol>
+            </MegaMenuSection>
             <MegaMenuCustomRegion variant="tertiary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
