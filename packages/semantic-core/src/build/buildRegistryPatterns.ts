@@ -233,6 +233,150 @@ function inferStoryComplexity(code: string): ExampleRecord["complexity"] {
   return "basic";
 }
 
+interface PatternDocsExampleTag {
+  tagName: "Diagram" | "ImageSwitcher" | "LivePreview";
+  raw: string;
+  heading: string;
+}
+
+function readMdxQuotedAttribute(raw: string, name: string): string | null {
+  const match = new RegExp(`${name}\\s*=\\s*"([^"]*)"`).exec(raw);
+  return match?.[1] ?? null;
+}
+
+function firstNonEmptyText(
+  values: Array<string | null | undefined>,
+): string | null {
+  return (
+    values.find((value): value is string => Boolean(value?.trim())) ?? null
+  );
+}
+
+function collectPatternDocsExampleTags(content: string): PatternDocsExampleTag[] {
+  const tags: PatternDocsExampleTag[] = [];
+  const tagStartPattern = /^\s*<(Diagram|ImageSwitcher|LivePreview)\b/;
+  let currentHeading = "";
+  let activeTag:
+    | {
+        tagName: PatternDocsExampleTag["tagName"];
+        lines: string[];
+        heading: string;
+      }
+    | null = null;
+
+  const flushActiveTag = (): void => {
+    if (!activeTag) {
+      return;
+    }
+
+    tags.push({
+      tagName: activeTag.tagName,
+      raw: activeTag.lines.join("\n").trim(),
+      heading: activeTag.heading,
+    });
+    activeTag = null;
+  };
+
+  for (const line of content.split(/\r?\n/)) {
+    if (activeTag) {
+      activeTag.lines.push(line);
+      if (
+        /\/>\s*$/.test(line) ||
+        new RegExp(`</${activeTag.tagName}>\\s*$`).test(line)
+      ) {
+        flushActiveTag();
+      }
+      continue;
+    }
+
+    const headingMatch = line.trim().match(/^#{2,4}\s+(.+)$/);
+    if (headingMatch) {
+      currentHeading = cleanMarkdownText(headingMatch[1]);
+      continue;
+    }
+
+    const tagMatch = line.match(tagStartPattern);
+    if (!tagMatch) {
+      continue;
+    }
+
+    activeTag = {
+      tagName: tagMatch[1] as PatternDocsExampleTag["tagName"],
+      lines: [line],
+      heading: currentHeading,
+    };
+    if (/\/>\s*$/.test(line)) {
+      flushActiveTag();
+    }
+  }
+
+  flushActiveTag();
+  return tags;
+}
+
+function titleFromPatternDocsExampleTag(
+  tag: PatternDocsExampleTag,
+  index: number,
+): string {
+  const displayName = readMdxQuotedAttribute(tag.raw, "displayName");
+  const exampleName = readMdxQuotedAttribute(tag.raw, "exampleName");
+  const caption = readMdxQuotedAttribute(tag.raw, "caption");
+  const content = readMdxQuotedAttribute(tag.raw, "content");
+  const alt = readMdxQuotedAttribute(tag.raw, "alt");
+  const fallback = `${tag.tagName} example ${index + 1}`;
+
+  return cleanMarkdownText(
+    firstNonEmptyText([
+      displayName,
+      tag.heading,
+      exampleName,
+      caption,
+      content,
+      alt,
+    ]) ??
+      fallback,
+  );
+}
+
+function descriptionFromPatternDocsExampleTag(
+  tag: PatternDocsExampleTag,
+): string {
+  return cleanMarkdownText(
+    readMdxQuotedAttribute(tag.raw, "caption") ??
+      readMdxQuotedAttribute(tag.raw, "content") ??
+      readMdxQuotedAttribute(tag.raw, "alt") ??
+      readMdxQuotedAttribute(tag.raw, "exampleName") ??
+      "",
+  ).slice(0, 500);
+}
+
+function extractPatternDocsExamples(input: {
+  patternTitle: string;
+  route: string;
+  content: string;
+}): ExampleRecord[] {
+  return collectPatternDocsExampleTags(input.content).map((tag, index) => {
+    const title = titleFromPatternDocsExampleTag(tag, index);
+
+    return {
+      id: `pattern-docs.${toKebabCase(input.patternTitle)}.${toKebabCase(title)}.${index + 1}`,
+      title,
+      description: descriptionFromPatternDocsExampleTag(tag),
+      intent: uniqueStrings([
+        `${input.patternTitle.toLowerCase()} docs example`,
+        tag.tagName.toLowerCase(),
+        "pattern example",
+      ]),
+      complexity: tag.tagName === "LivePreview" ? "intermediate" : "basic",
+      code: tag.raw,
+      source_url: input.route,
+      package: null,
+      target_type: "pattern",
+      target_name: input.patternTitle,
+    };
+  });
+}
+
 type PatternStarterTemplateKind =
   | "metric"
   | "app-header"
@@ -1060,6 +1204,14 @@ export async function extractPatterns(
         target_name: title,
       });
     });
+    const docsExamples =
+      examples.length === 0
+        ? extractPatternDocsExamples({
+            patternTitle: title,
+            route,
+            content: parsed.content,
+          })
+        : [];
 
     patterns.push({
       id: `pattern.${toKebabCase(title)}`,
@@ -1081,7 +1233,7 @@ export async function extractPatterns(
         summary: parseSectionStatements(parsed.content, "Accessibility"),
       },
       resources: resourceRecords,
-      examples,
+      examples: [...examples, ...docsExamples],
       starter_scaffold: getPatternStarterScaffold({
         content: parsed.content,
         route,
