@@ -717,6 +717,17 @@ Current state:
   replacements whose final records still lack source-backed generated policy
   docs. These remain docs/registry gaps, not prompt guidance or replacement
   claims.
+- Pattern docs example extraction on May 5, 2026 now derives pattern example
+  records from source-backed pattern MDX `Diagram`, `ImageSwitcher`, and
+  `LivePreview` tags when frontmatter resources have not already populated the
+  pattern record. A fresh production audit now reports 40 explicit unsupported
+  docs/registry gaps: 11 component gaps, 26 pattern gaps, and 3 foundation
+  gaps. The selected pattern context surface-gate gaps for `Header block` and
+  `List filtering` are closed through docs-derived example EvidenceRefs
+  resolving to their pattern overview docs. `Indication` remains the only
+  selected unsupported pattern context because the source-backed docs, Storybook
+  examples, and resources do not provide explicit `when_to_use` guidance; this
+  remains a docs/registry gap, not generated pattern guidance.
 
 Why this matters:
 
