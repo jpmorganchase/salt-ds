@@ -209,6 +209,85 @@ Fallback fixture behavior must not replace explicit fixture behavior.
     }
   });
 
+  it("does not infer fixture when_to_use guidance from generic topical sections", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-generic-topics-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+  resources:
+    [
+      { href: "https://example.test/salt/fixture-flow/examples", label: "Fixture examples" }
+    ]
+---
+
+## Status
+
+Fixture status explains the current fixture condition.
+
+## Sentiment
+
+Fixture sentiment explains the fixture tone.
+
+## Progression
+
+Fixture progression explains the fixture sequence.
+
+## Urgency
+
+Fixture urgency explains the fixture priority.
+`,
+      );
+
+      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const pattern = patterns[0];
+
+      expect(pattern.when_to_use).toEqual([]);
+      expect(pattern.how_it_works).toEqual([
+        "Fixture flow Status: Fixture status explains the current fixture condition.",
+        "Fixture flow Sentiment: Fixture sentiment explains the fixture tone.",
+        "Fixture flow Progression: Fixture progression explains the fixture sequence.",
+        "Fixture flow Urgency: Fixture urgency explains the fixture priority.",
+      ]);
+
+      const registry = buildFixtureRegistry(pattern);
+      const context = buildPatternContext({
+        registry,
+        pattern,
+        generated_at: GENERATED_AT,
+        generator: GENERATOR,
+        registry_hash: "fixture-registry-hash",
+      });
+
+      expect(context.status).toBe("unsupported");
+      expect(context.unsupported_claims).toEqual([
+        expect.objectContaining({
+          field_path: "when_to_use",
+          reason: "Registry pattern when_to_use guidance is empty.",
+        }),
+      ]);
+      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
+        [],
+      );
+      expect(
+        validateGeneratedArtifactRegistryEvidence(
+          context.generated_artifact,
+          registry,
+        ),
+      ).toEqual([]);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
   it("extracts source-backed fixture docs examples from visual MDX tags", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-docs-example-fixture-"),

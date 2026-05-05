@@ -534,4 +534,45 @@ describe("context coverage and unsupported surfaces", () => {
       }),
     );
   });
+
+  it("records selected fixture pattern surface-gate fields without inventing guidance", () => {
+    const registry = buildFixtureRegistry({
+      patterns: [
+        buildFixturePattern({
+          when_to_use: [],
+        }),
+      ],
+      tokens: [buildFixtureToken()],
+    });
+    const audit = buildContextCoverageAudit({
+      registry,
+      generated_at: GENERATED_AT,
+      generator: buildGenerator(),
+    });
+    const selectedPatternGap = audit.docs_registry_gaps.find(
+      (gap) =>
+        gap.kind === "pattern" &&
+        gap.id === "fixture-workflow" &&
+        gap.reason ===
+          "Selected pattern context did not pass the evidence surface gate.",
+    );
+
+    expect(validateSaltContextCoverageAuditSchema(audit)).toEqual([]);
+    expect(selectedPatternGap).toEqual(
+      expect.objectContaining({
+        missing: ["pattern context has 1 unsupported claim(s)"],
+        records: [
+          expect.objectContaining({
+            kind: "pattern",
+            id: "fixture-workflow.when_to_use.unsupported",
+            status: "unsupported",
+            reason_code: "evidence_surface_gate_failed",
+            reason: "Registry pattern when_to_use guidance is empty.",
+            missing: ["when_to_use"],
+            evidence_ref_ids: [],
+          }),
+        ],
+      }),
+    );
+  });
 });

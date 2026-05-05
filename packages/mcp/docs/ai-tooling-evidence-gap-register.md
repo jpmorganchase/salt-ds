@@ -728,6 +728,16 @@ Current state:
   selected unsupported pattern context because the source-backed docs, Storybook
   examples, and resources do not provide explicit `when_to_use` guidance; this
   remains a docs/registry gap, not generated pattern guidance.
+- Selected pattern surface-gate classification on May 5, 2026 now carries
+  unsupported pattern-claim records under selected pattern context gaps. The
+  production audit remains at 40 explicit unsupported docs/registry gaps: 11
+  component gaps, 26 pattern gaps, and 3 foundation gaps. The `Indication`
+  selected context gap now records `pattern.indication.when_to_use.unsupported`
+  with reason code `evidence_surface_gate_failed`, missing `when_to_use`, and
+  reason `Registry pattern when_to_use guidance is empty.` Generic pattern topic
+  sections such as status, sentiment, progression, and urgency remain
+  `how_it_works` behavior evidence and are not promoted into generated
+  `when_to_use` guidance.
 
 Why this matters:
 

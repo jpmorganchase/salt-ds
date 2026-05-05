@@ -9,6 +9,7 @@ import {
 import type {
   SaltGeneratedArtifactGenerator,
   SaltGeneratedArtifactRegistry,
+  SaltUnsupportedClaim,
 } from "./evidence.js";
 import { toSaltGeneratedArtifactRegistry } from "./registry/fingerprint.js";
 import type {
@@ -261,6 +262,27 @@ function missingPatternOptionalContextEvidence(pattern: PatternRecord): string[]
   return missing;
 }
 
+function unsupportedClaimMissingFields(claim: SaltUnsupportedClaim): string[] {
+  const missing = [claim.field_path ?? claim.text].filter(hasText);
+
+  return missing.length > 0 ? missing : ["source-backed evidence"];
+}
+
+function buildPatternUnsupportedClaimGapRecords(
+  unsupportedClaims: SaltUnsupportedClaim[],
+): SaltContextCoverageGapRecord[] {
+  return unsupportedClaims.map((claim): SaltContextCoverageGapRecord => ({
+    kind: "pattern",
+    id: claim.id,
+    name: claim.text,
+    status: "unsupported",
+    reason_code: "evidence_surface_gate_failed",
+    reason: claim.reason,
+    missing: unsupportedClaimMissingFields(claim),
+    evidence_ref_ids: [],
+  }));
+}
+
 function uniqueStrings(values: string[]): string[] {
   return [...new Set(values.map((value) => value.trim()))].filter(
     (value) => value.length > 0,
@@ -391,6 +413,11 @@ function summarizePatternCoverage(
       validation_issue_count: context.surface_gate.validation_issues.length,
       evidence_ref_ids: context.pattern.name.evidence_ref_ids,
     }));
+  const unsupportedContextsByPatternId = new Map(
+    contexts
+      .filter((context) => context.status === "unsupported")
+      .map((context) => [context.pattern.id, context] as const),
+  );
   const sourceGaps = input.registry.patterns
     .filter((pattern) => pattern.status === "stable")
     .filter((pattern) => !selectedIds.has(pattern.id))
@@ -446,7 +473,10 @@ function summarizePatternCoverage(
         reason: "Selected pattern context did not pass the evidence surface gate.",
         missing: record.missing,
         evidence_ref_ids: record.evidence_ref_ids,
-        records: [],
+        records: buildPatternUnsupportedClaimGapRecords(
+          unsupportedContextsByPatternId.get(record.id)?.unsupported_claims ??
+            [],
+        ),
       })),
     ],
   };
