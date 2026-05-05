@@ -104,6 +104,16 @@ export {
   type SaltContextCoverageUnsupportedRecord,
 } from "./contextCoverageAudit.js";
 export {
+  buildContextCoverageGapCatalog,
+  formatContextCoverageGapCatalogMarkdown,
+  SALT_CONTEXT_COVERAGE_GAP_CATALOG_CONTRACT,
+  type SaltContextCoverageGapCatalog,
+  type SaltContextCoverageGapCatalogCounts,
+  type SaltContextCoverageGapCatalogEntry,
+  type SaltContextCoverageGapCatalogRecord,
+  type SaltContextCoverageGapCatalogResolution,
+} from "./contextCoverageGapCatalog.js";
+export {
   buildComponentContextMarkdownBridge,
   checkComponentContextMarkdownBridge,
   normalizeComponentContextMarkdownForCheck,
