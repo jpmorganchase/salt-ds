@@ -687,6 +687,18 @@ Current state:
   source-backed policy records. The exact token records remain in the generated
   audit output rather than being converted into prompt guidance or replacement
   claims.
+- Deprecated CSS value-reference closure on May 5, 2026 added source-backed
+  token evidence for deprecated declarations whose value is a single
+  `var(--salt-...)` reference and which do not already have explicit replacement
+  evidence from metadata, changelog, or inline comments. Explicit replacement
+  sources still take precedence over fallback declaration values. A fresh
+  production audit now reports 42 explicit unsupported docs/registry gaps: 11
+  component gaps, 28 pattern gaps, and 3 foundation gaps. The remaining
+  foundation gap records are 3 measured token records, 11 opacity token records,
+  and 1 track token record. Taggable token-reference records now resolve through
+  source-backed deprecated CSS declarations, current token declarations, and
+  token policy docs. Raw-value tokens and references whose final replacement
+  target lacks source-backed policy evidence remain unsupported.
 
 Why this matters:
 

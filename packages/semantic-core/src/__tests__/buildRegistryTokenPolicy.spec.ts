@@ -271,6 +271,208 @@ describe("token policy source registry", () => {
     }
   });
 
+  it("extracts fixture deprecated value references from token CSS into policy evidence", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-css-value-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+        recursive: true,
+      });
+      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+        recursive: true,
+      });
+      await fs.writeFile(
+        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        `.salt-theme {
+  --salt-fixture-gap: 8px;
+}
+`,
+        "utf8",
+      );
+      await fs.writeFile(
+        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        `.salt-theme {
+  --salt-legacyfixture-gap: var(--salt-fixture-gap);
+}
+`,
+        "utf8",
+      );
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const tokens = await extractTokens(
+        repoRoot,
+        "2026-05-04T00:00:00Z",
+        sources,
+      );
+      const token = tokens.find(
+        (candidate) => candidate.name === "--salt-legacyfixture-gap",
+      );
+
+      expect(token).toEqual(
+        expect.objectContaining({
+          deprecated: true,
+          policy: expect.objectContaining({
+            docs: [
+              "/salt/foundations/fixture-area/index",
+              "/salt/themes/design-tokens/index",
+            ],
+            evidence_refs: expect.arrayContaining([
+              expect.objectContaining({
+                source_kind: "token",
+                source: expect.objectContaining({
+                  repo_path: "packages/theme/css/deprecated/foundations.css",
+                  section: expect.stringContaining(
+                    "--salt-legacyfixture-gap: var(--salt-fixture-gap)",
+                  ),
+                  line_start: 2,
+                  line_end: 2,
+                }),
+              }),
+            ]),
+          }),
+        }),
+      );
+      expect(
+        [...(token?.policy?.preferred_for ?? []), ...(token?.policy?.notes ?? [])].some(
+          (claim) => claim.includes("--salt-legacyfixture-gap:"),
+        ),
+      ).toBe(false);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("keeps fixture explicit replacement comments ahead of deprecated value references", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-css-value-comment-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+        recursive: true,
+      });
+      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+        recursive: true,
+      });
+      await fs.writeFile(
+        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        `.salt-theme {
+  --salt-fixture-gap: 8px;
+}
+`,
+        "utf8",
+      );
+      await fs.writeFile(
+        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        `.salt-theme {
+  --salt-legacyfixture-gap: var(--salt-fixture-gap); /* Use --salt-undocumented-gap */
+}
+`,
+        "utf8",
+      );
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const tokens = await extractTokens(
+        repoRoot,
+        "2026-05-04T00:00:00Z",
+        sources,
+      );
+      const token = tokens.find(
+        (candidate) => candidate.name === "--salt-legacyfixture-gap",
+      );
+
+      expect(token).toEqual(
+        expect.objectContaining({
+          deprecated: true,
+          policy: null,
+        }),
+      );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("keeps fixture metadata replacements ahead of deprecated value references", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-css-value-metadata-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureTokenReplacementMetadata(repoRoot, [
+        {
+          deprecated: "--salt-legacyfixture-gap",
+          replacements: ["--salt-fixture-gap"],
+          replacement_kind: "direct",
+          basis: {
+            source_path: "packages/theme/CHANGELOG.md",
+            line_start: 5,
+            line_end: 5,
+          },
+        },
+      ]);
+      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+        recursive: true,
+      });
+      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+        recursive: true,
+      });
+      await fs.writeFile(
+        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        `.salt-theme {
+  --salt-fixture-gap: 8px;
+}
+`,
+        "utf8",
+      );
+      await fs.writeFile(
+        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        `.salt-theme {
+  --salt-legacyfixture-gap: var(--salt-undocumented-gap);
+}
+`,
+        "utf8",
+      );
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const tokens = await extractTokens(
+        repoRoot,
+        "2026-05-04T00:00:00Z",
+        sources,
+      );
+      const token = tokens.find(
+        (candidate) => candidate.name === "--salt-legacyfixture-gap",
+      );
+
+      expect(token).toEqual(
+        expect.objectContaining({
+          deprecated: true,
+          policy: expect.objectContaining({
+            evidence_refs: expect.arrayContaining([
+              expect.objectContaining({
+                source: expect.objectContaining({
+                  repo_path:
+                    "packages/theme/css/deprecated/token-replacements.json",
+                }),
+              }),
+            ]),
+          }),
+        }),
+      );
+      expect(
+        token?.policy?.evidence_refs?.some((ref) =>
+          ref.source?.section?.includes("--salt-undocumented-gap"),
+        ),
+      ).toBe(false);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
   it("extracts fixture deprecated category replacement comments from token CSS into policy evidence", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-token-policy-css-category-fixture-"),
