@@ -18,14 +18,10 @@ export const VisualLabel = (): ReactElement => (
     />
     <Rating
       aria-label="Rating"
-      labelPlacement="left"
+      labelPlacement="bottom"
       defaultValue={4}
       getVisibleLabel={(value) => labels[value - 1] || "No rating"}
       getLabel={(value) => labels[value - 1]}
-      className="custom-rating-width"
     />
-    <style>
-      {".custom-rating-width .saltRating-label { min-width: 9ch; }"}
-    </style>
   </FlexLayout>
 );

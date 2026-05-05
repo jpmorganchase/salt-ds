@@ -1,5 +1,122 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.90
+
+### Minor Changes
+
+- 5d4de6f: Date components and related utilities have been extracted into a new package: `@salt-ds/date-components`. This package is intended to be the long-term home for these components.
+
+  To avoid a breaking change while the date components remain in release-candidate status, `@salt-ds/lab` continues to re-export the same APIs for now. Importing these APIs from `@salt-ds/lab` will emit a deprecation warning in development.
+
+  New code should import directly from `@salt-ds/date-components`. Once `@salt-ds/date-components` is marked stable, the date component exports will be removed from `@salt-ds/lab`.
+
+  In addition, `DatePickerSinglePanel` which was previously deprecated in favour of `DatePickerSingleGridPanel` has now been removed. Consumers should update to use `DatePickerSingleGridPanel` from `@salt-ds/date-components` if they have not already done so.
+
+  ```diff
+  - import { DatePickerSinglePanel } from "@salt-ds/lab";
+  + import { DatePickerSingleGridPanel } from "@salt-ds/date-components";
+  ```
+
+  ### DatePicker `enableApply` prop deprecation
+
+  The automatic detection of `DatePickerActions` to infer the `enableApply` prop is now deprecated. When using a modal `DatePicker` with confirmation controls, you must explicitly set `enableApply={true}` on the `DatePicker` component.
+
+  A deprecation warning will be emitted in development mode if `DatePickerActions` is detected and `enableApply` is not explicitly provided.
+
+  **Migration:**
+
+  Update your DatePicker usage to explicitly set `enableApply`:
+
+  ```diff
+    <DatePicker
+      selectionVariant="single"
+  +   enableApply={true}
+      onApply={handleApply}
+      onCancel={handleCancel}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput />
+      </DatePickerTrigger>
+      <DatePickerOverlay>
+        <DatePickerSingleGridPanel />
+        <DatePickerActions selectionVariant="single" />
+      </DatePickerOverlay>
+    </DatePicker>
+  ```
+
+  The automatic detection will be removed in a future version.
+
+  ### DatePickerRangePanel navigation fix
+
+  Fixed an issue where the end calendar's Next button was incorrectly disabled near `minDate`. The `isEndNextDisabled` guard was comparing against `minDate` plus one month instead of `maxDate`, which meant the Next button could be disabled even when valid later months were available.
+
+  ### DatePickerActions label fix
+
+  Fixed an issue where action button labels (Apply/Cancel) were missing context when `selectedDate` was `undefined` (e.g. an untouched uncontrolled picker). The guard now checks for both `null` and `undefined`. Additionally, partial range selections now show explicit wording (`"no start date"` / `"no end date"`) instead of blank labels.
+
+- 282c739: Added `SidePanel`.
+
+  `SidePanel` is a collapsible container that slides in from an edge of its parent, providing supplementary content or controls without disrupting the main layout.
+
+  Use `SidePanelProvider` to manage open state, `SidePanelTrigger` to toggle the panel, `SidePanelTitle` provides the accessible name for the panel region automatically and `useSidePanel` to access `setOpen` for programmatic close.
+
+  ```tsx
+  const PanelContent = () => {
+    const { CloseIcon } = useIcon();
+    const { setOpen } = useSidePanel();
+    return (
+      <SidePanel>
+        <SidePanelHeader>
+          <SidePanelTitle>
+            <H2>Panel Title</H2>
+          </SidePanelTitle>
+          <Button
+            aria-label="Close"
+            appearance="transparent"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        </SidePanelHeader>
+        <SidePanelContent>
+          <Text>Panel body content.</Text>
+        </SidePanelContent>
+      </SidePanel>
+    );
+  };
+
+  <SidePanelProvider>
+    <SidePanelTrigger>
+      <Button>Open Panel</Button>
+    </SidePanelTrigger>
+    <PanelContent />
+  </SidePanelProvider>;
+  ```
+
+### Patch Changes
+
+- Updated dependencies [5d4de6f]
+- Updated dependencies [5d4de6f]
+- Updated dependencies [5d4de6f]
+- Updated dependencies [5d4de6f]
+  - @salt-ds/date-components@0.1.0
+  - @salt-ds/date-adapters@0.1.0-alpha.7
+  - @salt-ds/core@1.60.0
+
+## 1.0.0-alpha.89
+
+### Patch Changes
+
+- e131baa: Improved `useEventCallback`'s stability.
+- 7427b2c: - Updated spacing between tree node elements.
+  - Fixed missing gap between node elements.
+  - Fixed node focus indicator outline placement.
+- 39e684a: Fixed incorrect Tooltip positioning and behavior when used with TreeNodeTrigger.
+- b9c81ae: Refactored Tabs to address accessibility issues, known bugs and improve stability.
+- Updated dependencies [e131baa]
+- Updated dependencies [2d2d62b]
+  - @salt-ds/core@1.59.1
+
 ## 1.0.0-alpha.88
 
 ### Patch Changes

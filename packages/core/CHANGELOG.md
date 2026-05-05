@@ -1,5 +1,38 @@
 # @salt-ds/core
 
+## 1.60.0
+
+### Minor Changes
+
+- 5d4de6f: `AriaAnnouncer` prop `delay` is deprecated in favour of an `options` prop.
+
+  The `options` prop provides `ariaLive` which can be set to either `polite` or `assertive` depending on the use case.
+  It also provides `target`, which routes announcements to a specific `AriaAnnouncerProvider` target (useful for nested contexts such as dialogs/modals).
+
+  ```diff
+  const { announce } = useAriaAnnouncer();
+  - announce("message", 500)
+  + announce("message", { ariaLive: "polite" });
+  + announce("message", { target: "date-picker-overlay", ariaLive: "polite" });
+  ```
+
+  The `delay` is replaced by two DOM elements that are used to announce messages.
+  The first element is used for `assertive` messages and the second for `polite` messages.
+  Messages are queued and remain in the DOM for 300 msecs before being removed, negating the need for a delay.
+
+  By default using the options prop will default to `polite` announcements.
+
+  In addition `Spinner`, `Pagination` and `ContentStatus` have been updated to default to `polite` announcements, to meet firmwide accessibility standards.
+
+  As part of the refactor, fixed announcements triggered during component unmount/cleanup (e.g. `Spinner` `completionAnnouncement`) being blocked.
+
+## 1.59.1
+
+### Patch Changes
+
+- e131baa: Improved `useEventCallback`'s stability.
+- 2d2d62b: Changed Accordion's value prop to be optional.
+
 ## 1.59.0
 
 ### Minor Changes

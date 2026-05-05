@@ -13,7 +13,6 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEvent,
-  useRef,
   useState,
 } from "react";
 import ratingCss from "./Rating.css";
@@ -60,10 +59,9 @@ export interface RatingProps
   getVisibleLabel?: (value: number, max: number) => string;
   /**
    * Position of the label relative to the rating component.
-   * Can be "top", "right", "bottom", or "left".
    * @default "right"
    */
-  labelPlacement?: "top" | "right" | "bottom" | "left";
+  labelPlacement?: "right" | "bottom";
   /**
    * The name to be set on each radio button within the group. If not set, then one will be generated for you.
    */
@@ -118,7 +116,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     name: "Rating",
     state: "value",
   });
-  const radioGroupRef = useRef<HTMLDivElement>(null);
   const name = useId(nameProp);
 
   const handleMouseEnter = (event: MouseEvent<HTMLInputElement>) => {
@@ -138,20 +135,6 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     onChange?.(event, itemValue);
   };
 
-  const isTopLeft = labelPlacement === "top" || labelPlacement === "left";
-
-  const displayLabel = getVisibleLabel && (
-    <div
-      className={clsx(
-        withBaseName("label"),
-        withBaseName(`label-${labelPlacement}`),
-      )}
-      aria-hidden
-    >
-      {getVisibleLabel(hoveredValue || selected, max)}
-    </div>
-  );
-
   return (
     <div
       ref={ref}
@@ -162,11 +145,9 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       )}
       {...restProps}
     >
-      {isTopLeft && displayLabel}
       <div
         role="radiogroup"
         className={withBaseName("container")}
-        ref={radioGroupRef}
         aria-readonly={readOnly || undefined}
         aria-label={ariaLabel}
         aria-labelledby={clsx(formFieldLabelledBy, ariaLabelledBy) || undefined}
@@ -201,7 +182,17 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
           );
         })}
       </div>
-      {!isTopLeft && displayLabel}
+      {getVisibleLabel && (
+        <div
+          className={clsx(
+            withBaseName("label"),
+            withBaseName(`label-${labelPlacement}`),
+          )}
+          aria-hidden
+        >
+          {getVisibleLabel(hoveredValue || selected, max)}
+        </div>
+      )}
     </div>
   );
 });

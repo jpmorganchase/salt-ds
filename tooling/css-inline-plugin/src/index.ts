@@ -5,7 +5,7 @@ import { createFilter } from "vite";
 export interface Options {
   /** Glob patterns to ignore */
   exclude?: string[];
-  /** Glob patterns to include. defaults to ts|tsx */
+  /** Glob patterns to include. defaults to js|jsx|ts|tsx */
   include?: string[];
 }
 
@@ -13,8 +13,8 @@ export interface Options {
 // vite's own style injection used in storybook
 export function cssInline(options: Options = {}): Plugin {
   const {
-    exclude = ["**/**.stories.tsx"],
-    include = ["**/packages/**/*.{tsx,jsx}"],
+    exclude = ["**/**.stories.{js,jsx,ts,tsx}"],
+    include = ["**/packages/**/*.{js,jsx,ts,tsx}"],
   } = options;
   const filter = createFilter(include, exclude);
 

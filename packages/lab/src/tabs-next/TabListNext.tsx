@@ -1,4 +1,10 @@
-import { capitalize, makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import {
+  capitalize,
+  makePrefixer,
+  useAriaAnnouncer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -6,15 +12,27 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type KeyboardEvent,
+  useCallback,
+  useEffect,
+  useMemo,
   useRef,
+  useState,
 } from "react";
+import { useFocusWithRetry } from "./hooks/useFocusWithRetry";
 import { useOverflow } from "./hooks/useOverflow";
-import { useRestoreActiveTab } from "./hooks/useRestoreActiveTab";
+import { useOverflowLayoutState } from "./hooks/useOverflowLayoutState";
+import { useTabListRecovery } from "./hooks/useTabListRecovery";
+import { useTabRemovalHandler } from "./hooks/useTabRemovalHandler";
+import { useTabSelectionFocus } from "./hooks/useTabSelectionFocus";
+import { TabListLayoutContext } from "./TabListLayoutContext";
 import tablistNextCss from "./TabListNext.css";
 import { TabOverflowList } from "./TabOverflowList";
+import { TabSlot } from "./TabSlot";
+import { TabSlotRegistryContext } from "./TabSlotRegistryContext";
 import { useTabsNext } from "./TabsNextContext";
 
 const withBaseName = makePrefixer("saltTabListNext");
+const MAX_FOCUS_RETRY_ATTEMPTS = 120;
 
 export interface TabListNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
@@ -29,11 +47,10 @@ export interface TabListNextProps
 }
 
 export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
-  function TabstripNext(props, ref) {
+  function TabListNext(props, ref) {
     const {
       appearance = "bordered",
       activeColor = "primary",
-      "aria-describedby": ariaDescribedBy,
       children,
       className,
       onKeyDown,
@@ -47,67 +64,209 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     });
 
     const {
+      renderMode,
       selected,
+      setSelected,
+      setBootstrapOverflowReady,
       getNext,
       getPrevious,
       getFirst,
       getLast,
-      items,
+      getIndex,
+      item,
+      itemAt,
       activeTab,
+      selectionFromOverflowValueRef,
       menuOpen,
       setMenuOpen,
-      removedActiveTabRef,
+      sortItems,
+      getRemovedItems,
+      getRenderedTab,
+      renderedTabs,
+      removalVersion,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
+    const overflowListRef = useRef<HTMLDivElement>(null);
+    const slotMapRef = useRef<Map<string, HTMLDivElement>>(new Map());
+    const removalRecoveryRafRef = useRef<number | null>(null);
+    const pendingRemovalRecoveryRef = useRef(false);
+    const pendingRemovalRecoveryRetriesRef = useRef(0);
+    const [slotVersion, setSlotVersion] = useState(0);
+
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
 
-    const [visible, hidden, isMeasuring, realSelectedIndexRef] = useOverflow({
+    const { announce } = useAriaAnnouncer();
+    const overflowMenuOpen = renderMode === "portal" ? menuOpen : false;
+
+    const [visibleValues, hiddenValues, isMeasuring] = useOverflow({
       container: tabstripRef,
-      tabs: items,
-      children,
+      menuOpen: overflowMenuOpen,
       selected,
+      tabs: renderedTabs,
       overflowButton: overflowButtonRef,
     });
 
-    useRestoreActiveTab({
-      container: tabstripRef,
-      tabs: items,
-      realSelectedIndex: realSelectedIndexRef,
-      removedActiveTabRef,
-    });
+    useEffect(() => {
+      setBootstrapOverflowReady(
+        renderMode === "inline" && renderedTabs.length > 0 && !isMeasuring,
+      );
+    }, [
+      isMeasuring,
+      renderMode,
+      renderedTabs.length,
+      setBootstrapOverflowReady,
+    ]);
+
+    const { resolvedOverflowActiveValue, tabListLayoutContext } =
+      useOverflowLayoutState({
+        hiddenValues,
+        menuOpen,
+        overflowMenuOpen,
+        visibleValues,
+      });
+    const registerSlot = useCallback(
+      (slotId: string, element: HTMLDivElement | null) => {
+        const currentElement = slotMapRef.current.get(slotId) ?? null;
+        if (currentElement === element) {
+          return;
+        }
+
+        if (element) {
+          slotMapRef.current.set(slotId, element);
+        } else {
+          slotMapRef.current.delete(slotId);
+        }
+
+        setSlotVersion((currentVersion) => currentVersion + 1);
+      },
+      [],
+    );
+    const slotRegistryContext = useMemo(
+      () => ({ registerSlot }),
+      [registerSlot],
+    );
+    const slotAssignments = useMemo(() => {
+      const nextAssignments = new Map<string, string>();
+
+      for (const value of visibleValues) {
+        nextAssignments.set(value, `main:${value}`);
+      }
+
+      for (const value of hiddenValues) {
+        nextAssignments.set(
+          value,
+          menuOpen ? `overflow:${value}` : `measure:${value}`,
+        );
+      }
+
+      return {
+        map: nextAssignments,
+        version: slotVersion,
+      };
+    }, [hiddenValues, menuOpen, slotVersion, visibleValues]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (renderMode !== "portal") {
+        return;
+      }
+
+      for (const [value, slotId] of slotAssignments.map) {
+        const host = getRenderedTab(value)?.host;
+        const slot = slotMapRef.current.get(slotId);
+
+        if (host && slot && host.parentElement !== slot) {
+          slot.appendChild(host);
+        }
+      }
+    }, [getRenderedTab, renderMode, slotAssignments]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event);
+
+      if (menuOpen) return;
 
       const actionMap = {
         ArrowRight: getNext,
         ArrowLeft: getPrevious,
         Home: getFirst,
         End: getLast,
-        ArrowUp: menuOpen ? getPrevious : undefined,
-        ArrowDown: menuOpen ? getNext : undefined,
       };
 
       const action = actionMap[event.key as keyof typeof actionMap];
 
       if (action) {
         event.preventDefault();
+        // Item registration/sorting is raf-driven; flush before keyboard nav to
+        // avoid navigating against stale collection order/registration.
+        sortItems();
         const activeTabId = activeTab.current?.id;
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
-          nextItem.element?.parentElement?.scrollIntoView({
-            block: "nearest",
-            inline: "nearest",
-          });
+          // Scrolling is handled by TabTrigger.
           nextItem.element?.focus({ preventScroll: true });
         }
       }
     };
 
-    const warningId = useId();
+    const getSelectedTabElement = useCallback(() => {
+      return (
+        tabstripRef.current?.querySelector<HTMLElement>(
+          '[role="tab"][aria-selected="true"]',
+        ) ?? item(activeTab.current?.id)?.element
+      );
+    }, [item, activeTab]);
+    const { focusElementWithRetry } = useFocusWithRetry({
+      maxAttempts: MAX_FOCUS_RETRY_ATTEMPTS,
+      targetWindow,
+    });
+    useTabSelectionFocus({
+      announce,
+      focusElementWithRetry,
+      getRenderedTab,
+      getSelectedTabElement,
+      menuOpen,
+      resolvedOverflowActiveValue,
+      selected,
+      selectionFromOverflowValueRef,
+      targetWindow,
+    });
+
+    const handleTabRemoval = useTabRemovalHandler({
+      activeTab,
+      focusElementWithRetry,
+      getFirst,
+      getIndex,
+      getLast,
+      getRemovedItems,
+      getRenderedTab,
+      getSelectedTabElement,
+      item,
+      itemAt,
+      maxRetryAttempts: MAX_FOCUS_RETRY_ATTEMPTS,
+      menuOpen,
+      overflowButtonRef,
+      overflowListRef,
+      pendingRemovalRecoveryRef,
+      pendingRemovalRecoveryRetriesRef,
+      removalRecoveryRafRef,
+      selected,
+      setSelected,
+      tabstripRef,
+      targetWindow,
+    });
+
+    useTabListRecovery({
+      removalVersion,
+      targetWindow,
+      tabstripRef,
+      overflowListRef,
+      handleTabRemoval,
+      pendingRemovalRecoveryRef,
+      pendingRemovalRecoveryRetriesRef,
+    });
 
     return (
       <div
@@ -119,28 +278,48 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
           withBaseName(`activeColor${capitalize(activeColor)}`),
           className,
         )}
-        data-ismeasuring={isMeasuring ? true : undefined}
+        data-ismeasuring={
+          renderMode === "portal" && isMeasuring ? true : undefined
+        }
         ref={handleRef}
         onKeyDown={handleKeyDown}
-        aria-describedby={clsx(ariaDescribedBy, warningId) || undefined}
         {...rest}
       >
-        {!isMeasuring && hidden.length > 0 && (
-          <span id={warningId} className={withBaseName("overflowWarning")}>
-            Note: This tab list includes overflow; tab positions may be
-            inaccurate or change when a tab is selected
-          </span>
+        {renderMode === "inline" ? (
+          children
+        ) : (
+          <TabSlotRegistryContext.Provider value={slotRegistryContext}>
+            <TabListLayoutContext.Provider value={tabListLayoutContext}>
+              {children}
+              {visibleValues.map((value) => (
+                <TabSlot key={value} slotId={`main:${value}`} value={value} />
+              ))}
+              {!menuOpen && hiddenValues.length > 0 ? (
+                <div
+                  aria-hidden="true"
+                  role="presentation"
+                  className={withBaseName("measureContainer")}
+                >
+                  {hiddenValues.map((value) => (
+                    <TabSlot
+                      key={`measure-${value}`}
+                      slotId={`measure:${value}`}
+                      value={value}
+                    />
+                  ))}
+                </div>
+              ) : null}
+              <TabOverflowList
+                buttonRef={overflowButtonRef}
+                hiddenValues={hiddenValues}
+                open={menuOpen}
+                order={renderedTabs.length}
+                setOpen={setMenuOpen}
+                ref={overflowListRef}
+              />
+            </TabListLayoutContext.Provider>
+          </TabSlotRegistryContext.Provider>
         )}
-        {visible}
-        <TabOverflowList
-          isMeasuring={isMeasuring}
-          buttonRef={overflowButtonRef}
-          tabstripRef={tabstripRef}
-          open={menuOpen}
-          setOpen={setMenuOpen}
-        >
-          {hidden}
-        </TabOverflowList>
       </div>
     );
   },
