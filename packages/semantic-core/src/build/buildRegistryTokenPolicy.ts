@@ -924,16 +924,24 @@ function collectInlineDeprecatedReplacements(
       lineStartOffset,
       lineEndOffset === -1 ? input.content.length : lineEndOffset,
     );
+    const tokenValue = normalizeWhitespace(declarationMatch[2] ?? "");
     const replacement =
       /\/\*\s*Use\s+(--salt-[\w-]+)\s*\*\//i.exec(declarationLine)?.[1] ?? null;
+    const hasExplicitReplacementSources =
+      (replacementsByToken.get(tokenName)?.length ?? 0) > 0;
+    const valueReferenceReplacement =
+      replacement == null && !hasExplicitReplacementSources
+        ? /^var\(\s*(--salt-[\w-]+)\s*\)$/i.exec(tokenValue)?.[1] ?? null
+        : null;
+    const sourceReplacement = replacement ?? valueReferenceReplacement;
 
-    if (replacement) {
+    if (sourceReplacement) {
       const lineNumber = lineNumberAtOffset(
         input.content,
         declarationMatch.index,
       );
       addDeprecatedReplacementSource(replacementsByToken, tokenName, {
-        replacement,
+        replacement: sourceReplacement,
         source_kind: "token",
         source_path: input.sourcePath,
         source_text: normalizeWhitespace(declarationLine),
