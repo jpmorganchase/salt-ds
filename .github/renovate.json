@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":preserveSemverRanges"],
+  "extends": [
+    "config:recommended",
+    ":preserveSemverRanges",
+    "helpers:pinGitHubActionDigests",
+    ":configMigration"
+  ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "packageRules": [
     {

@@ -1,43 +1,51 @@
 import {
-  FloatingTree,
   flip,
   offset,
+  shift,
   size,
+  useClick,
   useDismiss,
   useInteractions,
 } from "@floating-ui/react";
 import {
   Button,
   makePrefixer,
+  useFloatingComponent,
   useFloatingUI,
   useForkRef,
   useIcon,
   useId,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
-  Children,
   type ComponentPropsWithoutRef,
   type Dispatch,
   forwardRef,
-  type ReactNode,
+  type KeyboardEvent,
   type Ref,
-  type RefObject,
   type SetStateAction,
-  useCallback,
+  useEffect,
   useRef,
 } from "react";
-import { useFocusOutside } from "./hooks/useFocusOutside";
+import { isHTMLElement } from "./domUtils";
 import tabOverflowListCss from "./TabOverflowList.css";
+import { TabSlot } from "./TabSlot";
+import { useTabsNext } from "./TabsNextContext";
+import {
+  getMeasuredWidth,
+  seedWidthMap,
+  updateWidthMap,
+} from "./widthMeasurement";
 
 interface TabOverflowListProps extends ComponentPropsWithoutRef<"button"> {
   buttonRef?: Ref<HTMLButtonElement>;
-  tabstripRef: RefObject<HTMLDivElement>;
-  children?: ReactNode;
-  isMeasuring?: boolean;
+  hiddenValues: string[];
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  order: number;
 }
 
 const withBaseName = makePrefixer("saltTabOverflow");
@@ -46,9 +54,9 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
   function TabOverflowList(props, ref) {
     const {
       buttonRef,
-      tabstripRef,
-      children,
-      isMeasuring,
+      className,
+      hiddenValues,
+      order,
       open,
       setOpen,
       ...rest
@@ -61,28 +69,20 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       window: targetWindow,
     });
 
-    const { OverflowIcon } = useIcon();
+    const overflowRef = useRef<HTMLButtonElement>(null);
+    const hadOverflowItemsRef = useRef(false);
 
-    const { refs, x, y, strategy, context } = useFloatingUI({
+    const { OverflowIcon } = useIcon();
+    const { registerTab, updateTab, activeTab } = useTabsNext();
+
+    const { refs, x, y, strategy, context, elements } = useFloatingUI({
       open: open,
       onOpenChange(open, _, reason) {
-        if (reason === "escape-key") {
-          queueMicrotask(() => {
-            const allTabs =
-              tabstripRef.current?.querySelectorAll<HTMLElement>(
-                '[role="tab"]:not([aria-hidden])',
-              ) ?? [];
-            const numberOfTabsInOverflow =
-              listRef.current?.querySelectorAll<HTMLElement>('[role="tab"]')
-                .length ?? 0;
-
-            allTabs[allTabs.length - numberOfTabsInOverflow - 1]?.focus({
-              preventScroll: true,
-            });
-          });
-        }
-
         setOpen(open);
+
+        if (reason === "escape-key") {
+          overflowRef.current?.focus();
+        }
       },
       placement: "bottom-start",
       middleware: [
@@ -95,90 +95,204 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
           },
         }),
         flip(),
+        shift({
+          padding: 8,
+        }),
       ],
     });
 
-    const { getFloatingProps } = useInteractions([useDismiss(context)]);
+    const { getFloatingProps, getReferenceProps } = useInteractions([
+      useClick(context),
+      useDismiss(context),
+    ]);
 
-    const rootRef = useRef<HTMLDivElement>(null);
-    const handleRootRef = useForkRef(rootRef, ref);
-    const listRef = useRef<HTMLDivElement>(null);
-    const handleListRef = useForkRef<HTMLDivElement>(listRef, refs.setFloating);
-
-    const handleFocusOutside = useCallback(() => {
-      setOpen(false);
-    }, [setOpen]);
-
-    useFocusOutside(
-      rootRef,
-      handleFocusOutside,
-      open,
-      "[data-floating-ui-portal]",
-    );
-
-    const handleClick = () => {
-      if (!open) {
-        listRef.current
-          ?.querySelectorAll<HTMLElement>('[role="tab"]')[0]
-          ?.focus({ preventScroll: true });
-      } else {
-        setOpen(false);
-      }
-    };
-
-    const handleFocus = () => {
-      setOpen(true);
-    };
+    const handleListRef = useForkRef<HTMLDivElement>(ref, refs.setFloating);
 
     const handleButtonRef = useForkRef<HTMLButtonElement>(
       buttonRef,
       refs.setReference,
     );
+    const handleRef = useForkRef(handleButtonRef, overflowRef);
 
-    const listId = useId();
+    const { Component: FloatingComponent } = useFloatingComponent();
 
-    const childCount = Children.count(children);
-    if (childCount === 0 && !isMeasuring) return null;
+    const overflowId = useId();
+    const overlayId = useId();
+
+    const handleFocus = () => {
+      if (overflowId) {
+        activeTab.current = { value: overflowId, id: overflowId };
+      }
+    };
+
+    const handleFloatingKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      if (event.shiftKey) {
+        event.preventDefault();
+        setOpen(false);
+        const scheduleFocus = targetWindow?.requestAnimationFrame;
+        if (scheduleFocus) {
+          scheduleFocus(() =>
+            overflowRef.current?.focus({ preventScroll: true }),
+          );
+          return;
+        }
+
+        queueMicrotask(() =>
+          overflowRef.current?.focus({ preventScroll: true }),
+        );
+        return;
+      }
+    };
+
+    const overflowItemCount = hiddenValues.length;
+    const hasOverflowItems = overflowItemCount > 0;
+    const initialOrderRef = useRef(order);
+
+    useEffect(() => {
+      const tabList = overflowRef.current?.parentElement;
+      const resizeObserverCtor = (
+        targetWindow as
+          | (Window & { ResizeObserver?: typeof ResizeObserver })
+          | undefined
+      )?.ResizeObserver;
+      if (!open || !tabList || !resizeObserverCtor) {
+        return;
+      }
+
+      const observedElements = [tabList, tabList.parentElement].filter(
+        (element): element is HTMLElement => element != null,
+      );
+      const widths = seedWidthMap(observedElements);
+
+      const resizeObserver = new resizeObserverCtor(
+        (entries: ResizeObserverEntry[]) => {
+          for (const entry of entries) {
+            if (!isHTMLElement(entry.target)) {
+              continue;
+            }
+
+            const nextWidth =
+              entry.contentRect.width || getMeasuredWidth(entry.target);
+            if (updateWidthMap(widths, entry.target, nextWidth)) {
+              setOpen(false);
+              return;
+            }
+          }
+        },
+      );
+
+      for (const element of observedElements) {
+        resizeObserver.observe(element);
+      }
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }, [open, setOpen, targetWindow]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (open && !hasOverflowItems) {
+        setOpen(false);
+      }
+    }, [hasOverflowItems, open, setOpen]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (hasOverflowItems && !hadOverflowItemsRef.current) {
+        setOpen(false);
+      }
+
+      hadOverflowItemsRef.current = hasOverflowItems;
+    }, [hasOverflowItems, setOpen]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (overflowId && overflowRef.current && hasOverflowItems) {
+        const item = {
+          id: overflowId,
+          value: overflowId,
+          element: overflowRef.current,
+          location: "main" as const,
+          order: initialOrderRef.current,
+        };
+
+        return registerTab(item);
+      }
+    }, [hasOverflowItems, overflowId, registerTab]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (!overflowId || !hasOverflowItems) {
+        return;
+      }
+
+      updateTab(overflowId, {
+        element: overflowRef.current,
+        location: "main",
+        order,
+      });
+    }, [hasOverflowItems, order, overflowId, updateTab]);
+
+    if (!hasOverflowItems) return null;
 
     return (
-      <div className={withBaseName()} ref={handleRootRef} data-overflow>
+      <>
         <Button
+          className={clsx(withBaseName(), className)}
           data-overflowbutton
-          tabIndex={-1}
           appearance="transparent"
           sentiment="neutral"
-          onClick={handleClick}
-          ref={handleButtonRef}
-          aria-label={`Overflow menu. ${childCount} tabs hidden`}
+          {...getReferenceProps({
+            onFocus: handleFocus,
+          })}
+          ref={handleRef}
+          aria-label="Overflow"
           aria-expanded={open}
-          aria-controls={listId}
-          aria-hidden="true"
+          aria-controls={overlayId}
           role="tab"
-          aria-haspopup
+          tabIndex={-1}
           {...rest}
         >
           <OverflowIcon aria-hidden />
         </Button>
-        <FloatingTree>
+        <FloatingComponent
+          ref={handleListRef}
+          {...getFloatingProps({
+            id: overlayId,
+            onKeyDown: handleFloatingKeyDown,
+          })}
+          focusManagerProps={
+            context
+              ? {
+                  context,
+                  initialFocus: 0,
+                  returnFocus: false,
+                  modal: false,
+                  closeOnFocusOut: true,
+                }
+              : undefined
+          }
+          className={withBaseName("list")}
+          open={open}
+          left={x ?? 0}
+          top={y ?? 0}
+          position={strategy}
+          width={elements.floating?.offsetWidth}
+          height={elements.floating?.offsetHeight}
+        >
           <div
-            ref={handleListRef}
-            {...getFloatingProps({
-              onFocus: handleFocus,
-              role: "presentation",
-            })}
-            className={withBaseName("list")}
-            data-hidden={!open}
-            style={
-              open
-                ? { left: x ?? 0, top: y ?? 0, position: strategy }
-                : undefined
-            }
-            id={listId}
+            role="tablist"
+            aria-orientation="vertical"
+            className={withBaseName("listContainer")}
+            aria-label="Overflow tab options"
           >
-            <div className={withBaseName("listContainer")}>{children}</div>
+            {hiddenValues.map((value) => (
+              <TabSlot key={value} slotId={`overflow:${value}`} value={value} />
+            ))}
           </div>
-        </FloatingTree>
-      </div>
+        </FloatingComponent>
+      </>
     );
   },
 );

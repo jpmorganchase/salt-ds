@@ -39,41 +39,42 @@ export const LotsOfTabsTabstrip: StoryFn = () => {
   const [value, setValue] = useState<string | undefined>("Home");
   return (
     <QAContainer itemPadding={10} cols={2}>
-      <TabsNext
-        value={value}
-        onChange={(_, value) => {
-          setValue(value);
-        }}
-      >
-        <TabBar inset divider>
-          <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
-            {tabs.map((label) => (
-              <TabNext key={label} value={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
-            ))}
-          </TabListNext>
-        </TabBar>
-      </TabsNext>
-      <TabsNext
-        value={value}
-        onChange={(_, value) => {
-          setValue(value);
-        }}
-      >
-        <TabBar>
-          <TabListNext
-            appearance="transparent"
-            style={{ maxWidth: 350, margin: "auto" }}
-          >
-            {tabs.map((label) => (
-              <TabNext key={label} value={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
-            ))}
-          </TabListNext>
-        </TabBar>
-      </TabsNext>
+      <div className="container">
+        <TabsNext
+          value={value}
+          onChange={(_, value) => {
+            setValue(value);
+          }}
+        >
+          <TabBar inset divider>
+            <TabListNext>
+              {tabs.map((label) => (
+                <TabNext key={label} value={label}>
+                  <TabNextTrigger>{label}</TabNextTrigger>
+                </TabNext>
+              ))}
+            </TabListNext>
+          </TabBar>
+        </TabsNext>
+      </div>
+      <div className="container">
+        <TabsNext
+          value={value}
+          onChange={(_, value) => {
+            setValue(value);
+          }}
+        >
+          <TabBar>
+            <TabListNext appearance="transparent">
+              {tabs.map((label) => (
+                <TabNext key={label} value={label}>
+                  <TabNextTrigger>{label}</TabNextTrigger>
+                </TabNext>
+              ))}
+            </TabListNext>
+          </TabBar>
+        </TabsNext>
+      </div>
     </QAContainer>
   );
 };

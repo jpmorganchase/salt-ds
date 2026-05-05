@@ -1,4 +1,9 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -13,10 +18,13 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
+import { useRenderedTabWidth } from "./hooks/useRenderedTabWidth";
 import tabCss from "./TabNext.css";
 import { TabNextContext } from "./TabNextContext";
 import { useTabsNext } from "./TabsNextContext";
+import { getIntrinsicMeasuredWidth } from "./widthMeasurement";
 
 const withBaseName = makePrefixer("saltTabNext");
 
@@ -26,7 +34,7 @@ export interface TabNextProps extends ComponentPropsWithoutRef<"div"> {
    */
   disabled?: boolean;
   /**
-   * The value of the tab.
+   * The value of the tab. This must be unique within a `TabsNext` instance.
    */
   value: string;
 }
@@ -52,7 +60,15 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       window: targetWindow,
     });
 
-    const { selected, activeTab } = useTabsNext();
+    const {
+      selected,
+      activeTab,
+      renderMode,
+      registerBootstrapTab,
+      setBootstrapTabReady,
+      registerRenderedTab,
+      updateRenderedTab,
+    } = useTabsNext();
 
     const disabled = !!disabledProp;
 
@@ -61,10 +77,13 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     const wasMouseDown = useRef(false);
     const [focusVisible, setFocusVisible] = useState(false);
     const [focused, setFocused] = useState(false);
+    const [hostElement, setHostElement] = useState<HTMLDivElement | null>(null);
+    const markerRef = useRef<HTMLSpanElement>(null);
+    const tabRootRef = useRef<HTMLDivElement>(null);
 
     const handleFocusCapture = (event: FocusEvent<HTMLDivElement>) => {
       onFocusCapture?.(event);
-      if (value && id) {
+      if (id) {
         activeTab.current = { value, id };
       }
     };
@@ -92,18 +111,39 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
 
     const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
       onMouseDown?.(event);
+      if (id) {
+        activeTab.current = { value, id };
+      }
       wasMouseDown.current = true;
     };
 
-    const [actions, setActions] = useState<string[]>([]);
+    const [actionIds, setActionIds] = useState(() => new Set<string>());
 
     const registerAction = useCallback((id: string) => {
-      setActions((old) => old.concat(id));
+      setActionIds((old) => {
+        if (old.has(id)) {
+          return old;
+        }
+
+        const next = new Set(old);
+        next.add(id);
+        return next;
+      });
 
       return () => {
-        setActions((old) => old.filter((action) => action !== id));
+        setActionIds((old) => {
+          if (!old.has(id)) {
+            return old;
+          }
+
+          const next = new Set(old);
+          next.delete(id);
+          return next;
+        });
       };
     }, []);
+
+    const actions = useMemo(() => Array.from(actionIds), [actionIds]);
 
     const context = useMemo(
       () => ({
@@ -118,7 +158,87 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       [id, selected, value, focused, disabled, actions, registerAction],
     );
 
-    return (
+    useIsomorphicLayoutEffect(() => {
+      const doc = targetWindow?.document;
+      if (!doc) {
+        return;
+      }
+
+      const host = doc.createElement("div");
+      host.dataset.tabHost = value;
+      host.role = "presentation";
+      host.style.display = "contents";
+      setHostElement(host);
+
+      return () => {
+        host.remove();
+      };
+    }, [targetWindow, value]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (renderMode !== "inline") {
+        return;
+      }
+
+      return registerBootstrapTab(value);
+    }, [registerBootstrapTab, renderMode, value]);
+
+    useIsomorphicLayoutEffect(() => {
+      setBootstrapTabReady(value, hostElement != null);
+
+      return () => {
+        setBootstrapTabReady(value, false);
+      };
+    }, [hostElement, setBootstrapTabReady, value]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (!hostElement || !id) {
+        return;
+      }
+
+      return registerRenderedTab({
+        host: hostElement,
+        id,
+        marker: markerRef.current,
+        root: tabRootRef.current,
+        trigger: null,
+        value,
+        width: getIntrinsicMeasuredWidth(tabRootRef.current),
+      });
+    }, [hostElement, id, registerRenderedTab, value]);
+
+    useIsomorphicLayoutEffect(() => {
+      const updates = {
+        marker: markerRef.current,
+        root: tabRootRef.current,
+      } as Partial<{
+        host: HTMLDivElement;
+        id: string;
+        marker: HTMLElement | null;
+        root: HTMLElement | null;
+        trigger: HTMLButtonElement | null;
+        width: number;
+      }>;
+
+      if (renderMode === "inline") {
+        updates.width = getIntrinsicMeasuredWidth(tabRootRef.current);
+      }
+
+      updateRenderedTab(value, updates);
+    }, [renderMode, updateRenderedTab, value]);
+
+    useRenderedTabWidth({
+      hostElement,
+      renderMode,
+      tabRootRef,
+      targetWindow,
+      updateRenderedTab,
+      value,
+    });
+
+    const handleTabRootRef = useForkRef(tabRootRef, ref);
+
+    const tabMarkup = (
       <TabNextContext.Provider value={context}>
         <div
           className={clsx(
@@ -131,7 +251,8 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
             className,
           )}
           data-overflowitem="true"
-          ref={ref}
+          data-value={value}
+          ref={handleTabRootRef}
           onMouseDown={handleMouseDown}
           onFocusCapture={handleFocusCapture}
           onFocus={handleFocus}
@@ -142,6 +263,22 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
           {children}
         </div>
       </TabNextContext.Provider>
+    );
+
+    return (
+      <>
+        <span
+          role="presentation"
+          data-tabnext-marker=""
+          hidden
+          ref={markerRef}
+        />
+        {renderMode === "inline"
+          ? tabMarkup
+          : hostElement
+            ? createPortal(tabMarkup, hostElement)
+            : null}
+      </>
     );
   },
 );

@@ -42,7 +42,7 @@ export const TabBar = forwardRef<HTMLDivElement, TabBarProps>(
         {...rest}
         ref={ref}
       >
-        {children}
+        <div className={withBaseName("strip")}>{children}</div>
       </div>
     );
   },

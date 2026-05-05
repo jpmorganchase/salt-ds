@@ -2132,5 +2132,114 @@ describe("Given a Tree", () => {
       cy.findByRole("tooltip").should("be.visible");
       cy.findByRole("tooltip").should("have.text", "Main documents folder");
     });
+
+    it("should only show the tooltip for the focused node when moving through nested tooltip nodes", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          defaultExpanded={["documents", "reports"]}
+        >
+          <TreeNode value="documents">
+            <Tooltip content="Contains all document files" placement="right">
+              <TreeNodeTrigger>
+                <TreeNodeLabel>Documents</TreeNodeLabel>
+              </TreeNodeTrigger>
+            </Tooltip>
+            <TreeNode value="reports">
+              <Tooltip content="Financial reports folder" placement="right">
+                <TreeNodeTrigger>
+                  <TreeNodeLabel>Reports</TreeNodeLabel>
+                </TreeNodeTrigger>
+              </Tooltip>
+              <TreeNode value="annual-report" label="Annual Report" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.realPress("Tab");
+      cy.get('[role="treeitem"]#documents').should("be.focused");
+      cy.findAllByRole("tooltip").should("have.length", 1);
+      cy.findByRole("tooltip").should(
+        "have.text",
+        "Contains all document files",
+      );
+
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#reports').should("be.focused");
+      cy.findAllByRole("tooltip").should("have.length", 1);
+      cy.findByRole("tooltip").should("have.text", "Financial reports folder");
+
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#annual-report').should("be.focused");
+      cy.findByRole("tooltip").should("not.exist");
+
+      cy.realPress("ArrowUp");
+      cy.get('[role="treeitem"]#reports').should("be.focused");
+      cy.findAllByRole("tooltip").should("have.length", 1);
+      cy.findByRole("tooltip").should("have.text", "Financial reports folder");
+    });
+  });
+
+  describe("TreeNodeTrigger event forwarding", () => {
+    it("should only call focus and blur handlers for directly focused nodes", () => {
+      const documentsFocusSpy = cy.stub().as("documentsFocusSpy");
+      const documentsBlurSpy = cy.stub().as("documentsBlurSpy");
+      const reportsFocusSpy = cy.stub().as("reportsFocusSpy");
+      const reportsBlurSpy = cy.stub().as("reportsBlurSpy");
+
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          defaultExpanded={["documents", "reports"]}
+        >
+          <TreeNode value="documents">
+            <TreeNodeTrigger
+              onFocus={documentsFocusSpy}
+              onBlur={documentsBlurSpy}
+            >
+              <TreeNodeLabel>Documents</TreeNodeLabel>
+            </TreeNodeTrigger>
+            <TreeNode value="reports">
+              <TreeNodeTrigger
+                onFocus={reportsFocusSpy}
+                onBlur={reportsBlurSpy}
+              >
+                <TreeNodeLabel>Reports</TreeNodeLabel>
+              </TreeNodeTrigger>
+              <TreeNode value="annual-report" label="Annual Report" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.realPress("Tab");
+      cy.get('[role="treeitem"]#documents').should("be.focused");
+      cy.get("@documentsFocusSpy").should("have.callCount", 1);
+      cy.get("@documentsBlurSpy").should("not.have.been.called");
+      cy.get("@reportsFocusSpy").should("not.have.been.called");
+      cy.get("@reportsBlurSpy").should("not.have.been.called");
+
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#reports').should("be.focused");
+      cy.get("@documentsFocusSpy").should("have.callCount", 1);
+      cy.get("@documentsBlurSpy").should("have.callCount", 1);
+      cy.get("@reportsFocusSpy").should("have.callCount", 1);
+      cy.get("@reportsBlurSpy").should("not.have.been.called");
+
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#annual-report').should("be.focused");
+      cy.get("@documentsFocusSpy").should("have.callCount", 1);
+      cy.get("@documentsBlurSpy").should("have.callCount", 1);
+      cy.get("@reportsFocusSpy").should("have.callCount", 1);
+      cy.get("@reportsBlurSpy").should("have.callCount", 1);
+
+      cy.realPress("ArrowUp");
+      cy.get('[role="treeitem"]#reports').should("be.focused");
+      cy.get("@documentsFocusSpy").should("have.callCount", 1);
+      cy.get("@documentsBlurSpy").should("have.callCount", 1);
+      cy.get("@reportsFocusSpy").should("have.callCount", 2);
+      cy.get("@reportsBlurSpy").should("have.callCount", 1);
+    });
   });
 });

@@ -1,4 +1,14 @@
-import type { DateFrameworkTypeMap } from "./DateFrameworkTypeMap";
+/**
+ * To add a new adapter, then, add the adapter's date object to `DateFrameworkTypeMap` interface
+ *
+ * declare module "@salt-ds/date-adapters" {
+ *   interface DateFrameworkTypeMap {
+ *     luxon: DateTime;
+ *   }
+ * }
+ */
+
+export interface DateFrameworkTypeMap {};
 /**
  * Represents the date object of a date framework.
  *
@@ -105,7 +115,7 @@ export type RecommendedFormats =
  */
 export type Timezone = "default" | "system" | "UTC" | string;
 
-export type ParserResult<TDate extends DateFrameworkType> = {
+export type ParserResult<TDate extends DateFrameworkType = DateFrameworkType> = {
   date: TDate;
 } & DateDetail;
 
@@ -116,7 +126,7 @@ export type ParserResult<TDate extends DateFrameworkType> = {
  * @template TLocale - The type of the locale, defaulting to any.
  */
 export interface SaltDateAdapter<
-  TDate extends DateFrameworkType,
+  TDate extends DateFrameworkType = DateFrameworkType,
   // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   TLocale = any,
 > {
@@ -311,14 +321,6 @@ export interface SaltDateAdapter<
   now(timezone?: Timezone): TDate;
 
   /**
-   * Gets the day of the week for a date object.
-   *
-   * @param date - The date object.
-   * @returns The day of the week as a number (0-6).
-   */
-  getDayOfWeek(date: TDate): number;
-
-  /**
    * Gets the day of the month for a date object.
    *
    * @param date - The date object.
@@ -379,4 +381,10 @@ export interface SaltDateAdapter<
    * @param date
    */
   clone(date: TDate): TDate;
+
+  /**
+   * Convert to JS Date
+   * @param value
+   */
+  toJSDate:(value: TDate) => Date;
 }
