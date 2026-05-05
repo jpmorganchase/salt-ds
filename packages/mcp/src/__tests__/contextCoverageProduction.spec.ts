@@ -25,6 +25,10 @@ const GENERATOR = {
   version: "0.0.0",
 };
 
+function pureTokenReference(value: string): string | null {
+  return /^var\(\s*(--salt-[\w-]+)\s*\)$/i.exec(value)?.[1] ?? null;
+}
+
 describe("production context coverage audit", () => {
   it("writes a schema-valid production audit instead of filling coverage gaps with static facts", async () => {
     const registryDir = await fs.mkdtemp(
@@ -110,6 +114,39 @@ describe("production context coverage audit", () => {
         }
       }
 
+      const registryTokensByName = new Map(
+        registry.tokens.map((token) => [token.name, token]),
+      );
+      const foundationTokenGapRecords = audit.docs_registry_gaps
+        .filter((gap) => gap.kind === "foundation")
+        .flatMap((gap) => gap.records);
+      for (const record of foundationTokenGapRecords) {
+        const token = registryTokensByName.get(record.id);
+
+        expect(token).toBeDefined();
+        expect(token?.policy ?? null).toBeNull();
+
+        if (record.reason_code === "deprecated_token_raw_value_without_policy") {
+          expect(pureTokenReference(token?.value ?? "")).toBeNull();
+        }
+
+        if (
+          record.reason_code === "deprecated_token_reference_without_policy"
+        ) {
+          const replacement = pureTokenReference(token?.value ?? "");
+          const replacementToken = replacement
+            ? registryTokensByName.get(replacement)
+            : null;
+
+          expect(replacement).toEqual(expect.stringMatching(/^--salt-/));
+          expect(
+            replacementToken == null ||
+              replacementToken.deprecated ||
+              replacementToken.policy == null,
+          ).toBe(true);
+        }
+      }
+
       const componentContexts = selectDefaultContextPackComponents(
         registry,
       ).map((component) =>
@@ -186,5 +223,5 @@ describe("production context coverage audit", () => {
     } finally {
       await fs.rm(registryDir, { recursive: true, force: true });
     }
-  }, 120000);
+  }, 180000);
 });
