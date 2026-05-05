@@ -912,6 +912,25 @@ function extractPatternBehaviorStatements(
   );
 }
 
+function isExplicitPatternAccessibilityStatement(statement: string): boolean {
+  return /\b(accessibility|ADA|WCAG|screen reader|assistive|keyboard users?|mobility impairments?|visual impairments?|visually impaired users?|browser zoom|400% zoom|accessible layout)\b/i.test(
+    statement,
+  );
+}
+
+function parsePatternAccessibilitySummary(content: string): string[] {
+  const explicitAccessibility = parseSectionStatements(content, "Accessibility");
+  if (explicitAccessibility.length > 0) {
+    return explicitAccessibility;
+  }
+
+  return uniqueStrings(
+    extractStatementsFromSection(content).filter(
+      isExplicitPatternAccessibilityStatement,
+    ),
+  ).slice(0, 5);
+}
+
 function normalizePatternDocsRoute(route: string): string {
   return route.replace(/\/index$/, "");
 }
@@ -1230,7 +1249,7 @@ export async function extractPatterns(
       how_to_build: parseSectionStatements(parsed.content, "How to build"),
       how_it_works: howItWorks,
       accessibility: {
-        summary: parseSectionStatements(parsed.content, "Accessibility"),
+        summary: parsePatternAccessibilitySummary(parsed.content),
       },
       resources: resourceRecords,
       examples: [...examples, ...docsExamples],

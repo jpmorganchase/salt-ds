@@ -738,6 +738,19 @@ Current state:
   sections such as status, sentiment, progression, and urgency remain
   `how_it_works` behavior evidence and are not promoted into generated
   `when_to_use` guidance.
+- Pattern accessibility summary extraction on May 5, 2026 now prefers explicit
+  `Accessibility` sections, then only source-backed pattern MDX statements with
+  explicit accessibility markers such as ADA/WCAG, screen reader, keyboard
+  users, browser zoom, visually impaired user, or explicit accessibility
+  language. A fresh production audit now reports 35 total explicit unsupported
+  docs/registry gaps: 11 component gaps, 21 pattern gaps, and 3 foundation gaps.
+  Pattern accessibility summary gaps closed for `App header`, `Button bar`,
+  `Forms`, `List builder`, `Selectable card`, and `Wizard` through registry
+  EvidenceRefs resolving to their source-backed pattern docs. Generic
+  availability statements such as "accessible from any page" or visual
+  focus/layout prose are not promoted into accessibility summaries. Analytical
+  dashboard, Search, and the remaining undocumented pattern accessibility
+  surfaces stay as docs/registry gaps.
 
 Why this matters:
 
