@@ -931,6 +931,132 @@ function parsePatternAccessibilitySummary(content: string): string[] {
   ).slice(0, 5);
 }
 
+interface PatternExampleAccessibilitySummary {
+  value: string;
+  source_url: string;
+}
+
+interface PatternExampleAccessibilitySignals {
+  ariaAttributes: string[];
+  ariaRoles: string[];
+  ariaAnnouncements: boolean;
+}
+
+function extractAriaAttributesFromCode(code: string): string[] {
+  return uniqueStrings(
+    [...code.matchAll(/\baria-[a-zA-Z0-9_-]+\b/g)]
+      .map((match) => match[0])
+      .sort((left, right) => left.localeCompare(right)),
+  );
+}
+
+function extractAriaRoleValuesFromCode(code: string): string[] {
+  return uniqueStrings(
+    [
+      ...code.matchAll(
+        /\brole\s*=\s*(?:"([^"]+)"|'([^']+)'|\{\s*["']([^"']+)["']\s*\})/g,
+      ),
+    ]
+      .map((match) => match[1] ?? match[2] ?? match[3] ?? "")
+      .filter((value) => /^[a-z][a-z0-9-]*$/i.test(value))
+      .sort((left, right) => left.localeCompare(right)),
+  );
+}
+
+function formatSourceBackedList(values: string[]): string {
+  return values.join(", ");
+}
+
+function mergePatternExampleAccessibilitySignals(
+  left: PatternExampleAccessibilitySignals,
+  right: PatternExampleAccessibilitySignals,
+): PatternExampleAccessibilitySignals {
+  return {
+    ariaAttributes: uniqueStrings([
+      ...left.ariaAttributes,
+      ...right.ariaAttributes,
+    ]).sort((a, b) => a.localeCompare(b)),
+    ariaRoles: uniqueStrings([...left.ariaRoles, ...right.ariaRoles]).sort(
+      (a, b) => a.localeCompare(b),
+    ),
+    ariaAnnouncements: left.ariaAnnouncements || right.ariaAnnouncements,
+  };
+}
+
+function extractPatternExampleAccessibilitySignals(
+  code: string,
+): PatternExampleAccessibilitySignals {
+  return {
+    ariaAttributes: extractAriaAttributesFromCode(code),
+    ariaRoles: extractAriaRoleValuesFromCode(code),
+    ariaAnnouncements: /\buseAriaAnnouncer\b/.test(code),
+  };
+}
+
+export function derivePatternExampleAccessibilitySummaries(
+  pattern: PatternRecord,
+): PatternExampleAccessibilitySummary[] {
+  if (pattern.accessibility.summary.length > 0) {
+    return [];
+  }
+
+  const signalsBySourceUrl = new Map<string, PatternExampleAccessibilitySignals>();
+
+  for (const example of pattern.examples) {
+    if (!example.source_url || !example.code.trim()) {
+      continue;
+    }
+
+    const signals = extractPatternExampleAccessibilitySignals(example.code);
+    if (
+      signals.ariaAttributes.length === 0 &&
+      signals.ariaRoles.length === 0 &&
+      !signals.ariaAnnouncements
+    ) {
+      continue;
+    }
+
+    signalsBySourceUrl.set(
+      example.source_url,
+      mergePatternExampleAccessibilitySignals(
+        signalsBySourceUrl.get(example.source_url) ?? {
+          ariaAttributes: [],
+          ariaRoles: [],
+          ariaAnnouncements: false,
+        },
+        signals,
+      ),
+    );
+  }
+
+  const summaries: PatternExampleAccessibilitySummary[] = [];
+
+  for (const [source_url, signals] of signalsBySourceUrl) {
+    if (signals.ariaAttributes.length > 0) {
+      summaries.push({
+        value: `${pattern.name} examples declare ARIA attributes: ${formatSourceBackedList(signals.ariaAttributes)}.`,
+        source_url,
+      });
+    }
+
+    if (signals.ariaRoles.length > 0) {
+      summaries.push({
+        value: `${pattern.name} examples declare ARIA roles: ${formatSourceBackedList(signals.ariaRoles)}.`,
+        source_url,
+      });
+    }
+
+    if (signals.ariaAnnouncements) {
+      summaries.push({
+        value: `${pattern.name} examples use ARIA announcements.`,
+        source_url,
+      });
+    }
+  }
+
+  return summaries.slice(0, 5);
+}
+
 function normalizePatternDocsRoute(route: string): string {
   return route.replace(/\/index$/, "");
 }

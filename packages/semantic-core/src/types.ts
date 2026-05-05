@@ -299,6 +299,10 @@ export interface PatternRecord {
   how_it_works: string[];
   accessibility: {
     summary: string[];
+    summary_sources?: Array<{
+      field_path: string;
+      source_url: string;
+    }>;
   };
   resources: Array<{
     label: string;

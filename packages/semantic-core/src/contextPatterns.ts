@@ -119,7 +119,16 @@ function toPatternSourceRef(pattern: PatternRecord): SaltEvidenceSourceRef | nul
 
 function toPatternAccessibilitySourceRef(
   pattern: PatternRecord,
+  fieldPath: string,
 ): SaltEvidenceSourceRef | null {
+  const fieldSourceUrl = pattern.accessibility.summary_sources?.find(
+    (source) => source.field_path === fieldPath,
+  )?.source_url;
+
+  if (fieldSourceUrl) {
+    return { url: fieldSourceUrl };
+  }
+
   return toPatternSourceRef(pattern);
 }
 
@@ -535,14 +544,18 @@ export function buildPatternContextArtifact(
   });
 
   if (pattern.accessibility.summary.length > 0) {
-    const accessibilitySourceRef = toPatternAccessibilitySourceRef(pattern);
-
     pattern.accessibility.summary.forEach((summary, index) => {
+      const fieldPath = `accessibility.summary.${index}`;
+      const accessibilitySourceRef = toPatternAccessibilitySourceRef(
+        pattern,
+        fieldPath,
+      );
+
       if (!hasText(summary) || !accessibilitySourceRef) {
         pushUnsupported(
           unsupportedClaims,
           pattern,
-          `accessibility.summary.${index}`,
+          fieldPath,
           "accessibility",
           !hasText(summary)
             ? "Registry pattern accessibility summary entry is empty."
@@ -558,13 +571,13 @@ export function buildPatternContextArtifact(
           id: `${pattern.id}.accessibility.summary.${index}`,
           kind: "accessibility",
           text: summary,
-          field_path: `accessibility.summary.${index}`,
+          field_path: fieldPath,
         },
         buildPatternEvidenceRef(
           input,
           `${pattern.id}.accessibility.summary.${index}.ref`,
           "accessibility",
-          `accessibility.summary.${index}`,
+          fieldPath,
           accessibilitySourceRef,
         ),
       );

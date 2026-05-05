@@ -31,6 +31,7 @@ import { loadPropMetadata } from "./buildRegistryDocgen.js";
 import { extractGuides, extractPages } from "./buildRegistryDocs.js";
 import {
   createPatternNameBySlug,
+  derivePatternExampleAccessibilitySummaries,
   extractPatternExamplesFromStories,
   extractPatterns,
 } from "./buildRegistryPatterns.js";
@@ -104,6 +105,25 @@ export async function buildRegistry(
       left.id.localeCompare(right.id),
     );
   }
+
+  for (const pattern of enrichedPatternMap.values()) {
+    const accessibilitySummaries =
+      derivePatternExampleAccessibilitySummaries(pattern);
+    if (accessibilitySummaries.length === 0) {
+      continue;
+    }
+
+    pattern.accessibility.summary = accessibilitySummaries.map(
+      (summary) => summary.value,
+    );
+    pattern.accessibility.summary_sources = accessibilitySummaries.map(
+      (summary, index) => ({
+        field_path: `accessibility.summary.${index}`,
+        source_url: summary.source_url,
+      }),
+    );
+  }
+
   const enrichedPatterns = [...enrichedPatternMap.values()];
   const linkedTokens = await linkTokensToComponents(
     sourceRoot,

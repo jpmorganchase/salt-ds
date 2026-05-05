@@ -767,6 +767,22 @@ Current state:
   validator accessibility rules. A fresh production audit now reports 24 total
   explicit unsupported docs/registry gaps: 0 component gaps, 21 pattern gaps,
   and 3 foundation gaps.
+- Pattern story-source accessibility extraction on May 5, 2026 now derives
+  pattern accessibility summaries from source-backed Storybook examples only
+  when pattern docs accessibility summaries are empty and the example code
+  contains explicit ARIA attributes, ARIA roles, or ARIA announcer usage. The
+  generated EvidenceRefs resolve to the story source file for those summaries.
+  The extractor does not promote `tabIndex`, focus callbacks, generic visual
+  focus prose, or generic "accessible from any page" language. A fresh
+  production audit now reports 20 total explicit unsupported docs/registry gaps:
+  0 component gaps, 17 pattern gaps, and 3 foundation gaps. Story-source ARIA
+  evidence closed the accessibility-only gaps for `Announcement dialog`,
+  `Preferences dialog`, `Search`, and `Vertical navigation`, and removed the
+  accessibility portion of multi-field gaps for `Breadcrumbs`, `Contact
+details`, `File upload`, `Menu button`, and `Split button`. Remaining pattern
+  gaps stay unsupported because the docs and Storybook sources scanned in this
+  pass did not provide exact `when_not_to_use`, `how_to_build`, or accessibility
+  source evidence.
 
 Why this matters:
 

@@ -2,10 +2,14 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { extractPatterns } from "../build/buildRegistryPatterns.js";
+import {
+  derivePatternExampleAccessibilitySummaries,
+  extractPatterns,
+} from "../build/buildRegistryPatterns.js";
 import { buildPatternContext } from "../contextPatterns.js";
 import { validateGeneratedArtifactEvidence } from "../evidence.js";
 import { validateGeneratedArtifactRegistryEvidence } from "../generatedArtifactValidation.js";
+import { buildPatternValidationRulePack } from "../patternValidationRulePacks.js";
 import type { PatternRecord, SaltRegistry } from "../types.js";
 
 // All Salt-looking strings in this file are intentionally tiny fixture facts.
@@ -436,6 +440,194 @@ Fixture actions remain easily accessible from any fixture page.
           registry,
         ),
       ).toEqual([]);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("derives fixture accessibility summaries from source-backed story ARIA attributes", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-story-accessibility-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+  resources:
+    [
+      { href: "https://example.test/salt/fixture-flow/examples", label: "Fixture examples" }
+    ]
+---
+
+## When to use
+
+Use the fixture flow when fixture evidence applies.
+
+## How to build
+
+Add the fixture part to the fixture flow.
+`,
+      );
+
+      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const pattern = patterns[0];
+      const storySource =
+        "packages/core/stories/patterns/fixture-flow/fixture-flow.stories.tsx";
+
+      pattern.examples = [
+        {
+          id: "fixture-story-example",
+          title: "Fixture story",
+          description: "",
+          intent: ["fixture story"],
+          complexity: "basic",
+          code: `
+export const FixtureStory = () => (
+  <button aria-label="Open fixture">
+    <span aria-hidden>Fixture icon</span>
+  </button>
+);
+`,
+          source_url: storySource,
+          package: "@salt-ds/fixture",
+          target_type: "pattern",
+          target_name: "Fixture flow",
+        },
+      ];
+
+      const accessibilitySummaries =
+        derivePatternExampleAccessibilitySummaries(pattern);
+      pattern.accessibility.summary = accessibilitySummaries.map(
+        (summary) => summary.value,
+      );
+      pattern.accessibility.summary_sources = accessibilitySummaries.map(
+        (summary, index) => ({
+          field_path: `accessibility.summary.${index}`,
+          source_url: summary.source_url,
+        }),
+      );
+
+      expect(pattern.accessibility.summary).toEqual([
+        "Fixture flow examples declare ARIA attributes: aria-hidden, aria-label.",
+      ]);
+
+      const registry = buildFixtureRegistry(pattern);
+      const context = buildPatternContext({
+        registry,
+        pattern,
+        generated_at: GENERATED_AT,
+        generator: GENERATOR,
+        registry_hash: "fixture-registry-hash",
+      });
+      const accessibilityClaim = context.generated_artifact.claims.find(
+        (claim) => claim.field_path === "accessibility.summary.0",
+      );
+      const accessibilityEvidenceRef = context.evidence_refs.find(
+        (ref) => ref.id === accessibilityClaim?.evidence_ref_ids[0],
+      );
+      const rulePack = buildPatternValidationRulePack({
+        registry,
+        generated_at: GENERATED_AT,
+        generator: GENERATOR,
+        registry_hash: "fixture-registry-hash",
+      });
+      const accessibilityRule = rulePack.rules.find(
+        (rule) => rule.field_path === "accessibility.summary.0",
+      );
+
+      expect(context.status).toBe("validated");
+      expect(accessibilityEvidenceRef).toEqual(
+        expect.objectContaining({
+          source: { url: storySource },
+          registry: expect.objectContaining({
+            field_path: "accessibility.summary.0",
+          }),
+        }),
+      );
+      expect(accessibilityRule).toEqual(
+        expect.objectContaining({
+          canonical_source: storySource,
+          source_urls: [storySource],
+        }),
+      );
+      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
+        [],
+      );
+      expect(
+        validateGeneratedArtifactRegistryEvidence(
+          context.generated_artifact,
+          registry,
+        ),
+      ).toEqual([]);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("does not derive fixture accessibility summaries from focus-only story code", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-focus-only-story-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+  resources:
+    [
+      { href: "https://example.test/salt/fixture-flow/examples", label: "Fixture examples" }
+    ]
+---
+
+## When to use
+
+Use the fixture flow when fixture evidence applies.
+
+## How to build
+
+Add the fixture part to the fixture flow.
+`,
+      );
+
+      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const pattern = patterns[0];
+      pattern.examples = [
+        {
+          id: "fixture-story-example",
+          title: "Fixture story",
+          description: "",
+          intent: ["fixture story"],
+          complexity: "basic",
+          code: `
+export const FixtureStory = () => (
+  <div tabIndex={0} onFocus={() => undefined}>
+    Fixture focus surface
+  </div>
+);
+`,
+          source_url:
+            "packages/core/stories/patterns/fixture-flow/fixture-flow.stories.tsx",
+          package: "@salt-ds/fixture",
+          target_type: "pattern",
+          target_name: "Fixture flow",
+        },
+      ];
+
+      const accessibilitySummaries =
+        derivePatternExampleAccessibilitySummaries(pattern);
+
+      expect(accessibilitySummaries).toEqual([]);
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }

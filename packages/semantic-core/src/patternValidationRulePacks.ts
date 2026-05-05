@@ -99,9 +99,19 @@ function unique<T>(values: T[]): T[] {
   return [...new Set(values)];
 }
 
-function patternSourceUrls(pattern: PatternRecord): string[] {
+function patternSourceUrls(
+  pattern: PatternRecord,
+  fieldPath?: string,
+): string[] {
+  const fieldSourceUrls = fieldPath
+    ? (pattern.accessibility.summary_sources ?? [])
+        .filter((source) => source.field_path === fieldPath)
+        .map((source) => source.source_url)
+    : [];
+
   return unique(
     [
+      ...fieldSourceUrls,
       ...(pattern.starter_scaffold?.source_urls ?? []),
       ...(pattern.starter_scaffold?.example_source_urls ?? []),
       pattern.related_docs.overview,
@@ -112,8 +122,11 @@ function patternSourceUrls(pattern: PatternRecord): string[] {
   );
 }
 
-function patternRuleSource(pattern: PatternRecord): { url: string } | null {
-  const [url] = patternSourceUrls(pattern);
+function patternRuleSource(
+  pattern: PatternRecord,
+  fieldPath?: string,
+): { url: string } | null {
+  const [url] = patternSourceUrls(pattern, fieldPath);
   return url ? { url } : null;
 }
 
@@ -136,7 +149,7 @@ function buildPatternRuleEvidenceRef(input: {
       field_path: input.field_path,
       registry_version: input.registry.version,
     },
-    source: patternRuleSource(input.pattern),
+    source: patternRuleSource(input.pattern, input.field_path),
     confidence: "high",
     verified_at: input.pattern.last_verified_at,
   };
