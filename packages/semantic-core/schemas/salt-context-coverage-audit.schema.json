@@ -177,7 +177,8 @@
         "status",
         "reason",
         "missing",
-        "evidence_ref_ids"
+        "evidence_ref_ids",
+        "records"
       ],
       "properties": {
         "kind": {
@@ -193,6 +194,74 @@
         },
         "status": {
           "const": "unsupported"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "missing": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidence_ref_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/gapRecord"
+          }
+        }
+      }
+    },
+    "gapRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "name",
+        "status",
+        "reason_code",
+        "reason",
+        "missing",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "kind": {
+          "enum": ["component", "pattern", "token"]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "unsupported"
+        },
+        "reason_code": {
+          "enum": [
+            "missing_source_locator",
+            "missing_optional_evidence",
+            "evidence_surface_gate_failed",
+            "missing_token_policy",
+            "missing_token_policy_docs",
+            "missing_token_policy_source_evidence",
+            "missing_token_policy_docs_or_source_evidence",
+            "deprecated_token_raw_value_without_policy",
+            "deprecated_token_reference_without_policy"
+          ]
         },
         "reason": {
           "type": "string",

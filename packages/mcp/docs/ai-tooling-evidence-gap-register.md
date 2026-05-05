@@ -292,7 +292,7 @@ Current state:
   follow-up action.
 - Component context staleness checks and generated-context manifest health now
   have shared semantic-core serializers and schemas. CLI `export-context
-  --check`, `info --json`, and `doctor --json` delegate to those contracts
+--check`, `info --json`, and `doctor --json` delegate to those contracts
   instead of owning separate status logic.
 - CLI `doctor` now includes generated-context health and a diagnostic check for
   missing/current/stale/unsupported/invalid generated context. Stale, invalid,
@@ -675,6 +675,18 @@ Current state:
   `taggable` palette replacement now resolves through current CSS token
   declarations. Raw-value, deprecated-only, and non-exact replacement cases
   remain unsupported.
+- Foundation gap granularity on May 5, 2026 extended the shared
+  `salt_context_coverage_audit_v1` schema with token-level unsupported records
+  under each docs/registry gap. A fresh production audit still reports 43
+  explicit unsupported docs/registry gaps: 11 component gaps, 28 pattern gaps,
+  and 4 foundation gaps. The 4 remaining foundation gaps now carry registry
+  token records and machine-readable reasons instead of only category names:
+  `measured` has 12 unsupported token records, `opacity` has 11, `taggable` has
+  7, and `track` has 4. The unresolved reasons are deprecated token references
+  without source-backed policy records and deprecated raw token values without
+  source-backed policy records. The exact token records remain in the generated
+  audit output rather than being converted into prompt guidance or replacement
+  claims.
 
 Why this matters:
 

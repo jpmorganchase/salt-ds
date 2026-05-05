@@ -373,9 +373,97 @@ describe("context coverage and unsupported surfaces", () => {
             kind: "foundation",
             id: "tokens.fixture-color",
             missing: ["token policy docs or source-backed policy evidence"],
+            records: [
+              expect.objectContaining({
+                kind: "token",
+                id: "--salt-fixture-action-color",
+                status: "unsupported",
+                reason_code:
+                  "missing_token_policy_docs_or_source_evidence",
+                missing: ["policy docs", "source-backed policy evidence"],
+                evidence_ref_ids: [],
+              }),
+            ],
           }),
         ]),
       }),
+    );
+  });
+
+  it("records token-level fixture gap reasons without turning gaps into claims", () => {
+    const registry = buildFixtureRegistry({
+      tokens: [
+        buildFixtureToken({
+          name: "--salt-fixture-no-policy",
+          category: "fixture-policy",
+          policy: null,
+        }),
+        buildFixtureToken({
+          name: "--salt-fixture-deprecated-raw",
+          category: "fixture-policy",
+          value: "1px",
+          policy: null,
+          deprecated: true,
+        }),
+        buildFixtureToken({
+          name: "--salt-fixture-deprecated-reference",
+          category: "fixture-policy",
+          value: "var(--salt-fixture-next-token)",
+          policy: null,
+          deprecated: true,
+        }),
+      ],
+    });
+    const audit = buildContextCoverageAudit({
+      registry,
+      generated_at: GENERATED_AT,
+      generator: buildGenerator(),
+    });
+    const foundationGap = audit.docs_registry_gaps.find(
+      (gap) => gap.kind === "foundation" && gap.id === "tokens.fixture-policy",
+    );
+
+    expect(validateSaltContextCoverageAuditSchema(audit)).toEqual([]);
+    expect(foundationGap).toEqual(
+      expect.objectContaining({
+        records: expect.arrayContaining([
+          expect.objectContaining({
+            kind: "token",
+            id: "--salt-fixture-no-policy",
+            status: "unsupported",
+            reason_code: "missing_token_policy",
+            missing: ["token policy"],
+            evidence_ref_ids: [],
+          }),
+          expect.objectContaining({
+            kind: "token",
+            id: "--salt-fixture-deprecated-raw",
+            status: "unsupported",
+            reason_code: "deprecated_token_raw_value_without_policy",
+            missing: ["token policy"],
+            evidence_ref_ids: [],
+          }),
+          expect.objectContaining({
+            kind: "token",
+            id: "--salt-fixture-deprecated-reference",
+            status: "unsupported",
+            reason_code: "deprecated_token_reference_without_policy",
+            missing: ["token policy"],
+            evidence_ref_ids: [],
+          }),
+        ]),
+      }),
+    );
+    expect(
+      audit.docs_registry_gaps.flatMap((gap) =>
+        gap.records.map((record) => record.reason_code),
+      ),
+    ).toEqual(
+      expect.arrayContaining([
+        "missing_token_policy",
+        "deprecated_token_raw_value_without_policy",
+        "deprecated_token_reference_without_policy",
+      ]),
     );
   });
 

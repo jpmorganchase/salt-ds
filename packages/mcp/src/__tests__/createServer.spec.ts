@@ -1370,10 +1370,12 @@ describe("createSaltMcpServer", () => {
           kind?: string;
           status?: string;
           evidence_ref_ids?: unknown;
+          records?: unknown;
         }>) {
           expect(["component", "pattern", "foundation"]).toContain(gap.kind);
           expect(gap.status).toBe("unsupported");
           expect(gap.evidence_ref_ids).toEqual(expect.any(Array));
+          expect(gap.records).toEqual(expect.any(Array));
         }
 
         const contextBundleResult = await registeredResources[

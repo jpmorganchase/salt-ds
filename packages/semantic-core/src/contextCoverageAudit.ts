@@ -26,6 +26,20 @@ export type SaltContextCoverageGapKind =
   | "component"
   | "pattern"
   | "foundation";
+export type SaltContextCoverageGapRecordKind =
+  | "component"
+  | "pattern"
+  | "token";
+export type SaltContextCoverageGapReasonCode =
+  | "missing_source_locator"
+  | "missing_optional_evidence"
+  | "evidence_surface_gate_failed"
+  | "missing_token_policy"
+  | "missing_token_policy_docs"
+  | "missing_token_policy_source_evidence"
+  | "missing_token_policy_docs_or_source_evidence"
+  | "deprecated_token_raw_value_without_policy"
+  | "deprecated_token_reference_without_policy";
 
 export interface SaltContextCoverageUnsupportedRecord {
   id: string;
@@ -42,6 +56,18 @@ export interface SaltContextCoverageGap {
   id: string;
   name: string;
   status: "unsupported";
+  reason: string;
+  missing: string[];
+  evidence_ref_ids: string[];
+  records: SaltContextCoverageGapRecord[];
+}
+
+export interface SaltContextCoverageGapRecord {
+  kind: SaltContextCoverageGapRecordKind;
+  id: string;
+  name: string;
+  status: "unsupported";
+  reason_code: SaltContextCoverageGapReasonCode;
   reason: string;
   missing: string[];
   evidence_ref_ids: string[];
@@ -103,6 +129,103 @@ function hasTokenContextSourceLocator(token: TokenRecord): boolean {
         (ref) => hasText(ref.source?.url) || hasText(ref.source?.repo_path),
       ),
   );
+}
+
+function hasTokenPolicyDocs(token: TokenRecord): boolean {
+  return (token.policy?.docs.length ?? 0) > 0;
+}
+
+function hasTokenPolicySourceEvidence(token: TokenRecord): boolean {
+  return Boolean(
+    token.policy?.evidence_refs?.some(
+      (ref) => hasText(ref.source?.url) || hasText(ref.source?.repo_path),
+    ),
+  );
+}
+
+function tokenPolicyEvidenceRefIds(token: TokenRecord): string[] {
+  return uniqueStrings(
+    token.policy?.evidence_refs?.map((ref) => ref.id).filter(hasText) ?? [],
+  );
+}
+
+function tokenReferencesAnotherToken(token: TokenRecord): boolean {
+  return /var\(\s*--[^)]+\)/.test(token.value);
+}
+
+function buildTokenCoverageGapRecord(
+  token: TokenRecord,
+): SaltContextCoverageGapRecord {
+  const evidenceRefIds = tokenPolicyEvidenceRefIds(token);
+
+  if (!token.policy) {
+    const referencesAnotherToken = tokenReferencesAnotherToken(token);
+    const reasonCode: SaltContextCoverageGapReasonCode = token.deprecated
+      ? referencesAnotherToken
+        ? "deprecated_token_reference_without_policy"
+        : "deprecated_token_raw_value_without_policy"
+      : "missing_token_policy";
+    const reason = token.deprecated
+      ? referencesAnotherToken
+        ? "Deprecated registry token references another token but has no source-backed policy record for generated context."
+        : "Deprecated registry token has a raw value but no source-backed policy record for generated context."
+      : "Registry token is missing a source-backed policy record for generated context.";
+
+    return {
+      kind: "token",
+      id: token.name,
+      name: token.name,
+      status: "unsupported",
+      reason_code: reasonCode,
+      reason,
+      missing: ["token policy"],
+      evidence_ref_ids: evidenceRefIds,
+    };
+  }
+
+  const missing: string[] = [];
+  const hasDocs = hasTokenPolicyDocs(token);
+  const hasSourceEvidence = hasTokenPolicySourceEvidence(token);
+
+  if (!hasDocs) {
+    missing.push("policy docs");
+  }
+  if (!hasSourceEvidence) {
+    missing.push("source-backed policy evidence");
+  }
+
+  const reasonCode: SaltContextCoverageGapReasonCode =
+    !hasDocs && !hasSourceEvidence
+      ? "missing_token_policy_docs_or_source_evidence"
+      : !hasDocs
+        ? "missing_token_policy_docs"
+        : "missing_token_policy_source_evidence";
+
+  return {
+    kind: "token",
+    id: token.name,
+    name: token.name,
+    status: "unsupported",
+    reason_code: reasonCode,
+    reason:
+      "Registry token policy is missing docs or source-backed policy evidence for generated context.",
+    missing,
+    evidence_ref_ids: evidenceRefIds,
+  };
+}
+
+function groupTokenGapRecordsByCategory(
+  tokens: TokenRecord[],
+): Map<string, SaltContextCoverageGapRecord[]> {
+  const recordsByCategory = new Map<string, SaltContextCoverageGapRecord[]>();
+
+  for (const token of tokens) {
+    const records = recordsByCategory.get(token.category) ?? [];
+    records.push(buildTokenCoverageGapRecord(token));
+    recordsByCategory.set(token.category, records);
+  }
+
+  return recordsByCategory;
 }
 
 function missingComponentOptionalContextEvidence(
@@ -189,6 +312,7 @@ function summarizeComponentCoverage(
         "Stable component registry record is missing a source, docs, or example locator for generated context.",
       missing: ["component source locator"],
       evidence_ref_ids: [],
+      records: [],
     }));
   const optionalEvidenceGaps = selectedComponents
     .map((component) => ({
@@ -205,6 +329,7 @@ function summarizeComponentCoverage(
         "Component context omitted optional fields because registry or source-backed evidence is missing.",
       missing,
       evidence_ref_ids: [],
+      records: [],
     }));
 
   return {
@@ -230,6 +355,7 @@ function summarizeComponentCoverage(
           "Selected component context did not pass the evidence surface gate.",
         missing: record.missing,
         evidence_ref_ids: record.evidence_ref_ids,
+        records: [],
       })),
     ],
   };
@@ -278,6 +404,7 @@ function summarizePatternCoverage(
         "Stable pattern registry record is missing a docs, resource, or example source locator for generated context.",
       missing: ["pattern source locator"],
       evidence_ref_ids: [],
+      records: [],
     }));
   const optionalEvidenceGaps = selectedPatterns
     .map((pattern) => ({
@@ -294,6 +421,7 @@ function summarizePatternCoverage(
         "Pattern context omitted optional fields because registry or source-backed evidence is missing.",
       missing,
       evidence_ref_ids: [],
+      records: [],
     }));
 
   return {
@@ -318,6 +446,7 @@ function summarizePatternCoverage(
         reason: "Selected pattern context did not pass the evidence surface gate.",
         missing: record.missing,
         evidence_ref_ids: record.evidence_ref_ids,
+        records: [],
       })),
     ],
   };
@@ -362,8 +491,10 @@ function summarizeFoundationCoverage(
   const sourceGapTokens = input.registry.tokens.filter(
     (token) => !hasTokenContextSourceLocator(token),
   );
-  const sourceGaps = uniqueStrings(sourceGapTokens.map((token) => token.category))
-    .map((category): SaltContextCoverageGap => ({
+  const sourceGapRecordsByCategory =
+    groupTokenGapRecordsByCategory(sourceGapTokens);
+  const sourceGaps = [...sourceGapRecordsByCategory.entries()].map(
+    ([category, records]): SaltContextCoverageGap => ({
       kind: "foundation",
       id: `tokens.${category}`,
       name: category,
@@ -371,8 +502,12 @@ function summarizeFoundationCoverage(
       reason:
         "Token category has registry tokens missing policy docs or source-backed token policy evidence for generated context.",
       missing: ["token policy docs or source-backed policy evidence"],
-      evidence_ref_ids: [],
-    }));
+      evidence_ref_ids: uniqueStrings(
+        records.flatMap((record) => record.evidence_ref_ids),
+      ),
+      records,
+    }),
+  );
 
   return {
     section: {
@@ -396,6 +531,7 @@ function summarizeFoundationCoverage(
           "Selected foundation context did not pass the evidence surface gate.",
         missing: record.missing,
         evidence_ref_ids: record.evidence_ref_ids,
+        records: [],
       })),
     ],
   };
