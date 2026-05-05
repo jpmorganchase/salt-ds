@@ -27,6 +27,8 @@
 .smallViewportSection {
   max-inline-size: 100%;
   grid-template-columns: 1fr;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .smallViewportSection > * {

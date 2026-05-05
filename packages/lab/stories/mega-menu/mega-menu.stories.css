@@ -76,7 +76,10 @@ nav > ol {
 }
 
 .small-viewport-container .saltMegaMenuSection {
+  grid-template-columns: 1fr;
   max-inline-size: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .withLink-container {
