@@ -3,10 +3,8 @@ import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  Children,
   type ComponentType,
   forwardRef,
-  isValidElement,
   type ReactNode,
   useImperativeHandle,
   useMemo,
@@ -19,6 +17,7 @@ import {
 import treeNodeCss from "./TreeNode.css";
 import { TreeNodeLabel } from "./TreeNodeLabel";
 import { TreeNodeTrigger } from "./TreeNodeTrigger";
+import { flattenTreeNodeChildren, isTreeNodeElement } from "./treeModel";
 
 export interface TreeNodeProps {
   /**
@@ -55,13 +54,13 @@ function separateChildren(children: ReactNode): {
   const contentChildren: ReactNode[] = [];
   const nodeChildren: ReactNode[] = [];
 
-  Children.forEach(children, (child) => {
-    if (isValidElement(child) && typeof child.props.value === "string") {
+  for (const child of flattenTreeNodeChildren(children)) {
+    if (isTreeNodeElement(child)) {
       nodeChildren.push(child);
-    } else if (child != null) {
+    } else {
       contentChildren.push(child);
     }
-  });
+  }
 
   return { contentChildren, nodeChildren };
 }
@@ -97,7 +96,11 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     const parentContext = useTreeNodeContext();
     const level = (parentContext?.level ?? 0) + 1;
 
-    const disabled = treeDisabled || disabledProp || disabledIdsSet.has(value);
+    const disabled =
+      treeDisabled ||
+      parentContext?.disabled ||
+      disabledProp ||
+      disabledIdsSet.has(value);
     const expanded = expandedState.has(value);
     const selected = selectedSet.has(value);
     const indeterminate = indeterminateState.has(value);
@@ -106,12 +109,15 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
     const { contentChildren, nodeChildren } = useMemo(
       () =>
         usesLabelProp
-          ? { contentChildren: [], nodeChildren: Children.toArray(children) }
+          ? {
+              contentChildren: [],
+              nodeChildren: flattenTreeNodeChildren(children),
+            }
           : separateChildren(children),
       [children, usesLabelProp],
     );
 
-    const hasChildren = nodeChildren.length > 0;
+    const hasChildren = nodeChildren.some(isTreeNodeElement);
 
     // Forward ref to the <li> element rendered by TreeNodeTrigger
     useImperativeHandle(ref, () => getElement(value) as HTMLLIElement, [

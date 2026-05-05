@@ -19,6 +19,8 @@ export interface TreeContextValue {
   selectedSet: Set<string>;
   /** Set selected state directly */
   setSelectedState: Dispatch<SetStateAction<string[]>>;
+  /** Set selected state without expanding selection through hidden descendants */
+  setVisibleSelectionState: (selected: string[]) => void;
   /** Select node */
   select: (event: SyntheticEvent, value: string) => void;
 

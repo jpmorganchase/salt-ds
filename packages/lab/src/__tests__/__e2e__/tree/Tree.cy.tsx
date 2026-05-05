@@ -2,6 +2,16 @@ import { Tooltip } from "@salt-ds/core";
 import { Tree, TreeNode, TreeNodeLabel, TreeNodeTrigger } from "@salt-ds/lab";
 import { useState } from "react";
 
+const renderSecretFiles = (show = true) =>
+  show ? (
+    <>
+      <TreeNode value="secret-file" label="Secret file" />
+      <TreeNode value="secret-folder" label="Secret folder">
+        <TreeNode value="nested-secret-file" label="Nested secret file" />
+      </TreeNode>
+    </>
+  ) : null;
+
 describe("Given a Tree", () => {
   describe("Basic Rendering and ARIA Structure", () => {
     it("should render with tree role", () => {
@@ -44,6 +54,18 @@ describe("Given a Tree", () => {
       );
     });
 
+    it("should not render direct descendants for collapsed nodes", () => {
+      cy.mount(
+        <Tree aria-label="File browser">
+          <TreeNode value="parent" label="Parent">
+            <TreeNode value="child" label="Child" />
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.get('[role="treeitem"]#child').should("not.exist");
+    });
+
     it("should render aria-level correctly for nested nodes", () => {
       cy.mount(
         <Tree aria-label="File browser" defaultExpanded={["parent", "child"]}>
@@ -82,6 +104,265 @@ describe("Given a Tree", () => {
       cy.findByRole("treeitem", { name: "Node 2" }).should("be.focused");
       cy.realPress("ArrowDown");
       cy.findByRole("treeitem", { name: "Node 3" }).should("be.focused");
+    });
+
+    it("should move focus through conditionally rendered Fragment nodes", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          defaultExpanded={["project", "config", "secret-folder"]}
+        >
+          <TreeNode value="project" label="project">
+            <TreeNode value="config" label="config">
+              {renderSecretFiles()}
+              <TreeNode value="public-config" label="public.config.ts" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.realPress("Tab");
+      cy.get('[role="treeitem"]#project').should("be.focused");
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#config').should("be.focused");
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#secret-file').should("be.focused");
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#secret-folder').should("be.focused");
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#nested-secret-file').should("be.focused");
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#public-config').should("be.focused");
+    });
+
+    it("should propagate multiselect through conditionally rendered Fragment nodes", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          defaultExpanded={["project", "config", "secret-folder"]}
+          onSelectionChange={onSelectionChange}
+        >
+          <TreeNode value="project" label="project">
+            <TreeNode value="config" label="config">
+              {renderSecretFiles()}
+              <TreeNode value="public-config" label="public.config.ts" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.get('[role="treeitem"]#secret-folder')
+        .find(".saltTreeNodeTrigger")
+        .first()
+        .realClick();
+
+      cy.get('[role="treeitem"]#secret-folder').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.get('[role="treeitem"]#nested-secret-file').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.get("@selectionChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["secret-folder", "nested-secret-file"],
+      );
+    });
+
+    it("should set indeterminate state for conditionally rendered Fragment ancestors", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          defaultExpanded={["project", "config", "secret-folder"]}
+        >
+          <TreeNode value="project" label="project">
+            <TreeNode value="config" label="config">
+              {renderSecretFiles()}
+              <TreeNode value="public-config" label="public.config.ts" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.get('[role="treeitem"]#nested-secret-file')
+        .find(".saltTreeNodeTrigger")
+        .first()
+        .realClick();
+
+      cy.get('[role="treeitem"]#secret-folder').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.get('[role="treeitem"]#config').should(
+        "have.attr",
+        "aria-checked",
+        "mixed",
+      );
+    });
+
+    it("should propagate disabled state through conditionally rendered Fragment nodes", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          defaultExpanded={["project", "config", "secret-folder"]}
+        >
+          <TreeNode value="project" label="project">
+            <TreeNode value="config" label="config" disabled>
+              {renderSecretFiles()}
+              <TreeNode value="public-config" label="public.config.ts" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.get('[role="treeitem"]#secret-file').should(
+        "have.attr",
+        "aria-disabled",
+        "true",
+      );
+      cy.get('[role="treeitem"]#secret-folder').should(
+        "have.attr",
+        "aria-disabled",
+        "true",
+      );
+      cy.get('[role="treeitem"]#nested-secret-file').should(
+        "have.attr",
+        "aria-disabled",
+        "true",
+      );
+    });
+
+    it("should not move focus into collapsed conditionally rendered Fragment nodes", () => {
+      cy.mount(
+        <Tree aria-label="File browser" defaultExpanded={["project"]}>
+          <TreeNode value="project" label="project">
+            <TreeNode value="config" label="config">
+              {renderSecretFiles()}
+              <TreeNode value="public-config" label="public.config.ts" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.realPress("Tab");
+      cy.get('[role="treeitem"]#project').should("be.focused");
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#config').should("be.focused");
+      cy.realPress("ArrowDown");
+      cy.get('[role="treeitem"]#config').should("be.focused");
+      cy.findByRole("treeitem", { name: "Secret file" }).should("not.exist");
+    });
+
+    it("should propagate multiselect to collapsed conditionally rendered Fragment nodes", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          defaultExpanded={["project"]}
+        >
+          <TreeNode value="project" label="project">
+            <TreeNode value="config" label="config">
+              {renderSecretFiles()}
+              <TreeNode value="public-config" label="public.config.ts" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.get('[role="treeitem"]#config')
+        .find(".saltTreeNodeTrigger")
+        .first()
+        .realClick();
+
+      cy.get('[role="treeitem"]#config').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.findByRole("treeitem", { name: "Secret file" }).should("not.exist");
+
+      cy.get('[role="treeitem"]#config')
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+
+      cy.get('[role="treeitem"]#secret-file').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.get('[role="treeitem"]#secret-folder').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.get('[role="treeitem"]#public-config').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+
+      cy.get('[role="treeitem"]#secret-folder')
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+
+      cy.get('[role="treeitem"]#nested-secret-file').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
+    it("should apply defaultSelected to collapsed conditionally rendered Fragment descendants", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          defaultExpanded={["project"]}
+          defaultSelected={["secret-folder"]}
+        >
+          <TreeNode value="project" label="project">
+            <TreeNode value="config" label="config">
+              {renderSecretFiles()}
+              <TreeNode value="public-config" label="public.config.ts" />
+            </TreeNode>
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.get('[role="treeitem"]#config').should(
+        "have.attr",
+        "aria-checked",
+        "mixed",
+      );
+
+      cy.get('[role="treeitem"]#config')
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+
+      cy.get('[role="treeitem"]#secret-folder').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+
+      cy.get('[role="treeitem"]#secret-folder')
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+
+      cy.get('[role="treeitem"]#nested-secret-file').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
     });
 
     it("should move focus up with ArrowUp", () => {
@@ -691,6 +972,53 @@ describe("Given a Tree", () => {
       );
     });
 
+    it("should not select collapsed descendants with Ctrl+A in uncontrolled mode", () => {
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          onSelectionChange={onSelectionChange}
+        >
+          <TreeNode value="parent" label="Parent">
+            <TreeNode value="child" label="Child" />
+          </TreeNode>
+          <TreeNode value="sibling" label="Sibling" />
+        </Tree>,
+      );
+
+      cy.realPress("Tab");
+      cy.realPress(["Control", "a"]);
+
+      cy.get("@selectionChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["parent", "sibling"],
+      );
+      cy.get('[role="treeitem"]#parent').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.get('[role="treeitem"]#sibling').should(
+        "have.attr",
+        "aria-checked",
+        "true",
+      );
+      cy.get('[role="treeitem"]#child').should("not.exist");
+
+      cy.get('[role="treeitem"]#parent')
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+
+      cy.get('[role="treeitem"]#child').should(
+        "not.have.attr",
+        "aria-checked",
+        "true",
+      );
+    });
+
     it("should deselect all with Ctrl+A when all are selected", () => {
       cy.mount(
         <Tree
@@ -741,6 +1069,66 @@ describe("Given a Tree", () => {
         "aria-checked",
         "mixed",
       );
+    });
+
+    it("should preserve indeterminate state when collapsed ancestors unmount descendants", () => {
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          defaultExpanded={["grandparent", "parent"]}
+        >
+          <TreeNode value="grandparent" label="Grandparent">
+            <TreeNode value="parent" label="Parent">
+              <TreeNode value="deepChild1" label="Deep Child 1" />
+              <TreeNode value="deepChild2" label="Deep Child 2" />
+              <TreeNode value="deepChild3" label="Deep Child 3" />
+            </TreeNode>
+            <TreeNode value="sibling" label="Sibling" />
+          </TreeNode>
+        </Tree>,
+      );
+
+      cy.get('[role="treeitem"]#deepChild1')
+        .find(".saltTreeNodeTrigger")
+        .first()
+        .realClick();
+
+      cy.get('[role="treeitem"]#parent').should(
+        "have.attr",
+        "aria-checked",
+        "mixed",
+      );
+      cy.get('[role="treeitem"]#grandparent').should(
+        "have.attr",
+        "aria-checked",
+        "mixed",
+      );
+
+      cy.get('[role="treeitem"]#parent')
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+      cy.get('[role="treeitem"]#deepChild1').should("not.exist");
+      cy.get('[role="treeitem"]#parent').should(
+        "have.attr",
+        "aria-checked",
+        "mixed",
+      );
+
+      cy.get('[role="treeitem"]#grandparent')
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+      cy.get('[role="treeitem"]#parent').should("not.exist");
+
+      cy.get('[role="treeitem"]#grandparent')
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+      cy.get('[role="treeitem"]#parent').should(
+        "have.attr",
+        "aria-checked",
+        "mixed",
+      );
+      cy.get('[role="treeitem"]#deepChild1').should("not.exist");
     });
 
     it("should select with Space regardless of node type", () => {
@@ -1985,7 +2373,7 @@ describe("Given a Tree", () => {
 
         // Collapse grandparent (first level) - parent also hidden now
         getGrandparentNode().find(".saltTreeNodeExpansionIcon").realClick();
-        cy.get('[role="treeitem"][aria-level="2"]').should("not.exist");
+        cy.findByRole("treeitem", { name: "Parent" }).should("not.exist");
 
         // Tab out and back in - should still focus first node
         cy.realPress("Tab");
