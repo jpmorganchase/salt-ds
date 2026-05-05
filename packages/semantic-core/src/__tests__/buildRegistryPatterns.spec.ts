@@ -288,6 +288,159 @@ Fixture urgency explains the fixture priority.
     }
   });
 
+  it("extracts fixture accessibility summaries from explicit source-backed statements", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-accessibility-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+  resources:
+    [
+      { href: "https://example.test/salt/fixture-flow/examples", label: "Fixture examples" }
+    ]
+---
+
+## When to use
+
+Use the fixture flow when fixture evidence applies.
+
+## Layout
+
+Fixture layout preserves fixture grouping.
+
+For accessibility, fixture workflows must keep fixture controls reachable to keyboard users.
+`,
+      );
+
+      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const pattern = patterns[0];
+
+      expect(pattern.accessibility.summary).toEqual([
+        "For accessibility, fixture workflows must keep fixture controls reachable to keyboard users.",
+      ]);
+
+      const registry = buildFixtureRegistry(pattern);
+      const context = buildPatternContext({
+        registry,
+        pattern,
+        generated_at: GENERATED_AT,
+        generator: GENERATOR,
+        registry_hash: "fixture-registry-hash",
+      });
+      const accessibilityClaim = context.generated_artifact.claims.find(
+        (claim) => claim.field_path === "accessibility.summary.0",
+      );
+      const accessibilityEvidenceRef = context.evidence_refs.find(
+        (ref) => ref.id === accessibilityClaim?.evidence_ref_ids[0],
+      );
+
+      expect(context.status).toBe("validated");
+      expect(accessibilityClaim).toEqual(
+        expect.objectContaining({
+          kind: "accessibility",
+          evidence_ref_ids: [expect.any(String)],
+        }),
+      );
+      expect(accessibilityEvidenceRef).toEqual(
+        expect.objectContaining({
+          source_kind: "registry",
+          claim_kind: "accessibility",
+          registry: expect.objectContaining({
+            entity_id: "pattern.fixture-flow",
+            field_path: "accessibility.summary.0",
+          }),
+          source: expect.objectContaining({
+            url: "/salt/patterns/fixture-flow",
+          }),
+        }),
+      );
+      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
+        [],
+      );
+      expect(
+        validateGeneratedArtifactRegistryEvidence(
+          context.generated_artifact,
+          registry,
+        ),
+      ).toEqual([]);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("does not promote fixture visual focus or layout text into accessibility summaries", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-visual-focus-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+  resources:
+    [
+      { href: "https://example.test/salt/fixture-flow/examples", label: "Fixture examples" }
+    ]
+---
+
+## When to use
+
+Use the fixture flow when fixture evidence applies.
+
+## Visual focus
+
+Fixture visual focus directs attention to the primary fixture area.
+
+Fixture layout preserves a clear visual hierarchy.
+
+Fixture actions remain easily accessible from any fixture page.
+`,
+      );
+
+      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const pattern = patterns[0];
+      const registry = buildFixtureRegistry(pattern);
+      const context = buildPatternContext({
+        registry,
+        pattern,
+        generated_at: GENERATED_AT,
+        generator: GENERATOR,
+        registry_hash: "fixture-registry-hash",
+      });
+
+      expect(pattern.accessibility.summary).toEqual([]);
+      expect(
+        context.generated_artifact.claims.filter(
+          (claim) => claim.kind === "accessibility",
+        ),
+      ).toEqual([]);
+      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
+        [],
+      );
+      expect(
+        validateGeneratedArtifactRegistryEvidence(
+          context.generated_artifact,
+          registry,
+        ),
+      ).toEqual([]);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
   it("extracts source-backed fixture docs examples from visual MDX tags", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-docs-example-fixture-"),
