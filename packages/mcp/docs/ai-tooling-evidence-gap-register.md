@@ -699,6 +699,24 @@ Current state:
   source-backed deprecated CSS declarations, current token declarations, and
   token policy docs. Raw-value tokens and references whose final replacement
   target lacks source-backed policy evidence remain unsupported.
+- Remaining foundation gap classification on May 5, 2026 inspected the 15
+  token records in the fresh production audit against registry token records,
+  deprecated token metadata, theme CSS declarations, and changelog evidence.
+  There are no further source-closeable records in this pass. `measured`
+  retains `--salt-measured-fill-disabled` and
+  `--salt-measured-foreground-activeDisabled` because their referenced palette
+  targets are deprecated-only and the metadata records no exact source-backed
+  replacement token; `--salt-measured-textAlign` remains a literal-value chain
+  through `--salt-track-textAlign`. `track` retains `--salt-track-textAlign`
+  because the source-backed metadata gives literal `center` guidance rather than
+  an exact replacement token. `opacity` retains `--salt-opacity-0`,
+  `--salt-opacity-1`, `--salt-opacity-2`, `--salt-opacity-3`,
+  `--salt-opacity-4`, `--salt-opacity-8`, `--salt-opacity-15`,
+  `--salt-opacity-25`, `--salt-opacity-40`, `--salt-opacity-45`, and
+  `--salt-opacity-70` because the tokens are deprecated raw values or scale
+  replacements whose final records still lack source-backed generated policy
+  docs. These remain docs/registry gaps, not prompt guidance or replacement
+  claims.
 
 Why this matters:
 
