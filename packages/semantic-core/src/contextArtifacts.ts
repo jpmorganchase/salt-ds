@@ -154,6 +154,26 @@ function toAccessibilitySourceRef(
   };
 }
 
+function toComponentSourceRef(
+  component: ComponentRecord,
+): SaltEvidenceSourceRef | null {
+  return component.source.repo_path
+    ? {
+        repo_path: component.source.repo_path,
+      }
+    : null;
+}
+
+function isSourceDerivedAccessibilitySummary(
+  component: ComponentRecord,
+  summary: string,
+): boolean {
+  return (
+    summary.startsWith(`${component.name} source declares ARIA `) ||
+    summary === `${component.name} source uses the ARIA announcer utility.`
+  );
+}
+
 function toExampleSourceRef(
   component: ComponentRecord,
   example: ExampleRecord,
@@ -508,7 +528,9 @@ export function buildComponentContextArtifact(
           `${component.id}.accessibility.summary.${index}.ref`,
           "accessibility",
           `accessibility.summary.${index}`,
-          toAccessibilitySourceRef(component),
+          isSourceDerivedAccessibilitySummary(component, summary)
+            ? toComponentSourceRef(component)
+            : toAccessibilitySourceRef(component),
         ),
       );
     });

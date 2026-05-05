@@ -759,6 +759,14 @@ Current state:
   docs, the remaining pattern gaps lack explicit docs/registry fields for the
   missing guidance, and the foundation gaps are deprecated token policy evidence
   gaps.
+- Component source accessibility extraction on May 5, 2026 closed the 11
+  component coverage gaps through generic component source ARIA/role extraction.
+  The extractor only emits source-derived implementation summaries for explicit
+  ARIA attributes, ARIA roles, or ARIA announcer usage and does not promote
+  `tabIndex` or focus callbacks. These source-derived summaries do not become
+  validator accessibility rules. A fresh production audit now reports 24 total
+  explicit unsupported docs/registry gaps: 0 component gaps, 21 pattern gaps,
+  and 3 foundation gaps.
 
 Why this matters:
 
