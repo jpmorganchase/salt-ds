@@ -88,6 +88,26 @@ describe("production context coverage audit", () => {
         expect(gap.reason).toMatch(/evidence|registry|source|surface gate/i);
         expect(gap.missing.length).toBeGreaterThan(0);
         expect(Array.isArray(gap.evidence_ref_ids)).toBe(true);
+        expect(Array.isArray(gap.records)).toBe(true);
+
+        if (
+          gap.kind === "foundation" &&
+          gap.missing.includes(
+            "token policy docs or source-backed policy evidence",
+          )
+        ) {
+          expect(gap.records.length).toBeGreaterThan(0);
+          for (const record of gap.records) {
+            expect(record.kind).toBe("token");
+            expect(record.status).toBe("unsupported");
+            expect(record.reason_code).toMatch(
+              /^missing_token_policy|^deprecated_token_/,
+            );
+            expect(record.reason).toMatch(/policy|evidence/i);
+            expect(record.missing.length).toBeGreaterThan(0);
+            expect(Array.isArray(record.evidence_ref_ids)).toBe(true);
+          }
+        }
       }
 
       const componentContexts = selectDefaultContextPackComponents(

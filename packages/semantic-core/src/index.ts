@@ -97,6 +97,9 @@ export {
   type SaltContextCoverageAuditStatus,
   type SaltContextCoverageGap,
   type SaltContextCoverageGapKind,
+  type SaltContextCoverageGapReasonCode,
+  type SaltContextCoverageGapRecord,
+  type SaltContextCoverageGapRecordKind,
   type SaltContextCoverageSection,
   type SaltContextCoverageUnsupportedRecord,
 } from "./contextCoverageAudit.js";

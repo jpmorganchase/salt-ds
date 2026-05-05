@@ -1227,6 +1227,17 @@ describe("salt cli export-context", () => {
             id: "tokens.fixture-color",
             missing: ["token policy docs or source-backed policy evidence"],
             evidence_ref_ids: [],
+            records: [
+              expect.objectContaining({
+                kind: "token",
+                id: "--salt-fixture-action-color",
+                status: "unsupported",
+                reason_code:
+                  "missing_token_policy_docs_or_source_evidence",
+                missing: ["policy docs", "source-backed policy evidence"],
+                evidence_ref_ids: [],
+              }),
+            ],
           }),
         ]),
       }),
