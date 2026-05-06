@@ -37,10 +37,12 @@ import { createPortal } from "react-dom";
 import toolbarNextOverflowCss from "./ToolbarNextOverflow.css";
 import { ToolbarRegion } from "./ToolbarRegion";
 import {
+  getDocumentFocusableElements,
   getToolbarNextFocusMemory,
   getToolbarNextScopeFocusableElements,
   getToolbarNextTabMoveTarget,
   scheduleToolbarNextFocus,
+  shouldToolbarNextPreserveNativeTab,
   TOOLBAR_NEXT_GROUP_KEY_ATTR,
   TOOLBAR_NEXT_ITEM_ATTR,
   TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR,
@@ -292,6 +294,32 @@ export function ToolbarNextOverflowMenu({
   );
 
   const handlePanelKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === "Tab") {
+      const panelContent = panelContentRef.current;
+      const target = event.target;
+
+      if (
+        panelContent &&
+        target instanceof HTMLElement &&
+        shouldToolbarNextPreserveNativeTab(target)
+      ) {
+        const focusableElements = getDocumentFocusableElements(
+          panelContent.ownerDocument,
+        );
+        const currentIndex = focusableElements.indexOf(target);
+        const nextFocusTarget =
+          focusableElements[currentIndex + (event.shiftKey ? -1 : 1)];
+
+        if (
+          currentIndex !== -1 &&
+          nextFocusTarget &&
+          panelContent.contains(nextFocusTarget)
+        ) {
+          return;
+        }
+      }
+    }
+
     if (event.key === "Tab" && !event.shiftKey) {
       const toolbarRoot = triggerRef.current?.closest<HTMLElement>(
         `[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`,
