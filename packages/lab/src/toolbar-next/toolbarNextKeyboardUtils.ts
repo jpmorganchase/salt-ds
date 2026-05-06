@@ -75,7 +75,8 @@ export function getToolbarNextScopeFocusableElements(
   ).filter((element) => {
     return (
       getClosestToolbarNextScopeRoot(element) === scopeRoot &&
-      isToolbarNextFocusable(element, options)
+      (isToolbarNextFocusable(element, options) ||
+        isToolbarNextToggleGroupButton(element))
     );
   });
 }
@@ -322,7 +323,8 @@ function getToolbarNextItemFocusableElements(
   ).filter((element) => {
     return (
       getClosestToolbarNextScopeRoot(element) === scopeRoot &&
-      isToolbarNextFocusable(element, options)
+      (isToolbarNextFocusable(element, options) ||
+        isToolbarNextToggleGroupButton(element))
     );
   });
 }
@@ -416,7 +418,17 @@ function getToggleGroupButtons(target: HTMLElement) {
 
   return Array.from(
     toggleGroup.querySelectorAll<HTMLElement>("button:not([disabled])"),
-  ).filter((button) => isToolbarNextFocusable(button));
+  ).filter((button) =>
+    isToolbarNextFocusable(button, { includeTabIndexMinusOne: true }),
+  );
+}
+
+function isToolbarNextToggleGroupButton(target: HTMLElement) {
+  return (
+    target.tagName === "BUTTON" &&
+    target.closest(".saltToggleButtonGroup") != null &&
+    isToolbarNextFocusable(target, { includeTabIndexMinusOne: true })
+  );
 }
 
 function getToolbarNextKeyboardPolicy(
@@ -442,7 +454,6 @@ function getToolbarNextKeyboardPolicy(
 
   if (
     isSelectLikeControl(target) ||
-    target.closest(".saltToggleButtonGroup") != null ||
     target.closest(".saltDatePickerTrigger") != null
   ) {
     return {

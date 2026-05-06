@@ -12,6 +12,7 @@ const {
   KeyboardDropdownFixture,
   KeyboardOverflowFixture,
   KeyboardOverflowRerenderFixture,
+  KeyboardOverflowToggleGroupFixture,
   KeyboardRtlFixture,
   KeyboardTextInputFixture,
   KeyboardToggleGroupFixture,
@@ -721,16 +722,127 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByTestId("toolbar-after").should("be.focused");
   });
 
-  it("hands off from the last toggle button to the next toolbar control", () => {
+  it("moves through toggle buttons and hands off at toolbar boundaries", () => {
     cy.mount(<KeyboardToggleGroupFixture />);
 
-    cy.findByTestId("toolbar-before").focus();
-    cy.realPress("Tab");
+    cy.findByRole("button", { name: "First Run" }).focus();
+    cy.realPress("ArrowRight");
     cy.findByRole("radio", { name: "All" }).should("be.focused");
-    cy.findByRole("radio", { name: "Archived" }).focus();
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
     cy.findByRole("radio", { name: "Archived" }).should("be.focused");
+
     cy.realPress("ArrowRight");
     cy.findByRole("button", { name: "Run" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "Archived" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "All" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: "First Run" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "All" }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("Tab");
+    cy.findByTestId("toolbar-after").should("be.focused");
+
+    cy.realPress(["Shift", "Tab"]);
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+  });
+
+  it("does not skip a toggle group when its first toggle button is disabled", () => {
+    cy.mount(<KeyboardToggleGroupFixture disableFirstToggle />);
+
+    cy.findByRole("button", { name: "First Run" }).focus();
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Archived" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Run" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "Archived" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: "First Run" }).should("be.focused");
+  });
+
+  it("moves through toggle buttons and hands off inside overflow panels", () => {
+    cy.mount(<KeyboardOverflowToggleGroupFixture width={260} />);
+
+    cy.findByRole("button", { name: /Open Views overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Views overflow" }).should("be.visible");
+    cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "All" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Archived" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Confirm view" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "Archived" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "All" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
+  });
+
+  it("does not skip a disabled-leading toggle group inside overflow panels", () => {
+    cy.mount(
+      <KeyboardOverflowToggleGroupFixture disableFirstToggle width={260} />,
+    );
+
+    cy.findByRole("button", { name: /Open Views overflow\./i }).click();
+    cy.findByRole("toolbar", { name: "Views overflow" }).should("be.visible");
+    cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("radio", { name: "Archived" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Confirm view" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "Archived" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("radio", { name: "Active" }).should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
   });
 
   it("moves focus into overflow panels, supports horizontal navigation there, and returns focus on Escape", () => {

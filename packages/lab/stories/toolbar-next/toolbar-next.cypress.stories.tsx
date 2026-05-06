@@ -329,8 +329,10 @@ export function KeyboardDatePickerFixture({ width = 720 }: { width?: number }) {
 }
 
 export function KeyboardToggleGroupFixture({
+  disableFirstToggle = true,
   width = 680,
 }: {
+  disableFirstToggle?: boolean;
   width?: number;
 }) {
   return (
@@ -348,7 +350,9 @@ export function KeyboardToggleGroupFixture({
             aria-label="View toggle"
           >
             <ToggleButtonGroup defaultValue="all">
-              <ToggleButton value="all">All</ToggleButton>
+              <ToggleButton disabled={disableFirstToggle} value="all">
+                All
+              </ToggleButton>
               <ToggleButton value="active">Active</ToggleButton>
               <ToggleButton value="archived">Archived</ToggleButton>
             </ToggleButtonGroup>
@@ -357,6 +361,46 @@ export function KeyboardToggleGroupFixture({
         <ToolbarRegion position="end">
           <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
             <Button appearance="solid">Run</Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+      </ToolbarNext>
+    </KeyboardHarness>
+  );
+}
+
+export function KeyboardOverflowToggleGroupFixture({
+  disableFirstToggle = false,
+  width = 260,
+}: {
+  disableFirstToggle?: boolean;
+  width?: number;
+}) {
+  return (
+    <KeyboardHarness width={width}>
+      <ToolbarNext aria-label="Keyboard overflow toggle group toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+            <Button appearance="solid">Pinned</Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+        <ToolbarRegion position="end">
+          <TooltrayNext
+            aria-label="Views"
+            overflowGroup="Views"
+            overflowLabel="Views"
+            overflowMode="grouped"
+            overflowPriority={5}
+            role="group"
+          >
+            <Button appearance="transparent">Before toggles</Button>
+            <ToggleButtonGroup defaultValue="all">
+              <ToggleButton disabled={disableFirstToggle} value="all">
+                All
+              </ToggleButton>
+              <ToggleButton value="active">Active</ToggleButton>
+              <ToggleButton value="archived">Archived</ToggleButton>
+            </ToggleButtonGroup>
+            <Button appearance="solid">Confirm view</Button>
           </TooltrayNext>
         </ToolbarRegion>
       </ToolbarNext>
