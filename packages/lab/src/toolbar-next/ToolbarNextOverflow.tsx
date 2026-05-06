@@ -278,7 +278,7 @@ export function ToolbarNextOverflowMenu({
 
   const handleTriggerKeyDown = useCallback(
     (event: ReactKeyboardEvent<HTMLButtonElement>) => {
-      if (!open && ["ArrowDown", "Enter", " "].includes(event.key)) {
+      if (!open && ["Enter", " "].includes(event.key)) {
         event.preventDefault();
         setOpen(true);
         return;
