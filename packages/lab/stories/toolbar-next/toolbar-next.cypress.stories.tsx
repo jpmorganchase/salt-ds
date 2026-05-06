@@ -139,12 +139,8 @@ export function NamedOverflowWithDividersFixture({
           role="group"
           aria-label="Quick actions"
         >
-          <Button appearance="transparent" aria-label="Search">
-            Search
-          </Button>
-          <Button appearance="transparent" aria-label="Settings">
-            Settings
-          </Button>
+          <Button appearance="transparent">Search</Button>
+          <Button appearance="transparent">Settings</Button>
         </TooltrayNext>
       </ToolbarNext>
     </ToolbarHarness>
@@ -192,18 +188,52 @@ export function SpacingOverflowFixture({ width = 520 }: { width?: number }) {
   );
 }
 
+export function DefaultSharedOverflowFixture({
+  width = 360,
+}: {
+  width?: number;
+}) {
+  return (
+    <ToolbarHarness width={width}>
+      <ToolbarNext aria-label="Toolbar with default shared overflow">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+          <Input
+            bordered
+            startAdornment={<SearchIcon />}
+            placeholder="Search"
+          />
+        </TooltrayNext>
+        <TooltrayNext overflowPriority={4}>
+          <Button appearance="transparent" style={{ width: 140 }}>
+            Columns
+          </Button>
+        </TooltrayNext>
+        <TooltrayNext align="end" overflowPriority={6}>
+          <Button appearance="transparent" style={{ width: 140 }}>
+            Export
+          </Button>
+        </TooltrayNext>
+      </ToolbarNext>
+    </ToolbarHarness>
+  );
+}
+
 export function KeyboardButtonsFixture({ width = 560 }: { width?: number }) {
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard buttons toolbar">
         <ToolbarRegion position="start">
-          <TooltrayNext role="group" aria-label="Editing">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Editing">
             <Button appearance="transparent">Cut</Button>
             <Button appearance="transparent">Copy</Button>
           </TooltrayNext>
         </ToolbarRegion>
         <ToolbarRegion position="end">
-          <TooltrayNext role="group" aria-label="Primary action">
+          <TooltrayNext
+            overflowMode="none"
+            role="group"
+            aria-label="Primary action"
+          >
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
         </ToolbarRegion>
@@ -216,14 +246,14 @@ export function KeyboardTextInputFixture({ width = 620 }: { width?: number }) {
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard text input toolbar">
-        <TooltrayNext role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
           <Input
             bordered
             startAdornment={<SearchIcon />}
             placeholder="Search"
           />
         </TooltrayNext>
-        <TooltrayNext role="group" aria-label="Actions">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
           <Button appearance="transparent">Columns</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
@@ -236,14 +266,34 @@ export function KeyboardComboBoxFixture({ width = 620 }: { width?: number }) {
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard combo box toolbar">
-        <TooltrayNext role="group" aria-label="Selection">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Selection">
           <ComboBox bordered defaultSelected={["Option A"]}>
             {options.map((option) => (
               <Option key={option} value={option} />
             ))}
           </ComboBox>
         </TooltrayNext>
-        <TooltrayNext role="group" aria-label="Actions">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
+          <Button appearance="transparent">Columns</Button>
+          <Button appearance="solid">Run</Button>
+        </TooltrayNext>
+      </ToolbarNext>
+    </KeyboardHarness>
+  );
+}
+
+export function KeyboardDropdownFixture({ width = 620 }: { width?: number }) {
+  return (
+    <KeyboardHarness width={width}>
+      <ToolbarNext aria-label="Keyboard dropdown toolbar">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Selection">
+          <Dropdown bordered defaultSelected={["Option A"]}>
+            {options.map((option) => (
+              <Option key={option} value={option} />
+            ))}
+          </Dropdown>
+        </TooltrayNext>
+        <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
           <Button appearance="transparent">Columns</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
@@ -257,7 +307,7 @@ export function KeyboardDatePickerFixture({ width = 720 }: { width?: number }) {
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard date picker toolbar">
         <ToolbarRegion position="start">
-          <TooltrayNext role="group" aria-label="Date">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Date">
             <DatePicker selectionVariant="single">
               <DatePickerTrigger>
                 <DatePickerSingleInput bordered placeholder="Select date" />
@@ -269,7 +319,7 @@ export function KeyboardDatePickerFixture({ width = 720 }: { width?: number }) {
           </TooltrayNext>
         </ToolbarRegion>
         <ToolbarRegion position="end">
-          <TooltrayNext role="group" aria-label="Actions">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
             <Button appearance="solid">Apply</Button>
           </TooltrayNext>
         </ToolbarRegion>
@@ -286,8 +336,17 @@ export function KeyboardToggleGroupFixture({
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard toggle group toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
+            <Button appearance="solid">First Run</Button>
+          </TooltrayNext>
+        </ToolbarRegion>
         <ToolbarRegion position="center">
-          <TooltrayNext role="group" aria-label="View toggle">
+          <TooltrayNext
+            overflowMode="none"
+            role="group"
+            aria-label="View toggle"
+          >
             <ToggleButtonGroup defaultValue="all">
               <ToggleButton value="all">All</ToggleButton>
               <ToggleButton value="active">Active</ToggleButton>
@@ -296,7 +355,7 @@ export function KeyboardToggleGroupFixture({
           </TooltrayNext>
         </ToolbarRegion>
         <ToolbarRegion position="end">
-          <TooltrayNext role="group" aria-label="Actions">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
         </ToolbarRegion>
@@ -385,11 +444,20 @@ export function KeyboardRtlFixture({ width = 560 }: { width?: number }) {
     <KeyboardHarness width={width}>
       <div dir="rtl">
         <ToolbarNext aria-label="Keyboard RTL toolbar">
-          <TooltrayNext role="group" aria-label="Search and filter">
+          <TooltrayNext
+            overflowMode="none"
+            role="group"
+            aria-label="Search and filter"
+          >
             <Button appearance="transparent">Columns</Button>
             <Button appearance="transparent">Status</Button>
           </TooltrayNext>
-          <TooltrayNext role="group" align="end" aria-label="Actions">
+          <TooltrayNext
+            overflowMode="none"
+            role="group"
+            align="end"
+            aria-label="Actions"
+          >
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
         </ToolbarNext>

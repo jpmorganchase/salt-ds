@@ -14,6 +14,10 @@ import { type ReactNode, useState } from "react";
 export default {
   title: "Lab/Toolbar Next/Overflow Modes",
   component: ToolbarNext,
+  includeStories: [
+    "NamedOverflowModesComparison",
+    "PriorityOrderingComparison",
+  ],
   parameters: {
     layout: "padded",
   },
@@ -167,6 +171,70 @@ function SharedToolbar({
       >
         <Button appearance="transparent">Export</Button>
       </TooltrayNext>
+    </ToolbarNext>
+  );
+}
+
+function NamedFiltersToolbar({
+  overflowMode,
+}: {
+  overflowMode: "independent" | "grouped";
+}) {
+  return (
+    <ToolbarNext aria-label={`${overflowMode} named filters toolbar`}>
+      <ToolbarRegion position="start">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+          <Input
+            bordered
+            startAdornment={<SearchIcon />}
+            placeholder="Search"
+          />
+        </TooltrayNext>
+        <TooltrayNext
+          overflowGroup="Filters"
+          overflowLabel="Filters"
+          overflowMode={overflowMode}
+          overflowPriority={3}
+          role="group"
+          aria-label="Primary filters"
+        >
+          <Dropdown bordered defaultSelected={["Option A"]}>
+            {options.map((option) => (
+              <Option value={option} key={option} />
+            ))}
+          </Dropdown>
+        </TooltrayNext>
+        <TooltrayNext
+          overflowGroup="Filters"
+          overflowLabel="Filters"
+          overflowMode={overflowMode}
+          overflowPriority={4}
+          role="group"
+          aria-label="Secondary filters"
+        >
+          <Button appearance="transparent">Status</Button>
+        </TooltrayNext>
+        <TooltrayNext
+          overflowGroup="Filters"
+          overflowLabel="Filters"
+          overflowMode={overflowMode}
+          overflowPriority={5}
+          role="group"
+          aria-label="Tertiary filters"
+        >
+          <Button appearance="transparent">Columns</Button>
+        </TooltrayNext>
+      </ToolbarRegion>
+      <ToolbarRegion position="end">
+        <TooltrayNext
+          overflowMode="none"
+          role="group"
+          aria-label="Quick actions"
+        >
+          <Button appearance="transparent">Refresh</Button>
+          <Button appearance="solid">Run</Button>
+        </TooltrayNext>
+      </ToolbarRegion>
     </ToolbarNext>
   );
 }
@@ -343,6 +411,43 @@ function NamedIntrinsicWidthToolbar() {
     </div>
   );
 }
+
+/**
+ * Named overflow mode comparison.
+ *
+ * Intended behavior:
+ * - `independent` collapses one Filters tray at a time according to priority.
+ * - `grouped` collapses the whole Filters batch together.
+ * - Both examples keep Search and quick actions visible, so the difference is
+ *   isolated to the named overflow mode.
+ */
+export const NamedOverflowModesComparison: StoryFn<typeof ToolbarNext> = () => (
+  <StoryExample
+    title="Named overflow modes: progressive or batched collapse"
+    expectedBehavior={[
+      "Resize the story and compare the two toolbars.",
+      "The independent toolbar should hide Filters trays progressively: Columns, then Status, then the dropdown.",
+      "The grouped toolbar should replace all Filters trays with one Filters trigger at the same time.",
+    ]}
+    codeRelation={[
+      "All Filters trays share the same non-shared overflowGroup, so they render under one named trigger when hidden.",
+      "With independent, each TooltrayNext remains its own collapse unit.",
+      "With grouped, trays in the same named group are merged into one collapse unit.",
+    ]}
+  >
+    <StackLayout gap={1.5}>
+      <ComparisonLabel>
+        Toolbar A: `overflowMode=&quot;independent&quot;`
+      </ComparisonLabel>
+      <NamedFiltersToolbar overflowMode="independent" />
+      <ComparisonLabel>
+        Toolbar B: `overflowMode=&quot;grouped&quot;`
+      </ComparisonLabel>
+      <NamedFiltersToolbar overflowMode="grouped" />
+    </StackLayout>
+  </StoryExample>
+);
+NamedOverflowModesComparison.globals = wrapGlobals;
 
 /**
  * Single-tray comparison for `independent` and `grouped`.

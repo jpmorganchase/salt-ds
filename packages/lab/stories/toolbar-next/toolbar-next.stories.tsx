@@ -33,6 +33,16 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 export default {
   title: "Lab/Toolbar Next",
   component: ToolbarNext,
+  includeStories: [
+    "FlatAlignSugar",
+    "RegionFirst",
+    "MixedFormControls",
+    "CenteredNamedOverflow",
+    "Transparent",
+    "RightToLeft",
+    "DefaultSharedOverflow",
+    "NamedOverflow",
+  ],
   parameters: {
     layout: "padded",
   },
@@ -145,10 +155,8 @@ Playground.args = {
  * - The toolbar renders a start region with the search input and dropdown on
  *   the left, and an end region with icon buttons and a solid button on the
  *   right.
- * - No overflow behavior is configured (`overflowMode` defaults to `"none"`),
- *   so all controls remain visible regardless of available width. If the
- *   toolbar becomes narrower than its content, controls will be clipped
- *   rather than collapsed into an overflow surface.
+ * - The trays use the default shared overflow behavior, so constrained width
+ *   collapses content into the generic overflow trigger.
  */
 export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Flat toolbar">
@@ -171,6 +179,9 @@ export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
     </TooltrayNext>
   </ToolbarNext>
 );
+FlatAlignSugar.globals = {
+  responsive: "wrap",
+};
 
 /**
  * Flat layout with vertical dividers separating logical groups.
@@ -276,8 +287,8 @@ export const Spacing300Groups: StoryFn<typeof ToolbarNext> = () => (
  * - The center region holds a toggle button group that should remain
  *   visually centered between the start and end regions regardless of
  *   how much content is in each.
- * - No overflow is configured. This story validates the basic
- *   region-first authoring model and center alignment behavior.
+ * - Trays use the default shared overflow behavior, validating that the
+ *   region-first authoring model also collapses responsively.
  */
 export const RegionFirst: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Region first toolbar">
@@ -302,6 +313,9 @@ export const RegionFirst: StoryFn<typeof ToolbarNext> = () => (
     </ToolbarRegion>
   </ToolbarNext>
 );
+RegionFirst.globals = {
+  responsive: "wrap",
+};
 
 /**
  * Form controls arranged across explicit start, center, and end regions.
@@ -500,8 +514,8 @@ CenteredNamedOverflow.globals = {
  *   visual boundary.
  * - The two-region layout (start and end) still works; controls align
  *   to their respective edges.
- * - No overflow is configured here. This story validates the
- *   transparent visual treatment.
+ * - The trays still use default shared overflow, validating the transparent
+ *   treatment with the generic trigger.
  */
 export const Transparent: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext variant="transparent" aria-label="App header toolbar">
@@ -528,6 +542,9 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
     </ToolbarRegion>
   </ToolbarNext>
 );
+Transparent.globals = {
+  responsive: "wrap",
+};
 
 /**
  * Data view toolbar with explicit regions and mixed tray types.
@@ -587,8 +604,8 @@ export const DataViewActions: StoryFn<typeof ToolbarNext> = () => (
  *   only buttons.
  * - The start region groups filtering criteria; the end region groups
  *   a toggle and a primary action.
- * - No overflow is configured. This story validates that non-button
- *   controls render correctly within the toolbar layout.
+ * - The groups use default shared overflow, so non-button controls can collapse
+ *   into the generic overflow menu.
  */
 export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Mixed controls toolbar">
@@ -600,7 +617,7 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
-        <DateInputSingle bordered />
+        <DateInputSingle bordered ariaLabel="Settlement date" />
       </TooltrayNext>
     </ToolbarRegion>
     <ToolbarRegion position="end">
@@ -611,6 +628,9 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
     </ToolbarRegion>
   </ToolbarNext>
 );
+MixedFormControls.globals = {
+  responsive: "wrap",
+};
 
 /**
  * Right-to-left layout without overflow.
@@ -620,8 +640,8 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
  *   of the entire toolbar.
  * - The start-aligned search tray should appear on the right; the
  *   end-aligned actions tray should appear on the left.
- * - No overflow is configured. This story validates that the base
- *   layout, alignment, and control ordering are correct under RTL.
+ * - The groups use default shared overflow, validating the generic trigger
+ *   under RTL.
  */
 export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
   <div dir="rtl">
@@ -646,16 +666,18 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
     </ToolbarNext>
   </div>
 );
+RightToLeft.globals = {
+  responsive: "wrap",
+};
 
 /**
- * Shared overflow — independent collapse into a single generic overflow trigger.
+ * Default shared overflow — omitted overflowMode collapses into the generic trigger.
  *
  * Intended behavior:
  * - The search tray has `overflowMode="none"` and should never collapse.
  *   It remains visible at all widths.
  * - The dropdown/filters tray (priority 4) and the actions tray
- *   (priority 6) both use `overflowMode="independent"` with the default
- *   `overflowGroup="shared"`.
+ *   (priority 6) omit `overflowMode`, so both use the default shared overflow.
  * - As the toolbar narrows, the highest-priority tray (actions,
  *   priority 6) should overflow first, followed by the filters tray
  *   (priority 4). They collapse one at a time, not all at once.
@@ -668,12 +690,12 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
  * - Use the Storybook responsive wrapper (wrap/unwrap toggle) to
  *   resize and observe the progressive collapse.
  */
-export const SharedOverflow: StoryFn<typeof ToolbarNext> = () => (
+export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with shared overflow">
     <TooltrayNext role="group" aria-label="Search" overflowMode="none">
       <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
     </TooltrayNext>
-    <TooltrayNext overflowMode="independent" overflowPriority={4}>
+    <TooltrayNext overflowPriority={4}>
       <Dropdown bordered defaultSelected={["Option A"]}>
         {options.map((option) => (
           <Option value={option} key={option} />
@@ -688,7 +710,6 @@ export const SharedOverflow: StoryFn<typeof ToolbarNext> = () => (
     <TooltrayNext
       align="end"
       aria-label="Actions"
-      overflowMode="independent"
       overflowPriority={6}
       role="group"
     >
@@ -703,7 +724,7 @@ export const SharedOverflow: StoryFn<typeof ToolbarNext> = () => (
     </TooltrayNext>
   </ToolbarNext>
 );
-SharedOverflow.globals = {
+DefaultSharedOverflow.globals = {
   responsive: "wrap",
 };
 
