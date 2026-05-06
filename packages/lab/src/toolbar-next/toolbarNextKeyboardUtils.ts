@@ -53,6 +53,11 @@ export interface ToolbarNextFocusableOptions {
   includeTabIndexMinusOne?: boolean;
 }
 
+interface ToolbarNextKeyboardPolicy {
+  preserveHorizontalArrows: boolean;
+  preserveNativeTab: boolean;
+}
+
 export function getClosestToolbarNextScopeRoot(target: EventTarget | null) {
   if (!(target instanceof Element)) {
     return null;
@@ -224,31 +229,25 @@ export function getToolbarNextDirectionalMoveTarget(
     return null;
   }
 
-  if (target.isContentEditable) {
+  if (getToolbarNextKeyboardPolicy(target).preserveHorizontalArrows) {
     return null;
   }
 
-  if (isPlainTextInput(target)) {
-    return null;
-  }
+  const toggleGroupButtons = getToggleGroupButtons(target);
 
-  if (!isComboBoxInput(target)) {
-    const toggleGroupButtons = getToggleGroupButtons(target);
+  if (toggleGroupButtons.length > 0) {
+    const visualDelta = getVisualDelta(scopeRoot, key);
+    const currentIndex = toggleGroupButtons.indexOf(target);
 
-    if (toggleGroupButtons.length > 0) {
-      const visualDelta = getVisualDelta(scopeRoot, key);
-      const currentIndex = toggleGroupButtons.indexOf(target);
-
-      if (
-        currentIndex === -1 ||
-        !isToggleGroupBoundary(
-          currentIndex,
-          toggleGroupButtons.length,
-          visualDelta,
-        )
-      ) {
-        return null;
-      }
+    if (
+      currentIndex === -1 ||
+      !isToggleGroupBoundary(
+        currentIndex,
+        toggleGroupButtons.length,
+        visualDelta,
+      )
+    ) {
+      return null;
     }
   }
 
@@ -310,13 +309,7 @@ export function getToolbarNextTabMoveTarget(
 }
 
 export function shouldToolbarNextPreserveNativeTab(target: HTMLElement) {
-  return (
-    target.isContentEditable ||
-    isPlainTextInput(target) ||
-    isSelectLikeControl(target) ||
-    target.closest(".saltToggleButtonGroup") != null ||
-    target.closest(".saltDatePickerTrigger") != null
-  );
+  return getToolbarNextKeyboardPolicy(target).preserveNativeTab;
 }
 
 function getToolbarNextItemFocusableElements(
@@ -426,11 +419,53 @@ function getToggleGroupButtons(target: HTMLElement) {
   ).filter((button) => isToolbarNextFocusable(button));
 }
 
+function getToolbarNextKeyboardPolicy(
+  target: HTMLElement,
+): ToolbarNextKeyboardPolicy {
+  if (
+    target.isContentEditable ||
+    isPlainTextInput(target) ||
+    isComboBoxInput(target)
+  ) {
+    return {
+      preserveHorizontalArrows: true,
+      preserveNativeTab: true,
+    };
+  }
+
+  if (isDropdownControl(target)) {
+    return {
+      preserveHorizontalArrows: false,
+      preserveNativeTab: false,
+    };
+  }
+
+  if (
+    isSelectLikeControl(target) ||
+    target.closest(".saltToggleButtonGroup") != null ||
+    target.closest(".saltDatePickerTrigger") != null
+  ) {
+    return {
+      preserveHorizontalArrows: false,
+      preserveNativeTab: true,
+    };
+  }
+
+  return {
+    preserveHorizontalArrows: false,
+    preserveNativeTab: false,
+  };
+}
+
 function isComboBoxInput(target: HTMLElement) {
   return (
     target.tagName === "INPUT" &&
     target.closest('[role="combobox"], .saltComboBox') != null
   );
+}
+
+function isDropdownControl(target: HTMLElement) {
+  return target.closest(".saltDropdown") != null;
 }
 
 function isSelectLikeControl(target: HTMLElement) {
@@ -446,10 +481,6 @@ function isPlainTextInput(target: HTMLElement) {
   }
 
   if (target.tagName !== "INPUT") {
-    return false;
-  }
-
-  if (isComboBoxInput(target)) {
     return false;
   }
 

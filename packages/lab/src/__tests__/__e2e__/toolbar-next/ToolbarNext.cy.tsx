@@ -5,9 +5,11 @@ import { useState } from "react";
 import * as toolbarNextStories from "../../../../stories/toolbar-next/toolbar-next.cypress.stories";
 
 const {
+  DefaultSharedOverflowFixture,
   KeyboardButtonsFixture,
   KeyboardComboBoxFixture,
   KeyboardDatePickerFixture,
+  KeyboardDropdownFixture,
   KeyboardOverflowFixture,
   KeyboardOverflowRerenderFixture,
   KeyboardRtlFixture,
@@ -363,6 +365,15 @@ function expectCenteredControl(toolbarName: string, controlName: string) {
 }
 
 describe("Given ToolbarNext overflow measurements", () => {
+  it("collapses omitted overflowMode trays into the shared generic trigger by default", () => {
+    cy.mount(<DefaultSharedOverflowFixture width={420} />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: "Export" }).should("not.exist");
+    cy.findByRole("button", { name: "Columns" }).should("be.visible");
+    expectToolbarFits("Toolbar with default shared overflow");
+  });
+
   it("keeps divider-heavy shared overflow layouts clipped-free as trays collapse", () => {
     cy.mount(<OverflowDividersFixture width={560} />);
 
@@ -644,15 +655,46 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByTestId("toolbar-after").should("be.focused");
   });
 
-  it("lets combo boxes keep Up and Down while using Left and Right to move through the toolbar", () => {
+  it("keeps combo boxes on native left/right behavior and native Tab order", () => {
     cy.mount(<KeyboardComboBoxFixture />);
 
     cy.findByRole("combobox").focus();
+    cy.realPress("ArrowRight");
+    cy.findByRole("combobox").should("be.focused");
+    cy.realPress("ArrowLeft");
+    cy.findByRole("combobox").should("be.focused");
+
     cy.realPress("ArrowDown");
     cy.findByRole("combobox").should("have.attr", "aria-activedescendant");
+    cy.realPress("Escape");
+    cy.findByRole("combobox").should("be.focused");
 
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "Columns" }).should("be.focused");
+    cy.realPress("Tab");
+    cy.findByTestId("toolbar-after").should("be.focused");
+  });
+
+  it("uses Left and Right to move through the toolbar from a dropdown", () => {
+    cy.mount(<KeyboardDropdownFixture />);
+
+    cy.findByRole("combobox").focus();
     cy.realPress("ArrowRight");
     cy.findByRole("button", { name: "Columns" }).should("be.focused");
+    cy.realPress("ArrowLeft");
+    cy.findByRole("combobox").should("be.focused");
+  });
+
+  it("uses Tab and Shift+Tab to leave the toolbar from a dropdown", () => {
+    cy.mount(<KeyboardDropdownFixture />);
+
+    cy.findByRole("combobox").focus();
+    cy.realPress("Tab");
+    cy.findByTestId("toolbar-after").should("be.focused");
+
+    cy.findByRole("combobox").focus();
+    cy.realPress(["Shift", "Tab"]);
+    cy.findByTestId("toolbar-before").should("be.focused");
   });
 
   it("allows tabbing within the date picker trigger and arrowing from the calendar button", () => {

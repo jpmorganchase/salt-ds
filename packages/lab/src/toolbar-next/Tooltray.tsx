@@ -27,7 +27,7 @@ export interface TooltrayNextProps
   /**
    * Controls how this tray participates in `ToolbarNext` overflow.
    *
-   * Defaults to `"none"`.
+   * Defaults to `"independent"`.
    */
   overflowMode?: TooltrayNextOverflowMode;
   /**
@@ -60,7 +60,7 @@ export const TooltrayNext = forwardRef<HTMLDivElement, TooltrayNextProps>(
       className,
       overflowGroup = "shared",
       overflowLabel,
-      overflowMode = "none",
+      overflowMode = "independent",
       overflowPriority = 0,
       role,
       ...rest

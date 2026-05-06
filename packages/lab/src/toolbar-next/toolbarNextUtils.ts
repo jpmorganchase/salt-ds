@@ -182,7 +182,7 @@ function normalizeRegionItems(
       align = "start",
       overflowGroup = "shared",
       overflowLabel,
-      overflowMode = "none",
+      overflowMode = "independent",
       overflowPriority = 0,
     } = child.props;
     const order = items.length;
