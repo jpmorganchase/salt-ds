@@ -262,6 +262,41 @@ function missingPatternOptionalContextEvidence(pattern: PatternRecord): string[]
   return missing;
 }
 
+function patternOptionalGapFieldPath(missing: string): string {
+  switch (missing) {
+    case "when_not_to_use guidance":
+      return "when_not_to_use";
+    case "how_to_build guidance":
+      return "how_to_build";
+    case "how_it_works guidance":
+      return "how_it_works";
+    case "accessibility summary":
+      return "accessibility.summary";
+    default:
+      return missing;
+  }
+}
+
+function buildPatternOptionalEvidenceGapRecords(
+  pattern: PatternRecord,
+  missing: string[],
+): SaltContextCoverageGapRecord[] {
+  return missing.map((missingField): SaltContextCoverageGapRecord => {
+    const fieldPath = patternOptionalGapFieldPath(missingField);
+
+    return {
+      kind: "pattern",
+      id: `${pattern.id}.${fieldPath}.missing_optional_evidence`,
+      name: `${pattern.name} ${fieldPath}`,
+      status: "unsupported",
+      reason_code: "missing_optional_evidence",
+      reason: `Registry pattern ${fieldPath} is empty and no source-backed docs, examples, or source evidence was found for generated context.`,
+      missing: [missingField],
+      evidence_ref_ids: [],
+    };
+  });
+}
+
 function unsupportedClaimMissingFields(claim: SaltUnsupportedClaim): string[] {
   const missing = [claim.field_path ?? claim.text].filter(hasText);
 
@@ -448,7 +483,7 @@ function summarizePatternCoverage(
         "Pattern context omitted optional fields because registry or source-backed evidence is missing.",
       missing,
       evidence_ref_ids: [],
-      records: [],
+      records: buildPatternOptionalEvidenceGapRecords(pattern, missing),
     }));
 
   return {

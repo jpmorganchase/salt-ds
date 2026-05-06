@@ -783,6 +783,15 @@ details`, `File upload`, `Menu button`, and `Split button`. Remaining pattern
   gaps stay unsupported because the docs and Storybook sources scanned in this
   pass did not provide exact `when_not_to_use`, `how_to_build`, or accessibility
   source evidence.
+- Pattern optional-field gap classification on May 6, 2026 now records
+  per-field unsupported records for selected pattern context optional gaps. A
+  fresh production audit remains at 20 total explicit unsupported docs/registry
+  gaps: 0 component gaps, 17 pattern gaps, and 3 foundation gaps, but pattern
+  optional gaps now list the missing field record and
+  `missing_optional_evidence` cause directly. No production Salt facts were
+  added; the remaining `when_not_to_use`, `how_to_build`, accessibility, and
+  `Indication.when_to_use` surfaces remain unsupported until source-backed
+  docs, examples, source, or registry records exist.
 
 Why this matters:
 
