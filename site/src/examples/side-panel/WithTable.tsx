@@ -152,7 +152,7 @@ const SidePanelExample = () => {
         </TableContainer>
       </div>
 
-      <SidePanel position="right" style={panelStyle}>
+      <SidePanel position="right" style={panelStyle} key={selectedRow?.id}>
         {formValues && (
           <>
             <SidePanelHeader>
