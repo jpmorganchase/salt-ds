@@ -327,13 +327,14 @@ export function useToolbarNextKeyboardNavigation({
     [scopeRef],
   );
 
-  const handlePointerDownCapture =
-    useCallback<PointerEventHandler<HTMLElement>>(
-      (event) => {
-        handleScopePointerDown(event);
-      },
-      [handleScopePointerDown],
-    );
+  const handlePointerDownCapture = useCallback<
+    PointerEventHandler<HTMLElement>
+  >(
+    (event) => {
+      handleScopePointerDown(event);
+    },
+    [handleScopePointerDown],
+  );
 
   const handleScopeBlur = useCallback(
     (event: ToolbarNextFocusEvent) => {
