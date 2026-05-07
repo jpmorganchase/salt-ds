@@ -10,7 +10,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -19,7 +19,7 @@ import {
   type DateInputSingleProps,
   LocalizationProvider,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -32,7 +32,7 @@ const Single = ({
 }: {
   selectedTimezone: Timezone;
 }): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
 
   const [currentTimezone, setCurrentTimezone] = useState<string>("");
   const [iso8601String, setIso8601String] = useState<string>("");
@@ -49,73 +49,69 @@ const Single = ({
     setError(undefined);
   }, [selectedTimezone]);
 
-  const handleDateChange: DateInputSingleProps<DateFrameworkType>["onDateChange"] =
-    (_event, date, details) => {
-      const isDateUnset =
-        details?.errors?.length && details.errors[0].type === "unset";
-      const hasError = details?.errors?.length;
+  const handleDateChange: DateInputSingleProps["onDateChange"] = (
+    _event,
+    date,
+    details,
+  ) => {
+    const isDateUnset =
+      details?.errors?.length && details.errors[0].type === "unset";
+    const hasError = details?.errors?.length;
 
-      setError(
-        !isDateUnset && hasError ? details?.errors?.[0].message : undefined,
-      );
+    setError(
+      !isDateUnset && hasError ? details?.errors?.[0].message : undefined,
+    );
 
-      if (isDateUnset || hasError) {
-        setCurrentTimezone("");
-        setIso8601String("");
-        setLocaleDateString("");
-        setDateString("");
-        return;
-      }
+    if (isDateUnset || hasError) {
+      setCurrentTimezone("");
+      setIso8601String("");
+      setLocaleDateString("");
+      setDateString("");
+      return;
+    }
 
-      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const ianaTimezone =
-        selectedTimezone !== "system" && selectedTimezone !== "default"
-          ? selectedTimezone
-          : undefined;
+    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const ianaTimezone =
+      selectedTimezone !== "system" && selectedTimezone !== "default"
+        ? selectedTimezone
+        : undefined;
 
-      const formatDate = (date: Date, hasError: boolean) => {
-        if (hasError) return { iso: "", locale: "", formatted: "" };
-        const iso = date.toISOString();
-        const locale = new Intl.DateTimeFormat(undefined, {
-          timeZone: systemTimeZone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        const formatted = new Intl.DateTimeFormat(undefined, {
-          timeZone: ianaTimezone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(date);
-        return { iso, locale, formatted };
-      };
-
-      const jsDate =
-        dateAdapter.lib === "luxon"
-          ? date.toJSDate()
-          : dateAdapter.lib === "moment"
-            ? date.toDate()
-            : date;
-      const formattedDate = formatDate(
-        jsDate,
-        isDateUnset || (!isDateUnset && !!hasError),
-      );
-
-      setCurrentTimezone(dateAdapter.getTimezone(date));
-
-      setIso8601String(formattedDate.iso);
-      setLocaleDateString(formattedDate.locale);
-      setDateString(formattedDate.formatted);
+    const formatDate = (date: DateFrameworkType, hasError: boolean) => {
+      if (hasError) return { iso: "", locale: "", formatted: "" };
+      const jsDate = dateAdapter.toJSDate(date);
+      const iso = jsDate.toISOString();
+      const locale = new Intl.DateTimeFormat(undefined, {
+        timeZone: systemTimeZone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      const formatted = new Intl.DateTimeFormat(undefined, {
+        timeZone: ianaTimezone,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }).format(jsDate);
+      return { iso, locale, formatted };
     };
+
+    setCurrentTimezone(date ? dateAdapter.getTimezone(date) : "");
+
+    const formattedDate = date
+      ? formatDate(date, isDateUnset || (!isDateUnset && !!hasError))
+      : null;
+    setIso8601String(formattedDate?.iso ?? "");
+    setLocaleDateString(formattedDate?.locale ?? "");
+    setDateString(formattedDate?.formatted ?? "");
+  };
 
   return (
     <GridLayout gap={1}>
@@ -171,24 +167,21 @@ export const SingleWithTimezone = (): ReactElement => {
   const dateAdapterMap: Record<string, any> = {
     moment: AdapterMoment,
     dayjs: AdapterDayjs,
-    "date-fns": AdapterDateFns,
+    "date-fns": AdapterDateFnsTZ,
     luxon: AdapterLuxon,
   };
   const validAdapters = Object.keys(dateAdapterMap);
   const [dateAdapterName, setDateAdapterName] = useState<string>("luxon");
 
-  const timezoneOptions =
-    dateAdapterName !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
 
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],
