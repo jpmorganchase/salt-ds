@@ -98,7 +98,7 @@ export const RegionalSettingsContent = ({
       <FormField>
         <FormFieldLabel>Automatic translation</FormFieldLabel>
         <Switch
-          label="Automatically translate descriptions and reviews to English."
+          label="Automatically translate to English"
           name="autoTranslate"
           checked={formData.autoTranslate}
           onChange={handleCheckboxChange}

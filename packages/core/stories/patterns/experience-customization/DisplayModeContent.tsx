@@ -1,9 +1,11 @@
 import {
   Banner,
   BannerContent,
+  Checkbox,
   FlexItem,
   FlexLayout,
   FormField,
+  FormFieldHelperText,
   FormFieldLabel,
   InteractableCard,
   InteractableCardGroup,
@@ -13,27 +15,34 @@ import {
   Text,
 } from "@salt-ds/core";
 import type { FormContentProps } from "./experience-customization.stories";
-import HighDensityLight from "./img/high-light.png";
-import MediumDensityLight from "./img/medium-light.png";
+import HighDensityTable from "./img/table-high.png";
+import LowDensityTable from "./img/table-low.png";
+import MediumDensityTable from "./img/table-medium.png";
 
 export const DisplayModeContent = ({
   formData,
   handleSelectChange,
+  stepFieldValidation,
+  handleCheckboxChange,
 }: FormContentProps) => {
   const displayDensityOptions = [
     {
-      value: "medium",
-      label: "Medium density",
-      description: "Balanced spacing (Recommended)",
-      image: MediumDensityLight,
-      alt: "Medium Density Light",
-    },
-    {
       value: "high",
       label: "High density",
-      description: "More content on screen",
-      image: HighDensityLight,
-      alt: "High Density Light",
+      image: HighDensityTable,
+      alt: "High Density",
+    },
+    {
+      value: "medium",
+      label: "Medium density",
+      image: MediumDensityTable,
+      alt: "Medium Density",
+    },
+    {
+      value: "low",
+      label: "Low density",
+      image: LowDensityTable,
+      alt: "Low Density",
     },
   ] as const;
 
@@ -51,8 +60,9 @@ export const DisplayModeContent = ({
 
       <FlexItem>
         <FormField>
-          <FormFieldLabel>Display density</FormFieldLabel>
+          <FormFieldLabel>Choose a density</FormFieldLabel>
           <InteractableCardGroup
+            value={formData.displayDensity}
             onChange={(_event, value) => {
               handleSelectChange?.(value as string, "displayDensity");
             }}
@@ -79,7 +89,6 @@ export const DisplayModeContent = ({
                         />
                         <StackLayout gap={0}>
                           <Text>{option.label}</Text>
-                          <Text color="secondary">{option.description}</Text>
                         </StackLayout>
                       </StackLayout>
                     </StackLayout>
@@ -90,6 +99,25 @@ export const DisplayModeContent = ({
           </InteractableCardGroup>
         </FormField>
       </FlexItem>
+
+      {formData.displayDensity === "high" && (
+        <FormField
+          necessity="required"
+          validationStatus={stepFieldValidation.acceptTerms?.status}
+        >
+          <Checkbox
+            name="acceptTerms"
+            label="I understand that High density reduces target sizes and may affect readability and ease of use."
+            checked={formData.acceptTerms}
+            onChange={handleCheckboxChange}
+          />
+          {stepFieldValidation.acceptTerms?.status && (
+            <FormFieldHelperText>
+              {stepFieldValidation.acceptTerms.message}
+            </FormFieldHelperText>
+          )}
+        </FormField>
+      )}
     </StackLayout>
   );
 };

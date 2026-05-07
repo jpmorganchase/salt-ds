@@ -2,30 +2,55 @@ import {
   Banner,
   BannerContent,
   Button,
+  Card,
   Dialog,
   DialogActions,
   DialogContent,
   DialogHeader,
+  Display3,
+  Divider,
+  Dropdown,
   FlexItem,
   FlexLayout,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
   GridItem,
   GridLayout,
+  H2,
+  Input,
   InteractableCard,
   InteractableCardGroup,
   type InteractableCardValue,
+  NumberInput,
+  Option,
+  ParentChildLayout,
+  RadioButton,
+  RadioButtonGroup,
   RadioButtonIcon,
   SplitLayout,
   StackLayout,
   type StackLayoutProps,
   Step,
   Stepper,
+  Switch,
   Text,
   useResponsiveProp,
+  VerticalNavigation,
+  VerticalNavigationItem,
+  VerticalNavigationItemContent,
+  VerticalNavigationItemLabel,
+  VerticalNavigationItemTrigger,
 } from "@salt-ds/core";
+import { US } from "@salt-ds/countries";
 import {
+  ArrowDownIcon,
+  ArrowUpIcon,
   BuildingIcon,
   GlobeIcon,
+  LocationIcon,
   LockedIcon,
+  SearchIcon,
   WarningSolidIcon,
 } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
@@ -44,9 +69,15 @@ import { type FieldValidation, useWizardForm } from "../wizard/useWizardForm";
 import { getStepStage, validateStep } from "../wizard/utils";
 import { DataFormatContent } from "./DataFormatContent";
 import { DisplayModeContent } from "./DisplayModeContent";
-import { NotificationsContent } from "./NotificationsContent";
+import {
+  NOTIFICATION_POSITIONS,
+  NotificationPosition,
+  NotificationsContent,
+} from "./NotificationsContent";
 import { RegionalSettingsContent } from "./RegionalSettingsContent";
 import "../wizard/ContentOverflow.css";
+import NegativeTrend from "./img/negative-trend.png";
+import PositiveTrend from "./img/positive-trend.png";
 
 export default {
   title: "Patterns/Experience Customization",
@@ -56,14 +87,18 @@ export default {
 } as Meta;
 
 export interface ECFormData {
+  acceptTerms: boolean;
   language: string;
   timezone: string;
   autoTranslate: boolean;
   position: string;
-  displayMode: string;
   displayDensity: string;
   currency: string;
   currencyFormat: string;
+  stockNameDisplay: string;
+  exchangeAndRegionDisplay: string;
+  visibleMetrics: string;
+  performanceChart: boolean;
 }
 
 export interface FormContentProps {
@@ -77,37 +112,43 @@ export interface FormContentProps {
 }
 
 const wizardSteps = [
-  { id: "region", label: "Regional settings", stepTitle: "Regional" },
+  {
+    id: "foundation",
+    label: "Foundation",
+    stepTitle: "Foundation",
+  },
+  { id: "regional", label: "Regional settings", stepTitle: "Regional" },
+  {
+    id: "dataFormat",
+    label: "Data format ",
+    stepTitle: "Data format",
+  },
   {
     id: "notifications",
     label: "Notification and settings",
     stepTitle: "Notifications",
   },
-  {
-    id: "displayMode",
-    label: "Display preferences",
-    stepTitle: "Display",
-  },
-  {
-    id: "dataFormat",
-    label: "Data format preferences",
-    stepTitle: "Data format",
-  },
 ] as const;
 const stepIds = wizardSteps.map((s) => s.id);
 
-const initialFormData = {
-  // Regional settings
+const initialFormData: ECFormData = {
+  // Foundation
+  displayDensity: "",
+  acceptTerms: false,
+  // Regional
   language: "",
   timezone: "",
   autoTranslate: false,
-  // Notification settings
-  position: "top-right",
-  // Display preferences
-  displayDensity: "medium",
-  // Data format preferences
+  // Data format
   currency: "usd",
   currencyFormat: "standard",
+
+  stockNameDisplay: "tickerOnly",
+  exchangeAndRegionDisplay: "text",
+  visibleMetrics: "lastPrice",
+  performanceChart: false,
+  // Notifications
+  position: "top-right",
 };
 
 const stepValidationSchemas: Record<
@@ -115,7 +156,20 @@ const stepValidationSchemas: Record<
   // biome-ignore lint/suspicious/noExplicitAny: This is acceptable for an example.
   Yup.ObjectSchema<Record<string, any>>
 > = {
-  region: Yup.object({
+  foundation: Yup.object({
+    displayDensity: Yup.string().required("Display density is required."),
+    acceptTerms: Yup.boolean().when("displayDensity", {
+      is: "high",
+      // biome-ignore lint/suspicious/noThenProperty: This is the correct Yup syntax for conditional validation.
+      then: (schema) =>
+        schema.oneOf(
+          [true],
+          "You must accept the terms to use high display density.",
+        ),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  }),
+  regional: Yup.object({
     language: Yup.string().required("Language is required."),
     timezone: Yup.string().required("Timezone is required."),
   }),
@@ -136,11 +190,7 @@ const stepValidationSchemas: Record<
   }),
 };
 
-interface MultiStepTemplateArgs {
-  initialStep: number;
-}
-
-const MultiStepTemplate = (args: MultiStepTemplateArgs) => {
+const MultiStepTemplate = () => {
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -164,7 +214,7 @@ const MultiStepTemplate = (args: MultiStepTemplateArgs) => {
   } = useWizardForm({
     steps: stepIds,
     initialState: {
-      activeStepIndex: args.initialStep,
+      activeStepIndex: 0,
       formData: initialFormData,
       validationsByStep: {},
     },
@@ -207,10 +257,10 @@ const MultiStepTemplate = (args: MultiStepTemplateArgs) => {
   };
 
   const contentByStep: Record<string, ReactElement> = {
-    region: <RegionalSettingsContent {...sharedFormProps} />,
-    notifications: <NotificationsContent {...sharedFormProps} />,
-    displayMode: <DisplayModeContent {...sharedFormProps} />,
+    foundation: <DisplayModeContent {...sharedFormProps} />,
+    regional: <RegionalSettingsContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
+    notifications: <NotificationsContent {...sharedFormProps} />,
   };
 
   const header = (
@@ -277,7 +327,7 @@ const MultiStepTemplate = (args: MultiStepTemplateArgs) => {
       <Button
         sentiment="accented"
         appearance="transparent"
-        onClick={() => updateField("displayDensity", "medium")}
+        // onClick={() => updateField("displayDensity", "medium")}
       >
         Reset to medium density
       </Button>
@@ -314,32 +364,8 @@ const MultiStepTemplate = (args: MultiStepTemplateArgs) => {
   );
 };
 
-export const LocalizationAndStandards = {
-  render: (args: MultiStepTemplateArgs) => <MultiStepTemplate {...args} />,
-  args: {
-    initialStep: 0,
-  },
-};
-
-export const VisualExperienceSetting = {
-  render: (args: MultiStepTemplateArgs) => <MultiStepTemplate {...args} />,
-  args: {
-    initialStep: 1,
-  },
-};
-
-export const InformedChoices = {
-  render: (args: MultiStepTemplateArgs) => <MultiStepTemplate {...args} />,
-  args: {
-    initialStep: 2,
-  },
-};
-
-export const DataFormat = {
-  render: (args: MultiStepTemplateArgs) => <MultiStepTemplate {...args} />,
-  args: {
-    initialStep: 3,
-  },
+export const EndToEnd = {
+  render: () => <MultiStepTemplate />,
 };
 
 export const MandatoryConfigurations = () => {
@@ -553,9 +579,9 @@ export const Onboarding = () => {
   };
 
   const contentByStep: Record<string, ReactElement> = {
-    region: <RegionalSettingsContent {...sharedFormProps} />,
+    foundation: <DisplayModeContent {...sharedFormProps} />,
+    regional: <RegionalSettingsContent {...sharedFormProps} />,
     notifications: <NotificationsContent {...sharedFormProps} />,
-    displayMode: <DisplayModeContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
   };
 
@@ -687,5 +713,464 @@ export const Onboarding = () => {
         )}
       </Dialog>
     </>
+  );
+};
+
+export const StandardControls = () => {
+  return (
+    <StackLayout style={{ width: 314 }}>
+      <FormField>
+        <FormFieldLabel>Choose a language</FormFieldLabel>
+        <Dropdown
+          startAdornment={<SearchIcon />}
+          bordered
+          placeholder="Select language"
+        >
+          <Option value="English">English</Option>
+          <Option value="Spanish">Spanish</Option>
+          <Option value="French">French</Option>
+          <Option value="German">German</Option>
+        </Dropdown>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Choose a time zone</FormFieldLabel>
+        <Dropdown
+          startAdornment={<LocationIcon />}
+          bordered
+          placeholder="Select time zone"
+        >
+          <Option value="Pacific/Midway">(UTC-11:00) Pacific/Midway</Option>
+          <Option value="Pacific/Honolulu">(UTC-10:00) Hawaii</Option>
+          <Option value="America/Anchorage">(UTC-09:00) Alaska</Option>
+          <Option value="America/Los_Angeles">
+            (UTC-08:00) Pacific Time (US & Canada)
+          </Option>
+          <Option value="America/Denver">
+            (UTC-07:00) Mountain Time (US & Canada)
+          </Option>
+          <Option value="America/Chicago">
+            (UTC-06:00) Central Time (US & Canada)
+          </Option>
+          <Option value="America/New_York">
+            (UTC-05:00) Eastern Time (US & Canada)
+          </Option>
+          <Option value="America/Halifax">
+            (UTC-04:00) Atlantic Time (Canada)
+          </Option>
+          <Option value="America/Argentina/Buenos_Aires">
+            (UTC-03:00) Buenos Aires
+          </Option>
+          <Option value="Atlantic/South_Georgia">
+            (UTC-02:00) Mid-Atlantic
+          </Option>
+          <Option value="Atlantic/Azores">(UTC-01:00) Azores</Option>
+          <Option value="Europe/London">(UTC+00:00) London</Option>
+          <Option value="Europe/Berlin">(UTC+01:00) Berlin</Option>
+          <Option value="Europe/Paris">(UTC+01:00) Paris</Option>
+          <Option value="Europe/Athens">(UTC+02:00) Athens</Option>
+        </Dropdown>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Automatically translate to English</FormFieldLabel>
+        <Switch label="Off" />
+      </FormField>
+    </StackLayout>
+  );
+};
+
+export const CardSelection = () => {
+  const [selected, setSelected] = useState<InteractableCardValue>();
+  return (
+    <StackLayout>
+      <FormField>
+        <FormFieldLabel>Choose a placement for notification</FormFieldLabel>
+        <InteractableCardGroup
+          onChange={(_event, value) => {
+            setSelected(value);
+          }}
+        >
+          <FlexLayout>
+            {NOTIFICATION_POSITIONS.map(({ value, label }) => (
+              <FlexItem key={value}>
+                <InteractableCard
+                  value={value}
+                  style={{
+                    padding: "var(--salt-spacing-200)",
+                  }}
+                >
+                  <StackLayout gap={1}>
+                    <StackLayout gap={1} direction="row">
+                      <NotificationPosition position={value} />
+                    </StackLayout>
+                    <StackLayout direction="row" gap={1}>
+                      <RadioButtonIcon
+                        aria-hidden
+                        checked={selected === value}
+                      />
+                      <Text>{label}</Text>
+                    </StackLayout>
+                  </StackLayout>
+                </InteractableCard>
+              </FlexItem>
+            ))}
+          </FlexLayout>
+        </InteractableCardGroup>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Automatically dismiss notifications</FormFieldLabel>
+        <Switch label="Off" />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Extend notification display time</FormFieldLabel>
+        <Switch label="Off" />
+      </FormField>
+    </StackLayout>
+  );
+};
+
+export const DynamicPreview = () => {
+  return (
+    <FlexLayout style={{ maxWidth: 752 }} justify="space-between" wrap>
+      <StackLayout>
+        <FormField>
+          <FormFieldLabel>Stock name display</FormFieldLabel>
+          <RadioButtonGroup>
+            <RadioButton label="Ticker only" value="tickerOnly" />
+            <RadioButton label="Ticker and full name" value="fullNameTicker" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Exchange & Region</FormFieldLabel>
+          <RadioButtonGroup>
+            <RadioButton label="Text only" value="text" />
+            <RadioButton label="Flag only" value="flag" />
+            <RadioButton label="Both" value="both" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Visible metrics</FormFieldLabel>
+          <RadioButtonGroup>
+            <RadioButton label="Last price" value="lastPrice" />
+            <RadioButton label="Absolute change" value="absolute" />
+            <RadioButton label="Percentage change" value="percentage" />
+            <RadioButton label="Market Cap" value="marketCap" />
+          </RadioButtonGroup>
+        </FormField>
+
+        <FormField>
+          <FormFieldLabel>Performance chart</FormFieldLabel>
+          <Switch label="Show" />
+        </FormField>
+      </StackLayout>
+      <Card style={{ width: 372 }}>
+        <StackLayout gap={1}>
+          <FlexItem>
+            <FlexLayout justify="space-between">
+              <FlexItem>
+                <Text>
+                  <strong>VRT</strong>
+                </Text>
+                <Text color="secondary">VERTIV HOLDINGS CO-A</Text>
+                <Display3>
+                  328.02
+                  <ArrowUpIcon
+                    aria-hidden
+                    style={{
+                      color:
+                        "var(--salt-sentiment-positive-foreground-informative)",
+                    }}
+                  />
+                </Display3>
+                <Text color="success">+6.27 (+1.95%)</Text>
+              </FlexItem>
+              <FlexItem>
+                <FlexLayout gap={1} align="center">
+                  <Text color="secondary">NYSE</Text>
+                  <US />
+                </FlexLayout>
+              </FlexItem>
+            </FlexLayout>
+            <img
+              src={PositiveTrend}
+              alt="Positive trend"
+              style={{ width: "100%" }}
+            />
+          </FlexItem>
+          <Divider />
+          <FlexItem>
+            <FlexLayout justify="space-between">
+              <FlexItem>
+                <Text>
+                  <strong>GEV</strong>
+                </Text>
+                <Text color="secondary">GE VERNOVA INC</Text>
+                <Display3>
+                  1147.27
+                  <ArrowDownIcon
+                    aria-hidden
+                    style={{
+                      color:
+                        "var(--salt-sentiment-negative-foreground-informative)",
+                    }}
+                  />
+                </Display3>
+                <Text color="error">-4.03 (-0.35%)</Text>
+              </FlexItem>
+
+              <FlexItem>
+                <FlexLayout gap={1} align="center">
+                  <Text color="secondary">NYSE</Text>
+                  <US />
+                </FlexLayout>
+              </FlexItem>
+            </FlexLayout>
+
+            <img
+              src={NegativeTrend}
+              alt="Negative trend"
+              style={{ width: "100%" }}
+            />
+          </FlexItem>
+        </StackLayout>
+      </Card>
+    </FlexLayout>
+  );
+};
+
+function PreferencesNavigation({
+  items,
+  location,
+  onChange,
+}: {
+  items: string[];
+  location: string;
+  onChange: (location: string) => void;
+}) {
+  return (
+    <VerticalNavigation
+      aria-label="Basic indicator sidebar"
+      appearance="indicator"
+      style={{ minWidth: "30ch" }}
+    >
+      {items.map((item) => (
+        <VerticalNavigationItem key={item} active={location === item}>
+          <VerticalNavigationItemContent>
+            <VerticalNavigationItemTrigger
+              onClick={() => onChange(item)}
+              render={<button type="button" />}
+            >
+              <VerticalNavigationItemLabel>{item}</VerticalNavigationItemLabel>
+            </VerticalNavigationItemTrigger>
+          </VerticalNavigationItemContent>
+        </VerticalNavigationItem>
+      ))}
+    </VerticalNavigation>
+  );
+}
+
+function PreferencesContent({ currentSection }: { currentSection: string }) {
+  let content;
+
+  if (currentSection === "Account") {
+    content = (
+      <StackLayout gap={3}>
+        <FormField>
+          <FormFieldLabel>Name</FormFieldLabel>
+          <Input defaultValue="User name" readOnly />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Company</FormFieldLabel>
+          <Input defaultValue="Company" readOnly />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Email</FormFieldLabel>
+          <Input defaultValue="user@example.com" readOnly />
+          <FormFieldHelperText>
+            This is managed by your company.
+          </FormFieldHelperText>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Security type</FormFieldLabel>
+          <Dropdown value="Password" />
+        </FormField>
+      </StackLayout>
+    );
+  }
+
+  if (currentSection === "General") {
+    content = (
+      <StackLayout gap={3}>
+        <FormField>
+          <FormFieldLabel>Auto-launch on startup</FormFieldLabel>
+          <Switch checked />
+          <FormFieldHelperText>
+            Launch automatically at user login or system startup.
+          </FormFieldHelperText>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Launcher orientation</FormFieldLabel>
+          <RadioButtonGroup value="horizontal" direction="horizontal">
+            <RadioButton label="Horizontal" value="horizontal" />
+            <RadioButton label="Vertical" value="vertical" />
+          </RadioButtonGroup>
+          <FormFieldHelperText>
+            Set the default orientation of the launcher when the user starts.
+          </FormFieldHelperText>
+        </FormField>
+      </StackLayout>
+    );
+  }
+
+  if (currentSection === "Grid") {
+    content = (
+      <StackLayout gap={1}>
+        <FormField labelPlacement="left">
+          <FormFieldLabel>Grid row size</FormFieldLabel>
+          <RadioButtonGroup value="medium" direction="horizontal">
+            <RadioButton label="Small" value="small" />
+            <RadioButton label="Medium" value="medium" />
+            <RadioButton label="Large" value="large" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormFieldLabel>Column filters</FormFieldLabel>
+          <Switch label="Value" />
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormFieldLabel>Zebra stripes</FormFieldLabel>
+          <Switch label="Value" checked />
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormFieldLabel>Status bar</FormFieldLabel>
+          <Switch label="Value" />
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormFieldLabel>Column styling</FormFieldLabel>
+          <Switch label="Value" checked />
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormFieldLabel>Cell styling</FormFieldLabel>
+          <Switch label="Value" checked />
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormFieldLabel>Row styling</FormFieldLabel>
+          <Switch label="Value" />
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormFieldLabel>Cell flashing</FormFieldLabel>
+          <RadioButtonGroup value="off" direction="horizontal">
+            <RadioButton label="Off" value="off" />
+            <RadioButton label="All" value="all" />
+            <RadioButton label="Specific cells" value="specific" />
+          </RadioButtonGroup>
+        </FormField>
+      </StackLayout>
+    );
+  }
+
+  if (currentSection === "Export") {
+    content = (
+      <StackLayout>
+        <Text>
+          Default global settings for all new dashboards and widgets created.
+        </Text>
+        <StackLayout gap={1}>
+          <FormField labelPlacement="left">
+            <FormFieldLabel>File format</FormFieldLabel>
+            <Dropdown value="PNG" />
+          </FormField>
+          <FormField labelPlacement="left">
+            <FormFieldLabel>Publication style</FormFieldLabel>
+            <Dropdown value="None" />
+          </FormField>
+          <FormField labelPlacement="left">
+            <FormFieldLabel>Widget export width</FormFieldLabel>
+            <NumberInput
+              value="360"
+              endAdornment={
+                <Text>
+                  <strong>PX</strong>
+                </Text>
+              }
+            />
+          </FormField>
+          <FormField labelPlacement="left">
+            <FormFieldLabel>Dashboard size</FormFieldLabel>
+            <Dropdown value="To scale" />
+          </FormField>
+          <FormField labelPlacement="left">
+            <FormFieldLabel>Include title</FormFieldLabel>
+            <Dropdown value="Yes" />
+          </FormField>
+        </StackLayout>
+      </StackLayout>
+    );
+  }
+
+  return (
+    <StackLayout>
+      <H2 styleAs="h3" style={{ margin: 0 }}>
+        {currentSection}
+      </H2>
+      <div>{content}</div>
+    </StackLayout>
+  );
+}
+
+export const PreferenceDialog = () => {
+  const sections = ["Account", "General", "Grid", "Export"];
+  const [currentSection, setCurrentSection] = useState(sections[0]);
+  const [collapsed, setCollapsed] = useState(false);
+  const [view, setView] = useState<"parent" | "child">("parent");
+
+  const handleSectionChange = (section: string) => {
+    setView("child");
+    setCurrentSection(section);
+  };
+
+  return (
+    <Dialog style={{ minHeight: "60%" }} open>
+      <DialogHeader header="Preferences" />
+      <DialogContent>
+        <ParentChildLayout
+          gap={3}
+          onCollapseChange={(newCollapsed) => setCollapsed(newCollapsed)}
+          visibleView={view}
+          parent={
+            <PreferencesNavigation
+              items={sections}
+              location={currentSection}
+              onChange={handleSectionChange}
+            />
+          }
+          child={<PreferencesContent currentSection={currentSection} />}
+        />
+      </DialogContent>
+      <DialogActions>
+        <SplitLayout
+          startItem={
+            collapsed && view === "child" ? (
+              <Button
+                sentiment="accented"
+                appearance="transparent"
+                onClick={() => setView("parent")}
+              >
+                Back
+              </Button>
+            ) : undefined
+          }
+          endItem={
+            <StackLayout direction="row" gap={1}>
+              <Button sentiment="accented" appearance="bordered">
+                Cancel
+              </Button>
+              <Button sentiment="accented" appearance="solid">
+                Save
+              </Button>
+            </StackLayout>
+          }
+        />
+      </DialogActions>
+    </Dialog>
   );
 };

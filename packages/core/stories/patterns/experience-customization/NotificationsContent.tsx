@@ -1,6 +1,6 @@
 import {
-  GridItem,
-  GridLayout,
+  FlexItem,
+  FlexLayout,
   InteractableCard,
   InteractableCardGroup,
   RadioButtonIcon,
@@ -9,7 +9,7 @@ import {
 } from "@salt-ds/core";
 import type { FormContentProps } from "./experience-customization.stories";
 
-const NOTIFICATION_POSITIONS = [
+export const NOTIFICATION_POSITIONS = [
   {
     value: "top-left",
     label: "Top Left",
@@ -28,18 +28,18 @@ const NOTIFICATION_POSITIONS = [
   },
 ];
 
-const NotificationPosition = ({ position }: { position: string }) => {
+export const NotificationPosition = ({ position }: { position: string }) => {
   const positionStyles: Record<string, React.CSSProperties> = {
-    "top-left": { top: 10, left: 12 },
-    "top-right": { top: 10, right: 12 },
-    "bottom-left": { bottom: 10, left: 12 },
-    "bottom-right": { bottom: 10, right: 12 },
+    "top-left": { top: 10, left: 5.5 },
+    "top-right": { top: 10, right: 5.5 },
+    "bottom-left": { bottom: 10, left: 5.5 },
+    "bottom-right": { bottom: 10, right: 5.5 },
   };
 
   return (
     <div
       style={{
-        width: 225,
+        width: 108,
         height: 100,
         backgroundColor: "var(--salt-container-secondary-background)",
         position: "relative",
@@ -47,8 +47,8 @@ const NotificationPosition = ({ position }: { position: string }) => {
     >
       <div
         style={{
-          height: 18,
-          width: 75,
+          height: 12,
+          width: 29,
           backgroundColor: "var(--salt-actionable-background-selected)",
           borderRadius: "var(--salt-palette-corner-weaker)",
           position: "absolute",
@@ -69,17 +69,15 @@ export const NotificationsContent = ({
         handleSelectChange?.(value as string, "position");
       }}
     >
-      <GridLayout
-        padding={1}
-        columns={2}
-        rows={2}
-        style={{
-          margin: "0 auto",
-        }}
-      >
+      <FlexLayout>
         {NOTIFICATION_POSITIONS.map(({ value, label }) => (
-          <GridItem key={value}>
-            <InteractableCard value={value} style={{ width: "180px" }}>
+          <FlexItem key={value}>
+            <InteractableCard
+              value={value}
+              style={{
+                padding: "var(--salt-spacing-200)",
+              }}
+            >
               <StackLayout gap={1}>
                 <StackLayout gap={1} direction="row">
                   <NotificationPosition position={value} />
@@ -93,9 +91,9 @@ export const NotificationsContent = ({
                 </StackLayout>
               </StackLayout>
             </InteractableCard>
-          </GridItem>
+          </FlexItem>
         ))}
-      </GridLayout>
+      </FlexLayout>
     </InteractableCardGroup>
   );
 };
