@@ -10,6 +10,7 @@ import {
 } from "./buildRegistryShared.js";
 import {
   buildTokenPolicySourceRegistry,
+  getTokenPolicyGap,
   getTokenPolicy,
   type TokenPolicySourceRegistry,
 } from "./buildRegistryTokenPolicy.js";
@@ -279,31 +280,36 @@ export async function extractTokens(
   }
 
   const tokenNameSet = new Set(tokenMap.keys());
-  const tokens = [...tokenMap.values()].map((token) => ({
-    name: token.name,
-    category: token.category,
-    type: token.type,
-    value: token.value,
-    semantic_intent: token.semantic_intent,
-    themes: [...token.themeSet].sort(),
-    densities: token.densities,
-    applies_to: token.applies_to,
-    guidance: [...token.guidanceSet],
-    aliases: token.aliases,
-    policy: getTokenPolicy(
-      {
-        name: token.name,
-        category: token.category,
-        source_paths: [...token.sourcePathSet].sort(),
-        deprecated_replacements: [...token.deprecatedReplacementSet]
-          .filter((replacement) => tokenNameSet.has(replacement))
-          .sort(),
-      },
-      resolvedTokenPolicySources,
-    ),
-    deprecated: token.deprecated,
-    last_verified_at: token.last_verified_at,
-  }));
+  const tokens = [...tokenMap.values()].map((token) => {
+    const policyInput = {
+      name: token.name,
+      category: token.category,
+      source_paths: [...token.sourcePathSet].sort(),
+      deprecated_replacements: [...token.deprecatedReplacementSet]
+        .filter((replacement) => tokenNameSet.has(replacement))
+        .sort(),
+    };
+    const policy = getTokenPolicy(policyInput, resolvedTokenPolicySources);
+
+    return {
+      name: token.name,
+      category: token.category,
+      type: token.type,
+      value: token.value,
+      semantic_intent: token.semantic_intent,
+      themes: [...token.themeSet].sort(),
+      densities: token.densities,
+      applies_to: token.applies_to,
+      guidance: [...token.guidanceSet],
+      aliases: token.aliases,
+      policy,
+      policy_gap: policy
+        ? null
+        : getTokenPolicyGap(policyInput, resolvedTokenPolicySources),
+      deprecated: token.deprecated,
+      last_verified_at: token.last_verified_at,
+    };
+  });
 
   return tokens.sort((left, right) => left.name.localeCompare(right.name));
 }

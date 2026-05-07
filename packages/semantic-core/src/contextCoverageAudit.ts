@@ -146,7 +146,12 @@ function hasTokenPolicySourceEvidence(token: TokenRecord): boolean {
 
 function tokenPolicyEvidenceRefIds(token: TokenRecord): string[] {
   return uniqueStrings(
-    token.policy?.evidence_refs?.map((ref) => ref.id).filter(hasText) ?? [],
+    [
+      ...(token.policy?.evidence_refs ?? []),
+      ...(token.policy_gap?.evidence_refs ?? []),
+    ]
+      .map((ref) => ref.id)
+      .filter(hasText),
   );
 }
 
@@ -171,6 +176,7 @@ function buildTokenCoverageGapRecord(
         ? "Deprecated registry token references another token but has no source-backed policy record for generated context."
         : "Deprecated registry token has a raw value but no source-backed policy record for generated context."
       : "Registry token is missing a source-backed policy record for generated context.";
+    const policyGap = token.policy_gap ?? null;
 
     return {
       kind: "token",
@@ -178,8 +184,8 @@ function buildTokenCoverageGapRecord(
       name: token.name,
       status: "unsupported",
       reason_code: reasonCode,
-      reason,
-      missing: ["token policy"],
+      reason: policyGap?.reason ?? reason,
+      missing: policyGap?.missing ?? ["token policy"],
       evidence_ref_ids: evidenceRefIds,
     };
   }

@@ -717,6 +717,17 @@ Current state:
   replacements whose final records still lack source-backed generated policy
   docs. These remain docs/registry gaps, not prompt guidance or replacement
   claims.
+- Foundation token gap cause ledger on May 7, 2026 now records source-backed
+  unsupported policy causes on registry token records as `policy_gap` metadata.
+  The fresh production audit remains at 20 explicit unsupported docs/registry
+  gaps: 17 pattern gaps and 3 foundation gaps. The 15 foundation token records
+  now carry EvidenceRef IDs resolving to token replacement metadata and, where
+  applicable, source-backed replacement-chain evidence. `measured` and `track`
+  distinguish literal/manual or missing exact replacement-token causes;
+  `opacity` distinguishes missing source-backed policy docs for deprecated
+  opacity scale tokens. Generated token `policy` remains `null` for these
+  records, so CLI, MCP, skill, reports, and validators keep the token policy
+  state unsupported instead of emitting replacement guidance.
 - Pattern docs example extraction on May 5, 2026 now derives pattern example
   records from source-backed pattern MDX `Diagram`, `ImageSwitcher`, and
   `LivePreview` tags when frontmatter resources have not already populated the

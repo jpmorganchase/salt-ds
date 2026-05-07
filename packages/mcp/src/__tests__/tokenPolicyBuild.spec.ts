@@ -544,6 +544,7 @@ describe("generated token policy", () => {
       foundation_docs_by_category: new Map(),
       foundation_categories: new Set(["fixture"]),
       deprecated_replacements_by_token: new Map(),
+      deprecated_unsupported_policy_by_token: new Map(),
       token_declarations_by_token: new Map(),
       structural_role_rules: [],
     };
@@ -699,6 +700,42 @@ describe("token tools", () => {
         deprecated: false,
         last_verified_at: "2026-03-26T00:00:00Z",
       },
+      {
+        name: "--salt-fixture-deprecated-gap",
+        category: "fixture",
+        type: "dimension",
+        value: "12px",
+        semantic_intent: "Fixture deprecated gap token.",
+        themes: ["salt"],
+        densities: [],
+        applies_to: [],
+        guidance: ["Fixture deprecated gap token."],
+        aliases: [],
+        policy: null,
+        policy_gap: {
+          reason:
+            "Fixture deprecated token policy is unsupported from source-backed metadata.",
+          missing: ["token policy", "source-backed replacement token"],
+          evidence_refs: [
+            {
+              contract: SALT_EVIDENCE_REF_CONTRACT,
+              id: "fixture-deprecated-gap.policy.unsupported.0.source-ref",
+              source_kind: "token",
+              claim_kind: "token",
+              source: {
+                repo_path:
+                  "packages/theme/css/deprecated/token-replacements.json",
+                section: "Fixture unsupported policy metadata.",
+                line_start: 2,
+                line_end: 2,
+              },
+              confidence: "high",
+            },
+          ],
+        },
+        deprecated: true,
+        last_verified_at: "2026-03-26T00:00:00Z",
+      },
     ],
     deprecations: [],
     examples: [],
@@ -718,6 +755,31 @@ describe("token tools", () => {
     expect(result.source_url).toBe("/fixture/token-policy/size");
   });
 
+  it("returns fixture token policy gaps from getToken without inventing policy", () => {
+    const result = getToken(registry, {
+      name: "--salt-fixture-deprecated-gap",
+      include_deprecated: true,
+      max_results: 1,
+    });
+
+    expect(result.tokens[0]).toMatchObject({
+      name: "--salt-fixture-deprecated-gap",
+      policy: null,
+      policy_gap: expect.objectContaining({
+        reason:
+          "Fixture deprecated token policy is unsupported from source-backed metadata.",
+        missing: ["token policy", "source-backed replacement token"],
+        evidence_refs: [
+          expect.objectContaining({
+            id: "fixture-deprecated-gap.policy.unsupported.0.source-ref",
+            source_kind: "token",
+            claim_kind: "token",
+          }),
+        ],
+      }),
+    });
+  });
+
   it("does not reintroduce the summary route in recommendTokens output when policy docs omit it", () => {
     const result = recommendTokens(registry, {
       query: "border thickness",
@@ -729,5 +791,24 @@ describe("token tools", () => {
       docs: ["/fixture/token-policy/size"],
     });
     expect(result.source_url).toBe("/fixture/token-policy/size");
+  });
+
+  it("returns fixture token policy gaps from recommendTokens without inventing policy", () => {
+    const result = recommendTokens(registry, {
+      query: "deprecated gap",
+      category: "fixture",
+      include_deprecated: true,
+      top_k: 1,
+    });
+
+    expect(result.recommended).toMatchObject({
+      name: "--salt-fixture-deprecated-gap",
+      policy: null,
+      policy_gap: expect.objectContaining({
+        reason:
+          "Fixture deprecated token policy is unsupported from source-backed metadata.",
+        missing: ["token policy", "source-backed replacement token"],
+      }),
+    });
   });
 });

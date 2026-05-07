@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildTokenPolicySourceRegistry,
   getTokenPolicy,
+  getTokenPolicyGap,
 } from "../build/buildRegistryTokenPolicy.js";
 import { extractTokens } from "../build/buildRegistryTokens.js";
 
@@ -807,6 +808,155 @@ describe("token policy source registry", () => {
           sources,
         ),
       ).toBeNull();
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("records fixture manual replacement metadata as an evidence-backed policy gap", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-gap-metadata-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureTokenReplacementMetadata(repoRoot, [
+        {
+          deprecated: "--salt-legacyfixture-gap",
+          replacement_kind: "manual",
+          unsupported_reason:
+            "Fixture manual replacement metadata must not emit policy.",
+          basis: {
+            source_path: "packages/theme/CHANGELOG.md",
+            line_start: 5,
+            line_end: 5,
+          },
+        },
+      ]);
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const policyGap = getTokenPolicyGap(
+        {
+          name: "--salt-legacyfixture-gap",
+          category: "legacyfixture",
+        },
+        sources,
+      );
+
+      expect(
+        getTokenPolicy(
+          {
+            name: "--salt-legacyfixture-gap",
+            category: "legacyfixture",
+          },
+          sources,
+        ),
+      ).toBeNull();
+      expect(policyGap).toEqual(
+        expect.objectContaining({
+          reason: expect.stringContaining(
+            "Fixture manual replacement metadata must not emit policy.",
+          ),
+          missing: expect.arrayContaining([
+            "token policy",
+            "source-backed replacement token",
+          ]),
+          evidence_refs: [
+            expect.objectContaining({
+              source_kind: "token",
+              claim_kind: "token",
+              source: expect.objectContaining({
+                repo_path:
+                  "packages/theme/css/deprecated/token-replacements.json",
+                section: expect.stringContaining(
+                  "Fixture manual replacement metadata must not emit policy.",
+                ),
+              }),
+            }),
+          ],
+        }),
+      );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("records fixture replacement chains to unsupported metadata without generating policy", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-gap-chain-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureTokenReplacementMetadata(repoRoot, [
+        {
+          deprecated: "--salt-legacyfixture-gap",
+          replacements: ["--salt-intermediatefixture-gap"],
+          replacement_kind: "direct",
+          basis: {
+            source_path: "packages/theme/CHANGELOG.md",
+            line_start: 5,
+            line_end: 5,
+          },
+        },
+        {
+          deprecated: "--salt-intermediatefixture-gap",
+          replacement_kind: "unsupported",
+          unsupported_reason:
+            "Fixture replacement target has no source-backed policy docs.",
+          basis: {
+            source_path: "packages/theme/CHANGELOG.md",
+            line_start: 6,
+            line_end: 6,
+          },
+        },
+      ]);
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const policyGap = getTokenPolicyGap(
+        {
+          name: "--salt-legacyfixture-gap",
+          category: "legacyfixture",
+        },
+        sources,
+      );
+
+      expect(
+        getTokenPolicy(
+          {
+            name: "--salt-legacyfixture-gap",
+            category: "legacyfixture",
+          },
+          sources,
+        ),
+      ).toBeNull();
+      expect(policyGap).toEqual(
+        expect.objectContaining({
+          reason: expect.stringContaining(
+            "Fixture replacement target has no source-backed policy docs.",
+          ),
+          missing: expect.arrayContaining([
+            "token policy",
+            "source-backed policy docs",
+          ]),
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.stringContaining("deprecated-replacement"),
+              source: expect.objectContaining({
+                repo_path:
+                  "packages/theme/css/deprecated/token-replacements.json",
+              }),
+            }),
+            expect.objectContaining({
+              id: expect.stringContaining("unsupported"),
+              source: expect.objectContaining({
+                repo_path:
+                  "packages/theme/css/deprecated/token-replacements.json",
+              }),
+            }),
+          ]),
+        }),
+      );
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }

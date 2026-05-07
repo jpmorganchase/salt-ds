@@ -412,6 +412,34 @@ describe("context coverage and unsupported surfaces", () => {
           policy: null,
           deprecated: true,
         }),
+        buildFixtureToken({
+          name: "--salt-fixture-deprecated-policy-gap",
+          category: "fixture-policy",
+          value: "1px",
+          policy: null,
+          policy_gap: {
+            reason:
+              "Fixture deprecated token policy is unsupported from source-backed metadata.",
+            missing: ["token policy", "source-backed replacement token"],
+            evidence_refs: [
+              {
+                contract: "salt_evidence_ref_v1",
+                id: "fixture-deprecated-policy-gap.source-ref",
+                source_kind: "token",
+                claim_kind: "token",
+                source: {
+                  repo_path:
+                    "packages/theme/css/deprecated/token-replacements.json",
+                  section: "Fixture unsupported policy metadata.",
+                  line_start: 2,
+                  line_end: 2,
+                },
+                confidence: "high",
+              },
+            ],
+          },
+          deprecated: true,
+        }),
       ],
     });
     const audit = buildContextCoverageAudit({
@@ -450,6 +478,16 @@ describe("context coverage and unsupported surfaces", () => {
             reason_code: "deprecated_token_reference_without_policy",
             missing: ["token policy"],
             evidence_ref_ids: [],
+          }),
+          expect.objectContaining({
+            kind: "token",
+            id: "--salt-fixture-deprecated-policy-gap",
+            status: "unsupported",
+            reason_code: "deprecated_token_raw_value_without_policy",
+            reason:
+              "Fixture deprecated token policy is unsupported from source-backed metadata.",
+            missing: ["token policy", "source-backed replacement token"],
+            evidence_ref_ids: ["fixture-deprecated-policy-gap.source-ref"],
           }),
         ]),
       }),

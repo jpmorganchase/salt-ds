@@ -125,6 +125,12 @@ describe("production context coverage audit", () => {
 
         expect(token).toBeDefined();
         expect(token?.policy ?? null).toBeNull();
+        expect(token?.policy_gap ?? null).not.toBeNull();
+        expect(record.reason).toBe(token?.policy_gap?.reason);
+        expect(record.missing).toEqual(token?.policy_gap?.missing);
+        expect(record.evidence_ref_ids).toEqual(
+          token?.policy_gap?.evidence_refs.map((ref) => ref.id),
+        );
 
         if (record.reason_code === "deprecated_token_raw_value_without_policy") {
           expect(pureTokenReference(token?.value ?? "")).toBeNull();
