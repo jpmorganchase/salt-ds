@@ -329,7 +329,7 @@ export function KeyboardDatePickerFixture({ width = 720 }: { width?: number }) {
 }
 
 export function KeyboardToggleGroupFixture({
-  disableFirstToggle = true,
+  disableFirstToggle = false,
   width = 680,
 }: {
   disableFirstToggle?: boolean;
