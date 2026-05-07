@@ -3,6 +3,7 @@ import {
   BorderLayout,
   Button,
   Card,
+  capitalize,
   FlexItem,
   FlexLayout,
   FormField,
@@ -79,7 +80,7 @@ const ContentExample = ({ children }: { children?: ReactNode }) => (
       overflow: "auto",
     }}
   >
-    {children}
+    <div>{children}</div>
     <div
       style={{
         display: "grid",
@@ -96,7 +97,7 @@ const ContentExample = ({ children }: { children?: ReactNode }) => (
             backgroundColor: "var(--salt-container-secondary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
             border:
-              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -111,78 +112,66 @@ const ContentExample = ({ children }: { children?: ReactNode }) => (
 export const Default: StoryFn = () => {
   return (
     <SidePanelProvider>
-      <DefaultContent />
+      <FlexLayout
+        style={{
+          width: "100%",
+          height: 300,
+          border:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+          borderRadius: "var(--salt-palette-corner-weak)",
+        }}
+        gap={0}
+      >
+        <ContentExample>
+          <SidePanelTrigger>
+            <Button>Open right panel</Button>
+          </SidePanelTrigger>
+        </ContentExample>
+
+        <SidePanel position="right">
+          <SidePanelHeader>
+            <SidePanelTitle>Section Title</SidePanelTitle>
+            <SidePanelCloseButton />
+          </SidePanelHeader>
+          <SidePanelContent>
+            <Text>Side panel content goes here.</Text>
+          </SidePanelContent>
+        </SidePanel>
+      </FlexLayout>
     </SidePanelProvider>
-  );
-};
-
-const DefaultContent = () => {
-  return (
-    <FlexLayout
-      style={{
-        width: "100%",
-        height: 300,
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-      }}
-      gap={0}
-    >
-      <ContentExample>
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>Open right panel</Button>
-        </SidePanelTrigger>
-      </ContentExample>
-
-      <SidePanel position="right">
-        <SidePanelHeader>
-          <SidePanelTitle>Section Title</SidePanelTitle>
-          <SidePanelCloseButton />
-        </SidePanelHeader>
-        <SidePanelContent>
-          <Text>Side panel content goes here.</Text>
-        </SidePanelContent>
-      </SidePanel>
-    </FlexLayout>
   );
 };
 
 export const Left: StoryFn = () => {
   return (
     <SidePanelProvider>
-      <LeftContent />
+      <FlexLayout
+        style={{
+          width: "100%",
+          height: 300,
+          border:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+          borderRadius: "var(--salt-palette-corner-weak)",
+        }}
+        gap={0}
+      >
+        <SidePanel position="left">
+          <SidePanelHeader>
+            <SidePanelTitle>Section Title</SidePanelTitle>
+            <SidePanelCloseButton />
+          </SidePanelHeader>
+          <SidePanelContent>
+            <Text>Side panel content goes here.</Text>
+          </SidePanelContent>
+        </SidePanel>
+
+        <ContentExample>
+          <SidePanelTrigger>
+            <Button>Open left panel</Button>
+          </SidePanelTrigger>
+        </ContentExample>
+      </FlexLayout>
     </SidePanelProvider>
-  );
-};
-
-const LeftContent = () => {
-  return (
-    <FlexLayout
-      style={{
-        width: "100%",
-        height: 300,
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-      }}
-      gap={0}
-    >
-      <SidePanel position="left">
-        <SidePanelHeader>
-          <SidePanelTitle>Section Title</SidePanelTitle>
-          <SidePanelCloseButton />
-        </SidePanelHeader>
-        <SidePanelContent>
-          <Text>Side panel content goes here.</Text>
-        </SidePanelContent>
-      </SidePanel>
-
-      <ContentExample>
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>Open left panel</Button>
-        </SidePanelTrigger>
-      </ContentExample>
-    </FlexLayout>
   );
 };
 
@@ -229,16 +218,11 @@ const ManualContentArea = () => {
     <SidePanelProvider>
       <ContentExample>
         <FlexLayout gap={1} justify="space-between">
-          <Button
-            {...getTriggerProps()}
-            style={{ width: "fit-content", whiteSpace: "nowrap" }}
-          >
+          <Button {...getTriggerProps()} style={{ whiteSpace: "nowrap" }}>
             Toggle left panel
           </Button>
           <SidePanelTrigger>
-            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
-              Toggle right panel
-            </Button>
+            <Button style={{ whiteSpace: "nowrap" }}>Toggle right panel</Button>
           </SidePanelTrigger>
         </FlexLayout>
       </ContentExample>
@@ -266,7 +250,7 @@ export const ManualTrigger: StoryFn = () => (
   </div>
 );
 
-const variantOptions = ["primary", "secondary", "tertiary", "none"];
+const variantOptions = ["primary", "secondary", "tertiary"];
 
 export const Variants: StoryFn = () => {
   return (
@@ -297,15 +281,12 @@ const VariantsContent = () => {
       <ContentExample>
         <StackLayout direction="column" gap={1}>
           <SidePanelTrigger>
-            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
-              Open right panel
-            </Button>
+            <Button style={{ whiteSpace: "nowrap" }}>Open right panel</Button>
           </SidePanelTrigger>
           <FormField>
             <FormFieldLabel>Variant</FormFieldLabel>
             <RadioButtonGroup
               direction="horizontal"
-              aria-label="Variant Controls"
               name="variant"
               onChange={handleVariantChange}
               value={variant}
@@ -313,7 +294,7 @@ const VariantsContent = () => {
               {variantOptions.map((option) => (
                 <RadioButton
                   key={option}
-                  label={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                  label={capitalize(option)}
                   value={option}
                 />
               ))}
@@ -492,6 +473,7 @@ const WithTableContent = () => {
                 <FormField>
                   <FormFieldLabel>Name</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.name}
                     onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
@@ -503,6 +485,7 @@ const WithTableContent = () => {
                 <FormField>
                   <FormFieldLabel>Email</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.email}
                     onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
@@ -514,6 +497,7 @@ const WithTableContent = () => {
                 <FormField>
                   <FormFieldLabel>Phone</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.phone}
                     onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
@@ -568,30 +552,29 @@ const DesktopAppHeader = () => {
           <Text styleAs="h2">App name</Text>
         </FlexItem>
         <Input
-          startAdornment={<SearchIcon />}
+          aria-label="Search"
+          startAdornment={<SearchIcon aria-hidden />}
+          bordered
           placeholder="Search"
           style={{ width: 200 }}
         />
 
         <FlexItem align="center">
           <StackLayout direction="row" gap={1}>
-            <Tooltip content="Open help panel" hideArrow>
+            <Tooltip content="Help panel">
               <SidePanelTrigger>
-                <Button appearance="transparent" aria-label="Open help panel">
+                <Button appearance="transparent" aria-label="Help panel">
                   <HelpCircleIcon aria-hidden />
                 </Button>
               </SidePanelTrigger>
             </Tooltip>
-            <Tooltip content="Show notifications" hideArrow>
-              <Button
-                appearance="transparent"
-                aria-label={"open notifications"}
-              >
+            <Tooltip content="Notifications">
+              <Button appearance="transparent" aria-label="Notifications">
                 <NotificationIcon aria-hidden />
               </Button>
             </Tooltip>
-            <Tooltip content="Open chat" hideArrow>
-              <Button appearance="transparent" aria-label={"open chat"}>
+            <Tooltip content="Chat">
+              <Button appearance="transparent" aria-label="Chat">
                 <ChattingIcon aria-hidden />
               </Button>
             </Tooltip>
@@ -671,11 +654,11 @@ const ScrollableContent = () => (
       overflow: "auto",
     }}
   >
-    <SidePanelTrigger>
-      <Button style={{ width: "fit-content", flexShrink: 0 }}>
-        Toggle right panel
-      </Button>
-    </SidePanelTrigger>
+    <div>
+      <SidePanelTrigger>
+        <Button>Toggle right panel</Button>
+      </SidePanelTrigger>
+    </div>
     <div
       style={{
         display: "grid",
@@ -813,7 +796,7 @@ const ResizablePanel = ({ style }: { style?: CSSProperties }) => {
         <SidePanelTitle>Section Title</SidePanelTitle>
         <SidePanelCloseButton />
       </SidePanelHeader>
-      <SidePanelContent style={{ minWidth: 300 }}>
+      <SidePanelContent>
         <Text>Side panel content goes here.</Text>
       </SidePanelContent>
     </SidePanel>
@@ -841,9 +824,7 @@ export const Resizable: StoryFn = () => {
           <Panel style={{ transition: panelTransition }}>
             <ContentExample>
               <SidePanelTrigger>
-                <Button style={{ width: "fit-content" }}>
-                  Open right panel
-                </Button>
+                <Button>Open right panel</Button>
               </SidePanelTrigger>
             </ContentExample>
           </Panel>
@@ -925,7 +906,7 @@ const WithNavContent = () => {
       </SidePanel>
       <ContentExample>
         <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>Open side panel</Button>
+          <Button>Open side panel</Button>
         </SidePanelTrigger>
       </ContentExample>
     </FlexLayout>
@@ -952,6 +933,8 @@ const CardsAppHeader = () => {
           <Text styleAs="h2">App name</Text>
         </FlexItem>
         <Input
+          aria-label="Search"
+          bordered
           startAdornment={<SearchIcon />}
           placeholder="Search"
           style={{ width: 200 }}
@@ -1100,96 +1083,5 @@ export const Cards: StoryFn = () => {
     <SidePanelProvider defaultOpen={true}>
       <CardsContent />
     </SidePanelProvider>
-  );
-};
-
-export const ResizableCards: StoryFn = () => {
-  const {
-    panelRef,
-    expanded,
-    animating,
-    toggle,
-    panelTransition,
-    handleOpenChange,
-  } = useResizableSidePanel({ defaultExpanded: true });
-
-  return (
-    <FlexLayout
-      direction="column"
-      style={{ width: "100%", height: "100vh" }}
-      gap={0}
-    >
-      <SidePanelProvider open={expanded} onOpenChange={handleOpenChange}>
-        <CardsAppHeader />
-
-        <div
-          className="react-resizable-panels-theme-salt"
-          style={{ flex: 1, overflow: "hidden" }}
-        >
-          <PanelGroup direction="horizontal">
-            <Panel
-              tabIndex={0}
-              role="region"
-              aria-label="Main content"
-              style={{
-                overflow: "auto",
-                padding: "var(--salt-spacing-200)",
-                transition: panelTransition,
-              }}
-            >
-              <StackLayout gap={2}>
-                {Array.from({ length: 20 }, (_, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: Example-only static placeholder items
-                  <Card key={`content-card-${i}`}>
-                    <Text>
-                      Content card {i + 1} — This card is part of the main
-                      scrollable content area.
-                    </Text>
-                  </Card>
-                ))}
-              </StackLayout>
-            </Panel>
-
-            <PanelResizeHandle
-              aria-label="Resize side panel"
-              className="resize-handle-salt-border-left"
-              disabled={animating || !expanded}
-              style={{
-                width: expanded || animating ? undefined : 0,
-                visibility: expanded || animating ? "visible" : "hidden",
-              }}
-            />
-
-            <Panel
-              ref={panelRef}
-              defaultSize={25}
-              minSize={expanded && !animating ? 15 : 0}
-              maxSize={expanded || animating ? 50 : 0}
-              style={{
-                overflow: "hidden",
-                transition: panelTransition,
-                padding: "var(--salt-spacing-100)",
-              }}
-            >
-              <SidePanel
-                disableAnimation
-                style={resizableSidePanelStyle}
-                variant="none"
-              >
-                <HelpPanelCard
-                  open={expanded}
-                  onToggle={toggle}
-                  style={{
-                    height: "100%",
-                    boxSizing: "border-box",
-                    minWidth: 300,
-                  }}
-                />
-              </SidePanel>
-            </Panel>
-          </PanelGroup>
-        </div>
-      </SidePanelProvider>
-    </FlexLayout>
   );
 };

@@ -12,10 +12,13 @@ import { useSidePanelContext } from "./internal";
 const withBaseName = makePrefixer("saltSidePanelCloseButton");
 
 export const SidePanelCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
-  function SidePanelCloseButton({ className, onClick, ...rest }, ref) {
-    const { CloseIcon } = useIcon();
-    const { setOpen, titleId } = useSidePanelContext();
-    const closeButtonId = useId();
+  function SidePanelCloseButton(
+    { className, onClick, id: idProp, ...rest },
+    ref,
+  ) {
+    const { CollapseLeftIcon, CollapseRightIcon } = useIcon();
+    const { setOpen, titleId, position } = useSidePanelContext();
+    const closeButtonId = useId(idProp);
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
       onClick?.(event);
@@ -27,13 +30,17 @@ export const SidePanelCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         id={closeButtonId}
         aria-label="Close"
-        aria-labelledby={clsx(closeButtonId, titleId) || undefined}
+        aria-labelledby={titleId ? clsx(closeButtonId, titleId) : undefined}
         appearance="transparent"
         className={clsx(withBaseName(), className)}
         onClick={handleClick}
         {...rest}
       >
-        <CloseIcon aria-hidden />
+        {position === "left" ? (
+          <CollapseLeftIcon aria-hidden />
+        ) : (
+          <CollapseRightIcon aria-hidden />
+        )}
       </Button>
     );
   },

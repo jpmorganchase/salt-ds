@@ -94,18 +94,6 @@ When you use `SidePanelTitle` inside `SidePanelHeader`, the accessible name for 
 <SidePanelCloseButton />
 ```
 
-If you need custom logic before closing (e.g., confirming unsaved changes), provide an `onClick` handler. Call `event.preventDefault()` to cancel the close.
-
-```jsx
-<SidePanelCloseButton
-  onClick={(event) => {
-    if (!confirmDiscard()) {
-      event.preventDefault();
-    }
-  }}
-/>
-```
-
 ### SidePanelTitle
 
 `SidePanelTitle` provides the accessible name for the side panel region. It generates a unique ID internally and registers it with the context so that `SidePanel` can use it for `aria-labelledby` automatically.

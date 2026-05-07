@@ -3,10 +3,10 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  box-sizing: border-box;
 }
 
 .saltSidePanelContent-body {
   flex: 1;
+  min-height: 0;
   overflow: auto;
 }

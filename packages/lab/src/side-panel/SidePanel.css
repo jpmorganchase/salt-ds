@@ -35,7 +35,7 @@
 }
 
 .saltSidePanel-none .saltSidePanel-inner {
-  padding: 0;
+  padding: var(--salt-spacing-200);
 }
 
 .saltSidePanel-left,

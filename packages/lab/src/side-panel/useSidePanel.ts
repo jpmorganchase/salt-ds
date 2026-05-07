@@ -1,4 +1,9 @@
-import { useCallback } from "react";
+import {
+  type MouseEvent,
+  type MutableRefObject,
+  type RefCallback,
+  useCallback,
+} from "react";
 import { useSidePanelContext } from "./internal";
 
 export interface SidePanelValue {
@@ -15,7 +20,7 @@ export interface SidePanelValue {
    * Returns `aria-expanded`, `aria-controls`, a `ref` (for focus-return),
    * and an `onClick` that toggles the panel.
    *
-   * Spread the result onto a Button to get full trigger behaviour:
+   * Spread the result onto a Button to get full trigger behavior:
    * ```tsx
    * <Button {...getTriggerProps()}>Toggle panel</Button>
    * ```
@@ -48,14 +53,14 @@ export function useSidePanel(): SidePanelValue {
   const getTriggerProps = useCallback(
     (userProps?: Record<string, unknown>) => {
       const userOnClick = userProps?.onClick as
-        | ((e: React.MouseEvent<HTMLElement>) => void)
+        | ((e: MouseEvent<HTMLElement>) => void)
         | undefined;
 
       return {
         "aria-expanded": openState,
         "aria-controls": openState ? panelId : undefined,
         ...userProps,
-        onClick: (e: React.MouseEvent<HTMLElement>) => {
+        onClick: (e: MouseEvent<HTMLElement>) => {
           userOnClick?.(e);
           setOpen(!openState);
         },
@@ -63,7 +68,9 @@ export function useSidePanel(): SidePanelValue {
           // Register this element as the trigger for focus return
           setReference(node);
           // Forward the consumer's ref if provided
-          const userRef = userProps?.ref;
+          const userRef = userProps?.ref as
+            | RefCallback<HTMLElement | null>
+            | MutableRefObject<HTMLElement | null>;
           if (typeof userRef === "function") {
             userRef(node);
           } else if (
@@ -71,8 +78,7 @@ export function useSidePanel(): SidePanelValue {
             typeof userRef === "object" &&
             "current" in userRef
           ) {
-            (userRef as React.MutableRefObject<HTMLElement | null>).current =
-              node;
+            userRef.current = node;
           }
         },
       };

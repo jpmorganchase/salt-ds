@@ -15,10 +15,11 @@ import {
   type ComponentPropsWithRef,
   forwardRef,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
-import { useSidePanelContext } from "./internal";
+import { SidePanelContext, useSidePanelContext } from "./internal";
 import sidePanelCss from "./SidePanel.css";
 
 const withBaseName = makePrefixer("saltSidePanel");
@@ -59,11 +60,17 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       id: idProp,
       className,
       "aria-labelledby": ariaLabelledBy,
+      onAnimationEnd,
       ...rest
     } = props;
 
+    const sidePanelContext = useSidePanelContext();
     const { openState, floatingRootContext, setFloating, setPanelId, titleId } =
-      useSidePanelContext();
+      sidePanelContext;
+    const positionedContext = useMemo(
+      () => ({ ...sidePanelContext, position }),
+      [sidePanelContext, position],
+    );
 
     const id = useId(idProp);
 
@@ -93,7 +100,9 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
     const handleAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
-      if (event.currentTarget !== event.target) return;
+      onAnimationEnd?.(event);
+
+      if (event.currentTarget !== event.target || disableAnimation) return;
       setAnimating(false);
       if (!openState) {
         setShowComponent(false);
@@ -171,11 +180,14 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
           },
           className,
         )}
-        onAnimationEnd={disableAnimation ? undefined : handleAnimationEnd}
+        onAnimationEnd={handleAnimationEnd}
+        tabIndex={-1}
         {...rest}
         id={id}
       >
-        <div className={withBaseName("inner")}>{children}</div>
+        <SidePanelContext.Provider value={positionedContext}>
+          <div className={withBaseName("inner")}>{children}</div>
+        </SidePanelContext.Provider>
       </div>
     );
 
