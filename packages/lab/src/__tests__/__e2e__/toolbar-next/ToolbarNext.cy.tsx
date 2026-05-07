@@ -299,6 +299,35 @@ function NamedOverflowFocusReentryTestCase() {
   );
 }
 
+function SharedOverflowFocusReentryTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 320, flexDirection: "column" }}
+    >
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Shared overflow focus toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext role="group" aria-label="Search and filter">
+            <Input bordered placeholder="Search" />
+            <Dropdown bordered defaultSelected={["Option A"]}>
+              <Option value="Option A" />
+              <Option value="Option B" />
+            </Dropdown>
+          </TooltrayNext>
+        </ToolbarRegion>
+        <ToolbarRegion position="end">
+          <TooltrayNext role="group" aria-label="Actions">
+            <Button appearance="transparent">Export</Button>
+            <Button appearance="solid">Run</Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
 function OverflowTextInputKeyboardTestCase() {
   return (
     <div
@@ -365,6 +394,61 @@ function expectCenteredControl(toolbarName: string, controlName: string) {
     });
   });
 }
+
+describe("Given ToolbarNext variants and appearances", () => {
+  it("applies primary and bordered classes by default", () => {
+    cy.mount(
+      <ToolbarNext aria-label="Default toolbar">
+        <TooltrayNext>
+          <Button>Action</Button>
+        </TooltrayNext>
+      </ToolbarNext>,
+    );
+
+    cy.findByRole("toolbar", { name: "Default toolbar" })
+      .should("have.class", "saltToolbarNext-primary")
+      .and("have.class", "saltToolbarNext-bordered");
+  });
+
+  it("applies secondary and tertiary variant classes", () => {
+    cy.mount(
+      <>
+        <ToolbarNext variant="secondary" aria-label="Secondary toolbar">
+          <TooltrayNext>
+            <Button>Secondary action</Button>
+          </TooltrayNext>
+        </ToolbarNext>
+        <ToolbarNext variant="tertiary" aria-label="Tertiary toolbar">
+          <TooltrayNext>
+            <Button>Tertiary action</Button>
+          </TooltrayNext>
+        </ToolbarNext>
+      </>,
+    );
+
+    cy.findByRole("toolbar", { name: "Secondary toolbar" })
+      .should("have.class", "saltToolbarNext-secondary")
+      .and("have.class", "saltToolbarNext-bordered");
+    cy.findByRole("toolbar", { name: "Tertiary toolbar" })
+      .should("have.class", "saltToolbarNext-tertiary")
+      .and("have.class", "saltToolbarNext-bordered");
+  });
+
+  it("applies transparent appearance without bordered chrome", () => {
+    cy.mount(
+      <ToolbarNext appearance="transparent" aria-label="Transparent toolbar">
+        <TooltrayNext>
+          <Button>Action</Button>
+        </TooltrayNext>
+      </ToolbarNext>,
+    );
+
+    cy.findByRole("toolbar", { name: "Transparent toolbar" })
+      .should("have.class", "saltToolbarNext-primary")
+      .and("have.class", "saltToolbarNext-transparent")
+      .and("not.have.class", "saltToolbarNext-bordered");
+  });
+});
 
 describe("Given ToolbarNext overflow measurements", () => {
   it("collapses omitted overflowMode trays into the shared generic trigger by default", () => {
@@ -933,6 +1017,21 @@ describe("Given ToolbarNext keyboard navigation", () => {
 
     cy.realPress("ArrowRight");
     cy.findByRole("button", { name: "Filters" }).should("be.focused");
+  });
+
+  it("restores visible shared overflow controls when re-entering through the overflow trigger", () => {
+    cy.mount(<SharedOverflowFocusReentryTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByPlaceholderText("Search").focus();
+    cy.realPress("Tab");
+    cy.findByRole("combobox").should("be.focused");
+
+    cy.realPress("Tab");
+    cy.findByTestId("toolbar-after").should("be.focused");
+
+    cy.realPress(["Shift", "Tab"]);
+    cy.findByRole("combobox").should("be.focused");
   });
 
   it("restores named overflow controls to toolbar arrow navigation after expansion", () => {

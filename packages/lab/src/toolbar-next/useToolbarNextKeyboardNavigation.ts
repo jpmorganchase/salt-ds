@@ -204,6 +204,28 @@ export function useToolbarNextKeyboardNavigation({
     });
   }, [includeTabIndexMinusOne, items, overflowedIds, scopeRef]);
 
+  const restoreEntryFocus = useCallback((target: HTMLElement) => {
+    restoringEntryFocusRef.current = true;
+
+    const restoreFocus = () => {
+      restoreFrameRef.current = null;
+
+      focusToolbarNextElement(target);
+    };
+    const win = target.ownerDocument.defaultView;
+
+    if (win?.requestAnimationFrame) {
+      const currentFrame = restoreFrameRef.current;
+      if (currentFrame != null) {
+        win.cancelAnimationFrame(currentFrame);
+      }
+
+      restoreFrameRef.current = win.requestAnimationFrame(restoreFocus);
+    } else {
+      queueMicrotask(restoreFocus);
+    }
+  }, []);
+
   const handleScopeFocus = useCallback(
     (event: ToolbarNextFocusEvent) => {
       const scopeRoot = scopeRef.current;
@@ -251,6 +273,23 @@ export function useToolbarNextKeyboardNavigation({
           return;
         }
 
+        if (rememberedFocusRef.current?.type === "item") {
+          const restoreTarget = resolveToolbarNextFocusTarget(
+            scopeRoot,
+            rememberedFocusRef.current,
+            {
+              items,
+              includeTabIndexMinusOne,
+              overflowedIds,
+            },
+          );
+
+          if (restoreTarget && restoreTarget !== target) {
+            restoreEntryFocus(restoreTarget);
+            return;
+          }
+        }
+
         rememberedFocusRef.current = targetMemory;
         return;
       }
@@ -266,26 +305,7 @@ export function useToolbarNextKeyboardNavigation({
       );
 
       if (restoreTarget && restoreTarget !== target) {
-        restoringEntryFocusRef.current = true;
-
-        const restoreFocus = () => {
-          restoreFrameRef.current = null;
-
-          focusToolbarNextElement(restoreTarget);
-        };
-        const win = restoreTarget.ownerDocument.defaultView;
-
-        if (win?.requestAnimationFrame) {
-          const currentFrame = restoreFrameRef.current;
-          if (currentFrame != null) {
-            win.cancelAnimationFrame(currentFrame);
-          }
-
-          restoreFrameRef.current = win.requestAnimationFrame(restoreFocus);
-        } else {
-          queueMicrotask(restoreFocus);
-        }
-
+        restoreEntryFocus(restoreTarget);
         return;
       }
 
@@ -296,6 +316,7 @@ export function useToolbarNextKeyboardNavigation({
       items,
       overflowedIds,
       rememberTarget,
+      restoreEntryFocus,
       scopeRef,
       shouldPreserveItemMemoryForTrigger,
     ],
