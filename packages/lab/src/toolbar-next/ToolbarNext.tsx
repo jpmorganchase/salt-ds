@@ -65,6 +65,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       onBlurCapture,
       onFocusCapture,
       onKeyDownCapture,
+      onPointerDownCapture,
       variant = "bordered",
       ...rest
     },
@@ -282,6 +283,10 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
         onKeyDownCapture={(event) => {
           keyboardNavigation.handleKeyDownCapture(event);
           onKeyDownCapture?.(event);
+        }}
+        onPointerDownCapture={(event) => {
+          keyboardNavigation.handlePointerDownCapture(event);
+          onPointerDownCapture?.(event);
         }}
         {...rest}
         role="toolbar"

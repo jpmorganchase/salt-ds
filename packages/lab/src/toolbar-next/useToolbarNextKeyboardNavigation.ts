@@ -1,6 +1,7 @@
 import {
   type FocusEventHandler,
   type KeyboardEventHandler,
+  type PointerEventHandler,
   type RefObject,
   useCallback,
   useEffect,
@@ -46,6 +47,21 @@ interface ToolbarNextKeyDownEvent {
   target: EventTarget | null;
 }
 
+interface ToolbarNextPointerEvent {
+  pointerType: string;
+  target: EventTarget | null;
+}
+
+function isFocusFromPointerDown(
+  focusTarget: HTMLElement,
+  pointerTarget: EventTarget | null,
+) {
+  return (
+    pointerTarget instanceof Node &&
+    (focusTarget === pointerTarget || focusTarget.contains(pointerTarget))
+  );
+}
+
 export function useToolbarNextKeyboardNavigation({
   includeTabIndexMinusOne = false,
   items = [],
@@ -53,6 +69,7 @@ export function useToolbarNextKeyboardNavigation({
   scopeRef,
 }: UseToolbarNextKeyboardNavigationProps) {
   const rememberedFocusRef = useRef<ToolbarNextFocusMemory | null>(null);
+  const pointerDownTargetRef = useRef<EventTarget | null>(null);
   const restoringEntryFocusRef = useRef(false);
   const restoreFrameRef = useRef<number | null>(null);
 
@@ -202,6 +219,7 @@ export function useToolbarNextKeyboardNavigation({
 
       if (restoringEntryFocusRef.current) {
         restoringEntryFocusRef.current = false;
+        pointerDownTargetRef.current = null;
         rememberTarget(target);
         return;
       }
@@ -212,6 +230,7 @@ export function useToolbarNextKeyboardNavigation({
         getClosestToolbarNextScopeRoot(relatedTarget) !== scopeRoot;
 
       if (!enteringFromOutside) {
+        pointerDownTargetRef.current = null;
         rememberTarget(target);
         return;
       }
@@ -219,6 +238,14 @@ export function useToolbarNextKeyboardNavigation({
       const targetMemory = getToolbarNextFocusMemory(scopeRoot, target, {
         includeTabIndexMinusOne,
       });
+      const pointerDownTarget = pointerDownTargetRef.current;
+      pointerDownTargetRef.current = null;
+
+      if (isFocusFromPointerDown(target, pointerDownTarget)) {
+        rememberTarget(target);
+        return;
+      }
+
       if (targetMemory?.type === "overflow-trigger") {
         if (shouldPreserveItemMemoryForTrigger(targetMemory.groupKey)) {
           return;
@@ -280,6 +307,33 @@ export function useToolbarNextKeyboardNavigation({
     },
     [handleScopeFocus],
   );
+
+  const handleScopePointerDown = useCallback(
+    (event: ToolbarNextPointerEvent) => {
+      const scopeRoot = scopeRef.current;
+      const target = event.target;
+
+      if (
+        !scopeRoot ||
+        !(target instanceof HTMLElement) ||
+        getClosestToolbarNextScopeRoot(target) !== scopeRoot
+      ) {
+        pointerDownTargetRef.current = null;
+        return;
+      }
+
+      pointerDownTargetRef.current = target;
+    },
+    [scopeRef],
+  );
+
+  const handlePointerDownCapture =
+    useCallback<PointerEventHandler<HTMLElement>>(
+      (event) => {
+        handleScopePointerDown(event);
+      },
+      [handleScopePointerDown],
+    );
 
   const handleScopeBlur = useCallback(
     (event: ToolbarNextFocusEvent) => {
@@ -406,9 +460,11 @@ export function useToolbarNextKeyboardNavigation({
     handleBlurCapture,
     handleFocusCapture,
     handleKeyDownCapture,
+    handlePointerDownCapture,
     handleScopeBlur,
     handleScopeFocus,
     handleScopeKeyDown,
+    handleScopePointerDown,
     rememberItemFocus,
     rememberedFocusRef,
   };
