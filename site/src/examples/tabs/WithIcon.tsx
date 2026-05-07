@@ -1,3 +1,4 @@
+import { Tab, TabBar, TabList, Tabs, TabTrigger } from "@salt-ds/core";
 import {
   BankCheckIcon,
   CreditCardIcon,
@@ -5,13 +6,6 @@ import {
   LineChartIcon,
   ReceiptIcon,
 } from "@salt-ds/icons";
-import {
-  TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
 import type { ComponentType, ReactElement } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
@@ -27,22 +21,22 @@ const tabToIcon: Record<string, ComponentType> = {
 export const WithIcon = (): ReactElement => {
   return (
     <div style={{ width: "100%", minWidth: 0 }}>
-      <TabsNext defaultValue={tabs[0]}>
+      <Tabs defaultValue={tabs[0]}>
         <TabBar divider inset>
-          <TabListNext aria-label="Example tablist">
+          <TabList aria-label="Example tablist">
             {tabs.map((label) => {
               const Icon = tabToIcon[label];
               return (
-                <TabNext value={label} key={label}>
-                  <TabNextTrigger>
+                <Tab value={label} key={label}>
+                  <TabTrigger>
                     <Icon aria-hidden /> {label}
-                  </TabNextTrigger>
-                </TabNext>
+                  </TabTrigger>
+                </Tab>
               );
             })}
-          </TabListNext>
+          </TabList>
         </TabBar>
-      </TabsNext>
+      </Tabs>
     </div>
   );
 };

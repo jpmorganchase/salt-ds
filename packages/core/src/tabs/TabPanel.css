@@ -1,0 +1,12 @@
+.saltTabPanel {
+  height: 100%;
+  width: 100%;
+}
+
+.saltTabPanel[hidden] {
+  display: none;
+}
+
+.saltTabPanel:focus-visible {
+  outline: var(--salt-focused-outline);
+}

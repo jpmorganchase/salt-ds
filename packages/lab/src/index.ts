@@ -56,7 +56,6 @@ export * from "./side-panel";
 export * from "./static-list";
 export * from "./system-status";
 export * from "./tabs";
-export * from "./tabs-next";
 export * from "./toast-group";
 export * from "./tokenized-input";
 export * from "./tokenized-input-next";
