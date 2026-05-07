@@ -30,8 +30,10 @@ export interface TabsNextProps
    */
   value?: string;
   /**
-   * Callback fired when the selection changes. The event will be null when
-   * selection is moved automatically.
+   * Callback fired when the selection changes.
+   * The event will be null when selection is moved automatically, such as when
+   * the currently selected tab is removed and the next available tab is
+   * selected.
    */
   onChange?: (event: SyntheticEvent | null, value: string) => void;
 }

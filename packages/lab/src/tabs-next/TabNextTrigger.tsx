@@ -43,7 +43,7 @@ export const TabNextTrigger = forwardRef<
   HTMLButtonElement,
   TabNextTriggerProps
 >(function TabNextTrigger(props, ref) {
-  const { children, onClick, onKeyDown, onFocus, ...rest } = props;
+  const { children, className, onClick, onKeyDown, onFocus, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -227,7 +227,7 @@ export const TabNextTrigger = forwardRef<
       onClick={!disabled ? handleClick : undefined}
       onKeyDown={shouldHandleKeyDown ? handleKeyDown : undefined}
       onFocus={handleFocus}
-      className={withBaseName()}
+      className={clsx(withBaseName(), className)}
       id={id}
       ref={handleRef}
       data-value={value}

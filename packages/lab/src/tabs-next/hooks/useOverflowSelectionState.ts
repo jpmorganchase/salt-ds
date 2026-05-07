@@ -54,6 +54,7 @@ export function useOverflowSelectionState({
         : null;
 
       if (selectedFromOverflow) {
+        event?.persist();
         pendingOverflowSelectionRef.current = { event, value };
         setMenuOpen(false);
         return;

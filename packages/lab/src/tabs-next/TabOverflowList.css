@@ -54,11 +54,6 @@
   display: none;
 }
 
-.saltTabOverflow-list .saltTabNext[aria-disabled="true"] {
-  color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-cursor-disabled);
-}
-
 .saltTabOverflow-list .saltTabNext-focusVisible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
