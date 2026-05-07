@@ -148,7 +148,6 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       } else {
         setAnimating(true);
       }
-      // biome-ignore lint/correctness/useExhaustiveDependencies: Excluding floatingRootContext.elements.reference is safe because when the trigger changes while the panel is already open (e.g. table row switching), openState remains true so no visual update is needed.
     }, [openState, targetWindow, disableAnimation]);
 
     if (!showComponent) return null;
