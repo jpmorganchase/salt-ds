@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.43.0
+
+### Minor Changes
+
+- 7bd425f: Added categorical foundational colors into the next theme.
+
 ## 1.42.0
 
 ### Minor Changes

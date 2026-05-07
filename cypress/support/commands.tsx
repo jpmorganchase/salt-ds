@@ -8,7 +8,7 @@ import type {
   DateFrameworkType,
   SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { LocalizationProvider } from "@salt-ds/lab";
+import { LocalizationProvider } from "@salt-ds/date-components";
 import type { Options } from "cypress-axe";
 import { AnnouncementListener } from "./AnnouncementListener";
 import { type PerformanceResult, PerformanceTester } from "./PerformanceTester";

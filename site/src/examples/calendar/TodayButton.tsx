@@ -1,21 +1,19 @@
-import { Button, Divider, StackLayout } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { Button, Divider, StackLayout, useAriaAnnouncer } from "@salt-ds/core";
 import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   type UseCalendarSelectionSingleProps,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { type ReactElement, useState } from "react";
 
 export const TodayButton = (): ReactElement => {
-  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const { dateAdapter } = useLocalization();
+  const { announce } = useAriaAnnouncer();
   const today = dateAdapter.today();
   const [selectedDate, setSelectedDate] =
-    useState<
-      UseCalendarSelectionSingleProps<DateFrameworkType>["selectedDate"]
-    >(null);
+    useState<UseCalendarSelectionSingleProps["selectedDate"]>(null);
   return (
     <Calendar
       selectionVariant="single"
@@ -30,10 +28,16 @@ export const TodayButton = (): ReactElement => {
         <CalendarGrid />
         <Divider />
         <Button
+          aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
           style={{ margin: "var(--salt-spacing-100)" }}
           sentiment="accented"
           appearance="solid"
-          onClick={() => setSelectedDate(today)}
+          onClick={() => {
+            setSelectedDate(today);
+            announce(
+              `${dateAdapter.format(today, "dddd D MMMM YYYY")}, selected`,
+            );
+          }}
         >
           Today
         </Button>

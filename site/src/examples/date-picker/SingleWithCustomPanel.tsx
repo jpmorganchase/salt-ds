@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { FormField, FormFieldLabel as FormLabel, useId } from "@salt-ds/core";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -9,10 +8,10 @@ import {
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
-import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
+import { CustomDatePickerPanel } from "@salt-ds/date-components/stories/date-picker/CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -31,7 +30,7 @@ export const SingleWithCustomPanel = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: SingleDateSelection<DateFrameworkType> | null,
+      date: SingleDateSelection | null,
       details: DateInputSingleDetails | undefined,
     ) => {
       const { value, errors } = details || {};
@@ -59,15 +58,17 @@ export const SingleWithCustomPanel = (): ReactElement => {
     [dateAdapter],
   );
 
+  const labelId = useId();
+
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel>Select a date</FormLabel>
+      <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput />
+          <DatePickerSingleInput aria-labelledby={labelId} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <CustomDatePickerPanel
