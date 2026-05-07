@@ -644,7 +644,7 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
-        <DateInputSingle bordered ariaLabel="Settlement date" />
+        <DateInputSingle bordered aria-label="Settlement date" />
       </TooltrayNext>
     </ToolbarRegion>
     <ToolbarRegion position="end">
