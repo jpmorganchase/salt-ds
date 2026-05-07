@@ -4,68 +4,177 @@ import {
   FlexItem,
   FlexLayout,
   FormField,
-  FormFieldHelperText,
   FormFieldLabel,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
+  Switch,
   Text,
 } from "@salt-ds/core";
-import { ArrowUpIcon } from "@salt-ds/icons";
+import { US } from "@salt-ds/countries";
+import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 import type { FormContentProps } from "./experience-customization.stories";
+import NegativeTrend from "./img/negative-trend.png";
+import PositiveTrend from "./img/positive-trend.png";
+
+const stockCards = [
+  {
+    ticker: "VRT",
+    fullName: "VERTIV HOLDINGS CO-A",
+    exchange: "NYSE",
+    trendImage: PositiveTrend,
+    trendAlt: "Positive trend",
+    isPositive: true,
+    changeText: "+6.27 (+1.95%)",
+    changeColor: "success" as const,
+    metrics: {
+      lastPrice: "328.02",
+      absolute: "2.25",
+      marketCap: "66.199B",
+    },
+  },
+  {
+    ticker: "GEV",
+    fullName: "GE VERNOVA INC",
+    exchange: "NYSE",
+    trendImage: NegativeTrend,
+    trendAlt: "Negative trend",
+    isPositive: false,
+    changeText: "-4.03 (-0.35%)",
+    changeColor: "error" as const,
+    metrics: {
+      lastPrice: "1147.27",
+      absolute: "-8.92",
+      marketCap: "684.15B",
+    },
+  },
+];
 
 export const DataFormatContent = ({
   formData,
   handleRadioChange,
+  handleCheckboxChange,
 }: FormContentProps) => {
+  const showExchangeText = formData.exchangeAndRegionDisplay !== "flag";
+  const showFlag = formData.exchangeAndRegionDisplay !== "text";
+  const getDisplayMetric = (stock: (typeof stockCards)[number]) => {
+    if (formData.visibleMetrics === "absolute") {
+      return stock.metrics.absolute;
+    }
+
+    if (formData.visibleMetrics === "marketCap") {
+      return stock.metrics.marketCap;
+    }
+
+    return stock.metrics.lastPrice;
+  };
+
   return (
-    <FlexLayout wrap>
+    <FlexLayout justify="space-between" wrap>
       <StackLayout>
-        <FlexItem>
-          <FormField>
-            <FormFieldLabel>Choose a data format</FormFieldLabel>
-            <RadioButtonGroup
-              onChange={handleRadioChange}
-              name="currency"
-              value={formData.currency}
-            >
-              <RadioButton label="USD" value="usd" />
-              <RadioButton label="EUR" value="eur" />
-            </RadioButtonGroup>
-            <FormFieldHelperText>
-              Used for report display; does not convert transaction currency.
-            </FormFieldHelperText>
-          </FormField>
-        </FlexItem>
-        <FlexItem>
-          <FormField>
-            <FormFieldLabel>Display amounts</FormFieldLabel>
-            <RadioButtonGroup
-              onChange={handleRadioChange}
-              name="currencyFormat"
-              value={formData.currencyFormat}
-            >
-              <RadioButton label="Standard e.g. 1,000,000" value="standard" />
-              <RadioButton label="Abbreviated e.g. 1m" value="abbreviated" />
-            </RadioButtonGroup>
-          </FormField>
-        </FlexItem>
+        <FormField>
+          <FormFieldLabel>Stock name display</FormFieldLabel>
+          <RadioButtonGroup
+            onChange={handleRadioChange}
+            name="stockNameDisplay"
+            value={formData.stockNameDisplay}
+          >
+            <RadioButton label="Ticker only" value="tickerOnly" />
+            <RadioButton label="Ticker and full name" value="fullNameTicker" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Exchange & Region</FormFieldLabel>
+          <RadioButtonGroup
+            onChange={handleRadioChange}
+            name="exchangeAndRegionDisplay"
+            value={formData.exchangeAndRegionDisplay}
+          >
+            <RadioButton label="Text only" value="text" />
+            <RadioButton label="Flag only" value="flag" />
+            <RadioButton label="Both" value="both" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Visible metrics</FormFieldLabel>
+          <RadioButtonGroup
+            onChange={handleRadioChange}
+            name="visibleMetrics"
+            value={formData.visibleMetrics}
+          >
+            <RadioButton label="Last price" value="lastPrice" />
+            <RadioButton label="Absolute change" value="absolute" />
+            <RadioButton label="Market Cap" value="marketCap" />
+          </RadioButtonGroup>
+        </FormField>
+
+        <FormField>
+          <FormFieldLabel>Performance chart</FormFieldLabel>
+          <Switch
+            name="performanceChart"
+            checked={formData.performanceChart}
+            onChange={handleCheckboxChange}
+            label={formData.performanceChart ? "On" : "Off"}
+          />
+        </FormField>
       </StackLayout>
-      <FlexItem grow={1} align="center">
-        <Card style={{ width: 260, margin: "0 auto" }}>
-          <Text>
-            <strong>{formData.currency.toUpperCase()}</strong>
-          </Text>
-          <Display3>
-            {formData.currencyFormat === "standard" ? "1,000,000" : "1M"}{" "}
-            <ArrowUpIcon
-              aria-hidden
-              style={{
-                color: "var(--salt-sentiment-positive-foreground-decorative)",
-              }}
-            />
-          </Display3>
-          <Text color="success">+13,000 (+1.23%)</Text>
+      <FlexItem>
+        <Card style={{ width: 372 }}>
+          <StackLayout separators>
+            {stockCards.map((stock) => (
+              <FlexItem key={stock.ticker}>
+                <StackLayout gap={1}>
+                  <FlexLayout justify="space-between">
+                    <FlexItem>
+                      <Text>
+                        <strong>{stock.ticker}</strong>
+                      </Text>
+                      {formData.stockNameDisplay === "fullNameTicker" && (
+                        <Text color="secondary">{stock.fullName}</Text>
+                      )}
+                      <Display3>
+                        {getDisplayMetric(stock)}
+                        {stock.isPositive ? (
+                          <ArrowUpIcon
+                            aria-hidden
+                            style={{
+                              color:
+                                "var(--salt-sentiment-positive-foreground-informative)",
+                            }}
+                          />
+                        ) : (
+                          <ArrowDownIcon
+                            aria-hidden
+                            style={{
+                              color:
+                                "var(--salt-sentiment-negative-foreground-informative)",
+                            }}
+                          />
+                        )}
+                      </Display3>
+                      <Text color={stock.changeColor}>{stock.changeText}</Text>
+                    </FlexItem>
+                    <FlexItem>
+                      <FlexLayout gap={1} align="center">
+                        {showExchangeText && (
+                          <Text color="secondary">{stock.exchange}</Text>
+                        )}
+                        {showFlag && <US />}
+                      </FlexLayout>
+                    </FlexItem>
+                  </FlexLayout>
+
+                  {formData.performanceChart && (
+                    <img
+                      src={stock.trendImage}
+                      alt={stock.trendAlt}
+                      style={{ width: "100%" }}
+                    />
+                  )}
+                </StackLayout>
+              </FlexItem>
+            ))}
+          </StackLayout>
         </Card>
       </FlexItem>
     </FlexLayout>

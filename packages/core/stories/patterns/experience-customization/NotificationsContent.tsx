@@ -1,12 +1,16 @@
 import {
   FlexItem,
   FlexLayout,
+  FormField,
+  FormFieldLabel,
   InteractableCard,
   InteractableCardGroup,
   RadioButtonIcon,
   StackLayout,
+  Switch,
   Text,
 } from "@salt-ds/core";
+import type { CSSProperties } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 
 export const NOTIFICATION_POSITIONS = [
@@ -29,7 +33,7 @@ export const NOTIFICATION_POSITIONS = [
 ];
 
 export const NotificationPosition = ({ position }: { position: string }) => {
-  const positionStyles: Record<string, React.CSSProperties> = {
+  const positionStyles: Record<string, CSSProperties> = {
     "top-left": { top: 10, left: 5.5 },
     "top-right": { top: 10, right: 5.5 },
     "bottom-left": { bottom: 10, left: 5.5 },
@@ -62,38 +66,54 @@ export const NotificationPosition = ({ position }: { position: string }) => {
 export const NotificationsContent = ({
   formData,
   handleSelectChange,
+  handleCheckboxChange,
 }: FormContentProps) => {
   return (
-    <InteractableCardGroup
-      onChange={(_event, value) => {
-        handleSelectChange?.(value as string, "position");
-      }}
-    >
-      <FlexLayout>
-        {NOTIFICATION_POSITIONS.map(({ value, label }) => (
-          <FlexItem key={value}>
-            <InteractableCard
-              value={value}
-              style={{
-                padding: "var(--salt-spacing-200)",
-              }}
-            >
-              <StackLayout gap={1}>
-                <StackLayout gap={1} direction="row">
-                  <NotificationPosition position={value} />
+    <StackLayout>
+      <InteractableCardGroup
+        onChange={(_event, value) => {
+          handleSelectChange?.(value as string, "position");
+        }}
+      >
+        <FlexLayout>
+          {NOTIFICATION_POSITIONS.map(({ value, label }) => (
+            <FlexItem key={value}>
+              <InteractableCard value={value}>
+                <StackLayout gap={1}>
+                  <StackLayout gap={1} direction="row">
+                    <NotificationPosition position={value} />
+                  </StackLayout>
+                  <StackLayout direction="row" gap={1}>
+                    <RadioButtonIcon
+                      aria-hidden
+                      checked={formData.position === value}
+                    />
+                    <Text>{label}</Text>
+                  </StackLayout>
                 </StackLayout>
-                <StackLayout direction="row" gap={1}>
-                  <RadioButtonIcon
-                    aria-hidden
-                    checked={formData.position === value}
-                  />
-                  <Text>{label}</Text>
-                </StackLayout>
-              </StackLayout>
-            </InteractableCard>
-          </FlexItem>
-        ))}
-      </FlexLayout>
-    </InteractableCardGroup>
+              </InteractableCard>
+            </FlexItem>
+          ))}
+        </FlexLayout>
+      </InteractableCardGroup>
+      <FormField>
+        <FormFieldLabel>Automatically dismiss notifications</FormFieldLabel>
+        <Switch
+          label={formData.autoDismiss ? "On" : "Off"}
+          name="autoDismiss"
+          checked={formData.autoDismiss}
+          onChange={handleCheckboxChange}
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Extend notification display time</FormFieldLabel>
+        <Switch
+          label={formData.extendDisplayTime ? "On" : "Off"}
+          name="extendDisplayTime"
+          checked={formData.extendDisplayTime}
+          onChange={handleCheckboxChange}
+        />
+      </FormField>
+    </StackLayout>
   );
 };

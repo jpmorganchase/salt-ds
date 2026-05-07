@@ -6,13 +6,13 @@ import {
   FlexLayout,
   FormField,
   FormFieldHelperText,
-  FormFieldLabel,
   InteractableCard,
   InteractableCardGroup,
   Link,
   RadioButtonIcon,
   StackLayout,
   Text,
+  useId,
 } from "@salt-ds/core";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
@@ -46,6 +46,8 @@ export const DisplayModeContent = ({
     },
   ] as const;
 
+  const densityId = useId();
+
   return (
     <StackLayout aria-live="polite">
       {formData.displayDensity === "high" && (
@@ -59,9 +61,12 @@ export const DisplayModeContent = ({
       )}
 
       <FlexItem>
-        <FormField>
-          <FormFieldLabel>Choose a density</FormFieldLabel>
+        <StackLayout gap={1}>
+          <Text styleAs="label" id={densityId}>
+            Choose a density
+          </Text>
           <InteractableCardGroup
+            aria-labelledby={densityId}
             value={formData.displayDensity}
             onChange={(_event, value) => {
               handleSelectChange?.(value as string, "displayDensity");
@@ -97,7 +102,7 @@ export const DisplayModeContent = ({
               ))}
             </FlexLayout>
           </InteractableCardGroup>
-        </FormField>
+        </StackLayout>
       </FlexItem>
 
       {formData.displayDensity === "high" && (
