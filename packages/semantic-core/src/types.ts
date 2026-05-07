@@ -405,6 +405,11 @@ export interface TokenRecord {
     } | null;
     evidence_refs?: SaltEvidenceRef[];
   } | null;
+  policy_gap?: {
+    reason: string;
+    missing: string[];
+    evidence_refs: SaltEvidenceRef[];
+  } | null;
   deprecated: boolean;
   last_verified_at: string;
 }

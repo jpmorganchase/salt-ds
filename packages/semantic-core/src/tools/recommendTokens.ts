@@ -49,6 +49,9 @@ function toCompactTokenRecommendation(candidate: {
       : {}),
     docs: getTokenDocs(candidate.token),
     policy: candidate.token.policy ?? null,
+    ...(candidate.token.policy_gap
+      ? { policy_gap: candidate.token.policy_gap }
+      : {}),
     ...(candidate.token.deprecated ? { status: "deprecated" } : {}),
   };
 }
@@ -114,6 +117,9 @@ export function recommendTokens(
       guidance: candidate.token.guidance,
       docs: getTokenDocs(candidate.token),
       policy: candidate.token.policy ?? null,
+      ...(candidate.token.policy_gap
+        ? { policy_gap: candidate.token.policy_gap }
+        : {}),
       deprecated: candidate.token.deprecated,
     },
     score: candidate.score,

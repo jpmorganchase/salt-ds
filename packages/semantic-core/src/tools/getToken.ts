@@ -33,6 +33,7 @@ function toCompactToken(token: TokenRecord): Record<string, unknown> {
     ...(token.aliases.length > 0 ? { aliases: token.aliases } : {}),
     docs: getTokenDocs(token),
     policy: token.policy ?? null,
+    ...(token.policy_gap ? { policy_gap: token.policy_gap } : {}),
     themes: token.themes,
     ...(token.densities.length > 0 ? { densities: token.densities } : {}),
     deprecated: token.deprecated,
