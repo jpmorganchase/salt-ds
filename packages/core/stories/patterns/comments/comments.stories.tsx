@@ -24,6 +24,14 @@ export default {
   title: "Patterns/Comments",
 } as Meta;
 
+const getAvatarColor = (name: string) => {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return `category-${(Math.abs(hash) % 20) + 1}` as any;
+};
+
 const formatDate = (timestamp: number) =>
   new Date(timestamp)
     .toLocaleString("en-GB", {
@@ -38,6 +46,7 @@ const formatDate = (timestamp: number) =>
 
 export const Default = () => {
   const { announce } = useAriaAnnouncer();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
   const [validationStatus, setValidationStatus] = useState<
     "error" | "success" | undefined
@@ -60,6 +69,8 @@ export const Default = () => {
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
+      announce("Comment can't be blank");
+      inputRef.current?.focus();
       return;
     }
     setValidationStatus(undefined);
@@ -74,6 +85,7 @@ export const Default = () => {
     ]);
     setInputValue("");
     announce("Comment posted");
+    inputRef.current?.focus();
   };
 
   return (
@@ -90,6 +102,8 @@ export const Default = () => {
           <Input
             bordered
             placeholder="Add a comment..."
+            inputRef={inputRef}
+            inputProps={{ "aria-invalid": validationStatus === "error" }}
             endAdornment={
               inputValue && (
                 <Button aria-label="Send comment" type="submit">
@@ -121,7 +135,7 @@ export const Default = () => {
             style={{
               borderTop:
                 index > 0
-                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor)"
+                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
                   : "none",
             }}
           >
@@ -143,6 +157,7 @@ export const Default = () => {
 
 export const WithAvatar = () => {
   const { announce } = useAriaAnnouncer();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
   const [validationStatus, setValidationStatus] = useState<
     "error" | "success" | undefined
@@ -165,6 +180,8 @@ export const WithAvatar = () => {
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
+      announce("Comment can't be blank");
+      inputRef.current?.focus();
       return;
     }
     setValidationStatus(undefined);
@@ -179,6 +196,7 @@ export const WithAvatar = () => {
     ]);
     setInputValue("");
     announce("Comment posted");
+    inputRef.current?.focus();
   };
 
   return (
@@ -195,6 +213,8 @@ export const WithAvatar = () => {
           <Input
             bordered
             placeholder="Add a comment..."
+            inputRef={inputRef}
+            inputProps={{ "aria-invalid": validationStatus === "error" }}
             endAdornment={
               inputValue && (
                 <Button aria-label="Send comment" type="submit">
@@ -226,7 +246,7 @@ export const WithAvatar = () => {
             style={{
               borderTop:
                 index > 0
-                  ? "1px solid var(--salt-separable-secondary-borderColor)"
+                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
                   : "none",
             }}
           >
@@ -256,8 +276,250 @@ export const WithAvatar = () => {
   );
 };
 
+export const WithCategoricalAvatar = () => {
+  const { announce } = useAriaAnnouncer();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState("");
+  const [validationStatus, setValidationStatus] = useState<
+    "error" | "success" | undefined
+  >(undefined);
+  const [comments, setComments] = useState([
+    {
+      name: "Alex Rivera",
+      role: "Data Analyst",
+      date: 1775035560000,
+      text: "Date range + status. Also the saved views are super helpful.",
+    },
+    {
+      name: "Jordan Lee",
+      role: "Product Manager",
+      date: 1775035200000,
+      text: "Has anyone tried filtering by region and date?",
+    },
+  ]);
+
+  const handleSubmit = () => {
+    if (!inputValue.trim()) {
+      setValidationStatus("error");
+      announce("Comment can't be blank");
+      inputRef.current?.focus();
+      return;
+    }
+    setValidationStatus(undefined);
+    setComments([
+      {
+        name: "Sam Patel",
+        role: "UX Designer",
+        date: Date.now(),
+        text: inputValue,
+      },
+      ...comments,
+    ]);
+    setInputValue("");
+    announce("Comment posted");
+    inputRef.current?.focus();
+  };
+
+  return (
+    <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
+      <form
+        style={{ padding: "var(--salt-spacing-100)" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <FormField validationStatus={validationStatus}>
+          <FormFieldLabel>Write a comment</FormFieldLabel>
+          <Input
+            bordered
+            placeholder="Add a comment..."
+            inputRef={inputRef}
+            inputProps={{ "aria-invalid": validationStatus === "error" }}
+            endAdornment={
+              inputValue && (
+                <Button aria-label="Send comment" type="submit">
+                  <SendIcon aria-hidden />
+                </Button>
+              )
+            }
+            value={inputValue}
+            onChange={(e) => {
+              const value = (e.target as HTMLInputElement).value;
+              setInputValue(value);
+              if (value.trim()) {
+                setValidationStatus(undefined);
+              }
+            }}
+          />
+          {validationStatus === "error" && (
+            <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
+          )}
+        </FormField>
+      </form>
+      <ul
+        aria-label="Comments"
+        style={{ listStyle: "none", margin: 0, padding: 0 }}
+      >
+        {comments.map((comment, index) => (
+          <li
+            key={`${comment.name}-${comment.date}`}
+            style={{
+              borderTop:
+                index > 0
+                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
+                  : "none",
+            }}
+          >
+            <StackLayout padding={1} gap={1}>
+              <FlexLayout gap={1}>
+                <Avatar
+                  size={1}
+                  color={getAvatarColor(comment.name)}
+                  name={comment.name}
+                  aria-hidden="true"
+                />
+                <StackLayout gap={1}>
+                  <StackLayout gap={0.5}>
+                    <Text styleAs="h4">{comment.name}</Text>
+                    <Text styleAs="label" color="secondary">
+                      {comment.role} • {formatDate(comment.date)}
+                    </Text>
+                  </StackLayout>
+                  <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
+                </StackLayout>
+              </FlexLayout>
+            </StackLayout>
+          </li>
+        ))}
+      </ul>
+    </StackLayout>
+  );
+};
+
+export const WithEmptyState = () => {
+  const { announce } = useAriaAnnouncer();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState("");
+  const [validationStatus, setValidationStatus] = useState<
+    "error" | "success" | undefined
+  >(undefined);
+  const [comments, setComments] = useState<
+    { name: string; role: string; date: number; text: string }[]
+  >([]);
+
+  const handleSubmit = () => {
+    if (!inputValue.trim()) {
+      setValidationStatus("error");
+      announce("Comment can't be blank");
+      inputRef.current?.focus();
+      return;
+    }
+    setValidationStatus(undefined);
+    setComments([
+      {
+        name: "Sam Patel",
+        role: "UX Designer",
+        date: Date.now(),
+        text: inputValue,
+      },
+      ...comments,
+    ]);
+    setInputValue("");
+    announce("Comment posted");
+    inputRef.current?.focus();
+  };
+
+  return (
+    <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
+      <form
+        style={{ padding: "var(--salt-spacing-100)" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <FormField validationStatus={validationStatus}>
+          <FormFieldLabel>Write a comment</FormFieldLabel>
+          <Input
+            bordered
+            placeholder="Add a comment..."
+            inputRef={inputRef}
+            inputProps={{
+              "aria-invalid": validationStatus === "error",
+              style: { minWidth: "300px" },
+            }}
+            endAdornment={
+              <Button
+                aria-label="Send comment"
+                type="submit"
+                disabled={!inputValue}
+                style={{ visibility: inputValue ? "visible" : "hidden" }}
+              >
+                <SendIcon aria-hidden />
+              </Button>
+            }
+            value={inputValue}
+            onChange={(e) => {
+              const value = (e.target as HTMLInputElement).value;
+              setInputValue(value);
+              if (value.trim()) {
+                setValidationStatus(undefined);
+              }
+            }}
+          />
+          {validationStatus === "error" && (
+            <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
+          )}
+        </FormField>
+      </form>
+      {comments.length === 0 ? (
+        <StackLayout
+          gap={3}
+          align="center"
+          style={{ padding: "var(--salt-spacing-300) 0" }}
+        >
+          <StatusIndicator status="info" size={2} aria-hidden="true" />
+          <FlexLayout direction="column" align="center" gap={0}>
+            <Text>No comments yet.</Text>
+            <Text>Be the first to comment.</Text>
+          </FlexLayout>
+        </StackLayout>
+      ) : (
+        <ul
+          aria-label="Comments"
+          style={{ listStyle: "none", margin: 0, padding: 0 }}
+        >
+          {comments.map((comment, index) => (
+            <li
+              key={`${comment.name}-${comment.date}`}
+              style={{
+                borderTop:
+                  index > 0
+                    ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
+                    : "none",
+              }}
+            >
+              <StackLayout padding={1} gap={1}>
+                <StackLayout gap={0.5}>
+                  <Text styleAs="h4">{comment.name}</Text>
+                  <Text styleAs="label" color="secondary">
+                    {comment.role} • {formatDate(comment.date)}
+                  </Text>
+                </StackLayout>
+                <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
+              </StackLayout>
+            </li>
+          ))}
+        </ul>
+      )}
+    </StackLayout>
+  );
+};
+
 export const WithMultilineInput = () => {
   const { announce } = useAriaAnnouncer();
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [inputValue, setInputValue] = useState("");
   const [validationStatus, setValidationStatus] = useState<
     "error" | "success" | undefined
@@ -294,11 +556,15 @@ export const WithMultilineInput = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
       setErrorMessage("Comment can't be blank");
+      announce("Comment can't be blank");
+      textAreaRef.current?.focus();
       return;
     }
     if (inputValue.length > MAX_CHARS) {
       setValidationStatus("error");
       setErrorMessage("Comment is too long. Maximum is 1000 characters.");
+      announce("Comment is too long. Maximum is 1000 characters.");
+      textAreaRef.current?.focus();
       return;
     }
     setValidationStatus(undefined);
@@ -314,6 +580,7 @@ export const WithMultilineInput = () => {
     ]);
     setInputValue("");
     announce("Comment posted");
+    textAreaRef.current?.focus();
   };
 
   return (
@@ -330,7 +597,11 @@ export const WithMultilineInput = () => {
           <MultilineInput
             bordered
             placeholder="Add a comment..."
-            textAreaProps={{ "aria-describedby": counterId }}
+            textAreaRef={textAreaRef}
+            textAreaProps={{
+              "aria-describedby": counterId,
+              "aria-invalid": validationStatus === "error",
+            }}
             endAdornment={
               <>
                 <Label
@@ -392,7 +663,7 @@ export const WithMultilineInput = () => {
             style={{
               borderTop:
                 index > 0
-                  ? "1px solid var(--salt-separable-secondary-borderColor)"
+                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
                   : "none",
             }}
           >
@@ -422,121 +693,14 @@ export const WithMultilineInput = () => {
   );
 };
 
-export const WithEmptyState = () => {
-  const { announce } = useAriaAnnouncer();
-  const [inputValue, setInputValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<
-    "error" | "success" | undefined
-  >(undefined);
-  const [comments, setComments] = useState<
-    { name: string; role: string; date: number; text: string }[]
-  >([]);
-
-  const handleSubmit = () => {
-    if (!inputValue.trim()) {
-      setValidationStatus("error");
-      return;
-    }
-    setValidationStatus(undefined);
-    setComments([
-      {
-        name: "Sam Patel",
-        role: "UX Designer",
-        date: Date.now(),
-        text: inputValue,
-      },
-      ...comments,
-    ]);
-    setInputValue("");
-    announce("Comment posted");
-  };
-
-  return (
-    <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
-      <form
-        style={{ padding: "var(--salt-spacing-100)" }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-      >
-        <FormField validationStatus={validationStatus}>
-          <FormFieldLabel>Write a comment</FormFieldLabel>
-          <Input
-            bordered
-            placeholder="Add a comment..."
-            endAdornment={
-              inputValue && (
-                <Button aria-label="Send comment" type="submit">
-                  <SendIcon aria-hidden />
-                </Button>
-              )
-            }
-            value={inputValue}
-            onChange={(e) => {
-              const value = (e.target as HTMLInputElement).value;
-              setInputValue(value);
-              if (value.trim()) {
-                setValidationStatus(undefined);
-              }
-            }}
-          />
-          {validationStatus === "error" && (
-            <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
-          )}
-        </FormField>
-      </form>
-      {comments.length === 0 ? (
-        <StackLayout
-          gap={3}
-          align="center"
-          style={{ padding: "var(--salt-spacing-300) 0" }}
-        >
-          <StatusIndicator status="info" size={2} />
-          <FlexLayout direction="column" align="center" gap={0}>
-            <Text>No comments yet.</Text>
-            <Text>Be the first to comment.</Text>
-          </FlexLayout>
-        </StackLayout>
-      ) : (
-        <ul
-          aria-label="Comments"
-          style={{ listStyle: "none", margin: 0, padding: 0 }}
-        >
-          {comments.map((comment, index) => (
-            <li
-              key={`${comment.name}-${comment.date}`}
-              style={{
-                borderTop:
-                  index > 0
-                    ? "1px solid var(--salt-separable-secondary-borderColor)"
-                    : "none",
-              }}
-            >
-              <StackLayout padding={1} gap={1}>
-                <StackLayout gap={0.5}>
-                  <Text styleAs="h4">{comment.name}</Text>
-                  <Text styleAs="label" color="secondary">
-                    {comment.role} • {formatDate(comment.date)}
-                  </Text>
-                </StackLayout>
-                <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
-              </StackLayout>
-            </li>
-          ))}
-        </ul>
-      )}
-    </StackLayout>
-  );
-};
-
 export const WithSubmissionError = () => {
   const { announce } = useAriaAnnouncer();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
   const [validationStatus, setValidationStatus] = useState<
     "error" | "success" | undefined
   >(undefined);
-  const [submissionError, setSubmissionError] = useState(true);
+  const [submissionError, setSubmissionError] = useState(false);
   const [comments, setComments] = useState([
     {
       name: "Alex Rivera",
@@ -552,14 +716,35 @@ export const WithSubmissionError = () => {
     },
   ]);
 
+  const handleRetry = () => {
+    if (inputValue.trim()) {
+      setComments([
+        {
+          name: "Sam Patel",
+          role: "UX Designer",
+          date: Date.now(),
+          text: inputValue,
+        },
+        ...comments,
+      ]);
+      setInputValue("");
+      setSubmissionError(false);
+      announce("Comment posted");
+      inputRef.current?.focus();
+    }
+  };
+
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
+      announce("Comment can't be blank");
+      inputRef.current?.focus();
       return;
     }
     setValidationStatus(undefined);
     setSubmissionError(true);
     announce("Failed to post comment");
+    inputRef.current?.focus();
   };
 
   return (
@@ -576,6 +761,8 @@ export const WithSubmissionError = () => {
           <Input
             bordered
             placeholder="Add a comment..."
+            inputRef={inputRef}
+            inputProps={{ "aria-invalid": validationStatus === "error" }}
             endAdornment={
               inputValue && (
                 <Button aria-label="Send comment" type="submit">
@@ -606,8 +793,8 @@ export const WithSubmissionError = () => {
                   <strong>Couldn’t post your comment</strong>
                 </Text>
                 <Text>
-                  You are offline. Check your connection and resubmit I'll check
-                  if saved views are discoverable enough.
+                  You are offline. Check your connection and resubmit. I'll
+                  check if saved views are discoverable enough.
                 </Text>
               </StackLayout>
             </BannerContent>
@@ -616,12 +803,15 @@ export const WithSubmissionError = () => {
                 aria-label="Retry posting your comment"
                 sentiment="neutral"
                 appearance="transparent"
+                onClick={handleRetry}
               >
                 <RefreshIcon aria-hidden />
               </Button>
               <Button
                 aria-label="Dismiss submission error"
+                sentiment="neutral"
                 appearance="transparent"
+                onClick={() => setSubmissionError(false)}
               >
                 <CloseIcon aria-hidden />
               </Button>
@@ -639,7 +829,7 @@ export const WithSubmissionError = () => {
             style={{
               borderTop:
                 index > 0
-                  ? "1px solid var(--salt-separable-secondary-borderColor)"
+                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
                   : "none",
             }}
           >
