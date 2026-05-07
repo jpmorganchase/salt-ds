@@ -8,6 +8,13 @@ data:
   $ref: ./#/data
 ---
 
+<Callout title="Note">
+
+All date components require a [LocalizationProvider](/salt/components/localization-provider/examples) to be set up in your application.
+For the purpose of the examples, we use type `DateFrameworkType` so the examples can be used across all date adapters. For your own code you can replace this type with the type of your date object (e.g luxon would use `DateTime` type instead).
+
+</Callout>
+
 ## Single date selection
 
 When the `selectionVariant` prop is set to "single", the `Calendar` component allows users to select only a single date, providing a straightforward and focused date selection experience.

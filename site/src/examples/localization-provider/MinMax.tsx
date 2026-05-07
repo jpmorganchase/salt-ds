@@ -1,5 +1,4 @@
 import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import {
   Calendar,
@@ -9,7 +8,7 @@ import {
   type DateInputRangeDetails,
   type DateRangeSelection,
   LocalizationProvider,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
 import {
   type ReactElement,
@@ -22,8 +21,8 @@ export const MinMax = (): ReactElement => {
   // Create a 3 month range of selectable dates
   // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
   const dateAdapter = new AdapterDateFns(dateFnsEnUs as any);
-  const defaultMinDate = dateAdapter.parse("01 Jan 1900", "DD MMM YYYY").date;
-  const defaultMaxDate = dateAdapter.parse("01 Jan 2100", "DD MMM YYYY").date;
+  const defaultMinDate = dateAdapter.parse("01 Jan 2026", "DD MMM YYYY").date;
+  const defaultMaxDate = dateAdapter.parse("31 Mar 2026", "DD MMM YYYY").date;
   const defaultHelperText =
     "Define the Calendar Min/Max date in DD MMM YYYY format";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
@@ -31,15 +30,14 @@ export const MinMax = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection<DateFrameworkType> | null>({
-      startDate: defaultMinDate,
-      endDate: defaultMaxDate,
-    });
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>({
+    startDate: defaultMinDate,
+    endDate: defaultMaxDate,
+  });
   const handleDateChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -80,15 +78,15 @@ export const MinMax = (): ReactElement => {
     <LocalizationProvider
       DateAdapter={AdapterDateFns}
       locale={dateFnsEnUs}
-      minDate={selectedDate?.startDate ?? defaultMinDate}
-      maxDate={selectedDate?.endDate ?? defaultMaxDate}
+      minDate={(selectedDate?.startDate as Date) ?? defaultMinDate}
+      maxDate={(selectedDate?.endDate as Date) ?? defaultMaxDate}
     >
       <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
         <FormFieldLabel>Calendar's Min/Max Date Range</FormFieldLabel>
         <DateInputRange date={selectedDate} onDateChange={handleDateChange} />
         <FormFieldHelperText>{helperText}</FormFieldHelperText>
       </FormField>
-      <Calendar selectionVariant="single">
+      <Calendar selectionVariant="single" defaultVisibleMonth={defaultMinDate}>
         <CalendarNavigation />
         <CalendarGrid />
       </Calendar>

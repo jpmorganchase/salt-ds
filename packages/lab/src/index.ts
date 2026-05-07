@@ -53,6 +53,7 @@ export * from "./query-input";
 export * from "./rating";
 export * from "./responsive";
 export * from "./search-input";
+export * from "./side-panel";
 export * from "./static-list";
 export * from "./system-status";
 export * from "./tabs";
