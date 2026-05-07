@@ -115,38 +115,6 @@ const clippingValidationNoteStyle = {
 };
 
 /**
- * Empty playground for building up a toolbar configuration from scratch.
- */
-export const Playground: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Toolbar playground">
-    <ToolbarRegion position="start">
-      <TooltrayNext>
-        <Button>Hello Tymon</Button>
-      </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="center">
-      <TooltrayNext>
-        <Button>Hello Center</Button>
-        <Button>Hello Center</Button>
-        <Button>Hello Center</Button>
-      </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="end">
-      <TooltrayNext>
-        <Button>Hello Tymon</Button>
-        <Button>Hello Tymon</Button>
-        <Button>Hello Tymon</Button>
-        <Button>Hello Tymon</Button>
-        <Button>Hello Tymon</Button>
-      </TooltrayNext>
-    </ToolbarRegion>
-  </ToolbarNext>
-);
-Playground.args = {
-  "aria-label": "Toolbar playground",
-};
-
-/**
  * Flat align sugar — no explicit `ToolbarRegion` wrappers.
  *
  * Intended behavior:
@@ -160,13 +128,15 @@ Playground.args = {
  */
 export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Flat toolbar">
-    <TooltrayNext role="group" aria-label="Search and filter">
-      <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+    <TooltrayNext>
       <Dropdown bordered defaultSelected={["Option A"]}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
+    </TooltrayNext>
+    <TooltrayNext role="group" aria-label="Search and filter">
+      <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
     </TooltrayNext>
     <TooltrayNext role="group" align="end" aria-label="Actions">
       <Button appearance="transparent" aria-label="Grid view">
