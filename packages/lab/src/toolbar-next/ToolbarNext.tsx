@@ -36,9 +36,13 @@ import { useToolbarNextOverflow } from "./useToolbarNextOverflow";
 
 export interface ToolbarNextProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Defaults to `"bordered"`.
+   * Visual treatment of the toolbar. Defaults to `"bordered"`.
    */
-  variant?: "bordered" | "transparent";
+  appearance?: "bordered" | "transparent";
+  /**
+   * Styling variant. Defaults to `"primary"`.
+   */
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 const withBaseName = makePrefixer("saltToolbarNext");
@@ -66,7 +70,8 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       onFocusCapture,
       onKeyDownCapture,
       onPointerDownCapture,
-      variant = "bordered",
+      appearance = "bordered",
+      variant = "primary",
       ...rest
     },
     ref,
@@ -266,6 +271,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
             [withBaseName("layout")]: mode !== "invalid",
           },
           withBaseName(variant),
+          withBaseName(appearance),
           className,
         )}
         data-centered={mode !== "invalid" && hasCenteredLayout ? "" : undefined}

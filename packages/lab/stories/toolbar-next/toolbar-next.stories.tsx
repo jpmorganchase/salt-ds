@@ -38,6 +38,7 @@ export default {
     "RegionFirst",
     "MixedFormControls",
     "CenteredNamedOverflow",
+    "Variants",
     "Transparent",
     "RightToLeft",
     "DefaultSharedOverflow",
@@ -53,6 +54,7 @@ export default {
 } as Meta<typeof ToolbarNext>;
 
 const options = ["Option A", "Option B", "Option C"];
+const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
 const deskOptions = ["All desks", "Rates", "Credit", "Equities"];
 const exceptionRows = [
   ["FX-4120", "Morgan Stanley", "Missing allocation"],
@@ -475,10 +477,10 @@ CenteredNamedOverflow.globals = {
 };
 
 /**
- * Transparent variant with no visible border or padding.
+ * Transparent appearance with no visible border or padding.
  *
  * Intended behavior:
- * - `variant="transparent"` removes the toolbar's border and padding,
+ * - `appearance="transparent"` removes the toolbar's border and padding,
  *   making it suitable for embedding inside an existing container like
  *   an app header or card where the toolbar should not draw its own
  *   visual boundary.
@@ -488,7 +490,7 @@ CenteredNamedOverflow.globals = {
  *   treatment with the generic trigger.
  */
 export const Transparent: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext variant="transparent" aria-label="App header toolbar">
+  <ToolbarNext appearance="transparent" aria-label="App header toolbar">
     <ToolbarRegion position="start">
       <TooltrayNext role="group" aria-label="Search and filter">
         <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
@@ -513,6 +515,61 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
   </ToolbarNext>
 );
 Transparent.globals = {
+  responsive: "wrap",
+};
+
+/**
+ * Surface variants for bordered toolbars.
+ *
+ * Intended behavior:
+ * - `variant` maps the bordered toolbar to the matching container surface
+ *   tokens while preserving the same layout and overflow behavior.
+ * - `primary` is the default variant; `secondary` and `tertiary` are available
+ *   for embedding the toolbar in lower-emphasis surfaces.
+ */
+export const Variants: StoryFn<typeof ToolbarNext> = () => (
+  <div
+    style={{
+      display: "grid",
+      gap: "var(--salt-spacing-200)",
+    }}
+  >
+    {toolbarVariants.map((variant) => (
+      <div
+        key={variant}
+        style={{
+          display: "grid",
+          gap: "var(--salt-spacing-100)",
+        }}
+      >
+        <Text>{variant}</Text>
+        <ToolbarNext variant={variant} aria-label={`${variant} toolbar`}>
+          <ToolbarRegion position="start">
+            <TooltrayNext role="group" aria-label="Search and filter">
+              <Input
+                bordered
+                startAdornment={<SearchIcon />}
+                placeholder="Search"
+              />
+              <Dropdown bordered defaultSelected={["Option A"]}>
+                {options.map((option) => (
+                  <Option value={option} key={option} />
+                ))}
+              </Dropdown>
+            </TooltrayNext>
+          </ToolbarRegion>
+          <ToolbarRegion position="end">
+            <TooltrayNext role="group" aria-label="Utility actions">
+              <Button appearance="transparent">Export</Button>
+              <Button appearance="solid">Button</Button>
+            </TooltrayNext>
+          </ToolbarRegion>
+        </ToolbarNext>
+      </div>
+    ))}
+  </div>
+);
+Variants.globals = {
   responsive: "wrap",
 };
 
@@ -847,10 +904,10 @@ OverflowDividers.globals = {
 };
 
 /**
- * Transparent variant with named grouped overflow.
+ * Transparent appearance with named grouped overflow.
  *
  * Intended behavior:
- * - Combines `variant="transparent"` (no border, no padding) with
+ * - Combines `appearance="transparent"` (no border, no padding) with
  *   overflow behavior, validating that the overflow trigger and panel
  *   render correctly without the bordered toolbar frame.
  * - The search tray in the start region never collapses.
@@ -866,8 +923,8 @@ OverflowDividers.globals = {
  */
 export const TransparentOverflow: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext
+    appearance="transparent"
     aria-label="Transparent toolbar with overflow"
-    variant="transparent"
   >
     <ToolbarRegion position="start">
       <TooltrayNext role="group" aria-label="Search" overflowMode="none">
@@ -1083,8 +1140,8 @@ export const OverflowMenuInClippingContainer: StoryFn<
       </div>
       <div style={clippingValidationToolbarDockStyle}>
         <ToolbarNext
+          appearance="transparent"
           aria-label="Trade exception review toolbar"
-          variant="transparent"
         >
           <ToolbarRegion position="start">
             <TooltrayNext overflowMode="none" role="group" aria-label="Search">
