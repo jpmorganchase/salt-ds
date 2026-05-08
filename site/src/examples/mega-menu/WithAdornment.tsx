@@ -54,17 +54,13 @@ export const WithAdornment = (): ReactElement => {
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
-                    <MegaMenuItemContent>
-                      Telemedicine
-                      <Tag
-                        category={1}
-                        variant="primary"
-                        className={styles.menuItemAdornment}
-                      >
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    <div className={styles.menuItemAdornment}>
+                      <Tag category={1} variant="primary">
                         Premium
                       </Tag>
-                    </MegaMenuItemContent>
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>
@@ -90,17 +86,15 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
                     <MegaMenuItemContent>
                       Production planning
-                      <Tag
-                        category={2}
-                        variant="primary"
-                        className={styles.menuItemAdornment}
-                      >
+                    </MegaMenuItemContent>
+                    <div className={styles.menuItemAdornment}>
+                      <Tag category={2} variant="primary">
                         New
                       </Tag>
-                    </MegaMenuItemContent>
+                    </div>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -177,11 +171,11 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
-                    <MegaMenuItemContent>
-                      Training{" "}
-                      <Badge value="1" className={styles.menuItemAdornment} />
-                    </MegaMenuItemContent>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
+                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    <div className={styles.menuItemAdornment}>
+                      <Badge value="1" />
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>Support</MegaMenuItemContent>
@@ -198,11 +192,11 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
-                    <MegaMenuItemContent>
-                      In-person{" "}
-                      <Badge value="3" className={styles.menuItemAdornment} />
-                    </MegaMenuItemContent>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
+                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    <div className={styles.menuItemAdornment}>
+                      <Badge value="3" />
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>Workshops</MegaMenuItemContent>
@@ -241,11 +235,11 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
-                    <MegaMenuItemContent>
-                      Release notes{" "}
-                      <Badge className={styles.menuItemAdornment} />
-                    </MegaMenuItemContent>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
+                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    <div className={styles.menuItemAdornment}>
+                      <Badge />
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>FAQs</MegaMenuItemContent>
@@ -256,17 +250,13 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
-                    <MegaMenuItemContent>
-                      Community forum
-                      <Tag
-                        category={2}
-                        variant="primary"
-                        className={styles.menuItemAdornment}
-                      >
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
+                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    <div className={styles.menuItemAdornment}>
+                      <Tag category={2} variant="primary">
                         New
                       </Tag>
-                    </MegaMenuItemContent>
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>

@@ -449,16 +449,12 @@ export const WithAdornment: StoryFn = () => {
                     </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem>
-                    <MegaMenuItemContent>
-                      Telemedicine
-                      <Tag
-                        category={1}
-                        variant="primary"
-                        className="menu-item-adornment"
-                      >
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    <div className="menu-item-adornment">
+                      <Tag category={1} variant="primary">
                         Premium
                       </Tag>
-                    </MegaMenuItemContent>
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>
@@ -487,14 +483,12 @@ export const WithAdornment: StoryFn = () => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>
                       Production planning
-                      <Tag
-                        category={2}
-                        variant="primary"
-                        className="menu-item-adornment"
-                      >
+                    </MegaMenuItemContent>
+                    <div className="menu-item-adornment">
+                      <Tag category={2} variant="primary">
                         New
                       </Tag>
-                    </MegaMenuItemContent>
+                    </div>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -573,11 +567,11 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem>
-                    <MegaMenuItemContent>
+                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    <div className="menu-item-adornment">
                       {" "}
-                      Training
-                      <Badge value="1" className="menu-item-adornment" />
-                    </MegaMenuItemContent>
+                      <Badge value="1" />
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>Support</MegaMenuItemContent>
@@ -595,11 +589,11 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem>
-                    <MegaMenuItemContent>
+                    <MegaMenuItemContent> In-person</MegaMenuItemContent>
+                    <div className="menu-item-adornment">
                       {" "}
-                      In-person
-                      <Badge value="3" className="menu-item-adornment" />
-                    </MegaMenuItemContent>
+                      <Badge className="menu-item-adornment" />
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>Workshops</MegaMenuItemContent>
@@ -639,9 +633,10 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem>
-                    <MegaMenuItemContent>
-                      Release notes <Badge className="menu-item-adornment" />
-                    </MegaMenuItemContent>
+                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    <div className="menu-item-adornment">
+                      <Badge />
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>FAQs</MegaMenuItemContent>
@@ -653,16 +648,12 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem>
-                    <MegaMenuItemContent>
-                      Community forum
-                      <Tag
-                        category={2}
-                        variant="primary"
-                        className="menu-item-adornment"
-                      >
+                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    <div className="menu-item-adornment">
+                      <Tag category={2} variant="primary">
                         New
                       </Tag>
-                    </MegaMenuItemContent>
+                    </div>
                   </MegaMenuItem>
                   <MegaMenuItem>
                     <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>

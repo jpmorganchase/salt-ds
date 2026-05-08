@@ -54,7 +54,7 @@ export const WithAdornment = (): ReactElement => {
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
                     <MegaMenuItemContent>
                       Telemedicine
                       <Tag
@@ -90,7 +90,7 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
                     <MegaMenuItemContent>
                       Production planning
                       <Tag
@@ -177,7 +177,7 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
                     <MegaMenuItemContent>
                       Training{" "}
                       <Badge value="1" className={styles.menuItemAdornment} />
@@ -198,7 +198,7 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
                     <MegaMenuItemContent>
                       In-person{" "}
                       <Badge value="3" className={styles.menuItemAdornment} />
@@ -241,7 +241,7 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
                     <MegaMenuItemContent>
                       Release notes{" "}
                       <Badge className={styles.menuItemAdornment} />
@@ -256,7 +256,7 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuItem>
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem className={styles.menuItemFullWidth}>
                     <MegaMenuItemContent>
                       Community forum
                       <Tag

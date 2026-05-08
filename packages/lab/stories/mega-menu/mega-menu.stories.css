@@ -82,7 +82,14 @@ nav > ol {
 }
 
 .menu-item-adornment {
-  margin-left: auto;
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  height: var(--salt-size-base);
+}
+
+.saltMegaMenuItem > a {
+  inline-size: 100%;
 }
 
 .small-viewport-wrapper {

@@ -4,7 +4,14 @@
 }
 
 .menuItemAdornment {
-  margin-left: auto;
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  height: var(--salt-size-base);
+}
+
+.menuItemFullWidth > a {
+  inline-size: 100%;
 }
 
 .customRegionWrapper {
