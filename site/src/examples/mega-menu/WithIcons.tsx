@@ -35,6 +35,7 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -80,77 +81,95 @@ export const WithIcons = (): ReactElement => {
             <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
+                  <MegaMenuItem value="Digital banking">
                     <DevicesIcon aria-hidden />
-                    Digital Banking
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
+                  <MegaMenuItem value="Risk management">
                     <DatasetManagerIcon aria-hidden />
-                    Risk Management
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
+                  <MegaMenuItem value="Patient management">
                     <UserSearchIcon aria-hidden />
-                    Patient Management
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
                     <CallIcon aria-hidden />
-                    Telemedicine
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
+                  <MegaMenuItem value="Compliance solutions">
                     <PasteIcon aria-hidden />
-                    Compliance Solutions
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
+                  <MegaMenuItem value="E-commerce platforms">
                     <CartIcon aria-hidden />
-                    E-Commerce Platforms
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
+                  <MegaMenuItem value="Supply chain optimization">
                     <LinkedIcon aria-hidden />
-                    Supply Chain Optimization
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
+                  <MegaMenuItem value="Quality control">
                     <SettingsIcon aria-hidden />
-                    Quality Control
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
+                  <MegaMenuItem value="Production planning">
                     <NotificationIcon aria-hidden />
-                    Production Planning
+                    <MegaMenuItemContent>
+                      Production planning
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem value="Learning Management Systems">
+                  <MegaMenuItem value="Learning management systems">
                     <GuideOpenIcon aria-hidden />
-                    Learning Management Systems
+                    <MegaMenuItemContent>
+                      Learning management systems
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Virtual Classrooms">
+                  <MegaMenuItem value="Virtual classrooms">
                     <LaptopIcon aria-hidden />
-                    Virtual Classrooms
+                    <MegaMenuItemContent>
+                      Virtual classrooms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem value="Document Management">
+                  <MegaMenuItem value="Document management">
                     <DocumentIcon aria-hidden />
-                    Document Management
+                    <MegaMenuItemContent>
+                      Document management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Citizen Services">
+                  <MegaMenuItem value="Citizen services">
                     <PinIcon aria-hidden />
-                    Citizen Services
+                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Public Safety Solutions">
+                  <MegaMenuItem value="Public safety solutions">
                     <UserGroupIcon aria-hidden />
-                    Public Safety Solutions
+                    <MegaMenuItemContent>
+                      Public safety solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -177,80 +196,81 @@ export const WithIcons = (): ReactElement => {
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
                   <MegaMenuItem value="Strategy">
                     <ChartBubbleIcon aria-hidden />
-                    Strategy
+                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="IT">
                     <LaptopIcon aria-hidden />
-                    IT
+                    <MegaMenuItemContent>IT</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="HR">
                     <UserGroupIcon aria-hidden />
-                    HR
+                    <MegaMenuItemContent>HR</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Marketing">
                     <MarkerIcon aria-hidden />
-                    Marketing
+                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Operations">
                     <SettingsIcon aria-hidden />
-                    Operations
+                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
                   <MegaMenuItem value="Onboarding">
                     <PasteIcon aria-hidden />
-                    Onboarding
+                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Migration">
                     <SwapIcon aria-hidden />
-                    Migration
+                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Customization">
                     <PinIcon aria-hidden />
-                    Customization
+                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Training">
                     <GuideClosedIcon aria-hidden />
-                    Training
+                    <MegaMenuItemContent>Training</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Support">
                     <InfoIcon aria-hidden />
-                    Support
+                    <MegaMenuItemContent>Support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Testing">
                     <MaintenanceIcon aria-hidden />
-                    Testing
+                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Rollout">
                     <SaveIcon aria-hidden />
-                    Rollout
+                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
                   <MegaMenuItem value="Online">
                     <DisplayIcon aria-hidden />
-                    Online
+                    <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="In-Person">
+                  <MegaMenuItem value="In-person">
                     <UserIcon aria-hidden />
-                    In-Person
+                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Workshops">
                     <KeyIcon aria-hidden />
-                    Workshops
+                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Certifications">
                     <DocumentIcon aria-hidden />
-                    Certifications
+                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Tutorials">
                     <DocumentEditIcon aria-hidden />
-                    Tutorials
+                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Guides">
-                    <GuideOpenIcon aria-hidden /> Guides
+                    <GuideOpenIcon aria-hidden />
+                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -275,36 +295,36 @@ export const WithIcons = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User Guides">
+                  <MegaMenuItem value="User guides">
                     <GuideClosedIcon aria-hidden />
-                    User Guides
+                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="API Reference">
+                  <MegaMenuItem value="API reference">
                     <ApiIcon aria-hidden />
-                    API Reference
+                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Release Notes">
+                  <MegaMenuItem value="Release notes">
                     <NotificationIcon aria-hidden />
-                    Release Notes
+                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="FAQs">
                     <HelpIcon aria-hidden />
-                    FAQs
+                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Support & Help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact Support">
+                  <MegaMenuHeader>Support & help</MegaMenuHeader>
+                  <MegaMenuItem value="Contact support">
                     <InfoIcon aria-hidden />
-                    Contact Support
+                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Community Forum">
+                  <MegaMenuItem value="Community forum">
                     <ChatGroupIcon aria-hidden />
-                    Community Forum
+                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Troubleshooting">
                     <AnnouncementIcon aria-hidden />
-                    Troubleshooting
+                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>

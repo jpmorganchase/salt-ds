@@ -95,6 +95,11 @@ nav > ol {
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
+.link-footer-spacing {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  width: fit-content;
+}
+
 .small-viewport-container .saltMegaMenuSection {
   grid-template-columns: 1fr;
   max-inline-size: 100%;

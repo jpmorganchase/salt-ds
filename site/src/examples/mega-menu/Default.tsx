@@ -4,6 +4,7 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -49,61 +50,81 @@ export const Default = (): ReactElement => {
             <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
+                  <MegaMenuItem value="Digital banking">
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
+                  <MegaMenuItem value="Risk management">
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
+                  <MegaMenuItem value="Patient management">
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
+                  <MegaMenuItem value="Telemedicine">
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Compliance solutions">
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
+                  <MegaMenuItem value="E-commerce platforms">
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
-                    Supply Chain Optimization
+                  <MegaMenuItem value="Supply chain optimization">
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
-                    Quality Control
+                  <MegaMenuItem value="Quality control">
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
-                    Production Planning
+                  <MegaMenuItem value="Production planning">
+                    <MegaMenuItemContent>
+                      Production planning
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem value="Learning Management Systems">
-                    Learning Management Systems
+                  <MegaMenuItem value="Learning management systems">
+                    <MegaMenuItemContent>
+                      Learning management systems
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Virtual Classrooms">
-                    Virtual Classrooms
+                  <MegaMenuItem value="Virtual classrooms">
+                    <MegaMenuItemContent>
+                      Virtual classrooms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem value="Document Management">
-                    Document Management
+                  <MegaMenuItem value="Document management">
+                    <MegaMenuItemContent>
+                      Document management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Citizen Services">
-                    Citizen Services
+                  <MegaMenuItem value="Citizen services">
+                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Public Safety Solutions">
-                    Public Safety Solutions
+                  <MegaMenuItem value="Public safety solutions">
+                    <MegaMenuItemContent>
+                      Public safety solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -128,34 +149,66 @@ export const Default = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy">Strategy</MegaMenuItem>
-                  <MegaMenuItem value="IT">IT</MegaMenuItem>
-                  <MegaMenuItem value="HR">HR</MegaMenuItem>
-                  <MegaMenuItem value="Marketing">Marketing</MegaMenuItem>
-                  <MegaMenuItem value="Operations">Operations</MegaMenuItem>
+                  <MegaMenuItem value="Strategy">
+                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="IT">
+                    <MegaMenuItemContent>IT</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="HR">
+                    <MegaMenuItemContent>HR</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Marketing">
+                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Operations">
+                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem value="Onboarding">Onboarding</MegaMenuItem>
-                  <MegaMenuItem value="Migration">Migration</MegaMenuItem>
-                  <MegaMenuItem value="Customization">
-                    Customization
+                  <MegaMenuItem value="Onboarding">
+                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Training">Training</MegaMenuItem>
-                  <MegaMenuItem value="Support">Support</MegaMenuItem>
-                  <MegaMenuItem value="Testing">Testing</MegaMenuItem>
-                  <MegaMenuItem value="Rollout">Rollout</MegaMenuItem>
+                  <MegaMenuItem value="Migration">
+                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Customization">
+                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Training">
+                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Support">
+                    <MegaMenuItemContent>Support</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Testing">
+                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Rollout">
+                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem value="Online">Online</MegaMenuItem>
-                  <MegaMenuItem value="In-Person">In-Person</MegaMenuItem>
-                  <MegaMenuItem value="Workshops">Workshops</MegaMenuItem>
-                  <MegaMenuItem value="Certifications">
-                    Certifications
+                  <MegaMenuItem value="Online">
+                    <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
-                  <MegaMenuItem value="Guides">Guides</MegaMenuItem>
+                  <MegaMenuItem value="In-person">
+                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Workshops">
+                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Certifications">
+                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Tutorials">
+                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Guides">
+                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
@@ -179,25 +232,29 @@ export const Default = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User Guides">User Guides</MegaMenuItem>
-                  <MegaMenuItem value="API Reference">
-                    API Reference
+                  <MegaMenuItem value="User guides">
+                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Release Notes">
-                    Release Notes
+                  <MegaMenuItem value="API reference">
+                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="FAQs">FAQs</MegaMenuItem>
+                  <MegaMenuItem value="Release notes">
+                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="FAQs">
+                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Support & Help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact Support">
-                    Contact Support
+                  <MegaMenuHeader>Support & help</MegaMenuHeader>
+                  <MegaMenuItem value="Contact support">
+                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Community Forum">
-                    Community Forum
+                  <MegaMenuItem value="Community forum">
+                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Troubleshooting">
-                    Troubleshooting
+                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>

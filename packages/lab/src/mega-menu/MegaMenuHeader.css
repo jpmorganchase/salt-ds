@@ -10,3 +10,6 @@
   min-height: var(--salt-size-base);
   color: var(--salt-content-secondary-foreground);
 }
+.saltMegaMenuHeader {
+  margin-bottom: var(--salt-spacing-50);
+}

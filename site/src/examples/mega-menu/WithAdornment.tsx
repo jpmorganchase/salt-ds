@@ -1,5 +1,4 @@
-import { FlexLayout, Link, NavigationItem, StackLayout } from "@salt-ds/core";
-import { ChevronRightIcon } from "@salt-ds/icons";
+import { Badge, NavigationItem, StackLayout, Tag } from "@salt-ds/core";
 import {
   MegaMenu,
   MegaMenuGroup,
@@ -13,7 +12,7 @@ import {
 import { type ReactElement, useState } from "react";
 import styles from "./index.module.css";
 
-export const WithLink = (): ReactElement => {
+export const WithAdornment = (): ReactElement => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | undefined>();
@@ -48,10 +47,7 @@ export const WithLink = (): ReactElement => {
                 Solutions
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuPanel
-              className={styles.withLinkMenuContainer}
-              aria-label="Solutions menu"
-            >
+            <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
@@ -70,7 +66,16 @@ export const WithLink = (): ReactElement => {
                     </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    <MegaMenuItemContent>
+                      Telemedicine
+                      <Tag
+                        category={1}
+                        variant="primary"
+                        className={styles.menuItemAdornment}
+                      >
+                        Premium
+                      </Tag>
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Compliance solutions">
                     <MegaMenuItemContent>
@@ -99,6 +104,13 @@ export const WithLink = (): ReactElement => {
                   <MegaMenuItem value="Production planning">
                     <MegaMenuItemContent>
                       Production planning
+                      <Tag
+                        category={2}
+                        variant="primary"
+                        className={styles.menuItemAdornment}
+                      >
+                        New
+                      </Tag>
                     </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
@@ -132,28 +144,6 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <FlexLayout wrap gap={3}>
-                <MegaMenuGroup className={styles.linkFooterSpacing}>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Book a demo
-                  </Link>
-                </MegaMenuGroup>
-                <MegaMenuGroup className="link-footer-spacing">
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Support center
-                  </Link>
-                </MegaMenuGroup>
-              </FlexLayout>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -171,10 +161,7 @@ export const WithLink = (): ReactElement => {
                 Services
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuPanel
-              className={styles.withLinkMenuContainer}
-              aria-label="Services menu"
-            >
+            <MegaMenuPanel aria-label="Services menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -206,7 +193,10 @@ export const WithLink = (): ReactElement => {
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Training">
-                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    <MegaMenuItemContent>
+                      Training{" "}
+                      <Badge value="1" className={styles.menuItemAdornment} />
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Support">
                     <MegaMenuItemContent>Support</MegaMenuItemContent>
@@ -224,7 +214,10 @@ export const WithLink = (): ReactElement => {
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="In-person">
-                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    <MegaMenuItemContent>
+                      In-person{" "}
+                      <Badge value="3" className={styles.menuItemAdornment} />
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Workshops">
                     <MegaMenuItemContent>Workshops</MegaMenuItemContent>
@@ -240,16 +233,6 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup className={styles.linkFooterSpacing}>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  Service status
-                </Link>
-              </MegaMenuGroup>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -267,10 +250,7 @@ export const WithLink = (): ReactElement => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuPanel
-              className={styles.withLinkMenuContainer}
-              aria-label="Resources menu"
-            >
+            <MegaMenuPanel aria-label="Resources menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
@@ -281,7 +261,10 @@ export const WithLink = (): ReactElement => {
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Release notes">
-                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    <MegaMenuItemContent>
+                      Release notes{" "}
+                      <Badge className={styles.menuItemAdornment} />
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="FAQs">
                     <MegaMenuItemContent>FAQs</MegaMenuItemContent>
@@ -293,23 +276,22 @@ export const WithLink = (): ReactElement => {
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Community forum">
-                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    <MegaMenuItemContent>
+                      Community forum
+                      <Tag
+                        category={2}
+                        variant="primary"
+                        className={styles.menuItemAdornment}
+                      >
+                        New
+                      </Tag>
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Troubleshooting">
                     <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup className={styles.linkFooterSpacing}>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  Browse documentation
-                </Link>
-              </MegaMenuGroup>
             </MegaMenuPanel>
           </MegaMenu>
         </li>

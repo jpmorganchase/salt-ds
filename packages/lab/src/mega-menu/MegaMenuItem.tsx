@@ -29,16 +29,11 @@ export interface MegaMenuItemProps extends HTMLAttributes<HTMLLIElement> {
    * @default true
    */
   closeOnSelect?: boolean;
-  /**
-   * Navigation URL for the menu item. If provided, renders as a link.
-   * If omitted, renders as a button for action items.
-   */
-  href?: string;
 }
 
 export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
   function MegaMenuItem(
-    { children, className, value, closeOnSelect = true, href, ...rest },
+    { children, className, value, closeOnSelect = true, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -89,9 +84,7 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
         onClick={handleClick}
         onKeyDown={handleKeyDown}
       >
-        <a href={href ?? "#"} {...baseProps}>
-          {children}
-        </a>
+        <a {...baseProps}>{children}</a>
       </li>
     );
   },

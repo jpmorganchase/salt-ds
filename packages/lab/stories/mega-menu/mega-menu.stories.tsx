@@ -46,6 +46,7 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -106,77 +107,119 @@ export const WithIcons: StoryFn = () => {
             <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem value="Digital banking">
-                    <DevicesIcon aria-hidden />
-                    Digital banking
+                    <DevicesIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Risk management">
-                    <DatasetManagerIcon aria-hidden />
-                    Risk management
+                    <DatasetManagerIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem value="Patient management">
-                    <UserSearchIcon aria-hidden />
-                    Patient management
+                    <UserSearchIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
-                    <CallIcon aria-hidden />
-                    Telemedicine
+                    <CallIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Compliance solutions">
-                    <PasteIcon aria-hidden />
-                    Compliance solutions
+                    <PasteIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem value="E-commerce platforms">
-                    <CartIcon aria-hidden />
-                    E-commerce platforms
+                    <CartIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem value="Supply chain optimization">
-                    <LinkedIcon aria-hidden />
-                    Supply chain optimization
+                    <LinkedIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Quality control">
-                    <SettingsIcon aria-hidden />
-                    Quality control
+                    <SettingsIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Production planning">
-                    <NotificationIcon aria-hidden />
-                    Production planning
+                    <NotificationIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>
+                      Production planning
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
                   <MegaMenuItem value="Learning management systems">
-                    <GuideOpenIcon aria-hidden />
-                    Learning management systems
+                    <GuideOpenIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>
+                      Learning management systems
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Virtual classrooms">
-                    <LaptopIcon aria-hidden />
-                    Virtual classrooms
+                    <LaptopIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>
+                      Virtual classrooms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
                   <MegaMenuItem value="Document management">
-                    <DocumentIcon aria-hidden />
-                    Document management
+                    <DocumentIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>
+                      Document management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Citizen services">
-                    <PinIcon aria-hidden />
-                    Citizen services
+                    <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Public safety solutions">
-                    <UserGroupIcon aria-hidden />
-                    Public safety solutions
+                    <UserGroupIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>
+                      Public safety solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -203,83 +246,109 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
                   <MegaMenuItem value="Strategy">
-                    <ChartBubbleIcon aria-hidden />
-                    Strategy
+                    <ChartBubbleIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="IT">
-                    <LaptopIcon aria-hidden />
-                    IT
+                    <LaptopIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>IT</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="HR">
-                    <UserGroupIcon aria-hidden />
-                    HR
+                    <UserGroupIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>HR</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Marketing">
-                    <MarkerIcon aria-hidden />
-                    Marketing
+                    <MarkerIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Operations">
-                    <SettingsIcon aria-hidden />
-                    Operations
+                    <SettingsIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
                   <MegaMenuItem value="Onboarding">
-                    <PasteIcon aria-hidden />
-                    Onboarding
+                    <PasteIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Migration">
-                    <SwapIcon aria-hidden />
-                    Migration
+                    <SwapIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Customization">
-                    <PinIcon aria-hidden />
-                    Customization
+                    <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Training">
-                    <GuideClosedIcon aria-hidden />
-                    Training
+                    <GuideClosedIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Training</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Support">
-                    <InfoIcon aria-hidden />
-                    Support
+                    <InfoIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Testing">
-                    {" "}
-                    <MaintenanceIcon aria-hidden />
-                    Testing
+                    <MaintenanceIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Rollout">
-                    <SaveIcon aria-hidden />
-                    Rollout
+                    <SaveIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
                   <MegaMenuItem value="Online">
-                    <DisplayIcon aria-hidden />
-                    Online
+                    <DisplayIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="In-person">
-                    <UserIcon aria-hidden />
-                    In-person
+                    <UserIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Workshops">
-                    <KeyIcon aria-hidden />
-                    Workshops
+                    <KeyIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Certifications">
-                    <DocumentIcon aria-hidden />
-                    Certifications
+                    <DocumentIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Tutorials">
-                    {" "}
-                    <DocumentEditIcon aria-hidden />
-                    Tutorials
+                    <DocumentEditIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Guides">
-                    <GuideOpenIcon aria-hidden /> Guides
+                    <GuideOpenIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -305,36 +374,47 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
                   <MegaMenuItem value="User guides">
-                    {" "}
-                    <GuideClosedIcon aria-hidden />
-                    User guides
+                    <GuideClosedIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="API reference">
-                    <ApiIcon aria-hidden />
-                    API reference
+                    <ApiIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Release notes">
-                    <NotificationIcon aria-hidden />
-                    Release notes
+                    <NotificationIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="FAQs">
-                    <HelpIcon aria-hidden />
-                    FAQs
+                    <HelpIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Support & Help</MegaMenuHeader>
+                  <MegaMenuHeader>Support & help</MegaMenuHeader>
                   <MegaMenuItem value="Contact support">
-                    <InfoIcon aria-hidden />
-                    Contact support
+                    <InfoIcon aria-hidden className="saltMegaMenuItem-icon" />
+                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Community forum">
-                    <ChatGroupIcon aria-hidden />
-                    Community forum
+                    <ChatGroupIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Troubleshooting">
-                    <AnnouncementIcon aria-hidden />
-                    Troubleshooting
+                    <AnnouncementIcon
+                      aria-hidden
+                      className="saltMegaMenuItem-icon"
+                    />
+                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -387,77 +467,97 @@ export const WithAdornment: StoryFn = () => {
             <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem value="Digital banking">
-                    Digital banking
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Risk management">
-                    Risk management
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem value="Patient management">
-                    Patient management
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
-                    Telemedicine
-                    <Tag
-                      category={1}
-                      variant="primary"
-                      className="menu-item-adornment"
-                    >
-                      Premium
-                    </Tag>
+                    <MegaMenuItemContent>
+                      Telemedicine
+                      <Tag
+                        category={1}
+                        variant="primary"
+                        className="menu-item-adornment"
+                      >
+                        Premium
+                      </Tag>
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Compliance solutions">
-                    Compliance solutions
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem value="E-commerce platforms">
-                    E-commerce platforms
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem value="Supply chain optimization">
-                    Supply chain optimization
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Quality control">
-                    Quality control
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Production planning">
-                    Production planning
-                    <Tag
-                      category={2}
-                      variant="primary"
-                      className="menu-item-adornment"
-                    >
-                      New
-                    </Tag>
+                    <MegaMenuItemContent>
+                      Production planning
+                      <Tag
+                        category={2}
+                        variant="primary"
+                        className="menu-item-adornment"
+                      >
+                        New
+                      </Tag>
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
                   <MegaMenuItem value="Learning management systems">
-                    Learning management systems
+                    <MegaMenuItemContent>
+                      Learning management systems
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Virtual classrooms">
-                    Virtual classrooms
+                    <MegaMenuItemContent>
+                      Virtual classrooms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
                   <MegaMenuItem value="Document management">
-                    Document management
+                    <MegaMenuItemContent>
+                      Document management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Citizen services">
-                    Citizen services
+                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Public safety solutions">
-                    Public safety solutions
+                    <MegaMenuItemContent>
+                      Public safety solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -483,42 +583,74 @@ export const WithAdornment: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy">Strategy</MegaMenuItem>
-                  <MegaMenuItem value="IT">IT</MegaMenuItem>
-                  <MegaMenuItem value="HR">HR</MegaMenuItem>
-                  <MegaMenuItem value="Marketing">Marketing</MegaMenuItem>
-                  <MegaMenuItem value="Operations">Operations</MegaMenuItem>
+                  <MegaMenuItem value="Strategy">
+                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="IT">
+                    <MegaMenuItemContent>IT</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="HR">
+                    <MegaMenuItemContent>HR</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Marketing">
+                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Operations">
+                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem value="Onboarding">Onboarding</MegaMenuItem>
-                  <MegaMenuItem value="Migration">Migration</MegaMenuItem>
+                  <MegaMenuItem value="Onboarding">
+                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Migration">
+                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                  </MegaMenuItem>
                   <MegaMenuItem value="Customization">
-                    Customization
+                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Training">
-                    {" "}
-                    Training
-                    <Badge value="1" className="menu-item-adornment" />
+                    <MegaMenuItemContent>
+                      {" "}
+                      Training
+                      <Badge value="1" className="menu-item-adornment" />
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Support">Support</MegaMenuItem>
-                  <MegaMenuItem value="Testing">Testing</MegaMenuItem>
-                  <MegaMenuItem value="Rollout">Rollout</MegaMenuItem>
+                  <MegaMenuItem value="Support">
+                    <MegaMenuItemContent>Support</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Testing">
+                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Rollout">
+                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem value="Online">Online</MegaMenuItem>
+                  <MegaMenuItem value="Online">
+                    <MegaMenuItemContent>Online</MegaMenuItemContent>
+                  </MegaMenuItem>
                   <MegaMenuItem value="In-person">
-                    {" "}
-                    In-person
-                    <Badge value="3" className="menu-item-adornment" />
+                    <MegaMenuItemContent>
+                      {" "}
+                      In-person
+                      <Badge value="3" className="menu-item-adornment" />
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Workshops">Workshops</MegaMenuItem>
+                  <MegaMenuItem value="Workshops">
+                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                  </MegaMenuItem>
                   <MegaMenuItem value="Certifications">
-                    Certifications
+                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
-                  <MegaMenuItem value="Guides">Guides</MegaMenuItem>
+                  <MegaMenuItem value="Tutorials">
+                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Guides">
+                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
@@ -542,32 +674,40 @@ export const WithAdornment: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User guides">User guides</MegaMenuItem>
+                  <MegaMenuItem value="User guides">
+                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                  </MegaMenuItem>
                   <MegaMenuItem value="API reference">
-                    API reference
+                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Release notes">
-                    Release notes <Badge className="menu-item-adornment" />
+                    <MegaMenuItemContent>
+                      Release notes <Badge className="menu-item-adornment" />
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="FAQs">FAQs</MegaMenuItem>
+                  <MegaMenuItem value="FAQs">
+                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Support & Help</MegaMenuHeader>
+                  <MegaMenuHeader>Support & help</MegaMenuHeader>
                   <MegaMenuItem value="Contact support">
-                    Contact support
+                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Community forum">
-                    Community forum
-                    <Tag
-                      category={2}
-                      variant="primary"
-                      className="menu-item-adornment"
-                    >
-                      New
-                    </Tag>
+                    <MegaMenuItemContent>
+                      Community forum
+                      <Tag
+                        category={2}
+                        variant="primary"
+                        className="menu-item-adornment"
+                      >
+                        New
+                      </Tag>
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Troubleshooting">
-                    Troubleshooting
+                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -598,49 +738,49 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 1">
-                  Mega menu item 1
+                  <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 2">
-                  Mega menu item 2
+                  <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 3">
-                  Mega menu item 3
+                  <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 4">
-                  Mega menu item 4
+                  <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 5">
-                  Mega menu item 5
+                  <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 6">
-                  Mega menu item 6
+                  <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 7">
-                  Mega menu item 7
+                  <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 8">
-                  Mega menu item 8
+                  <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 9">
-                  Mega menu item 9
+                  <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 10">
-                  Mega menu item 10
+                  <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 11">
-                  Mega menu item 11
+                  <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 12">
-                  Mega menu item 12
+                  <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -661,49 +801,49 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 1">
-                  Mega menu item 1
+                  <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 2">
-                  Mega menu item 2
+                  <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 3">
-                  Mega menu item 3
+                  <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 4">
-                  Mega menu item 4
+                  <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 5">
-                  Mega menu item 5
+                  <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 6">
-                  Mega menu item 6
+                  <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 7">
-                  Mega menu item 7
+                  <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 8">
-                  Mega menu item 8
+                  <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 9">
-                  Mega menu item 9
+                  <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 10">
-                  Mega menu item 10
+                  <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 11">
-                  Mega menu item 11
+                  <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 12">
-                  Mega menu item 12
+                  <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -724,49 +864,49 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 1">
-                  Mega menu item 1
+                  <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 2">
-                  Mega menu item 2
+                  <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 3">
-                  Mega menu item 3
+                  <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 4">
-                  Mega menu item 4
+                  <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 5">
-                  Mega menu item 5
+                  <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 6">
-                  Mega menu item 6
+                  <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 7">
-                  Mega menu item 7
+                  <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 8">
-                  Mega menu item 8
+                  <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 9">
-                  Mega menu item 9
+                  <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 10">
-                  Mega menu item 10
+                  <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 11">
-                  Mega menu item 11
+                  <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 12">
-                  Mega menu item 12
+                  <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -787,49 +927,49 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 1">
-                  Mega menu item 1
+                  <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 2">
-                  Mega menu item 2
+                  <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 3">
-                  Mega menu item 3
+                  <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 4">
-                  Mega menu item 4
+                  <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 5">
-                  Mega menu item 5
+                  <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 6">
-                  Mega menu item 6
+                  <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 7">
-                  Mega menu item 7
+                  <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 8">
-                  Mega menu item 8
+                  <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 9">
-                  Mega menu item 9
+                  <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
                 <MegaMenuItem value="Mega menu item 10">
-                  Mega menu item 10
+                  <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 11">
-                  Mega menu item 11
+                  <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Mega menu item 12">
-                  Mega menu item 12
+                  <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -854,30 +994,38 @@ export const FullWidthContainer: StoryFn = () => {
           <MegaMenuGroup>
             <MegaMenuHeader>Products</MegaMenuHeader>
             <MegaMenuItem value="Analytics workspace">
-              Analytics workspace
+              <MegaMenuItemContent>Analytics workspace</MegaMenuItemContent>
             </MegaMenuItem>
             <MegaMenuItem value="Order management">
-              Order management
+              <MegaMenuItemContent>Order management</MegaMenuItemContent>
             </MegaMenuItem>
             <MegaMenuItem value="Pricing configurator">
-              Pricing configurator
+              <MegaMenuItemContent>Pricing configurator</MegaMenuItemContent>
             </MegaMenuItem>
           </MegaMenuGroup>
           <MegaMenuGroup>
             <MegaMenuHeader>Solutions</MegaMenuHeader>
-            <MegaMenuItem value="Risk monitoring">Risk monitoring</MegaMenuItem>
+            <MegaMenuItem value="Risk monitoring">
+              <MegaMenuItemContent>Risk monitoring</MegaMenuItemContent>
+            </MegaMenuItem>
             <MegaMenuItem value="Client reporting">
-              Client reporting
+              <MegaMenuItemContent>Client reporting</MegaMenuItemContent>
             </MegaMenuItem>
             <MegaMenuItem value="Trade automation">
-              Trade automation
+              <MegaMenuItemContent>Trade automation</MegaMenuItemContent>
             </MegaMenuItem>
           </MegaMenuGroup>
           <MegaMenuGroup>
             <MegaMenuHeader>Resources</MegaMenuHeader>
-            <MegaMenuItem value="Documentation">Documentation</MegaMenuItem>
-            <MegaMenuItem value="Release notes">Release notes</MegaMenuItem>
-            <MegaMenuItem value="Developer API">Developer API</MegaMenuItem>
+            <MegaMenuItem value="Documentation">
+              <MegaMenuItemContent>Documentation</MegaMenuItemContent>
+            </MegaMenuItem>
+            <MegaMenuItem value="Release notes">
+              <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+            </MegaMenuItem>
+            <MegaMenuItem value="Developer API">
+              <MegaMenuItemContent>Developer API</MegaMenuItemContent>
+            </MegaMenuItem>
           </MegaMenuGroup>
         </MegaMenuSection>
       </MegaMenuPanel>
@@ -906,40 +1054,52 @@ export const WithCustomRegion: StoryFn = () => {
             <div className="custom-region-content">
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem value="Digital banking">
-                    Digital banking
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Risk management">
-                    Risk management
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem value="Patient management">
-                    Patient management
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
+                  <MegaMenuItem value="Telemedicine">
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  </MegaMenuItem>
                   <MegaMenuItem value="Compliance solutions">
-                    Compliance solutions
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem value="E-commerce platforms">
-                    E-commerce platforms
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem value="Supply chain optimization">
-                    Supply chain optimization
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Quality control">
-                    Quality control
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Production planning">
-                    Production planning
+                    <MegaMenuItemContent>
+                      Production planning
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -1038,40 +1198,52 @@ export const WithCustomRegion: StoryFn = () => {
             <div className="custom-region-content">
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem value="Digital banking">
-                    Digital banking
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Risk management">
-                    Risk management
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem value="Patient management">
-                    Patient management
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
+                  <MegaMenuItem value="Telemedicine">
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  </MegaMenuItem>
                   <MegaMenuItem value="Compliance solutions">
-                    Compliance solutions
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem value="E-commerce platforms">
-                    E-commerce platforms
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem value="Supply chain optimization">
-                    Supply chain optimization
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Quality control">
-                    Quality control
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Production planning">
-                    Production planning
+                    <MegaMenuItemContent>
+                      Production planning
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -1140,40 +1312,48 @@ export const WithCustomRegion: StoryFn = () => {
             </MegaMenuCustomRegion>
             <MegaMenuSection>
               <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuHeader>Financial services</MegaMenuHeader>
                 <MegaMenuItem value="Digital banking">
-                  Digital banking
+                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Risk management">
-                  Risk management
+                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
                 <MegaMenuItem value="Patient management">
-                  Patient management
+                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
+                <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                </MegaMenuItem>
                 <MegaMenuItem value="Compliance solutions">
-                  Compliance solutions
+                  <MegaMenuItemContent>
+                    Compliance solutions
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
                 <MegaMenuItem value="E-commerce platforms">
-                  E-commerce platforms
+                  <MegaMenuItemContent>
+                    E-commerce platforms
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                 <MegaMenuItem value="Supply chain optimization">
-                  Supply chain optimization
+                  <MegaMenuItemContent>
+                    Supply chain optimization
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Quality control">
-                  Quality control
+                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Production planning">
-                  Production planning
+                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -1211,40 +1391,48 @@ export const WithCustomRegion: StoryFn = () => {
           >
             <MegaMenuSection>
               <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuHeader>Financial services</MegaMenuHeader>
                 <MegaMenuItem value="Digital banking">
-                  Digital banking
+                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Risk management">
-                  Risk management
+                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
                 <MegaMenuItem value="Patient management">
-                  Patient management
+                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
+                <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                </MegaMenuItem>
                 <MegaMenuItem value="Compliance solutions">
-                  Compliance solutions
+                  <MegaMenuItemContent>
+                    Compliance solutions
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
                 <MegaMenuItem value="E-commerce platforms">
-                  E-commerce platforms
+                  <MegaMenuItemContent>
+                    E-commerce platforms
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                 <MegaMenuItem value="Supply chain optimization">
-                  Supply chain optimization
+                  <MegaMenuItemContent>
+                    Supply chain optimization
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Quality control">
-                  Quality control
+                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                 </MegaMenuItem>
                 <MegaMenuItem value="Production planning">
-                  Production planning
+                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -1340,7 +1528,7 @@ export const WithLink: StoryFn = () => {
             <MegaMenuPanel className="withLink-menu-container">
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem
                     value="Digital banking"
                     onClick={() => {
@@ -1350,7 +1538,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Digital banking
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Risk management"
@@ -1361,7 +1549,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Risk management
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1375,7 +1563,9 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Patient management
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Telemedicine"
@@ -1386,7 +1576,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Telemedicine
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Compliance solutions"
@@ -1397,7 +1587,9 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Compliance solutions
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1411,7 +1603,9 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    E-commerce platforms
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1425,7 +1619,9 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Supply chain optimization
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Quality control"
@@ -1436,7 +1632,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Quality control
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Production planning"
@@ -1447,7 +1643,9 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Production planning
+                    <MegaMenuItemContent>
+                      Production planning
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1461,7 +1659,9 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Learning management systems
+                    <MegaMenuItemContent>
+                      Learning management systems
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Virtual classrooms"
@@ -1472,7 +1672,9 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Virtual classrooms
+                    <MegaMenuItemContent>
+                      Virtual classrooms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1486,7 +1688,9 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Document management
+                    <MegaMenuItemContent>
+                      Document management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Citizen services"
@@ -1497,7 +1701,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Citizen services
+                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Public safety solutions"
@@ -1508,27 +1712,34 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Public safety solutions
+                    <MegaMenuItemContent>
+                      Public safety solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
-              >
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  View guidelines
-                </Link>
-              </MegaMenuGroup>
+              <FlexLayout wrap gap={3}>
+                <MegaMenuGroup className="link-footer-spacing">
+                  <Link
+                    color="primary"
+                    underline="default"
+                    href="#link"
+                    IconComponent={ChevronRightIcon}
+                  >
+                    Book a demo
+                  </Link>
+                </MegaMenuGroup>
+                <MegaMenuGroup className="link-footer-spacing">
+                  <Link
+                    color="primary"
+                    underline="default"
+                    href="#link"
+                    IconComponent={ChevronRightIcon}
+                  >
+                    Support center
+                  </Link>
+                </MegaMenuGroup>
+              </FlexLayout>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1560,7 +1771,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Strategy
+                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="IT"
@@ -1568,7 +1779,7 @@ export const WithLink: StoryFn = () => {
                       console.log("[WithLink MegaMenu] selected value:", "IT");
                     }}
                   >
-                    IT
+                    <MegaMenuItemContent>IT</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="HR"
@@ -1576,7 +1787,7 @@ export const WithLink: StoryFn = () => {
                       console.log("[WithLink MegaMenu] selected value:", "HR");
                     }}
                   >
-                    HR
+                    <MegaMenuItemContent>HR</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Marketing"
@@ -1587,7 +1798,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Marketing
+                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Operations"
@@ -1598,7 +1809,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Operations
+                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1612,7 +1823,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Onboarding
+                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Migration"
@@ -1623,7 +1834,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Migration
+                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Customization"
@@ -1634,7 +1845,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Customization
+                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Training"
@@ -1645,7 +1856,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Training
+                    <MegaMenuItemContent>Training</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Support"
@@ -1656,7 +1867,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Support
+                    <MegaMenuItemContent>Support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Testing"
@@ -1667,7 +1878,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Testing
+                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Rollout"
@@ -1678,7 +1889,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Rollout
+                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1692,7 +1903,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Online
+                    <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="In-person"
@@ -1703,7 +1914,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    In-person
+                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Workshops"
@@ -1714,7 +1925,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Workshops
+                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Certifications"
@@ -1725,7 +1936,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Certifications
+                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Tutorials"
@@ -1736,7 +1947,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Tutorials
+                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Guides"
@@ -1747,24 +1958,18 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Guides
+                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
-              >
+              <MegaMenuGroup className="link-footer-spacing">
                 <Link
                   color="primary"
                   underline="default"
                   href="#link"
                   IconComponent={ChevronRightIcon}
                 >
-                  See all services
+                  Service status
                 </Link>
               </MegaMenuGroup>
             </MegaMenuPanel>
@@ -1797,7 +2002,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    User guides
+                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="API reference"
@@ -1808,7 +2013,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    API reference
+                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Release notes"
@@ -1819,7 +2024,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Release notes
+                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="FAQs"
@@ -1830,11 +2035,11 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    FAQs
+                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Support & Help</MegaMenuHeader>
+                  <MegaMenuHeader>Support & help</MegaMenuHeader>
                   <MegaMenuItem
                     value="Contact support"
                     onClick={() => {
@@ -1844,7 +2049,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Contact support
+                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Community forum"
@@ -1855,7 +2060,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Community forum
+                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Troubleshooting"
@@ -1866,24 +2071,18 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    Troubleshooting
+                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
-              >
+              <MegaMenuGroup className="link-footer-spacing">
                 <Link
                   color="primary"
                   underline="default"
                   href="#link"
                   IconComponent={ChevronRightIcon}
                 >
-                  See all resources
+                  Browse documentation
                 </Link>
               </MegaMenuGroup>
             </MegaMenuPanel>
@@ -1938,7 +2137,7 @@ export const InSmallViewport: StoryFn = () => {
               >
                 <MegaMenuSection>
                   <MegaMenuGroup>
-                    <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                    <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
                       value="Digital banking"
                       onClick={() => {
@@ -1948,7 +2147,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Digital banking
+                      <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Risk management"
@@ -1959,7 +2158,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Risk management
+                      <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -1973,7 +2172,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Patient management
+                      <MegaMenuItemContent>
+                        Patient management
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Telemedicine"
@@ -1984,7 +2185,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Telemedicine
+                      <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Compliance solutions"
@@ -1995,7 +2196,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Compliance solutions
+                      <MegaMenuItemContent>
+                        Compliance solutions
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2009,7 +2212,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      E-commerce platforms
+                      <MegaMenuItemContent>
+                        E-commerce platforms
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2023,7 +2228,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Supply chain optimization
+                      <MegaMenuItemContent>
+                        Supply chain optimization
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Quality control"
@@ -2034,7 +2241,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Quality control
+                      <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Production planning"
@@ -2045,7 +2252,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Production planning
+                      <MegaMenuItemContent>
+                        Production planning
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2059,7 +2268,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Learning management systems
+                      <MegaMenuItemContent>
+                        Learning management systems
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Virtual classrooms"
@@ -2070,7 +2281,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Virtual classrooms
+                      <MegaMenuItemContent>
+                        Virtual classrooms
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2084,7 +2297,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Document management
+                      <MegaMenuItemContent>
+                        Document management
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Citizen services"
@@ -2095,7 +2310,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Citizen services
+                      <MegaMenuItemContent>
+                        Citizen services
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Public safety solutions"
@@ -2106,7 +2323,9 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      Public safety solutions
+                      <MegaMenuItemContent>
+                        Public safety solutions
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -2134,29 +2353,53 @@ export const InSmallViewport: StoryFn = () => {
                 <MegaMenuSection>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Consulting</MegaMenuHeader>
-                    <MegaMenuItem value="Strategy">Strategy</MegaMenuItem>
-                    <MegaMenuItem value="IT">IT</MegaMenuItem>
-                    <MegaMenuItem value="HR">HR</MegaMenuItem>
-                    <MegaMenuItem value="Marketing">Marketing</MegaMenuItem>
-                    <MegaMenuItem value="Operations">Operations</MegaMenuItem>
+                    <MegaMenuItem value="Strategy">
+                      <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="IT">
+                      <MegaMenuItemContent>IT</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="HR">
+                      <MegaMenuItemContent>HR</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Marketing">
+                      <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Operations">
+                      <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                    </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Implementation</MegaMenuHeader>
-                    <MegaMenuItem value="Onboarding">Onboarding</MegaMenuItem>
-                    <MegaMenuItem value="Migration">Migration</MegaMenuItem>
-                    <MegaMenuItem value="Customization">
-                      Customization
+                    <MegaMenuItem value="Onboarding">
+                      <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Training">Training</MegaMenuItem>
-                    <MegaMenuItem value="Support">Support</MegaMenuItem>
+                    <MegaMenuItem value="Migration">
+                      <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Customization">
+                      <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Training">
+                      <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Support">
+                      <MegaMenuItemContent>Support</MegaMenuItemContent>
+                    </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Training</MegaMenuHeader>
-                    <MegaMenuItem value="Online">Online</MegaMenuItem>
-                    <MegaMenuItem value="In-person">In-person</MegaMenuItem>
-                    <MegaMenuItem value="Workshops">Workshops</MegaMenuItem>
+                    <MegaMenuItem value="Online">
+                      <MegaMenuItemContent>Online</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="In-person">
+                      <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Workshops">
+                      <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                    </MegaMenuItem>
                     <MegaMenuItem value="Certifications">
-                      Certifications
+                      <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -2184,33 +2427,41 @@ export const InSmallViewport: StoryFn = () => {
                 <MegaMenuSection>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Documentation</MegaMenuHeader>
-                    <MegaMenuItem value="User guides">User guides</MegaMenuItem>
+                    <MegaMenuItem value="User guides">
+                      <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                    </MegaMenuItem>
                     <MegaMenuItem value="API reference">
-                      API reference
+                      <MegaMenuItemContent>API reference</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem value="Release notes">
-                      Release notes
+                      <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="FAQs">FAQs</MegaMenuItem>
+                    <MegaMenuItem value="FAQs">
+                      <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                    </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Support</MegaMenuHeader>
                     <MegaMenuItem value="Contact support">
-                      Contact support
+                      <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem value="Community forum">
-                      Community forum
+                      <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem value="Troubleshooting">
-                      Troubleshooting
+                      <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Learn</MegaMenuHeader>
-                    <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
-                    <MegaMenuItem value="Guides">Guides</MegaMenuItem>
+                    <MegaMenuItem value="Tutorials">
+                      <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Guides">
+                      <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                    </MegaMenuItem>
                     <MegaMenuItem value="Best practices">
-                      Best practices
+                      <MegaMenuItemContent>Best practices</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -2236,28 +2487,36 @@ export const DefaultSelectedItem: StoryFn = () => {
             <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem value="Digital banking">
-                    Digital banking
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem value="Risk management">
-                    Risk management
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem value="Patient management">
-                    Patient management
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
+                  <MegaMenuItem value="Telemedicine">
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  </MegaMenuItem>
                   <MegaMenuItem value="Compliance solutions">
-                    Compliance solutions
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem value="E-commerce platforms">
-                    E-commerce platforms
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -2302,14 +2561,24 @@ export const Placement: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Group A</MegaMenuHeader>
-                <MegaMenuItem value={`${placement}-1`}>Item 1</MegaMenuItem>
-                <MegaMenuItem value={`${placement}-2`}>Item 2</MegaMenuItem>
-                <MegaMenuItem value={`${placement}-3`}>Item 3</MegaMenuItem>
+                <MegaMenuItem value={`${placement}-1`}>
+                  <MegaMenuItemContent>Item 1</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem value={`${placement}-2`}>
+                  <MegaMenuItemContent>Item 2</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem value={`${placement}-3`}>
+                  <MegaMenuItemContent>Item 3</MegaMenuItemContent>
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Group B</MegaMenuHeader>
-                <MegaMenuItem value={`${placement}-4`}>Item 4</MegaMenuItem>
-                <MegaMenuItem value={`${placement}-5`}>Item 5</MegaMenuItem>
+                <MegaMenuItem value={`${placement}-4`}>
+                  <MegaMenuItemContent>Item 4</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem value={`${placement}-5`}>
+                  <MegaMenuItemContent>Item 5</MegaMenuItemContent>
+                </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
           </MegaMenuPanel>

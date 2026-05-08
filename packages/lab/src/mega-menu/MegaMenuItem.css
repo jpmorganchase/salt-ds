@@ -5,13 +5,9 @@
 .saltMegaMenuItem > a {
   display: flex;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
-  align-items: center;
+  align-items: flex-start;
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background);
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-lineHeight);
   cursor: var(--salt-cursor-hover);
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   box-sizing: border-box;
@@ -19,6 +15,12 @@
   position: relative;
   border-radius: var(--salt-palette-corner-weak);
   text-decoration: none;
+}
+
+.saltMegaMenuItem > a > .saltIcon {
+  display: flex;
+  height: var(--salt-size-base);
+  align-items: center;
 }
 
 .saltMegaMenuItem > a:focus-visible {

@@ -6,6 +6,7 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -33,46 +34,60 @@ export const WithCustomRegion = (): ReactElement => {
             <div className={styles.customRegionContent}>
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
+                  <MegaMenuItem value="Digital banking">
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
+                  <MegaMenuItem value="Risk management">
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
+                  <MegaMenuItem value="Patient management">
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
+                  <MegaMenuItem value="Telemedicine">
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Compliance solutions">
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
+                  <MegaMenuItem value="E-commerce platforms">
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
-                    Supply Chain Optimization
+                  <MegaMenuItem value="Supply chain optimization">
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
-                    Quality Control
+                  <MegaMenuItem value="Quality control">
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
-                    Production Planning
+                  <MegaMenuItem value="Production planning">
+                    <MegaMenuItemContent>
+                      Production planning
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
               <MegaMenuSection className={styles.linkSection}>
                 <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem>Explore details</MegaMenuItem>
+                  <MegaMenuItem>
+                    <MegaMenuItemContent>Explore details</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </ol>
               </MegaMenuSection>
             </div>
@@ -88,7 +103,9 @@ export const WithCustomRegion = (): ReactElement => {
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
-                    <Text styleAs="h2">Featured Resource</Text>
+                    <Text styleAs="h2" as="h2">
+                      Featured Resource
+                    </Text>
                     <Text className={styles.customRegionRightDescription}>
                       Explore our latest accessibility guidelines to ensure your
                       components meet ADA standards and provide an inclusive
@@ -101,7 +118,7 @@ export const WithCustomRegion = (): ReactElement => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View Guidelines
+                    View guidelines
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -129,7 +146,9 @@ export const WithCustomRegion = (): ReactElement => {
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
-                    <Text styleAs="h2">Featured Resource</Text>
+                    <Text styleAs="h2" as="h2">
+                      Featured Resource
+                    </Text>
                     <Text className={styles.customRegionRightDescription}>
                       Explore our latest accessibility guidelines to ensure your
                       components meet ADA standards and provide an inclusive
@@ -142,7 +161,7 @@ export const WithCustomRegion = (): ReactElement => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View Guidelines
+                    View guidelines
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -150,46 +169,60 @@ export const WithCustomRegion = (): ReactElement => {
             <div className={styles.customRegionContent}>
               <MegaMenuSection>
                 <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
+                  <MegaMenuHeader>Financial services</MegaMenuHeader>
+                  <MegaMenuItem value="Digital banking">
+                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
+                  <MegaMenuItem value="Risk management">
+                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
+                  <MegaMenuItem value="Patient management">
+                    <MegaMenuItemContent>
+                      Patient management
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
+                  <MegaMenuItem value="Telemedicine">
+                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  </MegaMenuItem>
+                  <MegaMenuItem value="Compliance solutions">
+                    <MegaMenuItemContent>
+                      Compliance solutions
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
+                  <MegaMenuItem value="E-commerce platforms">
+                    <MegaMenuItemContent>
+                      E-commerce platforms
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
-                    Supply Chain Optimization
+                  <MegaMenuItem value="Supply chain optimization">
+                    <MegaMenuItemContent>
+                      Supply chain optimization
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
-                    Quality Control
+                  <MegaMenuItem value="Quality control">
+                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
-                    Production Planning
+                  <MegaMenuItem value="Production planning">
+                    <MegaMenuItemContent>
+                      Production planning
+                    </MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
               <MegaMenuSection className={styles.linkSection}>
                 <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem>Explore details</MegaMenuItem>
+                  <MegaMenuItem>
+                    <MegaMenuItemContent>Explore details</MegaMenuItemContent>
+                  </MegaMenuItem>
                 </ol>
               </MegaMenuSection>
             </div>
@@ -219,7 +252,9 @@ export const WithCustomRegion = (): ReactElement => {
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
-                    <Text styleAs="h2">Featured Resource</Text>
+                    <Text styleAs="h2" as="h2">
+                      Featured Resource
+                    </Text>
                     <Text>
                       Explore our latest accessibility guidelines to ensure your
                       components meet ADA standards and provide an inclusive
@@ -232,53 +267,63 @@ export const WithCustomRegion = (): ReactElement => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View Guidelines
+                    View guidelines
                   </Link>
                 </StackLayout>
               </FlexLayout>
             </MegaMenuCustomRegion>
             <MegaMenuSection>
               <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem value="Digital Banking">
-                  Digital Banking
+                <MegaMenuHeader>Financial services</MegaMenuHeader>
+                <MegaMenuItem value="Digital banking">
+                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Risk Management">
-                  Risk Management
+                <MegaMenuItem value="Risk management">
+                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem value="Patient Management">
-                  Patient Management
+                <MegaMenuItem value="Patient management">
+                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                <MegaMenuItem value="Compliance Solutions">
-                  Compliance Solutions
+                <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItemContent>
+                    Compliance solutions
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
-                <MegaMenuItem value="E-Commerce Platforms">
-                  E-Commerce Platforms
+                <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItemContent>
+                    E-commerce platforms
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                <MegaMenuItem value="Supply Chain Optimization">
-                  Supply Chain Optimization
+                <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItemContent>
+                    Supply chain optimization
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Quality Control">
-                  Quality Control
+                <MegaMenuItem value="Quality control">
+                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Production Planning">
-                  Production Planning
+                <MegaMenuItem value="Production planning">
+                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
             <MegaMenuSection className={styles.linkSection}>
               <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem>Explore details</MegaMenuItem>
+                <MegaMenuItem>
+                  <MegaMenuItemContent>Explore details</MegaMenuItemContent>
+                </MegaMenuItem>
               </ol>
             </MegaMenuSection>
           </MegaMenuPanel>
@@ -300,46 +345,56 @@ export const WithCustomRegion = (): ReactElement => {
           >
             <MegaMenuSection>
               <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem value="Digital Banking">
-                  Digital Banking
+                <MegaMenuHeader>Financial services</MegaMenuHeader>
+                <MegaMenuItem value="Digital banking">
+                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Risk Management">
-                  Risk Management
+                <MegaMenuItem value="Risk management">
+                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem value="Patient Management">
-                  Patient Management
+                <MegaMenuItem value="Patient management">
+                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                <MegaMenuItem value="Compliance Solutions">
-                  Compliance Solutions
+                <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItemContent>
+                    Compliance solutions
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
-                <MegaMenuItem value="E-Commerce Platforms">
-                  E-Commerce Platforms
+                <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItemContent>
+                    E-commerce platforms
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                <MegaMenuItem value="Supply Chain Optimization">
-                  Supply Chain Optimization
+                <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItemContent>
+                    Supply chain optimization
+                  </MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Quality Control">
-                  Quality Control
+                <MegaMenuItem value="Quality control">
+                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Production Planning">
-                  Production Planning
+                <MegaMenuItem value="Production planning">
+                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
             <MegaMenuSection className={styles.linkSection}>
               <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem>Explore details</MegaMenuItem>
+                <MegaMenuItem>
+                  <MegaMenuItemContent>Explore details</MegaMenuItemContent>
+                </MegaMenuItem>
               </ol>
             </MegaMenuSection>
             <MegaMenuCustomRegion variant="tertiary">
@@ -351,7 +406,9 @@ export const WithCustomRegion = (): ReactElement => {
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
-                    <Text styleAs="h2">Featured Resource</Text>
+                    <Text styleAs="h2" as="h2">
+                      Featured Resource
+                    </Text>
                     <Text>
                       Explore our latest accessibility guidelines to ensure your
                       components meet ADA standards and provide an inclusive
@@ -364,7 +421,7 @@ export const WithCustomRegion = (): ReactElement => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View Guidelines
+                    View guidelines
                   </Link>
                 </StackLayout>
               </FlexLayout>

@@ -5,6 +5,7 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
+  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -40,42 +41,44 @@ export const InSmallViewport = (): ReactElement => {
               <MegaMenuPanel className={styles.smallViewportContainer}>
                 <MegaMenuSection className={styles.smallViewportSection}>
                   <MegaMenuGroup>
-                    <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                    <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Digital Banking"
+                      value="Digital banking"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Digital Banking",
+                          "Digital banking",
                         );
                       }}
                     >
-                      Digital Banking
+                      <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Risk Management"
+                      value="Risk management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Risk Management",
+                          "Risk management",
                         );
                       }}
                     >
-                      Risk Management
+                      <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Healthcare</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Patient Management"
+                      value="Patient management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Patient Management",
+                          "Patient management",
                         );
                       }}
                     >
-                      Patient Management
+                      <MegaMenuItemContent>
+                        Patient management
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
                       value="Telemedicine"
@@ -86,129 +89,147 @@ export const InSmallViewport = (): ReactElement => {
                         );
                       }}
                     >
-                      Telemedicine
+                      <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Compliance Solutions"
+                      value="Compliance solutions"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Compliance Solutions",
+                          "Compliance solutions",
                         );
                       }}
                     >
-                      Compliance Solutions
+                      <MegaMenuItemContent>
+                        Compliance solutions
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Retail</MegaMenuHeader>
                     <MegaMenuItem
-                      value="E-Commerce Platforms"
+                      value="E-commerce platforms"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "E-Commerce Platforms",
+                          "E-commerce platforms",
                         );
                       }}
                     >
-                      E-Commerce Platforms
+                      <MegaMenuItemContent>
+                        E-commerce platforms
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Supply Chain Optimization"
+                      value="Supply chain optimization"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Supply Chain Optimization",
+                          "Supply chain optimization",
                         );
                       }}
                     >
-                      Supply Chain Optimization
+                      <MegaMenuItemContent>
+                        Supply chain optimization
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Quality Control"
+                      value="Quality control"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Quality Control",
+                          "Quality control",
                         );
                       }}
                     >
-                      Quality Control
+                      <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Production Planning"
+                      value="Production planning"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Production Planning",
+                          "Production planning",
                         );
                       }}
                     >
-                      Production Planning
+                      <MegaMenuItemContent>
+                        Production planning
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Education</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Learning Management Systems"
+                      value="Learning management systems"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Learning Management Systems",
+                          "Learning management systems",
                         );
                       }}
                     >
-                      Learning Management Systems
+                      <MegaMenuItemContent>
+                        Learning management systems
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Virtual Classrooms"
+                      value="Virtual classrooms"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Virtual Classrooms",
+                          "Virtual classrooms",
                         );
                       }}
                     >
-                      Virtual Classrooms
+                      <MegaMenuItemContent>
+                        Virtual classrooms
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Government</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Document Management"
+                      value="Document management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Document Management",
+                          "Document management",
                         );
                       }}
                     >
-                      Document Management
+                      <MegaMenuItemContent>
+                        Document management
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Citizen Services"
+                      value="Citizen services"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Citizen Services",
+                          "Citizen services",
                         );
                       }}
                     >
-                      Citizen Services
+                      <MegaMenuItemContent>
+                        Citizen services
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Public Safety Solutions"
+                      value="Public safety solutions"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
-                          "Public Safety Solutions",
+                          "Public safety solutions",
                         );
                       }}
                     >
-                      Public Safety Solutions
+                      <MegaMenuItemContent>
+                        Public safety solutions
+                      </MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>

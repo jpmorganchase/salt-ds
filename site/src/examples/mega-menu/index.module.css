@@ -15,6 +15,11 @@
   flex: 1;
 }
 
+.linkFooterSpacing {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  width: fit-content;
+}
+
 .withLinkMenuContainer {
   flex-direction: column;
 }
