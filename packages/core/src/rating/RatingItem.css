@@ -65,7 +65,7 @@
 
 .saltRatingItem-disabled {
   cursor: var(--salt-cursor-disabled);
-  opacity: var(--salt-palette-opacity-disabled);
+  opacity: 0.4;
 }
 
 .saltRatingItem-disabled .saltRatingItem-input {

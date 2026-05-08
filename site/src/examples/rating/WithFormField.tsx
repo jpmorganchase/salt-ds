@@ -1,5 +1,9 @@
-import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import { Rating } from "@salt-ds/lab";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Rating,
+} from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
