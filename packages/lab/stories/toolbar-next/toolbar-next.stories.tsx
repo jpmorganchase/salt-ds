@@ -10,6 +10,14 @@ import {
   ToggleButtonGroup,
 } from "@salt-ds/core";
 import {
+  DateInputSingle,
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleGridPanel,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+} from "@salt-ds/date-components";
+import {
   ExportIcon,
   FilterIcon,
   GridIcon,
@@ -17,17 +25,7 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import {
-  DateInputSingle,
-  DatePicker,
-  DatePickerOverlay,
-  DatePickerSingleGridPanel,
-  DatePickerSingleInput,
-  DatePickerTrigger,
-  ToolbarNext,
-  ToolbarRegion,
-  TooltrayNext,
-} from "@salt-ds/lab";
+import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {

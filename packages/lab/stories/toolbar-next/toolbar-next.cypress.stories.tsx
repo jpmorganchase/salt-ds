@@ -8,17 +8,15 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import { SearchIcon } from "@salt-ds/icons";
 import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
   DatePickerTrigger,
-  ToolbarNext,
-  ToolbarRegion,
-  TooltrayNext,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
+import { SearchIcon } from "@salt-ds/icons";
+import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react-vite";
 import { type ReactNode, useState } from "react";
 import { AdjustableFlexbox } from "../components";
