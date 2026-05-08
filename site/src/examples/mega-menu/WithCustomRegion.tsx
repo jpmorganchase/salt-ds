@@ -35,24 +35,24 @@ export const WithCustomRegion = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital banking">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Compliance solutions
                     </MegaMenuItemContent>
@@ -60,7 +60,7 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       E-commerce platforms
                     </MegaMenuItemContent>
@@ -68,15 +68,15 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Supply chain optimization
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality control">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production planning">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Production planning
                     </MegaMenuItemContent>
@@ -170,24 +170,24 @@ export const WithCustomRegion = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital banking">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Compliance solutions
                     </MegaMenuItemContent>
@@ -195,7 +195,7 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       E-commerce platforms
                     </MegaMenuItemContent>
@@ -203,15 +203,15 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Supply chain optimization
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality control">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production planning">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Production planning
                     </MegaMenuItemContent>
@@ -275,22 +275,22 @@ export const WithCustomRegion = (): ReactElement => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
-                <MegaMenuItem value="Digital banking">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Risk management">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem value="Patient management">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Patient management</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Telemedicine">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Compliance solutions">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     Compliance solutions
                   </MegaMenuItemContent>
@@ -298,7 +298,7 @@ export const WithCustomRegion = (): ReactElement => {
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
-                <MegaMenuItem value="E-commerce platforms">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     E-commerce platforms
                   </MegaMenuItemContent>
@@ -306,15 +306,15 @@ export const WithCustomRegion = (): ReactElement => {
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                <MegaMenuItem value="Supply chain optimization">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     Supply chain optimization
                   </MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Quality control">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Production planning">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Production planning</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
@@ -346,22 +346,22 @@ export const WithCustomRegion = (): ReactElement => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
-                <MegaMenuItem value="Digital banking">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Risk management">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem value="Patient management">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Patient management</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Telemedicine">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Compliance solutions">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     Compliance solutions
                   </MegaMenuItemContent>
@@ -369,7 +369,7 @@ export const WithCustomRegion = (): ReactElement => {
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
-                <MegaMenuItem value="E-commerce platforms">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     E-commerce platforms
                   </MegaMenuItemContent>
@@ -377,15 +377,15 @@ export const WithCustomRegion = (): ReactElement => {
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                <MegaMenuItem value="Supply chain optimization">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     Supply chain optimization
                   </MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Quality control">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Production planning">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Production planning</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>

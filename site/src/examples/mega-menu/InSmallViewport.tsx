@@ -15,24 +15,13 @@ import styles from "./index.module.css";
 
 export const InSmallViewport = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined,
-  );
 
   return (
     <div>
       <nav>
         <StackLayout as="ol" direction="row" gap={1} className={styles.navList}>
           <li>
-            <MegaMenu
-              open={isOpen}
-              onOpenChange={setIsOpen}
-              selectedItem={selectedItem}
-              onSelectedItemChange={(value) => {
-                const nextValue = selectedItem === value ? undefined : value;
-                setSelectedItem(nextValue);
-              }}
-            >
+            <MegaMenu open={isOpen} onOpenChange={setIsOpen}>
               <MegaMenuTrigger>
                 <Button sentiment="neutral" appearance="solid">
                   <MenuIcon />
@@ -43,7 +32,6 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Digital banking"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -54,7 +42,6 @@ export const InSmallViewport = (): ReactElement => {
                       <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Risk management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -68,7 +55,6 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Healthcare</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Patient management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -81,7 +67,6 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Telemedicine"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -92,7 +77,6 @@ export const InSmallViewport = (): ReactElement => {
                       <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Compliance solutions"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -108,7 +92,6 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Retail</MegaMenuHeader>
                     <MegaMenuItem
-                      value="E-commerce platforms"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -124,7 +107,6 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Supply chain optimization"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -137,7 +119,6 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Quality control"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -148,7 +129,6 @@ export const InSmallViewport = (): ReactElement => {
                       <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Production planning"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -164,7 +144,6 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Education</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Learning management systems"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -177,7 +156,6 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Virtual classrooms"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -193,7 +171,6 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Government</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Document management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -206,7 +183,6 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Citizen services"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -219,7 +195,6 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Public safety solutions"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",

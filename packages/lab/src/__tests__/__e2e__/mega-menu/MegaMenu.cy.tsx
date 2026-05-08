@@ -12,20 +12,9 @@ import { useState } from "react";
 
 const InteractiveMegaMenu = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>();
 
   const handleOpenChange = (menu: string) => (open: boolean) => {
     setOpenMenu(open ? menu : null);
-  };
-
-  const handleSelectedItemChange = (
-    menu: string,
-    value: string | undefined,
-  ) => {
-    const nextValue = selectedItem === value ? undefined : value;
-    setSelectedItem(nextValue);
-    setActiveMenu(nextValue ? menu : null);
   };
 
   return (
@@ -35,26 +24,16 @@ const InteractiveMegaMenu = () => {
           <MegaMenu
             open={openMenu === "solutions"}
             onOpenChange={handleOpenChange("solutions")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("solutions", value)
-            }
           >
             <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "solutions"}>
-                Solutions
-              </NavigationItem>
+              <NavigationItem>Solutions</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
-                  </MegaMenuItem>
+                  <MegaMenuItem>Digital Banking</MegaMenuItem>
+                  <MegaMenuItem>Risk Management</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
@@ -65,21 +44,15 @@ const InteractiveMegaMenu = () => {
           <MegaMenu
             open={openMenu === "services"}
             onOpenChange={handleOpenChange("services")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("services", value)
-            }
           >
             <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "services"}>
-                Services
-              </NavigationItem>
+              <NavigationItem>Services</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy">Strategy</MegaMenuItem>
+                  <MegaMenuItem>Strategy</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
@@ -130,13 +103,6 @@ describe("Given a MegaMenu", () => {
     cy.findByText("Digital Banking").click();
 
     cy.get(".saltMegaMenuPanel").should("not.exist");
-
-    cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByText("Digital Banking").should(
-      "have.attr",
-      "aria-current",
-      "page",
-    );
   });
 
   it("closes on outside click", () => {
@@ -159,9 +125,7 @@ describe("Given a MegaMenu", () => {
           <MegaMenuSection>
             <MegaMenuGroup>
               <MegaMenuHeader>Financial Services</MegaMenuHeader>
-              <MegaMenuItem value="Digital Banking">
-                Digital Banking
-              </MegaMenuItem>
+              <MegaMenuItem>Digital Banking</MegaMenuItem>
             </MegaMenuGroup>
           </MegaMenuSection>
         </MegaMenuPanel>
@@ -172,33 +136,14 @@ describe("Given a MegaMenu", () => {
     cy.findByText("Digital Banking").should("exist");
   });
 
-  it("shows defaultSelectedItem as active on open", () => {
-    cy.mount(
-      <MegaMenu defaultSelectedItem="Digital Banking">
-        <MegaMenuTrigger>
-          <NavigationItem>Solutions</NavigationItem>
-        </MegaMenuTrigger>
-        <MegaMenuPanel>
-          <MegaMenuSection>
-            <MegaMenuGroup>
-              <MegaMenuHeader>Financial Services</MegaMenuHeader>
-              <MegaMenuItem value="Digital Banking">
-                Digital Banking
-              </MegaMenuItem>
-              <MegaMenuItem value="Risk Management">
-                Risk Management
-              </MegaMenuItem>
-            </MegaMenuGroup>
-          </MegaMenuSection>
-        </MegaMenuPanel>
-      </MegaMenu>,
-    );
+  it("does not persist item active state after selection", () => {
+    cy.mount(<InteractiveMegaMenu />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByText("Digital Banking").should(
-      "have.attr",
-      "aria-current",
-      "page",
-    );
+    cy.findByText("Digital Banking").click();
+    cy.get(".saltMegaMenuPanel").should("not.exist");
+
+    cy.findByRole("button", { name: "Solutions" }).click();
+    cy.findByText("Digital Banking").should("not.have.attr", "aria-current");
   });
 });

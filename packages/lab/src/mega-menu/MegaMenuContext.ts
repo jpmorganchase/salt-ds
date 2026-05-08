@@ -27,10 +27,6 @@ export interface MegaMenuContextValue {
   setFloating: Dispatch<SetStateAction<HTMLElement | null>>;
   /** Ref setter for the trigger (reference) element. */
   setReference: Dispatch<SetStateAction<HTMLElement | null>>;
-  /** The currently selected item value, or `undefined` if no item is selected. */
-  selectedItem: string | undefined;
-  /** Update the selected item value. */
-  setSelectedItem: Dispatch<SetStateAction<string | undefined>>;
   /** Whether the first item should receive focus when the panel opens. */
   focusFirstItemOnOpen: boolean;
   /** Toggle the focus-first-item-on-open flag. */

@@ -20,11 +20,6 @@ export interface MegaMenuItemProps extends HTMLAttributes<HTMLLIElement> {
    */
   children?: ReactNode;
   /**
-   * A unique value identifying this item. Used for tracking the selected item.
-   * When omitted, this item will not participate in selected/active state tracking.
-   */
-  value?: string;
-  /**
    * Whether selecting this item closes the mega menu.
    * @default true
    */
@@ -33,7 +28,7 @@ export interface MegaMenuItemProps extends HTMLAttributes<HTMLLIElement> {
 
 export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
   function MegaMenuItem(
-    { children, className, value, closeOnSelect = true, ...rest },
+    { children, className, closeOnSelect = true, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -45,24 +40,14 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
       window: targetWindow,
     });
 
-    const isSelected = value != null && megaMenu.selectedItem === value;
-
     const baseProps = {
-      className: clsx(
-        withBaseName(),
-        { [withBaseName("active")]: isSelected },
-        className,
-      ),
+      className: clsx(withBaseName(), className),
       tabIndex: 0,
       "data-mega-menu-item": "",
-      ...(isSelected && { "aria-current": "page" as const }),
     };
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
       rest.onClick?.(event);
-      if (value != null) {
-        megaMenu.setSelectedItem(value);
-      }
       if (closeOnSelect) {
         megaMenu.setOpen(false);
       }

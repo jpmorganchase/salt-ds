@@ -6,14 +6,7 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
-import {
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import { type ReactNode, useCallback, useMemo, useState } from "react";
 import {
   MegaMenuContext,
   type MegaMenuCustomInteractions,
@@ -39,18 +32,6 @@ export interface MegaMenuProps extends MegaMenuCustomInteractions {
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * The currently selected item value. Use for controlled mode.
-   */
-  selectedItem?: string;
-  /**
-   * The initially selected item value. Use for uncontrolled mode.
-   */
-  defaultSelectedItem?: string;
-  /**
-   * Callback fired when the selected item changes.
-   */
-  onSelectedItemChange?: (selectedItem: string | undefined) => void;
-  /**
    * The placement of the mega menu panel relative to the trigger.
    * @default "bottom"
    */
@@ -62,9 +43,6 @@ export function MegaMenu({
   open,
   defaultOpen = false,
   onOpenChange,
-  selectedItem: selectedItemProp,
-  defaultSelectedItem,
-  onSelectedItemChange,
   placement = "bottom",
   interactions,
 }: MegaMenuProps) {
@@ -79,29 +57,6 @@ export function MegaMenu({
   const [floating, setFloating] = useState<HTMLElement | null>(null);
   const [focusFirstItemOnOpen, setFocusFirstItemOnOpen] = useState(false);
   const [panelId, setPanelId] = useState<string | undefined>(undefined);
-
-  const [selectedItem, setSelectedItemState] = useControlled({
-    controlled: selectedItemProp,
-    default: defaultSelectedItem,
-    name: "MegaMenu",
-    state: "selectedItem",
-  });
-
-  const setSelectedItem = useCallback<
-    Dispatch<SetStateAction<string | undefined>>
-  >(
-    (newSelectedItem) => {
-      setSelectedItemState((current) => {
-        const next =
-          typeof newSelectedItem === "function"
-            ? newSelectedItem(current)
-            : newSelectedItem;
-        onSelectedItemChange?.(next);
-        return next;
-      });
-    },
-    [onSelectedItemChange, setSelectedItemState],
-  );
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
@@ -144,8 +99,6 @@ export function MegaMenu({
       setFloating,
       setReference,
       setOpen,
-      selectedItem,
-      setSelectedItem,
       focusFirstItemOnOpen,
       setFocusFirstItemOnOpen,
       panelId,
@@ -160,8 +113,6 @@ export function MegaMenu({
       setFloating,
       setReference,
       setOpen,
-      selectedItem,
-      setSelectedItem,
       focusFirstItemOnOpen,
       setFocusFirstItemOnOpen,
       panelId,

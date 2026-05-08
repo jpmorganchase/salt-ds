@@ -69,21 +69,12 @@ export default {
 export const WithIcons: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined,
-  );
 
   const handleOpenChange = (menu: string) => (open: boolean) => {
     setOpenMenu(open ? menu : null);
-  };
-
-  const handleSelectedItemChange = (
-    menu: string,
-    value: string | undefined,
-  ) => {
-    const nextValue = selectedItem === value ? undefined : value;
-    setSelectedItem(nextValue);
-    setActiveMenu(nextValue ? menu : null);
+    if (open) {
+      setActiveMenu(menu);
+    }
   };
 
   return (
@@ -93,10 +84,6 @@ export const WithIcons: StoryFn = () => {
           <MegaMenu
             open={openMenu === "solutions"}
             onOpenChange={handleOpenChange("solutions")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("solutions", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "solutions"}>
@@ -108,14 +95,14 @@ export const WithIcons: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital banking">
+                  <MegaMenuItem>
                     <DevicesIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk management">
+                  <MegaMenuItem>
                     <DatasetManagerIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -125,7 +112,7 @@ export const WithIcons: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient management">
+                  <MegaMenuItem>
                     <UserSearchIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -134,11 +121,11 @@ export const WithIcons: StoryFn = () => {
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItem>
                     <CallIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItem>
                     <PasteIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>
                       Compliance solutions
@@ -147,7 +134,7 @@ export const WithIcons: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItem>
                     <CartIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>
                       E-commerce platforms
@@ -156,20 +143,20 @@ export const WithIcons: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItem>
                     <LinkedIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>
                       Supply chain optimization
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality control">
+                  <MegaMenuItem>
                     <SettingsIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production planning">
+                  <MegaMenuItem>
                     <NotificationIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -181,7 +168,7 @@ export const WithIcons: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem value="Learning management systems">
+                  <MegaMenuItem>
                     <GuideOpenIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -190,7 +177,7 @@ export const WithIcons: StoryFn = () => {
                       Learning management systems
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Virtual classrooms">
+                  <MegaMenuItem>
                     <LaptopIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>
                       Virtual classrooms
@@ -199,7 +186,7 @@ export const WithIcons: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem value="Document management">
+                  <MegaMenuItem>
                     <DocumentIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -208,11 +195,11 @@ export const WithIcons: StoryFn = () => {
                       Document management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Citizen services">
+                  <MegaMenuItem>
                     <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Public safety solutions">
+                  <MegaMenuItem>
                     <UserGroupIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -230,10 +217,6 @@ export const WithIcons: StoryFn = () => {
           <MegaMenu
             open={openMenu === "services"}
             onOpenChange={handleOpenChange("services")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("services", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "services"}>
@@ -245,29 +228,29 @@ export const WithIcons: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy">
+                  <MegaMenuItem>
                     <ChartBubbleIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="IT">
+                  <MegaMenuItem>
                     <LaptopIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>IT</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="HR">
+                  <MegaMenuItem>
                     <UserGroupIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>HR</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Marketing">
+                  <MegaMenuItem>
                     <MarkerIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Operations">
+                  <MegaMenuItem>
                     <SettingsIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -277,73 +260,73 @@ export const WithIcons: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem value="Onboarding">
+                  <MegaMenuItem>
                     <PasteIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Migration">
+                  <MegaMenuItem>
                     <SwapIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Migration</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Customization">
+                  <MegaMenuItem>
                     <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Training">
+                  <MegaMenuItem>
                     <GuideClosedIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Training</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Support">
+                  <MegaMenuItem>
                     <InfoIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Testing">
+                  <MegaMenuItem>
                     <MaintenanceIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Testing</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Rollout">
+                  <MegaMenuItem>
                     <SaveIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Rollout</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem value="Online">
+                  <MegaMenuItem>
                     <DisplayIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="In-person">
+                  <MegaMenuItem>
                     <UserIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>In-person</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Workshops">
+                  <MegaMenuItem>
                     <KeyIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Certifications">
+                  <MegaMenuItem>
                     <DocumentIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Tutorials">
+                  <MegaMenuItem>
                     <DocumentEditIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Guides">
+                  <MegaMenuItem>
                     <GuideOpenIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -359,10 +342,6 @@ export const WithIcons: StoryFn = () => {
           <MegaMenu
             open={openMenu === "resources"}
             onOpenChange={handleOpenChange("resources")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("resources", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "resources"}>
@@ -373,43 +352,43 @@ export const WithIcons: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User guides">
+                  <MegaMenuItem>
                     <GuideClosedIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="API reference">
+                  <MegaMenuItem>
                     <ApiIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Release notes">
+                  <MegaMenuItem>
                     <NotificationIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="FAQs">
+                  <MegaMenuItem>
                     <HelpIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>FAQs</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact support">
+                  <MegaMenuItem>
                     <InfoIcon aria-hidden className="saltMegaMenuItem-icon" />
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Community forum">
+                  <MegaMenuItem>
                     <ChatGroupIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
                     <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Troubleshooting">
+                  <MegaMenuItem>
                     <AnnouncementIcon
                       aria-hidden
                       className="saltMegaMenuItem-icon"
@@ -429,21 +408,12 @@ export const WithIcons: StoryFn = () => {
 export const WithAdornment: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined,
-  );
 
   const handleOpenChange = (menu: string) => (open: boolean) => {
     setOpenMenu(open ? menu : null);
-  };
-
-  const handleSelectedItemChange = (
-    menu: string,
-    value: string | undefined,
-  ) => {
-    const nextValue = selectedItem === value ? undefined : value;
-    setSelectedItem(nextValue);
-    setActiveMenu(nextValue ? menu : null);
+    if (open) {
+      setActiveMenu(menu);
+    }
   };
 
   return (
@@ -453,10 +423,6 @@ export const WithAdornment: StoryFn = () => {
           <MegaMenu
             open={openMenu === "solutions"}
             onOpenChange={handleOpenChange("solutions")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("solutions", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "solutions"}>
@@ -468,21 +434,21 @@ export const WithAdornment: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital banking">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Telemedicine
                       <Tag
@@ -494,7 +460,7 @@ export const WithAdornment: StoryFn = () => {
                       </Tag>
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Compliance solutions
                     </MegaMenuItemContent>
@@ -502,7 +468,7 @@ export const WithAdornment: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       E-commerce platforms
                     </MegaMenuItemContent>
@@ -510,15 +476,15 @@ export const WithAdornment: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Supply chain optimization
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality control">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production planning">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Production planning
                       <Tag
@@ -533,12 +499,12 @@ export const WithAdornment: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem value="Learning management systems">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Learning management systems
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Virtual classrooms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Virtual classrooms
                     </MegaMenuItemContent>
@@ -546,15 +512,15 @@ export const WithAdornment: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem value="Document management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Document management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Citizen services">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Public safety solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Public safety solutions
                     </MegaMenuItemContent>
@@ -568,10 +534,6 @@ export const WithAdornment: StoryFn = () => {
           <MegaMenu
             open={openMenu === "services"}
             onOpenChange={handleOpenChange("services")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("services", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "services"}>
@@ -583,72 +545,72 @@ export const WithAdornment: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="IT">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>IT</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="HR">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>HR</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Marketing">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Operations">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Operations</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem value="Onboarding">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Migration">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Migration</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Customization">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Training">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       {" "}
                       Training
                       <Badge value="1" className="menu-item-adornment" />
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Support">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Testing">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Testing</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Rollout">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Rollout</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem value="Online">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="In-person">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       {" "}
                       In-person
                       <Badge value="3" className="menu-item-adornment" />
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Workshops">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Certifications">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Tutorials">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Guides">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Guides</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
@@ -660,10 +622,6 @@ export const WithAdornment: StoryFn = () => {
           <MegaMenu
             open={openMenu === "resources"}
             onOpenChange={handleOpenChange("resources")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("resources", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "resources"}>
@@ -674,27 +632,27 @@ export const WithAdornment: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User guides">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="API reference">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Release notes">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Release notes <Badge className="menu-item-adornment" />
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="FAQs">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>FAQs</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact support">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Community forum">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Community forum
                       <Tag
@@ -706,7 +664,7 @@ export const WithAdornment: StoryFn = () => {
                       </Tag>
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Troubleshooting">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
@@ -737,49 +695,49 @@ export const TriggerPosition: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 1">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 2">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 3">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 4">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 5">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 6">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 7">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 8">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 9">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 10">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 11">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 12">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
@@ -800,49 +758,49 @@ export const TriggerPosition: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 1">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 2">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 3">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 4">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 5">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 6">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 7">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 8">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 9">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 10">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 11">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 12">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
@@ -863,49 +821,49 @@ export const TriggerPosition: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 1">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 2">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 3">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 4">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 5">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 6">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 7">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 8">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 9">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 10">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 11">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 12">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
@@ -926,49 +884,49 @@ export const TriggerPosition: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 1">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 2">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 3">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 4">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 5">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 6">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 7">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 8">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 9">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
-                <MegaMenuItem value="Mega menu item 10">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 11">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Mega menu item 12">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
@@ -993,37 +951,37 @@ export const FullWidthContainer: StoryFn = () => {
         <MegaMenuSection>
           <MegaMenuGroup>
             <MegaMenuHeader>Products</MegaMenuHeader>
-            <MegaMenuItem value="Analytics workspace">
+            <MegaMenuItem>
               <MegaMenuItemContent>Analytics workspace</MegaMenuItemContent>
             </MegaMenuItem>
-            <MegaMenuItem value="Order management">
+            <MegaMenuItem>
               <MegaMenuItemContent>Order management</MegaMenuItemContent>
             </MegaMenuItem>
-            <MegaMenuItem value="Pricing configurator">
+            <MegaMenuItem>
               <MegaMenuItemContent>Pricing configurator</MegaMenuItemContent>
             </MegaMenuItem>
           </MegaMenuGroup>
           <MegaMenuGroup>
             <MegaMenuHeader>Solutions</MegaMenuHeader>
-            <MegaMenuItem value="Risk monitoring">
+            <MegaMenuItem>
               <MegaMenuItemContent>Risk monitoring</MegaMenuItemContent>
             </MegaMenuItem>
-            <MegaMenuItem value="Client reporting">
+            <MegaMenuItem>
               <MegaMenuItemContent>Client reporting</MegaMenuItemContent>
             </MegaMenuItem>
-            <MegaMenuItem value="Trade automation">
+            <MegaMenuItem>
               <MegaMenuItemContent>Trade automation</MegaMenuItemContent>
             </MegaMenuItem>
           </MegaMenuGroup>
           <MegaMenuGroup>
             <MegaMenuHeader>Resources</MegaMenuHeader>
-            <MegaMenuItem value="Documentation">
+            <MegaMenuItem>
               <MegaMenuItemContent>Documentation</MegaMenuItemContent>
             </MegaMenuItem>
-            <MegaMenuItem value="Release notes">
+            <MegaMenuItem>
               <MegaMenuItemContent>Release notes</MegaMenuItemContent>
             </MegaMenuItem>
-            <MegaMenuItem value="Developer API">
+            <MegaMenuItem>
               <MegaMenuItemContent>Developer API</MegaMenuItemContent>
             </MegaMenuItem>
           </MegaMenuGroup>
@@ -1055,24 +1013,24 @@ export const WithCustomRegion: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital banking">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Compliance solutions
                     </MegaMenuItemContent>
@@ -1080,7 +1038,7 @@ export const WithCustomRegion: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       E-commerce platforms
                     </MegaMenuItemContent>
@@ -1088,15 +1046,15 @@ export const WithCustomRegion: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Supply chain optimization
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality control">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production planning">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Production planning
                     </MegaMenuItemContent>
@@ -1199,24 +1157,24 @@ export const WithCustomRegion: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital banking">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Compliance solutions
                     </MegaMenuItemContent>
@@ -1224,7 +1182,7 @@ export const WithCustomRegion: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       E-commerce platforms
                     </MegaMenuItemContent>
@@ -1232,15 +1190,15 @@ export const WithCustomRegion: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Supply chain optimization
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality control">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production planning">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Production planning
                     </MegaMenuItemContent>
@@ -1313,22 +1271,22 @@ export const WithCustomRegion: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
-                <MegaMenuItem value="Digital banking">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Risk management">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem value="Patient management">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Patient management</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Telemedicine">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Compliance solutions">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     Compliance solutions
                   </MegaMenuItemContent>
@@ -1336,7 +1294,7 @@ export const WithCustomRegion: StoryFn = () => {
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
-                <MegaMenuItem value="E-commerce platforms">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     E-commerce platforms
                   </MegaMenuItemContent>
@@ -1344,15 +1302,15 @@ export const WithCustomRegion: StoryFn = () => {
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                <MegaMenuItem value="Supply chain optimization">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     Supply chain optimization
                   </MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Quality control">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Production planning">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Production planning</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
@@ -1392,22 +1350,22 @@ export const WithCustomRegion: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
-                <MegaMenuItem value="Digital banking">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Risk management">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem value="Patient management">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Patient management</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Telemedicine">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Compliance solutions">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     Compliance solutions
                   </MegaMenuItemContent>
@@ -1415,7 +1373,7 @@ export const WithCustomRegion: StoryFn = () => {
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
-                <MegaMenuItem value="E-commerce platforms">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     E-commerce platforms
                   </MegaMenuItemContent>
@@ -1423,15 +1381,15 @@ export const WithCustomRegion: StoryFn = () => {
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                <MegaMenuItem value="Supply chain optimization">
+                <MegaMenuItem>
                   <MegaMenuItemContent>
                     Supply chain optimization
                   </MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Quality control">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value="Production planning">
+                <MegaMenuItem>
                   <MegaMenuItemContent>Production planning</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
@@ -1490,21 +1448,12 @@ export const WithCustomRegion: StoryFn = () => {
 export const WithLink: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined,
-  );
 
   const handleOpenChange = (menu: string) => (open: boolean) => {
     setOpenMenu(open ? menu : null);
-  };
-
-  const handleSelectedItemChange = (
-    menu: string,
-    value: string | undefined,
-  ) => {
-    const nextValue = selectedItem === value ? undefined : value;
-    setSelectedItem(nextValue);
-    setActiveMenu(nextValue ? menu : null);
+    if (open) {
+      setActiveMenu(menu);
+    }
   };
 
   return (
@@ -1514,10 +1463,6 @@ export const WithLink: StoryFn = () => {
           <MegaMenu
             open={openMenu === "solutions"}
             onOpenChange={handleOpenChange("solutions")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("solutions", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "solutions"}>
@@ -1530,7 +1475,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Digital banking"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1541,7 +1485,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Risk management"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1555,7 +1498,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Patient management"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1568,7 +1510,6 @@ export const WithLink: StoryFn = () => {
                     </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Telemedicine"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1579,7 +1520,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Compliance solutions"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1595,7 +1535,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem
-                    value="E-commerce platforms"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1611,7 +1550,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Supply chain optimization"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1624,7 +1562,6 @@ export const WithLink: StoryFn = () => {
                     </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Quality control"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1635,7 +1572,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Production planning"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1651,7 +1587,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Learning management systems"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1664,7 +1599,6 @@ export const WithLink: StoryFn = () => {
                     </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Virtual classrooms"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1680,7 +1614,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Document management"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1693,7 +1626,6 @@ export const WithLink: StoryFn = () => {
                     </MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Citizen services"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1704,7 +1636,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Public safety solutions"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1747,10 +1678,6 @@ export const WithLink: StoryFn = () => {
           <MegaMenu
             open={openMenu === "services"}
             onOpenChange={handleOpenChange("services")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("services", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "services"}>
@@ -1763,7 +1690,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Strategy"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1774,7 +1700,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="IT"
                     onClick={() => {
                       console.log("[WithLink MegaMenu] selected value:", "IT");
                     }}
@@ -1782,7 +1707,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>IT</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="HR"
                     onClick={() => {
                       console.log("[WithLink MegaMenu] selected value:", "HR");
                     }}
@@ -1790,7 +1714,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>HR</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Marketing"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1801,7 +1724,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Operations"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1815,7 +1737,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Onboarding"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1826,7 +1747,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Migration"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1837,7 +1757,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Migration</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Customization"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1848,7 +1767,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Training"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1859,7 +1777,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Training</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Support"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1870,7 +1787,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Testing"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1881,7 +1797,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Testing</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Rollout"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1895,7 +1810,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Online"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1906,7 +1820,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="In-person"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1917,7 +1830,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>In-person</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Workshops"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1928,7 +1840,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Certifications"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1939,7 +1850,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Tutorials"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1950,7 +1860,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Guides"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -1979,10 +1888,6 @@ export const WithLink: StoryFn = () => {
           <MegaMenu
             open={openMenu === "resources"}
             onOpenChange={handleOpenChange("resources")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("resources", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "resources"}>
@@ -1994,7 +1899,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
                   <MegaMenuItem
-                    value="User guides"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -2005,7 +1909,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="API reference"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -2016,7 +1919,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Release notes"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -2027,7 +1929,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="FAQs"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -2041,7 +1942,6 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & help</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Contact support"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -2052,7 +1952,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Community forum"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -2063,7 +1962,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Troubleshooting"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
@@ -2096,21 +1994,12 @@ export const WithLink: StoryFn = () => {
 export const InSmallViewport: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined,
-  );
 
   const handleOpenChange = (menu: string) => (open: boolean) => {
     setOpenMenu(open ? menu : null);
-  };
-
-  const handleSelectedItemChange = (
-    menu: string,
-    value: string | undefined,
-  ) => {
-    const nextValue = selectedItem === value ? undefined : value;
-    setSelectedItem(nextValue);
-    setActiveMenu(nextValue ? menu : null);
+    if (open) {
+      setActiveMenu(menu);
+    }
   };
 
   return (
@@ -2121,10 +2010,6 @@ export const InSmallViewport: StoryFn = () => {
             <MegaMenu
               open={openMenu === "solutions"}
               onOpenChange={handleOpenChange("solutions")}
-              selectedItem={selectedItem}
-              onSelectedItemChange={(value) =>
-                handleSelectedItemChange("solutions", value)
-              }
             >
               <MegaMenuTrigger>
                 <NavigationItem active={activeMenu === "solutions"}>
@@ -2139,7 +2024,6 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Digital banking"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2150,7 +2034,6 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Risk management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2164,7 +2047,6 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Healthcare</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Patient management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2177,7 +2059,6 @@ export const InSmallViewport: StoryFn = () => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Telemedicine"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2188,7 +2069,6 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Compliance solutions"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2204,7 +2084,6 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Retail</MegaMenuHeader>
                     <MegaMenuItem
-                      value="E-commerce platforms"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2220,7 +2099,6 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Supply chain optimization"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2233,7 +2111,6 @@ export const InSmallViewport: StoryFn = () => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Quality control"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2244,7 +2121,6 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Production planning"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2260,7 +2136,6 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Education</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Learning management systems"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2273,7 +2148,6 @@ export const InSmallViewport: StoryFn = () => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Virtual classrooms"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2289,7 +2163,6 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Government</MegaMenuHeader>
                     <MegaMenuItem
-                      value="Document management"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2302,7 +2175,6 @@ export const InSmallViewport: StoryFn = () => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Citizen services"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2315,7 +2187,6 @@ export const InSmallViewport: StoryFn = () => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      value="Public safety solutions"
                       onClick={() => {
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
@@ -2336,10 +2207,6 @@ export const InSmallViewport: StoryFn = () => {
             <MegaMenu
               open={openMenu === "services"}
               onOpenChange={handleOpenChange("services")}
-              selectedItem={selectedItem}
-              onSelectedItemChange={(value) =>
-                handleSelectedItemChange("services", value)
-              }
             >
               <MegaMenuTrigger>
                 <NavigationItem active={activeMenu === "services"}>
@@ -2353,52 +2220,52 @@ export const InSmallViewport: StoryFn = () => {
                 <MegaMenuSection>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Consulting</MegaMenuHeader>
-                    <MegaMenuItem value="Strategy">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="IT">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>IT</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="HR">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>HR</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Marketing">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Operations">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Operations</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Implementation</MegaMenuHeader>
-                    <MegaMenuItem value="Onboarding">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Migration">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Migration</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Customization">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Customization</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Training">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Training</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Support">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Support</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Training</MegaMenuHeader>
-                    <MegaMenuItem value="Online">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Online</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="In-person">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>In-person</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Workshops">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Certifications">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
@@ -2410,10 +2277,6 @@ export const InSmallViewport: StoryFn = () => {
             <MegaMenu
               open={openMenu === "resources"}
               onOpenChange={handleOpenChange("resources")}
-              selectedItem={selectedItem}
-              onSelectedItemChange={(value) =>
-                handleSelectedItemChange("resources", value)
-              }
             >
               <MegaMenuTrigger>
                 <NavigationItem active={activeMenu === "resources"}>
@@ -2427,40 +2290,40 @@ export const InSmallViewport: StoryFn = () => {
                 <MegaMenuSection>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Documentation</MegaMenuHeader>
-                    <MegaMenuItem value="User guides">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>User guides</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="API reference">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>API reference</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Release notes">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="FAQs">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>FAQs</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Support</MegaMenuHeader>
-                    <MegaMenuItem value="Contact support">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Community forum">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Troubleshooting">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Learn</MegaMenuHeader>
-                    <MegaMenuItem value="Tutorials">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Guides">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Guides</MegaMenuItemContent>
                     </MegaMenuItem>
-                    <MegaMenuItem value="Best practices">
+                    <MegaMenuItem>
                       <MegaMenuItemContent>Best practices</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
@@ -2474,12 +2337,12 @@ export const InSmallViewport: StoryFn = () => {
   );
 };
 
-export const DefaultSelectedItem: StoryFn = () => {
+export const DefaultOpen: StoryFn = () => {
   return (
     <nav>
       <StackLayout as="ol" direction="row" gap={1}>
         <li>
-          <MegaMenu defaultOpen defaultSelectedItem="Risk management">
+          <MegaMenu defaultOpen>
             <MegaMenuTrigger>
               <NavigationItem>Solutions</NavigationItem>
             </MegaMenuTrigger>
@@ -2488,24 +2351,24 @@ export const DefaultSelectedItem: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital banking">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Compliance solutions
                     </MegaMenuItemContent>
@@ -2513,7 +2376,7 @@ export const DefaultSelectedItem: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       E-commerce platforms
                     </MegaMenuItemContent>
@@ -2561,22 +2424,22 @@ export const Placement: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Group A</MegaMenuHeader>
-                <MegaMenuItem value={`${placement}-1`}>
+                <MegaMenuItem>
                   <MegaMenuItemContent>Item 1</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value={`${placement}-2`}>
+                <MegaMenuItem>
                   <MegaMenuItemContent>Item 2</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value={`${placement}-3`}>
+                <MegaMenuItem>
                   <MegaMenuItemContent>Item 3</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Group B</MegaMenuHeader>
-                <MegaMenuItem value={`${placement}-4`}>
+                <MegaMenuItem>
                   <MegaMenuItemContent>Item 4</MegaMenuItemContent>
                 </MegaMenuItem>
-                <MegaMenuItem value={`${placement}-5`}>
+                <MegaMenuItem>
                   <MegaMenuItemContent>Item 5</MegaMenuItemContent>
                 </MegaMenuItem>
               </MegaMenuGroup>

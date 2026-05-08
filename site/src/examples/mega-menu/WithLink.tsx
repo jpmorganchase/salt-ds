@@ -16,19 +16,12 @@ import styles from "./index.module.css";
 export const WithLink = (): ReactElement => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>();
 
   const handleOpenChange = (menu: string) => (open: boolean) => {
     setOpenMenu(open ? menu : null);
-  };
-
-  const handleSelectedItemChange = (
-    menu: string,
-    value: string | undefined,
-  ) => {
-    const nextValue = selectedItem === value ? undefined : value;
-    setSelectedItem(nextValue);
-    setActiveMenu(nextValue ? menu : null);
+    if (open) {
+      setActiveMenu(menu);
+    }
   };
 
   return (
@@ -38,10 +31,6 @@ export const WithLink = (): ReactElement => {
           <MegaMenu
             open={openMenu === "solutions"}
             onOpenChange={handleOpenChange("solutions")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("solutions", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "solutions"}>
@@ -55,24 +44,24 @@ export const WithLink = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital banking">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Telemedicine">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Compliance solutions
                     </MegaMenuItemContent>
@@ -80,7 +69,7 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-commerce platforms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       E-commerce platforms
                     </MegaMenuItemContent>
@@ -88,15 +77,15 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply chain optimization">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Supply chain optimization
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality control">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production planning">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Production planning
                     </MegaMenuItemContent>
@@ -104,12 +93,12 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem value="Learning management systems">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Learning management systems
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Virtual classrooms">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Virtual classrooms
                     </MegaMenuItemContent>
@@ -117,15 +106,15 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem value="Document management">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Document management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Citizen services">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Public safety solutions">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>
                       Public safety solutions
                     </MegaMenuItemContent>
@@ -161,10 +150,6 @@ export const WithLink = (): ReactElement => {
           <MegaMenu
             open={openMenu === "services"}
             onOpenChange={handleOpenChange("services")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("services", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "services"}>
@@ -178,64 +163,64 @@ export const WithLink = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem value="Strategy">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="IT">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>IT</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="HR">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>HR</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Marketing">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Operations">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Operations</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem value="Onboarding">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Migration">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Migration</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Customization">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Training">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Training</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Support">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Testing">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Testing</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Rollout">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Rollout</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem value="Online">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="In-person">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>In-person</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Workshops">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Certifications">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Tutorials">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Guides">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Guides</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
@@ -257,10 +242,6 @@ export const WithLink = (): ReactElement => {
           <MegaMenu
             open={openMenu === "resources"}
             onOpenChange={handleOpenChange("resources")}
-            selectedItem={selectedItem}
-            onSelectedItemChange={(value) =>
-              handleSelectedItemChange("resources", value)
-            }
           >
             <MegaMenuTrigger>
               <NavigationItem active={activeMenu === "resources"}>
@@ -274,28 +255,28 @@ export const WithLink = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User guides">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="API reference">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Release notes">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="FAQs">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>FAQs</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact support">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Community forum">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Troubleshooting">
+                  <MegaMenuItem>
                     <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>

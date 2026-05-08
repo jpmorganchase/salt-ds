@@ -33,14 +33,11 @@
   background: var(--salt-navigable-background-hover);
 }
 
-.saltMegaMenuItem > a:active,
-.saltMegaMenuItem > a.saltMegaMenuItem-active,
-.saltMegaMenuItem > a.saltMegaMenuItem-active:hover {
+.saltMegaMenuItem > a:active {
   background: var(--salt-navigable-accent-background-active);
 }
 
-.saltMegaMenuItem > a:active::before,
-.saltMegaMenuItem > a.saltMegaMenuItem-active::before {
+.saltMegaMenuItem > a:active::before {
   content: "";
   position: absolute;
   inset: 0;
