@@ -11,6 +11,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { CalendarIcon, LocationIcon, SearchIcon } from "@salt-ds/icons";
+import type { CSSProperties } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 
 export const RegionalSettingsContent = ({
@@ -18,9 +19,10 @@ export const RegionalSettingsContent = ({
   handleRadioChange,
   handleSelectChange,
   stepFieldValidation,
-}: FormContentProps) => {
+  style,
+}: FormContentProps & { style?: CSSProperties }) => {
   return (
-    <GridLayout columns={2}>
+    <GridLayout style={style} columns={{ xs: 1, sm: 2 }}>
       <GridItem>
         <StackLayout>
           <FormField
@@ -59,10 +61,7 @@ export const RegionalSettingsContent = ({
               </FormFieldHelperText>
             )}
           </FormField>
-          <FormField
-            validationStatus={stepFieldValidation.timezone?.status}
-            necessity="required"
-          >
+          <FormField>
             <FormFieldLabel>Region / Country</FormFieldLabel>
             <Dropdown
               startAdornment={<LocationIcon />}
@@ -89,11 +88,6 @@ export const RegionalSettingsContent = ({
               <Option value="Singapore">Singapore</Option>
               <Option value="Australia">Australia</Option>
             </Dropdown>
-            {stepFieldValidation.timezone?.status && (
-              <FormFieldHelperText>
-                {stepFieldValidation.timezone.message}
-              </FormFieldHelperText>
-            )}
           </FormField>
           <FormField>
             <FormFieldLabel>Public holiday calendar</FormFieldLabel>
@@ -120,11 +114,6 @@ export const RegionalSettingsContent = ({
               <Option value="Japan (National)">Japan (National)</Option>
               <Option value="Australia (National)">Australia (National)</Option>
             </Dropdown>
-            {stepFieldValidation.timezone?.status && (
-              <FormFieldHelperText>
-                {stepFieldValidation.timezone.message}
-              </FormFieldHelperText>
-            )}
           </FormField>
         </StackLayout>
       </GridItem>

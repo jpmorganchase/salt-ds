@@ -126,7 +126,7 @@ export const DataFormatContent = ({
         </FormField>
       </StackLayout>
       <FlexItem>
-        <Card style={{ width: 372 }}>
+        <Card>
           <StackLayout separators>
             {stockCards.map((stock) => (
               <FlexItem key={stock.ticker}>

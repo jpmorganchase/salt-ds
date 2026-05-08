@@ -61,9 +61,11 @@ export const FoundationContent = ({
       {formData.displayDensity === "high" && (
         <Banner status="warning">
           <BannerContent>
-            High density may reduce readability and make some controls harder to
-            use.{" "}
-            <Link href="#">Read WCAG guidelines for more information.</Link>
+            High density doesn't meet the{" "}
+            <Link href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">
+              WCAG-defined minimum target size
+            </Link>
+            , which may reduce readability and make interactions harder.
           </BannerContent>
         </Banner>
       )}

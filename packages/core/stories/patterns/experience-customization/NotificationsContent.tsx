@@ -75,7 +75,7 @@ export const NotificationsContent = ({
           handleSelectChange?.(value as string, "position");
         }}
       >
-        <FlexLayout>
+        <FlexLayout wrap>
           {NOTIFICATION_POSITIONS.map(({ value, label }) => (
             <FlexItem key={value}>
               <InteractableCard value={value}>

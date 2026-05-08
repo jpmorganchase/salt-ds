@@ -200,7 +200,6 @@ const stepValidationSchemas: Record<
   }),
   regional: Yup.object({
     language: Yup.string().required("Language is required."),
-    region: Yup.string().required("Region is required."),
   }),
   displayMode: Yup.object({
     displayDensity: Yup.string().test({
@@ -243,7 +242,7 @@ const MultiStepTemplate = () => {
   } = useWizardForm({
     steps: stepIds,
     initialState: {
-      activeStepIndex: 0,
+      activeStepIndex: 3,
       formData: initialFormData,
       validationsByStep: {},
     },
@@ -358,7 +357,7 @@ const MultiStepTemplate = () => {
         appearance="transparent"
         onClick={() => resetDataFormatFields(updateField)}
       >
-        Reset to default setting
+        Reset to default
       </Button>
     ) : null;
 
@@ -384,7 +383,7 @@ const MultiStepTemplate = () => {
     >
       <FlexItem padding={3}>{header}</FlexItem>
       <FlexItem grow={1}>
-        <ContentOverflow style={{ height: 424 }}>
+        <ContentOverflow style={{ height: 430 }}>
           {contentByStep[currentStepId]}
         </ContentOverflow>
       </FlexItem>
@@ -411,6 +410,9 @@ export const StandardControls = () => {
       handleCheckboxChange={handleCheckboxChange}
       handleSelectChange={handleSelectChange}
       stepFieldValidation={{}}
+      style={{
+        maxWidth: 636,
+      }}
     />
   );
 };
@@ -606,7 +608,7 @@ export const EndToEndModal = () => {
         appearance="transparent"
         onClick={() => resetDataFormatFields(updateField)}
       >
-        Reset to default setting
+        Reset to default
       </Button>
     ) : null;
 
@@ -890,24 +892,27 @@ function PreferencesContent({
         {formData.displayDensity === "high" && (
           <Banner status="warning">
             <BannerContent>
-              High density may reduce readability and make some controls harder
-              to use.{" "}
-              <Link href="#">Read WCAG guidelines for more information.</Link>
+              High density doesn't meet the{" "}
+              <Link href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">
+                WCAG-defined minimum target size
+              </Link>
+              , which may reduce readability and make interactions harder.
             </BannerContent>
           </Banner>
         )}
         <FormField>
           <FormFieldLabel>Choose a density</FormFieldLabel>
-          <Dropdown
+          <RadioButtonGroup
             value={formData.displayDensity}
-            onSelectionChange={(_event, value) =>
-              onDropdownChange("displayDensity", value[0])
+            onChange={(event) =>
+              onRadioChange("displayDensity", event.target.value)
             }
+            direction="horizontal"
           >
-            <Option value="high">High density</Option>
-            <Option value="medium">Medium density</Option>
-            <Option value="low">Low density</Option>
-          </Dropdown>
+            <RadioButton label="High density" value="high" />
+            <RadioButton label="Medium density" value="medium" />
+            <RadioButton label="Low density" value="low" />
+          </RadioButtonGroup>
         </FormField>
         {formData.displayDensity === "high" && (
           <FormField necessity="required">
@@ -1105,17 +1110,15 @@ function PreferencesContent({
       <StackLayout gap={3}>
         <FormField>
           <FormFieldLabel>Notification position</FormFieldLabel>
-          <Dropdown
+          <RadioButtonGroup
             value={formData.position}
-            onSelectionChange={(_event, value) =>
-              onDropdownChange("position", value[0])
-            }
+            onChange={(event) => onRadioChange("position", event.target.value)}
           >
-            <Option value="Top Left">Top Left</Option>
-            <Option value="Top Right">Top Right</Option>
-            <Option value="Bottom Left">Bottom Left</Option>
-            <Option value="Bottom Right">Bottom Right</Option>
-          </Dropdown>
+            <RadioButton label="Top Left" value="Top Left" />
+            <RadioButton label="Top Right" value="Top Right" />
+            <RadioButton label="Bottom Left" value="Bottom Left" />
+            <RadioButton label="Bottom Right" value="Bottom Right" />
+          </RadioButtonGroup>
         </FormField>
         <FormField>
           <FormFieldLabel>Automatically dismiss notifications</FormFieldLabel>
