@@ -34,7 +34,7 @@ Use the Experience Customization pattern to establish or update foundational s
 
 ### Usage contexts
 
-1. **Onboading (Wizard)**: A guided, step-by-step experience used to initialize the workspace and capture essential preferences upon the user’s first entry into the application. Establishing accessibility defaults during this setup phase ensures a compliant environment from the very first session.
+1. **Onboarding (Wizard)**: A guided, step-by-step experience used to initialize the workspace and capture essential preferences upon the user’s first entry into the application. Establishing accessibility defaults during this setup phase ensures a compliant environment from the very first session.
 2. **Ongoing customization**:  A persistent entry point that allows users to return and adjust their environment as their operational needs evolve.
 
 ### Accessibility and compliance
@@ -100,7 +100,7 @@ The steps below summarize Salt-specific user preferences that may be made avai
 | ---- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1    | Foundation          | Theme, Density, [Reduced motion](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions)                                                                                                                    | Establishes global system behavior first                                                                                                              |
 | 2    | Data interpretation | Number format, Currency format, Date/Time format, Locale, and timezone if needed                                                                | Ensures data is immediately understandable and consistently interpreted before configuring surfaces                                                   |
-| 3    | Data surfaces       | Tables (live preview): Columns, Sorting, Density/Compact, Zebra striping. Charts (live preview): Lines, Patterns, Markers, Labels, Gridlines, Legend. | Outcomes are cumulative, so users need to see results live before setting; this is the core step because it shapes how data is read and understood |
+| 3    | Data surfaces       | Tables (live preview): Columns, Sorting, Density/Compact, Zebra striping. Charts (live preview): Lines, Patterns, Markers, Labels, Grid lines, Legend. | Outcomes are cumulative, so users need to see results live before setting; this is the core step because it shapes how data is read and understood |
 | 4    | Feedback            | Toast position, Auto-dismiss, Duration                                                                                                            | Finalizes how the system provides feedback after core reading/interpretation is set                                                                   |
 
 ## Selection model
@@ -221,7 +221,7 @@ The following sequence illustrates the expected behavior when a mandatory select
 
 1. **Intent to proceed**: The user attempts to move forward by clicking 'Next' or 'Finish'. To maintain accessibility and discoverability, the button remains enabled. Because no selection has been made, the system initiates a validation check.
 2. **Error feedback**: A validation banner appears at the top of the content area to provide immediate context, and the specific component updates to an error state to highlight exactly where the user needs to take action. If a stepper is present, it also updates to an error state to reflect the same missing requirement.
-3. **Resolution**: Once the user selects an option, the requirement is satisfied. The validation banner and error states (including the stepper, if present) are cleared, and the user can click Next or Finish again to successfully proceed.
+3. **Resolution**: Once the user selects an option, the requirement is satisfied. The validation banner and error states (including the stepper, if present) are cleared, and the user can click `Next` or `Finish` again to successfully proceed.
 
 <Diagram
   src="/img/patterns/experience-customization/experience-customization-pattern-validation-flow.png"
