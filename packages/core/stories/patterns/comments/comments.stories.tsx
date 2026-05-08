@@ -485,13 +485,15 @@ export const WithEmptyState = () => {
           style={{ padding: "var(--salt-spacing-300) 0" }}
         >
           <StatusIndicator status="info" size={2} aria-hidden="true" />
-          <StackLayout gap={1} align="center" style={{ maxWidth: "175px", textAlign: "center" }}>
+          <StackLayout
+            gap={1}
+            align="center"
+            style={{ maxWidth: "175px", textAlign: "center" }}
+          >
             <Text styleAs="h4">
               <strong>Be the first to comment</strong>
             </Text>
-            <Text>
-              Start the discussion by adding a comment above.
-            </Text>
+            <Text>Start the discussion by adding a comment above.</Text>
           </StackLayout>
         </StackLayout>
       ) : (
