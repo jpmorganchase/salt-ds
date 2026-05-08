@@ -156,7 +156,7 @@ Use card selection for settings that lead to meaningful changes in the interfa
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-**Switch in wizard**: Switches can be used in multi-step wizards even when changes don’t take effect immediately. Use switches only for true on/off choices, and make any final behavior unmistakable—for example, label the final button “Finish & apply changes” instead of just “Finish.”
+**Switch in wizard**: Switches can be used in multi-step wizards even when changes don’t take effect immediately. Use switches only for true on/off choices, and make any final behavior unmistakable—for example, label the final button 'Finish and apply changes' instead of just 'Finish'.
 </GuidanceCallout>
 
 ## Reset to default
@@ -183,7 +183,7 @@ When a user selects an option that may not meet accessibility requirements, pre
 
 ### Confirmation
 
-When a user selects an option that may not meet accessibility requirements or may reduce usability for some users, require an explicit acknowledgement before they proceed. The acknowledgement should restate the selected option and its potential impact (e.g., “I understand that High density reduces target sizes and may affect readability and ease of use.”).
+When a user selects an option that may not meet accessibility requirements or may reduce usability for some users, require an explicit acknowledgement before they proceed. The acknowledgement should restate the selected option and its potential impact.
 
 ### Easy recovery
 
@@ -215,7 +215,7 @@ Because the workflow cannot continue without this input, the interface must guid
 
 The following sequence illustrates the expected behavior when a mandatory selection is required. This logic ensures the interface remains navigable while clearly communicating missing requirements.
 
-1. **Intent to proceed**: The user attempts to move forward by clicking Next or Finish. To maintain accessibility and discoverability, the button remains enabled. Because no selection has been made, the system initiates a validation check.
+1. **Intent to proceed**: The user attempts to move forward by clicking 'Next' or 'Finish'. To maintain accessibility and discoverability, the button remains enabled. Because no selection has been made, the system initiates a validation check.
 2. **Error feedback**: A validation banner appears at the top of the content area to provide immediate context, and the specific component updates to an error state to highlight exactly where the user needs to take action. If a stepper is present, it also updates to an error state to reflect the same missing requirement.
 3. **Resolution**: Once the user selects an option, the requirement is satisfied. The validation banner and error states (including the stepper, if present) are cleared, and the user can click Next or Finish again to successfully proceed.
 
