@@ -1,0 +1,53 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Appearance
+
+Toolbar supports two appearances: Bordered or Transparent. Transparent toolbars are flush with the edges of the toolbar container.
+
+<LivePreview componentName="toolbar" exampleName="Appearance" />
+
+## Variants
+
+Bordered toolbars are available in three variants: primary, secondary, and tertiary. The primary variant is set by default.
+
+<LivePreview componentName="toolbar" exampleName="Variants" />
+
+## Content sections
+
+A toolbar is divided into three sections: `start content`, `center content`, and `end content`. Each section can contain groups of components, also known as tool trays. In code, every component is wrapped in a tool tray by default so keyboard navigation can be handled in an accessible, consistent way. Each section can be hidden.
+
+<LivePreview componentName="toolbar" exampleName="ContentSections" />
+
+## Overflow
+
+### Independent collapse
+
+By default, `overflowMode` is set to `"independent"`, which enables controls to collapse from right to left, one tool tray at a time. When the toolbar reduces in length and the content does not fit in the visible area, the controls will overflow into an overflow toolbar. A custom collapse order may be defined using `overflowPriority`.
+
+<LivePreview componentName="toolbar" exampleName="IndependentCollapse" />
+
+### Grouped collapse
+
+When `overflowMode` is set to `"grouped"`, controls can collapse together when the toolbar can no longer display all components. This is best for when controls are interdependent, meaning they need to be displayed together in order to work effectively.
+
+<LivePreview componentName="toolbar" exampleName="GroupedCollapse" />
+
+### Dynamic collapse
+
+By default, controls will move into one overflow. If more are needed, use a named `overflowGroup` to define the trigger label.
+
+<Callout status="success" title="Best practices">
+  If your toolbar has more than one overflow, ensure that their combination of
+  labels and icons is different. For example, if a toolbar uses two overflows,
+  do not use overflow-menu icons for both.
+</Callout>
+
+<LivePreview componentName="toolbar" exampleName="DynamicCollapse" />

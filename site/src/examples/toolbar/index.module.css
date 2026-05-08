@@ -1,0 +1,28 @@
+.example {
+  display: grid;
+  gap: var(--salt-spacing-200);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.toolbarStack {
+  display: grid;
+  gap: var(--salt-spacing-100);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.constrained {
+  inline-size: 420px;
+  max-inline-size: 100%;
+}
+
+.dynamic {
+  inline-size: 620px;
+  max-inline-size: 100%;
+}
+
+.narrow {
+  inline-size: 360px;
+  max-inline-size: 100%;
+}

@@ -1,0 +1,47 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- To organize and group frequently used actions and commands together.
+- To improve efficiency and discoverability of related actions.
+- To provide a consistent location for key actions, typically at the top of a page, panel, or section.
+
+### When not to use
+
+- As primary navigation between major sections or pages. Instead, use [`Navigation item`](../navigation-item).
+- To display only one control.
+- For placing actions that are not directly related to the current context or content.
+- To display a brand logo, navigation, and utility actions. Instead, use [App header](/salt/patterns/app-header).
+
+## Content
+
+- Follow the respective content guidance for all components used inside a toolbar.
+- Keep content as brief as possible given the limited width of the toolbar.
+
+## Import
+
+To import `Toolbar` from the lab Salt package, use:
+
+```js
+import { ToolbarNext as Toolbar, TooltrayNext as Tooltray } from "@salt-ds/lab";
+```
+
+## Props
+
+### Toolbar
+
+<PropsTable packageName="lab" componentName="ToolbarNext" />
+
+### Tooltray
+
+<PropsTable packageName="lab" componentName="TooltrayNext" />

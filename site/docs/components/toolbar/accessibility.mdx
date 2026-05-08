@@ -1,0 +1,57 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Avoid controls that utilize arrow keys, like a text input, in the start or middle of a toolbar. These controls disrupt arrow-key item navigation and make Tab move to the next item instead of exiting, breaking expected toolbar behavior.
+  - If unavoidable, include only one and place it last to preserve arrow-key navigation and normal Tab exit.
+- Use an `aria-label` when there is no visible label on the toolbar element and `aria-labelledby` when there is a visible label.
+- With transparent toolbar, avoid spanning the full width of a page unless it contains enough controls to be recognized as a toolbar. Otherwise, use a bordered toolbar.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is before the toolbar, this action brings focus to the first control in the toolbar.
+- If a control in the toolbar has focus, this action moves focus out of the toolbar to the next interactive element in the tab order.
+- If a control that utilizes arrow keys, like a text input, has focus, this action moves focus to the next interactive element in the toolbar.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is on an interactive element immediately after the toolbar, this action moves focus onto the last-focused control in the toolbar.
+- If a control in the toolbar has focus, this action moves focus out of the toolbar to the previous interactive element in the tab order.
+- If a control that utilizes arrow keys, like a text input, has focus, this action moves focus onto the previous interactive element in the toolbar.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Left arrow / Up arrow">
+
+- Left arrow or Up arrow moves focus to the previous control in the toolbar. Focus wraps.
+- If focus is on a control that uses arrow keys, like a text input, these actions follow the control's native behavior.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Right arrow / Down arrow">
+
+- Right arrow or Down arrow moves focus to the next control in the toolbar. Focus wraps.
+- If focus is on a control that uses arrow keys, like a text input, these actions follow the control's native behavior.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+- Home moves focus to the first control in the toolbar.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+- End moves focus to the last control in the toolbar.
+
+</KeyboardControl>
+</KeyboardControls>
