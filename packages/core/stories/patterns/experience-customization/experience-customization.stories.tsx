@@ -298,7 +298,7 @@ const MultiStepTemplate = () => {
         <Text>
           Create a new account
           <Text
-            as="h2"
+            styleAs="h2"
             ref={stepHeadingRef}
             tabIndex={-1}
             style={{ margin: 0 }}

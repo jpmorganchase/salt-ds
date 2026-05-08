@@ -10,12 +10,15 @@ import {
   StackLayout,
   Switch,
   Text,
+  useTheme,
 } from "@salt-ds/core";
 import { US } from "@salt-ds/countries";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 import type { FormContentProps } from "./experience-customization.stories";
 import NegativeTrend from "./img/negative-trend.png";
+import NegativeTrendDark from "./img/negative-trend-dark.png";
 import PositiveTrend from "./img/positive-trend.png";
+import PositiveTrendDark from "./img/positive-trend-dark.png";
 
 const stockCards = [
   {
@@ -23,6 +26,7 @@ const stockCards = [
     fullName: "VERTIV HOLDINGS CO-A",
     exchange: "NYSE",
     trendImage: PositiveTrend,
+    trendImageDark: PositiveTrendDark,
     trendAlt: "Positive trend",
     isPositive: true,
     changeText: "+6.27 (+1.95%)",
@@ -38,6 +42,7 @@ const stockCards = [
     fullName: "GE VERNOVA INC",
     exchange: "NYSE",
     trendImage: NegativeTrend,
+    trendImageDark: NegativeTrendDark,
     trendAlt: "Negative trend",
     isPositive: false,
     changeText: "-4.03 (-0.35%)",
@@ -55,6 +60,8 @@ export const DataFormatContent = ({
   handleRadioChange,
   handleCheckboxChange,
 }: FormContentProps) => {
+  const { mode } = useTheme();
+
   const showExchangeText = formData.exchangeAndRegionDisplay !== "flag";
   const showFlag = formData.exchangeAndRegionDisplay !== "text";
   const getDisplayMetric = (stock: (typeof stockCards)[number]) => {
@@ -166,9 +173,14 @@ export const DataFormatContent = ({
 
                   {formData.performanceChart && (
                     <img
-                      src={stock.trendImage}
+                      src={
+                        mode === "dark"
+                          ? stock.trendImageDark
+                          : stock.trendImage
+                      }
                       alt={stock.trendAlt}
                       style={{ width: "100%" }}
+                      height="64px"
                     />
                   )}
                 </StackLayout>

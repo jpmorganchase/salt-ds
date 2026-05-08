@@ -13,11 +13,39 @@ import {
   StackLayout,
   Text,
   useId,
+  useTheme,
 } from "@salt-ds/core";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
+import HighDensityTableDark from "./img/table-high-dark.png";
 import LowDensityTable from "./img/table-low.png";
+import LowDensityTableDark from "./img/table-low-dark.png";
 import MediumDensityTable from "./img/table-medium.png";
+import MediumDensityTableDark from "./img/table-medium-dark.png";
+
+const displayDensityOptions = [
+  {
+    value: "high",
+    label: "High density",
+    image: HighDensityTable,
+    darkImage: HighDensityTableDark,
+    alt: "High Density",
+  },
+  {
+    value: "medium",
+    label: "Medium density",
+    image: MediumDensityTable,
+    darkImage: MediumDensityTableDark,
+    alt: "Medium Density",
+  },
+  {
+    value: "low",
+    label: "Low density",
+    image: LowDensityTable,
+    darkImage: LowDensityTableDark,
+    alt: "Low Density",
+  },
+] as const;
 
 export const FoundationContent = ({
   formData,
@@ -25,27 +53,7 @@ export const FoundationContent = ({
   stepFieldValidation,
   handleCheckboxChange,
 }: FormContentProps) => {
-  const displayDensityOptions = [
-    {
-      value: "high",
-      label: "High density",
-      image: HighDensityTable,
-      alt: "High Density",
-    },
-    {
-      value: "medium",
-      label: "Medium density",
-      image: MediumDensityTable,
-      alt: "Medium Density",
-    },
-    {
-      value: "low",
-      label: "Low density",
-      image: LowDensityTable,
-      alt: "Low Density",
-    },
-  ] as const;
-
+  const { mode } = useTheme();
   const densityId = useId();
 
   return (
@@ -78,7 +86,7 @@ export const FoundationContent = ({
                   <InteractableCard value={option.value}>
                     <StackLayout gap={1}>
                       <img
-                        src={option.image}
+                        src={mode === "dark" ? option.darkImage : option.image}
                         alt=""
                         style={{
                           height: 200,
