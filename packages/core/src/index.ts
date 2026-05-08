@@ -46,6 +46,7 @@ export * from "./parent-child-layout";
 export * from "./pill";
 export * from "./progress";
 export * from "./radio-button";
+export * from "./rating";
 /**
  * Defines the components that support useClassNameInjection via module augmentation of @salt-ds/styles ComponentPropsMap
  */

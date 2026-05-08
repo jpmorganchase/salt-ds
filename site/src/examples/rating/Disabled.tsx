@@ -1,4 +1,4 @@
-import { Rating } from "@salt-ds/lab";
+import { Rating } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Disabled = (): ReactElement => (
