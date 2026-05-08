@@ -8,6 +8,7 @@ import {
   SidePanelTitle,
   SidePanelTrigger,
 } from "@salt-ds/lab";
+import styles from "./index.module.css";
 
 const ScrollableContent = () => (
   <div
@@ -24,11 +25,11 @@ const ScrollableContent = () => (
       overflow: "auto",
     }}
   >
-    <SidePanelTrigger>
-      <Button style={{ width: "fit-content", flexShrink: 0 }}>
-        Open right panel
-      </Button>
-    </SidePanelTrigger>
+    <div>
+      <SidePanelTrigger>
+        <Button>Toggle right panel</Button>
+      </SidePanelTrigger>
+    </div>
     <div
       style={{
         display: "grid",
@@ -38,13 +39,15 @@ const ScrollableContent = () => (
     >
       {Array.from({ length: 12 }, (_, i) => (
         <div
-          // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-          key={`content-${i}`}
+          key={`grid-item-${
+            // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+            i
+          }`}
           style={{
-            backgroundColor: "var(--salt-container-secondary-background)",
+            backgroundColor: "var(--salt-container-primary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
             border:
-              "var(--salt-size-fixed-100) dashed var(--salt-container-primary-borderColor)",
+              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -66,8 +69,8 @@ const ScrollablePanel = () => {
       <SidePanelContent>
         <StackLayout>
           {Array.from({ length: 10 }, (_, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: Static list of identical placeholder items
-            <Text key={`panel-item-${i}`}>
+            // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+            <Text key={`content-${i}`}>
               Panel item — This is scrollable content inside the side panel that
               demonstrates independent scrolling.
             </Text>
@@ -81,19 +84,12 @@ const ScrollablePanel = () => {
 export const Scrollable = () => {
   return (
     <SidePanelProvider>
-      <FlexLayout
-        style={{
-          width: "100%",
-          height: 300,
-          border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-          borderRadius: "var(--salt-palette-corner-weak)",
-        }}
-        gap={0}
-      >
-        <ScrollableContent />
-        <ScrollablePanel />
-      </FlexLayout>
+      <div className={styles.appFrame}>
+        <FlexLayout gap={0} style={{ height: "100%" }}>
+          <ScrollableContent />
+          <ScrollablePanel />
+        </FlexLayout>
+      </div>
     </SidePanelProvider>
   );
 };

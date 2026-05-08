@@ -9,42 +9,30 @@ import {
   SidePanelTrigger,
 } from "@salt-ds/lab";
 import { ContentExample } from "./ContentExample";
+import styles from "./index.module.css";
 
 export const RightPanel = () => {
   return (
     <SidePanelProvider>
-      <RightPanelContent />
+      <div className={styles.appFrame}>
+        <FlexLayout gap={0} style={{ height: "100%" }}>
+          <ContentExample>
+            <SidePanelTrigger>
+              <Button>Toggle right panel</Button>
+            </SidePanelTrigger>
+          </ContentExample>
+
+          <SidePanel position="right">
+            <SidePanelHeader>
+              <SidePanelTitle>Section Title</SidePanelTitle>
+              <SidePanelCloseButton />
+            </SidePanelHeader>
+            <SidePanelContent>
+              <Text>Side panel content goes here.</Text>
+            </SidePanelContent>
+          </SidePanel>
+        </FlexLayout>
+      </div>
     </SidePanelProvider>
-  );
-};
-
-const RightPanelContent = () => {
-  return (
-    <FlexLayout
-      style={{
-        width: "100%",
-        height: 300,
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-      }}
-      gap={0}
-    >
-      <ContentExample>
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>Open right panel</Button>
-        </SidePanelTrigger>
-      </ContentExample>
-
-      <SidePanel position="right">
-        <SidePanelHeader>
-          <SidePanelTitle>Section Title</SidePanelTitle>
-          <SidePanelCloseButton />
-        </SidePanelHeader>
-        <SidePanelContent>
-          <Text>Side panel content goes here.</Text>
-        </SidePanelContent>
-      </SidePanel>
-    </FlexLayout>
   );
 };

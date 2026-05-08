@@ -11,6 +11,7 @@ import {
 } from "@salt-ds/lab";
 import type { CSSProperties } from "react";
 import { ContentExample } from "./ContentExample";
+import styles from "./index.module.css";
 
 const panelStyle = {
   "--saltSidePanel-width": "200px",
@@ -18,7 +19,7 @@ const panelStyle = {
 
 const RightPanel = () => {
   return (
-    <SidePanel style={panelStyle} variant="secondary">
+    <SidePanel style={panelStyle}>
       <SidePanelHeader>
         <SidePanelTitle>Right Panel</SidePanelTitle>
         <SidePanelCloseButton />
@@ -32,7 +33,7 @@ const RightPanel = () => {
 
 const LeftPanel = () => {
   return (
-    <SidePanel position="left" style={panelStyle} variant="secondary">
+    <SidePanel position="left" style={panelStyle}>
       <SidePanelHeader>
         <SidePanelTitle>Left Panel</SidePanelTitle>
         <SidePanelCloseButton />
@@ -51,16 +52,11 @@ const ContentArea = () => {
     <SidePanelProvider>
       <ContentExample>
         <FlexLayout gap={1} justify="space-between">
-          <Button
-            {...getTriggerProps()}
-            style={{ width: "fit-content", whiteSpace: "nowrap" }}
-          >
+          <Button {...getTriggerProps()} style={{ whiteSpace: "nowrap" }}>
             Toggle left panel
           </Button>
           <SidePanelTrigger>
-            <Button style={{ width: "fit-content", whiteSpace: "nowrap" }}>
-              Toggle right panel
-            </Button>
+            <Button style={{ whiteSpace: "nowrap" }}>Toggle right panel</Button>
           </SidePanelTrigger>
         </FlexLayout>
       </ContentExample>
@@ -71,21 +67,13 @@ const ContentArea = () => {
 
 export const ManualTrigger = () => {
   return (
-    <div
-      style={{
-        width: "100%",
-        height: 300,
-        display: "flex",
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-        overflow: "hidden",
-      }}
-    >
-      <SidePanelProvider>
-        <LeftPanel />
-        <ContentArea />
-      </SidePanelProvider>
-    </div>
+    <SidePanelProvider>
+      <div className={styles.appFrame}>
+        <FlexLayout gap={0} style={{ height: "100%" }}>
+          <LeftPanel />
+          <ContentArea />
+        </FlexLayout>
+      </div>
+    </SidePanelProvider>
   );
 };

@@ -9,42 +9,30 @@ import {
   SidePanelTrigger,
 } from "@salt-ds/lab";
 import { ContentExample } from "./ContentExample";
+import styles from "./index.module.css";
 
 export const LeftPanel = () => {
   return (
     <SidePanelProvider>
-      <LeftPanelContent />
+      <div className={styles.appFrame}>
+        <FlexLayout gap={0} style={{ height: "100%" }}>
+          <SidePanel position="left">
+            <SidePanelHeader>
+              <SidePanelTitle>Section Title</SidePanelTitle>
+              <SidePanelCloseButton />
+            </SidePanelHeader>
+            <SidePanelContent>
+              <Text>Side panel content goes here.</Text>
+            </SidePanelContent>
+          </SidePanel>
+
+          <ContentExample>
+            <SidePanelTrigger>
+              <Button>Toggle left panel</Button>
+            </SidePanelTrigger>
+          </ContentExample>
+        </FlexLayout>
+      </div>
     </SidePanelProvider>
-  );
-};
-
-const LeftPanelContent = () => {
-  return (
-    <FlexLayout
-      style={{
-        width: "100%",
-        height: 300,
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-      }}
-      gap={0}
-    >
-      <SidePanel position="left">
-        <SidePanelHeader>
-          <SidePanelTitle>Section Title</SidePanelTitle>
-          <SidePanelCloseButton />
-        </SidePanelHeader>
-        <SidePanelContent>
-          <Text>Side panel content goes here.</Text>
-        </SidePanelContent>
-      </SidePanel>
-
-      <ContentExample>
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>Open left panel</Button>
-        </SidePanelTrigger>
-      </ContentExample>
-    </FlexLayout>
   );
 };

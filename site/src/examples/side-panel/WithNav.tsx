@@ -9,9 +9,10 @@ import {
   SidePanelTrigger,
 } from "@salt-ds/lab";
 import { ContentExample } from "./ContentExample";
+import styles from "./index.module.css";
 
 const Nav = () => (
-  <nav
+  <div
     style={{
       display: "flex",
       flexDirection: "column",
@@ -19,54 +20,48 @@ const Nav = () => (
       padding: "var(--salt-spacing-200)",
       borderRight:
         "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-      backgroundColor: "var(--salt-container-secondary-background)",
+      backgroundColor: "var(--salt-container-primary-background)",
       whiteSpace: "nowrap",
     }}
   >
-    <Text styleAs="label" style={{ fontWeight: "bold" }}>
-      Nav
-    </Text>
-    <Text>Item 1</Text>
-    <Text>Item 2</Text>
-    <Text>Item 3</Text>
-  </nav>
+    {Array.from({ length: 3 }).map((_, i) => (
+      <div
+        // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+        key={i}
+        style={{
+          height: "var(--salt-size-base)",
+          aspectRatio: 1,
+          border:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+          borderRadius: "var(--salt-palette-corner-weak)",
+        }}
+      />
+    ))}
+  </div>
 );
 
 export const WithNav = () => {
   return (
     <SidePanelProvider>
-      <WithNavContent />
+      <div className={styles.appFrame}>
+        <FlexLayout gap={0} style={{ height: "100%" }}>
+          <Nav />
+          <SidePanel position="left">
+            <SidePanelHeader>
+              <SidePanelTitle>Section Title</SidePanelTitle>
+              <SidePanelCloseButton />
+            </SidePanelHeader>
+            <SidePanelContent>
+              <Text>Side panel content goes here.</Text>
+            </SidePanelContent>
+          </SidePanel>
+          <ContentExample>
+            <SidePanelTrigger>
+              <Button>Open side panel</Button>
+            </SidePanelTrigger>
+          </ContentExample>
+        </FlexLayout>
+      </div>
     </SidePanelProvider>
-  );
-};
-
-const WithNavContent = () => {
-  return (
-    <FlexLayout
-      style={{
-        width: "100%",
-        height: 300,
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-      }}
-      gap={0}
-    >
-      <Nav />
-      <SidePanel position="left">
-        <SidePanelHeader>
-          <SidePanelTitle>Section Title</SidePanelTitle>
-          <SidePanelCloseButton />
-        </SidePanelHeader>
-        <SidePanelContent>
-          <Text>Side panel content goes here.</Text>
-        </SidePanelContent>
-      </SidePanel>
-      <ContentExample>
-        <SidePanelTrigger>
-          <Button style={{ width: "fit-content" }}>Open side panel</Button>
-        </SidePanelTrigger>
-      </ContentExample>
-    </FlexLayout>
   );
 };

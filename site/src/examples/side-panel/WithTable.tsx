@@ -22,7 +22,8 @@ import {
   SidePanelTitle,
   useSidePanel,
 } from "@salt-ds/lab";
-import React, { type CSSProperties, useState } from "react";
+import type React from "react";
+import { type ChangeEvent, type CSSProperties, useState } from "react";
 import styles from "./WithTable.module.css";
 
 interface TeamMember {
@@ -113,13 +114,21 @@ const SidePanelExample = () => {
     <FlexLayout
       style={{
         width: "100%",
-        height: "100%",
+        height: 350,
         border:
           "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        overflow: "hidden",
       }}
       gap={0}
     >
-      <div style={{ flex: 1, minWidth: 0, padding: "var(--salt-spacing-300)" }}>
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          padding: "var(--salt-spacing-300)",
+          boxSizing: "border-box",
+        }}
+      >
         <TableContainer>
           <Table>
             <caption>Users</caption>
@@ -152,7 +161,7 @@ const SidePanelExample = () => {
         </TableContainer>
       </div>
 
-      <SidePanel position="right" style={panelStyle} key={selectedRow?.id}>
+      <SidePanel position="right" style={panelStyle}>
         {formValues && (
           <>
             <SidePanelHeader>
@@ -167,8 +176,9 @@ const SidePanelExample = () => {
                 <FormField>
                   <FormFieldLabel>Name</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.name}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
                         (v) => v && { ...v, name: event.target.value },
                       )
@@ -178,8 +188,9 @@ const SidePanelExample = () => {
                 <FormField>
                   <FormFieldLabel>Email</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.email}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
                         (v) => v && { ...v, email: event.target.value },
                       )
@@ -189,8 +200,9 @@ const SidePanelExample = () => {
                 <FormField>
                   <FormFieldLabel>Phone</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.phone}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
                         (v) => v && { ...v, phone: event.target.value },
                       )
