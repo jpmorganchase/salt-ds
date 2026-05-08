@@ -7,6 +7,10 @@ tags:
 aliases:
   - /salt/patterns/experience-customization
 data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-experience-customization", label: "Experience customization examples" },
+    ]
   components: ["Banner", "Dropdown", "Radio button", "Stepper", "Switch", "Toggle button"]
   relatedPatterns: ["Button bar", "Selectable card", "Wizard"]
 ---
@@ -90,14 +94,14 @@ The steps below summarize Salt-specific user preferences that may be made avai
 
 | Step | Stage               | What the user sets                                                                                                                               | Sequence rationale                                                                                                                                    |
 | ---- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1    | Foundation          | Theme, Density, Reduced motion                                                                                                                    | Establishes global system behavior first                                                                                                              |
+| 1    | Foundation          | Theme, Density, [Reduced motion](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions)                                                                                                                    | Establishes global system behavior first                                                                                                              |
 | 2    | Data interpretation | Number format, Currency format, Date/Time format, Locale, and timezone if needed                                                                | Ensures data is immediately understandable and consistently interpreted before configuring surfaces                                                   |
 | 3    | Data surfaces       | Tables (live preview): Columns, Sorting, Density/Compact, Zebra striping. Charts (live preview): Lines, Patterns, Markers, Labels, Gridlines, Legend. | Outcomes are cumulative, so users need to see results live before setting; this is the core step because it shapes how data is read and understood |
 | 4    | Feedback            | Toast position, Auto-dismiss, Duration                                                                                                            | Finalizes how the system provides feedback after core reading/interpretation is set                                                                   |
 
 ## Selection model
 
-The selection model uses an escalation-based approach for presenting configuration choices in Experience Customization, progressing from Standard controls to Card selection to Dynamic live preview based on complexity and cumulative visual impact. This approach aligns options with user comprehension, supports WCAG 2.2 accessibility guidelines, and ensures all choices are practical within the Salt design system. 
+The selection model uses an escalation-based approach for presenting configuration choices in Experience Customization, progressing from Standard controls to Card selection to Dynamic live preview based on complexity and cumulative visual impact. This approach aligns options with user comprehension, supports [WCAG 2.2 accessibility guidelines](https://www.w3.org/WAI/WCAG22/Understanding/), and ensures all choices are practical within the Salt design system. 
 
 ### Choosing the right pattern
 
@@ -224,6 +228,6 @@ The following sequence illustrates the expected behavior when a mandatory select
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-**Explicit requirements**: Use the header/description area to clearly communicate that a selection is required to proceed (e.g., “A selection is required to proceed”). 
+**Explicit requirements**: Use the header/description area to clearly communicate that a selection is required to proceed (e.g., 'A selection is required to proceed'). 
 </GuidanceCallout>
 
