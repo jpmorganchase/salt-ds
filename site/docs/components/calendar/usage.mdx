@@ -39,34 +39,63 @@ Use the `Calendar` component when you need a versatile date selection tool that 
 
 ### Calendar
 
-To import `Calendar` from the Salt lab package, use:
+To import `Calendar` from the Salt date components package, use:
 
 ```js
-import { Calendar } from "@salt-ds/lab";
+import { Calendar } from "@salt-ds/date-components";
 ```
 
 ### CalendarNavigation
 
-To import `CalendarNavigation` from the Salt lab package, use:
+To import `CalendarNavigation` from the Salt date components package, use:
 
 ```js
-import { CalendarNavigation } from "@salt-ds/lab";
+import { CalendarNavigation } from "@salt-ds/date-components";
 ```
 
 ### CalendarWeekHeader
 
-To import `CalendarWeekHeader` from the Salt lab package, use:
+To import `CalendarWeekHeader` from the Salt date components package, use:
 
 ```js
-import { CalendarWeekHeader } from "@salt-ds/lab";
+import { CalendarWeekHeader } from "@salt-ds/date-components";
 ```
 
 ### CalendarGrid
 
-To import `CalendarGrid` from the Salt lab package, use:
+To import `CalendarGrid` from the Salt date components package, use:
 
 ```js
-import { CalendarGrid } from "@salt-ds/lab";
+import { CalendarGrid } from "@salt-ds/date-components";
+```
+
+### Setting the date
+
+Date controls, require your application to contain a [LocalizationProvider](../LocalizationProvider).
+
+Pass a date object from your configured date framework via the `defaultDate` or `date` props.
+
+```tsx
+import { DateTime } from "luxon";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import {
+  LocalizationProvider,
+  DateInputSingle,
+  DateInputRange,
+  Calendar,
+  CalendarNavigation,
+  CalendarGrid,
+} from "@salt-ds/date-components";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+    <Calendar
+      selectionVariant={"single"}
+      defaultSelectedDate={new DateTime().now()}
+    >
+      <CalendarNavigation />
+      <CalendarGrid />
+    </Calendar>
+<LocalizationProvider>
 ```
 
 ### Locale

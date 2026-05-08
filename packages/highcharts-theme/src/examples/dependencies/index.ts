@@ -6,6 +6,19 @@ export { bulletOptions } from "./bulletOptions";
 export { candlestickOptions } from "./candlestickOptions";
 export { columnOptions } from "./columnOptions";
 export { donutOptions } from "./donutOptions";
+export { dualAxisOptions } from "./dualAxisOptions";
+export {
+  heatmapDataClassesOptions,
+  heatmapDataClassesSaltColorAxis,
+  heatmapDiscreteRangesOptions,
+  heatmapDiscreteRangesSaltColorAxis,
+  heatmapOptions,
+  heatmapSaltColorAxis,
+  heatmapThresholdOptions,
+  heatmapThresholdSaltColorAxis,
+  heatmapTwoColorDiscreteRangesOptions,
+  heatmapTwoColorDiscreteRangesSaltColorAxis,
+} from "./heatmapOptions";
 export { lineOptions } from "./lineOptions";
 export { pieOptions } from "./pieOptions";
 export { scatterOptions } from "./scatterOptions";

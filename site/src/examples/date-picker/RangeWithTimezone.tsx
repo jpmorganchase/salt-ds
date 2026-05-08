@@ -10,7 +10,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -25,9 +25,7 @@ import {
   type DateRangeSelection,
   LocalizationProvider,
   useLocalization,
-} from "@salt-ds/lab";
-import type { DateTime } from "luxon";
-import type { Moment } from "moment/moment";
+} from "@salt-ds/date-components";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -63,7 +61,7 @@ const Range = ({
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      selection: DateRangeSelection<DateFrameworkType> | null,
+      selection: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = selection ?? {};
@@ -118,7 +116,8 @@ const Range = ({
           : undefined;
 
       const formatDate = (date: DateFrameworkType) => {
-        const iso = date.toISOString();
+        const jsDate = dateAdapter.toJSDate(date);
+        const iso = jsDate.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,
           year: "numeric",
@@ -128,7 +127,7 @@ const Range = ({
           minute: "numeric",
           second: "numeric",
           hour12: true,
-        }).format(date);
+        }).format(jsDate);
         const formatted = new Intl.DateTimeFormat(undefined, {
           timeZone: ianaTimezone,
           year: "numeric",
@@ -138,20 +137,14 @@ const Range = ({
           minute: "numeric",
           second: "numeric",
           hour12: true,
-        }).format(date);
+        }).format(jsDate);
         return { iso, locale, formatted };
       };
 
-      setCurrentTimezone(dateAdapter.getTimezone(startDate));
+      setCurrentTimezone(startDate ? dateAdapter.getTimezone(startDate) : "");
 
       if (startDate && !startDateErrors?.length) {
-        const startJSDate =
-          dateAdapter.lib === "luxon"
-            ? (startDate as DateTime).toJSDate()
-            : dateAdapter.lib === "moment"
-              ? (startDate as Moment).toDate()
-              : startDate;
-        const start = formatDate(startJSDate);
+        const start = formatDate(startDate);
         setStartIso8601String(start.iso);
         setStartLocaleDateString(start.locale);
         setStartDateString(start.formatted);
@@ -161,13 +154,7 @@ const Range = ({
         setStartDateString("");
       }
       if (endDate && !endDateErrors?.length) {
-        const endJSDate =
-          dateAdapter.lib === "luxon"
-            ? (endDate as DateTime).toJSDate()
-            : dateAdapter.lib === "moment"
-              ? (endDate as Moment).toDate()
-              : endDate;
-        const end = formatDate(endJSDate);
+        const end = formatDate(endDate);
         setEndIso8601String(end.iso);
         setEndLocaleDateString(end.locale);
         setEndDateString(end.formatted);
@@ -277,24 +264,21 @@ export const RangeWithTimezone = (): ReactElement => {
   const dateAdapterMap: Record<string, any> = {
     moment: AdapterMoment,
     dayjs: AdapterDayjs,
-    "date-fns": AdapterDateFns,
+    "date-fns": AdapterDateFnsTZ,
     luxon: AdapterLuxon,
   };
   const validAdapters = Object.keys(dateAdapterMap);
   const [dateAdapterName, setDateAdapterName] = useState<string>("luxon");
 
-  const timezoneOptions =
-    dateAdapterName !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
 
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],

@@ -1,5 +1,4 @@
 import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -10,7 +9,7 @@ import {
   DatePickerTrigger,
   type DateRangeSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -29,7 +28,7 @@ export const RangeBordered = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};

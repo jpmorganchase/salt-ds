@@ -1,5 +1,4 @@
 import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -9,10 +8,10 @@ import {
   DatePickerTrigger,
   type DateRangeSelection,
   useLocalization,
-} from "@salt-ds/lab";
+} from "@salt-ds/date-components";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
-import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
+import { CustomDatePickerPanel } from "@salt-ds/date-components/stories/date-picker/CustomDatePickerPanel";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -32,7 +31,7 @@ export const RangeWithCustomPanel = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       _event: SyntheticEvent,
-      date: DateRangeSelection<DateFrameworkType> | null,
+      date: DateRangeSelection | null,
       details: DateInputRangeDetails | undefined,
     ) => {
       const { startDate, endDate } = date ?? {};

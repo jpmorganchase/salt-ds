@@ -1,38 +1,34 @@
 import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
 import bullet from "highcharts/modules/bullet";
+import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
 import { bulletOptions } from "./dependencies";
 
 bullet(Highcharts);
+patternFill(Highcharts);
 
 export interface BulletChartProps {
-  patterns?: boolean;
+  fillPatterns?: boolean;
   options: Options;
 }
 
 const BulletChart: FC<BulletChartProps> = ({
-  patterns = false,
+  fillPatterns = false,
   options = bulletOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
-
-  const chartOptions = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, options, {
+    fillPatterns,
+  });
 
   return (
-    <div
-      className={clsx("highcharts-theme-salt", {
-        "salt-fill-patterns": patterns,
-      })}
-    >
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-        ref={chartRef}
-      />
-    </div>
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={chartOptions}
+      ref={chartRef}
+    />
   );
 };
 
