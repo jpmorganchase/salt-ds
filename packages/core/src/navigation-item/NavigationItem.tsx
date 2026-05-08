@@ -50,6 +50,10 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    * Href to be passed to the Link element.
    */
   href?: string;
+  /**
+   * ID of the element controlled by this navigation item.
+   */
+  "aria-controls"?: string;
 }
 
 const withBaseName = makePrefixer("saltNavigationItem");
@@ -69,6 +73,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       level = 0,
       onExpand,
       style: styleProp,
+      "aria-controls": ariaControls,
       ...rest
     } = props;
 
@@ -109,6 +114,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
           )}
           render={render ?? (isLink ? undefined : <button type="button" />)}
           aria-expanded={isLink ? undefined : expanded}
+          aria-controls={ariaControls}
           onClick={handleClick}
           aria-current={isLink && active ? "page" : undefined}
           href={href}

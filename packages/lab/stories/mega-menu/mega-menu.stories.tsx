@@ -30,7 +30,6 @@ import {
   LinkedIcon,
   MaintenanceIcon,
   MarkerIcon,
-  MenuIcon,
   NotificationIcon,
   PasteIcon,
   PinIcon,
@@ -108,76 +107,76 @@ export const WithIcons: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
+                  <MegaMenuItem value="Digital banking">
                     <DevicesIcon aria-hidden />
-                    Digital Banking
+                    Digital banking
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
+                  <MegaMenuItem value="Risk management">
                     <DatasetManagerIcon aria-hidden />
-                    Risk Management
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
+                  <MegaMenuItem value="Patient management">
                     <UserSearchIcon aria-hidden />
-                    Patient Management
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
                     <CallIcon aria-hidden />
                     Telemedicine
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
+                  <MegaMenuItem value="Compliance solutions">
                     <PasteIcon aria-hidden />
-                    Compliance Solutions
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
+                  <MegaMenuItem value="E-commerce platforms">
                     <CartIcon aria-hidden />
-                    E-Commerce Platforms
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
+                  <MegaMenuItem value="Supply chain optimization">
                     <LinkedIcon aria-hidden />
-                    Supply Chain Optimization
+                    Supply chain optimization
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
+                  <MegaMenuItem value="Quality control">
                     <SettingsIcon aria-hidden />
-                    Quality Control
+                    Quality control
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
+                  <MegaMenuItem value="Production planning">
                     <NotificationIcon aria-hidden />
-                    Production Planning
+                    Production planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem value="Learning Management Systems">
+                  <MegaMenuItem value="Learning management systems">
                     <GuideOpenIcon aria-hidden />
-                    Learning Management Systems
+                    Learning management systems
                   </MegaMenuItem>
-                  <MegaMenuItem value="Virtual Classrooms">
+                  <MegaMenuItem value="Virtual classrooms">
                     <LaptopIcon aria-hidden />
-                    Virtual Classrooms
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem value="Document Management">
+                  <MegaMenuItem value="Document management">
                     <DocumentIcon aria-hidden />
-                    Document Management
+                    Document management
                   </MegaMenuItem>
-                  <MegaMenuItem value="Citizen Services">
+                  <MegaMenuItem value="Citizen services">
                     <PinIcon aria-hidden />
-                    Citizen Services
+                    Citizen services
                   </MegaMenuItem>
-                  <MegaMenuItem value="Public Safety Solutions">
+                  <MegaMenuItem value="Public safety solutions">
                     <UserGroupIcon aria-hidden />
-                    Public Safety Solutions
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -262,9 +261,9 @@ export const WithIcons: StoryFn = () => {
                     <DisplayIcon aria-hidden />
                     Online
                   </MegaMenuItem>
-                  <MegaMenuItem value="In-Person">
+                  <MegaMenuItem value="In-person">
                     <UserIcon aria-hidden />
-                    In-Person
+                    In-person
                   </MegaMenuItem>
                   <MegaMenuItem value="Workshops">
                     <KeyIcon aria-hidden />
@@ -305,18 +304,18 @@ export const WithIcons: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User Guides">
+                  <MegaMenuItem value="User guides">
                     {" "}
                     <GuideClosedIcon aria-hidden />
-                    User Guides
+                    User guides
                   </MegaMenuItem>
-                  <MegaMenuItem value="API Reference">
+                  <MegaMenuItem value="API reference">
                     <ApiIcon aria-hidden />
-                    API Reference
+                    API reference
                   </MegaMenuItem>
-                  <MegaMenuItem value="Release Notes">
+                  <MegaMenuItem value="Release notes">
                     <NotificationIcon aria-hidden />
-                    Release Notes
+                    Release notes
                   </MegaMenuItem>
                   <MegaMenuItem value="FAQs">
                     <HelpIcon aria-hidden />
@@ -325,13 +324,13 @@ export const WithIcons: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & Help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact Support">
+                  <MegaMenuItem value="Contact support">
                     <InfoIcon aria-hidden />
-                    Contact Support
+                    Contact support
                   </MegaMenuItem>
-                  <MegaMenuItem value="Community Forum">
+                  <MegaMenuItem value="Community forum">
                     <ChatGroupIcon aria-hidden />
-                    Community Forum
+                    Community forum
                   </MegaMenuItem>
                   <MegaMenuItem value="Troubleshooting">
                     <AnnouncementIcon aria-hidden />
@@ -347,7 +346,7 @@ export const WithIcons: StoryFn = () => {
   );
 };
 
-export const WithStaticAdornment: StoryFn = () => {
+export const WithAdornment: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
@@ -389,17 +388,17 @@ export const WithStaticAdornment: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
+                  <MegaMenuItem value="Digital banking">
+                    Digital banking
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
+                  <MegaMenuItem value="Risk management">
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
+                  <MegaMenuItem value="Patient management">
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">
                     Telemedicine
@@ -411,26 +410,26 @@ export const WithStaticAdornment: StoryFn = () => {
                       Premium
                     </Tag>
                   </MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
+                  <MegaMenuItem value="Compliance solutions">
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
+                  <MegaMenuItem value="E-commerce platforms">
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
-                    Supply Chain Optimization
+                  <MegaMenuItem value="Supply chain optimization">
+                    Supply chain optimization
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
-                    Quality Control
+                  <MegaMenuItem value="Quality control">
+                    Quality control
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
-                    Production Planning
+                  <MegaMenuItem value="Production planning">
+                    Production planning
                     <Tag
                       category={2}
                       variant="primary"
@@ -442,23 +441,23 @@ export const WithStaticAdornment: StoryFn = () => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem value="Learning Management Systems">
-                    Learning Management Systems
+                  <MegaMenuItem value="Learning management systems">
+                    Learning management systems
                   </MegaMenuItem>
-                  <MegaMenuItem value="Virtual Classrooms">
-                    Virtual Classrooms
+                  <MegaMenuItem value="Virtual classrooms">
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem value="Document Management">
-                    Document Management
+                  <MegaMenuItem value="Document management">
+                    Document management
                   </MegaMenuItem>
-                  <MegaMenuItem value="Citizen Services">
-                    Citizen Services
+                  <MegaMenuItem value="Citizen services">
+                    Citizen services
                   </MegaMenuItem>
-                  <MegaMenuItem value="Public Safety Solutions">
-                    Public Safety Solutions
+                  <MegaMenuItem value="Public safety solutions">
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -509,9 +508,9 @@ export const WithStaticAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
                   <MegaMenuItem value="Online">Online</MegaMenuItem>
-                  <MegaMenuItem value="In-Person">
+                  <MegaMenuItem value="In-person">
                     {" "}
-                    In-Person
+                    In-person
                     <Badge value="3" className="menu-item-adornment" />
                   </MegaMenuItem>
                   <MegaMenuItem value="Workshops">Workshops</MegaMenuItem>
@@ -543,22 +542,22 @@ export const WithStaticAdornment: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem value="User Guides">User Guides</MegaMenuItem>
-                  <MegaMenuItem value="API Reference">
-                    API Reference
+                  <MegaMenuItem value="User guides">User guides</MegaMenuItem>
+                  <MegaMenuItem value="API reference">
+                    API reference
                   </MegaMenuItem>
-                  <MegaMenuItem value="Release Notes">
-                    Release Notes <Badge className="menu-item-adornment" />
+                  <MegaMenuItem value="Release notes">
+                    Release notes <Badge className="menu-item-adornment" />
                   </MegaMenuItem>
                   <MegaMenuItem value="FAQs">FAQs</MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & Help</MegaMenuHeader>
-                  <MegaMenuItem value="Contact Support">
-                    Contact Support
+                  <MegaMenuItem value="Contact support">
+                    Contact support
                   </MegaMenuItem>
-                  <MegaMenuItem value="Community Forum">
-                    Community Forum
+                  <MegaMenuItem value="Community forum">
+                    Community forum
                     <Tag
                       category={2}
                       variant="primary"
@@ -854,30 +853,30 @@ export const FullWidthContainer: StoryFn = () => {
         <MegaMenuSection>
           <MegaMenuGroup>
             <MegaMenuHeader>Products</MegaMenuHeader>
-            <MegaMenuItem value="Analytics Workspace">
-              Analytics Workspace
+            <MegaMenuItem value="Analytics workspace">
+              Analytics workspace
             </MegaMenuItem>
-            <MegaMenuItem value="Order Management">
-              Order Management
+            <MegaMenuItem value="Order management">
+              Order management
             </MegaMenuItem>
-            <MegaMenuItem value="Pricing Configurator">
-              Pricing Configurator
+            <MegaMenuItem value="Pricing configurator">
+              Pricing configurator
             </MegaMenuItem>
           </MegaMenuGroup>
           <MegaMenuGroup>
             <MegaMenuHeader>Solutions</MegaMenuHeader>
-            <MegaMenuItem value="Risk Monitoring">Risk Monitoring</MegaMenuItem>
-            <MegaMenuItem value="Client Reporting">
-              Client Reporting
+            <MegaMenuItem value="Risk monitoring">Risk monitoring</MegaMenuItem>
+            <MegaMenuItem value="Client reporting">
+              Client reporting
             </MegaMenuItem>
-            <MegaMenuItem value="Trade Automation">
-              Trade Automation
+            <MegaMenuItem value="Trade automation">
+              Trade automation
             </MegaMenuItem>
           </MegaMenuGroup>
           <MegaMenuGroup>
             <MegaMenuHeader>Resources</MegaMenuHeader>
             <MegaMenuItem value="Documentation">Documentation</MegaMenuItem>
-            <MegaMenuItem value="Release Notes">Release Notes</MegaMenuItem>
+            <MegaMenuItem value="Release notes">Release notes</MegaMenuItem>
             <MegaMenuItem value="Developer API">Developer API</MegaMenuItem>
           </MegaMenuGroup>
         </MegaMenuSection>
@@ -908,49 +907,58 @@ export const WithCustomRegion: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
+                  <MegaMenuItem value="Digital banking">
+                    Digital banking
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
+                  <MegaMenuItem value="Risk management">
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
+                  <MegaMenuItem value="Patient management">
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
+                  <MegaMenuItem value="Compliance solutions">
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
+                  <MegaMenuItem value="E-commerce platforms">
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
-                    Supply Chain Optimization
+                  <MegaMenuItem value="Supply chain optimization">
+                    Supply chain optimization
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
-                    Quality Control
+                  <MegaMenuItem value="Quality control">
+                    Quality control
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
-                    Production Planning
+                  <MegaMenuItem value="Production planning">
+                    Production planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection className="withLink-container">
-                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem>
-                    <Link>Explore details</Link>
-                  </MegaMenuItem>
-                </ol>
-              </MegaMenuSection>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  View guidelines
+                </Link>
+              </MegaMenuGroup>
             </div>
             <MegaMenuCustomRegion
               variant="tertiary"
@@ -964,7 +972,9 @@ export const WithCustomRegion: StoryFn = () => {
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
-                    <Text styleAs="h2">Featured Resource</Text>
+                    <Text styleAs="h2" as="h2">
+                      Featured resource
+                    </Text>
                     <Text className="custom-region-right-description">
                       Explore our latest accessibility guidelines to ensure your
                       components meet ADA standards and provide an inclusive
@@ -977,7 +987,7 @@ export const WithCustomRegion: StoryFn = () => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View Guidelines
+                    View guidelines
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -1005,7 +1015,9 @@ export const WithCustomRegion: StoryFn = () => {
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
-                    <Text styleAs="h2">Featured Resource</Text>
+                    <Text styleAs="h2" as="h2">
+                      Featured resource
+                    </Text>
                     <Text className="custom-region-right-description">
                       Explore our latest accessibility guidelines to ensure your
                       components meet ADA standards and provide an inclusive
@@ -1018,7 +1030,7 @@ export const WithCustomRegion: StoryFn = () => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View Guidelines
+                    View guidelines
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -1027,50 +1039,58 @@ export const WithCustomRegion: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
+                  <MegaMenuItem value="Digital banking">
+                    Digital banking
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
+                  <MegaMenuItem value="Risk management">
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
+                  <MegaMenuItem value="Patient management">
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
+                  <MegaMenuItem value="Compliance solutions">
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
+                  <MegaMenuItem value="E-commerce platforms">
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem value="Supply Chain Optimization">
-                    Supply Chain Optimization
+                  <MegaMenuItem value="Supply chain optimization">
+                    Supply chain optimization
                   </MegaMenuItem>
-                  <MegaMenuItem value="Quality Control">
-                    Quality Control
+                  <MegaMenuItem value="Quality control">
+                    Quality control
                   </MegaMenuItem>
-                  <MegaMenuItem value="Production Planning">
-                    Production Planning
+                  <MegaMenuItem value="Production planning">
+                    Production planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection className="withLink-container">
-                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem>
-                    {" "}
-                    <Link>Explore details</Link>
-                  </MegaMenuItem>
-                </ol>
-              </MegaMenuSection>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  View guidelines
+                </Link>
+              </MegaMenuGroup>
             </div>
           </MegaMenuPanel>
         </div>
@@ -1098,7 +1118,9 @@ export const WithCustomRegion: StoryFn = () => {
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
-                    <Text styleAs="h2">Featured Resource</Text>
+                    <Text styleAs="h2" as="h2">
+                      Featured resource
+                    </Text>
                     <Text>
                       Explore our latest accessibility guidelines to ensure your
                       components meet ADA standards and provide an inclusive
@@ -1111,7 +1133,7 @@ export const WithCustomRegion: StoryFn = () => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View Guidelines
+                    View guidelines
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -1119,50 +1141,57 @@ export const WithCustomRegion: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem value="Digital Banking">
-                  Digital Banking
+                <MegaMenuItem value="Digital banking">
+                  Digital banking
                 </MegaMenuItem>
-                <MegaMenuItem value="Risk Management">
-                  Risk Management
+                <MegaMenuItem value="Risk management">
+                  Risk management
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem value="Patient Management">
-                  Patient Management
+                <MegaMenuItem value="Patient management">
+                  Patient management
                 </MegaMenuItem>
                 <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                <MegaMenuItem value="Compliance Solutions">
-                  Compliance Solutions
+                <MegaMenuItem value="Compliance solutions">
+                  Compliance solutions
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
-                <MegaMenuItem value="E-Commerce Platforms">
-                  E-Commerce Platforms
+                <MegaMenuItem value="E-commerce platforms">
+                  E-commerce platforms
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                <MegaMenuItem value="Supply Chain Optimization">
-                  Supply Chain Optimization
+                <MegaMenuItem value="Supply chain optimization">
+                  Supply chain optimization
                 </MegaMenuItem>
-                <MegaMenuItem value="Quality Control">
-                  Quality Control
+                <MegaMenuItem value="Quality control">
+                  Quality control
                 </MegaMenuItem>
-                <MegaMenuItem value="Production Planning">
-                  Production Planning
+                <MegaMenuItem value="Production planning">
+                  Production planning
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <MegaMenuSection className="withLink-container">
-              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem>
-                  {" "}
-                  <Link>Explore details</Link>
-                </MegaMenuItem>
-              </ol>
-            </MegaMenuSection>
+            <MegaMenuGroup
+              style={{
+                padding: " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                width: "fit-content",
+              }}
+            >
+              <Link
+                color="primary"
+                underline="default"
+                href="#link"
+                IconComponent={ChevronRightIcon}
+              >
+                View guidelines
+              </Link>
+            </MegaMenuGroup>
           </MegaMenuPanel>
         </div>
       </MegaMenu>
@@ -1183,50 +1212,57 @@ export const WithCustomRegion: StoryFn = () => {
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem value="Digital Banking">
-                  Digital Banking
+                <MegaMenuItem value="Digital banking">
+                  Digital banking
                 </MegaMenuItem>
-                <MegaMenuItem value="Risk Management">
-                  Risk Management
+                <MegaMenuItem value="Risk management">
+                  Risk management
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem value="Patient Management">
-                  Patient Management
+                <MegaMenuItem value="Patient management">
+                  Patient management
                 </MegaMenuItem>
                 <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                <MegaMenuItem value="Compliance Solutions">
-                  Compliance Solutions
+                <MegaMenuItem value="Compliance solutions">
+                  Compliance solutions
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
-                <MegaMenuItem value="E-Commerce Platforms">
-                  E-Commerce Platforms
+                <MegaMenuItem value="E-commerce platforms">
+                  E-commerce platforms
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                <MegaMenuItem value="Supply Chain Optimization">
-                  Supply Chain Optimization
+                <MegaMenuItem value="Supply chain optimization">
+                  Supply chain optimization
                 </MegaMenuItem>
-                <MegaMenuItem value="Quality Control">
-                  Quality Control
+                <MegaMenuItem value="Quality control">
+                  Quality control
                 </MegaMenuItem>
-                <MegaMenuItem value="Production Planning">
-                  Production Planning
+                <MegaMenuItem value="Production planning">
+                  Production planning
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <MegaMenuSection className="withLink-container">
-              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem>
-                  {" "}
-                  <Link>Explore details</Link>
-                </MegaMenuItem>
-              </ol>
-            </MegaMenuSection>
+            <MegaMenuGroup
+              style={{
+                padding: " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                width: "fit-content",
+              }}
+            >
+              <Link
+                color="primary"
+                underline="default"
+                href="#link"
+                IconComponent={ChevronRightIcon}
+              >
+                View guidelines
+              </Link>
+            </MegaMenuGroup>
             <MegaMenuCustomRegion variant="tertiary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
@@ -1236,7 +1272,9 @@ export const WithCustomRegion: StoryFn = () => {
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
-                    <Text styleAs="h2">Featured Resource</Text>
+                    <Text styleAs="h2" as="h2">
+                      Featured resource
+                    </Text>
                     <Text>
                       Explore our latest accessibility guidelines to ensure your
                       components meet ADA standards and provide an inclusive
@@ -1249,7 +1287,7 @@ export const WithCustomRegion: StoryFn = () => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View Guidelines
+                    View guidelines
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -1304,40 +1342,40 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Digital Banking"
+                    value="Digital banking"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Digital Banking",
+                        "Digital banking",
                       );
                     }}
                   >
-                    Digital Banking
+                    Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Risk Management"
+                    value="Risk management"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Risk Management",
+                        "Risk management",
                       );
                     }}
                   >
-                    Risk Management
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Patient Management"
+                    value="Patient management"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Patient Management",
+                        "Patient management",
                       );
                     }}
                   >
-                    Patient Management
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Telemedicine"
@@ -1351,136 +1389,146 @@ export const WithLink: StoryFn = () => {
                     Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Compliance Solutions"
+                    value="Compliance solutions"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Compliance Solutions",
+                        "Compliance solutions",
                       );
                     }}
                   >
-                    Compliance Solutions
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem
-                    value="E-Commerce Platforms"
+                    value="E-commerce platforms"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "E-Commerce Platforms",
+                        "E-commerce platforms",
                       );
                     }}
                   >
-                    E-Commerce Platforms
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Supply Chain Optimization"
+                    value="Supply chain optimization"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Supply Chain Optimization",
+                        "Supply chain optimization",
                       );
                     }}
                   >
-                    Supply Chain Optimization
+                    Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Quality Control"
+                    value="Quality control"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Quality Control",
+                        "Quality control",
                       );
                     }}
                   >
-                    Quality Control
+                    Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Production Planning"
+                    value="Production planning"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Production Planning",
+                        "Production planning",
                       );
                     }}
                   >
-                    Production Planning
+                    Production planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Learning Management Systems"
+                    value="Learning management systems"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Learning Management Systems",
+                        "Learning management systems",
                       );
                     }}
                   >
-                    Learning Management Systems
+                    Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Virtual Classrooms"
+                    value="Virtual classrooms"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Virtual Classrooms",
+                        "Virtual classrooms",
                       );
                     }}
                   >
-                    Virtual Classrooms
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Document Management"
+                    value="Document management"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Document Management",
+                        "Document management",
                       );
                     }}
                   >
-                    Document Management
+                    Document management
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Citizen Services"
+                    value="Citizen services"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Citizen Services",
+                        "Citizen services",
                       );
                     }}
                   >
-                    Citizen Services
+                    Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Public Safety Solutions"
+                    value="Public safety solutions"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Public Safety Solutions",
+                        "Public safety solutions",
                       );
                     }}
                   >
-                    Public Safety Solutions
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection className="withLink-container">
-                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem>
-                    <Link>See all solutions</Link>
-                  </MegaMenuItem>
-                </ol>
-              </MegaMenuSection>
+
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  View guidelines
+                </Link>
+              </MegaMenuGroup>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1647,15 +1695,15 @@ export const WithLink: StoryFn = () => {
                     Online
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="In-Person"
+                    value="In-person"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "In-Person",
+                        "In-person",
                       );
                     }}
                   >
-                    In-Person
+                    In-person
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Workshops"
@@ -1703,13 +1751,22 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection className="withLink-container">
-                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem>
-                    <Link>See all services</Link>
-                  </MegaMenuItem>
-                </ol>
-              </MegaMenuSection>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  See all services
+                </Link>
+              </MegaMenuGroup>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1732,37 +1789,37 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
                   <MegaMenuItem
-                    value="User Guides"
+                    value="User guides"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "User Guides",
+                        "User guides",
                       );
                     }}
                   >
-                    User Guides
+                    User guides
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="API Reference"
+                    value="API reference"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "API Reference",
+                        "API reference",
                       );
                     }}
                   >
-                    API Reference
+                    API reference
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Release Notes"
+                    value="Release notes"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Release Notes",
+                        "Release notes",
                       );
                     }}
                   >
-                    Release Notes
+                    Release notes
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="FAQs"
@@ -1779,26 +1836,26 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & Help</MegaMenuHeader>
                   <MegaMenuItem
-                    value="Contact Support"
+                    value="Contact support"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Contact Support",
+                        "Contact support",
                       );
                     }}
                   >
-                    Contact Support
+                    Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
-                    value="Community Forum"
+                    value="Community forum"
                     onClick={() => {
                       console.log(
                         "[WithLink MegaMenu] selected value:",
-                        "Community Forum",
+                        "Community forum",
                       );
                     }}
                   >
-                    Community Forum
+                    Community forum
                   </MegaMenuItem>
                   <MegaMenuItem
                     value="Troubleshooting"
@@ -1813,13 +1870,22 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection className="withLink-container">
-                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem>
-                    <Link>See all resources</Link>
-                  </MegaMenuItem>
-                </ol>
-              </MegaMenuSection>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  See all resources
+                </Link>
+              </MegaMenuGroup>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1829,203 +1895,331 @@ export const WithLink: StoryFn = () => {
 };
 
 export const InSmallViewport: StoryFn = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
     undefined,
   );
 
+  const handleOpenChange = (menu: string) => (open: boolean) => {
+    setOpenMenu(open ? menu : null);
+  };
+
+  const handleSelectedItemChange = (
+    menu: string,
+    value: string | undefined,
+  ) => {
+    const nextValue = selectedItem === value ? undefined : value;
+    setSelectedItem(nextValue);
+    setActiveMenu(nextValue ? menu : null);
+  };
+
   return (
-    <MegaMenu
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      selectedItem={selectedItem}
-      onSelectedItemChange={(value) => {
-        const nextValue = selectedItem === value ? undefined : value;
-        setSelectedItem(nextValue);
-      }}
-    >
-      <MegaMenuTrigger>
-        <Button sentiment="neutral" appearance="solid">
-          <MenuIcon />
-        </Button>
-      </MegaMenuTrigger>
-      <MegaMenuPanel className="small-viewport-container">
-        <MegaMenuSection>
-          <MegaMenuGroup>
-            <MegaMenuHeader>Financial Services</MegaMenuHeader>
-            <MegaMenuItem
-              value="Digital Banking"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Digital Banking",
-                );
-              }}
+    <div className="small-viewport-wrapper">
+      <nav>
+        <StackLayout as="ol" direction="row" gap={1}>
+          <li>
+            <MegaMenu
+              open={openMenu === "solutions"}
+              onOpenChange={handleOpenChange("solutions")}
+              selectedItem={selectedItem}
+              onSelectedItemChange={(value) =>
+                handleSelectedItemChange("solutions", value)
+              }
             >
-              Digital Banking
-            </MegaMenuItem>
-            <MegaMenuItem
-              value="Risk Management"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Risk Management",
-                );
-              }}
+              <MegaMenuTrigger>
+                <NavigationItem active={activeMenu === "solutions"}>
+                  Solutions
+                </NavigationItem>
+              </MegaMenuTrigger>
+              <MegaMenuPanel
+                className="small-viewport-container"
+                aria-label="Solutions menu"
+              >
+                <MegaMenuSection>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Digital banking"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Digital banking",
+                        );
+                      }}
+                    >
+                      Digital banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Risk management"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Risk management",
+                        );
+                      }}
+                    >
+                      Risk management
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Healthcare</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Patient management"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Patient management",
+                        );
+                      }}
+                    >
+                      Patient management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Telemedicine"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Telemedicine",
+                        );
+                      }}
+                    >
+                      Telemedicine
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Compliance solutions"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Compliance solutions",
+                        );
+                      }}
+                    >
+                      Compliance solutions
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Retail</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="E-commerce platforms"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "E-commerce platforms",
+                        );
+                      }}
+                    >
+                      E-commerce platforms
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Manufacturing</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Supply chain optimization"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Supply chain optimization",
+                        );
+                      }}
+                    >
+                      Supply chain optimization
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Quality control"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Quality control",
+                        );
+                      }}
+                    >
+                      Quality control
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Production planning"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Production planning",
+                        );
+                      }}
+                    >
+                      Production planning
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Education</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Learning management systems"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Learning management systems",
+                        );
+                      }}
+                    >
+                      Learning management systems
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Virtual classrooms"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Virtual classrooms",
+                        );
+                      }}
+                    >
+                      Virtual classrooms
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Government</MegaMenuHeader>
+                    <MegaMenuItem
+                      value="Document management"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Document management",
+                        );
+                      }}
+                    >
+                      Document management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Citizen services"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Citizen services",
+                        );
+                      }}
+                    >
+                      Citizen services
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      value="Public safety solutions"
+                      onClick={() => {
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Public safety solutions",
+                        );
+                      }}
+                    >
+                      Public safety solutions
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                </MegaMenuSection>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+          <li>
+            <MegaMenu
+              open={openMenu === "services"}
+              onOpenChange={handleOpenChange("services")}
+              selectedItem={selectedItem}
+              onSelectedItemChange={(value) =>
+                handleSelectedItemChange("services", value)
+              }
             >
-              Risk Management
-            </MegaMenuItem>
-          </MegaMenuGroup>
-          <MegaMenuGroup>
-            <MegaMenuHeader>Healthcare</MegaMenuHeader>
-            <MegaMenuItem
-              value="Patient Management"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Patient Management",
-                );
-              }}
+              <MegaMenuTrigger>
+                <NavigationItem active={activeMenu === "services"}>
+                  Services
+                </NavigationItem>
+              </MegaMenuTrigger>
+              <MegaMenuPanel
+                className="small-viewport-container"
+                aria-label="Services menu"
+              >
+                <MegaMenuSection>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Consulting</MegaMenuHeader>
+                    <MegaMenuItem value="Strategy">Strategy</MegaMenuItem>
+                    <MegaMenuItem value="IT">IT</MegaMenuItem>
+                    <MegaMenuItem value="HR">HR</MegaMenuItem>
+                    <MegaMenuItem value="Marketing">Marketing</MegaMenuItem>
+                    <MegaMenuItem value="Operations">Operations</MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Implementation</MegaMenuHeader>
+                    <MegaMenuItem value="Onboarding">Onboarding</MegaMenuItem>
+                    <MegaMenuItem value="Migration">Migration</MegaMenuItem>
+                    <MegaMenuItem value="Customization">
+                      Customization
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Training">Training</MegaMenuItem>
+                    <MegaMenuItem value="Support">Support</MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Training</MegaMenuHeader>
+                    <MegaMenuItem value="Online">Online</MegaMenuItem>
+                    <MegaMenuItem value="In-person">In-person</MegaMenuItem>
+                    <MegaMenuItem value="Workshops">Workshops</MegaMenuItem>
+                    <MegaMenuItem value="Certifications">
+                      Certifications
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                </MegaMenuSection>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+          <li>
+            <MegaMenu
+              open={openMenu === "resources"}
+              onOpenChange={handleOpenChange("resources")}
+              selectedItem={selectedItem}
+              onSelectedItemChange={(value) =>
+                handleSelectedItemChange("resources", value)
+              }
             >
-              Patient Management
-            </MegaMenuItem>
-            <MegaMenuItem
-              value="Telemedicine"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Telemedicine",
-                );
-              }}
-            >
-              Telemedicine
-            </MegaMenuItem>
-            <MegaMenuItem
-              value="Compliance Solutions"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Compliance Solutions",
-                );
-              }}
-            >
-              Compliance Solutions
-            </MegaMenuItem>
-          </MegaMenuGroup>
-          <MegaMenuGroup>
-            <MegaMenuHeader>Retail</MegaMenuHeader>
-            <MegaMenuItem
-              value="E-Commerce Platforms"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "E-Commerce Platforms",
-                );
-              }}
-            >
-              E-Commerce Platforms
-            </MegaMenuItem>
-          </MegaMenuGroup>
-          <MegaMenuGroup>
-            <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-            <MegaMenuItem
-              value="Supply Chain Optimization"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Supply Chain Optimization",
-                );
-              }}
-            >
-              Supply Chain Optimization
-            </MegaMenuItem>
-            <MegaMenuItem
-              value="Quality Control"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Quality Control",
-                );
-              }}
-            >
-              Quality Control
-            </MegaMenuItem>
-            <MegaMenuItem
-              value="Production Planning"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Production Planning",
-                );
-              }}
-            >
-              Production Planning
-            </MegaMenuItem>
-          </MegaMenuGroup>
-          <MegaMenuGroup>
-            <MegaMenuHeader>Education</MegaMenuHeader>
-            <MegaMenuItem
-              value="Learning Management Systems"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Learning Management Systems",
-                );
-              }}
-            >
-              Learning Management Systems
-            </MegaMenuItem>
-            <MegaMenuItem
-              value="Virtual Classrooms"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Virtual Classrooms",
-                );
-              }}
-            >
-              Virtual Classrooms
-            </MegaMenuItem>
-          </MegaMenuGroup>
-          <MegaMenuGroup>
-            <MegaMenuHeader>Government</MegaMenuHeader>
-            <MegaMenuItem
-              value="Document Management"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Document Management",
-                );
-              }}
-            >
-              Document Management
-            </MegaMenuItem>
-            <MegaMenuItem
-              value="Citizen Services"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Citizen Services",
-                );
-              }}
-            >
-              Citizen Services
-            </MegaMenuItem>
-            <MegaMenuItem
-              value="Public Safety Solutions"
-              onClick={() => {
-                console.log(
-                  "[InSmallViewport MegaMenu] selected value:",
-                  "Public Safety Solutions",
-                );
-              }}
-            >
-              Public Safety Solutions
-            </MegaMenuItem>
-          </MegaMenuGroup>
-        </MegaMenuSection>
-      </MegaMenuPanel>
-    </MegaMenu>
+              <MegaMenuTrigger>
+                <NavigationItem active={activeMenu === "resources"}>
+                  Resources
+                </NavigationItem>
+              </MegaMenuTrigger>
+              <MegaMenuPanel
+                className="small-viewport-container"
+                aria-label="Resources menu"
+              >
+                <MegaMenuSection>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Documentation</MegaMenuHeader>
+                    <MegaMenuItem value="User guides">User guides</MegaMenuItem>
+                    <MegaMenuItem value="API reference">
+                      API reference
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Release notes">
+                      Release notes
+                    </MegaMenuItem>
+                    <MegaMenuItem value="FAQs">FAQs</MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Support</MegaMenuHeader>
+                    <MegaMenuItem value="Contact support">
+                      Contact support
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Community forum">
+                      Community forum
+                    </MegaMenuItem>
+                    <MegaMenuItem value="Troubleshooting">
+                      Troubleshooting
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Learn</MegaMenuHeader>
+                    <MegaMenuItem value="Tutorials">Tutorials</MegaMenuItem>
+                    <MegaMenuItem value="Guides">Guides</MegaMenuItem>
+                    <MegaMenuItem value="Best practices">
+                      Best practices
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                </MegaMenuSection>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+        </StackLayout>
+      </nav>
+    </div>
   );
 };
 
@@ -2034,7 +2228,7 @@ export const DefaultSelectedItem: StoryFn = () => {
     <nav>
       <StackLayout as="ol" direction="row" gap={1}>
         <li>
-          <MegaMenu defaultOpen defaultSelectedItem="Risk Management">
+          <MegaMenu defaultOpen defaultSelectedItem="Risk management">
             <MegaMenuTrigger>
               <NavigationItem>Solutions</NavigationItem>
             </MegaMenuTrigger>
@@ -2043,27 +2237,27 @@ export const DefaultSelectedItem: StoryFn = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem value="Digital Banking">
-                    Digital Banking
+                  <MegaMenuItem value="Digital banking">
+                    Digital banking
                   </MegaMenuItem>
-                  <MegaMenuItem value="Risk Management">
-                    Risk Management
+                  <MegaMenuItem value="Risk management">
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem value="Patient Management">
-                    Patient Management
+                  <MegaMenuItem value="Patient management">
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem value="Telemedicine">Telemedicine</MegaMenuItem>
-                  <MegaMenuItem value="Compliance Solutions">
-                    Compliance Solutions
+                  <MegaMenuItem value="Compliance solutions">
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem value="E-Commerce Platforms">
-                    E-Commerce Platforms
+                  <MegaMenuItem value="E-commerce platforms">
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>

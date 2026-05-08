@@ -1,4 +1,8 @@
 .saltMegaMenuItem {
+  list-style: none;
+}
+
+.saltMegaMenuItem > a {
   display: flex;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
   align-items: center;
@@ -13,28 +17,28 @@
   box-sizing: border-box;
   gap: var(--salt-spacing-100);
   position: relative;
-  list-style: none;
   border-radius: var(--salt-palette-corner-weak);
+  text-decoration: none;
 }
 
-.saltMegaMenuItem:focus-visible {
+.saltMegaMenuItem > a:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltMegaMenuItem:hover {
+.saltMegaMenuItem > a:hover {
   outline: none;
   background: var(--salt-navigable-background-hover);
 }
 
-.saltMegaMenuItem:active,
-.saltMegaMenuItem-active,
-.saltMegaMenuItem-active:hover {
+.saltMegaMenuItem > a:active,
+.saltMegaMenuItem > a.saltMegaMenuItem-active,
+.saltMegaMenuItem > a.saltMegaMenuItem-active:hover {
   background: var(--salt-navigable-accent-background-active);
 }
 
-.saltMegaMenuItem:active::before,
-.saltMegaMenuItem-active::before {
+.saltMegaMenuItem > a:active::before,
+.saltMegaMenuItem > a.saltMegaMenuItem-active::before {
   content: "";
   position: absolute;
   inset: 0;

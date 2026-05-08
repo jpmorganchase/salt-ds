@@ -29,11 +29,16 @@ export interface MegaMenuItemProps extends HTMLAttributes<HTMLLIElement> {
    * @default true
    */
   closeOnSelect?: boolean;
+  /**
+   * Navigation URL for the menu item. If provided, renders as a link.
+   * If omitted, renders as a button for action items.
+   */
+  href?: string;
 }
 
 export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
   function MegaMenuItem(
-    { children, className, value, closeOnSelect = true, ...rest },
+    { children, className, value, closeOnSelect = true, href, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -46,6 +51,17 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
     });
 
     const isSelected = value != null && megaMenu.selectedItem === value;
+
+    const baseProps = {
+      className: clsx(
+        withBaseName(),
+        { [withBaseName("active")]: isSelected },
+        className,
+      ),
+      tabIndex: 0,
+      "data-mega-menu-item": "",
+      ...(isSelected && { "aria-current": "page" as const }),
+    };
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
       rest.onClick?.(event);
@@ -67,20 +83,15 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
 
     return (
       <li
-        className={clsx(
-          withBaseName(),
-          { [withBaseName("active")]: isSelected },
-          className,
-        )}
+        className={withBaseName()}
         ref={ref}
-        tabIndex={0}
-        data-mega-menu-item=""
-        aria-current={isSelected ? "page" : undefined}
         {...rest}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
       >
-        {children}
+        <a href={href ?? "#"} {...baseProps}>
+          {children}
+        </a>
       </li>
     );
   },

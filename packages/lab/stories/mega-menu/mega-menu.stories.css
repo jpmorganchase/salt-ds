@@ -41,7 +41,10 @@ nav > ol {
 }
 
 .custom-region-content {
-  flex: 0 0 auto;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-inline-size: 0;
 }
 
 .custom-region-no-container-padding {
@@ -57,7 +60,19 @@ nav > ol {
 }
 
 .withLink-menu-container {
+  display: flex;
   flex-direction: column;
+}
+
+.withLink-menu-container .saltMegaMenuSection,
+.custom-region-content .saltMegaMenuSection {
+  flex: 1 1 auto;
+}
+
+.withLink-menu-container > .saltMegaMenuGroup,
+.custom-region-content > .saltMegaMenuGroup {
+  margin-top: auto;
+  align-self: flex-start;
 }
 
 .custom-region-image {
@@ -68,6 +83,11 @@ nav > ol {
 
 .menu-item-adornment {
   margin-left: auto;
+}
+
+.small-viewport-wrapper {
+  inline-size: 320px;
+  max-inline-size: 100%;
 }
 
 .small-viewport-container {
@@ -84,4 +104,11 @@ nav > ol {
 
 .withLink-container {
   padding-top: 0;
+}
+.saltMegaMenuPanel {
+  max-block-size: calc(100vh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
+  max-block-size: calc(100dvh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
