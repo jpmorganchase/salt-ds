@@ -269,7 +269,10 @@ export function useToolbarNextKeyboardNavigation({
       }
 
       if (targetMemory?.type === "overflow-trigger") {
-        if (shouldPreserveItemMemoryForTrigger(targetMemory.groupKey)) {
+        const shouldPreserve = shouldPreserveItemMemoryForTrigger(
+          targetMemory.groupKey,
+        );
+        if (shouldPreserve) {
           return;
         }
 

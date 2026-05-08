@@ -27,6 +27,7 @@ import {
   type ReactElement,
   type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
+  type RefObject,
   useCallback,
   useEffect,
   useRef,
@@ -35,6 +36,12 @@ import {
 import { createPortal } from "react-dom";
 
 import toolbarNextOverflowCss from "./ToolbarNextOverflow.css";
+import {
+  getToolbarNextOverflowBoundaryKey,
+  isTargetInsideOverflowBoundary,
+  ToolbarNextOverflowFloatingComponentProvider,
+  useToolbarNextOverflowFloatingBoundary,
+} from "./ToolbarNextOverflowFloatingBoundary";
 import { ToolbarRegion } from "./ToolbarRegion";
 import {
   getDocumentFocusableElements,
@@ -47,6 +54,7 @@ import {
   TOOLBAR_NEXT_ITEM_ATTR,
   TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR,
   TOOLBAR_NEXT_SCOPE_ROOT_ATTR,
+  type ToolbarNextFocusMemory,
   toolbarNextFocusableSelector,
 } from "./toolbarNextKeyboardUtils";
 import type {
@@ -58,6 +66,16 @@ import { useToolbarNextKeyboardNavigation } from "./useToolbarNextKeyboardNaviga
 import type { ToolbarNextOverflowGroup } from "./useToolbarNextOverflow";
 
 const withBaseName = makePrefixer("saltToolbarNextOverflow");
+
+function canSeedOverflowFocusMemory(
+  focusMemory: ToolbarNextFocusMemory | null | undefined,
+  group: ToolbarNextOverflowGroup,
+): focusMemory is Extract<ToolbarNextFocusMemory, { type: "item" }> {
+  return (
+    focusMemory?.type === "item" &&
+    group.items.some((item) => item.id === focusMemory.itemId)
+  );
+}
 
 interface ToolbarNextOverflowOwnersProps {
   hostNodes: Record<string, HTMLDivElement | null>;
@@ -76,6 +94,16 @@ function ToolbarNextOverflowItemOwner({
   const mainToolbarTabIndexMemoryRef = useRef(
     new WeakMap<HTMLElement, string | null>(),
   );
+  const lastOverflowBoundaryKeyRef = useRef<string | null>(null);
+  const currentOverflowBoundaryKey = getToolbarNextOverflowBoundaryKey(host);
+
+  if (host) {
+    lastOverflowBoundaryKeyRef.current = currentOverflowBoundaryKey;
+  }
+
+  const boundaryKey = host
+    ? currentOverflowBoundaryKey
+    : lastOverflowBoundaryKeyRef.current;
 
   useIsomorphicLayoutEffect(() => {
     const nextMountNode = targetWindow?.document.createElement("div");
@@ -139,15 +167,24 @@ function ToolbarNextOverflowItemOwner({
     mountNode.parentElement?.removeChild(mountNode);
   }, [host, mountNode]);
 
-  return mountNode
-    ? createPortal(
-        cloneElement(item.element as ReactElement<Record<string, ReactNode>>, {
-          [TOOLBAR_NEXT_GROUP_KEY_ATTR]: item.overflowGroupKey,
-          [TOOLBAR_NEXT_ITEM_ATTR]: item.id,
-        }),
-        mountNode,
-      )
-    : null;
+  if (!mountNode) {
+    return null;
+  }
+
+  const clonedItem = cloneElement(
+    item.element as ReactElement<Record<string, ReactNode>>,
+    {
+      [TOOLBAR_NEXT_GROUP_KEY_ATTR]: item.overflowGroupKey,
+      [TOOLBAR_NEXT_ITEM_ATTR]: item.id,
+    },
+  );
+  const itemContent = (
+    <ToolbarNextOverflowFloatingComponentProvider boundaryKey={boundaryKey}>
+      {clonedItem}
+    </ToolbarNextOverflowFloatingComponentProvider>
+  );
+
+  return createPortal(itemContent, mountNode);
 }
 
 export function ToolbarNextOverflowOwners({
@@ -216,12 +253,14 @@ function getOverflowTriggerLabel(group: ToolbarNextOverflowGroup) {
 }
 
 interface ToolbarNextOverflowMenuProps {
+  focusMemoryRef?: RefObject<ToolbarNextFocusMemory | null>;
   getItemHostRef: (id: string) => (node: HTMLDivElement | null) => void;
   group: ToolbarNextOverflowGroup;
   onItemFocus?: (itemId: string, controlIndex: number) => void;
 }
 
 export function ToolbarNextOverflowMenu({
+  focusMemoryRef,
   getItemHostRef,
   group,
   onItemFocus,
@@ -235,11 +274,13 @@ export function ToolbarNextOverflowMenu({
     useState<HTMLDivElement | null>(null);
   const wasOpenRef = useRef(false);
   const focusedOpenPanelRef = useRef(false);
+  const floatingBoundary = useToolbarNextOverflowFloatingBoundary();
   const {
     focusEntryTarget,
     handleScopeBlur,
     handleScopeFocus,
     handleScopeKeyDown,
+    rememberedFocusRef,
   } = useToolbarNextKeyboardNavigation({
     includeTabIndexMinusOne: true,
     items: group.items,
@@ -273,7 +314,17 @@ export function ToolbarNextOverflowMenu({
   });
   const { getFloatingProps, getReferenceProps } = useInteractions([
     useClick(context),
-    useDismiss(context),
+    useDismiss(context, {
+      escapeKey: false,
+      outsidePress(event) {
+        return !isTargetInsideOverflowBoundary(
+          panelContentRef.current,
+          floatingBoundary,
+          group.key,
+          event.target,
+        );
+      },
+    }),
   ]);
 
   const handleTriggerKeyDown = useCallback(
@@ -390,11 +441,17 @@ export function ToolbarNextOverflowMenu({
 
   useEffect(() => {
     if (open && !wasOpenRef.current) {
+      const externalFocusMemory = focusMemoryRef?.current;
+
+      if (canSeedOverflowFocusMemory(externalFocusMemory, group)) {
+        rememberedFocusRef.current = externalFocusMemory;
+      }
+
       focusEntryTarget();
     }
 
     wasOpenRef.current = open;
-  }, [focusEntryTarget, open]);
+  }, [focusEntryTarget, focusMemoryRef, group, open, rememberedFocusRef]);
 
   useEffect(() => {
     if (!open || !panelContentNode) {
@@ -405,6 +462,17 @@ export function ToolbarNextOverflowMenu({
       handlePanelFocus(event);
     };
     const handleFocusOut = (event: FocusEvent) => {
+      if (
+        isTargetInsideOverflowBoundary(
+          panelContentRef.current,
+          floatingBoundary,
+          group.key,
+          event.relatedTarget,
+        )
+      ) {
+        return;
+      }
+
       handleScopeBlur(event);
     };
     const handleKeyDownCapture = (event: KeyboardEvent) => {
@@ -436,6 +504,8 @@ export function ToolbarNextOverflowMenu({
     handlePanelKeyDown,
     handleScopeBlur,
     handleScopeKeyDown,
+    floatingBoundary,
+    group.key,
     open,
     panelContentNode,
   ]);
@@ -546,7 +616,7 @@ export function ToolbarNextOverflowMenu({
                 initialFocus: -1,
                 returnFocus: false,
                 modal: false,
-                closeOnFocusOut: true,
+                closeOnFocusOut: false,
               }
             : undefined
         }
@@ -589,6 +659,7 @@ export function ToolbarNextOverflowMenu({
 }
 
 export interface ToolbarNextOverflowRegionProps {
+  focusMemoryRef?: RefObject<ToolbarNextFocusMemory | null>;
   getItemHostRef: (id: string) => (node: HTMLDivElement | null) => void;
   getItemRef: (id: string) => (node: HTMLDivElement | null) => void;
   getNamedTriggerRef: (id: string) => (node: HTMLDivElement | null) => void;
@@ -600,6 +671,7 @@ export interface ToolbarNextOverflowRegionProps {
 }
 
 export function ToolbarNextOverflowRegion({
+  focusMemoryRef,
   getItemHostRef,
   getItemRef,
   getNamedTriggerRef,
@@ -676,6 +748,7 @@ export function ToolbarNextOverflowRegion({
               {triggerGroup ? (
                 <div className={withBaseName("item")}>
                   <ToolbarNextOverflowMenu
+                    focusMemoryRef={focusMemoryRef}
                     getItemHostRef={getItemHostRef}
                     group={triggerGroup}
                     onItemFocus={onItemFocus}

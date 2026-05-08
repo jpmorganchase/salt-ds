@@ -1,4 +1,4 @@
-import { Button, Dropdown, Input, Option } from "@salt-ds/core";
+import { Button, ComboBox, Dropdown, Input, Option } from "@salt-ds/core";
 import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
 import { useState } from "react";
@@ -319,6 +319,94 @@ function SharedOverflowFocusReentryTestCase() {
         <ToolbarRegion position="end">
           <TooltrayNext role="group" aria-label="Actions">
             <Button appearance="transparent">Export</Button>
+            <Button appearance="solid">Run</Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
+function SharedOverflowComboBoxFocusReentryTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 320, flexDirection: "column" }}
+    >
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Shared overflow combo box toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext role="group" aria-label="Search and filter">
+            <Input bordered placeholder="Search" />
+            <ComboBox bordered defaultSelected={["Option A"]}>
+              <Option value="Option A" />
+              <Option value="Option B" />
+              <Option value="Option C" />
+            </ComboBox>
+          </TooltrayNext>
+        </ToolbarRegion>
+        <ToolbarRegion position="end">
+          <TooltrayNext role="group" aria-label="Actions">
+            <Button appearance="transparent">Export</Button>
+            <Button appearance="solid">Run</Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
+function SharedOverflowDropdownPopupTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 220, flexDirection: "column" }}
+    >
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Shared overflow dropdown toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+            <Button appearance="transparent" style={{ width: 170 }}>
+              Pinned
+            </Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+        <ToolbarRegion position="end">
+          <TooltrayNext role="group" aria-label="Filters" overflowPriority={5}>
+            <Dropdown bordered defaultSelected={["Option A"]}>
+              <Option value="Option A" />
+              <Option value="Option B" />
+            </Dropdown>
+          </TooltrayNext>
+        </ToolbarRegion>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
+function MixedControlsWidthChangeTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 520, flexDirection: "column" }}
+    >
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Mixed controls width change toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext role="group" aria-label="Criteria">
+            <Input bordered placeholder="Search" style={{ width: 150 }} />
+            <Dropdown bordered defaultSelected={["Option A"]}>
+              <Option value="Option A" />
+              <Option value="Option B" />
+            </Dropdown>
+          </TooltrayNext>
+        </ToolbarRegion>
+        <ToolbarRegion position="end">
+          <TooltrayNext role="group" aria-label="Actions">
+            <Button appearance="transparent">Toggle</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
         </ToolbarRegion>
@@ -1032,6 +1120,119 @@ describe("Given ToolbarNext keyboard navigation", () => {
 
     cy.realPress(["Shift", "Tab"]);
     cy.findByRole("combobox").should("be.focused");
+  });
+
+  it("keeps a portaled dropdown selection inside the shared overflow panel", () => {
+    cy.mount(<SharedOverflowDropdownPopupTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Option B" }).realClick();
+
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("have.text", "Option B");
+    cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("keeps a portaled combo box selection inside the shared overflow panel", () => {
+    cy.mount(<SharedOverflowComboBoxFocusReentryTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Option B" }).realClick();
+
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("have.value", "Option B");
+    cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("preserves dropdown focus and selection when a visible control moves into shared overflow", () => {
+    cy.mount(<MixedControlsWidthChangeTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Option B" }).realClick();
+    cy.findByRole("combobox").should("have.text", "Option B");
+
+    setFixtureWidth(180);
+    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+
+    cy.findByRole("toolbar", { name: "More overflow" }).within(() => {
+      cy.findByRole("combobox")
+        .should("have.text", "Option B")
+        .and("be.focused");
+    });
+  });
+
+  it("keeps a portaled dropdown selection inside the named overflow panel", () => {
+    cy.mount(<NamedOverflowFocusReentryTestCase />);
+
+    cy.findByRole("button", { name: /Open Filters overflow\./i }).realClick();
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
+
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Option B" }).realClick();
+
+    cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("have.text", "Option B");
+    cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("keeps keyboard-opened shared overflow open during mouse selection in a child popup", () => {
+    cy.mount(<SharedOverflowDropdownPopupTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).focus();
+    cy.realPress("Space");
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Option B" }).realClick();
+
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("have.text", "Option B");
+    cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("closes shared overflow and child popup on outside click", () => {
+    cy.mount(<SharedOverflowDropdownPopupTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("listbox").should("be.visible");
+
+    cy.findByTestId("toolbar-after").realClick();
+
+    cy.findByRole("toolbar", { name: "More overflow" }).should("not.exist");
+    cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("keeps reopened child popups above the shared overflow panel", () => {
+    cy.mount(<SharedOverflowDropdownPopupTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("listbox").should("be.visible");
+
+    cy.findByTestId("toolbar-after").realClick();
+    cy.findByRole("toolbar", { name: "More overflow" }).should("not.exist");
+
+    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("listbox")
+      .should("be.visible")
+      .and("have.css", "z-index", "1501");
+    cy.findByRole("option", { name: "Option B" }).realClick();
+
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByRole("combobox").should("have.text", "Option B");
   });
 
   it("restores named overflow controls to toolbar arrow navigation after expansion", () => {

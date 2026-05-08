@@ -52,6 +52,11 @@
   z-index: var(--salt-zIndex-flyover);
 }
 
+/* TODO: improve this as brittle */
+.saltToolbarNextOverflow-floatingDescendant.saltToolbarNextOverflow-floatingDescendant {
+  z-index: calc(var(--salt-zIndex-flyover) + var(--salt-zIndex-default));
+}
+
 .saltToolbarNextOverflow-panelContent {
   align-items: center;
   display: flex;

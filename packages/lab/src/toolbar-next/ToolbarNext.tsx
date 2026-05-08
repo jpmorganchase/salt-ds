@@ -25,6 +25,7 @@ import {
   ToolbarNextOverflowRegion,
   ToolbarNextOverflowTriggerContent,
 } from "./ToolbarNextOverflow";
+import { ToolbarNextOverflowFloatingBoundaryProvider } from "./ToolbarNextOverflowFloatingBoundary";
 import type { ToolbarRegionPosition } from "./ToolbarRegion";
 import { TOOLBAR_NEXT_SCOPE_ROOT_ATTR } from "./toolbarNextKeyboardUtils";
 import {
@@ -301,7 +302,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
         {mode === "invalid" ? (
           children
         ) : (
-          <>
+          <ToolbarNextOverflowFloatingBoundaryProvider>
             <ToolbarNextOverflowOwners
               hostNodes={itemHostNodes}
               items={allItems}
@@ -382,6 +383,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                 >
                   {bandRegions.map((region) => (
                     <ToolbarNextOverflowRegion
+                      focusMemoryRef={keyboardNavigation.rememberedFocusRef}
                       getItemHostRef={getItemHostRef}
                       getItemRef={getItemRef}
                       getNamedTriggerRef={getNamedTriggerRef}
@@ -398,6 +400,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                   {position === "end"
                     ? sharedOverflowGroups.map((group) => (
                         <ToolbarNextOverflowMenu
+                          focusMemoryRef={keyboardNavigation.rememberedFocusRef}
                           getItemHostRef={getItemHostRef}
                           group={group}
                           key={group.id}
@@ -408,7 +411,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                 </div>
               );
             })}
-          </>
+          </ToolbarNextOverflowFloatingBoundaryProvider>
         )}
       </div>
     );
