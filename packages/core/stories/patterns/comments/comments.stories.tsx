@@ -18,18 +18,23 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon, SendIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
+import type { ComponentProps } from "react";
 import { useEffect, useRef, useState } from "react";
 
 export default {
   title: "Patterns/Comments",
 } as Meta;
 
-const getAvatarColor = (name: string) => {
+const getAvatarColor = (
+  name: string,
+): ComponentProps<typeof Avatar>["color"] => {
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
-  return `category-${(Math.abs(hash) % 20) + 1}` as any;
+  return `category-${(Math.abs(hash) % 20) + 1}` as ComponentProps<
+    typeof Avatar
+  >["color"];
 };
 
 const formatDate = (timestamp: number) =>
