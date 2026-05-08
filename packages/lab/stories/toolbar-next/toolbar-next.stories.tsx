@@ -43,6 +43,8 @@ export default {
     "RightToLeft",
     "DefaultSharedOverflow",
     "NamedOverflow",
+    "NamedOverflowWithDividers",
+    "OverflowMenuDividers",
   ],
   parameters: {
     layout: "padded",
@@ -900,6 +902,68 @@ export const OverflowDividers: StoryFn<typeof ToolbarNext> = () => (
   </ToolbarNext>
 );
 OverflowDividers.globals = {
+  responsive: "wrap",
+};
+
+/**
+ * General toolbar with dividers carried into overflow.
+ *
+ * Intended behavior:
+ * - At full width, the action controls are separate trays with visible
+ *   dividers between them.
+ * - Use the Storybook responsive wrapper to reduce the toolbar width. The
+ *   grouped action trays collapse into the named Actions overflow trigger.
+ * - The dividers are authored between those trays, so they move with the
+ *   overflowed controls and appear between actions inside the overflow panel.
+ */
+export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
+  <ToolbarNext aria-label="Toolbar with overflow menu dividers">
+    <ToolbarRegion position="start">
+      <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+      </TooltrayNext>
+      <TooltrayNext overflowMode="none">
+        <Dropdown bordered defaultSelected={["Option A"]}>
+          {options.map((option) => (
+            <Option value={option} key={option} />
+          ))}
+        </Dropdown>
+      </TooltrayNext>
+    </ToolbarRegion>
+    <ToolbarRegion position="end">
+      <TooltrayNext
+        overflowGroup="Actions"
+        overflowLabel="Actions"
+        overflowMode="grouped"
+        overflowPriority={5}
+      >
+        <Button appearance="transparent">Columns</Button>
+      </TooltrayNext>
+      <Divider orientation="vertical" variant="secondary" />
+      <TooltrayNext
+        overflowGroup="Actions"
+        overflowLabel="Actions"
+        overflowMode="grouped"
+        overflowPriority={5}
+      >
+        <Button appearance="transparent">
+          <ExportIcon aria-hidden />
+          Export
+        </Button>
+      </TooltrayNext>
+      <Divider orientation="vertical" variant="secondary" />
+      <TooltrayNext
+        overflowGroup="Actions"
+        overflowLabel="Actions"
+        overflowMode="grouped"
+        overflowPriority={5}
+      >
+        <Button appearance="solid">Run</Button>
+      </TooltrayNext>
+    </ToolbarRegion>
+  </ToolbarNext>
+);
+OverflowMenuDividers.globals = {
   responsive: "wrap",
 };
 
