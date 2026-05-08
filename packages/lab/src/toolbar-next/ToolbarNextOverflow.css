@@ -72,6 +72,10 @@
   margin-inline: 0;
 }
 
+.saltToolbarNextOverflow-panel .saltTooltrayNext > * {
+  inline-size: auto;
+}
+
 .saltToolbarNextOverflow-region > .saltToolbarNextOverflow-slot .saltTooltrayNext[data-align="center"],
 .saltToolbarNextOverflow-region > .saltToolbarNextOverflow-slot .saltTooltrayNext[data-align="end"] {
   margin-inline: 0;

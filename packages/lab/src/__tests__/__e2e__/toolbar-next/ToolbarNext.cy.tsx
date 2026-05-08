@@ -1,4 +1,11 @@
-import { Button, ComboBox, Dropdown, Input, Option } from "@salt-ds/core";
+import {
+  Button,
+  ComboBox,
+  Dropdown,
+  Input,
+  Option,
+  Switch,
+} from "@salt-ds/core";
 import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
 import { useState } from "react";
@@ -309,8 +316,12 @@ function SharedOverflowFocusReentryTestCase() {
       <ToolbarNext aria-label="Shared overflow focus toolbar">
         <ToolbarRegion position="start">
           <TooltrayNext role="group" aria-label="Search and filter">
-            <Input bordered placeholder="Search" />
-            <Dropdown bordered defaultSelected={["Option A"]}>
+            <Input bordered placeholder="Search" style={{ width: 130 }} />
+            <Dropdown
+              bordered
+              defaultSelected={["Option A"]}
+              style={{ width: 90 }}
+            >
               <Option value="Option A" />
               <Option value="Option B" />
             </Dropdown>
@@ -442,8 +453,114 @@ function OverflowTextInputKeyboardTestCase() {
   );
 }
 
+function SharedBoundaryCollapseTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 220, width: 760, flexDirection: "column" }}
+    >
+      <ToolbarNext aria-label="Shared boundary toolbar">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+          <Button appearance="transparent" style={{ width: 120 }}>
+            Pinned
+          </Button>
+        </TooltrayNext>
+        <TooltrayNext overflowPriority={1}>
+          <Button appearance="transparent" style={{ width: 110 }}>
+            Low priority
+          </Button>
+        </TooltrayNext>
+        <TooltrayNext overflowPriority={5}>
+          <Button appearance="transparent" style={{ width: 130 }}>
+            High priority
+          </Button>
+        </TooltrayNext>
+        <TooltrayNext overflowPriority={0}>
+          <Button appearance="solid" style={{ width: 100 }}>
+            Run
+          </Button>
+        </TooltrayNext>
+      </ToolbarNext>
+    </div>
+  );
+}
+
+function MixedTrayCompressionTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 220, width: 760, flexDirection: "column" }}
+    >
+      <ToolbarNext aria-label="Mixed tray compression toolbar">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+          <Button appearance="transparent" style={{ width: 120 }}>
+            Pinned
+          </Button>
+        </TooltrayNext>
+        <TooltrayNext
+          overflowPriority={5}
+          role="group"
+          aria-label="View settings"
+        >
+          <Switch label="Show total" />
+          <Dropdown
+            bordered
+            defaultSelected={["Sort by highest balance"]}
+            style={{ width: 240 }}
+          >
+            <Option value="Sort by highest balance" />
+            <Option value="Sort by lowest balance" />
+          </Dropdown>
+          <Button appearance="bordered">Add view</Button>
+        </TooltrayNext>
+      </ToolbarNext>
+    </div>
+  );
+}
+
 function setFixtureWidth(width: number) {
   cy.get(".Flexbox").invoke("css", "width", `${width}px`);
+}
+
+function parsePixelValue(value: string) {
+  return Number.parseFloat(value || "0") || 0;
+}
+
+function isVisibleElement(element: HTMLElement) {
+  const style = element.ownerDocument.defaultView?.getComputedStyle(element);
+  const rect = element.getBoundingClientRect();
+
+  return (
+    style?.display !== "none" &&
+    style?.visibility !== "hidden" &&
+    rect.width > 0 &&
+    rect.height > 0
+  );
+}
+
+function getVisibleElementRects(elements: Iterable<HTMLElement>) {
+  return Array.from(elements)
+    .filter(isVisibleElement)
+    .map((element) => element.getBoundingClientRect());
+}
+
+function shrinkFixtureBelowVisibleToolbarContent(toolbarName: string) {
+  cy.findByRole("toolbar", { name: toolbarName }).then(($toolbar) => {
+    const toolbar = $toolbar[0];
+    const styles = toolbar.ownerDocument.defaultView?.getComputedStyle(toolbar);
+    const visibleSlotRects = getVisibleElementRects(
+      toolbar.querySelectorAll<HTMLElement>(".saltToolbarNextOverflow-slot"),
+    );
+    const left = Math.min(...visibleSlotRects.map((rect) => rect.left));
+    const right = Math.max(...visibleSlotRects.map((rect) => rect.right));
+    const frameWidth =
+      parsePixelValue(styles?.paddingLeft ?? "0") +
+      parsePixelValue(styles?.paddingRight ?? "0") +
+      parsePixelValue(styles?.borderLeftWidth ?? "0") +
+      parsePixelValue(styles?.borderRightWidth ?? "0");
+
+    setFixtureWidth(Math.ceil(right - left + frameWidth) - 1);
+  });
 }
 
 function expectToolbarFits(name: string) {
@@ -451,6 +568,31 @@ function expectToolbarFits(name: string) {
     expect($toolbar[0]?.scrollWidth, `scroll width for ${name}`).to.be.at.most(
       $toolbar[0]?.clientWidth ?? 0,
     );
+  });
+}
+
+function expectToolbarSlotsDoNotIntersect(name: string) {
+  cy.findByRole("toolbar", { name }).should(($toolbar) => {
+    const toolbar = $toolbar[0];
+    const slotRects = getVisibleElementRects(
+      toolbar.querySelectorAll<HTMLElement>(".saltToolbarNextOverflow-slot"),
+    );
+
+    for (const [index, rect] of slotRects.entries()) {
+      for (const nextRect of slotRects.slice(index + 1)) {
+        const horizontalOverlap =
+          Math.min(rect.right, nextRect.right) -
+          Math.max(rect.left, nextRect.left);
+        const verticalOverlap =
+          Math.min(rect.bottom, nextRect.bottom) -
+          Math.max(rect.top, nextRect.top);
+
+        expect(
+          horizontalOverlap > 0.5 && verticalOverlap > 0.5,
+          `slot overlap for ${name}`,
+        ).to.equal(false);
+      }
+    }
   });
 }
 
@@ -539,6 +681,46 @@ describe("Given ToolbarNext variants and appearances", () => {
 });
 
 describe("Given ToolbarNext overflow measurements", () => {
+  it("collapses the first shared tray as soon as measured content exceeds the container", () => {
+    cy.mount(<SharedBoundaryCollapseTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: "High priority" }).should("be.visible");
+    expectToolbarFits("Shared boundary toolbar");
+    expectToolbarSlotsDoNotIntersect("Shared boundary toolbar");
+
+    shrinkFixtureBelowVisibleToolbarContent("Shared boundary toolbar");
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: "High priority" }).should("not.exist");
+    cy.findByRole("button", { name: "Low priority" }).should("be.visible");
+    cy.findByRole("button", { name: "Pinned" }).should("be.visible");
+    cy.findByRole("button", { name: "Run" }).should("be.visible");
+    expectToolbarFits("Shared boundary toolbar");
+    expectToolbarSlotsDoNotIntersect("Shared boundary toolbar");
+  });
+
+  it("collapses a mixed-control tray before its controls compress", () => {
+    cy.mount(<MixedTrayCompressionTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByText("Show total").should("be.visible");
+    cy.findByText("Sort by highest balance").should("be.visible");
+    cy.findByRole("button", { name: "Add view" }).should("be.visible");
+    expectToolbarFits("Mixed tray compression toolbar");
+    expectToolbarSlotsDoNotIntersect("Mixed tray compression toolbar");
+
+    shrinkFixtureBelowVisibleToolbarContent("Mixed tray compression toolbar");
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByText("Show total").should("not.exist");
+    cy.findByText("Sort by highest balance").should("not.exist");
+    cy.findByRole("button", { name: "Add view" }).should("not.exist");
+    cy.findByRole("button", { name: "Pinned" }).should("be.visible");
+    expectToolbarFits("Mixed tray compression toolbar");
+    expectToolbarSlotsDoNotIntersect("Mixed tray compression toolbar");
+  });
+
   it("collapses omitted overflowMode trays into the shared generic trigger by default", () => {
     cy.mount(<DefaultSharedOverflowFixture width={420} />);
 

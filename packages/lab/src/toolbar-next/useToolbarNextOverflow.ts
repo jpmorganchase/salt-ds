@@ -81,6 +81,44 @@ function measureWidth(element: HTMLElement | null) {
   return Math.ceil(width);
 }
 
+function isVisibleMeasurementElement(element: Element): element is HTMLElement {
+  if (!(element instanceof HTMLElement)) {
+    return false;
+  }
+
+  const { width, height } = element.getBoundingClientRect();
+  const styles = ownerWindow(element).getComputedStyle(element);
+
+  return (
+    width > 0 &&
+    height > 0 &&
+    styles.display !== "none" &&
+    styles.visibility !== "hidden"
+  );
+}
+
+function measureOverflowItemWidth(element: HTMLElement | null) {
+  if (!element) {
+    return 0;
+  }
+
+  const rect = element.getBoundingClientRect();
+  let left = rect.left;
+  let right = rect.right;
+
+  for (const descendant of element.querySelectorAll("*")) {
+    if (!isVisibleMeasurementElement(descendant)) {
+      continue;
+    }
+
+    const descendantRect = descendant.getBoundingClientRect();
+    left = Math.min(left, descendantRect.left);
+    right = Math.max(right, descendantRect.right);
+  }
+
+  return Math.ceil(Math.max(rect.width, right - left));
+}
+
 function readGap(gapValue: string) {
   return Number.parseFloat(gapValue || "0") || 0;
 }
@@ -562,12 +600,11 @@ export function useToolbarNextOverflow({
       const element = itemRefs.current[item.id];
 
       if (element) {
-        const { width } = element.getBoundingClientRect();
+        const width = measureOverflowItemWidth(element);
 
         if (width > 0) {
-          const ceiled = Math.ceil(width);
-          itemWidths.set(item.id, ceiled);
-          cachedItemWidths.current[item.id] = ceiled;
+          itemWidths.set(item.id, width);
+          cachedItemWidths.current[item.id] = width;
           continue;
         }
       }
@@ -627,7 +664,7 @@ export function useToolbarNextOverflow({
       cachedSharedTriggerWidths.current[group.key] = width;
     }
 
-    return computeToolbarNextOverflowState({
+    const nextOverflowState = computeToolbarNextOverflowState({
       bandGaps,
       collapseUnits,
       containerWidth,
@@ -640,6 +677,8 @@ export function useToolbarNextOverflow({
       rootGap,
       triggerWidths,
     });
+
+    return nextOverflowState;
   }, [collapseUnits, groupDefinitions, items, namedTriggerItems, regions]);
 
   const scheduleMeasure = useCallback(() => {
@@ -787,7 +826,10 @@ export function useToolbarNextOverflow({
           continue;
         }
 
-        const nextWidth = measureWidth(entry.target as HTMLElement);
+        const nextWidth =
+          target.kind === "item"
+            ? measureOverflowItemWidth(entry.target as HTMLElement)
+            : measureWidth(entry.target as HTMLElement);
 
         if (nextWidth <= 0) {
           continue;

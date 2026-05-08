@@ -637,14 +637,29 @@ export const DataViewActions: StoryFn<typeof ToolbarNext> = () => (
 export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Mixed controls toolbar">
     <ToolbarRegion position="start">
+      <TooltrayNext>
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
+      </TooltrayNext>
       <TooltrayNext role="group" aria-label="Criteria">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
-        <Dropdown bordered defaultSelected={["Option A"]}>
+        <Dropdown
+          bordered
+          defaultSelected={["Option A"]}
+          style={{ width: 120 }}
+        >
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
-        <DateInputSingle bordered aria-label="Settlement date" />
+        <DateInputSingle
+          bordered
+          aria-label="Settlement date"
+          style={{ width: 180 }}
+        />
       </TooltrayNext>
     </ToolbarRegion>
     <ToolbarRegion position="end">
