@@ -19,7 +19,7 @@ import HighDensityTable from "./img/table-high.png";
 import LowDensityTable from "./img/table-low.png";
 import MediumDensityTable from "./img/table-medium.png";
 
-export const DisplayModeContent = ({
+export const FoundationContent = ({
   formData,
   handleSelectChange,
   stepFieldValidation,

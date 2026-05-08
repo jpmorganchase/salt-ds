@@ -2,6 +2,7 @@ import {
   Banner,
   BannerContent,
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,16 +11,15 @@ import {
   FlexItem,
   FlexLayout,
   FormField,
-  FormFieldHelperText,
   FormFieldLabel,
   GridItem,
   GridLayout,
   H2,
-  Input,
   InteractableCard,
   InteractableCardGroup,
   type InteractableCardValue,
-  NumberInput,
+  Link,
+  Option,
   ParentChildLayout,
   RadioButton,
   RadioButtonGroup,
@@ -40,8 +40,11 @@ import {
 } from "@salt-ds/core";
 import {
   BuildingIcon,
+  CalendarIcon,
   GlobeIcon,
+  LocationIcon,
   LockedIcon,
+  SearchIcon,
   WarningSolidIcon,
 } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
@@ -59,10 +62,11 @@ import { ContentOverflow } from "../wizard/ContentOverflow";
 import { type FieldValidation, useWizardForm } from "../wizard/useWizardForm";
 import { getStepStage, validateStep } from "../wizard/utils";
 import { DataFormatContent } from "./DataFormatContent";
-import { DisplayModeContent } from "./DisplayModeContent";
+import { FoundationContent } from "./FoundationContent";
 import { NotificationsContent } from "./NotificationsContent";
 import { RegionalSettingsContent } from "./RegionalSettingsContent";
 import "../wizard/ContentOverflow.css";
+import "./experience-customization.stories.css";
 
 export default {
   title: "Patterns/Experience Customization",
@@ -74,8 +78,8 @@ export default {
 export interface ECFormData {
   acceptTerms: boolean;
   language: string;
-  timezone: string;
-  autoTranslate: boolean;
+  region: string;
+  publicHolidayCalendar: string;
   position: string;
   displayDensity: string;
   currency: string;
@@ -86,6 +90,9 @@ export interface ECFormData {
   performanceChart: boolean;
   autoDismiss: boolean;
   extendDisplayTime: boolean;
+  firstDayOfWeek?: string;
+  timeFormat?: string;
+  measurementSystem?: string;
 }
 
 export interface FormContentProps {
@@ -124,12 +131,14 @@ const initialFormData: ECFormData = {
   acceptTerms: false,
   // Regional
   language: "",
-  timezone: "",
-  autoTranslate: false,
+  region: "",
+  publicHolidayCalendar: "",
+  firstDayOfWeek: "",
+  timeFormat: "",
+  measurementSystem: "",
   // Data format
   currency: "usd",
   currencyFormat: "standard",
-
   stockNameDisplay: "fullNameTicker",
   exchangeAndRegionDisplay: "both",
   visibleMetrics: "lastPrice",
@@ -191,7 +200,7 @@ const stepValidationSchemas: Record<
   }),
   regional: Yup.object({
     language: Yup.string().required("Language is required."),
-    timezone: Yup.string().required("Timezone is required."),
+    region: Yup.string().required("Region is required."),
   }),
   displayMode: Yup.object({
     displayDensity: Yup.string().test({
@@ -277,7 +286,7 @@ const MultiStepTemplate = () => {
   };
 
   const contentByStep: Record<string, ReactElement> = {
-    foundation: <DisplayModeContent {...sharedFormProps} />,
+    foundation: <FoundationContent {...sharedFormProps} />,
     regional: <RegionalSettingsContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
     notifications: <NotificationsContent {...sharedFormProps} />,
@@ -295,7 +304,7 @@ const MultiStepTemplate = () => {
             style={{ margin: 0 }}
           >
             {wizardSteps[activeStepIndex].label}
-            <span className="salt-visuallyHidden">
+            <span className="visuallyHidden">
               {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
             </span>
           </Text>
@@ -554,7 +563,7 @@ export const EndToEndModal = () => {
   };
 
   const contentByStep: Record<string, ReactElement> = {
-    foundation: <DisplayModeContent {...sharedFormProps} />,
+    foundation: <FoundationContent {...sharedFormProps} />,
     regional: <RegionalSettingsContent {...sharedFormProps} />,
     notifications: <NotificationsContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
@@ -663,7 +672,7 @@ export const EndToEndModal = () => {
               header={
                 <span tabIndex={-1} ref={stepHeadingRef}>
                   {wizardSteps[activeStepIndex].label}
-                  <span className="salt-visuallyHidden">
+                  <span className="visuallyHidden">
                     {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
                   </span>
                 </span>
@@ -830,141 +839,304 @@ function PreferencesNavigation({
   );
 }
 
-function PreferencesContent({ currentSection }: { currentSection: string }) {
+type PreferenceSection =
+  | "Foundation"
+  | "Regional"
+  | "Data format"
+  | "Notification";
+
+interface PreferenceDialogFormData {
+  displayDensity: string;
+  acceptTerms: boolean;
+  language: string;
+  region: string;
+  publicHolidayCalendar: string;
+  firstDayOfWeek: string;
+  timeFormat: string;
+  measurementSystem: string;
+  stockNameDisplay: string;
+  exchangeAndRegionDisplay: string;
+  visibleMetrics: string;
+  performanceChart: boolean;
+  position: string;
+  autoDismiss: boolean;
+  extendDisplayTime: boolean;
+}
+
+function PreferencesContent({
+  currentSection,
+  formData,
+  onDropdownChange,
+  onSwitchChange,
+  onRadioChange,
+}: {
+  currentSection: PreferenceSection;
+  formData: PreferenceDialogFormData;
+  onDropdownChange: (
+    field: keyof PreferenceDialogFormData,
+    value: string,
+  ) => void;
+  onSwitchChange: (
+    field: keyof PreferenceDialogFormData,
+    checked: boolean,
+  ) => void;
+  onRadioChange: (field: keyof PreferenceDialogFormData, value: string) => void;
+}) {
   let content;
 
-  if (currentSection === "Account") {
+  if (currentSection === "Foundation") {
     content = (
       <StackLayout gap={3}>
+        {formData.displayDensity === "high" && (
+          <Banner status="warning">
+            <BannerContent>
+              High density may reduce readability and make some controls harder
+              to use.{" "}
+              <Link href="#">Read WCAG guidelines for more information.</Link>
+            </BannerContent>
+          </Banner>
+        )}
         <FormField>
-          <FormFieldLabel>Name</FormFieldLabel>
-          <Input defaultValue="User name" readOnly />
+          <FormFieldLabel>Choose a density</FormFieldLabel>
+          <Dropdown
+            value={formData.displayDensity}
+            onSelectionChange={(_event, value) =>
+              onDropdownChange("displayDensity", value[0])
+            }
+          >
+            <Option value="high">High density</Option>
+            <Option value="medium">Medium density</Option>
+            <Option value="low">Low density</Option>
+          </Dropdown>
         </FormField>
-        <FormField>
-          <FormFieldLabel>Company</FormFieldLabel>
-          <Input defaultValue="Company" readOnly />
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Email</FormFieldLabel>
-          <Input defaultValue="user@example.com" readOnly />
-          <FormFieldHelperText>
-            This is managed by your company.
-          </FormFieldHelperText>
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Security type</FormFieldLabel>
-          <Dropdown value="Password" />
-        </FormField>
-      </StackLayout>
-    );
-  }
-
-  if (currentSection === "General") {
-    content = (
-      <StackLayout gap={3}>
-        <FormField>
-          <FormFieldLabel>Auto-launch on startup</FormFieldLabel>
-          <Switch checked />
-          <FormFieldHelperText>
-            Launch automatically at user login or system startup.
-          </FormFieldHelperText>
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Launcher orientation</FormFieldLabel>
-          <RadioButtonGroup value="horizontal" direction="horizontal">
-            <RadioButton label="Horizontal" value="horizontal" />
-            <RadioButton label="Vertical" value="vertical" />
-          </RadioButtonGroup>
-          <FormFieldHelperText>
-            Set the default orientation of the launcher when the user starts.
-          </FormFieldHelperText>
-        </FormField>
-      </StackLayout>
-    );
-  }
-
-  if (currentSection === "Grid") {
-    content = (
-      <StackLayout gap={1}>
-        <FormField labelPlacement="left">
-          <FormFieldLabel>Grid row size</FormFieldLabel>
-          <RadioButtonGroup value="medium" direction="horizontal">
-            <RadioButton label="Small" value="small" />
-            <RadioButton label="Medium" value="medium" />
-            <RadioButton label="Large" value="large" />
-          </RadioButtonGroup>
-        </FormField>
-        <FormField labelPlacement="left">
-          <FormFieldLabel>Column filters</FormFieldLabel>
-          <Switch label="Value" />
-        </FormField>
-        <FormField labelPlacement="left">
-          <FormFieldLabel>Zebra stripes</FormFieldLabel>
-          <Switch label="Value" checked />
-        </FormField>
-        <FormField labelPlacement="left">
-          <FormFieldLabel>Status bar</FormFieldLabel>
-          <Switch label="Value" />
-        </FormField>
-        <FormField labelPlacement="left">
-          <FormFieldLabel>Column styling</FormFieldLabel>
-          <Switch label="Value" checked />
-        </FormField>
-        <FormField labelPlacement="left">
-          <FormFieldLabel>Cell styling</FormFieldLabel>
-          <Switch label="Value" checked />
-        </FormField>
-        <FormField labelPlacement="left">
-          <FormFieldLabel>Row styling</FormFieldLabel>
-          <Switch label="Value" />
-        </FormField>
-        <FormField labelPlacement="left">
-          <FormFieldLabel>Cell flashing</FormFieldLabel>
-          <RadioButtonGroup value="off" direction="horizontal">
-            <RadioButton label="Off" value="off" />
-            <RadioButton label="All" value="all" />
-            <RadioButton label="Specific cells" value="specific" />
-          </RadioButtonGroup>
-        </FormField>
-      </StackLayout>
-    );
-  }
-
-  if (currentSection === "Export") {
-    content = (
-      <StackLayout>
-        <Text>
-          Default global settings for all new dashboards and widgets created.
-        </Text>
-        <StackLayout gap={1}>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>File format</FormFieldLabel>
-            <Dropdown value="PNG" />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Publication style</FormFieldLabel>
-            <Dropdown value="None" />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Widget export width</FormFieldLabel>
-            <NumberInput
-              value="360"
-              endAdornment={
-                <Text>
-                  <strong>PX</strong>
-                </Text>
+        {formData.displayDensity === "high" && (
+          <FormField necessity="required">
+            <Checkbox
+              checked={formData.acceptTerms}
+              onChange={(event) =>
+                onSwitchChange("acceptTerms", event.target.checked)
               }
+              label="I understand that High density reduces target sizes and may affect readability and ease of use."
             />
           </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Dashboard size</FormFieldLabel>
-            <Dropdown value="To scale" />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormFieldLabel>Include title</FormFieldLabel>
-            <Dropdown value="Yes" />
-          </FormField>
-        </StackLayout>
+        )}
+      </StackLayout>
+    );
+  }
+
+  if (currentSection === "Regional") {
+    content = (
+      <StackLayout gap={3}>
+        <FormField>
+          <FormFieldLabel>Choose a language</FormFieldLabel>
+          <Dropdown
+            startAdornment={<SearchIcon />}
+            bordered
+            placeholder="Search"
+            value={formData.language}
+            onSelectionChange={(_event, value) =>
+              onDropdownChange("language", value[0])
+            }
+          >
+            <Option value="English">English</Option>
+            <Option value="Spanish">Spanish</Option>
+            <Option value="French">French</Option>
+            <Option value="German">German</Option>
+            <Option value="Italian">Italian</Option>
+            <Option value="Portuguese">Portuguese</Option>
+            <Option value="Chinese (Simplified)">Chinese (Simplified)</Option>
+            <Option value="Chinese (Traditional)">Chinese (Traditional)</Option>
+            <Option value="Japanese">Japanese</Option>
+            <Option value="Korean">Korean</Option>
+            <Option value="Arabic">Arabic</Option>
+            <Option value="Hindi">Hindi</Option>
+          </Dropdown>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Region / Country</FormFieldLabel>
+          <Dropdown
+            startAdornment={<LocationIcon />}
+            bordered
+            placeholder="Search"
+            value={formData.region}
+            onSelectionChange={(_event, value) =>
+              onDropdownChange("region", value[0])
+            }
+          >
+            <Option value="United States">United States</Option>
+            <Option value="Canada">Canada</Option>
+            <Option value="United Kingdom">United Kingdom</Option>
+            <Option value="Ireland">Ireland</Option>
+            <Option value="France">France</Option>
+            <Option value="Germany">Germany</Option>
+            <Option value="Spain">Spain</Option>
+            <Option value="Italy">Italy</Option>
+            <Option value="Netherlands">Netherlands</Option>
+            <Option value="Switzerland">Switzerland</Option>
+            <Option value="India">India</Option>
+            <Option value="Japan">Japan</Option>
+            <Option value="Singapore">Singapore</Option>
+            <Option value="Australia">Australia</Option>
+          </Dropdown>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Public holiday calendar</FormFieldLabel>
+          <Dropdown
+            startAdornment={<CalendarIcon />}
+            bordered
+            placeholder="Search"
+            value={formData.publicHolidayCalendar}
+            onSelectionChange={(_event, value) =>
+              onDropdownChange("publicHolidayCalendar", value[0])
+            }
+          >
+            <Option value="None">None (don’t apply public holidays)</Option>
+            <Option value="Selected country">Selected country</Option>
+            <Option value="United States (Federal)">
+              United States (Federal)
+            </Option>
+            <Option value="United Kingdom (England & Wales)">
+              United Kingdom (England &amp; Wales)
+            </Option>
+            <Option value="Canada (Federal)">Canada (Federal)</Option>
+            <Option value="India (National)">India (National)</Option>
+            <Option value="Japan (National)">Japan (National)</Option>
+            <Option value="Australia (National)">Australia (National)</Option>
+          </Dropdown>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>First day of the week</FormFieldLabel>
+          <RadioButtonGroup
+            value={formData.firstDayOfWeek}
+            onChange={(event) =>
+              onRadioChange("firstDayOfWeek", event.target.value)
+            }
+          >
+            <RadioButton label="Sunday" value="sunday" />
+            <RadioButton label="Monday" value="monday" />
+            <RadioButton label="Saturday" value="saturday" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Time format</FormFieldLabel>
+          <RadioButtonGroup
+            value={formData.timeFormat}
+            onChange={(event) =>
+              onRadioChange("timeFormat", event.target.value)
+            }
+          >
+            <RadioButton label="12-hour" value="12-hour" />
+            <RadioButton label="24-hour" value="24-hour" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Measurement system</FormFieldLabel>
+          <RadioButtonGroup
+            value={formData.measurementSystem}
+            onChange={(event) =>
+              onRadioChange("measurementSystem", event.target.value)
+            }
+          >
+            <RadioButton label="Metric" value="metric" />
+            <RadioButton label="Imperial" value="imperial" />
+          </RadioButtonGroup>
+        </FormField>
+      </StackLayout>
+    );
+  }
+
+  if (currentSection === "Data format") {
+    content = (
+      <StackLayout gap={3}>
+        <FormField>
+          <FormFieldLabel>Stock name display</FormFieldLabel>
+          <RadioButtonGroup
+            value={formData.stockNameDisplay}
+            onChange={(event) =>
+              onRadioChange("stockNameDisplay", event.target.value)
+            }
+          >
+            <RadioButton label="Ticker only" value="tickerOnly" />
+            <RadioButton label="Ticker and full name" value="fullNameTicker" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Exchange & Region</FormFieldLabel>
+          <RadioButtonGroup
+            value={formData.exchangeAndRegionDisplay}
+            onChange={(event) =>
+              onRadioChange("exchangeAndRegionDisplay", event.target.value)
+            }
+          >
+            <RadioButton label="Text only" value="text" />
+            <RadioButton label="Flag only" value="flag" />
+            <RadioButton label="Both" value="both" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Visible metrics</FormFieldLabel>
+          <RadioButtonGroup
+            value={formData.visibleMetrics}
+            onChange={(event) =>
+              onRadioChange("visibleMetrics", event.target.value)
+            }
+          >
+            <RadioButton label="Last price" value="lastPrice" />
+            <RadioButton label="Absolute change" value="absolute" />
+            <RadioButton label="Market Cap" value="marketCap" />
+          </RadioButtonGroup>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Performance chart</FormFieldLabel>
+          <Switch
+            checked={formData.performanceChart}
+            onChange={(event) =>
+              onSwitchChange("performanceChart", event.target.checked)
+            }
+            label={formData.performanceChart ? "Visible" : "Hidden"}
+          />
+        </FormField>
+      </StackLayout>
+    );
+  }
+
+  if (currentSection === "Notification") {
+    content = (
+      <StackLayout gap={3}>
+        <FormField>
+          <FormFieldLabel>Notification position</FormFieldLabel>
+          <Dropdown
+            value={formData.position}
+            onSelectionChange={(_event, value) =>
+              onDropdownChange("position", value[0])
+            }
+          >
+            <Option value="Top Left">Top Left</Option>
+            <Option value="Top Right">Top Right</Option>
+            <Option value="Bottom Left">Bottom Left</Option>
+            <Option value="Bottom Right">Bottom Right</Option>
+          </Dropdown>
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Automatically dismiss notifications</FormFieldLabel>
+          <Switch
+            checked={formData.autoDismiss}
+            onChange={(event) =>
+              onSwitchChange("autoDismiss", event.target.checked)
+            }
+            label={formData.autoDismiss ? "On" : "Off"}
+          />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Extend notification display time</FormFieldLabel>
+          <Switch
+            checked={formData.extendDisplayTime}
+            onChange={(event) =>
+              onSwitchChange("extendDisplayTime", event.target.checked)
+            }
+            label={formData.extendDisplayTime ? "On" : "Off"}
+          />
+        </FormField>
       </StackLayout>
     );
   }
@@ -980,14 +1152,59 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
 }
 
 export const PreferenceDialog = () => {
-  const sections = ["Account", "General", "Grid", "Export"];
-  const [currentSection, setCurrentSection] = useState(sections[0]);
+  const sections: PreferenceSection[] = [
+    "Foundation",
+    "Regional",
+    "Data format",
+    "Notification",
+  ];
+  const [currentSection, setCurrentSection] = useState<PreferenceSection>(
+    sections[0],
+  );
   const [collapsed, setCollapsed] = useState(false);
   const [view, setView] = useState<"parent" | "child">("parent");
+  const [formData, setFormData] = useState<PreferenceDialogFormData>({
+    displayDensity: "medium",
+    acceptTerms: false,
+    language: "English",
+    region: "United States",
+    publicHolidayCalendar: "selected-country",
+    firstDayOfWeek: "monday",
+    timeFormat: "24-hour",
+    measurementSystem: "metric",
+    stockNameDisplay: "fullNameTicker",
+    exchangeAndRegionDisplay: "both",
+    visibleMetrics: "lastPrice",
+    performanceChart: true,
+    position: "Top Right",
+    autoDismiss: false,
+    extendDisplayTime: false,
+  });
 
   const handleSectionChange = (section: string) => {
     setView("child");
-    setCurrentSection(section);
+    setCurrentSection(section as PreferenceSection);
+  };
+
+  const handleDropdownChange = (
+    field: keyof PreferenceDialogFormData,
+    value: string,
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSwitchChange = (
+    field: keyof PreferenceDialogFormData,
+    checked: boolean,
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: checked }));
+  };
+
+  const handleRadioChange = (
+    field: keyof PreferenceDialogFormData,
+    value: string,
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
@@ -1005,7 +1222,15 @@ export const PreferenceDialog = () => {
               onChange={handleSectionChange}
             />
           }
-          child={<PreferencesContent currentSection={currentSection} />}
+          child={
+            <PreferencesContent
+              currentSection={currentSection}
+              formData={formData}
+              onDropdownChange={handleDropdownChange}
+              onSwitchChange={handleSwitchChange}
+              onRadioChange={handleRadioChange}
+            />
+          }
         />
       </DialogContent>
       <DialogActions>

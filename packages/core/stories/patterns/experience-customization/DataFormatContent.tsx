@@ -114,7 +114,7 @@ export const DataFormatContent = ({
             name="performanceChart"
             checked={formData.performanceChart}
             onChange={handleCheckboxChange}
-            label={formData.performanceChart ? "On" : "Off"}
+            label={formData.performanceChart ? "Visible" : "Hidden"}
           />
         </FormField>
       </StackLayout>
