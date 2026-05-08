@@ -1,4 +1,3 @@
-import { makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -8,6 +7,8 @@ import {
   forwardRef,
   type MouseEvent,
 } from "react";
+import { useIcon } from "../semantic-icon-provider";
+import { makePrefixer } from "../utils";
 import ratingItemCss from "./RatingItem.css";
 
 const withBaseName = makePrefixer("saltRatingItem");
