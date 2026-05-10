@@ -2,30 +2,27 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type ReactNode,
+} from "react";
 import megaMenuCustomRegionCss from "./MegaMenuCustomRegion.css";
 
 const withBaseName = makePrefixer("saltMegaMenuCustomRegion");
 
 export interface MegaMenuCustomRegionProps
-  extends HTMLAttributes<HTMLDivElement> {
+  extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of the custom region.
    */
   children?: ReactNode;
-  /**
-   * Background style variant.
-   */
-  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export const MegaMenuCustomRegion = forwardRef<
   HTMLDivElement,
   MegaMenuCustomRegionProps
->(function MegaMenuCustomRegion(
-  { children, className, variant, ...rest },
-  ref,
-) {
+>(function MegaMenuCustomRegion({ className, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-mega-menu-custom-region",
@@ -35,16 +32,10 @@ export const MegaMenuCustomRegion = forwardRef<
 
   return (
     <div
-      className={clsx(
-        withBaseName(),
-        variant && withBaseName(variant),
-        className,
-      )}
+      className={clsx(withBaseName(), className)}
       data-mega-menu-column=""
       ref={ref}
       {...rest}
-    >
-      {children}
-    </div>
+    />
   );
 });

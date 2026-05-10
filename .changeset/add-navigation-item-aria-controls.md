@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": minor
+"@salt-ds/core": patch
 ---
 
-Added an `aria-controls` prop to NavigationItem to improve accessibility. The prop is now applied directly to the trigger element (for correct ARIA semantics) instead of the wrapper.
+Fixed `aria-controls` on `NavigationItem` being applied to the outer wrapper element instead of the interactive trigger element.

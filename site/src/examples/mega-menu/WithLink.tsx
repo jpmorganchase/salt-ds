@@ -44,24 +44,64 @@ export const WithLink = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Digital banking",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Risk management",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Risk management</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Patient management",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       Patient management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Telemedicine",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Compliance solutions",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       Compliance solutions
                     </MegaMenuItemContent>
@@ -69,7 +109,15 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "E-commerce platforms",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       E-commerce platforms
                     </MegaMenuItemContent>
@@ -77,15 +125,39 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Supply chain optimization",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       Supply chain optimization
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Quality control",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Production planning",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       Production planning
                     </MegaMenuItemContent>
@@ -93,12 +165,28 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Learning management systems",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       Learning management systems
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Virtual classrooms",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       Virtual classrooms
                     </MegaMenuItemContent>
@@ -106,15 +194,39 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Document management",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       Document management
                     </MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Citizen services",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Public safety solutions",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>
                       Public safety solutions
                     </MegaMenuItemContent>
@@ -163,64 +275,202 @@ export const WithLink = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Strategy",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Strategy</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log("[WithLink MegaMenu] selected value:", "IT");
+                    }}
+                  >
                     <MegaMenuItemContent>IT</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log("[WithLink MegaMenu] selected value:", "HR");
+                    }}
+                  >
                     <MegaMenuItemContent>HR</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Marketing",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Marketing</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Operations",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Operations</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Onboarding",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Migration",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Migration</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Customization",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Customization</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Training",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Training</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Support",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Testing",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Testing</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Rollout",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Rollout</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Online",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Online</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "In-person",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>In-person</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Workshops",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Workshops</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Certifications",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Certifications</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Tutorials",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Guides",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Guides</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
@@ -255,28 +505,84 @@ export const WithLink = (): ReactElement => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "User guides",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>User guides</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "API reference",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>API reference</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Release notes",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Release notes</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "FAQs",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>FAQs</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & help</MegaMenuHeader>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Contact support",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Contact support</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Community forum",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Community forum</MegaMenuItemContent>
                   </MegaMenuItem>
-                  <MegaMenuItem>
+                  <MegaMenuItem
+                    onClick={(event) => {
+                      event.preventDefault();
+                      console.log(
+                        "[WithLink MegaMenu] selected value:",
+                        "Troubleshooting",
+                      );
+                    }}
+                  >
                     <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
                   </MegaMenuItem>
                 </MegaMenuGroup>

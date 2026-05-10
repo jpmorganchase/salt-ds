@@ -55,6 +55,18 @@ nav > ol {
   flex: 0 0 auto;
 }
 
+.custom-region-primary {
+  background: var(--salt-container-primary-background);
+}
+
+.custom-region-secondary {
+  background: var(--salt-container-secondary-background);
+}
+
+.custom-region-tertiary {
+  background: var(--salt-container-tertiary-background);
+}
+
 .custom-region-right-description {
   max-inline-size: 240px;
 }
@@ -107,6 +119,15 @@ nav > ol {
   width: fit-content;
 }
 
+.link-footer-spacing-first-link {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  width: fit-content;
+}
+
+.link-footer-spacing-multi-link {
+  padding: 0 0 var(--salt-spacing-300) 0;
+  width: fit-content;
+}
 .small-viewport-container .saltMegaMenuSection {
   grid-template-columns: 1fr;
   max-inline-size: 100%;

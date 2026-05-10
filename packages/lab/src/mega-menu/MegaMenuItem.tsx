@@ -1,10 +1,11 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type AnchorHTMLAttributes,
+  type ComponentPropsWithoutRef,
   forwardRef,
-  type HTMLAttributes,
   type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
@@ -14,21 +15,26 @@ import { useMegaMenu } from "./useMegaMenu";
 
 const withBaseName = makePrefixer("saltMegaMenuItem");
 
-export interface MegaMenuItemProps extends HTMLAttributes<HTMLLIElement> {
+// biome-ignore lint/suspicious/noExplicitAny: We don't know the exact type here
+function ItemAction(props: ComponentPropsWithoutRef<any>) {
+  return renderProps("a", props);
+}
+
+export interface MegaMenuItemProps
+  extends AnchorHTMLAttributes<HTMLAnchorElement> {
   /**
    * The content of the mega menu item.
    */
   children?: ReactNode;
   /**
-   * Whether selecting this item closes the mega menu.
-   * @default true
+   * Href to be passed to the Link element.
    */
-  closeOnSelect?: boolean;
+  href?: string;
 }
 
 export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
   function MegaMenuItem(
-    { children, className, closeOnSelect = true, ...rest },
+    { children, className, href = "#", onClick, onKeyDown, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -40,36 +46,32 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
       window: targetWindow,
     });
 
-    const baseProps = {
-      className: clsx(withBaseName(), className),
-      tabIndex: 0,
-      "data-mega-menu-item": "",
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+      onClick?.(event);
+      megaMenu.setOpen(false);
     };
 
-    const handleClick = (event: MouseEvent<HTMLLIElement>) => {
-      rest.onClick?.(event);
-      if (closeOnSelect) {
-        megaMenu.setOpen(false);
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent<HTMLLIElement>) => {
-      rest.onKeyDown?.(event);
-      if (event.key === " " || event.key === "Enter") {
+    // Native `<a>` activates on Enter but not Space — handle Space here for parity.
+    const handleKeyDown = (event: KeyboardEvent<HTMLAnchorElement>) => {
+      onKeyDown?.(event);
+      if (!event.defaultPrevented && event.key === " ") {
         event.preventDefault();
         event.currentTarget.click();
       }
     };
 
     return (
-      <li
-        className={withBaseName()}
-        ref={ref}
-        {...rest}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
-      >
-        <a {...baseProps}>{children}</a>
+      <li className={withBaseName()} ref={ref}>
+        <ItemAction
+          className={clsx(withBaseName(), className)}
+          data-mega-menu-item=""
+          href={href}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          {...rest}
+        >
+          {children}
+        </ItemAction>
       </li>
     );
   },

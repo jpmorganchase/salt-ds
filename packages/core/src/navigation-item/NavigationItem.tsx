@@ -50,10 +50,6 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    * Href to be passed to the Link element.
    */
   href?: string;
-  /**
-   * ID of the element controlled by this navigation item.
-   */
-  "aria-controls"?: string;
 }
 
 const withBaseName = makePrefixer("saltNavigationItem");

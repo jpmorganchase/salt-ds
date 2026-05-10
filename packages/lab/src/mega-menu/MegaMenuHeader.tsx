@@ -1,13 +1,17 @@
-import { Divider, makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type ReactNode,
+} from "react";
 import megaMenuHeaderCss from "./MegaMenuHeader.css";
 
 const withBaseName = makePrefixer("saltMegaMenuHeader");
 
-export interface MegaMenuHeaderProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of the mega menu header.
    */
@@ -26,13 +30,10 @@ export const MegaMenuHeader = forwardRef<HTMLDivElement, MegaMenuHeaderProps>(
     return (
       <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
         <div className={clsx(withBaseName("content"))}>{children}</div>
-        <Divider variant="tertiary" aria-hidden />
       </div>
     );
   },
 );
-
-MegaMenuHeader.displayName = "MegaMenuHeader";
 
 /** @internal Marker used by MegaMenuGroup to identify header children. */
 (MegaMenuHeader as any).__isMegaMenuHeader = true;

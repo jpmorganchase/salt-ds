@@ -32,7 +32,8 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Digital banking",
@@ -42,7 +43,8 @@ export const InSmallViewport = (): ReactElement => {
                       <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Risk management",
@@ -55,7 +57,8 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Healthcare</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Patient management",
@@ -67,7 +70,8 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Telemedicine",
@@ -77,7 +81,8 @@ export const InSmallViewport = (): ReactElement => {
                       <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Compliance solutions",
@@ -92,7 +97,8 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Retail</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "E-commerce platforms",
@@ -107,7 +113,8 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Supply chain optimization",
@@ -119,7 +126,8 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Quality control",
@@ -129,7 +137,8 @@ export const InSmallViewport = (): ReactElement => {
                       <MegaMenuItemContent>Quality control</MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Production planning",
@@ -144,7 +153,8 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Education</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Learning management systems",
@@ -156,7 +166,8 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Virtual classrooms",
@@ -171,7 +182,8 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Government</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Document management",
@@ -183,7 +195,8 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Citizen services",
@@ -195,7 +208,8 @@ export const InSmallViewport = (): ReactElement => {
                       </MegaMenuItemContent>
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={() => {
+                      onClick={(event) => {
+                        event.preventDefault();
                         console.log(
                           "[InSmallViewport MegaMenu] selected value:",
                           "Public safety solutions",

@@ -7,13 +7,10 @@ import {
 } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
-import {
-  MegaMenuContext,
-  type MegaMenuCustomInteractions,
-} from "./MegaMenuContext";
+import { MegaMenuContext } from "./MegaMenuContext";
 import { useMegaMenuKeyboard } from "./useMegaMenuKeyboard";
 
-export interface MegaMenuProps extends MegaMenuCustomInteractions {
+export interface MegaMenuProps {
   /**
    * The content of the mega menu, typically `MegaMenuTrigger` and `MegaMenuPanel`.
    */
@@ -44,7 +41,6 @@ export function MegaMenu({
   defaultOpen = false,
   onOpenChange,
   placement = "bottom",
-  interactions,
 }: MegaMenuProps) {
   const [openState, setOpenState] = useControlled({
     controlled: open,
@@ -77,17 +73,11 @@ export function MegaMenu({
 
   const megaMenuKeyboard = useMegaMenuKeyboard(floatingRootContext);
 
-  const defaultInteractions = [
-    useClick(floatingRootContext, { toggle: true }),
-    useDismiss(floatingRootContext, { bubbles: true }),
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useClick(floatingRootContext),
+    useDismiss(floatingRootContext),
     megaMenuKeyboard,
-  ];
-
-  const { getReferenceProps, getFloatingProps } = useInteractions(
-    interactions
-      ? [...interactions(floatingRootContext), megaMenuKeyboard]
-      : defaultInteractions,
-  );
+  ]);
 
   const contextValue = useMemo(
     () => ({

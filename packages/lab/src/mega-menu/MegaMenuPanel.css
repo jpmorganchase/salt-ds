@@ -8,7 +8,7 @@
   overflow-y: auto;
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner);
-  border: var(--salt-size-fixed-100) solid var(--salt-container-primary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   background: var(--salt-container-primary-background);
   box-shadow: var(--salt-overlayable-shadow-popout);
 }

@@ -27,7 +27,7 @@ export interface MegaMenuPanelProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
-  function MegaMenuPanel({ children, className, ...rest }, ref) {
+  function MegaMenuPanel({ children, className, id: idProp, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-mega-menu-panel",
@@ -36,8 +36,6 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
     });
 
     const { Component: FloatingComponent } = useFloatingComponent();
-    const megaMenu = useMegaMenu();
-
     const {
       openState: isOpen,
       floatingRootContext,
@@ -46,9 +44,9 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       setFloating,
       focusFirstItemOnOpen,
       setPanelId,
-    } = megaMenu;
+    } = useMegaMenu();
 
-    const id = useId(rest.id);
+    const id = useId(idProp);
 
     // Register the panel id in context so the trigger can reference it via aria-controls.
     useEffect(() => {
@@ -75,14 +73,6 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
 
     const floatingProps = getFloatingProps();
 
-    // floating-ui adds aria-orientation for listbox-style widgets,
-    // but mega menus are not listboxes — strip it to avoid confusing AT.
-    const {
-      "aria-orientation": _ariaOrientation,
-      style: _style,
-      ...interactionProps
-    } = floatingProps;
-
     return (
       <FloatingComponent
         open={isOpen}
@@ -104,7 +94,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
           id={id}
           role="region"
           ref={ref}
-          {...interactionProps}
+          {...floatingProps}
           {...rest}
         >
           {children}

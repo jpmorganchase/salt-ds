@@ -62,6 +62,18 @@
   display: block;
 }
 
+.customRegionPrimary {
+  background: var(--salt-container-primary-background);
+}
+
+.customRegionSecondary {
+  background: var(--salt-container-secondary-background);
+}
+
+.customRegionTertiary {
+  background: var(--salt-container-tertiary-background);
+}
+
 .linkSection {
   padding-top: 0;
 }

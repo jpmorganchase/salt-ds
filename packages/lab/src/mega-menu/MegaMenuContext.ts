@@ -1,8 +1,4 @@
-import type {
-  ElementProps,
-  FloatingRootContext,
-  Placement,
-} from "@floating-ui/react";
+import type { FloatingRootContext, Placement } from "@floating-ui/react";
 import { createContext } from "@salt-ds/core";
 import type { Dispatch, HTMLProps, SetStateAction } from "react";
 
@@ -41,12 +37,3 @@ export const MegaMenuContext = createContext<MegaMenuContextValue | undefined>(
   "MegaMenuContext",
   undefined,
 );
-
-export interface MegaMenuCustomInteractions {
-  /**
-   * Override the default floating-ui interaction hooks.
-   * Receives the floating root context and should return an array of interaction props.
-   * When provided, replaces the default `useClick` and `useDismiss` interactions.
-   */
-  interactions?: (context: FloatingRootContext) => Array<ElementProps>;
-}

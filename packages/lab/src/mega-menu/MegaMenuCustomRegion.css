@@ -1,14 +1,3 @@
 .saltMegaMenuCustomRegion {
   padding: var(--salt-spacing-300);
 }
-.saltMegaMenuCustomRegion-primary {
-  background: var(--saltMegaMenuCustomRegion-background, var(--salt-container-primary-background));
-}
-
-.saltMegaMenuCustomRegion-secondary {
-  background: var(--saltMegaMenuCustomRegion-background, var(--salt-container-secondary-background));
-}
-
-.saltMegaMenuCustomRegion-tertiary {
-  background: var(--saltMegaMenuCustomRegion-background, var(--salt-container-tertiary-background));
-}
