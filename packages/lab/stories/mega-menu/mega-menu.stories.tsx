@@ -42,7 +42,7 @@ import {
 } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuCustomRegion,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
@@ -1931,7 +1931,7 @@ FullWidthContainer.parameters = {
   layout: "fullscreen",
 };
 
-export const WithCustomRegion: StoryFn = () => {
+export const WithContent: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
@@ -1942,7 +1942,7 @@ export const WithCustomRegion: StoryFn = () => {
       >
         <div className="custom-region-wrapper">
           <MegaMenuTrigger>
-            <Button>Custom Region on Right</Button>
+            <Button>Content on right</Button>
           </MegaMenuTrigger>
           <MegaMenuPanel className="custom-region-no-container-padding">
             <div className="custom-region-content">
@@ -2083,7 +2083,7 @@ export const WithCustomRegion: StoryFn = () => {
                 </Link>
               </MegaMenuGroup>
             </div>
-            <MegaMenuCustomRegion
+            <MegaMenuContent
               className="custom-region-tertiary"
               style={{ width: "fit-content" }}
             >
@@ -2114,7 +2114,7 @@ export const WithCustomRegion: StoryFn = () => {
                   </Link>
                 </StackLayout>
               </FlexLayout>
-            </MegaMenuCustomRegion>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </div>
       </MegaMenu>
@@ -2125,11 +2125,11 @@ export const WithCustomRegion: StoryFn = () => {
       >
         <div className="custom-region-wrapper">
           <MegaMenuTrigger>
-            <Button>Custom Region on Left</Button>
+            <Button>Content on left</Button>
           </MegaMenuTrigger>
 
           <MegaMenuPanel className="custom-region-no-container-padding">
-            <MegaMenuCustomRegion className="custom-region-secondary">
+            <MegaMenuContent className="custom-region-secondary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="example"
@@ -2157,7 +2157,7 @@ export const WithCustomRegion: StoryFn = () => {
                   </Link>
                 </StackLayout>
               </FlexLayout>
-            </MegaMenuCustomRegion>
+            </MegaMenuContent>
             <div className="custom-region-content">
               <MegaMenuSection>
                 <MegaMenuGroup>
@@ -2306,14 +2306,14 @@ export const WithCustomRegion: StoryFn = () => {
       >
         <div className="custom-region-wrapper">
           <MegaMenuTrigger>
-            <Button>Custom Region on Top</Button>
+            <Button>Content on top</Button>
           </MegaMenuTrigger>
 
           <MegaMenuPanel
             className="custom-region-no-container-padding"
             style={{ flexDirection: "column" }}
           >
-            <MegaMenuCustomRegion className="custom-region-primary">
+            <MegaMenuContent className="custom-region-primary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="example"
@@ -2341,7 +2341,7 @@ export const WithCustomRegion: StoryFn = () => {
                   </Link>
                 </StackLayout>
               </FlexLayout>
-            </MegaMenuCustomRegion>
+            </MegaMenuContent>
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
@@ -2483,7 +2483,7 @@ export const WithCustomRegion: StoryFn = () => {
       >
         <div className="custom-region-wrapper">
           <MegaMenuTrigger>
-            <Button>Custom Region on Bottom</Button>
+            <Button>Content on bottom</Button>
           </MegaMenuTrigger>
 
           <MegaMenuPanel
@@ -2621,7 +2621,7 @@ export const WithCustomRegion: StoryFn = () => {
                 View guidelines
               </Link>
             </MegaMenuGroup>
-            <MegaMenuCustomRegion className="custom-region-tertiary">
+            <MegaMenuContent className="custom-region-tertiary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="example"
@@ -2649,7 +2649,7 @@ export const WithCustomRegion: StoryFn = () => {
                   </Link>
                 </StackLayout>
               </FlexLayout>
-            </MegaMenuCustomRegion>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </div>
       </MegaMenu>

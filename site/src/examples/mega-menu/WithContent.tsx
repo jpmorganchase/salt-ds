@@ -2,7 +2,7 @@ import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuCustomRegion,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
@@ -17,7 +17,7 @@ import styles from "./index.module.css";
 const exampleImage = "/img/examples/image-skeleton.png";
 const exampleImage2 = "/img/examples/image-skeleton2.png";
 
-export const WithCustomRegion = (): ReactElement => {
+export const WithContent = (): ReactElement => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
@@ -28,7 +28,7 @@ export const WithCustomRegion = (): ReactElement => {
       >
         <div className={styles.customRegionWrapper}>
           <MegaMenuTrigger>
-            <Button>Custom Region on Right</Button>
+            <Button>Content on right</Button>
           </MegaMenuTrigger>
           <MegaMenuPanel className={styles.customRegionNoContainerPadding}>
             <div className={styles.customRegionContent}>
@@ -39,7 +39,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Digital banking",
                       );
                     }}
@@ -50,7 +50,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Risk management",
                       );
                     }}
@@ -64,7 +64,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Patient management",
                       );
                     }}
@@ -77,7 +77,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Telemedicine",
                       );
                     }}
@@ -88,7 +88,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Compliance solutions",
                       );
                     }}
@@ -104,7 +104,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "E-commerce platforms",
                       );
                     }}
@@ -120,7 +120,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Supply chain optimization",
                       );
                     }}
@@ -133,7 +133,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Quality control",
                       );
                     }}
@@ -144,7 +144,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Production planning",
                       );
                     }}
@@ -172,7 +172,7 @@ export const WithCustomRegion = (): ReactElement => {
                 </Link>
               </MegaMenuGroup>
             </div>
-            <MegaMenuCustomRegion
+            <MegaMenuContent
               className={styles.customRegionTertiary}
               style={{ width: "fit-content" }}
             >
@@ -203,7 +203,7 @@ export const WithCustomRegion = (): ReactElement => {
                   </Link>
                 </StackLayout>
               </FlexLayout>
-            </MegaMenuCustomRegion>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </div>
       </MegaMenu>
@@ -214,11 +214,11 @@ export const WithCustomRegion = (): ReactElement => {
       >
         <div className={styles.customRegionWrapper}>
           <MegaMenuTrigger>
-            <Button>Custom Region on Left</Button>
+            <Button>Content on left</Button>
           </MegaMenuTrigger>
 
           <MegaMenuPanel className={styles.customRegionNoContainerPadding}>
-            <MegaMenuCustomRegion className={styles.customRegionSecondary}>
+            <MegaMenuContent className={styles.customRegionSecondary}>
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
@@ -246,7 +246,7 @@ export const WithCustomRegion = (): ReactElement => {
                   </Link>
                 </StackLayout>
               </FlexLayout>
-            </MegaMenuCustomRegion>
+            </MegaMenuContent>
             <div className={styles.customRegionContent}>
               <MegaMenuSection>
                 <MegaMenuGroup>
@@ -255,7 +255,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Digital banking",
                       );
                     }}
@@ -266,7 +266,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Risk management",
                       );
                     }}
@@ -280,7 +280,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Patient management",
                       );
                     }}
@@ -293,7 +293,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Telemedicine",
                       );
                     }}
@@ -304,7 +304,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Compliance solutions",
                       );
                     }}
@@ -320,7 +320,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "E-commerce platforms",
                       );
                     }}
@@ -336,7 +336,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Supply chain optimization",
                       );
                     }}
@@ -349,7 +349,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Quality control",
                       );
                     }}
@@ -360,7 +360,7 @@ export const WithCustomRegion = (): ReactElement => {
                     onClick={(event) => {
                       event.preventDefault();
                       console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
+                        "[WithContent MegaMenu] selected value:",
                         "Production planning",
                       );
                     }}
@@ -398,14 +398,14 @@ export const WithCustomRegion = (): ReactElement => {
       >
         <div className={styles.customRegionWrapper}>
           <MegaMenuTrigger>
-            <Button>Custom Region on Top</Button>
+            <Button>Content on top</Button>
           </MegaMenuTrigger>
 
           <MegaMenuPanel
             className={styles.customRegionNoContainerPadding}
             style={{ flexDirection: "column" }}
           >
-            <MegaMenuCustomRegion className={styles.customRegionPrimary}>
+            <MegaMenuContent className={styles.customRegionPrimary}>
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
@@ -433,7 +433,7 @@ export const WithCustomRegion = (): ReactElement => {
                   </Link>
                 </StackLayout>
               </FlexLayout>
-            </MegaMenuCustomRegion>
+            </MegaMenuContent>
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
@@ -441,7 +441,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Digital banking",
                     );
                   }}
@@ -452,7 +452,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Risk management",
                     );
                   }}
@@ -466,7 +466,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Patient management",
                     );
                   }}
@@ -477,7 +477,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Telemedicine",
                     );
                   }}
@@ -488,7 +488,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Compliance solutions",
                     );
                   }}
@@ -504,7 +504,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "E-commerce platforms",
                     );
                   }}
@@ -520,7 +520,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Supply chain optimization",
                     );
                   }}
@@ -533,7 +533,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Quality control",
                     );
                   }}
@@ -544,7 +544,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Production planning",
                     );
                   }}
@@ -578,7 +578,7 @@ export const WithCustomRegion = (): ReactElement => {
       >
         <div className={styles.customRegionWrapper}>
           <MegaMenuTrigger>
-            <Button>Custom Region on Bottom</Button>
+            <Button>Content on bottom</Button>
           </MegaMenuTrigger>
 
           <MegaMenuPanel
@@ -592,7 +592,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Digital banking",
                     );
                   }}
@@ -603,7 +603,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Risk management",
                     );
                   }}
@@ -617,7 +617,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Patient management",
                     );
                   }}
@@ -628,7 +628,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Telemedicine",
                     );
                   }}
@@ -639,7 +639,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Compliance solutions",
                     );
                   }}
@@ -655,7 +655,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "E-commerce platforms",
                     );
                   }}
@@ -671,7 +671,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Supply chain optimization",
                     );
                   }}
@@ -684,7 +684,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Quality control",
                     );
                   }}
@@ -695,7 +695,7 @@ export const WithCustomRegion = (): ReactElement => {
                   onClick={(event) => {
                     event.preventDefault();
                     console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
+                      "[WithContent MegaMenu] selected value:",
                       "Production planning",
                     );
                   }}
@@ -719,7 +719,7 @@ export const WithCustomRegion = (): ReactElement => {
                 View guidelines
               </Link>
             </MegaMenuGroup>
-            <MegaMenuCustomRegion className={styles.customRegionTertiary}>
+            <MegaMenuContent className={styles.customRegionTertiary}>
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
@@ -747,7 +747,7 @@ export const WithCustomRegion = (): ReactElement => {
                   </Link>
                 </StackLayout>
               </FlexLayout>
-            </MegaMenuCustomRegion>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </div>
       </MegaMenu>

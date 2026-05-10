@@ -1,5 +1,5 @@
 export * from "./MegaMenu";
-export * from "./MegaMenuCustomRegion";
+export * from "./MegaMenuContent";
 export * from "./MegaMenuGroup";
 export * from "./MegaMenuHeader";
 export * from "./MegaMenuItem";
