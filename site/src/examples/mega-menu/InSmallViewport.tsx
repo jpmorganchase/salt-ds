@@ -1,5 +1,4 @@
-import { Button, StackLayout } from "@salt-ds/core";
-import { MenuIcon } from "@salt-ds/icons";
+import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
   MegaMenuGroup,
@@ -14,21 +13,35 @@ import { type ReactElement, useState } from "react";
 import styles from "./index.module.css";
 
 export const InSmallViewport = (): ReactElement => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+
+  const handleOpenChange = (menu: string) => (open: boolean) => {
+    setOpenMenu(open ? menu : null);
+    if (open) {
+      setActiveMenu(menu);
+    }
+  };
 
   return (
-    <div>
+    <div className={styles.smallViewportWrapper}>
       <nav>
         <StackLayout as="ol" direction="row" gap={1} className={styles.navList}>
           <li>
-            <MegaMenu open={isOpen} onOpenChange={setIsOpen}>
+            <MegaMenu
+              open={openMenu === "solutions"}
+              onOpenChange={handleOpenChange("solutions")}
+            >
               <MegaMenuTrigger>
-                <Button sentiment="neutral" appearance="solid">
-                  <MenuIcon />
-                </Button>
+                <NavigationItem active={activeMenu === "solutions"}>
+                  Solutions
+                </NavigationItem>
               </MegaMenuTrigger>
-              <MegaMenuPanel className={styles.smallViewportContainer}>
-                <MegaMenuSection className={styles.smallViewportSection}>
+              <MegaMenuPanel
+                className={styles.smallViewportContainer}
+                aria-label="Solutions menu"
+              >
+                <MegaMenuSection>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
@@ -219,6 +232,326 @@ export const InSmallViewport = (): ReactElement => {
                       <MegaMenuItemContent>
                         Public safety solutions
                       </MegaMenuItemContent>
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                </MegaMenuSection>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+          <li>
+            <MegaMenu
+              open={openMenu === "services"}
+              onOpenChange={handleOpenChange("services")}
+            >
+              <MegaMenuTrigger>
+                <NavigationItem active={activeMenu === "services"}>
+                  Services
+                </NavigationItem>
+              </MegaMenuTrigger>
+              <MegaMenuPanel
+                className={styles.smallViewportContainer}
+                aria-label="Services menu"
+              >
+                <MegaMenuSection>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Consulting</MegaMenuHeader>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Strategy",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "IT",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>IT</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "HR",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>HR</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Marketing",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Operations",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Implementation</MegaMenuHeader>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Onboarding",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Migration",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Customization",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Training",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Support",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Support</MegaMenuItemContent>
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Training</MegaMenuHeader>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Online",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Online</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "In-person",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Workshops",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Certifications",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                </MegaMenuSection>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+          <li>
+            <MegaMenu
+              open={openMenu === "resources"}
+              onOpenChange={handleOpenChange("resources")}
+            >
+              <MegaMenuTrigger>
+                <NavigationItem active={activeMenu === "resources"}>
+                  Resources
+                </NavigationItem>
+              </MegaMenuTrigger>
+              <MegaMenuPanel
+                className={styles.smallViewportContainer}
+                aria-label="Resources menu"
+              >
+                <MegaMenuSection>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Documentation</MegaMenuHeader>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "User guides",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "API reference",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Release notes",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "FAQs",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Support</MegaMenuHeader>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Contact support",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Community forum",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Troubleshooting",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                    </MegaMenuItem>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuHeader>Learn</MegaMenuHeader>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Tutorials",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Guides",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      onClick={(event) => {
+                        event.preventDefault();
+                        console.log(
+                          "[InSmallViewport MegaMenu] selected value:",
+                          "Best practices",
+                        );
+                      }}
+                    >
+                      <MegaMenuItemContent>Best practices</MegaMenuItemContent>
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>

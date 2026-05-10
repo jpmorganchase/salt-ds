@@ -17,9 +17,23 @@
 .customRegionWrapper {
   width: 100%;
 }
+.linkFooterSpacingFirstLinkStart {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  width: fit-content;
+}
 
+.linkFooterSpacingMultiLink {
+  padding: 0 0 var(--salt-spacing-300) 0;
+  width: fit-content;
+}
 .customRegionContent {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.customRegionContent > :last-child {
+  margin-top: auto;
 }
 
 .linkFooterSpacing {
@@ -31,21 +45,21 @@
   flex-direction: column;
 }
 
+.smallViewportWrapper {
+  inline-size: 320px;
+  max-inline-size: 100%;
+}
+
 .smallViewportContainer {
   --saltMegaMenuPanel-inlineSize: 320px;
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
-.smallViewportSection {
-  max-inline-size: 100%;
+.smallViewportContainer :global(.saltMegaMenuSection) {
   grid-template-columns: 1fr;
+  max-inline-size: 100%;
   width: 100%;
   box-sizing: border-box;
-}
-
-.smallViewportSection > * {
-  flex: initial;
-  inline-size: auto;
 }
 
 .customRegionNoContainerPadding {

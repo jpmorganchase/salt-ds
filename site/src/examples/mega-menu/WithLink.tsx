@@ -234,7 +234,9 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
               </MegaMenuSection>
               <FlexLayout wrap gap={3}>
-                <MegaMenuGroup className={styles.linkFooterSpacing}>
+                <MegaMenuGroup
+                  className={styles.linkFooterSpacingFirstLinkStart}
+                >
                   <Link
                     color="primary"
                     underline="default"
@@ -244,7 +246,7 @@ export const WithLink = (): ReactElement => {
                     Book a demo
                   </Link>
                 </MegaMenuGroup>
-                <MegaMenuGroup className="link-footer-spacing">
+                <MegaMenuGroup className={styles.linkFooterSpacingMultiLink}>
                   <Link
                     color="primary"
                     underline="default"

@@ -155,21 +155,22 @@ export const WithCustomRegion = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection className={styles.linkSection}>
-                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
-                        "Explore details",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Explore details</MegaMenuItemContent>
-                  </MegaMenuItem>
-                </ol>
-              </MegaMenuSection>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  View guidelines
+                </Link>
+              </MegaMenuGroup>
             </div>
             <MegaMenuCustomRegion
               className={styles.customRegionTertiary}
@@ -370,21 +371,22 @@ export const WithCustomRegion = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuSection className={styles.linkSection}>
-                <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithCustomRegion MegaMenu] selected value:",
-                        "Explore details",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Explore details</MegaMenuItemContent>
-                  </MegaMenuItem>
-                </ol>
-              </MegaMenuSection>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  View guidelines
+                </Link>
+              </MegaMenuGroup>
             </div>
           </MegaMenuPanel>
         </div>
@@ -551,21 +553,21 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <MegaMenuSection className={styles.linkSection}>
-              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
-                      "Explore details",
-                    );
-                  }}
-                >
-                  <MegaMenuItemContent>Explore details</MegaMenuItemContent>
-                </MegaMenuItem>
-              </ol>
-            </MegaMenuSection>
+            <MegaMenuGroup
+              style={{
+                padding: " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                width: "fit-content",
+              }}
+            >
+              <Link
+                color="primary"
+                underline="default"
+                href="#link"
+                IconComponent={ChevronRightIcon}
+              >
+                View guidelines
+              </Link>
+            </MegaMenuGroup>
           </MegaMenuPanel>
         </div>
       </MegaMenu>
@@ -702,21 +704,21 @@ export const WithCustomRegion = (): ReactElement => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <MegaMenuSection className={styles.linkSection}>
-              <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[WithCustomRegion MegaMenu] selected value:",
-                      "Explore details",
-                    );
-                  }}
-                >
-                  <MegaMenuItemContent>Explore details</MegaMenuItemContent>
-                </MegaMenuItem>
-              </ol>
-            </MegaMenuSection>
+            <MegaMenuGroup
+              style={{
+                padding: " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                width: "fit-content",
+              }}
+            >
+              <Link
+                color="primary"
+                underline="default"
+                href="#link"
+                IconComponent={ChevronRightIcon}
+              >
+                View guidelines
+              </Link>
+            </MegaMenuGroup>
             <MegaMenuCustomRegion className={styles.customRegionTertiary}>
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
