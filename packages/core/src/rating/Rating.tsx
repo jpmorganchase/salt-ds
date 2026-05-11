@@ -1,10 +1,3 @@
-import {
-  capitalize,
-  makePrefixer,
-  useControlled,
-  useFormFieldProps,
-  useId,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -15,6 +8,8 @@ import {
   type MouseEvent,
   useState,
 } from "react";
+import { useFormFieldProps } from "../form-field-context";
+import { capitalize, makePrefixer, useControlled, useId } from "../utils";
 import ratingCss from "./Rating.css";
 import { RatingItem } from "./RatingItem";
 

@@ -1,6 +1,5 @@
-import { SemanticIconProvider } from "@salt-ds/core";
+import { Rating, SemanticIconProvider } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
-import { Rating } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const CustomIcons = (): ReactElement => {
