@@ -72,10 +72,10 @@ export const NotificationsContent = ({
   const titleId = useId();
   return (
     <StackLayout>
-      <StackLayout gap={1}>
-        <Text styleAs="label" id={titleId}>
+      <FormField>
+        <FormFieldLabel id={titleId}>
           Choose a placement for notification
-        </Text>
+        </FormFieldLabel>
         <InteractableCardGroup
           aria-labelledby={titleId}
           value={formData.position}
@@ -104,7 +104,8 @@ export const NotificationsContent = ({
             ))}
           </FlexLayout>
         </InteractableCardGroup>
-      </StackLayout>
+      </FormField>
+
       <FormField>
         <FormFieldLabel>Automatically dismiss notifications</FormFieldLabel>
         <Switch

@@ -774,9 +774,7 @@ export const MandatoryConfigurations = () => {
           <StackLayout>
             {hasError && (
               <Banner status="error" id={bannerId}>
-                <BannerContent>
-                  A selection is required to proceed
-                </BannerContent>
+                <BannerContent>Choose an option.</BannerContent>
               </Banner>
             )}
             <StackLayout>
@@ -874,7 +872,7 @@ type PreferenceSection =
   | "Foundation"
   | "Regional"
   | "Data format"
-  | "Notification";
+  | "Notification delivery";
 
 interface PreferenceDialogFormData {
   displayDensity: string;
@@ -1089,7 +1087,7 @@ function PreferencesContent({
           </RadioButtonGroup>
         </FormField>
         <FormField>
-          <FormFieldLabel>Exchange & Region</FormFieldLabel>
+          <FormFieldLabel>Exchange and Region</FormFieldLabel>
           <RadioButtonGroup
             direction="horizontal"
             value={formData.exchangeAndRegionDisplay}
@@ -1130,7 +1128,7 @@ function PreferencesContent({
     );
   }
 
-  if (currentSection === "Notification") {
+  if (currentSection === "Notification delivery") {
     content = (
       <StackLayout gap={3}>
         <FormField>
@@ -1187,7 +1185,7 @@ export const PreferenceDialog = () => {
     "Foundation",
     "Regional",
     "Data format",
-    "Notification",
+    "Notification delivery",
   ];
   const [currentSection, setCurrentSection] = useState<PreferenceSection>(
     sections[0],

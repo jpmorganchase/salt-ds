@@ -6,6 +6,7 @@ import {
   FlexLayout,
   FormField,
   FormFieldHelperText,
+  FormFieldLabel,
   InteractableCard,
   InteractableCardGroup,
   Link,
@@ -93,10 +94,8 @@ export const FoundationContent = ({
       )}
 
       <FlexItem>
-        <StackLayout gap={1}>
-          <Text styleAs="label" id={densityId}>
-            Choose a density
-          </Text>
+        <FormField>
+          <FormFieldLabel id={densityId}>Choose a density</FormFieldLabel>
           <InteractableCardGroup
             aria-labelledby={densityId}
             value={formData.displayDensity}
@@ -143,7 +142,7 @@ export const FoundationContent = ({
               ))}
             </FlexLayout>
           </InteractableCardGroup>
-        </StackLayout>
+        </FormField>
       </FlexItem>
 
       {formData.displayDensity === "high" && (
