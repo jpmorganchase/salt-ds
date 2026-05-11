@@ -55,8 +55,19 @@ nav > ol {
 }
 
 .max-width-content-panel {
-  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
+  /* Stretch edge-to-edge: floating-ui positions the panel at
+     `left: var(--salt-layout-page-margin)`, so pull it back by that
+     same amount and force the width to the full viewport. */
+  --saltMegaMenuPanel-inlineSize: 100vw;
+  --saltMegaMenuPanel-maxInlineSize: 100vw;
+  margin-inline-start: calc(-1 * var(--salt-layout-page-margin));
   box-sizing: border-box;
+}
+
+/* Prevent the wider-than-available panel from creating horizontal
+   scroll on the page. Scoped to stories using the full-width wrapper. */
+.full-width-wrapper {
+  overflow-x: clip;
 }
 
 .max-width-content-panel .saltMegaMenuSection {
