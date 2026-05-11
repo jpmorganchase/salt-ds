@@ -155,22 +155,36 @@ export const WithContent = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
-              >
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
+
+              <FlexLayout gap={3}>
+                <MegaMenuGroup
+                  style={{
+                    padding:
+                      " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                    width: "fit-content",
+                  }}
                 >
-                  View guidelines
-                </Link>
-              </MegaMenuGroup>
+                  {" "}
+                  <Link
+                    color="primary"
+                    underline="default"
+                    href="#link"
+                    IconComponent={ChevronRightIcon}
+                  >
+                    Book a demo
+                  </Link>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <Link
+                    color="primary"
+                    underline="default"
+                    href="#link"
+                    IconComponent={ChevronRightIcon}
+                  >
+                    Support center
+                  </Link>
+                </MegaMenuGroup>
+              </FlexLayout>
             </div>
             <MegaMenuContent
               className={styles.customRegionTertiary}
@@ -199,7 +213,7 @@ export const WithContent = (): ReactElement => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View guidelines
+                    Link
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -242,7 +256,7 @@ export const WithContent = (): ReactElement => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View guidelines
+                    Link
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -371,22 +385,34 @@ export const WithContent = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
-              >
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
+              <FlexLayout gap={3}>
+                <MegaMenuGroup
+                  style={{
+                    padding:
+                      " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                    width: "fit-content",
+                  }}
                 >
-                  View guidelines
-                </Link>
-              </MegaMenuGroup>
+                  <Link
+                    color="primary"
+                    underline="default"
+                    href="#link"
+                    IconComponent={ChevronRightIcon}
+                  >
+                    Book a demo
+                  </Link>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <Link
+                    color="primary"
+                    underline="default"
+                    href="#link"
+                    IconComponent={ChevronRightIcon}
+                  >
+                    Support center
+                  </Link>
+                </MegaMenuGroup>
+              </FlexLayout>
             </div>
           </MegaMenuPanel>
         </div>
@@ -429,7 +455,7 @@ export const WithContent = (): ReactElement => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View guidelines
+                    Link
                   </Link>
                 </StackLayout>
               </FlexLayout>
@@ -553,21 +579,34 @@ export const WithContent = (): ReactElement => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <MegaMenuGroup
-              style={{
-                padding: " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                width: "fit-content",
-              }}
-            >
-              <Link
-                color="primary"
-                underline="default"
-                href="#link"
-                IconComponent={ChevronRightIcon}
+            <FlexLayout gap={3}>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
               >
-                View guidelines
-              </Link>
-            </MegaMenuGroup>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Book a demo
+                </Link>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Support center
+                </Link>
+              </MegaMenuGroup>
+            </FlexLayout>
           </MegaMenuPanel>
         </div>
       </MegaMenu>
@@ -704,21 +743,34 @@ export const WithContent = (): ReactElement => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
-            <MegaMenuGroup
-              style={{
-                padding: " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                width: "fit-content",
-              }}
-            >
-              <Link
-                color="primary"
-                underline="default"
-                href="#link"
-                IconComponent={ChevronRightIcon}
+            <FlexLayout gap={3}>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
               >
-                View guidelines
-              </Link>
-            </MegaMenuGroup>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Book a demo
+                </Link>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Support center
+                </Link>
+              </MegaMenuGroup>
+            </FlexLayout>
             <MegaMenuContent className={styles.customRegionTertiary}>
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
@@ -743,7 +795,7 @@ export const WithContent = (): ReactElement => {
                     href="#link"
                     IconComponent={ChevronRightIcon}
                   >
-                    View guidelines
+                    link
                   </Link>
                 </StackLayout>
               </FlexLayout>
