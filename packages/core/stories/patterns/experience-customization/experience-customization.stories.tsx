@@ -31,6 +31,7 @@ import {
   Stepper,
   Switch,
   Text,
+  useId,
   useResponsiveProp,
   VerticalNavigation,
   VerticalNavigationItem,
@@ -114,12 +115,12 @@ const wizardSteps = [
   { id: "regional", label: "Regional settings", stepTitle: "Regional" },
   {
     id: "dataFormat",
-    label: "Data format ",
+    label: "Data format",
     stepTitle: "Data format",
   },
   {
     id: "notifications",
-    label: "Notification and settings",
+    label: "Notification",
     stepTitle: "Notifications",
   },
 ] as const;
@@ -218,7 +219,79 @@ const stepValidationSchemas: Record<
   }),
 };
 
-const MultiStepTemplate = () => {
+export const StandardControls = () => {
+  const [formData, setFormData] = useState<ECFormData>({ ...initialFormData });
+
+  const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSelectChange = (value: string, name: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  return (
+    <RegionalSettingsContent
+      formData={formData}
+      handleRadioChange={handleRadioChange}
+      handleSelectChange={handleSelectChange}
+      stepFieldValidation={{}}
+      style={{
+        maxWidth: 330,
+      }}
+    />
+  );
+};
+
+export const CardSelection = () => {
+  const [formData, setFormData] = useState<ECFormData>({ ...initialFormData });
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: checked }));
+  };
+
+  const handleSelectChange = (value: string, name: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  return (
+    <NotificationsContent
+      formData={formData}
+      handleCheckboxChange={handleCheckboxChange}
+      handleSelectChange={handleSelectChange}
+      stepFieldValidation={{}}
+    />
+  );
+};
+
+export const DynamicPreview = () => {
+  const [formData, setFormData] = useState<ECFormData>({ ...initialFormData });
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: checked }));
+  };
+
+  const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  return (
+    <div style={{ maxWidth: 752 }}>
+      <DataFormatContent
+        formData={formData}
+        handleRadioChange={handleRadioChange}
+        handleCheckboxChange={handleCheckboxChange}
+        stepFieldValidation={{}}
+      />
+    </div>
+  );
+};
+
+export const EndToEnd = () => {
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
 
@@ -242,7 +315,7 @@ const MultiStepTemplate = () => {
   } = useWizardForm({
     steps: stepIds,
     initialState: {
-      activeStepIndex: 3,
+      activeStepIndex: 0,
       formData: initialFormData,
       validationsByStep: {},
     },
@@ -286,7 +359,12 @@ const MultiStepTemplate = () => {
 
   const contentByStep: Record<string, ReactElement> = {
     foundation: <FoundationContent {...sharedFormProps} />,
-    regional: <RegionalSettingsContent {...sharedFormProps} />,
+    regional: (
+      <RegionalSettingsContent
+        {...sharedFormProps}
+        style={{ maxWidth: "50%" }}
+      />
+    ),
     dataFormat: <DataFormatContent {...sharedFormProps} />,
     notifications: <NotificationsContent {...sharedFormProps} />,
   };
@@ -392,88 +470,14 @@ const MultiStepTemplate = () => {
   );
 };
 
-export const StandardControls = () => {
-  const [formData, setFormData] = useState<ECFormData>({ ...initialFormData });
-
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: checked }));
-  };
-
-  const handleSelectChange = (value: string, name: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  return (
-    <RegionalSettingsContent
-      formData={formData}
-      handleCheckboxChange={handleCheckboxChange}
-      handleSelectChange={handleSelectChange}
-      stepFieldValidation={{}}
-      style={{
-        maxWidth: 636,
-      }}
-    />
-  );
-};
-
-export const CardSelection = () => {
-  const [formData, setFormData] = useState<ECFormData>({ ...initialFormData });
-
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: checked }));
-  };
-
-  const handleSelectChange = (value: string, name: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  return (
-    <NotificationsContent
-      formData={formData}
-      handleCheckboxChange={handleCheckboxChange}
-      handleSelectChange={handleSelectChange}
-      stepFieldValidation={{}}
-    />
-  );
-};
-
-export const DynamicPreview = () => {
-  const [formData, setFormData] = useState<ECFormData>({ ...initialFormData });
-
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: checked }));
-  };
-
-  const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  return (
-    <div style={{ maxWidth: 752 }}>
-      <DataFormatContent
-        formData={formData}
-        handleRadioChange={handleRadioChange}
-        handleCheckboxChange={handleCheckboxChange}
-        stepFieldValidation={{}}
-      />
-    </div>
-  );
-};
-
-export const EndToEnd = {
-  render: () => <MultiStepTemplate />,
-};
-
 export const EndToEndModal = () => {
   type WizardState = "form" | "cancel-warning";
   const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatedRef = useRef(false);
+
+  const warningTitleId = useId();
 
   const {
     state: { activeStepIndex, formData, validationsByStep },
@@ -627,7 +631,14 @@ export const EndToEndModal = () => {
   return (
     <>
       <Button onClick={openWizard}>Open experience customization</Button>
-      <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        style={{ height: 588 }}
+        aria-labelledby={
+          wizardState === "cancel-warning" ? warningTitleId : undefined
+        }
+      >
         {wizardState === "cancel-warning" ? (
           <>
             <DialogContent>
@@ -644,7 +655,9 @@ export const EndToEndModal = () => {
                           "var(--salt-status-warning-foreground-decorative)",
                       }}
                     />
-                    <Text styleAs="h2">Are you sure you want to cancel?</Text>
+                    <Text styleAs="h2" id={warningTitleId}>
+                      Are you sure you want to cancel?
+                    </Text>
                     <Text>
                       Any changes you've made will be lost after you confirm
                       cancelling.
@@ -716,13 +729,13 @@ export const MandatoryConfigurations = () => {
     {
       value: "standard",
       title: "Standard",
-      description: "Business-recommended. Standard access logging.",
+      description: "Business-recommended. Standard access logging is enabled. ",
       Icon: BuildingIcon,
     },
     {
       value: "restricted",
-      title: "Credit Card",
-      description: "High compliance, Full data logging and MFA required.",
+      title: "Restricted",
+      description: "High compliance. Full data logging and MFA are required.",
       Icon: LockedIcon,
     },
     {
@@ -733,15 +746,16 @@ export const MandatoryConfigurations = () => {
     },
   ];
 
+  const bannerId = useId();
+
   return (
     <StackLayout gap={0} style={{ maxWidth: 730 }}>
       <StackLayout padding={3}>
         <Text>
           Customize your experience
           <Text as="h2" style={{ margin: 0 }}>
-            Set governance & privacy standards
+            Choose data access level
           </Text>
-          A selection is required to proceed
         </Text>
       </StackLayout>
 
@@ -749,7 +763,7 @@ export const MandatoryConfigurations = () => {
         <ContentOverflow style={{ minHeight: 300 }}>
           <StackLayout>
             {hasError && (
-              <Banner status="error">
+              <Banner status="error" id={bannerId}>
                 <BannerContent>
                   A selection is required to proceed
                 </BannerContent>
@@ -768,11 +782,14 @@ export const MandatoryConfigurations = () => {
                       key={value}
                       value={value}
                       style={{ width: "180px" }}
+                      aria-describedby={hasError ? bannerId : undefined}
                     >
                       <StackLayout gap={1}>
                         <StackLayout gap={1} direction="row" align="center">
-                          <Icon aria-hidden size={1} />
-                          <Text style={{ margin: 0 }}>{title}</Text>
+                          <Icon aria-hidden size={2} />
+                          <Text style={{ margin: 0 }}>
+                            <strong>{title}</strong>
+                          </Text>
                         </StackLayout>
                         <StackLayout direction="row" gap={1}>
                           <RadioButtonIcon
@@ -893,7 +910,11 @@ function PreferencesContent({
           <Banner status="warning">
             <BannerContent>
               High density doesn't meet the{" "}
-              <Link href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">
+              <Link
+                href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+                target="_blank"
+                rel="noopener"
+              >
                 WCAG-defined minimum target size
               </Link>
               , which may reduce readability and make interactions harder.
@@ -995,7 +1016,7 @@ function PreferencesContent({
               onDropdownChange("publicHolidayCalendar", value[0])
             }
           >
-            <Option value="None">None (don’t apply public holidays)</Option>
+            <Option value="None">None (don't apply public holidays)</Option>
             <Option value="Selected country">Selected country</Option>
             <Option value="United States (Federal)">
               United States (Federal)
@@ -1012,6 +1033,7 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>First day of the week</FormFieldLabel>
           <RadioButtonGroup
+            direction="horizontal"
             value={formData.firstDayOfWeek}
             onChange={(event) =>
               onRadioChange("firstDayOfWeek", event.target.value)
@@ -1025,6 +1047,7 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>Time format</FormFieldLabel>
           <RadioButtonGroup
+            direction="horizontal"
             value={formData.timeFormat}
             onChange={(event) =>
               onRadioChange("timeFormat", event.target.value)
@@ -1037,6 +1060,7 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>Measurement system</FormFieldLabel>
           <RadioButtonGroup
+            direction="horizontal"
             value={formData.measurementSystem}
             onChange={(event) =>
               onRadioChange("measurementSystem", event.target.value)
@@ -1056,6 +1080,7 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>Stock name display</FormFieldLabel>
           <RadioButtonGroup
+            direction="horizontal"
             value={formData.stockNameDisplay}
             onChange={(event) =>
               onRadioChange("stockNameDisplay", event.target.value)
@@ -1068,6 +1093,7 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>Exchange & Region</FormFieldLabel>
           <RadioButtonGroup
+            direction="horizontal"
             value={formData.exchangeAndRegionDisplay}
             onChange={(event) =>
               onRadioChange("exchangeAndRegionDisplay", event.target.value)
@@ -1081,6 +1107,7 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>Visible metrics</FormFieldLabel>
           <RadioButtonGroup
+            direction="horizontal"
             value={formData.visibleMetrics}
             onChange={(event) =>
               onRadioChange("visibleMetrics", event.target.value)
@@ -1109,35 +1136,38 @@ function PreferencesContent({
     content = (
       <StackLayout gap={3}>
         <FormField>
-          <FormFieldLabel>Notification position</FormFieldLabel>
+          <FormFieldLabel>Choose a placement for notification</FormFieldLabel>
           <RadioButtonGroup
+            direction="horizontal"
             value={formData.position}
             onChange={(event) => onRadioChange("position", event.target.value)}
           >
-            <RadioButton label="Top Left" value="Top Left" />
-            <RadioButton label="Top Right" value="Top Right" />
-            <RadioButton label="Bottom Left" value="Bottom Left" />
-            <RadioButton label="Bottom Right" value="Bottom Right" />
+            <RadioButton label="Top left" value="Top left" />
+            <RadioButton label="Top right" value="Top right" />
+            <RadioButton label="Bottom left" value="Bottom left" />
+            <RadioButton label="Bottom right" value="Bottom right" />
           </RadioButtonGroup>
         </FormField>
         <FormField>
           <FormFieldLabel>Automatically dismiss notifications</FormFieldLabel>
           <Switch
+            label={formData.autoDismiss ? "On" : "Off"}
+            name="autoDismiss"
             checked={formData.autoDismiss}
             onChange={(event) =>
               onSwitchChange("autoDismiss", event.target.checked)
             }
-            label={formData.autoDismiss ? "On" : "Off"}
           />
         </FormField>
         <FormField>
           <FormFieldLabel>Extend notification display time</FormFieldLabel>
           <Switch
+            label={formData.extendDisplayTime ? "On" : "Off"}
+            name="extendDisplayTime"
             checked={formData.extendDisplayTime}
             onChange={(event) =>
               onSwitchChange("extendDisplayTime", event.target.checked)
             }
-            label={formData.extendDisplayTime ? "On" : "Off"}
           />
         </FormField>
       </StackLayout>
@@ -1164,6 +1194,7 @@ export const PreferenceDialog = () => {
   const [currentSection, setCurrentSection] = useState<PreferenceSection>(
     sections[0],
   );
+  const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [view, setView] = useState<"parent" | "child">("parent");
   const [formData, setFormData] = useState<PreferenceDialogFormData>({
@@ -1171,7 +1202,7 @@ export const PreferenceDialog = () => {
     acceptTerms: false,
     language: "English",
     region: "United States",
-    publicHolidayCalendar: "selected-country",
+    publicHolidayCalendar: "Selected country",
     firstDayOfWeek: "monday",
     timeFormat: "24-hour",
     measurementSystem: "metric",
@@ -1179,7 +1210,7 @@ export const PreferenceDialog = () => {
     exchangeAndRegionDisplay: "both",
     visibleMetrics: "lastPrice",
     performanceChart: true,
-    position: "Top Right",
+    position: "Top right",
     autoDismiss: false,
     extendDisplayTime: false,
   });
@@ -1211,56 +1242,67 @@ export const PreferenceDialog = () => {
   };
 
   return (
-    <Dialog style={{ minHeight: "60%" }} open>
-      <DialogHeader header="Preferences" />
-      <DialogContent>
-        <ParentChildLayout
-          gap={3}
-          onCollapseChange={(newCollapsed) => setCollapsed(newCollapsed)}
-          visibleView={view}
-          parent={
-            <PreferencesNavigation
-              items={sections}
-              location={currentSection}
-              onChange={handleSectionChange}
-            />
-          }
-          child={
-            <PreferencesContent
-              currentSection={currentSection}
-              formData={formData}
-              onDropdownChange={handleDropdownChange}
-              onSwitchChange={handleSwitchChange}
-              onRadioChange={handleRadioChange}
-            />
-          }
-        />
-      </DialogContent>
-      <DialogActions>
-        <SplitLayout
-          startItem={
-            collapsed && view === "child" ? (
-              <Button
-                sentiment="accented"
-                appearance="transparent"
-                onClick={() => setView("parent")}
-              >
-                Back
-              </Button>
-            ) : undefined
-          }
-          endItem={
-            <StackLayout direction="row" gap={1}>
-              <Button sentiment="accented" appearance="bordered">
-                Cancel
-              </Button>
-              <Button sentiment="accented" appearance="solid">
-                Save
-              </Button>
-            </StackLayout>
-          }
-        />
-      </DialogActions>
-    </Dialog>
+    <>
+      <Button onClick={() => setOpen(true)}>Open preferences dialog</Button>
+      <Dialog style={{ minHeight: "60%" }} open={open}>
+        <DialogHeader header="Preferences" />
+        <DialogContent>
+          <ParentChildLayout
+            gap={3}
+            onCollapseChange={(newCollapsed) => setCollapsed(newCollapsed)}
+            visibleView={view}
+            parent={
+              <PreferencesNavigation
+                items={sections}
+                location={currentSection}
+                onChange={handleSectionChange}
+              />
+            }
+            child={
+              <PreferencesContent
+                currentSection={currentSection}
+                formData={formData}
+                onDropdownChange={handleDropdownChange}
+                onSwitchChange={handleSwitchChange}
+                onRadioChange={handleRadioChange}
+              />
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          <SplitLayout
+            startItem={
+              collapsed && view === "child" ? (
+                <Button
+                  sentiment="accented"
+                  appearance="transparent"
+                  onClick={() => setView("parent")}
+                >
+                  Back
+                </Button>
+              ) : undefined
+            }
+            endItem={
+              <StackLayout direction="row" gap={1}>
+                <Button
+                  sentiment="accented"
+                  appearance="bordered"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  sentiment="accented"
+                  appearance="solid"
+                  onClick={() => setOpen(false)}
+                >
+                  Save
+                </Button>
+              </StackLayout>
+            }
+          />
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };

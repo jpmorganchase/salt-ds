@@ -15,6 +15,7 @@ import {
   useId,
   useTheme,
 } from "@salt-ds/core";
+import { useEffect, useRef } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
 import HighDensityTableDark from "./img/table-high-dark.png";
@@ -55,14 +56,26 @@ export const FoundationContent = ({
 }: FormContentProps) => {
   const { mode } = useTheme();
   const densityId = useId();
+  const bannerId = useId();
+  const requiredDisclaimerField = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (stepFieldValidation.acceptTerms?.status) {
+      requiredDisclaimerField.current?.scrollIntoView();
+    }
+  }, [stepFieldValidation.acceptTerms?.status]);
 
   return (
     <StackLayout aria-live="polite">
       {formData.displayDensity === "high" && (
-        <Banner status="warning">
+        <Banner status="warning" id={bannerId}>
           <BannerContent>
             High density doesn't meet the{" "}
-            <Link href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">
+            <Link
+              href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+              target="_blank"
+              rel="noopener"
+            >
               WCAG-defined minimum target size
             </Link>
             , which may reduce readability and make interactions harder.
@@ -76,6 +89,9 @@ export const FoundationContent = ({
             Choose a density
           </Text>
           <InteractableCardGroup
+            aria-describedby={
+              formData.displayDensity === "high" ? bannerId : undefined
+            }
             aria-labelledby={densityId}
             value={formData.displayDensity}
             onChange={(_event, value) => {
@@ -119,6 +135,7 @@ export const FoundationContent = ({
         <FormField
           necessity="required"
           validationStatus={stepFieldValidation.acceptTerms?.status}
+          ref={requiredDisclaimerField}
         >
           <Checkbox
             name="acceptTerms"

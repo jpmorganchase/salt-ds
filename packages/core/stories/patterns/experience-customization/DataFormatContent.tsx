@@ -180,7 +180,7 @@ export const DataFormatContent = ({
                       }
                       alt={stock.trendAlt}
                       style={{ width: "100%" }}
-                      height="64px"
+                      height={64}
                     />
                   )}
                 </StackLayout>

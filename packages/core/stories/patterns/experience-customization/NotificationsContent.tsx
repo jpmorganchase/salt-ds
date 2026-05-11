@@ -9,6 +9,7 @@ import {
   StackLayout,
   Switch,
   Text,
+  useId,
 } from "@salt-ds/core";
 import type { CSSProperties } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
@@ -16,19 +17,19 @@ import type { FormContentProps } from "./experience-customization.stories";
 export const NOTIFICATION_POSITIONS = [
   {
     value: "top-left",
-    label: "Top Left",
+    label: "Top left",
   },
   {
     value: "top-right",
-    label: "Top Right",
+    label: "Top right",
   },
   {
     value: "bottom-left",
-    label: "Bottom Left",
+    label: "Bottom left",
   },
   {
     value: "bottom-right",
-    label: "Bottom Right",
+    label: "Bottom right",
   },
 ];
 
@@ -68,9 +69,14 @@ export const NotificationsContent = ({
   handleSelectChange,
   handleCheckboxChange,
 }: FormContentProps) => {
+  const titleId = useId();
   return (
-    <StackLayout>
+    <StackLayout gap={1}>
+      <Text styleAs="label" id={titleId}>
+        Choose a placement for notification
+      </Text>
       <InteractableCardGroup
+        aria-labelledby={titleId}
         onChange={(_event, value) => {
           handleSelectChange?.(value as string, "position");
         }}
