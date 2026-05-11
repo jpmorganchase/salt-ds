@@ -3023,7 +3023,7 @@ export const WithContent: StoryFn = () => {
           <MegaMenuTrigger>
             <Button>Content on right</Button>
           </MegaMenuTrigger>
-          <MegaMenuPanel className="custom-region-no-container-padding">
+          <MegaMenuPanel className="custom-region-no-container-padding custom-region-side">
             <div className="custom-region-content">
               <MegaMenuSection>
                 <MegaMenuGroup>
@@ -3162,10 +3162,7 @@ export const WithContent: StoryFn = () => {
                 </Link>
               </MegaMenuGroup>
             </div>
-            <MegaMenuContent
-              className="custom-region-tertiary"
-              style={{ width: "fit-content" }}
-            >
+            <MegaMenuContent className="custom-region-tertiary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="example"
@@ -3207,7 +3204,7 @@ export const WithContent: StoryFn = () => {
             <Button>Content on left</Button>
           </MegaMenuTrigger>
 
-          <MegaMenuPanel className="custom-region-no-container-padding">
+          <MegaMenuPanel className="custom-region-no-container-padding custom-region-side">
             <MegaMenuContent className="custom-region-secondary">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
@@ -3389,7 +3386,7 @@ export const WithContent: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel
-            className="custom-region-no-container-padding"
+            className="custom-region-no-container-padding custom-region-stack"
             style={{ flexDirection: "column" }}
           >
             <MegaMenuContent className="custom-region-primary">
@@ -3566,7 +3563,7 @@ export const WithContent: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel
-            className="custom-region-no-container-padding"
+            className="custom-region-no-container-padding custom-region-stack"
             style={{ flexDirection: "column" }}
           >
             <MegaMenuSection>

@@ -120,6 +120,82 @@ nav > ol {
   display: block;
 }
 
+.custom-region-side .saltMegaMenuContent {
+  flex: 0 0 258px;
+  inline-size: 258px;
+  box-sizing: border-box;
+}
+
+.custom-region-side .custom-region-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* When the side region wraps below the menu, pin the panel to 320px */
+@media (max-width: 1200px) {
+  .custom-region-side {
+    --saltMegaMenuPanel-inlineSize: 320px;
+    --saltMegaMenuPanel-maxInlineSize: 320px;
+  }
+
+  .custom-region-side .saltMegaMenuContent {
+    flex: 0 0 auto;
+    inline-size: 100%;
+    padding-inline: var(--salt-spacing-300);
+  }
+
+  .custom-region-side .saltMegaMenuSection {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-region-side .saltMegaMenuItem {
+    inline-size: 100%;
+  }
+}
+
+/* Top / bottom variants: panel width is driven by the menu section
+   (the area containing the menu groups), but capped to the available
+   viewport width so the panel stays responsive on smaller screens.
+   The custom region (image + description) stretches to fill that width.
+   The panel itself never wraps, so the section and the custom region
+   are always stacked; responsiveness happens *inside* the section,
+   where menu groups wrap via the auto-fit grid. */
+.custom-region-stack {
+  --saltMegaMenuPanel-inlineSize: min(max-content, var(--saltMegaMenuPanel-availableWidth, 100vw));
+  --saltMegaMenuPanel-maxInlineSize: var(--saltMegaMenuPanel-availableWidth, 100vw);
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.custom-region-stack .saltMegaMenuContent {
+  flex: 0 0 auto;
+  inline-size: auto;
+  align-self: stretch;
+  box-sizing: border-box;
+}
+
+.custom-region-stack .saltMegaMenuContent .saltFlexLayout {
+  flex-wrap: nowrap;
+  min-block-size: 0;
+}
+
+.custom-region-stack .saltMegaMenuSection {
+  flex: 0 0 auto;
+  inline-size: 100%;
+  box-sizing: border-box;
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
+.custom-region-stack .custom-region-image {
+  width: 100%;
+  height: auto;
+  max-block-size: 240px;
+  object-fit: cover;
+  display: block;
+}
+
 .menu-item-adornment {
   margin-inline-start: auto;
   display: flex;
