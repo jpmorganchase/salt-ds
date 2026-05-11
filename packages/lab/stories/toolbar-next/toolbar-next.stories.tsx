@@ -18,6 +18,8 @@ import {
   DatePickerTrigger,
 } from "@salt-ds/date-components";
 import {
+  AddIcon,
+  CalendarIcon,
   ExportIcon,
   FilterIcon,
   GridIcon,
@@ -27,6 +29,7 @@ import {
 } from "@salt-ds/icons";
 import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import { useState } from "react";
 
 export default {
   title: "Lab/Toolbar Next",
@@ -35,6 +38,7 @@ export default {
     "FlatAlignSugar",
     "RegionFirst",
     "MixedFormControls",
+    "DynamicElements",
     "CenteredNamedOverflow",
     "Variants",
     "Transparent",
@@ -131,14 +135,19 @@ const clippingValidationNoteStyle = {
 export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Flat toolbar">
     <TooltrayNext>
-      <Dropdown bordered defaultSelected={["Option A"]}>
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
     </TooltrayNext>
     <TooltrayNext role="group" aria-label="Search and filter">
-      <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+      <Input
+        bordered
+        startAdornment={<SearchIcon />}
+        placeholder="Search"
+        style={{ width: 180 }}
+      />
     </TooltrayNext>
     <TooltrayNext role="group" align="end" aria-label="Actions">
       <Button appearance="transparent" aria-label="Grid view">
@@ -170,8 +179,13 @@ FlatAlignSugar.globals = {
 export const FlatWithDividers: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with dividers">
     <TooltrayNext role="group" aria-label="Search and filter">
-      <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
-      <Dropdown bordered defaultSelected={["Option A"]}>
+      <Input
+        bordered
+        startAdornment={<SearchIcon />}
+        placeholder="Search"
+        style={{ width: 180 }}
+      />
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
@@ -182,7 +196,7 @@ export const FlatWithDividers: StoryFn<typeof ToolbarNext> = () => (
       <Text>Description</Text>
     </TooltrayNext>
     <TooltrayNext align="end">
-      <Dropdown bordered defaultSelected={["Option A"]}>
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
@@ -218,8 +232,13 @@ export const Spacing300Groups: StoryFn<typeof ToolbarNext> = () => (
       aria-label="Search and filter"
       style={{ marginRight: "var(--salt-spacing-300)" }}
     >
-      <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
-      <Dropdown bordered defaultSelected={["Option A"]}>
+      <Input
+        bordered
+        startAdornment={<SearchIcon />}
+        placeholder="Search"
+        style={{ width: 180 }}
+      />
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
@@ -232,7 +251,7 @@ export const Spacing300Groups: StoryFn<typeof ToolbarNext> = () => (
       align="end"
       style={{ marginRight: "var(--salt-spacing-300)" }}
     >
-      <Dropdown bordered defaultSelected={["Option A"]}>
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
@@ -266,7 +285,12 @@ export const RegionFirst: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Region first toolbar">
     <ToolbarRegion position="start">
       <TooltrayNext>
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
       </TooltrayNext>
     </ToolbarRegion>
     <ToolbarRegion position="center">
@@ -313,7 +337,12 @@ export const CenteredFormControls: StoryFn<typeof ToolbarNext> = () => (
         overflowMode="grouped"
         overflowPriority={4}
       >
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
       </TooltrayNext>
     </ToolbarRegion>
     <ToolbarRegion position="center">
@@ -493,8 +522,13 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext appearance="transparent" aria-label="App header toolbar">
     <ToolbarRegion position="start">
       <TooltrayNext role="group" aria-label="Search and filter">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
-        <Dropdown bordered defaultSelected={["Option A"]}>
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
+        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -545,13 +579,20 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
         <Text>{variant}</Text>
         <ToolbarNext variant={variant} aria-label={`${variant} toolbar`}>
           <ToolbarRegion position="start">
-            <TooltrayNext role="group" aria-label="Search and filter">
+            <TooltrayNext role="group" aria-label="Search" overflowMode="none">
               <Input
                 bordered
                 startAdornment={<SearchIcon />}
                 placeholder="Search"
+                style={{ width: 180 }}
               />
-              <Dropdown bordered defaultSelected={["Option A"]}>
+            </TooltrayNext>
+            <TooltrayNext role="group" aria-label="Filter">
+              <Dropdown
+                bordered
+                defaultSelected={["Option A"]}
+                style={{ width: 160 }}
+              >
                 {options.map((option) => (
                   <Option value={option} key={option} />
                 ))}
@@ -588,8 +629,13 @@ export const DataViewActions: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Data view toolbar">
     <ToolbarRegion position="start">
       <TooltrayNext role="group" aria-label="Search and filter">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
-        <Dropdown bordered defaultSelected={["Option A"]}>
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
+        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -602,7 +648,7 @@ export const DataViewActions: StoryFn<typeof ToolbarNext> = () => (
     </ToolbarRegion>
     <ToolbarRegion position="end">
       <TooltrayNext>
-        <Dropdown bordered defaultSelected={["Option A"]}>
+        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -649,7 +695,7 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
         <Dropdown
           bordered
           defaultSelected={["Option A"]}
-          style={{ width: 120 }}
+          style={{ width: 160 }}
         >
           {options.map((option) => (
             <Option value={option} key={option} />
@@ -675,6 +721,104 @@ MixedFormControls.globals = {
 };
 
 /**
+ * Dynamic toolbar content added after mount.
+ *
+ * Intended behavior:
+ * - The add dropdown and add date buttons append keyed controls to the start
+ *   region when pressed.
+ * - The toolbar recalculates its child model and overflow measurements after
+ *   each render, so newly added controls should appear immediately and
+ *   participate in the named Filters overflow group when width is constrained.
+ * - The buttons that mutate the toolbar live in an `overflowMode="none"` tray,
+ *   so they stay visible and never move into the overflow menu.
+ */
+export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
+  const [controls, setControls] = useState<
+    Array<{ id: number; type: "date" | "dropdown" }>
+  >([{ id: 1, type: "dropdown" }]);
+
+  return (
+    <ToolbarNext aria-label="Dynamic toolbar">
+      <ToolbarRegion position="start">
+        <TooltrayNext role="group" aria-label="Search" overflowMode="none">
+          <Input
+            bordered
+            startAdornment={<SearchIcon />}
+            placeholder="Search"
+            style={{ width: 180 }}
+          />
+        </TooltrayNext>
+        {controls.map((control) => (
+          <TooltrayNext
+            key={control.id}
+            overflowGroup="Filters"
+            overflowLabel="Filters"
+            overflowMode="independent"
+            overflowPriority={control.id}
+          >
+            {control.type === "dropdown" ? (
+              <Dropdown
+                aria-label={`Filter ${control.id}`}
+                bordered
+                defaultSelected={[options[(control.id - 1) % options.length]]}
+                style={{ width: 160 }}
+              >
+                {options.map((option) => (
+                  <Option value={option} key={option} />
+                ))}
+              </Dropdown>
+            ) : (
+              <DateInputSingle
+                aria-label={`Date filter ${control.id}`}
+                bordered
+                style={{ width: 180 }}
+              />
+            )}
+          </TooltrayNext>
+        ))}
+      </ToolbarRegion>
+      <ToolbarRegion position="end">
+        <TooltrayNext
+          overflowMode="none"
+          role="group"
+          aria-label="Dynamic toolbar actions"
+        >
+          <Button
+            appearance="transparent"
+            aria-label="Add filter dropdown"
+            onClick={() => {
+              setControls((previousControls) => [
+                ...previousControls,
+                { id: previousControls.length + 1, type: "dropdown" },
+              ]);
+            }}
+          >
+            <AddIcon aria-hidden />
+            Add dropdown
+          </Button>
+          <Button
+            appearance="transparent"
+            aria-label="Add date input"
+            onClick={() => {
+              setControls((previousControls) => [
+                ...previousControls,
+                { id: previousControls.length + 1, type: "date" },
+              ]);
+            }}
+          >
+            <CalendarIcon aria-hidden />
+            Add date
+          </Button>
+        </TooltrayNext>
+      </ToolbarRegion>
+    </ToolbarNext>
+  );
+};
+DynamicElements.globals = {
+  responsive: "wrap",
+};
+
+/**
  * Right-to-left layout without overflow.
  *
  * Intended behavior:
@@ -689,8 +833,13 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
   <div dir="rtl">
     <ToolbarNext aria-label="RTL toolbar">
       <TooltrayNext role="group" aria-label="Search and filter">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
-        <Dropdown bordered defaultSelected={["Option A"]}>
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
+        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -735,10 +884,15 @@ RightToLeft.globals = {
 export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with shared overflow">
     <TooltrayNext role="group" aria-label="Search" overflowMode="none">
-      <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+      <Input
+        bordered
+        startAdornment={<SearchIcon />}
+        placeholder="Search"
+        style={{ width: 180 }}
+      />
     </TooltrayNext>
     <TooltrayNext overflowPriority={4}>
-      <Dropdown bordered defaultSelected={["Option A"]}>
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
@@ -797,7 +951,12 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with named overflow">
     <ToolbarRegion position="start">
       <TooltrayNext role="group" aria-label="Search" overflowMode="none">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
       </TooltrayNext>
       <Divider orientation="vertical" variant="secondary" />
       <TooltrayNext
@@ -808,7 +967,7 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
         overflowPriority={6}
         role="group"
       >
-        <Dropdown bordered defaultSelected={["Option A"]}>
+        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -902,7 +1061,12 @@ OverflowPriorities.globals = {
 export const OverflowDividers: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with divider overflow">
     <TooltrayNext role="group" aria-label="Search" overflowMode="none">
-      <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+      <Input
+        bordered
+        startAdornment={<SearchIcon />}
+        placeholder="Search"
+        style={{ width: 180 }}
+      />
     </TooltrayNext>
     <Divider orientation="vertical" variant="secondary" />
     <TooltrayNext overflowMode="independent" overflowPriority={5}>
@@ -933,10 +1097,15 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with overflow menu dividers">
     <ToolbarRegion position="start">
       <TooltrayNext overflowMode="none" role="group" aria-label="Search">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
       </TooltrayNext>
       <TooltrayNext overflowMode="none">
-        <Dropdown bordered defaultSelected={["Option A"]}>
+        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -1005,7 +1174,12 @@ export const TransparentOverflow: StoryFn<typeof ToolbarNext> = () => (
   >
     <ToolbarRegion position="start">
       <TooltrayNext role="group" aria-label="Search" overflowMode="none">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
       </TooltrayNext>
     </ToolbarRegion>
     <ToolbarRegion position="end">
@@ -1054,7 +1228,12 @@ export const OverflowRightToLeft: StoryFn<typeof ToolbarNext> = () => (
   <div dir="rtl">
     <ToolbarNext aria-label="RTL overflow toolbar">
       <TooltrayNext role="group" aria-label="Search" overflowMode="none">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+        <Input
+          bordered
+          startAdornment={<SearchIcon />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
       </TooltrayNext>
       <TooltrayNext
         align="end"
@@ -1124,7 +1303,7 @@ OverflowRightToLeft.globals = {
 export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Data entry toolbar with named overflow">
     <TooltrayNext overflowMode="none">
-      <Input bordered placeholder="Value" />
+      <Input bordered placeholder="Value" style={{ width: 180 }} />
     </TooltrayNext>
     <TooltrayNext
       overflowGroup="Filters"
@@ -1132,7 +1311,7 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
       overflowMode="independent"
       overflowPriority={3}
     >
-      <Dropdown bordered defaultSelected={["Option A"]}>
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
@@ -1144,7 +1323,7 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
       overflowMode="independent"
       overflowPriority={4}
     >
-      <Dropdown bordered defaultSelected={["Option A"]}>
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
         {options.map((option) => (
           <Option value={option} key={option} />
         ))}
@@ -1238,7 +1417,7 @@ export const OverflowMenuInClippingContainer: StoryFn<
               <Dropdown
                 bordered
                 defaultSelected={["All desks"]}
-                style={{ width: 140 }}
+                style={{ width: 160 }}
               >
                 {deskOptions.map((option) => (
                   <Option value={option} key={option} />
