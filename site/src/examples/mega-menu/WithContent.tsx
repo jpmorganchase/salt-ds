@@ -212,6 +212,7 @@ export const WithContent = (): ReactElement => {
                     underline="default"
                     href="#link"
                     IconComponent={ChevronRightIcon}
+                    style={{ width: "fit-content" }}
                   >
                     Link
                   </Link>
@@ -255,6 +256,7 @@ export const WithContent = (): ReactElement => {
                     underline="default"
                     href="#link"
                     IconComponent={ChevronRightIcon}
+                    style={{ width: "fit-content" }}
                   >
                     Link
                   </Link>
@@ -453,6 +455,7 @@ export const WithContent = (): ReactElement => {
                     color="primary"
                     underline="default"
                     href="#link"
+                    style={{ width: "fit-content" }}
                     IconComponent={ChevronRightIcon}
                   >
                     Link
@@ -794,6 +797,7 @@ export const WithContent = (): ReactElement => {
                     underline="default"
                     href="#link"
                     IconComponent={ChevronRightIcon}
+                    style={{ width: "fit-content" }}
                   >
                     link
                   </Link>
