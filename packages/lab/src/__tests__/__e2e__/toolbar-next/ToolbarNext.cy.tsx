@@ -29,6 +29,115 @@ const {
 } = composeStories(toolbarNextStories);
 const toolbarHarnessStyle = { height: 220, width: 760 };
 
+type ToolbarNextQueuedAnimationFrame = {
+  callback: FrameRequestCallback;
+  cancelled: boolean;
+  id: number;
+};
+
+interface ToolbarNextGuardedResizeTestControls {
+  deliverResize: (target: Element) => void;
+  flushNextFrame: () => void;
+  restore: () => void;
+}
+
+type ToolbarNextGuardedResizeWindow = Cypress.AUTWindow & {
+  __toolbarNextGuardedResizeTest?: ToolbarNextGuardedResizeTestControls;
+};
+
+function installToolbarNextGuardedResizeTestControls(win: Cypress.AUTWindow) {
+  const testWindow = win as ToolbarNextGuardedResizeWindow;
+  testWindow.__toolbarNextGuardedResizeTest?.restore();
+
+  const originalRequestAnimationFrame = win.requestAnimationFrame.bind(win);
+  const originalCancelAnimationFrame = win.cancelAnimationFrame.bind(win);
+  const originalResizeObserver = win.ResizeObserver;
+  const frameQueue: ToolbarNextQueuedAnimationFrame[] = [];
+  const observers: ControlledResizeObserver[] = [];
+  let nextFrameId = 1;
+
+  class ControlledResizeObserver implements ResizeObserver {
+    readonly observedTargets = new Set<Element>();
+    readonly callback: ResizeObserverCallback;
+
+    constructor(callback: ResizeObserverCallback) {
+      this.callback = callback;
+      observers.push(this);
+    }
+
+    observe(target: Element) {
+      this.observedTargets.add(target);
+    }
+
+    unobserve(target: Element) {
+      this.observedTargets.delete(target);
+    }
+
+    disconnect() {
+      this.observedTargets.clear();
+    }
+
+    deliver(target: Element) {
+      if (!this.observedTargets.has(target)) {
+        return false;
+      }
+
+      this.callback(
+        [
+          {
+            contentRect: target.getBoundingClientRect(),
+            target,
+          } as ResizeObserverEntry,
+        ],
+        this,
+      );
+      return true;
+    }
+  }
+
+  win.requestAnimationFrame = ((callback: FrameRequestCallback) => {
+    const id = nextFrameId++;
+    frameQueue.push({ callback, cancelled: false, id });
+    return id;
+  }) as typeof win.requestAnimationFrame;
+
+  win.cancelAnimationFrame = ((id: number) => {
+    const frame = frameQueue.find((entry) => entry.id === id);
+    if (frame) {
+      frame.cancelled = true;
+    }
+  }) as typeof win.cancelAnimationFrame;
+
+  win.ResizeObserver = ControlledResizeObserver;
+
+  testWindow.__toolbarNextGuardedResizeTest = {
+    deliverResize(target) {
+      const delivered = observers.some((observer) => observer.deliver(target));
+
+      expect(
+        delivered,
+        "controlled ResizeObserver delivered observed target",
+      ).to.equal(true);
+    },
+    flushNextFrame() {
+      const frame = frameQueue.shift();
+      expect(frame, "queued animation frame").to.not.equal(undefined);
+
+      if (!frame || frame.cancelled) {
+        return;
+      }
+
+      frame.callback(win.performance.now());
+    },
+    restore() {
+      win.requestAnimationFrame = originalRequestAnimationFrame;
+      win.cancelAnimationFrame = originalCancelAnimationFrame;
+      win.ResizeObserver = originalResizeObserver;
+      delete testWindow.__toolbarNextGuardedResizeTest;
+    },
+  };
+}
+
 function WidthChangingButton({
   ariaLabel,
   collapsedLabel,
@@ -71,6 +180,38 @@ function SharedIntrinsicWidthTestCase() {
             expandedLabel="Search with advanced filters"
             expandedWidth={300}
           />
+        </TooltrayNext>
+        <TooltrayNext overflowMode="independent" overflowPriority={5}>
+          <Button appearance="transparent" style={{ width: 150 }}>
+            Columns
+          </Button>
+        </TooltrayNext>
+        <TooltrayNext
+          overflowMode="none"
+          role="group"
+          aria-label="Primary action"
+        >
+          <Button appearance="solid" style={{ width: 100 }}>
+            Run
+          </Button>
+        </TooltrayNext>
+      </ToolbarNext>
+    </div>
+  );
+}
+
+function GuardedResizeDuringComputeTestCase() {
+  return (
+    <div className="GuardedResizeHarness" style={{ height: 220, width: 500 }}>
+      <ToolbarNext aria-label="Toolbar with guarded resize work">
+        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+          <Button
+            appearance="transparent"
+            aria-label="Resize guarded tray"
+            style={{ width: "var(--guarded-resize-width, 120px)" }}
+          >
+            Search
+          </Button>
         </TooltrayNext>
         <TooltrayNext overflowMode="independent" overflowPriority={5}>
           <Button appearance="transparent" style={{ width: 150 }}>
@@ -817,6 +958,14 @@ describe("Given ToolbarNext variants and appearances", () => {
 });
 
 describe("Given ToolbarNext overflow measurements", () => {
+  afterEach(() => {
+    cy.window({ log: false }).then((win) => {
+      (
+        win as ToolbarNextGuardedResizeWindow
+      ).__toolbarNextGuardedResizeTest?.restore();
+    });
+  });
+
   it("collapses the first shared tray as soon as measured content exceeds the container", () => {
     cy.mount(<SharedBoundaryCollapseTestCase />);
 
@@ -948,6 +1097,53 @@ describe("Given ToolbarNext overflow measurements", () => {
     cy.findByRole("button", { name: "Columns" }).should("be.visible");
     expectIntrinsicHarnessWidth(500);
     expectToolbarFits("Toolbar with shared intrinsic width changes");
+  });
+
+  it("queues resize work requested while overflow computation is guarded", () => {
+    cy.window().then((win) => {
+      installToolbarNextGuardedResizeTestControls(win);
+    });
+    cy.mount(<GuardedResizeDuringComputeTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: "Columns" }).should("be.visible");
+    cy.window().then((win) => {
+      const controls = (win as ToolbarNextGuardedResizeWindow)
+        .__toolbarNextGuardedResizeTest;
+      expect(controls, "guarded resize test controls").to.not.equal(undefined);
+      controls?.flushNextFrame();
+    });
+
+    cy.findByRole("button", { name: "Resize guarded tray" }).then(($button) => {
+      const button = $button[0];
+      const harness = button.closest<HTMLElement>(".GuardedResizeHarness");
+      const slot = button.closest<HTMLElement>(".saltToolbarNextOverflow-slot");
+
+      expect(harness, "resize harness").to.not.equal(null);
+      expect(slot, "observed toolbar slot").to.not.equal(null);
+      harness?.style.setProperty("--guarded-resize-width", "320px");
+
+      cy.window().then((win) => {
+        const controls = (win as ToolbarNextGuardedResizeWindow)
+          .__toolbarNextGuardedResizeTest;
+        expect(controls, "guarded resize test controls").to.not.equal(
+          undefined,
+        );
+
+        if (!slot || !controls) {
+          return;
+        }
+
+        controls.deliverResize(slot);
+        controls.flushNextFrame();
+        controls.flushNextFrame();
+        controls.flushNextFrame();
+      });
+    });
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: "Columns" }).should("not.exist");
+    expectToolbarFits("Toolbar with guarded resize work");
   });
 
   it("remeasures named overflow when a visible tray changes width", () => {

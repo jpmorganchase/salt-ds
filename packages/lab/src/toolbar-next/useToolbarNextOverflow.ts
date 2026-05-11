@@ -505,7 +505,9 @@ export function useToolbarNextOverflow({
     new Map<string, (node: HTMLButtonElement | null) => void>(),
   );
   const rafRef = useRef<number | null>(null);
+  const clearComputingRafRef = useRef<number | null>(null);
   const isComputingRef = useRef(false);
+  const pendingMeasureRef = useRef(false);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const observedWidthTargetsRef = useRef(
     new Map<Element, ObservedWidthTarget>(),
@@ -681,8 +683,15 @@ export function useToolbarNextOverflow({
     return nextOverflowState;
   }, [collapseUnits, groupDefinitions, items, namedTriggerItems, regions]);
 
+  const scheduleMeasureRef = useRef<() => void>(() => {});
+
   const scheduleMeasure = useCallback(() => {
-    if (!targetWindow || isComputingRef.current) {
+    if (!targetWindow) {
+      return;
+    }
+
+    if (isComputingRef.current) {
+      pendingMeasureRef.current = true;
       return;
     }
 
@@ -703,14 +712,20 @@ export function useToolbarNextOverflow({
             : nextState;
         });
       } finally {
-        targetWindow.requestAnimationFrame(() => {
-          isComputingRef.current = false;
-        });
+        clearComputingRafRef.current = targetWindow.requestAnimationFrame(
+          () => {
+            clearComputingRafRef.current = null;
+            isComputingRef.current = false;
+
+            if (pendingMeasureRef.current) {
+              pendingMeasureRef.current = false;
+              scheduleMeasureRef.current();
+            }
+          },
+        );
       }
     });
   }, [computeOverflow, targetWindow]);
-
-  const scheduleMeasureRef = useRef(scheduleMeasure);
 
   useIsomorphicLayoutEffect(() => {
     scheduleMeasureRef.current = scheduleMeasure;
@@ -869,6 +884,14 @@ export function useToolbarNextOverflow({
         win.cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
       }
+
+      if (clearComputingRafRef.current != null) {
+        win.cancelAnimationFrame(clearComputingRafRef.current);
+        clearComputingRafRef.current = null;
+      }
+
+      isComputingRef.current = false;
+      pendingMeasureRef.current = false;
     };
   }, [
     getCachedWidthForObservedTarget,
