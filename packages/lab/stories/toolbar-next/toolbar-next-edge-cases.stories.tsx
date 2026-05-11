@@ -1,10 +1,4 @@
-import {
-  Button,
-  Dropdown,
-  Input,
-  Option,
-  Text,
-} from "@salt-ds/core";
+import { Button, Dropdown, Input, Option, Text } from "@salt-ds/core";
 import { DateInputSingle } from "@salt-ds/date-components";
 import {
   AddIcon,
@@ -14,7 +8,7 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
@@ -30,7 +24,7 @@ export default {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarRegion,
+    ToolbarContent,
     TooltrayNext,
   },
 } as Meta<typeof ToolbarNext>;
@@ -122,7 +116,7 @@ const clippingValidationNoteStyle = {
  *
  * Intended behavior:
  * - The add dropdown and add date buttons append keyed controls to the start
- *   region when pressed.
+ *   content when pressed.
  * - The toolbar recalculates its child model and overflow measurements after
  *   each render, so newly added controls should appear immediately and
  *   participate in the named Filters overflow group when width is constrained.
@@ -136,7 +130,7 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
 
   return (
     <ToolbarNext aria-label="Dynamic toolbar">
-      <ToolbarRegion position="start">
+      <ToolbarContent position="start">
         <TooltrayNext role="group" aria-label="Search" overflowMode="none">
           <Input
             bordered
@@ -173,8 +167,8 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
             )}
           </TooltrayNext>
         ))}
-      </ToolbarRegion>
-      <ToolbarRegion position="end">
+      </ToolbarContent>
+      <ToolbarContent position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -207,7 +201,7 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
             Add date
           </Button>
         </TooltrayNext>
-      </ToolbarRegion>
+      </ToolbarContent>
     </ToolbarNext>
   );
 };
@@ -298,7 +292,7 @@ HiddenOverflowRemeasurement.globals = {
  * Intended behavior:
  * - The toolbar is docked at the bottom of a compact review-queue card whose
  *   container uses `overflow: hidden`, like many dashboard cards and modals.
- * - The available width intentionally collapses the end-region actions into a
+ * - The available width intentionally collapses the end-content actions into a
  *   named `Actions` overflow trigger.
  * - Open the Actions trigger. The overflow panel should float outside the card
  *   and remain fully visible over the note below instead of being clipped by
@@ -331,7 +325,7 @@ export const OverflowMenuInClippingContainer: StoryFn<
           appearance="transparent"
           aria-label="Trade exception review toolbar"
         >
-          <ToolbarRegion position="start">
+          <ToolbarContent position="start">
             <TooltrayNext overflowMode="none" role="group" aria-label="Search">
               <Input
                 bordered
@@ -367,8 +361,8 @@ export const OverflowMenuInClippingContainer: StoryFn<
                 Status
               </Button>
             </TooltrayNext>
-          </ToolbarRegion>
-          <ToolbarRegion position="end">
+          </ToolbarContent>
+          <ToolbarContent position="end">
             <TooltrayNext
               aria-label="Review actions"
               overflowGroup="Actions"
@@ -393,7 +387,7 @@ export const OverflowMenuInClippingContainer: StoryFn<
                 <SettingsIcon aria-hidden />
               </Button>
             </TooltrayNext>
-          </ToolbarRegion>
+          </ToolbarContent>
         </ToolbarNext>
       </div>
     </div>

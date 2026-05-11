@@ -17,17 +17,16 @@ import {
   useRef,
   useState,
 } from "react";
-
+import type { ToolbarContentPosition } from "./ToolbarContent";
 import toolbarNextCss from "./ToolbarNext.css";
 import {
   type ToolbarNextItemHostKind,
+  ToolbarNextOverflowContent,
   ToolbarNextOverflowMenu,
   ToolbarNextOverflowOwners,
-  ToolbarNextOverflowRegion,
   ToolbarNextOverflowTriggerContent,
 } from "./ToolbarNextOverflow";
 import { ToolbarNextOverflowFloatingBoundaryProvider } from "./ToolbarNextOverflowFloatingBoundary";
-import type { ToolbarRegionPosition } from "./ToolbarRegion";
 import { TOOLBAR_NEXT_SCOPE_ROOT_ATTR } from "./toolbarNextKeyboardUtils";
 import {
   normalizeToolbarChildren,
@@ -49,7 +48,7 @@ export interface ToolbarNextProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltToolbarNext");
 const withOverflowBaseName = makePrefixer("saltToolbarNextOverflow");
-const bandPositions: ToolbarRegionPosition[] = ["start", "center", "end"];
+const bandPositions: ToolbarContentPosition[] = ["start", "center", "end"];
 
 type ToolbarNextItemHostNodes = Partial<
   Record<ToolbarNextItemHostKind, HTMLDivElement | null>
@@ -89,11 +88,11 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       window: targetWindow,
     });
 
-    const { mode, regions } = normalizeToolbarChildren(children);
+    const { mode, content } = normalizeToolbarChildren(children);
 
     const allItems = useMemo(
-      () => regions.flatMap((region) => region.items),
-      [regions],
+      () => content.flatMap((contentArea) => contentArea.items),
+      [content],
     );
 
     const {
@@ -102,12 +101,12 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       getItemRef,
       getNamedTriggerMeasureRef,
       getNamedTriggerRef,
-      getRegionRef,
+      getContentRef,
       getTriggerMeasureRef,
       overflowGroups,
       overflowTriggerGroups,
       overflowedIds,
-    } = useToolbarNextOverflow({ regions });
+    } = useToolbarNextOverflow({ content });
 
     const handleRef = useForkRef(ref, containerRef);
     const invalidCompositionWarnedRef = useRef(false);
@@ -148,11 +147,11 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
 
     const bandsByPosition = useMemo(() => {
       return bandPositions.reduce<
-        Record<ToolbarRegionPosition, typeof regions>
+        Record<ToolbarContentPosition, typeof content>
       >(
         (bands, position) => {
-          bands[position] = regions.filter(
-            (region) => region.position === position,
+          bands[position] = content.filter(
+            (contentArea) => contentArea.position === position,
           );
           return bands;
         },
@@ -162,7 +161,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
           end: [],
         },
       );
-    }, [regions]);
+    }, [content]);
     const hasCenteredLayout = bandsByPosition.center.length > 0;
     const keyboardNavigation = useToolbarNextKeyboardNavigation({
       items: allItems,
@@ -283,7 +282,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       if (process.env.NODE_ENV !== "production") {
         if (mode === "invalid" && !invalidCompositionWarnedRef.current) {
           console.warn(
-            "ToolbarNext children must be authored in one composition model: either TooltrayNext/Divider children directly in ToolbarNext, or ToolbarRegion children containing TooltrayNext/Divider items.",
+            "ToolbarNext children must be authored in one composition model: either TooltrayNext/Divider children directly in ToolbarNext, or ToolbarContent children containing TooltrayNext/Divider items.",
           );
           invalidCompositionWarnedRef.current = true;
         }
@@ -418,12 +417,12 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
               ))}
             </div>
             {bandPositions.map((position) => {
-              const bandRegions = bandsByPosition[position];
+              const bandContent = bandsByPosition[position];
               const shouldRenderBand = hasCenteredLayout
                 ? true
                 : position === "end"
-                  ? bandRegions.length > 0 || sharedOverflowGroups.length > 0
-                  : bandRegions.length > 0;
+                  ? bandContent.length > 0 || sharedOverflowGroups.length > 0
+                  : bandContent.length > 0;
 
               if (!shouldRenderBand) {
                 return null;
@@ -436,20 +435,20 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                   key={position}
                   ref={getBandRef(position)}
                 >
-                  {bandRegions.map((region) => (
-                    <ToolbarNextOverflowRegion
+                  {bandContent.map((contentArea) => (
+                    <ToolbarNextOverflowContent
                       focusMemoryRef={keyboardNavigation.rememberedFocusRef}
                       getItemHostRef={getItemHostRef}
                       getItemRef={getItemRef}
                       getNamedTriggerRef={getNamedTriggerRef}
-                      getRegionRef={getRegionRef}
-                      key={region.key}
+                      getContentRef={getContentRef}
+                      key={contentArea.key}
                       onItemFocus={keyboardNavigation.rememberItemFocus}
                       overflowGroups={namedOverflowGroups.filter(
-                        (group) => group.regionKey === region.key,
+                        (group) => group.contentKey === contentArea.key,
                       )}
                       overflowedIds={overflowedIds}
-                      region={region}
+                      content={contentArea}
                     />
                   ))}
                   {position === "end"

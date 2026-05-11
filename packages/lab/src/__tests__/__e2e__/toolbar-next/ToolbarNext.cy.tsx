@@ -6,7 +6,7 @@ import {
   Option,
   Switch,
 } from "@salt-ds/core";
-import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
 import { useState } from "react";
 import * as toolbarNextStories from "../../../../stories/toolbar-next/toolbar-next.cypress.stories";
@@ -259,7 +259,7 @@ function NamedGroupCollapseTestCase({
   return (
     <div className="Flexbox" style={toolbarHarnessStyle}>
       <ToolbarNext aria-label={`${overflowMode} named filters toolbar`}>
-        <ToolbarRegion position="start">
+        <ToolbarContent position="start">
           <TooltrayNext overflowMode="none" role="group" aria-label="Search">
             <Button style={{ width: 140 }}>Search</Button>
           </TooltrayNext>
@@ -299,8 +299,8 @@ function NamedGroupCollapseTestCase({
               Columns
             </Button>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext
             overflowMode="none"
             role="group"
@@ -313,7 +313,7 @@ function NamedGroupCollapseTestCase({
               Run
             </Button>
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
     </div>
   );
@@ -336,18 +336,18 @@ function CenteredToolbarTestCase({
     <div className="Flexbox" style={{ height: 220, width: 760 }}>
       <ToolbarNext aria-label={ariaLabel}>
         {includeStart ? (
-          <ToolbarRegion position="start">
+          <ToolbarContent position="start">
             <TooltrayNext overflowMode="none" role="group" aria-label="Leading">
               <Button style={{ width: startWidth }}>Start</Button>
             </TooltrayNext>
-          </ToolbarRegion>
+          </ToolbarContent>
         ) : null}
-        <ToolbarRegion position="center">
+        <ToolbarContent position="center">
           <TooltrayNext overflowMode="none" role="group" aria-label="Centered">
             <Button style={{ width: 140 }}>Center action</Button>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext
             aria-label="Actions"
             overflowGroup="Actions"
@@ -365,7 +365,7 @@ function CenteredToolbarTestCase({
               </Button>
             ) : null}
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
     </div>
   );
@@ -454,7 +454,7 @@ function NamedOverflowFocusReentryTestCase() {
     >
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Named overflow focus toolbar">
-        <ToolbarRegion position="start">
+        <ToolbarContent position="start">
           <TooltrayNext overflowMode="none" role="group" aria-label="Search">
             <Input bordered placeholder="Search" />
           </TooltrayNext>
@@ -472,8 +472,8 @@ function NamedOverflowFocusReentryTestCase() {
             </Dropdown>
             <Button appearance="transparent">Filters</Button>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext
             overflowGroup="Actions"
             overflowLabel="Actions"
@@ -485,7 +485,7 @@ function NamedOverflowFocusReentryTestCase() {
             <Button appearance="transparent">Export</Button>
             <Button appearance="transparent">Settings</Button>
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
@@ -500,7 +500,7 @@ function SharedOverflowFocusReentryTestCase() {
     >
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Shared overflow focus toolbar">
-        <ToolbarRegion position="start">
+        <ToolbarContent position="start">
           <TooltrayNext role="group" aria-label="Search and filter">
             <Input bordered placeholder="Search" style={{ width: 130 }} />
             <Dropdown
@@ -512,13 +512,13 @@ function SharedOverflowFocusReentryTestCase() {
               <Option value="Option B" />
             </Dropdown>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext role="group" aria-label="Actions">
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
@@ -529,7 +529,7 @@ function PointerEntryControlsTestCase() {
   return (
     <div className="Flexbox" style={{ height: 220, width: 640 }}>
       <ToolbarNext aria-label="Pointer entry controls toolbar">
-        <ToolbarRegion position="start">
+        <ToolbarContent position="start">
           <TooltrayNext
             overflowMode="none"
             role="group"
@@ -541,12 +541,12 @@ function PointerEntryControlsTestCase() {
               <Option value="Option B" />
             </Dropdown>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext overflowMode="none" role="group" aria-label="Settings">
             <Switch label="Pinned" />
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
     </div>
   );
@@ -560,14 +560,14 @@ function OverflowPointerEntryControlsTestCase() {
     >
       <button data-testid="overflow-pointer-before">Before toolbar</button>
       <ToolbarNext aria-label="Overflow pointer entry controls toolbar">
-        <ToolbarRegion position="start">
+        <ToolbarContent position="start">
           <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
             <Button appearance="transparent" style={{ width: 170 }}>
               Pinned
             </Button>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext
             role="group"
             aria-label="Overflow controls"
@@ -580,7 +580,7 @@ function OverflowPointerEntryControlsTestCase() {
             </Dropdown>
             <Switch label="Overflow pinned" />
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
     </div>
   );
@@ -594,7 +594,7 @@ function SharedOverflowComboBoxFocusReentryTestCase() {
     >
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Shared overflow combo box toolbar">
-        <ToolbarRegion position="start">
+        <ToolbarContent position="start">
           <TooltrayNext role="group" aria-label="Search and filter">
             <Input bordered placeholder="Search" />
             <ComboBox bordered defaultSelected={["Option A"]}>
@@ -603,13 +603,13 @@ function SharedOverflowComboBoxFocusReentryTestCase() {
               <Option value="Option C" />
             </ComboBox>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext role="group" aria-label="Actions">
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
@@ -624,21 +624,21 @@ function SharedOverflowDropdownPopupTestCase() {
     >
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Shared overflow dropdown toolbar">
-        <ToolbarRegion position="start">
+        <ToolbarContent position="start">
           <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
             <Button appearance="transparent" style={{ width: 170 }}>
               Pinned
             </Button>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext role="group" aria-label="Filters" overflowPriority={5}>
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
               <Option value="Option B" />
             </Dropdown>
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
@@ -653,7 +653,7 @@ function MixedControlsWidthChangeTestCase() {
     >
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Mixed controls width change toolbar">
-        <ToolbarRegion position="start">
+        <ToolbarContent position="start">
           <TooltrayNext role="group" aria-label="Criteria">
             <Input bordered placeholder="Search" style={{ width: 150 }} />
             <Dropdown bordered defaultSelected={["Option A"]}>
@@ -661,13 +661,13 @@ function MixedControlsWidthChangeTestCase() {
               <Option value="Option B" />
             </Dropdown>
           </TooltrayNext>
-        </ToolbarRegion>
-        <ToolbarRegion position="end">
+        </ToolbarContent>
+        <ToolbarContent position="end">
           <TooltrayNext role="group" aria-label="Actions">
             <Button appearance="transparent">Toggle</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
-        </ToolbarRegion>
+        </ToolbarContent>
       </ToolbarNext>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>

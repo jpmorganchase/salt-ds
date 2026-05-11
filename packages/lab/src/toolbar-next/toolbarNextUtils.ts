@@ -8,10 +8,10 @@ import {
 } from "react";
 
 import {
-  ToolbarRegion,
-  type ToolbarRegionPosition,
-  type ToolbarRegionProps,
-} from "./ToolbarRegion";
+  ToolbarContent,
+  type ToolbarContentPosition,
+  type ToolbarContentProps,
+} from "./ToolbarContent";
 import {
   TooltrayNext,
   type TooltrayNextOverflowMode,
@@ -33,7 +33,7 @@ export interface ToolbarNextOverflowItem {
   overflowLabel?: string;
   overflowMode: TooltrayNextOverflowMode;
   overflowPriority: number;
-  regionKey: string;
+  contentKey: string;
   trailingDecorations: ReactElement[];
 }
 
@@ -45,20 +45,20 @@ export interface ToolbarNextOverflowRenderSlot {
   triggerGroupKey?: string;
 }
 
-export interface ToolbarNextRegionModel {
+export interface ToolbarNextContentModel {
   implicit: boolean;
   items: ToolbarNextOverflowItem[];
   key: string;
-  position: ToolbarRegionPosition;
-  props: Omit<ToolbarRegionProps, "children" | "position">;
+  position: ToolbarContentPosition;
+  props: Omit<ToolbarContentProps, "children" | "position">;
 }
 
 export interface ToolbarNextModel {
   mode: ToolbarNextMode;
-  regions: ToolbarNextRegionModel[];
+  content: ToolbarNextContentModel[];
 }
 
-export function buildRegionOverflowRenderSlots(
+export function buildContentOverflowRenderSlots(
   items: ToolbarNextOverflowItem[],
   overflowedIds: Set<string>,
   activeNamedGroupKeys: Set<string>,
@@ -128,10 +128,10 @@ export function flattenToolbarChildren(
   return flattened;
 }
 
-function isToolbarRegionElement(
+function isToolbarContentElement(
   child: ToolbarNextChild,
-): child is ReactElement<ToolbarRegionProps> {
-  return isValidElement(child) && child.type === ToolbarRegion;
+): child is ReactElement<ToolbarContentProps> {
+  return isValidElement(child) && child.type === ToolbarContent;
 }
 
 function isTooltrayElement(
@@ -145,24 +145,24 @@ function isDividerElement(child: ToolbarNextChild): child is ReactElement {
 }
 
 function buildItemId(
-  regionKey: string,
+  contentKey: string,
   element: ReactElement<TooltrayNextProps>,
   order: number,
 ) {
   const elementKey =
     element.key != null ? String(element.key) : `tray-${order}`;
-  return `${regionKey}-${elementKey}-${order}`;
+  return `${contentKey}-${elementKey}-${order}`;
 }
 
-function buildOverflowGroupKey(regionKey: string, overflowGroup: string) {
+function buildOverflowGroupKey(contentKey: string, overflowGroup: string) {
   return overflowGroup === "shared"
     ? "shared"
-    : `${regionKey}:${overflowGroup}`;
+    : `${contentKey}:${overflowGroup}`;
 }
 
-function normalizeRegionItems(
+function normalizeContentItems(
   children: ReactNode,
-  regionKey: string,
+  contentKey: string,
 ): ToolbarNextOverflowItem[] | null {
   const flattenedChildren = flattenToolbarChildren(children);
   const items: ToolbarNextOverflowItem[] = [];
@@ -190,15 +190,15 @@ function normalizeRegionItems(
     items.push({
       align,
       element: child,
-      id: buildItemId(regionKey, child, order),
+      id: buildItemId(contentKey, child, order),
       leadingDecorations: pendingLeadingDecorations,
       order,
       overflowGroup,
-      overflowGroupKey: buildOverflowGroupKey(regionKey, overflowGroup),
+      overflowGroupKey: buildOverflowGroupKey(contentKey, overflowGroup),
       overflowLabel,
       overflowMode,
       overflowPriority,
-      regionKey,
+      contentKey,
       trailingDecorations: [],
     });
 
@@ -214,44 +214,48 @@ function normalizeRegionItems(
   return items;
 }
 
-function normalizeExplicitRegions(
+function normalizeExplicitContent(
   children: ToolbarNextChild[],
-): ToolbarNextRegionModel[] | null {
-  const regions: ToolbarNextRegionModel[] = [];
+): ToolbarNextContentModel[] | null {
+  const content: ToolbarNextContentModel[] = [];
 
   for (const [index, child] of children.entries()) {
-    if (!isToolbarRegionElement(child)) {
+    if (!isToolbarContentElement(child)) {
       continue;
     }
 
-    const { children: regionChildren, position, ...regionProps } = child.props;
-    const regionKey =
-      child.key != null ? String(child.key) : `${position}-region-${index}`;
-    const items = normalizeRegionItems(regionChildren, regionKey);
+    const {
+      children: contentChildren,
+      position,
+      ...contentProps
+    } = child.props;
+    const contentKey =
+      child.key != null ? String(child.key) : `${position}-content-${index}`;
+    const items = normalizeContentItems(contentChildren, contentKey);
 
     if (items == null) {
       return null;
     }
 
-    regions.push({
+    content.push({
       implicit: false,
       items,
-      key: regionKey,
+      key: contentKey,
       position,
-      props: regionProps,
+      props: contentProps,
     });
   }
 
-  return regions;
+  return content;
 }
 
 function normalizeFlatChildren(children: ToolbarNextChild[]) {
-  const buckets: Record<ToolbarRegionPosition, ToolbarNextChild[]> = {
+  const buckets: Record<ToolbarContentPosition, ToolbarNextChild[]> = {
     start: [],
     center: [],
     end: [],
   };
-  let currentPosition: ToolbarRegionPosition = "start";
+  let currentPosition: ToolbarContentPosition = "start";
 
   for (const child of children) {
     if (isTooltrayElement(child)) {
@@ -268,25 +272,25 @@ function normalizeFlatChildren(children: ToolbarNextChild[]) {
     return null;
   }
 
-  return (Object.keys(buckets) as ToolbarRegionPosition[]).reduce<
-    ToolbarNextRegionModel[]
-  >((regions, position) => {
-    const regionKey = `${position}-implicit`;
-    const regionItems = normalizeRegionItems(buckets[position], regionKey);
+  return (Object.keys(buckets) as ToolbarContentPosition[]).reduce<
+    ToolbarNextContentModel[]
+  >((content, position) => {
+    const contentKey = `${position}-implicit`;
+    const contentItems = normalizeContentItems(buckets[position], contentKey);
 
-    if (regionItems == null || regionItems.length === 0) {
-      return regions;
+    if (contentItems == null || contentItems.length === 0) {
+      return content;
     }
 
-    regions.push({
+    content.push({
       implicit: true,
-      items: regionItems,
-      key: regionKey,
+      items: contentItems,
+      key: contentKey,
       position,
       props: {},
     });
 
-    return regions;
+    return content;
   }, []);
 }
 
@@ -294,41 +298,41 @@ export function normalizeToolbarChildren(
   children: ReactNode,
 ): ToolbarNextModel {
   const flattenedChildren = flattenToolbarChildren(children);
-  const hasRegionChildren = flattenedChildren.some(isToolbarRegionElement);
-  const hasOnlyRegions =
-    hasRegionChildren && flattenedChildren.every(isToolbarRegionElement);
+  const hasContentChildren = flattenedChildren.some(isToolbarContentElement);
+  const hasOnlyContent =
+    hasContentChildren && flattenedChildren.every(isToolbarContentElement);
   const hasOnlyFlatChildren = flattenedChildren.every(
     (child) => isTooltrayElement(child) || isDividerElement(child),
   );
 
-  if (hasOnlyRegions) {
-    const regions = normalizeExplicitRegions(flattenedChildren);
+  if (hasOnlyContent) {
+    const content = normalizeExplicitContent(flattenedChildren);
 
-    if (regions == null) {
-      return { mode: "invalid", regions: [] };
+    if (content == null) {
+      return { mode: "invalid", content: [] };
     }
 
     return {
       mode: "explicit",
-      regions,
+      content,
     };
   }
 
   if (hasOnlyFlatChildren) {
-    const regions = normalizeFlatChildren(flattenedChildren);
+    const content = normalizeFlatChildren(flattenedChildren);
 
-    if (regions == null) {
-      return { mode: "invalid", regions: [] };
+    if (content == null) {
+      return { mode: "invalid", content: [] };
     }
 
     return {
       mode: "flat",
-      regions,
+      content,
     };
   }
 
   return {
     mode: "invalid",
-    regions: [],
+    content: [],
   };
 }

@@ -7,7 +7,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
-import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ReactNode, useState } from "react";
 
@@ -22,7 +22,7 @@ export default {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarRegion,
+    ToolbarContent,
     TooltrayNext,
   },
 } as Meta<typeof ToolbarNext>;
@@ -182,7 +182,7 @@ function NamedFiltersToolbar({
 }) {
   return (
     <ToolbarNext aria-label={`${overflowMode} named filters toolbar`}>
-      <ToolbarRegion position="start">
+      <ToolbarContent position="start">
         <TooltrayNext overflowMode="none" role="group" aria-label="Search">
           <Input
             bordered
@@ -224,8 +224,8 @@ function NamedFiltersToolbar({
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
-      </ToolbarRegion>
-      <ToolbarRegion position="end">
+      </ToolbarContent>
+      <ToolbarContent position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -234,7 +234,7 @@ function NamedFiltersToolbar({
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
-      </ToolbarRegion>
+      </ToolbarContent>
     </ToolbarNext>
   );
 }
@@ -254,7 +254,7 @@ function PriorityOrderingToolbar({
 }) {
   return (
     <ToolbarNext aria-label={ariaLabel}>
-      <ToolbarRegion position="start">
+      <ToolbarContent position="start">
         <TooltrayNext overflowMode="none" role="group" aria-label="Search">
           <Input
             bordered
@@ -280,8 +280,8 @@ function PriorityOrderingToolbar({
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
-      </ToolbarRegion>
-      <ToolbarRegion position="end">
+      </ToolbarContent>
+      <ToolbarContent position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -289,7 +289,7 @@ function PriorityOrderingToolbar({
         >
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
-      </ToolbarRegion>
+      </ToolbarContent>
     </ToolbarNext>
   );
 }
@@ -493,11 +493,11 @@ SingleTrayComparison.globals = wrapGlobals;
  * Multi-tray named overflow using `independent`.
  *
  * Intended behavior:
- * - The search tray and end-region quick actions never overflow.
+ * - The search tray and end-content quick actions never overflow.
  * - The three `Filters` trays collapse progressively, one `TooltrayNext` at a
  *   time, because they are separate trays in the same named group.
  * - The highest-priority tray overflows first, then the next, then the next.
- * - The named `Filters` trigger stays inline in the start region and represents
+ * - The named `Filters` trigger stays inline in the start content and represents
  *   whichever subset of the group is currently hidden.
  */
 export const NamedGroupIndependentProgressive: StoryFn<
@@ -506,9 +506,9 @@ export const NamedGroupIndependentProgressive: StoryFn<
   <StoryExample
     title="Named group with independent: progressive tray-by-tray collapse"
     expectedBehavior={[
-      "Resize the story. The Search tray and the end-region quick actions remain visible while the Filters group collapses in stages.",
+      "Resize the story. The Search tray and the end-content quick actions remain visible while the Filters group collapses in stages.",
       "The tertiary Filters tray overflows first, then the secondary tray, then the primary tray. You should see several distinct collapse steps rather than a single jump.",
-      "A single Filters trigger appears inline in the start region and continues to represent more hidden content as additional trays overflow.",
+      "A single Filters trigger appears inline in the start content and continues to represent more hidden content as additional trays overflow.",
     ]}
     codeRelation={[
       "All three Filters trays share the same non-shared overflowGroup, so they end up under one named trigger.",
@@ -517,7 +517,7 @@ export const NamedGroupIndependentProgressive: StoryFn<
     ]}
   >
     <ToolbarNext aria-label="Named independent progressive overflow toolbar">
-      <ToolbarRegion position="start">
+      <ToolbarContent position="start">
         <TooltrayNext overflowMode="none" role="group" aria-label="Search">
           <Input
             bordered
@@ -559,8 +559,8 @@ export const NamedGroupIndependentProgressive: StoryFn<
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
-      </ToolbarRegion>
-      <ToolbarRegion position="end">
+      </ToolbarContent>
+      <ToolbarContent position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -569,7 +569,7 @@ export const NamedGroupIndependentProgressive: StoryFn<
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
-      </ToolbarRegion>
+      </ToolbarContent>
     </ToolbarNext>
   </StoryExample>
 );
@@ -579,7 +579,7 @@ NamedGroupIndependentProgressive.globals = wrapGlobals;
  * Multi-tray named overflow using `grouped`.
  *
  * Intended behavior:
- * - The search tray and end-region quick actions never overflow.
+ * - The search tray and end-content quick actions never overflow.
  * - The three `Filters` trays all disappear together once the toolbar needs
  *   space from that named group.
  * - There is no intermediate state where one or two filter trays remain visible
@@ -591,7 +591,7 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
     title="Named group with grouped: the whole batch disappears together"
     expectedBehavior={[
       "Resize the story and watch the Filters group. Instead of collapsing in several steps, all three Filters trays disappear together and are replaced by one Filters trigger.",
-      "The Search tray and the end-region quick actions remain visible, which makes the batch collapse easier to notice.",
+      "The Search tray and the end-content quick actions remain visible, which makes the batch collapse easier to notice.",
       "Compared with the independent example, this story should have one obvious transition point rather than multiple progressive transitions.",
     ]}
     codeRelation={[
@@ -601,7 +601,7 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
     ]}
   >
     <ToolbarNext aria-label="Named grouped batch overflow toolbar">
-      <ToolbarRegion position="start">
+      <ToolbarContent position="start">
         <TooltrayNext overflowMode="none" role="group" aria-label="Search">
           <Input
             bordered
@@ -643,8 +643,8 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
-      </ToolbarRegion>
-      <ToolbarRegion position="end">
+      </ToolbarContent>
+      <ToolbarContent position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -653,7 +653,7 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
-      </ToolbarRegion>
+      </ToolbarContent>
     </ToolbarNext>
   </StoryExample>
 );

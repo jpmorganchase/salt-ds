@@ -34,7 +34,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-
+import { ToolbarContent } from "./ToolbarContent";
 import toolbarNextOverflowCss from "./ToolbarNextOverflow.css";
 import {
   getToolbarNextOverflowBoundaryKey,
@@ -42,7 +42,6 @@ import {
   ToolbarNextOverflowFloatingComponentProvider,
   useToolbarNextOverflowFloatingBoundary,
 } from "./ToolbarNextOverflowFloatingBoundary";
-import { ToolbarRegion } from "./ToolbarRegion";
 import {
   getDocumentFocusableElements,
   getToolbarNextFocusMemory,
@@ -58,10 +57,10 @@ import {
   toolbarNextFocusableSelector,
 } from "./toolbarNextKeyboardUtils";
 import type {
+  ToolbarNextContentModel,
   ToolbarNextOverflowItem,
-  ToolbarNextRegionModel,
 } from "./toolbarNextUtils";
-import { buildRegionOverflowRenderSlots } from "./toolbarNextUtils";
+import { buildContentOverflowRenderSlots } from "./toolbarNextUtils";
 import { useToolbarNextKeyboardNavigation } from "./useToolbarNextKeyboardNavigation";
 import type { ToolbarNextOverflowGroup } from "./useToolbarNextOverflow";
 
@@ -678,7 +677,7 @@ export function ToolbarNextOverflowMenu({
   );
 }
 
-export interface ToolbarNextOverflowRegionProps {
+export interface ToolbarNextOverflowContentProps {
   focusMemoryRef?: RefObject<ToolbarNextFocusMemory | null>;
   getItemHostRef: (
     id: string,
@@ -686,24 +685,24 @@ export interface ToolbarNextOverflowRegionProps {
   ) => (node: HTMLDivElement | null) => void;
   getItemRef: (id: string) => (node: HTMLDivElement | null) => void;
   getNamedTriggerRef: (id: string) => (node: HTMLDivElement | null) => void;
-  getRegionRef: (regionKey: string) => (node: HTMLDivElement | null) => void;
+  getContentRef: (contentKey: string) => (node: HTMLDivElement | null) => void;
   onItemFocus?: (itemId: string, controlIndex: number) => void;
   overflowGroups: ToolbarNextOverflowGroup[];
   overflowedIds: Set<string>;
-  region: ToolbarNextRegionModel;
+  content: ToolbarNextContentModel;
 }
 
-export function ToolbarNextOverflowRegion({
+export function ToolbarNextOverflowContent({
+  content,
   focusMemoryRef,
   getItemHostRef,
   getItemRef,
   getNamedTriggerRef,
-  getRegionRef,
+  getContentRef,
   onItemFocus,
   overflowGroups,
   overflowedIds,
-  region,
-}: ToolbarNextOverflowRegionProps) {
+}: ToolbarNextOverflowContentProps) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-toolbar-next-overflow",
@@ -711,24 +710,24 @@ export function ToolbarNextOverflowRegion({
     window: targetWindow,
   });
 
-  const { className, ...regionProps } = region.props;
+  const { className, ...contentProps } = content.props;
   const overflowGroupByKey = new Map(
     overflowGroups.map((group) => [group.key, group] as const),
   );
 
-  const renderSlots = buildRegionOverflowRenderSlots(
-    region.items,
+  const renderSlots = buildContentOverflowRenderSlots(
+    content.items,
     overflowedIds,
     new Set(overflowGroups.map((group) => group.key)),
   );
 
   return (
-    <ToolbarRegion
-      data-implicit={region.implicit || undefined}
-      {...regionProps}
-      className={clsx(className, withBaseName("region"))}
-      position={region.position}
-      ref={getRegionRef(region.key)}
+    <ToolbarContent
+      data-implicit={content.implicit || undefined}
+      {...contentProps}
+      className={clsx(className, withBaseName("content"))}
+      position={content.position}
+      ref={getContentRef(content.key)}
     >
       {renderSlots.map(
         ({
@@ -750,7 +749,7 @@ export function ToolbarNextOverflowRegion({
               data-priority={item.overflowPriority}
               key={
                 triggerGroup
-                  ? `${region.key}-${triggerGroup.id}-anchor-${item.id}`
+                  ? `${content.key}-${triggerGroup.id}-anchor-${item.id}`
                   : item.id
               }
               ref={
@@ -789,6 +788,6 @@ export function ToolbarNextOverflowRegion({
           );
         },
       )}
-    </ToolbarRegion>
+    </ToolbarContent>
   );
 }

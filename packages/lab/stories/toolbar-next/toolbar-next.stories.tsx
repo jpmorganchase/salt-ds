@@ -18,7 +18,7 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import { ToolbarNext, ToolbarRegion, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
@@ -28,7 +28,7 @@ export default {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarRegion,
+    ToolbarContent,
     TooltrayNext,
   },
 } as Meta<typeof ToolbarNext>;
@@ -37,13 +37,13 @@ const options = ["Option A", "Option B", "Option C"];
 const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
 
 /**
- * Flat align sugar — no explicit `ToolbarRegion` wrappers.
+ * Flat align sugar — no explicit `ToolbarContent` wrappers.
  *
  * Intended behavior:
- * - `TooltrayNext` children are bucketed into implicit regions via their
+ * - `TooltrayNext` children are bucketed into implicit content via their
  *   `align` prop (`"start"` by default, `"end"` for the actions tray).
- * - The toolbar renders a start region with the search input and dropdown on
- *   the left, and an end region with icon buttons and a solid button on the
+ * - The toolbar renders a start content with the search input and dropdown on
+ *   the left, and an end content with icon buttons and a solid button on the
  *   right.
  * - The trays use the default shared overflow behavior, so constrained width
  *   collapses content into the generic overflow trigger.
@@ -81,20 +81,20 @@ FlatAlignSugar.globals = {
 };
 
 /**
- * Explicit three-region layout using `ToolbarRegion`.
+ * Explicit three-content layout using `ToolbarContent`.
  *
  * Intended behavior:
- * - The toolbar uses explicit `ToolbarRegion` wrappers with `position`
+ * - The toolbar uses explicit `ToolbarContent` wrappers with `position`
  *   set to `"start"`, `"center"`, and `"end"`.
- * - The center region holds a toggle button group that should remain
- *   visually centered between the start and end regions regardless of
+ * - The center content holds a toggle button group that should remain
+ *   visually centered between the start and end content regardless of
  *   how much content is in each.
  * - Trays use the default shared overflow behavior, validating that the
- *   region-first authoring model also collapses responsively.
+ *   content-first authoring model also collapses responsively.
  */
-export const RegionFirst: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Region first toolbar">
-    <ToolbarRegion position="start">
+export const ContentFirst: StoryFn<typeof ToolbarNext> = () => (
+  <ToolbarNext aria-label="Content first toolbar">
+    <ToolbarContent position="start">
       <TooltrayNext>
         <Input
           bordered
@@ -103,8 +103,8 @@ export const RegionFirst: StoryFn<typeof ToolbarNext> = () => (
           style={{ width: 180 }}
         />
       </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="center">
+    </ToolbarContent>
+    <ToolbarContent position="center">
       <TooltrayNext role="group" aria-label="Toggle options">
         <ToggleButtonGroup>
           <ToggleButton value="toggle-1">Toggle</ToggleButton>
@@ -112,15 +112,15 @@ export const RegionFirst: StoryFn<typeof ToolbarNext> = () => (
           <ToggleButton value="toggle-3">Toggle</ToggleButton>
         </ToggleButtonGroup>
       </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="end">
+    </ToolbarContent>
+    <ToolbarContent position="end">
       <TooltrayNext>
         <Text>Description</Text>
       </TooltrayNext>
-    </ToolbarRegion>
+    </ToolbarContent>
   </ToolbarNext>
 );
-RegionFirst.globals = {
+ContentFirst.globals = {
   responsive: "wrap",
 };
 
@@ -128,24 +128,24 @@ RegionFirst.globals = {
  * Centered layout with a named inline overflow trigger in the end band.
  *
  * Intended behavior:
- * - As width decreases, the end-region actions collapse into an inline
+ * - As width decreases, the end-content actions collapse into an inline
  *   `Actions` trigger.
  * - Replacing the end tray with that trigger must not pull the center control
  *   off the toolbar midpoint.
  */
 export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Centered named overflow toolbar">
-    <ToolbarRegion position="start">
+    <ToolbarContent position="start">
       <TooltrayNext overflowMode="none" role="group" aria-label="Leading">
         <Button style={{ width: 140 }}>Start</Button>
       </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="center">
+    </ToolbarContent>
+    <ToolbarContent position="center">
       <TooltrayNext overflowMode="none" role="group" aria-label="Centered">
         <Button style={{ width: 140 }}>Center action</Button>
       </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="end">
+    </ToolbarContent>
+    <ToolbarContent position="end">
       <TooltrayNext
         aria-label="Actions"
         overflowGroup="Actions"
@@ -161,7 +161,7 @@ export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           End secondary
         </Button>
       </TooltrayNext>
-    </ToolbarRegion>
+    </ToolbarContent>
   </ToolbarNext>
 );
 CenteredNamedOverflow.globals = {
@@ -176,14 +176,14 @@ CenteredNamedOverflow.globals = {
  *   making it suitable for embedding inside an existing container like
  *   an app header or card where the toolbar should not draw its own
  *   visual boundary.
- * - The two-region layout (start and end) still works; controls align
+ * - The two-content layout (start and end) still works; controls align
  *   to their respective edges.
  * - The trays still use default shared overflow, validating the transparent
  *   treatment with the generic trigger.
  */
 export const Transparent: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext appearance="transparent" aria-label="App header toolbar">
-    <ToolbarRegion position="start">
+    <ToolbarContent position="start">
       <TooltrayNext role="group" aria-label="Search and filter">
         <Input
           bordered
@@ -191,14 +191,18 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
           placeholder="Search"
           style={{ width: 180 }}
         />
-        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
+        <Dropdown
+          bordered
+          defaultSelected={["Option A"]}
+          style={{ width: 160 }}
+        >
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
       </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="end">
+    </ToolbarContent>
+    <ToolbarContent position="end">
       <TooltrayNext role="group" aria-label="Utility actions">
         <Button appearance="transparent" aria-label="Grid view">
           <GridIcon aria-hidden />
@@ -208,7 +212,7 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
         </Button>
         <Button appearance="solid">Button</Button>
       </TooltrayNext>
-    </ToolbarRegion>
+    </ToolbarContent>
   </ToolbarNext>
 );
 Transparent.globals = {
@@ -241,7 +245,7 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
       >
         <Text>{variant}</Text>
         <ToolbarNext variant={variant} aria-label={`${variant} toolbar`}>
-          <ToolbarRegion position="start">
+          <ToolbarContent position="start">
             <TooltrayNext role="group" aria-label="Search" overflowMode="none">
               <Input
                 bordered
@@ -261,13 +265,13 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
                 ))}
               </Dropdown>
             </TooltrayNext>
-          </ToolbarRegion>
-          <ToolbarRegion position="end">
+          </ToolbarContent>
+          <ToolbarContent position="end">
             <TooltrayNext role="group" aria-label="Utility actions">
               <Button appearance="transparent">Export</Button>
               <Button appearance="solid">Button</Button>
             </TooltrayNext>
-          </ToolbarRegion>
+          </ToolbarContent>
         </ToolbarNext>
       </div>
     ))}
@@ -284,14 +288,14 @@ Variants.globals = {
  * - Demonstrates that `TooltrayNext` can hold arbitrary Salt form
  *   controls (Input, Dropdown, DateInputSingle, Switch, Button), not
  *   only buttons.
- * - The start region groups filtering criteria; the end region groups
+ * - The start content groups filtering criteria; the end content groups
  *   a toggle and a primary action.
  * - The groups use default shared overflow, so non-button controls can collapse
  *   into the generic overflow menu.
  */
 export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Mixed controls toolbar">
-    <ToolbarRegion position="start">
+    <ToolbarContent position="start">
       <TooltrayNext>
         <Input
           bordered
@@ -316,13 +320,13 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
           style={{ width: 180 }}
         />
       </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="end">
+    </ToolbarContent>
+    <ToolbarContent position="end">
       <TooltrayNext role="group" aria-label="Settings and actions">
         <Switch label="Pinned" />
         <Button appearance="solid">Run</Button>
       </TooltrayNext>
-    </ToolbarRegion>
+    </ToolbarContent>
   </ToolbarNext>
 );
 MixedFormControls.globals = {
@@ -350,7 +354,11 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
           placeholder="Search"
           style={{ width: 180 }}
         />
-        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
+        <Dropdown
+          bordered
+          defaultSelected={["Option A"]}
+          style={{ width: 160 }}
+        >
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -439,12 +447,12 @@ DefaultSharedOverflow.globals = {
  * Named overflow — grouped collapse into distinct named overflow triggers.
  *
  * Intended behavior:
- * - Uses explicit `ToolbarRegion` wrappers (start and end).
+ * - Uses explicit `ToolbarContent` wrappers (start and end).
  * - The search tray (`overflowMode="none"`) never collapses.
- * - The "Filters" tray (start region, priority 6, `overflowGroup="Filters"`,
+ * - The "Filters" tray (start content, priority 6, `overflowGroup="Filters"`,
  *   `overflowMode="grouped"`) collapses as a complete unit into its own
  *   overflow trigger labeled "Filters".
- * - The "Actions" tray (end region, priority 5, `overflowGroup="Actions"`,
+ * - The "Actions" tray (end content, priority 5, `overflowGroup="Actions"`,
  *   `overflowMode="grouped"`) collapses as a complete unit into its own
  *   overflow trigger labeled "Actions".
  * - Because "Filters" has higher priority (6) than "Actions" (5), the
@@ -453,14 +461,14 @@ DefaultSharedOverflow.globals = {
  *   treatment, so users can tell them apart without relying on a shared
  *   overflow icon.
  * - Each named trigger replaces its collapsed tray inline within its own
- *   region rather than jumping to the end of the toolbar.
+ *   content rather than jumping to the end of the toolbar.
  * - Clicking a named trigger opens a panel showing that group's controls
  *   in a horizontal toolbar-like layout.
  * - Escape closes the panel and returns focus to the trigger.
  */
 export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with named overflow">
-    <ToolbarRegion position="start">
+    <ToolbarContent position="start">
       <TooltrayNext role="group" aria-label="Search" overflowMode="none">
         <Input
           bordered
@@ -478,7 +486,11 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
         overflowPriority={6}
         role="group"
       >
-        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
+        <Dropdown
+          bordered
+          defaultSelected={["Option A"]}
+          style={{ width: 160 }}
+        >
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -488,8 +500,8 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           Filters
         </Button>
       </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="end">
+    </ToolbarContent>
+    <ToolbarContent position="end">
       <TooltrayNext
         aria-label="Actions"
         overflowGroup="Actions"
@@ -507,7 +519,7 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           Settings
         </Button>
       </TooltrayNext>
-    </ToolbarRegion>
+    </ToolbarContent>
   </ToolbarNext>
 );
 NamedOverflow.globals = {
@@ -565,7 +577,7 @@ OverflowPriorities.globals = {
  */
 export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with overflow menu dividers">
-    <ToolbarRegion position="start">
+    <ToolbarContent position="start">
       <TooltrayNext overflowMode="none" role="group" aria-label="Search">
         <Input
           bordered
@@ -575,14 +587,18 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
         />
       </TooltrayNext>
       <TooltrayNext overflowMode="none">
-        <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
+        <Dropdown
+          bordered
+          defaultSelected={["Option A"]}
+          style={{ width: 160 }}
+        >
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
       </TooltrayNext>
-    </ToolbarRegion>
-    <ToolbarRegion position="end">
+    </ToolbarContent>
+    <ToolbarContent position="end">
       <TooltrayNext
         overflowGroup="Actions"
         overflowLabel="Actions"
@@ -612,7 +628,7 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
       >
         <Button appearance="solid">Run</Button>
       </TooltrayNext>
-    </ToolbarRegion>
+    </ToolbarContent>
   </ToolbarNext>
 );
 OverflowMenuDividers.globals = {
@@ -626,7 +642,7 @@ OverflowMenuDividers.globals = {
  *
  * 1. Full width:
  *    `[Value] [Value v] [Value v] | [Decline Request] [Adjust Price]   Q @`
- *    The two quick-action icons live in an implicit end region, so they
+ *    The two quick-action icons live in an implicit end content, so they
  *    remain pinned at toolbar end.
  *
  * 2. Actions collapse first (grouped, priority 5):
@@ -634,7 +650,7 @@ OverflowMenuDividers.globals = {
  *    "Decline Request" and "Adjust Price" disappear together into a
  *    labeled ACTIONS trigger. The divider between filters and actions
  *    is preserved because the ACTIONS trigger replaces the tray inline
- *    in the start region.
+ *    in the start content.
  *
  * 3. Trailing dropdown collapses into Filters (independent, priority 4):
  *    `[Value] [Value v] FILTERS | ACTIONS   Q @`
