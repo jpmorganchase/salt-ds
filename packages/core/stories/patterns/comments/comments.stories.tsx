@@ -718,6 +718,8 @@ export const WithMultilineInput = () => {
 export const WithSubmissionError = () => {
   const { announce } = useAriaAnnouncer();
   const inputRef = useRef<HTMLInputElement>(null);
+  const submissionErrorMessage =
+    "You are offline. Check your connection and resubmit.";
   const [inputValue, setInputValue] = useState("");
   const [validationStatus, setValidationStatus] = useState<
     "error" | "success" | undefined
@@ -776,10 +778,9 @@ export const WithSubmissionError = () => {
     }
     setValidationStatus(undefined);
     setSubmissionError(true);
-    announce(
-      "Couldn't post your comment. You are offline. Check your connection and resubmit.",
-      { ariaLive: "assertive" },
-    );
+    announce(`${submissionErrorMessage}`, {
+      ariaLive: "assertive",
+    });
   };
 
   return (
@@ -827,10 +828,7 @@ export const WithSubmissionError = () => {
                 <Text>
                   <strong>Couldn’t post your comment</strong>
                 </Text>
-                <Text>
-                  You are offline. Check your connection and resubmit. I'll
-                  check if saved views are discoverable enough.
-                </Text>
+                <Text>{submissionErrorMessage}</Text>
               </StackLayout>
             </BannerContent>
             <BannerActions>
