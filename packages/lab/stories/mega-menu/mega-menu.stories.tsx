@@ -2406,7 +2406,7 @@ FullWidthContainer.parameters = {
   layout: "fullscreen",
 };
 
-export const MaxWidthContent: StoryFn = () => {
+export const EdgeToEdge: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
@@ -2418,7 +2418,7 @@ export const MaxWidthContent: StoryFn = () => {
   };
 
   return (
-    <div className="full-width-wrapper">
+    <div className="edge-to-edge-wrapper">
       <nav>
         <StackLayout as="ol" direction="row" gap={1}>
           <li>
@@ -3018,7 +3018,7 @@ export const MaxWidthContent: StoryFn = () => {
   );
 };
 
-MaxWidthContent.parameters = {
+EdgeToEdge.parameters = {
   layout: "fullscreen",
 };
 

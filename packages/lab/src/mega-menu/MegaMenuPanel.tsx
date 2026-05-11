@@ -55,18 +55,21 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       return () => setPanelId(undefined);
     }, [id, setPanelId]);
 
-    // Resolve the `--salt-layout-page-margin` CSS variable to a pixel value so it
-    // can be passed as padding to floating-ui's `shift` and `size` middleware,
-    // ensuring the panel always keeps left/right margins of that size.
+    // Resolve the panel's page-margin to a pixel value to override the margin as required.
     const [pageMargin, setPageMargin] = useState(0);
     useEffect(() => {
       if (!targetWindow) return;
+      const referenceEl = floatingRootContext.elements.domReference as
+        | HTMLElement
+        | null
+        | undefined;
+      const host = referenceEl ?? targetWindow.document.body;
       const doc = targetWindow.document;
       const measure = () => {
         const probe = doc.createElement("div");
         probe.style.cssText =
-          "position:absolute;visibility:hidden;pointer-events:none;width:var(--salt-layout-page-margin);";
-        doc.body.appendChild(probe);
+          "position:absolute;visibility:hidden;pointer-events:none;width:var(--saltMegaMenuPanel-pageMargin, var(--salt-layout-page-margin));";
+        host.appendChild(probe);
         const width = probe.getBoundingClientRect().width;
         probe.remove();
         setPageMargin((prev) => (prev === width ? prev : width));
@@ -74,7 +77,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       measure();
       targetWindow.addEventListener("resize", measure);
       return () => targetWindow.removeEventListener("resize", measure);
-    }, [targetWindow]);
+    }, [targetWindow, floatingRootContext]);
 
     const floatingUIResult = useFloatingUI({
       rootContext: floatingRootContext,

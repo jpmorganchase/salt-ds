@@ -3,6 +3,44 @@
   padding: 0;
 }
 
+.fullWidthWrapper {
+  padding: var(--salt-layout-page-margin);
+  box-sizing: border-box;
+}
+
+.fullWidthPanel {
+  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
+  box-sizing: border-box;
+}
+
+.fullWidthPanel :global(.saltMegaMenuSection) {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
+.edgeToEdgeWrapper {
+  /* Override the panel's page margin so it can render edge-to-edge.
+     The MegaMenuPanel reads this variable from its trigger's tree. */
+  --saltMegaMenuPanel-pageMargin: 0;
+  box-sizing: border-box;
+}
+
+.edgeToEdgePanel {
+  /* Make the panel span the full viewport width. With the page
+     margin overridden to 0 above, floating-ui no longer reserves
+     gutter space, so the panel reaches both viewport edges. */
+  --saltMegaMenuPanel-inlineSize: 100vw;
+  --saltMegaMenuPanel-maxInlineSize: 100vw;
+  box-sizing: border-box;
+}
+
+.edgeToEdgePanel :global(.saltMegaMenuSection) {
+  --saltMegaMenuSection-columnWidth: 212px;
+  max-inline-size: 920px;
+  inline-size: 100%;
+  margin-inline: auto;
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
 .menuItemAdornment {
   margin-inline-start: auto;
   display: flex;

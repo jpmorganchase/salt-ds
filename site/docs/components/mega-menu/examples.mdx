@@ -10,7 +10,9 @@ data:
 
 ## Default
 
-The mega menu displays grouped menu items in a multi-column layout. The menu container is typically triggered by a button and can be closed by clicking outside the menu, pressing the Escape key, or clicking the trigger component again. Each menu item acts as a link that navigates to a specific page. If the content exceeds the available space, the menu becomes scrollable.
+The mega menu displays grouped navigation links in a multi-column layout sized to hug its contents. It’s typically opened via a trigger button and can be closed by clicking outside the menu, pressing Escape key, or clicking the trigger again. Each mega menu item links to a specific page. If the content exceeds the available space, the menu wraps in width and scrolls vertically.
+
+When the content becomes wider than the available width, the container expands until it reaches the inset defined by the left and right Layout-page-margin, and the mega menu groups wrap to fit.
 
 <LivePreview componentName="mega-menu" exampleName="Default" />
 
@@ -20,7 +22,19 @@ Includes an icon alongside the text, enhancing visual recognition and making nav
 
 <LivePreview componentName="mega-menu" exampleName="WithIcons" />
 
-## With Adornment
+## Full width
+
+The mega menu container is full width within the inset, expanding to the left and right Layout-page-margin by default. The content then fills the container.
+
+<LivePreview componentName="mega-menu" exampleName="FullWidth" />
+
+## Edge to edge
+
+The mega menu container expands to the full viewport width (edge-to-edge). In this example, the content is center-aligned and constrained to a maximum width, creating balanced left/right margins on larger displays.
+
+<LivePreview componentName="mega-menu" exampleName="EdgeToEdge" />
+
+## With adornment
 
 You can display adornments such as tags, badges, or icons. This allows you to indicate statuses, show counts, or signal external navigation.
 
@@ -45,6 +59,12 @@ You can add a link to give users a quick way to access a broader section or view
 
 ## In small viewport
 
-When the mega menu is triggered in a small viewport, or the screen size changes to a small viewport, the expanded mega menu arranges its groups, custom regions, and links in a stacked layout, preserving their original order. This ensures the menu remains accessible and easy to navigate on smaller screens.
+When the mega menu is triggered in a small viewport, or the screen size changes to a small viewport, the expanded mega menu arranges its groups, Contents, and links in a stacked layout, preserving their original order. This ensures the menu remains accessible and easy to navigate on smaller screens.
+
+### Best practices
+
+- Although the mega menu stacks into a single column on small screens, it’s more suitable for desktop. In small viewports it can become hard to scan, scroll-heavy, and more error-prone on touch.
+
+- If content is large or frequently used on mobile, use an alternate mobile nav (e.g., drawer/accordion).
 
 <LivePreview componentName="mega-menu" exampleName="InSmallViewport" />
