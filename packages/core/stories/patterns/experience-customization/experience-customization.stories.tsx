@@ -244,6 +244,7 @@ export const CardSelection = () => {
       handleCheckboxChange={handleCheckboxChange}
       handleSelectChange={handleSelectChange}
       stepFieldValidation={{}}
+      style={{ maxWidth: 700 }}
     />
   );
 };

@@ -3,10 +3,11 @@ import {
   BannerContent,
   Checkbox,
   FlexItem,
-  FlexLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  GridItem,
+  GridLayout,
   InteractableCard,
   InteractableCardGroup,
   Link,
@@ -103,9 +104,9 @@ export const FoundationContent = ({
               handleSelectChange?.(value as string, "displayDensity");
             }}
           >
-            <FlexLayout>
+            <GridLayout style={{ width: "100%" }} columns={{ xs: 1, sm: 3 }}>
               {displayDensityOptions.map((option) => (
-                <FlexItem key={option.value}>
+                <GridItem key={option.value}>
                   <InteractableCard
                     value={option.value}
                     aria-describedby={
@@ -123,9 +124,8 @@ export const FoundationContent = ({
                         style={{
                           height: 200,
                           width: "100%",
-                          objectFit: "contain",
+                          // objectFit: "contain",
                         }}
-                        aria-hidden
                       />
                       <StackLayout direction="row" gap={1}>
                         <RadioButtonIcon
@@ -138,9 +138,9 @@ export const FoundationContent = ({
                       </StackLayout>
                     </StackLayout>
                   </InteractableCard>
-                </FlexItem>
+                </GridItem>
               ))}
-            </FlexLayout>
+            </GridLayout>
           </InteractableCardGroup>
         </FormField>
       </FlexItem>

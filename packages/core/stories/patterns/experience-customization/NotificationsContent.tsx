@@ -1,8 +1,8 @@
 import {
-  FlexItem,
-  FlexLayout,
   FormField,
   FormFieldLabel,
+  GridItem,
+  GridLayout,
   InteractableCard,
   InteractableCardGroup,
   RadioButtonIcon,
@@ -44,7 +44,7 @@ export const NotificationPosition = ({ position }: { position: string }) => {
   return (
     <div
       style={{
-        width: 108,
+        width: "100%",
         height: 100,
         backgroundColor: "var(--salt-container-secondary-background)",
         position: "relative",
@@ -53,7 +53,7 @@ export const NotificationPosition = ({ position }: { position: string }) => {
       <div
         style={{
           height: 12,
-          width: 29,
+          width: "30%",
           backgroundColor: "var(--salt-actionable-background-selected)",
           borderRadius: "var(--salt-palette-corner-weaker)",
           position: "absolute",
@@ -68,10 +68,11 @@ export const NotificationsContent = ({
   formData,
   handleSelectChange,
   handleCheckboxChange,
-}: FormContentProps) => {
+  style,
+}: FormContentProps & { style?: CSSProperties }) => {
   const titleId = useId();
   return (
-    <StackLayout>
+    <StackLayout style={style}>
       <FormField>
         <FormFieldLabel id={titleId}>
           Choose a placement for notification
@@ -83,9 +84,13 @@ export const NotificationsContent = ({
             handleSelectChange?.(value as string, "position");
           }}
         >
-          <FlexLayout wrap>
+          <GridLayout
+            style={{ width: "100%" }}
+            columns={{ xs: 1, sm: 2, md: 4 }}
+            gap={3}
+          >
             {NOTIFICATION_POSITIONS.map(({ value, label }) => (
-              <FlexItem key={value}>
+              <GridItem key={value}>
                 <InteractableCard value={value}>
                   <StackLayout gap={1}>
                     <StackLayout gap={1} direction="row">
@@ -100,9 +105,9 @@ export const NotificationsContent = ({
                     </StackLayout>
                   </StackLayout>
                 </InteractableCard>
-              </FlexItem>
+              </GridItem>
             ))}
-          </FlexLayout>
+          </GridLayout>
         </InteractableCardGroup>
       </FormField>
 
