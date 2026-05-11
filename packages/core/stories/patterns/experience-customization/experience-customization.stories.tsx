@@ -202,21 +202,6 @@ const stepValidationSchemas: Record<
   regional: Yup.object({
     language: Yup.string().required("Language is required."),
   }),
-  displayMode: Yup.object({
-    displayDensity: Yup.string().test({
-      name: "high-density-warning",
-      message: "warning",
-      test(value, ctx) {
-        if (!value) return true;
-        if (value === "high") {
-          return ctx.createError({
-            params: { severity: "warning" },
-          });
-        }
-        return true;
-      },
-    }),
-  }),
 };
 
 export const StandardControls = () => {
@@ -308,7 +293,7 @@ export const EndToEnd = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -339,7 +324,7 @@ export const EndToEnd = () => {
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -373,7 +358,7 @@ export const EndToEnd = () => {
     <FlexLayout justify="space-between">
       <FlexItem style={{ flex: 1 }}>
         <Text>
-          Create a new account
+          Customize your experience
           <Text
             styleAs="h2"
             ref={stepHeadingRef}
@@ -483,7 +468,7 @@ export const EndToEndModal = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -550,7 +535,7 @@ export const EndToEndModal = () => {
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -1244,7 +1229,7 @@ export const PreferenceDialog = () => {
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open preferences dialog</Button>
-      <Dialog style={{ minHeight: "60%" }} open={open}>
+      <Dialog style={{ minHeight: "60%" }} open={open} onOpenChange={setOpen}>
         <DialogHeader header="Preferences" />
         <DialogContent>
           <ParentChildLayout

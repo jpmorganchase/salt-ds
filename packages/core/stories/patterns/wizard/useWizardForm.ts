@@ -158,21 +158,21 @@ export function useWizardForm({
     });
   }, [runValidationAndStore]);
 
+  // Moves to the next step without revalidating. Useful after explicit validation has already completed.
+  const nextWithoutValidation = () => dispatch({ type: "NEXT_STEP" });
+
   // Moves to the previous step
-  const previous = useCallback(() => {
-    dispatch({ type: "PREVIOUS_STEP" });
-  }, []);
+  const previous = () => dispatch({ type: "PREVIOUS_STEP" });
 
   // Resets the wizard form to its initial state
-  const reset = useCallback(() => {
-    dispatch({ type: "RESET" });
-  }, []);
+  const reset = () => dispatch({ type: "RESET" });
 
   return {
     state,
     currentStepId,
     updateField,
     next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,

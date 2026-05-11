@@ -142,7 +142,7 @@ export const Horizontal = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -179,7 +179,7 @@ export const Horizontal = () => {
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -305,7 +305,7 @@ export const HorizontalWithCancelConfirmation = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -343,7 +343,7 @@ export const HorizontalWithCancelConfirmation = () => {
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -486,7 +486,7 @@ export const VerticalWithCancelConfirmation = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -524,7 +524,7 @@ export const VerticalWithCancelConfirmation = () => {
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -661,7 +661,7 @@ export const Modal = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -710,7 +710,7 @@ export const Modal = () => {
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -813,7 +813,7 @@ export const ModalWithConfirmations = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -875,7 +875,7 @@ export const ModalWithConfirmations = () => {
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
