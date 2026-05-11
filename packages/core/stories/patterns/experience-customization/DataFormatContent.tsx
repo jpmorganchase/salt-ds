@@ -77,55 +77,60 @@ export const DataFormatContent = ({
   };
 
   return (
-    <FlexLayout justify="space-between" wrap>
-      <StackLayout>
-        <FormField>
-          <FormFieldLabel>Stock name display</FormFieldLabel>
-          <RadioButtonGroup
-            onChange={handleRadioChange}
-            name="stockNameDisplay"
-            value={formData.stockNameDisplay}
-          >
-            <RadioButton label="Ticker only" value="tickerOnly" />
-            <RadioButton label="Ticker and full name" value="fullNameTicker" />
-          </RadioButtonGroup>
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Exchange & Region</FormFieldLabel>
-          <RadioButtonGroup
-            onChange={handleRadioChange}
-            name="exchangeAndRegionDisplay"
-            value={formData.exchangeAndRegionDisplay}
-          >
-            <RadioButton label="Text only" value="text" />
-            <RadioButton label="Flag only" value="flag" />
-            <RadioButton label="Both" value="both" />
-          </RadioButtonGroup>
-        </FormField>
-        <FormField>
-          <FormFieldLabel>Visible metrics</FormFieldLabel>
-          <RadioButtonGroup
-            onChange={handleRadioChange}
-            name="visibleMetrics"
-            value={formData.visibleMetrics}
-          >
-            <RadioButton label="Last price" value="lastPrice" />
-            <RadioButton label="Absolute change" value="absolute" />
-            <RadioButton label="Market Cap" value="marketCap" />
-          </RadioButtonGroup>
-        </FormField>
+    <FlexLayout wrap>
+      <FlexItem grow={1} basis={0}>
+        <StackLayout>
+          <FormField>
+            <FormFieldLabel>Stock name display</FormFieldLabel>
+            <RadioButtonGroup
+              onChange={handleRadioChange}
+              name="stockNameDisplay"
+              value={formData.stockNameDisplay}
+            >
+              <RadioButton label="Ticker only" value="tickerOnly" />
+              <RadioButton
+                label="Ticker and full name"
+                value="fullNameTicker"
+              />
+            </RadioButtonGroup>
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Exchange & Region</FormFieldLabel>
+            <RadioButtonGroup
+              onChange={handleRadioChange}
+              name="exchangeAndRegionDisplay"
+              value={formData.exchangeAndRegionDisplay}
+            >
+              <RadioButton label="Text only" value="text" />
+              <RadioButton label="Flag only" value="flag" />
+              <RadioButton label="Both" value="both" />
+            </RadioButtonGroup>
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Visible metrics</FormFieldLabel>
+            <RadioButtonGroup
+              onChange={handleRadioChange}
+              name="visibleMetrics"
+              value={formData.visibleMetrics}
+            >
+              <RadioButton label="Last price" value="lastPrice" />
+              <RadioButton label="Absolute change" value="absolute" />
+              <RadioButton label="Market Cap" value="marketCap" />
+            </RadioButtonGroup>
+          </FormField>
 
-        <FormField>
-          <FormFieldLabel>Performance chart</FormFieldLabel>
-          <Switch
-            name="performanceChart"
-            checked={formData.performanceChart}
-            onChange={handleCheckboxChange}
-            label={formData.performanceChart ? "Visible" : "Hidden"}
-          />
-        </FormField>
-      </StackLayout>
-      <FlexItem>
+          <FormField>
+            <FormFieldLabel>Performance chart</FormFieldLabel>
+            <Switch
+              name="performanceChart"
+              checked={formData.performanceChart}
+              onChange={handleCheckboxChange}
+              label={formData.performanceChart ? "Visible" : "Hidden"}
+            />
+          </FormField>
+        </StackLayout>
+      </FlexItem>
+      <FlexItem grow={1} basis={0}>
         <Card>
           <StackLayout separators>
             {stockCards.map((stock) => (

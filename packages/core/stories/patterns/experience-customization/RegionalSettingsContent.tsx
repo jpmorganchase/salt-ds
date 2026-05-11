@@ -91,7 +91,7 @@ export const RegionalSettingsContent = ({
             handleSelectChange?.(value[0], "publicHolidayCalendar")
           }
         >
-          <Option value="None">None (don’t apply public holidays)</Option>
+          <Option value="None">None (don't apply public holidays)</Option>
           <Option value="selected-country">Selected country</Option>
           <Option value="United States (Federal)">
             United States (Federal)

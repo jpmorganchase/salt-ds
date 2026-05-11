@@ -15,6 +15,7 @@ import {
   useId,
   useTheme,
 } from "@salt-ds/core";
+import { clsx } from "clsx";
 import { useEffect, useRef } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
@@ -56,7 +57,8 @@ export const FoundationContent = ({
 }: FormContentProps) => {
   const { mode } = useTheme();
   const densityId = useId();
-  const bannerId = useId();
+  const warningBannerId = useId();
+  const errorBannerId = useId();
   const requiredDisclaimerField = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,9 +68,9 @@ export const FoundationContent = ({
   }, [stepFieldValidation.acceptTerms?.status]);
 
   return (
-    <StackLayout aria-live="polite">
+    <StackLayout>
       {formData.displayDensity === "high" && (
-        <Banner status="warning" id={bannerId}>
+        <Banner status="warning" id={warningBannerId}>
           <BannerContent>
             High density doesn't meet the{" "}
             <Link
@@ -82,6 +84,13 @@ export const FoundationContent = ({
           </BannerContent>
         </Banner>
       )}
+      {stepFieldValidation.displayDensity?.status && (
+        <Banner status="error" id={errorBannerId}>
+          <BannerContent>
+            {stepFieldValidation.displayDensity.message}
+          </BannerContent>
+        </Banner>
+      )}
 
       <FlexItem>
         <StackLayout gap={1}>
@@ -89,9 +98,6 @@ export const FoundationContent = ({
             Choose a density
           </Text>
           <InteractableCardGroup
-            aria-describedby={
-              formData.displayDensity === "high" ? bannerId : undefined
-            }
             aria-labelledby={densityId}
             value={formData.displayDensity}
             onChange={(_event, value) => {
@@ -101,7 +107,16 @@ export const FoundationContent = ({
             <FlexLayout>
               {displayDensityOptions.map((option) => (
                 <FlexItem key={option.value}>
-                  <InteractableCard value={option.value}>
+                  <InteractableCard
+                    value={option.value}
+                    aria-describedby={
+                      clsx(
+                        formData.displayDensity === "high" && warningBannerId,
+                        stepFieldValidation.displayDensity?.status &&
+                          errorBannerId,
+                      ) || undefined
+                    }
+                  >
                     <StackLayout gap={1}>
                       <img
                         src={mode === "dark" ? option.darkImage : option.image}

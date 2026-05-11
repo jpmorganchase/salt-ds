@@ -2,7 +2,6 @@ import {
   Banner,
   BannerContent,
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -120,7 +119,7 @@ const wizardSteps = [
   },
   {
     id: "notifications",
-    label: "Notification",
+    label: "Notification delivery",
     stepTitle: "Notifications",
   },
 ] as const;
@@ -191,6 +190,7 @@ const stepValidationSchemas: Record<
   Yup.ObjectSchema<Record<string, any>>
 > = {
   foundation: Yup.object({
+    displayDensity: Yup.string().required("Choose one option to continue."),
     acceptTerms: Yup.boolean().when("displayDensity", {
       is: "high",
       // biome-ignore lint/suspicious/noThenProperty: This is the correct Yup syntax for conditional validation.
@@ -732,13 +732,14 @@ export const MandatoryConfigurations = () => {
   ];
 
   const bannerId = useId();
+  const headingId = useId();
 
   return (
     <StackLayout gap={0} style={{ maxWidth: 730 }}>
       <StackLayout padding={3}>
         <Text>
           Customize your experience
-          <Text as="h2" style={{ margin: 0 }}>
+          <Text as="h2" id={headingId} style={{ margin: 0 }}>
             Choose data access level
           </Text>
         </Text>
@@ -756,6 +757,8 @@ export const MandatoryConfigurations = () => {
             )}
             <StackLayout>
               <InteractableCardGroup
+                aria-labelledby={headingId}
+                value={selected}
                 onChange={(_event, value) => {
                   setHasError(false);
                   setSelected(value);
@@ -824,7 +827,7 @@ function PreferencesNavigation({
   return (
     <VerticalNavigation
       aria-label="Basic indicator sidebar"
-      appearance="indicator"
+      appearance="bordered"
       style={{ minWidth: "30ch" }}
     >
       {items.map((item) => (
@@ -920,17 +923,6 @@ function PreferencesContent({
             <RadioButton label="Low density" value="low" />
           </RadioButtonGroup>
         </FormField>
-        {formData.displayDensity === "high" && (
-          <FormField necessity="required">
-            <Checkbox
-              checked={formData.acceptTerms}
-              onChange={(event) =>
-                onSwitchChange("acceptTerms", event.target.checked)
-              }
-              label="I understand that High density reduces target sizes and may affect readability and ease of use."
-            />
-          </FormField>
-        )}
       </StackLayout>
     );
   }

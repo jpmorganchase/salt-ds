@@ -71,37 +71,40 @@ export const NotificationsContent = ({
 }: FormContentProps) => {
   const titleId = useId();
   return (
-    <StackLayout gap={1}>
-      <Text styleAs="label" id={titleId}>
-        Choose a placement for notification
-      </Text>
-      <InteractableCardGroup
-        aria-labelledby={titleId}
-        onChange={(_event, value) => {
-          handleSelectChange?.(value as string, "position");
-        }}
-      >
-        <FlexLayout wrap>
-          {NOTIFICATION_POSITIONS.map(({ value, label }) => (
-            <FlexItem key={value}>
-              <InteractableCard value={value}>
-                <StackLayout gap={1}>
-                  <StackLayout gap={1} direction="row">
-                    <NotificationPosition position={value} />
+    <StackLayout>
+      <StackLayout gap={1}>
+        <Text styleAs="label" id={titleId}>
+          Choose a placement for notification
+        </Text>
+        <InteractableCardGroup
+          aria-labelledby={titleId}
+          value={formData.position}
+          onChange={(_event, value) => {
+            handleSelectChange?.(value as string, "position");
+          }}
+        >
+          <FlexLayout wrap>
+            {NOTIFICATION_POSITIONS.map(({ value, label }) => (
+              <FlexItem key={value}>
+                <InteractableCard value={value}>
+                  <StackLayout gap={1}>
+                    <StackLayout gap={1} direction="row">
+                      <NotificationPosition position={value} />
+                    </StackLayout>
+                    <StackLayout direction="row" gap={1}>
+                      <RadioButtonIcon
+                        aria-hidden
+                        checked={formData.position === value}
+                      />
+                      <Text>{label}</Text>
+                    </StackLayout>
                   </StackLayout>
-                  <StackLayout direction="row" gap={1}>
-                    <RadioButtonIcon
-                      aria-hidden
-                      checked={formData.position === value}
-                    />
-                    <Text>{label}</Text>
-                  </StackLayout>
-                </StackLayout>
-              </InteractableCard>
-            </FlexItem>
-          ))}
-        </FlexLayout>
-      </InteractableCardGroup>
+                </InteractableCard>
+              </FlexItem>
+            ))}
+          </FlexLayout>
+        </InteractableCardGroup>
+      </StackLayout>
       <FormField>
         <FormFieldLabel>Automatically dismiss notifications</FormFieldLabel>
         <Switch
