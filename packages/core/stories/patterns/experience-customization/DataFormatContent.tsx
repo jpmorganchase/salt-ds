@@ -27,7 +27,6 @@ const stockCards = [
     exchange: "NYSE",
     trendImage: PositiveTrend,
     trendImageDark: PositiveTrendDark,
-    trendAlt: "Positive trend",
     isPositive: true,
     changeText: "+6.27 (+1.95%)",
     changeColor: "success" as const,
@@ -43,7 +42,6 @@ const stockCards = [
     exchange: "NYSE",
     trendImage: NegativeTrend,
     trendImageDark: NegativeTrendDark,
-    trendAlt: "Negative trend",
     isPositive: false,
     changeText: "-4.03 (-0.35%)",
     changeColor: "error" as const,
@@ -183,7 +181,7 @@ export const DataFormatContent = ({
                           ? stock.trendImageDark
                           : stock.trendImage
                       }
-                      alt={stock.trendAlt}
+                      alt=""
                       style={{ width: "100%" }}
                       height={64}
                     />

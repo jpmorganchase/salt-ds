@@ -92,7 +92,7 @@ export const RegionalSettingsContent = ({
           }
         >
           <Option value="None">None (don't apply public holidays)</Option>
-          <Option value="selected-country">Selected country</Option>
+          <Option value="Selected country">Selected country</Option>
           <Option value="United States (Federal)">
             United States (Federal)
           </Option>

@@ -41,11 +41,8 @@ import {
 } from "@salt-ds/core";
 import {
   BuildingIcon,
-  CalendarIcon,
   GlobeIcon,
-  LocationIcon,
   LockedIcon,
-  SearchIcon,
   WarningSolidIcon,
 } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
@@ -675,9 +672,6 @@ export const EndToEndModal = () => {
               header={
                 <span tabIndex={-1} ref={stepHeadingRef}>
                   {wizardSteps[activeStepIndex].label}
-                  <span className="visuallyHidden">
-                    {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
-                  </span>
                 </span>
               }
               preheader="Customize your experience"
@@ -829,7 +823,7 @@ function PreferencesNavigation({
 }) {
   return (
     <VerticalNavigation
-      aria-label="Basic indicator sidebar"
+      aria-label="Experience customization sidebar"
       appearance="bordered"
       style={{ minWidth: "30ch" }}
     >
@@ -936,9 +930,8 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>Choose a language</FormFieldLabel>
           <Dropdown
-            startAdornment={<SearchIcon />}
             bordered
-            placeholder="Search"
+            placeholder="Select"
             value={formData.language}
             onSelectionChange={(_event, value) =>
               onDropdownChange("language", value[0])
@@ -961,9 +954,8 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>Region / Country</FormFieldLabel>
           <Dropdown
-            startAdornment={<LocationIcon />}
             bordered
-            placeholder="Search"
+            placeholder="Select"
             value={formData.region}
             onSelectionChange={(_event, value) =>
               onDropdownChange("region", value[0])
@@ -988,9 +980,8 @@ function PreferencesContent({
         <FormField>
           <FormFieldLabel>Public holiday calendar</FormFieldLabel>
           <Dropdown
-            startAdornment={<CalendarIcon />}
             bordered
-            placeholder="Search"
+            placeholder="Select"
             value={formData.publicHolidayCalendar}
             onSelectionChange={(_event, value) =>
               onDropdownChange("publicHolidayCalendar", value[0])
