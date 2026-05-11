@@ -4,18 +4,19 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  Rating,
+  type RatingProps,
   SemanticIconProvider,
   StackLayout,
 } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
-import { Rating, type RatingProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
 import "./rating.stories.css";
 
 export default {
-  title: "Lab/Rating",
+  title: "Core/Rating",
   component: Rating,
   args: {
     onChange: fn(),

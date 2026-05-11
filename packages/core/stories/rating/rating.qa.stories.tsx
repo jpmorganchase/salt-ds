@@ -1,11 +1,10 @@
-import { SemanticIconProvider } from "@salt-ds/core";
+import { Rating, SemanticIconProvider } from "@salt-ds/core";
 import { LikeIcon, LikeSolidIcon } from "@salt-ds/icons";
-import { Rating } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Rating/Rating QA",
+  title: "Core/Rating/Rating QA",
   component: Rating,
 } as Meta<typeof Rating>;
 

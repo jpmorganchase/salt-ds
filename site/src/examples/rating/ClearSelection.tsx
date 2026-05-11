@@ -2,10 +2,10 @@ import {
   Button,
   FormField,
   FormFieldLabel,
+  Rating,
   StackLayout,
   useAriaAnnouncer,
 } from "@salt-ds/core";
-import { Rating } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const ClearSelection = (): ReactElement => {
