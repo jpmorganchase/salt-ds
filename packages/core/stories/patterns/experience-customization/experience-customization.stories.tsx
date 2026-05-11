@@ -367,6 +367,16 @@ export const EndToEnd = () => {
           >
             {wizardSteps[activeStepIndex].label}
           </Text>
+          {wizardSteps[activeStepIndex].id === "foundation" && (
+            <Text
+              color="secondary"
+              style={{
+                marginTop: "var(--salt-spacing-50)",
+              }}
+            >
+              A selection is required to proceed
+            </Text>
+          )}
         </Text>
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
@@ -555,7 +565,12 @@ export const EndToEndModal = () => {
 
   const contentByStep: Record<string, ReactElement> = {
     foundation: <FoundationContent {...sharedFormProps} />,
-    regional: <RegionalSettingsContent {...sharedFormProps} />,
+    regional: (
+      <RegionalSettingsContent
+        {...sharedFormProps}
+        style={{ maxWidth: "50%" }}
+      />
+    ),
     notifications: <NotificationsContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
   };
@@ -687,6 +702,10 @@ export const EndToEndModal = () => {
                   ))}
                 </Stepper>
               }
+              description={
+                wizardSteps[activeStepIndex].id === "foundation" &&
+                "A selection is required to proceed"
+              }
             />
             <DialogContent>{contentByStep[currentStepId]}</DialogContent>
             <DialogActions>{footer}</DialogActions>
@@ -738,6 +757,14 @@ export const MandatoryConfigurations = () => {
           Customize your experience
           <Text as="h2" id={headingId} style={{ margin: 0 }}>
             Choose data access level
+          </Text>
+          <Text
+            color="secondary"
+            style={{
+              marginTop: "var(--salt-spacing-50)",
+            }}
+          >
+            A selection is required to proceed
           </Text>
         </Text>
       </StackLayout>
