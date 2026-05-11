@@ -15,9 +15,9 @@ Desktop densities are tailored for different types of applications, from complex
 
 | Densities | Use case                                                                                                                               |
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| High      | Ideal for data-heavy or complex applications, such as trading platforms, where maximum information needs to be displayed efficiently.  |
-| Medium    | Suited for standard applications and websites, providing a balanced default density for most use cases.                                |
-| Low       | Best for data-light or content-focused interfaces, such as marketing and communications, where a spacious layout enhances readability. |
+| Low      | Best for data-light or content-focused interfaces, such as marketing and communications, where a spacious layout enhances readability. |
+| Medium   | Suited for standard applications and websites, providing a balanced default density for most use cases.                                |
+| High     | Ideal for data-heavy or complex applications, such as trading platforms, where maximum information needs to be displayed efficiently.  |
 
 <Diagram
   src="/img/foundations/density-desktop-densities.png"
@@ -26,14 +26,14 @@ Desktop densities are tailored for different types of applications, from complex
   background="secondary"
 />
 
-### High density
+### Low density
 
-High density is suitable for specialized use cases. It’s ideal for data-dense applications where screen real estate is maximized, or for applications frequently used by experienced users.
+Low density is suitable for use cases that require increased legibility and whitespace. It’s ideal for marketing applications or interfaces with simpler layouts.
 
 <Diagram
-  src="/img/foundations/density-high-density.png"
-  srcDark="/img/foundations/density-high-density-dark.png"
-  alt="Example of a high density"
+  src="/img/foundations/density-low-density.png"
+  srcDark="/img/foundations/density-low-density-dark.png"
+  alt="Example of a low density"
   background="secondary"
 />
 
@@ -48,16 +48,25 @@ Medium density is suitable for most use-cases. It's ideal for standard applicati
   background="secondary"
 />
 
-### Low density
+### High density
 
-Low density is suitable for use cases that require increased legibility and whitespace. It’s ideal for marketing applications or interfaces with simpler layouts.
+High density is suitable for specialized use cases. It’s ideal for data-dense applications where screen real estate is maximized, or for applications frequently used by experienced users.
 
 <Diagram
-  src="/img/foundations/density-low-density.png"
-  srcDark="/img/foundations/density-low-density-dark.png"
-  alt="Example of a low density"
+  src="/img/foundations/density-high-density.png"
+  srcDark="/img/foundations/density-high-density-dark.png"
+  alt="Example of a high density"
   background="secondary"
 />
+
+<Callout
+  status="warning"
+  title="High density is not recommended as the default density"
+>
+High density doesn’t meet [WCAG 2.2](https://www.w3.org/WAI/WCAG22/Understanding/) level AA requirements, including target size. When offering a choice of densities, users must be informed about the accessibility implications prior to applying high density. All information and functionality must remain available regardless of the density selected—switching density must not change the experience beyond presentation (e.g., spacing, text size).
+
+Read about [Guiding conscious decisions](/salt/patterns/experience-customization#guiding-conscious-decisions) on the Experience Customization pattern.
+</Callout>
 
 ## Mobile density
 

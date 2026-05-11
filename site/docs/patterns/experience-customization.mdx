@@ -51,11 +51,11 @@ Typical groups of settings you might expose to your users are:
 
 ## How to build
 
-The Experience Customization pattern utilizes existing Salt components. Refer to the [Wizard](/salt/patterns/wizard) and [Preference dialogue](/salt/patterns/preferences-dialog) for technical specifications.
+The Experience Customization pattern utilizes existing Salt components. Refer to the [Wizard](/salt/patterns/wizard) and [Preference dialog](/salt/patterns/preferences-dialog) for technical specifications.
 
 ### Anatomy
 
-#### Onboarding - first time setup
+#### Onboarding - First time setup
 
 1. **Pattern: [Wizard](/salt/patterns/wizard)**
 2. **Content area**: This region is intended for selection model. Three patterns are available: standard control selection using switches, radio buttons, and selects for clear, label-driven choices; card or tile selection for scannable, comparable options; and dynamic live preview for configurations where multiple settings combine and users need to see results before committing, such as data grid or chart configuration.
@@ -70,7 +70,7 @@ The Experience Customization pattern utilizes existing Salt components. Refer to
 
 #### Ongoing customization
 
-1. **Pattern: [Preference dialogue](/salt/patterns/preferences-dialog)**
+1. **Pattern: [Preference dialog](/salt/patterns/preferences-dialog)**
 2. **Content area**: In this persistent context, use standard control selection with clear, label-driven controls. Since users are introduced to these settings during onboarding, ongoing customization should focus on familiar adjustments with clear, easily understood results.
 
 <Diagram
@@ -90,7 +90,7 @@ The steps below summarize Salt-specific user preferences that may be made avai
 3. **Data surfaces**: Configure tables and charts, where multiple settings combine and users benefit from seeing outcomes live before finalizing selections.
 4. **Feedback**: Finalize how the system provides feedback after core reading and interpretation is set.
 
-#### Ordering the experience
+### Ordering the experience
 
 | Step | Stage               | What the user sets                                                                                                                               | Sequence rationale                                                                                                                                    |
 | ---- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -119,7 +119,7 @@ The selection model uses an escalation-based approach for presenting configurati
 
 The following examples show how the choice of selection pattern is guided by the specific needs of each workflow.
 
-### Standard controls – locale and time zone
+### Standard controls – Locale and time zone
 
 Use standard controls for familiar, functional settings such as language selection, time zone selection, or an automatic translate toggle. These options are clearly described by labels alone, so adding visual examples would be redundant and take up unnecessary screen space. Standard controls are the most effective pattern for these straightforward choices.
 
@@ -143,7 +143,7 @@ Use a dynamic live preview for report-oriented presentation choices, such as s
   background="secondary"
 />
 
-### Card selection – notification placement
+### Card selection – Notification placement
 
 Use card selection for settings that lead to meaningful changes in the interface layout, such as notification placement. Card selection allows users to compare distinct visual states side by side, making it easier to understand and choose the desired outcome without extra cognitive effort.
 
@@ -156,19 +156,19 @@ Use card selection for settings that lead to meaningful changes in the interfa
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-**Switch in wizard**: Switches can be used in multi-step wizards even when changes don’t take effect immediately. Use switches only for true on/off choices, and make any final behavior unmistakable—for example, label the final button 'Finish and apply changes' instead of just 'Finish'.
+Switches can be used in multi-step wizards even when changes don’t take effect immediately. Use switches only for true on/off choices, and make any final behavior unmistakable—for example, label the final button 'Finish and apply changes' instead of just 'Finish'.
 </GuidanceCallout>
 
 ## Reset to default
 
-Use progressive disclosure to show Reset to defaults only when the current step is no longer in its default state.
+Use progressive disclosure to show 'Reset to default' button only when the current step is no longer in its default state.
 
 The action is hidden when the step matches defaults, and revealed once the user selects any non-default option. When selected, it returns the affected settings in the current step to their default state and updates the UI; once defaults are restored, the action is hidden again.
 
 <Diagram
   src="/img/patterns/experience-customization/experience-customization-pattern-reset-to-default-examples.png"
   srcDark="/img/patterns/experience-customization/experience-customization-pattern-reset-to-default-examples-dark.png"
-  alt="Reset to defaults behavior showing hidden and revealed action states"
+  alt="Reset to default behavior showing hidden and revealed action states"
   border
   background="secondary"
 />
@@ -228,6 +228,6 @@ The following sequence illustrates the expected behavior when a mandatory select
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-**Explicit requirements**: Use the header/description area to clearly communicate that a selection is required to proceed (e.g., 'A selection is required to proceed'). 
+**Explicit requirements**: Use the description area to clearly communicate that a selection is required to proceed. 
 </GuidanceCallout>
 
