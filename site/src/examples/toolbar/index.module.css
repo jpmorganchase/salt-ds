@@ -12,6 +12,11 @@
   min-inline-size: 0;
 }
 
+.dividerExampleControls {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .constrained {
   inline-size: 420px;
   max-inline-size: 100%;
