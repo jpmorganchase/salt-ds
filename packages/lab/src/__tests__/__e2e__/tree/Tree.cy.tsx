@@ -12,6 +12,18 @@ const renderSecretFiles = (show = true) =>
     </>
   ) : null;
 
+function getTreeItem(label: string) {
+  return cy.get('[role="treeitem"]').filter((_, element) => {
+    const itemLabel = Cypress.$(element)
+      .children(".saltTreeNodeTrigger")
+      .find(".saltTreeNodeLabel")
+      .first()
+      .text();
+
+    return itemLabel === label;
+  });
+}
+
 describe("Given a Tree", () => {
   describe("Basic Rendering and ARIA Structure", () => {
     it("should render with tree role", () => {
@@ -63,7 +75,59 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      cy.get('[role="treeitem"]#child').should("not.exist");
+      getTreeItem("Child").should("not.exist");
+    });
+
+    it("should support values with spaces without using them as DOM ids", () => {
+      const onExpandedChange = cy.stub().as("expandedChangeHandler");
+      const onSelectionChange = cy.stub().as("selectionChangeHandler");
+
+      cy.mount(
+        <Tree
+          aria-label="File browser"
+          onExpandedChange={onExpandedChange}
+          onSelectionChange={onSelectionChange}
+        >
+          <TreeNode value="Parent folder" label="Parent Folder">
+            <TreeNode value="Nested file one" label="Nested File One" />
+          </TreeNode>
+          <TreeNode value="Sibling file" label="Sibling File" />
+        </Tree>,
+      );
+
+      getTreeItem("Parent Folder").should(
+        "not.have.attr",
+        "id",
+        "Parent folder",
+      );
+
+      cy.realPress("Tab");
+      getTreeItem("Parent Folder").should("be.focused");
+      cy.realPress("ArrowRight");
+      getTreeItem("Parent Folder").should(
+        "have.attr",
+        "aria-expanded",
+        "true",
+      );
+      cy.get("@expandedChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["Parent folder"],
+      );
+
+      cy.realPress("ArrowRight");
+      getTreeItem("Nested File One").should("be.focused");
+      cy.realPress("Enter");
+      getTreeItem("Nested File One").should(
+        "have.attr",
+        "aria-selected",
+        "true",
+      );
+      cy.get("@selectionChangeHandler").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        ["Nested file one"],
+      );
     });
 
     it("should render aria-level correctly for nested nodes", () => {
@@ -122,17 +186,17 @@ describe("Given a Tree", () => {
       );
 
       cy.realPress("Tab");
-      cy.get('[role="treeitem"]#project').should("be.focused");
+      getTreeItem("project").should("be.focused");
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#config').should("be.focused");
+      getTreeItem("config").should("be.focused");
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#secret-file').should("be.focused");
+      getTreeItem("Secret file").should("be.focused");
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#secret-folder').should("be.focused");
+      getTreeItem("Secret folder").should("be.focused");
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#nested-secret-file').should("be.focused");
+      getTreeItem("Nested secret file").should("be.focused");
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#public-config').should("be.focused");
+      getTreeItem("public.config.ts").should("be.focused");
     });
 
     it("should propagate multiselect through conditionally rendered Fragment nodes", () => {
@@ -154,17 +218,17 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      cy.get('[role="treeitem"]#secret-folder')
+      getTreeItem("Secret folder")
         .find(".saltTreeNodeTrigger")
         .first()
         .realClick();
 
-      cy.get('[role="treeitem"]#secret-folder').should(
+      getTreeItem("Secret folder").should(
         "have.attr",
         "aria-checked",
         "true",
       );
-      cy.get('[role="treeitem"]#nested-secret-file').should(
+      getTreeItem("Nested secret file").should(
         "have.attr",
         "aria-checked",
         "true",
@@ -192,17 +256,17 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      cy.get('[role="treeitem"]#nested-secret-file')
+      getTreeItem("Nested secret file")
         .find(".saltTreeNodeTrigger")
         .first()
         .realClick();
 
-      cy.get('[role="treeitem"]#secret-folder').should(
+      getTreeItem("Secret folder").should(
         "have.attr",
         "aria-checked",
         "true",
       );
-      cy.get('[role="treeitem"]#config').should(
+      getTreeItem("config").should(
         "have.attr",
         "aria-checked",
         "mixed",
@@ -224,17 +288,17 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      cy.get('[role="treeitem"]#secret-file').should(
+      getTreeItem("Secret file").should(
         "have.attr",
         "aria-disabled",
         "true",
       );
-      cy.get('[role="treeitem"]#secret-folder').should(
+      getTreeItem("Secret folder").should(
         "have.attr",
         "aria-disabled",
         "true",
       );
-      cy.get('[role="treeitem"]#nested-secret-file').should(
+      getTreeItem("Nested secret file").should(
         "have.attr",
         "aria-disabled",
         "true",
@@ -254,11 +318,11 @@ describe("Given a Tree", () => {
       );
 
       cy.realPress("Tab");
-      cy.get('[role="treeitem"]#project').should("be.focused");
+      getTreeItem("project").should("be.focused");
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#config').should("be.focused");
+      getTreeItem("config").should("be.focused");
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#config').should("be.focused");
+      getTreeItem("config").should("be.focused");
       cy.findByRole("treeitem", { name: "Secret file" }).should("not.exist");
     });
 
@@ -278,43 +342,43 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      cy.get('[role="treeitem"]#config')
+      getTreeItem("config")
         .find(".saltTreeNodeTrigger")
         .first()
         .realClick();
 
-      cy.get('[role="treeitem"]#config').should(
+      getTreeItem("config").should(
         "have.attr",
         "aria-checked",
         "true",
       );
       cy.findByRole("treeitem", { name: "Secret file" }).should("not.exist");
 
-      cy.get('[role="treeitem"]#config')
+      getTreeItem("config")
         .find(".saltTreeNodeExpansionIcon")
         .realClick();
 
-      cy.get('[role="treeitem"]#secret-file').should(
+      getTreeItem("Secret file").should(
         "have.attr",
         "aria-checked",
         "true",
       );
-      cy.get('[role="treeitem"]#secret-folder').should(
+      getTreeItem("Secret folder").should(
         "have.attr",
         "aria-checked",
         "true",
       );
-      cy.get('[role="treeitem"]#public-config').should(
+      getTreeItem("public.config.ts").should(
         "have.attr",
         "aria-checked",
         "true",
       );
 
-      cy.get('[role="treeitem"]#secret-folder')
+      getTreeItem("Secret folder")
         .find(".saltTreeNodeExpansionIcon")
         .realClick();
 
-      cy.get('[role="treeitem"]#nested-secret-file').should(
+      getTreeItem("Nested secret file").should(
         "have.attr",
         "aria-checked",
         "true",
@@ -338,27 +402,27 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      cy.get('[role="treeitem"]#config').should(
+      getTreeItem("config").should(
         "have.attr",
         "aria-checked",
         "mixed",
       );
 
-      cy.get('[role="treeitem"]#config')
+      getTreeItem("config")
         .find(".saltTreeNodeExpansionIcon")
         .realClick();
 
-      cy.get('[role="treeitem"]#secret-folder').should(
+      getTreeItem("Secret folder").should(
         "have.attr",
         "aria-checked",
         "true",
       );
 
-      cy.get('[role="treeitem"]#secret-folder')
+      getTreeItem("Secret folder")
         .find(".saltTreeNodeExpansionIcon")
         .realClick();
 
-      cy.get('[role="treeitem"]#nested-secret-file').should(
+      getTreeItem("Nested secret file").should(
         "have.attr",
         "aria-checked",
         "true",
@@ -996,23 +1060,23 @@ describe("Given a Tree", () => {
         Cypress.sinon.match.any,
         ["parent", "sibling"],
       );
-      cy.get('[role="treeitem"]#parent').should(
+      getTreeItem("Parent").should(
         "have.attr",
         "aria-checked",
         "true",
       );
-      cy.get('[role="treeitem"]#sibling').should(
+      getTreeItem("Sibling").should(
         "have.attr",
         "aria-checked",
         "true",
       );
-      cy.get('[role="treeitem"]#child').should("not.exist");
+      getTreeItem("Child").should("not.exist");
 
-      cy.get('[role="treeitem"]#parent')
+      getTreeItem("Parent")
         .find(".saltTreeNodeExpansionIcon")
         .realClick();
 
-      cy.get('[role="treeitem"]#child').should(
+      getTreeItem("Child").should(
         "not.have.attr",
         "aria-checked",
         "true",
@@ -1089,46 +1153,46 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      cy.get('[role="treeitem"]#deepChild1')
+      getTreeItem("Deep Child 1")
         .find(".saltTreeNodeTrigger")
         .first()
         .realClick();
 
-      cy.get('[role="treeitem"]#parent').should(
+      getTreeItem("Parent").should(
         "have.attr",
         "aria-checked",
         "mixed",
       );
-      cy.get('[role="treeitem"]#grandparent').should(
-        "have.attr",
-        "aria-checked",
-        "mixed",
-      );
-
-      cy.get('[role="treeitem"]#parent')
-        .find(".saltTreeNodeExpansionIcon")
-        .realClick();
-      cy.get('[role="treeitem"]#deepChild1').should("not.exist");
-      cy.get('[role="treeitem"]#parent').should(
+      getTreeItem("Grandparent").should(
         "have.attr",
         "aria-checked",
         "mixed",
       );
 
-      cy.get('[role="treeitem"]#grandparent')
+      getTreeItem("Parent")
         .find(".saltTreeNodeExpansionIcon")
         .realClick();
-      cy.get('[role="treeitem"]#parent').should("not.exist");
-
-      cy.get('[role="treeitem"]#grandparent')
-        .find(".saltTreeNodeExpansionIcon")
-        .realClick();
-      cy.get('[role="treeitem"]#parent').should(
+      getTreeItem("Deep Child 1").should("not.exist");
+      getTreeItem("Parent").should(
         "have.attr",
         "aria-checked",
         "mixed",
       );
-      cy.get('[role="treeitem"]#deepChild1').should("not.exist");
+
+      getTreeItem("Grandparent")
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+      getTreeItem("Parent").should("not.exist");
+
+      getTreeItem("Grandparent")
+        .find(".saltTreeNodeExpansionIcon")
+        .realClick();
+      getTreeItem("Parent").should(
+        "have.attr",
+        "aria-checked",
+        "mixed",
+      );
+      getTreeItem("Deep Child 1").should("not.exist");
     });
 
     it("should select with Space regardless of node type", () => {
@@ -2546,7 +2610,7 @@ describe("Given a Tree", () => {
       );
 
       cy.realPress("Tab");
-      cy.get('[role="treeitem"]#documents').should("be.focused");
+      getTreeItem("Documents").should("be.focused");
       cy.findAllByRole("tooltip").should("have.length", 1);
       cy.findByRole("tooltip").should(
         "have.text",
@@ -2554,16 +2618,16 @@ describe("Given a Tree", () => {
       );
 
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#reports').should("be.focused");
+      getTreeItem("Reports").should("be.focused");
       cy.findAllByRole("tooltip").should("have.length", 1);
       cy.findByRole("tooltip").should("have.text", "Financial reports folder");
 
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#annual-report').should("be.focused");
+      getTreeItem("Annual Report").should("be.focused");
       cy.findByRole("tooltip").should("not.exist");
 
       cy.realPress("ArrowUp");
-      cy.get('[role="treeitem"]#reports').should("be.focused");
+      getTreeItem("Reports").should("be.focused");
       cy.findAllByRole("tooltip").should("have.length", 1);
       cy.findByRole("tooltip").should("have.text", "Financial reports folder");
     });
@@ -2602,28 +2666,28 @@ describe("Given a Tree", () => {
       );
 
       cy.realPress("Tab");
-      cy.get('[role="treeitem"]#documents').should("be.focused");
+      getTreeItem("Documents").should("be.focused");
       cy.get("@documentsFocusSpy").should("have.callCount", 1);
       cy.get("@documentsBlurSpy").should("not.have.been.called");
       cy.get("@reportsFocusSpy").should("not.have.been.called");
       cy.get("@reportsBlurSpy").should("not.have.been.called");
 
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#reports').should("be.focused");
+      getTreeItem("Reports").should("be.focused");
       cy.get("@documentsFocusSpy").should("have.callCount", 1);
       cy.get("@documentsBlurSpy").should("have.callCount", 1);
       cy.get("@reportsFocusSpy").should("have.callCount", 1);
       cy.get("@reportsBlurSpy").should("not.have.been.called");
 
       cy.realPress("ArrowDown");
-      cy.get('[role="treeitem"]#annual-report').should("be.focused");
+      getTreeItem("Annual Report").should("be.focused");
       cy.get("@documentsFocusSpy").should("have.callCount", 1);
       cy.get("@documentsBlurSpy").should("have.callCount", 1);
       cy.get("@reportsFocusSpy").should("have.callCount", 1);
       cy.get("@reportsBlurSpy").should("have.callCount", 1);
 
       cy.realPress("ArrowUp");
-      cy.get('[role="treeitem"]#reports').should("be.focused");
+      getTreeItem("Reports").should("be.focused");
       cy.get("@documentsFocusSpy").should("have.callCount", 1);
       cy.get("@documentsBlurSpy").should("have.callCount", 1);
       cy.get("@reportsFocusSpy").should("have.callCount", 2);

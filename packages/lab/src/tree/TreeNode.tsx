@@ -1,4 +1,4 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, useIdMemo } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -82,7 +82,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       window: targetWindow,
     });
 
-    const id = useId(value) ?? value;
+    const id = useIdMemo();
 
     const {
       expandedState,
