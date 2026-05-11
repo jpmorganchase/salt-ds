@@ -30,6 +30,7 @@ import {
   Stepper,
   Switch,
   Text,
+  useAriaAnnouncer,
   useId,
   useResponsiveProp,
   VerticalNavigation,
@@ -66,7 +67,6 @@ import { FoundationContent } from "./FoundationContent";
 import { NotificationsContent } from "./NotificationsContent";
 import { RegionalSettingsContent } from "./RegionalSettingsContent";
 import "../wizard/ContentOverflow.css";
-import "./experience-customization.stories.css";
 
 export default {
   title: "Patterns/Experience Customization",
@@ -310,6 +310,8 @@ export const EndToEnd = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
+  const { announce } = useAriaAnnouncer();
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus when active step changes
   useEffect(() => {
     if (!navigatedRef.current) return;
@@ -325,6 +327,7 @@ export const EndToEnd = () => {
     }
     navigatedRef.current = true;
     nextWithoutValidation();
+    announce(`Step ${activeStepIndex + 1} of ${wizardSteps.length}`);
   };
 
   const handlePrevious = () => {
@@ -360,15 +363,12 @@ export const EndToEnd = () => {
         <Text>
           Customize your experience
           <Text
-            styleAs="h2"
+            as="h2"
             ref={stepHeadingRef}
             tabIndex={-1}
             style={{ margin: 0 }}
           >
             {wizardSteps[activeStepIndex].label}
-            <span className="visuallyHidden">
-              {`, step ${activeStepIndex + 1} of ${wizardSteps.length}`}
-            </span>
           </Text>
         </Text>
       </FlexItem>
@@ -527,6 +527,8 @@ export const EndToEndModal = () => {
     setOpen(value);
   };
 
+  const { announce } = useAriaAnnouncer();
+
   const handleNext = async () => {
     const valid = await runValidationAndStore();
     if (!valid) return;
@@ -536,6 +538,7 @@ export const EndToEndModal = () => {
     }
     navigatedRef.current = true;
     nextWithoutValidation();
+    announce(`Step ${activeStepIndex + 1} of ${wizardSteps.length}`);
   };
 
   const handlePrevious = () => {
