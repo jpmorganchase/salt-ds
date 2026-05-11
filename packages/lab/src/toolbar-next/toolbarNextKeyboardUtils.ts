@@ -66,6 +66,36 @@ export function getClosestToolbarNextScopeRoot(target: EventTarget | null) {
   return target.closest<HTMLElement>(`[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`);
 }
 
+export function getToolbarNextItemId(target: Element | null) {
+  return (
+    target
+      ?.closest<HTMLElement>(`[${TOOLBAR_NEXT_ITEM_ATTR}]`)
+      ?.getAttribute(TOOLBAR_NEXT_ITEM_ATTR) ?? null
+  );
+}
+
+export function isToolbarNextFocusFromPointerTarget(
+  focusTarget: HTMLElement,
+  pointerTarget: EventTarget | null,
+) {
+  if (!(pointerTarget instanceof Node)) {
+    return false;
+  }
+
+  if (focusTarget === pointerTarget || focusTarget.contains(pointerTarget)) {
+    return true;
+  }
+
+  if (!(pointerTarget instanceof Element)) {
+    return false;
+  }
+
+  const focusItemId = getToolbarNextItemId(focusTarget);
+  const pointerItemId = getToolbarNextItemId(pointerTarget);
+
+  return focusItemId != null && focusItemId === pointerItemId;
+}
+
 export function getToolbarNextScopeFocusableElements(
   scopeRoot: HTMLElement,
   options: ToolbarNextFocusableOptions = {},

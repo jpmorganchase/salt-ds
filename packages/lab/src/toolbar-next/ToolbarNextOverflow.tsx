@@ -280,6 +280,7 @@ export function ToolbarNextOverflowMenu({
     handleScopeBlur,
     handleScopeFocus,
     handleScopeKeyDown,
+    handleScopePointerDown,
     rememberedFocusRef,
   } = useToolbarNextKeyboardNavigation({
     includeTabIndexMinusOne: true,
@@ -478,6 +479,9 @@ export function ToolbarNextOverflowMenu({
     const handleKeyDownCapture = (event: KeyboardEvent) => {
       handleScopeKeyDown(event);
     };
+    const handlePointerDownCapture = (event: PointerEvent) => {
+      handleScopePointerDown(event);
+    };
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!event.defaultPrevented) {
         handlePanelKeyDown(event);
@@ -487,6 +491,11 @@ export function ToolbarNextOverflowMenu({
     panelContentNode.addEventListener("focusin", handleFocusIn);
     panelContentNode.addEventListener("focusout", handleFocusOut);
     panelContentNode.addEventListener("keydown", handleKeyDownCapture, true);
+    panelContentNode.addEventListener(
+      "pointerdown",
+      handlePointerDownCapture,
+      true,
+    );
     panelContentNode.addEventListener("keydown", handleKeyDown);
 
     return () => {
@@ -497,6 +506,11 @@ export function ToolbarNextOverflowMenu({
         handleKeyDownCapture,
         true,
       );
+      panelContentNode.removeEventListener(
+        "pointerdown",
+        handlePointerDownCapture,
+        true,
+      );
       panelContentNode.removeEventListener("keydown", handleKeyDown);
     };
   }, [
@@ -504,6 +518,7 @@ export function ToolbarNextOverflowMenu({
     handlePanelKeyDown,
     handleScopeBlur,
     handleScopeKeyDown,
+    handleScopePointerDown,
     floatingBoundary,
     group.key,
     open,

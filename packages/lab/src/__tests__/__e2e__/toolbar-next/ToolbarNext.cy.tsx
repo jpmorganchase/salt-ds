@@ -339,6 +339,71 @@ function SharedOverflowFocusReentryTestCase() {
   );
 }
 
+function PointerEntryControlsTestCase() {
+  return (
+    <div className="Flexbox" style={{ height: 220, width: 640 }}>
+      <ToolbarNext aria-label="Pointer entry controls toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext
+            overflowMode="none"
+            role="group"
+            aria-label="Search and filter"
+          >
+            <Input bordered placeholder="Search" />
+            <Dropdown bordered defaultSelected={["Option A"]}>
+              <Option value="Option A" />
+              <Option value="Option B" />
+            </Dropdown>
+          </TooltrayNext>
+        </ToolbarRegion>
+        <ToolbarRegion position="end">
+          <TooltrayNext
+            overflowMode="none"
+            role="group"
+            aria-label="Settings"
+          >
+            <Switch label="Pinned" />
+          </TooltrayNext>
+        </ToolbarRegion>
+      </ToolbarNext>
+    </div>
+  );
+}
+
+function OverflowPointerEntryControlsTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 260, width: 220, flexDirection: "column" }}
+    >
+      <button data-testid="overflow-pointer-before">Before toolbar</button>
+      <ToolbarNext aria-label="Overflow pointer entry controls toolbar">
+        <ToolbarRegion position="start">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+            <Button appearance="transparent" style={{ width: 170 }}>
+              Pinned
+            </Button>
+          </TooltrayNext>
+        </ToolbarRegion>
+        <ToolbarRegion position="end">
+          <TooltrayNext
+            role="group"
+            aria-label="Overflow controls"
+            overflowPriority={5}
+          >
+            <Input bordered placeholder="Overflow search" />
+            <Dropdown bordered defaultSelected={["Option A"]}>
+              <Option value="Option A" />
+              <Option value="Option B" />
+            </Dropdown>
+            <Switch label="Overflow pinned" />
+          </TooltrayNext>
+        </ToolbarRegion>
+      </ToolbarNext>
+    </div>
+  );
+}
+
 function SharedOverflowComboBoxFocusReentryTestCase() {
   return (
     <div
@@ -951,6 +1016,54 @@ describe("Given ToolbarNext keyboard navigation", () => {
 
     cy.realPress(["Shift", "Tab"]);
     cy.findByRole("button", { name: "Copy" }).should("be.focused");
+  });
+
+  it("keeps focus on a dropdown entered by mouse through its trailing affordance", () => {
+    cy.mount(<PointerEntryControlsTestCase />);
+
+    cy.findByRole("combobox").realClick({ position: "right" });
+
+    cy.findByRole("combobox").should("be.focused");
+    cy.findByPlaceholderText("Search").should("not.be.focused");
+  });
+
+  it("keeps focus on a switch entered by mouse through its label", () => {
+    cy.mount(<PointerEntryControlsTestCase />);
+
+    cy.findByText("Pinned").realClick();
+
+    cy.findByRole("switch", { name: "Pinned" }).should("be.focused");
+    cy.findByPlaceholderText("Search").should("not.be.focused");
+  });
+
+  it("keeps focus on an overflow dropdown entered by mouse through its trailing affordance", () => {
+    cy.mount(<OverflowPointerEntryControlsTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByTestId("overflow-pointer-before").focus();
+
+    cy.findByRole("toolbar", { name: "More overflow" }).within(() => {
+      cy.findByRole("combobox").realClick({ position: "right" });
+      cy.findByRole("combobox").should("be.focused");
+      cy.findByPlaceholderText("Overflow search").should("not.be.focused");
+    });
+  });
+
+  it("keeps focus on an overflow switch entered by mouse through its label", () => {
+    cy.mount(<OverflowPointerEntryControlsTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByTestId("overflow-pointer-before").focus();
+
+    cy.findByRole("toolbar", { name: "More overflow" }).within(() => {
+      cy.findByText("Overflow pinned").realClick();
+      cy.findByRole("switch", { name: "Overflow pinned" }).should(
+        "be.focused",
+      );
+      cy.findByPlaceholderText("Overflow search").should("not.be.focused");
+    });
   });
 
   it("moves focus before the toolbar on Shift+Tab from a button", () => {

@@ -14,6 +14,7 @@ import {
   getToolbarNextFocusMemory,
   getToolbarNextScopeFocusableElements,
   getToolbarNextTabMoveTarget,
+  isToolbarNextFocusFromPointerTarget,
   resolveToolbarNextFocusTarget,
   shouldToolbarNextPreserveNativeTab,
   TOOLBAR_NEXT_GROUP_KEY_ATTR,
@@ -48,18 +49,7 @@ interface ToolbarNextKeyDownEvent {
 }
 
 interface ToolbarNextPointerEvent {
-  pointerType: string;
   target: EventTarget | null;
-}
-
-function isFocusFromPointerDown(
-  focusTarget: HTMLElement,
-  pointerTarget: EventTarget | null,
-) {
-  return (
-    pointerTarget instanceof Node &&
-    (focusTarget === pointerTarget || focusTarget.contains(pointerTarget))
-  );
 }
 
 export function useToolbarNextKeyboardNavigation({
@@ -262,8 +252,12 @@ export function useToolbarNextKeyboardNavigation({
       });
       const pointerDownTarget = pointerDownTargetRef.current;
       pointerDownTargetRef.current = null;
+      const focusFromPointerTarget = isToolbarNextFocusFromPointerTarget(
+        target,
+        pointerDownTarget,
+      );
 
-      if (isFocusFromPointerDown(target, pointerDownTarget)) {
+      if (focusFromPointerTarget) {
         rememberTarget(target);
         return;
       }
@@ -339,7 +333,7 @@ export function useToolbarNextKeyboardNavigation({
 
       if (
         !scopeRoot ||
-        !(target instanceof HTMLElement) ||
+        !(target instanceof Element) ||
         getClosestToolbarNextScopeRoot(target) !== scopeRoot
       ) {
         pointerDownTargetRef.current = null;
