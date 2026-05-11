@@ -13,6 +13,7 @@ import {
   type HTMLAttributes,
   type ReactNode,
   useEffect,
+  useState,
 } from "react";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
 import { useMegaMenu } from "./useMegaMenu";
@@ -54,13 +55,35 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       return () => setPanelId(undefined);
     }, [id, setPanelId]);
 
+    // Resolve the `--salt-layout-page-margin` CSS variable to a pixel value so it
+    // can be passed as padding to floating-ui's `shift` and `size` middleware,
+    // ensuring the panel always keeps left/right margins of that size.
+    const [pageMargin, setPageMargin] = useState(0);
+    useEffect(() => {
+      if (!targetWindow) return;
+      const doc = targetWindow.document;
+      const measure = () => {
+        const probe = doc.createElement("div");
+        probe.style.cssText =
+          "position:absolute;visibility:hidden;pointer-events:none;width:var(--salt-layout-page-margin);";
+        doc.body.appendChild(probe);
+        const width = probe.getBoundingClientRect().width;
+        probe.remove();
+        setPageMargin((prev) => (prev === width ? prev : width));
+      };
+      measure();
+      targetWindow.addEventListener("resize", measure);
+      return () => targetWindow.removeEventListener("resize", measure);
+    }, [targetWindow]);
+
     const floatingUIResult = useFloatingUI({
       rootContext: floatingRootContext,
       placement,
       middleware: [
-        flip(),
-        shift({ limiter: limitShift() }),
+        flip({ padding: pageMargin }),
+        shift({ padding: pageMargin, limiter: limitShift() }),
         size({
+          padding: pageMargin,
           apply({ availableWidth, elements }) {
             elements.floating.style.setProperty(
               "--saltMegaMenuPanel-availableWidth",

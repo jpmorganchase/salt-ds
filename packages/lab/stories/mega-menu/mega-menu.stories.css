@@ -40,6 +40,33 @@ nav > ol {
   width: 100%;
 }
 
+.full-width-wrapper {
+  padding: var(--salt-layout-page-margin);
+  box-sizing: border-box;
+}
+
+.full-width-panel {
+  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
+  box-sizing: border-box;
+}
+
+.full-width-panel .saltMegaMenuSection {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
+.max-width-content-panel {
+  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
+  box-sizing: border-box;
+}
+
+.max-width-content-panel .saltMegaMenuSection {
+  max-inline-size: 920px;
+  inline-size: 100%;
+  margin-inline: auto;
+  --saltMegaMenuSection-columnWidth: 212px;
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
 .custom-region-content {
   display: flex;
   flex: 1 1 auto;
