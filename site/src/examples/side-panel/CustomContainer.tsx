@@ -43,7 +43,7 @@ const AppHeader = () => {
       <Input
         aria-label="Search"
         bordered
-        startAdornment={<SearchIcon />}
+        startAdornment={<SearchIcon aria-hidden />}
         placeholder="Search"
         style={{ width: 200 }}
       />

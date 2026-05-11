@@ -57,7 +57,7 @@ export const WithNav = () => {
           </SidePanel>
           <ContentExample>
             <SidePanelTrigger>
-              <Button>Open side panel</Button>
+              <Button>Toggle side panel</Button>
             </SidePanelTrigger>
           </ContentExample>
         </FlexLayout>

@@ -42,7 +42,7 @@ export const Variants = () => {
               <div>
                 <SidePanelTrigger>
                   <Button style={{ whiteSpace: "nowrap" }}>
-                    Open right panel
+                    Toggle right panel
                   </Button>
                 </SidePanelTrigger>
               </div>
