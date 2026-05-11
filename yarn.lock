@@ -3963,7 +3963,9 @@ __metadata:
     "@salt-ds/window": "workspace:*"
     "@types/react-window": "npm:^1.8.2"
     clsx: "npm:^2.0.0"
+    dom-accessibility-api: "npm:^0.7.1"
     react-window: "npm:^1.8.6"
+    tabbable: "npm:^6.0.0"
     use-sync-external-store: "npm:^1.5.0"
   peerDependencies:
     "@types/react": ">=16.14.0"
@@ -4144,11 +4146,9 @@ __metadata:
     clsx: "npm:^2.0.0"
     compute-scroll-into-view: "npm:^3.0.0"
     deepmerge: "npm:^4.2.2"
-    dom-accessibility-api: "npm:^0.7.1"
     react-color: "npm:^2.19.3"
     react-window: "npm:^1.8.6"
     rifm: "npm:^0.12.0"
-    tabbable: "npm:^6.0.0"
     tinycolor2: "npm:^1.4.2"
   peerDependencies:
     "@salt-ds/date-adapters": ">=0.1.0-alpha.7"

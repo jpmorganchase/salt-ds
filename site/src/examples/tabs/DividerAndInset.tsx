@@ -1,11 +1,12 @@
-import { StackLayout, Switch } from "@salt-ds/core";
 import {
+  StackLayout,
+  Switch,
+  Tab,
   TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
+  TabList,
+  Tabs,
+  TabTrigger,
+} from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
@@ -16,28 +17,28 @@ export const DividerAndInset = (): ReactElement => {
 
   return (
     <StackLayout style={{ width: "100%", minWidth: 0 }}>
-      <TabsNext defaultValue={tabs[0]}>
+      <Tabs defaultValue={tabs[0]}>
         <TabBar divider={divider} inset={inset}>
-          <TabListNext appearance="bordered" aria-label="Example tablist">
+          <TabList appearance="bordered" aria-label="Example tablist">
             {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
+              <Tab value={label} key={label}>
+                <TabTrigger>{label}</TabTrigger>
+              </Tab>
             ))}
-          </TabListNext>
+          </TabList>
         </TabBar>
-      </TabsNext>
-      <TabsNext defaultValue={tabs[0]}>
+      </Tabs>
+      <Tabs defaultValue={tabs[0]}>
         <TabBar divider={divider} inset={inset}>
-          <TabListNext appearance="transparent">
+          <TabList appearance="transparent">
             {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
+              <Tab value={label} key={label}>
+                <TabTrigger>{label}</TabTrigger>
+              </Tab>
             ))}
-          </TabListNext>
+          </TabList>
         </TabBar>
-      </TabsNext>
+      </Tabs>
       <StackLayout direction="row">
         <Switch
           label="Divider"
