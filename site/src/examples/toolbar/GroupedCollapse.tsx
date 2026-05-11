@@ -7,7 +7,7 @@ import { accountOptions, typeOptions } from "./toolbarExampleData";
 
 export const GroupedCollapse = (): ReactElement => (
   <div className={styles.constrained}>
-    <Toolbar aria-label="Account toolbar">
+    <Toolbar aria-label="Account toolbar" variant="tertiary">
       <Tooltray overflowMode="none">
         <Dropdown
           bordered

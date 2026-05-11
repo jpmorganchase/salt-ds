@@ -1,4 +1,4 @@
-import { Button, Dropdown, Option } from "@salt-ds/core";
+import { Dropdown, Option } from "@salt-ds/core";
 import { DateInputSingle } from "@salt-ds/date-components";
 import { ToolbarNext as Toolbar, TooltrayNext as Tooltray } from "@salt-ds/lab";
 import type { ReactElement } from "react";
@@ -7,7 +7,7 @@ import { sortOptions, typeOptions } from "./toolbarExampleData";
 
 export const IndependentCollapse = (): ReactElement => (
   <div className={styles.narrow}>
-    <Toolbar aria-label="Payment toolbar">
+    <Toolbar aria-label="Payment toolbar" variant="secondary">
       <Tooltray overflowMode="none">
         <Dropdown
           bordered
@@ -36,9 +36,6 @@ export const IndependentCollapse = (): ReactElement => (
           aria-label="Settlement date"
           style={{ width: 180 }}
         />
-      </Tooltray>
-      <Tooltray align="end" overflowPriority={6}>
-        <Button appearance="solid">Add item</Button>
       </Tooltray>
     </Toolbar>
   </div>
