@@ -160,11 +160,10 @@ export const WithContent = (): ReactElement => {
                 <MegaMenuGroup
                   style={{
                     padding:
-                      " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                      " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
                     width: "fit-content",
                   }}
                 >
-                  {" "}
                   <Link
                     color="primary"
                     underline="default"
@@ -391,7 +390,7 @@ export const WithContent = (): ReactElement => {
                 <MegaMenuGroup
                   style={{
                     padding:
-                      " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                      " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
                     width: "fit-content",
                   }}
                 >
@@ -586,7 +585,7 @@ export const WithContent = (): ReactElement => {
               <MegaMenuGroup
                 style={{
                   padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                    " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
                   width: "fit-content",
                 }}
               >
@@ -750,7 +749,7 @@ export const WithContent = (): ReactElement => {
               <MegaMenuGroup
                 style={{
                   padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
+                    " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
                   width: "fit-content",
                 }}
               >

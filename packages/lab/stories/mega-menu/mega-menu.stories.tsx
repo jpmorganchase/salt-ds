@@ -3158,13 +3158,7 @@ export const WithContent: StoryFn = () => {
                 </MegaMenuGroup>
               </MegaMenuSection>
               <FlexLayout gap={3}>
-                <MegaMenuGroup
-                  style={{
-                    padding:
-                      " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                    width: "fit-content",
-                  }}
-                >
+                <MegaMenuGroup className="link-footer-spacing-first-link">
                   <Link
                     color="primary"
                     underline="default"
@@ -3382,13 +3376,7 @@ export const WithContent: StoryFn = () => {
                 </MegaMenuGroup>
               </MegaMenuSection>
               <FlexLayout gap={3}>
-                <MegaMenuGroup
-                  style={{
-                    padding:
-                      " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                    width: "fit-content",
-                  }}
-                >
+                <MegaMenuGroup className="link-footer-spacing-first-link">
                   <Link
                     color="primary"
                     underline="default"
@@ -3574,13 +3562,7 @@ export const WithContent: StoryFn = () => {
               </MegaMenuGroup>
             </MegaMenuSection>
             <FlexLayout gap={3}>
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
-              >
+              <MegaMenuGroup className="link-footer-spacing-first-link">
                 <Link
                   color="primary"
                   underline="default"
@@ -3735,13 +3717,7 @@ export const WithContent: StoryFn = () => {
               </MegaMenuGroup>
             </MegaMenuSection>
             <FlexLayout gap={3}>
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 var(--salt-spacing-300)  var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
-              >
+              <MegaMenuGroup className="link-footer-spacing-first-link">
                 <Link
                   color="primary"
                   underline="default"
