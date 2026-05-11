@@ -74,8 +74,8 @@ export const Default = () => {
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
-      announce("Comment can't be blank");
       inputRef.current?.focus();
+      announce("Comment can't be blank", { ariaLive: "assertive" });
       return;
     }
     setValidationStatus(undefined);
@@ -89,8 +89,10 @@ export const Default = () => {
       ...comments,
     ]);
     setInputValue("");
-    announce("Comment posted");
     inputRef.current?.focus();
+    requestAnimationFrame(() => {
+      announce("Comment posted");
+    });
   };
 
   return (
@@ -185,8 +187,8 @@ export const WithAvatar = () => {
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
-      announce("Comment can't be blank");
       inputRef.current?.focus();
+      announce("Comment can't be blank", { ariaLive: "assertive" });
       return;
     }
     setValidationStatus(undefined);
@@ -200,8 +202,10 @@ export const WithAvatar = () => {
       ...comments,
     ]);
     setInputValue("");
-    announce("Comment posted");
     inputRef.current?.focus();
+    requestAnimationFrame(() => {
+      announce("Comment posted");
+    });
   };
 
   return (
@@ -306,8 +310,8 @@ export const WithCategoricalAvatar = () => {
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
-      announce("Comment can't be blank");
       inputRef.current?.focus();
+      announce("Comment can't be blank", { ariaLive: "assertive" });
       return;
     }
     setValidationStatus(undefined);
@@ -321,8 +325,10 @@ export const WithCategoricalAvatar = () => {
       ...comments,
     ]);
     setInputValue("");
-    announce("Comment posted");
     inputRef.current?.focus();
+    requestAnimationFrame(() => {
+      announce("Comment posted");
+    });
   };
 
   return (
@@ -416,8 +422,8 @@ export const WithEmptyState = () => {
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
-      announce("Comment can't be blank");
       inputRef.current?.focus();
+      announce("Comment can't be blank", { ariaLive: "assertive" });
       return;
     }
     setValidationStatus(undefined);
@@ -431,8 +437,10 @@ export const WithEmptyState = () => {
       ...comments,
     ]);
     setInputValue("");
-    announce("Comment posted");
     inputRef.current?.focus();
+    requestAnimationFrame(() => {
+      announce("Comment posted");
+    });
   };
 
   return (
@@ -567,15 +575,17 @@ export const WithMultilineInput = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
       setErrorMessage("Comment can't be blank");
-      announce("Comment can't be blank");
       textAreaRef.current?.focus();
+      announce("Comment can't be blank", { ariaLive: "assertive" });
       return;
     }
     if (inputValue.length > MAX_CHARS) {
       setValidationStatus("error");
       setErrorMessage("Comment is too long. Maximum is 1000 characters.");
-      announce("Comment is too long. Maximum is 1000 characters.");
       textAreaRef.current?.focus();
+      announce("Comment is too long. Maximum is 1000 characters.", {
+        ariaLive: "assertive",
+      });
       return;
     }
     setValidationStatus(undefined);
@@ -590,8 +600,10 @@ export const WithMultilineInput = () => {
       ...comments,
     ]);
     setInputValue("");
-    announce("Comment posted");
     textAreaRef.current?.focus();
+    requestAnimationFrame(() => {
+      announce("Comment posted");
+    });
   };
 
   return (
@@ -638,14 +650,13 @@ export const WithMultilineInput = () => {
                   prevAtLimitRef.current = true;
                   announce(
                     `Character limit reached. ${value.length} of ${MAX_CHARS} characters used.`,
+                    { ariaLive: "assertive" },
                   );
                 }
               } else {
                 prevAtLimitRef.current = false;
-                if (value.trim()) {
-                  setValidationStatus(undefined);
-                  setErrorMessage("");
-                }
+                setValidationStatus(undefined);
+                setErrorMessage("");
                 if (announceTimerRef.current) {
                   clearTimeout(announceTimerRef.current);
                 }
@@ -740,22 +751,35 @@ export const WithSubmissionError = () => {
       ]);
       setInputValue("");
       setSubmissionError(false);
-      announce("Comment posted");
       inputRef.current?.focus();
+      requestAnimationFrame(() => {
+        announce("Comment posted");
+      });
     }
+  };
+
+  const handleDismiss = () => {
+    setSubmissionError(false);
+    inputRef.current?.focus();
   };
 
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
-      announce("Comment can't be blank");
       inputRef.current?.focus();
+      announce("Comment can't be blank", { ariaLive: "assertive" });
+      return;
+    }
+    if (submissionError) {
+      handleRetry();
       return;
     }
     setValidationStatus(undefined);
     setSubmissionError(true);
-    announce("Failed to post comment");
-    inputRef.current?.focus();
+    announce(
+      "Couldn't post your comment. You are offline. Check your connection and resubmit.",
+      { ariaLive: "assertive" },
+    );
   };
 
   return (
@@ -822,7 +846,7 @@ export const WithSubmissionError = () => {
                 aria-label="Dismiss submission error"
                 sentiment="neutral"
                 appearance="transparent"
-                onClick={() => setSubmissionError(false)}
+                onClick={handleDismiss}
               >
                 <CloseIcon aria-hidden />
               </Button>
