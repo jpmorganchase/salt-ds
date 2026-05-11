@@ -16,7 +16,6 @@ nav > ol {
 .trigger-position-left {
   display: flex;
   justify-content: flex-start;
-  padding-left: 12px;
 }
 
 .trigger-position-center {
@@ -33,7 +32,6 @@ nav > ol {
 .trigger-position-right {
   display: flex;
   justify-content: flex-end;
-  padding-right: 12px;
 }
 
 .custom-region-wrapper {
@@ -41,7 +39,6 @@ nav > ol {
 }
 
 .full-width-wrapper {
-  padding: var(--salt-layout-page-margin);
   box-sizing: border-box;
 }
 

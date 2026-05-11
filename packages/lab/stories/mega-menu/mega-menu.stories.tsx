@@ -61,8 +61,20 @@ import "./mega-menu.stories.css";
 export default {
   title: "Lab/Mega Menu",
   parameters: {
-    layout: "padded",
+    layout: "fullscreen",
   },
+  decorators: [
+    (Story: StoryFn) => (
+      <div
+        style={{
+          padding: "var(--salt-layout-page-margin)",
+          boxSizing: "border-box",
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   component: MegaMenu,
 };
 
