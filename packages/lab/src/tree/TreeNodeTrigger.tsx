@@ -60,6 +60,8 @@ export const TreeNodeTrigger = forwardRef<
     expanded,
     disabled,
     id,
+    nodeRef,
+    setNodeRef,
     selected,
     indeterminate,
     nodeChildren,
@@ -74,7 +76,6 @@ export const TreeNodeTrigger = forwardRef<
     registerElement,
   } = useTreeContext();
 
-  const nodeRef = useRef<HTMLLIElement>(null);
   const triggerContentRef = useForkRef(useRef<HTMLSpanElement>(null), ref);
   const wasMouseDownRef = useRef(false);
   const [focusVisible, setFocusVisible] = useState(false);
@@ -87,7 +88,7 @@ export const TreeNodeTrigger = forwardRef<
     if (nodeRef.current) {
       return registerElement(value, nodeRef.current);
     }
-  }, [value, registerElement]);
+  }, [value, registerElement, nodeRef]);
 
   const handleClick = (event: MouseEvent<HTMLLIElement>) => {
     onClick?.(event);
@@ -125,7 +126,7 @@ export const TreeNodeTrigger = forwardRef<
 
   return (
     <li
-      ref={nodeRef}
+      ref={setNodeRef}
       id={id}
       role="treeitem"
       aria-expanded={hasChildren ? expanded : undefined}

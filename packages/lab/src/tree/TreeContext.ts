@@ -2,6 +2,8 @@ import { createContext } from "@salt-ds/core";
 import {
   type Dispatch,
   type ReactNode,
+  type Ref,
+  type RefObject,
   type SetStateAction,
   type SyntheticEvent,
   useContext,
@@ -88,6 +90,10 @@ export interface TreeNodeContextValue {
   disabled: boolean;
   /** Node id for the li element */
   id: string;
+  /** Ref for the li element rendered by TreeNodeTrigger */
+  nodeRef: RefObject<HTMLLIElement>;
+  /** Callback ref that connects TreeNode's forwarded ref to the li element */
+  setNodeRef: Ref<HTMLLIElement> | null;
   /** Whether node is selected */
   selected: boolean;
   /** Whether node is in indeterminate state (partially selected children) */

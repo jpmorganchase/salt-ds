@@ -104,11 +104,7 @@ describe("Given a Tree", () => {
       cy.realPress("Tab");
       getTreeItem("Parent Folder").should("be.focused");
       cy.realPress("ArrowRight");
-      getTreeItem("Parent Folder").should(
-        "have.attr",
-        "aria-expanded",
-        "true",
-      );
+      getTreeItem("Parent Folder").should("have.attr", "aria-expanded", "true");
       cy.get("@expandedChangeHandler").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
@@ -223,11 +219,7 @@ describe("Given a Tree", () => {
         .first()
         .realClick();
 
-      getTreeItem("Secret folder").should(
-        "have.attr",
-        "aria-checked",
-        "true",
-      );
+      getTreeItem("Secret folder").should("have.attr", "aria-checked", "true");
       getTreeItem("Nested secret file").should(
         "have.attr",
         "aria-checked",
@@ -261,16 +253,8 @@ describe("Given a Tree", () => {
         .first()
         .realClick();
 
-      getTreeItem("Secret folder").should(
-        "have.attr",
-        "aria-checked",
-        "true",
-      );
-      getTreeItem("config").should(
-        "have.attr",
-        "aria-checked",
-        "mixed",
-      );
+      getTreeItem("Secret folder").should("have.attr", "aria-checked", "true");
+      getTreeItem("config").should("have.attr", "aria-checked", "mixed");
     });
 
     it("should propagate disabled state through conditionally rendered Fragment nodes", () => {
@@ -288,16 +272,8 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      getTreeItem("Secret file").should(
-        "have.attr",
-        "aria-disabled",
-        "true",
-      );
-      getTreeItem("Secret folder").should(
-        "have.attr",
-        "aria-disabled",
-        "true",
-      );
+      getTreeItem("Secret file").should("have.attr", "aria-disabled", "true");
+      getTreeItem("Secret folder").should("have.attr", "aria-disabled", "true");
       getTreeItem("Nested secret file").should(
         "have.attr",
         "aria-disabled",
@@ -342,32 +318,15 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      getTreeItem("config")
-        .find(".saltTreeNodeTrigger")
-        .first()
-        .realClick();
+      getTreeItem("config").find(".saltTreeNodeTrigger").first().realClick();
 
-      getTreeItem("config").should(
-        "have.attr",
-        "aria-checked",
-        "true",
-      );
+      getTreeItem("config").should("have.attr", "aria-checked", "true");
       cy.findByRole("treeitem", { name: "Secret file" }).should("not.exist");
 
-      getTreeItem("config")
-        .find(".saltTreeNodeExpansionIcon")
-        .realClick();
+      getTreeItem("config").find(".saltTreeNodeExpansionIcon").realClick();
 
-      getTreeItem("Secret file").should(
-        "have.attr",
-        "aria-checked",
-        "true",
-      );
-      getTreeItem("Secret folder").should(
-        "have.attr",
-        "aria-checked",
-        "true",
-      );
+      getTreeItem("Secret file").should("have.attr", "aria-checked", "true");
+      getTreeItem("Secret folder").should("have.attr", "aria-checked", "true");
       getTreeItem("public.config.ts").should(
         "have.attr",
         "aria-checked",
@@ -402,21 +361,11 @@ describe("Given a Tree", () => {
         </Tree>,
       );
 
-      getTreeItem("config").should(
-        "have.attr",
-        "aria-checked",
-        "mixed",
-      );
+      getTreeItem("config").should("have.attr", "aria-checked", "mixed");
 
-      getTreeItem("config")
-        .find(".saltTreeNodeExpansionIcon")
-        .realClick();
+      getTreeItem("config").find(".saltTreeNodeExpansionIcon").realClick();
 
-      getTreeItem("Secret folder").should(
-        "have.attr",
-        "aria-checked",
-        "true",
-      );
+      getTreeItem("Secret folder").should("have.attr", "aria-checked", "true");
 
       getTreeItem("Secret folder")
         .find(".saltTreeNodeExpansionIcon")
@@ -1060,27 +1009,13 @@ describe("Given a Tree", () => {
         Cypress.sinon.match.any,
         ["parent", "sibling"],
       );
-      getTreeItem("Parent").should(
-        "have.attr",
-        "aria-checked",
-        "true",
-      );
-      getTreeItem("Sibling").should(
-        "have.attr",
-        "aria-checked",
-        "true",
-      );
+      getTreeItem("Parent").should("have.attr", "aria-checked", "true");
+      getTreeItem("Sibling").should("have.attr", "aria-checked", "true");
       getTreeItem("Child").should("not.exist");
 
-      getTreeItem("Parent")
-        .find(".saltTreeNodeExpansionIcon")
-        .realClick();
+      getTreeItem("Parent").find(".saltTreeNodeExpansionIcon").realClick();
 
-      getTreeItem("Child").should(
-        "not.have.attr",
-        "aria-checked",
-        "true",
-      );
+      getTreeItem("Child").should("not.have.attr", "aria-checked", "true");
     });
 
     it("should deselect all with Ctrl+A when all are selected", () => {
@@ -1158,40 +1093,18 @@ describe("Given a Tree", () => {
         .first()
         .realClick();
 
-      getTreeItem("Parent").should(
-        "have.attr",
-        "aria-checked",
-        "mixed",
-      );
-      getTreeItem("Grandparent").should(
-        "have.attr",
-        "aria-checked",
-        "mixed",
-      );
+      getTreeItem("Parent").should("have.attr", "aria-checked", "mixed");
+      getTreeItem("Grandparent").should("have.attr", "aria-checked", "mixed");
 
-      getTreeItem("Parent")
-        .find(".saltTreeNodeExpansionIcon")
-        .realClick();
+      getTreeItem("Parent").find(".saltTreeNodeExpansionIcon").realClick();
       getTreeItem("Deep Child 1").should("not.exist");
-      getTreeItem("Parent").should(
-        "have.attr",
-        "aria-checked",
-        "mixed",
-      );
+      getTreeItem("Parent").should("have.attr", "aria-checked", "mixed");
 
-      getTreeItem("Grandparent")
-        .find(".saltTreeNodeExpansionIcon")
-        .realClick();
+      getTreeItem("Grandparent").find(".saltTreeNodeExpansionIcon").realClick();
       getTreeItem("Parent").should("not.exist");
 
-      getTreeItem("Grandparent")
-        .find(".saltTreeNodeExpansionIcon")
-        .realClick();
-      getTreeItem("Parent").should(
-        "have.attr",
-        "aria-checked",
-        "mixed",
-      );
+      getTreeItem("Grandparent").find(".saltTreeNodeExpansionIcon").realClick();
+      getTreeItem("Parent").should("have.attr", "aria-checked", "mixed");
       getTreeItem("Deep Child 1").should("not.exist");
     });
 

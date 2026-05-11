@@ -1,4 +1,4 @@
-import { makePrefixer, useIdMemo } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -6,8 +6,8 @@ import {
   type ComponentType,
   forwardRef,
   type ReactNode,
-  useImperativeHandle,
   useMemo,
+  useRef,
 } from "react";
 import {
   TreeNodeProvider,
@@ -90,7 +90,6 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
       disabled: treeDisabled,
       disabledIdsSet,
       indeterminateState,
-      getElement,
     } = useTreeContext();
 
     const parentContext = useTreeNodeContext();
@@ -119,11 +118,8 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
 
     const hasChildren = nodeChildren.some(isTreeNodeElement);
 
-    // Forward ref to the <li> element rendered by TreeNodeTrigger
-    useImperativeHandle(ref, () => getElement(value) as HTMLLIElement, [
-      getElement,
-      value,
-    ]);
+    const nodeRef = useRef<HTMLLIElement>(null);
+    const setNodeRef = useForkRef(nodeRef, ref);
 
     const nodeContext = useMemo(
       () => ({
@@ -133,6 +129,8 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         expanded,
         disabled,
         id,
+        nodeRef,
+        setNodeRef,
         selected,
         indeterminate,
         nodeChildren,
@@ -144,6 +142,7 @@ export const TreeNode = forwardRef<HTMLLIElement, TreeNodeProps>(
         expanded,
         disabled,
         id,
+        setNodeRef,
         selected,
         indeterminate,
         nodeChildren,
