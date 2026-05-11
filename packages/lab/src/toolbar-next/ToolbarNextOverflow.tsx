@@ -67,6 +67,8 @@ import type { ToolbarNextOverflowGroup } from "./useToolbarNextOverflow";
 
 const withBaseName = makePrefixer("saltToolbarNextOverflow");
 
+export type ToolbarNextItemHostKind = "main" | "measurement" | "overflow";
+
 function canSeedOverflowFocusMemory(
   focusMemory: ToolbarNextFocusMemory | null | undefined,
   group: ToolbarNextOverflowGroup,
@@ -254,7 +256,10 @@ function getOverflowTriggerLabel(group: ToolbarNextOverflowGroup) {
 
 interface ToolbarNextOverflowMenuProps {
   focusMemoryRef?: RefObject<ToolbarNextFocusMemory | null>;
-  getItemHostRef: (id: string) => (node: HTMLDivElement | null) => void;
+  getItemHostRef: (
+    id: string,
+    kind: ToolbarNextItemHostKind,
+  ) => (node: HTMLDivElement | null) => void;
   group: ToolbarNextOverflowGroup;
   onItemFocus?: (itemId: string, controlIndex: number) => void;
 }
@@ -662,7 +667,7 @@ export function ToolbarNextOverflowMenu({
                 cloneDecorations(item.id, item.leadingDecorations, "leading")}
               <div
                 className={withBaseName("itemHost")}
-                ref={getItemHostRef(item.id)}
+                ref={open ? getItemHostRef(item.id, "overflow") : null}
               />
               {cloneDecorations(item.id, item.trailingDecorations, "trailing")}
             </div>
@@ -675,7 +680,10 @@ export function ToolbarNextOverflowMenu({
 
 export interface ToolbarNextOverflowRegionProps {
   focusMemoryRef?: RefObject<ToolbarNextFocusMemory | null>;
-  getItemHostRef: (id: string) => (node: HTMLDivElement | null) => void;
+  getItemHostRef: (
+    id: string,
+    kind: ToolbarNextItemHostKind,
+  ) => (node: HTMLDivElement | null) => void;
   getItemRef: (id: string) => (node: HTMLDivElement | null) => void;
   getNamedTriggerRef: (id: string) => (node: HTMLDivElement | null) => void;
   getRegionRef: (regionKey: string) => (node: HTMLDivElement | null) => void;
@@ -756,7 +764,7 @@ export function ToolbarNextOverflowRegion({
                 <div className={withBaseName("item")}>
                   <div
                     className={withBaseName("itemHost")}
-                    ref={getItemHostRef(item.id)}
+                    ref={getItemHostRef(item.id, "main")}
                   />
                 </div>
               ) : null}

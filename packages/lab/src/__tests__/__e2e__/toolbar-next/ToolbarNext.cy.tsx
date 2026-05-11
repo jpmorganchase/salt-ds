@@ -260,6 +260,51 @@ function NamedIntrinsicWidthTestCase() {
   );
 }
 
+function HiddenOverflowWidthChangeTestCase({
+  initialWide = false,
+}: {
+  initialWide?: boolean;
+}) {
+  const [wide, setWide] = useState(initialWide);
+  const nextWide = !initialWide;
+
+  return (
+    <>
+      <Button
+        onClick={() => {
+          setWide(nextWide);
+        }}
+      >
+        {nextWide ? "Use long hidden label" : "Use short hidden label"}
+      </Button>
+      <div className="Flexbox" style={{ height: 220, width: 260 }}>
+        <ToolbarNext aria-label="Toolbar with hidden intrinsic width changes">
+          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+            <Button appearance="transparent" style={{ width: 120 }}>
+              Pinned
+            </Button>
+          </TooltrayNext>
+          <TooltrayNext overflowMode="independent" overflowPriority={5}>
+            <Button appearance="transparent" style={{ width: wide ? 320 : 80 }}>
+              {wide ? "Hidden action with a long label" : "Short"}
+            </Button>
+          </TooltrayNext>
+          <TooltrayNext
+            align="end"
+            overflowMode="none"
+            role="group"
+            aria-label="Primary action"
+          >
+            <Button appearance="solid" style={{ width: 100 }}>
+              Run
+            </Button>
+          </TooltrayNext>
+        </ToolbarNext>
+      </div>
+    </>
+  );
+}
+
 function NamedOverflowFocusReentryTestCase() {
   return (
     <div
@@ -357,11 +402,7 @@ function PointerEntryControlsTestCase() {
           </TooltrayNext>
         </ToolbarRegion>
         <ToolbarRegion position="end">
-          <TooltrayNext
-            overflowMode="none"
-            role="group"
-            aria-label="Settings"
-          >
+          <TooltrayNext overflowMode="none" role="group" aria-label="Settings">
             <Switch label="Pinned" />
           </TooltrayNext>
         </ToolbarRegion>
@@ -690,6 +731,36 @@ function expectCenteredControl(toolbarName: string, controlName: string) {
   });
 }
 
+function recordToolbarVisibleTextSnapshots(toolbarName: string, alias: string) {
+  cy.findByRole("toolbar", { name: toolbarName }).then(($toolbar) => {
+    const toolbar = $toolbar[0];
+    const win = toolbar.ownerDocument.defaultView;
+    if (!win) {
+      return;
+    }
+    const snapshots: string[] = [];
+    const recordSnapshot = () => {
+      snapshots.push(
+        Array.from(toolbar.querySelectorAll<HTMLElement>("button"))
+          .filter(isVisibleElement)
+          .map((button) => button.textContent?.trim() ?? "")
+          .join("|"),
+      );
+    };
+
+    recordSnapshot();
+
+    const observer = new win.MutationObserver(recordSnapshot);
+    observer.observe(toolbar, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    cy.wrap({ observer, snapshots }, { log: false }).as(alias);
+  });
+}
+
 describe("Given ToolbarNext variants and appearances", () => {
   it("applies primary and bordered classes by default", () => {
     cy.mount(
@@ -778,8 +849,8 @@ describe("Given ToolbarNext overflow measurements", () => {
     shrinkFixtureBelowVisibleToolbarContent("Mixed tray compression toolbar");
 
     cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
-    cy.findByText("Show total").should("not.exist");
-    cy.findByText("Sort by highest balance").should("not.exist");
+    cy.findByText("Show total").should("not.be.visible");
+    cy.findByText("Sort by highest balance").should("not.be.visible");
     cy.findByRole("button", { name: "Add view" }).should("not.exist");
     cy.findByRole("button", { name: "Pinned" }).should("be.visible");
     expectToolbarFits("Mixed tray compression toolbar");
@@ -923,6 +994,56 @@ describe("Given ToolbarNext overflow measurements", () => {
     expectToolbarFits("Toolbar with named intrinsic width changes");
   });
 
+  it("remeasures shared overflow when a hidden tray changes width", () => {
+    cy.mount(<HiddenOverflowWidthChangeTestCase />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: "Short" }).should("not.exist");
+    expectToolbarFits("Toolbar with hidden intrinsic width changes");
+    recordToolbarVisibleTextSnapshots(
+      "Toolbar with hidden intrinsic width changes",
+      "hiddenOverflowSnapshots",
+    );
+
+    cy.findByRole("button", { name: "Use long hidden label" }).click();
+    setFixtureWidth(420);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", {
+      name: "Hidden action with a long label",
+    }).should("not.exist");
+    expectToolbarFits("Toolbar with hidden intrinsic width changes");
+    cy.get<{
+      observer: MutationObserver;
+      snapshots: string[];
+    }>("@hiddenOverflowSnapshots").then(({ observer, snapshots }) => {
+      observer.disconnect();
+      expect(
+        snapshots.some((snapshot) =>
+          snapshot.includes("Hidden action with a long label"),
+        ),
+        "hidden tray did not appear in the main toolbar during resize",
+      ).to.equal(false);
+    });
+  });
+
+  it("remeasures shared overflow when a hidden tray shrinks", () => {
+    cy.mount(<HiddenOverflowWidthChangeTestCase initialWide />);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", {
+      name: "Hidden action with a long label",
+    }).should("not.exist");
+    expectToolbarFits("Toolbar with hidden intrinsic width changes");
+
+    cy.findByRole("button", { name: "Use short hidden label" }).click();
+    setFixtureWidth(420);
+
+    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: "Short" }).should("be.visible");
+    expectToolbarFits("Toolbar with hidden intrinsic width changes");
+  });
+
   it("preserves progressive versus grouped behavior for multi-tray named overflow", () => {
     cy.mount(<NamedGroupCollapseTestCase overflowMode="independent" />);
 
@@ -1059,9 +1180,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
 
     cy.findByRole("toolbar", { name: "More overflow" }).within(() => {
       cy.findByText("Overflow pinned").realClick();
-      cy.findByRole("switch", { name: "Overflow pinned" }).should(
-        "be.focused",
-      );
+      cy.findByRole("switch", { name: "Overflow pinned" }).should("be.focused");
       cy.findByPlaceholderText("Overflow search").should("not.be.focused");
     });
   });

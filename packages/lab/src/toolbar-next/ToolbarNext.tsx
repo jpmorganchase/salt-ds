@@ -20,6 +20,7 @@ import {
 
 import toolbarNextCss from "./ToolbarNext.css";
 import {
+  type ToolbarNextItemHostKind,
   ToolbarNextOverflowMenu,
   ToolbarNextOverflowOwners,
   ToolbarNextOverflowRegion,
@@ -49,6 +50,10 @@ export interface ToolbarNextProps extends ComponentPropsWithoutRef<"div"> {
 const withBaseName = makePrefixer("saltToolbarNext");
 const withOverflowBaseName = makePrefixer("saltToolbarNextOverflow");
 const bandPositions: ToolbarRegionPosition[] = ["start", "center", "end"];
+
+type ToolbarNextItemHostNodes = Partial<
+  Record<ToolbarNextItemHostKind, HTMLDivElement | null>
+>;
 
 function cloneMeasureDecorations(
   itemId: string,
@@ -110,7 +115,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       new Map<string, (node: HTMLDivElement | null) => void>(),
     );
     const [itemHostNodes, setItemHostNodes] = useState<
-      Record<string, HTMLDivElement | null>
+      Record<string, ToolbarNextItemHostNodes>
     >({});
 
     const sharedOverflowGroups = useMemo(
@@ -170,29 +175,55 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
     );
     const previousOverflowedIdsKeyRef = useRef(overflowedIdsKey);
 
-    const getItemHostRef = useCallback((id: string) => {
-      const existing = itemHostRefCallbacks.current.get(id);
+    const getItemHostRef = useCallback(
+      (id: string, kind: ToolbarNextItemHostKind) => {
+        const callbackKey = `${id}:${kind}`;
+        const existing = itemHostRefCallbacks.current.get(callbackKey);
 
-      if (existing) {
-        return existing;
-      }
+        if (existing) {
+          return existing;
+        }
 
-      const callback = (node: HTMLDivElement | null) => {
-        setItemHostNodes((previous) => {
-          if (previous[id] === node) {
-            return previous;
-          }
+        const callback = (node: HTMLDivElement | null) => {
+          setItemHostNodes((previous) => {
+            if (previous[id]?.[kind] === node) {
+              return previous;
+            }
 
-          return {
-            ...previous,
-            [id]: node,
-          };
-        });
-      };
+            return {
+              ...previous,
+              [id]: {
+                ...previous[id],
+                [kind]: node,
+              },
+            };
+          });
+        };
 
-      itemHostRefCallbacks.current.set(id, callback);
-      return callback;
-    }, []);
+        itemHostRefCallbacks.current.set(callbackKey, callback);
+        return callback;
+      },
+      [],
+    );
+
+    const itemOwnerHostNodes = useMemo(() => {
+      return allItems.reduce<Record<string, HTMLDivElement | null>>(
+        (hosts, item) => {
+          const nodes = itemHostNodes[item.id];
+
+          hosts[item.id] =
+            nodes?.overflow ?? nodes?.main ?? nodes?.measurement ?? null;
+          return hosts;
+        },
+        {},
+      );
+    }, [allItems, itemHostNodes]);
+
+    const overflowedMeasurementItems = useMemo(() => {
+      return allItems.filter((item) => {
+        return overflowedIds.has(item.id) && !itemHostNodes[item.id]?.overflow;
+      });
+    }, [allItems, itemHostNodes, overflowedIds]);
 
     useIsomorphicLayoutEffect(() => {
       const overflowChanged =
@@ -304,7 +335,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
         ) : (
           <ToolbarNextOverflowFloatingBoundaryProvider>
             <ToolbarNextOverflowOwners
-              hostNodes={itemHostNodes}
+              hostNodes={itemOwnerHostNodes}
               items={allItems}
             />
             <div aria-hidden className={clsx(withBaseName("measurements"))}>
@@ -361,6 +392,30 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                   </div>
                 );
               })}
+              {overflowedMeasurementItems.map((item) => (
+                <div
+                  className={withOverflowBaseName("slot")}
+                  key={`measure-item-${item.id}`}
+                  ref={getItemRef(item.id)}
+                >
+                  {cloneMeasureDecorations(
+                    item.id,
+                    "leading",
+                    item.leadingDecorations,
+                  )}
+                  <div className={withOverflowBaseName("item")}>
+                    <div
+                      className={withOverflowBaseName("itemHost")}
+                      ref={getItemHostRef(item.id, "measurement")}
+                    />
+                  </div>
+                  {cloneMeasureDecorations(
+                    item.id,
+                    "trailing",
+                    item.trailingDecorations,
+                  )}
+                </div>
+              ))}
             </div>
             {bandPositions.map((position) => {
               const bandRegions = bandsByPosition[position];
