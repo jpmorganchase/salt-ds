@@ -8,8 +8,13 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,6 +44,7 @@ jobs:
         run: yarn workspace @salt-ds/site spellcheck
 
   dependency-check:
+    name: Dependency Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -73,6 +79,7 @@ jobs:
               exit 1;
           fi
   type-checks:
+    name: Type Checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -89,6 +96,7 @@ jobs:
       - name: Run typecheck
         run: yarn run typecheck
   jest-tests:
+    name: Jest Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -104,6 +112,7 @@ jobs:
         run: yarn
       - run: yarn run test
   cypress-tests:
+    name: Cypress Tests (React ${{ matrix.react }})
     strategy:
       fail-fast: false
       matrix:
@@ -130,7 +139,7 @@ jobs:
       - name: Build packages
         run: yarn run build
       - name: Cypress Components
-        uses: cypress-io/github-action@v7
+        uses: cypress-io/github-action@dace029018fcdf86e0df89a31bc3cfa5b32570d8 # v7
         with:
           install: false
           component: true

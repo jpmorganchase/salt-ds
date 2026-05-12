@@ -15,9 +15,10 @@ jobs:
     name: Release
     if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
     runs-on: ubuntu-latest
+    outputs:
+      hasReleasePackages: ${{ steps.prepare_release_artifacts.outputs.hasPackages }}
     permissions:
-      contents: write # Needed for changesets to publish release commits/tags.
-      id-token: write # Needed for npm trusted publishing provenance.
+      contents: write # Needed for changesets to create/update the release PR branch.
       pull-requests: write # Needed for changesets to open/update the release PR.
     concurrency:
       group: ${{ github.workflow }}-release-${{ github.ref }}
@@ -37,19 +38,190 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn build
-      - name: Create Release Pull Request or Publish packages
+      - name: Create Release Pull Request
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # v1
         with:
-          publish: yarn changeset publish
+          version: yarn changeset version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
 
+      - name: Prepare release publish artifacts
+        id: prepare_release_artifacts
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: node scripts/prepareNpmPublishArtifacts.mjs --tag latest --out "$RUNNER_TEMP/npm-publish-artifacts"
+
+      - name: Upload release publish artifacts
+        if: steps.prepare_release_artifacts.outputs.hasPackages == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: release-publish-artifacts
+          path: ${{ runner.temp }}/npm-publish-artifacts
+          retention-days: 1
+
+  publish-release:
+    name: Publish Release Packages
+    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds' && needs.release.outputs.hasReleasePackages == 'true'
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read # Needed to download the prepared npm package artifacts from the release job.
+      contents: write # Needed to create GitHub releases and release tags.
+      id-token: write # Needed for npm trusted publishing provenance.
+    concurrency:
+      group: ${{ github.workflow }}-npm-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Use Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+          registry-url: "https://registry.npmjs.org"
+      - name: Download release publish artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: release-publish-artifacts
+          path: ${{ runner.temp }}/npm-publish-artifacts
+      - name: Publish npm packages
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          ARTIFACTS_DIR: ${{ runner.temp }}/npm-publish-artifacts
+          CREATE_GITHUB_RELEASES: "true"
+          NPM_CONFIG_PROVENANCE: true
+        with:
+          script: |
+            const fs = require("node:fs");
+            const path = require("node:path");
+
+            const artifactsDir = process.env.ARTIFACTS_DIR;
+            const metadata = JSON.parse(fs.readFileSync(path.join(artifactsDir, "packages.json"), "utf8"));
+            const packages = metadata.packages ?? [];
+            const allowedTags = new Set(["latest"]);
+            const semverPattern = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
+
+            async function npmVersionExists(name, version) {
+              let stdout = "";
+              let stderr = "";
+              const code = await exec.exec("npm", ["view", `${name}@${version}`, "version", "--json"], {
+                ignoreReturnCode: true,
+                listeners: {
+                  stdout: (data) => {
+                    stdout += data.toString();
+                  },
+                  stderr: (data) => {
+                    stderr += data.toString();
+                  },
+                },
+              });
+
+              if (code === 0) {
+                return true;
+              }
+
+              const output = `${stdout}\n${stderr}`;
+              if (output.includes("E404") || output.includes("404")) {
+                return false;
+              }
+
+              throw new Error(`Unable to check ${name}@${version} on npm:\n${output}`);
+            }
+
+            async function createRelease(pkg) {
+              const body = pkg.releaseBody || `Published ${pkg.name}@${pkg.version}.`;
+
+              try {
+                await github.rest.repos.createRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  tag_name: pkg.releaseTag,
+                  target_commitish: context.sha,
+                  name: pkg.releaseTag,
+                  body,
+                });
+              } catch (error) {
+                if (error.status === 422) {
+                  core.info(`GitHub release already exists for ${pkg.releaseTag}.`);
+                  return;
+                }
+                throw error;
+              }
+            }
+
+            for (const pkg of packages) {
+              if (!pkg.name?.startsWith("@salt-ds/")) {
+                throw new Error(`Refusing to publish unexpected package name: ${pkg.name}`);
+              }
+              if (!semverPattern.test(pkg.version)) {
+                throw new Error(`Refusing to publish invalid package version: ${pkg.version}`);
+              }
+              if (!allowedTags.has(pkg.tag)) {
+                throw new Error(`Refusing to publish with unexpected npm tag: ${pkg.tag}`);
+              }
+
+              const tarballsDir = path.resolve(artifactsDir, "tarballs");
+              const tarballPath = path.resolve(artifactsDir, pkg.tarball);
+
+              if (!tarballPath.startsWith(`${tarballsDir}${path.sep}`)) {
+                throw new Error(`Refusing to publish tarball outside artifact directory: ${pkg.tarball}`);
+              }
+
+              if (await npmVersionExists(pkg.name, pkg.version)) {
+                core.info(`${pkg.name}@${pkg.version} already exists on npm; skipping publish.`);
+              } else {
+                await exec.exec("npm", ["publish", tarballPath, "--access", "public", "--tag", pkg.tag, "--provenance"]);
+              }
+
+              if (process.env.CREATE_GITHUB_RELEASES === "true") {
+                await createRelease(pkg);
+              }
+            }
+
+  build-release-storybook:
+    name: Build Release Storybook
+    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
+    needs: release
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Install dependencies
+        run: yarn install
       - name: Run Storybook build
         run: yarn build-storybook
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
+      - name: Upload Storybook Static
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: storybook-build
+          path: ./storybook-static
+          retention-days: 1
+
+  publish-storybook:
+    name: Publish Storybook
+    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
+    needs: build-release-storybook
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read # Needed to download the Storybook build artifact from the release job.
+    concurrency:
+      group: ${{ github.workflow }}-storybook-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Download Storybook build
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: storybook-build
+          path: ./storybook-static
       - name: Publish Storybook
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
@@ -65,11 +237,14 @@ jobs:
       github.event.issue.pull_request &&
       (github.event.comment.body == '/release-pr' || github.event.comment.body == '/snapshot-release')
     runs-on: ubuntu-latest
+    outputs:
+      hasSnapshotPackages: ${{ steps.prepare_snapshot_artifacts.outputs.hasPackages }}
+      headSha: ${{ steps.pr_data.outputs.headSha }}
+      statusCommentId: ${{ steps.snapshot_status.outputs.commentId }}
     permissions:
       contents: read
-      id-token: write # Needed for npm trusted publishing provenance.
       issues: write # Needed to react to and comment on the trigger comment.
-      pull-requests: write # Needed to read the PR head repository and fork status.
+      pull-requests: read # Needed to read the PR head repository and fork status.
     concurrency:
       group: ${{ github.workflow }}-snapshot-${{ github.event.issue.number }}
       cancel-in-progress: false
@@ -183,14 +358,30 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Create and publish snapshot release
+      - name: Create snapshot versions
+        run: yarn changeset version --snapshot snapshot
+
+      - name: Build snapshot packages
+        run: yarn build
+
+      - name: Prepare snapshot publish artifacts
+        id: prepare_snapshot_artifacts
+        run: node scripts/prepareNpmPublishArtifacts.mjs --tag snapshot --out "$RUNNER_TEMP/npm-publish-artifacts"
+
+      - name: Upload snapshot publish artifacts
+        if: steps.prepare_snapshot_artifacts.outputs.hasPackages == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: snapshot-publish-artifacts
+          path: ${{ runner.temp }}/npm-publish-artifacts
+          retention-days: 1
+
+      - name: Update snapshot status when no packages changed
+        if: steps.prepare_snapshot_artifacts.outputs.hasPackages == 'false'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMENT_ID: ${{ github.event.comment.id }}
           STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}
           HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
-          NPM_CONFIG_PROVENANCE: true
         with:
           script: |
             const owner = context.repo.owner;
@@ -199,26 +390,139 @@ jobs:
             const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
             const shortSha = process.env.HEAD_SHA.slice(0, 7);
 
-            await exec.exec('yarn changeset version --snapshot snapshot');
+            await github.rest.issues.updateComment({
+              owner,
+              repo,
+              comment_id: statusCommentId,
+              body: `Snapshot release finished for \`${shortSha}\`, but no packages were published.\n\n[View workflow run](${runUrl})`,
+            })
 
-            await exec.exec('yarn build');
+      - name: Update snapshot status on failure
+        if: ${{ always() && steps.snapshot_status.outputs.commentId != '' && (failure() || cancelled()) }}
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}
+          HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const statusCommentId = Number.parseInt(process.env.STATUS_COMMENT_ID, 10);
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+            const shortSha = process.env.HEAD_SHA.slice(0, 7);
 
-            let output = ''
+            await github.rest.issues.updateComment({
+              owner,
+              repo,
+              comment_id: statusCommentId,
+              body: `Snapshot release failed for \`${shortSha}\`.\n\n[View workflow run](${runUrl})`,
+            });
 
-            const options = {
-              listeners: {
-                stdout: (data) => {
-                  output += data.toString();
+  publish-snapshot:
+    name: Publish Snapshot Packages
+    if: github.event_name == 'issue_comment' && github.repository == 'jpmorganchase/salt-ds' && needs.snapshot.outputs.hasSnapshotPackages == 'true'
+    needs: snapshot
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read # Needed to download the prepared npm package artifacts from the snapshot job.
+      id-token: write # Needed for npm trusted publishing provenance.
+      issues: write # Needed to update the snapshot status comment.
+    concurrency:
+      group: ${{ github.workflow }}-snapshot-publish-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - name: Use Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Download snapshot publish artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: snapshot-publish-artifacts
+          path: ${{ runner.temp }}/npm-publish-artifacts
+
+      - name: Publish snapshot packages
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          ARTIFACTS_DIR: ${{ runner.temp }}/npm-publish-artifacts
+          COMMENT_ID: ${{ github.event.comment.id }}
+          HEAD_SHA: ${{ needs.snapshot.outputs.headSha }}
+          NPM_CONFIG_PROVENANCE: true
+          STATUS_COMMENT_ID: ${{ needs.snapshot.outputs.statusCommentId }}
+        with:
+          script: |
+            const fs = require("node:fs");
+            const path = require("node:path");
+
+            const artifactsDir = process.env.ARTIFACTS_DIR;
+            const metadata = JSON.parse(fs.readFileSync(path.join(artifactsDir, "packages.json"), "utf8"));
+            const packages = metadata.packages ?? [];
+            const allowedTags = new Set(["snapshot"]);
+            const semverPattern = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
+            const newTags = [];
+
+            async function npmVersionExists(name, version) {
+              let stdout = "";
+              let stderr = "";
+              const code = await exec.exec("npm", ["view", `${name}@${version}`, "version", "--json"], {
+                ignoreReturnCode: true,
+                listeners: {
+                  stdout: (data) => {
+                    stdout += data.toString();
+                  },
+                  stderr: (data) => {
+                    stderr += data.toString();
+                  },
                 },
+              });
+
+              if (code === 0) {
+                return true;
               }
-            };
 
-            await exec.exec('yarn changeset publish --no-git-tag --snapshot --tag snapshot', [], options);
+              const output = `${stdout}\n${stderr}`;
+              if (output.includes("E404") || output.includes("404")) {
+                return false;
+              }
 
-            const { COMMENT_ID } = process.env
-            const [_, packagesStdin] = output.split("packages published successfully:\n")
+              throw new Error(`Unable to check ${name}@${version} on npm:\n${output}`);
+            }
 
-            const newTags = packagesStdin ? packagesStdin.split("\n").flatMap(package => Array.from(package.matchAll(/\s+(.*)/g),m => m[1])) : [];
+            for (const pkg of packages) {
+              if (!pkg.name?.startsWith("@salt-ds/")) {
+                throw new Error(`Refusing to publish unexpected package name: ${pkg.name}`);
+              }
+              if (!semverPattern.test(pkg.version)) {
+                throw new Error(`Refusing to publish invalid package version: ${pkg.version}`);
+              }
+              if (!allowedTags.has(pkg.tag)) {
+                throw new Error(`Refusing to publish with unexpected npm tag: ${pkg.tag}`);
+              }
+
+              const tarballsDir = path.resolve(artifactsDir, "tarballs");
+              const tarballPath = path.resolve(artifactsDir, pkg.tarball);
+
+              if (!tarballPath.startsWith(`${tarballsDir}${path.sep}`)) {
+                throw new Error(`Refusing to publish tarball outside artifact directory: ${pkg.tarball}`);
+              }
+
+              if (await npmVersionExists(pkg.name, pkg.version)) {
+                core.info(`${pkg.name}@${pkg.version} already exists on npm; skipping publish.`);
+              } else {
+                await exec.exec("npm", ["publish", tarballPath, "--access", "public", "--tag", pkg.tag, "--provenance"]);
+              }
+
+              newTags.push(`${pkg.name}@${pkg.version}`);
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const statusCommentId = Number.parseInt(process.env.STATUS_COMMENT_ID, 10);
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+            const shortSha = process.env.HEAD_SHA.slice(0, 7);
 
             if (newTags.length) {
               const multiple = newTags.length > 1
@@ -235,6 +539,7 @@ jobs:
                 )).join('\n') +
                 `\n\n[View workflow run](${runUrl})`
               )
+
               await github.rest.issues.updateComment({
                 owner,
                 repo,
@@ -243,9 +548,9 @@ jobs:
               })
 
               await github.rest.reactions.createForIssueComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: COMMENT_ID,
+                owner,
+                repo,
+                comment_id: process.env.COMMENT_ID,
                 content: "rocket",
               })
             } else {
@@ -257,12 +562,12 @@ jobs:
               })
             }
 
-      - name: Update snapshot status on failure
-        if: ${{ always() && steps.snapshot_status.outputs.commentId != '' && (failure() || cancelled()) }}
+      - name: Update snapshot publish status on failure
+        if: ${{ always() && needs.snapshot.outputs.statusCommentId != '' && (failure() || cancelled()) }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
-          STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}
-          HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
+          HEAD_SHA: ${{ needs.snapshot.outputs.headSha }}
+          STATUS_COMMENT_ID: ${{ needs.snapshot.outputs.statusCommentId }}
         with:
           script: |
             const owner = context.repo.owner;
