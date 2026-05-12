@@ -134,62 +134,60 @@ export const DataFormatContent = ({
         <Card>
           <StackLayout separators>
             {stockCards.map((stock) => (
-              <FlexItem key={stock.ticker}>
-                <StackLayout gap={1}>
-                  <FlexLayout justify="space-between">
-                    <FlexItem>
-                      <Text>
-                        <strong>{stock.ticker}</strong>
-                      </Text>
-                      {formData.stockNameDisplay === "fullNameTicker" && (
-                        <Text color="secondary">{stock.fullName}</Text>
-                      )}
-                      <Display3>
-                        {getDisplayMetric(stock)}
-                        {stock.isPositive ? (
-                          <ArrowUpIcon
-                            aria-hidden
-                            style={{
-                              color:
-                                "var(--salt-sentiment-positive-foreground-informative)",
-                            }}
-                          />
-                        ) : (
-                          <ArrowDownIcon
-                            aria-hidden
-                            style={{
-                              color:
-                                "var(--salt-sentiment-negative-foreground-informative)",
-                            }}
-                          />
-                        )}
-                      </Display3>
-                      <Text color={stock.changeColor}>{stock.changeText}</Text>
-                    </FlexItem>
-                    <FlexItem>
-                      <FlexLayout gap={1} align="center">
-                        {showExchangeText && (
-                          <Text color="secondary">{stock.exchange}</Text>
-                        )}
-                        {showFlag && <US />}
-                      </FlexLayout>
-                    </FlexItem>
-                  </FlexLayout>
+              <StackLayout gap={1} key={stock.ticker}>
+                <FlexLayout justify="space-between">
+                  <FlexItem>
+                    <Text>
+                      <strong>{stock.ticker}</strong>
+                    </Text>
+                    {formData.stockNameDisplay === "fullNameTicker" && (
+                      <Text color="secondary">{stock.fullName}</Text>
+                    )}
+                  </FlexItem>
 
-                  {formData.performanceChart && (
-                    <img
-                      src={
-                        mode === "dark"
-                          ? stock.trendImageDark
-                          : stock.trendImage
-                      }
-                      alt=""
-                      style={{ width: "100%" }}
-                      height={64}
+                  <FlexItem>
+                    <FlexLayout gap={1} align="center">
+                      {showExchangeText && (
+                        <Text color="secondary">{stock.exchange}</Text>
+                      )}
+                      {showFlag && <US />}
+                    </FlexLayout>
+                  </FlexItem>
+                </FlexLayout>
+
+                <Display3>
+                  {getDisplayMetric(stock)}
+                  {stock.isPositive ? (
+                    <ArrowUpIcon
+                      aria-hidden
+                      style={{
+                        color:
+                          "var(--salt-sentiment-positive-foreground-informative)",
+                      }}
+                    />
+                  ) : (
+                    <ArrowDownIcon
+                      aria-hidden
+                      style={{
+                        color:
+                          "var(--salt-sentiment-negative-foreground-informative)",
+                      }}
                     />
                   )}
-                </StackLayout>
-              </FlexItem>
+                </Display3>
+                <Text color={stock.changeColor}>{stock.changeText}</Text>
+
+                {formData.performanceChart && (
+                  <img
+                    src={
+                      mode === "dark" ? stock.trendImageDark : stock.trendImage
+                    }
+                    alt=""
+                    style={{ width: "100%" }}
+                    height={64}
+                  />
+                )}
+              </StackLayout>
             ))}
           </StackLayout>
         </Card>

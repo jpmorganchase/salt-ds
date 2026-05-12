@@ -6,7 +6,6 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  GridItem,
   GridLayout,
   InteractableCard,
   InteractableCardGroup,
@@ -108,38 +107,37 @@ export const FoundationContent = ({
           >
             <GridLayout style={{ width: "100%" }} columns={{ xs: 1, sm: 3 }}>
               {displayDensityOptions.map((option) => (
-                <GridItem key={option.value}>
-                  <InteractableCard
-                    value={option.value}
-                    aria-describedby={
-                      clsx(
-                        formData.displayDensity === "high" && warningBannerId,
-                        stepFieldValidation.displayDensity?.status &&
-                          errorBannerId,
-                      ) || undefined
-                    }
-                  >
-                    <StackLayout gap={1}>
-                      <img
-                        src={mode === "dark" ? option.darkImage : option.image}
-                        alt=""
-                        style={{
-                          height: 200,
-                          width: "100%",
-                        }}
+                <InteractableCard
+                  key={option.value}
+                  value={option.value}
+                  aria-describedby={
+                    clsx(
+                      formData.displayDensity === "high" && warningBannerId,
+                      stepFieldValidation.displayDensity?.status &&
+                        errorBannerId,
+                    ) || undefined
+                  }
+                >
+                  <StackLayout gap={1}>
+                    <img
+                      src={mode === "dark" ? option.darkImage : option.image}
+                      alt=""
+                      style={{
+                        height: 200,
+                        width: "100%",
+                      }}
+                    />
+                    <StackLayout direction="row" gap={1}>
+                      <RadioButtonIcon
+                        aria-hidden
+                        checked={formData.displayDensity === option.value}
                       />
-                      <StackLayout direction="row" gap={1}>
-                        <RadioButtonIcon
-                          aria-hidden
-                          checked={formData.displayDensity === option.value}
-                        />
-                        <StackLayout gap={0}>
-                          <Text>{option.label}</Text>
-                        </StackLayout>
+                      <StackLayout gap={0}>
+                        <Text>{option.label}</Text>
                       </StackLayout>
                     </StackLayout>
-                  </InteractableCard>
-                </GridItem>
+                  </StackLayout>
+                </InteractableCard>
               ))}
             </GridLayout>
           </InteractableCardGroup>

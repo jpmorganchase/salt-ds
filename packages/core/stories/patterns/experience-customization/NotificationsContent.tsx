@@ -1,7 +1,6 @@
 import {
   FormField,
   FormFieldLabel,
-  GridItem,
   GridLayout,
   InteractableCard,
   InteractableCardGroup,
@@ -90,22 +89,20 @@ export const NotificationsContent = ({
             gap={3}
           >
             {NOTIFICATION_POSITIONS.map(({ value, label }) => (
-              <GridItem key={value}>
-                <InteractableCard value={value}>
-                  <StackLayout gap={1}>
-                    <StackLayout gap={1} direction="row">
-                      <NotificationPosition position={value} />
-                    </StackLayout>
-                    <StackLayout direction="row" gap={1}>
-                      <RadioButtonIcon
-                        aria-hidden
-                        checked={formData.position === value}
-                      />
-                      <Text>{label}</Text>
-                    </StackLayout>
+              <InteractableCard value={value} key={value}>
+                <StackLayout gap={1}>
+                  <StackLayout gap={1} direction="row">
+                    <NotificationPosition position={value} />
                   </StackLayout>
-                </InteractableCard>
-              </GridItem>
+                  <StackLayout direction="row" gap={1}>
+                    <RadioButtonIcon
+                      aria-hidden
+                      checked={formData.position === value}
+                    />
+                    <Text>{label}</Text>
+                  </StackLayout>
+                </StackLayout>
+              </InteractableCard>
             ))}
           </GridLayout>
         </InteractableCardGroup>

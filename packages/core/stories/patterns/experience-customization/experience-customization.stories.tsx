@@ -11,6 +11,7 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
+  GridLayout,
   H2,
   InteractableCard,
   InteractableCardGroup,
@@ -71,7 +72,6 @@ export interface ECFormData {
   publicHolidayCalendar: string;
   position: string;
   displayDensity: string;
-  currencyFormat: string;
   stockNameDisplay: string;
   exchangeAndRegionDisplay: string;
   visibleMetrics: string;
@@ -144,7 +144,6 @@ const initialFormData: ECFormData = {
   timeFormat: "",
   measurementSystem: "",
   // Data format
-  currencyFormat: "standard",
   stockNameDisplay: "fullNameTicker",
   exchangeAndRegionDisplay: "both",
   visibleMetrics: "lastPrice",
@@ -156,7 +155,6 @@ const initialFormData: ECFormData = {
 };
 
 const defaultDataFormatValues = {
-  currencyFormat: initialFormData.currencyFormat,
   stockNameDisplay: initialFormData.stockNameDisplay,
   exchangeAndRegionDisplay: initialFormData.exchangeAndRegionDisplay,
   visibleMetrics: initialFormData.visibleMetrics,
@@ -165,7 +163,6 @@ const defaultDataFormatValues = {
 
 const hasDataFormatChanges = (formData: ECFormData) => {
   return (
-    formData.currencyFormat !== defaultDataFormatValues.currencyFormat ||
     formData.stockNameDisplay !== defaultDataFormatValues.stockNameDisplay ||
     formData.exchangeAndRegionDisplay !==
       defaultDataFormatValues.exchangeAndRegionDisplay ||
@@ -177,7 +174,6 @@ const hasDataFormatChanges = (formData: ECFormData) => {
 const resetDataFormatFields = (
   updateField: (name: string, value: string | boolean) => void,
 ) => {
-  updateField("currencyFormat", defaultDataFormatValues.currencyFormat);
   updateField("stockNameDisplay", defaultDataFormatValues.stockNameDisplay);
   updateField(
     "exchangeAndRegionDisplay",
@@ -227,12 +223,14 @@ export const StandardControls = () => {
   };
 
   return (
-    <RegionalSettingsContent
-      formData={formData}
-      handleRadioChange={handleRadioChange}
-      handleSelectChange={handleSelectChange}
-      stepFieldValidation={{}}
-    />
+    <div style={{ maxWidth: 700 }}>
+      <RegionalSettingsContent
+        formData={formData}
+        handleRadioChange={handleRadioChange}
+        handleSelectChange={handleSelectChange}
+        stepFieldValidation={{}}
+      />
+    </div>
   );
 };
 
@@ -720,6 +718,34 @@ export const MandatoryConfigurations = () => {
   const bannerId = useId();
   const headingId = useId();
 
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      {
+        xs: "column",
+        sm: "row",
+      },
+      "row",
+    );
+
+  const cancel = (
+    <Button
+      sentiment="accented"
+      appearance="bordered"
+      onClick={() => {
+        setSelected(undefined);
+        setHasError(false);
+      }}
+    >
+      Cancel
+    </Button>
+  );
+
+  const finish = (
+    <Button sentiment="accented" onClick={handleSubmit}>
+      Finish
+    </Button>
+  );
+
   return (
     <StackLayout gap={0} style={{ maxWidth: 730 }}>
       <StackLayout padding={3}>
@@ -739,15 +765,16 @@ export const MandatoryConfigurations = () => {
         </Text>
       </StackLayout>
 
-      <FlexItem grow={1}>
-        <ContentOverflow style={{ minHeight: 300 }}>
-          <StackLayout>
-            {hasError && (
-              <Banner status="error" id={bannerId}>
-                <BannerContent>Choose an option.</BannerContent>
-              </Banner>
-            )}
+      <StackLayout>
+        <FlexItem grow={1}>
+          <ContentOverflow style={{ minHeight: 300 }}>
             <StackLayout>
+              {hasError && (
+                <Banner status="error" id={bannerId}>
+                  <BannerContent>Choose an option.</BannerContent>
+                </Banner>
+              )}
+
               <InteractableCardGroup
                 aria-labelledby={headingId}
                 value={selected}
@@ -756,53 +783,55 @@ export const MandatoryConfigurations = () => {
                   setSelected(value);
                 }}
               >
-                {governanceOptions.map(
-                  ({ value, title, description, Icon }) => (
-                    <InteractableCard
-                      key={value}
-                      value={value}
-                      style={{ width: "180px" }}
-                      aria-describedby={hasError ? bannerId : undefined}
-                    >
-                      <StackLayout gap={1}>
-                        <StackLayout gap={1} direction="row" align="center">
-                          <Icon aria-hidden size={2} />
-                          <Text style={{ margin: 0 }}>
-                            <strong>{title}</strong>
-                          </Text>
+                <GridLayout
+                  style={{ width: "100%" }}
+                  columns={{ xs: 1, sm: 3 }}
+                >
+                  {governanceOptions.map(
+                    ({ value, title, description, Icon }) => (
+                      <InteractableCard
+                        key={value}
+                        value={value}
+                        aria-describedby={hasError ? bannerId : undefined}
+                      >
+                        <StackLayout gap={1}>
+                          <StackLayout gap={1} direction="row" align="center">
+                            <Icon aria-hidden size={2} />
+                            <Text style={{ margin: 0 }}>
+                              <strong>{title}</strong>
+                            </Text>
+                          </StackLayout>
+                          <StackLayout direction="row" gap={1}>
+                            <RadioButtonIcon
+                              aria-hidden
+                              checked={selected === value}
+                            />
+                            <Text>{description}</Text>
+                          </StackLayout>
                         </StackLayout>
-                        <StackLayout direction="row" gap={1}>
-                          <RadioButtonIcon
-                            aria-hidden
-                            checked={selected === value}
-                          />
-                          <Text>{description}</Text>
-                        </StackLayout>
-                      </StackLayout>
-                    </InteractableCard>
-                  ),
-                )}
+                      </InteractableCard>
+                    ),
+                  )}
+                </GridLayout>
               </InteractableCardGroup>
             </StackLayout>
-          </StackLayout>
-        </ContentOverflow>
-      </FlexItem>
+          </ContentOverflow>
+        </FlexItem>
 
-      <FlexLayout gap={1} justify="end" padding={3}>
-        <Button
-          sentiment="accented"
-          appearance="bordered"
-          onClick={() => {
-            setSelected(undefined);
-            setHasError(false);
-          }}
-        >
-          Cancel
-        </Button>
-        <Button sentiment="accented" onClick={handleSubmit}>
-          Finish
-        </Button>
-      </FlexLayout>
+        <FlexItem>
+          {direction === "column" ? (
+            <StackLayout gap={1}>
+              {finish}
+              {cancel}
+            </StackLayout>
+          ) : (
+            <FlexLayout gap={1} justify="end" padding={3}>
+              {cancel}
+              {finish}
+            </FlexLayout>
+          )}
+        </FlexItem>
+      </StackLayout>
     </StackLayout>
   );
 };
