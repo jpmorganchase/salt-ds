@@ -29,9 +29,11 @@ export const WithContent = (): ReactElement => {
           <MegaMenuTrigger>
             <Button>Content on right</Button>
           </MegaMenuTrigger>
-          <MegaMenuPanel className={styles.customRegionNoContainerPadding}>
+          <MegaMenuPanel
+            className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
+          >
             <div className={styles.customRegionContent}>
-              <MegaMenuSection>
+              <MegaMenuSection className={styles.customRegionSideSection}>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem
@@ -185,14 +187,13 @@ export const WithContent = (): ReactElement => {
               </FlexLayout>
             </div>
             <MegaMenuContent
-              className={styles.customRegionTertiary}
-              style={{ width: "fit-content" }}
+              className={`${styles.customRegionTertiary} ${styles.customRegionSideContent}`}
             >
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
                   src={exampleImage}
-                  className={styles.customRegionImage}
+                  className={`${styles.customRegionImage} ${styles.customRegionSideImage}`}
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
@@ -230,13 +231,17 @@ export const WithContent = (): ReactElement => {
             <Button>Content on left</Button>
           </MegaMenuTrigger>
 
-          <MegaMenuPanel className={styles.customRegionNoContainerPadding}>
-            <MegaMenuContent className={styles.customRegionSecondary}>
+          <MegaMenuPanel
+            className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
+          >
+            <MegaMenuContent
+              className={`${styles.customRegionSecondary} ${styles.customRegionSideContent}`}
+            >
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
                   src={exampleImage}
-                  className={styles.customRegionImage}
+                  className={`${styles.customRegionImage} ${styles.customRegionSideImage}`}
                 />
                 <StackLayout gap={1}>
                   <StackLayout gap={0}>
@@ -262,7 +267,7 @@ export const WithContent = (): ReactElement => {
               </FlexLayout>
             </MegaMenuContent>
             <div className={styles.customRegionContent}>
-              <MegaMenuSection>
+              <MegaMenuSection className={styles.customRegionSideSection}>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem

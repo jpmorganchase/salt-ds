@@ -114,6 +114,37 @@
   display: block;
 }
 
+.customRegionSideContent {
+  flex: 0 0 258px;
+  inline-size: 258px;
+  box-sizing: border-box;
+}
+
+.customRegionSideImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* When the side region wraps below the menu, pin the panel to 320px */
+@media (max-width: 1200px) {
+  .customRegionSide {
+    --saltMegaMenuPanel-inlineSize: 320px;
+    --saltMegaMenuPanel-maxInlineSize: 320px;
+  }
+
+  .customRegionSideContent {
+    flex: 0 0 auto;
+    inline-size: 100%;
+    padding-inline: var(--salt-spacing-300);
+  }
+
+  .customRegionSideSection {
+    grid-template-columns: 1fr;
+  }
+}
+
 .customRegionPrimary {
   background: var(--salt-container-primary-background);
 }
