@@ -4,15 +4,13 @@ import {
   GridItem,
   GridLayout,
   StackLayout,
+  Tab,
+  TabBar,
+  TabList,
+  Tabs,
+  TabTrigger,
 } from "@salt-ds/core";
 import { MessageIcon, NotificationSolidIcon } from "@salt-ds/icons";
-import {
-  TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -45,20 +43,20 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
         </Button>
       </Badge>
       <GridItem colSpan={7}>
-        <TabsNext defaultValue="Checks">
+        <Tabs defaultValue="Checks">
           <TabBar>
-            <TabListNext>
-              <TabNext value="Checks">
-                <TabNextTrigger>
+            <TabList>
+              <Tab value="Checks">
+                <TabTrigger>
                   <StackLayout direction="row" gap={1}>
                     Checks
                     <Badge value={30} />
                   </StackLayout>
-                </TabNextTrigger>
-              </TabNext>
-            </TabListNext>
+                </TabTrigger>
+              </Tab>
+            </TabList>
           </TabBar>
-        </TabsNext>
+        </Tabs>
       </GridItem>
     </GridLayout>
   </QAContainer>

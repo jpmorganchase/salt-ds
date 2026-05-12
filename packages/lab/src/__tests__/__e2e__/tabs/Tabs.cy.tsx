@@ -1,8 +1,8 @@
 import { TabPanel, Tabs } from "@salt-ds/lab";
-import * as tabsStories from "@stories/tabs/tabs.stories";
-import * as tabstripStories from "@stories/tabstrip/tabstrip.cypress.stories";
 import { composeStories } from "@storybook/react-vite";
 import { version } from "react";
+import * as tabsStories from "../../../../stories/tabs/tabs.stories";
+import * as tabstripStories from "../../../../stories/tabstrip/tabstrip.cypress.stories";
 
 const { SimpleTabstrip, SimpleTabstripAddRemoveTab } =
   composeStories(tabstripStories);
