@@ -31,7 +31,16 @@ export interface WizardFormState {
 }
 
 export type WizardFormAction =
-  | { type: "UPDATE_FIELD"; name: string; value: string } // Update a specific field in the form data
+  | { type: "UPDATE_FIELD"; name: string; value: unknown } // Update a specific field in the form data
+  | {
+      type: "UPDATE_FIELDS";
+      fields: Record<string, unknown>;
+    } // Update multiple fields in the form data
+  | {
+      type: "CLEAR_FIELD_VALIDATION";
+      stepId: string;
+      name: string;
+    }
   | {
       type: "SET_VALIDATION"; // Set validation results for a step
       stepId: string; // The ID of the step being validated
@@ -64,6 +73,32 @@ export const wizardFormReducer = (
         ...state,
         formData: { ...state.formData, [action.name]: action.value },
       };
+    case "UPDATE_FIELDS":
+      return {
+        ...state,
+        formData: { ...state.formData, ...action.fields },
+      };
+    case "CLEAR_FIELD_VALIDATION": {
+      const currentStepValidation = state.validationsByStep[action.stepId];
+
+      if (!currentStepValidation?.fields[action.name]) {
+        return state;
+      }
+
+      const nextFields = { ...currentStepValidation.fields };
+      delete nextFields[action.name];
+
+      return {
+        ...state,
+        validationsByStep: {
+          ...state.validationsByStep,
+          [action.stepId]: {
+            fields: nextFields,
+            status: deriveStatus(nextFields),
+          },
+        },
+      };
+    }
     case "SET_VALIDATION":
       return {
         ...state,
@@ -134,14 +169,32 @@ export function useWizardForm({
     [currentStepId, state.formData, validateStep],
   );
 
-  // Updates a specific field in the form data and revalidates the step
+  // Updates a specific field in the form data and revalidates if there are existing errors
   const updateField = useCallback(
-    (name: string, value: string) => {
+    (name: string, value: unknown) => {
       dispatch({ type: "UPDATE_FIELD", name, value });
-      runValidationAndStore({ ...state.formData, [name]: value });
+      // Only revalidate if there are already validation errors on this step
+      if (state.validationsByStep[currentStepId]) {
+        runValidationAndStore({ ...state.formData, [name]: value });
+      }
     },
-    [state.formData, runValidationAndStore],
+    [
+      state.formData,
+      state.validationsByStep,
+      currentStepId,
+      runValidationAndStore,
+    ],
   );
+
+  // Updates multiple fields in the form data without triggering revalidation.
+  // Useful when validation should be deferred (e.g. until the user clicks Next).
+  const updateFieldsWithoutValidation = (fields: Record<string, unknown>) => {
+    dispatch({ type: "UPDATE_FIELDS", fields });
+  };
+
+  const clearFieldValidation = (stepId: string, name: string) => {
+    dispatch({ type: "CLEAR_FIELD_VALIDATION", stepId, name });
+  };
 
   // Moves to the next step if the current step is valid
   const next = useCallback(() => {
@@ -150,21 +203,23 @@ export function useWizardForm({
     });
   }, [runValidationAndStore]);
 
+  // Moves to the next step without revalidating. Useful after explicit validation has already completed.
+  const nextWithoutValidation = () => dispatch({ type: "NEXT_STEP" });
+
   // Moves to the previous step
-  const previous = useCallback(() => {
-    dispatch({ type: "PREVIOUS_STEP" });
-  }, []);
+  const previous = () => dispatch({ type: "PREVIOUS_STEP" });
 
   // Resets the wizard form to its initial state
-  const reset = useCallback(() => {
-    dispatch({ type: "RESET" });
-  }, []);
+  const reset = () => dispatch({ type: "RESET" });
 
   return {
     state,
     currentStepId,
     updateField,
+    updateFieldsWithoutValidation,
+    clearFieldValidation,
     next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
