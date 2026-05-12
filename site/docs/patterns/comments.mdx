@@ -1,0 +1,164 @@
+---
+title: Comments
+description: "The Comments pattern enables users to post, view, and interact with user-generated content, such as feedback, discussions, or reviews."
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/comments
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-comments", label: "Comments examples" },
+    ]
+  components: ["Avatar", "Form field", "Input", "Multiline input"]
+---
+
+<Diagram
+  src="/img/patterns/comments/comments-hero-shot.png"
+  srcDark="/img/patterns/comments/comments-hero-shot-dark.png"
+  alt="Example showing comments."
+  border
+/>
+
+## When to use
+
+- Facilitate team communication, feedback, or discussion within an application.
+- Capture collaborative notes and reminders in shared contexts.
+- Maintain an auditable discussion log.
+- Suitable for forums, activity feeds, support threads, and collaborative workspaces.
+
+## How to build
+
+### Anatomy
+
+At the top level, Comments consists of an input for adding new comments and a running list that shows the conversation history, so users can review prior messages.
+
+Each comment tile can include:
+
+1. **Author**: Display name 
+2. **Avatar (optional)**: Initials or image identifying the commenter.
+3. **Supporting details**: Metadata such as timestamp, an optional user role, or an “Edited” indicator.
+4. **Content**: Main body of the comment.
+
+<Diagram
+  src="/img/patterns/comments/comments-anatomy.png"
+  srcDark="/img/patterns/comments/comments-anatomy-dark.png"
+  alt="Comments anatomy"
+  border
+/>
+
+### Layout
+
+Use [`StackLayout`](/salt/components/layouts/stack-layout) to display the input and the comments list. 
+
+<Diagram
+  src="/img/patterns/comments/comments-layout.png"
+  srcDark="/img/patterns/comments/comments-layout-dark.png"
+  alt="comments layout"
+  border
+/>
+
+## Avatar and user role 
+
+Include when identity cues improve scanning or clarify ownership.
+
+- Avatar: Show a photo; fall back to initials. Keep size and placement consistent.
+- Role: Use a short, standardized role or title. 
+
+<Diagram
+  src="/img/patterns/comments/comments-avatar.png"
+  srcDark="/img/patterns/comments/comments-avatar-dark.png"
+  alt="comments with avatars"
+  border
+/>
+
+Use the [`Avatar`](/salt/components/avatar) component’s categorical colors to differentiate authors.
+
+<Diagram
+  src="/img/patterns/comments/comments-user-role.png"
+  srcDark="/img/patterns/comments/comments-user-role-dark.png"
+  alt="comments with user roles"
+  border
+/>
+
+## Timestamp
+
+Always show a timestamp and the last edit time.
+<Diagram
+  src="/img/patterns/comments/comments-timestamp.png"
+  srcDark="/img/patterns/comments/comments-timestamp-dark.png"
+  alt="comments with time stamp"
+  border
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  - Display “edited” with the last edit time; keep the original creation timestamp visible.
+  - Use locale‑aware formatting and the viewer’s time zone.
+</GuidanceCallout>
+
+## Empty state
+
+Use a short, neutral message to indicate there are no comments yet.
+
+<Diagram
+  src="/img/patterns/comments/comments-empty-state.png"
+  srcDark="/img/patterns/comments/comments-empty-state-dark.png"
+  alt="Comments with empty state"
+  border
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  - Use direct language that sets expectations (for example, “No comments yet.”).
+  - Keep it compact; avoid decorative imagery or filler.
+</GuidanceCallout>
+
+## Multiline input
+
+Use a [`MultilineInput`](/salt/components/multiline-input) when longer messages are common; this reduces scrolling while composing.
+
+<Diagram
+  src="/img/patterns/comments/comments-multiline-input.png"
+  srcDark="/img/patterns/comments/comments-multiline-input-dark.png"
+  alt="Comments with multiline input"
+  border
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  - Use a multiline field only if a meaningful portion of users will benefit.
+  - Auto‑grow to a sensible maximum height, then scroll within the field so the thread stays visible.
+</GuidanceCallout>
+
+## Display order
+
+Choose the order that best fits the task.
+
+- Newest-first (default for ongoing threads): Surfaces the latest activity immediately; ideal for long‑running discussions over days or weeks.
+- Oldest-first: Preserves chronological reading; best for short, time‑boxed reviews where sequence matters.
+
+<Diagram
+  src="/img/patterns/comments/comments-display-order.png"
+  srcDark="/img/patterns/comments/comments-display-order-dark.png"
+  alt="Comments display order"
+  border
+/>
+
+## Submission error
+
+Offer recovery without losing work by showing an inline error. Preserve the failed comment text.
+
+<Diagram
+  src="/img/patterns/comments/comments-submission-error.png"
+  srcDark="/img/patterns/comments/comments-submission-error-dark.png"
+  alt="Comments with submission error"
+  border
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  - Use clear, actionable copy that states what happened and what the user can do next.
+  - Provide Retry and Dismiss actions; keep the message visible until resolved.
+  - Support stacked errors if multiple submissions fail.
+</GuidanceCallout>
+
+
+:fragment{src="./fragments/feedback.mdx"}
