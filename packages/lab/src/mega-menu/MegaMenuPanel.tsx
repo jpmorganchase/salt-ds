@@ -1,4 +1,4 @@
-import { flip, limitShift, shift, size } from "@floating-ui/react";
+import { flip, limitShift, offset, shift, size } from "@floating-ui/react";
 import {
   makePrefixer,
   useFloatingComponent,
@@ -83,6 +83,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       rootContext: floatingRootContext,
       placement,
       middleware: [
+        offset(1),
         flip({ padding: pageMargin }),
         shift({ padding: pageMargin, limiter: limitShift() }),
         size({
