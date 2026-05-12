@@ -44,6 +44,50 @@ const DefaultStory: StoryFn<typeof Tree> = (args) => (
 );
 export const Default = DefaultStory.bind({});
 
+const renderSecretFiles = (show = true) =>
+  show ? (
+    <>
+      <TreeNode value="project/config/.env.local" label=".env.local" />
+      <TreeNode value="project/config/.npmrc" label=".npmrc" />
+      <TreeNode value="project/config/credentials" label="credentials">
+        <TreeNode value="project/config/credentials/api-key" label="api.key" />
+        <TreeNode
+          value="project/config/credentials/service-account"
+          label="service-account.json"
+        />
+      </TreeNode>
+      <TreeNode value="project/config/secrets" label="secrets.json" />
+    </>
+  ) : null;
+
+export const WithConditionalFragment: StoryFn<typeof Tree> = (args) => (
+  <>
+    <p>
+      Use this story to check keyboard navigation and model-driven selection
+      state for TreeNodes rendered from a conditional fragment.
+    </p>
+    <Tree {...args} aria-label="Project files" multiselect>
+      <TreeNode value="project" label="project">
+        <TreeNode value="project/config" label="config">
+          {renderSecretFiles()}
+          <TreeNode value="project/config/public" label="public">
+            <TreeNode value="project/config/public/app" label="app.config.ts" />
+            <TreeNode value="project/config/public/theme" label="theme.json" />
+          </TreeNode>
+        </TreeNode>
+      </TreeNode>
+      <TreeNode value="project/src" label="src">
+        <TreeNode value="project/src/components" label="components">
+          <TreeNode value="project/src/components/tree" label="Tree.tsx" />
+        </TreeNode>
+      </TreeNode>
+      <TreeNode value="project/tests" label="tests">
+        <TreeNode value="project/tests/tree" label="tree.test.tsx" />
+      </TreeNode>
+    </Tree>
+  </>
+);
+
 export const WithIcons: StoryFn<typeof Tree> = (args) => {
   const [expanded, setExpanded] = useState(["documents"]);
 

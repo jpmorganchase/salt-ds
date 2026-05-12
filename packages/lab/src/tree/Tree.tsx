@@ -98,7 +98,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
       toggleExpanded,
       select,
       selectedSet,
-      setSelectedState,
+      setVisibleSelectionState,
       visibleNodes,
       getNodeMeta,
       getElement,
@@ -182,8 +182,10 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           if (activeNode) {
             const nodeMeta = getNodeMeta(activeNode);
             const isDisabled = disabledIdsSet.has(activeNode);
-            if (!isDisabled && nodeMeta?.hasChildren) {
-              if (!expandedState.has(activeNode)) {
+            const hasChildren = Boolean(nodeMeta?.hasChildren);
+            const isExpanded = expandedState.has(activeNode);
+            if (!isDisabled && hasChildren) {
+              if (!isExpanded) {
                 toggleExpanded(event, activeNode);
               } else {
                 const firstChild = visibleNodes.find(
@@ -202,7 +204,8 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           if (activeNode) {
             const isDisabled = disabledIdsSet.has(activeNode);
             if (!isDisabled) {
-              if (expandedState.has(activeNode)) {
+              const isExpanded = expandedState.has(activeNode);
+              if (isExpanded) {
                 toggleExpanded(event, activeNode);
               } else {
                 const parent = getParent(activeNode);
@@ -334,7 +337,7 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
 
         const newSelected = allSelected ? [] : allVisibleValues;
 
-        setSelectedState(newSelected);
+        setVisibleSelectionState(newSelected);
         onSelectionChange?.(event, newSelected);
         return;
       }
