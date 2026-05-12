@@ -10,21 +10,28 @@ data:
 
 ## Default
 
-The mega menu displays grouped navigation links in a multi-column layout sized to hug its contents. It’s typically opened via a trigger button and can be closed by clicking outside the menu, pressing Escape key, or clicking the trigger again. Each mega menu item links to a specific page. If the content exceeds the available space, the menu wraps in width and scrolls vertically.
+The mega menu displays grouped navigation links in a multi-column layout sized to hug its contents.
 
-When the content becomes wider than the available width, the container expands until it reaches the inset defined by the left and right Layout-page-margin, and the mega menu groups wrap to fit.
+As the content grows wider, the container expands until it reaches the default max-width (100% of the viewport minus the layout page margins on both sides). At that point, the mega menu groups wrap to fit.
 
 <LivePreview componentName="mega-menu" exampleName="Default" />
 
 ## Full width
 
-The mega menu container is full width within the inset, expanding to the left and right Layout-page-margin by default. The content then fills the container.
+In certain circumstances, you may want to always display the mega menu at its default max-width. To do this, use the following CSS: `--saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth)`.
 
 <LivePreview componentName="mega-menu" exampleName="FullWidth" />
 
 ## Edge to edge
 
-The mega menu container expands to the full viewport width (edge-to-edge). In this example, the content is center-aligned and constrained to a maximum width, creating balanced left/right margins on larger displays.
+If you want the mega menu to be edge-to-edge with no inset, you can use the following CSS:
+
+```css
+--saltMegaMenuPanel-inlineSize: 100vw;
+--saltMegaMenuPanel-maxInlineSize: 100vw;
+```
+
+In this example, the content is center-aligned and constrained to a maximum width, creating balanced left and right margins on larger displays. This approach works with mega menus of any width.
 
 <LivePreview componentName="mega-menu" exampleName="EdgeToEdge" />
 
@@ -65,6 +72,6 @@ You can add a link to give users a quick way to access a broader section or view
 
 ## With content
 
-A content can be positioned on the left or right, allowing for flexible layouts like banners or images alongside mega menu items. In small viewports, it reflows into the stacked mega menu in its original order, appearing at the top or bottom of the stack.
+Content can be positioned on the left or right, allowing for flexible layouts alongside mega menu items. In small viewports, it reflows into the stacked mega menu in its original order, appearing at the top or bottom of the stack.
 
 <LivePreview componentName="mega-menu" exampleName="WithContent" />
