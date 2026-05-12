@@ -5,6 +5,8 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
+  GridItem,
+  GridLayout,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
@@ -75,8 +77,8 @@ export const DataFormatContent = ({
   };
 
   return (
-    <FlexLayout wrap>
-      <FlexItem grow={1} basis={0}>
+    <GridLayout columns={{ xs: 1, sm: 2 }}>
+      <GridItem>
         <StackLayout>
           <FormField>
             <FormFieldLabel>Stock name display</FormFieldLabel>
@@ -127,8 +129,8 @@ export const DataFormatContent = ({
             />
           </FormField>
         </StackLayout>
-      </FlexItem>
-      <FlexItem grow={1} basis={0}>
+      </GridItem>
+      <GridItem>
         <Card>
           <StackLayout separators>
             {stockCards.map((stock) => (
@@ -191,7 +193,7 @@ export const DataFormatContent = ({
             ))}
           </StackLayout>
         </Card>
-      </FlexItem>
-    </FlexLayout>
+      </GridItem>
+    </GridLayout>
   );
 };

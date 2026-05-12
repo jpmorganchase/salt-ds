@@ -11,8 +11,6 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  GridItem,
-  GridLayout,
   H2,
   InteractableCard,
   InteractableCardGroup,
@@ -39,12 +37,7 @@ import {
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
 } from "@salt-ds/core";
-import {
-  BuildingIcon,
-  GlobeIcon,
-  LockedIcon,
-  WarningSolidIcon,
-} from "@salt-ds/icons";
+import { BuildingIcon, GlobeIcon, LockedIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -101,6 +94,26 @@ export interface FormContentProps {
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   handleRadioChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
+
+const interactiveElementSelector = [
+  "button:not([disabled])",
+  'input:not([disabled]):not([type="hidden"])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(", ");
+
+const getStepAnnouncement = (stepIndex: number) => {
+  const step = wizardSteps[stepIndex];
+
+  return `${step.label}, step ${stepIndex + 1} of ${wizardSteps.length}`;
+};
+
+const focusFirstInteractiveElement = (container: HTMLElement | null) => {
+  const firstInteractive = container?.querySelector<HTMLElement>(
+    interactiveElementSelector,
+  );
+
+  firstInteractive?.focus();
+};
 
 const wizardSteps = [
   {
@@ -181,6 +194,13 @@ const resetDataFormatFields = (
   updateField("performanceChart", defaultDataFormatValues.performanceChart);
 };
 
+const getDensityFormUpdates = (
+  displayDensity: string,
+): Partial<ECFormData> => ({
+  displayDensity,
+  ...(displayDensity === "high" ? {} : { acceptTerms: false }),
+});
+
 const stepValidationSchemas: Record<
   string,
   // biome-ignore lint/suspicious/noExplicitAny: This is acceptable for an example.
@@ -219,9 +239,6 @@ export const StandardControls = () => {
       handleRadioChange={handleRadioChange}
       handleSelectChange={handleSelectChange}
       stepFieldValidation={{}}
-      style={{
-        maxWidth: 330,
-      }}
     />
   );
 };
@@ -249,7 +266,7 @@ export const CardSelection = () => {
   );
 };
 
-export const DynamicPreview = () => {
+export const DynamicLivePreview = () => {
   const [formData, setFormData] = useState<ECFormData>({ ...initialFormData });
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -275,7 +292,7 @@ export const DynamicPreview = () => {
 };
 
 export const EndToEnd = () => {
-  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
@@ -291,6 +308,8 @@ export const EndToEnd = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
+    updateFieldsWithoutValidation,
+    clearFieldValidation,
     nextWithoutValidation,
     previous,
     reset,
@@ -314,7 +333,8 @@ export const EndToEnd = () => {
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
-    stepHeadingRef.current?.focus();
+
+    focusFirstInteractiveElement(stepContentRef.current);
   }, [activeStepIndex]);
 
   const handleNext = async () => {
@@ -323,34 +343,45 @@ export const EndToEnd = () => {
     if (isLastStep) {
       return;
     }
+
+    const nextStepIndex = activeStepIndex + 1;
+
     navigatedRef.current = true;
     nextWithoutValidation();
-    announce(`Step ${activeStepIndex + 1} of ${wizardSteps.length}`);
+    announce(getStepAnnouncement(nextStepIndex));
   };
 
   const handlePrevious = () => {
+    const previousStepIndex = activeStepIndex - 1;
+
     navigatedRef.current = true;
     previous();
+    announce(getStepAnnouncement(previousStepIndex));
+  };
+
+  const handleDensityChange = (value: string) => {
+    updateFieldsWithoutValidation(getDensityFormUpdates(value));
+    clearFieldValidation(currentStepId, "displayDensity");
+    clearFieldValidation(currentStepId, "acceptTerms");
   };
 
   const sharedFormProps: FormContentProps = {
     formData: formData as FormContentProps["formData"],
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
-    handleSelectChange: (value: string, name: string) =>
-      updateField(name, value),
+    handleSelectChange: (value, name) => updateField(name, value),
     handleRadioChange: (e) => updateField(e.target.name, e.target.value),
     stepFieldValidation: validationsByStep[currentStepId]?.fields || {},
   };
 
   const contentByStep: Record<string, ReactElement> = {
-    foundation: <FoundationContent {...sharedFormProps} />,
-    regional: (
-      <RegionalSettingsContent
+    foundation: (
+      <FoundationContent
         {...sharedFormProps}
-        style={{ maxWidth: "50%" }}
+        onDensityChange={handleDensityChange}
       />
     ),
+    regional: <RegionalSettingsContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
     notifications: <NotificationsContent {...sharedFormProps} />,
   };
@@ -360,12 +391,7 @@ export const EndToEnd = () => {
       <FlexItem style={{ flex: 1 }}>
         <Text>
           Customize your experience
-          <Text
-            as="h2"
-            ref={stepHeadingRef}
-            tabIndex={-1}
-            style={{ margin: 0 }}
-          >
+          <Text as="h2" style={{ margin: 0 }}>
             {wizardSteps[activeStepIndex].label}
           </Text>
           {wizardSteps[activeStepIndex].id === "foundation" && (
@@ -455,7 +481,7 @@ export const EndToEnd = () => {
       <FlexItem padding={3}>{header}</FlexItem>
       <FlexItem grow={1}>
         <ContentOverflow style={{ height: 430 }}>
-          {contentByStep[currentStepId]}
+          <div ref={stepContentRef}>{contentByStep[currentStepId]}</div>
         </ContentOverflow>
       </FlexItem>
       <FlexItem>{footer}</FlexItem>
@@ -464,18 +490,16 @@ export const EndToEnd = () => {
 };
 
 export const EndToEndModal = () => {
-  type WizardState = "form" | "cancel-warning";
-  const [wizardState, setWizardState] = useState<WizardState>("form");
   const [open, setOpen] = useState(false);
-  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
-
-  const warningTitleId = useId();
 
   const {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
+    updateFieldsWithoutValidation,
+    clearFieldValidation,
     nextWithoutValidation,
     previous,
     reset,
@@ -507,12 +531,12 @@ export const EndToEndModal = () => {
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
-    stepHeadingRef.current?.focus();
+
+    focusFirstInteractiveElement(stepContentRef.current);
   }, [activeStepIndex]);
 
   const openWizard = () => {
     reset();
-    setWizardState("form");
     setOpen(true);
   };
 
@@ -520,16 +544,12 @@ export const EndToEndModal = () => {
     setOpen(false);
     setTimeout(() => {
       reset();
-      setWizardState("form");
     }, 300);
   };
 
-  const showCancelWarning = () => setWizardState("cancel-warning");
-  const backToForm = () => setWizardState("form");
-
   const onOpenChange = (value: boolean) => {
-    if (!value && !isLastStep) {
-      showCancelWarning();
+    if (!value) {
+      closeWizardAndReset();
       return;
     }
     setOpen(value);
@@ -544,34 +564,45 @@ export const EndToEndModal = () => {
       closeWizardAndReset();
       return;
     }
+
+    const nextStepIndex = activeStepIndex + 1;
+
     navigatedRef.current = true;
     nextWithoutValidation();
-    announce(`Step ${activeStepIndex + 1} of ${wizardSteps.length}`);
+    announce(getStepAnnouncement(nextStepIndex));
   };
 
   const handlePrevious = () => {
+    const previousStepIndex = activeStepIndex - 1;
+
     navigatedRef.current = true;
     previous();
+    announce(getStepAnnouncement(previousStepIndex));
+  };
+
+  const handleDensityChange = (value: string) => {
+    updateFieldsWithoutValidation(getDensityFormUpdates(value));
+    clearFieldValidation(currentStepId, "displayDensity");
+    clearFieldValidation(currentStepId, "acceptTerms");
   };
 
   const sharedFormProps: FormContentProps = {
     formData: formData as FormContentProps["formData"],
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
-    handleSelectChange: (value: string, name: string) =>
-      updateField(name, value),
+    handleSelectChange: (value, name) => updateField(name, value),
     handleRadioChange: (e) => updateField(e.target.name, e.target.value),
     stepFieldValidation: validationsByStep[currentStepId]?.fields || {},
   };
 
   const contentByStep: Record<string, ReactElement> = {
-    foundation: <FoundationContent {...sharedFormProps} />,
-    regional: (
-      <RegionalSettingsContent
+    foundation: (
+      <FoundationContent
         {...sharedFormProps}
-        style={{ maxWidth: "50%" }}
+        onDensityChange={handleDensityChange}
       />
     ),
+    regional: <RegionalSettingsContent {...sharedFormProps} />,
     notifications: <NotificationsContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
   };
@@ -580,7 +611,7 @@ export const EndToEndModal = () => {
     <Button
       sentiment="accented"
       appearance="transparent"
-      onClick={showCancelWarning}
+      onClick={closeWizardAndReset}
     >
       Cancel
     </Button>
@@ -632,86 +663,31 @@ export const EndToEndModal = () => {
   return (
     <>
       <Button onClick={openWizard}>Open experience customization</Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        style={{ height: 588 }}
-        aria-labelledby={
-          wizardState === "cancel-warning" ? warningTitleId : undefined
-        }
-      >
-        {wizardState === "cancel-warning" ? (
-          <>
-            <DialogContent>
-              <GridLayout rows={1} columns={1} style={{ height: "100%" }}>
-                <GridItem
-                  horizontalAlignment="center"
-                  verticalAlignment="center"
-                >
-                  <StackLayout align="center">
-                    <WarningSolidIcon
-                      size={2}
-                      style={{
-                        color:
-                          "var(--salt-status-warning-foreground-decorative)",
-                      }}
-                    />
-                    <Text styleAs="h2" id={warningTitleId}>
-                      Are you sure you want to cancel?
-                    </Text>
-                    <Text>
-                      Any changes you've made will be lost after you confirm
-                      cancelling.
-                    </Text>
-                  </StackLayout>
-                </GridItem>
-              </GridLayout>
-            </DialogContent>
-            <DialogActions>
-              <FlexLayout gap={1}>
-                <Button
-                  appearance="bordered"
-                  sentiment="accented"
-                  onClick={backToForm}
-                >
-                  No
-                </Button>
-                <Button sentiment="accented" onClick={closeWizardAndReset}>
-                  Yes
-                </Button>
-              </FlexLayout>
-            </DialogActions>
-          </>
-        ) : (
-          <>
-            <DialogHeader
-              header={
-                <span tabIndex={-1} ref={stepHeadingRef}>
-                  {wizardSteps[activeStepIndex].label}
-                </span>
-              }
-              preheader="Customize your experience"
-              actions={
-                <Stepper orientation="horizontal">
-                  {wizardSteps.map((step, index) => (
-                    <Step
-                      key={step.id}
-                      label={step.stepTitle}
-                      status={validationsByStep[step.id]?.status}
-                      stage={getStepStage(index, activeStepIndex)}
-                    />
-                  ))}
-                </Stepper>
-              }
-              description={
-                wizardSteps[activeStepIndex].id === "foundation" &&
-                "A selection is required to proceed"
-              }
-            />
-            <DialogContent>{contentByStep[currentStepId]}</DialogContent>
-            <DialogActions>{footer}</DialogActions>
-          </>
-        )}
+      <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
+        <DialogHeader
+          header={<span>{wizardSteps[activeStepIndex].label}</span>}
+          preheader="Customize your experience"
+          actions={
+            <Stepper orientation="horizontal">
+              {wizardSteps.map((step, index) => (
+                <Step
+                  key={step.id}
+                  label={step.stepTitle}
+                  status={validationsByStep[step.id]?.status}
+                  stage={getStepStage(index, activeStepIndex)}
+                />
+              ))}
+            </Stepper>
+          }
+          description={
+            wizardSteps[activeStepIndex].id === "foundation" &&
+            "A selection is required to proceed"
+          }
+        />
+        <DialogContent ref={stepContentRef}>
+          {contentByStep[currentStepId]}
+        </DialogContent>
+        <DialogActions>{footer}</DialogActions>
       </Dialog>
     </>
   );
@@ -978,7 +954,7 @@ function PreferencesContent({
           </Dropdown>
         </FormField>
         <FormField>
-          <FormFieldLabel>Region / Country</FormFieldLabel>
+          <FormFieldLabel>Region/Country</FormFieldLabel>
           <Dropdown
             bordered
             placeholder="Select"

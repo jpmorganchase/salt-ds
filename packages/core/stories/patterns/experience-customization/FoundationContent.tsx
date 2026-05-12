@@ -53,10 +53,12 @@ const displayDensityOptions = [
 
 export const FoundationContent = ({
   formData,
-  handleSelectChange,
+  onDensityChange,
   stepFieldValidation,
   handleCheckboxChange,
-}: FormContentProps) => {
+}: FormContentProps & {
+  onDensityChange?: (value: string) => void;
+}) => {
   const { mode } = useTheme();
   const densityId = useId();
   const warningBannerId = useId();
@@ -101,7 +103,7 @@ export const FoundationContent = ({
             aria-labelledby={densityId}
             value={formData.displayDensity}
             onChange={(_event, value) => {
-              handleSelectChange?.(value as string, "displayDensity");
+              onDensityChange?.(value as string);
             }}
           >
             <GridLayout style={{ width: "100%" }} columns={{ xs: 1, sm: 3 }}>
