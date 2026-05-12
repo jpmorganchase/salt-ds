@@ -1,5 +1,50 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.91
+
+### Minor Changes
+
+- e74d4d8: Added `MegaMenu`.
+
+  `MegaMenu` is a multi-column dropdown that opens from a trigger to display a large set of grouped navigation items. Use `MegaMenu` to manage open state, `MegaMenuTrigger` to toggle the panel, `MegaMenuPanel` for the floating container, and `MegaMenuSection` / `MegaMenuGroup` / `MegaMenuHeader` / `MegaMenuItem` / `MegaMenuItemContent` / `MegaMenuContent` to structure the contents.
+
+  ```tsx
+  const [open, setOpen] = useState(false);
+
+  <MegaMenu open={open} onOpenChange={setOpen}>
+    <MegaMenuTrigger>
+      <NavigationItem>Solutions</NavigationItem>
+    </MegaMenuTrigger>
+    <MegaMenuPanel aria-label="Solutions menu">
+      <MegaMenuSection>
+        <MegaMenuGroup>
+          <MegaMenuHeader>Financial services</MegaMenuHeader>
+          <MegaMenuItem onClick={() => console.log("Digital banking")}>
+            <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+          </MegaMenuItem>
+          <MegaMenuItem onClick={() => console.log("Risk management")}>
+            <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+          </MegaMenuItem>
+        </MegaMenuGroup>
+      </MegaMenuSection>
+    </MegaMenuPanel>
+  </MegaMenu>;
+  ```
+
+- 7ffd0fd: Removed `TabsNext` and related components from lab and promoted to core. As part of the promotion the components were renamed e.g., `TabsNext` is now `Tabs`.
+- 2db14be: Removed `Rating` from lab and promoted to core.
+- 6368299: Added `SidePanelCloseButton` component that handles close logic, icon rendering, and accessible labelling (`aria-label` + `aria-labelledby` linked to the panel title) automatically. Removes the need for consumers to manually wire up IDs, icons, and click handlers.
+- 6368299: Updated `getTriggerProps` in `useSidePanel` to include a built-in `onClick` handler that toggles the panel open state, removing the need for consumers to manage toggle logic themselves, unless they want to.
+
+### Patch Changes
+
+- 78ca46a: Fix TreeNodes wrapped in React Fragments not participating in keyboard navigation
+- 6368299: Fixed `SidePanel` animating on first render when using `defaultOpen`. The panel now appears immediately without animation when initially open, and only animates on subsequent open/close interactions.
+- Updated dependencies [e74d4d8]
+- Updated dependencies [2db14be]
+- Updated dependencies [7ffd0fd]
+  - @salt-ds/core@1.61.0
+
 ## 1.0.0-alpha.90
 
 ### Minor Changes

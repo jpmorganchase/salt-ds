@@ -1,5 +1,43 @@
 # @salt-ds/core
 
+## 1.61.0
+
+### Minor Changes
+
+- 2db14be: Added `Rating`.
+
+  `Rating` component allows users to submit feedback and view average scores on a defined scale, reflecting your product, service or experience.
+
+  ```tsx
+  <Rating aria-label="Rating" defaultValue={3} />
+  ```
+
+- 7ffd0fd: Added `Tab`, `TabAction`, `TabBar`, `TabList`, `TabPanel`, `Tabs`, `TabTrigger`.
+
+  `Tabs` allow users to move between different views of related content without leave the current page.
+
+  ```tsx
+  <Tabs defaultValue="Home">
+    <TabBar>
+      <TabList aria-label="Example tablist">
+        <Tab value="Home">
+          <TabTrigger>Home</TabTrigger>
+        </Tab>
+        <Tab value="Transactions">
+          <TabTrigger>Transactions</TabTrigger>
+        </Tab>
+        <Tab value="Checks">
+          <TabTrigger>Checks</TabTrigger>
+        </Tab>
+      </TabList>
+    </TabBar>
+  </Tabs>
+  ```
+
+### Patch Changes
+
+- e74d4d8: Fixed `aria-controls` on `NavigationItem` being applied to the outer wrapper element instead of the interactive trigger element.
+
 ## 1.60.0
 
 ### Minor Changes
