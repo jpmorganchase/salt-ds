@@ -34,10 +34,6 @@ nav > ol {
   justify-content: flex-end;
 }
 
-.custom-region-wrapper {
-  width: 100%;
-}
-
 .full-width-wrapper {
   box-sizing: border-box;
 }

@@ -52,9 +52,6 @@
   inline-size: 100%;
 }
 
-.customRegionWrapper {
-  width: 100%;
-}
 .linkFooterSpacingFirstLinkStart {
   padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
   width: fit-content;

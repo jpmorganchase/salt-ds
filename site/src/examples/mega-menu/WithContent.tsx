@@ -20,404 +20,392 @@ export const WithContent = (): ReactElement => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
-    <StackLayout direction="column" gap={2}>
+    <FlexLayout gap={2}>
       <MegaMenu
         open={openMenu === "right"}
         onOpenChange={(open) => setOpenMenu(open ? "right" : null)}
       >
-        <div className={styles.customRegionWrapper}>
-          <MegaMenuTrigger>
-            <Button>Content on right</Button>
-          </MegaMenuTrigger>
-          <MegaMenuPanel
-            className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
-          >
-            <div className={styles.customRegionContent}>
-              <MegaMenuSection className={styles.customRegionSideSection}>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Digital banking",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Risk management",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Patient management",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Telemedicine",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Compliance solutions",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "E-commerce platforms",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Supply chain optimization",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      Supply chain optimization
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Quality control",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Production planning",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      Production planning
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-              </MegaMenuSection>
-
-              <FlexLayout gap={3}>
-                <MegaMenuGroup
-                  style={{
-                    padding:
-                      " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
-                    width: "fit-content",
+        <MegaMenuTrigger>
+          <Button>Content on right</Button>
+        </MegaMenuTrigger>
+        <MegaMenuPanel
+          className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
+        >
+          <div className={styles.customRegionContent}>
+            <MegaMenuSection className={styles.customRegionSideSection}>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial services</MegaMenuHeader>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Digital banking",
+                    );
                   }}
                 >
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Book a demo
-                  </Link>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Support center
-                  </Link>
-                </MegaMenuGroup>
-              </FlexLayout>
-            </div>
-            <MegaMenuContent className={`${styles.customRegionSideContent}`}>
-              <FlexLayout direction={"column"} wrap gap={2}>
-                <img
-                  alt="Featured resource"
-                  src={exampleImage}
-                  className={`${styles.customRegionImage} ${styles.customRegionSideImage}`}
-                />
-                <StackLayout gap={1}>
-                  <StackLayout gap={0}>
-                    <Text styleAs="h2" as="h2">
-                      Featured Resource
-                    </Text>
-                    <Text className={styles.customRegionRightDescription}>
-                      Explore our latest accessibility guidelines to ensure your
-                      components meet ADA standards and provide an inclusive
-                      user experience.
-                    </Text>
-                  </StackLayout>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                    style={{ width: "fit-content" }}
-                  >
-                    View guidelines
-                  </Link>
+                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Risk management",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Healthcare</MegaMenuHeader>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Patient management",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Telemedicine",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Compliance solutions",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>
+                    Compliance solutions
+                  </MegaMenuItemContent>
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Retail</MegaMenuHeader>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "E-commerce platforms",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>
+                    E-commerce platforms
+                  </MegaMenuItemContent>
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Manufacturing</MegaMenuHeader>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Supply chain optimization",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>
+                    Supply chain optimization
+                  </MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Quality control",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Production planning",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuSection>
+
+            <FlexLayout gap={3}>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Book a demo
+                </Link>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Support center
+                </Link>
+              </MegaMenuGroup>
+            </FlexLayout>
+          </div>
+          <MegaMenuContent className={`${styles.customRegionSideContent}`}>
+            <FlexLayout direction={"column"} wrap gap={2}>
+              <img
+                alt="Featured resource"
+                src={exampleImage}
+                className={`${styles.customRegionImage} ${styles.customRegionSideImage}`}
+              />
+              <StackLayout gap={1}>
+                <StackLayout gap={0}>
+                  <Text styleAs="h2" as="h2">
+                    Featured Resource
+                  </Text>
+                  <Text className={styles.customRegionRightDescription}>
+                    Explore our latest accessibility guidelines to ensure your
+                    components meet ADA standards and provide an inclusive user
+                    experience.
+                  </Text>
                 </StackLayout>
-              </FlexLayout>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </div>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                  style={{ width: "fit-content" }}
+                >
+                  View guidelines
+                </Link>
+              </StackLayout>
+            </FlexLayout>
+          </MegaMenuContent>
+        </MegaMenuPanel>
       </MegaMenu>
 
       <MegaMenu
         open={openMenu === "left"}
         onOpenChange={(open) => setOpenMenu(open ? "left" : null)}
       >
-        <div className={styles.customRegionWrapper}>
-          <MegaMenuTrigger>
-            <Button>Content on left</Button>
-          </MegaMenuTrigger>
+        <MegaMenuTrigger>
+          <Button>Content on left</Button>
+        </MegaMenuTrigger>
 
-          <MegaMenuPanel
-            className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
-          >
-            <MegaMenuContent className={`${styles.customRegionSideContent}`}>
-              <FlexLayout direction={"column"} wrap gap={2}>
-                <img
-                  alt="Featured resource"
-                  src={exampleImage}
-                  className={`${styles.customRegionImage} ${styles.customRegionSideImage}`}
-                />
-                <StackLayout gap={1}>
-                  <StackLayout gap={0}>
-                    <Text styleAs="h2" as="h2">
-                      Featured Resource
-                    </Text>
-                    <Text className={styles.customRegionRightDescription}>
-                      Explore our latest accessibility guidelines to ensure your
-                      components meet ADA standards and provide an inclusive
-                      user experience.
-                    </Text>
-                  </StackLayout>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                    style={{ width: "fit-content" }}
-                  >
-                    View guidelines
-                  </Link>
+        <MegaMenuPanel
+          className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
+        >
+          <MegaMenuContent className={`${styles.customRegionSideContent}`}>
+            <FlexLayout direction={"column"} wrap gap={2}>
+              <img
+                alt="Featured resource"
+                src={exampleImage}
+                className={`${styles.customRegionImage} ${styles.customRegionSideImage}`}
+              />
+              <StackLayout gap={1}>
+                <StackLayout gap={0}>
+                  <Text styleAs="h2" as="h2">
+                    Featured Resource
+                  </Text>
+                  <Text className={styles.customRegionRightDescription}>
+                    Explore our latest accessibility guidelines to ensure your
+                    components meet ADA standards and provide an inclusive user
+                    experience.
+                  </Text>
                 </StackLayout>
-              </FlexLayout>
-            </MegaMenuContent>
-            <div className={styles.customRegionContent}>
-              <MegaMenuSection className={styles.customRegionSideSection}>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Financial services</MegaMenuHeader>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Digital banking",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Risk management",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Patient management",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Telemedicine",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Compliance solutions",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Retail</MegaMenuHeader>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "E-commerce platforms",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Supply chain optimization",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      Supply chain optimization
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Quality control",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithContent MegaMenu] selected value:",
-                        "Production planning",
-                      );
-                    }}
-                  >
-                    <MegaMenuItemContent>
-                      Production planning
-                    </MegaMenuItemContent>
-                  </MegaMenuItem>
-                </MegaMenuGroup>
-              </MegaMenuSection>
-              <FlexLayout gap={3}>
-                <MegaMenuGroup
-                  style={{
-                    padding:
-                      " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
-                    width: "fit-content",
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                  style={{ width: "fit-content" }}
+                >
+                  View guidelines
+                </Link>
+              </StackLayout>
+            </FlexLayout>
+          </MegaMenuContent>
+          <div className={styles.customRegionContent}>
+            <MegaMenuSection className={styles.customRegionSideSection}>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial services</MegaMenuHeader>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Digital banking",
+                    );
                   }}
                 >
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Book a demo
-                  </Link>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Support center
-                  </Link>
-                </MegaMenuGroup>
-              </FlexLayout>
-            </div>
-          </MegaMenuPanel>
-        </div>
+                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Risk management",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Healthcare</MegaMenuHeader>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Patient management",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Telemedicine",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Compliance solutions",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>
+                    Compliance solutions
+                  </MegaMenuItemContent>
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Retail</MegaMenuHeader>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "E-commerce platforms",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>
+                    E-commerce platforms
+                  </MegaMenuItemContent>
+                </MegaMenuItem>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Manufacturing</MegaMenuHeader>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Supply chain optimization",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>
+                    Supply chain optimization
+                  </MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Quality control",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                </MegaMenuItem>
+                <MegaMenuItem
+                  onClick={(event) => {
+                    event.preventDefault();
+                    console.log(
+                      "[WithContent MegaMenu] selected value:",
+                      "Production planning",
+                    );
+                  }}
+                >
+                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuSection>
+            <FlexLayout gap={3}>
+              <MegaMenuGroup
+                style={{
+                  padding:
+                    " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
+                  width: "fit-content",
+                }}
+              >
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Book a demo
+                </Link>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Support center
+                </Link>
+              </MegaMenuGroup>
+            </FlexLayout>
+          </div>
+        </MegaMenuPanel>
       </MegaMenu>
-    </StackLayout>
+    </FlexLayout>
   );
 };
