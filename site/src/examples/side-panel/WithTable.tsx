@@ -12,19 +12,18 @@ import {
   TH,
   THead,
   TR,
-  useIcon,
-  useId,
 } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
   useSidePanel,
 } from "@salt-ds/lab";
-import { clsx } from "clsx";
-import React, { type CSSProperties, useState } from "react";
+import type React from "react";
+import { type ChangeEvent, type CSSProperties, useState } from "react";
 import styles from "./WithTable.module.css";
 
 interface TeamMember {
@@ -75,11 +74,7 @@ const SidePanelExample = () => {
   const [selectedRow, setSelectedRow] = useState<TeamMember | null>(null);
   const [data, setData] = useState(tableData);
   const [formValues, setFormValues] = useState<TeamMember | null>(null);
-  const { CloseIcon } = useIcon();
   const { setOpen, openState, setTriggerRef, panelId } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
 
   const handleRowClick = (row: TeamMember, target: HTMLElement) => {
     if (openState && selectedRow?.id === row.id) {
@@ -119,13 +114,21 @@ const SidePanelExample = () => {
     <FlexLayout
       style={{
         width: "100%",
-        height: "100%",
+        height: 350,
         border:
           "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        overflow: "hidden",
       }}
       gap={0}
     >
-      <div style={{ flex: 1, minWidth: 0, padding: "var(--salt-spacing-300)" }}>
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          padding: "var(--salt-spacing-300)",
+          boxSizing: "border-box",
+        }}
+      >
         <TableContainer>
           <Table>
             <caption>Users</caption>
@@ -158,35 +161,24 @@ const SidePanelExample = () => {
         </TableContainer>
       </div>
 
-      <SidePanel
-        position="right"
-        style={panelStyle}
-        key={selectedRow?.id}
-        disableAnimation
-      >
+      <SidePanel position="right" style={panelStyle}>
         {formValues && (
           <>
             <SidePanelHeader>
-              <SidePanelTitle id={titleId}>
+              <SidePanelTitle>
                 <span className={styles.visuallyHidden}>{formValues.name}</span>
                 Employee Details
               </SidePanelTitle>
-              <Button
-                aria-label="Close"
-                aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-                appearance="transparent"
-                onClick={() => setOpen(false)}
-              >
-                <CloseIcon aria-hidden />
-              </Button>
+              <SidePanelCloseButton />
             </SidePanelHeader>
             <SidePanelContent>
               <StackLayout style={{ width: "100%" }}>
                 <FormField>
                   <FormFieldLabel>Name</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.name}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
                         (v) => v && { ...v, name: event.target.value },
                       )
@@ -196,8 +188,9 @@ const SidePanelExample = () => {
                 <FormField>
                   <FormFieldLabel>Email</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.email}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
                         (v) => v && { ...v, email: event.target.value },
                       )
@@ -207,8 +200,9 @@ const SidePanelExample = () => {
                 <FormField>
                   <FormFieldLabel>Phone</FormFieldLabel>
                   <Input
+                    bordered
                     value={formValues.phone}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
                       setFormValues(
                         (v) => v && { ...v, phone: event.target.value },
                       )

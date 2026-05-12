@@ -12,9 +12,9 @@ data:
 
 **Provide a clear accessible name for the `SidePanel`**
 
-When you use `SidePanelTitle` inside `SidePanelHeader`, the accessible name for the panel region is provided automatically.
+The `SidePanelTitle` component automatically provides the accessible name for both the panel region and the close button when used within `SidePanelHeader` and alongside `SidePanelCloseButton`.
 
-If you are not using `SidePanelTitle`, you must provide an accessible name explicitly using `aria-labelledby` (preferred when a visible heading exists) or `aria-label` (when no visible heading is available).
+If you aren't using `SidePanelTitle`, you must provide an accessible name explicitly using `aria-labelledby` (preferred when a visible heading exists) or `aria-label` (when no visible heading is available) and apply an accessible name to the `SidePanelCloseButton`.
 
 ## Keyboard interactions
 

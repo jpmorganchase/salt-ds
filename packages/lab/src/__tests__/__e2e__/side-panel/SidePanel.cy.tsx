@@ -1,5 +1,7 @@
+import { Button, Text } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
@@ -8,11 +10,83 @@ import {
 } from "@salt-ds/lab";
 import * as sidePanel from "@stories/side-panel/side-panel.stories";
 import { composeStories } from "@storybook/react-vite";
+import { useState } from "react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(sidePanel);
 const { Left, Default, ManualTrigger, WithTable, Scrollable, WithNav } =
   composedStories;
+
+function DynamicScrollablePanel() {
+  const [expanded, setExpanded] = useState(false);
+  const content = expanded
+    ? Array.from({ length: 160 }, () => "Expanded content").join(" ")
+    : "Short content";
+
+  return (
+    <SidePanelProvider defaultOpen>
+      <div style={{ display: "flex", height: 240 }}>
+        <SidePanel disableAnimation>
+          <SidePanelHeader>
+            <SidePanelTitle>Dynamic Panel</SidePanelTitle>
+          </SidePanelHeader>
+          <SidePanelContent>
+            <Button onClick={() => setExpanded(true)}>Expand content</Button>
+            <Text>{content}</Text>
+          </SidePanelContent>
+        </SidePanel>
+      </div>
+    </SidePanelProvider>
+  );
+}
+
+function FocusOrderPanel() {
+  return (
+    <SidePanelProvider>
+      <div>
+        <Button>Before trigger</Button>
+        <SidePanelTrigger>
+          <Button>Open panel</Button>
+        </SidePanelTrigger>
+        <Button>After trigger</Button>
+        <SidePanel disableAnimation>
+          <SidePanelHeader>
+            <SidePanelTitle>Focus Panel</SidePanelTitle>
+            <SidePanelCloseButton />
+          </SidePanelHeader>
+          <SidePanelContent>
+            <Button>Panel action</Button>
+          </SidePanelContent>
+        </SidePanel>
+      </div>
+    </SidePanelProvider>
+  );
+}
+
+function NaturalTabOrderPanel() {
+  return (
+    <SidePanelProvider defaultOpen>
+      <div>
+        <SidePanelTrigger>
+          <Button>Open panel</Button>
+        </SidePanelTrigger>
+        <Button>After trigger</Button>
+        <Button>Later page action</Button>
+        <SidePanel disableAnimation>
+          <SidePanelHeader>
+            <SidePanelTitle>Natural Order Panel</SidePanelTitle>
+            <SidePanelCloseButton />
+          </SidePanelHeader>
+          <SidePanelContent>
+            <Button>Panel action</Button>
+          </SidePanelContent>
+        </SidePanel>
+        <Button>After panel</Button>
+      </div>
+    </SidePanelProvider>
+  );
+}
+
 describe("GIVEN a SidePanel component", () => {
   checkAccessibility(composedStories);
 
@@ -48,7 +122,7 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("region").should("have.class", "saltSidePanel-left");
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Close Section Title" }).click();
       cy.findByRole("button", { name: "Open left panel" }).should(
         "have.attr",
         "aria-expanded",
@@ -97,16 +171,20 @@ describe("GIVEN a SidePanel component", () => {
           );
         });
 
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
+      cy.findByRole("button", { name: "Close Section Title" }).should(
+        "have.focus",
+      );
 
       cy.realPress("Escape");
       cy.findByRole("region").should("not.exist");
       cy.focused().should("have.text", "Open right panel");
 
       cy.findByRole("button", { name: "Open right panel" }).click();
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
+      cy.findByRole("button", { name: "Close Section Title" }).should(
+        "have.focus",
+      );
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Close Section Title" }).click();
       cy.findByRole("button", { name: "Open right panel" }).should(
         "have.attr",
         "aria-expanded",
@@ -180,6 +258,98 @@ describe("GIVEN a SidePanel component", () => {
       cy.get("@onOpenChange").should("have.been.calledWith", false);
       cy.findByRole("region").should("not.exist");
     });
+
+    it("SHOULD place panel content after the trigger in keyboard order while open", () => {
+      cy.mount(<FocusOrderPanel />);
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Before trigger" }).should("have.focus");
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Open panel" }).should("have.focus");
+
+      cy.realPress("Enter");
+      cy.findByRole("button", { name: "Close Focus Panel" }).should(
+        "have.focus",
+      );
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Open panel" }).should("have.focus");
+      cy.findByRole("region", { name: "Focus Panel" }).should("be.visible");
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Close Focus Panel" }).should(
+        "have.focus",
+      );
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Panel action" }).should("have.focus");
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "After trigger" }).should("have.focus");
+      cy.findByRole("region", { name: "Focus Panel" }).should("be.visible");
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Panel action" }).should("have.focus");
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "After trigger" }).should("have.focus");
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Panel action" }).should("have.focus");
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Close Focus Panel" }).should(
+        "have.focus",
+      );
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Open panel" }).should("have.focus");
+    });
+
+    it("SHOULD preserve natural tab order when focus enters the panel from page content", () => {
+      cy.mount(<NaturalTabOrderPanel />);
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Open panel" }).should("have.focus");
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Close Natural Order Panel" }).should(
+        "have.focus",
+      );
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Panel action" }).should("have.focus");
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "After trigger" }).should("have.focus");
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Later page action" }).should(
+        "have.focus",
+      );
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Close Natural Order Panel" }).should(
+        "have.focus",
+      );
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Later page action" }).should(
+        "have.focus",
+      );
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Close Natural Order Panel" }).should(
+        "have.focus",
+      );
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Panel action" }).should("have.focus");
+
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "After panel" }).should("have.focus");
+    });
   });
 
   describe("WithTable", () => {
@@ -204,7 +374,9 @@ describe("GIVEN a SidePanel component", () => {
         cy.findByDisplayValue("+1 212 555 0101").should("be.visible");
       });
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", {
+        name: "Close Alex Morgan Employee Details",
+      }).click();
       cy.findByRole("region", {
         name: "Alex Morgan Employee Details",
       }).should("not.exist");
@@ -235,18 +407,22 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", {
         name: "Alex Morgan Employee Details",
       }).should("be.visible");
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
+      cy.findByRole("button", {
+        name: "Close Alex Morgan Employee Details",
+      }).should("have.focus");
 
-      // Switch rows while panel is open — focus moves into the new panel
+      // Switch rows while panel is open — panel updates content
       cy.findByRole("button", {
         name: "Edit details for Taylor Reed",
       }).click();
       cy.findByRole("region", {
         name: "Taylor Reed Employee Details",
       }).should("be.visible");
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
 
       // Close via Escape — focus returns to the trigger
+      cy.findByRole("button", {
+        name: "Close Taylor Reed Employee Details",
+      }).focus();
       cy.realPress("Escape");
       cy.findByRole("region").should("not.exist");
       cy.focused().should(
@@ -259,7 +435,9 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("button", {
         name: "Edit details for Alex Morgan",
       }).click();
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", {
+        name: "Close Alex Morgan Employee Details",
+      }).click();
       cy.findByRole("region").should("not.exist");
       cy.focused().should(
         "have.attr",
@@ -309,13 +487,27 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("region", { name: "Main content" }).should("be.visible");
 
-      cy.findByRole("button", { name: "Close" }).should("have.focus");
+      cy.findByRole("button", { name: "Close Section Title" }).should(
+        "have.focus",
+      );
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Close Section Title" }).click();
       cy.findByRole("region", { name: "Section Title" }).should("not.exist");
 
       cy.findByRole("button", { name: "Toggle right panel" }).click();
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
+    });
+
+    it("WHEN content changes make the panel body scrollable, THEN body focusability attributes update", () => {
+      cy.mount(<DynamicScrollablePanel />);
+
+      cy.get(".saltSidePanelContent-body").should("not.have.attr", "tabindex");
+
+      cy.findByRole("button", { name: "Expand content" }).click();
+
+      cy.get(".saltSidePanelContent-body")
+        .should("have.attr", "tabindex", "0")
+        .and("have.attr", "role", "region");
     });
   });
 
@@ -327,7 +519,7 @@ describe("GIVEN a SidePanel component", () => {
       cy.findByRole("region", { name: "Section Title" }).should("be.visible");
       cy.findByRole("navigation").should("be.visible");
 
-      cy.findByRole("button", { name: "Close" }).click();
+      cy.findByRole("button", { name: "Close Section Title" }).click();
       cy.findByRole("region", { name: "Section Title" }).should("not.exist");
       cy.findByRole("navigation").should("be.visible");
     });

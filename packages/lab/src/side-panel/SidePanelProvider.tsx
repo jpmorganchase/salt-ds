@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { SidePanelContext } from "./internal";
+import { SidePanelContext, useSidePanelTabOrder } from "./internal";
 
 export interface SidePanelProviderProps {
   /**
@@ -50,6 +50,9 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
   const [floating, setFloating] = useState<HTMLDivElement | null>(null);
   const [panelId, setPanelId] = useState<string | undefined>(undefined);
   const [titleId, setTitleId] = useState<string | undefined>(undefined);
+  const [position, setPosition] = useState<"right" | "left" | undefined>(
+    undefined,
+  );
 
   const floatingRootContext = useFloatingRootContext({
     open: openState,
@@ -81,6 +84,12 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
     };
   }, [floating, openState, handleOpenChange]);
 
+  useSidePanelTabOrder({
+    floating,
+    open: openState,
+    reference,
+  });
+
   const context = useMemo(
     () => ({
       openState,
@@ -92,8 +101,17 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
       setPanelId,
       titleId,
       setTitleId,
+      position,
+      setPosition,
     }),
-    [openState, floatingRootContext, handleOpenChange, panelId, titleId],
+    [
+      openState,
+      floatingRootContext,
+      handleOpenChange,
+      panelId,
+      titleId,
+      position,
+    ],
   );
 
   return (

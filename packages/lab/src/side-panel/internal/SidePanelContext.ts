@@ -45,6 +45,14 @@ export interface SidePanelContextValue {
    * so that SidePanel and SidePanelContent can use it for aria-labelledby.
    */
   setTitleId: Dispatch<SetStateAction<string | undefined>>;
+  /**
+   * Edge the panel is anchored to.
+   */
+  position?: "right" | "left";
+  /**
+   * Registers the position from SidePanel back to the context.
+   */
+  setPosition: Dispatch<SetStateAction<"right" | "left" | undefined>>;
 }
 
 export const SidePanelContext = createContext<SidePanelContextValue>(
@@ -59,6 +67,8 @@ export const SidePanelContext = createContext<SidePanelContextValue>(
     setPanelId: () => {},
     titleId: undefined,
     setTitleId: () => {},
+    position: undefined,
+    setPosition: () => {},
   },
 );
 
