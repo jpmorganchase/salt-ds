@@ -1,4 +1,13 @@
-import { Badge, Button, FlexLayout } from "@salt-ds/core";
+import {
+  Badge,
+  Button,
+  FlexLayout,
+  Tab,
+  TabBar,
+  TabList,
+  Tabs,
+  TabTrigger,
+} from "@salt-ds/core";
 import {
   MessageIcon,
   NotificationIcon,
@@ -6,13 +15,6 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "@salt-ds/icons";
-import {
-  TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
@@ -75,28 +77,28 @@ export const String: StoryFn = () => {
 
 export const InlineBadge: StoryFn = () => {
   return (
-    <TabsNext defaultValue="Home">
+    <Tabs defaultValue="Home">
       <TabBar inset divider>
-        <TabListNext
+        <TabList
           style={{
             minWidth: 350,
           }}
         >
-          <TabNext value="Home">
-            <TabNextTrigger>Home</TabNextTrigger>
-          </TabNext>
-          <TabNext value="Transactions">
-            <TabNextTrigger aria-label="Transations - 30 updates">
+          <Tab value="Home">
+            <TabTrigger>Home</TabTrigger>
+          </Tab>
+          <Tab value="Transactions">
+            <TabTrigger aria-label="Transations - 30 updates">
               Transactions
               <Badge value={30} />
-            </TabNextTrigger>
-          </TabNext>
-          <TabNext value="Loans">
-            <TabNextTrigger>Loans</TabNextTrigger>
-          </TabNext>
-        </TabListNext>
+            </TabTrigger>
+          </Tab>
+          <Tab value="Loans">
+            <TabTrigger>Loans</TabTrigger>
+          </Tab>
+        </TabList>
       </TabBar>
-    </TabsNext>
+    </Tabs>
   );
 };
 
@@ -134,23 +136,23 @@ export const DotBadge: StoryFn<typeof Badge> = () => {
 
 export const InlineDotBadge: StoryFn<typeof Badge> = () => {
   return (
-    <TabsNext defaultValue="Home">
+    <Tabs defaultValue="Home">
       <TabBar>
-        <TabListNext appearance="transparent" style={{ minWidth: 350 }}>
-          <TabNext value="Home">
-            <TabNextTrigger>Home</TabNextTrigger>
-          </TabNext>
-          <TabNext value="Transactions">
-            <TabNextTrigger aria-label="Transations - New">
+        <TabList appearance="transparent" style={{ minWidth: 350 }}>
+          <Tab value="Home">
+            <TabTrigger>Home</TabTrigger>
+          </Tab>
+          <Tab value="Transactions">
+            <TabTrigger aria-label="Transations - New">
               Transactions
               <Badge />
-            </TabNextTrigger>
-          </TabNext>
-          <TabNext value="Loans">
-            <TabNextTrigger>Loans</TabNextTrigger>
-          </TabNext>
-        </TabListNext>
+            </TabTrigger>
+          </Tab>
+          <Tab value="Loans">
+            <TabTrigger>Loans</TabTrigger>
+          </Tab>
+        </TabList>
       </TabBar>
-    </TabsNext>
+    </Tabs>
   );
 };

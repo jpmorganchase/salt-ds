@@ -1,13 +1,13 @@
-import { useAriaAnnouncer } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
+  Tab,
+  TabAction,
   TabBar,
-  TabListNext,
-  TabNext,
-  TabNextAction,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
+  TabList,
+  Tabs,
+  TabTrigger,
+  useAriaAnnouncer,
+} from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 export const DismissibleTabs = (): ReactElement => {
@@ -28,12 +28,12 @@ export const DismissibleTabs = (): ReactElement => {
 
   return (
     <div style={{ width: "100%", minWidth: 0 }}>
-      <TabsNext defaultValue={tabs[0]}>
+      <Tabs defaultValue={tabs[0]}>
         <TabBar inset divider>
-          <TabListNext aria-label="Example tablist">
+          <TabList aria-label="Example tablist">
             {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger
+              <Tab value={label} key={label}>
+                <TabTrigger
                   onKeyDown={(event) => {
                     if (event.key === "Delete" && tabs.length > 1) {
                       handleDismissTab(label);
@@ -41,22 +41,22 @@ export const DismissibleTabs = (): ReactElement => {
                   }}
                 >
                   {label}
-                </TabNextTrigger>
+                </TabTrigger>
                 {tabs.length > 1 && (
-                  <TabNextAction
+                  <TabAction
                     onClick={() => {
                       handleDismissTab(label);
                     }}
                     aria-label="Dismiss tab"
                   >
                     <CloseIcon aria-hidden />
-                  </TabNextAction>
+                  </TabAction>
                 )}
-              </TabNext>
+              </Tab>
             ))}
-          </TabListNext>
+          </TabList>
         </TabBar>
-      </TabsNext>
+      </Tabs>
     </div>
   );
 };

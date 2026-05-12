@@ -1,0 +1,23 @@
+.saltTabTrigger {
+  all: unset;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* The action should be triggered by clicking anywhere on the tab. */
+.saltTabTrigger::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.saltTabTrigger:focus-visible {
+  outline: none;
+}
