@@ -85,16 +85,8 @@ nav > ol {
   flex: 0 0 auto;
 }
 
-.custom-region-primary {
-  background: var(--salt-container-primary-background);
-}
-
-.custom-region-secondary {
+.custom-region {
   background: var(--salt-container-secondary-background);
-}
-
-.custom-region-tertiary {
-  background: var(--salt-container-tertiary-background);
 }
 
 .custom-region-right-description {
@@ -165,40 +157,6 @@ nav > ol {
    The panel itself never wraps, so the section and the custom region
    are always stacked; responsiveness happens *inside* the section,
    where menu groups wrap via the auto-fit grid. */
-.custom-region-stack {
-  --saltMegaMenuPanel-inlineSize: min(max-content, var(--saltMegaMenuPanel-availableWidth, 100vw));
-  --saltMegaMenuPanel-maxInlineSize: var(--saltMegaMenuPanel-availableWidth, 100vw);
-  flex-wrap: nowrap;
-  align-items: stretch;
-}
-
-.custom-region-stack .saltMegaMenuContent {
-  flex: 0 0 auto;
-  inline-size: auto;
-  align-self: stretch;
-  box-sizing: border-box;
-}
-
-.custom-region-stack .saltMegaMenuContent .saltFlexLayout {
-  flex-wrap: nowrap;
-  min-block-size: 0;
-}
-
-.custom-region-stack .saltMegaMenuSection {
-  flex: 0 0 auto;
-  inline-size: 100%;
-  box-sizing: border-box;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
-}
-
-.custom-region-stack .custom-region-image {
-  width: 100%;
-  height: auto;
-  max-block-size: 240px;
-  object-fit: cover;
-  display: block;
-}
-
 .menu-item-adornment {
   margin-inline-start: auto;
   display: flex;
@@ -241,9 +199,6 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.withLink-container {
-  padding-top: 0;
-}
 .saltMegaMenuPanel {
   max-block-size: calc(100vh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
   max-block-size: calc(100dvh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);

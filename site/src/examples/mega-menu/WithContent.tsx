@@ -186,9 +186,7 @@ export const WithContent = (): ReactElement => {
                 </MegaMenuGroup>
               </FlexLayout>
             </div>
-            <MegaMenuContent
-              className={`${styles.customRegionTertiary} ${styles.customRegionSideContent}`}
-            >
+            <MegaMenuContent className={`${styles.customRegionSideContent}`}>
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"
@@ -234,9 +232,7 @@ export const WithContent = (): ReactElement => {
           <MegaMenuPanel
             className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
           >
-            <MegaMenuContent
-              className={`${styles.customRegionSecondary} ${styles.customRegionSideContent}`}
-            >
+            <MegaMenuContent className={`${styles.customRegionSideContent}`}>
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="Featured resource"

@@ -118,6 +118,7 @@
   flex: 0 0 258px;
   inline-size: 258px;
   box-sizing: border-box;
+  background: var(--salt-container-secondary-background);
 }
 
 .customRegionSideImage {
@@ -142,20 +143,4 @@
   .customRegionSideSection {
     grid-template-columns: 1fr;
   }
-}
-
-.customRegionPrimary {
-  background: var(--salt-container-primary-background);
-}
-
-.customRegionSecondary {
-  background: var(--salt-container-secondary-background);
-}
-
-.customRegionTertiary {
-  background: var(--salt-container-tertiary-background);
-}
-
-.linkSection {
-  padding-top: 0;
 }

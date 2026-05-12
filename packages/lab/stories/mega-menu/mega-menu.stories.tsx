@@ -3178,7 +3178,7 @@ export const WithContent: StoryFn = () => {
                 </MegaMenuGroup>
               </FlexLayout>
             </div>
-            <MegaMenuContent className="custom-region-tertiary">
+            <MegaMenuContent className="custom-region">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="example"
@@ -3222,7 +3222,7 @@ export const WithContent: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel className="custom-region-no-container-padding custom-region-side">
-            <MegaMenuContent className="custom-region-secondary">
+            <MegaMenuContent className="custom-region">
               <FlexLayout direction={"column"} wrap gap={2}>
                 <img
                   alt="example"
