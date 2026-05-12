@@ -1,0 +1,82 @@
+.saltTabOverflowList {
+  position: relative;
+}
+
+.saltTabOverflowList-list {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  overflow: hidden;
+  overflow-y: auto;
+  position: absolute;
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  box-sizing: border-box;
+  border-radius: var(--salt-palette-corner, 0);
+  z-index: var(--salt-zIndex-flyover);
+}
+
+.saltTabOverflowList-listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-fixed-100);
+  max-height: inherit;
+  min-height: inherit;
+}
+
+.saltTabOverflowList-list .saltTab {
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-selectable-background);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+  display: flex;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  align-items: center;
+  cursor: var(--salt-cursor-hover);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  justify-content: flex-start;
+}
+
+@supports selector(:has(*)) {
+  .saltTabList:has([data-overflowbutton]) .saltTabOverflowList-list .saltTab {
+    max-width: unset;
+  }
+}
+
+.saltTabOverflowList-list .saltTab .saltTabTrigger {
+  justify-content: start;
+}
+
+.saltTabOverflowList-list .saltTab::after {
+  display: none;
+}
+
+.saltTabOverflowList-list .saltTab-focusVisible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+}
+
+.saltTabOverflowList-list .saltTab:hover {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltTabOverflowList-list .saltTab-disabled {
+  color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-cursor-disabled);
+}
+
+.saltTabOverflowList-list .saltTab-disabled:hover,
+.saltTabOverflowList-list .saltTab-disabled:active {
+  background: var(--salt-selectable-background);
+  box-shadow: none;
+}
+
+.saltTabOverflowList-list .saltTab:active {
+  background: var(--salt-selectable-background-selected);
+  box-shadow:
+    0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected),
+    0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
+}

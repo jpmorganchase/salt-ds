@@ -5,13 +5,13 @@ import {
   useStore,
 } from "@jpmorganchase/mosaic-store";
 import {
+  Tab,
   TabBar,
-  type TabListNextProps,
-  TabNext,
-  TabNextPanel,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
+  type TabListProps,
+  TabPanel,
+  Tabs,
+  TabTrigger,
+} from "@salt-ds/core";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { type SyntheticEvent, useEffect } from "react";
@@ -34,8 +34,8 @@ const tabs = [
 
 export type Relationship = "similarTo" | "contains";
 
-const TabListNext = dynamic<TabListNextProps>(() =>
-  import("@salt-ds/lab").then((mod) => mod.TabListNext),
+const TabList = dynamic<TabListProps>(() =>
+  import("@salt-ds/core").then((mod) => mod.TabList),
 );
 
 interface RelatedComponent {
@@ -152,26 +152,26 @@ export const DetailComponent = ({ children }: LayoutProps) => {
       >
         {isOverview ? children : undefined}
         {!isOverview && (
-          <TabsNext
+          <Tabs
             className={styles.content}
             value={currentTabName}
             onChange={handleTabChange}
           >
             <TabBar divider>
-              <TabListNext appearance="transparent">
+              <TabList appearance="transparent">
                 {tabs.map(({ name, label }) => (
-                  <TabNext key={name} value={name}>
-                    <TabNextTrigger>{label}</TabNextTrigger>
-                  </TabNext>
+                  <Tab key={name} value={name}>
+                    <TabTrigger>{label}</TabTrigger>
+                  </Tab>
                 ))}
-              </TabListNext>
+              </TabList>
             </TabBar>
             {tabs.map(({ name }) => (
-              <TabNextPanel className={styles.tabPanel} key={name} value={name}>
+              <TabPanel className={styles.tabPanel} key={name} value={name}>
                 {name === currentTabName ? children : null}
-              </TabNextPanel>
+              </TabPanel>
             ))}
-          </TabsNext>
+          </Tabs>
         )}
       </Base>
     </LivePreviewProvider>

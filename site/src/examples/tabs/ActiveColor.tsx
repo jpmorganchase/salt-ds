@@ -5,46 +5,44 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-} from "@salt-ds/core";
-import {
+  Tab,
   TabBar,
-  TabListNext,
-  type TabListNextProps,
-  TabNext,
-  TabNextPanel,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
+  TabList,
+  type TabListProps,
+  TabPanel,
+  Tabs,
+  TabTrigger,
+} from "@salt-ds/core";
 import { type ChangeEvent, type ReactElement, useState } from "react";
 
 const tabs = ["Home", "Transactions", "Loans"];
 
 export const ActiveColor = (): ReactElement => {
   const [variant, setVariant] =
-    useState<TabListNextProps["activeColor"]>("primary");
+    useState<TabListProps["activeColor"]>("primary");
 
   const handleVariantChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setVariant(event.target.value as TabListNextProps["activeColor"]);
+    setVariant(event.target.value as TabListProps["activeColor"]);
   };
 
   return (
     <StackLayout gap={6} style={{ width: "100%", minWidth: 0 }}>
-      <TabsNext defaultValue={tabs[0]}>
+      <Tabs defaultValue={tabs[0]}>
         <TabBar divider>
-          <TabListNext activeColor={variant} aria-label="Example tablist">
+          <TabList activeColor={variant} aria-label="Example tablist">
             {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
+              <Tab value={label} key={label}>
+                <TabTrigger>{label}</TabTrigger>
+              </Tab>
             ))}
-          </TabListNext>
+          </TabList>
         </TabBar>
         {tabs.map((label) => (
-          <TabNextPanel value={label} key={label} style={{ height: 200 }}>
+          <TabPanel value={label} key={label} style={{ height: 200 }}>
             <Panel variant={variant}>{label}</Panel>
-          </TabNextPanel>
+          </TabPanel>
         ))}
-      </TabsNext>
+      </Tabs>
 
       <FormField style={{ width: "auto" }}>
         <FormFieldLabel>Select tabstrip color</FormFieldLabel>
