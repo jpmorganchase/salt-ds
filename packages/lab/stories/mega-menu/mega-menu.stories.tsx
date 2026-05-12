@@ -54,8 +54,6 @@ import {
 import type { StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import exampleImage from "../assets/image-skeleton.png";
-import exampleImage2 from "../assets/image-skeleton2.png";
-
 import "./mega-menu.stories.css";
 
 export default {
