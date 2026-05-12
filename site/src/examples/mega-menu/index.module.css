@@ -127,7 +127,6 @@
   display: block;
 }
 
-/* When the side region wraps below the menu, pin the panel to 320px */
 @media (max-width: 1200px) {
   .customRegionSide {
     --saltMegaMenuPanel-inlineSize: 320px;
