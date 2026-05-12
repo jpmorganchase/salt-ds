@@ -95,7 +95,7 @@ export const DataFormatContent = ({
             </RadioButtonGroup>
           </FormField>
           <FormField>
-            <FormFieldLabel>Exchange and Region</FormFieldLabel>
+            <FormFieldLabel>Exchange and region</FormFieldLabel>
             <RadioButtonGroup
               onChange={handleRadioChange}
               name="exchangeAndRegionDisplay"

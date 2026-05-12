@@ -42,7 +42,6 @@ import type { Meta } from "@storybook/react-vite";
 import {
   type ChangeEvent,
   type ElementType,
-  type FocusEvent,
   type ReactElement,
   useEffect,
   useRef,
@@ -72,7 +71,6 @@ export interface ECFormData {
   publicHolidayCalendar: string;
   position: string;
   displayDensity: string;
-  currency: string;
   currencyFormat: string;
   stockNameDisplay: string;
   exchangeAndRegionDisplay: string;
@@ -91,7 +89,6 @@ export interface FormContentProps {
   handleCheckboxChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   stepFieldValidation: Record<string, FieldValidation>;
   handleSelectChange?: (value: string, name: string) => void;
-  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   handleRadioChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -121,7 +118,7 @@ const wizardSteps = [
     label: "Foundation",
     stepTitle: "Foundation",
   },
-  { id: "regional", label: "Regional settings", stepTitle: "Regional" },
+  { id: "regional", label: "Regional", stepTitle: "Regional" },
   {
     id: "dataFormat",
     label: "Data format",
@@ -147,7 +144,6 @@ const initialFormData: ECFormData = {
   timeFormat: "",
   measurementSystem: "",
   // Data format
-  currency: "usd",
   currencyFormat: "standard",
   stockNameDisplay: "fullNameTicker",
   exchangeAndRegionDisplay: "both",
@@ -160,7 +156,6 @@ const initialFormData: ECFormData = {
 };
 
 const defaultDataFormatValues = {
-  currency: initialFormData.currency,
   currencyFormat: initialFormData.currencyFormat,
   stockNameDisplay: initialFormData.stockNameDisplay,
   exchangeAndRegionDisplay: initialFormData.exchangeAndRegionDisplay,
@@ -170,7 +165,6 @@ const defaultDataFormatValues = {
 
 const hasDataFormatChanges = (formData: ECFormData) => {
   return (
-    formData.currency !== defaultDataFormatValues.currency ||
     formData.currencyFormat !== defaultDataFormatValues.currencyFormat ||
     formData.stockNameDisplay !== defaultDataFormatValues.stockNameDisplay ||
     formData.exchangeAndRegionDisplay !==
@@ -183,7 +177,6 @@ const hasDataFormatChanges = (formData: ECFormData) => {
 const resetDataFormatFields = (
   updateField: (name: string, value: string | boolean) => void,
 ) => {
-  updateField("currency", defaultDataFormatValues.currency);
   updateField("currencyFormat", defaultDataFormatValues.currencyFormat);
   updateField("stockNameDisplay", defaultDataFormatValues.stockNameDisplay);
   updateField(
@@ -387,7 +380,7 @@ export const EndToEnd = () => {
   };
 
   const header = (
-    <FlexLayout justify="space-between">
+    <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
       <FlexItem style={{ flex: 1 }}>
         <Text>
           Customize your experience
@@ -429,7 +422,7 @@ export const EndToEnd = () => {
 
   const nextBtn = (
     <Button sentiment="accented" onClick={handleNext}>
-      {isLastStep ? "Finish" : "Next"}
+      {isLastStep ? "Finish and apply changes" : "Next"}
     </Button>
   );
 
@@ -603,8 +596,8 @@ export const EndToEndModal = () => {
       />
     ),
     regional: <RegionalSettingsContent {...sharedFormProps} />,
-    notifications: <NotificationsContent {...sharedFormProps} />,
     dataFormat: <DataFormatContent {...sharedFormProps} />,
+    notifications: <NotificationsContent {...sharedFormProps} />,
   };
 
   const cancel = (
@@ -619,7 +612,7 @@ export const EndToEndModal = () => {
 
   const nextBtn = (
     <Button sentiment="accented" onClick={handleNext}>
-      {isLastStep ? "Finish" : "Next"}
+      {isLastStep ? "Finish and apply changes" : "Next"}
     </Button>
   );
 
@@ -1064,7 +1057,7 @@ function PreferencesContent({
           </RadioButtonGroup>
         </FormField>
         <FormField>
-          <FormFieldLabel>Exchange and Region</FormFieldLabel>
+          <FormFieldLabel>Exchange and region</FormFieldLabel>
           <RadioButtonGroup
             direction="horizontal"
             value={formData.exchangeAndRegionDisplay}

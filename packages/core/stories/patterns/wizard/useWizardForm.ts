@@ -186,13 +186,6 @@ export function useWizardForm({
     ],
   );
 
-  const updateFields = (fields: Record<string, unknown>) => {
-    dispatch({ type: "UPDATE_FIELDS", fields });
-    if (state.validationsByStep[currentStepId]) {
-      runValidationAndStore({ ...state.formData, ...fields });
-    }
-  };
-
   // Updates multiple fields in the form data without triggering revalidation.
   // Useful when validation should be deferred (e.g. until the user clicks Next).
   const updateFieldsWithoutValidation = (fields: Record<string, unknown>) => {
@@ -223,7 +216,6 @@ export function useWizardForm({
     state,
     currentStepId,
     updateField,
-    updateFields,
     updateFieldsWithoutValidation,
     clearFieldValidation,
     next,

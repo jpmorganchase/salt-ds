@@ -126,7 +126,6 @@ export const FoundationContent = ({
                         style={{
                           height: 200,
                           width: "100%",
-                          // objectFit: "contain",
                         }}
                       />
                       <StackLayout direction="row" gap={1}>
