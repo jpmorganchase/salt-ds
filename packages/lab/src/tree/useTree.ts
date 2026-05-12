@@ -1,14 +1,16 @@
 import { useControlled } from "@salt-ds/core";
 import {
-  Children,
-  isValidElement,
   type ReactNode,
   type SyntheticEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import { buildTreeModel, type TreeModel, type TreeNodeMeta } from "./treeModel";
+
+export type { TreeModel, TreeNodeMeta } from "./treeModel";
 
 export interface UseTreeProps {
   /**
@@ -49,69 +51,12 @@ export interface UseTreeProps {
   children?: ReactNode;
 }
 
-export interface TreeNodeMeta {
-  value: string;
-  parentValue: string | undefined;
-  hasChildren: boolean;
-  disabled: boolean;
-}
-
-export interface TreeModel {
-  /** All nodes indexed by value */
-  nodes: Map<string, TreeNodeMeta>;
-  /** Ordered list of root node values */
-  rootValues: string[];
-  /** Maps parent value to ordered list of child values */
-  childrenOf: Map<string, string[]>;
-}
-
-function buildTreeModel(children: ReactNode): TreeModel {
-  const nodes = new Map<string, TreeNodeMeta>();
-  const rootValues: string[] = [];
-  const childrenOf = new Map<string, string[]>();
-
-  function traverse(
-    reactChildren: ReactNode,
-    parentValue?: string,
-    parentDisabled = false,
-  ): void {
-    const siblingValues: string[] = [];
-
-    Children.forEach(reactChildren, (child) => {
-      if (isValidElement(child) && typeof child.props.value === "string") {
-        const value = child.props.value;
-        const nodeChildren = child.props.children;
-        const hasChildren = Children.count(nodeChildren) > 0;
-        const disabled = parentDisabled || Boolean(child.props.disabled);
-
-        nodes.set(value, {
-          value,
-          parentValue,
-          hasChildren,
-          disabled,
-        });
-
-        siblingValues.push(value);
-
-        // Process children recursively and pass down disabled state
-        if (hasChildren) {
-          traverse(nodeChildren, value, disabled);
-        }
-      }
-    });
-
-    // Ordered children of parent
-    if (parentValue !== undefined) {
-      childrenOf.set(parentValue, siblingValues);
-    } else {
-      // ...and the root nodes
-      rootValues.push(...siblingValues);
-    }
+function arraysEqual(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) {
+    return false;
   }
 
-  traverse(children);
-
-  return { nodes, rootValues, childrenOf };
+  return a.every((value, index) => value === b[index]);
 }
 
 function expandSelectionWithDescendants(
@@ -187,6 +132,8 @@ export function useTree(props: UseTreeProps) {
     selectedProp && !multiselect ? selectedProp.slice(0, 1) : selectedProp;
 
   const treeModel = useMemo(() => buildTreeModel(children), [children]);
+  const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
+  const suppressUncontrolledSelectionExpansionRef = useRef(false);
 
   const disabledIdsSet = useMemo(() => {
     const set = new Set<string>();
@@ -222,29 +169,35 @@ export function useTree(props: UseTreeProps) {
     return expanded;
   }, [clampedDefaultSelected, treeModel, disabledIdsSet, multiselect]);
 
-  const [selectedState, setSelectedState] = useControlled({
+  const [selectedState, setSelectedState, selectedControlled] = useControlled({
     controlled: clampedSelectedProp,
     default: expandedDefaultSelected,
     name: "Tree",
     state: "selected",
   });
 
+  const setVisibleSelectionState = useCallback((selection: string[]) => {
+    suppressUncontrolledSelectionExpansionRef.current = true;
+    setSelectedState(selection);
+  }, []);
+
   const selectedSet = useMemo(() => new Set(selectedState), [selectedState]);
 
   const [activeNode, setActiveNode] = useState<string | undefined>(undefined);
 
-  const elementsRef = useRef<Map<string, HTMLElement>>(new Map());
-
-  const registerElement = (value: string, element: HTMLElement) => {
+  const registerElement = useCallback((value: string, element: HTMLElement) => {
     elementsRef.current.set(value, element);
-    return () => {
-      elementsRef.current.delete(value);
-    };
-  };
 
-  const getElement = (value: string): HTMLElement | undefined => {
+    return () => {
+      if (elementsRef.current.get(value) === element) {
+        elementsRef.current.delete(value);
+      }
+    };
+  }, []);
+
+  const getElement = useCallback((value: string): HTMLElement | undefined => {
     return elementsRef.current.get(value);
-  };
+  }, []);
 
   const getNodeMeta = useCallback(
     (value: string): TreeNodeMeta | undefined => {
@@ -362,13 +315,40 @@ export function useTree(props: UseTreeProps) {
     [getParent, getChildren, disabledIdsSet],
   );
 
-  const indeterminateState = useMemo(
-    () =>
-      multiselect
-        ? calculateIndeterminateState(selectedState)
-        : new Set<string>(),
-    [multiselect, selectedState, calculateIndeterminateState],
-  );
+  const indeterminateState = useMemo(() => {
+    const state = multiselect
+      ? calculateIndeterminateState(selectedState)
+      : new Set<string>();
+    return state;
+  }, [multiselect, selectedState, calculateIndeterminateState]);
+
+  useEffect(() => {
+    if (suppressUncontrolledSelectionExpansionRef.current) {
+      suppressUncontrolledSelectionExpansionRef.current = false;
+      return;
+    }
+
+    if (selectedControlled || !multiselect || selectedState.length === 0) {
+      return;
+    }
+
+    let expanded = expandSelectionWithDescendants(
+      selectedState,
+      treeModel,
+      disabledIdsSet,
+    );
+    expanded = expandSelectionUpwards(expanded, treeModel, disabledIdsSet);
+
+    if (!arraysEqual(selectedState, expanded)) {
+      setSelectedState(expanded);
+    }
+  }, [
+    selectedControlled,
+    multiselect,
+    selectedState,
+    treeModel,
+    disabledIdsSet,
+  ]);
 
   const updateAncestors = (
     currentSet: Set<string>,
@@ -484,6 +464,7 @@ export function useTree(props: UseTreeProps) {
     selectedState,
     selectedSet,
     setSelectedState,
+    setVisibleSelectionState,
     select,
     multiselect,
     disabled,
