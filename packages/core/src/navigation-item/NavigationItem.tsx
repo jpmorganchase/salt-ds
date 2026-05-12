@@ -69,6 +69,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       level = 0,
       onExpand,
       style: styleProp,
+      "aria-controls": ariaControls,
       ...rest
     } = props;
 
@@ -109,6 +110,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
           )}
           render={render ?? (isLink ? undefined : <button type="button" />)}
           aria-expanded={isLink ? undefined : expanded}
+          aria-controls={ariaControls}
           onClick={handleClick}
           aria-current={isLink && active ? "page" : undefined}
           href={href}

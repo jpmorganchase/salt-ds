@@ -1,0 +1,68 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+### Triggering mega menu
+
+- Any button that triggers a Mega menu container.
+- It should be wrapped in a `<nav>` element to establish a navigation landmark.
+- The group of buttons should be structured as a `<ul>` or `<ol>`, with each button placed inside an `<li>`.
+- `MegaMenuTrigger` automatically applies **aria-expanded** to reflect the expanded or collapsed state, and **aria-controls** to reference the associated mega menu panel.
+
+### Mega menu panel
+
+- `MegaMenuPanel` renders a `<div>` with `role="region"`. Always provide an `aria-label` on `MegaMenuPanel` that describes the menu content, for example `aria-label="Solutions menu"`. This ensures assistive technology users can distinguish the panel from other landmarks on the page.
+
+### Custom region
+
+- A custom region can include a locally customized component; however, it must comply with ADA standards. For example, opening another modal through an action in a custom region may violate ADA compliance and should be avoided.
+
+### Accessibility semantics
+
+- The Mega menu container should use **role="region"**.
+- Mega menu groups should use **Link lists**, structured as `<ul>` elements containing `<li>` items.
+- Each `<ul>` should have an accessible name that corresponds to the group label.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Focus starts on the first mega menu item and moves sequentially through each item in a group, then continues to the first item of the next group once the last item is reached.
+- Tab includes interactive elements within custom regions in the focus sequence, based on their position in the layout. The custom region itself is not focusable.
+- Exits and collapses menu: After the last focusable element, Tab moves focus out of the mega menu and collapses it.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is in the mega menu, this action sets focus to the previous focusable component in the tab order.
+- If the first element in the mega menu has focus, Shift+Tab moves focus to the previous focusable element outside of the mega menu.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Escape">
+
+- If focus is in the mega menu, Escape closes the mega menu and returns focus to the triggering element.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Up arrow / Down arrow / Left arrow / Right arrow">
+
+- Pressing the Up and Down arrow key moves focus between items within the current group.
+- Pressing the Left or Right arrow key will shift focus to the first item of the adjacent mega menu group.
+- Pressing the Left or Up arrow on the first item moves focus to the trigger and keeps the menu open.
+- Pressing Right arrow on the last item moves focus to the following trigger elements and close the mega menu panel. If there is no next trigger, nothing happens.
+- Pressing the Down arrow on the last item has no effect.
+
+</KeyboardControl>
+
+</KeyboardControls>

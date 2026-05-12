@@ -1,0 +1,143 @@
+.navList {
+  list-style: none;
+  padding: 0;
+}
+
+.fullWidthWrapper {
+  padding: var(--salt-layout-page-margin);
+  box-sizing: border-box;
+}
+
+.fullWidthPanel {
+  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
+  box-sizing: border-box;
+}
+
+.fullWidthPanel :global(.saltMegaMenuSection) {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
+.edgeToEdgeWrapper {
+  /* Override the panel's page margin so it can render edge-to-edge.
+     The MegaMenuPanel reads this variable from its trigger's tree. */
+  --saltMegaMenuPanel-pageMargin: 0;
+  box-sizing: border-box;
+}
+
+.edgeToEdgePanel {
+  /* Make the panel span the full viewport width. With the page
+     margin overridden to 0 above, floating-ui no longer reserves
+     gutter space, so the panel reaches both viewport edges. */
+  --saltMegaMenuPanel-inlineSize: 100vw;
+  --saltMegaMenuPanel-maxInlineSize: 100vw;
+  box-sizing: border-box;
+}
+
+.edgeToEdgePanel :global(.saltMegaMenuSection) {
+  --saltMegaMenuSection-columnWidth: 212px;
+  max-inline-size: 920px;
+  inline-size: 100%;
+  margin-inline: auto;
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
+.menuItemAdornment {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  height: var(--salt-size-base);
+}
+
+.menuItemFullWidth > a {
+  inline-size: 100%;
+}
+
+.linkFooterSpacingFirstLinkStart {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  width: fit-content;
+}
+
+.linkFooterSpacingMultiLink {
+  padding: 0 0 var(--salt-spacing-300) 0;
+  width: fit-content;
+}
+.customRegionContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.customRegionContent > :last-child {
+  margin-top: auto;
+}
+
+.linkFooterSpacing {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  width: fit-content;
+}
+
+.withLinkMenuContainer {
+  flex-direction: column;
+}
+
+.smallViewportWrapper {
+  inline-size: 320px;
+  max-inline-size: 100%;
+}
+
+.smallViewportContainer {
+  --saltMegaMenuPanel-inlineSize: 320px;
+  --saltMegaMenuPanel-maxInlineSize: 320px;
+}
+
+.smallViewportContainer :global(.saltMegaMenuSection) {
+  grid-template-columns: 1fr;
+  max-inline-size: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.customRegionNoContainerPadding {
+  padding: 0;
+}
+
+.customRegionRightDescription {
+  max-inline-size: 240px;
+}
+
+.customRegionImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.customRegionSideContent {
+  flex: 0 0 258px;
+  inline-size: 258px;
+  box-sizing: border-box;
+  background: var(--salt-container-secondary-background);
+}
+
+.customRegionSideImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 1200px) {
+  .customRegionSide {
+    --saltMegaMenuPanel-inlineSize: 320px;
+    --saltMegaMenuPanel-maxInlineSize: 320px;
+  }
+
+  .customRegionSideContent {
+    flex: 0 0 auto;
+    inline-size: 100%;
+    padding-inline: var(--salt-spacing-300);
+  }
+
+  .customRegionSideSection {
+    grid-template-columns: 1fr;
+  }
+}
