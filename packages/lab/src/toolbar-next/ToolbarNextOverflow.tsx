@@ -249,8 +249,8 @@ function getOverflowTriggerLabel(group: ToolbarNextOverflowGroup) {
   const hiddenLabel = hiddenCount === 1 ? "tray hidden" : "trays hidden";
 
   return group.named
-    ? `Open ${group.label} overflow. ${hiddenCount} ${hiddenLabel}.`
-    : `Open overflow. ${hiddenCount} ${hiddenLabel}.`;
+    ? `${group.label} overflow. ${hiddenCount} ${hiddenLabel}.`
+    : `Overflow. ${hiddenCount} ${hiddenLabel}.`;
 }
 
 interface ToolbarNextOverflowMenuProps {
@@ -605,7 +605,6 @@ export function ToolbarNextOverflowMenu({
         appearance="transparent"
         aria-controls={panelId}
         aria-expanded={open}
-        aria-haspopup
         aria-label={getOverflowTriggerLabel(group)}
         className={withBaseName("trigger")}
         {...{

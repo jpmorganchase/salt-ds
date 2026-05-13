@@ -969,14 +969,14 @@ describe("Given ToolbarNext overflow measurements", () => {
   it("collapses the first shared tray as soon as measured content exceeds the container", () => {
     cy.mount(<SharedBoundaryCollapseTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     cy.findByRole("button", { name: "High priority" }).should("be.visible");
     expectToolbarFits("Shared boundary toolbar");
     expectToolbarSlotsDoNotIntersect("Shared boundary toolbar");
 
     shrinkFixtureBelowVisibleToolbarContent("Shared boundary toolbar");
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByRole("button", { name: "High priority" }).should("not.exist");
     cy.findByRole("button", { name: "Low priority" }).should("be.visible");
     cy.findByRole("button", { name: "Pinned" }).should("be.visible");
@@ -988,7 +988,7 @@ describe("Given ToolbarNext overflow measurements", () => {
   it("collapses a mixed-control tray before its controls compress", () => {
     cy.mount(<MixedTrayCompressionTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     cy.findByText("Show total").should("be.visible");
     cy.findByText("Sort by highest balance").should("be.visible");
     cy.findByRole("button", { name: "Add view" }).should("be.visible");
@@ -997,7 +997,7 @@ describe("Given ToolbarNext overflow measurements", () => {
 
     shrinkFixtureBelowVisibleToolbarContent("Mixed tray compression toolbar");
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByText("Show total").should("not.be.visible");
     cy.findByText("Sort by highest balance").should("not.be.visible");
     cy.findByRole("button", { name: "Add view" }).should("not.exist");
@@ -1009,7 +1009,7 @@ describe("Given ToolbarNext overflow measurements", () => {
   it("collapses omitted overflowMode trays into the shared generic trigger by default", () => {
     cy.mount(<DefaultSharedOverflowFixture width={420} />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("not.exist");
     cy.findByRole("button", { name: "Columns" }).should("be.visible");
     expectToolbarFits("Toolbar with default shared overflow");
@@ -1019,11 +1019,11 @@ describe("Given ToolbarNext overflow measurements", () => {
     cy.mount(<OverflowDividersFixture width={560} />);
 
     expectVisibleSeparators(2);
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     expectToolbarFits("Toolbar with divider overflow");
 
     setFixtureWidth(360);
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     expectVisibleSeparators(1);
     expectToolbarFits("Toolbar with divider overflow");
 
@@ -1038,23 +1038,23 @@ describe("Given ToolbarNext overflow measurements", () => {
     expectToolbarFits("Data entry toolbar with named overflow");
 
     setFixtureWidth(540);
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+    cy.findByRole("button", { name: /Actions overflow\./i }).should(
       "be.visible",
     );
-    cy.findByRole("button", { name: /Open Actions overflow\./i })
+    cy.findByRole("button", { name: /Actions overflow\./i })
       .closest('[data-position="start"]')
       .should("exist");
     expectVisibleSeparators(1);
     expectToolbarFits("Data entry toolbar with named overflow");
 
     setFixtureWidth(420);
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.visible",
     );
-    cy.findByRole("button", { name: /Open Filters overflow\./i })
+    cy.findByRole("button", { name: /Filters overflow\./i })
       .closest('[data-position="start"]')
       .should("exist");
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+    cy.findByRole("button", { name: /Actions overflow\./i }).should(
       "be.visible",
     );
     expectVisibleSeparators(1);
@@ -1064,13 +1064,13 @@ describe("Given ToolbarNext overflow measurements", () => {
   it("accounts for spacing overrides when deciding shared overflow", () => {
     cy.mount(<SpacingOverflowFixture width={520} />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     cy.findByRole("button", { name: "Primary" }).should("be.visible");
     cy.findByRole("button", { name: "Run" }).should("be.visible");
     expectToolbarFits("Toolbar with overflow spacing");
 
     setFixtureWidth(360);
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByRole("button", { name: "Primary" }).should("be.visible");
     cy.findByRole("button", { name: "Run" }).should("be.visible");
     expectToolbarFits("Toolbar with overflow spacing");
@@ -1079,21 +1079,21 @@ describe("Given ToolbarNext overflow measurements", () => {
   it("remeasures shared overflow when a visible tray changes width", () => {
     cy.mount(<SharedIntrinsicWidthTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     cy.findByRole("button", { name: "Columns" }).should("be.visible");
     expectIntrinsicHarnessWidth(500);
     expectToolbarFits("Toolbar with shared intrinsic width changes");
 
     cy.findByRole("button", { name: "Toggle shared width" }).click();
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByRole("button", { name: "Columns" }).should("not.exist");
     expectIntrinsicHarnessWidth(500);
     expectToolbarFits("Toolbar with shared intrinsic width changes");
 
     cy.findByRole("button", { name: "Toggle shared width" }).click();
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     cy.findByRole("button", { name: "Columns" }).should("be.visible");
     expectIntrinsicHarnessWidth(500);
     expectToolbarFits("Toolbar with shared intrinsic width changes");
@@ -1105,7 +1105,7 @@ describe("Given ToolbarNext overflow measurements", () => {
     });
     cy.mount(<GuardedResizeDuringComputeTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     cy.findByRole("button", { name: "Columns" }).should("be.visible");
     cy.window().then((win) => {
       const controls = (win as ToolbarNextGuardedResizeWindow)
@@ -1141,7 +1141,7 @@ describe("Given ToolbarNext overflow measurements", () => {
       });
     });
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByRole("button", { name: "Columns" }).should("not.exist");
     expectToolbarFits("Toolbar with guarded resize work");
   });
@@ -1152,7 +1152,7 @@ describe("Given ToolbarNext overflow measurements", () => {
     cy.findByRole("toolbar", {
       name: "Toolbar with named intrinsic width changes",
     }).within(() => {
-      cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+      cy.findByRole("button", { name: /Actions overflow\./i }).should(
         "not.exist",
       );
       cy.findByRole("button", { name: "Export" }).should("be.visible");
@@ -1166,7 +1166,7 @@ describe("Given ToolbarNext overflow measurements", () => {
     cy.findByRole("toolbar", {
       name: "Toolbar with named intrinsic width changes",
     }).within(() => {
-      cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+      cy.findByRole("button", { name: /Actions overflow\./i }).should(
         "be.visible",
       );
       cy.findByRole("button", { name: "Export" }).should("not.exist");
@@ -1180,7 +1180,7 @@ describe("Given ToolbarNext overflow measurements", () => {
     cy.findByRole("toolbar", {
       name: "Toolbar with named intrinsic width changes",
     }).within(() => {
-      cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+      cy.findByRole("button", { name: /Actions overflow\./i }).should(
         "not.exist",
       );
       cy.findByRole("button", { name: "Export" }).should("be.visible");
@@ -1193,7 +1193,7 @@ describe("Given ToolbarNext overflow measurements", () => {
   it("remeasures shared overflow when a hidden tray changes width", () => {
     cy.mount(<HiddenOverflowWidthChangeTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByRole("button", { name: "Short" }).should("not.exist");
     expectToolbarFits("Toolbar with hidden intrinsic width changes");
     recordToolbarVisibleTextSnapshots(
@@ -1204,7 +1204,7 @@ describe("Given ToolbarNext overflow measurements", () => {
     cy.findByRole("button", { name: "Use long hidden label" }).click();
     setFixtureWidth(420);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByRole("button", {
       name: "Hidden action with a long label",
     }).should("not.exist");
@@ -1226,7 +1226,7 @@ describe("Given ToolbarNext overflow measurements", () => {
   it("remeasures shared overflow when a hidden tray shrinks", () => {
     cy.mount(<HiddenOverflowWidthChangeTestCase initialWide />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByRole("button", {
       name: "Hidden action with a long label",
     }).should("not.exist");
@@ -1235,7 +1235,7 @@ describe("Given ToolbarNext overflow measurements", () => {
     cy.findByRole("button", { name: "Use short hidden label" }).click();
     setFixtureWidth(420);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     cy.findByRole("button", { name: "Short" }).should("be.visible");
     expectToolbarFits("Toolbar with hidden intrinsic width changes");
   });
@@ -1243,14 +1243,14 @@ describe("Given ToolbarNext overflow measurements", () => {
   it("preserves progressive versus grouped behavior for multi-tray named overflow", () => {
     cy.mount(<NamedGroupCollapseTestCase overflowMode="independent" />);
 
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "not.exist",
     );
     cy.findByRole("button", { name: "Status" }).should("be.visible");
     cy.findByRole("button", { name: "Columns" }).should("be.visible");
 
     setFixtureWidth(590);
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.visible",
     );
     cy.findByRole("button", { name: "Columns" }).should("not.exist");
@@ -1259,11 +1259,11 @@ describe("Given ToolbarNext overflow measurements", () => {
 
     cy.mount(<NamedGroupCollapseTestCase overflowMode="grouped" />);
 
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "not.exist",
     );
     setFixtureWidth(590);
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.visible",
     );
     cy.findByRole("button", { name: "Columns" }).should("not.exist");
@@ -1306,10 +1306,10 @@ describe("Given ToolbarNext overflow measurements", () => {
     );
 
     setFixtureWidth(420);
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+    cy.findByRole("button", { name: /Actions overflow\./i }).should(
       "be.visible",
     );
-    cy.findByRole("button", { name: /Open Actions overflow\./i })
+    cy.findByRole("button", { name: /Actions overflow\./i })
       .closest('[data-band-position="end"]')
       .should("exist");
     expectCenteredControl("Centered named overflow toolbar", "Center action");
@@ -1356,7 +1356,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps focus on an overflow dropdown entered by mouse through its trailing affordance", () => {
     cy.mount(<OverflowPointerEntryControlsTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Overflow\./i }).realClick();
     cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
     cy.findByTestId("overflow-pointer-before").focus();
 
@@ -1370,7 +1370,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps focus on an overflow switch entered by mouse through its label", () => {
     cy.mount(<OverflowPointerEntryControlsTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Overflow\./i }).realClick();
     cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
     cy.findByTestId("overflow-pointer-before").focus();
 
@@ -1427,7 +1427,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps overflow panel text inputs on native left/right behavior and uses Tab within the panel", () => {
     cy.mount(<OverflowTextInputKeyboardTestCase />);
 
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).click();
+    cy.findByRole("button", { name: /Filters overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
     cy.findByPlaceholderText("Overflow search").focus();
 
@@ -1570,7 +1570,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("moves through toggle buttons and hands off inside overflow panels", () => {
     cy.mount(<KeyboardOverflowToggleGroupFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Views overflow\./i }).click();
+    cy.findByRole("button", { name: /Views overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Views overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
 
@@ -1604,7 +1604,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
       <KeyboardOverflowToggleGroupFixture disableFirstToggle width={260} />,
     );
 
-    cy.findByRole("button", { name: /Open Views overflow\./i }).click();
+    cy.findByRole("button", { name: /Views overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Views overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
 
@@ -1627,10 +1627,39 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
   });
 
+  it("exposes overflow triggers as disclosure buttons that open toolbar panels", () => {
+    cy.mount(<KeyboardOverflowFixture width={260} />);
+
+    cy.findByRole("button", { name: /Actions overflow\./i }).as(
+      "overflowTrigger",
+    );
+    cy.get("@overflowTrigger").should("not.have.attr", "aria-haspopup");
+    cy.get("@overflowTrigger").should("have.attr", "aria-expanded", "false");
+    cy.get("@overflowTrigger")
+      .invoke("attr", "aria-controls")
+      .should("match", /\S/);
+
+    cy.get("@overflowTrigger").click();
+    cy.get("@overflowTrigger").should("not.have.attr", "aria-haspopup");
+    cy.get("@overflowTrigger").should("have.attr", "aria-expanded", "true");
+    cy.get("@overflowTrigger")
+      .invoke("attr", "aria-controls")
+      .then((panelId) => {
+        expect(panelId, "overflow panel id").to.be.a("string").and.not.be.empty;
+
+        cy.document().then((document) => {
+          expect(document.getElementById(String(panelId))).not.to.equal(null);
+        });
+        cy.findByRole("toolbar", { name: "Actions overflow" }).should(
+          "be.visible",
+        );
+      });
+  });
+
   it("moves focus into overflow panels, supports horizontal navigation there, and returns focus on Escape", () => {
     cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("button", { name: /Actions overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
@@ -1639,7 +1668,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
 
     cy.realPress("Escape");
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("not.exist");
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+    cy.findByRole("button", { name: /Actions overflow\./i }).should(
       "be.focused",
     );
   });
@@ -1647,7 +1676,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("closes a portaled overflow panel and moves focus after the toolbar on Tab", () => {
     cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("button", { name: /Actions overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
@@ -1660,14 +1689,14 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("closes a portaled overflow panel and returns focus to the trigger on Shift+Tab", () => {
     cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("button", { name: /Actions overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
     cy.realPress(["Shift", "Tab"]);
 
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("not.exist");
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).should(
+    cy.findByRole("button", { name: /Actions overflow\./i }).should(
       "be.focused",
     );
   });
@@ -1675,7 +1704,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("closes a portaled overflow panel when focus moves outside", () => {
     cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("button", { name: /Actions overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
 
     cy.findByTestId("toolbar-after").click();
@@ -1687,12 +1716,12 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("restores focus to the named overflow trigger when tabbing back into the toolbar", () => {
     cy.mount(<NamedOverflowFocusReentryTestCase />);
 
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.visible",
     );
     cy.findByPlaceholderText("Search").focus();
     cy.realPress("Tab");
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.focused",
     );
 
@@ -1705,7 +1734,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
 
     cy.findByTestId("toolbar-before").focus();
     cy.realPress("Tab");
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.focused",
     );
 
@@ -1720,7 +1749,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("restores visible shared overflow controls when re-entering through the overflow trigger", () => {
     cy.mount(<SharedOverflowFocusReentryTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("be.visible");
+    cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
     cy.findByPlaceholderText("Search").focus();
     cy.realPress("Tab");
     cy.findByRole("combobox").should("be.focused");
@@ -1735,7 +1764,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps a portaled dropdown selection inside the shared overflow panel", () => {
     cy.mount(<SharedOverflowDropdownPopupTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Overflow\./i }).realClick();
     cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
 
     cy.findByRole("combobox").realClick();
@@ -1749,7 +1778,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps a portaled combo box selection inside the shared overflow panel", () => {
     cy.mount(<SharedOverflowComboBoxFocusReentryTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Overflow\./i }).realClick();
     cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
 
     cy.findByRole("combobox").realClick();
@@ -1763,14 +1792,14 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("preserves dropdown focus and selection when a visible control moves into shared overflow", () => {
     cy.mount(<MixedControlsWidthChangeTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).should("not.exist");
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
 
     cy.findByRole("combobox").realClick();
     cy.findByRole("option", { name: "Option B" }).realClick();
     cy.findByRole("combobox").should("have.text", "Option B");
 
     setFixtureWidth(180);
-    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Overflow\./i }).realClick();
 
     cy.findByRole("toolbar", { name: "More overflow" }).within(() => {
       cy.findByRole("combobox")
@@ -1782,7 +1811,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps a portaled dropdown selection inside the named overflow panel", () => {
     cy.mount(<NamedOverflowFocusReentryTestCase />);
 
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Filters overflow\./i }).realClick();
     cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
 
     cy.findByRole("combobox").realClick();
@@ -1796,7 +1825,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps keyboard-opened shared overflow open during mouse selection in a child popup", () => {
     cy.mount(<SharedOverflowDropdownPopupTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).focus();
+    cy.findByRole("button", { name: /Overflow\./i }).focus();
     cy.realPress("Space");
     cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
 
@@ -1811,7 +1840,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("closes shared overflow and child popup on outside click", () => {
     cy.mount(<SharedOverflowDropdownPopupTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Overflow\./i }).realClick();
     cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox").should("be.visible");
@@ -1825,7 +1854,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps reopened child popups above the shared overflow panel", () => {
     cy.mount(<SharedOverflowDropdownPopupTestCase />);
 
-    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Overflow\./i }).realClick();
     cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox").should("be.visible");
@@ -1833,7 +1862,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByTestId("toolbar-after").realClick();
     cy.findByRole("toolbar", { name: "More overflow" }).should("not.exist");
 
-    cy.findByRole("button", { name: /Open overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Overflow\./i }).realClick();
     cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox")
@@ -1848,10 +1877,10 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("restores named overflow controls to toolbar arrow navigation after expansion", () => {
     cy.mount(<NamedOverflowFocusReentryTestCase />);
 
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.visible",
     );
-    cy.findByRole("button", { name: /Open Filters overflow\./i })
+    cy.findByRole("button", { name: /Filters overflow\./i })
       .focus()
       .should("be.focused");
 
@@ -1860,7 +1889,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("combobox").should("be.focused");
 
     cy.realPress("Escape");
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.focused",
     );
 
@@ -1883,10 +1912,10 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("preserves focused overflow panel control when its tray returns to the toolbar", () => {
     cy.mount(<NamedOverflowFocusReentryTestCase />);
 
-    cy.findByRole("button", { name: /Open Filters overflow\./i }).should(
+    cy.findByRole("button", { name: /Filters overflow\./i }).should(
       "be.visible",
     );
-    cy.findByRole("button", { name: /Open Filters overflow\./i })
+    cy.findByRole("button", { name: /Filters overflow\./i })
       .focus()
       .should("be.focused");
 
@@ -1908,7 +1937,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.viewport(430, 500);
     cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("button", { name: /Actions overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
 
     cy.get("html").should(($html) => {
@@ -1920,7 +1949,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("preserves focus inside an open overflow panel across parent re-renders", () => {
     cy.mount(<KeyboardOverflowRerenderFixture width={260} />);
 
-    cy.findByRole("button", { name: /Open Actions overflow\./i }).click();
+    cy.findByRole("button", { name: /Actions overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
