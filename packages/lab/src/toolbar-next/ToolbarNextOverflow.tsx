@@ -710,6 +710,7 @@ export function ToolbarNextOverflowContent({
   });
 
   const { className, ...contentProps } = content.props;
+  const handleContentRef = useForkRef(content.ref, getContentRef(content.key));
   const overflowGroupByKey = new Map(
     overflowGroups.map((group) => [group.key, group] as const),
   );
@@ -726,7 +727,7 @@ export function ToolbarNextOverflowContent({
       data-implicit={content.implicit || undefined}
       className={clsx(className, withBaseName("content"))}
       position={content.position}
-      ref={getContentRef(content.key)}
+      ref={handleContentRef}
     >
       {renderSlots.map(
         ({

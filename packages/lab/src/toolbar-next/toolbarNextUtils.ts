@@ -1,10 +1,11 @@
-import { Divider } from "@salt-ds/core";
+import { Divider, getRefFromChildren } from "@salt-ds/core";
 import {
   Children,
   Fragment,
   isValidElement,
   type ReactElement,
   type ReactNode,
+  type Ref,
 } from "react";
 
 import {
@@ -51,6 +52,7 @@ export interface ToolbarNextContentModel {
   key: string;
   position: ToolbarContentPosition;
   props: Omit<ToolbarContentProps, "children" | "position">;
+  ref: Ref<HTMLDivElement> | null;
 }
 
 export interface ToolbarNextModel {
@@ -243,6 +245,7 @@ function normalizeExplicitContent(
       key: contentKey,
       position,
       props: contentProps,
+      ref: getRefFromChildren(child),
     });
   }
 
@@ -288,6 +291,7 @@ function normalizeFlatChildren(children: ToolbarNextChild[]) {
       key: contentKey,
       position,
       props: {},
+      ref: null,
     });
 
     return content;
