@@ -46,6 +46,7 @@ export {
 export * from "./list-next";
 export * from "./localization-provider";
 export * from "./logo";
+export * from "./mega-menu";
 export * from "./menu-button";
 export * from "./metric";
 export * from "./portal";
@@ -56,7 +57,6 @@ export * from "./side-panel";
 export * from "./static-list";
 export * from "./system-status";
 export * from "./tabs";
-export * from "./tabs-next";
 export * from "./toast-group";
 export * from "./tokenized-input";
 export * from "./tokenized-input-next";

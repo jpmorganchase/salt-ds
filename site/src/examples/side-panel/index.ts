@@ -1,4 +1,5 @@
 export * from "./ContentExample";
+export * from "./CustomContainer";
 export * from "./LeftPanel";
 export * from "./ManualTrigger";
 export * from "./RightPanel";

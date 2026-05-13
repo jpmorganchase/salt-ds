@@ -1,0 +1,9 @@
+.appFrame {
+  width: 100%;
+  height: 350px;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
+  background: var(--salt-container-secondary-background);
+  border-radius: var(--salt-palette-corner-weak);
+  display: flex;
+  flex-direction: column;
+}

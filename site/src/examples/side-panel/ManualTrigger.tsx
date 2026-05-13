@@ -1,40 +1,28 @@
-import { Button, FlexLayout, Text, useIcon, useId } from "@salt-ds/core";
+import { Button, FlexLayout, Text } from "@salt-ds/core";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
-  type SidePanelValue,
+  SidePanelTrigger,
   useSidePanel,
 } from "@salt-ds/lab";
-import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 import { ContentExample } from "./ContentExample";
+import styles from "./index.module.css";
 
 const panelStyle = {
   "--saltSidePanel-width": "200px",
 } as CSSProperties;
 
 const RightPanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
-
   return (
-    <SidePanel style={panelStyle} variant="secondary">
+    <SidePanel style={panelStyle}>
       <SidePanelHeader>
-        <SidePanelTitle id={titleId}>Right Panel</SidePanelTitle>
-        <Button
-          aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
+        <SidePanelTitle>Right Panel</SidePanelTitle>
+        <SidePanelCloseButton />
       </SidePanelHeader>
       <SidePanelContent>
         <Text>Right panel content.</Text>
@@ -44,24 +32,11 @@ const RightPanel = () => {
 };
 
 const LeftPanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
-
   return (
-    <SidePanel position="left" style={panelStyle} variant="secondary">
+    <SidePanel position="left" style={panelStyle}>
       <SidePanelHeader>
-        <SidePanelTitle id={titleId}>Left Panel</SidePanelTitle>
-        <Button
-          aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
+        <SidePanelTitle>Left Panel</SidePanelTitle>
+        <SidePanelCloseButton />
       </SidePanelHeader>
       <SidePanelContent>
         <Text>Left panel content.</Text>
@@ -70,50 +45,19 @@ const LeftPanel = () => {
   );
 };
 
-const TriggerButton = ({
-  children,
-  context,
-}: {
-  children: string;
-  context: SidePanelValue;
-}) => {
-  const { openState, setOpen, panelId, getTriggerProps } = context;
-
-  return (
-    <Button
-      {...getTriggerProps({
-        "aria-expanded": openState,
-        "aria-controls": openState ? panelId : undefined,
-        onClick: () => setOpen(!openState),
-      })}
-      style={{ width: "fit-content", whiteSpace: "nowrap" }}
-    >
-      {children}
-    </Button>
-  );
-};
-
-const RightPanelTriggerButton = () => {
-  const rightPanelContext = useSidePanel();
-
-  return (
-    <TriggerButton context={rightPanelContext}>
-      Toggle right panel
-    </TriggerButton>
-  );
-};
-
 const ContentArea = () => {
-  const leftPanelContext = useSidePanel();
+  const { getTriggerProps } = useSidePanel();
 
   return (
     <SidePanelProvider>
       <ContentExample>
         <FlexLayout gap={1} justify="space-between">
-          <TriggerButton context={leftPanelContext}>
+          <Button {...getTriggerProps()} style={{ whiteSpace: "nowrap" }}>
             Toggle left panel
-          </TriggerButton>
-          <RightPanelTriggerButton />
+          </Button>
+          <SidePanelTrigger>
+            <Button style={{ whiteSpace: "nowrap" }}>Toggle right panel</Button>
+          </SidePanelTrigger>
         </FlexLayout>
       </ContentExample>
       <RightPanel />
@@ -123,21 +67,13 @@ const ContentArea = () => {
 
 export const ManualTrigger = () => {
   return (
-    <div
-      style={{
-        width: "100%",
-        height: 300,
-        display: "flex",
-        border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
-        borderRadius: "var(--salt-palette-corner-weak)",
-        overflow: "hidden",
-      }}
-    >
-      <SidePanelProvider>
-        <LeftPanel />
-        <ContentArea />
-      </SidePanelProvider>
-    </div>
+    <SidePanelProvider>
+      <div className={styles.appFrame}>
+        <FlexLayout gap={0} style={{ height: "100%" }}>
+          <LeftPanel />
+          <ContentArea />
+        </FlexLayout>
+      </div>
+    </SidePanelProvider>
   );
 };

@@ -1,11 +1,4 @@
-import { Badge } from "@salt-ds/core";
-import {
-  TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
+import { Badge, Tab, TabBar, TabList, Tabs, TabTrigger } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
@@ -25,24 +18,24 @@ function getNotificationLabel(label: string) {
 export const WithBadge = (): ReactElement => {
   return (
     <div style={{ width: "100%", minWidth: 0 }}>
-      <TabsNext defaultValue={tabs[0]}>
+      <Tabs defaultValue={tabs[0]}>
         <TabBar divider inset>
-          <TabListNext aria-label="Example tablist">
+          <TabList aria-label="Example tablist">
             {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger
+              <Tab value={label} key={label}>
+                <TabTrigger
                   aria-label={`${label}${getNotificationLabel(label)}`}
                 >
                   <span aria-hidden>{label}</span>
                   {notifications[label] > 0 ? (
                     <Badge value={notifications[label]} aria-hidden />
                   ) : undefined}
-                </TabNextTrigger>
-              </TabNext>
+                </TabTrigger>
+              </Tab>
             ))}
-          </TabListNext>
+          </TabList>
         </TabBar>
-      </TabsNext>
+      </Tabs>
     </div>
   );
 };

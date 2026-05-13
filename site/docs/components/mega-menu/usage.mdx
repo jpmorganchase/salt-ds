@@ -1,0 +1,87 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- When your website or application has a large number of pages, categories, or options that need to be organized and easily accessible from the main navigation.
+- When you want to provide users with a clear overview of complex site structures, allowing them to quickly find relevant content without excessive clicking.
+- When you need to group related links, resources, or products in a visually organized, multi-column layout.
+
+### When not to use
+
+- When your site has a simple structure with only a few navigation options or categories, as a mega menu may be unnecessarily complex.
+- When you want to maintain a minimal or streamlined user interface, especially for mobile devices where mega menus can be difficult to use.
+- Consider these alternatives instead:
+  - Dropdown menus
+  - Vertical navigation
+  - Hamburger menu
+
+### Consistency within one navigation system
+
+- If multiple top-level navigation items belong to the same navigation system, use one same pattern across them to keep the experience consistent.
+- If any top-level item requires a mega menu, use the mega menu for all top-level items in that navigation system.
+
+## Import
+
+To import `MegaMenu` and related components from the lab package, use:
+
+```js
+import {
+  MegaMenu,
+  MegaMenuTrigger,
+  MegaMenuPanel,
+  MegaMenuSection,
+  MegaMenuGroup,
+  MegaMenuHeader,
+  MegaMenuItem,
+  MegaMenuItemContent,
+  MegaMenuContent,
+} from "@salt-ds/lab";
+```
+
+## Props
+
+### `MegaMenu`
+
+<PropsTable packageName="lab" componentName="MegaMenu" />
+
+### `MegaMenuTrigger`
+
+<PropsTable packageName="lab" componentName="MegaMenuTrigger" />
+
+### `MegaMenuPanel`
+
+<PropsTable packageName="lab" componentName="MegaMenuPanel" />
+
+### `MegaMenuSection`
+
+<PropsTable packageName="lab" componentName="MegaMenuSection" />
+
+### `MegaMenuGroup`
+
+<PropsTable packageName="lab" componentName="MegaMenuGroup" />
+
+### `MegaMenuHeader`
+
+<PropsTable packageName="lab" componentName="MegaMenuHeader" />
+
+### `MegaMenuItem`
+
+<PropsTable packageName="lab" componentName="MegaMenuItem" />
+
+### `MegaMenuItemContent`
+
+<PropsTable packageName="lab" componentName="MegaMenuItemContent" />
+
+### `MegaMenuContent`
+
+<PropsTable packageName="lab" componentName="MegaMenuContent" />

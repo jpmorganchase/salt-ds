@@ -5,11 +5,10 @@ import {
   FlexItem,
   FlexLayout,
   Input,
+  Link,
   StackLayout,
   Text,
   Tooltip,
-  useIcon,
-  useId,
 } from "@salt-ds/core";
 import {
   ChattingIcon,
@@ -19,87 +18,70 @@ import {
 } from "@salt-ds/icons";
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-  useSidePanel,
 } from "@salt-ds/lab";
-import { clsx } from "clsx";
-import { ContentExample } from "src/examples/side-panel/ContentExample";
+import { ContentExample } from "./ContentExample";
 
 const DesktopAppHeader = () => {
   return (
-    <header>
-      <FlexLayout
-        style={{
-          padding: "var(--salt-spacing-100) var(--salt-spacing-300)",
-          position: "sticky",
-          top: 0,
-          width: "100%",
-          zIndex: 1,
-          borderBottom:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
-        }}
-        justify="space-between"
-        gap={3}
-      >
-        <FlexItem align="center">
-          <Text styleAs="h2">App name</Text>
-        </FlexItem>
-        <Input
-          startAdornment={<SearchIcon />}
-          placeholder="Search"
-          style={{ width: 200 }}
-        />
+    <FlexLayout
+      style={{
+        padding: "var(--salt-spacing-100) var(--salt-spacing-200)",
+        width: "100%",
+        borderBottom:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+        background: "var(--salt-container-primary-background)",
+      }}
+      justify="space-between"
+      gap={3}
+    >
+      <FlexItem align="center">
+        <Text styleAs="h2">App name</Text>
+      </FlexItem>
+      <Input
+        aria-label="Search"
+        startAdornment={<SearchIcon aria-hidden />}
+        bordered
+        placeholder="Search"
+        style={{ width: 200 }}
+      />
 
-        <FlexItem align="center">
-          <StackLayout direction="row" gap={1}>
-            <Tooltip content="Open help panel" hideArrow>
-              <SidePanelTrigger>
-                <Button appearance="transparent" aria-label="Open help panel">
-                  <HelpCircleIcon aria-hidden />
-                </Button>
-              </SidePanelTrigger>
-            </Tooltip>
-            <Tooltip content="Show notifications" hideArrow>
-              <Button appearance="transparent" aria-label="Show notifications">
-                <NotificationIcon aria-hidden />
+      <FlexItem align="center">
+        <StackLayout direction="row" gap={1}>
+          <Tooltip content="Help panel">
+            <SidePanelTrigger>
+              <Button appearance="transparent" aria-label="Help panel">
+                <HelpCircleIcon aria-hidden />
               </Button>
-            </Tooltip>
-            <Tooltip content="Open chat" hideArrow>
-              <Button appearance="transparent" aria-label="Open chat">
-                <ChattingIcon aria-hidden />
-              </Button>
-            </Tooltip>
-          </StackLayout>
-        </FlexItem>
-      </FlexLayout>
-    </header>
+            </SidePanelTrigger>
+          </Tooltip>
+          <Tooltip content="Notifications">
+            <Button appearance="transparent" aria-label="Notifications">
+              <NotificationIcon aria-hidden />
+            </Button>
+          </Tooltip>
+          <Tooltip content="Chat">
+            <Button appearance="transparent" aria-label="Chat">
+              <ChattingIcon aria-hidden />
+            </Button>
+          </Tooltip>
+        </StackLayout>
+      </FlexItem>
+    </FlexLayout>
   );
 };
 
 const HelpPanel = () => {
-  const { CloseIcon } = useIcon();
-  const { setOpen } = useSidePanel();
-
-  const titleId = useId();
-  const closeButtonId = useId();
-
   return (
     <SidePanel>
       <SidePanelHeader>
-        <SidePanelTitle id={titleId}>Help & support</SidePanelTitle>
-        <Button
-          id={closeButtonId}
-          aria-label="Close"
-          aria-labelledby={clsx(closeButtonId, titleId) || undefined}
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
+        <SidePanelTitle>Help & support</SidePanelTitle>
+        <SidePanelCloseButton />
       </SidePanelHeader>
       <SidePanelContent>
         <Text>
@@ -123,13 +105,23 @@ export const WithAppHeader = () => {
           width: "100%",
           border:
             "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
+          background: "var(--salt-container-secondary-background)",
         }}
+        gap={0}
       >
         <BorderItem position="north">
           <DesktopAppHeader />
         </BorderItem>
-        <BorderItem position="center">
-          <ContentExample />
+        <BorderItem
+          position="center"
+          style={{ padding: "var(--salt-spacing-200)" }}
+        >
+          <FlexLayout>
+            <Link href="#">Link 1</Link>
+            <Link href="#">Link 2</Link>
+            <Link href="#">Link 3</Link>
+          </FlexLayout>
+          <ContentExample style={{ padding: 0 }} />
         </BorderItem>
         <BorderItem position="east">
           <HelpPanel />

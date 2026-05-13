@@ -1,0 +1,14 @@
+.saltMegaMenuPanel {
+  display: flex;
+  flex-wrap: wrap;
+  inline-size: var(--saltMegaMenuPanel-inlineSize, fit-content);
+  max-inline-size: var(--saltMegaMenuPanel-maxInlineSize, var(--saltMegaMenuPanel-availableWidth, calc(100vw - var(--salt-spacing-600))));
+  max-height: 90%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  border-radius: var(--salt-palette-corner);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  background: var(--salt-container-primary-background);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+}

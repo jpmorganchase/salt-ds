@@ -1,4 +1,5 @@
 export * from "./SidePanel";
+export * from "./SidePanelCloseButton";
 export * from "./SidePanelContent";
 export * from "./SidePanelHeader";
 export * from "./SidePanelProvider";

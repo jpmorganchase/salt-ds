@@ -2,6 +2,7 @@
   background-color: var(--sidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 300px;
   --sidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--sidePanel-borderColor, var(--salt-container-primary-borderColor));
+  --saltSidePanel-padding: var(--salt-spacing-300);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -34,8 +35,8 @@
   border: none;
 }
 
-.saltSidePanel-none .saltSidePanel-inner {
-  padding: 0;
+.saltSidePanel-none {
+  --saltSidePanel-padding: var(--salt-spacing-200);
 }
 
 .saltSidePanel-left,
@@ -71,7 +72,7 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  padding: var(--salt-spacing-300);
+  padding: var(--saltSidePanel-padding);
 }
 
 .saltSidePanel-left .saltSidePanel-inner,

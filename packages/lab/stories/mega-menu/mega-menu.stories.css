@@ -1,0 +1,204 @@
+nav > ol {
+  list-style: none;
+  padding: 0;
+}
+
+.saltMegaMenuSection {
+  --saltMegaMenuSection-columnWidth: 16rem;
+}
+
+.trigger-position-grid {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+}
+
+.trigger-position-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.trigger-position-center {
+  display: flex;
+  justify-content: center;
+}
+
+.trigger-position-offset {
+  display: flex;
+  justify-content: center;
+  padding-left: 180px;
+}
+
+.trigger-position-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.full-width-wrapper {
+  box-sizing: border-box;
+}
+
+.full-width-panel {
+  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
+  box-sizing: border-box;
+}
+
+.full-width-panel .saltMegaMenuSection {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
+.edge-to-edge-wrapper {
+  --saltMegaMenuPanel-pageMargin: 0;
+  box-sizing: border-box;
+}
+
+.max-width-content-panel {
+  --saltMegaMenuPanel-inlineSize: 100vw;
+  --saltMegaMenuPanel-maxInlineSize: 100vw;
+  box-sizing: border-box;
+}
+
+.max-width-content-panel .saltMegaMenuSection {
+  max-inline-size: 920px;
+  inline-size: 100%;
+  margin-inline: auto;
+  --saltMegaMenuSection-columnWidth: 212px;
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+}
+
+.custom-region-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.custom-region-no-container-padding {
+  padding: 0;
+}
+
+.custom-region-no-container-padding .saltMegaMenuContent {
+  flex: 0 0 auto;
+}
+
+.custom-region {
+  background: var(--salt-container-secondary-background);
+}
+
+.custom-region-right-description {
+  max-inline-size: 240px;
+}
+
+.withLink-menu-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.withLink-menu-container .saltMegaMenuSection,
+.custom-region-content .saltMegaMenuSection {
+  flex: 1 1 auto;
+}
+
+.withLink-menu-container > .saltMegaMenuGroup,
+.custom-region-content > .saltMegaMenuGroup {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.custom-region-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.custom-region-side .saltMegaMenuContent {
+  flex: 0 0 258px;
+  inline-size: 258px;
+  box-sizing: border-box;
+}
+
+.custom-region-side .custom-region-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* When the side region wraps below the menu, pin the panel to 320px */
+@media (max-width: 1200px) {
+  .custom-region-side {
+    --saltMegaMenuPanel-inlineSize: 320px;
+    --saltMegaMenuPanel-maxInlineSize: 320px;
+  }
+
+  .custom-region-side .saltMegaMenuContent {
+    flex: 0 0 auto;
+    inline-size: 100%;
+    padding-inline: var(--salt-spacing-300);
+  }
+
+  .custom-region-side .saltMegaMenuSection {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-region-side .saltMegaMenuItem {
+    inline-size: 100%;
+  }
+}
+
+/* Top / bottom variants: panel width is driven by the menu section
+   (the area containing the menu groups), but capped to the available
+   viewport width so the panel stays responsive on smaller screens.
+   The custom region (image + description) stretches to fill that width.
+   The panel itself never wraps, so the section and the custom region
+   are always stacked; responsiveness happens *inside* the section,
+   where menu groups wrap via the auto-fit grid. */
+.menu-item-adornment {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  height: var(--salt-size-base);
+}
+
+.saltMegaMenuItem > a {
+  inline-size: 100%;
+}
+
+.small-viewport-wrapper {
+  inline-size: 320px;
+  max-inline-size: 100%;
+}
+
+.small-viewport-container {
+  --saltMegaMenuPanel-inlineSize: 320px;
+  --saltMegaMenuPanel-maxInlineSize: 320px;
+}
+
+.link-footer-spacing {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  width: fit-content;
+}
+
+.link-footer-spacing-first-link {
+  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  width: fit-content;
+}
+
+.link-footer-spacing-multi-link {
+  padding: 0 0 var(--salt-spacing-300) 0;
+  width: fit-content;
+}
+.small-viewport-container .saltMegaMenuSection {
+  grid-template-columns: 1fr;
+  max-inline-size: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.saltMegaMenuPanel {
+  max-block-size: calc(100vh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
+  max-block-size: calc(100dvh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
