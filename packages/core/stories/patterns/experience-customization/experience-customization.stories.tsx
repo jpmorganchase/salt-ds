@@ -12,7 +12,7 @@ import {
   FormField,
   FormFieldLabel,
   GridLayout,
-  H2,
+  H3,
   InteractableCard,
   InteractableCardGroup,
   type InteractableCardValue,
@@ -95,7 +95,10 @@ export interface FormContentProps {
 const interactiveElementSelector = [
   "button:not([disabled])",
   'input:not([disabled]):not([type="hidden"])',
-  '[tabindex]:not([tabindex="-1"])',
+  "a[href]",
+  '[role="radio"][tabindex="0"]:not([aria-disabled="true"])',
+  '[role="checkbox"][tabindex="0"]:not([aria-disabled="true"])',
+  '[tabindex]:not([tabindex="-1"]):not([role="region"])',
 ].join(", ");
 
 const getStepAnnouncement = (stepIndex: number) => {
@@ -1171,9 +1174,7 @@ function PreferencesContent({
 
   return (
     <StackLayout>
-      <H2 styleAs="h3" style={{ margin: 0 }}>
-        {currentSection}
-      </H2>
+      <H3 style={{ margin: 0 }}>{currentSection}</H3>
       <div>{content}</div>
     </StackLayout>
   );
