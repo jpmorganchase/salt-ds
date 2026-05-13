@@ -305,6 +305,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
           withBaseName(appearance),
           className,
         )}
+        {...rest}
         data-centered={mode !== "invalid" && hasCenteredLayout ? "" : undefined}
         data-mode={mode}
         {...{ [TOOLBAR_NEXT_SCOPE_ROOT_ATTR]: "main" }}
@@ -325,7 +326,6 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
           keyboardNavigation.handlePointerDownCapture(event);
           onPointerDownCapture?.(event);
         }}
-        {...rest}
         role="toolbar"
         aria-orientation="horizontal"
       >

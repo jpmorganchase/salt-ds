@@ -31,9 +31,9 @@ export const ToolbarContent = forwardRef<HTMLDivElement, ToolbarContentProps>(
     return (
       <div
         className={clsx(withBaseName(), className)}
+        {...rest}
         data-position={position}
         ref={ref}
-        {...rest}
       >
         {children}
       </div>

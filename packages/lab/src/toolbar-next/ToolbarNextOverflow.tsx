@@ -722,8 +722,8 @@ export function ToolbarNextOverflowContent({
 
   return (
     <ToolbarContent
-      data-implicit={content.implicit || undefined}
       {...contentProps}
+      data-implicit={content.implicit || undefined}
       className={clsx(className, withBaseName("content"))}
       position={content.position}
       ref={getContentRef(content.key)}

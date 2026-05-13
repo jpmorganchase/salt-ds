@@ -77,6 +77,7 @@ export const TooltrayNext = forwardRef<HTMLDivElement, TooltrayNextProps>(
     return (
       <div
         className={clsx(withBaseName(), className)}
+        {...rest}
         data-align={align}
         data-overflow-group={overflowGroup}
         data-overflow-label={overflowLabel}
@@ -90,7 +91,6 @@ export const TooltrayNext = forwardRef<HTMLDivElement, TooltrayNextProps>(
               "aria-labelledby": ariaLabelledby,
             }
           : {})}
-        {...rest}
       >
         {children}
       </div>
