@@ -1,4 +1,5 @@
 import {
+  AriaAnnouncerProvider,
   Banner,
   BannerContent,
   Button,
@@ -483,10 +484,14 @@ export const EndToEnd = () => {
   );
 };
 
+const EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET =
+  "experience-customization-modal";
+
 export const EndToEndModal = () => {
   const [open, setOpen] = useState(false);
   const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
+  const pendingAnnouncementRef = useRef<string | null>(null);
 
   const {
     state: { activeStepIndex, formData, validationsByStep },
@@ -521,13 +526,28 @@ export const EndToEndModal = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus when active step changes
+  const { announce } = useAriaAnnouncer();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus and announcements when active step changes
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
 
     focusFirstInteractiveElement(stepContentRef.current);
-  }, [activeStepIndex]);
+
+    const announcement = pendingAnnouncementRef.current;
+    if (!announcement) return;
+
+    pendingAnnouncementRef.current = null;
+
+    const timeoutId = setTimeout(() => {
+      announce(announcement, {
+        target: EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET,
+      });
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [activeStepIndex, announce]);
 
   const openWizard = () => {
     reset();
@@ -549,8 +569,6 @@ export const EndToEndModal = () => {
     setOpen(value);
   };
 
-  const { announce } = useAriaAnnouncer();
-
   const handleNext = async () => {
     const valid = await runValidationAndStore();
     if (!valid) return;
@@ -562,16 +580,16 @@ export const EndToEndModal = () => {
     const nextStepIndex = activeStepIndex + 1;
 
     navigatedRef.current = true;
+    pendingAnnouncementRef.current = getStepAnnouncement(nextStepIndex);
     nextWithoutValidation();
-    announce(getStepAnnouncement(nextStepIndex));
   };
 
   const handlePrevious = () => {
     const previousStepIndex = activeStepIndex - 1;
 
     navigatedRef.current = true;
+    pendingAnnouncementRef.current = getStepAnnouncement(previousStepIndex);
     previous();
-    announce(getStepAnnouncement(previousStepIndex));
   };
 
   const handleDensityChange = (value: string) => {
@@ -658,30 +676,34 @@ export const EndToEndModal = () => {
     <>
       <Button onClick={openWizard}>Open experience customization</Button>
       <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
-        <DialogHeader
-          header={<span>{wizardSteps[activeStepIndex].label}</span>}
-          preheader="Customize your experience"
-          actions={
-            <Stepper orientation="horizontal">
-              {wizardSteps.map((step, index) => (
-                <Step
-                  key={step.id}
-                  label={step.stepTitle}
-                  status={validationsByStep[step.id]?.status}
-                  stage={getStepStage(index, activeStepIndex)}
-                />
-              ))}
-            </Stepper>
-          }
-          description={
-            wizardSteps[activeStepIndex].id === "foundation" &&
-            "A selection is required to proceed"
-          }
-        />
-        <DialogContent ref={stepContentRef}>
-          {contentByStep[currentStepId]}
-        </DialogContent>
-        <DialogActions>{footer}</DialogActions>
+        <AriaAnnouncerProvider
+          target={EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET}
+        >
+          <DialogHeader
+            header={wizardSteps[activeStepIndex].label}
+            preheader="Customize your experience"
+            actions={
+              <Stepper orientation="horizontal">
+                {wizardSteps.map((step, index) => (
+                  <Step
+                    key={step.id}
+                    label={step.stepTitle}
+                    status={validationsByStep[step.id]?.status}
+                    stage={getStepStage(index, activeStepIndex)}
+                  />
+                ))}
+              </Stepper>
+            }
+            description={
+              wizardSteps[activeStepIndex].id === "foundation" &&
+              "A selection is required to proceed"
+            }
+          />
+          <DialogContent ref={stepContentRef}>
+            {contentByStep[currentStepId]}
+          </DialogContent>
+          <DialogActions>{footer}</DialogActions>
+        </AriaAnnouncerProvider>
       </Dialog>
     </>
   );
@@ -701,7 +723,7 @@ export const MandatoryConfigurations = () => {
     {
       value: "standard",
       title: "Standard",
-      description: "Business-recommended. Standard access logging is enabled. ",
+      description: "Business-recommended. Standard access logging is enabled.",
       Icon: BuildingIcon,
     },
     {
