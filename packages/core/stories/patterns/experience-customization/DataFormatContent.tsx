@@ -137,8 +137,8 @@ export const DataFormatContent = ({
               <StackLayout gap={1} key={stock.ticker}>
                 <FlexLayout justify="space-between">
                   <FlexItem>
-                    <Text>
-                      <strong>{stock.ticker}</strong>
+                    <Text as="h3" style={{ margin: 0 }}>
+                      {stock.ticker}
                     </Text>
                     {formData.stockNameDisplay === "fullNameTicker" && (
                       <Text color="secondary">{stock.fullName}</Text>
@@ -185,6 +185,7 @@ export const DataFormatContent = ({
                     alt=""
                     style={{ width: "100%" }}
                     height={64}
+                    aria-hidden
                   />
                 )}
               </StackLayout>

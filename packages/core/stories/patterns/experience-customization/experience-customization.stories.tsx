@@ -144,9 +144,9 @@ const initialFormData: ECFormData = {
   language: "",
   region: "",
   publicHolidayCalendar: "",
-  firstDayOfWeek: "",
-  timeFormat: "",
-  measurementSystem: "",
+  firstDayOfWeek: "sunday",
+  timeFormat: "12-hour",
+  measurementSystem: "metric",
   // Data format
   stockNameDisplay: "fullNameTicker",
   exchangeAndRegionDisplay: "both",
@@ -402,7 +402,10 @@ export const EndToEnd = () => {
         </Text>
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
-        <Stepper orientation="horizontal">
+        <Stepper
+          orientation="horizontal"
+          aria-label="Customize your experience steps"
+        >
           {wizardSteps.map((step, index) => (
             <Step
               key={step.id}
@@ -690,7 +693,10 @@ export const EndToEndModal = () => {
             header={wizardSteps[activeStepIndex].label}
             preheader="Customize your experience"
             actions={
-              <Stepper orientation="horizontal">
+              <Stepper
+                orientation="horizontal"
+                aria-label="Customize your experience steps"
+              >
                 {wizardSteps.map((step, index) => (
                   <Step
                     key={step.id}
@@ -720,9 +726,14 @@ export const MandatoryConfigurations = () => {
   const [selected, setSelected] = useState<InteractableCardValue>();
   const [hasError, setHasError] = useState(false);
 
+  const { announce } = useAriaAnnouncer();
+
+  const ERROR_MEESAGE = "Choose an option to continue.";
+
   const handleSubmit = () => {
     if (!selected) {
       setHasError(true);
+      announce(ERROR_MEESAGE, { ariaLive: "assertive" });
     }
   };
 
@@ -821,11 +832,7 @@ export const MandatoryConfigurations = () => {
                 >
                   {governanceOptions.map(
                     ({ value, title, description, Icon }) => (
-                      <InteractableCard
-                        key={value}
-                        value={value}
-                        aria-describedby={hasError ? bannerId : undefined}
-                      >
+                      <InteractableCard key={value} value={value}>
                         <StackLayout gap={1}>
                           <StackLayout gap={1} direction="row" align="center">
                             <Icon aria-hidden size={2} />
