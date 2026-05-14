@@ -292,6 +292,106 @@ Fixture urgency explains the fixture priority.
     }
   });
 
+  it("extracts fixture avoidance guidance from source-backed guidance callouts and preserves EvidenceRefs", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-avoid-callout-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+  resources:
+    [
+      { href: "https://example.test/salt/fixture-flow/examples", label: "Fixture examples" }
+    ]
+---
+
+## When to use
+
+Use the fixture flow when fixture evidence applies.
+
+## How to build
+
+Add the fixture part to the fixture flow.
+
+## Runtime state
+
+The fixture flow keeps source-backed state visible while fixture work is active.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+- Keep fixture state visible while fixture work is active.
+- Do not use the fixture flow when fixture work has no source-backed hierarchy.
+- Refrain from using fixture labels when several fixture values represent the same channel.
+</GuidanceCallout>
+`,
+      );
+
+      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const pattern = patterns[0];
+
+      expect(pattern.when_not_to_use).toEqual([
+        "Do not use the fixture flow when fixture work has no source-backed hierarchy.",
+        "Refrain from using fixture labels when several fixture values represent the same channel.",
+      ]);
+      expect(pattern.when_not_to_use.join(" ")).not.toContain(
+        "Keep fixture state visible",
+      );
+
+      const registry = buildFixtureRegistry(pattern);
+      const context = buildPatternContext({
+        registry,
+        pattern,
+        generated_at: GENERATED_AT,
+        generator: GENERATOR,
+        registry_hash: "fixture-registry-hash",
+      });
+      const avoidClaim = context.generated_artifact.claims.find(
+        (claim) => claim.field_path === "when_not_to_use.0",
+      );
+      const avoidEvidenceRef = context.evidence_refs.find(
+        (ref) => ref.id === avoidClaim?.evidence_ref_ids[0],
+      );
+
+      expect(context.status).toBe("validated");
+      expect(avoidClaim).toEqual(
+        expect.objectContaining({
+          kind: "pattern",
+          evidence_ref_ids: [expect.any(String)],
+        }),
+      );
+      expect(avoidEvidenceRef).toEqual(
+        expect.objectContaining({
+          source_kind: "registry",
+          claim_kind: "pattern",
+          registry: expect.objectContaining({
+            entity_id: "pattern.fixture-flow",
+            field_path: "when_not_to_use.0",
+          }),
+          source: expect.objectContaining({
+            url: "/salt/patterns/fixture-flow",
+          }),
+        }),
+      );
+      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
+        [],
+      );
+      expect(
+        validateGeneratedArtifactRegistryEvidence(
+          context.generated_artifact,
+          registry,
+        ),
+      ).toEqual([]);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
   it("extracts fixture accessibility summaries from explicit source-backed statements", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-accessibility-fixture-"),

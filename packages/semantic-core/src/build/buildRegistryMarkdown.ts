@@ -195,6 +195,13 @@ export function parseStructuredGuidanceCallouts(content: string | null): {
   const preferred: string[] = [];
   const avoid: string[] = [];
   const regex = /<(Callout|GuidanceCallout)\b([^>]*)>([\s\S]*?)<\/\1>/g;
+
+  function isAvoidanceGuidanceStatement(statement: string): boolean {
+    return /^(?:avoid|do not|don't|never|refrain from)\b/i.test(
+      cleanMarkdownText(statement),
+    );
+  }
+
   let match = regex.exec(content);
   while (match) {
     const attrs = match[2] ?? "";
@@ -236,7 +243,13 @@ export function parseStructuredGuidanceCallouts(content: string | null): {
     if (bucket) {
       const statements = extractStatementsFromSection(body);
       if (bucket === "preferred") {
-        preferred.push(...statements);
+        for (const statement of statements) {
+          if (isAvoidanceGuidanceStatement(statement)) {
+            avoid.push(statement);
+          } else {
+            preferred.push(statement);
+          }
+        }
       } else {
         avoid.push(...statements);
       }
