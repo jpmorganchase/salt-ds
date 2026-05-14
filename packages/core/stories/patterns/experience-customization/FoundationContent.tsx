@@ -17,7 +17,7 @@ import {
   useTheme,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { useEffect, useRef } from "react";
+import { type Ref, useEffect, useRef } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
 import HighDensityTableDark from "./img/table-high-dark.png";
@@ -53,10 +53,12 @@ const displayDensityOptions = [
 export const FoundationContent = ({
   formData,
   onDensityChange,
+  initialFocusRef,
   stepFieldValidation,
   handleCheckboxChange,
 }: FormContentProps & {
   onDensityChange?: (value: string) => void;
+  initialFocusRef?: Ref<HTMLDivElement>;
 }) => {
   const { mode } = useTheme();
   const densityId = useId();
@@ -110,6 +112,11 @@ export const FoundationContent = ({
                 <InteractableCard
                   key={option.value}
                   value={option.value}
+                  ref={
+                    option.value === displayDensityOptions[0].value
+                      ? initialFocusRef
+                      : undefined
+                  }
                   aria-describedby={
                     clsx(
                       formData.displayDensity === "high" && warningBannerId,

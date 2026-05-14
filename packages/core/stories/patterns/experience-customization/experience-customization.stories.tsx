@@ -490,6 +490,7 @@ const EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET =
 export const EndToEndModal = () => {
   const [open, setOpen] = useState(false);
   const stepContentRef = useRef<HTMLDivElement>(null);
+  const initialDensityCardRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
   const pendingAnnouncementRef = useRef<string | null>(null);
 
@@ -611,6 +612,7 @@ export const EndToEndModal = () => {
     foundation: (
       <FoundationContent
         {...sharedFormProps}
+        initialFocusRef={initialDensityCardRef}
         onDensityChange={handleDensityChange}
       />
     ),
@@ -675,7 +677,12 @@ export const EndToEndModal = () => {
   return (
     <>
       <Button onClick={openWizard}>Open experience customization</Button>
-      <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        initialFocus={initialDensityCardRef}
+        style={{ height: 588 }}
+      >
         <AriaAnnouncerProvider
           target={EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET}
         >
