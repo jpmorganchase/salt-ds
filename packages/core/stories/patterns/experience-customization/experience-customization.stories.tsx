@@ -13,6 +13,7 @@ import {
   FormField,
   FormFieldLabel,
   GridLayout,
+  H2,
   H3,
   InteractableCard,
   InteractableCardGroup,
@@ -384,11 +385,11 @@ export const EndToEnd = () => {
   const header = (
     <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
       <FlexItem style={{ flex: 1 }}>
-        <Text>
-          Customize your experience
-          <Text as="h2" style={{ margin: 0 }}>
+        <div>
+          <H2 style={{ margin: 0 }}>
+            <Text color="primary">Customize your experience</Text>
             {wizardSteps[activeStepIndex].label}
-          </Text>
+          </H2>
           {wizardSteps[activeStepIndex].id === "foundation" && (
             <Text
               color="secondary"
@@ -399,7 +400,7 @@ export const EndToEnd = () => {
               A selection is required to proceed
             </Text>
           )}
-        </Text>
+        </div>
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
         <Stepper
