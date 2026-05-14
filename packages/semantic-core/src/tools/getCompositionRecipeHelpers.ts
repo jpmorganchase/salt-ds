@@ -734,5 +734,6 @@ export function toRecipeStarterCode(
         }
       : null,
     supporting_example: toSupportingExample(recipe),
+    allow_generic_component_starter: recipe.recipe_type !== "pattern",
   });
 }

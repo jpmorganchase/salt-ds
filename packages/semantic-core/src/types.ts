@@ -303,6 +303,16 @@ export interface PatternRecord {
       field_path: string;
       source_url: string;
     }>;
+    implementation_signals?: Array<{
+      kind:
+        | "aria_attribute"
+        | "aria_role"
+        | "aria_announcement"
+        | "semantic_element";
+      values: string[];
+      source_kind: "example" | "source";
+      source_url: string;
+    }>;
   };
   resources: Array<{
     label: string;

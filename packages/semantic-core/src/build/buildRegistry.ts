@@ -31,8 +31,8 @@ import { loadPropMetadata } from "./buildRegistryDocgen.js";
 import { extractGuides, extractPages } from "./buildRegistryDocs.js";
 import {
   createPatternNameBySlug,
-  derivePatternImplementationAccessibilitySummaries,
-  derivePatternExampleAccessibilitySummaries,
+  derivePatternImplementationAccessibilitySignals,
+  derivePatternExampleAccessibilitySignals,
   extractPatternExamplesFromStories,
   extractPatterns,
 } from "./buildRegistryPatterns.js";
@@ -108,30 +108,22 @@ export async function buildRegistry(
   }
 
   for (const pattern of enrichedPatternMap.values()) {
-    let accessibilitySummaries = derivePatternExampleAccessibilitySummaries(
+    let accessibilitySignals = derivePatternExampleAccessibilitySignals(
       pattern,
     );
-    if (accessibilitySummaries.length === 0) {
-      accessibilitySummaries =
-        await derivePatternImplementationAccessibilitySummaries(
+    if (accessibilitySignals.length === 0) {
+      accessibilitySignals =
+        await derivePatternImplementationAccessibilitySignals(
           sourceRoot,
           pattern,
         );
     }
 
-    if (accessibilitySummaries.length === 0) {
+    if (accessibilitySignals.length === 0) {
       continue;
     }
 
-    pattern.accessibility.summary = accessibilitySummaries.map(
-      (summary) => summary.value,
-    );
-    pattern.accessibility.summary_sources = accessibilitySummaries.map(
-      (summary, index) => ({
-        field_path: `accessibility.summary.${index}`,
-        source_url: summary.source_url,
-      }),
-    );
+    pattern.accessibility.implementation_signals = accessibilitySignals;
   }
 
   const enrichedPatterns = [...enrichedPatternMap.values()];

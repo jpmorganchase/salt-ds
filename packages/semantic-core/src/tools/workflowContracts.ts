@@ -431,6 +431,7 @@ function buildProvenanceSourceUrls(
 function buildWorkflowReadiness(
   starterValidation: WorkflowStarterValidation | null,
   projectPolicy: WorkflowProjectPolicyArtifact | null | undefined = null,
+  workflowBlockers: string[] = [],
 ): WorkflowReadiness {
   if (!starterValidation) {
     return {
@@ -469,12 +470,38 @@ function buildWorkflowReadiness(
     };
   }
 
+  if (workflowBlockers.length > 0) {
+    return {
+      status: "starter_needs_attention",
+      implementation_ready: false,
+      reason: workflowBlockers[0],
+    };
+  }
+
   return {
     status: "starter_validated",
     implementation_ready: true,
     reason:
       "Starter code was generated and passed the Salt-specific self-check for this workflow result.",
   };
+}
+
+function getMigrationReadinessBlockers(result: MigrateToSaltResult): string[] {
+  const blockers: string[] = [];
+
+  if (result.summary.confirmation_required > 0) {
+    blockers.push(
+      "Migration has unresolved decision gates that must be confirmed before implementation is ready.",
+    );
+  }
+
+  if (result.summary.manual_reviews > 0) {
+    blockers.push(
+      "Migration includes manual-review translations that must be resolved before implementation is ready.",
+    );
+  }
+
+  return blockers;
 }
 
 function getCreateFollowThroughTargets(
@@ -2249,7 +2276,11 @@ export function buildMigrateToSaltWorkflowContract(
       projectConventionsCheck,
       provenance,
     }),
-    readiness: buildWorkflowReadiness(starterValidation, input.project_policy),
+    readiness: buildWorkflowReadiness(
+      starterValidation,
+      input.project_policy,
+      getMigrationReadinessBlockers(result),
+    ),
     context_requirement: input.context_checked
       ? buildSatisfiedWorkflowContextRequirement({
           retry_with_root_dir: input.context_retry_with_root_dir ?? null,

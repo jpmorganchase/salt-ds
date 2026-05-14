@@ -98,12 +98,18 @@
         "accessibility": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["summary"],
+          "required": ["summary", "implementation_signals"],
           "properties": {
             "summary": {
               "type": "array",
               "items": {
                 "$ref": "#/$defs/evidenceText"
+              }
+            },
+            "implementation_signals": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/accessibilitySignal"
               }
             }
           }
@@ -225,6 +231,45 @@
         },
         "internal": {
           "type": "boolean"
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/evidenceRefIds"
+        }
+      }
+    },
+    "accessibilitySignal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "values",
+        "source_kind",
+        "source_url",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "aria_attribute",
+            "aria_role",
+            "aria_announcement",
+            "semantic_element"
+          ]
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_kind": {
+          "enum": ["example", "source"]
+        },
+        "source_url": {
+          "type": "string",
+          "minLength": 1
         },
         "evidence_ref_ids": {
           "$ref": "#/$defs/evidenceRefIds"

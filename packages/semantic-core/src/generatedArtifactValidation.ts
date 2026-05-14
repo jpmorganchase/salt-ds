@@ -292,6 +292,8 @@ function patternFieldExists(
       return hasText(pattern.summary);
     case "accessibility.summary":
       return pattern.accessibility.summary.length > 0;
+    case "accessibility.implementation_signals":
+      return (pattern.accessibility.implementation_signals?.length ?? 0) > 0;
     case "composed_of":
       return pattern.composed_of.length > 0;
     case "examples":
@@ -337,6 +339,50 @@ function patternFieldExists(
   );
   if (accessibilitySummaryIndex != null) {
     return hasText(pattern.accessibility.summary[accessibilitySummaryIndex]);
+  }
+
+  const accessibilitySignalMatch = fieldPath.match(
+    /^accessibility\.implementation_signals\.(\d+)(?:\.(kind|source_kind|source_url|values)(?:\.(\d+))?)?$/,
+  );
+  if (accessibilitySignalMatch) {
+    const [, rawIndex, key, rawValueIndex] = accessibilitySignalMatch;
+    const signal =
+      pattern.accessibility.implementation_signals?.[
+        Number.parseInt(rawIndex, 10)
+      ];
+
+    if (!signal) {
+      return false;
+    }
+
+    if (!key) {
+      return (
+        hasText(signal.kind) &&
+        signal.values.some(hasText) &&
+        hasText(signal.source_kind) &&
+        hasText(signal.source_url)
+      );
+    }
+
+    if (key === "kind") {
+      return hasText(signal.kind);
+    }
+
+    if (key === "source_kind") {
+      return hasText(signal.source_kind);
+    }
+
+    if (key === "source_url") {
+      return hasText(signal.source_url);
+    }
+
+    if (key === "values") {
+      if (rawValueIndex == null) {
+        return signal.values.some(hasText);
+      }
+
+      return hasText(signal.values[Number.parseInt(rawValueIndex, 10)]);
+    }
   }
 
   const starterSourceUrlIndex = parseArrayIndex(
