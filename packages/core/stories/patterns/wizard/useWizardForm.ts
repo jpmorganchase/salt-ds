@@ -23,10 +23,12 @@ export type ValidateStepFn = (
 ) => Promise<StepValidationResult["fields"]>; // Returns a promise resolving to field validation results
 
 // Represents the state of the wizard form
-export interface WizardFormState {
-  activeStepIndex: number; // Index of the currently active step
+export interface WizardFormState<
   // biome-ignore lint/suspicious/noExplicitAny: This is acceptable to support other use-cases.
-  formData: Record<string, any>; // The form data collected across steps
+  TFormData extends Record<string, any> = Record<string, any>,
+> {
+  activeStepIndex: number; // Index of the currently active step
+  formData: TFormData; // The form data collected across steps
   validationsByStep: Partial<Record<string, StepValidationResult>>; // Validation results for each step
 }
 
@@ -136,22 +138,24 @@ export type UseWizardReducer = (
 ) => WizardFormState;
 
 // Options for configuring the `useWizardForm` hook
-interface UseWizardFormOptions {
+// biome-ignore lint/suspicious/noExplicitAny: This is acceptable to support other use-cases.
+interface UseWizardFormOptions<TFormData extends Record<string, any>> {
   steps: string[]; // Array of step IDs in the wizard
-  initialState: WizardFormState; // Initial state of the wizard form
+  initialState: WizardFormState<TFormData>; // Initial state of the wizard form
   validateStep: ValidateStepFn; // Function to validate a step
   reducer?: UseWizardReducer; // Reducer function to handle state transitions
 }
 
-export function useWizardForm({
+// biome-ignore lint/suspicious/noExplicitAny: This is acceptable to support other use-cases.
+export function useWizardForm<TFormData extends Record<string, any>>({
   steps,
   initialState,
   validateStep,
   reducer = wizardFormReducer,
-}: UseWizardFormOptions) {
+}: UseWizardFormOptions<TFormData>) {
   const [state, dispatch] = useReducer(
-    (state: WizardFormState, action: WizardFormAction) =>
-      reducer(state, action, steps, initialState),
+    (state: WizardFormState<TFormData>, action: WizardFormAction) =>
+      reducer(state, action, steps, initialState) as WizardFormState<TFormData>,
     initialState,
   );
 

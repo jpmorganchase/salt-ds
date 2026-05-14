@@ -327,7 +327,7 @@ export const EndToEnd = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
     handleSelectChange: (value, name) => updateField(name, value),
@@ -409,8 +409,7 @@ export const EndToEnd = () => {
   );
 
   const startFooter =
-    currentStepId === "dataFormat" &&
-    hasDataFormatChanges(formData as ECFormData) ? (
+    currentStepId === "dataFormat" && hasDataFormatChanges(formData) ? (
       <Button
         sentiment="accented"
         appearance="transparent"
@@ -567,7 +566,7 @@ export const EndToEndModal = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
     handleSelectChange: (value, name) => updateField(name, value),
@@ -619,8 +618,7 @@ export const EndToEndModal = () => {
   );
 
   const startFooter =
-    currentStepId === "dataFormat" &&
-    hasDataFormatChanges(formData as ECFormData) ? (
+    currentStepId === "dataFormat" && hasDataFormatChanges(formData) ? (
       <Button
         sentiment="accented"
         appearance="transparent"
