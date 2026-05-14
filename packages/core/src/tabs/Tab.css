@@ -1,0 +1,82 @@
+/* Class applied to root Tab element */
+.saltTab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  -webkit-appearance: none;
+  gap: var(--salt-spacing-100);
+  border: none;
+  border-left: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  white-space: pre;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-width: 4em;
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  cursor: var(--salt-cursor-hover);
+  color: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-fontWeight);
+  font-family: var(--salt-text-fontFamily);
+  text-align: var(--salt-text-textAlign);
+  letter-spacing: var(--salt-text-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
+  font-size: var(--salt-text-fontSize);
+  max-width: 100%;
+}
+
+@supports selector(:has(*)) {
+  .saltTabList:has([data-overflowbutton]) .saltTab {
+    /* 100% of the tab list but reserving space for the overflow button */
+    max-width: calc(100% - var(--salt-spacing-100) - var(--salt-size-base));
+  }
+}
+
+.saltTab::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--salt-size-fixed-100) * -1);
+  right: calc(var(--salt-size-fixed-100) * -1);
+  height: var(--salt-size-indicator);
+}
+
+.saltTabList-bordered .saltTab::after {
+  top: 0;
+}
+
+.saltTabList-transparent .saltTab::after {
+  bottom: 0;
+}
+
+.saltTab:hover::after,
+.saltTab-focusVisible::after {
+  background: var(--salt-navigable-indicator-hover);
+}
+
+.saltTab-disabled:hover::after,
+.saltTab-disabled.saltTab-focusVisible::after {
+  background: none;
+}
+
+.saltTab-focusVisible {
+  outline: var(--salt-focused-outline);
+}
+
+.saltTabList-bordered .saltTab.saltTab-selected {
+  background: var(--saltTabList-activeColor);
+  border-left: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+  border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+}
+
+.saltTab.saltTab-selected::after {
+  background: var(--salt-navigable-accent-indicator-active);
+}
+
+.saltTab.saltTab-disabled {
+  cursor: var(--salt-cursor-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
+}

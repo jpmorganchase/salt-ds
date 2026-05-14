@@ -1,0 +1,229 @@
+---
+title: Experience customization
+description: "Experience customization is a pattern which guides users through configuring their application settings—including regional, visual, and functional formats—on first use or later use, to ensure the interface is fully optimized for their specific preferences."
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/experience-customization
+data:
+  components: ["Banner", "Dropdown", "Radio button", "Stepper", "Switch", "Toggle button"]
+  relatedPatterns: ["Button bar", "Selectable card", "Wizard"]
+---
+
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-experience-customization.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-experience-customization-dark.png"
+  alt="Experience customization overview showing onboarding and ongoing preferences entry points"
+  border
+  background="secondary"
+/>
+
+## When to use
+
+Use the Experience customization pattern to establish or update foundational settings that align with the user’s application UI preferences. It gives users intentional, explicit control to bridge the gap between a generic experience and one tailored to their workflow.
+
+### Usage contexts
+
+1. **Onboarding (Wizard)**: A guided, step-by-step experience used to initialize the workspace and capture essential preferences upon the user’s first entry into the application. Establishing accessibility defaults during this setup phase ensures a compliant environment from the very first session.
+2. **Ongoing customization**:  A persistent entry point that allows users to return and adjust their environment as their operational needs evolve.
+
+### Accessibility and compliance
+
+To comply with ADA and WCAG expectations, implement onboarding (Wizard) and an always-available ongoing customization entry point (Preferences dialog) as a paired capability: onboarding (Wizard) establishes an accessible, conforming default configuration, and ongoing customization (Preferences dialog) provides predictable, ongoing access to the same experience settings so users can revisit and adjust preferences as needs change.
+
+### Configuration areas
+
+Typical groups of settings you might expose to your users are:
+
+- **Visual foundations**: Theme, density, reduced motion
+- **Localization**: Language, locale, time zone, and regional formats for currency/dates
+- **Data surfaces**: Tables and charts configuration
+- **Governance**: Role-based tailoring, notification channel selection, and security/access levels
+- **Structure**: Workspace initialization, naming conventions, and project templates
+- **Feedback / notification**: Toast position, auto-dismiss, duration; notification preferences
+
+
+## How to build
+
+The Experience customization pattern utilizes existing Salt components. Refer to the [Wizard](/salt/patterns/wizard) and [Preference dialog](/salt/patterns/preferences-dialog) for technical specifications.
+
+### Anatomy
+
+#### Onboarding - First time setup
+
+1. **Pattern: [Wizard](/salt/patterns/wizard)**
+2. **Content area**: This region is intended for selection model. Three patterns are available: standard control selection using switches, radio buttons, and selects for clear, label-driven choices; card or tile selection for scannable, comparable options; and dynamic live preview for configurations where multiple settings combine and users need to see results before committing, such as data grid or chart configuration.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-experience-customization-anatomy.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-experience-customization-anatomy-dark.png"
+  alt="Onboarding wizard anatomy showing stepper, content area, and actions"
+  border
+  background="secondary"
+/>
+
+#### Ongoing customization
+
+1. **Pattern: [Preference dialog](/salt/patterns/preferences-dialog)**
+2. **Content area**: In this persistent context, use standard control selection with clear, label-driven controls. Since users are introduced to these settings during onboarding, ongoing customization should focus on familiar adjustments with clear, easily understood results.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-ongoing-customization-anatomy.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-ongoing-customization-anatomy-dark.png"
+  alt="Ongoing customization anatomy in a preferences dialog with familiar controls"
+  border
+  background="secondary"
+/>
+
+## Setup flow
+
+The steps below summarize Salt-specific user preferences that may be made available for configuration.
+
+1. **Foundations**: Establish global behavior first.
+2. **Data interpretation**: Ensure data is understood consistently.
+3. **Data surfaces**: Configure tables and charts, where multiple settings combine and users benefit from seeing outcomes live before finalizing selections.
+4. **Feedback**: Finalize how the system provides feedback after core reading and interpretation is set.
+
+### Ordering the experience
+
+| Step | Stage               | What the user sets                                                                                                                               | Sequence rationale                                                                                                                                    |
+| ---- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Foundation          | Theme, Density, [Reduced motion](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions)                                                                                                                    | Establishes global system behavior first                                                                                                              |
+| 2    | Data interpretation | Number format, Currency format, Date/Time format, Locale, and timezone if needed                                                                | Ensures data is immediately understandable and consistently interpreted before configuring surfaces                                                   |
+| 3    | Data surfaces       | Tables (live preview): Columns, Sorting, Density/Compact, Zebra striping. Charts (live preview): Lines, Patterns, Markers, Labels, Grid lines, Legend. | Outcomes are cumulative, so users need to see results live before setting; this is the core step because it shapes how data is read and understood |
+| 4    | Feedback            | Toast position, Auto-dismiss, Duration                                                                                                            | Finalizes how the system provides feedback after core reading/interpretation is set                                                                   |
+
+## Selection model
+
+The selection model uses an escalation-based approach for presenting configuration choices in Experience customization, progressing from Standard controls to Card selection to Dynamic live preview based on complexity and cumulative visual impact. This approach aligns options with user comprehension, supports [WCAG 2.2 accessibility guidelines](https://www.w3.org/WAI/WCAG22/Understanding/), and ensures all choices are practical within the Salt design system. 
+
+### Choosing the right pattern
+
+| Pattern              | Use when                                                                       | Typical examples                                                        | Best for                                |
+| -------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | --------------------------------------- |
+| Standard controls    | Labels clearly communicate the outcome without needing visual comparison        | Date format, currency, reduced motion (on/off), value labels (show/hide) | High-volume (5+ options) and efficiency |
+| Card selection       | The difference is best understood visually and there are typically 2–4 options | Theme (light/dark), density, toast position                             | Low-volume (2–4 options) and visual state |
+| Dynamic live preview | Multiple settings combine and users need to see results before committing      | Data grid configuration, chart configuration                            | Complex tasks and real-time validation  |
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  Focus on configuration that changes how the system communicates data—supporting readability, structure, and interpretation—without exposing styling, component design, or system logic.
+</GuidanceCallout>
+
+## Use cases
+
+The following examples show how the choice of selection pattern is guided by the specific needs of each workflow.
+
+### Standard controls – Locale and time zone
+
+Use standard controls for familiar, functional settings such as language selection, time zone selection, or an automatic translate toggle. These options are clearly described by labels alone, so adding visual examples would be redundant and take up unnecessary screen space. Standard controls are the most effective pattern for these straightforward choices.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-standard-controls.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-standard-controls-dark.png"
+  alt="Standard controls example for locale and time zone settings"
+  border
+  background="secondary"
+/>
+
+### Dynamic live preview – Data presentation
+
+Use a dynamic live preview for report-oriented presentation choices, such as selecting which metadata appears and how it’s displayed. This approach is ideal when users have specific requirements and need confidence in the final output. By showing results as settings change, a dynamic live preview reduces trial and error and minimizes the need to revisit settings later.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-dynamic-live-preview.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-dynamic-live-preview-dark.png"
+  alt="Dynamic live preview example for data presentation configuration"
+  border
+  background="secondary"
+/>
+
+### Card selection – Notification placement
+
+Use card selection for settings that lead to meaningful changes in the interface layout, such as notification placement. Card selection allows users to compare distinct visual states side by side, making it easier to understand and choose the desired outcome without extra cognitive effort.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-card-selection.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-card-selection-dark.png"
+  alt="Card selection example for notification placement options"
+  border
+  background="secondary"
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+Switches can be used in multi-step wizards even when changes don’t take effect immediately. Use switches only for true on/off choices, and make any final behavior unmistakable—for example, label the final button 'Finish and apply changes' instead of just 'Finish'.
+</GuidanceCallout>
+
+## Reset to default
+
+Use progressive disclosure to show 'Reset to default' button only when the current step is no longer in its default state.
+
+The action is hidden when the step matches defaults, and revealed once the user selects any non-default option. When selected, it returns the affected settings in the current step to their default state and updates the UI; once defaults are restored, the action is hidden again.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-reset-to-default-examples.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-reset-to-default-examples-dark.png"
+  alt="Reset to default behavior showing hidden and revealed action states"
+  border
+  background="secondary"
+/>
+
+## Guiding conscious decisions
+
+Apply the Experience customization pattern when an application offers explicit options that require deliberate user selection. This is especially important for choices that may impact accessibility, compliance, or system governance. Ensure users understand the implications of their selections before they proceed. This section focuses on user-driven preferences where the goal is informed choice and easy recovery, not enforcement.
+
+### Informed-choice guidance
+
+When a user selects an option that may not meet accessibility requirements, present clear guidance explaining the implications and trade-offs before the user proceeds. Where available, include a link to supporting accessibility guidance. If this guidance is displayed as a banner while the selection is active, ensure it is removed once the user switches back to an option that meets accessibility requirements.
+
+### Confirmation
+
+When a user selects an option that may not meet accessibility requirements or may reduce usability for some users, require an explicit acknowledgement before they proceed. The acknowledgement should restate the selected option and its potential impact.
+
+### Easy recovery
+
+Support easy recovery by ensuring users can change or undo their selection and return to an option that meets accessibility requirements. Where a default setting exists and is applicable to the flow, provide a clear way to return to the default.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-guiding-conscious-decisions.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-guiding-conscious-decisions-dark.png"
+  alt="Guidance and acknowledgement flow for accessibility-impacting choices"
+  border
+  background="secondary"
+/>
+
+## Mandatory configurations
+
+Use this pattern when an application provides explicit options—such as a security profile or data-sharing tier—that require a conscious selection to meet governance, compliance, or security standards.
+
+Because the workflow cannot continue without this input, the interface must guide the user through a clear validation sequence that maintains focus and accessibility.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-mandatory-configuratons.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-mandatory-configuratons-dark.png"
+  alt="Mandatory configuration step requiring a selection before continuing"
+  border
+  background="secondary"
+/>
+
+### Validation flow
+
+The following sequence illustrates the expected behavior when a mandatory selection is required. This logic ensures the interface remains navigable while clearly communicating missing requirements.
+
+1. **Intent to proceed**: The user attempts to move forward by clicking 'Next' or 'Finish'. To maintain accessibility and discoverability, the button remains enabled. Because no selection has been made, the system initiates a validation check.
+2. **Error feedback**: A validation banner appears at the top of the content area to provide immediate context, and the specific component updates to an error state to highlight exactly where the user needs to take action. If a stepper is present, it also updates to an error state to reflect the same missing requirement.
+3. **Resolution**: Once the user selects an option, the requirement is satisfied. The validation banner and error states (including the stepper, if present) are cleared, and the user can click 'Next' or 'Finish' again to successfully proceed.
+
+<Diagram
+  src="/img/patterns/experience-customization/experience-customization-pattern-validation-flow.png"
+  srcDark="/img/patterns/experience-customization/experience-customization-pattern-validation-flow-dark.png"
+  alt="Validation flow for mandatory selection with banner and field error states"
+  border
+  background="secondary"
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+**Explicit requirements**: Use the label or description in the header section to clearly communicate that a selection is required to proceed.
+</GuidanceCallout>
+

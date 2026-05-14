@@ -1,12 +1,13 @@
-import { Button, useAriaAnnouncer } from "@salt-ds/core";
-import { AddIcon } from "@salt-ds/icons";
 import {
+  Button,
+  Tab,
   TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
+  TabList,
+  Tabs,
+  TabTrigger,
+  useAriaAnnouncer,
+} from "@salt-ds/core";
+import { AddIcon } from "@salt-ds/icons";
 import { type ReactElement, useRef, useState } from "react";
 
 export const AddANewTab = (): ReactElement => {
@@ -17,18 +18,15 @@ export const AddANewTab = (): ReactElement => {
 
   return (
     <div style={{ width: "100%", minWidth: 0 }}>
-      <TabsNext
-        value={value}
-        onChange={(_event, newValue) => setValue(newValue)}
-      >
+      <Tabs value={value} onChange={(_event, newValue) => setValue(newValue)}>
         <TabBar inset divider>
-          <TabListNext aria-label="Example tablist">
+          <TabList aria-label="Example tablist">
             {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
+              <Tab value={label} key={label}>
+                <TabTrigger>{label}</TabTrigger>
+              </Tab>
             ))}
-          </TabListNext>
+          </TabList>
           <Button
             aria-label="Add tab"
             appearance="transparent"
@@ -44,7 +42,7 @@ export const AddANewTab = (): ReactElement => {
             <AddIcon aria-hidden />
           </Button>
         </TabBar>
-      </TabsNext>
+      </Tabs>
     </div>
   );
 };

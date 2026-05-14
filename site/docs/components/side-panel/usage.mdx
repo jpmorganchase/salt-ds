@@ -34,6 +34,7 @@ To import `SidePanel` and related components from the lab Salt package, use:
 ```js
 import {
   SidePanel,
+  SidePanelCloseButton,
   SidePanelContent,
   SidePanelHeader,
   SidePanelProvider,
@@ -76,34 +77,29 @@ When you use `SidePanelTitle` inside `SidePanelHeader`, the accessible name for 
 
 ### SidePanelHeader
 
-`SidePanelHeader` is a layout wrapper for the panel header area. It is intended to contain a `SidePanelTitle` and a close button.
+`SidePanelHeader` is a layout wrapper for the panel header area. It is intended to contain a `SidePanelTitle` and a `SidePanelCloseButton`.
 
 ```jsx
-const { CloseIcon } = useIcon();
-const { setOpen } = useSidePanel();
-
 <SidePanelHeader>
-  <SidePanelTitle>
-    <H2>Panel Title</H2>
-  </SidePanelTitle>
-  <Button
-    aria-label="Close"
-    appearance="transparent"
-    onClick={() => setOpen(false)}
-  >
-    <CloseIcon aria-hidden />
-  </Button>
-</SidePanelHeader>;
+  <SidePanelTitle>Panel Title</SidePanelTitle>
+  <SidePanelCloseButton />
+</SidePanelHeader>
+```
+
+### SidePanelCloseButton
+
+`SidePanelCloseButton` renders a close button that automatically closes the panel, displays the appropriate close icon, and wires up accessible labelling (linking its `aria-labelledby` to the `SidePanelTitle`). It accepts all `Button` props for customization.
+
+```jsx
+<SidePanelCloseButton />
 ```
 
 ### SidePanelTitle
 
-`SidePanelTitle` provides the accessible name for the side panel region. It generates a unique ID internally and registers it with the context so that `SidePanel` can use it for `aria-labelledby` automatically. Place your heading element (e.g. `<H2>`) inside it.
+`SidePanelTitle` provides the accessible name for the side panel region. It generates a unique ID internally and registers it with the context so that `SidePanel` can use it for `aria-labelledby` automatically.
 
 ```jsx
-<SidePanelTitle>
-  <H2>Section Title</H2>
-</SidePanelTitle>
+<SidePanelTitle>Section Title</SidePanelTitle>
 ```
 
 ### SidePanelContent
@@ -123,9 +119,6 @@ If you need a custom layout or close behavior, you can skip `SidePanelContent` a
 A minimal side panel combines all parts inside a flex container:
 
 ```jsx
-const { CloseIcon } = useIcon();
-const { setOpen } = useSidePanel();
-
 <SidePanelProvider>
   <FlexLayout gap={0}>
     <StackLayout style={{ flex: 1 }}>
@@ -136,42 +129,39 @@ const { setOpen } = useSidePanel();
 
     <SidePanel position="right">
       <SidePanelHeader>
-        <SidePanelTitle>
-          <H2>Details</H2>
-        </SidePanelTitle>
-        <Button
-          aria-label="Close"
-          appearance="transparent"
-          onClick={() => setOpen(false)}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
+        <SidePanelTitle>Details</SidePanelTitle>
+        <SidePanelCloseButton />
       </SidePanelHeader>
       <SidePanelContent>
         <Text>Side panel content goes here.</Text>
       </SidePanelContent>
     </SidePanel>
   </FlexLayout>
-</SidePanelProvider>;
+</SidePanelProvider>
 ```
 
 ### Manual trigger
 
-When `SidePanelTrigger` doesn't fit your layout—for example, when multiple buttons in a table each open the same panel—you can build a manual trigger using `useSidePanel`. Call `setOpen`, `triggerRef`, and spread `getTriggerProps` onto your element to maintain the correct ARIA attributes and focus return behavior.
+When `SidePanelTrigger` doesn't fit your layout—for example, when multiple buttons in a table each open the same panel—you can build a manual trigger using `useSidePanel`. Spread `getTriggerProps()` onto your element to get the correct ARIA attributes, toggle behavior, and focus return automatically.
 
 ```jsx
-const { setOpen, triggerRef, getTriggerProps, panelId, openState } =
-  useSidePanel();
+const { getTriggerProps } = useSidePanel();
+
+<Button {...getTriggerProps()}>Toggle panel</Button>;
+```
+
+For multi-trigger scenarios (e.g., table rows) where each button should open the panel for a different item, use `setTriggerRef` and `panelId` to manage ARIA attributes and focus return yourself:
+
+```jsx
+const { setOpen, setTriggerRef, panelId, openState } = useSidePanel();
 
 <Button
-  {...getTriggerProps({
-    "aria-expanded": openState,
-    "aria-controls": openState ? panelId : undefined,
-    onClick: (event) => {
-      triggerRef(event.currentTarget);
-      setOpen(true);
-    },
-  })}
+  aria-expanded={openState && selectedId === row.id}
+  aria-controls={openState && selectedId === row.id ? panelId : undefined}
+  onClick={(event) => {
+    setTriggerRef(event.currentTarget);
+    setOpen(true);
+  }}
 >
   Edit
 </Button>;
@@ -190,6 +180,10 @@ const { setOpen, triggerRef, getTriggerProps, panelId, openState } =
 ### SidePanelTrigger
 
 <PropsTable packageName="lab" componentName="SidePanelTrigger" />
+
+### SidePanelCloseButton
+
+<PropsTable packageName="lab" componentName="SidePanelCloseButton" />
 
 ### SidePanelHeader
 

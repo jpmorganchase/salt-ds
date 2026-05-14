@@ -1,6 +1,6 @@
 .saltSidePanelHeader {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-shrink: 0;
   gap: var(--salt-spacing-100);
   padding: 0 0 var(--salt-spacing-300);

@@ -1,17 +1,21 @@
-import type { ReactNode } from "react";
+import type { ComponentPropsWithRef } from "react";
 
-export const ContentExample = ({ children }: { children?: ReactNode }) => (
+export const ContentExample = ({
+  children,
+  style,
+}: ComponentPropsWithRef<"div">) => (
   <div
     style={{
       flex: 1,
       display: "flex",
       flexDirection: "column",
       gap: "var(--salt-spacing-200)",
-      padding: "var(--salt-spacing-300)",
+      padding: "var(--salt-spacing-200)",
       overflow: "auto",
+      ...style,
     }}
   >
-    {children}
+    <div>{children}</div>
     <div
       style={{
         display: "grid",
@@ -25,7 +29,7 @@ export const ContentExample = ({ children }: { children?: ReactNode }) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
           key={`content-${i}`}
           style={{
-            backgroundColor: "var(--salt-container-secondary-background)",
+            backgroundColor: "var(--salt-container-primary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
             border:
               "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
