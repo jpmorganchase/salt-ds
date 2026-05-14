@@ -1,10 +1,10 @@
+import { Tree, TreeNode } from "@salt-ds/core";
 import { DocumentIcon, FolderClosedIcon, FolderOpenIcon } from "@salt-ds/icons";
-import { Tree, TreeNode } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Tree/Tree QA",
+  title: "Core/Tree/Tree QA",
   component: Tree,
 } as Meta<typeof Tree>;
 

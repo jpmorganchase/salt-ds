@@ -1,5 +1,5 @@
+import { Tree, TreeNode } from "@salt-ds/core";
 import { DocumentIcon, FolderClosedIcon, FolderOpenIcon } from "@salt-ds/icons";
-import { Tree, TreeNode } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const WithIcons = (): ReactElement => {

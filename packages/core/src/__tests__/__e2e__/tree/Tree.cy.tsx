@@ -1,5 +1,10 @@
-import { Tooltip } from "@salt-ds/core";
-import { Tree, TreeNode, TreeNodeLabel, TreeNodeTrigger } from "@salt-ds/lab";
+import {
+  Tooltip,
+  Tree,
+  TreeNode,
+  TreeNodeLabel,
+  TreeNodeTrigger,
+} from "@salt-ds/core";
 import { useState } from "react";
 
 const renderSecretFiles = (show = true) =>

@@ -1,4 +1,3 @@
-import { createContext } from "@salt-ds/core";
 import {
   type Dispatch,
   type ReactNode,
@@ -8,6 +7,7 @@ import {
   type SyntheticEvent,
   useContext,
 } from "react";
+import { createContext } from "../utils";
 import type { TreeModel, TreeNodeMeta } from "./useTree";
 
 export interface TreeContextValue {

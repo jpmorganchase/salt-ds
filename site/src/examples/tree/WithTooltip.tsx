@@ -1,6 +1,11 @@
-import { Tooltip } from "@salt-ds/core";
+import {
+  Tooltip,
+  Tree,
+  TreeNode,
+  TreeNodeLabel,
+  TreeNodeTrigger,
+} from "@salt-ds/core";
 import { DocumentIcon, FolderClosedIcon, FolderOpenIcon } from "@salt-ds/icons";
-import { Tree, TreeNode, TreeNodeLabel, TreeNodeTrigger } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithTooltip = (): ReactElement => (
