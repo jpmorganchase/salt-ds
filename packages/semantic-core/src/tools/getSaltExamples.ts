@@ -59,6 +59,7 @@ function createPatternStarter(
       package: null,
       role: entry.role,
     })),
+    starter_scaffold: pattern.starter_scaffold ?? null,
     supporting_example: pattern.examples[0]
       ? {
           title: pattern.examples[0].title,
@@ -66,6 +67,7 @@ function createPatternStarter(
           source_url: pattern.examples[0].source_url,
         }
       : null,
+    allow_generic_component_starter: false,
   });
 }
 

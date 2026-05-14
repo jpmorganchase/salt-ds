@@ -249,7 +249,70 @@ function missingComponentOptionalContextEvidence(
     : ["accessibility docs or source-backed summary"];
 }
 
-function missingPatternOptionalContextEvidence(pattern: PatternRecord): string[] {
+function componentHasAccessibilityEvidence(
+  component: ComponentRecord | undefined,
+): boolean {
+  return Boolean(
+    component &&
+      (component.accessibility.summary.some(hasText) ||
+        component.accessibility.rules.some((rule) => hasText(rule.rule)) ||
+        hasText(component.related_docs.accessibility)),
+  );
+}
+
+function hasSourceBackedPatternExample(pattern: PatternRecord): boolean {
+  return pattern.examples.some(
+    (example) => hasText(example.source_url) && hasText(example.code),
+  );
+}
+
+function hasPatternAccessibilityImplementationSignal(
+  pattern: PatternRecord,
+): boolean {
+  return Boolean(
+    pattern.accessibility.implementation_signals?.some(
+      (signal) =>
+        hasText(signal.source_url) &&
+        signal.values.some(hasText) &&
+        hasText(signal.kind),
+    ),
+  );
+}
+
+function hasComposedComponentAccessibilityEvidence(
+  pattern: PatternRecord,
+  componentByName: Map<string, ComponentRecord>,
+): boolean {
+  const componentNames = uniqueStrings(
+    pattern.composed_of.map((composition) => composition.component),
+  );
+  if (componentNames.length === 0) {
+    return false;
+  }
+
+  const resolvedComponents = componentNames.map((name) =>
+    componentByName.get(name),
+  );
+
+  return resolvedComponents.every(componentHasAccessibilityEvidence);
+}
+
+function hasPatternAccessibilityCoverage(
+  pattern: PatternRecord,
+  componentByName: Map<string, ComponentRecord>,
+): boolean {
+  return (
+    pattern.accessibility.summary.some(hasText) ||
+    hasPatternAccessibilityImplementationSignal(pattern) ||
+    hasSourceBackedPatternExample(pattern) ||
+    hasComposedComponentAccessibilityEvidence(pattern, componentByName)
+  );
+}
+
+function missingPatternOptionalContextEvidence(
+  pattern: PatternRecord,
+  componentByName: Map<string, ComponentRecord>,
+): string[] {
   const missing: string[] = [];
 
   if (pattern.when_not_to_use.length === 0) {
@@ -261,8 +324,8 @@ function missingPatternOptionalContextEvidence(pattern: PatternRecord): string[]
   if (pattern.how_it_works.length === 0) {
     missing.push("how_it_works guidance");
   }
-  if (pattern.accessibility.summary.length === 0) {
-    missing.push("accessibility summary");
+  if (!hasPatternAccessibilityCoverage(pattern, componentByName)) {
+    missing.push("pattern accessibility coverage");
   }
 
   return missing;
@@ -276,11 +339,19 @@ function patternOptionalGapFieldPath(missing: string): string {
       return "how_to_build";
     case "how_it_works guidance":
       return "how_it_works";
-    case "accessibility summary":
-      return "accessibility.summary";
+    case "pattern accessibility coverage":
+      return "accessibility";
     default:
       return missing;
   }
+}
+
+function patternOptionalGapReason(missing: string, fieldPath: string): string {
+  if (missing === "pattern accessibility coverage") {
+    return "Registry pattern accessibility coverage is empty and no source-backed examples, implementation signals, or composed component accessibility evidence was found for generated context.";
+  }
+
+  return `Registry pattern ${fieldPath} is empty and no source-backed docs, examples, or source evidence was found for generated context.`;
 }
 
 function buildPatternOptionalEvidenceGapRecords(
@@ -296,7 +367,7 @@ function buildPatternOptionalEvidenceGapRecords(
       name: `${pattern.name} ${fieldPath}`,
       status: "unsupported",
       reason_code: "missing_optional_evidence",
-      reason: `Registry pattern ${fieldPath} is empty and no source-backed docs, examples, or source evidence was found for generated context.`,
+      reason: patternOptionalGapReason(missingField, fieldPath),
       missing: [missingField],
       evidence_ref_ids: [],
     };
@@ -434,6 +505,9 @@ function summarizePatternCoverage(
     limit: input.registry.patterns.length,
     include_unsupported: true,
   });
+  const componentByName = new Map(
+    input.registry.components.map((component) => [component.name, component]),
+  );
   const selectedIds = new Set(selectedPatterns.map((pattern) => pattern.id));
   const contexts = selectedPatterns.map((pattern) =>
     buildPatternContext({
@@ -477,7 +551,7 @@ function summarizePatternCoverage(
   const optionalEvidenceGaps = selectedPatterns
     .map((pattern) => ({
       pattern,
-      missing: missingPatternOptionalContextEvidence(pattern),
+      missing: missingPatternOptionalContextEvidence(pattern, componentByName),
     }))
     .filter((entry) => entry.missing.length > 0)
     .map(({ pattern, missing }): SaltContextCoverageGap => ({

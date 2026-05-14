@@ -931,10 +931,9 @@ function parsePatternAccessibilitySummary(content: string): string[] {
   ).slice(0, 5);
 }
 
-interface PatternExampleAccessibilitySummary {
-  value: string;
-  source_url: string;
-}
+type PatternAccessibilitySignal = NonNullable<
+  PatternRecord["accessibility"]["implementation_signals"]
+>[number];
 
 interface PatternExampleAccessibilitySignals {
   ariaAttributes: string[];
@@ -972,10 +971,6 @@ function extractSemanticElementsFromCode(code: string): string[] {
   );
 }
 
-function formatSourceBackedList(values: string[]): string {
-  return values.join(", ");
-}
-
 function mergePatternExampleAccessibilitySignals(
   left: PatternExampleAccessibilitySignals,
   right: PatternExampleAccessibilitySignals,
@@ -1007,9 +1002,55 @@ function extractPatternExampleAccessibilitySignals(
   };
 }
 
-export function derivePatternExampleAccessibilitySummaries(
+function toPatternAccessibilitySignals(input: {
+  signals: PatternExampleAccessibilitySignals;
+  source_kind: PatternAccessibilitySignal["source_kind"];
+  source_url: string;
+}): PatternAccessibilitySignal[] {
+  const entries: PatternAccessibilitySignal[] = [];
+
+  if (input.signals.ariaAttributes.length > 0) {
+    entries.push({
+      kind: "aria_attribute",
+      values: input.signals.ariaAttributes,
+      source_kind: input.source_kind,
+      source_url: input.source_url,
+    });
+  }
+
+  if (input.signals.ariaRoles.length > 0) {
+    entries.push({
+      kind: "aria_role",
+      values: input.signals.ariaRoles,
+      source_kind: input.source_kind,
+      source_url: input.source_url,
+    });
+  }
+
+  if (input.signals.ariaAnnouncements) {
+    entries.push({
+      kind: "aria_announcement",
+      values: ["useAriaAnnouncer"],
+      source_kind: input.source_kind,
+      source_url: input.source_url,
+    });
+  }
+
+  if (input.signals.semanticElements.length > 0) {
+    entries.push({
+      kind: "semantic_element",
+      values: input.signals.semanticElements,
+      source_kind: input.source_kind,
+      source_url: input.source_url,
+    });
+  }
+
+  return entries;
+}
+
+export function derivePatternExampleAccessibilitySignals(
   pattern: PatternRecord,
-): PatternExampleAccessibilitySummary[] {
+): PatternAccessibilitySignal[] {
   if (pattern.accessibility.summary.length > 0) {
     return [];
   }
@@ -1045,45 +1086,25 @@ export function derivePatternExampleAccessibilitySummaries(
     );
   }
 
-  const summaries: PatternExampleAccessibilitySummary[] = [];
+  const accessibilitySignals: PatternAccessibilitySignal[] = [];
 
   for (const [source_url, signals] of signalsBySourceUrl) {
-    if (signals.ariaAttributes.length > 0) {
-      summaries.push({
-        value: `${pattern.name} examples declare ARIA attributes: ${formatSourceBackedList(signals.ariaAttributes)}.`,
+    accessibilitySignals.push(
+      ...toPatternAccessibilitySignals({
+        signals,
+        source_kind: "example",
         source_url,
-      });
-    }
-
-    if (signals.ariaRoles.length > 0) {
-      summaries.push({
-        value: `${pattern.name} examples declare ARIA roles: ${formatSourceBackedList(signals.ariaRoles)}.`,
-        source_url,
-      });
-    }
-
-    if (signals.ariaAnnouncements) {
-      summaries.push({
-        value: `${pattern.name} examples use ARIA announcements.`,
-        source_url,
-      });
-    }
-
-    if (signals.semanticElements.length > 0) {
-      summaries.push({
-        value: `${pattern.name} examples use semantic HTML elements: ${formatSourceBackedList(signals.semanticElements)}.`,
-        source_url,
-      });
-    }
+      }),
+    );
   }
 
-  return summaries.slice(0, 5);
+  return accessibilitySignals.slice(0, 5);
 }
 
-export async function derivePatternImplementationAccessibilitySummaries(
+export async function derivePatternImplementationAccessibilitySignals(
   repoRoot: string,
   pattern: PatternRecord,
-): Promise<PatternExampleAccessibilitySummary[]> {
+): Promise<PatternAccessibilitySignal[]> {
   if (pattern.accessibility.summary.length > 0) {
     return [];
   }
@@ -1097,7 +1118,7 @@ export async function derivePatternImplementationAccessibilitySummaries(
       ignore: ["**/__tests__/**", "**/*.test.*", "**/*.spec.*"],
     })
   ).sort((left, right) => left.localeCompare(right));
-  const summaries: PatternExampleAccessibilitySummary[] = [];
+  const accessibilitySignals: PatternAccessibilitySignal[] = [];
 
   for (const sourcePath of sourcePaths) {
     const source = await readFileOrNull(sourcePath);
@@ -1108,36 +1129,16 @@ export async function derivePatternImplementationAccessibilitySummaries(
     const sourceUrl = toPosixPath(path.relative(repoRoot, sourcePath));
     const signals = extractPatternExampleAccessibilitySignals(source);
 
-    if (signals.ariaAttributes.length > 0) {
-      summaries.push({
-        value: `${pattern.name} source declares ARIA attributes: ${formatSourceBackedList(signals.ariaAttributes)}.`,
+    accessibilitySignals.push(
+      ...toPatternAccessibilitySignals({
+        signals,
+        source_kind: "source",
         source_url: sourceUrl,
-      });
-    }
-
-    if (signals.ariaRoles.length > 0) {
-      summaries.push({
-        value: `${pattern.name} source declares ARIA roles: ${formatSourceBackedList(signals.ariaRoles)}.`,
-        source_url: sourceUrl,
-      });
-    }
-
-    if (signals.ariaAnnouncements) {
-      summaries.push({
-        value: `${pattern.name} source uses ARIA announcements.`,
-        source_url: sourceUrl,
-      });
-    }
-
-    if (signals.semanticElements.length > 0) {
-      summaries.push({
-        value: `${pattern.name} source uses semantic HTML elements: ${formatSourceBackedList(signals.semanticElements)}.`,
-        source_url: sourceUrl,
-      });
-    }
+      }),
+    );
   }
 
-  return summaries.slice(0, 5);
+  return accessibilitySignals.slice(0, 5);
 }
 
 function normalizePatternDocsRoute(route: string): string {

@@ -565,7 +565,6 @@ describe("context coverage and unsupported surfaces", () => {
               "when_not_to_use guidance",
               "how_to_build guidance",
               "how_it_works guidance",
-              "accessibility summary",
             ],
             records: [
               expect.objectContaining({
@@ -589,18 +588,93 @@ describe("context coverage and unsupported surfaces", () => {
                 missing: ["how_it_works guidance"],
                 evidence_ref_ids: [],
               }),
-              expect.objectContaining({
-                kind: "pattern",
-                id: "fixture-workflow.accessibility.summary.missing_optional_evidence",
-                reason_code: "missing_optional_evidence",
-                missing: ["accessibility summary"],
-                evidence_ref_ids: [],
-              }),
             ],
           }),
         ]),
       }),
     );
+  });
+
+  it("records fixture pattern accessibility coverage gaps only when pattern examples, implementation signals, and component accessibility evidence are absent", () => {
+    const registry = buildFixtureRegistry({
+      components: [
+        buildFixtureComponent({
+          accessibility: {
+            summary: [],
+            rules: [],
+          },
+          related_docs: {
+            overview: "https://example.test/salt/fixture-action",
+            usage: null,
+            accessibility: null,
+            examples: null,
+          },
+        }),
+      ],
+      patterns: [
+        buildFixturePattern({
+          accessibility: {
+            summary: [],
+          },
+          examples: [],
+        }),
+      ],
+      tokens: [buildFixtureToken()],
+    });
+    const audit = buildContextCoverageAudit({
+      registry,
+      generated_at: GENERATED_AT,
+      generator: buildGenerator(),
+    });
+    const patternGap = audit.docs_registry_gaps.find(
+      (gap) =>
+        gap.kind === "pattern" &&
+        gap.id === "fixture-workflow" &&
+        gap.reason ===
+          "Pattern context omitted optional fields because registry or source-backed evidence is missing.",
+    );
+
+    expect(validateSaltContextCoverageAuditSchema(audit)).toEqual([]);
+    expect(patternGap).toEqual(
+      expect.objectContaining({
+        missing: ["pattern accessibility coverage"],
+        records: [
+          expect.objectContaining({
+            kind: "pattern",
+            id: "fixture-workflow.accessibility.missing_optional_evidence",
+            reason_code: "missing_optional_evidence",
+            reason:
+              "Registry pattern accessibility coverage is empty and no source-backed examples, implementation signals, or composed component accessibility evidence was found for generated context.",
+            missing: ["pattern accessibility coverage"],
+            evidence_ref_ids: [],
+          }),
+        ],
+      }),
+    );
+  });
+
+  it("treats composed fixture component accessibility evidence as pattern accessibility coverage", () => {
+    const registry = buildFixtureRegistry({
+      patterns: [
+        buildFixturePattern({
+          accessibility: {
+            summary: [],
+          },
+          examples: [],
+        }),
+      ],
+      tokens: [buildFixtureToken()],
+    });
+    const audit = buildContextCoverageAudit({
+      registry,
+      generated_at: GENERATED_AT,
+      generator: buildGenerator(),
+    });
+
+    expect(validateSaltContextCoverageAuditSchema(audit)).toEqual([]);
+    expect(
+      audit.docs_registry_gaps.flatMap((gap) => gap.missing),
+    ).not.toContain("pattern accessibility coverage");
   });
 
   it("records selected fixture pattern surface-gate fields without inventing guidance", () => {

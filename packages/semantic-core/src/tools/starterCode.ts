@@ -411,6 +411,7 @@ export function createRecipeStarterCode(input: {
   components: RecipeStarterComponent[];
   supporting_example?: SupportingStarterExample | null;
   starter_scaffold?: PatternStarterScaffold | null;
+  allow_generic_component_starter?: boolean;
 }): StarterCodeSnippet[] {
   const structuredScaffold = shouldUseStructuredScaffold(input.starter_scaffold)
     ? input.starter_scaffold
@@ -424,8 +425,18 @@ export function createRecipeStarterCode(input: {
     structuredScaffold?.template?.kind === "fallback-template"
       ? structuredScaffold.template
       : null;
+  const allowGenericComponentStarter =
+    input.allow_generic_component_starter ?? true;
 
-  if (input.components.length === 0 && !structuredScaffold) {
+  if (input.components.length === 0 && !structuredScaffold && !exampleBackedStarter) {
+    return [];
+  }
+
+  if (
+    !allowGenericComponentStarter &&
+    !exampleBackedStarter &&
+    !fallbackTemplate
+  ) {
     return [];
   }
 
@@ -480,6 +491,9 @@ export function createRecipeStarterCode(input: {
       source_urls: [
         ...(structuredScaffold?.source_urls ?? []),
         ...(structuredScaffold?.example_source_urls ?? []),
+        ...(exampleBackedStarter?.source_url
+          ? [exampleBackedStarter.source_url]
+          : []),
       ],
       notes: [
         ...(structuredScaffold?.source_urls?.length

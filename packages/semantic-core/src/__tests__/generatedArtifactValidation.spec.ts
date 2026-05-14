@@ -463,6 +463,67 @@ describe("generated artifact registry evidence validation", () => {
     ]);
   });
 
+  it("accepts fixture pattern accessibility implementation signal claims that point to documented registry fields", () => {
+    const issues = validateGeneratedArtifactRegistryEvidence(
+      buildArtifact({
+        kind: "accessibility",
+        entity_type: "pattern",
+        entity_id: "fixture-workflow",
+        field_path: "accessibility.implementation_signals.0",
+      }),
+      buildFixtureRegistry({
+        pattern: buildFixturePattern({
+          accessibility: {
+            summary: [],
+            implementation_signals: [
+              {
+                kind: "aria_attribute",
+                values: ["aria-label"],
+                source_kind: "example",
+                source_url: "https://example.test/salt/fixture-workflow/examples/basic",
+              },
+            ],
+          },
+        }),
+      }),
+    );
+
+    expect(issues).toEqual([]);
+  });
+
+  it("rejects generated context claims for undocumented fixture pattern accessibility implementation signals", () => {
+    const issues = validateGeneratedArtifactRegistryEvidence(
+      buildArtifact({
+        kind: "accessibility",
+        entity_type: "pattern",
+        entity_id: "fixture-workflow",
+        field_path: "accessibility.implementation_signals.99",
+      }),
+      buildFixtureRegistry({
+        pattern: buildFixturePattern({
+          accessibility: {
+            summary: [],
+            implementation_signals: [
+              {
+                kind: "aria_attribute",
+                values: ["aria-label"],
+                source_kind: "example",
+                source_url: "https://example.test/salt/fixture-workflow/examples/basic",
+              },
+            ],
+          },
+        }),
+      }),
+    );
+
+    expect(issues).toEqual([
+      expect.objectContaining({
+        code: "missing_registry_field",
+        path: "evidence_refs[0].registry.field_path",
+      }),
+    ]);
+  });
+
   it("rejects generated context claims for undocumented fixture tokens", () => {
     const issues = validateGeneratedArtifactRegistryEvidence(
       buildArtifact({

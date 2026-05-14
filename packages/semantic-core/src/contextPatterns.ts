@@ -63,8 +63,21 @@ export interface SaltContextPatternResource {
   evidence_ref_ids: string[];
 }
 
+export interface SaltContextPatternAccessibilitySignal {
+  kind: NonNullable<
+    PatternRecord["accessibility"]["implementation_signals"]
+  >[number]["kind"];
+  values: string[];
+  source_kind: NonNullable<
+    PatternRecord["accessibility"]["implementation_signals"]
+  >[number]["source_kind"];
+  source_url: string;
+  evidence_ref_ids: string[];
+}
+
 export interface SaltContextPatternAccessibility {
   summary: SaltContextPatternEvidenceText[];
+  implementation_signals: SaltContextPatternAccessibilitySignal[];
 }
 
 export interface SaltContextPatternExample {
@@ -130,6 +143,14 @@ function toPatternAccessibilitySourceRef(
   }
 
   return toPatternSourceRef(pattern);
+}
+
+function toPatternAccessibilitySignalSourceRef(
+  signal: NonNullable<
+    PatternRecord["accessibility"]["implementation_signals"]
+  >[number],
+): SaltEvidenceSourceRef | null {
+  return signal.source_url ? { url: signal.source_url } : null;
 }
 
 function toPatternExampleSourceRef(
@@ -252,6 +273,25 @@ function pushIndexedTextClaims(input: {
       ),
     );
   });
+}
+
+function formatPatternAccessibilitySignal(
+  pattern: PatternRecord,
+  signal: NonNullable<
+    PatternRecord["accessibility"]["implementation_signals"]
+  >[number],
+): string {
+  const signalLabel =
+    signal.kind === "aria_attribute"
+      ? "ARIA attributes"
+      : signal.kind === "aria_role"
+        ? "ARIA roles"
+        : signal.kind === "aria_announcement"
+          ? "ARIA announcement APIs"
+          : "semantic HTML elements";
+  const sourceLabel = signal.source_kind === "example" ? "examples" : "source";
+
+  return `${pattern.name} ${sourceLabel} expose ${signalLabel}: ${signal.values.join(", ")}.`;
 }
 
 function findClaimByFieldPath(
@@ -385,6 +425,32 @@ function toContextExamples(
       },
     ];
   });
+}
+
+function toContextAccessibilitySignals(
+  pattern: PatternRecord,
+  artifact: SaltGeneratedArtifact,
+): SaltContextPatternAccessibilitySignal[] {
+  return (pattern.accessibility.implementation_signals ?? []).flatMap(
+    (signal, index) => {
+      const claim = findClaimByFieldPath(
+        artifact,
+        `accessibility.implementation_signals.${index}`,
+      );
+
+      return claim
+        ? [
+            {
+              kind: signal.kind,
+              values: signal.values,
+              source_kind: signal.source_kind,
+              source_url: signal.source_url,
+              evidence_ref_ids: claim.evidence_ref_ids,
+            },
+          ]
+        : [];
+    },
+  );
 }
 
 export function buildPatternContextArtifact(
@@ -584,6 +650,48 @@ export function buildPatternContextArtifact(
     });
   }
 
+  (pattern.accessibility.implementation_signals ?? []).forEach(
+    (signal, index) => {
+      const fieldPath = `accessibility.implementation_signals.${index}`;
+      const signalSourceRef = toPatternAccessibilitySignalSourceRef(signal);
+
+      if (
+        !hasText(signal.kind) ||
+        signal.values.length === 0 ||
+        !signal.values.every(hasText) ||
+        !hasText(signal.source_kind) ||
+        !signalSourceRef
+      ) {
+        pushUnsupported(
+          unsupportedClaims,
+          pattern,
+          fieldPath,
+          "accessibility",
+          "Registry pattern accessibility implementation signal is missing kind, values, source kind, or source locator.",
+        );
+        return;
+      }
+
+      pushClaim(
+        claims,
+        evidenceRefs,
+        {
+          id: `${pattern.id}.accessibility.implementation_signals.${index}`,
+          kind: "accessibility",
+          text: formatPatternAccessibilitySignal(pattern, signal),
+          field_path: fieldPath,
+        },
+        buildPatternEvidenceRef(
+          input,
+          `${pattern.id}.accessibility.implementation_signals.${index}.ref`,
+          "accessibility",
+          fieldPath,
+          signalSourceRef,
+        ),
+      );
+    },
+  );
+
   for (const [index, resource] of pattern.resources.entries()) {
     if (!hasText(resource.label) || !hasText(resource.href)) {
       pushUnsupported(
@@ -740,6 +848,10 @@ export function buildPatternContext(
           artifact,
           "accessibility.summary",
           input.pattern.accessibility.summary,
+        ),
+        implementation_signals: toContextAccessibilitySignals(
+          input.pattern,
+          artifact,
         ),
       },
       resources: toContextResources(input.pattern, artifact),

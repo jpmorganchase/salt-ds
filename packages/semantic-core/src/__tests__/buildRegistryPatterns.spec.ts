@@ -3,14 +3,13 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  derivePatternImplementationAccessibilitySummaries,
-  derivePatternExampleAccessibilitySummaries,
+  derivePatternImplementationAccessibilitySignals,
+  derivePatternExampleAccessibilitySignals,
   extractPatterns,
 } from "../build/buildRegistryPatterns.js";
 import { buildPatternContext } from "../contextPatterns.js";
 import { validateGeneratedArtifactEvidence } from "../evidence.js";
 import { validateGeneratedArtifactRegistryEvidence } from "../generatedArtifactValidation.js";
-import { buildPatternValidationRulePack } from "../patternValidationRulePacks.js";
 import type { PatternRecord, SaltRegistry } from "../types.js";
 
 // All Salt-looking strings in this file are intentionally tiny fixture facts.
@@ -546,7 +545,7 @@ Fixture actions remain easily accessible from any fixture page.
     }
   });
 
-  it("derives fixture accessibility summaries from source-backed story ARIA attributes", async () => {
+  it("derives fixture accessibility implementation signals from source-backed story ARIA attributes without promoting them to guidance", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-story-accessibility-fixture-"),
     );
@@ -602,20 +601,18 @@ export const FixtureStory = () => (
         },
       ];
 
-      const accessibilitySummaries =
-        derivePatternExampleAccessibilitySummaries(pattern);
-      pattern.accessibility.summary = accessibilitySummaries.map(
-        (summary) => summary.value,
-      );
-      pattern.accessibility.summary_sources = accessibilitySummaries.map(
-        (summary, index) => ({
-          field_path: `accessibility.summary.${index}`,
-          source_url: summary.source_url,
-        }),
-      );
+      const accessibilitySignals =
+        derivePatternExampleAccessibilitySignals(pattern);
+      pattern.accessibility.implementation_signals = accessibilitySignals;
 
-      expect(pattern.accessibility.summary).toEqual([
-        "Fixture flow examples declare ARIA attributes: aria-hidden, aria-label.",
+      expect(pattern.accessibility.summary).toEqual([]);
+      expect(pattern.accessibility.implementation_signals).toEqual([
+        {
+          kind: "aria_attribute",
+          values: ["aria-hidden", "aria-label"],
+          source_kind: "example",
+          source_url: storySource,
+        },
       ]);
 
       const registry = buildFixtureRegistry(pattern);
@@ -627,34 +624,37 @@ export const FixtureStory = () => (
         registry_hash: "fixture-registry-hash",
       });
       const accessibilityClaim = context.generated_artifact.claims.find(
-        (claim) => claim.field_path === "accessibility.summary.0",
+        (claim) =>
+          claim.field_path === "accessibility.implementation_signals.0",
       );
       const accessibilityEvidenceRef = context.evidence_refs.find(
         (ref) => ref.id === accessibilityClaim?.evidence_ref_ids[0],
       );
-      const rulePack = buildPatternValidationRulePack({
-        registry,
-        generated_at: GENERATED_AT,
-        generator: GENERATOR,
-        registry_hash: "fixture-registry-hash",
-      });
-      const accessibilityRule = rulePack.rules.find(
-        (rule) => rule.field_path === "accessibility.summary.0",
-      );
 
       expect(context.status).toBe("validated");
+      expect(context.pattern.accessibility.summary).toEqual([]);
+      expect(context.pattern.accessibility.implementation_signals).toEqual([
+        expect.objectContaining({
+          kind: "aria_attribute",
+          values: ["aria-hidden", "aria-label"],
+          source_kind: "example",
+          source_url: storySource,
+          evidence_ref_ids: [expect.any(String)],
+        }),
+      ]);
+      expect(accessibilityClaim).toEqual(
+        expect.objectContaining({
+          kind: "accessibility",
+          text: "Fixture flow examples expose ARIA attributes: aria-hidden, aria-label.",
+          evidence_ref_ids: [expect.any(String)],
+        }),
+      );
       expect(accessibilityEvidenceRef).toEqual(
         expect.objectContaining({
           source: { url: storySource },
           registry: expect.objectContaining({
-            field_path: "accessibility.summary.0",
+            field_path: "accessibility.implementation_signals.0",
           }),
-        }),
-      );
-      expect(accessibilityRule).toEqual(
-        expect.objectContaining({
-          canonical_source: storySource,
-          source_urls: [storySource],
         }),
       );
       expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
@@ -671,7 +671,7 @@ export const FixtureStory = () => (
     }
   });
 
-  it("derives fixture accessibility summaries from source-backed story semantic elements", async () => {
+  it("derives fixture accessibility implementation signals from source-backed story semantic elements", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-story-semantic-fixture-"),
     );
@@ -727,12 +727,14 @@ export const FixtureStory = () => (
         },
       ];
 
-      const accessibilitySummaries =
-        derivePatternExampleAccessibilitySummaries(pattern);
+      const accessibilitySignals =
+        derivePatternExampleAccessibilitySignals(pattern);
 
-      expect(accessibilitySummaries).toEqual([
+      expect(accessibilitySignals).toEqual([
         {
-          value: "Fixture flow examples use semantic HTML elements: nav.",
+          kind: "semantic_element",
+          values: ["nav"],
+          source_kind: "example",
           source_url: storySource,
         },
       ]);
@@ -741,7 +743,7 @@ export const FixtureStory = () => (
     }
   });
 
-  it("derives fixture accessibility summaries from source-backed implementation code and preserves EvidenceRefs", async () => {
+  it("derives fixture accessibility implementation signals from source-backed implementation code and preserves EvidenceRefs", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-source-accessibility-fixture-"),
     );
@@ -795,26 +797,34 @@ export function FixtureFlow() {
 
       const patterns = await extractPatterns(repoRoot, GENERATED_AT);
       const pattern = patterns[0];
-      const accessibilitySummaries =
-        await derivePatternImplementationAccessibilitySummaries(
+      const accessibilitySignals =
+        await derivePatternImplementationAccessibilitySignals(
           repoRoot,
           pattern,
         );
 
-      pattern.accessibility.summary = accessibilitySummaries.map(
-        (summary) => summary.value,
-      );
-      pattern.accessibility.summary_sources = accessibilitySummaries.map(
-        (summary, index) => ({
-          field_path: `accessibility.summary.${index}`,
-          source_url: summary.source_url,
-        }),
-      );
+      pattern.accessibility.implementation_signals = accessibilitySignals;
 
-      expect(pattern.accessibility.summary).toEqual([
-        "Fixture flow source declares ARIA attributes: aria-labelledby.",
-        "Fixture flow source declares ARIA roles: region.",
-        "Fixture flow source uses ARIA announcements.",
+      expect(pattern.accessibility.summary).toEqual([]);
+      expect(pattern.accessibility.implementation_signals).toEqual([
+        {
+          kind: "aria_attribute",
+          values: ["aria-labelledby"],
+          source_kind: "source",
+          source_url: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
+        },
+        {
+          kind: "aria_role",
+          values: ["region"],
+          source_kind: "source",
+          source_url: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
+        },
+        {
+          kind: "aria_announcement",
+          values: ["useAriaAnnouncer"],
+          source_kind: "source",
+          source_url: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
+        },
       ]);
 
       const registry = buildFixtureRegistry(pattern);
@@ -826,7 +836,8 @@ export function FixtureFlow() {
         registry_hash: "fixture-registry-hash",
       });
       const accessibilityClaim = context.generated_artifact.claims.find(
-        (claim) => claim.field_path === "accessibility.summary.0",
+        (claim) =>
+          claim.field_path === "accessibility.implementation_signals.0",
       );
       const accessibilityEvidenceRef = context.evidence_refs.find(
         (ref) => ref.id === accessibilityClaim?.evidence_ref_ids[0],
@@ -839,7 +850,7 @@ export function FixtureFlow() {
             url: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
           },
           registry: expect.objectContaining({
-            field_path: "accessibility.summary.0",
+            field_path: "accessibility.implementation_signals.0",
           }),
         }),
       );
@@ -857,7 +868,7 @@ export function FixtureFlow() {
     }
   });
 
-  it("does not derive fixture accessibility summaries from focus-only story code", async () => {
+  it("does not derive fixture accessibility implementation signals from focus-only story code", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-focus-only-story-fixture-"),
     );
@@ -911,10 +922,10 @@ export const FixtureStory = () => (
         },
       ];
 
-      const accessibilitySummaries =
-        derivePatternExampleAccessibilitySummaries(pattern);
+      const accessibilitySignals =
+        derivePatternExampleAccessibilitySignals(pattern);
 
-      expect(accessibilitySummaries).toEqual([]);
+      expect(accessibilitySignals).toEqual([]);
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }
