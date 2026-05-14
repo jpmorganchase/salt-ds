@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 8
+  version: 9
   cacheKey: 10
 
 "@adobe/css-tools@npm:^4.4.0":
@@ -4242,6 +4242,15 @@ __metadata:
     vite-tsconfig-paths: "npm:^5.1.4"
     vitest: "npm:^4.0.0"
     yup: "npm:^1.7.1"
+  dependenciesMeta:
+    cypress:
+      built: true
+    esbuild:
+      built: true
+    msw:
+      built: true
+    sharp:
+      built: true
   languageName: unknown
   linkType: soft
 

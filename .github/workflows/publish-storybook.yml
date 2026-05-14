@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      actions: read
-      deployments: write
-      pull-requests: read
-      statuses: write
+      actions: read # Needed to download the Storybook build artifact from the triggering run.
+      deployments: write # Needed by Cloudflare Pages deployment integration.
+      pull-requests: read # Needed to resolve PR metadata for preview branch naming.
+      statuses: write # Needed to publish the Storybook commit status.
 
     name: Deploy Storybook to Cloudflare Pages
     steps:
@@ -94,7 +94,6 @@ jobs:
             const pullRequest = await getPullRequest();
             const branchName = pullRequest ? pullRequest.head.label : workflowRun.head_branch;
             const deploymentBranch = pullRequest ? `pr-${pullRequest.number}` : workflowRun.head_branch;
-
             core.setOutput("branchName", branchName);
             core.setOutput("deploymentBranch", deploymentBranch);
             core.setOutput("headSha", workflowRun.head_sha);
@@ -110,8 +109,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: "Delete stats.json if it exists"
-        run: rm -f "$STORYBOOK_STATIC_DIR/preview-stats.json"
+      - name: "Remove non-static preview files"
+        run: rm -rf "$STORYBOOK_STATIC_DIR/preview-stats.json" "$STORYBOOK_STATIC_DIR/_worker.js" "$STORYBOOK_STATIC_DIR/_routes.json" "$STORYBOOK_STATIC_DIR/functions"
         env:
           STORYBOOK_STATIC_DIR: ${{ runner.temp }}/storybook-static
 
