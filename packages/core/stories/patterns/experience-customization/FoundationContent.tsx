@@ -13,10 +13,10 @@ import {
   RadioButtonIcon,
   StackLayout,
   Text,
+  useAriaAnnouncer,
   useId,
   useTheme,
 } from "@salt-ds/core";
-import { clsx } from "clsx";
 import { type Ref, useEffect, useRef } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
@@ -25,6 +25,9 @@ import LowDensityTable from "./img/table-low.png";
 import LowDensityTableDark from "./img/table-low-dark.png";
 import MediumDensityTable from "./img/table-medium.png";
 import MediumDensityTableDark from "./img/table-medium-dark.png";
+
+const HIGH_DENSITY_WARNING_MESSAGE =
+  "Warning: High density doesn't meet the WCAG-defined minimum target size, which may reduce readability and make interactions harder. (link provided in warning message above)";
 
 const displayDensityOptions = [
   {
@@ -65,12 +68,38 @@ export const FoundationContent = ({
   const warningBannerId = useId();
   const errorBannerId = useId();
   const requiredDisclaimerField = useRef<HTMLDivElement>(null);
+  const previousDisplayDensity = useRef<string>();
+
+  const { announce } = useAriaAnnouncer();
 
   useEffect(() => {
     if (stepFieldValidation.acceptTerms?.status) {
       requiredDisclaimerField.current?.scrollIntoView();
     }
-  }, [stepFieldValidation.acceptTerms?.status]);
+
+    if (stepFieldValidation.acceptTerms?.message) {
+      announce(stepFieldValidation.acceptTerms.message, {
+        ariaLive: "assertive",
+      });
+    }
+  }, [
+    stepFieldValidation.acceptTerms?.status,
+    stepFieldValidation.acceptTerms?.message,
+    announce,
+  ]);
+
+  useEffect(() => {
+    if (
+      formData.displayDensity === "high" &&
+      previousDisplayDensity.current !== "high"
+    ) {
+      announce(HIGH_DENSITY_WARNING_MESSAGE, {
+        ariaLive: "assertive",
+      });
+    }
+
+    previousDisplayDensity.current = formData.displayDensity;
+  }, [formData.displayDensity, announce]);
 
   return (
     <StackLayout>
@@ -117,18 +146,12 @@ export const FoundationContent = ({
                       ? initialFocusRef
                       : undefined
                   }
-                  aria-describedby={
-                    clsx(
-                      formData.displayDensity === "high" && warningBannerId,
-                      stepFieldValidation.displayDensity?.status &&
-                        errorBannerId,
-                    ) || undefined
-                  }
                 >
                   <StackLayout gap={1}>
                     <img
                       src={mode === "dark" ? option.darkImage : option.image}
                       alt=""
+                      aria-hidden
                       style={{
                         height: 200,
                         width: "100%",
