@@ -142,7 +142,7 @@ export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
     </ToolbarContent>
     <ToolbarContent position="center">
       <TooltrayNext overflowMode="none" role="group" aria-label="Centered">
-        <Button style={{ width: 140 }}>Center action</Button>
+        <Button style={{ width: 180 }}>Center action</Button>
       </TooltrayNext>
     </ToolbarContent>
     <ToolbarContent position="end">
@@ -157,7 +157,7 @@ export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
         <Button appearance="transparent" style={{ width: 180 }}>
           End primary
         </Button>
-        <Button appearance="transparent" style={{ width: 120 }}>
+        <Button appearance="transparent" style={{ width: 180 }}>
           End secondary
         </Button>
       </TooltrayNext>
@@ -421,7 +421,6 @@ export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
         Filters
       </Button>
     </TooltrayNext>
-    <Divider orientation="vertical" variant="secondary" />
     <TooltrayNext
       align="end"
       aria-label="Actions"
