@@ -31,6 +31,7 @@ import { loadPropMetadata } from "./buildRegistryDocgen.js";
 import { extractGuides, extractPages } from "./buildRegistryDocs.js";
 import {
   createPatternNameBySlug,
+  derivePatternImplementationAccessibilitySummaries,
   derivePatternExampleAccessibilitySummaries,
   extractPatternExamplesFromStories,
   extractPatterns,
@@ -107,8 +108,17 @@ export async function buildRegistry(
   }
 
   for (const pattern of enrichedPatternMap.values()) {
-    const accessibilitySummaries =
-      derivePatternExampleAccessibilitySummaries(pattern);
+    let accessibilitySummaries = derivePatternExampleAccessibilitySummaries(
+      pattern,
+    );
+    if (accessibilitySummaries.length === 0) {
+      accessibilitySummaries =
+        await derivePatternImplementationAccessibilitySummaries(
+          sourceRoot,
+          pattern,
+        );
+    }
+
     if (accessibilitySummaries.length === 0) {
       continue;
     }
