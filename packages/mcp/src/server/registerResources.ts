@@ -5,6 +5,7 @@ import {
 import {
   buildComponentContextMarkdownBridge,
   buildContextCoverageAudit,
+  buildContextCoverageGapCatalog,
   buildContextPackBundleReleaseGate,
   buildGeneratedContextManifestHealth,
   buildSaltAiEvidenceClosureReport,
@@ -40,6 +41,7 @@ import {
   SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI,
   SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI,
   SALT_MCP_CONTEXT_COVERAGE_URI,
+  SALT_MCP_CONTEXT_GAP_CATALOG_URI,
   SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
   SALT_MCP_CONTEXT_HEALTH_URI,
   SALT_MCP_CONTEXT_MANIFEST_URI,
@@ -74,11 +76,16 @@ export function registerSaltResources(
     2,
   );
   const contextManifestText = JSON.stringify(contextManifest, null, 2);
-  const contextCoverageText = JSON.stringify(
-    buildContextCoverageAudit({
-      registry,
+  const contextCoverage = buildContextCoverageAudit({
+    registry,
+    generated_at: registry.generated_at,
+    generator: buildContextResourceGenerator(registry),
+  });
+  const contextCoverageText = JSON.stringify(contextCoverage, null, 2);
+  const contextGapCatalogText = JSON.stringify(
+    buildContextCoverageGapCatalog({
+      audit: contextCoverage,
       generated_at: registry.generated_at,
-      generator: buildContextResourceGenerator(registry),
     }),
     null,
     2,
@@ -233,6 +240,26 @@ export function registerSaltResources(
           uri: uri.toString(),
           mimeType: "application/json",
           text: contextCoverageText,
+        },
+      ],
+    }),
+  );
+
+  server.registerResource(
+    "salt_context_gap_catalog",
+    SALT_MCP_CONTEXT_GAP_CATALOG_URI,
+    {
+      title: "Salt Generated Context Gap Catalog",
+      description:
+        "Machine-readable cause-coded docs and registry gaps for Salt generated context coverage.",
+      mimeType: "application/json",
+    },
+    async (uri) => ({
+      contents: [
+        {
+          uri: uri.toString(),
+          mimeType: "application/json",
+          text: contextGapCatalogText,
         },
       ],
     }),

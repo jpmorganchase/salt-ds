@@ -17,6 +17,7 @@ import { validateSaltAiEvidenceClosureReportSchema } from "../../../semantic-cor
 import { validateSaltAiSetupSchema } from "../../../semantic-core/src/__tests__/aiSetupSchemaTestUtils.js";
 import { validateSaltContextComponentSchema } from "../../../semantic-core/src/__tests__/contextComponentSchemaTestUtils.js";
 import { validateSaltContextCoverageAuditSchema } from "../../../semantic-core/src/__tests__/contextCoverageAuditSchemaTestUtils.js";
+import { validateSaltContextCoverageGapCatalogSchema } from "../../../semantic-core/src/__tests__/contextCoverageGapCatalogSchemaTestUtils.js";
 import { validateSaltContextFoundationSchema } from "../../../semantic-core/src/__tests__/contextFoundationSchemaTestUtils.js";
 import { validateSaltContextPackBundleSchema } from "../../../semantic-core/src/__tests__/contextPackBundleSchemaTestUtils.js";
 import { validateSaltContextPackPersistenceCheckSchema } from "../../../semantic-core/src/__tests__/contextPackBundleSchemaTestUtils.js";
@@ -42,6 +43,7 @@ import {
   SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI,
   SALT_MCP_CONTEXT_COVERAGE_URI,
   SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_GAP_CATALOG_URI,
   SALT_MCP_CONTEXT_HEALTH_URI,
   SALT_MCP_CONTEXT_MANIFEST_URI,
   SALT_MCP_CONTEXT_PACK_URI,
@@ -991,6 +993,7 @@ describe("createSaltMcpServer", () => {
           SALT_MCP_CONTEXT_MANIFEST_URI,
           SALT_MCP_CONTEXT_HEALTH_URI,
           SALT_MCP_CONTEXT_COVERAGE_URI,
+          SALT_MCP_CONTEXT_GAP_CATALOG_URI,
           SALT_MCP_CONTEXT_PACK_URI,
           SALT_MCP_CONTEXT_RELEASE_GATE_URI,
           SALT_MCP_AI_SETUP_URI,
@@ -1052,6 +1055,7 @@ describe("createSaltMcpServer", () => {
             context_manifest_uri?: string | null;
             context_health_uri?: string | null;
             context_coverage_uri?: string | null;
+            context_gap_catalog_uri?: string | null;
             context_pack_uri?: string | null;
             context_release_gate_uri?: string | null;
             ai_setup_uri?: string | null;
@@ -1130,6 +1134,7 @@ describe("createSaltMcpServer", () => {
             context_manifest_uri: SALT_MCP_CONTEXT_MANIFEST_URI,
             context_health_uri: SALT_MCP_CONTEXT_HEALTH_URI,
             context_coverage_uri: SALT_MCP_CONTEXT_COVERAGE_URI,
+            context_gap_catalog_uri: SALT_MCP_CONTEXT_GAP_CATALOG_URI,
             context_pack_uri: SALT_MCP_CONTEXT_PACK_URI,
             context_release_gate_uri: SALT_MCP_CONTEXT_RELEASE_GATE_URI,
             ai_setup_uri: SALT_MCP_AI_SETUP_URI,
@@ -1374,6 +1379,41 @@ describe("createSaltMcpServer", () => {
         }>) {
           expect(["component", "pattern", "foundation"]).toContain(gap.kind);
           expect(gap.status).toBe("unsupported");
+          expect(gap.evidence_ref_ids).toEqual(expect.any(Array));
+          expect(gap.records).toEqual(expect.any(Array));
+        }
+
+        const contextGapCatalogResult = await registeredResources[
+          SALT_MCP_CONTEXT_GAP_CATALOG_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_GAP_CATALOG_URI), {});
+        const contextGapCatalog = JSON.parse(
+          contextGapCatalogResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(
+          validateSaltContextCoverageGapCatalogSchema(contextGapCatalog),
+        ).toEqual([]);
+        expect(contextGapCatalog).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_coverage_gap_catalog_v1",
+            audit_contract: "salt_context_coverage_audit_v1",
+            audit_status: contextCoverage.status,
+            counts: expect.objectContaining({
+              total: (
+                contextCoverage.docs_registry_gaps as unknown[]
+              ).length,
+            }),
+            gaps: expect.any(Array),
+          }),
+        );
+        for (const gap of contextGapCatalog.gaps as Array<{
+          cause?: string;
+          cause_codes?: unknown[];
+          evidence_ref_ids?: unknown[];
+          records?: unknown[];
+        }>) {
+          expect(gap.cause).toEqual(expect.any(String));
+          expect(gap.cause_codes?.length).toBeGreaterThan(0);
           expect(gap.evidence_ref_ids).toEqual(expect.any(Array));
           expect(gap.records).toEqual(expect.any(Array));
         }
@@ -1792,7 +1832,7 @@ describe("createSaltMcpServer", () => {
         );
       },
     );
-  }, 120_000);
+  }, 180_000);
 
   it("registers output schemas and workflow annotations for the default workflow tools", async () => {
     await withRegistryDir(

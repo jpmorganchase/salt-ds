@@ -6,11 +6,13 @@ import {
   buildComponentContextMarkdownBridge,
   buildComponentContextMarkdownManifestEntry,
   buildContextCoverageAudit,
+  buildContextCoverageGapCatalog,
   buildContextPackManifest,
   buildDefaultContextPackCoverageGaps,
   buildDefaultPromptHostInstructionSurfaces,
   DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
   DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
+  formatContextCoverageGapCatalogMarkdown,
   checkComponentContextMarkdownBridge,
   buildFoundationContext,
   buildFoundationContextManifestEntry,
@@ -779,6 +781,71 @@ async function writeContextCoverageAudit(input: {
   return audit.status === "validated" ? 0 : 10;
 }
 
+async function writeContextGapCatalog(input: {
+  registry: SaltRegistry;
+  flags: Record<string, string>;
+  io: RequiredCliIo;
+}): Promise<number> {
+  const format = input.flags.format?.trim() ?? "json";
+  if (format !== "json" && format !== "markdown") {
+    input.io.writeStderr(
+      "Unsupported --format for --gap-catalog. Use json or markdown.\n",
+    );
+    return 30;
+  }
+
+  const runtime = getSaltCliRuntimeMetadata();
+  const generatedAt = new Date().toISOString();
+  const audit = buildContextCoverageAudit({
+    registry: input.registry,
+    generated_at: generatedAt,
+    generator: {
+      name: "salt-ds export-context",
+      version: runtime.cli_version,
+    },
+  });
+  const catalog = buildContextCoverageGapCatalog({
+    audit,
+    generated_at: generatedAt,
+  });
+  const outputPath = input.flags.output
+    ? path.resolve(input.io.cwd, input.flags.output)
+    : null;
+
+  if (outputPath) {
+    if (format === "markdown") {
+      await fs.mkdir(path.dirname(outputPath), { recursive: true });
+      await fs.writeFile(
+        outputPath,
+        formatContextCoverageGapCatalogMarkdown(catalog),
+        "utf8",
+      );
+    } else {
+      await writeJsonFile(outputPath, catalog);
+    }
+  }
+
+  if (format === "markdown") {
+    input.io.writeStdout(formatContextCoverageGapCatalogMarkdown(catalog));
+  } else if (input.flags.json === "true") {
+    input.io.writeStdout(`${JSON.stringify(catalog, null, 2)}\n`);
+  } else {
+    input.io.writeStdout(
+      [
+        "Salt Context Coverage Gap Catalog",
+        `Status: ${catalog.audit_status}`,
+        `Total gaps: ${catalog.counts.total}`,
+        `Component gaps: ${catalog.counts.component}`,
+        `Pattern gaps: ${catalog.counts.pattern}`,
+        `Foundation gaps: ${catalog.counts.foundation}`,
+        "",
+      ].join("\n"),
+    );
+  }
+
+  return catalog.counts.total === 0 ? 0 : 10;
+}
+
 async function checkGeneratedArtifactReleaseGate(input: {
   registry: SaltRegistry;
   artifactPath: string;
@@ -905,6 +972,7 @@ export async function runExportContextCommand(
   const packCheckRequested =
     !componentTarget && Boolean(manifestPath) && flags.check === "true";
   const coverageAuditRequested = flags.coverage === "true";
+  const gapCatalogRequested = flags["gap-catalog"] === "true";
   const releaseGatePath = flags["release-gate"];
   const releaseGateRequested = Boolean(releaseGatePath);
 
@@ -913,10 +981,11 @@ export async function runExportContextCommand(
     !packExportRequested &&
     !packCheckRequested &&
     !coverageAuditRequested &&
+    !gapCatalogRequested &&
     !releaseGateRequested
   ) {
     io.writeStderr(
-      "Missing component target. Use `salt-ds export-context --component <name-or-id> --json`, `salt-ds export-context --manifest --json`, `salt-ds export-context --coverage --json`, or `salt-ds export-context --release-gate <artifact.json> --json`.\n",
+      "Missing component target. Use `salt-ds export-context --component <name-or-id> --json`, `salt-ds export-context --manifest --json`, `salt-ds export-context --coverage --json`, `salt-ds export-context --gap-catalog --json`, or `salt-ds export-context --release-gate <artifact.json> --json`.\n",
     );
     return 30;
   }
@@ -951,6 +1020,14 @@ export async function runExportContextCommand(
 
     if (coverageAuditRequested) {
       return await writeContextCoverageAudit({
+        registry,
+        flags,
+        io,
+      });
+    }
+
+    if (gapCatalogRequested) {
+      return await writeContextGapCatalog({
         registry,
         flags,
         io,
