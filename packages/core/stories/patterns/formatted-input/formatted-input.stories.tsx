@@ -1,4 +1,5 @@
 import {
+  FlexLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
@@ -137,6 +138,14 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     "Enter your phone number, including the country code and area code.";
   const [helperText, setHelperText] = useState(defaultHelperText);
 
+  const [phoneNumber2, setPhoneNumber2] = useState("");
+  const [displayValue2, setDisplayValue2] = useState("");
+  const [preview2, setPreview2] = useState("");
+  const [validationStatus2, setValidationStatus2] = useState<"error" | undefined>(
+    undefined,
+  );
+  const [helperText2, setHelperText2] = useState(defaultHelperText);
+
   const formatPhoneNumber = (cleaned: string) => {
     if (cleaned.length === 0) {
       return "";
@@ -188,6 +197,13 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     setPhoneNumber(value);
     const normalized = value.replace(/\D/g, "");
 
+    const hasInvalidChars = /[^0-9()\s-]/.test(value);
+    if (hasInvalidChars) {
+      handleValidation("error", "Remove letters and symbols—Only numbers and () - are allowed");
+      setPreview("");
+      return;
+    }
+
     if (normalized.length === 0) {
       setDisplayValue("");
       handleValidation(undefined, defaultHelperText);
@@ -213,38 +229,126 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     }
   };
 
+  const handleChange2 = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDisplayValue2(value);
+
+    const hasInvalidChars = /[^0-9()\s-]/.test(value);
+    if (hasInvalidChars) {
+      setValidationStatus2("error");
+      setHelperText2("Only numbers and () - are allowed");
+      setPreview2("");
+    } else {
+      setValidationStatus2(undefined);
+      setHelperText2(defaultHelperText);
+      setPreview2(generatePreview(value));
+    }
+  };
+
+  const handleBlur2 = (e: FocusEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPhoneNumber2(value);
+    const normalized = value.replace(/\D/g, "");
+
+    const hasInvalidChars = /[^0-9()\s-]/.test(value);
+    if (hasInvalidChars) {
+      setValidationStatus2("error");
+      setHelperText2("Remove letters and symbols—Only numbers and () - are allowed");
+      setPreview2("");
+      return;
+    }
+
+    if (normalized.length === 0) {
+      setDisplayValue2("");
+      setValidationStatus2(undefined);
+      setHelperText2(defaultHelperText);
+      setPreview2("");
+    } else if (normalized.length === 10) {
+      const formatted = formatPhoneNumber(normalized);
+      setDisplayValue2(formatted);
+      setValidationStatus2(undefined);
+      setHelperText2(defaultHelperText);
+      setPreview2("");
+    } else {
+      setValidationStatus2("error");
+      setHelperText2(
+        "Please enter a valid phone number, including country and area code.",
+      );
+      setPreview2("");
+    }
+  };
+
+  const handleFocus2 = () => {
+    if (phoneNumber2) {
+      setDisplayValue2(phoneNumber2);
+      setPreview2(generatePreview(phoneNumber2));
+    }
+  };
+
   return (
-    <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
-      <StackLayout
-        direction="row"
-        align="center"
-        gap={1}
-        style={{ justifyContent: "space-between" }}
-      >
-        <FormFieldLabel>Phone number</FormFieldLabel>
-        {preview && (
-          <Text styleAs="label" color="secondary">
-            {preview}
-          </Text>
-        )}
-      </StackLayout>
-      <Input
-        value={displayValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholder="(123) 456-7890"
-        aria-describedby="phone-with-preview-helper-text"
-        bordered
-      />
+    <FlexLayout direction="column" align="start" gap={2}>
+      <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
+        <StackLayout
+          direction="row"
+          align="center"
+          gap={1}
+          style={{ justifyContent: "space-between" }}
+        >
+          <FormFieldLabel>Phone number</FormFieldLabel>
+          {preview && (
+            <Text styleAs="label" color="secondary">
+              {preview}
+            </Text>
+          )}
+        </StackLayout>
+        <Input
+          value={displayValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          placeholder="(123) 456-7890"
+          aria-describedby="phone-with-preview-helper-text"
+          bordered
+        />
+        <FormFieldHelperText
+          id="phone-with-preview-helper-text"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          {helperText}
+        </FormFieldHelperText>
+      </FormField>
+      <FormField validationStatus={validationStatus2}>
+      <FormFieldLabel>Phone number with preview on right</FormFieldLabel>
+      <FlexLayout direction="row" align="center" gap={1.5}>
+        <Input
+          value={displayValue2}
+          onChange={handleChange2}
+          onBlur={handleBlur2}
+          onFocus={handleFocus2}
+          placeholder="(123) 456-7890"
+          aria-describedby="phone-with-right-preview-helper-text"
+          bordered
+          style={{ width: "300px" }}
+        />
+        <Text
+          styleAs="label"
+          color="secondary"
+          style={{ minWidth: "150px", visibility: preview2 ? "visible" : "hidden" }}
+        >
+          {preview2}
+        </Text>
+      </FlexLayout>
       <FormFieldHelperText
-        id="phone-with-preview-helper-text"
+        id="phone-with-right-preview-helper-text"
         aria-live="assertive"
         aria-atomic="true"
+        style={{ maxWidth: "300px" }}
       >
-        {helperText}
+        {helperText2}
       </FormFieldHelperText>
     </FormField>
+    </FlexLayout>
   );
 };
 
