@@ -188,8 +188,14 @@ function useCommentForm(initialData: Comment[] = initialComments) {
 // --- Stories ---
 
 export const Default = () => {
-  const { inputRef, inputValue, validationStatus, comments, handleSubmit, handleChange } =
-    useCommentForm();
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm();
 
   return (
     <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
@@ -228,8 +234,14 @@ export const Default = () => {
 };
 
 export const WithAvatar = () => {
-  const { inputRef, inputValue, validationStatus, comments, handleSubmit, handleChange } =
-    useCommentForm();
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm();
 
   return (
     <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
@@ -278,8 +290,14 @@ export const WithAvatar = () => {
 };
 
 export const WithCategoricalAvatar = () => {
-  const { inputRef, inputValue, validationStatus, comments, handleSubmit, handleChange } =
-    useCommentForm();
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm();
 
   return (
     <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
@@ -328,8 +346,14 @@ export const WithCategoricalAvatar = () => {
 };
 
 export const WithEmptyState = () => {
-  const { inputRef, inputValue, validationStatus, comments, handleSubmit, handleChange } =
-    useCommentForm([]);
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm([]);
 
   return (
     <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
@@ -375,11 +399,7 @@ export const WithEmptyState = () => {
           style={{ padding: "var(--salt-spacing-300) 0" }}
         >
           <StatusIndicator status="info" size={2} aria-hidden="true" />
-          <StackLayout
-            gap={1}
-            align="center"
-            style={{ textAlign: "center" }}
-          >
+          <StackLayout gap={1} align="center" style={{ textAlign: "center" }}>
             <Text styleAs="h4">
               <strong>Be the first to comment</strong>
             </Text>
