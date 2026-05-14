@@ -1281,7 +1281,7 @@ export async function extractPatterns(
       );
     }
     const whenToUse = parseSectionStatements(parsed.content, "When to use");
-    const whenNotToUse = parseSectionStatements(
+    const explicitWhenNotToUse = parseSectionStatements(
       parsed.content,
       "When not to use",
     );
@@ -1294,6 +1294,10 @@ export async function extractPatterns(
         ? explicitHowItWorks
         : extractPatternBehaviorStatements(title, parsed.content);
     const structuredGuidance = parseStructuredGuidanceCallouts(parsed.content);
+    const whenNotToUse = uniqueStrings([
+      ...explicitWhenNotToUse,
+      ...structuredGuidance.avoid,
+    ]);
     const topicSignals = extractPatternTopicSignals(title, parsed.content);
     const componentRoles = inferComponentRoles(parsed.content, components);
     const semantics = buildUsageSemantics({
@@ -1303,7 +1307,7 @@ export async function extractPatterns(
         ...structuredGuidance.preferred,
         ...topicSignals,
       ],
-      not_for: [...whenNotToUse, ...structuredGuidance.avoid],
+      not_for: whenNotToUse,
       derived_from: [
         "pattern-category-map",
         "pattern-docs",
@@ -1314,7 +1318,7 @@ export async function extractPatterns(
         ],
     });
     const retrievalSignals = buildRetrievalSignals({
-      caution_statements: [...whenNotToUse, ...structuredGuidance.avoid],
+      caution_statements: whenNotToUse,
     });
 
     const summary =
