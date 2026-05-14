@@ -115,7 +115,7 @@ jobs:
           STORYBOOK_STATIC_DIR: ${{ runner.temp }}/storybook-static
 
       - name: Publish
-        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4
         id: publish
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
