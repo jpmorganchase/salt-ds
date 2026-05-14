@@ -940,6 +940,7 @@ interface PatternExampleAccessibilitySignals {
   ariaAttributes: string[];
   ariaRoles: string[];
   ariaAnnouncements: boolean;
+  semanticElements: string[];
 }
 
 function extractAriaAttributesFromCode(code: string): string[] {
@@ -963,6 +964,14 @@ function extractAriaRoleValuesFromCode(code: string): string[] {
   );
 }
 
+function extractSemanticElementsFromCode(code: string): string[] {
+  const semanticElements = ["aside", "footer", "form", "header", "main", "nav"];
+
+  return semanticElements.filter((element) =>
+    new RegExp(`<${element}\\b`, "i").test(code),
+  );
+}
+
 function formatSourceBackedList(values: string[]): string {
   return values.join(", ");
 }
@@ -980,6 +989,10 @@ function mergePatternExampleAccessibilitySignals(
       (a, b) => a.localeCompare(b),
     ),
     ariaAnnouncements: left.ariaAnnouncements || right.ariaAnnouncements,
+    semanticElements: uniqueStrings([
+      ...left.semanticElements,
+      ...right.semanticElements,
+    ]).sort((a, b) => a.localeCompare(b)),
   };
 }
 
@@ -990,6 +1003,7 @@ function extractPatternExampleAccessibilitySignals(
     ariaAttributes: extractAriaAttributesFromCode(code),
     ariaRoles: extractAriaRoleValuesFromCode(code),
     ariaAnnouncements: /\buseAriaAnnouncer\b/.test(code),
+    semanticElements: extractSemanticElementsFromCode(code),
   };
 }
 
@@ -1011,7 +1025,8 @@ export function derivePatternExampleAccessibilitySummaries(
     if (
       signals.ariaAttributes.length === 0 &&
       signals.ariaRoles.length === 0 &&
-      !signals.ariaAnnouncements
+      !signals.ariaAnnouncements &&
+      signals.semanticElements.length === 0
     ) {
       continue;
     }
@@ -1023,6 +1038,7 @@ export function derivePatternExampleAccessibilitySummaries(
           ariaAttributes: [],
           ariaRoles: [],
           ariaAnnouncements: false,
+          semanticElements: [],
         },
         signals,
       ),
@@ -1050,6 +1066,73 @@ export function derivePatternExampleAccessibilitySummaries(
       summaries.push({
         value: `${pattern.name} examples use ARIA announcements.`,
         source_url,
+      });
+    }
+
+    if (signals.semanticElements.length > 0) {
+      summaries.push({
+        value: `${pattern.name} examples use semantic HTML elements: ${formatSourceBackedList(signals.semanticElements)}.`,
+        source_url,
+      });
+    }
+  }
+
+  return summaries.slice(0, 5);
+}
+
+export async function derivePatternImplementationAccessibilitySummaries(
+  repoRoot: string,
+  pattern: PatternRecord,
+): Promise<PatternExampleAccessibilitySummary[]> {
+  if (pattern.accessibility.summary.length > 0) {
+    return [];
+  }
+
+  const patternSlug = toKebabCase(pattern.name);
+  const sourcePaths = (
+    await fg(`packages/*/src/${patternSlug}/**/*.{ts,tsx}`, {
+      cwd: repoRoot,
+      absolute: true,
+      onlyFiles: true,
+      ignore: ["**/__tests__/**", "**/*.test.*", "**/*.spec.*"],
+    })
+  ).sort((left, right) => left.localeCompare(right));
+  const summaries: PatternExampleAccessibilitySummary[] = [];
+
+  for (const sourcePath of sourcePaths) {
+    const source = await readFileOrNull(sourcePath);
+    if (!source) {
+      continue;
+    }
+
+    const sourceUrl = toPosixPath(path.relative(repoRoot, sourcePath));
+    const signals = extractPatternExampleAccessibilitySignals(source);
+
+    if (signals.ariaAttributes.length > 0) {
+      summaries.push({
+        value: `${pattern.name} source declares ARIA attributes: ${formatSourceBackedList(signals.ariaAttributes)}.`,
+        source_url: sourceUrl,
+      });
+    }
+
+    if (signals.ariaRoles.length > 0) {
+      summaries.push({
+        value: `${pattern.name} source declares ARIA roles: ${formatSourceBackedList(signals.ariaRoles)}.`,
+        source_url: sourceUrl,
+      });
+    }
+
+    if (signals.ariaAnnouncements) {
+      summaries.push({
+        value: `${pattern.name} source uses ARIA announcements.`,
+        source_url: sourceUrl,
+      });
+    }
+
+    if (signals.semanticElements.length > 0) {
+      summaries.push({
+        value: `${pattern.name} source uses semantic HTML elements: ${formatSourceBackedList(signals.semanticElements)}.`,
+        source_url: sourceUrl,
       });
     }
   }
