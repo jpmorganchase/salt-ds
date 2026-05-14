@@ -793,11 +793,11 @@ export const MandatoryConfigurations = () => {
   return (
     <StackLayout gap={0} style={{ maxWidth: 730 }}>
       <StackLayout padding={3}>
-        <Text>
-          Customize your experience
-          <H2 id={headingId} style={{ margin: 0 }}>
+        <div>
+          <Text as="h1" styleAs="h2" style={{ margin: 0 }}>
+            <Text color="primary">Customize your experience</Text>
             Choose data access level
-          </H2>
+          </Text>
           <Text
             color="secondary"
             style={{
@@ -806,7 +806,7 @@ export const MandatoryConfigurations = () => {
           >
             A selection is required to proceed
           </Text>
-        </Text>
+        </div>
       </StackLayout>
 
       <StackLayout>
@@ -837,9 +837,7 @@ export const MandatoryConfigurations = () => {
                         <StackLayout gap={1}>
                           <StackLayout gap={1} direction="row" align="center">
                             <Icon aria-hidden size={2} />
-                            <Text style={{ margin: 0 }}>
-                              <strong>{title}</strong>
-                            </Text>
+                            <H3 style={{ margin: 0 }}>{title}</H3>
                           </StackLayout>
                           <StackLayout direction="row" gap={1}>
                             <RadioButtonIcon
