@@ -378,7 +378,7 @@ export const EndToEnd = () => {
       />
     ),
     regional: <RegionalSettingsContent {...sharedFormProps} />,
-    dataFormat: <DataFormatContent {...sharedFormProps} />,
+    dataFormat: <DataFormatContent {...sharedFormProps} tickerAs="h2" />,
     notifications: <NotificationsContent {...sharedFormProps} />,
   };
 
@@ -386,10 +386,10 @@ export const EndToEnd = () => {
     <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
       <FlexItem style={{ flex: 1 }}>
         <div>
-          <H2 style={{ margin: 0 }}>
+          <Text as="h1" styleAs="h2" style={{ margin: 0 }}>
             <Text color="primary">Customize your experience</Text>
             {wizardSteps[activeStepIndex].label}
-          </H2>
+          </Text>
           {wizardSteps[activeStepIndex].id === "foundation" && (
             <Text
               color="secondary"
