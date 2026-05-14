@@ -1478,6 +1478,8 @@ function buildUpgradeBlockingReasons(result: UpgradeSaltUiResult): string[] {
     result.ambiguity ? result.decision.why : null,
     result.did_you_mean?.length ? "upgrade target still has ambiguity" : null,
     result.breaking?.[0] ?? null,
+    result.important?.[0] ?? null,
+    result.nice_to_know?.[0] ?? null,
   ]);
 }
 

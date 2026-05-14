@@ -2023,4 +2023,42 @@ describe("publicContract workflow adapters", () => {
       }),
     );
   });
+
+  it("keeps upgrade contracts blocked with a reason when non-breaking upgrade guidance remains", () => {
+    const result = {
+      decision: {
+        target: "@salt-ds/core",
+        from_version: "1.0.0",
+        to_version: "2.0.0",
+        why: "Fixture upgrade guidance is available.",
+      },
+      important: ["Review fixture upgrade guidance before editing."],
+    } as unknown as UpgradeSaltUiResult;
+    const contract = buildUpgradeWorkflowContract({
+      ide_summary: buildUpgradeIdeSummary({
+        target: "@salt-ds/core",
+        from_version: "1.0.0",
+        to_version: "2.0.0",
+      }),
+    });
+
+    const compact = buildUpgradePublicContract(
+      result as unknown as never,
+      contract,
+      {
+        transport_used: "mcp",
+      },
+    );
+
+    expect(toComparablePublicContract(compact)).toEqual(
+      expect.objectContaining({
+        workflow: "upgrade",
+        workflow_status: "blocked",
+        safe_to_implement_exact_request: false,
+        blocking_reasons: expect.arrayContaining([
+          "Review fixture upgrade guidance before editing.",
+        ]),
+      }),
+    );
+  });
 });
