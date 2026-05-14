@@ -795,9 +795,9 @@ export const MandatoryConfigurations = () => {
       <StackLayout padding={3}>
         <Text>
           Customize your experience
-          <Text as="h2" id={headingId} style={{ margin: 0 }}>
+          <H2 id={headingId} style={{ margin: 0 }}>
             Choose data access level
-          </Text>
+          </H2>
           <Text
             color="secondary"
             style={{

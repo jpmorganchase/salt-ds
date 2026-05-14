@@ -7,6 +7,7 @@ import {
   FormFieldLabel,
   GridItem,
   GridLayout,
+  H3,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
@@ -137,9 +138,7 @@ export const DataFormatContent = ({
               <StackLayout gap={1} key={stock.ticker}>
                 <FlexLayout justify="space-between">
                   <FlexItem>
-                    <Text as="h3" style={{ margin: 0 }}>
-                      {stock.ticker}
-                    </Text>
+                    <H3 style={{ margin: 0 }}>{stock.ticker}</H3>
                     {formData.stockNameDisplay === "fullNameTicker" && (
                       <Text color="secondary">{stock.fullName}</Text>
                     )}
