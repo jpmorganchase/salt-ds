@@ -836,7 +836,9 @@ export const MandatoryConfigurations = () => {
                         <StackLayout gap={1}>
                           <StackLayout gap={1} direction="row" align="center">
                             <Icon aria-hidden size={2} />
-                            <H3 style={{ margin: 0 }}>{title}</H3>
+                            <Text styleAs="h3" style={{ margin: 0 }}>
+                              {title}
+                            </Text>
                           </StackLayout>
                           <StackLayout direction="row" gap={1}>
                             <RadioButtonIcon
