@@ -154,6 +154,7 @@ describe("Salt capability manifest", () => {
     expect(manifest.resources).toEqual(
       expect.objectContaining({
         context_component_markdown_template_uri: null,
+        context_gap_catalog_uri: null,
         context_release_gate_uri: null,
         ai_setup_uri: null,
       }),

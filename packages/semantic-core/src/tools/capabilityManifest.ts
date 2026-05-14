@@ -191,6 +191,7 @@ export interface SaltCapabilityManifest {
     context_manifest_uri: string | null;
     context_health_uri: string | null;
     context_coverage_uri: string | null;
+    context_gap_catalog_uri: string | null;
     context_pack_uri: string | null;
     context_release_gate_uri: string | null;
     ai_setup_uri: string | null;
@@ -401,6 +402,8 @@ export function buildSaltCapabilityManifest(
       context_manifest_uri: options.resources?.context_manifest_uri ?? null,
       context_health_uri: options.resources?.context_health_uri ?? null,
       context_coverage_uri: options.resources?.context_coverage_uri ?? null,
+      context_gap_catalog_uri:
+        options.resources?.context_gap_catalog_uri ?? null,
       context_pack_uri: options.resources?.context_pack_uri ?? null,
       context_release_gate_uri:
         options.resources?.context_release_gate_uri ?? null,

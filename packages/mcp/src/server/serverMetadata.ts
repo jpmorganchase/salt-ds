@@ -19,6 +19,8 @@ export const SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI =
 export const SALT_MCP_CONTEXT_MANIFEST_URI = "salt://context/manifest";
 export const SALT_MCP_CONTEXT_HEALTH_URI = "salt://context/health";
 export const SALT_MCP_CONTEXT_COVERAGE_URI = "salt://context/coverage";
+export const SALT_MCP_CONTEXT_GAP_CATALOG_URI =
+  "salt://context/gap-catalog";
 export const SALT_MCP_CONTEXT_PACK_URI = "salt://context/pack";
 export const SALT_MCP_CONTEXT_RELEASE_GATE_URI =
   "salt://context/release-gate";
@@ -155,6 +157,7 @@ export function getSaltMcpRuntimeMetadata(
       context_manifest_uri: SALT_MCP_CONTEXT_MANIFEST_URI,
       context_health_uri: SALT_MCP_CONTEXT_HEALTH_URI,
       context_coverage_uri: SALT_MCP_CONTEXT_COVERAGE_URI,
+      context_gap_catalog_uri: SALT_MCP_CONTEXT_GAP_CATALOG_URI,
       context_pack_uri: SALT_MCP_CONTEXT_PACK_URI,
       context_release_gate_uri: SALT_MCP_CONTEXT_RELEASE_GATE_URI,
       ai_setup_uri: SALT_MCP_AI_SETUP_URI,
@@ -199,7 +202,7 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
     `Machine-readable capability manifest resource: ${metadata.capability_manifest_uri}.`,
     `Machine-readable retrieval catalog resources: ${SALT_MCP_CATALOG_MANIFEST_URI}, ${SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI}, ${SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI}.`,
     `Catalog family browsing is available through ${SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI}.`,
-    `Generated context resources are available through ${SALT_MCP_CONTEXT_MANIFEST_URI}, ${SALT_MCP_CONTEXT_HEALTH_URI}, ${SALT_MCP_CONTEXT_COVERAGE_URI}, ${SALT_MCP_CONTEXT_PACK_URI}, ${SALT_MCP_CONTEXT_RELEASE_GATE_URI}, ${SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI}, ${SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI}, ${SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI}, and ${SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI}.`,
+    `Generated context resources are available through ${SALT_MCP_CONTEXT_MANIFEST_URI}, ${SALT_MCP_CONTEXT_HEALTH_URI}, ${SALT_MCP_CONTEXT_COVERAGE_URI}, ${SALT_MCP_CONTEXT_GAP_CATALOG_URI}, ${SALT_MCP_CONTEXT_PACK_URI}, ${SALT_MCP_CONTEXT_RELEASE_GATE_URI}, ${SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI}, ${SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI}, ${SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI}, and ${SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI}.`,
     `AI setup state is available through ${SALT_MCP_AI_SETUP_URI}; final-pass evidence closure state is available through ${SALT_MCP_AI_EVIDENCE_CLOSURE_URI}.`,
     "When asked for the MCP version, use the runtime version.",
     "When asked about the Salt content version, use the registry version.",

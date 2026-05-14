@@ -19,6 +19,7 @@ import {
 } from "../../../semantic-core/src/__tests__/contextCheckSchemaTestUtils.js";
 import { validateSaltContextComponentSchema } from "../../../semantic-core/src/__tests__/contextComponentSchemaTestUtils.js";
 import { validateSaltContextCoverageAuditSchema } from "../../../semantic-core/src/__tests__/contextCoverageAuditSchemaTestUtils.js";
+import { validateSaltContextCoverageGapCatalogSchema } from "../../../semantic-core/src/__tests__/contextCoverageGapCatalogSchemaTestUtils.js";
 import { validateSaltContextFoundationSchema } from "../../../semantic-core/src/__tests__/contextFoundationSchemaTestUtils.js";
 import { validateSaltContextPackManifestSchema } from "../../../semantic-core/src/__tests__/contextManifestSchemaTestUtils.js";
 import { validateSaltContextPatternSchema } from "../../../semantic-core/src/__tests__/contextPatternSchemaTestUtils.js";
@@ -1243,6 +1244,128 @@ describe("salt cli export-context", () => {
       }),
     );
     expect(await readJsonFile(outputPath)).toEqual(audit);
+  });
+
+  it("emits a fixture gap catalog with causes instead of filling docs or registry gaps", async () => {
+    const rootDir = await createTempDir(
+      "salt-cli-export-context-gap-catalog",
+    );
+    const registryDir = path.join(rootDir, "registry");
+    const outputPath = path.join(rootDir, ".salt", "gap-catalog.json");
+    const markdownPath = path.join(rootDir, ".salt", "gap-catalog.md");
+    const tokenWithoutPolicy = buildFixtureToken({
+      policy: null,
+      policy_gap: {
+        reason:
+          "Fixture token is missing source-backed policy evidence for generated context.",
+        missing: ["token policy"],
+        evidence_refs: [],
+      },
+    });
+    await writeFixtureRegistry(registryDir, buildFixtureComponent(), {
+      patterns: [
+        buildFixturePattern({
+          resources: [],
+          examples: [],
+          related_docs: {
+            overview: null,
+          },
+        }),
+      ],
+      tokens: [tokenWithoutPolicy],
+    });
+
+    let stdout = "";
+    expect(
+      await runCli(
+        [
+          "export-context",
+          ".",
+          "--gap-catalog",
+          "--json",
+          "--output",
+          outputPath,
+          "--registry-dir",
+          registryDir,
+        ],
+        {
+          cwd: rootDir,
+          writeStdout: (message) => {
+            stdout += message;
+          },
+          writeStderr: () => {},
+        },
+      ),
+    ).toBe(10);
+    const catalog = readJson(stdout);
+
+    expect(validateSaltContextCoverageGapCatalogSchema(catalog)).toEqual([]);
+    expect(catalog).toEqual(
+      expect.objectContaining({
+        contract: "salt_context_coverage_gap_catalog_v1",
+        audit_contract: "salt_context_coverage_audit_v1",
+        audit_status: "unsupported",
+        counts: expect.objectContaining({
+          total: 2,
+          pattern: 1,
+          foundation: 1,
+        }),
+        gaps: expect.arrayContaining([
+          expect.objectContaining({
+            kind: "pattern",
+            id: "fixture-workflow",
+            cause_codes: ["missing_source_locator"],
+            evidence_ref_ids: expect.any(Array),
+            resolution: "add_source_backed_docs_or_registry_evidence",
+          }),
+          expect.objectContaining({
+            kind: "foundation",
+            id: "tokens.fixture-color",
+            cause_codes: ["missing_token_policy"],
+            evidence_ref_ids: expect.any(Array),
+            records: [
+              expect.objectContaining({
+                id: "--salt-fixture-action-color",
+                cause_code: "missing_token_policy",
+                evidence_ref_ids: expect.any(Array),
+                missing: ["token policy"],
+              }),
+            ],
+          }),
+        ]),
+      }),
+    );
+    expect(await readJsonFile(outputPath)).toEqual(catalog);
+
+    let markdownStdout = "";
+    expect(
+      await runCli(
+        [
+          "export-context",
+          ".",
+          "--gap-catalog",
+          "--format",
+          "markdown",
+          "--output",
+          markdownPath,
+          "--registry-dir",
+          registryDir,
+        ],
+        {
+          cwd: rootDir,
+          writeStdout: (message) => {
+            markdownStdout += message;
+          },
+          writeStderr: () => {},
+        },
+      ),
+    ).toBe(10);
+    const markdown = await fs.readFile(markdownPath, "utf8");
+
+    expect(markdown).toBe(markdownStdout);
+    expect(markdown).toContain("missing_source_locator");
+    expect(markdown).toContain("missing_token_policy");
+    expect(markdown).not.toMatch(/recommended replacement|use .+ instead/i);
   });
 
   it("surfaces generated context manifest health in info json", async () => {

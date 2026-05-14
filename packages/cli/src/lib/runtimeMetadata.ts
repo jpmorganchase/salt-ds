@@ -133,6 +133,7 @@ export function buildSaltCliCapabilityManifest(input: {
       context_manifest_uri: null,
       context_health_uri: null,
       context_coverage_uri: null,
+      context_gap_catalog_uri: null,
       context_pack_uri: null,
       context_component_template_uri: null,
       context_component_markdown_template_uri: null,
