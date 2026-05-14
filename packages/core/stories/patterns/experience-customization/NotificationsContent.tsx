@@ -11,7 +11,7 @@ import {
   useId,
 } from "@salt-ds/core";
 import type { CSSProperties } from "react";
-import type { FormContentProps } from "./experience-customization.stories";
+import type { FormContentProps } from "./types";
 
 export const NOTIFICATION_POSITIONS = [
   {

@@ -18,13 +18,13 @@ import {
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type Ref, useEffect, useRef } from "react";
-import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
 import HighDensityTableDark from "./img/table-high-dark.png";
 import LowDensityTable from "./img/table-low.png";
 import LowDensityTableDark from "./img/table-low-dark.png";
 import MediumDensityTable from "./img/table-medium.png";
 import MediumDensityTableDark from "./img/table-medium-dark.png";
+import type { FormContentProps } from "./types";
 
 const displayDensityOptions = [
   {
