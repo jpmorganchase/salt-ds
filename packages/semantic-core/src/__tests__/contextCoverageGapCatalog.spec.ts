@@ -8,6 +8,7 @@ import {
   formatContextCoverageGapCatalogMarkdown,
   SALT_CONTEXT_COVERAGE_GAP_CATALOG_CONTRACT,
 } from "../contextCoverageGapCatalog.js";
+import { validateSaltContextCoverageGapCatalogSchema } from "./contextCoverageGapCatalogSchemaTestUtils.js";
 
 // All Salt-looking strings in this file are intentionally tiny fixture facts.
 const GENERATED_AT = "2026-05-05T00:00:00.000Z";
@@ -69,7 +70,7 @@ function buildFixtureAudit(): SaltContextCoverageAudit {
         reason:
           "Component context omitted optional fields because registry or source-backed evidence is missing.",
         missing: ["fixture accessibility guidance"],
-        evidence_ref_ids: [],
+        evidence_ref_ids: ["fixture-component-gap.ref"],
         records: [],
       },
       {
@@ -79,7 +80,7 @@ function buildFixtureAudit(): SaltContextCoverageAudit {
         status: "unsupported",
         reason: "Selected pattern context did not pass the evidence surface gate.",
         missing: ["pattern context has 1 unsupported claim(s)"],
-        evidence_ref_ids: [],
+        evidence_ref_ids: ["fixture-pattern-gap.ref"],
         records: [
           {
             kind: "pattern",
@@ -89,7 +90,7 @@ function buildFixtureAudit(): SaltContextCoverageAudit {
             reason_code: "evidence_surface_gate_failed",
             reason: "Registry pattern when_to_use guidance is empty.",
             missing: ["when_to_use"],
-            evidence_ref_ids: [],
+            evidence_ref_ids: ["fixture-pattern-gap-record.ref"],
           },
         ],
       },
@@ -127,6 +128,7 @@ describe("context coverage gap catalog", () => {
       generated_at: GENERATED_AT,
     });
 
+    expect(validateSaltContextCoverageGapCatalogSchema(catalog)).toEqual([]);
     expect(catalog).toEqual(
       expect.objectContaining({
         contract: SALT_CONTEXT_COVERAGE_GAP_CATALOG_CONTRACT,
@@ -143,15 +145,18 @@ describe("context coverage gap catalog", () => {
       expect.objectContaining({
         kind: "component",
         cause_codes: ["missing_optional_evidence"],
+        evidence_ref_ids: ["fixture-component-gap.ref"],
         resolution: "add_source_backed_docs_or_registry_evidence",
       }),
       expect.objectContaining({
         kind: "pattern",
         cause_codes: ["evidence_surface_gate_failed"],
+        evidence_ref_ids: ["fixture-pattern-gap.ref"],
         resolution: "keep_unsupported_until_source_evidence_exists",
         records: [
           expect.objectContaining({
             cause_code: "evidence_surface_gate_failed",
+            evidence_ref_ids: ["fixture-pattern-gap-record.ref"],
             missing: ["when_to_use"],
           }),
         ],
@@ -169,6 +174,65 @@ describe("context coverage gap catalog", () => {
     ]);
   });
 
+  it("schema rejects gaps without an explicit cause trail", () => {
+    const catalog = buildContextCoverageGapCatalog({
+      audit: buildFixtureAudit(),
+      generated_at: GENERATED_AT,
+    });
+    const [firstGap] = catalog.gaps;
+
+    expect(
+      validateSaltContextCoverageGapCatalogSchema({
+        ...catalog,
+        gaps: [
+          {
+            ...firstGap,
+            cause: "",
+            cause_codes: [],
+          },
+        ],
+      }),
+    ).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("/gaps/0/cause"),
+        expect.stringContaining("/gaps/0/cause_codes"),
+      ]),
+    );
+  });
+
+  it("schema rejects gaps and records without explicit EvidenceRef fields", () => {
+    const catalog = buildContextCoverageGapCatalog({
+      audit: buildFixtureAudit(),
+      generated_at: GENERATED_AT,
+    });
+    const gapWithoutEvidenceRefs = { ...catalog.gaps[0] } as Record<
+      string,
+      unknown
+    >;
+    delete gapWithoutEvidenceRefs.evidence_ref_ids;
+    const recordWithoutEvidenceRefs = {
+      ...(catalog.gaps[1]?.records[0] ?? {}),
+    } as Record<string, unknown>;
+    delete recordWithoutEvidenceRefs.evidence_ref_ids;
+
+    expect(
+      validateSaltContextCoverageGapCatalogSchema({
+        ...catalog,
+        gaps: [
+          gapWithoutEvidenceRefs,
+          {
+            ...catalog.gaps[1],
+            records: [recordWithoutEvidenceRefs],
+          },
+        ],
+      }),
+    ).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("evidence_ref_ids"),
+      ]),
+    );
+  });
+
   it("renders markdown without inventing replacements for missing evidence", () => {
     const catalog = buildContextCoverageGapCatalog({
       audit: buildFixtureAudit(),
@@ -179,10 +243,15 @@ describe("context coverage gap catalog", () => {
     expect(markdown).toContain(
       "Status: generated from semantic-core context coverage audit",
     );
+    expect(markdown).toContain(
+      "not a source of Salt product guidance",
+    );
     expect(markdown).toContain("| component | component.fixture-action |");
     expect(markdown).toContain("missing_optional_evidence");
     expect(markdown).toContain("evidence_surface_gate_failed");
     expect(markdown).toContain("missing_token_policy");
+    expect(markdown).toContain("fixture-pattern-gap.ref");
+    expect(markdown).toContain("fixture-pattern-gap-record.ref");
     expect(markdown).not.toMatch(/recommended replacement|use .+ instead/i);
   });
 });
