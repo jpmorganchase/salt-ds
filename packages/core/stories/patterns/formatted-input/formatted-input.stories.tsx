@@ -141,9 +141,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   const [phoneNumber2, setPhoneNumber2] = useState("");
   const [displayValue2, setDisplayValue2] = useState("");
   const [preview2, setPreview2] = useState("");
-  const [validationStatus2, setValidationStatus2] = useState<"error" | undefined>(
-    undefined,
-  );
+  const [validationStatus2, setValidationStatus2] = useState<
+    "error" | undefined
+  >(undefined);
   const [helperText2, setHelperText2] = useState(defaultHelperText);
 
   const formatPhoneNumber = (cleaned: string) => {
@@ -199,7 +199,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
 
     const hasInvalidChars = /[^0-9()\s-]/.test(value);
     if (hasInvalidChars) {
-      handleValidation("error", "Remove letters and symbols—Only numbers and () - are allowed");
+      handleValidation(
+        "error",
+        "Remove letters and symbols—Only numbers and () - are allowed",
+      );
       setPreview("");
       return;
     }
@@ -253,7 +256,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     const hasInvalidChars = /[^0-9()\s-]/.test(value);
     if (hasInvalidChars) {
       setValidationStatus2("error");
-      setHelperText2("Remove letters and symbols—Only numbers and () - are allowed");
+      setHelperText2(
+        "Remove letters and symbols—Only numbers and () - are allowed",
+      );
       setPreview2("");
       return;
     }
@@ -319,35 +324,38 @@ export const PhoneNumberWithPreview: StoryFn = () => {
         </FormFieldHelperText>
       </FormField>
       <FormField validationStatus={validationStatus2}>
-      <FormFieldLabel>Phone number with preview on right</FormFieldLabel>
-      <FlexLayout direction="row" align="center" gap={1.5}>
-        <Input
-          value={displayValue2}
-          onChange={handleChange2}
-          onBlur={handleBlur2}
-          onFocus={handleFocus2}
-          placeholder="(123) 456-7890"
-          aria-describedby="phone-with-right-preview-helper-text"
-          bordered
-          style={{ width: "300px" }}
-        />
-        <Text
-          styleAs="label"
-          color="secondary"
-          style={{ minWidth: "150px", visibility: preview2 ? "visible" : "hidden" }}
+        <FormFieldLabel>Phone number with preview on right</FormFieldLabel>
+        <FlexLayout direction="row" align="center" gap={1.5}>
+          <Input
+            value={displayValue2}
+            onChange={handleChange2}
+            onBlur={handleBlur2}
+            onFocus={handleFocus2}
+            placeholder="(123) 456-7890"
+            aria-describedby="phone-with-right-preview-helper-text"
+            bordered
+            style={{ width: "300px" }}
+          />
+          <Text
+            styleAs="label"
+            color="secondary"
+            style={{
+              minWidth: "150px",
+              visibility: preview2 ? "visible" : "hidden",
+            }}
+          >
+            {preview2}
+          </Text>
+        </FlexLayout>
+        <FormFieldHelperText
+          id="phone-with-right-preview-helper-text"
+          aria-live="assertive"
+          aria-atomic="true"
+          style={{ maxWidth: "300px" }}
         >
-          {preview2}
-        </Text>
-      </FlexLayout>
-      <FormFieldHelperText
-        id="phone-with-right-preview-helper-text"
-        aria-live="assertive"
-        aria-atomic="true"
-        style={{ maxWidth: "300px" }}
-      >
-        {helperText2}
-      </FormFieldHelperText>
-    </FormField>
+          {helperText2}
+        </FormFieldHelperText>
+      </FormField>
     </FlexLayout>
   );
 };
