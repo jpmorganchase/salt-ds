@@ -2,7 +2,7 @@
   "meta": {
     "source": "site/public/search-data.json",
     "generatedOn": "2026-03-20",
-    "componentCount": 72,
+    "componentCount": 74,
     "categoryCount": 12
   },
   "categoryOrder": [
@@ -208,6 +208,11 @@
       "route": "/salt/components/localization-provider/index",
       "category": "Providers"
     },
+    "mega-menu": {
+      "title": "Mega menu",
+      "route": "/salt/components/mega-menu/index",
+      "category": "Navigation"
+    },
     "menu": {
       "title": "Menu",
       "route": "/salt/components/menu/index",
@@ -288,6 +293,11 @@
       "title": "Skip link",
       "route": "/salt/components/skip-link/index",
       "category": "Navigation"
+    },
+    "side-panel": {
+      "title": "Side panel",
+      "route": "/salt/components/side-panel/index",
+      "category": "Layout"
     },
     "slider": {
       "title": "Slider",

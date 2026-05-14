@@ -2,7 +2,7 @@
   "meta": {
     "source": "manual canonical pattern categorization",
     "generatedOn": "2026-03-21",
-    "patternCount": 25,
+    "patternCount": 28,
     "categoryCount": 8
   },
   "categoryOrder": [
@@ -44,6 +44,12 @@
       "route": "/salt/patterns/button-bar",
       "category": "Actions and commands"
     },
+    "comments": {
+      "title": "Comments",
+      "route": "/salt/patterns/comments",
+      "category": "Feedback and status",
+      "secondaryCategories": ["Forms and data entry"]
+    },
     "contact-details": {
       "title": "Contact details",
       "route": "/salt/patterns/contact-details",
@@ -54,10 +60,22 @@
       "route": "/salt/patterns/content-status",
       "category": "Feedback and status"
     },
+    "experience-customization": {
+      "title": "Experience customization",
+      "route": "/salt/patterns/experience-customization",
+      "category": "Forms and data entry",
+      "secondaryCategories": ["Selection and filtering"]
+    },
     "file-upload": {
       "title": "File upload",
       "route": "/salt/patterns/file-upload",
       "category": "Forms and data entry"
+    },
+    "formatted-input": {
+      "title": "Formatted input",
+      "route": "/salt/patterns/formatted-input",
+      "category": "Forms and data entry",
+      "secondaryCategories": ["Feedback and status"]
     },
     "forms": {
       "title": "Forms",
