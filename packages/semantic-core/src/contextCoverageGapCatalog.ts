@@ -26,6 +26,7 @@ export interface SaltContextCoverageGapCatalogEntry {
   missing: string[];
   cause: string;
   cause_codes: SaltContextCoverageGapReasonCode[];
+  evidence_ref_ids: string[];
   resolution: SaltContextCoverageGapCatalogResolution;
   record_count: number;
   records: SaltContextCoverageGapCatalogRecord[];
@@ -37,6 +38,7 @@ export interface SaltContextCoverageGapCatalogRecord {
   missing: string[];
   cause: string;
   cause_code: SaltContextCoverageGapReasonCode;
+  evidence_ref_ids: string[];
 }
 
 export interface SaltContextCoverageGapCatalog {
@@ -95,6 +97,7 @@ function buildCatalogEntry(
     missing: gap.missing,
     cause: gap.reason,
     cause_codes: causeCodes,
+    evidence_ref_ids: gap.evidence_ref_ids,
     resolution: inferResolution(causeCodes),
     record_count: gap.records.length,
     records: gap.records.map((record) => ({
@@ -103,6 +106,7 @@ function buildCatalogEntry(
       missing: record.missing,
       cause: record.reason,
       cause_code: record.reason_code,
+      evidence_ref_ids: record.evidence_ref_ids,
     })),
   };
 }
@@ -152,7 +156,7 @@ function formatRecords(records: SaltContextCoverageGapCatalogRecord[]): string {
           (record) =>
             `${markdownEscape(record.id)} (${record.cause_code}: ${formatList(
               record.missing,
-            )})`,
+            )}; EvidenceRefs: ${formatList(record.evidence_ref_ids)})`,
         )
         .join("<br>")
     : "None";
@@ -165,6 +169,8 @@ export function formatContextCoverageGapCatalogMarkdown(
     "# Salt AI Tooling Context Coverage Gap Catalog",
     "",
     "Status: generated from semantic-core context coverage audit",
+    "This file is a docs/registry gap tracker, not a source of Salt product guidance.",
+    "Do not close entries here by adding prompt, CLI, MCP, skill, or test facts.",
     "",
     `Generated: ${catalog.generated_at}`,
     "",
@@ -181,15 +187,15 @@ export function formatContextCoverageGapCatalogMarkdown(
     "",
     "## Gaps",
     "",
-    "| Kind | ID | Name | Missing | Cause codes | Resolution | Records |",
-    "| --- | --- | --- | --- | --- | --- | --- |",
+    "| Kind | ID | Name | Missing | Cause codes | EvidenceRefs | Resolution | Records |",
+    "| --- | --- | --- | --- | --- | --- | --- | --- |",
     ...catalog.gaps.map(
       (gap) =>
         `| ${gap.kind} | ${markdownEscape(gap.id)} | ${markdownEscape(
           gap.name,
         )} | ${formatList(
           gap.missing,
-        )} | ${formatList(gap.cause_codes)} | ${gap.resolution} | ${formatRecords(
+        )} | ${formatList(gap.cause_codes)} | ${formatList(gap.evidence_ref_ids)} | ${gap.resolution} | ${formatRecords(
           gap.records,
         )} |`,
     ),
