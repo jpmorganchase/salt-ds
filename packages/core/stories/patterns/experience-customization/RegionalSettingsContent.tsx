@@ -10,7 +10,7 @@ import {
   RadioButtonGroup,
   StackLayout,
 } from "@salt-ds/core";
-import type { FormContentProps } from "./types";
+import type { FormContentProps } from "./experience-customization.stories";
 
 export const RegionalSettingsContent = ({
   formData,

@@ -16,11 +16,11 @@ import {
 } from "@salt-ds/core";
 import { US } from "@salt-ds/countries";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+import type { FormContentProps } from "./experience-customization.stories";
 import NegativeTrend from "./img/negative-trend.png";
 import NegativeTrendDark from "./img/negative-trend-dark.png";
 import PositiveTrend from "./img/positive-trend.png";
 import PositiveTrendDark from "./img/positive-trend-dark.png";
-import type { FormContentProps } from "./types";
 
 const stockCards = [
   {
