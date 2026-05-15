@@ -1,4 +1,5 @@
 import {
+  type AnnounceFnOptions,
   AriaAnnouncerProvider,
   Banner,
   BannerContent,
@@ -12,17 +13,12 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  GridLayout,
   H3,
-  InteractableCard,
-  InteractableCardGroup,
-  type InteractableCardValue,
   Link,
   Option,
   ParentChildLayout,
   RadioButton,
   RadioButtonGroup,
-  RadioButtonIcon,
   SplitLayout,
   StackLayout,
   type StackLayoutProps,
@@ -31,7 +27,6 @@ import {
   Switch,
   Text,
   useAriaAnnouncer,
-  useId,
   useResponsiveProp,
   VerticalNavigation,
   VerticalNavigationItem,
@@ -39,12 +34,12 @@ import {
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
 } from "@salt-ds/core";
-import { BuildingIcon, GlobeIcon, LockedIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import {
   type ChangeEvent,
   type ElementType,
   type ReactElement,
+  type Ref,
   useEffect,
   useRef,
   useState,
@@ -58,6 +53,7 @@ import { FoundationContent } from "./FoundationContent";
 import { NotificationsContent } from "./NotificationsContent";
 import { RegionalSettingsContent } from "./RegionalSettingsContent";
 import "../wizard/ContentOverflow.css";
+import { MandatoryConfigurationsContent } from "./MandatoryConfigurationsContent";
 
 export default {
   title: "Patterns/Experience Customization",
@@ -286,9 +282,23 @@ export const DynamicLivePreview = () => {
   );
 };
 
-export const EndToEnd = () => {
+const announceValidationErrors = (
+  fields: Record<string, FieldValidation>,
+  announce: (message: string, options?: AnnounceFnOptions) => void,
+  options?: AnnounceFnOptions,
+) => {
+  const messages = Object.values(fields)
+    .filter((f) => f.status === "error" && f.message)
+    .map((f) => f.message as string);
+  if (messages.length > 0) {
+    announce(messages.join(". "), { ariaLive: "assertive", ...options });
+  }
+};
+
+const EndToEndContent = () => {
   const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
+  const pendingAnnouncementRef = useRef<string | null>(null);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
@@ -330,11 +340,24 @@ export const EndToEnd = () => {
     navigatedRef.current = false;
 
     focusFirstInteractiveElement(stepContentRef.current);
-  }, [activeStepIndex]);
+
+    const announcement = pendingAnnouncementRef.current;
+    if (!announcement) return;
+    pendingAnnouncementRef.current = null;
+
+    const timeoutId = setTimeout(() => {
+      announce(announcement);
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [activeStepIndex, announce]);
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
-    if (!valid) return;
+    const { valid, fields } = await runValidationAndStore();
+    if (!valid) {
+      announceValidationErrors(fields, announce);
+      return;
+    }
     if (isLastStep) {
       return;
     }
@@ -342,22 +365,27 @@ export const EndToEnd = () => {
     const nextStepIndex = activeStepIndex + 1;
 
     navigatedRef.current = true;
+    pendingAnnouncementRef.current = getStepAnnouncement(nextStepIndex);
     nextWithoutValidation();
-    announce(getStepAnnouncement(nextStepIndex));
   };
 
   const handlePrevious = () => {
     const previousStepIndex = activeStepIndex - 1;
 
     navigatedRef.current = true;
+    pendingAnnouncementRef.current = getStepAnnouncement(previousStepIndex);
     previous();
-    announce(getStepAnnouncement(previousStepIndex));
   };
 
   const handleDensityChange = (value: string) => {
     updateFieldsWithoutValidation(getDensityFormUpdates(value));
     clearFieldValidation(currentStepId, "displayDensity");
     clearFieldValidation(currentStepId, "acceptTerms");
+  };
+
+  const handleFoundationCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    updateFieldsWithoutValidation({ [e.target.name]: e.target.checked });
+    clearFieldValidation(currentStepId, e.target.name);
   };
 
   const sharedFormProps: FormContentProps = {
@@ -373,6 +401,7 @@ export const EndToEnd = () => {
     foundation: (
       <FoundationContent
         {...sharedFormProps}
+        handleCheckboxChange={handleFoundationCheckboxChange}
         onDensityChange={handleDensityChange}
       />
     ),
@@ -487,13 +516,63 @@ export const EndToEnd = () => {
   );
 };
 
+export const EndToEnd = () => {
+  return (
+    <AriaAnnouncerProvider>
+      <EndToEndContent />
+    </AriaAnnouncerProvider>
+  );
+};
+
 const EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET =
   "experience-customization-modal";
 
 export const EndToEndModal = () => {
   const [open, setOpen] = useState(false);
-  const stepContentRef = useRef<HTMLDivElement>(null);
   const initialDensityCardRef = useRef<HTMLDivElement>(null);
+
+  const openWizard = () => {
+    setOpen(true);
+  };
+
+  const closeWizard = () => {
+    setOpen(false);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  return (
+    <>
+      <Button onClick={openWizard}>Open experience customization</Button>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        initialFocus={initialDensityCardRef}
+        style={{ height: 588 }}
+      >
+        <AriaAnnouncerProvider
+          target={EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET}
+        >
+          <EndToEndModalContent
+            initialDensityCardRef={initialDensityCardRef}
+            closeWizard={closeWizard}
+          />
+        </AriaAnnouncerProvider>
+      </Dialog>
+    </>
+  );
+};
+
+function EndToEndModalContent({
+  initialDensityCardRef,
+  closeWizard,
+}: {
+  initialDensityCardRef: Ref<HTMLDivElement>;
+  closeWizard: () => void;
+}) {
+  const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
   const pendingAnnouncementRef = useRef<string | null>(null);
 
@@ -553,29 +632,21 @@ export const EndToEndModal = () => {
     return () => clearTimeout(timeoutId);
   }, [activeStepIndex, announce]);
 
-  const openWizard = () => {
-    reset();
-    setOpen(true);
-  };
-
   const closeWizardAndReset = () => {
-    setOpen(false);
+    closeWizard();
     setTimeout(() => {
       reset();
     }, 300);
   };
 
-  const onOpenChange = (value: boolean) => {
-    if (!value) {
-      closeWizardAndReset();
+  const handleNext = async () => {
+    const { valid, fields } = await runValidationAndStore();
+    if (!valid) {
+      announceValidationErrors(fields, announce, {
+        target: EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET,
+      });
       return;
     }
-    setOpen(value);
-  };
-
-  const handleNext = async () => {
-    const valid = await runValidationAndStore();
-    if (!valid) return;
     if (isLastStep) {
       closeWizardAndReset();
       return;
@@ -602,6 +673,11 @@ export const EndToEndModal = () => {
     clearFieldValidation(currentStepId, "acceptTerms");
   };
 
+  const handleFoundationCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    updateFieldsWithoutValidation({ [e.target.name]: e.target.checked });
+    clearFieldValidation(currentStepId, e.target.name);
+  };
+
   const sharedFormProps: FormContentProps = {
     formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
@@ -615,6 +691,7 @@ export const EndToEndModal = () => {
     foundation: (
       <FoundationContent
         {...sharedFormProps}
+        handleCheckboxChange={handleFoundationCheckboxChange}
         initialFocusRef={initialDensityCardRef}
         onDensityChange={handleDensityChange}
       />
@@ -679,199 +756,42 @@ export const EndToEndModal = () => {
 
   return (
     <>
-      <Button onClick={openWizard}>Open experience customization</Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        initialFocus={initialDensityCardRef}
-        style={{ height: 588 }}
-      >
-        <AriaAnnouncerProvider
-          target={EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET}
-        >
-          <DialogHeader
-            header={wizardSteps[activeStepIndex].label}
-            preheader="Customize your experience"
-            actions={
-              <Stepper
-                orientation="horizontal"
-                aria-label="Customize your experience steps"
-              >
-                {wizardSteps.map((step, index) => (
-                  <Step
-                    key={step.id}
-                    label={step.stepTitle}
-                    status={validationsByStep[step.id]?.status}
-                    stage={getStepStage(index, activeStepIndex)}
-                  />
-                ))}
-              </Stepper>
-            }
-            description={
-              wizardSteps[activeStepIndex].id === "foundation" &&
-              "A selection is required to proceed"
-            }
-          />
-          <DialogContent ref={stepContentRef}>
-            {contentByStep[currentStepId]}
-          </DialogContent>
-          <DialogActions>{footer}</DialogActions>
-        </AriaAnnouncerProvider>
-      </Dialog>
+      <DialogHeader
+        header={wizardSteps[activeStepIndex].label}
+        preheader="Customize your experience"
+        actions={
+          <Stepper
+            orientation="horizontal"
+            aria-label="Customize your experience steps"
+          >
+            {wizardSteps.map((step, index) => (
+              <Step
+                key={step.id}
+                label={step.stepTitle}
+                status={validationsByStep[step.id]?.status}
+                stage={getStepStage(index, activeStepIndex)}
+              />
+            ))}
+          </Stepper>
+        }
+        description={
+          wizardSteps[activeStepIndex].id === "foundation" &&
+          "A selection is required to proceed"
+        }
+      />
+      <DialogContent ref={stepContentRef}>
+        {contentByStep[currentStepId]}
+      </DialogContent>
+      <DialogActions>{footer}</DialogActions>
     </>
   );
-};
+}
 
 export const MandatoryConfigurations = () => {
-  const [selected, setSelected] = useState<InteractableCardValue>();
-  const [hasError, setHasError] = useState(false);
-
-  const { announce } = useAriaAnnouncer();
-
-  const ERROR_MEESAGE = "Choose an option to continue.";
-
-  const handleSubmit = () => {
-    if (!selected) {
-      setHasError(true);
-      announce(ERROR_MEESAGE, { ariaLive: "assertive" });
-    }
-  };
-
-  const governanceOptions = [
-    {
-      value: "standard",
-      title: "Standard",
-      description: "Business-recommended. Standard access logging is enabled.",
-      Icon: BuildingIcon,
-    },
-    {
-      value: "restricted",
-      title: "Restricted",
-      description: "High compliance. Full data logging and MFA are required.",
-      Icon: LockedIcon,
-    },
-    {
-      value: "external",
-      title: "External",
-      description: "Allow controlled access for partners.",
-      Icon: GlobeIcon,
-    },
-  ];
-
-  const bannerId = useId();
-  const headingId = useId();
-
-  const direction: StackLayoutProps<ElementType>["direction"] =
-    useResponsiveProp(
-      {
-        xs: "column",
-        sm: "row",
-      },
-      "row",
-    );
-
-  const cancel = (
-    <Button
-      sentiment="accented"
-      appearance="bordered"
-      onClick={() => {
-        setSelected(undefined);
-        setHasError(false);
-      }}
-    >
-      Cancel
-    </Button>
-  );
-
-  const finish = (
-    <Button sentiment="accented" onClick={handleSubmit}>
-      Finish
-    </Button>
-  );
-
   return (
-    <StackLayout gap={0} style={{ maxWidth: 730 }}>
-      <StackLayout padding={3}>
-        <div>
-          <Text as="h1" styleAs="h2" style={{ margin: 0 }}>
-            <Text color="primary">Customize your experience</Text>
-            Choose data access level
-          </Text>
-          <Text
-            color="secondary"
-            style={{
-              marginTop: "var(--salt-spacing-50)",
-            }}
-          >
-            A selection is required to proceed
-          </Text>
-        </div>
-      </StackLayout>
-
-      <StackLayout>
-        <FlexItem grow={1}>
-          <ContentOverflow style={{ minHeight: 300 }}>
-            <StackLayout>
-              {hasError && (
-                <Banner status="error" id={bannerId}>
-                  <BannerContent>Choose an option.</BannerContent>
-                </Banner>
-              )}
-
-              <InteractableCardGroup
-                aria-labelledby={headingId}
-                value={selected}
-                onChange={(_event, value) => {
-                  setHasError(false);
-                  setSelected(value);
-                }}
-              >
-                <GridLayout
-                  style={{ width: "100%" }}
-                  columns={{ xs: 1, sm: 3 }}
-                >
-                  {governanceOptions.map(
-                    ({ value, title, description, Icon }) => (
-                      <InteractableCard key={value} value={value}>
-                        <StackLayout gap={1}>
-                          <StackLayout gap={1} direction="row" align="center">
-                            <Icon aria-hidden size={2} />
-                            <Text styleAs="h3" style={{ margin: 0 }}>
-                              {title}
-                            </Text>
-                          </StackLayout>
-                          <StackLayout direction="row" gap={1}>
-                            <RadioButtonIcon
-                              aria-hidden
-                              checked={selected === value}
-                            />
-                            <Text>{description}</Text>
-                          </StackLayout>
-                        </StackLayout>
-                      </InteractableCard>
-                    ),
-                  )}
-                </GridLayout>
-              </InteractableCardGroup>
-            </StackLayout>
-          </ContentOverflow>
-        </FlexItem>
-
-        <FlexItem>
-          {direction === "column" ? (
-            <StackLayout gap={1}>
-              {finish}
-              {cancel}
-            </StackLayout>
-          ) : (
-            <FlexLayout gap={1} justify="end" padding={3}>
-              {cancel}
-              {finish}
-            </FlexLayout>
-          )}
-        </FlexItem>
-      </StackLayout>
-    </StackLayout>
+    <AriaAnnouncerProvider>
+      <MandatoryConfigurationsContent />
+    </AriaAnnouncerProvider>
   );
 };
 

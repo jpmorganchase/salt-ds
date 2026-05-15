@@ -9,6 +9,7 @@ import {
   GridLayout,
   InteractableCard,
   InteractableCardGroup,
+  type InteractableCardValue,
   Link,
   RadioButtonIcon,
   StackLayout,
@@ -17,7 +18,7 @@ import {
   useId,
   useTheme,
 } from "@salt-ds/core";
-import { type Ref, useEffect, useRef } from "react";
+import { type Ref, type SyntheticEvent, useEffect, useRef } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
 import HighDensityTableDark from "./img/table-high-dark.png";
@@ -65,10 +66,7 @@ export const FoundationContent = ({
 }) => {
   const { mode } = useTheme();
   const densityId = useId();
-  const warningBannerId = useId();
-  const errorBannerId = useId();
   const requiredDisclaimerField = useRef<HTMLDivElement>(null);
-  const previousDisplayDensity = useRef<string>();
 
   const { announce } = useAriaAnnouncer();
 
@@ -76,35 +74,22 @@ export const FoundationContent = ({
     if (stepFieldValidation.acceptTerms?.status) {
       requiredDisclaimerField.current?.scrollIntoView();
     }
+  }, [stepFieldValidation.acceptTerms?.status]);
 
-    if (stepFieldValidation.acceptTerms?.message) {
-      announce(stepFieldValidation.acceptTerms.message, {
-        ariaLive: "assertive",
-      });
+  const handleOnChange = (
+    _event: SyntheticEvent<HTMLDivElement, Event>,
+    value: InteractableCardValue,
+  ) => {
+    onDensityChange?.(value as string);
+    if (value === "high") {
+      announce(HIGH_DENSITY_WARNING_MESSAGE);
     }
-  }, [
-    stepFieldValidation.acceptTerms?.status,
-    stepFieldValidation.acceptTerms?.message,
-    announce,
-  ]);
-
-  useEffect(() => {
-    if (
-      formData.displayDensity === "high" &&
-      previousDisplayDensity.current !== "high"
-    ) {
-      announce(HIGH_DENSITY_WARNING_MESSAGE, {
-        ariaLive: "assertive",
-      });
-    }
-
-    previousDisplayDensity.current = formData.displayDensity;
-  }, [formData.displayDensity, announce]);
+  };
 
   return (
     <StackLayout>
       {formData.displayDensity === "high" && (
-        <Banner status="warning" id={warningBannerId}>
+        <Banner status="warning">
           <BannerContent>
             High density doesn't meet the{" "}
             <Link
@@ -119,7 +104,7 @@ export const FoundationContent = ({
         </Banner>
       )}
       {stepFieldValidation.displayDensity?.status && (
-        <Banner status="error" id={errorBannerId}>
+        <Banner status="error">
           <BannerContent>
             {stepFieldValidation.displayDensity.message}
           </BannerContent>
@@ -132,9 +117,7 @@ export const FoundationContent = ({
           <InteractableCardGroup
             aria-labelledby={densityId}
             value={formData.displayDensity}
-            onChange={(_event, value) => {
-              onDensityChange?.(value as string);
-            }}
+            onChange={handleOnChange}
           >
             <GridLayout style={{ width: "100%" }} columns={{ xs: 1, sm: 3 }}>
               {displayDensityOptions.map((option) => (
@@ -185,6 +168,7 @@ export const FoundationContent = ({
             label="I understand that High density reduces target sizes and may affect readability and ease of use."
             checked={formData.acceptTerms}
             onChange={handleCheckboxChange}
+            required
           />
           {stepFieldValidation.acceptTerms?.status && (
             <FormFieldHelperText>

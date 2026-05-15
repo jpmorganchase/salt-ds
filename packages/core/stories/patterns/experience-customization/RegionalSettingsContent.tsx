@@ -9,9 +9,7 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-  useAriaAnnouncer,
 } from "@salt-ds/core";
-import { useEffect } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 
 export const RegionalSettingsContent = ({
@@ -20,16 +18,6 @@ export const RegionalSettingsContent = ({
   handleSelectChange,
   stepFieldValidation,
 }: FormContentProps) => {
-  const { announce } = useAriaAnnouncer();
-
-  useEffect(() => {
-    if (stepFieldValidation.language?.message) {
-      announce(stepFieldValidation.language.message, {
-        ariaLive: "assertive",
-      });
-    }
-  }, [stepFieldValidation.language?.message, announce]);
-
   return (
     <GridLayout columns={{ xs: 1, sm: 2 }}>
       <GridItem>

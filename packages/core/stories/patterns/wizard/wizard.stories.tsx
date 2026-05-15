@@ -336,7 +336,7 @@ export const HorizontalWithCancelConfirmation = () => {
   }, [activeStepIndex]);
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       setSuccessOpen(true);
@@ -517,7 +517,7 @@ export const VerticalWithCancelConfirmation = () => {
   }, [activeStepIndex]);
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       setSuccessOpen(true);
@@ -703,7 +703,7 @@ export const Modal = () => {
   const isFirstStep = activeStepIndex === 0;
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       closeWizardAndReset();
@@ -868,7 +868,7 @@ export const ModalWithConfirmations = () => {
   };
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       createAccount();

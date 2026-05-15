@@ -168,7 +168,7 @@ export function useWizardForm<TFormData extends Record<string, any>>({
       const fields = await validateStep(currentStepId, dataToUse);
       dispatch({ type: "SET_VALIDATION", stepId: currentStepId, fields });
       const hasErrors = Object.values(fields).some((f) => f.status === "error");
-      return !hasErrors;
+      return { valid: !hasErrors, fields };
     },
     [currentStepId, state.formData, validateStep],
   );
@@ -202,7 +202,7 @@ export function useWizardForm<TFormData extends Record<string, any>>({
 
   // Moves to the next step if the current step is valid
   const next = useCallback(() => {
-    runValidationAndStore().then((isValid) => {
+    runValidationAndStore().then(({ valid: isValid }) => {
       if (isValid) dispatch({ type: "NEXT_STEP" });
     });
   }, [runValidationAndStore]);
