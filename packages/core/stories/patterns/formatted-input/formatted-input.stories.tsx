@@ -49,7 +49,7 @@ export const PhoneNumber: StoryFn = () => {
     setHelperText(helperText);
   };
 
-  const hasInvalidChars = (value: string) => /[^0-9()\s+\-]/.test(value);
+  const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -182,7 +182,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     setHelperText(helperText);
   };
 
-  const hasInvalidChars = (value: string) => /[^0-9()\s+\-]/.test(value);
+  const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -333,7 +333,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           {helperText}
         </FormFieldHelperText>
       </FormField>
-      <FormField validationStatus={validationStatus2} labelPlacement="left" >
+      <FormField validationStatus={validationStatus2} labelPlacement="left">
         <FormFieldLabel>Phone number with preview on right</FormFieldLabel>
         <FlexLayout direction="row" align="center" gap={1.5}>
           <Input
