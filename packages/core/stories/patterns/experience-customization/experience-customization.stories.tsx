@@ -298,7 +298,6 @@ const announceValidationErrors = (
 const EndToEndContent = () => {
   const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
-  const pendingAnnouncementRef = useRef<string | null>(null);
 
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp(
@@ -334,22 +333,12 @@ const EndToEndContent = () => {
 
   const { announce } = useAriaAnnouncer();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus when active step changes
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
 
     focusFirstInteractiveElement(stepContentRef.current);
-
-    const announcement = pendingAnnouncementRef.current;
-    if (!announcement) return;
-    pendingAnnouncementRef.current = null;
-
-    const timeoutId = setTimeout(() => {
-      announce(announcement);
-    }, 100);
-
-    return () => clearTimeout(timeoutId);
+    announce(getStepAnnouncement(activeStepIndex));
   }, [activeStepIndex, announce]);
 
   const handleNext = async () => {
@@ -362,18 +351,12 @@ const EndToEndContent = () => {
       return;
     }
 
-    const nextStepIndex = activeStepIndex + 1;
-
     navigatedRef.current = true;
-    pendingAnnouncementRef.current = getStepAnnouncement(nextStepIndex);
     nextWithoutValidation();
   };
 
   const handlePrevious = () => {
-    const previousStepIndex = activeStepIndex - 1;
-
     navigatedRef.current = true;
-    pendingAnnouncementRef.current = getStepAnnouncement(previousStepIndex);
     previous();
   };
 
