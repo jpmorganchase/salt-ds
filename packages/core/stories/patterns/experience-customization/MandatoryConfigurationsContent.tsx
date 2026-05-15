@@ -90,7 +90,7 @@ export const MandatoryConfigurationsContent = () => {
     <StackLayout gap={0} style={{ maxWidth: 730 }}>
       <StackLayout padding={3}>
         <div>
-          <Text as="h1" styleAs="h2" style={{ margin: 0 }}>
+          <Text as="h1" styleAs="h2" style={{ margin: 0 }} id={headingId}>
             <Text color="primary">Customize your experience</Text>
             Choose data access level
           </Text>

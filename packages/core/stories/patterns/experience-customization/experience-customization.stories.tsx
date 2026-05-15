@@ -457,7 +457,8 @@ const EndToEndContent = () => {
   );
 
   const startFooter =
-    activeStepIndex === 2 && hasDataFormatChanges(formData as ECFormData) ? (
+    currentStepId === "dataFormat" &&
+    hasDataFormatChanges(formData as ECFormData) ? (
       <Button
         sentiment="accented"
         appearance="transparent"
@@ -680,7 +681,8 @@ function EndToEndModalContent({ closeWizard }: { closeWizard: () => void }) {
   );
 
   const startFooter =
-    activeStepIndex === 2 && hasDataFormatChanges(formData as ECFormData) ? (
+    currentStepId === "dataFormat" &&
+    hasDataFormatChanges(formData as ECFormData) ? (
       <Button
         sentiment="accented"
         appearance="transparent"
@@ -924,7 +926,7 @@ function PreferencesContent({
               United States (Federal)
             </Option>
             <Option value="United Kingdom (England & Wales)">
-              United Kingdom (England &amp; Wales)
+              United Kingdom (England & Wales)
             </Option>
             <Option value="Canada (Federal)">Canada (Federal)</Option>
             <Option value="India (National)">India (National)</Option>
