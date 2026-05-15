@@ -962,6 +962,81 @@ describe("token policy source registry", () => {
     }
   });
 
+  it("records fixture scale replacement chains to unsupported policy docs without generating policy", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-token-policy-gap-scale-chain-fixture-"),
+    );
+
+    try {
+      await writeFixturePolicyRepo(repoRoot);
+      await writeFixtureTokenReplacementMetadata(repoRoot, [
+        {
+          deprecated: "--salt-legacyfixture-opacity-1",
+          replacements: ["--salt-legacyfixture-opacity-15"],
+          replacement_kind: "scale",
+          basis: {
+            source_path: "packages/theme/css/deprecated/foundations.css",
+            line_start: 5,
+            line_end: 5,
+          },
+        },
+        {
+          deprecated: "--salt-legacyfixture-opacity-15",
+          replacement_kind: "unsupported",
+          unsupported_reason:
+            "No source-backed policy docs resolve this fixture opacity token for generated policy.",
+          basis: {
+            source_path: "packages/theme/css/deprecated/foundations.css",
+            line_start: 6,
+            line_end: 6,
+          },
+        },
+      ]);
+
+      const sources = await buildTokenPolicySourceRegistry(repoRoot);
+      const input = {
+        name: "--salt-legacyfixture-opacity-1",
+        category: "legacyfixture",
+      };
+      const policyGap = getTokenPolicyGap(input, sources);
+
+      expect(getTokenPolicy(input, sources)).toBeNull();
+      expect(policyGap).toEqual(
+        expect.objectContaining({
+          reason: expect.stringContaining(
+            "No source-backed policy docs resolve this fixture opacity token for generated policy.",
+          ),
+          missing: expect.arrayContaining([
+            "token policy",
+            "source-backed policy docs",
+          ]),
+          evidence_refs: expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.stringContaining("deprecated-replacement"),
+              source: expect.objectContaining({
+                repo_path:
+                  "packages/theme/css/deprecated/token-replacements.json",
+                section: expect.stringContaining("kind: scale"),
+              }),
+            }),
+            expect.objectContaining({
+              id: expect.stringContaining("unsupported"),
+              source: expect.objectContaining({
+                repo_path:
+                  "packages/theme/css/deprecated/token-replacements.json",
+                section: expect.stringContaining(
+                  "No source-backed policy docs resolve this fixture opacity token for generated policy.",
+                ),
+              }),
+            }),
+          ]),
+        }),
+      );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
   it("keeps fixture metadata replacements unsupported when replacement docs are missing", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-token-policy-metadata-gap-fixture-"),

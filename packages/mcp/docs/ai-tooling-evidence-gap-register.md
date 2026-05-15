@@ -803,6 +803,22 @@ details`, `File upload`, `Menu button`, and `Split button`. Remaining pattern
   added; the remaining `when_not_to_use`, `how_to_build`, accessibility, and
   `Indication.when_to_use` surfaces remain unsupported until source-backed
   docs, examples, source, or registry records exist.
+- Foundation token gap recertification on May 15, 2026 rechecked the remaining
+  non-pattern catalog entries after the selected-pattern behavior slice. The
+  current catalog records 15 total gaps: 12 pattern gaps and 3 foundation token
+  gaps. The 15 foundation token records still reduce to source-backed
+  unsupported states, not extractor misses. `measured` retains two records whose
+  replacement metadata has no exact source-backed replacement token and one
+  record whose replacement chain ends at manual literal guidance; `track`
+  retains the manual literal `textAlign` policy gap; `opacity` retains raw and
+  scale replacement records whose final token records still lack source-backed
+  generated policy docs. These causes come from semantic-core registry
+  `policy_gap` records backed by
+  `packages/theme/css/deprecated/token-replacements.json`, deprecated token CSS,
+  and theme changelog evidence. No production Salt facts were added; generated
+  policy remains `null` and the CLI, MCP, skill, reports, and validators must
+  continue exposing unsupported states until source docs or registry policy
+  records close the gaps.
 
 Why this matters:
 
