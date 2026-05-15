@@ -9,7 +9,12 @@ import {
 } from "@salt-ds/core";
 import "@salt-ds/countries/saltCountries.css";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ChangeEvent, type FocusEvent, useState } from "react";
+import {
+  type ChangeEvent,
+  type CSSProperties,
+  type FocusEvent,
+  useState,
+} from "react";
 
 export default {
   title: "Patterns/Formatted Input",
@@ -52,11 +57,7 @@ export const PhoneNumber: StoryFn = () => {
   const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    // Automatically add + at the start if user types a number
-    if (value.length > 0 && !value.startsWith("+") && /^\d/.test(value)) {
-      value = `+${value}`;
-    }
+    const value = e.target.value;
     setDisplayValue(value);
 
     if (hasInvalidChars(value)) {
@@ -67,7 +68,7 @@ export const PhoneNumber: StoryFn = () => {
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value;
     setPhoneNumber(value);
     const normalized = value.replace(/\D/g, "");
 
@@ -95,6 +96,10 @@ export const PhoneNumber: StoryFn = () => {
         handleValidation("success", "Phone number is valid.");
       }
     } else {
+      if (!value.trim().startsWith("+") && normalized.length > 0) {
+        value = `+${value}`;
+        setDisplayValue(value);
+      }
       handleValidation(
         "error",
         "Please enter a valid phone number, including country and area code.",
@@ -117,12 +122,10 @@ export const PhoneNumber: StoryFn = () => {
         onBlur={handleBlur}
         onFocus={handleFocus}
         placeholder="+1 (000) 000-0000"
-        aria-describedby="phone-helper-text"
         bordered
       />
       <FormFieldHelperText
-        id="phone-helper-text"
-        aria-live="assertive"
+        aria-live={validationStatus ? "assertive" : "polite"}
         aria-atomic="true"
       >
         {helperText}
@@ -185,11 +188,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    // Automatically add + at the start if user types a number
-    if (value.length > 0 && !value.startsWith("+") && /^\d/.test(value)) {
-      value = `+${value}`;
-    }
+    const value = e.target.value;
     setDisplayValue(value);
 
     if (hasInvalidChars(value)) {
@@ -202,7 +201,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value;
     setPhoneNumber(value);
     const normalized = value.replace(/\D/g, "");
 
@@ -225,6 +224,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       handleValidation(undefined, defaultHelperText);
       setPreview("");
     } else {
+      if (!value.trim().startsWith("+") && normalized.length > 0) {
+        value = `+${value}`;
+        setDisplayValue(value);
+      }
       handleValidation(
         "error",
         "Please enter a valid phone number, including country and area code.",
@@ -241,11 +244,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   };
 
   const handleChange2 = (e: ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    // Automatically add + at the start if user types a number
-    if (value.length > 0 && !value.startsWith("+") && /^\d/.test(value)) {
-      value = `+${value}`;
-    }
+    const value = e.target.value;
     setDisplayValue2(value);
 
     if (hasInvalidChars(value)) {
@@ -260,7 +259,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   };
 
   const handleBlur2 = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value;
     setPhoneNumber2(value);
     const normalized = value.replace(/\D/g, "");
 
@@ -285,6 +284,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       setHelperText2(defaultHelperText);
       setPreview2("");
     } else {
+      if (!value.trim().startsWith("+") && normalized.length > 0) {
+        value = `+${value}`;
+        setDisplayValue2(value);
+      }
       setValidationStatus2("error");
       setHelperText2(
         "Please enter a valid phone number, including country and area code.",
@@ -322,19 +325,21 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           onBlur={handleBlur}
           onFocus={handleFocus}
           placeholder="+1 (000) 000-0000"
-          aria-describedby="phone-with-preview-helper-text"
           bordered
         />
         <FormFieldHelperText
-          id="phone-with-preview-helper-text"
-          aria-live="assertive"
+          aria-live={validationStatus ? "assertive" : "polite"}
           aria-atomic="true"
         >
           {helperText}
         </FormFieldHelperText>
       </FormField>
-      <FormField validationStatus={validationStatus2} labelPlacement="left">
-        <FormFieldLabel>Phone number with preview on right</FormFieldLabel>
+      <FormField
+        validationStatus={validationStatus2}
+        labelPlacement="left"
+        style={{ "--saltFormField-label-width": "auto" } as CSSProperties}
+      >
+        <FormFieldLabel>Phone number</FormFieldLabel>
         <FlexLayout direction="row" align="center" gap={1.5}>
           <Input
             value={displayValue2}
@@ -342,9 +347,8 @@ export const PhoneNumberWithPreview: StoryFn = () => {
             onBlur={handleBlur2}
             onFocus={handleFocus2}
             placeholder="+1 (000) 000-0000"
-            aria-describedby="phone-with-right-preview-helper-text"
             bordered
-            style={{ width: "150px" }}
+            style={{ width: "210px" }}
           />
           <Text
             styleAs="label"
@@ -358,10 +362,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           </Text>
         </FlexLayout>
         <FormFieldHelperText
-          id="phone-with-right-preview-helper-text"
-          aria-live="assertive"
+          aria-live={validationStatus2 ? "assertive" : "polite"}
           aria-atomic="true"
-          style={{ maxWidth: "150px" }}
+          style={{ maxWidth: "210px" }}
         >
           {helperText2}
         </FormFieldHelperText>
@@ -446,12 +449,10 @@ export const CreditCard: StoryFn = () => {
         onBlur={handleBlur}
         onFocus={handleFocus}
         placeholder="5555-5555-5555-4444"
-        aria-describedby="credit-card-helper-text"
         bordered
       />
       <FormFieldHelperText
-        id="credit-card-helper-text"
-        aria-live="assertive"
+        aria-live={validationStatus ? "assertive" : "polite"}
         aria-atomic="true"
       >
         {helperText}
@@ -548,12 +549,10 @@ export const Currency: StoryFn = () => {
         onBlur={handleBlur}
         onFocus={handleFocus}
         placeholder="0.00"
-        aria-describedby="currency-helper-text"
         bordered
       />
       <FormFieldHelperText
-        id="currency-helper-text"
-        aria-live="assertive"
+        aria-live={validationStatus ? "assertive" : "polite"}
         aria-atomic="true"
       >
         {helperText}
@@ -671,12 +670,10 @@ export const PostalCode: StoryFn = () => {
         onBlur={handleBlur}
         onFocus={handleFocus}
         placeholder="12345 or E14 5JP or SW1A 1AA"
-        aria-describedby="postal-code-helper-text"
         bordered
       />
       <FormFieldHelperText
-        id="postal-code-helper-text"
-        aria-live="assertive"
+        aria-live={validationStatus ? "assertive" : "polite"}
         aria-atomic="true"
       >
         {helperText}
