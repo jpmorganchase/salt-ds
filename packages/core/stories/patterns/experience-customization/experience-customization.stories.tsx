@@ -557,7 +557,6 @@ function EndToEndModalContent({
 }) {
   const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
-  const pendingAnnouncementRef = useRef<string | null>(null);
 
   const {
     state: { activeStepIndex, formData, validationsByStep },
@@ -594,25 +593,14 @@ function EndToEndModalContent({
 
   const { announce } = useAriaAnnouncer();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus and announcements when active step changes
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
 
     focusFirstInteractiveElement(stepContentRef.current);
-
-    const announcement = pendingAnnouncementRef.current;
-    if (!announcement) return;
-
-    pendingAnnouncementRef.current = null;
-
-    const timeoutId = setTimeout(() => {
-      announce(announcement, {
-        target: EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET,
-      });
-    }, 100);
-
-    return () => clearTimeout(timeoutId);
+    announce(getStepAnnouncement(activeStepIndex), {
+      target: EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET,
+    });
   }, [activeStepIndex, announce]);
 
   const closeWizardAndReset = () => {
@@ -635,18 +623,12 @@ function EndToEndModalContent({
       return;
     }
 
-    const nextStepIndex = activeStepIndex + 1;
-
     navigatedRef.current = true;
-    pendingAnnouncementRef.current = getStepAnnouncement(nextStepIndex);
     nextWithoutValidation();
   };
 
   const handlePrevious = () => {
-    const previousStepIndex = activeStepIndex - 1;
-
     navigatedRef.current = true;
-    pendingAnnouncementRef.current = getStepAnnouncement(previousStepIndex);
     previous();
   };
 

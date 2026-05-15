@@ -82,7 +82,11 @@ export const FoundationContent = ({
   ) => {
     onDensityChange?.(value as string);
     if (value === "high") {
-      announce(HIGH_DENSITY_WARNING_MESSAGE);
+      setTimeout(() => {
+        announce(HIGH_DENSITY_WARNING_MESSAGE, {
+          duration: 1000,
+        });
+      }, 0);
     }
   };
 
