@@ -527,7 +527,9 @@ export const EndToEndModal = () => {
 
   return (
     <>
-      <Button onClick={openWizard}>Open experience customization</Button>
+      <Button onClick={openWizard} aria-haspopup="dialog">
+        Open experience customization
+      </Button>
       <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
         <AriaAnnouncerProvider
           target={EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET}
@@ -1145,7 +1147,9 @@ export const PreferenceDialog = () => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open preferences dialog</Button>
+      <Button onClick={() => setOpen(true)} aria-haspopup="dialog">
+        Open preferences dialog
+      </Button>
       <Dialog style={{ minHeight: "60%" }} open={open} onOpenChange={setOpen}>
         <DialogHeader header="Preferences" />
         <DialogContent>

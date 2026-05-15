@@ -172,7 +172,9 @@ export const FoundationContent = ({
             label="I understand that High density reduces target sizes and may affect readability and ease of use."
             checked={formData.acceptTerms}
             onChange={handleCheckboxChange}
-            required
+            inputProps={{
+              required: true,
+            }}
           />
           {stepFieldValidation.acceptTerms?.status && (
             <FormFieldHelperText>
