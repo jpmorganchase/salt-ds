@@ -456,13 +456,19 @@ export const EndToEnd = () => {
     </FlexLayout>
   );
 
+  const handleResetToDefault = () => {
+    resetDataFormatFields(updateField);
+    focusFirstInteractiveElement(stepContentRef.current);
+    announce("Data format settings have been reset to default values.");
+  };
+
   const startFooter =
     currentStepId === "dataFormat" &&
     hasDataFormatChanges(formData as ECFormData) ? (
       <Button
         sentiment="accented"
         appearance="transparent"
-        onClick={() => resetDataFormatFields(updateField)}
+        onClick={handleResetToDefault}
       >
         Reset to default
       </Button>
@@ -691,13 +697,19 @@ function EndToEndModalContent({
     </FlexLayout>
   );
 
+  const handleResetToDefault = () => {
+    resetDataFormatFields(updateField);
+    focusFirstInteractiveElement(stepContentRef.current);
+    announce("Data format settings have been reset to default values.");
+  };
+
   const startFooter =
     currentStepId === "dataFormat" &&
     hasDataFormatChanges(formData as ECFormData) ? (
       <Button
         sentiment="accented"
         appearance="transparent"
-        onClick={() => resetDataFormatFields(updateField)}
+        onClick={handleResetToDefault}
       >
         Reset to default
       </Button>
