@@ -294,7 +294,7 @@ const announceValidationErrors = (
   }
 };
 
-const EndToEndContent = () => {
+export const EndToEnd = () => {
   const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
@@ -499,19 +499,12 @@ const EndToEndContent = () => {
   );
 };
 
-export const EndToEnd = () => {
-  return (
-    <AriaAnnouncerProvider>
-      <EndToEndContent />
-    </AriaAnnouncerProvider>
-  );
-};
-
 const EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET =
   "experience-customization-modal";
 
 export const EndToEndModal = () => {
   const [open, setOpen] = useState(false);
+  const headingRef = useRef<HTMLElement | null>(null);
 
   const openWizard = () => {
     setOpen(true);
@@ -530,18 +523,34 @@ export const EndToEndModal = () => {
       <Button onClick={openWizard} aria-haspopup="dialog">
         Open experience customization
       </Button>
-      <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        initialFocus={headingRef}
+        style={{ height: 588 }}
+      >
         <AriaAnnouncerProvider
           target={EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET}
         >
-          <EndToEndModalContent closeWizard={closeWizard} />
+          <EndToEndModalContent
+            closeWizard={closeWizard}
+            setHeadingRef={(node) => {
+              headingRef.current = node;
+            }}
+          />
         </AriaAnnouncerProvider>
       </Dialog>
     </>
   );
 };
 
-function EndToEndModalContent({ closeWizard }: { closeWizard: () => void }) {
+function EndToEndModalContent({
+  closeWizard,
+  setHeadingRef,
+}: {
+  closeWizard: () => void;
+  setHeadingRef: (node: HTMLSpanElement | null) => void;
+}) {
   const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
@@ -709,7 +718,11 @@ function EndToEndModalContent({ closeWizard }: { closeWizard: () => void }) {
   return (
     <>
       <DialogHeader
-        header={wizardSteps[activeStepIndex].label}
+        header={
+          <span ref={setHeadingRef} tabIndex={-1}>
+            {wizardSteps[activeStepIndex].label}
+          </span>
+        }
         preheader="Customize your experience"
         actions={
           <Stepper
