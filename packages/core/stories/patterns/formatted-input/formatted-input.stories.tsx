@@ -27,16 +27,16 @@ export const PhoneNumber: StoryFn = () => {
   const [helperText, setHelperText] = useState(defaultHelperText);
 
   const formatPhoneNumber = (cleaned: string) => {
-    if (cleaned.length === 10) {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
+    if (cleaned.length === 11) {
+      return `+${cleaned.slice(0, 1)} (${cleaned.slice(1, 4)}) ${cleaned.slice(4, 7)}-${cleaned.slice(7)}`;
     }
     return cleaned;
   };
 
   const hasUnusualAreaCode = (cleaned: string) => {
-    if (cleaned.length === 10) {
-      const areaCodeNum = Number.parseInt(cleaned.slice(0, 3), 10);
-      return areaCodeNum < 200;
+    if (cleaned.length === 11) {
+      const areaCodeNum = Number.parseInt(cleaned.slice(1, 4), 10);
+      return areaCodeNum < 100;
     }
     return false;
   };
@@ -49,14 +49,18 @@ export const PhoneNumber: StoryFn = () => {
     setHelperText(helperText);
   };
 
-  const hasInvalidChars = (value: string) => /[^0-9()\s-]/.test(value);
+  const hasInvalidChars = (value: string) => /[^0-9()\s+\-]/.test(value);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value;
+    // Automatically add + at the start if user types a number
+    if (value.length > 0 && !value.startsWith("+") && /^\d/.test(value)) {
+      value = `+${value}`;
+    }
     setDisplayValue(value);
 
     if (hasInvalidChars(value)) {
-      handleValidation("error", "Only numbers and () - are allowed");
+      handleValidation("error", "Only numbers and () + - are allowed");
     } else {
       handleValidation(undefined, defaultHelperText);
     }
@@ -70,7 +74,7 @@ export const PhoneNumber: StoryFn = () => {
     if (hasInvalidChars(value)) {
       handleValidation(
         "error",
-        "Remove letters and symbols—Only numbers and () - are allowed",
+        "Remove letters and symbols—Only numbers and () + - are allowed",
       );
       return;
     }
@@ -78,7 +82,7 @@ export const PhoneNumber: StoryFn = () => {
     if (normalized.length === 0) {
       setDisplayValue("");
       handleValidation(undefined, defaultHelperText);
-    } else if (normalized.length === 10) {
+    } else if (normalized.length === 11) {
       const formatted = formatPhoneNumber(normalized);
       setDisplayValue(formatted);
 
@@ -112,7 +116,7 @@ export const PhoneNumber: StoryFn = () => {
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
-        placeholder="(123) 456-7890"
+        placeholder="+1 (000) 000-0000"
         aria-describedby="phone-helper-text"
         bordered
       />
@@ -150,21 +154,21 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     if (cleaned.length === 0) {
       return "";
     }
-    if (cleaned.length <= 3) {
-      return `(${cleaned}`;
+    if (cleaned.length <= 4) {
+      return `+${cleaned.slice(0, 1)} (${cleaned.slice(1)}`;
     }
-    if (cleaned.length <= 6) {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
+    if (cleaned.length <= 7) {
+      return `+${cleaned.slice(0, 1)} (${cleaned.slice(1, 4)}) ${cleaned.slice(4)}`;
     }
-    if (cleaned.length <= 10) {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
+    if (cleaned.length <= 11) {
+      return `+${cleaned.slice(0, 1)} (${cleaned.slice(1, 4)}) ${cleaned.slice(4, 7)}-${cleaned.slice(7)}`;
     }
     return cleaned;
   };
 
   const generatePreview = (value: string) => {
     const cleaned = value.replace(/\D/g, "");
-    if (cleaned.length > 0 && cleaned.length <= 10) {
+    if (cleaned.length > 0 && cleaned.length <= 11) {
       return formatPhoneNumber(cleaned);
     }
     return "";
@@ -178,13 +182,18 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     setHelperText(helperText);
   };
 
+  const hasInvalidChars = (value: string) => /[^0-9()\s+\-]/.test(value);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value;
+    // Automatically add + at the start if user types a number
+    if (value.length > 0 && !value.startsWith("+") && /^\d/.test(value)) {
+      value = `+${value}`;
+    }
     setDisplayValue(value);
 
-    const hasInvalidChars = /[^0-9()\s-]/.test(value);
-    if (hasInvalidChars) {
-      handleValidation("error", "Only numbers and () - are allowed");
+    if (hasInvalidChars(value)) {
+      handleValidation("error", "Only numbers and () + - are allowed");
       setPreview("");
     } else {
       handleValidation(undefined, defaultHelperText);
@@ -197,11 +206,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     setPhoneNumber(value);
     const normalized = value.replace(/\D/g, "");
 
-    const hasInvalidChars = /[^0-9()\s-]/.test(value);
-    if (hasInvalidChars) {
+    if (hasInvalidChars(value)) {
       handleValidation(
         "error",
-        "Remove letters and symbols—Only numbers and () - are allowed",
+        "Remove letters and symbols—Only numbers and () + - are allowed",
       );
       setPreview("");
       return;
@@ -211,7 +219,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       setDisplayValue("");
       handleValidation(undefined, defaultHelperText);
       setPreview("");
-    } else if (normalized.length === 10) {
+    } else if (normalized.length === 11) {
       const formatted = formatPhoneNumber(normalized);
       setDisplayValue(formatted);
       handleValidation(undefined, defaultHelperText);
@@ -233,13 +241,16 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   };
 
   const handleChange2 = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value;
+    // Automatically add + at the start if user types a number
+    if (value.length > 0 && !value.startsWith("+") && /^\d/.test(value)) {
+      value = `+${value}`;
+    }
     setDisplayValue2(value);
 
-    const hasInvalidChars = /[^0-9()\s-]/.test(value);
-    if (hasInvalidChars) {
+    if (hasInvalidChars(value)) {
       setValidationStatus2("error");
-      setHelperText2("Only numbers and () - are allowed");
+      setHelperText2("Only numbers and () + - are allowed");
       setPreview2("");
     } else {
       setValidationStatus2(undefined);
@@ -253,11 +264,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     setPhoneNumber2(value);
     const normalized = value.replace(/\D/g, "");
 
-    const hasInvalidChars = /[^0-9()\s-]/.test(value);
-    if (hasInvalidChars) {
+    if (hasInvalidChars(value)) {
       setValidationStatus2("error");
       setHelperText2(
-        "Remove letters and symbols—Only numbers and () - are allowed",
+        "Remove letters and symbols—Only numbers and () + - are allowed",
       );
       setPreview2("");
       return;
@@ -268,7 +278,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       setValidationStatus2(undefined);
       setHelperText2(defaultHelperText);
       setPreview2("");
-    } else if (normalized.length === 10) {
+    } else if (normalized.length === 11) {
       const formatted = formatPhoneNumber(normalized);
       setDisplayValue2(formatted);
       setValidationStatus2(undefined);
@@ -311,7 +321,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           onFocus={handleFocus}
-          placeholder="(123) 456-7890"
+          placeholder="+1 (000) 000-0000"
           aria-describedby="phone-with-preview-helper-text"
           bordered
         />
@@ -323,7 +333,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           {helperText}
         </FormFieldHelperText>
       </FormField>
-      <FormField validationStatus={validationStatus2}>
+      <FormField validationStatus={validationStatus2} labelPlacement="left" >
         <FormFieldLabel>Phone number with preview on right</FormFieldLabel>
         <FlexLayout direction="row" align="center" gap={1.5}>
           <Input
@@ -331,10 +341,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
             onChange={handleChange2}
             onBlur={handleBlur2}
             onFocus={handleFocus2}
-            placeholder="(123) 456-7890"
+            placeholder="+1 (000) 000-0000"
             aria-describedby="phone-with-right-preview-helper-text"
             bordered
-            style={{ width: "300px" }}
+            style={{ width: "150px" }}
           />
           <Text
             styleAs="label"
@@ -351,7 +361,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           id="phone-with-right-preview-helper-text"
           aria-live="assertive"
           aria-atomic="true"
-          style={{ maxWidth: "300px" }}
+          style={{ maxWidth: "150px" }}
         >
           {helperText2}
         </FormFieldHelperText>
