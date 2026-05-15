@@ -68,7 +68,7 @@ export const PhoneNumber: StoryFn = () => {
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    let value = e.target.value;
+    const value = e.target.value;
     setPhoneNumber(value);
     const normalized = value.replace(/\D/g, "");
 
@@ -96,10 +96,6 @@ export const PhoneNumber: StoryFn = () => {
         handleValidation("success", "Phone number is valid.");
       }
     } else {
-      if (!value.trim().startsWith("+") && normalized.length > 0) {
-        value = `+${value}`;
-        setDisplayValue(value);
-      }
       handleValidation(
         "error",
         "Please enter a valid phone number, including country and area code.",
@@ -201,7 +197,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    let value = e.target.value;
+    const value = e.target.value;
     setPhoneNumber(value);
     const normalized = value.replace(/\D/g, "");
 
@@ -224,10 +220,6 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       handleValidation(undefined, defaultHelperText);
       setPreview("");
     } else {
-      if (!value.trim().startsWith("+") && normalized.length > 0) {
-        value = `+${value}`;
-        setDisplayValue(value);
-      }
       handleValidation(
         "error",
         "Please enter a valid phone number, including country and area code.",
@@ -259,7 +251,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   };
 
   const handleBlur2 = (e: FocusEvent<HTMLInputElement>) => {
-    let value = e.target.value;
+    const value = e.target.value;
     setPhoneNumber2(value);
     const normalized = value.replace(/\D/g, "");
 
@@ -284,10 +276,6 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       setHelperText2(defaultHelperText);
       setPreview2("");
     } else {
-      if (!value.trim().startsWith("+") && normalized.length > 0) {
-        value = `+${value}`;
-        setDisplayValue2(value);
-      }
       setValidationStatus2("error");
       setHelperText2(
         "Please enter a valid phone number, including country and area code.",
