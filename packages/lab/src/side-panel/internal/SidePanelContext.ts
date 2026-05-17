@@ -46,13 +46,9 @@ export interface SidePanelContextValue {
    */
   setTitleId: Dispatch<SetStateAction<string | undefined>>;
   /**
-   * Edge the panel is anchored to.
+   * Edge the panel is anchored to. Set by SidePanel for its own subtree.
    */
   position?: "right" | "left";
-  /**
-   * Registers the position from SidePanel back to the context.
-   */
-  setPosition: Dispatch<SetStateAction<"right" | "left" | undefined>>;
 }
 
 export const SidePanelContext = createContext<SidePanelContextValue>(
@@ -68,7 +64,6 @@ export const SidePanelContext = createContext<SidePanelContextValue>(
     titleId: undefined,
     setTitleId: () => {},
     position: undefined,
-    setPosition: () => {},
   },
 );
 

@@ -1,24 +1,25 @@
-import { FloatingFocusManager } from "@floating-ui/react";
 import {
   makePrefixer,
-  useFloatingUI,
+  useEventCallback,
   useForkRef,
   useId,
   useIsomorphicLayoutEffect,
+  usePrevious,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type AnimationEvent,
-  type ComponentProps,
   type ComponentPropsWithRef,
   forwardRef,
+  type RefObject,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import { tabbable } from "tabbable";
 import { SidePanelContext, useSidePanelContext } from "./internal";
 import sidePanelCss from "./SidePanel.css";
 
@@ -39,9 +40,9 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
    * Which element receives focus when the panel opens.
    * Pass a number for the tabbable element index (0 = first), or a ref to a specific element.
-   * Defaults to the side panel close button.
+   * Defaults to the first tabbable element inside the panel (close button if present).
    */
-  initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
+  initialFocus?: number | RefObject<HTMLElement | null>;
   /**
    * The background color palette. Options are 'primary', 'secondary', 'tertiary' and 'none'.
    * @default "primary"
@@ -65,8 +66,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     } = props;
 
     const sidePanelContext = useSidePanelContext();
-    const { openState, floatingRootContext, setFloating, setPanelId, titleId } =
-      sidePanelContext;
+    const { openState, setFloating, setPanelId, titleId } = sidePanelContext;
     const positionedContext = useMemo(
       () => ({ ...sidePanelContext, position }),
       [sidePanelContext, position],
@@ -77,14 +77,11 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
     const [showComponent, setShowComponent] = useState(openState);
     const [animating, setAnimating] = useState(false);
     const shouldAnimateOpen = useRef(!openState);
-    // On first mount while open, skip moving focus when focus did not come from the trigger.
-    const [skipInitialFocus, setSkipInitialFocus] = useState(() => {
-      if (!openState) return false;
-      const reference = floatingRootContext.elements.reference;
-      if (!(reference instanceof Element)) return true;
-      const activeElement = reference.ownerDocument?.activeElement;
-      return !activeElement || !reference.contains(activeElement);
-    });
+    // Stays true until a ref-callback invocation observes focus already
+    // inside the trigger (a user-driven open). Flipping this from a mount
+    // effect would break under React 18 strict-mode double-mounting.
+    const initialMountRef = useRef(true);
+    const panelRef = useRef<HTMLDivElement | null>(null);
     const targetWindow = useWindow();
 
     useComponentCssInjection({
@@ -93,21 +90,78 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       window: targetWindow,
     });
 
-    const { context } = useFloatingUI({
-      rootContext: floatingRootContext,
+    // Guards against re-focusing the panel multiple times per open session.
+    const initialFocusDoneRef = useRef(false);
+    useEffect(() => {
+      if (!openState) {
+        initialFocusDoneRef.current = false;
+      }
+    }, [openState]);
+
+    // useEventCallback keeps a stable identity while always reading the
+    // latest closure, so React doesn't tear down and re-invoke the ref
+    // callback per render.
+    const handleInitialFocus = useEventCallback((el: HTMLDivElement | null) => {
+      if (!el || !openState || initialFocusDoneRef.current) {
+        return;
+      }
+
+      // On first mount, only auto-focus if focus is already in the trigger
+      // (the common click path). For defaultOpen without user interaction
+      // we leave focus alone.
+      if (initialMountRef.current) {
+        const reference =
+          sidePanelContext.floatingRootContext.elements.reference;
+        const activeElement =
+          reference instanceof Element
+            ? reference.ownerDocument?.activeElement
+            : null;
+        const focusCameFromTrigger =
+          reference instanceof Element &&
+          activeElement instanceof Node &&
+          reference.contains(activeElement);
+        if (!focusCameFromTrigger) {
+          return;
+        }
+        initialMountRef.current = false;
+      }
+
+      initialFocusDoneRef.current = true;
+      // Defer one frame so useSidePanelTabOrder has marked descendants
+      // with data-salt-original-tabindex and any child layout effects
+      // (e.g. SidePanelContent's scrollable-body tabIndex toggle) have
+      // settled. Scoped to the panel's owner window for iframe/shadow-root
+      // hosts.
+      const raf =
+        el.ownerDocument.defaultView?.requestAnimationFrame ??
+        targetWindow?.requestAnimationFrame ??
+        requestAnimationFrame;
+      raf(() => {
+        if (!el.isConnected) return;
+        const focusTarget = resolveInitialFocusTarget(el, initialFocus);
+        focusTarget?.focus();
+      });
     });
 
-    const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
+    const setPanelEl = useEventCallback((el: HTMLDivElement | null) => {
+      panelRef.current = el;
+      setFloating(el);
+      handleInitialFocus(el);
+    });
 
-    const handleAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
-      onAnimationEnd?.(event);
+    const handleRef = useForkRef<HTMLDivElement>(setPanelEl, ref);
 
-      if (event.currentTarget !== event.target || disableAnimation) return;
-      setAnimating(false);
-      if (!openState) {
-        setShowComponent(false);
-      }
-    };
+    const handleAnimationEnd = useEventCallback(
+      (event: AnimationEvent<HTMLDivElement>) => {
+        onAnimationEnd?.(event);
+
+        if (event.currentTarget !== event.target || disableAnimation) return;
+        setAnimating(false);
+        if (!openState) {
+          setShowComponent(false);
+        }
+      },
+    );
 
     useEffect(() => {
       setPanelId(id);
@@ -116,11 +170,24 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       };
     }, [id, setPanelId]);
 
+    // Return focus to the trigger on close (mirrors floating-ui's
+    // returnFocus). Initial previousOpenState of `false` ensures we never
+    // restore on mount — only on a real true→false transition.
+    const reference = sidePanelContext.floatingRootContext.elements.reference;
+    const previousOpenState = usePrevious(openState, [openState], false);
     useEffect(() => {
-      if (!openState) {
-        setSkipInitialFocus(false);
+      if (!previousOpenState || openState) return;
+      const panel = panelRef.current;
+      if (!(reference instanceof HTMLElement)) return;
+      const doc = reference.ownerDocument;
+      const active = doc?.activeElement;
+      const focusInsidePanel =
+        panel && active instanceof Node && panel.contains(active);
+      const focusOnBody = active === doc?.body || active == null;
+      if (focusInsidePanel || focusOnBody) {
+        reference.focus();
       }
-    }, [openState]);
+    }, [openState, previousOpenState, reference]);
 
     useIsomorphicLayoutEffect(() => {
       if (disableAnimation) {
@@ -134,7 +201,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         shouldAnimateOpen.current = true;
       }
 
-      // Don't animate if the panel has never been closed (defaultOpen scenario).
+      // Skip enter animation when the panel was open from the start.
       if (openState && !shouldAnimateOpen.current) {
         setShowComponent(true);
         setAnimating(false);
@@ -161,9 +228,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     if (!showComponent) return null;
 
-    const resolvedInitialFocus = skipInitialFocus ? -1 : (initialFocus ?? 0);
-
-    const panelDiv = (
+    return (
       <div
         role="region"
         aria-labelledby={clsx(ariaLabelledBy, titleId) || undefined}
@@ -190,21 +255,28 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         </SidePanelContext.Provider>
       </div>
     );
-
-    if (openState || animating) {
-      return (
-        <FloatingFocusManager
-          context={context}
-          modal={false}
-          initialFocus={resolvedInitialFocus}
-          closeOnFocusOut={false}
-          guards={false}
-        >
-          {panelDiv}
-        </FloatingFocusManager>
-      );
-    }
-
-    return panelDiv;
   },
 );
+
+function resolveInitialFocusTarget(
+  panel: HTMLElement,
+  initialFocus: SidePanelProps["initialFocus"],
+): HTMLElement | null {
+  if (initialFocus && typeof initialFocus === "object") {
+    return initialFocus.current ?? null;
+  }
+
+  // Prefer the panel's "managed" sequence (elements detached from the
+  // natural tab order by useSidePanelTabOrder), falling back to a fresh
+  // tabbable() scan when detachment hasn't run yet.
+  const managed = Array.from(
+    panel.querySelectorAll<HTMLElement>("[data-salt-original-tabindex]"),
+  );
+
+  const candidates = managed.length
+    ? managed
+    : (tabbable(panel, { displayCheck: "none" }) as HTMLElement[]);
+
+  const index = typeof initialFocus === "number" ? initialFocus : 0;
+  return candidates[index] ?? candidates[0] ?? panel;
+}

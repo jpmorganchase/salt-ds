@@ -8,7 +8,7 @@ import sidePanelContentCss from "./SidePanelContent.css";
 
 const withBaseName = makePrefixer("saltSidePanelContent");
 
-export interface SidePanelContentProps extends ComponentPropsWithRef<"div"> {}
+export type SidePanelContentProps = ComponentPropsWithRef<"div">;
 
 export const SidePanelContent = forwardRef<
   HTMLDivElement,

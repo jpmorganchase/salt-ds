@@ -32,11 +32,8 @@
 
 .saltSidePanel-none {
   --sidePanel-background: none;
-  border: none;
-}
-
-.saltSidePanel-none {
   --saltSidePanel-padding: var(--salt-spacing-200);
+  border: none;
 }
 
 .saltSidePanel-left,

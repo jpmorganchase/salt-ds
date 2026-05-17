@@ -41,6 +41,7 @@ import {
   SidePanelTrigger,
   useSidePanel,
 } from "@salt-ds/lab";
+import { useWindow } from "@salt-ds/window";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "@salt-ds/react-resizable-panels-theme/index.css";
 import type React from "react";
@@ -743,16 +744,18 @@ function useResizableSidePanel({
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [animating, setAnimating] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const targetWindow = useWindow();
 
   const toggle = useCallback(() => {
     if (!panelRef.current) return;
     clearTimeout(timerRef.current);
     const willExpand = !expanded;
+    const doc = targetWindow?.document ?? document;
     const duration =
       Number.parseInt(
-        getComputedStyle(document.documentElement).getPropertyValue(
-          "--salt-duration-perceptible",
-        ),
+        doc.defaultView
+          ?.getComputedStyle(doc.documentElement)
+          .getPropertyValue("--salt-duration-perceptible") ?? "",
         10,
       ) || 300; // var(--salt-duration-perceptible)
     setAnimating(true);
@@ -761,7 +764,7 @@ function useResizableSidePanel({
       panelRef.current?.resize(willExpand ? expandedSize : 0);
     });
     timerRef.current = setTimeout(() => setAnimating(false), duration);
-  }, [expanded, expandedSize]);
+  }, [expanded, expandedSize, targetWindow]);
 
   const panelTransition = animating
     ? "flex-grow var(--salt-duration-perceptible) var(--salt-animation-timing-function)"
@@ -1084,4 +1087,17 @@ export const Cards: StoryFn = () => {
       <CardsContent />
     </SidePanelProvider>
   );
+};
+
+Cards.parameters = {
+  // SidePanel detaches its descendants from the natural Tab order, so the
+  // scrollable help region inside the panel is reachable only through the
+  // trigger-driven Tab walk (Tab on the trigger jumps to the first managed
+  // element inside the panel, and Shift+Tab cycles back). Axe sees the
+  // region with tabindex="-1" and flags it as not focusable, but keyboard
+  // users still reach it via that trigger flow, so we suppress the rule
+  // for this story.
+  axe: {
+    disabledRules: ["scrollable-region-focusable"],
+  },
 };

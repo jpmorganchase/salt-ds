@@ -7,7 +7,7 @@ import sidePanelHeaderCss from "./SidePanelHeader.css";
 
 const withBaseName = makePrefixer("saltSidePanelHeader");
 
-export interface SidePanelHeaderProps extends ComponentPropsWithRef<"div"> {}
+export type SidePanelHeaderProps = ComponentPropsWithRef<"div">;
 
 export const SidePanelHeader = forwardRef<HTMLDivElement, SidePanelHeaderProps>(
   function SidePanelHeader(props, ref) {
