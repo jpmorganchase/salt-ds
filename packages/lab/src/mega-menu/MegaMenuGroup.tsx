@@ -8,16 +8,12 @@ import {
   forwardRef,
   type HTMLAttributes,
   isValidElement,
-  type ReactElement,
   type ReactNode,
 } from "react";
 import megaMenuGroupCss from "./MegaMenuGroup.css";
+import { MegaMenuHeader } from "./MegaMenuHeader";
 
 const withBaseName = makePrefixer("saltMegaMenuGroup");
-
-function isMegaMenuHeader(child: ReactElement): boolean {
-  return !!(child.type as { __isMegaMenuHeader?: boolean })?.__isMegaMenuHeader;
-}
 
 export interface MegaMenuGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -40,7 +36,7 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
     const items: ReactNode[] = [];
 
     Children.forEach(children, (child) => {
-      if (isValidElement(child) && isMegaMenuHeader(child) && !header) {
+      if (isValidElement(child) && child.type === MegaMenuHeader && !header) {
         header = cloneElement(child, { id: headerId });
       } else {
         items.push(child);

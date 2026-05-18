@@ -279,7 +279,7 @@ describe("Given a MegaMenu", () => {
       cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
-    it("tabs from the last item to the next trigger", () => {
+    it("tabs from the last item to the next trigger and closes the panel", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
@@ -291,6 +291,19 @@ describe("Given a MegaMenu", () => {
 
       cy.realPress("Tab");
       cy.findByRole("button", { name: "Services" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+    });
+
+    it("closes on Escape when focus is still on the trigger", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      focusSolutionsTrigger();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      // Focus has not yet moved into the panel — Escape should still dismiss it.
+      cy.realPress("Escape");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
     });
 
     it("supports Home to jump to first item in column", () => {

@@ -61,9 +61,8 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
     };
 
     return (
-      <li className={withBaseName()} ref={ref}>
+      <li className={clsx(withBaseName(), className)} ref={ref}>
         <ItemAction
-          className={clsx(withBaseName(), className)}
           data-mega-menu-item=""
           href={href}
           onClick={handleClick}
