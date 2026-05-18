@@ -173,10 +173,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     return "";
   };
 
-  const handleValidation = (
-    status: "error" | undefined,
-    message: string,
-  ) => {
+  const handleValidation = (status: "error" | undefined, message: string) => {
     setValidationStatus(status);
     setValidationMessage(message);
   };
@@ -375,10 +372,7 @@ export const CreditCard: StoryFn = () => {
     return match ? match.join("-") : cleaned;
   };
 
-  const handleValidation = (
-    status: "error" | undefined,
-    message: string,
-  ) => {
+  const handleValidation = (status: "error" | undefined, message: string) => {
     setValidationStatus(status);
     setValidationMessage(message);
   };
@@ -390,7 +384,10 @@ export const CreditCard: StoryFn = () => {
     setDisplayValue(value);
 
     if (hasInvalidChars(value)) {
-      handleValidation("error", "Only numbers, spaces and hyphens are allowed.");
+      handleValidation(
+        "error",
+        "Only numbers, spaces and hyphens are allowed.",
+      );
     } else {
       handleValidation(undefined, "");
     }
@@ -471,10 +468,7 @@ export const Currency: StoryFn = () => {
     return true;
   };
 
-  const handleValidation = (
-    status: "error" | undefined,
-    message: string,
-  ) => {
+  const handleValidation = (status: "error" | undefined, message: string) => {
     setValidationStatus(status);
     setValidationMessage(message);
   };
@@ -590,10 +584,7 @@ export const PostalCode: StoryFn = () => {
     );
   };
 
-  const handleValidation = (
-    status: "error" | undefined,
-    message: string,
-  ) => {
+  const handleValidation = (status: "error" | undefined, message: string) => {
     setValidationStatus(status);
     setValidationMessage(message);
   };
