@@ -2,7 +2,7 @@
 "@salt-ds/highcharts-theme": major
 ---
 
-Marked `@salt-ds/highcharts-theme` as stable.
+Salt's Highchart theme is now stable.
 
 The package provides Salt styling and default chart options for Highcharts through the `useChart` hook. `useChart` reads Salt theme and density values, builds the Salt defaults for the chart, and injects the required Highcharts theme CSS so consumers no longer need to manage those styles manually.
 
