@@ -251,8 +251,8 @@ function ToolbarNextOverflowItemOwner({
 
     if (host) {
       if (mountNode.parentElement !== host) {
-        notifyToolbarNextReparentedFocusLoss(mountNode);
         host.appendChild(mountNode);
+        notifyToolbarNextReparentedFocusLoss(mountNode);
       }
 
       const isMainToolbarHost =
