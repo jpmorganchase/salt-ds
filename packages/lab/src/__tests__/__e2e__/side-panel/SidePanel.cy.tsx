@@ -588,7 +588,7 @@ describe("GIVEN a SidePanel component", () => {
         const insidePanel = !!active?.closest(".saltSidePanel");
         expect(
           insidePanel,
-          `Tab past last row landed inside the side panel ` +
+          "Tab past last row landed inside the side panel " +
             `(focused element: ${active?.outerHTML?.slice(0, 120) ?? "<none>"})`,
         ).to.equal(false);
       });

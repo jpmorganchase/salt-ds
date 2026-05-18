@@ -1,11 +1,20 @@
 .saltSidePanel {
-  background-color: var(--sidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 300px;
   --sidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--sidePanel-borderColor, var(--salt-container-primary-borderColor));
   --saltSidePanel-padding: var(--salt-spacing-300);
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  /* Gap wrapper: animates its `width` between 0 and the panel width
+     to reserve / release space in the parent flex flow. Acts as the
+     containing block + clip for the absolutely-positioned inner.
+     `contain: paint` clips overflow AND forces Chrome to resolve the
+     inner's containing block from the gap's rendered width (Safari
+     does this without it). */
+  position: relative;
+  flex: none;
+  width: var(--saltSidePanel-width);
+  height: 100%;
+  min-height: 0;
+  align-self: stretch;
+  contain: paint;
 }
 
 .saltSidePanel-primary {
@@ -23,77 +32,69 @@
   --sidePanel-borderColor: var(--salt-container-tertiary-borderColor);
 }
 
-.saltSidePanel-left {
-  border-right: var(--sidePanel-border);
-}
-.saltSidePanel-right {
-  border-left: var(--sidePanel-border);
-}
-
 .saltSidePanel-none {
   --sidePanel-background: none;
   --saltSidePanel-padding: var(--salt-spacing-200);
-  border: none;
 }
 
-.saltSidePanel-left,
-.saltSidePanel-right {
-  width: var(--saltSidePanel-width);
-  height: 100%;
-  min-height: 0;
-  align-self: stretch;
-}
-
-.saltSidePanel-enterAnimation,
-.saltSidePanel-exitAnimation {
-  overflow: hidden;
-}
-
-.saltSidePanel-left.saltSidePanel-enterAnimation,
-.saltSidePanel-right.saltSidePanel-enterAnimation {
-  animation: saltSidePanel-expandWidth var(--salt-duration-perceptible) var(--salt-animation-timing-function);
-}
-
-.saltSidePanel-left.saltSidePanel-exitAnimation,
-.saltSidePanel-right.saltSidePanel-exitAnimation {
-  animation: saltSidePanel-collapseWidth var(--salt-duration-perceptible) var(--salt-animation-timing-function) both;
-}
-
-.saltSidePanel-exitAnimation {
-  pointer-events: none;
-}
-
+/* Inner: constant-width, absolutely-positioned panel. Anchored to the
+   gap's GROWING edge so its leading edge tracks the gap's expansion
+   in lockstep — content visibly pushes the sibling rather than being
+   revealed in place. Left panel grows rightward → anchor inner right;
+   right panel grows leftward → anchor inner left. */
 .saltSidePanel-inner {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-height: 0;
   padding: var(--saltSidePanel-padding);
-}
-
-.saltSidePanel-left .saltSidePanel-inner,
-.saltSidePanel-right .saltSidePanel-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   width: var(--saltSidePanel-width);
-  height: 100%;
+  background-color: var(--sidePanel-background, var(--salt-container-primary-background));
 }
 
-@keyframes saltSidePanel-expandWidth {
+.saltSidePanel-left .saltSidePanel-inner {
+  right: 0;
+  border-right: var(--sidePanel-border);
+}
+
+.saltSidePanel-right .saltSidePanel-inner {
+  left: 0;
+  border-left: var(--sidePanel-border);
+}
+
+.saltSidePanel-none .saltSidePanel-inner {
+  border: none;
+}
+
+.saltSidePanel-exitAnimation .saltSidePanel-inner {
+  pointer-events: none;
+}
+
+.saltSidePanel-enterAnimation {
+  animation: saltSidePanel-open var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+}
+
+.saltSidePanel-exitAnimation {
+  animation: saltSidePanel-close var(--salt-duration-perceptible) var(--salt-animation-timing-function) both;
+}
+
+@keyframes saltSidePanel-open {
   from {
     width: 0;
   }
 }
-@keyframes saltSidePanel-collapseWidth {
+
+@keyframes saltSidePanel-close {
   to {
     width: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .saltSidePanel-left.saltSidePanel-enterAnimation,
-  .saltSidePanel-right.saltSidePanel-enterAnimation,
-  .saltSidePanel-left.saltSidePanel-exitAnimation,
-  .saltSidePanel-right.saltSidePanel-exitAnimation {
+  .saltSidePanel-enterAnimation,
+  .saltSidePanel-exitAnimation {
     animation: none;
   }
 }
