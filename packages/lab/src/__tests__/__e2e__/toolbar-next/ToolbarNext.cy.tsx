@@ -6,6 +6,7 @@ import {
   Option,
   Switch,
 } from "@salt-ds/core";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -34,6 +35,7 @@ const {
   OverflowDividersFixture,
   SpacingOverflowFixture,
 } = composeStories(toolbarNextStories);
+const adapterDayjs = new AdapterDayjs();
 const toolbarHarnessStyle = { height: 220, width: 760 };
 
 type ToolbarNextQueuedAnimationFrame = {
@@ -1587,6 +1589,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   });
 
   it("allows tabbing within the date picker trigger and arrowing from the calendar button", () => {
+    cy.setDateAdapter(adapterDayjs);
     cy.mount(<KeyboardDatePickerFixture />);
 
     cy.findByPlaceholderText("Select date").focus();
@@ -2061,6 +2064,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   });
 
   it("clears date input focus styling when shared overflow returns to the toolbar", () => {
+    cy.setDateAdapter(adapterDayjs);
     cy.mount(<SharedOverflowDateInputFocusReentryTestCase />);
 
     cy.findByRole("button", { name: /Overflow\./i })

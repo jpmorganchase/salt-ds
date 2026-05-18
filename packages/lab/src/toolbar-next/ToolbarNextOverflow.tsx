@@ -20,6 +20,7 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import { compute } from "compute-scroll-into-view";
 import {
   Children,
   cloneElement,
@@ -73,6 +74,14 @@ const toolbarNextStatefulFocusRootSelector = [
   ".saltInput-focused",
 ].join(", ");
 
+const toolbarNextOverflowFocusScrollRootSelector = [
+  ".saltComboBox",
+  ".saltDateInput",
+  ".saltDropdown",
+  ".saltInput",
+  ".saltSwitch",
+].join(", ");
+
 function createToolbarNextFocusEvent(
   eventName: "blur" | "focusout",
   target: HTMLElement,
@@ -118,6 +127,67 @@ function notifyToolbarNextReparentedFocusLoss(mountNode: HTMLDivElement) {
     target.dispatchEvent(
       createToolbarNextFocusEvent("focusout", target, relatedTarget),
     );
+  }
+}
+
+function getToolbarNextOverflowFocusScrollTarget(target: HTMLElement) {
+  const itemRoot = target.closest<HTMLElement>(`[${TOOLBAR_NEXT_ITEM_ATTR}]`);
+  const controlRoot = target.closest<HTMLElement>(
+    toolbarNextOverflowFocusScrollRootSelector,
+  );
+
+  return controlRoot && itemRoot?.contains(controlRoot) ? controlRoot : target;
+}
+
+function getToolbarNextOverflowPanelInlinePadding(target: HTMLElement) {
+  const panelContent = target.closest<HTMLElement>(
+    `[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`,
+  );
+  const styles =
+    panelContent?.ownerDocument.defaultView?.getComputedStyle(panelContent);
+
+  return {
+    left: Number.parseFloat(styles?.paddingLeft ?? "0") || 0,
+    right: Number.parseFloat(styles?.paddingRight ?? "0") || 0,
+  };
+}
+
+function scrollToolbarNextOverflowTargetIntoView(
+  panel: HTMLDivElement | null,
+  target: HTMLElement,
+) {
+  if (!panel || !panel.contains(target)) {
+    return;
+  }
+
+  const scrollTarget = getToolbarNextOverflowFocusScrollTarget(target);
+  const actions = compute(scrollTarget, {
+    block: "nearest",
+    boundary: panel,
+    inline: "nearest",
+    scrollMode: "if-needed",
+  });
+
+  for (const { el, left, top } of actions) {
+    if (el === panel) {
+      const targetRect = scrollTarget.getBoundingClientRect();
+      const panelRect = panel.getBoundingClientRect();
+      const viewportLeft = panelRect.left + panel.clientLeft;
+      const viewportRight = viewportLeft + panel.clientWidth;
+      const padding = getToolbarNextOverflowPanelInlinePadding(scrollTarget);
+      const nextLeft =
+        targetRect.left < viewportLeft + padding.left
+          ? left - padding.left
+          : targetRect.right > viewportRight - padding.right
+            ? left + padding.right
+            : left;
+
+      el.scrollLeft = Math.max(0, nextLeft);
+    } else {
+      el.scrollLeft = left;
+    }
+
+    el.scrollTop = top;
   }
 }
 
@@ -493,6 +563,7 @@ export function ToolbarNextOverflowMenu({
         return;
       }
 
+      scrollToolbarNextOverflowTargetIntoView(panelRef.current, target);
       onItemFocus?.(focusMemory.itemId, focusMemory.controlIndex);
     },
     [handleScopeFocus, onItemFocus],
