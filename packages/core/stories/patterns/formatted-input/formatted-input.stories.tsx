@@ -27,9 +27,9 @@ export const PhoneNumber: StoryFn = () => {
   const [validationStatus, setValidationStatus] = useState<
     "error" | "warning" | "success" | undefined
   >(undefined);
+  const [validationMessage, setValidationMessage] = useState("");
   const defaultHelperText =
     "Enter your phone number, including the country code and area code.";
-  const [helperText, setHelperText] = useState(defaultHelperText);
 
   const formatPhoneNumber = (cleaned: string) => {
     if (cleaned.length === 11) {
@@ -48,10 +48,10 @@ export const PhoneNumber: StoryFn = () => {
 
   const handleValidation = (
     status: "error" | "warning" | "success" | undefined,
-    helperText: string,
+    message: string,
   ) => {
     setValidationStatus(status);
-    setHelperText(helperText);
+    setValidationMessage(message);
   };
 
   const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
@@ -61,9 +61,9 @@ export const PhoneNumber: StoryFn = () => {
     setDisplayValue(value);
 
     if (hasInvalidChars(value)) {
-      handleValidation("error", "Only numbers and () + - are allowed");
+      handleValidation("error", "Only numbers and () + - are allowed.");
     } else {
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     }
   };
 
@@ -75,14 +75,14 @@ export const PhoneNumber: StoryFn = () => {
     if (hasInvalidChars(value)) {
       handleValidation(
         "error",
-        "Remove letters and symbols—Only numbers and () + - are allowed",
+        "Remove letters and symbols—Only numbers and () + - are allowed.",
       );
       return;
     }
 
     if (normalized.length === 0) {
       setDisplayValue("");
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     } else if (normalized.length === 11) {
       const formatted = formatPhoneNumber(normalized);
       setDisplayValue(formatted);
@@ -124,7 +124,7 @@ export const PhoneNumber: StoryFn = () => {
         aria-live={validationStatus ? "assertive" : "polite"}
         aria-atomic="true"
       >
-        {helperText}
+        {validationMessage || defaultHelperText}
       </FormFieldHelperText>
     </FormField>
   );
@@ -137,9 +137,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+  const [validationMessage, setValidationMessage] = useState("");
   const defaultHelperText =
     "Enter your phone number, including the country code and area code.";
-  const [helperText, setHelperText] = useState(defaultHelperText);
 
   const [phoneNumber2, setPhoneNumber2] = useState("");
   const [displayValue2, setDisplayValue2] = useState("");
@@ -147,7 +147,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   const [validationStatus2, setValidationStatus2] = useState<
     "error" | undefined
   >(undefined);
-  const [helperText2, setHelperText2] = useState(defaultHelperText);
+  const [validationMessage2, setValidationMessage2] = useState("");
 
   const formatPhoneNumber = (cleaned: string) => {
     if (cleaned.length === 0) {
@@ -175,10 +175,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
 
   const handleValidation = (
     status: "error" | undefined,
-    helperText: string,
+    message: string,
   ) => {
     setValidationStatus(status);
-    setHelperText(helperText);
+    setValidationMessage(message);
   };
 
   const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
@@ -188,10 +188,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     setDisplayValue(value);
 
     if (hasInvalidChars(value)) {
-      handleValidation("error", "Only numbers and () + - are allowed");
+      handleValidation("error", "Only numbers and () + - are allowed.");
       setPreview("");
     } else {
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
       setPreview(generatePreview(value));
     }
   };
@@ -204,7 +204,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     if (hasInvalidChars(value)) {
       handleValidation(
         "error",
-        "Remove letters and symbols—Only numbers and () + - are allowed",
+        "Remove letters and symbols—Only numbers and () + - are allowed.",
       );
       setPreview("");
       return;
@@ -212,12 +212,12 @@ export const PhoneNumberWithPreview: StoryFn = () => {
 
     if (normalized.length === 0) {
       setDisplayValue("");
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
       setPreview("");
     } else if (normalized.length === 11) {
       const formatted = formatPhoneNumber(normalized);
       setDisplayValue(formatted);
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
       setPreview("");
     } else {
       handleValidation(
@@ -241,11 +241,11 @@ export const PhoneNumberWithPreview: StoryFn = () => {
 
     if (hasInvalidChars(value)) {
       setValidationStatus2("error");
-      setHelperText2("Only numbers and () + - are allowed");
+      setValidationMessage2("Only numbers and () + - are allowed.");
       setPreview2("");
     } else {
       setValidationStatus2(undefined);
-      setHelperText2(defaultHelperText);
+      setValidationMessage2("");
       setPreview2(generatePreview(value));
     }
   };
@@ -257,8 +257,8 @@ export const PhoneNumberWithPreview: StoryFn = () => {
 
     if (hasInvalidChars(value)) {
       setValidationStatus2("error");
-      setHelperText2(
-        "Remove letters and symbols—Only numbers and () + - are allowed",
+      setValidationMessage2(
+        "Remove letters and symbols—Only numbers and () + - are allowed.",
       );
       setPreview2("");
       return;
@@ -267,17 +267,17 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     if (normalized.length === 0) {
       setDisplayValue2("");
       setValidationStatus2(undefined);
-      setHelperText2(defaultHelperText);
+      setValidationMessage2("");
       setPreview2("");
     } else if (normalized.length === 11) {
       const formatted = formatPhoneNumber(normalized);
       setDisplayValue2(formatted);
       setValidationStatus2(undefined);
-      setHelperText2(defaultHelperText);
+      setValidationMessage2("");
       setPreview2("");
     } else {
       setValidationStatus2("error");
-      setHelperText2(
+      setValidationMessage2(
         "Please enter a valid phone number, including country and area code.",
       );
       setPreview2("");
@@ -319,7 +319,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           aria-live={validationStatus ? "assertive" : "polite"}
           aria-atomic="true"
         >
-          {helperText}
+          {validationMessage || defaultHelperText}
         </FormFieldHelperText>
       </FormField>
       <FormField
@@ -354,7 +354,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           aria-atomic="true"
           style={{ maxWidth: "210px" }}
         >
-          {helperText2}
+          {validationMessage2 || defaultHelperText}
         </FormFieldHelperText>
       </FormField>
     </FlexLayout>
@@ -367,8 +367,8 @@ export const CreditCard: StoryFn = () => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const defaultHelperText = "Enter your 16-digit card number";
-  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationMessage, setValidationMessage] = useState("");
+  const defaultHelperText = "Enter your 16-digit card number.";
 
   const formatCreditCard = (cleaned: string) => {
     const match = cleaned.match(/.{1,4}/g);
@@ -377,10 +377,10 @@ export const CreditCard: StoryFn = () => {
 
   const handleValidation = (
     status: "error" | undefined,
-    helperText: string,
+    message: string,
   ) => {
     setValidationStatus(status);
-    setHelperText(helperText);
+    setValidationMessage(message);
   };
 
   const hasInvalidChars = (value: string) => /[^\d\s-]/.test(value);
@@ -390,9 +390,9 @@ export const CreditCard: StoryFn = () => {
     setDisplayValue(value);
 
     if (hasInvalidChars(value)) {
-      handleValidation("error", "Only numbers, spaces and hyphens are allowed");
+      handleValidation("error", "Only numbers, spaces and hyphens are allowed.");
     } else {
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     }
   };
 
@@ -403,7 +403,7 @@ export const CreditCard: StoryFn = () => {
     if (hasInvalidChars(value)) {
       handleValidation(
         "error",
-        "Remove invalid characters—Only numbers, spaces and hyphens are allowed",
+        "Remove invalid characters—Only numbers, spaces and hyphens are allowed.",
       );
       return;
     }
@@ -412,13 +412,13 @@ export const CreditCard: StoryFn = () => {
 
     if (cleaned.length === 0) {
       setDisplayValue("");
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     } else if (cleaned.length === 16 && /^\d{16}$/.test(cleaned)) {
       const formatted = formatCreditCard(cleaned);
       setDisplayValue(formatted);
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     } else {
-      handleValidation("error", "Please enter a valid 16-digit card number");
+      handleValidation("error", "Please enter a valid 16-digit card number.");
     }
   };
 
@@ -443,7 +443,7 @@ export const CreditCard: StoryFn = () => {
         aria-live={validationStatus ? "assertive" : "polite"}
         aria-atomic="true"
       >
-        {helperText}
+        {validationMessage || defaultHelperText}
       </FormFieldHelperText>
     </FormField>
   );
@@ -455,8 +455,8 @@ export const Currency: StoryFn = () => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+  const [validationMessage, setValidationMessage] = useState("");
   const defaultHelperText = "Enter an amount (numbers only).";
-  const [helperText, setHelperText] = useState(defaultHelperText);
 
   const formatCurrency = (cleaned: string) => {
     const parts = cleaned.split(".");
@@ -473,10 +473,10 @@ export const Currency: StoryFn = () => {
 
   const handleValidation = (
     status: "error" | undefined,
-    helperText: string,
+    message: string,
   ) => {
     setValidationStatus(status);
-    setHelperText(helperText);
+    setValidationMessage(message);
   };
 
   const hasInvalidChars = (value: string) => /[^\d.,]/.test(value);
@@ -488,10 +488,10 @@ export const Currency: StoryFn = () => {
     if (hasInvalidChars(value)) {
       handleValidation(
         "error",
-        "Only numbers, periods, and commas are allowed",
+        "Only numbers, periods, and commas are allowed.",
       );
     } else {
-      handleValidation(undefined, "Enter an amount (numbers only).");
+      handleValidation(undefined, "");
     }
   };
 
@@ -502,7 +502,7 @@ export const Currency: StoryFn = () => {
     if (hasInvalidChars(value)) {
       handleValidation(
         "error",
-        "Remove invalid characters—Only numbers, periods, and commas are allowed",
+        "Remove invalid characters—Only numbers, periods, and commas are allowed.",
       );
       return;
     }
@@ -511,13 +511,13 @@ export const Currency: StoryFn = () => {
 
     if (cleaned.length === 0) {
       setDisplayValue("");
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     } else if (validateCurrency(cleaned)) {
       const formatted = formatCurrency(cleaned);
       setDisplayValue(formatted);
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     } else {
-      handleValidation("error", "Please enter a valid amount");
+      handleValidation("error", "Please enter a valid amount.");
     }
   };
 
@@ -543,7 +543,7 @@ export const Currency: StoryFn = () => {
         aria-live={validationStatus ? "assertive" : "polite"}
         aria-atomic="true"
       >
-        {helperText}
+        {validationMessage || defaultHelperText}
       </FormFieldHelperText>
     </FormField>
   );
@@ -555,8 +555,8 @@ export const PostalCode: StoryFn = () => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const defaultHelperText = "Enter your postal code";
-  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationMessage, setValidationMessage] = useState("");
+  const defaultHelperText = "Enter your postal code.";
   // UK postal code patterns: various formats like E14 5JP, SW1A 1AA, etc.
   const UK_POSTALCODE_REGEX = /^[A-Z]{1,2}\d{1,2}[A-Z]?\d[A-Z]{2}$/;
 
@@ -592,10 +592,10 @@ export const PostalCode: StoryFn = () => {
 
   const handleValidation = (
     status: "error" | undefined,
-    helperText: string,
+    message: string,
   ) => {
     setValidationStatus(status);
-    setHelperText(helperText);
+    setValidationMessage(message);
   };
 
   const hasInvalidChars = (value: string) => /[^A-Z0-9\s]/.test(value);
@@ -608,10 +608,10 @@ export const PostalCode: StoryFn = () => {
     if (hasInvalidChars(uppercase)) {
       handleValidation(
         "error",
-        "Only letters, numbers, and spaces are allowed",
+        "Only letters, numbers, and spaces are allowed.",
       );
     } else {
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     }
   };
 
@@ -623,22 +623,22 @@ export const PostalCode: StoryFn = () => {
     if (hasInvalidChars(value)) {
       handleValidation(
         "error",
-        "Remove invalid characters—Only letters, numbers, and spaces are allowed",
+        "Remove invalid characters—Only letters, numbers, and spaces are allowed.",
       );
       return;
     }
 
     if (cleaned.length === 0) {
       setDisplayValue("");
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     } else if (validatePostalCode(cleaned)) {
       const formatted = formatPostalCode(cleaned);
       setDisplayValue(formatted);
-      handleValidation(undefined, defaultHelperText);
+      handleValidation(undefined, "");
     } else {
       handleValidation(
         "error",
-        "Please enter a valid postal code (e.g., 12345 or E14 5JP or SW1A 1AA)",
+        "Please enter a valid postal code (e.g., 12345 or E14 5JP or SW1A 1AA).",
       );
     }
   };
@@ -664,7 +664,7 @@ export const PostalCode: StoryFn = () => {
         aria-live={validationStatus ? "assertive" : "polite"}
         aria-atomic="true"
       >
-        {helperText}
+        {validationMessage || defaultHelperText}
       </FormFieldHelperText>
     </FormField>
   );
