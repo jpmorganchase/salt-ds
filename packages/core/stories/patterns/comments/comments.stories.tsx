@@ -18,12 +18,46 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon, SendIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
-import type { ComponentProps } from "react";
-import { useEffect, useRef, useState } from "react";
+import type { ChangeEvent, ComponentProps, ReactNode } from "react";
+import { useId, useRef, useState } from "react";
 
 export default {
   title: "Patterns/Comments",
 } as Meta;
+
+// --- Shared types & data ---
+
+interface Comment {
+  name: string;
+  role: string;
+  date: number;
+  text: string;
+}
+
+const initialComments: Comment[] = [
+  {
+    name: "Alex Rivera",
+    role: "Data Analyst",
+    date: 1775035560000,
+    text: "Date range + status. Also the saved views are super helpful.",
+  },
+  {
+    name: "Jordan Lee",
+    role: "Product Manager",
+    date: 1775035200000,
+    text: "Has anyone tried filtering by region and date?",
+  },
+];
+
+const formatDate = (timestamp: number) =>
+  new Date(timestamp).toLocaleString(undefined, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  });
 
 const getAvatarColor = (
   name: string,
@@ -37,46 +71,79 @@ const getAvatarColor = (
   >["color"];
 };
 
-const formatDate = (timestamp: number) =>
-  new Date(timestamp)
-    .toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    })
-    .replace(",", " •");
+// --- Shared components ---
 
-export const Default = () => {
+function CommentList({
+  comments,
+  renderAvatar,
+}: {
+  comments: Comment[];
+  renderAvatar?: (comment: Comment) => ReactNode;
+}) {
+  return (
+    <ul
+      aria-label="Comments"
+      style={{ listStyle: "none", margin: 0, padding: 0 }}
+    >
+      {comments.map((comment, index) => (
+        <li
+          key={`${comment.name}-${comment.date}`}
+          style={{
+            borderTop:
+              index > 0
+                ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
+                : "none",
+          }}
+        >
+          <StackLayout padding={1} gap={1}>
+            {renderAvatar ? (
+              <FlexLayout gap={1}>
+                {renderAvatar(comment)}
+                <StackLayout gap={1}>
+                  <StackLayout gap={0.5}>
+                    <Text styleAs="h4">{comment.name}</Text>
+                    <Text styleAs="label" color="secondary">
+                      {comment.role} • {formatDate(comment.date)}
+                    </Text>
+                  </StackLayout>
+                  <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
+                </StackLayout>
+              </FlexLayout>
+            ) : (
+              <>
+                <StackLayout gap={0.5}>
+                  <Text styleAs="h4">{comment.name}</Text>
+                  <Text styleAs="label" color="secondary">
+                    {comment.role} • {formatDate(comment.date)}
+                  </Text>
+                </StackLayout>
+                <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
+              </>
+            )}
+          </StackLayout>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// --- Shared hook ---
+
+function useCommentForm(initialData: Comment[] = initialComments) {
   const { announce } = useAriaAnnouncer();
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
   const [validationStatus, setValidationStatus] = useState<
     "error" | "success" | undefined
   >(undefined);
-  const [comments, setComments] = useState([
-    {
-      name: "Alex Rivera",
-      role: "Data Analyst",
-      date: 1775035560000,
-      text: "Date range + status. Also the saved views are super helpful.",
-    },
-    {
-      name: "Jordan Lee",
-      role: "Product Manager",
-      date: 1775035200000,
-      text: "Has anyone tried filtering by region and date?",
-    },
-  ]);
+  const [comments, setComments] = useState<Comment[]>(initialData);
 
   const handleSubmit = () => {
     if (!inputValue.trim()) {
       setValidationStatus("error");
       inputRef.current?.focus();
       announce("Comment can't be blank", { ariaLive: "assertive" });
-      return;
+      return false;
     }
     setValidationStatus(undefined);
     setComments([
@@ -93,7 +160,42 @@ export const Default = () => {
     requestAnimationFrame(() => {
       announce("Comment posted");
     });
+    return true;
   };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setInputValue(value);
+    if (value.trim()) {
+      setValidationStatus(undefined);
+    }
+  };
+
+  return {
+    announce,
+    inputRef,
+    inputValue,
+    setInputValue,
+    validationStatus,
+    setValidationStatus,
+    comments,
+    setComments,
+    handleSubmit,
+    handleChange,
+  };
+}
+
+// --- Stories ---
+
+export const Default = () => {
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm();
 
   return (
     <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
@@ -119,94 +221,27 @@ export const Default = () => {
               )
             }
             value={inputValue}
-            onChange={(e) => {
-              const value = (e.target as HTMLInputElement).value;
-              setInputValue(value);
-              if (value.trim()) {
-                setValidationStatus(undefined);
-              }
-            }}
+            onChange={handleChange}
           />
           {validationStatus === "error" && (
             <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
           )}
         </FormField>
       </form>
-      <ul
-        aria-label="Comments"
-        style={{ listStyle: "none", margin: 0, padding: 0 }}
-      >
-        {comments.map((comment, index) => (
-          <li
-            key={`${comment.name}-${comment.date}`}
-            style={{
-              borderTop:
-                index > 0
-                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
-                  : "none",
-            }}
-          >
-            <StackLayout padding={1} gap={1}>
-              <StackLayout gap={0.5}>
-                <Text styleAs="h4">{comment.name}</Text>
-                <Text styleAs="label" color="secondary">
-                  {comment.role} • {formatDate(comment.date)}
-                </Text>
-              </StackLayout>
-              <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
-            </StackLayout>
-          </li>
-        ))}
-      </ul>
+      <CommentList comments={comments} />
     </StackLayout>
   );
 };
 
 export const WithAvatar = () => {
-  const { announce } = useAriaAnnouncer();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<
-    "error" | "success" | undefined
-  >(undefined);
-  const [comments, setComments] = useState([
-    {
-      name: "Alex Rivera",
-      role: "Data Analyst",
-      date: 1775035560000,
-      text: "Date range + status. Also the saved views are super helpful.",
-    },
-    {
-      name: "Jordan Lee",
-      role: "Product Manager",
-      date: 1775035200000,
-      text: "Has anyone tried filtering by region and date?",
-    },
-  ]);
-
-  const handleSubmit = () => {
-    if (!inputValue.trim()) {
-      setValidationStatus("error");
-      inputRef.current?.focus();
-      announce("Comment can't be blank", { ariaLive: "assertive" });
-      return;
-    }
-    setValidationStatus(undefined);
-    setComments([
-      {
-        name: "Sam Patel",
-        role: "UX Designer",
-        date: Date.now(),
-        text: inputValue,
-      },
-      ...comments,
-    ]);
-    setInputValue("");
-    inputRef.current?.focus();
-    requestAnimationFrame(() => {
-      announce("Comment posted");
-    });
-  };
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm();
 
   return (
     <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
@@ -232,104 +267,37 @@ export const WithAvatar = () => {
               )
             }
             value={inputValue}
-            onChange={(e) => {
-              const value = (e.target as HTMLInputElement).value;
-              setInputValue(value);
-              if (value.trim()) {
-                setValidationStatus(undefined);
-              }
-            }}
+            onChange={handleChange}
           />
           {validationStatus === "error" && (
             <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
           )}
         </FormField>
       </form>
-      <ul
-        aria-label="Comments"
-        style={{ listStyle: "none", margin: 0, padding: 0 }}
-      >
-        {comments.map((comment, index) => (
-          <li
-            key={`${comment.name}-${comment.date}`}
-            style={{
-              borderTop:
-                index > 0
-                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
-                  : "none",
-            }}
-          >
-            <StackLayout padding={1} gap={1}>
-              <FlexLayout gap={1}>
-                <Avatar
-                  size={1}
-                  color="accent"
-                  name={comment.name}
-                  aria-hidden="true"
-                />
-                <StackLayout gap={1}>
-                  <StackLayout gap={0.5}>
-                    <Text styleAs="h4">{comment.name}</Text>
-                    <Text styleAs="label" color="secondary">
-                      {comment.role} • {formatDate(comment.date)}
-                    </Text>
-                  </StackLayout>
-                  <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
-                </StackLayout>
-              </FlexLayout>
-            </StackLayout>
-          </li>
-        ))}
-      </ul>
+      <CommentList
+        comments={comments}
+        renderAvatar={(comment) => (
+          <Avatar
+            size={1}
+            color="accent"
+            name={comment.name}
+            aria-hidden="true"
+          />
+        )}
+      />
     </StackLayout>
   );
 };
 
 export const WithCategoricalAvatar = () => {
-  const { announce } = useAriaAnnouncer();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<
-    "error" | "success" | undefined
-  >(undefined);
-  const [comments, setComments] = useState([
-    {
-      name: "Alex Rivera",
-      role: "Data Analyst",
-      date: 1775035560000,
-      text: "Date range + status. Also the saved views are super helpful.",
-    },
-    {
-      name: "Jordan Lee",
-      role: "Product Manager",
-      date: 1775035200000,
-      text: "Has anyone tried filtering by region and date?",
-    },
-  ]);
-
-  const handleSubmit = () => {
-    if (!inputValue.trim()) {
-      setValidationStatus("error");
-      inputRef.current?.focus();
-      announce("Comment can't be blank", { ariaLive: "assertive" });
-      return;
-    }
-    setValidationStatus(undefined);
-    setComments([
-      {
-        name: "Sam Patel",
-        role: "UX Designer",
-        date: Date.now(),
-        text: inputValue,
-      },
-      ...comments,
-    ]);
-    setInputValue("");
-    inputRef.current?.focus();
-    requestAnimationFrame(() => {
-      announce("Comment posted");
-    });
-  };
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm();
 
   return (
     <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
@@ -355,93 +323,37 @@ export const WithCategoricalAvatar = () => {
               )
             }
             value={inputValue}
-            onChange={(e) => {
-              const value = (e.target as HTMLInputElement).value;
-              setInputValue(value);
-              if (value.trim()) {
-                setValidationStatus(undefined);
-              }
-            }}
+            onChange={handleChange}
           />
           {validationStatus === "error" && (
             <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
           )}
         </FormField>
       </form>
-      <ul
-        aria-label="Comments"
-        style={{ listStyle: "none", margin: 0, padding: 0 }}
-      >
-        {comments.map((comment, index) => (
-          <li
-            key={`${comment.name}-${comment.date}`}
-            style={{
-              borderTop:
-                index > 0
-                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
-                  : "none",
-            }}
-          >
-            <StackLayout padding={1} gap={1}>
-              <FlexLayout gap={1}>
-                <Avatar
-                  size={1}
-                  color={getAvatarColor(comment.name)}
-                  name={comment.name}
-                  aria-hidden="true"
-                />
-                <StackLayout gap={1}>
-                  <StackLayout gap={0.5}>
-                    <Text styleAs="h4">{comment.name}</Text>
-                    <Text styleAs="label" color="secondary">
-                      {comment.role} • {formatDate(comment.date)}
-                    </Text>
-                  </StackLayout>
-                  <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
-                </StackLayout>
-              </FlexLayout>
-            </StackLayout>
-          </li>
-        ))}
-      </ul>
+      <CommentList
+        comments={comments}
+        renderAvatar={(comment) => (
+          <Avatar
+            size={1}
+            color={getAvatarColor(comment.name)}
+            name={comment.name}
+            aria-hidden="true"
+          />
+        )}
+      />
     </StackLayout>
   );
 };
 
 export const WithEmptyState = () => {
-  const { announce } = useAriaAnnouncer();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<
-    "error" | "success" | undefined
-  >(undefined);
-  const [comments, setComments] = useState<
-    { name: string; role: string; date: number; text: string }[]
-  >([]);
-
-  const handleSubmit = () => {
-    if (!inputValue.trim()) {
-      setValidationStatus("error");
-      inputRef.current?.focus();
-      announce("Comment can't be blank", { ariaLive: "assertive" });
-      return;
-    }
-    setValidationStatus(undefined);
-    setComments([
-      {
-        name: "Sam Patel",
-        role: "UX Designer",
-        date: Date.now(),
-        text: inputValue,
-      },
-      ...comments,
-    ]);
-    setInputValue("");
-    inputRef.current?.focus();
-    requestAnimationFrame(() => {
-      announce("Comment posted");
-    });
-  };
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm([]);
 
   return (
     <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
@@ -473,13 +385,7 @@ export const WithEmptyState = () => {
               </Button>
             }
             value={inputValue}
-            onChange={(e) => {
-              const value = (e.target as HTMLInputElement).value;
-              setInputValue(value);
-              if (value.trim()) {
-                setValidationStatus(undefined);
-              }
-            }}
+            onChange={handleChange}
           />
           {validationStatus === "error" && (
             <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
@@ -493,11 +399,7 @@ export const WithEmptyState = () => {
           style={{ padding: "var(--salt-spacing-300) 0" }}
         >
           <StatusIndicator status="info" size={2} aria-hidden="true" />
-          <StackLayout
-            gap={1}
-            align="center"
-            style={{ maxWidth: "175px", textAlign: "center" }}
-          >
+          <StackLayout gap={1} align="center" style={{ textAlign: "center" }}>
             <Text styleAs="h4">
               <strong>Be the first to comment</strong>
             </Text>
@@ -505,32 +407,7 @@ export const WithEmptyState = () => {
           </StackLayout>
         </StackLayout>
       ) : (
-        <ul
-          aria-label="Comments"
-          style={{ listStyle: "none", margin: 0, padding: 0 }}
-        >
-          {comments.map((comment, index) => (
-            <li
-              key={`${comment.name}-${comment.date}`}
-              style={{
-                borderTop:
-                  index > 0
-                    ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
-                    : "none",
-              }}
-            >
-              <StackLayout padding={1} gap={1}>
-                <StackLayout gap={0.5}>
-                  <Text styleAs="h4">{comment.name}</Text>
-                  <Text styleAs="label" color="secondary">
-                    {comment.role} • {formatDate(comment.date)}
-                  </Text>
-                </StackLayout>
-                <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
-              </StackLayout>
-            </li>
-          ))}
-        </ul>
+        <CommentList comments={comments} />
       )}
     </StackLayout>
   );
@@ -545,31 +422,9 @@ export const WithMultilineInput = () => {
   >(undefined);
   const [errorMessage, setErrorMessage] = useState("");
   const MAX_CHARS = 1000;
-  const counterId = "comment-char-counter";
-  const announceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const counterId = useId();
   const prevAtLimitRef = useRef(false);
-
-  useEffect(() => {
-    return () => {
-      if (announceTimerRef.current) {
-        clearTimeout(announceTimerRef.current);
-      }
-    };
-  }, []);
-  const [comments, setComments] = useState([
-    {
-      name: "Alex Rivera",
-      role: "Data Analyst",
-      date: 1775035560000,
-      text: "Date range + status. Also the saved views are super helpful.",
-    },
-    {
-      name: "Jordan Lee",
-      role: "Product Manager",
-      date: 1775035200000,
-      text: "Has anyone tried filtering by region and date?",
-    },
-  ]);
+  const [comments, setComments] = useState<Comment[]>(initialComments);
 
   const handleSubmit = () => {
     if (!inputValue.trim()) {
@@ -624,6 +479,32 @@ export const WithMultilineInput = () => {
             textAreaProps={{
               "aria-describedby": counterId,
               "aria-invalid": validationStatus === "error",
+              onChange: (event: ChangeEvent<HTMLTextAreaElement>) => {
+                const value = event.target.value;
+                setInputValue(value);
+                if (value.length > MAX_CHARS) {
+                  setValidationStatus("error");
+                  setErrorMessage(
+                    "Comment is too long. Maximum is 1000 characters.",
+                  );
+                  if (!prevAtLimitRef.current) {
+                    prevAtLimitRef.current = true;
+                    announce(
+                      `Character limit reached. ${value.length} of ${MAX_CHARS} characters used.`,
+                      { ariaLive: "assertive" },
+                    );
+                  }
+                } else {
+                  prevAtLimitRef.current = false;
+                  setValidationStatus(undefined);
+                  setErrorMessage("");
+                  if (value.length > 0) {
+                    announce(
+                      `${value.length} of ${MAX_CHARS} characters used.`,
+                    );
+                  }
+                }
+              },
             }}
             endAdornment={
               <>
@@ -638,107 +519,43 @@ export const WithMultilineInput = () => {
               </>
             }
             value={inputValue}
-            onChange={(e) => {
-              const value = (e.target as HTMLInputElement).value;
-              setInputValue(value);
-              if (value.length > MAX_CHARS) {
-                setValidationStatus("error");
-                setErrorMessage(
-                  "Comment is too long. Maximum is 1000 characters.",
-                );
-                if (!prevAtLimitRef.current) {
-                  prevAtLimitRef.current = true;
-                  announce(
-                    `Character limit reached. ${value.length} of ${MAX_CHARS} characters used.`,
-                    { ariaLive: "assertive" },
-                  );
-                }
-              } else {
-                prevAtLimitRef.current = false;
-                setValidationStatus(undefined);
-                setErrorMessage("");
-                if (announceTimerRef.current) {
-                  clearTimeout(announceTimerRef.current);
-                }
-                announceTimerRef.current = setTimeout(() => {
-                  if (value.length > 0) {
-                    announce(
-                      `${value.length} of ${MAX_CHARS} characters used.`,
-                    );
-                  }
-                }, 1000);
-              }
-            }}
           />
           {validationStatus === "error" && (
             <FormFieldHelperText>{errorMessage}</FormFieldHelperText>
           )}
         </FormField>
       </form>
-      <ul
-        aria-label="Comments"
-        style={{ listStyle: "none", margin: 0, padding: 0 }}
-      >
-        {comments.map((comment, index) => (
-          <li
-            key={`${comment.name}-${comment.date}`}
-            style={{
-              borderTop:
-                index > 0
-                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
-                  : "none",
-            }}
-          >
-            <StackLayout padding={1} gap={1}>
-              <FlexLayout gap={1}>
-                <Avatar
-                  size={1}
-                  color="accent"
-                  name={comment.name}
-                  aria-hidden="true"
-                />
-                <StackLayout gap={1}>
-                  <StackLayout gap={0.5}>
-                    <Text styleAs="h4">{comment.name}</Text>
-                    <Text styleAs="label" color="secondary">
-                      {comment.role} • {formatDate(comment.date)}
-                    </Text>
-                  </StackLayout>
-                  <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
-                </StackLayout>
-              </FlexLayout>
-            </StackLayout>
-          </li>
-        ))}
-      </ul>
+      <CommentList
+        comments={comments}
+        renderAvatar={(comment) => (
+          <Avatar
+            size={1}
+            color="accent"
+            name={comment.name}
+            aria-hidden="true"
+          />
+        )}
+      />
     </StackLayout>
   );
 };
 
 export const WithSubmissionError = () => {
-  const { announce } = useAriaAnnouncer();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const {
+    announce,
+    inputRef,
+    inputValue,
+    setInputValue,
+    validationStatus,
+    setValidationStatus,
+    comments,
+    setComments,
+    handleChange,
+  } = useCommentForm();
+
   const submissionErrorMessage =
     "You are offline. Check your connection and resubmit.";
-  const [inputValue, setInputValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<
-    "error" | "success" | undefined
-  >(undefined);
   const [submissionError, setSubmissionError] = useState(false);
-  const [comments, setComments] = useState([
-    {
-      name: "Alex Rivera",
-      role: "Data Analyst",
-      date: 1775035560000,
-      text: "Date range + status. Also the saved views are super helpful.",
-    },
-    {
-      name: "Jordan Lee",
-      role: "Product Manager",
-      date: 1775035200000,
-      text: "Has anyone tried filtering by region and date?",
-    },
-  ]);
 
   const handleRetry = () => {
     if (inputValue.trim()) {
@@ -778,9 +595,7 @@ export const WithSubmissionError = () => {
     }
     setValidationStatus(undefined);
     setSubmissionError(true);
-    announce(`${submissionErrorMessage}`, {
-      ariaLive: "assertive",
-    });
+    announce(submissionErrorMessage, { ariaLive: "assertive" });
   };
 
   return (
@@ -807,13 +622,7 @@ export const WithSubmissionError = () => {
               )
             }
             value={inputValue}
-            onChange={(e) => {
-              const value = (e.target as HTMLInputElement).value;
-              setInputValue(value);
-              if (value.trim()) {
-                setValidationStatus(undefined);
-              }
-            }}
+            onChange={handleChange}
           />
           {validationStatus === "error" && (
             <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
@@ -826,7 +635,7 @@ export const WithSubmissionError = () => {
             <BannerContent>
               <StackLayout gap={1}>
                 <Text>
-                  <strong>Couldn’t post your comment</strong>
+                  <strong>Couldn't post your comment</strong>
                 </Text>
                 <Text>{submissionErrorMessage}</Text>
               </StackLayout>
@@ -852,42 +661,17 @@ export const WithSubmissionError = () => {
           </Banner>
         </div>
       )}
-      <ul
-        aria-label="Comments"
-        style={{ listStyle: "none", margin: 0, padding: 0 }}
-      >
-        {comments.map((comment, index) => (
-          <li
-            key={`${comment.name}-${comment.date}`}
-            style={{
-              borderTop:
-                index > 0
-                  ? "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor)"
-                  : "none",
-            }}
-          >
-            <StackLayout padding={1} gap={1}>
-              <FlexLayout gap={1}>
-                <Avatar
-                  size={1}
-                  color="accent"
-                  name={comment.name}
-                  aria-hidden="true"
-                />
-                <StackLayout gap={1}>
-                  <StackLayout gap={0.5}>
-                    <Text styleAs="h4">{comment.name}</Text>
-                    <Text styleAs="label" color="secondary">
-                      {comment.role} • {formatDate(comment.date)}
-                    </Text>
-                  </StackLayout>
-                  <Text style={{ lineBreak: "anywhere" }}>{comment.text}</Text>
-                </StackLayout>
-              </FlexLayout>
-            </StackLayout>
-          </li>
-        ))}
-      </ul>
+      <CommentList
+        comments={comments}
+        renderAvatar={(comment) => (
+          <Avatar
+            size={1}
+            color="accent"
+            name={comment.name}
+            aria-hidden="true"
+          />
+        )}
+      />
     </StackLayout>
   );
 };
