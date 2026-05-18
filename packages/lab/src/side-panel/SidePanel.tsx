@@ -151,6 +151,35 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(setPanelEl, ref);
 
+    // Snapshot the panel's natural width (in px) into a CSS variable so the
+    // inner can keep its full size while the outer animates between 0 and
+    // its target width. This makes percentage values for
+    // --saltSidePanel-width work, since the inner no longer resolves a
+    // percentage against the outer's animating width.
+    useIsomorphicLayoutEffect(() => {
+      if (!animating || disableAnimation) return;
+      const panel = panelRef.current;
+      if (!panel) return;
+
+      // Read the natural width with the animation suspended so we see the
+      // resting size rather than the in-flight interpolated value.
+      // getBoundingClientRect() flushes style/layout, so the inline
+      // `animation: none` takes effect for this read.
+      const previousAnimation = panel.style.animation;
+      panel.style.animation = "none";
+      const widthPx = panel.getBoundingClientRect().width;
+      panel.style.animation = previousAnimation;
+
+      panel.style.setProperty(
+        "--saltSidePanel-animation-width",
+        `${widthPx}px`,
+      );
+
+      return () => {
+        panel.style.removeProperty("--saltSidePanel-animation-width");
+      };
+    }, [animating, disableAnimation]);
+
     const handleAnimationEnd = useEventCallback(
       (event: AnimationEvent<HTMLDivElement>) => {
         onAnimationEnd?.(event);
