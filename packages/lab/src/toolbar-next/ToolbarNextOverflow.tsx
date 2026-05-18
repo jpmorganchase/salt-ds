@@ -68,6 +68,59 @@ const withBaseName = makePrefixer("saltToolbarNextOverflow");
 
 export type ToolbarNextItemHostKind = "main" | "measurement" | "overflow";
 
+const toolbarNextStatefulFocusRootSelector = [
+  ".saltDateInput-focused",
+  ".saltInput-focused",
+].join(", ");
+
+function createToolbarNextFocusEvent(
+  eventName: "blur" | "focusout",
+  target: HTMLElement,
+  relatedTarget: Element | null,
+) {
+  const FocusEventCtor = target.ownerDocument.defaultView?.FocusEvent;
+  const eventInit = {
+    bubbles: eventName === "focusout",
+    relatedTarget,
+  };
+
+  return FocusEventCtor
+    ? new FocusEventCtor(eventName, eventInit)
+    : new Event(eventName, eventInit);
+}
+
+function notifyToolbarNextReparentedFocusLoss(mountNode: HTMLDivElement) {
+  const activeElement = mountNode.ownerDocument.activeElement;
+
+  if (mountNode.contains(activeElement)) {
+    return;
+  }
+
+  // Browser focus can move to the document when a portaled toolbar item is
+  // reparented, without notifying controls that keep their own focused state.
+  const staleFocusTargets = Array.from(
+    mountNode.querySelectorAll<HTMLElement>(
+      toolbarNextStatefulFocusRootSelector,
+    ),
+  )
+    .map((root) =>
+      root.querySelector<HTMLElement>(toolbarNextFocusableSelector),
+    )
+    .filter((target): target is HTMLElement => target != null);
+
+  for (const target of staleFocusTargets) {
+    const relatedTarget =
+      activeElement instanceof Element ? activeElement : null;
+
+    target.dispatchEvent(
+      createToolbarNextFocusEvent("blur", target, relatedTarget),
+    );
+    target.dispatchEvent(
+      createToolbarNextFocusEvent("focusout", target, relatedTarget),
+    );
+  }
+}
+
 function canSeedOverflowFocusMemory(
   focusMemory: ToolbarNextFocusMemory | null | undefined,
   group: ToolbarNextOverflowGroup,
@@ -128,6 +181,7 @@ function ToolbarNextOverflowItemOwner({
 
     if (host) {
       if (mountNode.parentElement !== host) {
+        notifyToolbarNextReparentedFocusLoss(mountNode);
         host.appendChild(mountNode);
       }
 
@@ -165,6 +219,7 @@ function ToolbarNextOverflowItemOwner({
       return;
     }
 
+    notifyToolbarNextReparentedFocusLoss(mountNode);
     mountNode.parentElement?.removeChild(mountNode);
   }, [host, mountNode]);
 

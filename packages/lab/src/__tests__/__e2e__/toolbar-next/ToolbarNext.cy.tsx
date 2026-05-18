@@ -6,6 +6,13 @@ import {
   Option,
   Switch,
 } from "@salt-ds/core";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleGridPanel,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+} from "@salt-ds/date-components";
 import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
 import { useState } from "react";
@@ -484,6 +491,99 @@ function NamedOverflowFocusReentryTestCase() {
           >
             <Button appearance="transparent">Export</Button>
             <Button appearance="transparent">Settings</Button>
+          </TooltrayNext>
+        </ToolbarContent>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
+function NamedOverflowInputFocusReentryTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 320, flexDirection: "column" }}
+    >
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Named overflow input focus toolbar">
+        <ToolbarContent position="start">
+          <TooltrayNext
+            overflowGroup="Filters"
+            overflowLabel="Filters"
+            overflowMode="grouped"
+            overflowPriority={6}
+            role="group"
+            aria-label="Filters"
+          >
+            <Dropdown
+              aria-label="Filter option"
+              bordered
+              defaultSelected={["Option A"]}
+              style={{ width: 160 }}
+            >
+              <Option value="Option A" />
+              <Option value="Option B" />
+            </Dropdown>
+            <Button appearance="transparent">Filters</Button>
+          </TooltrayNext>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <TooltrayNext
+            overflowGroup="Actions"
+            overflowLabel="Actions"
+            overflowMode="grouped"
+            overflowPriority={5}
+            role="group"
+            aria-label="Actions"
+          >
+            <Button appearance="transparent">Export</Button>
+            <Button appearance="transparent">Settings</Button>
+            <Input bordered placeholder="Search" style={{ width: 180 }} />
+          </TooltrayNext>
+        </ToolbarContent>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
+function SharedOverflowDateInputFocusReentryTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 260, flexDirection: "column" }}
+    >
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Shared overflow date input focus toolbar">
+        <ToolbarContent position="start">
+          <TooltrayNext overflowPriority={6} role="group" aria-label="Criteria">
+            <Dropdown
+              aria-label="Criteria option"
+              bordered
+              defaultSelected={["Option A"]}
+            >
+              <Option value="Option A" />
+              <Option value="Option B" />
+            </Dropdown>
+            <DatePicker selectionVariant="single">
+              <DatePickerTrigger>
+                <DatePickerSingleInput
+                  aria-label="Settlement date"
+                  bordered
+                  placeholder="dd mmm yyyy"
+                />
+              </DatePickerTrigger>
+              <DatePickerOverlay>
+                <DatePickerSingleGridPanel />
+              </DatePickerOverlay>
+            </DatePicker>
+          </TooltrayNext>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <TooltrayNext role="group" aria-label="Actions">
+            <Button appearance="transparent">Pinned</Button>
+            <Button appearance="solid">Run</Button>
           </TooltrayNext>
         </ToolbarContent>
       </ToolbarNext>
@@ -1931,6 +2031,58 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByTestId("toolbar-before").focus();
     cy.realPress("Tab");
     cy.findByRole("button", { name: "Filters" }).should("be.focused");
+  });
+
+  it("clears input focus styling when named overflow returns to the toolbar", () => {
+    cy.mount(<NamedOverflowInputFocusReentryTestCase />);
+
+    cy.findByRole("button", { name: /Actions overflow\./i })
+      .focus()
+      .should("be.focused");
+    cy.realPress("Space");
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
+
+    cy.findByRole("button", { name: "Export" }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: "Settings" }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByPlaceholderText("Search").should("be.focused");
+
+    setFixtureWidth(760);
+    cy.findByRole("toolbar", { name: "Actions overflow" }).should("not.exist");
+    cy.findByPlaceholderText("Search")
+      .should("not.be.focused")
+      .closest(".saltInput")
+      .should("not.have.class", "saltInput-focused");
+
+    cy.findByTestId("toolbar-before").focus();
+    cy.realPress("Tab");
+    cy.findByPlaceholderText("Search").should("be.focused");
+  });
+
+  it("clears date input focus styling when shared overflow returns to the toolbar", () => {
+    cy.mount(<SharedOverflowDateInputFocusReentryTestCase />);
+
+    cy.findByRole("button", { name: /Overflow\./i })
+      .focus()
+      .should("be.focused");
+    cy.realPress("Space");
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+
+    cy.findByRole("combobox", { name: "Criteria option" }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("textbox", { name: "Settlement date" }).should("be.focused");
+
+    setFixtureWidth(760);
+    cy.findByRole("toolbar", { name: "More overflow" }).should("not.exist");
+    cy.findByRole("textbox", { name: "Settlement date" })
+      .should("not.be.focused")
+      .closest(".saltDateInput")
+      .should("not.have.class", "saltDateInput-focused");
+
+    cy.findByTestId("toolbar-before").focus();
+    cy.realPress("Tab");
+    cy.findByRole("textbox", { name: "Settlement date" }).should("be.focused");
   });
 
   it("keeps the portaled overflow panel inside the viewport", () => {
