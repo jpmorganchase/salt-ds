@@ -50,13 +50,13 @@ const initialComments: Comment[] = [
 ];
 
 const formatDate = (timestamp: number) =>
-  new Date(timestamp).toLocaleString("en-GB", {
+  new Date(timestamp).toLocaleString(undefined, {
     day: "2-digit",
     month: "short",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-    hour12: true,
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 
 const getAvatarColor = (
