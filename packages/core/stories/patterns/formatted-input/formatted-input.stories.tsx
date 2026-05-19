@@ -9,12 +9,27 @@ import {
   useBreakpoint,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import type { ReactNode } from "react";
 import { useFormattedInput } from "./useFormattedInput";
 
 export default {
   title: "Patterns/Formatted Input",
-  component: Input,
 } as Meta;
+
+const PhoneNumberLabelWithPreview = ({
+  previewText,
+}: {
+  previewText: ReactNode;
+}) => (
+  <FlexLayout direction="row" align="center" justify="space-between" gap={1}>
+    <FormFieldLabel>Phone number</FormFieldLabel>
+    {previewText && (
+      <Text styleAs="label" color="secondary">
+        {previewText}
+      </Text>
+    )}
+  </FlexLayout>
+);
 
 export const PhoneNumber: StoryFn = () => {
   const formatPhoneNumber = (cleaned: string) => {
@@ -90,14 +105,18 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   const defaultHelperText = "Enter a US phone number, e.g. +1 (555) 000-0000.";
 
   const { matchedBreakpoints } = useBreakpoint();
-  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+  const isBelowSm = !matchedBreakpoints.includes("sm");
 
   const formatPhoneNumber = (cleaned: string) => {
     if (cleaned.length === 0) {
       return "";
     }
     if (cleaned.length <= 4) {
-      return `+${cleaned.slice(0, 1)} (${cleaned.slice(1)}`;
+      // Keep the partial format balanced while typing (close the paren when
+      // we have at least 4 digits, otherwise show just the country code).
+      return cleaned.length < 4
+        ? `+${cleaned.slice(0, 1)} ${cleaned.slice(1)}`.trimEnd()
+        : `+${cleaned.slice(0, 1)} (${cleaned.slice(1, 4)})`;
     }
     if (cleaned.length <= 7) {
       return `+${cleaned.slice(0, 1)} (${cleaned.slice(1, 4)}) ${cleaned.slice(4)}`;
@@ -116,7 +135,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     return "";
   };
 
-  const phoneInputOptions = {
+  const buildPhoneOptions = () => ({
     formatValue: (cleaned: string) =>
       cleaned.length === 11 ? formatPhoneNumber(cleaned) : cleaned,
     normalizedValue: (value: string) => value.replace(/\D/g, ""),
@@ -128,7 +147,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     invalidFormatMessage:
       "Please enter a valid US phone number: country code (1) + area code + number.",
     generatePreview,
-  };
+  });
 
   const {
     displayValue,
@@ -139,7 +158,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     handleChange,
     handleBlur,
     handleFocus,
-  } = useFormattedInput(phoneInputOptions);
+  } = useFormattedInput(buildPhoneOptions());
 
   const {
     displayValue: displayValue2,
@@ -150,25 +169,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     handleChange: handleChange2,
     handleBlur: handleBlur2,
     handleFocus: handleFocus2,
-  } = useFormattedInput(phoneInputOptions);
-
-  const getFormFieldLabel = (preview: string) => {
-    return (
-      <StackLayout
-        direction="row"
-        align="center"
-        gap={1}
-        style={{ justifyContent: "space-between" }}
-      >
-        <FormFieldLabel>Phone number</FormFieldLabel>
-        {preview && (
-          <Text styleAs="label" color="secondary">
-            {preview}
-          </Text>
-        )}
-      </StackLayout>
-    );
-  };
+  } = useFormattedInput(buildPhoneOptions());
 
   return (
     <FlexLayout direction="row" align="start" gap={2} wrap>
@@ -177,7 +178,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           style={{ width: "300px" }}
           validationStatus={validationStatus}
         >
-          {getFormFieldLabel(preview)}
+          <PhoneNumberLabelWithPreview previewText={preview} />
           <Input
             value={displayValue}
             onChange={handleChange}
@@ -205,8 +206,8 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           style={{ width: "300px" }}
           validationStatus={validationStatus2}
         >
-          {isMobile ? (
-            getFormFieldLabel(preview2)
+          {isBelowSm ? (
+            <PhoneNumberLabelWithPreview previewText={preview2} />
           ) : (
             <FormFieldLabel>Phone number</FormFieldLabel>
           )}
@@ -218,14 +219,14 @@ export const PhoneNumberWithPreview: StoryFn = () => {
               onFocus={handleFocus2}
               placeholder="+1 (000) 000-0000"
               bordered
-              style={{ width: isMobile ? "100%" : "210px" }}
+              style={{ width: isBelowSm ? "100%" : "210px" }}
               inputProps={{
                 "aria-invalid":
                   validationStatus2 === "error" ? true : undefined,
                 autoComplete: "tel",
               }}
             />
-            {!isMobile && (
+            {!isBelowSm && (
               <Text
                 styleAs="label"
                 color="secondary"
@@ -239,7 +240,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
             )}
           </FlexLayout>
           <FormFieldHelperText
-            style={{ maxWidth: isMobile ? "100%" : "210px" }}
+            style={{ maxWidth: isBelowSm ? "100%" : "210px" }}
           >
             {validationMessage2 || defaultHelperText}
           </FormFieldHelperText>
@@ -257,7 +258,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
 export const CreditCard: StoryFn = () => {
   const formatCreditCard = (cleaned: string) => {
     const match = cleaned.match(/.{1,4}/g);
-    return match ? match.join("-") : cleaned;
+    return match ? match.join(" ") : cleaned;
   };
   const {
     displayValue,
@@ -270,8 +271,7 @@ export const CreditCard: StoryFn = () => {
   } = useFormattedInput({
     formatValue: formatCreditCard,
     normalizedValue: (value) => value.replace(/[\s-]/g, ""),
-    validateNormalized: (cleaned) =>
-      cleaned.length === 16 && /^\d{16}$/.test(cleaned),
+    validateNormalized: (cleaned) => /^\d{16}$/.test(cleaned),
     hasInvalidChars: (value: string) => /[^\d\s-]/.test(value),
     invalidCharMessage: "Only numbers, spaces and hyphens are allowed.",
     invalidCharBlurMessage:
@@ -288,7 +288,7 @@ export const CreditCard: StoryFn = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           onFocus={handleFocus}
-          placeholder="5555-5555-5555-4444"
+          placeholder="5555 5555 5555 4444"
           bordered
           inputProps={{
             "aria-invalid": validationStatus === "error" ? true : undefined,
@@ -318,7 +318,9 @@ export const Currency: StoryFn = () => {
   const validateCurrency = (cleaned: string) => {
     const parts = cleaned.split(".");
     if (parts.length > 2) return false;
-    return parts[0].length !== 0;
+    if (parts[0].length === 0) return false;
+    // Reject a trailing dot with no fractional digits (e.g. "123.").
+    return !(parts.length === 2 && parts[1].length === 0);
   };
 
   const {
@@ -370,7 +372,9 @@ export const Currency: StoryFn = () => {
 };
 
 export const PostalCode: StoryFn = () => {
-  // UK postal code patterns: various formats like M1, CR2, W1A, EC1A, etc.
+  // UK full postal codes: outward + inward, e.g. M1 1AA, CR2 6XH, W1A 1HQ,
+  // EC1A 1BB, SW1A 1AA. The regex matches the full code (no space) after
+  // normalization.
   const UK_POSTALCODE_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?\d[A-Z]{2}$/;
 
   const formatPostalCode = (cleaned: string) => {
@@ -379,8 +383,10 @@ export const PostalCode: StoryFn = () => {
       return cleaned;
     }
 
-    // UK postal code format - insert space 3 characters from the end
-    if (cleaned.length > 3) {
+    // UK postal code format - insert space 3 characters from the end. Only
+    // apply once the input is long enough to be a full UK postcode, so we
+    // don't insert a space into in-progress entries like "ABCD".
+    if (cleaned.length >= 5 && UK_POSTALCODE_REGEX.test(cleaned)) {
       const outwardCode = cleaned.slice(0, -3);
       const inwardCode = cleaned.slice(-3);
       return `${outwardCode} ${inwardCode}`;
@@ -395,12 +401,8 @@ export const PostalCode: StoryFn = () => {
       return true;
     }
 
-    // UK postal code: 5-7 characters matching UK format
-    return (
-      cleaned.length >= 5 &&
-      cleaned.length <= 7 &&
-      UK_POSTALCODE_REGEX.test(cleaned)
-    );
+    // UK postal code: the regex enforces the 5–7 char shape itself.
+    return UK_POSTALCODE_REGEX.test(cleaned);
   };
 
   const {

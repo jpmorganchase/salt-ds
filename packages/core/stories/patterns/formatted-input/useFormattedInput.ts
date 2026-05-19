@@ -1,5 +1,5 @@
 import { useAriaAnnouncer } from "@salt-ds/core";
-import { type ChangeEvent, type FocusEvent, useState } from "react";
+import { type ChangeEvent, useRef, useState } from "react";
 
 interface UseFormattedInputOptions {
   formatValue: (cleaned: string) => string;
@@ -34,12 +34,15 @@ export function useFormattedInput(options: UseFormattedInputOptions) {
 
   const [inputValue, setInputValue] = useState("");
   const [displayValue, setDisplayValue] = useState("");
+  const [editingValue, setEditingValue] = useState("");
   const [preview, setPreview] = useState("");
   const [validationStatus, setValidationStatus] = useState<
     "error" | "warning" | "success" | undefined
   >(undefined);
   const [validationMessage, setValidationMessage] = useState("");
   const { announce } = useAriaAnnouncer();
+  // Track last announced error to avoid spamming the live region on every keystroke.
+  const lastAnnouncedErrorRef = useRef<string>("");
 
   const handleValidation = (
     status: "error" | "warning" | "success" | undefined,
@@ -48,7 +51,15 @@ export function useFormattedInput(options: UseFormattedInputOptions) {
     setValidationStatus(status);
     setValidationMessage(message);
     if (message && status === "error") {
-      announce(message, { ariaLive: "assertive" });
+      // Only announce on transition into a new error message so the assertive
+      // live region isn't re-triggered on every keystroke while the same
+      // error is already showing.
+      if (lastAnnouncedErrorRef.current !== message) {
+        lastAnnouncedErrorRef.current = message;
+        announce(message, { ariaLive: "assertive" });
+      }
+    } else {
+      lastAnnouncedErrorRef.current = "";
     }
   };
 
@@ -57,35 +68,46 @@ export function useFormattedInput(options: UseFormattedInputOptions) {
       ? transformOnChange(e.target.value)
       : e.target.value;
     setDisplayValue(value);
-    setPreview("");
+    // Preserve the user's raw editing value so we can restore it on re-focus
+    // (spec: "revert the input to the original value the user typed").
+    setEditingValue(value);
 
     if (hasInvalidChars(value)) {
+      setPreview("");
       handleValidation("error", invalidCharMessage);
     } else {
       handleValidation(undefined, "");
-      if (generatePreview) {
-        setPreview(generatePreview(value));
-      }
+      setPreview(generatePreview ? generatePreview(value) : "");
     }
   };
 
-  const handleBlur = (_e: FocusEvent<HTMLInputElement>) => {
-    const value = displayValue;
+  const handleBlur = () => {
     setPreview("");
 
-    if (hasInvalidChars(value)) {
-      setInputValue(value);
+    // Validate the user's raw input, not the formatted display value, so
+    // characters that formatValue itself introduces (e.g. spaces, hyphens,
+    // parentheses) can never cause a previously accepted value to fail
+    // hasInvalidChars on a subsequent blur.
+    const valueToCheck = editingValue || displayValue;
+
+    if (hasInvalidChars(valueToCheck)) {
+      // Do NOT overwrite inputValue with the invalid raw value; inputValue is
+      // the canonical submission value and should only reflect a valid entry.
       handleValidation("error", invalidCharBlurMessage);
       return;
     }
 
-    const normalized = normalizedValue(value);
-    setInputValue(normalized);
+    const normalized = normalizedValue(valueToCheck);
 
     if (normalized.length === 0) {
+      setInputValue("");
       setDisplayValue("");
+      // Drop any stale editing value so a subsequent focus doesn't restore
+      // text the user has just cleared.
+      setEditingValue("");
       handleValidation(undefined, "");
     } else if (validateNormalized(normalized)) {
+      setInputValue(normalized);
       setDisplayValue(formatValue(normalized));
       if (warnCondition?.(normalized)) {
         handleValidation("warning", warnMessage ?? "");
@@ -102,9 +124,16 @@ export function useFormattedInput(options: UseFormattedInputOptions) {
 
   const handleFocus = () => {
     handleValidation(undefined, "");
-    if (inputValue.length > 0) {
-      setDisplayValue(inputValue);
-      setPreview(generatePreview ? generatePreview(inputValue) : "");
+    if (editingValue.length > 0) {
+      setDisplayValue(editingValue);
+      setPreview(generatePreview ? generatePreview(editingValue) : "");
+    } else if (inputValue.length > 0) {
+      // Fallback when the field was hydrated externally (e.g. server-rendered
+      // canonical value) without an editing value: surface the formatted form
+      // so the user sees a readable string, not the raw normalized value.
+      const formatted = formatValue(inputValue);
+      setDisplayValue(formatted);
+      setPreview(generatePreview ? generatePreview(formatted) : "");
     }
   };
 
