@@ -4,20 +4,18 @@
   align-items: flex-start;
   gap: var(--salt-spacing-100);
   width: 100%;
-  min-height: var(--salt-size-base);
 
-  padding-top: calc((var(--salt-size-base) - var(--salt-size-selectable)) / 2);
-  padding-bottom: calc((var(--salt-size-base) - var(--salt-size-selectable)) / 2);
+  padding-top: calc(var(--salt-spacing-75) + var(--salt-spacing-50));
+  padding-bottom: calc(var(--salt-spacing-75) + var(--salt-spacing-50));
   padding-right: var(--salt-spacing-100);
   /* Keep a fixed spacing-100 outer left padding for all nodes, then add one
-   indent step per additional level. Each indent step = (selectable element
-   width + inter-item gap).
+   indent step per additional level. Each indent step = (icon column width +
+   inter-item gap).
    Level-1 nodes get no extra indent; level-2 gets 1 step, level-3 gets 2, etc.
    */
-  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-selectable) + var(--salt-spacing-100));
-  /* Icons clamp to 12px minimum in Icon, so align against the rendered size. */
-  --saltTreeNodeTrigger-iconOffsetY: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2);
-  --saltTreeNodeTrigger-directIconInsetX: max(0px, calc((var(--salt-size-selectable) - max(var(--salt-size-icon), 12px)) / 2));
+  --saltTreeNodeTrigger-indentStep: calc(var(--salt-size-icon) + var(--salt-spacing-100));
+  --saltTreeNodeTrigger-iconOffsetY: calc((var(--salt-text-lineHeight) - var(--salt-size-icon)) / 2);
+  --saltTreeNodeTrigger-checkboxOffsetY: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
   padding-left: calc(var(--salt-spacing-100) + (var(--saltTreeNodeTrigger-indentStep) * (var(--saltTreeNode-level, 1) - 1)));
   background: var(--salt-selectable-background);
   color: var(--salt-content-primary-foreground);
@@ -56,18 +54,23 @@
 }
 
 .saltTreeNodeTrigger > .saltTreeNode-checkbox {
-  margin-block: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
+  margin-block: var(--saltTreeNodeTrigger-checkboxOffsetY) 0;
+}
+
+.saltTreeNodeTrigger > .saltTreeNodeExpansionIcon,
+.saltTreeNodeTrigger > .saltTreeNode-icon {
+  margin-block-start: var(--saltTreeNodeTrigger-iconOffsetY);
 }
 
 .saltTreeNodeTrigger > .saltTreeNodeExpansionIcon > .saltTreeNodeExpansionIcon-icon,
 .saltTreeNodeTrigger > .saltTreeNode-icon > .saltIcon {
-  --saltIcon-margin: var(--saltTreeNodeTrigger-iconOffsetY) 0 0 0;
+  --saltIcon-size: var(--salt-size-icon);
 }
 
 .saltTreeNodeTrigger > .saltIcon {
-  --saltIcon-margin: var(--saltTreeNodeTrigger-iconOffsetY) 0 0 0;
-  box-sizing: content-box;
-  padding-inline: var(--saltTreeNodeTrigger-directIconInsetX);
+  --saltIcon-size: var(--salt-size-icon);
+
+  margin-block-start: var(--saltTreeNodeTrigger-iconOffsetY);
   flex-shrink: 0;
   color: var(--salt-content-primary-foreground);
 }

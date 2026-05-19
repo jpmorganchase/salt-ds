@@ -1,15 +1,17 @@
 .saltTreeNodeExpansionIcon {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  width: var(--salt-size-selectable);
-  min-width: var(--salt-size-selectable);
-  height: var(--salt-size-selectable);
+  width: var(--salt-size-icon);
+  min-width: var(--salt-size-icon);
+  height: var(--salt-size-icon);
   flex-shrink: 0;
   position: relative;
 }
 
 .saltTreeNodeExpansionIcon-icon {
+  --saltIcon-size: var(--salt-size-icon);
+
   color: var(--salt-content-primary-foreground);
 }
 
