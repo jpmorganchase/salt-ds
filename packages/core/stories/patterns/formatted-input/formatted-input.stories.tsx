@@ -6,8 +6,9 @@ import {
   Input,
   StackLayout,
   Text,
+  useAriaAnnouncer,
+  useBreakpoint,
 } from "@salt-ds/core";
-import "@salt-ds/countries/saltCountries.css";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -28,6 +29,7 @@ export const PhoneNumber: StoryFn = () => {
     "error" | "warning" | "success" | undefined
   >(undefined);
   const [validationMessage, setValidationMessage] = useState("");
+  const { announce } = useAriaAnnouncer();
   const defaultHelperText =
     "Enter your phone number, including the country code and area code.";
 
@@ -52,6 +54,9 @@ export const PhoneNumber: StoryFn = () => {
   ) => {
     setValidationStatus(status);
     setValidationMessage(message);
+    if (message && status === "error") {
+      announce(message, { ariaLive: "assertive" });
+    }
   };
 
   const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
@@ -119,11 +124,12 @@ export const PhoneNumber: StoryFn = () => {
         onFocus={handleFocus}
         placeholder="+1 (000) 000-0000"
         bordered
+        inputProps={{
+          "aria-invalid": validationStatus === "error" ? true : undefined,
+          autoComplete: "tel",
+        }}
       />
-      <FormFieldHelperText
-        aria-live={validationStatus ? "assertive" : "polite"}
-        aria-atomic="true"
-      >
+      <FormFieldHelperText>
         {validationMessage || defaultHelperText}
       </FormFieldHelperText>
     </FormField>
@@ -148,6 +154,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     "error" | undefined
   >(undefined);
   const [validationMessage2, setValidationMessage2] = useState("");
+  const { announce } = useAriaAnnouncer();
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
   const formatPhoneNumber = (cleaned: string) => {
     if (cleaned.length === 0) {
@@ -176,6 +185,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   const handleValidation = (status: "error" | undefined, message: string) => {
     setValidationStatus(status);
     setValidationMessage(message);
+    if (message && status === "error") {
+      announce(message, { ariaLive: "assertive" });
+    }
   };
 
   const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
@@ -239,6 +251,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     if (hasInvalidChars(value)) {
       setValidationStatus2("error");
       setValidationMessage2("Only numbers and () + - are allowed.");
+      announce("Only numbers and () + - are allowed.", { ariaLive: "assertive" });
       setPreview2("");
     } else {
       setValidationStatus2(undefined);
@@ -257,6 +270,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       setValidationMessage2(
         "Remove letters and symbols—Only numbers and () + - are allowed.",
       );
+      announce("Remove letters and symbols—Only numbers and () + - are allowed.", { ariaLive: "assertive" });
       setPreview2("");
       return;
     }
@@ -277,6 +291,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       setValidationMessage2(
         "Please enter a valid phone number, including country and area code.",
       );
+      announce("Please enter a valid phone number, including country and area code.", { ariaLive: "assertive" });
       setPreview2("");
     }
   };
@@ -288,10 +303,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     }
   };
 
-  return (
-    <FlexLayout direction="column" align="start" gap={2}>
-      <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
-        <StackLayout
+  const getFormFieldLabel = (preview: string) => {
+    return (
+      <StackLayout
           direction="row"
           align="center"
           gap={1}
@@ -304,6 +318,13 @@ export const PhoneNumberWithPreview: StoryFn = () => {
             </Text>
           )}
         </StackLayout>
+    );
+  }
+
+  return (
+    <FlexLayout direction="column" align="start" gap={2}>
+      <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
+        {getFormFieldLabel(preview)}
         <Input
           value={displayValue}
           onChange={handleChange}
@@ -311,20 +332,21 @@ export const PhoneNumberWithPreview: StoryFn = () => {
           onFocus={handleFocus}
           placeholder="+1 (000) 000-0000"
           bordered
+          inputProps={{
+            "aria-invalid": validationStatus === "error" ? true : undefined,
+            autoComplete: "tel",
+          }}
         />
-        <FormFieldHelperText
-          aria-live={validationStatus ? "assertive" : "polite"}
-          aria-atomic="true"
-        >
+        <FormFieldHelperText>
           {validationMessage || defaultHelperText}
         </FormFieldHelperText>
       </FormField>
       <FormField
         validationStatus={validationStatus2}
-        labelPlacement="left"
+        labelPlacement={isMobile ? "top" : "left"}
         style={{ "--saltFormField-label-width": "auto" } as CSSProperties}
       >
-        <FormFieldLabel>Phone number</FormFieldLabel>
+        {isMobile ? getFormFieldLabel(preview2) : <FormFieldLabel>Phone number</FormFieldLabel>}
         <FlexLayout direction="row" align="center" gap={1.5}>
           <Input
             value={displayValue2}
@@ -333,9 +355,13 @@ export const PhoneNumberWithPreview: StoryFn = () => {
             onFocus={handleFocus2}
             placeholder="+1 (000) 000-0000"
             bordered
-            style={{ width: "210px" }}
+            style={{ width: isMobile ? "100%" : "210px" }}
+            inputProps={{
+              "aria-invalid": validationStatus2 === "error" ? true : undefined,
+              autoComplete: "tel",
+            }}
           />
-          <Text
+          {!isMobile && <Text
             styleAs="label"
             color="secondary"
             style={{
@@ -344,13 +370,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
             }}
           >
             {preview2}
-          </Text>
+          </Text>}
         </FlexLayout>
-        <FormFieldHelperText
-          aria-live={validationStatus2 ? "assertive" : "polite"}
-          aria-atomic="true"
-          style={{ maxWidth: "210px" }}
-        >
+        <FormFieldHelperText style={{ maxWidth: isMobile ? "100%" : "210px" }}>
           {validationMessage2 || defaultHelperText}
         </FormFieldHelperText>
       </FormField>
@@ -366,6 +388,7 @@ export const CreditCard: StoryFn = () => {
   );
   const [validationMessage, setValidationMessage] = useState("");
   const defaultHelperText = "Enter your 16-digit card number.";
+  const { announce } = useAriaAnnouncer();
 
   const formatCreditCard = (cleaned: string) => {
     const match = cleaned.match(/.{1,4}/g);
@@ -375,6 +398,9 @@ export const CreditCard: StoryFn = () => {
   const handleValidation = (status: "error" | undefined, message: string) => {
     setValidationStatus(status);
     setValidationMessage(message);
+    if (message && status === "error") {
+      announce(message, { ariaLive: "assertive" });
+    }
   };
 
   const hasInvalidChars = (value: string) => /[^\d\s-]/.test(value);
@@ -435,11 +461,12 @@ export const CreditCard: StoryFn = () => {
         onFocus={handleFocus}
         placeholder="5555-5555-5555-4444"
         bordered
+        inputProps={{
+          "aria-invalid": validationStatus === "error" ? true : undefined,
+          autoComplete: "cc-number",
+        }}
       />
-      <FormFieldHelperText
-        aria-live={validationStatus ? "assertive" : "polite"}
-        aria-atomic="true"
-      >
+      <FormFieldHelperText>
         {validationMessage || defaultHelperText}
       </FormFieldHelperText>
     </FormField>
@@ -453,7 +480,8 @@ export const Currency: StoryFn = () => {
     undefined,
   );
   const [validationMessage, setValidationMessage] = useState("");
-  const defaultHelperText = "Enter an amount (numbers only).";
+  const defaultHelperText = "Enter an amount in US dollars (numbers only).";
+  const { announce } = useAriaAnnouncer();
 
   const formatCurrency = (cleaned: string) => {
     const parts = cleaned.split(".");
@@ -471,6 +499,9 @@ export const Currency: StoryFn = () => {
   const handleValidation = (status: "error" | undefined, message: string) => {
     setValidationStatus(status);
     setValidationMessage(message);
+    if (message && status === "error") {
+      announce(message, { ariaLive: "assertive" });
+    }
   };
 
   const hasInvalidChars = (value: string) => /[^\d.,]/.test(value);
@@ -532,11 +563,12 @@ export const Currency: StoryFn = () => {
         onFocus={handleFocus}
         placeholder="0.00"
         bordered
+        inputProps={{
+          "aria-invalid": validationStatus === "error" ? true : undefined,
+          autoComplete: "postal-code",
+        }}
       />
-      <FormFieldHelperText
-        aria-live={validationStatus ? "assertive" : "polite"}
-        aria-atomic="true"
-      >
+      <FormFieldHelperText>
         {validationMessage || defaultHelperText}
       </FormFieldHelperText>
     </FormField>
@@ -551,6 +583,7 @@ export const PostalCode: StoryFn = () => {
   );
   const [validationMessage, setValidationMessage] = useState("");
   const defaultHelperText = "Enter your postal code.";
+  const { announce } = useAriaAnnouncer();
   // UK postal code patterns: various formats like E14 5JP, SW1A 1AA, etc.
   const UK_POSTALCODE_REGEX = /^[A-Z]{1,2}\d{1,2}[A-Z]?\d[A-Z]{2}$/;
 
@@ -587,6 +620,9 @@ export const PostalCode: StoryFn = () => {
   const handleValidation = (status: "error" | undefined, message: string) => {
     setValidationStatus(status);
     setValidationMessage(message);
+    if (message && status === "error") {
+      announce(message, { ariaLive: "assertive" });
+    }
   };
 
   const hasInvalidChars = (value: string) => /[^A-Z0-9\s]/.test(value);
@@ -650,11 +686,11 @@ export const PostalCode: StoryFn = () => {
         onFocus={handleFocus}
         placeholder="12345 or E14 5JP or SW1A 1AA"
         bordered
+        inputProps={{
+          "aria-invalid": validationStatus === "error" ? true : undefined,
+        }}
       />
-      <FormFieldHelperText
-        aria-live={validationStatus ? "assertive" : "polite"}
-        aria-atomic="true"
-      >
+      <FormFieldHelperText>
         {validationMessage || defaultHelperText}
       </FormFieldHelperText>
     </FormField>
