@@ -3,10 +3,10 @@ import Highcharts from "highcharts";
 
 type AxisOptions = Options["xAxis"] | Options["yAxis"];
 
-const mergeAxisOptions = (
-  defaultAxis: AxisOptions,
-  resolvedAxis: AxisOptions,
-): AxisOptions => {
+const mergeAxisOptions = <T extends AxisOptions>(
+  defaultAxis: T,
+  resolvedAxis: T,
+): T => {
   if (resolvedAxis == null) {
     return defaultAxis;
   }
@@ -23,10 +23,12 @@ const mergeAxisOptions = (
     // Highcharts does not reliably merge object axis defaults into axis arrays,
     // so we normalize each axis entry before the top-level merge instead.
     // See: https://github.com/highcharts/highcharts/issues/21155
-    return resolvedAxis.map((axis) => Highcharts.merge(axisDefaults, axis));
+    return resolvedAxis.map((axis) =>
+      Highcharts.merge(axisDefaults, axis),
+    ) as T;
   }
 
-  return Highcharts.merge(axisDefaults, resolvedAxis);
+  return Highcharts.merge(axisDefaults, resolvedAxis) as T;
 };
 
 export const mergeChartOptions = (

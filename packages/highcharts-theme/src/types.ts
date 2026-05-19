@@ -3,6 +3,12 @@ import type { Options } from "highcharts";
 // Compatibility helpers for supporting Highcharts v10–v12 while
 // allowing newer options that were introduced in later versions.
 
+export type HighchartsSeriesOptionsCompat = NonNullable<
+  Options["series"]
+>[number] & {
+  type?: string;
+};
+
 type PlotPieBorderRadiusCompat = {
   plotOptions?: {
     pie?: {
