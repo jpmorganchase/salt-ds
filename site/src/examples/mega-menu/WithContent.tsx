@@ -153,12 +153,8 @@ export const WithContent = (): ReactElement => {
             </MegaMenuSection>
 
             <FlexLayout gap={3}>
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
+              <MegaMenuContent
+                className={styles.linkFooterSpacingFirstLinkStart}
               >
                 <Link
                   color="primary"
@@ -168,8 +164,8 @@ export const WithContent = (): ReactElement => {
                 >
                   Book a demo
                 </Link>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
+              </MegaMenuContent>
+              <MegaMenuContent className={styles.linkFooterSpacingMultiLink}>
                 <Link
                   color="primary"
                   underline="default"
@@ -178,7 +174,7 @@ export const WithContent = (): ReactElement => {
                 >
                   Support center
                 </Link>
-              </MegaMenuGroup>
+              </MegaMenuContent>
             </FlexLayout>
           </div>
           <MegaMenuContent className={`${styles.customRegionSideContent}`}>
@@ -376,12 +372,8 @@ export const WithContent = (): ReactElement => {
               </MegaMenuGroup>
             </MegaMenuSection>
             <FlexLayout gap={3}>
-              <MegaMenuGroup
-                style={{
-                  padding:
-                    " 0 0  var(--salt-spacing-300) var(--salt-spacing-300)",
-                  width: "fit-content",
-                }}
+              <MegaMenuContent
+                className={styles.linkFooterSpacingFirstLinkStart}
               >
                 <Link
                   color="primary"
@@ -391,8 +383,8 @@ export const WithContent = (): ReactElement => {
                 >
                   Book a demo
                 </Link>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
+              </MegaMenuContent>
+              <MegaMenuContent className={styles.linkFooterSpacingMultiLink}>
                 <Link
                   color="primary"
                   underline="default"
@@ -401,7 +393,7 @@ export const WithContent = (): ReactElement => {
                 >
                   Support center
                 </Link>
-              </MegaMenuGroup>
+              </MegaMenuContent>
             </FlexLayout>
           </div>
         </MegaMenuPanel>

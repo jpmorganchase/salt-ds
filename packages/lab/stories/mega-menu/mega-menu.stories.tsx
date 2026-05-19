@@ -3151,7 +3151,7 @@ export const WithContent: StoryFn = () => {
               </MegaMenuGroup>
             </MegaMenuSection>
             <FlexLayout gap={3}>
-              <MegaMenuGroup className="link-footer-spacing-first-link">
+              <MegaMenuContent className="link-footer-spacing-first-link">
                 <Link
                   color="primary"
                   underline="default"
@@ -3160,8 +3160,8 @@ export const WithContent: StoryFn = () => {
                 >
                   Book a demo
                 </Link>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
+              </MegaMenuContent>
+              <MegaMenuContent className="link-footer-spacing-multi-link">
                 <Link
                   color="primary"
                   underline="default"
@@ -3170,7 +3170,7 @@ export const WithContent: StoryFn = () => {
                 >
                   Support center
                 </Link>
-              </MegaMenuGroup>
+              </MegaMenuContent>
             </FlexLayout>
           </div>
           <MegaMenuContent className="custom-region">
@@ -3362,7 +3362,7 @@ export const WithContent: StoryFn = () => {
               </MegaMenuGroup>
             </MegaMenuSection>
             <FlexLayout gap={3}>
-              <MegaMenuGroup className="link-footer-spacing-first-link">
+              <MegaMenuContent className="link-footer-spacing-first-link">
                 <Link
                   color="primary"
                   underline="default"
@@ -3371,8 +3371,8 @@ export const WithContent: StoryFn = () => {
                 >
                   Book a demo
                 </Link>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
+              </MegaMenuContent>
+              <MegaMenuContent className="link-footer-spacing-multi-link">
                 <Link
                   color="primary"
                   underline="default"
@@ -3381,7 +3381,7 @@ export const WithContent: StoryFn = () => {
                 >
                   Support center
                 </Link>
-              </MegaMenuGroup>
+              </MegaMenuContent>
             </FlexLayout>
           </div>
         </MegaMenuPanel>
@@ -3609,7 +3609,7 @@ export const WithLink: StoryFn = () => {
                 </MegaMenuGroup>
               </MegaMenuSection>
               <FlexLayout wrap gap={3}>
-                <MegaMenuGroup className="link-footer-spacing-first-link">
+                <MegaMenuContent className="link-footer-spacing-first-link">
                   <Link
                     color="primary"
                     underline="default"
@@ -3618,8 +3618,8 @@ export const WithLink: StoryFn = () => {
                   >
                     Book a demo
                   </Link>
-                </MegaMenuGroup>
-                <MegaMenuGroup className="link-footer-spacing-multi-link">
+                </MegaMenuContent>
+                <MegaMenuContent className="link-footer-spacing-multi-link">
                   <Link
                     color="primary"
                     underline="default"
@@ -3628,7 +3628,7 @@ export const WithLink: StoryFn = () => {
                   >
                     Support center
                   </Link>
-                </MegaMenuGroup>
+                </MegaMenuContent>
               </FlexLayout>
             </MegaMenuPanel>
           </MegaMenu>
@@ -3848,7 +3848,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup className="link-footer-spacing">
+              <MegaMenuContent className="link-footer-spacing">
                 <Link
                   color="primary"
                   underline="default"
@@ -3857,7 +3857,7 @@ export const WithLink: StoryFn = () => {
                 >
                   Service status
                 </Link>
-              </MegaMenuGroup>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3957,7 +3957,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup className="link-footer-spacing">
+              <MegaMenuContent className="link-footer-spacing">
                 <Link
                   color="primary"
                   underline="default"
@@ -3966,7 +3966,7 @@ export const WithLink: StoryFn = () => {
                 >
                   Browse documentation
                 </Link>
-              </MegaMenuGroup>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>

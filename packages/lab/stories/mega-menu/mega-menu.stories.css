@@ -77,7 +77,7 @@ nav > ol {
   padding: 0;
 }
 
-.custom-region-no-container-padding .saltMegaMenuContent {
+.custom-region-no-container-padding .custom-region {
   flex: 0 0 auto;
 }
 
@@ -111,7 +111,7 @@ nav > ol {
   display: block;
 }
 
-.custom-region-side .saltMegaMenuContent {
+.custom-region-side .custom-region {
   flex: 0 0 258px;
   inline-size: 258px;
   box-sizing: border-box;
@@ -131,7 +131,7 @@ nav > ol {
     --saltMegaMenuPanel-maxInlineSize: 320px;
   }
 
-  .custom-region-side .saltMegaMenuContent {
+  .custom-region-side .custom-region {
     flex: 0 0 auto;
     inline-size: 100%;
     padding-inline: var(--salt-spacing-300);
@@ -146,13 +146,6 @@ nav > ol {
   }
 }
 
-/* Top / bottom variants: panel width is driven by the menu section
-   (the area containing the menu groups), but capped to the available
-   viewport width so the panel stays responsive on smaller screens.
-   The custom region (image + description) stretches to fill that width.
-   The panel itself never wraps, so the section and the custom region
-   are always stacked; responsiveness happens *inside* the section,
-   where menu groups wrap via the auto-fit grid. */
 .menu-item-adornment {
   margin-inline-start: auto;
   display: flex;
@@ -175,17 +168,19 @@ nav > ol {
 }
 
 .link-footer-spacing {
-  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  padding-top: 0;
   width: fit-content;
 }
 
 .link-footer-spacing-first-link {
-  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  padding-right: 0;
+  padding-top: 0;
   width: fit-content;
 }
 
 .link-footer-spacing-multi-link {
-  padding: 0 0 var(--salt-spacing-300) 0;
+  padding-left: 0;
+  padding-top: 0;
   width: fit-content;
 }
 .small-viewport-container .saltMegaMenuSection {

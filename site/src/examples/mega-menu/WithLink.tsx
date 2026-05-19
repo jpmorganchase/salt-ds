@@ -2,6 +2,7 @@ import { FlexLayout, Link, NavigationItem, StackLayout } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
@@ -234,7 +235,7 @@ export const WithLink = (): ReactElement => {
                 </MegaMenuGroup>
               </MegaMenuSection>
               <FlexLayout wrap gap={3}>
-                <MegaMenuGroup
+                <MegaMenuContent
                   className={styles.linkFooterSpacingFirstLinkStart}
                 >
                   <Link
@@ -245,8 +246,8 @@ export const WithLink = (): ReactElement => {
                   >
                     Book a demo
                   </Link>
-                </MegaMenuGroup>
-                <MegaMenuGroup className={styles.linkFooterSpacingMultiLink}>
+                </MegaMenuContent>
+                <MegaMenuContent className={styles.linkFooterSpacingMultiLink}>
                   <Link
                     color="primary"
                     underline="default"
@@ -255,7 +256,7 @@ export const WithLink = (): ReactElement => {
                   >
                     Support center
                   </Link>
-                </MegaMenuGroup>
+                </MegaMenuContent>
               </FlexLayout>
             </MegaMenuPanel>
           </MegaMenu>
@@ -477,7 +478,7 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup className={styles.linkFooterSpacing}>
+              <MegaMenuContent className={styles.linkFooterSpacing}>
                 <Link
                   color="primary"
                   underline="default"
@@ -486,7 +487,7 @@ export const WithLink = (): ReactElement => {
                 >
                   Service status
                 </Link>
-              </MegaMenuGroup>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -589,7 +590,7 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
-              <MegaMenuGroup className={styles.linkFooterSpacing}>
+              <MegaMenuContent className={styles.linkFooterSpacing}>
                 <Link
                   color="primary"
                   underline="default"
@@ -598,7 +599,7 @@ export const WithLink = (): ReactElement => {
                 >
                   Browse documentation
                 </Link>
-              </MegaMenuGroup>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>

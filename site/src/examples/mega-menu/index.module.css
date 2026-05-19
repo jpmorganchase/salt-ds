@@ -53,12 +53,14 @@
 }
 
 .linkFooterSpacingFirstLinkStart {
-  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  padding-right: 0;
+  padding-top: 0;
   width: fit-content;
 }
 
 .linkFooterSpacingMultiLink {
-  padding: 0 0 var(--salt-spacing-300) 0;
+  padding-left: 0;
+  padding-top: 0;
   width: fit-content;
 }
 .customRegionContent {
@@ -72,8 +74,8 @@
 }
 
 .linkFooterSpacing {
-  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
   width: fit-content;
+  padding-top: 0;
 }
 
 .withLinkMenuContainer {
