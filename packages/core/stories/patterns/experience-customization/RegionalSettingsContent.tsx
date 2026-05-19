@@ -1,7 +1,6 @@
 import {
   Dropdown,
   FormField,
-  FormFieldHelperText,
   FormFieldLabel,
   GridItem,
   GridLayout,
@@ -16,47 +15,11 @@ export const RegionalSettingsContent = ({
   formData,
   handleRadioChange,
   handleSelectChange,
-  stepFieldValidation,
 }: FormContentProps) => {
   return (
     <GridLayout columns={{ xs: 1, sm: 2 }}>
       <GridItem>
         <StackLayout>
-          <FormField
-            validationStatus={stepFieldValidation.language?.status}
-            necessity="required"
-          >
-            <FormFieldLabel>Choose a language</FormFieldLabel>
-            <Dropdown
-              bordered
-              placeholder="Select"
-              name="language"
-              value={formData.language}
-              onSelectionChange={(_e, value) =>
-                handleSelectChange?.(value[0], "language")
-              }
-            >
-              <Option value="English">English</Option>
-              <Option value="Spanish">Spanish</Option>
-              <Option value="French">French</Option>
-              <Option value="German">German</Option>
-              <Option value="Italian">Italian</Option>
-              <Option value="Portuguese">Portuguese</Option>
-              <Option value="Chinese (Simplified)">Chinese (Simplified)</Option>
-              <Option value="Chinese (Traditional)">
-                Chinese (Traditional)
-              </Option>
-              <Option value="Japanese">Japanese</Option>
-              <Option value="Korean">Korean</Option>
-              <Option value="Arabic">Arabic</Option>
-              <Option value="Hindi">Hindi</Option>
-            </Dropdown>
-            {stepFieldValidation.language?.status && (
-              <FormFieldHelperText>
-                {stepFieldValidation.language.message}
-              </FormFieldHelperText>
-            )}
-          </FormField>
           <FormField>
             <FormFieldLabel>Region/Country</FormFieldLabel>
             <Dropdown

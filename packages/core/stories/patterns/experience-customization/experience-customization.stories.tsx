@@ -63,7 +63,6 @@ export default {
 
 export interface ECFormData {
   acceptTerms: boolean;
-  language: string;
   region: string;
   publicHolidayCalendar: string;
   position: string;
@@ -136,7 +135,6 @@ const initialFormData: ECFormData = {
   displayDensity: "",
   acceptTerms: false,
   // Regional
-  language: "",
   region: "",
   publicHolidayCalendar: "",
   firstDayOfWeek: "sunday",
@@ -203,9 +201,6 @@ const stepValidationSchemas: Record<
         schema.oneOf([true], "Please check the box to continue."),
       otherwise: (schema) => schema.notRequired(),
     }),
-  }),
-  regional: Yup.object({
-    language: Yup.string().required("Language is required."),
   }),
 };
 
@@ -812,7 +807,6 @@ type PreferenceSection =
 interface PreferenceDialogFormData {
   displayDensity: string;
   acceptTerms: boolean;
-  language: string;
   region: string;
   publicHolidayCalendar: string;
   firstDayOfWeek: string;
@@ -887,30 +881,6 @@ function PreferencesContent({
   if (currentSection === "Regional") {
     content = (
       <StackLayout gap={3}>
-        <FormField>
-          <FormFieldLabel>Choose a language</FormFieldLabel>
-          <Dropdown
-            bordered
-            placeholder="Select"
-            value={formData.language}
-            onSelectionChange={(_event, value) =>
-              onDropdownChange("language", value[0])
-            }
-          >
-            <Option value="English">English</Option>
-            <Option value="Spanish">Spanish</Option>
-            <Option value="French">French</Option>
-            <Option value="German">German</Option>
-            <Option value="Italian">Italian</Option>
-            <Option value="Portuguese">Portuguese</Option>
-            <Option value="Chinese (Simplified)">Chinese (Simplified)</Option>
-            <Option value="Chinese (Traditional)">Chinese (Traditional)</Option>
-            <Option value="Japanese">Japanese</Option>
-            <Option value="Korean">Korean</Option>
-            <Option value="Arabic">Arabic</Option>
-            <Option value="Hindi">Hindi</Option>
-          </Dropdown>
-        </FormField>
         <FormField>
           <FormFieldLabel>Region/Country</FormFieldLabel>
           <Dropdown
@@ -1129,7 +1099,6 @@ export const PreferenceDialog = () => {
   const [formData, setFormData] = useState<PreferenceDialogFormData>({
     displayDensity: "medium",
     acceptTerms: false,
-    language: "English",
     region: "United States",
     publicHolidayCalendar: "Selected country",
     firstDayOfWeek: "monday",
