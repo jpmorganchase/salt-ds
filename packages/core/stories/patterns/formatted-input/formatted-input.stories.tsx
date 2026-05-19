@@ -251,7 +251,9 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     if (hasInvalidChars(value)) {
       setValidationStatus2("error");
       setValidationMessage2("Only numbers and () + - are allowed.");
-      announce("Only numbers and () + - are allowed.", { ariaLive: "assertive" });
+      announce("Only numbers and () + - are allowed.", {
+        ariaLive: "assertive",
+      });
       setPreview2("");
     } else {
       setValidationStatus2(undefined);
@@ -270,7 +272,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       setValidationMessage2(
         "Remove letters and symbols—Only numbers and () + - are allowed.",
       );
-      announce("Remove letters and symbols—Only numbers and () + - are allowed.", { ariaLive: "assertive" });
+      announce(
+        "Remove letters and symbols—Only numbers and () + - are allowed.",
+        { ariaLive: "assertive" },
+      );
       setPreview2("");
       return;
     }
@@ -291,7 +296,10 @@ export const PhoneNumberWithPreview: StoryFn = () => {
       setValidationMessage2(
         "Please enter a valid phone number, including country and area code.",
       );
-      announce("Please enter a valid phone number, including country and area code.", { ariaLive: "assertive" });
+      announce(
+        "Please enter a valid phone number, including country and area code.",
+        { ariaLive: "assertive" },
+      );
       setPreview2("");
     }
   };
@@ -306,20 +314,20 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   const getFormFieldLabel = (preview: string) => {
     return (
       <StackLayout
-          direction="row"
-          align="center"
-          gap={1}
-          style={{ justifyContent: "space-between" }}
-        >
-          <FormFieldLabel>Phone number</FormFieldLabel>
-          {preview && (
-            <Text styleAs="label" color="secondary">
-              {preview}
-            </Text>
-          )}
-        </StackLayout>
+        direction="row"
+        align="center"
+        gap={1}
+        style={{ justifyContent: "space-between" }}
+      >
+        <FormFieldLabel>Phone number</FormFieldLabel>
+        {preview && (
+          <Text styleAs="label" color="secondary">
+            {preview}
+          </Text>
+        )}
+      </StackLayout>
     );
-  }
+  };
 
   return (
     <FlexLayout direction="column" align="start" gap={2}>
@@ -346,7 +354,11 @@ export const PhoneNumberWithPreview: StoryFn = () => {
         labelPlacement={isMobile ? "top" : "left"}
         style={{ "--saltFormField-label-width": "auto" } as CSSProperties}
       >
-        {isMobile ? getFormFieldLabel(preview2) : <FormFieldLabel>Phone number</FormFieldLabel>}
+        {isMobile ? (
+          getFormFieldLabel(preview2)
+        ) : (
+          <FormFieldLabel>Phone number</FormFieldLabel>
+        )}
         <FlexLayout direction="row" align="center" gap={1.5}>
           <Input
             value={displayValue2}
@@ -361,16 +373,18 @@ export const PhoneNumberWithPreview: StoryFn = () => {
               autoComplete: "tel",
             }}
           />
-          {!isMobile && <Text
-            styleAs="label"
-            color="secondary"
-            style={{
-              minWidth: "150px",
-              visibility: preview2 ? "visible" : "hidden",
-            }}
-          >
-            {preview2}
-          </Text>}
+          {!isMobile && (
+            <Text
+              styleAs="label"
+              color="secondary"
+              style={{
+                minWidth: "150px",
+                visibility: preview2 ? "visible" : "hidden",
+              }}
+            >
+              {preview2}
+            </Text>
+          )}
         </FlexLayout>
         <FormFieldHelperText style={{ maxWidth: isMobile ? "100%" : "210px" }}>
           {validationMessage2 || defaultHelperText}
