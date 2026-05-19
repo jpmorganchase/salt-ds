@@ -730,8 +730,7 @@ export const Scrollable: StoryFn = () => {
   );
 };
 
-/** State, refs, toggle logic and CSS transition for animating a
- *  react-resizable-panels Panel as a SidePanel. */
+/** Animates a react-resizable-panels Panel as a SidePanel. */
 function useResizableSidePanel({
   defaultExpanded = false,
   expandedSize = 25,
@@ -742,26 +741,28 @@ function useResizableSidePanel({
   const panelRef = useRef<ImperativePanelHandle>(null);
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [animating, setAnimating] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const toggle = useCallback(() => {
     if (!panelRef.current) return;
-    clearTimeout(timerRef.current);
     const willExpand = !expanded;
-    const duration =
-      Number.parseInt(
-        getComputedStyle(document.documentElement).getPropertyValue(
-          "--salt-duration-perceptible",
-        ),
-        10,
-      ) || 300; // var(--salt-duration-perceptible)
     setAnimating(true);
     setExpanded(willExpand);
     requestAnimationFrame(() => {
       panelRef.current?.resize(willExpand ? expandedSize : 0);
     });
-    timerRef.current = setTimeout(() => setAnimating(false), duration);
   }, [expanded, expandedSize]);
+
+  const handleTransitionEnd = useCallback(
+    (event: React.TransitionEvent<HTMLElement>) => {
+      if (
+        event.target === event.currentTarget &&
+        event.propertyName === "flex-grow"
+      ) {
+        setAnimating(false);
+      }
+    },
+    [],
+  );
 
   const panelTransition = animating
     ? "flex-grow var(--salt-duration-perceptible) var(--salt-animation-timing-function)"
@@ -776,20 +777,16 @@ function useResizableSidePanel({
     toggle,
     panelTransition,
     handleOpenChange,
+    handleTransitionEnd,
   };
 }
-
-/** Style overrides for a SidePanel inside a resizable Panel (the Panel itself
- *  controls width so the SidePanel's own width and border are disabled). */
-const resizableSidePanelStyle = {
-  "--saltSidePanel-width": "100%",
-} as CSSProperties;
 
 const ResizablePanel = ({ style }: { style?: CSSProperties }) => {
   return (
     <SidePanel
+      className="resizableSidePanel"
       disableAnimation
-      style={{ ...resizableSidePanelStyle, ...style }}
+      style={style}
       variant="primary"
     >
       <SidePanelHeader>
@@ -804,11 +801,21 @@ const ResizablePanel = ({ style }: { style?: CSSProperties }) => {
 };
 
 export const Resizable: StoryFn = () => {
-  const { panelRef, expanded, animating, panelTransition, handleOpenChange } =
-    useResizableSidePanel({ expandedSize: 30 });
+  const {
+    panelRef,
+    expanded,
+    animating,
+    panelTransition,
+    handleOpenChange,
+    handleTransitionEnd,
+  } = useResizableSidePanel({ expandedSize: 30 });
+
+  // True while the panel occupies space (open or mid-animation). Keeps
+  // SidePanel mounted across the collapse animation.
+  const visible = expanded || animating;
 
   return (
-    <SidePanelProvider open={expanded} onOpenChange={handleOpenChange}>
+    <SidePanelProvider open={visible} onOpenChange={handleOpenChange}>
       <div
         className="react-resizable-panels-theme-salt"
         style={{
@@ -831,17 +838,18 @@ export const Resizable: StoryFn = () => {
           <PanelResizeHandle
             aria-label="Resize panel"
             className="resize-handle-salt-border-left"
-            disabled={animating || !expanded}
+            disabled={!expanded || animating}
             style={{
-              width: expanded || animating ? undefined : 0,
-              visibility: expanded || animating ? "visible" : "hidden",
+              width: visible ? undefined : 0,
+              visibility: visible ? "visible" : "hidden",
             }}
           />
           <Panel
             ref={panelRef}
             defaultSize={0}
             minSize={expanded && !animating ? 15 : 0}
-            maxSize={expanded || animating ? 50 : 0}
+            maxSize={visible ? 50 : 0}
+            onTransitionEnd={handleTransitionEnd}
             style={{ overflow: "hidden", transition: panelTransition }}
           >
             <ResizablePanel />
@@ -1084,4 +1092,17 @@ export const Cards: StoryFn = () => {
       <CardsContent />
     </SidePanelProvider>
   );
+};
+
+Cards.parameters = {
+  // SidePanel detaches its descendants from the natural Tab order, so the
+  // scrollable help region inside the panel is reachable only through the
+  // trigger-driven Tab walk (Tab on the trigger jumps to the first managed
+  // element inside the panel, and Shift+Tab cycles back). Axe sees the
+  // region with tabindex="-1" and flags it as not focusable, but keyboard
+  // users still reach it via that trigger flow, so we suppress the rule
+  // for this story.
+  axe: {
+    disabledRules: ["scrollable-region-focusable"],
+  },
 };

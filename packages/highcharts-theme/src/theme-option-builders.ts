@@ -4,9 +4,17 @@ import {
   CATEGORY_DATAVIZ_TOKENS,
   type SaltChartTokenMap,
 } from "./density-token-map";
-import type { HighchartsOptionsCompat } from "./types";
+import type {
+  HighchartsOptionsCompat,
+  HighchartsSeriesOptionsCompat,
+} from "./types";
 
 const AXES_GRID_LINE_SERIES_TYPES = new Set(["bubble", "scatter"]);
+
+const getSeriesType = (
+  series: HighchartsSeriesOptionsCompat,
+): string | undefined =>
+  typeof series.type === "string" ? series.type : undefined;
 
 const shouldShowAxesGridLines = (chartOptions: Options): boolean => {
   if (
@@ -16,24 +24,30 @@ const shouldShowAxesGridLines = (chartOptions: Options): boolean => {
     return true;
   }
 
-  return (chartOptions.series ?? []).some((series) => {
-    return typeof series.type === "string"
-      ? AXES_GRID_LINE_SERIES_TYPES.has(series.type)
-      : false;
-  });
+  return ((chartOptions.series ?? []) as HighchartsSeriesOptionsCompat[]).some(
+    (series) => {
+      const seriesType = getSeriesType(series);
+
+      return seriesType ? AXES_GRID_LINE_SERIES_TYPES.has(seriesType) : false;
+    },
+  );
 };
 
 const isHeatmapChart = (chartOptions: Options): boolean => {
   const chartType = chartOptions.chart?.type;
-  const series = chartOptions.series ?? [];
+  const series = (chartOptions.series ?? []) as HighchartsSeriesOptionsCompat[];
 
   if (chartType === "heatmap") {
     return series.every(
-      (entry) => entry.type == null || entry.type === "heatmap",
+      (entry) =>
+        getSeriesType(entry) == null || getSeriesType(entry) === "heatmap",
     );
   }
 
-  return series.length > 0 && series.every((entry) => entry.type === "heatmap");
+  return (
+    series.length > 0 &&
+    series.every((entry) => getSeriesType(entry) === "heatmap")
+  );
 };
 
 export const buildChartOptions = (

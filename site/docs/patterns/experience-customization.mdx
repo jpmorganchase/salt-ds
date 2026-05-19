@@ -7,6 +7,10 @@ tags:
 aliases:
   - /salt/patterns/experience-customization
 data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-experience-customization", label: "Examples" },
+    ]
   components: ["Banner", "Dropdown", "Radio button", "Stepper", "Switch", "Toggle button"]
   relatedPatterns: ["Button bar", "Selectable card", "Wizard"]
 ---
@@ -95,6 +99,10 @@ The steps below summarize Salt-specific user preferences that may be made avai
 | 3    | Data surfaces       | Tables (live preview): Columns, Sorting, Density/Compact, Zebra striping. Charts (live preview): Lines, Patterns, Markers, Labels, Grid lines, Legend. | Outcomes are cumulative, so users need to see results live before setting; this is the core step because it shapes how data is read and understood |
 | 4    | Feedback            | Toast position, Auto-dismiss, Duration                                                                                                            | Finalizes how the system provides feedback after core reading/interpretation is set                                                                   |
 
+<GuidanceCallout type="positive" customPillText="Best practices">
+**Language selection**: If you include language selection in this flow, place it at the beginning so users can understand the rest of the setup. Apply the selected language from the next step onward. When the language changes, ensure the language metadata is updated (set the lang attribute to a valid language code) so assistive technologies interpret the content correctly.
+</GuidanceCallout>
+
 ## Selection model
 
 The selection model uses an escalation-based approach for presenting configuration choices in Experience customization, progressing from Standard controls to Card selection to Dynamic live preview based on complexity and cumulative visual impact. This approach aligns options with user comprehension, supports [WCAG 2.2 accessibility guidelines](https://www.w3.org/WAI/WCAG22/Understanding/), and ensures all choices are practical within the Salt design system. 
@@ -138,6 +146,10 @@ Use a dynamic live preview for report-oriented presentation choices, such as s
   border
   background="secondary"
 />
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+**Heading hierarchy**: If the live preview includes headings or titles, ensure they follow the heading hierarchy of the surrounding page or modal.
+</GuidanceCallout>
 
 ### Card selection – Notification placement
 

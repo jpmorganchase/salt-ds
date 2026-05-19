@@ -188,7 +188,7 @@ export const Horizontal = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value: string, name: string) =>
       updateField(name, value),
@@ -336,7 +336,7 @@ export const HorizontalWithCancelConfirmation = () => {
   }, [activeStepIndex]);
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       setSuccessOpen(true);
@@ -352,7 +352,7 @@ export const HorizontalWithCancelConfirmation = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value: string, name: string) =>
       updateField(name, value),
@@ -517,7 +517,7 @@ export const VerticalWithCancelConfirmation = () => {
   }, [activeStepIndex]);
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       setSuccessOpen(true);
@@ -533,7 +533,7 @@ export const VerticalWithCancelConfirmation = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value: string, name: string) =>
       updateField(name, value),
@@ -703,7 +703,7 @@ export const Modal = () => {
   const isFirstStep = activeStepIndex === 0;
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       closeWizardAndReset();
@@ -719,7 +719,7 @@ export const Modal = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value, name) => updateField(name, value),
     onBlur: () => {}, // Add blur logic if needed
@@ -868,7 +868,7 @@ export const ModalWithConfirmations = () => {
   };
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       createAccount();
@@ -884,7 +884,7 @@ export const ModalWithConfirmations = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value, name) => updateField(name, value),
     handleRadioChange: (e) => updateField(e.target.name, e.target.value),

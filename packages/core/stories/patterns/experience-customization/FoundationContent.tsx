@@ -9,15 +9,16 @@ import {
   GridLayout,
   InteractableCard,
   InteractableCardGroup,
+  type InteractableCardValue,
   Link,
   RadioButtonIcon,
   StackLayout,
   Text,
+  useAriaAnnouncer,
   useId,
   useTheme,
 } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { useEffect, useRef } from "react";
+import { type Ref, type SyntheticEvent, useEffect, useRef } from "react";
 import type { FormContentProps } from "./experience-customization.stories";
 import HighDensityTable from "./img/table-high.png";
 import HighDensityTableDark from "./img/table-high-dark.png";
@@ -25,6 +26,9 @@ import LowDensityTable from "./img/table-low.png";
 import LowDensityTableDark from "./img/table-low-dark.png";
 import MediumDensityTable from "./img/table-medium.png";
 import MediumDensityTableDark from "./img/table-medium-dark.png";
+
+const HIGH_DENSITY_WARNING_MESSAGE =
+  "Warning: High density doesn't meet the WCAG-defined minimum target size, which may reduce readability and make interactions harder. (link provided in warning message above)";
 
 const displayDensityOptions = [
   {
@@ -53,16 +57,18 @@ const displayDensityOptions = [
 export const FoundationContent = ({
   formData,
   onDensityChange,
+  initialFocusRef,
   stepFieldValidation,
   handleCheckboxChange,
 }: FormContentProps & {
   onDensityChange?: (value: string) => void;
+  initialFocusRef?: Ref<HTMLDivElement>;
 }) => {
   const { mode } = useTheme();
   const densityId = useId();
-  const warningBannerId = useId();
-  const errorBannerId = useId();
   const requiredDisclaimerField = useRef<HTMLDivElement>(null);
+
+  const { announce } = useAriaAnnouncer();
 
   useEffect(() => {
     if (stepFieldValidation.acceptTerms?.status) {
@@ -70,10 +76,24 @@ export const FoundationContent = ({
     }
   }, [stepFieldValidation.acceptTerms?.status]);
 
+  const handleOnChange = (
+    _event: SyntheticEvent<HTMLDivElement, Event>,
+    value: InteractableCardValue,
+  ) => {
+    onDensityChange?.(value as string);
+    if (value === "high") {
+      setTimeout(() => {
+        announce(HIGH_DENSITY_WARNING_MESSAGE, {
+          duration: 1000,
+        });
+      }, 0);
+    }
+  };
+
   return (
     <StackLayout>
       {formData.displayDensity === "high" && (
-        <Banner status="warning" id={warningBannerId}>
+        <Banner status="warning">
           <BannerContent>
             High density doesn't meet the{" "}
             <Link
@@ -88,7 +108,7 @@ export const FoundationContent = ({
         </Banner>
       )}
       {stepFieldValidation.displayDensity?.status && (
-        <Banner status="error" id={errorBannerId}>
+        <Banner status="error">
           <BannerContent>
             {stepFieldValidation.displayDensity.message}
           </BannerContent>
@@ -101,27 +121,24 @@ export const FoundationContent = ({
           <InteractableCardGroup
             aria-labelledby={densityId}
             value={formData.displayDensity}
-            onChange={(_event, value) => {
-              onDensityChange?.(value as string);
-            }}
+            onChange={handleOnChange}
           >
             <GridLayout style={{ width: "100%" }} columns={{ xs: 1, sm: 3 }}>
               {displayDensityOptions.map((option) => (
                 <InteractableCard
                   key={option.value}
                   value={option.value}
-                  aria-describedby={
-                    clsx(
-                      formData.displayDensity === "high" && warningBannerId,
-                      stepFieldValidation.displayDensity?.status &&
-                        errorBannerId,
-                    ) || undefined
+                  ref={
+                    option.value === displayDensityOptions[0].value
+                      ? initialFocusRef
+                      : undefined
                   }
                 >
                   <StackLayout gap={1}>
                     <img
                       src={mode === "dark" ? option.darkImage : option.image}
                       alt=""
+                      aria-hidden
                       style={{
                         height: 200,
                         width: "100%",
@@ -152,9 +169,12 @@ export const FoundationContent = ({
         >
           <Checkbox
             name="acceptTerms"
-            label="I understand that High density reduces target sizes and may affect readability and ease of use."
+            label="I understand that high density doesn't meet the WCAG-defined minimum target size, which may reduce readability and make interactions harder."
             checked={formData.acceptTerms}
             onChange={handleCheckboxChange}
+            inputProps={{
+              required: true,
+            }}
           />
           {stepFieldValidation.acceptTerms?.status && (
             <FormFieldHelperText>

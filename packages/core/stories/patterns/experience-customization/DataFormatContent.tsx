@@ -1,8 +1,5 @@
 import {
   Card,
-  Display3,
-  FlexItem,
-  FlexLayout,
   FormField,
   FormFieldLabel,
   GridItem,
@@ -11,18 +8,23 @@ import {
   RadioButtonGroup,
   StackLayout,
   Switch,
-  Text,
-  useTheme,
 } from "@salt-ds/core";
-import { US } from "@salt-ds/countries";
-import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 import type { FormContentProps } from "./experience-customization.stories";
 import NegativeTrend from "./img/negative-trend.png";
 import NegativeTrendDark from "./img/negative-trend-dark.png";
 import PositiveTrend from "./img/positive-trend.png";
 import PositiveTrendDark from "./img/positive-trend-dark.png";
+import {
+  StockCard,
+  type StockCardData,
+  type StockCardProps,
+} from "./StockCard";
 
-const stockCards = [
+export interface DataFormatContentProps extends FormContentProps {
+  tickerAs?: StockCardProps["tickerAs"];
+}
+
+const stockCards: StockCardData[] = [
   {
     ticker: "VRT",
     fullName: "VERTIV HOLDINGS CO-A",
@@ -59,23 +61,8 @@ export const DataFormatContent = ({
   formData,
   handleRadioChange,
   handleCheckboxChange,
-}: FormContentProps) => {
-  const { mode } = useTheme();
-
-  const showExchangeText = formData.exchangeAndRegionDisplay !== "flag";
-  const showFlag = formData.exchangeAndRegionDisplay !== "text";
-  const getDisplayMetric = (stock: (typeof stockCards)[number]) => {
-    if (formData.visibleMetrics === "absolute") {
-      return stock.metrics.absolute;
-    }
-
-    if (formData.visibleMetrics === "marketCap") {
-      return stock.metrics.marketCap;
-    }
-
-    return stock.metrics.lastPrice;
-  };
-
+  tickerAs,
+}: DataFormatContentProps) => {
   return (
     <GridLayout columns={{ xs: 1, sm: 2 }}>
       <GridItem>
@@ -134,60 +121,15 @@ export const DataFormatContent = ({
         <Card>
           <StackLayout separators>
             {stockCards.map((stock) => (
-              <StackLayout gap={1} key={stock.ticker}>
-                <FlexLayout justify="space-between">
-                  <FlexItem>
-                    <Text>
-                      <strong>{stock.ticker}</strong>
-                    </Text>
-                    {formData.stockNameDisplay === "fullNameTicker" && (
-                      <Text color="secondary">{stock.fullName}</Text>
-                    )}
-                  </FlexItem>
-
-                  <FlexItem>
-                    <FlexLayout gap={1} align="center">
-                      {showExchangeText && (
-                        <Text color="secondary">{stock.exchange}</Text>
-                      )}
-                      {showFlag && <US />}
-                    </FlexLayout>
-                  </FlexItem>
-                </FlexLayout>
-
-                <Display3>
-                  {getDisplayMetric(stock)}
-                  {stock.isPositive ? (
-                    <ArrowUpIcon
-                      aria-hidden
-                      style={{
-                        color:
-                          "var(--salt-sentiment-positive-foreground-informative)",
-                      }}
-                    />
-                  ) : (
-                    <ArrowDownIcon
-                      aria-hidden
-                      style={{
-                        color:
-                          "var(--salt-sentiment-negative-foreground-informative)",
-                      }}
-                    />
-                  )}
-                </Display3>
-                <Text color={stock.changeColor}>{stock.changeText}</Text>
-
-                {formData.performanceChart && (
-                  <img
-                    src={
-                      mode === "dark" ? stock.trendImageDark : stock.trendImage
-                    }
-                    alt=""
-                    style={{ width: "100%" }}
-                    height={64}
-                  />
-                )}
-              </StackLayout>
+              <StockCard
+                key={stock.ticker}
+                stock={stock}
+                stockNameDisplay={formData.stockNameDisplay}
+                exchangeAndRegionDisplay={formData.exchangeAndRegionDisplay}
+                visibleMetrics={formData.visibleMetrics}
+                performanceChart={formData.performanceChart}
+                tickerAs={tickerAs}
+              />
             ))}
           </StackLayout>
         </Card>

@@ -9,3 +9,12 @@
   white-space: nowrap;
   border-width: 0;
 }
+
+/* SidePanel inside a resizable Panel: outer fills the Panel, inner keeps
+   a min-width so the collapsing Panel slides over it instead of squashing. */
+.resizableSidePanel {
+  --saltSidePanel-width: 100%;
+}
+.resizableSidePanel .saltSidePanel-inner {
+  width: max(100%, 300px);
+}

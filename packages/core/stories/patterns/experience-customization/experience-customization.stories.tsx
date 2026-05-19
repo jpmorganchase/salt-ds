@@ -1,4 +1,6 @@
 import {
+  type AnnounceFnOptions,
+  AriaAnnouncerProvider,
   Banner,
   BannerContent,
   Button,
@@ -11,17 +13,12 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  GridLayout,
-  H2,
-  InteractableCard,
-  InteractableCardGroup,
-  type InteractableCardValue,
+  H3,
   Link,
   Option,
   ParentChildLayout,
   RadioButton,
   RadioButtonGroup,
-  RadioButtonIcon,
   SplitLayout,
   StackLayout,
   type StackLayoutProps,
@@ -30,7 +27,6 @@ import {
   Switch,
   Text,
   useAriaAnnouncer,
-  useId,
   useResponsiveProp,
   VerticalNavigation,
   VerticalNavigationItem,
@@ -38,7 +34,6 @@ import {
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
 } from "@salt-ds/core";
-import { BuildingIcon, GlobeIcon, LockedIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -57,6 +52,7 @@ import { FoundationContent } from "./FoundationContent";
 import { NotificationsContent } from "./NotificationsContent";
 import { RegionalSettingsContent } from "./RegionalSettingsContent";
 import "../wizard/ContentOverflow.css";
+import { MandatoryConfigurationsContent } from "./MandatoryConfigurationsContent";
 
 export default {
   title: "Patterns/Experience Customization",
@@ -67,7 +63,6 @@ export default {
 
 export interface ECFormData {
   acceptTerms: boolean;
-  language: string;
   region: string;
   publicHolidayCalendar: string;
   position: string;
@@ -95,7 +90,10 @@ export interface FormContentProps {
 const interactiveElementSelector = [
   "button:not([disabled])",
   'input:not([disabled]):not([type="hidden"])',
-  '[tabindex]:not([tabindex="-1"])',
+  "a[href]",
+  '[role="radio"][tabindex="0"]:not([aria-disabled="true"])',
+  '[role="checkbox"][tabindex="0"]:not([aria-disabled="true"])',
+  '[tabindex]:not([tabindex="-1"]):not([role="region"])',
 ].join(", ");
 
 const getStepAnnouncement = (stepIndex: number) => {
@@ -137,12 +135,11 @@ const initialFormData: ECFormData = {
   displayDensity: "",
   acceptTerms: false,
   // Regional
-  language: "",
   region: "",
   publicHolidayCalendar: "",
-  firstDayOfWeek: "",
-  timeFormat: "",
-  measurementSystem: "",
+  firstDayOfWeek: "sunday",
+  timeFormat: "12-hour",
+  measurementSystem: "metric",
   // Data format
   stockNameDisplay: "fullNameTicker",
   exchangeAndRegionDisplay: "both",
@@ -204,9 +201,6 @@ const stepValidationSchemas: Record<
         schema.oneOf([true], "Please check the box to continue."),
       otherwise: (schema) => schema.notRequired(),
     }),
-  }),
-  regional: Yup.object({
-    language: Yup.string().required("Language is required."),
   }),
 };
 
@@ -282,6 +276,19 @@ export const DynamicLivePreview = () => {
   );
 };
 
+const announceValidationErrors = (
+  fields: Record<string, FieldValidation>,
+  announce: (message: string, options?: AnnounceFnOptions) => void,
+  options?: AnnounceFnOptions,
+) => {
+  const messages = Object.values(fields)
+    .filter((f) => f.status === "error" && f.message)
+    .map((f) => f.message as string);
+  if (messages.length > 0) {
+    announce(messages.join(". "), { ariaLive: "assertive", ...options });
+  }
+};
+
 export const EndToEnd = () => {
   const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
@@ -320,34 +327,31 @@ export const EndToEnd = () => {
 
   const { announce } = useAriaAnnouncer();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus when active step changes
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
 
     focusFirstInteractiveElement(stepContentRef.current);
-  }, [activeStepIndex]);
+    announce(getStepAnnouncement(activeStepIndex));
+  }, [activeStepIndex, announce]);
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
-    if (!valid) return;
+    const { valid, fields } = await runValidationAndStore();
+    if (!valid) {
+      announceValidationErrors(fields, announce);
+      return;
+    }
     if (isLastStep) {
       return;
     }
 
-    const nextStepIndex = activeStepIndex + 1;
-
     navigatedRef.current = true;
     nextWithoutValidation();
-    announce(getStepAnnouncement(nextStepIndex));
   };
 
   const handlePrevious = () => {
-    const previousStepIndex = activeStepIndex - 1;
-
     navigatedRef.current = true;
     previous();
-    announce(getStepAnnouncement(previousStepIndex));
   };
 
   const handleDensityChange = (value: string) => {
@@ -356,8 +360,13 @@ export const EndToEnd = () => {
     clearFieldValidation(currentStepId, "acceptTerms");
   };
 
+  const handleFoundationCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    updateFieldsWithoutValidation({ [e.target.name]: e.target.checked });
+    clearFieldValidation(currentStepId, e.target.name);
+  };
+
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
     handleSelectChange: (value, name) => updateField(name, value),
@@ -369,20 +378,21 @@ export const EndToEnd = () => {
     foundation: (
       <FoundationContent
         {...sharedFormProps}
+        handleCheckboxChange={handleFoundationCheckboxChange}
         onDensityChange={handleDensityChange}
       />
     ),
     regional: <RegionalSettingsContent {...sharedFormProps} />,
-    dataFormat: <DataFormatContent {...sharedFormProps} />,
+    dataFormat: <DataFormatContent {...sharedFormProps} tickerAs="h2" />,
     notifications: <NotificationsContent {...sharedFormProps} />,
   };
 
   const header = (
     <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
       <FlexItem style={{ flex: 1 }}>
-        <Text>
-          Customize your experience
-          <Text as="h2" style={{ margin: 0 }}>
+        <div>
+          <Text as="h1" styleAs="h2" style={{ margin: 0 }}>
+            <Text color="primary">Customize your experience</Text>
             {wizardSteps[activeStepIndex].label}
           </Text>
           {wizardSteps[activeStepIndex].id === "foundation" && (
@@ -395,10 +405,13 @@ export const EndToEnd = () => {
               A selection is required to proceed
             </Text>
           )}
-        </Text>
+        </div>
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
-        <Stepper orientation="horizontal">
+        <Stepper
+          orientation="horizontal"
+          aria-label="Customize your experience steps"
+        >
           {wizardSteps.map((step, index) => (
             <Step
               key={step.id}
@@ -438,12 +451,19 @@ export const EndToEnd = () => {
     </FlexLayout>
   );
 
+  const handleResetToDefault = () => {
+    resetDataFormatFields(updateField);
+    focusFirstInteractiveElement(stepContentRef.current);
+    announce("Data format settings have been reset to default values.");
+  };
+
   const startFooter =
-    activeStepIndex === 2 && hasDataFormatChanges(formData as ECFormData) ? (
+    currentStepId === "dataFormat" &&
+    hasDataFormatChanges(formData as ECFormData) ? (
       <Button
         sentiment="accented"
         appearance="transparent"
-        onClick={() => resetDataFormatFields(updateField)}
+        onClick={handleResetToDefault}
       >
         Reset to default
       </Button>
@@ -480,8 +500,58 @@ export const EndToEnd = () => {
   );
 };
 
+const EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET =
+  "experience-customization-modal";
+
 export const EndToEndModal = () => {
   const [open, setOpen] = useState(false);
+  const headingRef = useRef<HTMLElement | null>(null);
+
+  const openWizard = () => {
+    setOpen(true);
+  };
+
+  const closeWizard = () => {
+    setOpen(false);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  return (
+    <>
+      <Button onClick={openWizard} aria-haspopup="dialog">
+        Open experience customization
+      </Button>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        initialFocus={headingRef}
+        style={{ height: 588 }}
+      >
+        <AriaAnnouncerProvider
+          target={EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET}
+        >
+          <EndToEndModalContent
+            closeWizard={closeWizard}
+            setHeadingRef={(node) => {
+              headingRef.current = node;
+            }}
+          />
+        </AriaAnnouncerProvider>
+      </Dialog>
+    </>
+  );
+};
+
+function EndToEndModalContent({
+  closeWizard,
+  setHeadingRef,
+}: {
+  closeWizard: () => void;
+  setHeadingRef: (node: HTMLSpanElement | null) => void;
+}) {
   const stepContentRef = useRef<HTMLDivElement>(null);
   const navigatedRef = useRef(false);
 
@@ -518,57 +588,45 @@ export const EndToEndModal = () => {
   const isLastStep = activeStepIndex === wizardSteps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Update focus when active step changes
+  const { announce } = useAriaAnnouncer();
+
   useEffect(() => {
     if (!navigatedRef.current) return;
     navigatedRef.current = false;
 
     focusFirstInteractiveElement(stepContentRef.current);
-  }, [activeStepIndex]);
-
-  const openWizard = () => {
-    reset();
-    setOpen(true);
-  };
+    announce(getStepAnnouncement(activeStepIndex), {
+      target: EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET,
+    });
+  }, [activeStepIndex, announce]);
 
   const closeWizardAndReset = () => {
-    setOpen(false);
+    closeWizard();
     setTimeout(() => {
       reset();
     }, 300);
   };
 
-  const onOpenChange = (value: boolean) => {
-    if (!value) {
-      closeWizardAndReset();
+  const handleNext = async () => {
+    const { valid, fields } = await runValidationAndStore();
+    if (!valid) {
+      announceValidationErrors(fields, announce, {
+        target: EXPERIENCE_CUSTOMIZATION_MODAL_ANNOUNCER_TARGET,
+      });
       return;
     }
-    setOpen(value);
-  };
-
-  const { announce } = useAriaAnnouncer();
-
-  const handleNext = async () => {
-    const valid = await runValidationAndStore();
-    if (!valid) return;
     if (isLastStep) {
       closeWizardAndReset();
       return;
     }
 
-    const nextStepIndex = activeStepIndex + 1;
-
     navigatedRef.current = true;
     nextWithoutValidation();
-    announce(getStepAnnouncement(nextStepIndex));
   };
 
   const handlePrevious = () => {
-    const previousStepIndex = activeStepIndex - 1;
-
     navigatedRef.current = true;
     previous();
-    announce(getStepAnnouncement(previousStepIndex));
   };
 
   const handleDensityChange = (value: string) => {
@@ -577,8 +635,13 @@ export const EndToEndModal = () => {
     clearFieldValidation(currentStepId, "acceptTerms");
   };
 
+  const handleFoundationCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    updateFieldsWithoutValidation({ [e.target.name]: e.target.checked });
+    clearFieldValidation(currentStepId, e.target.name);
+  };
+
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleCheckboxChange: (e) => updateField(e.target.name, e.target.checked),
     handleSelectChange: (value, name) => updateField(name, value),
@@ -590,6 +653,7 @@ export const EndToEndModal = () => {
     foundation: (
       <FoundationContent
         {...sharedFormProps}
+        handleCheckboxChange={handleFoundationCheckboxChange}
         onDensityChange={handleDensityChange}
       />
     ),
@@ -628,12 +692,19 @@ export const EndToEndModal = () => {
     </FlexLayout>
   );
 
+  const handleResetToDefault = () => {
+    resetDataFormatFields(updateField);
+    focusFirstInteractiveElement(stepContentRef.current);
+    announce("Data format settings have been reset to default values.");
+  };
+
   const startFooter =
-    activeStepIndex === 2 && hasDataFormatChanges(formData as ECFormData) ? (
+    currentStepId === "dataFormat" &&
+    hasDataFormatChanges(formData as ECFormData) ? (
       <Button
         sentiment="accented"
         appearance="transparent"
-        onClick={() => resetDataFormatFields(updateField)}
+        onClick={handleResetToDefault}
       >
         Reset to default
       </Button>
@@ -653,186 +724,46 @@ export const EndToEndModal = () => {
 
   return (
     <>
-      <Button onClick={openWizard}>Open experience customization</Button>
-      <Dialog open={open} onOpenChange={onOpenChange} style={{ height: 588 }}>
-        <DialogHeader
-          header={<span>{wizardSteps[activeStepIndex].label}</span>}
-          preheader="Customize your experience"
-          actions={
-            <Stepper orientation="horizontal">
-              {wizardSteps.map((step, index) => (
-                <Step
-                  key={step.id}
-                  label={step.stepTitle}
-                  status={validationsByStep[step.id]?.status}
-                  stage={getStepStage(index, activeStepIndex)}
-                />
-              ))}
-            </Stepper>
-          }
-          description={
-            wizardSteps[activeStepIndex].id === "foundation" &&
-            "A selection is required to proceed"
-          }
-        />
-        <DialogContent ref={stepContentRef}>
-          {contentByStep[currentStepId]}
-        </DialogContent>
-        <DialogActions>{footer}</DialogActions>
-      </Dialog>
+      <DialogHeader
+        header={
+          <span ref={setHeadingRef} tabIndex={-1}>
+            {wizardSteps[activeStepIndex].label}
+          </span>
+        }
+        preheader="Customize your experience"
+        actions={
+          <Stepper
+            orientation="horizontal"
+            aria-label="Customize your experience steps"
+          >
+            {wizardSteps.map((step, index) => (
+              <Step
+                key={step.id}
+                label={step.stepTitle}
+                status={validationsByStep[step.id]?.status}
+                stage={getStepStage(index, activeStepIndex)}
+              />
+            ))}
+          </Stepper>
+        }
+        description={
+          wizardSteps[activeStepIndex].id === "foundation" &&
+          "A selection is required to proceed"
+        }
+      />
+      <DialogContent ref={stepContentRef}>
+        {contentByStep[currentStepId]}
+      </DialogContent>
+      <DialogActions>{footer}</DialogActions>
     </>
   );
-};
+}
 
 export const MandatoryConfigurations = () => {
-  const [selected, setSelected] = useState<InteractableCardValue>();
-  const [hasError, setHasError] = useState(false);
-
-  const handleSubmit = () => {
-    if (!selected) {
-      setHasError(true);
-    }
-  };
-
-  const governanceOptions = [
-    {
-      value: "standard",
-      title: "Standard",
-      description: "Business-recommended. Standard access logging is enabled. ",
-      Icon: BuildingIcon,
-    },
-    {
-      value: "restricted",
-      title: "Restricted",
-      description: "High compliance. Full data logging and MFA are required.",
-      Icon: LockedIcon,
-    },
-    {
-      value: "external",
-      title: "External",
-      description: "Allow controlled access for partners.",
-      Icon: GlobeIcon,
-    },
-  ];
-
-  const bannerId = useId();
-  const headingId = useId();
-
-  const direction: StackLayoutProps<ElementType>["direction"] =
-    useResponsiveProp(
-      {
-        xs: "column",
-        sm: "row",
-      },
-      "row",
-    );
-
-  const cancel = (
-    <Button
-      sentiment="accented"
-      appearance="bordered"
-      onClick={() => {
-        setSelected(undefined);
-        setHasError(false);
-      }}
-    >
-      Cancel
-    </Button>
-  );
-
-  const finish = (
-    <Button sentiment="accented" onClick={handleSubmit}>
-      Finish
-    </Button>
-  );
-
   return (
-    <StackLayout gap={0} style={{ maxWidth: 730 }}>
-      <StackLayout padding={3}>
-        <Text>
-          Customize your experience
-          <Text as="h2" id={headingId} style={{ margin: 0 }}>
-            Choose data access level
-          </Text>
-          <Text
-            color="secondary"
-            style={{
-              marginTop: "var(--salt-spacing-50)",
-            }}
-          >
-            A selection is required to proceed
-          </Text>
-        </Text>
-      </StackLayout>
-
-      <StackLayout>
-        <FlexItem grow={1}>
-          <ContentOverflow style={{ minHeight: 300 }}>
-            <StackLayout>
-              {hasError && (
-                <Banner status="error" id={bannerId}>
-                  <BannerContent>Choose an option.</BannerContent>
-                </Banner>
-              )}
-
-              <InteractableCardGroup
-                aria-labelledby={headingId}
-                value={selected}
-                onChange={(_event, value) => {
-                  setHasError(false);
-                  setSelected(value);
-                }}
-              >
-                <GridLayout
-                  style={{ width: "100%" }}
-                  columns={{ xs: 1, sm: 3 }}
-                >
-                  {governanceOptions.map(
-                    ({ value, title, description, Icon }) => (
-                      <InteractableCard
-                        key={value}
-                        value={value}
-                        aria-describedby={hasError ? bannerId : undefined}
-                      >
-                        <StackLayout gap={1}>
-                          <StackLayout gap={1} direction="row" align="center">
-                            <Icon aria-hidden size={2} />
-                            <Text style={{ margin: 0 }}>
-                              <strong>{title}</strong>
-                            </Text>
-                          </StackLayout>
-                          <StackLayout direction="row" gap={1}>
-                            <RadioButtonIcon
-                              aria-hidden
-                              checked={selected === value}
-                            />
-                            <Text>{description}</Text>
-                          </StackLayout>
-                        </StackLayout>
-                      </InteractableCard>
-                    ),
-                  )}
-                </GridLayout>
-              </InteractableCardGroup>
-            </StackLayout>
-          </ContentOverflow>
-        </FlexItem>
-
-        <FlexItem>
-          {direction === "column" ? (
-            <StackLayout gap={1}>
-              {finish}
-              {cancel}
-            </StackLayout>
-          ) : (
-            <FlexLayout gap={1} justify="end" padding={3}>
-              {cancel}
-              {finish}
-            </FlexLayout>
-          )}
-        </FlexItem>
-      </StackLayout>
-    </StackLayout>
+    <AriaAnnouncerProvider>
+      <MandatoryConfigurationsContent />
+    </AriaAnnouncerProvider>
   );
 };
 
@@ -876,7 +807,6 @@ type PreferenceSection =
 interface PreferenceDialogFormData {
   displayDensity: string;
   acceptTerms: boolean;
-  language: string;
   region: string;
   publicHolidayCalendar: string;
   firstDayOfWeek: string;
@@ -952,30 +882,6 @@ function PreferencesContent({
     content = (
       <StackLayout gap={3}>
         <FormField>
-          <FormFieldLabel>Choose a language</FormFieldLabel>
-          <Dropdown
-            bordered
-            placeholder="Select"
-            value={formData.language}
-            onSelectionChange={(_event, value) =>
-              onDropdownChange("language", value[0])
-            }
-          >
-            <Option value="English">English</Option>
-            <Option value="Spanish">Spanish</Option>
-            <Option value="French">French</Option>
-            <Option value="German">German</Option>
-            <Option value="Italian">Italian</Option>
-            <Option value="Portuguese">Portuguese</Option>
-            <Option value="Chinese (Simplified)">Chinese (Simplified)</Option>
-            <Option value="Chinese (Traditional)">Chinese (Traditional)</Option>
-            <Option value="Japanese">Japanese</Option>
-            <Option value="Korean">Korean</Option>
-            <Option value="Arabic">Arabic</Option>
-            <Option value="Hindi">Hindi</Option>
-          </Dropdown>
-        </FormField>
-        <FormField>
           <FormFieldLabel>Region/Country</FormFieldLabel>
           <Dropdown
             bordered
@@ -1017,7 +923,7 @@ function PreferencesContent({
               United States (Federal)
             </Option>
             <Option value="United Kingdom (England & Wales)">
-              United Kingdom (England &amp; Wales)
+              United Kingdom (England & Wales)
             </Option>
             <Option value="Canada (Federal)">Canada (Federal)</Option>
             <Option value="India (National)">India (National)</Option>
@@ -1171,9 +1077,7 @@ function PreferencesContent({
 
   return (
     <StackLayout>
-      <H2 styleAs="h3" style={{ margin: 0 }}>
-        {currentSection}
-      </H2>
+      <H3 style={{ margin: 0 }}>{currentSection}</H3>
       <div>{content}</div>
     </StackLayout>
   );
@@ -1195,7 +1099,6 @@ export const PreferenceDialog = () => {
   const [formData, setFormData] = useState<PreferenceDialogFormData>({
     displayDensity: "medium",
     acceptTerms: false,
-    language: "English",
     region: "United States",
     publicHolidayCalendar: "Selected country",
     firstDayOfWeek: "monday",
@@ -1238,7 +1141,9 @@ export const PreferenceDialog = () => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open preferences dialog</Button>
+      <Button onClick={() => setOpen(true)} aria-haspopup="dialog">
+        Open preferences dialog
+      </Button>
       <Dialog style={{ minHeight: "60%" }} open={open} onOpenChange={setOpen}>
         <DialogHeader header="Preferences" />
         <DialogContent>
