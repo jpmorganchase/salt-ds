@@ -14,7 +14,7 @@ import sidePanelTitleCss from "./SidePanelTitle.css";
 
 const withBaseName = makePrefixer("saltSidePanelTitle");
 
-export interface SidePanelTitleProps extends TextProps<"div"> {}
+export type SidePanelTitleProps = TextProps<"div">;
 
 export const SidePanelTitle = forwardRef<HTMLDivElement, SidePanelTitleProps>(
   function SidePanelTitle(props, ref) {

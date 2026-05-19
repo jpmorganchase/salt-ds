@@ -50,17 +50,17 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
   const [floating, setFloating] = useState<HTMLDivElement | null>(null);
   const [panelId, setPanelId] = useState<string | undefined>(undefined);
   const [titleId, setTitleId] = useState<string | undefined>(undefined);
-  const [position, setPosition] = useState<"right" | "left" | undefined>(
-    undefined,
+
+  // Memoise so floating-ui's root context isn't recreated every render.
+  const elements = useMemo(
+    () => ({ reference, floating }),
+    [reference, floating],
   );
 
   const floatingRootContext = useFloatingRootContext({
     open: openState,
     onOpenChange: handleOpenChange,
-    elements: {
-      reference,
-      floating,
-    },
+    elements,
   });
 
   useEffect(() => {
@@ -101,17 +101,8 @@ export function SidePanelProvider(props: SidePanelProviderProps) {
       setPanelId,
       titleId,
       setTitleId,
-      position,
-      setPosition,
     }),
-    [
-      openState,
-      floatingRootContext,
-      handleOpenChange,
-      panelId,
-      titleId,
-      position,
-    ],
+    [openState, floatingRootContext, handleOpenChange, panelId, titleId],
   );
 
   return (

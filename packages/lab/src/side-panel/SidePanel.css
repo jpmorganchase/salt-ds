@@ -1,11 +1,22 @@
 .saltSidePanel {
-  background-color: var(--sidePanel-background, var(--salt-container-primary-background));
   --saltSidePanel-width: 300px;
   --sidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--sidePanel-borderColor, var(--salt-container-primary-borderColor));
   --saltSidePanel-padding: var(--salt-spacing-300);
+  /* Outer wrapper. Idle: a normal flex column whose width comes from
+     --saltSidePanel-width (supports any CSS length, including %).
+     During enter/exit animation: animates `width` between 0 and the
+     panel width and clips the absolutely-positioned inner via
+     `contain: paint`. The inner uses a JS-resolved px width during
+     animation (--saltSidePanel-animation-width) so percentage widths
+     don't compound against the animating outer. */
+  position: relative;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  flex: none;
+  width: var(--saltSidePanel-width);
+  height: 100%;
+  min-height: 0;
+  align-self: stretch;
 }
 
 .saltSidePanel-primary {
@@ -23,47 +34,9 @@
   --sidePanel-borderColor: var(--salt-container-tertiary-borderColor);
 }
 
-.saltSidePanel-left {
-  border-right: var(--sidePanel-border);
-}
-.saltSidePanel-right {
-  border-left: var(--sidePanel-border);
-}
-
 .saltSidePanel-none {
   --sidePanel-background: none;
-  border: none;
-}
-
-.saltSidePanel-none {
   --saltSidePanel-padding: var(--salt-spacing-200);
-}
-
-.saltSidePanel-left,
-.saltSidePanel-right {
-  width: var(--saltSidePanel-width);
-  height: 100%;
-  min-height: 0;
-  align-self: stretch;
-}
-
-.saltSidePanel-enterAnimation,
-.saltSidePanel-exitAnimation {
-  overflow: hidden;
-}
-
-.saltSidePanel-left.saltSidePanel-enterAnimation,
-.saltSidePanel-right.saltSidePanel-enterAnimation {
-  animation: saltSidePanel-expandWidth var(--salt-duration-perceptible) var(--salt-animation-timing-function);
-}
-
-.saltSidePanel-left.saltSidePanel-exitAnimation,
-.saltSidePanel-right.saltSidePanel-exitAnimation {
-  animation: saltSidePanel-collapseWidth var(--salt-duration-perceptible) var(--salt-animation-timing-function) both;
-}
-
-.saltSidePanel-exitAnimation {
-  pointer-events: none;
 }
 
 .saltSidePanel-inner {
@@ -73,30 +46,84 @@
   flex: 1;
   min-height: 0;
   padding: var(--saltSidePanel-padding);
+  width: 100%;
+  background-color: var(--sidePanel-background, var(--salt-container-primary-background));
 }
 
-.saltSidePanel-left .saltSidePanel-inner,
+.saltSidePanel-left .saltSidePanel-inner {
+  border-right: var(--sidePanel-border);
+}
+
 .saltSidePanel-right .saltSidePanel-inner {
-  width: var(--saltSidePanel-width);
-  height: 100%;
+  border-left: var(--sidePanel-border);
 }
 
-@keyframes saltSidePanel-expandWidth {
+.saltSidePanel-none .saltSidePanel-inner {
+  border: none;
+}
+
+/* Animation: outer becomes the gap + clip; inner is absolutely positioned
+   and anchored to the gap's GROWING edge so the leading edge tracks the
+   gap's expansion — content visibly pushes the sibling rather than being
+   revealed in place. Left grows rightward → anchor inner right; right
+   grows leftward → anchor inner left.
+
+   During animation the outer's width is interpolating, so the inner can't
+   rely on --saltSidePanel-width (which may be a percentage that would
+   resolve against the animating outer). Instead the JS layer measures the
+   resolved width once and exposes it as --saltSidePanel-animation-width
+   (a px value) for the inner to use. */
+.saltSidePanel-enterAnimation,
+.saltSidePanel-exitAnimation {
+  contain: paint;
+}
+
+.saltSidePanel-enterAnimation .saltSidePanel-inner,
+.saltSidePanel-exitAnimation .saltSidePanel-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  flex: none;
+  width: var(--saltSidePanel-animation-width, var(--saltSidePanel-width));
+}
+
+.saltSidePanel-left.saltSidePanel-enterAnimation .saltSidePanel-inner,
+.saltSidePanel-left.saltSidePanel-exitAnimation .saltSidePanel-inner {
+  right: 0;
+}
+
+.saltSidePanel-right.saltSidePanel-enterAnimation .saltSidePanel-inner,
+.saltSidePanel-right.saltSidePanel-exitAnimation .saltSidePanel-inner {
+  left: 0;
+}
+
+.saltSidePanel-exitAnimation .saltSidePanel-inner {
+  pointer-events: none;
+}
+
+.saltSidePanel-enterAnimation {
+  animation: saltSidePanel-open var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+}
+
+.saltSidePanel-exitAnimation {
+  animation: saltSidePanel-close var(--salt-duration-perceptible) var(--salt-animation-timing-function) both;
+}
+
+@keyframes saltSidePanel-open {
   from {
     width: 0;
   }
 }
-@keyframes saltSidePanel-collapseWidth {
+
+@keyframes saltSidePanel-close {
   to {
     width: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .saltSidePanel-left.saltSidePanel-enterAnimation,
-  .saltSidePanel-right.saltSidePanel-enterAnimation,
-  .saltSidePanel-left.saltSidePanel-exitAnimation,
-  .saltSidePanel-right.saltSidePanel-exitAnimation {
+  .saltSidePanel-enterAnimation,
+  .saltSidePanel-exitAnimation {
     animation: none;
   }
 }

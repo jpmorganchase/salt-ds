@@ -1,10 +1,32 @@
-import {
-  type MouseEvent,
-  type MutableRefObject,
-  type RefCallback,
-  useCallback,
+import { useEventCallback } from "@salt-ds/core";
+import type {
+  ComponentPropsWithoutRef,
+  MouseEvent,
+  MutableRefObject,
+  RefCallback,
 } from "react";
 import { useSidePanelContext } from "./internal";
+
+export interface SidePanelTriggerExtraProps {
+  /**
+   * Optional ref to forward alongside the focus-return registration.
+   */
+  ref?:
+    | RefCallback<HTMLElement | null>
+    | MutableRefObject<HTMLElement | null>
+    | null;
+  /**
+   * Click handler. Runs before the built-in toggle so consumers can
+   * preventDefault to skip the toggle.
+   */
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+}
+
+export type SidePanelTriggerPropsResult = ComponentPropsWithoutRef<"button"> & {
+  "aria-expanded": boolean;
+  "aria-controls": string | undefined;
+  ref: RefCallback<HTMLElement | null>;
+};
 
 export interface SidePanelValue {
   /**
@@ -26,18 +48,20 @@ export interface SidePanelValue {
    * ```
    *
    * You can pass additional props which are merged in. If you provide your
-   * own `onClick`, it runs before the built-in toggle.
+   * own `onClick`, it runs before the built-in toggle. If you provide your
+   * own `ref`, it is forwarded alongside the internal focus-return ref.
    *
    * For multi-trigger scenarios (e.g. table rows), use `setTriggerRef` and
    * manage ARIA attributes yourself instead.
    */
   getTriggerProps: (
-    userProps?: Record<string, unknown>,
-  ) => Record<string, unknown>;
+    userProps?: SidePanelTriggerExtraProps,
+  ) => SidePanelTriggerPropsResult;
   /**
    * Registers the element that should receive focus when the panel closes.
    * Use this in multi-trigger scenarios (e.g. table rows) where each trigger
-   * needs explicit control over which element is the reference.
+   * needs explicit control over which element is the reference. Pass `null`
+   * to clear the previously-registered trigger.
    */
   setTriggerRef: (element: HTMLElement | null) => void;
   /**
@@ -50,27 +74,23 @@ export interface SidePanelValue {
 export function useSidePanel(): SidePanelValue {
   const { openState, setOpen, setReference, panelId } = useSidePanelContext();
 
-  const getTriggerProps = useCallback(
-    (userProps?: Record<string, unknown>) => {
-      const userOnClick = userProps?.onClick as
-        | ((e: MouseEvent<HTMLElement>) => void)
-        | undefined;
+  // useEventCallback gives a stable identity so consumers can memoise
+  // around getTriggerProps without it churning on open/close.
+  const getTriggerProps = useEventCallback(
+    (userProps?: SidePanelTriggerExtraProps): SidePanelTriggerPropsResult => {
+      const userOnClick = userProps?.onClick;
+      const userRef = userProps?.ref;
 
       return {
         "aria-expanded": openState,
         "aria-controls": openState ? panelId : undefined,
         ...userProps,
-        onClick: (e: MouseEvent<HTMLElement>) => {
-          userOnClick?.(e);
+        onClick: (event: MouseEvent<HTMLButtonElement>) => {
+          userOnClick?.(event);
           setOpen(!openState);
         },
         ref: (node: HTMLElement | null) => {
-          // Register this element as the trigger for focus return
           setReference(node);
-          // Forward the consumer's ref if provided
-          const userRef = userProps?.ref as
-            | RefCallback<HTMLElement | null>
-            | MutableRefObject<HTMLElement | null>;
           if (typeof userRef === "function") {
             userRef(node);
           } else if (
@@ -83,7 +103,6 @@ export function useSidePanel(): SidePanelValue {
         },
       };
     },
-    [openState, panelId, setReference, setOpen],
   );
 
   return {

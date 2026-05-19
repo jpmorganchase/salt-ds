@@ -130,8 +130,7 @@ const SidePanelExample = () => {
         }}
       >
         <TableContainer>
-          <Table>
-            <caption>Users</caption>
+          <Table aria-label="Users">
             <THead>
               <TR>
                 <TH>Name</TH>
@@ -172,43 +171,45 @@ const SidePanelExample = () => {
               <SidePanelCloseButton />
             </SidePanelHeader>
             <SidePanelContent>
-              <StackLayout style={{ width: "100%" }}>
-                <FormField>
-                  <FormFieldLabel>Name</FormFieldLabel>
-                  <Input
-                    bordered
-                    value={formValues.name}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                      setFormValues(
-                        (v) => v && { ...v, name: event.target.value },
-                      )
-                    }
-                  />
-                </FormField>
-                <FormField>
-                  <FormFieldLabel>Email</FormFieldLabel>
-                  <Input
-                    bordered
-                    value={formValues.email}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                      setFormValues(
-                        (v) => v && { ...v, email: event.target.value },
-                      )
-                    }
-                  />
-                </FormField>
-                <FormField>
-                  <FormFieldLabel>Phone</FormFieldLabel>
-                  <Input
-                    bordered
-                    value={formValues.phone}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                      setFormValues(
-                        (v) => v && { ...v, phone: event.target.value },
-                      )
-                    }
-                  />
-                </FormField>
+              <StackLayout gap={3} style={{ width: "100%" }}>
+                <StackLayout gap={1}>
+                  <FormField>
+                    <FormFieldLabel>Name</FormFieldLabel>
+                    <Input
+                      bordered
+                      value={formValues.name}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        setFormValues(
+                          (v) => v && { ...v, name: event.target.value },
+                        )
+                      }
+                    />
+                  </FormField>
+                  <FormField>
+                    <FormFieldLabel>Email</FormFieldLabel>
+                    <Input
+                      bordered
+                      value={formValues.email}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        setFormValues(
+                          (v) => v && { ...v, email: event.target.value },
+                        )
+                      }
+                    />
+                  </FormField>
+                  <FormField>
+                    <FormFieldLabel>Phone</FormFieldLabel>
+                    <Input
+                      bordered
+                      value={formValues.phone}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        setFormValues(
+                          (v) => v && { ...v, phone: event.target.value },
+                        )
+                      }
+                    />
+                  </FormField>
+                </StackLayout>
                 <FlexLayout gap={1}>
                   <Button
                     sentiment="accented"
