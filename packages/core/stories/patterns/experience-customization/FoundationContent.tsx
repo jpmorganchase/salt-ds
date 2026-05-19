@@ -169,7 +169,7 @@ export const FoundationContent = ({
         >
           <Checkbox
             name="acceptTerms"
-            label="I understand that High density reduces target sizes and may affect readability and ease of use."
+            label="I understand that high density doesn't meet the WCAG-defined minimum target size, which may reduce readability and make interactions harder."
             checked={formData.acceptTerms}
             onChange={handleCheckboxChange}
             inputProps={{
