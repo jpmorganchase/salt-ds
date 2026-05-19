@@ -143,24 +143,23 @@ function useCommentForm(initialData: Comment[] = initialComments) {
       setValidationStatus("error");
       inputRef.current?.focus();
       announce("Comment can't be blank", { ariaLive: "assertive" });
-      return false;
+      return;
     }
     setValidationStatus(undefined);
-    setComments([
+    setComments((prev) => [
       {
         name: "Sam Patel",
         role: "UX Designer",
         date: Date.now(),
         text: inputValue,
       },
-      ...comments,
+      ...prev,
     ]);
     setInputValue("");
     inputRef.current?.focus();
     requestAnimationFrame(() => {
       announce("Comment posted");
     });
-    return true;
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -375,14 +374,11 @@ export const WithEmptyState = () => {
               style: { minWidth: "300px" },
             }}
             endAdornment={
-              <Button
-                aria-label="Send comment"
-                type="submit"
-                disabled={!inputValue}
-                style={{ visibility: inputValue ? "visible" : "hidden" }}
-              >
-                <SendIcon aria-hidden />
-              </Button>
+              inputValue && (
+                <Button aria-label="Send comment" type="submit">
+                  <SendIcon aria-hidden />
+                </Button>
+              )
             }
             value={inputValue}
             onChange={handleChange}
@@ -414,7 +410,7 @@ export const WithEmptyState = () => {
 };
 
 export const WithMultilineInput = () => {
-  const { announce } = useAriaAnnouncer();
+  const { announce } = useAriaAnnouncer({ debounce: 500 });
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [inputValue, setInputValue] = useState("");
   const [validationStatus, setValidationStatus] = useState<
@@ -445,14 +441,14 @@ export const WithMultilineInput = () => {
     }
     setValidationStatus(undefined);
     setErrorMessage("");
-    setComments([
+    setComments((prev) => [
       {
         name: "Sam Patel",
         role: "UX Designer",
         date: Date.now(),
         text: inputValue,
       },
-      ...comments,
+      ...prev,
     ]);
     setInputValue("");
     textAreaRef.current?.focus();
@@ -559,14 +555,14 @@ export const WithSubmissionError = () => {
 
   const handleRetry = () => {
     if (inputValue.trim()) {
-      setComments([
+      setComments((prev) => [
         {
           name: "Sam Patel",
           role: "UX Designer",
           date: Date.now(),
           text: inputValue,
         },
-        ...comments,
+        ...prev,
       ]);
       setInputValue("");
       setSubmissionError(false);
