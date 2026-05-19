@@ -6,16 +6,11 @@ import {
   Input,
   StackLayout,
   Text,
-  useAriaAnnouncer,
   useBreakpoint,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import {
-  type ChangeEvent,
-  type CSSProperties,
-  type FocusEvent,
-  useState,
-} from "react";
+import type { CSSProperties } from "react";
+import { useFormattedInput } from "./useFormattedInput";
 
 export default {
   title: "Patterns/Formatted Input",
@@ -23,16 +18,6 @@ export default {
 } as Meta;
 
 export const PhoneNumber: StoryFn = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [displayValue, setDisplayValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<
-    "error" | "warning" | "success" | undefined
-  >(undefined);
-  const [validationMessage, setValidationMessage] = useState("");
-  const { announce } = useAriaAnnouncer();
-  const defaultHelperText =
-    "Enter your phone number, including the country code and area code.";
-
   const formatPhoneNumber = (cleaned: string) => {
     if (cleaned.length === 11) {
       return `+${cleaned.slice(0, 1)} (${cleaned.slice(1, 4)}) ${cleaned.slice(4, 7)}-${cleaned.slice(7)}`;
@@ -48,71 +33,28 @@ export const PhoneNumber: StoryFn = () => {
     return false;
   };
 
-  const handleValidation = (
-    status: "error" | "warning" | "success" | undefined,
-    message: string,
-  ) => {
-    setValidationStatus(status);
-    setValidationMessage(message);
-    if (message && status === "error") {
-      announce(message, { ariaLive: "assertive" });
-    }
-  };
-
-  const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDisplayValue(value);
-
-    if (hasInvalidChars(value)) {
-      handleValidation("error", "Only numbers and () + - are allowed.");
-    } else {
-      handleValidation(undefined, "");
-    }
-  };
-
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPhoneNumber(value);
-    const normalized = value.replace(/\D/g, "");
-
-    if (hasInvalidChars(value)) {
-      handleValidation(
-        "error",
-        "Remove letters and symbols—Only numbers and () + - are allowed.",
-      );
-      return;
-    }
-
-    if (normalized.length === 0) {
-      setDisplayValue("");
-      handleValidation(undefined, "");
-    } else if (normalized.length === 11) {
-      const formatted = formatPhoneNumber(normalized);
-      setDisplayValue(formatted);
-
-      if (hasUnusualAreaCode(normalized)) {
-        handleValidation(
-          "warning",
-          "The phone number entered is valid, but the area code appears to be unusual.",
-        );
-      } else {
-        handleValidation("success", "Phone number is valid.");
-      }
-    } else {
-      handleValidation(
-        "error",
-        "Please enter a valid phone number, including country and area code.",
-      );
-    }
-  };
-
-  const handleFocus = () => {
-    if (phoneNumber) {
-      setDisplayValue(phoneNumber);
-    }
-  };
+  const {
+    displayValue,
+    validationStatus,
+    validationMessage,
+    handleChange,
+    handleBlur,
+    handleFocus,
+  } = useFormattedInput({
+    formatValue: formatPhoneNumber,
+    normalizedValue: (value) => value.replace(/\D/g, ""),
+    validateNormalized: (normalized) => normalized.length === 11,
+    hasInvalidChars: (value: string) => /[^0-9()\s+-]/.test(value),
+    invalidCharMessage: "Only numbers and () + - are allowed.",
+    invalidCharBlurMessage:
+      "Remove letters and symbols—Only numbers and () + - are allowed.",
+    invalidFormatMessage:
+      "Please enter a valid phone number, including country and area code.",
+    warnCondition: hasUnusualAreaCode,
+    warnMessage:
+      "The phone number entered is valid, but the area code appears to be unusual.",
+    successMessage: "Phone number is valid.",
+  });
 
   return (
     <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
@@ -130,31 +72,17 @@ export const PhoneNumber: StoryFn = () => {
         }}
       />
       <FormFieldHelperText>
-        {validationMessage || defaultHelperText}
+        {validationMessage ||
+          "Enter your phone number, including the country code and area code."}
       </FormFieldHelperText>
     </FormField>
   );
 };
 
 export const PhoneNumberWithPreview: StoryFn = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [displayValue, setDisplayValue] = useState("");
-  const [preview, setPreview] = useState("");
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
-  const [validationMessage, setValidationMessage] = useState("");
   const defaultHelperText =
     "Enter your phone number, including the country code and area code.";
 
-  const [phoneNumber2, setPhoneNumber2] = useState("");
-  const [displayValue2, setDisplayValue2] = useState("");
-  const [preview2, setPreview2] = useState("");
-  const [validationStatus2, setValidationStatus2] = useState<
-    "error" | undefined
-  >(undefined);
-  const [validationMessage2, setValidationMessage2] = useState("");
-  const { announce } = useAriaAnnouncer();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
@@ -182,134 +110,39 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     return "";
   };
 
-  const handleValidation = (status: "error" | undefined, message: string) => {
-    setValidationStatus(status);
-    setValidationMessage(message);
-    if (message && status === "error") {
-      announce(message, { ariaLive: "assertive" });
-    }
+  const phoneInputOptions = {
+    formatValue: (cleaned: string) =>
+      cleaned.length === 11 ? formatPhoneNumber(cleaned) : cleaned,
+    normalizedValue: (value: string) => value.replace(/\D/g, ""),
+    validateNormalized: (normalized: string) => normalized.length === 11,
+    hasInvalidChars: (value: string) => /[^0-9()\s+-]/.test(value),
+    invalidCharMessage: "Only numbers and () + - are allowed.",
+    invalidCharBlurMessage:
+      "Remove letters and symbols—Only numbers and () + - are allowed.",
+    invalidFormatMessage:
+      "Please enter a valid phone number, including country and area code.",
+    generatePreview: generatePreview,
   };
 
-  const hasInvalidChars = (value: string) => /[^0-9()\s+-]/.test(value);
+  const {
+    displayValue,
+    preview,
+    validationStatus,
+    validationMessage,
+    handleChange,
+    handleBlur,
+    handleFocus,
+  } = useFormattedInput(phoneInputOptions);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDisplayValue(value);
-
-    if (hasInvalidChars(value)) {
-      handleValidation("error", "Only numbers and () + - are allowed.");
-      setPreview("");
-    } else {
-      handleValidation(undefined, "");
-      setPreview(generatePreview(value));
-    }
-  };
-
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPhoneNumber(value);
-    const normalized = value.replace(/\D/g, "");
-
-    if (hasInvalidChars(value)) {
-      handleValidation(
-        "error",
-        "Remove letters and symbols—Only numbers and () + - are allowed.",
-      );
-      setPreview("");
-      return;
-    }
-
-    if (normalized.length === 0) {
-      setDisplayValue("");
-      handleValidation(undefined, "");
-      setPreview("");
-    } else if (normalized.length === 11) {
-      const formatted = formatPhoneNumber(normalized);
-      setDisplayValue(formatted);
-      handleValidation(undefined, "");
-      setPreview("");
-    } else {
-      handleValidation(
-        "error",
-        "Please enter a valid phone number, including country and area code.",
-      );
-      setPreview("");
-    }
-  };
-
-  const handleFocus = () => {
-    if (phoneNumber) {
-      setDisplayValue(phoneNumber);
-      setPreview(generatePreview(phoneNumber));
-    }
-  };
-
-  const handleChange2 = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDisplayValue2(value);
-
-    if (hasInvalidChars(value)) {
-      setValidationStatus2("error");
-      setValidationMessage2("Only numbers and () + - are allowed.");
-      announce("Only numbers and () + - are allowed.", {
-        ariaLive: "assertive",
-      });
-      setPreview2("");
-    } else {
-      setValidationStatus2(undefined);
-      setValidationMessage2("");
-      setPreview2(generatePreview(value));
-    }
-  };
-
-  const handleBlur2 = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPhoneNumber2(value);
-    const normalized = value.replace(/\D/g, "");
-
-    if (hasInvalidChars(value)) {
-      setValidationStatus2("error");
-      setValidationMessage2(
-        "Remove letters and symbols—Only numbers and () + - are allowed.",
-      );
-      announce(
-        "Remove letters and symbols—Only numbers and () + - are allowed.",
-        { ariaLive: "assertive" },
-      );
-      setPreview2("");
-      return;
-    }
-
-    if (normalized.length === 0) {
-      setDisplayValue2("");
-      setValidationStatus2(undefined);
-      setValidationMessage2("");
-      setPreview2("");
-    } else if (normalized.length === 11) {
-      const formatted = formatPhoneNumber(normalized);
-      setDisplayValue2(formatted);
-      setValidationStatus2(undefined);
-      setValidationMessage2("");
-      setPreview2("");
-    } else {
-      setValidationStatus2("error");
-      setValidationMessage2(
-        "Please enter a valid phone number, including country and area code.",
-      );
-      announce(
-        "Please enter a valid phone number, including country and area code.",
-        { ariaLive: "assertive" },
-      );
-      setPreview2("");
-    }
-  };
-
-  const handleFocus2 = () => {
-    if (phoneNumber2) {
-      setDisplayValue2(phoneNumber2);
-      setPreview2(generatePreview(phoneNumber2));
-    }
-  };
+  const {
+    displayValue: displayValue2,
+    preview: preview2,
+    validationStatus: validationStatus2,
+    validationMessage: validationMessage2,
+    handleChange: handleChange2,
+    handleBlur: handleBlur2,
+    handleFocus: handleFocus2,
+  } = useFormattedInput(phoneInputOptions);
 
   const getFormFieldLabel = (preview: string) => {
     return (
@@ -395,78 +228,31 @@ export const PhoneNumberWithPreview: StoryFn = () => {
 };
 
 export const CreditCard: StoryFn = () => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [displayValue, setDisplayValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
-  const [validationMessage, setValidationMessage] = useState("");
-  const defaultHelperText = "Enter your 16-digit card number.";
-  const { announce } = useAriaAnnouncer();
-
   const formatCreditCard = (cleaned: string) => {
     const match = cleaned.match(/.{1,4}/g);
     return match ? match.join("-") : cleaned;
   };
-
-  const handleValidation = (status: "error" | undefined, message: string) => {
-    setValidationStatus(status);
-    setValidationMessage(message);
-    if (message && status === "error") {
-      announce(message, { ariaLive: "assertive" });
-    }
-  };
-
-  const hasInvalidChars = (value: string) => /[^\d\s-]/.test(value);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDisplayValue(value);
-
-    if (hasInvalidChars(value)) {
-      handleValidation(
-        "error",
-        "Only numbers, spaces and hyphens are allowed.",
-      );
-    } else {
-      handleValidation(undefined, "");
-    }
-  };
-
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setCardNumber(value);
-
-    if (hasInvalidChars(value)) {
-      handleValidation(
-        "error",
-        "Remove invalid characters—Only numbers, spaces and hyphens are allowed.",
-      );
-      return;
-    }
-
-    const cleaned = value.replace(/[\s-]/g, "");
-
-    if (cleaned.length === 0) {
-      setDisplayValue("");
-      handleValidation(undefined, "");
-    } else if (cleaned.length === 16 && /^\d{16}$/.test(cleaned)) {
-      const formatted = formatCreditCard(cleaned);
-      setDisplayValue(formatted);
-      handleValidation(undefined, "");
-    } else {
-      handleValidation("error", "Please enter a valid 16-digit card number.");
-    }
-  };
-
-  const handleFocus = () => {
-    if (cardNumber) {
-      setDisplayValue(cardNumber);
-    }
-  };
+  const {
+    displayValue,
+    validationStatus,
+    validationMessage,
+    handleChange,
+    handleBlur,
+    handleFocus,
+  } = useFormattedInput({
+    formatValue: formatCreditCard,
+    normalizedValue: (value) => value.replace(/[\s-]/g, ""),
+    validateNormalized: (cleaned) =>
+      cleaned.length === 16 && /^\d{16}$/.test(cleaned),
+    hasInvalidChars: (value: string) => /[^\d\s-]/.test(value),
+    invalidCharMessage: "Only numbers, spaces and hyphens are allowed.",
+    invalidCharBlurMessage:
+      "Remove invalid characters—Only numbers, spaces and hyphens are allowed.",
+    invalidFormatMessage: "Please enter a valid 16-digit card number.",
+  });
 
   return (
-    <FormField style={{ width: "400px" }} validationStatus={validationStatus}>
+    <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
       <FormFieldLabel>Credit card number</FormFieldLabel>
       <Input
         value={displayValue}
@@ -481,22 +267,13 @@ export const CreditCard: StoryFn = () => {
         }}
       />
       <FormFieldHelperText>
-        {validationMessage || defaultHelperText}
+        {validationMessage || "Enter your 16-digit card number."}
       </FormFieldHelperText>
     </FormField>
   );
 };
 
 export const Currency: StoryFn = () => {
-  const [amount, setAmount] = useState("");
-  const [displayValue, setDisplayValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
-  const [validationMessage, setValidationMessage] = useState("");
-  const defaultHelperText = "Enter an amount in US dollars (numbers only).";
-  const { announce } = useAriaAnnouncer();
-
   const formatCurrency = (cleaned: string) => {
     const parts = cleaned.split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -510,61 +287,23 @@ export const Currency: StoryFn = () => {
     return true;
   };
 
-  const handleValidation = (status: "error" | undefined, message: string) => {
-    setValidationStatus(status);
-    setValidationMessage(message);
-    if (message && status === "error") {
-      announce(message, { ariaLive: "assertive" });
-    }
-  };
-
-  const hasInvalidChars = (value: string) => /[^\d.,]/.test(value);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDisplayValue(value);
-
-    if (hasInvalidChars(value)) {
-      handleValidation(
-        "error",
-        "Only numbers, periods, and commas are allowed.",
-      );
-    } else {
-      handleValidation(undefined, "");
-    }
-  };
-
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setAmount(value);
-
-    if (hasInvalidChars(value)) {
-      handleValidation(
-        "error",
-        "Remove invalid characters—Only numbers, periods, and commas are allowed.",
-      );
-      return;
-    }
-
-    const cleaned = value.replace(/[^\d.]/g, "");
-
-    if (cleaned.length === 0) {
-      setDisplayValue("");
-      handleValidation(undefined, "");
-    } else if (validateCurrency(cleaned)) {
-      const formatted = formatCurrency(cleaned);
-      setDisplayValue(formatted);
-      handleValidation(undefined, "");
-    } else {
-      handleValidation("error", "Please enter a valid amount.");
-    }
-  };
-
-  const handleFocus = () => {
-    if (amount) {
-      setDisplayValue(amount);
-    }
-  };
+  const {
+    displayValue,
+    validationStatus,
+    validationMessage,
+    handleChange,
+    handleBlur,
+    handleFocus,
+  } = useFormattedInput({
+    formatValue: formatCurrency,
+    normalizedValue: (value: string) => value.replace(/[^\d.]/g, ""),
+    validateNormalized: validateCurrency,
+    hasInvalidChars: (value: string) => /[^\d.,]/.test(value),
+    invalidCharMessage: "Only numbers, periods, and commas are allowed.",
+    invalidCharBlurMessage:
+      "Remove invalid characters—Only numbers, periods, and commas are allowed.",
+    invalidFormatMessage: "Please enter a valid amount.",
+  });
 
   return (
     <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
@@ -583,21 +322,13 @@ export const Currency: StoryFn = () => {
         }}
       />
       <FormFieldHelperText>
-        {validationMessage || defaultHelperText}
+        {validationMessage || "Enter an amount in US dollars (numbers only)."}
       </FormFieldHelperText>
     </FormField>
   );
 };
 
 export const PostalCode: StoryFn = () => {
-  const [postalCode, setPostalCode] = useState("");
-  const [displayValue, setDisplayValue] = useState("");
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
-  const [validationMessage, setValidationMessage] = useState("");
-  const defaultHelperText = "Enter your postal code.";
-  const { announce } = useAriaAnnouncer();
   // UK postal code patterns: various formats like E14 5JP, SW1A 1AA, etc.
   const UK_POSTALCODE_REGEX = /^[A-Z]{1,2}\d{1,2}[A-Z]?\d[A-Z]{2}$/;
 
@@ -631,64 +362,25 @@ export const PostalCode: StoryFn = () => {
     );
   };
 
-  const handleValidation = (status: "error" | undefined, message: string) => {
-    setValidationStatus(status);
-    setValidationMessage(message);
-    if (message && status === "error") {
-      announce(message, { ariaLive: "assertive" });
-    }
-  };
-
-  const hasInvalidChars = (value: string) => /[^A-Z0-9\s]/.test(value);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const uppercase = value.toUpperCase();
-    setDisplayValue(uppercase);
-
-    if (hasInvalidChars(uppercase)) {
-      handleValidation(
-        "error",
-        "Only letters, numbers, and spaces are allowed.",
-      );
-    } else {
-      handleValidation(undefined, "");
-    }
-  };
-
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPostalCode(value);
-    const cleaned = value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-
-    if (hasInvalidChars(value)) {
-      handleValidation(
-        "error",
-        "Remove invalid characters—Only letters, numbers, and spaces are allowed.",
-      );
-      return;
-    }
-
-    if (cleaned.length === 0) {
-      setDisplayValue("");
-      handleValidation(undefined, "");
-    } else if (validatePostalCode(cleaned)) {
-      const formatted = formatPostalCode(cleaned);
-      setDisplayValue(formatted);
-      handleValidation(undefined, "");
-    } else {
-      handleValidation(
-        "error",
-        "Please enter a valid postal code (e.g., 12345 or E14 5JP or SW1A 1AA).",
-      );
-    }
-  };
-
-  const handleFocus = () => {
-    if (postalCode) {
-      setDisplayValue(postalCode);
-    }
-  };
+  const {
+    displayValue,
+    validationStatus,
+    validationMessage,
+    handleChange,
+    handleBlur,
+    handleFocus,
+  } = useFormattedInput({
+    formatValue: formatPostalCode,
+    normalizedValue: (value) => value.toUpperCase().replace(/[^A-Z0-9]/g, ""),
+    validateNormalized: validatePostalCode,
+    hasInvalidChars: (value: string) => /[^A-Z0-9\s]/.test(value),
+    invalidCharMessage: "Only letters, numbers, and spaces are allowed.",
+    invalidCharBlurMessage:
+      "Remove invalid characters—Only letters, numbers, and spaces are allowed.",
+    invalidFormatMessage:
+      "Please enter a valid postal code (e.g., 12345 or E14 5JP or SW1A 1AA).",
+    transformOnChange: (v) => v.toUpperCase(),
+  });
 
   return (
     <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
@@ -705,7 +397,7 @@ export const PostalCode: StoryFn = () => {
         }}
       />
       <FormFieldHelperText>
-        {validationMessage || defaultHelperText}
+        {validationMessage || "Enter your postal code."}
       </FormFieldHelperText>
     </FormField>
   );
