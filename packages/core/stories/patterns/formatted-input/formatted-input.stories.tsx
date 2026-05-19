@@ -9,7 +9,6 @@ import {
   useBreakpoint,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import type { CSSProperties } from "react";
 import { useFormattedInput } from "./useFormattedInput";
 
 export default {
@@ -35,6 +34,7 @@ export const PhoneNumber: StoryFn = () => {
 
   const {
     displayValue,
+    inputValue,
     validationStatus,
     validationMessage,
     handleChange,
@@ -49,7 +49,7 @@ export const PhoneNumber: StoryFn = () => {
     invalidCharBlurMessage:
       "Remove letters and symbols—Only numbers and () + - are allowed.",
     invalidFormatMessage:
-      "Please enter a valid phone number, including country and area code.",
+      "Please enter a valid US phone number: country code (1) + area code + number.",
     warnCondition: hasUnusualAreaCode,
     warnMessage:
       "The phone number entered is valid, but the area code appears to be unusual.",
@@ -57,31 +57,37 @@ export const PhoneNumber: StoryFn = () => {
   });
 
   return (
-    <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
-      <FormFieldLabel>Phone number</FormFieldLabel>
-      <Input
-        value={displayValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholder="+1 (000) 000-0000"
-        bordered
-        inputProps={{
-          "aria-invalid": validationStatus === "error" ? true : undefined,
-          autoComplete: "tel",
-        }}
-      />
-      <FormFieldHelperText>
-        {validationMessage ||
-          "Enter your phone number, including the country code and area code."}
-      </FormFieldHelperText>
-    </FormField>
+    <StackLayout gap={2} style={{ width: "300px" }}>
+      <FormField validationStatus={validationStatus}>
+        <FormFieldLabel>Phone number</FormFieldLabel>
+        <Input
+          value={displayValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          placeholder="+1 (000) 000-0000"
+          bordered
+          inputProps={{
+            "aria-invalid": validationStatus === "error" ? true : undefined,
+            autoComplete: "tel",
+          }}
+        />
+        <FormFieldHelperText>
+          {validationMessage ||
+            "Enter a US phone number, e.g. +1 (555) 000-0000."}
+        </FormFieldHelperText>
+      </FormField>
+      {inputValue.length > 0 && (
+        <Text color="secondary" styleAs="label">
+          Value for submission: <strong>{inputValue}</strong>
+        </Text>
+      )}
+    </StackLayout>
   );
 };
 
 export const PhoneNumberWithPreview: StoryFn = () => {
-  const defaultHelperText =
-    "Enter your phone number, including the country code and area code.";
+  const defaultHelperText = "Enter a US phone number, e.g. +1 (555) 000-0000.";
 
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
@@ -120,12 +126,13 @@ export const PhoneNumberWithPreview: StoryFn = () => {
     invalidCharBlurMessage:
       "Remove letters and symbols—Only numbers and () + - are allowed.",
     invalidFormatMessage:
-      "Please enter a valid phone number, including country and area code.",
-    generatePreview: generatePreview,
+      "Please enter a valid US phone number: country code (1) + area code + number.",
+    generatePreview,
   };
 
   const {
     displayValue,
+    inputValue,
     preview,
     validationStatus,
     validationMessage,
@@ -136,6 +143,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
 
   const {
     displayValue: displayValue2,
+    inputValue: inputValue2,
     preview: preview2,
     validationStatus: validationStatus2,
     validationMessage: validationMessage2,
@@ -163,66 +171,85 @@ export const PhoneNumberWithPreview: StoryFn = () => {
   };
 
   return (
-    <FlexLayout direction="column" align="start" gap={2}>
-      <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
-        {getFormFieldLabel(preview)}
-        <Input
-          value={displayValue}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          placeholder="+1 (000) 000-0000"
-          bordered
-          inputProps={{
-            "aria-invalid": validationStatus === "error" ? true : undefined,
-            autoComplete: "tel",
-          }}
-        />
-        <FormFieldHelperText>
-          {validationMessage || defaultHelperText}
-        </FormFieldHelperText>
-      </FormField>
-      <FormField
-        validationStatus={validationStatus2}
-        labelPlacement={isMobile ? "top" : "left"}
-        style={{ "--saltFormField-label-width": "auto" } as CSSProperties}
-      >
-        {isMobile ? (
-          getFormFieldLabel(preview2)
-        ) : (
-          <FormFieldLabel>Phone number</FormFieldLabel>
-        )}
-        <FlexLayout direction="row" align="center" gap={1.5}>
+    <FlexLayout direction="row" align="start" gap={2} wrap>
+      <StackLayout gap={1}>
+        <FormField
+          style={{ width: "300px" }}
+          validationStatus={validationStatus}
+        >
+          {getFormFieldLabel(preview)}
           <Input
-            value={displayValue2}
-            onChange={handleChange2}
-            onBlur={handleBlur2}
-            onFocus={handleFocus2}
+            value={displayValue}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
             placeholder="+1 (000) 000-0000"
             bordered
-            style={{ width: isMobile ? "100%" : "210px" }}
             inputProps={{
-              "aria-invalid": validationStatus2 === "error" ? true : undefined,
+              "aria-invalid": validationStatus === "error" ? true : undefined,
               autoComplete: "tel",
             }}
           />
-          {!isMobile && (
-            <Text
-              styleAs="label"
-              color="secondary"
-              style={{
-                minWidth: "150px",
-                visibility: preview2 ? "visible" : "hidden",
-              }}
-            >
-              {preview2}
-            </Text>
+          <FormFieldHelperText>
+            {validationMessage || defaultHelperText}
+          </FormFieldHelperText>
+        </FormField>
+        {inputValue.length > 0 && (
+          <Text color="secondary" styleAs="label">
+            Value for submission: <strong>{inputValue}</strong>
+          </Text>
+        )}
+      </StackLayout>
+      <StackLayout gap={1}>
+        <FormField
+          style={{ width: "300px" }}
+          validationStatus={validationStatus2}
+        >
+          {isMobile ? (
+            getFormFieldLabel(preview2)
+          ) : (
+            <FormFieldLabel>Phone number</FormFieldLabel>
           )}
-        </FlexLayout>
-        <FormFieldHelperText style={{ maxWidth: isMobile ? "100%" : "210px" }}>
-          {validationMessage2 || defaultHelperText}
-        </FormFieldHelperText>
-      </FormField>
+          <FlexLayout direction="row" align="center" gap={1.5}>
+            <Input
+              value={displayValue2}
+              onChange={handleChange2}
+              onBlur={handleBlur2}
+              onFocus={handleFocus2}
+              placeholder="+1 (000) 000-0000"
+              bordered
+              style={{ width: isMobile ? "100%" : "210px" }}
+              inputProps={{
+                "aria-invalid":
+                  validationStatus2 === "error" ? true : undefined,
+                autoComplete: "tel",
+              }}
+            />
+            {!isMobile && (
+              <Text
+                styleAs="label"
+                color="secondary"
+                style={{
+                  minWidth: "150px",
+                  visibility: preview2 ? "visible" : "hidden",
+                }}
+              >
+                {preview2}
+              </Text>
+            )}
+          </FlexLayout>
+          <FormFieldHelperText
+            style={{ maxWidth: isMobile ? "100%" : "210px" }}
+          >
+            {validationMessage2 || defaultHelperText}
+          </FormFieldHelperText>
+        </FormField>
+        {inputValue2.length > 0 && (
+          <Text color="secondary" styleAs="label">
+            Value for submission: <strong>{inputValue2}</strong>
+          </Text>
+        )}
+      </StackLayout>
     </FlexLayout>
   );
 };
@@ -234,6 +261,7 @@ export const CreditCard: StoryFn = () => {
   };
   const {
     displayValue,
+    inputValue,
     validationStatus,
     validationMessage,
     handleChange,
@@ -252,24 +280,31 @@ export const CreditCard: StoryFn = () => {
   });
 
   return (
-    <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
-      <FormFieldLabel>Credit card number</FormFieldLabel>
-      <Input
-        value={displayValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholder="5555-5555-5555-4444"
-        bordered
-        inputProps={{
-          "aria-invalid": validationStatus === "error" ? true : undefined,
-          autoComplete: "cc-number",
-        }}
-      />
-      <FormFieldHelperText>
-        {validationMessage || "Enter your 16-digit card number."}
-      </FormFieldHelperText>
-    </FormField>
+    <StackLayout gap={2} style={{ width: "300px" }}>
+      <FormField validationStatus={validationStatus}>
+        <FormFieldLabel>Credit card number</FormFieldLabel>
+        <Input
+          value={displayValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          placeholder="5555-5555-5555-4444"
+          bordered
+          inputProps={{
+            "aria-invalid": validationStatus === "error" ? true : undefined,
+            autoComplete: "cc-number",
+          }}
+        />
+        <FormFieldHelperText>
+          {validationMessage || "Enter your 16-digit card number."}
+        </FormFieldHelperText>
+      </FormField>
+      {inputValue.length > 0 && (
+        <Text color="secondary" styleAs="label">
+          Value for submission: <strong>{inputValue}</strong>
+        </Text>
+      )}
+    </StackLayout>
   );
 };
 
@@ -283,12 +318,12 @@ export const Currency: StoryFn = () => {
   const validateCurrency = (cleaned: string) => {
     const parts = cleaned.split(".");
     if (parts.length > 2) return false;
-    if (parts[0].length === 0) return false;
-    return true;
+    return parts[0].length !== 0;
   };
 
   const {
     displayValue,
+    inputValue,
     validationStatus,
     validationMessage,
     handleChange,
@@ -306,31 +341,37 @@ export const Currency: StoryFn = () => {
   });
 
   return (
-    <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
-      <FormFieldLabel>Amount</FormFieldLabel>
-      <Input
-        startAdornment={<Text>$</Text>}
-        value={displayValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholder="0.00"
-        bordered
-        inputProps={{
-          "aria-invalid": validationStatus === "error" ? true : undefined,
-          autoComplete: "postal-code",
-        }}
-      />
-      <FormFieldHelperText>
-        {validationMessage || "Enter an amount in US dollars (numbers only)."}
-      </FormFieldHelperText>
-    </FormField>
+    <StackLayout gap={2} style={{ width: "300px" }}>
+      <FormField validationStatus={validationStatus}>
+        <FormFieldLabel>Amount</FormFieldLabel>
+        <Input
+          startAdornment={<Text>$</Text>}
+          value={displayValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          placeholder="0.00"
+          bordered
+          inputProps={{
+            "aria-invalid": validationStatus === "error" ? true : undefined,
+          }}
+        />
+        <FormFieldHelperText>
+          {validationMessage || "Enter an amount in US dollars (numbers only)."}
+        </FormFieldHelperText>
+      </FormField>
+      {inputValue.length > 0 && (
+        <Text color="secondary" styleAs="label">
+          Value for submission: <strong>{inputValue}</strong>
+        </Text>
+      )}
+    </StackLayout>
   );
 };
 
 export const PostalCode: StoryFn = () => {
-  // UK postal code patterns: various formats like E14 5JP, SW1A 1AA, etc.
-  const UK_POSTALCODE_REGEX = /^[A-Z]{1,2}\d{1,2}[A-Z]?\d[A-Z]{2}$/;
+  // UK postal code patterns: various formats like M1, CR2, W1A, EC1A, etc.
+  const UK_POSTALCODE_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?\d[A-Z]{2}$/;
 
   const formatPostalCode = (cleaned: string) => {
     // US ZIP code (5 digits)
@@ -364,6 +405,7 @@ export const PostalCode: StoryFn = () => {
 
   const {
     displayValue,
+    inputValue,
     validationStatus,
     validationMessage,
     handleChange,
@@ -373,7 +415,7 @@ export const PostalCode: StoryFn = () => {
     formatValue: formatPostalCode,
     normalizedValue: (value) => value.toUpperCase().replace(/[^A-Z0-9]/g, ""),
     validateNormalized: validatePostalCode,
-    hasInvalidChars: (value: string) => /[^A-Z0-9\s]/.test(value),
+    hasInvalidChars: (value: string) => /[^a-zA-Z0-9\s]/.test(value),
     invalidCharMessage: "Only letters, numbers, and spaces are allowed.",
     invalidCharBlurMessage:
       "Remove invalid characters—Only letters, numbers, and spaces are allowed.",
@@ -383,22 +425,30 @@ export const PostalCode: StoryFn = () => {
   });
 
   return (
-    <FormField style={{ width: "300px" }} validationStatus={validationStatus}>
-      <FormFieldLabel>Postal Code</FormFieldLabel>
-      <Input
-        value={displayValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholder="12345 or E14 5JP or SW1A 1AA"
-        bordered
-        inputProps={{
-          "aria-invalid": validationStatus === "error" ? true : undefined,
-        }}
-      />
-      <FormFieldHelperText>
-        {validationMessage || "Enter your postal code."}
-      </FormFieldHelperText>
-    </FormField>
+    <StackLayout gap={2} style={{ width: "300px" }}>
+      <FormField validationStatus={validationStatus}>
+        <FormFieldLabel>Postal Code</FormFieldLabel>
+        <Input
+          value={displayValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          placeholder="12345 or E14 5JP or SW1A 1AA"
+          bordered
+          inputProps={{
+            "aria-invalid": validationStatus === "error" ? true : undefined,
+            autoComplete: "postal-code",
+          }}
+        />
+        <FormFieldHelperText>
+          {validationMessage || "Enter your postal code."}
+        </FormFieldHelperText>
+      </FormField>
+      {inputValue.length > 0 && (
+        <Text color="secondary" styleAs="label">
+          Value for submission: <strong>{inputValue}</strong>
+        </Text>
+      )}
+    </StackLayout>
   );
 };

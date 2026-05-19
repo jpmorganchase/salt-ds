@@ -57,37 +57,37 @@ export function useFormattedInput(options: UseFormattedInputOptions) {
       ? transformOnChange(e.target.value)
       : e.target.value;
     setDisplayValue(value);
+    setPreview("");
 
     if (hasInvalidChars(value)) {
       handleValidation("error", invalidCharMessage);
-      setPreview("");
     } else {
       handleValidation(undefined, "");
-      setPreview(generatePreview ? generatePreview(value) : "");
+      if (generatePreview) {
+        setPreview(generatePreview(value));
+      }
     }
   };
 
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
+  const handleBlur = (_e: FocusEvent<HTMLInputElement>) => {
+    const value = displayValue;
+    setPreview("");
 
     if (hasInvalidChars(value)) {
+      setInputValue(value);
       handleValidation("error", invalidCharBlurMessage);
-      setPreview("");
       return;
     }
 
     const normalized = normalizedValue(value);
+    setInputValue(normalized);
 
     if (normalized.length === 0) {
       setDisplayValue("");
       handleValidation(undefined, "");
-      setPreview("");
     } else if (validateNormalized(normalized)) {
       setDisplayValue(formatValue(normalized));
-      handleValidation(undefined, "");
-      setPreview("");
-      if (warnCondition && warnCondition(normalized)) {
+      if (warnCondition?.(normalized)) {
         handleValidation("warning", warnMessage ?? "");
       } else {
         handleValidation(
@@ -97,12 +97,12 @@ export function useFormattedInput(options: UseFormattedInputOptions) {
       }
     } else {
       handleValidation("error", invalidFormatMessage);
-      setPreview("");
     }
   };
 
   const handleFocus = () => {
-    if (inputValue) {
+    handleValidation(undefined, "");
+    if (inputValue.length > 0) {
       setDisplayValue(inputValue);
       setPreview(generatePreview ? generatePreview(inputValue) : "");
     }
@@ -110,6 +110,7 @@ export function useFormattedInput(options: UseFormattedInputOptions) {
 
   return {
     displayValue,
+    inputValue,
     validationStatus,
     validationMessage,
     preview,
