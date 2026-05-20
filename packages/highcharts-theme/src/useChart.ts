@@ -26,8 +26,7 @@ export const useChart = (
 ) => {
   const density = useDensity();
 
-  // Not supporting theme/style options for now
-  const { mode } = useTheme();
+  const { mode, theme } = useTheme();
   const targetWindow = useWindow();
 
   useComponentCssInjection({
@@ -73,6 +72,7 @@ export const useChart = (
     // From v12 onwards, we can use CSS color variables directly in the Options object
     // which enable us to be reactive to theme changes without this extra step
     void mode;
+    void theme;
 
     const chart = chartRef.current?.chart as Highcharts.Chart | null;
     const container = chart?.container ?? null;
@@ -80,7 +80,7 @@ export const useChart = (
     const elementUsed = container ?? targetWindow?.document?.documentElement;
 
     setMergedOptions(getMergedOptions(elementUsed));
-  }, [chartRef, getMergedOptions, mode, targetWindow]);
+  }, [chartRef, getMergedOptions, mode, targetWindow, theme]);
 
   return mergedOptions;
 };

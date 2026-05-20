@@ -5,6 +5,7 @@ import {
   type SaltChartTokenMap,
 } from "./density-token-map";
 import { getFillPatternColor, getSentimentPatternColors } from "./patterns";
+import type { HighchartsSeriesOptionsCompat } from "./types";
 
 type FillPatternColor = ReturnType<
   typeof getSentimentPatternColors
@@ -37,7 +38,7 @@ type FillPatternPoint = Record<string, unknown> & {
   y?: number;
 };
 
-type FillPatternSeries = NonNullable<Options["series"]>[number] & {
+type FillPatternSeries = HighchartsSeriesOptionsCompat & {
   data?: Array<unknown>;
   dashStyle?: string;
   fillColor?: SeriesColor;

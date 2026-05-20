@@ -8,8 +8,7 @@ import {
 } from "react";
 import { useSidePanelContext } from "./internal";
 
-export interface SidePanelTriggerProps
-  extends ComponentPropsWithoutRef<"button"> {}
+export type SidePanelTriggerProps = ComponentPropsWithoutRef<"button">;
 
 export const SidePanelTrigger = forwardRef<
   HTMLButtonElement,

@@ -6,8 +6,13 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   cypress-tests:
+    name: Cypress Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,7 +31,7 @@ jobs:
       - name: Build packages
         run: yarn run build
       - name: Cypress Components
-        uses: cypress-io/github-action@v7
+        uses: cypress-io/github-action@dace029018fcdf86e0df89a31bc3cfa5b32570d8 # v7
         with:
           install: false
           command: yarn run test:components

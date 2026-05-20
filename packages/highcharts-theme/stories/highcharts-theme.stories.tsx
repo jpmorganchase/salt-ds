@@ -1,3 +1,4 @@
+import isChromatic from "chromatic/isChromatic";
 import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import HighchartsReact from "highcharts-react-official";
@@ -57,6 +58,29 @@ interface HeatmapStoryArgs extends ChartStoryArgs {
   saltColorAxis?: SaltColorAxis;
 }
 
+const getChromaticStableOptions = (options: Options): Options =>
+  isChromatic()
+    ? {
+        ...options,
+        chart: {
+          ...options.chart,
+          animation: false,
+        },
+        plotOptions: {
+          ...options.plotOptions,
+          series: {
+            ...options.plotOptions?.series,
+            animation: false,
+          },
+        },
+      }
+    : options;
+
+const getChromaticStableArgs = <T extends ChartStoryArgs>(args: T): T => ({
+  ...args,
+  options: getChromaticStableOptions(args.options),
+});
+
 export default {
   title: "Highcharts/Highcharts Theme",
   component: HighchartsReact,
@@ -79,7 +103,9 @@ export default {
 };
 
 export const LineChart = {
-  render: (args: ChartStoryArgs) => <LineChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <LineChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: lineOptions,
@@ -87,7 +113,9 @@ export const LineChart = {
 };
 
 export const DualAxisChart = {
-  render: (args: ChartStoryArgs) => <DualAxisChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <DualAxisChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: dualAxisOptions,
@@ -95,7 +123,9 @@ export const DualAxisChart = {
 };
 
 export const HeatmapChart = {
-  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  render: (args: HeatmapStoryArgs) => (
+    <HeatmapChartComponent {...getChromaticStableArgs(args)} />
+  ),
   argTypes: {
     saltColorAxis: {
       control: "object",
@@ -110,7 +140,9 @@ export const HeatmapChart = {
 };
 
 export const HeatmapDataClassesChart = {
-  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  render: (args: HeatmapStoryArgs) => (
+    <HeatmapChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: heatmapDataClassesOptions,
@@ -119,7 +151,9 @@ export const HeatmapDataClassesChart = {
 };
 
 export const HeatmapDiscreteRangesChart = {
-  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  render: (args: HeatmapStoryArgs) => (
+    <HeatmapChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: heatmapDiscreteRangesOptions,
@@ -128,7 +162,9 @@ export const HeatmapDiscreteRangesChart = {
 };
 
 export const HeatmapTwoColorDiscreteRangesChart = {
-  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  render: (args: HeatmapStoryArgs) => (
+    <HeatmapChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: heatmapTwoColorDiscreteRangesOptions,
@@ -137,7 +173,9 @@ export const HeatmapTwoColorDiscreteRangesChart = {
 };
 
 export const HeatmapThresholdChart = {
-  render: (args: HeatmapStoryArgs) => <HeatmapChartComponent {...args} />,
+  render: (args: HeatmapStoryArgs) => (
+    <HeatmapChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: heatmapThresholdOptions,
@@ -146,7 +184,9 @@ export const HeatmapThresholdChart = {
 };
 
 export const AreaChart = {
-  render: (args: ChartStoryArgs) => <AreaChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <AreaChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: areaOptions,
@@ -154,7 +194,9 @@ export const AreaChart = {
 };
 
 export const DonutChart = {
-  render: (args: ChartStoryArgs) => <DonutChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <DonutChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: donutOptions,
@@ -162,7 +204,9 @@ export const DonutChart = {
 };
 
 export const PieChart = {
-  render: (args: ChartStoryArgs) => <PieChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <PieChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: pieOptions,
@@ -170,7 +214,9 @@ export const PieChart = {
 };
 
 export const BubbleChart = {
-  render: (args: ChartStoryArgs) => <BubbleChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <BubbleChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: bubbleOptions,
@@ -178,7 +224,9 @@ export const BubbleChart = {
 };
 
 export const CandlestickChart = {
-  render: (args: ChartStoryArgs) => <CandlestickChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <CandlestickChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: candlestickOptions,
@@ -186,7 +234,9 @@ export const CandlestickChart = {
 };
 
 export const StackedBarChart = {
-  render: (args: ChartStoryArgs) => <StackedBarChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <StackedBarChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: stackedBarOptions,
@@ -194,7 +244,9 @@ export const StackedBarChart = {
 };
 
 export const BoxPlotChart = {
-  render: (args: ChartStoryArgs) => <BoxPlotChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <BoxPlotChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: boxPlotOptions,
@@ -202,7 +254,9 @@ export const BoxPlotChart = {
 };
 
 export const BulletChart = {
-  render: (args: ChartStoryArgs) => <BulletChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <BulletChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: bulletOptions,
@@ -210,7 +264,9 @@ export const BulletChart = {
 };
 
 export const BarChart = {
-  render: (args: ChartStoryArgs) => <BarChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <BarChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: barOptions,
@@ -218,7 +274,9 @@ export const BarChart = {
 };
 
 export const ColumnChart = {
-  render: (args: ChartStoryArgs) => <ColumnChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <ColumnChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: columnOptions,
@@ -226,7 +284,9 @@ export const ColumnChart = {
 };
 
 export const ScatterChart = {
-  render: (args: ChartStoryArgs) => <ScatterChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <ScatterChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: scatterOptions,
@@ -234,7 +294,9 @@ export const ScatterChart = {
 };
 
 export const WaterfallChart = {
-  render: (args: ChartStoryArgs) => <WaterfallChartComponent {...args} />,
+  render: (args: ChartStoryArgs) => (
+    <WaterfallChartComponent {...getChromaticStableArgs(args)} />
+  ),
   args: {
     fillPatterns: false,
     options: waterfallOptions,

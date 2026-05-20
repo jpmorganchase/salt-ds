@@ -14,12 +14,13 @@ concurrency:
 
 jobs:
   chromatic-deployment:
+    name: Publish Chromatic
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
-      actions: read
+      actions: read # Needed to download the Storybook build artifact from the triggering run.
       contents: read
-      pull-requests: read
+      pull-requests: read # Needed to resolve PR labels before deciding whether to publish to Chromatic.
     outputs:
       issueNumber: ${{ steps.run_context.outputs.issueNumber }}
       runChromatic: ${{ steps.run_context.outputs.runChromatic }}
@@ -119,7 +120,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
         if: ${{ steps.run_context.outputs.branchName == 'main' || steps.run_context.outputs.runChromatic == 'true' }}
-        uses: chromaui/action@cad40970f69e7a6a5bef4ddfe42c01309ba17cb1 # v16
+        uses: chromaui/action@7aca53e7aa87489020a97f633c1e7e82c12e5973 # v17
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
@@ -138,11 +139,12 @@ jobs:
         env:
           LOG_LEVEL: "debug"
   remove-chromatic-label:
+    name: Remove Chromatic Label
     if: ${{ needs.chromatic-deployment.result == 'success' && needs.chromatic-deployment.outputs.issueNumber != '' && needs.chromatic-deployment.outputs.runChromatic == 'true' }}
     needs: chromatic-deployment
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
+      pull-requests: write # Needed to remove the opt-in "chromatic" label from the PR.
     steps:
       - name: Remove Chromatic label
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
