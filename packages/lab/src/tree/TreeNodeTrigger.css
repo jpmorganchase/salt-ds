@@ -22,6 +22,11 @@
   color: var(--salt-content-primary-foreground);
 }
 
+/* Account for selectable and icon token size differences */
+.saltTree-multiselect .saltTreeNodeTrigger {
+  --saltTreeNodeTrigger-indentStep: calc(((var(--saltTreeNodeTrigger-iconSize) + var(--salt-size-selectable)) / 2) + var(--salt-spacing-100));
+}
+
 .saltTreeNodeTrigger:hover {
   background: var(--salt-selectable-background-hover);
 }
