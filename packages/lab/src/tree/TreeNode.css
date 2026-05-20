@@ -42,11 +42,11 @@
 
 .saltTreeNode-icon {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  width: var(--salt-size-selectable);
-  min-width: var(--salt-size-selectable);
-  height: var(--salt-size-selectable);
+  width: var(--saltTreeNodeTrigger-iconSize);
+  min-width: var(--saltTreeNodeTrigger-iconSize);
+  height: var(--saltTreeNodeTrigger-iconSize);
   flex-shrink: 0;
 }
 
