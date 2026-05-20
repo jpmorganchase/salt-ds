@@ -2,16 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--salt-size-icon);
-  min-width: var(--salt-size-icon);
-  height: var(--salt-size-icon);
+  width: var(--saltTreeNodeTrigger-iconSize);
+  min-width: var(--saltTreeNodeTrigger-iconSize);
+  height: var(--saltTreeNodeTrigger-iconSize);
   flex-shrink: 0;
   position: relative;
 }
 
 .saltTreeNodeExpansionIcon-icon {
-  --saltIcon-size: var(--salt-size-icon);
-
   color: var(--salt-content-primary-foreground);
 }
 
