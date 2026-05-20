@@ -46,7 +46,6 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -118,7 +117,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                    Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -133,7 +132,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -151,9 +150,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -162,7 +159,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <CallIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -174,9 +171,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <PasteIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -191,9 +186,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <CartIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -208,9 +201,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <LinkedIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>
-                      Supply chain optimization
-                    </MegaMenuItemContent>
+                    Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -225,7 +216,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                    Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -240,9 +231,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>
-                      Production planning
-                    </MegaMenuItemContent>
+                    Production planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -260,9 +249,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>
-                      Learning management systems
-                    </MegaMenuItemContent>
+                    Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -274,9 +261,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <LaptopIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>
-                      Virtual classrooms
-                    </MegaMenuItemContent>
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -294,9 +279,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>
-                      Document management
-                    </MegaMenuItemContent>
+                    Document management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -308,7 +291,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
+                    Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -323,9 +306,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>
-                      Public safety solutions
-                    </MegaMenuItemContent>
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -357,7 +338,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                    Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -366,7 +347,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <LaptopIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>IT</MegaMenuItemContent>
+                    IT
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -378,7 +359,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>HR</MegaMenuItemContent>
+                    HR
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -387,7 +368,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <MarkerIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                    Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -399,7 +380,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                    Operations
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -411,7 +392,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <PasteIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                    Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -420,7 +401,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <SwapIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                    Migration
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -432,7 +413,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                    Customization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -444,7 +425,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    Training
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -453,7 +434,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <InfoIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Support</MegaMenuItemContent>
+                    Support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -465,7 +446,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                    Testing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -474,7 +455,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <SaveIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                    Rollout
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -489,7 +470,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Online</MegaMenuItemContent>
+                    Online
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -498,7 +479,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <UserIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    In-person
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -507,7 +488,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <KeyIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                    Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -522,7 +503,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                    Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -534,7 +515,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                    Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -546,7 +527,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                    Guides
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -577,7 +558,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                    User guides
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -589,7 +570,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <ApiIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                    API reference
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -604,7 +585,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    Release notes
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -613,7 +594,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <HelpIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                    FAQs
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -628,7 +609,7 @@ export const WithIcons: StoryFn = () => {
                     }}
                   >
                     <InfoIcon aria-hidden className="saltMegaMenuItem-icon" />
-                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                    Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -643,7 +624,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    Community forum
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -658,7 +639,7 @@ export const WithIcons: StoryFn = () => {
                       aria-hidden
                       className="saltMegaMenuItem-icon"
                     />
-                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                    Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -707,7 +688,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                    Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -718,7 +699,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -732,9 +713,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -742,7 +721,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Telemedicine");
                     }}
                   >
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    Telemedicine
                     <div className="menu-item-adornment">
                       <Tag category={1} variant="primary">
                         Premium
@@ -758,9 +737,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -774,9 +751,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -790,9 +765,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Supply chain optimization
-                    </MegaMenuItemContent>
+                    Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -803,7 +776,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                    Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -814,9 +787,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Production planning
-                    </MegaMenuItemContent>
+                    Production planning
                     <div className="menu-item-adornment">
                       <Tag category={2} variant="primary">
                         New
@@ -835,9 +806,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Learning management systems
-                    </MegaMenuItemContent>
+                    Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -848,9 +817,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Virtual classrooms
-                    </MegaMenuItemContent>
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -864,9 +831,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Document management
-                    </MegaMenuItemContent>
+                    Document management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -877,7 +842,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
+                    Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -888,9 +853,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Public safety solutions
-                    </MegaMenuItemContent>
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -918,7 +881,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Strategy");
                     }}
                   >
-                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                    Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -926,7 +889,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "IT");
                     }}
                   >
-                    <MegaMenuItemContent>IT</MegaMenuItemContent>
+                    IT
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -934,7 +897,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "HR");
                     }}
                   >
-                    <MegaMenuItemContent>HR</MegaMenuItemContent>
+                    HR
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -942,7 +905,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Marketing");
                     }}
                   >
-                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                    Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -950,7 +913,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Operations");
                     }}
                   >
-                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                    Operations
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -961,7 +924,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Onboarding");
                     }}
                   >
-                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                    Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -969,7 +932,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Migration");
                     }}
                   >
-                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                    Migration
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -980,7 +943,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                    Customization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -988,7 +951,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Training");
                     }}
                   >
-                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    Training
                     <div className="menu-item-adornment">
                       {" "}
                       <Badge value="1" />
@@ -1000,7 +963,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Support");
                     }}
                   >
-                    <MegaMenuItemContent>Support</MegaMenuItemContent>
+                    Support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1008,7 +971,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Testing");
                     }}
                   >
-                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                    Testing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1016,7 +979,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Rollout");
                     }}
                   >
-                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                    Rollout
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1027,7 +990,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Online");
                     }}
                   >
-                    <MegaMenuItemContent>Online</MegaMenuItemContent>
+                    Online
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1035,7 +998,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "In-person");
                     }}
                   >
-                    <MegaMenuItemContent> In-person</MegaMenuItemContent>
+                    In-person
                     <div className="menu-item-adornment">
                       {" "}
                       <Badge className="menu-item-adornment" />
@@ -1047,7 +1010,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Workshops");
                     }}
                   >
-                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                    Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1058,7 +1021,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                    Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1066,7 +1029,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Tutorials");
                     }}
                   >
-                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                    Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1074,7 +1037,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Guides");
                     }}
                   >
-                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                    Guides
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -1101,7 +1064,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "User guides");
                     }}
                   >
-                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                    User guides
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1112,7 +1075,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                    API reference
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1123,7 +1086,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    Release notes
                     <div className="menu-item-adornment">
                       <Badge />
                     </div>
@@ -1134,7 +1097,7 @@ export const WithAdornment: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "FAQs");
                     }}
                   >
-                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                    FAQs
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -1148,7 +1111,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                    Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -1159,7 +1122,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    Community forum
                     <div className="menu-item-adornment">
                       <Tag category={2} variant="primary">
                         New
@@ -1175,7 +1138,7 @@ export const WithAdornment: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                    Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -1214,7 +1177,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
+                  Mega menu item 1
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1225,7 +1188,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
+                  Mega menu item 2
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1236,7 +1199,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
+                  Mega menu item 3
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1250,7 +1213,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
+                  Mega menu item 4
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1261,7 +1224,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
+                  Mega menu item 5
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1272,7 +1235,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
+                  Mega menu item 6
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1286,7 +1249,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
+                  Mega menu item 7
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1297,7 +1260,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
+                  Mega menu item 8
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1308,7 +1271,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
+                  Mega menu item 9
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1322,7 +1285,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
+                  Mega menu item 10
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1333,7 +1296,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
+                  Mega menu item 11
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1344,7 +1307,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
+                  Mega menu item 12
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -1373,7 +1336,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
+                  Mega menu item 1
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1384,7 +1347,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
+                  Mega menu item 2
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1395,7 +1358,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
+                  Mega menu item 3
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1409,7 +1372,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
+                  Mega menu item 4
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1420,7 +1383,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
+                  Mega menu item 5
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1431,7 +1394,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
+                  Mega menu item 6
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1445,7 +1408,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
+                  Mega menu item 7
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1456,7 +1419,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
+                  Mega menu item 8
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1467,7 +1430,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
+                  Mega menu item 9
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1481,7 +1444,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
+                  Mega menu item 10
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1492,7 +1455,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
+                  Mega menu item 11
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1503,7 +1466,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
+                  Mega menu item 12
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -1532,7 +1495,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
+                  Mega menu item 1
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1543,7 +1506,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
+                  Mega menu item 2
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1554,7 +1517,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
+                  Mega menu item 3
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1568,7 +1531,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
+                  Mega menu item 4
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1579,7 +1542,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
+                  Mega menu item 5
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1590,7 +1553,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
+                  Mega menu item 6
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1604,7 +1567,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
+                  Mega menu item 7
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1615,7 +1578,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
+                  Mega menu item 8
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1626,7 +1589,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
+                  Mega menu item 9
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1640,7 +1603,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
+                  Mega menu item 10
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1651,7 +1614,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
+                  Mega menu item 11
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1662,7 +1625,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
+                  Mega menu item 12
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -1691,7 +1654,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 1</MegaMenuItemContent>
+                  Mega menu item 1
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1702,7 +1665,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 2</MegaMenuItemContent>
+                  Mega menu item 2
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1713,7 +1676,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 3</MegaMenuItemContent>
+                  Mega menu item 3
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1727,7 +1690,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 4</MegaMenuItemContent>
+                  Mega menu item 4
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1738,7 +1701,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 5</MegaMenuItemContent>
+                  Mega menu item 5
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1749,7 +1712,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 6</MegaMenuItemContent>
+                  Mega menu item 6
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1763,7 +1726,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 7</MegaMenuItemContent>
+                  Mega menu item 7
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1774,7 +1737,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 8</MegaMenuItemContent>
+                  Mega menu item 8
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1785,7 +1748,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 9</MegaMenuItemContent>
+                  Mega menu item 9
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -1799,7 +1762,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 10</MegaMenuItemContent>
+                  Mega menu item 10
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1810,7 +1773,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 11</MegaMenuItemContent>
+                  Mega menu item 11
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -1821,7 +1784,7 @@ export const TriggerPosition: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Mega menu item 12</MegaMenuItemContent>
+                  Mega menu item 12
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -1874,7 +1837,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                      Digital banking
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -1885,7 +1848,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                      Risk management
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -1899,9 +1862,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Patient management
-                      </MegaMenuItemContent>
+                      Patient management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -1912,7 +1873,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                      Telemedicine
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -1923,9 +1884,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Compliance solutions
-                      </MegaMenuItemContent>
+                      Compliance solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -1939,9 +1898,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        E-commerce platforms
-                      </MegaMenuItemContent>
+                      E-commerce platforms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -1955,9 +1912,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Supply chain optimization
-                      </MegaMenuItemContent>
+                      Supply chain optimization
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -1968,7 +1923,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                      Quality control
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -1979,9 +1934,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Production planning
-                      </MegaMenuItemContent>
+                      Production planning
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -1995,9 +1948,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Learning management systems
-                      </MegaMenuItemContent>
+                      Learning management systems
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2008,9 +1959,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Virtual classrooms
-                      </MegaMenuItemContent>
+                      Virtual classrooms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2024,9 +1973,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Document management
-                      </MegaMenuItemContent>
+                      Document management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2037,9 +1984,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Citizen services
-                      </MegaMenuItemContent>
+                      Citizen services
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2050,9 +1995,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Public safety solutions
-                      </MegaMenuItemContent>
+                      Public safety solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2066,7 +2009,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Cloud solutions</MegaMenuItemContent>
+                      Cloud solutions
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2077,7 +2020,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Cybersecurity</MegaMenuItemContent>
+                      Cybersecurity
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2091,9 +2034,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Smart Grid Management
-                      </MegaMenuItemContent>
+                      Smart Grid Management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2104,9 +2045,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Renewable Integration
-                      </MegaMenuItemContent>
+                      Renewable Integration
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -2137,7 +2076,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Strategy");
                       }}
                     >
-                      <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                      Strategy
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2145,7 +2084,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "IT");
                       }}
                     >
-                      <MegaMenuItemContent>IT</MegaMenuItemContent>
+                      IT
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2153,7 +2092,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "HR");
                       }}
                     >
-                      <MegaMenuItemContent>HR</MegaMenuItemContent>
+                      HR
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2161,7 +2100,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Marketing");
                       }}
                     >
-                      <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                      Marketing
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2169,7 +2108,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Operations");
                       }}
                     >
-                      <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                      Operations
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2180,7 +2119,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Onboarding");
                       }}
                     >
-                      <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                      Onboarding
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2188,7 +2127,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Migration");
                       }}
                     >
-                      <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                      Migration
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2199,7 +2138,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                      Customization
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2207,7 +2146,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Training");
                       }}
                     >
-                      <MegaMenuItemContent>Training</MegaMenuItemContent>
+                      Training
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2215,7 +2154,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Support");
                       }}
                     >
-                      <MegaMenuItemContent>Support</MegaMenuItemContent>
+                      Support
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2223,7 +2162,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Testing");
                       }}
                     >
-                      <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                      Testing
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2231,7 +2170,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Rollout");
                       }}
                     >
-                      <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                      Rollout
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2253,7 +2192,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "In-person");
                       }}
                     >
-                      <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                      In-person
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2261,7 +2200,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Workshops");
                       }}
                     >
-                      <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                      Workshops
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2272,7 +2211,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                      Certifications
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2280,7 +2219,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Tutorials");
                       }}
                     >
-                      <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                      Tutorials
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2288,7 +2227,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Guides");
                       }}
                     >
-                      <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                      Guides
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -2321,7 +2260,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                      User guides
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2332,7 +2271,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                      API reference
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2343,7 +2282,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                      Release notes
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2351,7 +2290,7 @@ export const FullWidthContainer: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "FAQs");
                       }}
                     >
-                      <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                      FAQs
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2365,7 +2304,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                      Contact support
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2376,7 +2315,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                      Community forum
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2387,7 +2326,7 @@ export const FullWidthContainer: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                      Troubleshooting
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -2450,7 +2389,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                      Digital banking
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2465,7 +2404,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                      Risk management
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2483,9 +2422,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Patient management
-                      </MegaMenuItemContent>
+                      Patient management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2497,7 +2434,7 @@ export const EdgeToEdge: StoryFn = () => {
                       }}
                     >
                       <CallIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                      Telemedicine
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2512,9 +2449,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Compliance solutions
-                      </MegaMenuItemContent>
+                      Compliance solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2529,9 +2464,7 @@ export const EdgeToEdge: StoryFn = () => {
                       }}
                     >
                       <CartIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>
-                        E-commerce platforms
-                      </MegaMenuItemContent>
+                      E-commerce platforms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2549,9 +2482,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Supply chain optimization
-                      </MegaMenuItemContent>
+                      Supply chain optimization
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2566,7 +2497,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                      Quality control
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2581,9 +2512,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Production planning
-                      </MegaMenuItemContent>
+                      Production planning
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2601,9 +2530,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Learning management systems
-                      </MegaMenuItemContent>
+                      Learning management systems
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2618,9 +2545,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Virtual classrooms
-                      </MegaMenuItemContent>
+                      Virtual classrooms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2638,9 +2563,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Document management
-                      </MegaMenuItemContent>
+                      Document management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2652,9 +2575,7 @@ export const EdgeToEdge: StoryFn = () => {
                       }}
                     >
                       <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>
-                        Citizen services
-                      </MegaMenuItemContent>
+                      Citizen services
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2669,9 +2590,7 @@ export const EdgeToEdge: StoryFn = () => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Public safety solutions
-                      </MegaMenuItemContent>
+                      Public safety solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2685,7 +2604,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Cloud solutions</MegaMenuItemContent>
+                      Cloud solutions
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2696,7 +2615,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Cybersecurity</MegaMenuItemContent>
+                      Cybersecurity
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2710,9 +2629,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Smart Grid Management
-                      </MegaMenuItemContent>
+                      Smart Grid Management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2723,9 +2640,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Renewable Integration
-                      </MegaMenuItemContent>
+                      Renewable Integration
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -2756,7 +2671,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Strategy");
                       }}
                     >
-                      <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                      Strategy
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2764,7 +2679,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "IT");
                       }}
                     >
-                      <MegaMenuItemContent>IT</MegaMenuItemContent>
+                      IT
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2772,7 +2687,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "HR");
                       }}
                     >
-                      <MegaMenuItemContent>HR</MegaMenuItemContent>
+                      HR
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2780,7 +2695,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Marketing");
                       }}
                     >
-                      <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                      Marketing
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2788,7 +2703,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Operations");
                       }}
                     >
-                      <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                      Operations
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2799,7 +2714,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Onboarding");
                       }}
                     >
-                      <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                      Onboarding
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2807,7 +2722,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Migration");
                       }}
                     >
-                      <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                      Migration
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2818,7 +2733,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                      Customization
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2826,7 +2741,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Training");
                       }}
                     >
-                      <MegaMenuItemContent>Training</MegaMenuItemContent>
+                      Training
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2834,7 +2749,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Support");
                       }}
                     >
-                      <MegaMenuItemContent>Support</MegaMenuItemContent>
+                      Support
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2842,7 +2757,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Testing");
                       }}
                     >
-                      <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                      Testing
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2850,7 +2765,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Rollout");
                       }}
                     >
-                      <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                      Rollout
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2861,7 +2776,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Online");
                       }}
                     >
-                      <MegaMenuItemContent>Online</MegaMenuItemContent>
+                      Online
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2869,7 +2784,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "In-person");
                       }}
                     >
-                      <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                      In-person
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2877,7 +2792,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Workshops");
                       }}
                     >
-                      <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                      Workshops
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2888,7 +2803,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                      Certifications
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2896,7 +2811,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Tutorials");
                       }}
                     >
-                      <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                      Tutorials
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2904,7 +2819,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Guides");
                       }}
                     >
-                      <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                      Guides
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -2937,7 +2852,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                      User guides
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2948,7 +2863,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                      API reference
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2959,7 +2874,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                      Release notes
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2967,7 +2882,7 @@ export const EdgeToEdge: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "FAQs");
                       }}
                     >
-                      <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                      FAQs
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -2981,7 +2896,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                      Contact support
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -2992,7 +2907,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                      Community forum
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -3003,7 +2918,7 @@ export const EdgeToEdge: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                      Troubleshooting
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -3046,7 +2961,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                  Digital banking
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3057,7 +2972,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                  Risk management
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -3071,7 +2986,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
+                  Patient management
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3079,7 +2994,7 @@ export const WithContent: StoryFn = () => {
                     console.log("[MegaMenu] selected value:", "Telemedicine");
                   }}
                 >
-                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  Telemedicine
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3090,9 +3005,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    Compliance solutions
-                  </MegaMenuItemContent>
+                  Compliance solutions
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -3106,9 +3019,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    E-commerce platforms
-                  </MegaMenuItemContent>
+                  E-commerce platforms
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -3122,9 +3033,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    Supply chain optimization
-                  </MegaMenuItemContent>
+                  Supply chain optimization
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3135,7 +3044,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                  Quality control
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3146,7 +3055,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
+                  Production planning
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -3257,7 +3166,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                  Digital banking
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3268,7 +3177,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                  Risk management
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -3282,7 +3191,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
+                  Patient management
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3290,7 +3199,7 @@ export const WithContent: StoryFn = () => {
                     console.log("[MegaMenu] selected value:", "Telemedicine");
                   }}
                 >
-                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  Telemedicine
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3301,9 +3210,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    Compliance solutions
-                  </MegaMenuItemContent>
+                  Compliance solutions
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -3317,9 +3224,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    E-commerce platforms
-                  </MegaMenuItemContent>
+                  E-commerce platforms
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -3333,9 +3238,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    Supply chain optimization
-                  </MegaMenuItemContent>
+                  Supply chain optimization
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3346,7 +3249,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                  Quality control
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -3357,7 +3260,7 @@ export const WithContent: StoryFn = () => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
+                  Production planning
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -3428,7 +3331,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                    Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3439,7 +3342,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -3453,9 +3356,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3466,7 +3367,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3477,9 +3378,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -3493,9 +3392,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -3509,9 +3406,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Supply chain optimization
-                    </MegaMenuItemContent>
+                    Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3522,7 +3417,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                    Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3533,9 +3428,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Production planning
-                    </MegaMenuItemContent>
+                    Production planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -3549,9 +3442,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Learning management systems
-                    </MegaMenuItemContent>
+                    Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3562,9 +3453,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Virtual classrooms
-                    </MegaMenuItemContent>
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -3578,9 +3467,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Document management
-                    </MegaMenuItemContent>
+                    Document management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3591,7 +3478,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
+                    Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3602,9 +3489,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Public safety solutions
-                    </MegaMenuItemContent>
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -3657,7 +3542,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                    Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3665,7 +3550,7 @@ export const WithLink: StoryFn = () => {
                       console.log("[WithLink MegaMenu] selected value:", "IT");
                     }}
                   >
-                    <MegaMenuItemContent>IT</MegaMenuItemContent>
+                    IT
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3673,7 +3558,7 @@ export const WithLink: StoryFn = () => {
                       console.log("[WithLink MegaMenu] selected value:", "HR");
                     }}
                   >
-                    <MegaMenuItemContent>HR</MegaMenuItemContent>
+                    HR
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3684,7 +3569,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                    Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3695,7 +3580,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                    Operations
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -3709,7 +3594,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                    Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3720,7 +3605,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                    Migration
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3731,7 +3616,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                    Customization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3742,7 +3627,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    Training
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3753,7 +3638,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Support</MegaMenuItemContent>
+                    Support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3764,7 +3649,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                    Testing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3775,7 +3660,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                    Rollout
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -3789,7 +3674,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Online</MegaMenuItemContent>
+                    Online
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3800,7 +3685,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    In-person
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3811,7 +3696,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                    Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3822,7 +3707,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                    Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3833,7 +3718,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                    Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3844,7 +3729,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                    Guides
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -3884,7 +3769,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                    User guides
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3895,7 +3780,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                    API reference
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3906,7 +3791,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    Release notes
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3917,7 +3802,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                    FAQs
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -3931,7 +3816,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                    Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3942,7 +3827,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    Community forum
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -3953,7 +3838,7 @@ export const WithLink: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                    Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -4016,7 +3901,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                      Digital banking
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4027,7 +3912,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                      Risk management
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4041,9 +3926,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Patient management
-                      </MegaMenuItemContent>
+                      Patient management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4054,7 +3937,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                      Telemedicine
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4065,9 +3948,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Compliance solutions
-                      </MegaMenuItemContent>
+                      Compliance solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4081,9 +3962,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        E-commerce platforms
-                      </MegaMenuItemContent>
+                      E-commerce platforms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4097,9 +3976,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Supply chain optimization
-                      </MegaMenuItemContent>
+                      Supply chain optimization
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4110,7 +3987,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                      Quality control
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4121,9 +3998,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Production planning
-                      </MegaMenuItemContent>
+                      Production planning
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4137,9 +4012,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Learning management systems
-                      </MegaMenuItemContent>
+                      Learning management systems
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4150,9 +4023,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Virtual classrooms
-                      </MegaMenuItemContent>
+                      Virtual classrooms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4166,9 +4037,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Document management
-                      </MegaMenuItemContent>
+                      Document management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4179,9 +4048,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Citizen services
-                      </MegaMenuItemContent>
+                      Citizen services
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4192,9 +4059,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Public safety solutions
-                      </MegaMenuItemContent>
+                      Public safety solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -4224,7 +4089,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Strategy");
                       }}
                     >
-                      <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                      Strategy
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4232,7 +4097,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "IT");
                       }}
                     >
-                      <MegaMenuItemContent>IT</MegaMenuItemContent>
+                      IT
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4240,7 +4105,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "HR");
                       }}
                     >
-                      <MegaMenuItemContent>HR</MegaMenuItemContent>
+                      HR
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4248,7 +4113,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Marketing");
                       }}
                     >
-                      <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                      Marketing
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4256,7 +4121,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Operations");
                       }}
                     >
-                      <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                      Operations
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4267,7 +4132,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Onboarding");
                       }}
                     >
-                      <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                      Onboarding
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4275,7 +4140,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Migration");
                       }}
                     >
-                      <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                      Migration
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4286,7 +4151,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                      Customization
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4294,7 +4159,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Training");
                       }}
                     >
-                      <MegaMenuItemContent>Training</MegaMenuItemContent>
+                      Training
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4302,7 +4167,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Support");
                       }}
                     >
-                      <MegaMenuItemContent>Support</MegaMenuItemContent>
+                      Support
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4313,7 +4178,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Online");
                       }}
                     >
-                      <MegaMenuItemContent>Online</MegaMenuItemContent>
+                      Online
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4321,7 +4186,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "In-person");
                       }}
                     >
-                      <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                      In-person
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4329,7 +4194,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Workshops");
                       }}
                     >
-                      <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                      Workshops
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4340,7 +4205,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                      Certifications
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -4373,7 +4238,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                      User guides
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4384,7 +4249,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                      API reference
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4395,7 +4260,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                      Release notes
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4403,7 +4268,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "FAQs");
                       }}
                     >
-                      <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                      FAQs
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4417,7 +4282,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                      Contact support
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4428,7 +4293,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                      Community forum
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4439,7 +4304,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                      Troubleshooting
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -4450,7 +4315,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Tutorials");
                       }}
                     >
-                      <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                      Tutorials
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4458,7 +4323,7 @@ export const InSmallViewport: StoryFn = () => {
                         console.log("[MegaMenu] selected value:", "Guides");
                       }}
                     >
-                      <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                      Guides
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -4469,7 +4334,7 @@ export const InSmallViewport: StoryFn = () => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Best practices</MegaMenuItemContent>
+                      Best practices
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -4505,7 +4370,7 @@ export const DefaultOpen: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                    Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -4516,7 +4381,7 @@ export const DefaultOpen: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -4530,9 +4395,7 @@ export const DefaultOpen: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -4540,7 +4403,7 @@ export const DefaultOpen: StoryFn = () => {
                       console.log("[MegaMenu] selected value:", "Telemedicine");
                     }}
                   >
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -4551,9 +4414,7 @@ export const DefaultOpen: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -4567,9 +4428,7 @@ export const DefaultOpen: StoryFn = () => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -4620,7 +4479,7 @@ export const Placement: StoryFn = () => {
                     console.log("[MegaMenu] selected value:", "Item 1");
                   }}
                 >
-                  <MegaMenuItemContent>Item 1</MegaMenuItemContent>
+                  Item 1
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -4628,7 +4487,7 @@ export const Placement: StoryFn = () => {
                     console.log("[MegaMenu] selected value:", "Item 2");
                   }}
                 >
-                  <MegaMenuItemContent>Item 2</MegaMenuItemContent>
+                  Item 2
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -4636,7 +4495,7 @@ export const Placement: StoryFn = () => {
                     console.log("[MegaMenu] selected value:", "Item 3");
                   }}
                 >
-                  <MegaMenuItemContent>Item 3</MegaMenuItemContent>
+                  Item 3
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -4647,7 +4506,7 @@ export const Placement: StoryFn = () => {
                     console.log("[MegaMenu] selected value:", "Item 4");
                   }}
                 >
-                  <MegaMenuItemContent>Item 4</MegaMenuItemContent>
+                  Item 4
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -4655,7 +4514,7 @@ export const Placement: StoryFn = () => {
                     console.log("[MegaMenu] selected value:", "Item 5");
                   }}
                 >
-                  <MegaMenuItemContent>Item 5</MegaMenuItemContent>
+                  Item 5
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>

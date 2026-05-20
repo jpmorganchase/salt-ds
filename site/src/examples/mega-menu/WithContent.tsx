@@ -6,7 +6,6 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -44,7 +43,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                  Digital banking
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -55,7 +54,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                  Risk management
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -69,7 +68,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
+                  Patient management
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -80,7 +79,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  Telemedicine
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -91,9 +90,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    Compliance solutions
-                  </MegaMenuItemContent>
+                  Compliance solutions
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -107,9 +104,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    E-commerce platforms
-                  </MegaMenuItemContent>
+                  E-commerce platforms
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -123,9 +118,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    Supply chain optimization
-                  </MegaMenuItemContent>
+                  Supply chain optimization
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -136,7 +129,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                  Quality control
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -147,7 +140,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
+                  Production planning
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
@@ -264,7 +257,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                  Digital banking
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -275,7 +268,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                  Risk management
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -289,7 +282,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Patient management</MegaMenuItemContent>
+                  Patient management
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -300,7 +293,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                  Telemedicine
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -311,9 +304,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    Compliance solutions
-                  </MegaMenuItemContent>
+                  Compliance solutions
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -327,9 +318,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    E-commerce platforms
-                  </MegaMenuItemContent>
+                  E-commerce platforms
                 </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
@@ -343,9 +332,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>
-                    Supply chain optimization
-                  </MegaMenuItemContent>
+                  Supply chain optimization
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -356,7 +343,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                  Quality control
                 </MegaMenuItem>
                 <MegaMenuItem
                   onClick={(event) => {
@@ -367,7 +354,7 @@ export const WithContent = (): ReactElement => {
                     );
                   }}
                 >
-                  <MegaMenuItemContent>Production planning</MegaMenuItemContent>
+                  Production planning
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>

@@ -3,7 +3,6 @@ export * from "./MegaMenuContent";
 export * from "./MegaMenuGroup";
 export * from "./MegaMenuHeader";
 export * from "./MegaMenuItem";
-export * from "./MegaMenuItemContent";
 export * from "./MegaMenuPanel";
 export * from "./MegaMenuSection";
 export * from "./MegaMenuTrigger";

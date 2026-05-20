@@ -4,6 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type AnchorHTMLAttributes,
+  Children,
   type ComponentPropsWithoutRef,
   forwardRef,
   type KeyboardEvent,
@@ -69,7 +70,13 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
           onKeyDown={handleKeyDown}
           {...rest}
         >
-          {children}
+          {Children.map(children, (child) =>
+            typeof child === "string" || typeof child === "number" ? (
+              <span className={withBaseName("content")}>{child}</span>
+            ) : (
+              child
+            ),
+          )}
         </ItemAction>
       </li>
     );

@@ -4,7 +4,6 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -35,9 +34,7 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Group</MegaMenuHeader>
-                  <MegaMenuItem>
-                    <MegaMenuItemContent>Item</MegaMenuItemContent>
-                  </MegaMenuItem>
+                  <MegaMenuItem>Item</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
@@ -52,9 +49,7 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Group</MegaMenuHeader>
-                  <MegaMenuItem>
-                    <MegaMenuItemContent>Item</MegaMenuItemContent>
-                  </MegaMenuItem>
+                  <MegaMenuItem>Item</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
@@ -69,9 +64,7 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Group</MegaMenuHeader>
-                  <MegaMenuItem>
-                    <MegaMenuItemContent>Item</MegaMenuItemContent>
-                  </MegaMenuItem>
+                  <MegaMenuItem>Item</MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>

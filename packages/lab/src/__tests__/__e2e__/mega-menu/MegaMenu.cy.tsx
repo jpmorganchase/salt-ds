@@ -89,18 +89,18 @@ describe("Given a MegaMenu", () => {
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.get(".saltMegaMenuPanel").should("exist");
-    cy.findByText("Digital Banking").should("exist");
+    cy.findByRole("link", { name: "Digital Banking" }).should("exist");
 
     cy.findByRole("button", { name: "Services" }).click();
-    cy.findByText("Strategy").should("exist");
-    cy.findByText("Digital Banking").should("not.exist");
+    cy.findByRole("link", { name: "Strategy" }).should("exist");
+    cy.findByRole("link", { name: "Digital Banking" }).should("not.exist");
   });
 
   it("selects an item and closes the menu", () => {
     cy.mount(<InteractiveMegaMenu />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByText("Digital Banking").click();
+    cy.findByRole("link", { name: "Digital Banking" }).click();
 
     cy.get(".saltMegaMenuPanel").should("not.exist");
   });
@@ -133,17 +133,20 @@ describe("Given a MegaMenu", () => {
     );
 
     cy.get(".saltMegaMenuPanel").should("exist");
-    cy.findByText("Digital Banking").should("exist");
+    cy.findByRole("link", { name: "Digital Banking" }).should("exist");
   });
 
   it("does not persist item active state after selection", () => {
     cy.mount(<InteractiveMegaMenu />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByText("Digital Banking").click();
+    cy.findByRole("link", { name: "Digital Banking" }).click();
     cy.get(".saltMegaMenuPanel").should("not.exist");
 
     cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByText("Digital Banking").should("not.have.attr", "aria-current");
+    cy.findByRole("link", { name: "Digital Banking" }).should(
+      "not.have.attr",
+      "aria-current",
+    );
   });
 });

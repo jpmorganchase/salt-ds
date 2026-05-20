@@ -4,7 +4,6 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -49,7 +48,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                    Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -60,7 +59,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -74,9 +73,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
                     className={styles.menuItemFullWidth}
@@ -88,7 +85,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    Telemedicine
                     <div className={styles.menuItemAdornment}>
                       <Tag category={1} variant="primary">
                         Premium
@@ -104,9 +101,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -120,9 +115,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -136,9 +129,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Supply chain optimization
-                    </MegaMenuItemContent>
+                    Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -149,7 +140,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                    Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
                     className={styles.menuItemFullWidth}
@@ -161,9 +152,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Production planning
-                    </MegaMenuItemContent>
+                    Production planning
                     <div className={styles.menuItemAdornment}>
                       <Tag category={2} variant="primary">
                         New
@@ -182,9 +171,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Learning management systems
-                    </MegaMenuItemContent>
+                    Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -195,9 +182,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Virtual classrooms
-                    </MegaMenuItemContent>
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -211,9 +196,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Document management
-                    </MegaMenuItemContent>
+                    Document management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -224,7 +207,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
+                    Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -235,9 +218,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Public safety solutions
-                    </MegaMenuItemContent>
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -267,7 +248,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                    Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -278,7 +259,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>IT</MegaMenuItemContent>
+                    IT
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -289,7 +270,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>HR</MegaMenuItemContent>
+                    HR
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -300,7 +281,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                    Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -311,7 +292,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                    Operations
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -325,7 +306,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                    Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -336,7 +317,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                    Migration
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -347,7 +328,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                    Customization
                   </MegaMenuItem>
                   <MegaMenuItem
                     className={styles.menuItemFullWidth}
@@ -359,7 +340,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    Training
                     <div className={styles.menuItemAdornment}>
                       <Badge value="1" />
                     </div>
@@ -373,7 +354,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Support</MegaMenuItemContent>
+                    Support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -384,7 +365,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                    Testing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -395,7 +376,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                    Rollout
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -409,7 +390,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Online</MegaMenuItemContent>
+                    Online
                   </MegaMenuItem>
                   <MegaMenuItem
                     className={styles.menuItemFullWidth}
@@ -421,7 +402,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    In-person
                     <div className={styles.menuItemAdornment}>
                       <Badge value="3" />
                     </div>
@@ -435,7 +416,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                    Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -446,7 +427,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                    Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -457,7 +438,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                    Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -468,7 +449,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                    Guides
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -498,7 +479,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                    User guides
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -509,7 +490,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                    API reference
                   </MegaMenuItem>
                   <MegaMenuItem
                     className={styles.menuItemFullWidth}
@@ -521,7 +502,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    Release notes
                     <div className={styles.menuItemAdornment}>
                       <Badge />
                     </div>
@@ -535,7 +516,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                    FAQs
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -549,7 +530,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                    Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
                     className={styles.menuItemFullWidth}
@@ -561,7 +542,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    Community forum
                     <div className={styles.menuItemAdornment}>
                       <Tag category={2} variant="primary">
                         New
@@ -577,7 +558,7 @@ export const WithAdornment = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                    Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>

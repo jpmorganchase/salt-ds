@@ -20,7 +20,6 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -73,7 +72,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                      Digital banking
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -88,7 +87,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                      Risk management
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -106,9 +105,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Patient management
-                      </MegaMenuItemContent>
+                      Patient management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -120,7 +117,7 @@ export const EdgeToEdge = (): ReactElement => {
                       }}
                     >
                       <CallIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                      Telemedicine
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -135,9 +132,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Compliance solutions
-                      </MegaMenuItemContent>
+                      Compliance solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -152,9 +147,7 @@ export const EdgeToEdge = (): ReactElement => {
                       }}
                     >
                       <CartIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>
-                        E-commerce platforms
-                      </MegaMenuItemContent>
+                      E-commerce platforms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -172,9 +165,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Supply chain optimization
-                      </MegaMenuItemContent>
+                      Supply chain optimization
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -189,7 +180,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                      Quality control
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -204,9 +195,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Production planning
-                      </MegaMenuItemContent>
+                      Production planning
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -224,9 +213,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Learning management systems
-                      </MegaMenuItemContent>
+                      Learning management systems
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -241,9 +228,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Virtual classrooms
-                      </MegaMenuItemContent>
+                      Virtual classrooms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -261,9 +246,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Document management
-                      </MegaMenuItemContent>
+                      Document management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -275,9 +258,7 @@ export const EdgeToEdge = (): ReactElement => {
                       }}
                     >
                       <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>
-                        Citizen services
-                      </MegaMenuItemContent>
+                      Citizen services
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -292,9 +273,7 @@ export const EdgeToEdge = (): ReactElement => {
                         aria-hidden
                         className="saltMegaMenuItem-icon"
                       />
-                      <MegaMenuItemContent>
-                        Public safety solutions
-                      </MegaMenuItemContent>
+                      Public safety solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -308,7 +287,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Cloud solutions</MegaMenuItemContent>
+                      Cloud solutions
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -319,7 +298,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Cybersecurity</MegaMenuItemContent>
+                      Cybersecurity
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -333,9 +312,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Smart Grid Management
-                      </MegaMenuItemContent>
+                      Smart Grid Management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -346,9 +323,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Renewable Integration
-                      </MegaMenuItemContent>
+                      Renewable Integration
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -381,7 +356,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                      Strategy
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -392,7 +367,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                      Operations
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -406,7 +381,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                      Onboarding
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -417,7 +392,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                      Migration
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -431,7 +406,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                      Workshops
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -442,7 +417,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                      Certifications
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -475,7 +450,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                      User guides
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -486,7 +461,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                      API reference
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -500,7 +475,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                      Contact support
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -511,7 +486,7 @@ export const EdgeToEdge = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                      Community forum
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>

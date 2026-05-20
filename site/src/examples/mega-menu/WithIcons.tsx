@@ -35,7 +35,6 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -81,7 +80,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <DevicesIcon aria-hidden />
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                    Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -93,7 +92,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <DatasetManagerIcon aria-hidden />
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -108,9 +107,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <UserSearchIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -122,7 +119,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <CallIcon aria-hidden />
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -134,9 +131,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <PasteIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -151,9 +146,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <CartIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -168,9 +161,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <LinkedIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      Supply chain optimization
-                    </MegaMenuItemContent>
+                    Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -182,7 +173,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <SettingsIcon aria-hidden />
-                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                    Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -194,9 +185,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <NotificationIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      Production planning
-                    </MegaMenuItemContent>
+                    Production planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -211,9 +200,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <GuideOpenIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      Learning management systems
-                    </MegaMenuItemContent>
+                    Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -225,9 +212,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <LaptopIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      Virtual classrooms
-                    </MegaMenuItemContent>
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -242,9 +227,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <DocumentIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      Document management
-                    </MegaMenuItemContent>
+                    Document management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -256,7 +239,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <PinIcon aria-hidden />
-                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
+                    Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -268,9 +251,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <UserGroupIcon aria-hidden />
-                    <MegaMenuItemContent>
-                      Public safety solutions
-                    </MegaMenuItemContent>
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -301,7 +282,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <ChartBubbleIcon aria-hidden />
-                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                    Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -310,7 +291,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <LaptopIcon aria-hidden />
-                    <MegaMenuItemContent>IT</MegaMenuItemContent>
+                    IT
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -319,7 +300,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <UserGroupIcon aria-hidden />
-                    <MegaMenuItemContent>HR</MegaMenuItemContent>
+                    HR
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -331,7 +312,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <MarkerIcon aria-hidden />
-                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                    Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -343,7 +324,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <SettingsIcon aria-hidden />
-                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                    Operations
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -358,7 +339,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <PasteIcon aria-hidden />
-                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                    Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -370,7 +351,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <SwapIcon aria-hidden />
-                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                    Migration
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -382,7 +363,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <PinIcon aria-hidden />
-                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                    Customization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -394,7 +375,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <GuideClosedIcon aria-hidden />
-                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    Training
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -406,7 +387,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <InfoIcon aria-hidden />
-                    <MegaMenuItemContent>Support</MegaMenuItemContent>
+                    Support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -418,7 +399,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <MaintenanceIcon aria-hidden />
-                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                    Testing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -430,7 +411,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <SaveIcon aria-hidden />
-                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                    Rollout
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -445,7 +426,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <DisplayIcon aria-hidden />
-                    <MegaMenuItemContent>Online</MegaMenuItemContent>
+                    Online
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -457,7 +438,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <UserIcon aria-hidden />
-                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    In-person
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -469,7 +450,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <KeyIcon aria-hidden />
-                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                    Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -481,7 +462,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <DocumentIcon aria-hidden />
-                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                    Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -493,7 +474,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <DocumentEditIcon aria-hidden />
-                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                    Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -505,7 +486,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <GuideOpenIcon aria-hidden />
-                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                    Guides
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -536,7 +517,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <GuideClosedIcon aria-hidden />
-                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                    User guides
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -548,7 +529,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <ApiIcon aria-hidden />
-                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                    API reference
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -560,7 +541,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <NotificationIcon aria-hidden />
-                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    Release notes
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -572,7 +553,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <HelpIcon aria-hidden />
-                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                    FAQs
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -587,7 +568,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <InfoIcon aria-hidden />
-                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                    Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -599,7 +580,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <ChatGroupIcon aria-hidden />
-                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    Community forum
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -611,7 +592,7 @@ export const WithIcons = (): ReactElement => {
                     }}
                   >
                     <AnnouncementIcon aria-hidden />
-                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                    Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>

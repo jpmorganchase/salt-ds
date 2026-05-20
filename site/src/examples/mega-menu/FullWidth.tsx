@@ -4,7 +4,6 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -53,7 +52,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                      Digital banking
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -64,7 +63,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                      Risk management
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -78,9 +77,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Patient management
-                      </MegaMenuItemContent>
+                      Patient management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -91,7 +88,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                      Telemedicine
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -102,9 +99,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Compliance solutions
-                      </MegaMenuItemContent>
+                      Compliance solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -118,9 +113,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        E-commerce platforms
-                      </MegaMenuItemContent>
+                      E-commerce platforms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -134,9 +127,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Supply chain optimization
-                      </MegaMenuItemContent>
+                      Supply chain optimization
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -147,7 +138,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                      Quality control
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -161,9 +152,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Learning management systems
-                      </MegaMenuItemContent>
+                      Learning management systems
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -174,9 +163,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Virtual classrooms
-                      </MegaMenuItemContent>
+                      Virtual classrooms
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -190,9 +177,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Document management
-                      </MegaMenuItemContent>
+                      Document management
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -203,9 +188,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>
-                        Citizen services
-                      </MegaMenuItemContent>
+                      Citizen services
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -219,7 +202,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Cloud solutions</MegaMenuItemContent>
+                      Cloud solutions
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -230,7 +213,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Cybersecurity</MegaMenuItemContent>
+                      Cybersecurity
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -263,7 +246,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                      Strategy
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -274,7 +257,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                      Operations
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -288,7 +271,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                      Onboarding
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -299,7 +282,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                      Migration
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -313,7 +296,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                      Workshops
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -324,7 +307,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                      Certifications
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>
@@ -357,7 +340,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                      User guides
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -368,7 +351,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                      API reference
                     </MegaMenuItem>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
@@ -382,7 +365,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                      Contact support
                     </MegaMenuItem>
                     <MegaMenuItem
                       onClick={(event) => {
@@ -393,7 +376,7 @@ export const FullWidth = (): ReactElement => {
                         );
                       }}
                     >
-                      <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                      Community forum
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuSection>

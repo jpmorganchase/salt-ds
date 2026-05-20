@@ -4,7 +4,6 @@ import {
   MegaMenuGroup,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -49,7 +48,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+                    Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -60,7 +59,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+                    Risk management
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -74,9 +73,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Patient management
-                    </MegaMenuItemContent>
+                    Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -87,7 +84,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
+                    Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -98,9 +95,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Compliance solutions
-                    </MegaMenuItemContent>
+                    Compliance solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -114,9 +109,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      E-commerce platforms
-                    </MegaMenuItemContent>
+                    E-commerce platforms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -130,9 +123,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Supply chain optimization
-                    </MegaMenuItemContent>
+                    Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -143,7 +134,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Quality control</MegaMenuItemContent>
+                    Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -154,9 +145,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Production planning
-                    </MegaMenuItemContent>
+                    Production planning
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -170,9 +159,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Learning management systems
-                    </MegaMenuItemContent>
+                    Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -183,9 +170,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Virtual classrooms
-                    </MegaMenuItemContent>
+                    Virtual classrooms
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -199,9 +184,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Document management
-                    </MegaMenuItemContent>
+                    Document management
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -212,7 +195,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Citizen services</MegaMenuItemContent>
+                    Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -223,9 +206,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>
-                      Public safety solutions
-                    </MegaMenuItemContent>
+                    Public safety solutions
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -255,7 +236,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Strategy</MegaMenuItemContent>
+                    Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -263,7 +244,7 @@ export const Default = (): ReactElement => {
                       console.log("[Default MegaMenu] selected value:", "IT");
                     }}
                   >
-                    <MegaMenuItemContent>IT</MegaMenuItemContent>
+                    IT
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -271,7 +252,7 @@ export const Default = (): ReactElement => {
                       console.log("[Default MegaMenu] selected value:", "HR");
                     }}
                   >
-                    <MegaMenuItemContent>HR</MegaMenuItemContent>
+                    HR
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -282,7 +263,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Marketing</MegaMenuItemContent>
+                    Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -293,7 +274,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Operations</MegaMenuItemContent>
+                    Operations
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -307,7 +288,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
+                    Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -318,7 +299,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Migration</MegaMenuItemContent>
+                    Migration
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -329,7 +310,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Customization</MegaMenuItemContent>
+                    Customization
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -340,7 +321,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Training</MegaMenuItemContent>
+                    Training
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -351,7 +332,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Support</MegaMenuItemContent>
+                    Support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -362,7 +343,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Testing</MegaMenuItemContent>
+                    Testing
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -373,7 +354,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Rollout</MegaMenuItemContent>
+                    Rollout
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -387,7 +368,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Online</MegaMenuItemContent>
+                    Online
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -398,7 +379,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>In-person</MegaMenuItemContent>
+                    In-person
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -409,7 +390,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Workshops</MegaMenuItemContent>
+                    Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -420,7 +401,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Certifications</MegaMenuItemContent>
+                    Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -431,7 +412,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Tutorials</MegaMenuItemContent>
+                    Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -442,7 +423,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Guides</MegaMenuItemContent>
+                    Guides
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
@@ -472,7 +453,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>User guides</MegaMenuItemContent>
+                    User guides
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -483,7 +464,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>API reference</MegaMenuItemContent>
+                    API reference
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -494,7 +475,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Release notes</MegaMenuItemContent>
+                    Release notes
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -502,7 +483,7 @@ export const Default = (): ReactElement => {
                       console.log("[Default MegaMenu] selected value:", "FAQs");
                     }}
                   >
-                    <MegaMenuItemContent>FAQs</MegaMenuItemContent>
+                    FAQs
                   </MegaMenuItem>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
@@ -516,7 +497,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Contact support</MegaMenuItemContent>
+                    Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -527,7 +508,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Community forum</MegaMenuItemContent>
+                    Community forum
                   </MegaMenuItem>
                   <MegaMenuItem
                     onClick={(event) => {
@@ -538,7 +519,7 @@ export const Default = (): ReactElement => {
                       );
                     }}
                   >
-                    <MegaMenuItemContent>Troubleshooting</MegaMenuItemContent>
+                    Troubleshooting
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
