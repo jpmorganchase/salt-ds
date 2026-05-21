@@ -1,13 +1,21 @@
 import {
   Button,
+  Checkbox,
   Divider,
   Dropdown,
   Input,
+  Link,
   Option,
+  RadioButton,
+  RadioButtonGroup,
   Switch,
+  Tag,
   Text,
   ToggleButton,
   ToggleButtonGroup,
+  Toggletip,
+  ToggletipPanel,
+  ToggletipTrigger,
 } from "@salt-ds/core";
 import {
   DatePicker,
@@ -20,6 +28,7 @@ import {
   ExportIcon,
   FilterIcon,
   GridIcon,
+  HelpCircleIcon,
   ListIcon,
   SearchIcon,
   SettingsIcon,
@@ -362,6 +371,108 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
   </ToolbarNext>
 );
 MixedFormControls.globals = {
+  responsive: "wrap",
+};
+
+/**
+ * Mixed Salt core controls with independent overflow.
+ *
+ * Intended behavior:
+ * - Demonstrates that `TooltrayNext` can compose Tag, Checkbox,
+ *   RadioButtonGroup/RadioButton, DatePicker, Toggletip, and Link.
+ * - Each control is authored in an independent tray with a distinct overflow
+ *   priority, so reducing width collapses them one by one.
+ * - The varied control types provide a keyboard navigation surface across
+ *   buttons, inputs, toggles, and links.
+ */
+export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
+  <ToolbarNext aria-label="Toolbar with independent mixed controls">
+    <ToolbarContent position="start">
+      <TooltrayNext
+        role="group"
+        aria-label="Status"
+        overflowMode="independent"
+        overflowPriority={1}
+      >
+        <Tag category={1} variant="primary">
+          Draft
+        </Tag>
+      </TooltrayNext>
+      <TooltrayNext
+        role="group"
+        aria-label="Archive filter"
+        overflowMode="independent"
+        overflowPriority={2}
+      >
+        <Checkbox label="Show archived" />
+      </TooltrayNext>
+      <TooltrayNext
+        role="group"
+        aria-label="Due date"
+        overflowMode="independent"
+        overflowPriority={3}
+      >
+        <Text styleAs="label">Due date</Text>
+        <DatePicker selectionVariant="single">
+          <DatePickerTrigger>
+            <DatePickerSingleInput
+              bordered
+              aria-label="Due date"
+              style={{ width: 150 }}
+            />
+          </DatePickerTrigger>
+          <DatePickerOverlay>
+            <DatePickerSingleGridPanel />
+          </DatePickerOverlay>
+        </DatePicker>
+      </TooltrayNext>
+      <TooltrayNext
+        role="group"
+        aria-label="Review mode"
+        overflowMode="independent"
+        overflowPriority={4}
+      >
+        <RadioButtonGroup
+          aria-label="Review mode"
+          direction="horizontal"
+          defaultValue="review"
+        >
+          <RadioButton label="Review" value="review" />
+          <RadioButton label="Approve" value="approve" />
+        </RadioButtonGroup>
+      </TooltrayNext>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <TooltrayNext
+        role="group"
+        aria-label="Help"
+        overflowMode="independent"
+        overflowPriority={5}
+      >
+        <Toggletip placement="bottom">
+          <ToggletipTrigger aria-label="Review mode help">
+            <HelpCircleIcon aria-hidden />
+          </ToggletipTrigger>
+          <ToggletipPanel>
+            <Text>
+              Use review mode to compare pending changes before approval.{" "}
+              <Link href="#">Read guidelines</Link>
+            </Text>
+          </ToggletipPanel>
+        </Toggletip>
+      </TooltrayNext>
+      <TooltrayNext
+        role="group"
+        aria-label="Reference"
+        overflowMode="independent"
+        overflowPriority={6}
+      >
+        <Link href="#">View audit trail</Link>
+      </TooltrayNext>
+    </ToolbarContent>
+  </ToolbarNext>
+);
+IndependentMixedControls.globals = {
   responsive: "wrap",
 };
 
