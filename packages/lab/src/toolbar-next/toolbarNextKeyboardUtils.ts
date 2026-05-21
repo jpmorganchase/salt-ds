@@ -446,10 +446,9 @@ function getToggleGroupButtons(target: HTMLElement) {
     return [];
   }
 
-  return Array.from(
-    toggleGroup.querySelectorAll<HTMLElement>("button:not([disabled])"),
-  ).filter((button) =>
-    isToolbarNextFocusable(button, { includeTabIndexMinusOne: true }),
+  return Array.from(toggleGroup.querySelectorAll<HTMLElement>("button")).filter(
+    (button) =>
+      isToolbarNextFocusable(button, { includeTabIndexMinusOne: true }),
   );
 }
 
@@ -530,11 +529,18 @@ function isPlainTextInput(target: HTMLElement) {
   );
 }
 
+function isNativeDisabledFormControl(target: HTMLElement) {
+  return (
+    "disabled" in target &&
+    (target as HTMLButtonElement | HTMLInputElement).disabled
+  );
+}
+
 export function isToolbarNextFocusable(
   target: HTMLElement,
   { includeTabIndexMinusOne = false }: ToolbarNextFocusableOptions = {},
 ) {
-  if (target.matches(":disabled")) {
+  if (isNativeDisabledFormControl(target)) {
     return false;
   }
 

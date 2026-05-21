@@ -346,7 +346,9 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
     <ToolbarContent position="end">
       <TooltrayNext role="group" aria-label="Settings and actions">
         <Switch label="Pinned" />
-        <Button appearance="solid">Run</Button>
+        <Button appearance="solid" disabled focusableWhenDisabled>
+          Run
+        </Button>
       </TooltrayNext>
       <TooltrayNext role="group" aria-label="Search">
         <Input
