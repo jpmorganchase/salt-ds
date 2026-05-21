@@ -1,5 +1,6 @@
-import { Button, Input, Text } from "@salt-ds/core";
 import {
+  Button,
+  Input,
   SidePanel,
   SidePanelCloseButton,
   SidePanelContent,
@@ -7,8 +8,9 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
+  Text,
   useSidePanel,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import * as sidePanel from "@stories/side-panel/side-panel.stories";
 import { composeStories } from "@storybook/react-vite";
 import { useRef, useState } from "react";

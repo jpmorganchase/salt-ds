@@ -1,4 +1,3 @@
-import { getRefFromChildren, mergeProps, useForkRef } from "@salt-ds/core";
 import {
   type ComponentPropsWithoutRef,
   cloneElement,
@@ -6,6 +5,7 @@ import {
   isValidElement,
   type MouseEvent,
 } from "react";
+import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useSidePanelContext } from "./internal";
 
 export type SidePanelTriggerProps = ComponentPropsWithoutRef<"button">;

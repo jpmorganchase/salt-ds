@@ -1,5 +1,4 @@
 import { useFloatingRootContext } from "@floating-ui/react";
-import { useControlled } from "@salt-ds/core";
 import {
   type ReactNode,
   useCallback,
@@ -7,6 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useControlled } from "../utils";
 import { SidePanelContext, useSidePanelTabOrder } from "./internal";
 
 export interface SidePanelProviderProps {

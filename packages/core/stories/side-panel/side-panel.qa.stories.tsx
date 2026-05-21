@@ -1,5 +1,3 @@
-import { StackLayout, Text } from "@salt-ds/core";
-
 import {
   SidePanel,
   SidePanelContent,
@@ -7,14 +5,16 @@ import {
   type SidePanelProps,
   SidePanelProvider,
   SidePanelTitle,
-} from "@salt-ds/lab";
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import type { ReactNode } from "react";
 
 export default {
-  title: "Lab/Side Panel/Side Panel QA",
+  title: "Core/Side Panel/Side Panel QA",
   component: SidePanel,
 } as Meta<typeof SidePanel>;
 
