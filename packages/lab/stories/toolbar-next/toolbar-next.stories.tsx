@@ -33,7 +33,11 @@ export default {
   },
 } as Meta<typeof ToolbarNext>;
 
-const options = ["Option A", "Option B", "Option C"];
+const filterOptions = [
+  "Filter: Option A",
+  "Filter: Option B",
+  "Filter: Option C",
+];
 const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
 
 /**
@@ -55,10 +59,10 @@ export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
       <Dropdown
         aria-label="Filter option"
         bordered
-        defaultSelected={["Option A"]}
+        defaultSelected={[filterOptions[0]]}
         style={{ width: 160 }}
       >
-        {options.map((option) => (
+        {filterOptions.map((option) => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
@@ -103,7 +107,7 @@ export const ContentFirst: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Content first toolbar">
     <ToolbarContent position="start">
       <TooltrayNext>
-        <Text>Description</Text>
+        <Text styleAs="label">Description</Text>
       </TooltrayNext>
     </ToolbarContent>
     <ToolbarContent position="center">
@@ -195,10 +199,10 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
         <Dropdown
           aria-label="Filter option"
           bordered
-          defaultSelected={["Option A"]}
+          defaultSelected={[filterOptions[0]]}
           style={{ width: 160 }}
         >
-          {options.map((option) => (
+          {filterOptions.map((option) => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
@@ -260,10 +264,10 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
               <Dropdown
                 aria-label="Filter option"
                 bordered
-                defaultSelected={["Option A"]}
+                defaultSelected={[filterOptions[0]]}
                 style={{ width: 160 }}
               >
-                {options.map((option) => (
+                {filterOptions.map((option) => (
                   <Option value={option} key={option} />
                 ))}
               </Dropdown>
@@ -311,13 +315,14 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
         <Dropdown
           aria-label="Criteria option"
           bordered
-          defaultSelected={["Option A"]}
+          defaultSelected={[filterOptions[0]]}
           style={{ width: 160 }}
         >
-          {options.map((option) => (
+          {filterOptions.map((option) => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
+        <Text styleAs="label">Settlement date</Text>
         <DateInputSingle
           bordered
           aria-label="Settlement date"
@@ -372,10 +377,10 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
         <Dropdown
           aria-label="Filter option"
           bordered
-          defaultSelected={["Option A"]}
+          defaultSelected={[filterOptions[0]]}
           style={{ width: 160 }}
         >
-          {options.map((option) => (
+          {filterOptions.map((option) => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
@@ -419,10 +424,10 @@ export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
       <Dropdown
         aria-label="Filter option"
         bordered
-        defaultSelected={["Option A"]}
+        defaultSelected={[filterOptions[0]]}
         style={{ width: 160 }}
       >
-        {options.map((option) => (
+        {filterOptions.map((option) => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
@@ -503,10 +508,10 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
         <Dropdown
           aria-label="Filter option"
           bordered
-          defaultSelected={["Option A"]}
+          defaultSelected={[filterOptions[0]]}
           style={{ width: 160 }}
         >
-          {options.map((option) => (
+          {filterOptions.map((option) => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
@@ -606,10 +611,10 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
         <Dropdown
           aria-label="Filter option"
           bordered
-          defaultSelected={["Option A"]}
+          defaultSelected={[filterOptions[0]]}
           style={{ width: 160 }}
         >
-          {options.map((option) => (
+          {filterOptions.map((option) => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
@@ -709,13 +714,14 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
       overflowMode="independent"
       overflowPriority={3}
     >
+      <Text styleAs="label">Primary filter</Text>
       <Dropdown
         aria-label="Primary filter"
         bordered
-        defaultSelected={["Option A"]}
+        defaultSelected={[filterOptions[0]]}
         style={{ width: 160 }}
       >
-        {options.map((option) => (
+        {filterOptions.map((option) => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
@@ -726,13 +732,14 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
       overflowMode="independent"
       overflowPriority={4}
     >
+      <Text styleAs="label">Secondary filter</Text>
       <Dropdown
         aria-label="Secondary filter"
         bordered
-        defaultSelected={["Option A"]}
+        defaultSelected={[filterOptions[0]]}
         style={{ width: 160 }}
       >
-        {options.map((option) => (
+        {filterOptions.map((option) => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
