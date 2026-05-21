@@ -38,7 +38,10 @@ Behavioral references:
 - `packages/lab/stories/toolbar-next/toolbar-next-edge-cases.stories.tsx` documents dynamic content, hidden-item remeasurement, and clipping-container behavior.
 - `site/docs/components/toolbar/usage.mdx` and `site/docs/components/toolbar/accessibility.mdx` describe public usage and keyboard behavior.
 
-## High-Level Dependency Graph
+## High-Level Source Dependency Graph
+
+This graph includes local runtime imports and local type-only imports that matter when following the
+implementation across files.
 
 ```mermaid
 flowchart TD
@@ -150,17 +153,19 @@ Example:
 </ToolbarNext>
 ```
 
-In this mode, `TooltrayNext.align` is interpreted as a toolbar-band shorthand. The normalization
-logic buckets trays into implicit `ToolbarContent` models:
+In this mode, `TooltrayNext.align` is interpreted as a toolbar-band shorthand. Each tray updates the
+current bucket using `align ?? "start"`, and the normalization logic turns those buckets into
+implicit `ToolbarContent` models:
 
 - `"start"` trays go into `start-implicit`;
 - `"center"` trays go into `center-implicit`;
 - `"end"` trays go into `end-implicit`;
-- dividers go into the current bucket, which starts as `"start"` and changes whenever a tray with an
-  `align` prop is encountered.
+- dividers go into the current bucket, which starts as `"start"` and changes whenever a tray is
+  encountered.
 
-The rendered `ToolbarContent` receives `data-implicit`, and `ToolbarContent.css` cancels tray
-auto-margins for implicit center/end trays so the band itself controls placement.
+The rendered `ToolbarContent` receives `data-implicit`. Visible-slot CSS mirrors tray alignment on
+the slot and resets tray auto-margins inside the slot, so the band and slot control placement rather
+than the portaled tray node.
 
 In flat mode, a divider before the first tray in a bucket becomes that bucket's first tray's leading
 decoration. A divider left in a bucket that ends up with no tray is dropped when that empty implicit
@@ -416,8 +421,8 @@ The rendered trigger labels are created in `ToolbarNextOverflow.tsx`:
 
 - shared trigger content is the Salt overflow icon;
 - named trigger content is the group label;
-- trigger `aria-label` includes the number of hidden trays, for example
-  `"Overflow. 2 trays hidden."` or `"Actions overflow. 1 tray hidden."`.
+- trigger `aria-label` describes hidden controls, for example
+  `"Overflow. Hidden controls."` or `"Actions overflow. Hidden controls."`.
 
 Overflow triggers are disclosure buttons:
 
@@ -762,14 +767,17 @@ The memory tracks both semantic identity and fallback order:
 - `groupKey` preserves focus on a trigger;
 - `scopeIndex` provides a stable fallback when the exact item or trigger is unavailable.
 
-`resolveToolbarNextFocusTarget` attempts, in order:
+`resolveToolbarNextFocusTarget` resolves by memory type:
 
-1. exact visible item control;
-2. overflow trigger for the hidden item;
-3. exact overflow trigger;
-4. first visible item in the remembered group;
-5. focusable element at the remembered scope index;
-6. first focusable element in the scope.
+- no memory: first focusable element in the scope;
+- item memory: exact visible item control, then that item's overflow trigger when the item is hidden,
+  then the scope-index fallback;
+- overflow-trigger memory: exact overflow trigger, then the first focusable item found for the
+  remembered group, then the scope-index fallback;
+- scope memory: the scope-index fallback.
+
+The scope-index fallback clamps the remembered index into the current focusable list and falls back
+to the first focusable element in the scope.
 
 ## Main Toolbar Keyboard Navigation
 
@@ -857,9 +865,10 @@ open, independent of where Floating UI portals the panel wrapper.
 
 Panel behavior:
 
-- opening the panel focuses the remembered item in that group or the first panel focusable;
-- if focusables are not mounted immediately, mutation and resize observers wait until a focusable
-  appears;
+- keyboard-opening the panel focuses the remembered item in that group or the first panel focusable;
+- pointer-opening the panel leaves focus on the trigger;
+- for keyboard-opened panels, if focusables are not mounted immediately, mutation and resize
+  observers wait until a focusable appears;
 - Left/Right navigation works within the panel scope;
 - Escape closes the panel and returns focus to the trigger;
 - Shift+Tab closes the panel and returns focus to the trigger;
@@ -941,8 +950,9 @@ Overflow panel semantics:
 
 Keyboard semantics:
 
-- documented keyboard support covers Tab, Shift+Tab, Left Arrow, and Right Arrow;
-- implementation matches that documented key set;
+- public toolbar-navigation docs cover Tab, Shift+Tab, Left Arrow, and Right Arrow;
+- `useToolbarNextKeyboardNavigation` implements that navigation key set;
+- overflow triggers and panels additionally handle Enter, Space, and Escape where appropriate;
 - Up/Down/Home/End are not implemented by the current keyboard utility.
 
 ## CSS Responsibilities
@@ -961,7 +971,7 @@ Keyboard semantics:
 - renders content areas as flex rows;
 - applies content gap;
 - justifies content by position;
-- cancels local tray auto-margins in implicit flat mode.
+- provides minimum sizing and non-shrinking content-area behavior.
 
 `Tooltray.css`:
 
@@ -977,7 +987,7 @@ Keyboard semantics:
 - uses `display: contents` for item and content hosts;
 - styles overflow triggers;
 - styles floating panels and panel content;
-- resets tray margins inside panels;
+- resets tray margins inside visible slots and panels;
 - raises descendant floating popups above the parent overflow panel.
 
 ## Invariants To Preserve
