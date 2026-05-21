@@ -38,6 +38,11 @@ const {
 const adapterDayjs = new AdapterDayjs();
 const toolbarHarnessStyle = { height: 220, width: 760 };
 
+function openOverflowWithKeyboard(name: string | RegExp) {
+  cy.findByRole("button", { name }).focus().should("be.focused");
+  cy.realPress("Space");
+}
+
 type ToolbarNextQueuedAnimationFrame = {
   callback: FrameRequestCallback;
   cancelled: boolean;
@@ -1483,6 +1488,26 @@ describe("Given ToolbarNext keyboard navigation", () => {
     });
   });
 
+  it("keeps focus on the overflow trigger when opening an input-first overflow by mouse", () => {
+    cy.mount(<OverflowPointerEntryControlsTestCase />);
+
+    cy.findByRole("button", { name: /Overflow\./i })
+      .realClick()
+      .should("be.focused");
+
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByPlaceholderText("Overflow search").should("not.be.focused");
+  });
+
+  it("moves focus to the first overflow control when opening an input-first overflow by keyboard", () => {
+    cy.mount(<OverflowPointerEntryControlsTestCase />);
+
+    openOverflowWithKeyboard(/Overflow\./i);
+
+    cy.findByRole("toolbar", { name: "More overflow" }).should("be.visible");
+    cy.findByPlaceholderText("Overflow search").should("be.focused");
+  });
+
   it("moves focus before the toolbar on Shift+Tab from a button", () => {
     cy.mount(<KeyboardButtonsFixture />);
 
@@ -1673,7 +1698,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("moves through toggle buttons and hands off inside overflow panels", () => {
     cy.mount(<KeyboardOverflowToggleGroupFixture width={260} />);
 
-    cy.findByRole("button", { name: /Views overflow\./i }).click();
+    openOverflowWithKeyboard(/Views overflow\./i);
     cy.findByRole("toolbar", { name: "Views overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
 
@@ -1707,7 +1732,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
       <KeyboardOverflowToggleGroupFixture disableFirstToggle width={260} />,
     );
 
-    cy.findByRole("button", { name: /Views overflow\./i }).click();
+    openOverflowWithKeyboard(/Views overflow\./i);
     cy.findByRole("toolbar", { name: "Views overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Before toggles" }).should("be.focused");
 
@@ -1762,7 +1787,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("moves focus into overflow panels, supports horizontal navigation there, and returns focus on Escape", () => {
     cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Actions overflow\./i }).click();
+    openOverflowWithKeyboard(/Actions overflow\./i);
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
@@ -1779,7 +1804,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("closes a portaled overflow panel and moves focus after the toolbar on Tab", () => {
     cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Actions overflow\./i }).click();
+    openOverflowWithKeyboard(/Actions overflow\./i);
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
@@ -1792,7 +1817,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("closes a portaled overflow panel and returns focus to the trigger on Shift+Tab", () => {
     cy.mount(<KeyboardOverflowFixture width={260} />);
 
-    cy.findByRole("button", { name: /Actions overflow\./i }).click();
+    openOverflowWithKeyboard(/Actions overflow\./i);
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
@@ -1902,7 +1927,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("combobox").should("have.text", "Option B");
 
     setFixtureWidth(180);
-    cy.findByRole("button", { name: /Overflow\./i }).realClick();
+    openOverflowWithKeyboard(/Overflow\./i);
 
     cy.findByRole("toolbar", { name: "More overflow" }).within(() => {
       cy.findByRole("combobox")
@@ -2105,7 +2130,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("preserves focus inside an open overflow panel across parent re-renders", () => {
     cy.mount(<KeyboardOverflowRerenderFixture width={260} />);
 
-    cy.findByRole("button", { name: /Actions overflow\./i }).click();
+    openOverflowWithKeyboard(/Actions overflow\./i);
     cy.findByRole("toolbar", { name: "Actions overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Export" }).should("be.focused");
 
