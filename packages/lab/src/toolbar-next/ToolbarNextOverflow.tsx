@@ -27,7 +27,9 @@ import {
   isValidElement,
   type ReactElement,
   type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
   type ReactNode,
+  type PointerEvent as ReactPointerEvent,
   type RefObject,
   useCallback,
   useEffect,
@@ -81,6 +83,8 @@ const toolbarNextOverflowFocusScrollRootSelector = [
   ".saltInput",
   ".saltSwitch",
 ].join(", ");
+
+type ToolbarNextOverflowOpenModality = "keyboard" | "pointer" | null;
 
 function createToolbarNextFocusEvent(
   eventName: "blur" | "focusout",
@@ -403,6 +407,7 @@ export function ToolbarNextOverflowMenu({
     useState<HTMLDivElement | null>(null);
   const wasOpenRef = useRef(false);
   const focusedOpenPanelRef = useRef(false);
+  const openModalityRef = useRef<ToolbarNextOverflowOpenModality>(null);
   const floatingBoundary = useToolbarNextOverflowFloatingBoundary();
   const {
     focusEntryTarget,
@@ -421,6 +426,10 @@ export function ToolbarNextOverflowMenu({
     open,
     onOpenChange(nextOpen, _, reason) {
       setOpen(nextOpen);
+
+      if (!nextOpen) {
+        openModalityRef.current = null;
+      }
 
       if (!nextOpen && reason === "escape-key") {
         scheduleToolbarNextFocus(triggerRef.current);
@@ -461,6 +470,7 @@ export function ToolbarNextOverflowMenu({
     (event: ReactKeyboardEvent<HTMLButtonElement>) => {
       if (!open && ["Enter", " "].includes(event.key)) {
         event.preventDefault();
+        openModalityRef.current = "keyboard";
         setOpen(true);
         return;
       }
@@ -469,6 +479,24 @@ export function ToolbarNextOverflowMenu({
         event.preventDefault();
         setOpen(false);
         scheduleToolbarNextFocus(triggerRef.current);
+      }
+    },
+    [open],
+  );
+
+  const handleTriggerPointerDown = useCallback(
+    (event: ReactPointerEvent<HTMLButtonElement>) => {
+      if (!open && event.button === 0) {
+        openModalityRef.current = "pointer";
+      }
+    },
+    [open],
+  );
+
+  const handleTriggerMouseDown = useCallback(
+    (event: ReactMouseEvent<HTMLButtonElement>) => {
+      if (!open && event.button === 0) {
+        openModalityRef.current = "pointer";
       }
     },
     [open],
@@ -578,7 +606,9 @@ export function ToolbarNextOverflowMenu({
         rememberedFocusRef.current = externalFocusMemory;
       }
 
-      focusEntryTarget();
+      if (openModalityRef.current !== "pointer") {
+        focusEntryTarget();
+      }
     }
 
     wasOpenRef.current = open;
@@ -661,7 +691,11 @@ export function ToolbarNextOverflowMenu({
       return;
     }
 
-    if (!panelContentNode || focusedOpenPanelRef.current) {
+    if (
+      !panelContentNode ||
+      focusedOpenPanelRef.current ||
+      openModalityRef.current === "pointer"
+    ) {
       return;
     }
 
@@ -739,6 +773,8 @@ export function ToolbarNextOverflowMenu({
         }}
         {...getReferenceProps({
           onKeyDown: handleTriggerKeyDown,
+          onMouseDown: handleTriggerMouseDown,
+          onPointerDown: handleTriggerPointerDown,
         })}
         ref={handleTriggerRef}
         sentiment="neutral"
