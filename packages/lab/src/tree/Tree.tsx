@@ -386,7 +386,10 @@ export const Tree = forwardRef<HTMLUListElement, TreeProps>(
           aria-disabled={disabled || undefined}
           className={clsx(
             withBaseName(),
-            { [withBaseName("disabled")]: disabled },
+            {
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("multiselect")]: multiselect,
+            },
             className,
           )}
           onKeyDown={handleKeyDown}
