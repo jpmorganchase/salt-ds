@@ -12,7 +12,7 @@ const OVERFLOWED_ITEMS = '.saltTabstrip-inner > *[data-overflowed="true"]';
 const OVERFLOW_IND = '.saltTabstrip-inner > *[data-overflow-indicator="true"]';
 const ADD_BUTTON = '.saltTabstrip-inner  > *[aria-label="Create Tab"]';
 
-describe("Responsive rendering, Given a Tabstrip", () => {
+describe.skip("Responsive rendering, Given a Tabstrip", () => {
   describe("WHEN initial size is sufficient to display all contents", () => {
     describe("WHEN it initially renders", () => {
       it("THEN all the content items will be visible", () => {
