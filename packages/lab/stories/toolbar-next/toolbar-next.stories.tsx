@@ -9,7 +9,13 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import { DateInputSingle } from "@salt-ds/date-components";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleGridPanel,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+} from "@salt-ds/date-components";
 import {
   ExportIcon,
   FilterIcon,
@@ -301,7 +307,7 @@ Variants.globals = {
  *
  * Intended behavior:
  * - Demonstrates that `TooltrayNext` can hold arbitrary Salt form
- *   controls (Input, Dropdown, DateInputSingle, Switch, Button), not
+ *   controls (Input, Dropdown, DatePicker, Switch, Button), not
  *   only buttons.
  * - The start content groups filtering criteria; the end content groups
  *   a toggle, a primary action, and the search input.
@@ -323,11 +329,18 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
           ))}
         </Dropdown>
         <Text styleAs="label">Settlement date</Text>
-        <DateInputSingle
-          bordered
-          aria-label="Settlement date"
-          style={{ width: 180 }}
-        />
+        <DatePicker selectionVariant="single">
+          <DatePickerTrigger>
+            <DatePickerSingleInput
+              bordered
+              aria-label="Settlement date"
+              style={{ width: 180 }}
+            />
+          </DatePickerTrigger>
+          <DatePickerOverlay>
+            <DatePickerSingleGridPanel />
+          </DatePickerOverlay>
+        </DatePicker>
       </TooltrayNext>
     </ToolbarContent>
     <ToolbarContent position="end">
