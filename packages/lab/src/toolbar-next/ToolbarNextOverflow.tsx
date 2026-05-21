@@ -374,12 +374,9 @@ export function ToolbarNextOverflowTriggerContent({
 }
 
 function getOverflowTriggerLabel(group: ToolbarNextOverflowGroup) {
-  const hiddenCount = group.items.length;
-  const hiddenLabel = hiddenCount === 1 ? "tray hidden" : "trays hidden";
-
   return group.named
-    ? `${group.label} overflow. ${hiddenCount} ${hiddenLabel}.`
-    : `Overflow. ${hiddenCount} ${hiddenLabel}.`;
+    ? `${group.label} overflow. Hidden controls.`
+    : "Overflow. Hidden controls.";
 }
 
 interface ToolbarNextOverflowMenuProps {
