@@ -1,18 +1,16 @@
-import { Button, Divider, Dropdown, Option, Switch, Text } from "@salt-ds/core";
+import { Button, Divider, Dropdown, Option, Text } from "@salt-ds/core";
 import {
   ToolbarNext as Toolbar,
   ToolbarContent,
   TooltrayNext as Tooltray,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 const paymentOptions = ["Cash", "Card", "Wire transfer"];
 const typeOptions = ["Type", "Date", "Status"];
 
 export const Dividers = (): ReactElement => {
-  const [showSpacing, setShowSpacing] = useState(false);
-
   return (
     <div className={styles.example}>
       <Toolbar aria-label="Payment toolbar with divider">
@@ -98,24 +96,13 @@ export const Dividers = (): ReactElement => {
             overflowMode="none"
             role="group"
             aria-label="Payment actions"
-            style={
-              showSpacing
-                ? { marginInlineStart: "var(--salt-spacing-300)" }
-                : undefined
-            }
+            style={{ marginInlineStart: "var(--salt-spacing-300)" }}
           >
             <Button appearance="bordered">Reject</Button>
             <Button appearance="solid">Publish</Button>
           </Tooltray>
         </ToolbarContent>
       </Toolbar>
-      <div className={styles.dividerExampleControls}>
-        <Switch
-          checked={showSpacing}
-          label="Show spacing"
-          onChange={(event) => setShowSpacing(event.target.checked)}
-        />
-      </div>
     </div>
   );
 };

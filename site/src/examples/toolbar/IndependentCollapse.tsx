@@ -1,5 +1,11 @@
 import { Dropdown, Option } from "@salt-ds/core";
-import { DateInputSingle } from "@salt-ds/date-components";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleGridPanel,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+} from "@salt-ds/date-components";
 import { ToolbarNext as Toolbar, TooltrayNext as Tooltray } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
@@ -31,11 +37,18 @@ export const IndependentCollapse = (): ReactElement => (
         </Dropdown>
       </Tooltray>
       <Tooltray align="end" overflowPriority={4}>
-        <DateInputSingle
-          bordered
-          aria-label="Settlement date"
-          style={{ width: 180 }}
-        />
+        <DatePicker selectionVariant="single">
+          <DatePickerTrigger>
+            <DatePickerSingleInput
+              bordered
+              aria-label="Settlement date"
+              style={{ width: 180 }}
+            />
+          </DatePickerTrigger>
+          <DatePickerOverlay>
+            <DatePickerSingleGridPanel />
+          </DatePickerOverlay>
+        </DatePicker>
       </Tooltray>
     </Toolbar>
   </div>

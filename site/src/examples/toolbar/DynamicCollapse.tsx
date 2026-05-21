@@ -30,13 +30,11 @@ export const DynamicCollapse = (): ReactElement => (
         role="group"
         aria-label="Filters"
       >
-        <Button appearance="transparent">
-          <FilterIcon aria-hidden />
-          Filters
-        </Button>
         <Dropdown
+          aria-label="Date filter"
           bordered
           defaultSelected={[dateOptions[0]]}
+          startAdornment={<FilterIcon aria-hidden />}
           style={{ width: 180 }}
         >
           {dateOptions.map((option) => (
