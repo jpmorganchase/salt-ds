@@ -54,6 +54,7 @@ import type { StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import exampleImage from "../assets/image-skeleton.png";
 import "./mega-menu.stories.css";
+import { Link as RouterLink, MemoryRouter } from "react-router";
 
 export default {
   title: "Lab/Mega Menu",
@@ -68,7 +69,9 @@ export default {
           boxSizing: "border-box",
         }}
       >
-        <Story />
+        <MemoryRouter>
+          <Story />
+        </MemoryRouter>
       </div>
     ),
   ],
@@ -105,13 +108,10 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Digital banking",
-                      );
-                    }}
+                   render={<RouterLink to="/digital-banking" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/digital-banking")
+                    }
                   >
                     <DevicesIcon
                       aria-hidden
@@ -120,13 +120,10 @@ export const WithIcons: StoryFn = () => {
                     Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Risk management",
-                      );
-                    }}
+                    render={<RouterLink to="/risk-management" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/risk-management")
+                    }
                   >
                     <DatasetManagerIcon
                       aria-hidden
@@ -138,13 +135,13 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/patient-management" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Patient management",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/patient-management",
+                      )
+                    }
                   >
                     <UserSearchIcon
                       aria-hidden
@@ -153,22 +150,22 @@ export const WithIcons: StoryFn = () => {
                     Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Telemedicine");
-                    }}
+                    render={<RouterLink to="/telemedicine" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/telemedicine")
+                    }
                   >
                     <CallIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/compliance-solutions" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Compliance solutions",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/compliance-solutions",
+                      )
+                    }
                   >
                     <PasteIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Compliance solutions
@@ -177,13 +174,13 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/e-commerce-platforms" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "E-commerce platforms",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/e-commerce-platforms",
+                      )
+                    }
                   >
                     <CartIcon aria-hidden className="saltMegaMenuItem-icon" />
                     E-commerce platforms
@@ -192,25 +189,22 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/supply-chain-optimization" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Supply chain optimization",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/supply-chain-optimization",
+                      )
+                    }
                   >
                     <LinkedIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Quality control",
-                      );
-                    }}
+                    render={<RouterLink to="/quality-control" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/quality-control")
+                    }
                   >
                     <SettingsIcon
                       aria-hidden
@@ -219,13 +213,13 @@ export const WithIcons: StoryFn = () => {
                     Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/production-planning" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Production planning",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/production-planning",
+                      )
+                    }
                   >
                     <NotificationIcon
                       aria-hidden
@@ -237,13 +231,13 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/learning-management-systems" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Learning management systems",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/learning-management-systems",
+                      )
+                    }
                   >
                     <GuideOpenIcon
                       aria-hidden
@@ -252,13 +246,13 @@ export const WithIcons: StoryFn = () => {
                     Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/virtual-classrooms" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Virtual classrooms",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/virtual-classrooms",
+                      )
+                    }
                   >
                     <LaptopIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Virtual classrooms
@@ -267,13 +261,13 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/document-management" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Document management",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/document-management",
+                      )
+                    }
                   >
                     <DocumentIcon
                       aria-hidden
@@ -282,25 +276,22 @@ export const WithIcons: StoryFn = () => {
                     Document management
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Citizen services",
-                      );
-                    }}
+                    render={<RouterLink to="/citizen-services" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/citizen-services")
+                    }
                   >
                     <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/public-safety-solutions" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Public safety solutions",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/public-safety-solutions",
+                      )
+                    }
                   >
                     <UserGroupIcon
                       aria-hidden
@@ -329,10 +320,10 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Strategy");
-                    }}
+                    render={<RouterLink to="/strategy" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/strategy")
+                    }
                   >
                     <ChartBubbleIcon
                       aria-hidden
@@ -341,19 +332,15 @@ export const WithIcons: StoryFn = () => {
                     Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "IT");
-                    }}
+                    render={<RouterLink to="/it" />}
+                    onClick={() => console.log("MegaMenuItem clicked:", "/it")}
                   >
                     <LaptopIcon aria-hidden className="saltMegaMenuItem-icon" />
                     IT
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "HR");
-                    }}
+                    render={<RouterLink to="/hr" />}
+                    onClick={() => console.log("MegaMenuItem clicked:", "/hr")}
                   >
                     <UserGroupIcon
                       aria-hidden
@@ -362,19 +349,19 @@ export const WithIcons: StoryFn = () => {
                     HR
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Marketing");
-                    }}
+                    render={<RouterLink to="/marketing" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/marketing")
+                    }
                   >
                     <MarkerIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Operations");
-                    }}
+                    render={<RouterLink to="/operations" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/operations")
+                    }
                   >
                     <SettingsIcon
                       aria-hidden
@@ -386,40 +373,37 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Onboarding");
-                    }}
+                    render={<RouterLink to="/onboarding" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/onboarding")
+                    }
                   >
                     <PasteIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Migration");
-                    }}
+                    render={<RouterLink to="/migration" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/migration")
+                    }
                   >
                     <SwapIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Migration
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Customization",
-                      );
-                    }}
+                    render={<RouterLink to="/customization" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/customization")
+                    }
                   >
                     <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Customization
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Training");
-                    }}
+                    render={<RouterLink to="/training" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/training")
+                    }
                   >
                     <GuideClosedIcon
                       aria-hidden
@@ -428,19 +412,19 @@ export const WithIcons: StoryFn = () => {
                     Training
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Support");
-                    }}
+                    render={<RouterLink to="/support" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/support")
+                    }
                   >
                     <InfoIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Support
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Testing");
-                    }}
+                    render={<RouterLink to="/testing" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/testing")
+                    }
                   >
                     <MaintenanceIcon
                       aria-hidden
@@ -449,10 +433,10 @@ export const WithIcons: StoryFn = () => {
                     Testing
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Rollout");
-                    }}
+                    render={<RouterLink to="/rollout" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/rollout")
+                    }
                   >
                     <SaveIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Rollout
@@ -461,10 +445,10 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Online");
-                    }}
+                    render={<RouterLink to="/online" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/online")
+                    }
                   >
                     <DisplayIcon
                       aria-hidden
@@ -473,31 +457,28 @@ export const WithIcons: StoryFn = () => {
                     Online
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "In-person");
-                    }}
+                    render={<RouterLink to="/in-person" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/in-person")
+                    }
                   >
                     <UserIcon aria-hidden className="saltMegaMenuItem-icon" />
                     In-person
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Workshops");
-                    }}
+                    render={<RouterLink to="/workshops" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/workshops")
+                    }
                   >
                     <KeyIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Certifications",
-                      );
-                    }}
+                    render={<RouterLink to="/certifications" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/certifications")
+                    }
                   >
                     <DocumentIcon
                       aria-hidden
@@ -506,10 +487,10 @@ export const WithIcons: StoryFn = () => {
                     Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Tutorials");
-                    }}
+                    render={<RouterLink to="/tutorials" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/tutorials")
+                    }
                   >
                     <DocumentEditIcon
                       aria-hidden
@@ -518,10 +499,10 @@ export const WithIcons: StoryFn = () => {
                     Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Guides");
-                    }}
+                    render={<RouterLink to="/guides" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/guides")
+                    }
                   >
                     <GuideOpenIcon
                       aria-hidden
@@ -549,10 +530,10 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "User guides");
-                    }}
+                    render={<RouterLink to="/user-guides" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/user-guides")
+                    }
                   >
                     <GuideClosedIcon
                       aria-hidden
@@ -561,25 +542,19 @@ export const WithIcons: StoryFn = () => {
                     User guides
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "API reference",
-                      );
-                    }}
+                    render={<RouterLink to="/api-reference" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/api-reference")
+                    }
                   >
                     <ApiIcon aria-hidden className="saltMegaMenuItem-icon" />
                     API reference
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Release notes",
-                      );
-                    }}
+                    render={<RouterLink to="/release-notes" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/release-notes")
+                    }
                   >
                     <NotificationIcon
                       aria-hidden
@@ -588,10 +563,10 @@ export const WithIcons: StoryFn = () => {
                     Release notes
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "FAQs");
-                    }}
+                    render={<RouterLink to="/faqs" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/faqs")
+                    }
                   >
                     <HelpIcon aria-hidden className="saltMegaMenuItem-icon" />
                     FAQs
@@ -600,25 +575,19 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & help</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Contact support",
-                      );
-                    }}
+                    render={<RouterLink to="/contact-support" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/contact-support")
+                    }
                   >
                     <InfoIcon aria-hidden className="saltMegaMenuItem-icon" />
                     Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Community forum",
-                      );
-                    }}
+                    render={<RouterLink to="/community-forum" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/community-forum")
+                    }
                   >
                     <ChatGroupIcon
                       aria-hidden
@@ -627,13 +596,10 @@ export const WithIcons: StoryFn = () => {
                     Community forum
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Troubleshooting",
-                      );
-                    }}
+                    render={<RouterLink to="/troubleshooting" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/troubleshooting")
+                    }
                   >
                     <AnnouncementIcon
                       aria-hidden
@@ -680,24 +646,18 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Digital banking",
-                      );
-                    }}
+                    render={<RouterLink to="/digital-banking" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/digital-banking")
+                    }
                   >
                     Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Risk management",
-                      );
-                    }}
+                    render={<RouterLink to="/risk-management" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/risk-management")
+                    }
                   >
                     Risk management
                   </MegaMenuItem>
@@ -705,21 +665,21 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/patient-management" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Patient management",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/patient-management",
+                      )
+                    }
                   >
                     Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Telemedicine");
-                    }}
+                    render={<RouterLink to="/telemedicine" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/telemedicine")
+                    }
                   >
                     Telemedicine
                     <div className="menu-item-adornment">
@@ -729,13 +689,13 @@ export const WithAdornment: StoryFn = () => {
                     </div>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/compliance-solutions" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Compliance solutions",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/compliance-solutions",
+                      )
+                    }
                   >
                     Compliance solutions
                   </MegaMenuItem>
@@ -743,13 +703,13 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/e-commerce-platforms" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "E-commerce platforms",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/e-commerce-platforms",
+                      )
+                    }
                   >
                     E-commerce platforms
                   </MegaMenuItem>
@@ -757,35 +717,32 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/supply-chain-optimization" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Supply chain optimization",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/supply-chain-optimization",
+                      )
+                    }
                   >
                     Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Quality control",
-                      );
-                    }}
+                    render={<RouterLink to="/quality-control" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/quality-control")
+                    }
                   >
                     Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/production-planning" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Production planning",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/production-planning",
+                      )
+                    }
                   >
                     Production planning
                     <div className="menu-item-adornment">
@@ -798,24 +755,24 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/learning-management-systems" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Learning management systems",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/learning-management-systems",
+                      )
+                    }
                   >
                     Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/virtual-classrooms" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Virtual classrooms",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/virtual-classrooms",
+                      )
+                    }
                   >
                     Virtual classrooms
                   </MegaMenuItem>
@@ -823,35 +780,32 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/document-management" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Document management",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/document-management",
+                      )
+                    }
                   >
                     Document management
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Citizen services",
-                      );
-                    }}
+                    render={<RouterLink to="/citizen-services" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/citizen-services")
+                    }
                   >
                     Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/public-safety-solutions" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Public safety solutions",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/public-safety-solutions",
+                      )
+                    }
                   >
                     Public safety solutions
                   </MegaMenuItem>
@@ -876,42 +830,38 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Strategy");
-                    }}
+                    render={<RouterLink to="/strategy" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/strategy")
+                    }
                   >
                     Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "IT");
-                    }}
+                    render={<RouterLink to="/it" />}
+                    onClick={() => console.log("MegaMenuItem clicked:", "/it")}
                   >
                     IT
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "HR");
-                    }}
+                    render={<RouterLink to="/hr" />}
+                    onClick={() => console.log("MegaMenuItem clicked:", "/hr")}
                   >
                     HR
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Marketing");
-                    }}
+                    render={<RouterLink to="/marketing" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/marketing")
+                    }
                   >
                     Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Operations");
-                    }}
+                    render={<RouterLink to="/operations" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/operations")
+                    }
                   >
                     Operations
                   </MegaMenuItem>
@@ -919,37 +869,34 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Onboarding");
-                    }}
+                    render={<RouterLink to="/onboarding" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/onboarding")
+                    }
                   >
                     Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Migration");
-                    }}
+                    render={<RouterLink to="/migration" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/migration")
+                    }
                   >
                     Migration
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Customization",
-                      );
-                    }}
+                    render={<RouterLink to="/customization" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/customization")
+                    }
                   >
                     Customization
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Training");
-                    }}
+                    render={<RouterLink to="/training" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/training")
+                    }
                   >
                     Training
                     <div className="menu-item-adornment">
@@ -958,26 +905,26 @@ export const WithAdornment: StoryFn = () => {
                     </div>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Support");
-                    }}
+                    render={<RouterLink to="/support" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/support")
+                    }
                   >
                     Support
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Testing");
-                    }}
+                    render={<RouterLink to="/testing" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/testing")
+                    }
                   >
                     Testing
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Rollout");
-                    }}
+                    render={<RouterLink to="/rollout" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/rollout")
+                    }
                   >
                     Rollout
                   </MegaMenuItem>
@@ -985,18 +932,18 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Online");
-                    }}
+                    render={<RouterLink to="/online" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/online")
+                    }
                   >
                     Online
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "In-person");
-                    }}
+                    render={<RouterLink to="/in-person" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/in-person")
+                    }
                   >
                     In-person
                     <div className="menu-item-adornment">
@@ -1005,37 +952,34 @@ export const WithAdornment: StoryFn = () => {
                     </div>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Workshops");
-                    }}
+                    render={<RouterLink to="/workshops" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/workshops")
+                    }
                   >
                     Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Certifications",
-                      );
-                    }}
+                    render={<RouterLink to="/certifications" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/certifications")
+                    }
                   >
                     Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Tutorials");
-                    }}
+                    render={<RouterLink to="/tutorials" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/tutorials")
+                    }
                   >
                     Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Guides");
-                    }}
+                    render={<RouterLink to="/guides" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/guides")
+                    }
                   >
                     Guides
                   </MegaMenuItem>
@@ -1059,32 +1003,26 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "User guides");
-                    }}
+                    render={<RouterLink to="/user-guides" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/user-guides")
+                    }
                   >
                     User guides
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "API reference",
-                      );
-                    }}
+                    render={<RouterLink to="/api-reference" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/api-reference")
+                    }
                   >
                     API reference
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Release notes",
-                      );
-                    }}
+                    render={<RouterLink to="/release-notes" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/release-notes")
+                    }
                   >
                     Release notes
                     <div className="menu-item-adornment">
@@ -1092,10 +1030,10 @@ export const WithAdornment: StoryFn = () => {
                     </div>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "FAQs");
-                    }}
+                    render={<RouterLink to="/faqs" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/faqs")
+                    }
                   >
                     FAQs
                   </MegaMenuItem>
@@ -1103,24 +1041,18 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & help</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Contact support",
-                      );
-                    }}
+                    render={<RouterLink to="/contact-support" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/contact-support")
+                    }
                   >
                     Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Community forum",
-                      );
-                    }}
+                    render={<RouterLink to="/community-forum" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/community-forum")
+                    }
                   >
                     Community forum
                     <div className="menu-item-adornment">
@@ -1130,13 +1062,10 @@ export const WithAdornment: StoryFn = () => {
                     </div>
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Troubleshooting",
-                      );
-                    }}
+                    render={<RouterLink to="/troubleshooting" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/troubleshooting")
+                    }
                   >
                     Troubleshooting
                   </MegaMenuItem>
@@ -1169,35 +1098,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 1",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-1" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-1")
+                  }
                 >
                   Mega menu item 1
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 2",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-2" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-2")
+                  }
                 >
                   Mega menu item 2
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 3",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-3" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-3")
+                  }
                 >
                   Mega menu item 3
                 </MegaMenuItem>
@@ -1205,35 +1125,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 4",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-4" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-4")
+                  }
                 >
                   Mega menu item 4
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 5",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-5" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-5")
+                  }
                 >
                   Mega menu item 5
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 6",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-6" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-6")
+                  }
                 >
                   Mega menu item 6
                 </MegaMenuItem>
@@ -1241,35 +1152,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 7",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-7" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-7")
+                  }
                 >
                   Mega menu item 7
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 8",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-8" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-8")
+                  }
                 >
                   Mega menu item 8
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 9",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-9" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-9")
+                  }
                 >
                   Mega menu item 9
                 </MegaMenuItem>
@@ -1277,35 +1179,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 10",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-10" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-10")
+                  }
                 >
                   Mega menu item 10
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 11",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-11" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-11")
+                  }
                 >
                   Mega menu item 11
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 12",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-12" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-12")
+                  }
                 >
                   Mega menu item 12
                 </MegaMenuItem>
@@ -1328,35 +1221,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 1",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-1" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-1")
+                  }
                 >
                   Mega menu item 1
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 2",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-2" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-2")
+                  }
                 >
                   Mega menu item 2
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 3",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-3" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-3")
+                  }
                 >
                   Mega menu item 3
                 </MegaMenuItem>
@@ -1364,35 +1248,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 4",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-4" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-4")
+                  }
                 >
                   Mega menu item 4
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 5",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-5" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-5")
+                  }
                 >
                   Mega menu item 5
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 6",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-6" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-6")
+                  }
                 >
                   Mega menu item 6
                 </MegaMenuItem>
@@ -1400,35 +1275,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 7",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-7" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-7")
+                  }
                 >
                   Mega menu item 7
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 8",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-8" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-8")
+                  }
                 >
                   Mega menu item 8
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 9",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-9" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-9")
+                  }
                 >
                   Mega menu item 9
                 </MegaMenuItem>
@@ -1436,35 +1302,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 10",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-10" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-10")
+                  }
                 >
                   Mega menu item 10
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 11",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-11" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-11")
+                  }
                 >
                   Mega menu item 11
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 12",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-12" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-12")
+                  }
                 >
                   Mega menu item 12
                 </MegaMenuItem>
@@ -1487,35 +1344,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 1",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-1" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-1")
+                  }
                 >
                   Mega menu item 1
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 2",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-2" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-2")
+                  }
                 >
                   Mega menu item 2
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 3",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-3" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-3")
+                  }
                 >
                   Mega menu item 3
                 </MegaMenuItem>
@@ -1523,35 +1371,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 4",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-4" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-4")
+                  }
                 >
                   Mega menu item 4
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 5",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-5" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-5")
+                  }
                 >
                   Mega menu item 5
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 6",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-6" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-6")
+                  }
                 >
                   Mega menu item 6
                 </MegaMenuItem>
@@ -1559,35 +1398,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 7",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-7" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-7")
+                  }
                 >
                   Mega menu item 7
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 8",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-8" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-8")
+                  }
                 >
                   Mega menu item 8
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 9",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-9" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-9")
+                  }
                 >
                   Mega menu item 9
                 </MegaMenuItem>
@@ -1595,35 +1425,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 10",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-10" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-10")
+                  }
                 >
                   Mega menu item 10
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 11",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-11" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-11")
+                  }
                 >
                   Mega menu item 11
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 12",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-12" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-12")
+                  }
                 >
                   Mega menu item 12
                 </MegaMenuItem>
@@ -1646,35 +1467,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 1</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 1",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-1" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-1")
+                  }
                 >
                   Mega menu item 1
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 2",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-2" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-2")
+                  }
                 >
                   Mega menu item 2
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 3",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-3" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-3")
+                  }
                 >
                   Mega menu item 3
                 </MegaMenuItem>
@@ -1682,35 +1494,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 2</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 4",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-4" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-4")
+                  }
                 >
                   Mega menu item 4
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 5",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-5" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-5")
+                  }
                 >
                   Mega menu item 5
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 6",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-6" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-6")
+                  }
                 >
                   Mega menu item 6
                 </MegaMenuItem>
@@ -1718,35 +1521,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 3</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 7",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-7" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-7")
+                  }
                 >
                   Mega menu item 7
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 8",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-8" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-8")
+                  }
                 >
                   Mega menu item 8
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 9",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-9" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-9")
+                  }
                 >
                   Mega menu item 9
                 </MegaMenuItem>
@@ -1754,35 +1548,26 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Menu Header 4</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 10",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-10" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-10")
+                  }
                 >
                   Mega menu item 10
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 11",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-11" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-11")
+                  }
                 >
                   Mega menu item 11
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Mega menu item 12",
-                    );
-                  }}
+                  render={<RouterLink to="/mega-menu-item-12" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/mega-menu-item-12")
+                  }
                 >
                   Mega menu item 12
                 </MegaMenuItem>
@@ -1829,24 +1614,18 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Digital banking",
-                        );
-                      }}
+                      render={<RouterLink to="/digital-banking" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/digital-banking")
+                      }
                     >
                       Digital banking
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Risk management",
-                        );
-                      }}
+                      render={<RouterLink to="/risk-management" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/risk-management")
+                      }
                     >
                       Risk management
                     </MegaMenuItem>
@@ -1854,35 +1633,32 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Healthcare</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/patient-management" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Patient management",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/patient-management",
+                        )
+                      }
                     >
                       Patient management
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Telemedicine",
-                        );
-                      }}
+                      render={<RouterLink to="/telemedicine" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/telemedicine")
+                      }
                     >
                       Telemedicine
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/compliance-solutions" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Compliance solutions",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/compliance-solutions",
+                        )
+                      }
                     >
                       Compliance solutions
                     </MegaMenuItem>
@@ -1890,13 +1666,13 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Retail</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/e-commerce-platforms" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "E-commerce platforms",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/e-commerce-platforms",
+                        )
+                      }
                     >
                       E-commerce platforms
                     </MegaMenuItem>
@@ -1904,35 +1680,32 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/supply-chain-optimization" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Supply chain optimization",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/supply-chain-optimization",
+                        )
+                      }
                     >
                       Supply chain optimization
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Quality control",
-                        );
-                      }}
+                      render={<RouterLink to="/quality-control" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/quality-control")
+                      }
                     >
                       Quality control
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/production-planning" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Production planning",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/production-planning",
+                        )
+                      }
                     >
                       Production planning
                     </MegaMenuItem>
@@ -1940,24 +1713,24 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Education</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/learning-management-systems" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Learning management systems",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/learning-management-systems",
+                        )
+                      }
                     >
                       Learning management systems
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/virtual-classrooms" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Virtual classrooms",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/virtual-classrooms",
+                        )
+                      }
                     >
                       Virtual classrooms
                     </MegaMenuItem>
@@ -1965,35 +1738,35 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Government</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/document-management" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Document management",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/document-management",
+                        )
+                      }
                     >
                       Document management
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/citizen-services" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Citizen services",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/citizen-services",
+                        )
+                      }
                     >
                       Citizen services
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/public-safety-solutions" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Public safety solutions",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/public-safety-solutions",
+                        )
+                      }
                     >
                       Public safety solutions
                     </MegaMenuItem>
@@ -2001,24 +1774,18 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Technology</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Cloud solutions",
-                        );
-                      }}
+                      render={<RouterLink to="/cloud-solutions" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/cloud-solutions")
+                      }
                     >
                       Cloud solutions
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Cybersecurity",
-                        );
-                      }}
+                      render={<RouterLink to="/cybersecurity" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/cybersecurity")
+                      }
                     >
                       Cybersecurity
                     </MegaMenuItem>
@@ -2026,24 +1793,24 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Energy</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/smart-grid-management" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Smart Grid Management",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/smart-grid-management",
+                        )
+                      }
                     >
                       Smart Grid Management
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/renewable-integration" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Renewable Integration",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/renewable-integration",
+                        )
+                      }
                     >
                       Renewable Integration
                     </MegaMenuItem>
@@ -2071,42 +1838,42 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Consulting</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Strategy");
-                      }}
+                      render={<RouterLink to="/strategy" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/strategy")
+                      }
                     >
                       Strategy
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "IT");
-                      }}
+                      render={<RouterLink to="/it" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/it")
+                      }
                     >
                       IT
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "HR");
-                      }}
+                      render={<RouterLink to="/hr" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/hr")
+                      }
                     >
                       HR
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Marketing");
-                      }}
+                      render={<RouterLink to="/marketing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/marketing")
+                      }
                     >
                       Marketing
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Operations");
-                      }}
+                      render={<RouterLink to="/operations" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/operations")
+                      }
                     >
                       Operations
                     </MegaMenuItem>
@@ -2114,61 +1881,58 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Implementation</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Onboarding");
-                      }}
+                      render={<RouterLink to="/onboarding" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/onboarding")
+                      }
                     >
                       Onboarding
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Migration");
-                      }}
+                      render={<RouterLink to="/migration" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/migration")
+                      }
                     >
                       Migration
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Customization",
-                        );
-                      }}
+                      render={<RouterLink to="/customization" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/customization")
+                      }
                     >
                       Customization
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Training");
-                      }}
+                      render={<RouterLink to="/training" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/training")
+                      }
                     >
                       Training
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Support");
-                      }}
+                      render={<RouterLink to="/support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/support")
+                      }
                     >
                       Support
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Testing");
-                      }}
+                      render={<RouterLink to="/testing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/testing")
+                      }
                     >
                       Testing
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Rollout");
-                      }}
+                      render={<RouterLink to="/rollout" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/rollout")
+                      }
                     >
                       Rollout
                     </MegaMenuItem>
@@ -2176,10 +1940,10 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Training</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Online");
-                      }}
+                      render={<RouterLink to="/online" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/online")
+                      }
                     >
                       <DisplayIcon
                         aria-hidden
@@ -2187,45 +1951,42 @@ export const FullWidthContainer: StoryFn = () => {
                       />
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "In-person");
-                      }}
+                      render={<RouterLink to="/in-person" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/in-person")
+                      }
                     >
                       In-person
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Workshops");
-                      }}
+                      render={<RouterLink to="/workshops" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/workshops")
+                      }
                     >
                       Workshops
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Certifications",
-                        );
-                      }}
+                      render={<RouterLink to="/certifications" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/certifications")
+                      }
                     >
                       Certifications
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Tutorials");
-                      }}
+                      render={<RouterLink to="/tutorials" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/tutorials")
+                      }
                     >
                       Tutorials
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Guides");
-                      }}
+                      render={<RouterLink to="/guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/guides")
+                      }
                     >
                       Guides
                     </MegaMenuItem>
@@ -2252,43 +2013,34 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Documentation</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "User guides",
-                        );
-                      }}
+                      render={<RouterLink to="/user-guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/user-guides")
+                      }
                     >
                       User guides
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "API reference",
-                        );
-                      }}
+                      render={<RouterLink to="/api-reference" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/api-reference")
+                      }
                     >
                       API reference
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Release notes",
-                        );
-                      }}
+                      render={<RouterLink to="/release-notes" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/release-notes")
+                      }
                     >
                       Release notes
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "FAQs");
-                      }}
+                      render={<RouterLink to="/faqs" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/faqs")
+                      }
                     >
                       FAQs
                     </MegaMenuItem>
@@ -2296,35 +2048,26 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Support &amp; help</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Contact support",
-                        );
-                      }}
+                      render={<RouterLink to="/contact-support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/contact-support")
+                      }
                     >
                       Contact support
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Community forum",
-                        );
-                      }}
+                      render={<RouterLink to="/community-forum" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/community-forum")
+                      }
                     >
                       Community forum
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Troubleshooting",
-                        );
-                      }}
+                      render={<RouterLink to="/troubleshooting" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/troubleshooting")
+                      }
                     >
                       Troubleshooting
                     </MegaMenuItem>
@@ -2377,13 +2120,10 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Digital banking",
-                        );
-                      }}
+                      render={<RouterLink to="/digital-banking" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/digital-banking")
+                      }
                     >
                       <DevicesIcon
                         aria-hidden
@@ -2392,13 +2132,10 @@ export const EdgeToEdge: StoryFn = () => {
                       Digital banking
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Risk management",
-                        );
-                      }}
+                      render={<RouterLink to="/risk-management" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/risk-management")
+                      }
                     >
                       <DatasetManagerIcon
                         aria-hidden
@@ -2410,13 +2147,13 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Healthcare</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/patient-management" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Patient management",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/patient-management",
+                        )
+                      }
                     >
                       <UserSearchIcon
                         aria-hidden
@@ -2425,25 +2162,22 @@ export const EdgeToEdge: StoryFn = () => {
                       Patient management
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Telemedicine",
-                        );
-                      }}
+                      render={<RouterLink to="/telemedicine" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/telemedicine")
+                      }
                     >
                       <CallIcon aria-hidden className="saltMegaMenuItem-icon" />
                       Telemedicine
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/compliance-solutions" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Compliance solutions",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/compliance-solutions",
+                        )
+                      }
                     >
                       <PasteIcon
                         aria-hidden
@@ -2455,13 +2189,13 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Retail</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/e-commerce-platforms" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "E-commerce platforms",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/e-commerce-platforms",
+                        )
+                      }
                     >
                       <CartIcon aria-hidden className="saltMegaMenuItem-icon" />
                       E-commerce platforms
@@ -2470,13 +2204,13 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/supply-chain-optimization" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Supply chain optimization",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/supply-chain-optimization",
+                        )
+                      }
                     >
                       <LinkedIcon
                         aria-hidden
@@ -2485,13 +2219,10 @@ export const EdgeToEdge: StoryFn = () => {
                       Supply chain optimization
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Quality control",
-                        );
-                      }}
+                      render={<RouterLink to="/quality-control" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/quality-control")
+                      }
                     >
                       <SettingsIcon
                         aria-hidden
@@ -2500,13 +2231,13 @@ export const EdgeToEdge: StoryFn = () => {
                       Quality control
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/production-planning" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Production planning",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/production-planning",
+                        )
+                      }
                     >
                       <NotificationIcon
                         aria-hidden
@@ -2518,13 +2249,13 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Education</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/learning-management-systems" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Learning management systems",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/learning-management-systems",
+                        )
+                      }
                     >
                       <GuideOpenIcon
                         aria-hidden
@@ -2533,13 +2264,13 @@ export const EdgeToEdge: StoryFn = () => {
                       Learning management systems
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/virtual-classrooms" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Virtual classrooms",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/virtual-classrooms",
+                        )
+                      }
                     >
                       <LaptopIcon
                         aria-hidden
@@ -2551,13 +2282,13 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Government</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/document-management" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Document management",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/document-management",
+                        )
+                      }
                     >
                       <DocumentIcon
                         aria-hidden
@@ -2566,25 +2297,25 @@ export const EdgeToEdge: StoryFn = () => {
                       Document management
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/citizen-services" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Citizen services",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/citizen-services",
+                        )
+                      }
                     >
                       <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
                       Citizen services
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/public-safety-solutions" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Public safety solutions",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/public-safety-solutions",
+                        )
+                      }
                     >
                       <UserGroupIcon
                         aria-hidden
@@ -2596,24 +2327,18 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Technology</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Cloud solutions",
-                        );
-                      }}
+                      render={<RouterLink to="/cloud-solutions" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/cloud-solutions")
+                      }
                     >
                       Cloud solutions
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Cybersecurity",
-                        );
-                      }}
+                      render={<RouterLink to="/cybersecurity" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/cybersecurity")
+                      }
                     >
                       Cybersecurity
                     </MegaMenuItem>
@@ -2621,24 +2346,24 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Energy</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/smart-grid-management" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Smart Grid Management",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/smart-grid-management",
+                        )
+                      }
                     >
                       Smart Grid Management
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/renewable-integration" />}
+                      onClick={() =>
                         console.log(
-                          "[MegaMenu] selected value:",
-                          "Renewable Integration",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/renewable-integration",
+                        )
+                      }
                     >
                       Renewable Integration
                     </MegaMenuItem>
@@ -2666,42 +2391,42 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Consulting</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Strategy");
-                      }}
+                      render={<RouterLink to="/strategy" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/strategy")
+                      }
                     >
                       Strategy
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "IT");
-                      }}
+                      render={<RouterLink to="/it" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/it")
+                      }
                     >
                       IT
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "HR");
-                      }}
+                      render={<RouterLink to="/hr" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/hr")
+                      }
                     >
                       HR
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Marketing");
-                      }}
+                      render={<RouterLink to="/marketing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/marketing")
+                      }
                     >
                       Marketing
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Operations");
-                      }}
+                      render={<RouterLink to="/operations" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/operations")
+                      }
                     >
                       Operations
                     </MegaMenuItem>
@@ -2709,61 +2434,58 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Implementation</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Onboarding");
-                      }}
+                      render={<RouterLink to="/onboarding" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/onboarding")
+                      }
                     >
                       Onboarding
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Migration");
-                      }}
+                      render={<RouterLink to="/migration" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/migration")
+                      }
                     >
                       Migration
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Customization",
-                        );
-                      }}
+                      render={<RouterLink to="/customization" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/customization")
+                      }
                     >
                       Customization
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Training");
-                      }}
+                      render={<RouterLink to="/training" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/training")
+                      }
                     >
                       Training
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Support");
-                      }}
+                      render={<RouterLink to="/support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/support")
+                      }
                     >
                       Support
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Testing");
-                      }}
+                      render={<RouterLink to="/testing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/testing")
+                      }
                     >
                       Testing
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Rollout");
-                      }}
+                      render={<RouterLink to="/rollout" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/rollout")
+                      }
                     >
                       Rollout
                     </MegaMenuItem>
@@ -2771,53 +2493,50 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Training</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Online");
-                      }}
+                      render={<RouterLink to="/online" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/online")
+                      }
                     >
                       Online
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "In-person");
-                      }}
+                      render={<RouterLink to="/in-person" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/in-person")
+                      }
                     >
                       In-person
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Workshops");
-                      }}
+                      render={<RouterLink to="/workshops" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/workshops")
+                      }
                     >
                       Workshops
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Certifications",
-                        );
-                      }}
+                      render={<RouterLink to="/certifications" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/certifications")
+                      }
                     >
                       Certifications
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Tutorials");
-                      }}
+                      render={<RouterLink to="/tutorials" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/tutorials")
+                      }
                     >
                       Tutorials
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Guides");
-                      }}
+                      render={<RouterLink to="/guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/guides")
+                      }
                     >
                       Guides
                     </MegaMenuItem>
@@ -2844,43 +2563,34 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Documentation</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "User guides",
-                        );
-                      }}
+                      render={<RouterLink to="/user-guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/user-guides")
+                      }
                     >
                       User guides
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "API reference",
-                        );
-                      }}
+                      render={<RouterLink to="/api-reference" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/api-reference")
+                      }
                     >
                       API reference
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Release notes",
-                        );
-                      }}
+                      render={<RouterLink to="/release-notes" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/release-notes")
+                      }
                     >
                       Release notes
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "FAQs");
-                      }}
+                      render={<RouterLink to="/faqs" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/faqs")
+                      }
                     >
                       FAQs
                     </MegaMenuItem>
@@ -2888,35 +2598,26 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Support &amp; help</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Contact support",
-                        );
-                      }}
+                      render={<RouterLink to="/contact-support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/contact-support")
+                      }
                     >
                       Contact support
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Community forum",
-                        );
-                      }}
+                      render={<RouterLink to="/community-forum" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/community-forum")
+                      }
                     >
                       Community forum
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Troubleshooting",
-                        );
-                      }}
+                      render={<RouterLink to="/troubleshooting" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/troubleshooting")
+                      }
                     >
                       Troubleshooting
                     </MegaMenuItem>
@@ -2953,24 +2654,18 @@ export const WithContent: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Digital banking",
-                    );
-                  }}
+                  render={<RouterLink to="/digital-banking" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/digital-banking")
+                  }
                 >
                   Digital banking
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Risk management",
-                    );
-                  }}
+                  render={<RouterLink to="/risk-management" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/risk-management")
+                  }
                 >
                   Risk management
                 </MegaMenuItem>
@@ -2978,32 +2673,29 @@ export const WithContent: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Patient management",
-                    );
-                  }}
+                  render={<RouterLink to="/patient-management" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/patient-management")
+                  }
                 >
                   Patient management
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log("[MegaMenu] selected value:", "Telemedicine");
-                  }}
+                  render={<RouterLink to="/telemedicine" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/telemedicine")
+                  }
                 >
                   Telemedicine
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
+                  render={<RouterLink to="/compliance-solutions" />}
+                  onClick={() =>
                     console.log(
-                      "[MegaMenu] selected value:",
-                      "Compliance solutions",
-                    );
-                  }}
+                      "MegaMenuItem clicked:",
+                      "/compliance-solutions",
+                    )
+                  }
                 >
                   Compliance solutions
                 </MegaMenuItem>
@@ -3011,13 +2703,13 @@ export const WithContent: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
+                  render={<RouterLink to="/e-commerce-platforms" />}
+                  onClick={() =>
                     console.log(
-                      "[MegaMenu] selected value:",
-                      "E-commerce platforms",
-                    );
-                  }}
+                      "MegaMenuItem clicked:",
+                      "/e-commerce-platforms",
+                    )
+                  }
                 >
                   E-commerce platforms
                 </MegaMenuItem>
@@ -3025,35 +2717,29 @@ export const WithContent: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
+                  render={<RouterLink to="/supply-chain-optimization" />}
+                  onClick={() =>
                     console.log(
-                      "[MegaMenu] selected value:",
-                      "Supply chain optimization",
-                    );
-                  }}
+                      "MegaMenuItem clicked:",
+                      "/supply-chain-optimization",
+                    )
+                  }
                 >
                   Supply chain optimization
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Quality control",
-                    );
-                  }}
+                  render={<RouterLink to="/quality-control" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/quality-control")
+                  }
                 >
                   Quality control
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Production planning",
-                    );
-                  }}
+                  render={<RouterLink to="/production-planning" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/production-planning")
+                  }
                 >
                   Production planning
                 </MegaMenuItem>
@@ -3158,24 +2844,18 @@ export const WithContent: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Digital banking",
-                    );
-                  }}
+                  render={<RouterLink to="/digital-banking" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/digital-banking")
+                  }
                 >
                   Digital banking
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Risk management",
-                    );
-                  }}
+                  render={<RouterLink to="/risk-management" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/risk-management")
+                  }
                 >
                   Risk management
                 </MegaMenuItem>
@@ -3183,32 +2863,29 @@ export const WithContent: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Patient management",
-                    );
-                  }}
+                  render={<RouterLink to="/patient-management" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/patient-management")
+                  }
                 >
                   Patient management
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log("[MegaMenu] selected value:", "Telemedicine");
-                  }}
+                  render={<RouterLink to="/telemedicine" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/telemedicine")
+                  }
                 >
                   Telemedicine
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
+                  render={<RouterLink to="/compliance-solutions" />}
+                  onClick={() =>
                     console.log(
-                      "[MegaMenu] selected value:",
-                      "Compliance solutions",
-                    );
-                  }}
+                      "MegaMenuItem clicked:",
+                      "/compliance-solutions",
+                    )
+                  }
                 >
                   Compliance solutions
                 </MegaMenuItem>
@@ -3216,13 +2893,13 @@ export const WithContent: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Retail</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
+                  render={<RouterLink to="/e-commerce-platforms" />}
+                  onClick={() =>
                     console.log(
-                      "[MegaMenu] selected value:",
-                      "E-commerce platforms",
-                    );
-                  }}
+                      "MegaMenuItem clicked:",
+                      "/e-commerce-platforms",
+                    )
+                  }
                 >
                   E-commerce platforms
                 </MegaMenuItem>
@@ -3230,35 +2907,29 @@ export const WithContent: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
+                  render={<RouterLink to="/supply-chain-optimization" />}
+                  onClick={() =>
                     console.log(
-                      "[MegaMenu] selected value:",
-                      "Supply chain optimization",
-                    );
-                  }}
+                      "MegaMenuItem clicked:",
+                      "/supply-chain-optimization",
+                    )
+                  }
                 >
                   Supply chain optimization
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Quality control",
-                    );
-                  }}
+                  render={<RouterLink to="/quality-control" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/quality-control")
+                  }
                 >
                   Quality control
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log(
-                      "[MegaMenu] selected value:",
-                      "Production planning",
-                    );
-                  }}
+                  render={<RouterLink to="/production-planning" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/production-planning")
+                  }
                 >
                   Production planning
                 </MegaMenuItem>
@@ -3323,24 +2994,18 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Digital banking",
-                      );
-                    }}
+                    render={<RouterLink to="/digital-banking" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/digital-banking")
+                    }
                   >
                     Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Risk management",
-                      );
-                    }}
+                    render={<RouterLink to="/risk-management" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/risk-management")
+                    }
                   >
                     Risk management
                   </MegaMenuItem>
@@ -3348,35 +3013,32 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/patient-management" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Patient management",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/patient-management",
+                      )
+                    }
                   >
                     Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Telemedicine",
-                      );
-                    }}
+                    render={<RouterLink to="/telemedicine" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/telemedicine")
+                    }
                   >
                     Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/compliance-solutions" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Compliance solutions",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/compliance-solutions",
+                      )
+                    }
                   >
                     Compliance solutions
                   </MegaMenuItem>
@@ -3384,13 +3046,13 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/e-commerce-platforms" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "E-commerce platforms",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/e-commerce-platforms",
+                      )
+                    }
                   >
                     E-commerce platforms
                   </MegaMenuItem>
@@ -3398,35 +3060,32 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/supply-chain-optimization" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Supply chain optimization",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/supply-chain-optimization",
+                      )
+                    }
                   >
                     Supply chain optimization
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Quality control",
-                      );
-                    }}
+                    render={<RouterLink to="/quality-control" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/quality-control")
+                    }
                   >
                     Quality control
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/production-planning" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Production planning",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/production-planning",
+                      )
+                    }
                   >
                     Production planning
                   </MegaMenuItem>
@@ -3434,24 +3093,24 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Education</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/learning-management-systems" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Learning management systems",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/learning-management-systems",
+                      )
+                    }
                   >
                     Learning management systems
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/virtual-classrooms" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Virtual classrooms",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/virtual-classrooms",
+                      )
+                    }
                   >
                     Virtual classrooms
                   </MegaMenuItem>
@@ -3459,35 +3118,32 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Government</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/document-management" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Document management",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/document-management",
+                      )
+                    }
                   >
                     Document management
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Citizen services",
-                      );
-                    }}
+                    render={<RouterLink to="/citizen-services" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/citizen-services")
+                    }
                   >
                     Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                   render={<RouterLink to="/public-safety-solutions" />}
+                    onClick={() =>
                       console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Public safety solutions",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/public-safety-solutions",
+                      )
+                    }
                   >
                     Public safety solutions
                   </MegaMenuItem>
@@ -3534,51 +3190,38 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Strategy",
-                      );
-                    }}
+                    render={<RouterLink to="/strategy" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/strategy")
+                    }
                   >
                     Strategy
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[WithLink MegaMenu] selected value:", "IT");
-                    }}
+                    render={<RouterLink to="/it" />}
+                    onClick={() => console.log("MegaMenuItem clicked:", "/it")}
                   >
                     IT
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[WithLink MegaMenu] selected value:", "HR");
-                    }}
+                    render={<RouterLink to="/hr" />}
+                    onClick={() => console.log("MegaMenuItem clicked:", "/hr")}
                   >
                     HR
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Marketing",
-                      );
-                    }}
+                    render={<RouterLink to="/marketing" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/marketing")
+                    }
                   >
                     Marketing
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Operations",
-                      );
-                    }}
+                    render={<RouterLink to="/operations" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/operations")
+                    }
                   >
                     Operations
                   </MegaMenuItem>
@@ -3586,79 +3229,58 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Implementation</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Onboarding",
-                      );
-                    }}
+                    render={<RouterLink to="/onboarding" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/onboarding")
+                    }
                   >
                     Onboarding
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Migration",
-                      );
-                    }}
+                    render={<RouterLink to="/migration" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/migration")
+                    }
                   >
                     Migration
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Customization",
-                      );
-                    }}
+                    render={<RouterLink to="/customization" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/customization")
+                    }
                   >
                     Customization
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Training",
-                      );
-                    }}
+                    render={<RouterLink to="/training" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/training")
+                    }
                   >
                     Training
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Support",
-                      );
-                    }}
+                    render={<RouterLink to="/support" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/support")
+                    }
                   >
                     Support
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Testing",
-                      );
-                    }}
+                    render={<RouterLink to="/testing" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/testing")
+                    }
                   >
                     Testing
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Rollout",
-                      );
-                    }}
+                    render={<RouterLink to="/rollout" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/rollout")
+                    }
                   >
                     Rollout
                   </MegaMenuItem>
@@ -3666,68 +3288,50 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Training</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Online",
-                      );
-                    }}
+                    render={<RouterLink to="/online" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/online")
+                    }
                   >
                     Online
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "In-person",
-                      );
-                    }}
+                    render={<RouterLink to="/in-person" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/in-person")
+                    }
                   >
                     In-person
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Workshops",
-                      );
-                    }}
+                    render={<RouterLink to="/workshops" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/workshops")
+                    }
                   >
                     Workshops
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Certifications",
-                      );
-                    }}
+                    render={<RouterLink to="/certifications" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/certifications")
+                    }
                   >
                     Certifications
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Tutorials",
-                      );
-                    }}
+                    render={<RouterLink to="/tutorials" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/tutorials")
+                    }
                   >
                     Tutorials
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Guides",
-                      );
-                    }}
+                    render={<RouterLink to="/guides" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/guides")
+                    }
                   >
                     Guides
                   </MegaMenuItem>
@@ -3761,46 +3365,34 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "User guides",
-                      );
-                    }}
+                    render={<RouterLink to="/user-guides" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/user-guides")
+                    }
                   >
                     User guides
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "API reference",
-                      );
-                    }}
+                    render={<RouterLink to="/api-reference" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/api-reference")
+                    }
                   >
                     API reference
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Release notes",
-                      );
-                    }}
+                    render={<RouterLink to="/release-notes" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/release-notes")
+                    }
                   >
                     Release notes
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "FAQs",
-                      );
-                    }}
+                    render={<RouterLink to="/faqs" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/faqs")
+                    }
                   >
                     FAQs
                   </MegaMenuItem>
@@ -3808,35 +3400,26 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Support & help</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Contact support",
-                      );
-                    }}
+                    render={<RouterLink to="/contact-support" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/contact-support")
+                    }
                   >
                     Contact support
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Community forum",
-                      );
-                    }}
+                    render={<RouterLink to="/community-forum" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/community-forum")
+                    }
                   >
                     Community forum
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[WithLink MegaMenu] selected value:",
-                        "Troubleshooting",
-                      );
-                    }}
+                    render={<RouterLink to="/troubleshooting" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/troubleshooting")
+                    }
                   >
                     Troubleshooting
                   </MegaMenuItem>
@@ -3893,24 +3476,18 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Digital banking",
-                        );
-                      }}
+                      render={<RouterLink to="/digital-banking" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/digital-banking")
+                      }
                     >
                       Digital banking
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Risk management",
-                        );
-                      }}
+                      render={<RouterLink to="/risk-management" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/risk-management")
+                      }
                     >
                       Risk management
                     </MegaMenuItem>
@@ -3918,35 +3495,32 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Healthcare</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/patient-management" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Patient management",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/patient-management",
+                        )
+                      }
                     >
                       Patient management
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Telemedicine",
-                        );
-                      }}
+                      render={<RouterLink to="/telemedicine" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/telemedicine")
+                      }
                     >
                       Telemedicine
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/compliance-solutions" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Compliance solutions",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/compliance-solutions",
+                        )
+                      }
                     >
                       Compliance solutions
                     </MegaMenuItem>
@@ -3954,13 +3528,13 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Retail</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/e-commerce-platforms" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "E-commerce platforms",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/e-commerce-platforms",
+                        )
+                      }
                     >
                       E-commerce platforms
                     </MegaMenuItem>
@@ -3968,35 +3542,32 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Manufacturing</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/supply-chain-optimization" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Supply chain optimization",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/supply-chain-optimization",
+                        )
+                      }
                     >
                       Supply chain optimization
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Quality control",
-                        );
-                      }}
+                      render={<RouterLink to="/quality-control" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/quality-control")
+                      }
                     >
                       Quality control
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/production-planning" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Production planning",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/production-planning",
+                        )
+                      }
                     >
                       Production planning
                     </MegaMenuItem>
@@ -4004,24 +3575,24 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Education</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/learning-management-systems" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Learning management systems",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/learning-management-systems",
+                        )
+                      }
                     >
                       Learning management systems
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/virtual-classrooms" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Virtual classrooms",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/virtual-classrooms",
+                        )
+                      }
                     >
                       Virtual classrooms
                     </MegaMenuItem>
@@ -4029,35 +3600,35 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Government</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/document-management" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Document management",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/document-management",
+                        )
+                      }
                     >
                       Document management
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/citizen-services" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Citizen services",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/citizen-services",
+                        )
+                      }
                     >
                       Citizen services
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
+                      render={<RouterLink to="/public-safety-solutions" />}
+                      onClick={() =>
                         console.log(
-                          "[InSmallViewport MegaMenu] selected value:",
-                          "Public safety solutions",
-                        );
-                      }}
+                          "MegaMenuItem clicked:",
+                          "/public-safety-solutions",
+                        )
+                      }
                     >
                       Public safety solutions
                     </MegaMenuItem>
@@ -4084,42 +3655,42 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Consulting</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Strategy");
-                      }}
+                      render={<RouterLink to="/strategy" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/strategy")
+                      }
                     >
                       Strategy
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "IT");
-                      }}
+                      render={<RouterLink to="/it" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/it")
+                      }
                     >
                       IT
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "HR");
-                      }}
+                      render={<RouterLink to="/hr" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/hr")
+                      }
                     >
                       HR
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Marketing");
-                      }}
+                      render={<RouterLink to="/marketing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/marketing")
+                      }
                     >
                       Marketing
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Operations");
-                      }}
+                      render={<RouterLink to="/operations" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/operations")
+                      }
                     >
                       Operations
                     </MegaMenuItem>
@@ -4127,45 +3698,42 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Implementation</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Onboarding");
-                      }}
+                      render={<RouterLink to="/onboarding" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/onboarding")
+                      }
                     >
                       Onboarding
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Migration");
-                      }}
+                      render={<RouterLink to="/migration" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/migration")
+                      }
                     >
                       Migration
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Customization",
-                        );
-                      }}
+                      render={<RouterLink to="/customization" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/customization")
+                      }
                     >
                       Customization
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Training");
-                      }}
+                      render={<RouterLink to="/training" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/training")
+                      }
                     >
                       Training
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Support");
-                      }}
+                      render={<RouterLink to="/support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/support")
+                      }
                     >
                       Support
                     </MegaMenuItem>
@@ -4173,37 +3741,34 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Training</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Online");
-                      }}
+                      render={<RouterLink to="/online" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/online")
+                      }
                     >
                       Online
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "In-person");
-                      }}
+                      render={<RouterLink to="/in-person" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/in-person")
+                      }
                     >
                       In-person
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Workshops");
-                      }}
+                      render={<RouterLink to="/workshops" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/workshops")
+                      }
                     >
                       Workshops
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Certifications",
-                        );
-                      }}
+                      render={<RouterLink to="/certifications" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/certifications")
+                      }
                     >
                       Certifications
                     </MegaMenuItem>
@@ -4230,43 +3795,34 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Documentation</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "User guides",
-                        );
-                      }}
+                      render={<RouterLink to="/user-guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/user-guides")
+                      }
                     >
                       User guides
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "API reference",
-                        );
-                      }}
+                      render={<RouterLink to="/api-reference" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/api-reference")
+                      }
                     >
                       API reference
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Release notes",
-                        );
-                      }}
+                      render={<RouterLink to="/release-notes" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/release-notes")
+                      }
                     >
                       Release notes
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "FAQs");
-                      }}
+                      render={<RouterLink to="/faqs" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/faqs")
+                      }
                     >
                       FAQs
                     </MegaMenuItem>
@@ -4274,35 +3830,26 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Support</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Contact support",
-                        );
-                      }}
+                      render={<RouterLink to="/contact-support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/contact-support")
+                      }
                     >
                       Contact support
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Community forum",
-                        );
-                      }}
+                      render={<RouterLink to="/community-forum" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/community-forum")
+                      }
                     >
                       Community forum
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Troubleshooting",
-                        );
-                      }}
+                      render={<RouterLink to="/troubleshooting" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/troubleshooting")
+                      }
                     >
                       Troubleshooting
                     </MegaMenuItem>
@@ -4310,29 +3857,26 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuHeader>Learn</MegaMenuHeader>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Tutorials");
-                      }}
+                      render={<RouterLink to="/tutorials" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/tutorials")
+                      }
                     >
                       Tutorials
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log("[MegaMenu] selected value:", "Guides");
-                      }}
+                      render={<RouterLink to="/guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/guides")
+                      }
                     >
                       Guides
                     </MegaMenuItem>
                     <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[MegaMenu] selected value:",
-                          "Best practices",
-                        );
-                      }}
+                      render={<RouterLink to="/best-practices" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/best-practices")
+                      }
                     >
                       Best practices
                     </MegaMenuItem>
@@ -4362,24 +3906,18 @@ export const DefaultOpen: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Digital banking",
-                      );
-                    }}
+                    render={<RouterLink to="/digital-banking" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/digital-banking")
+                    }
                   >
                     Digital banking
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log(
-                        "[MegaMenu] selected value:",
-                        "Risk management",
-                      );
-                    }}
+                    render={<RouterLink to="/risk-management" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/risk-management")
+                    }
                   >
                     Risk management
                   </MegaMenuItem>
@@ -4387,32 +3925,32 @@ export const DefaultOpen: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Healthcare</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/patient-management" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Patient management",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/patient-management",
+                      )
+                    }
                   >
                     Patient management
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
-                      console.log("[MegaMenu] selected value:", "Telemedicine");
-                    }}
+                    render={<RouterLink to="/telemedicine" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/telemedicine")
+                    }
                   >
                     Telemedicine
                   </MegaMenuItem>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/compliance-solutions" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "Compliance solutions",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/compliance-solutions",
+                      )
+                    }
                   >
                     Compliance solutions
                   </MegaMenuItem>
@@ -4420,13 +3958,13 @@ export const DefaultOpen: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Retail</MegaMenuHeader>
                   <MegaMenuItem
-                    onClick={(event) => {
-                      event.preventDefault();
+                    render={<RouterLink to="/e-commerce-platforms" />}
+                    onClick={() =>
                       console.log(
-                        "[MegaMenu] selected value:",
-                        "E-commerce platforms",
-                      );
-                    }}
+                        "MegaMenuItem clicked:",
+                        "/e-commerce-platforms",
+                      )
+                    }
                   >
                     E-commerce platforms
                   </MegaMenuItem>
@@ -4474,26 +4012,26 @@ export const Placement: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Group A</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log("[MegaMenu] selected value:", "Item 1");
-                  }}
+                  render={<RouterLink to="/item-1" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/item-1")
+                  }
                 >
                   Item 1
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log("[MegaMenu] selected value:", "Item 2");
-                  }}
+                  render={<RouterLink to="/item-2" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/item-2")
+                  }
                 >
                   Item 2
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log("[MegaMenu] selected value:", "Item 3");
-                  }}
+                  render={<RouterLink to="/item-3" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/item-3")
+                  }
                 >
                   Item 3
                 </MegaMenuItem>
@@ -4501,18 +4039,18 @@ export const Placement: StoryFn = () => {
               <MegaMenuGroup>
                 <MegaMenuHeader>Group B</MegaMenuHeader>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log("[MegaMenu] selected value:", "Item 4");
-                  }}
+                  render={<RouterLink to="/item-4" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/item-4")
+                  }
                 >
                   Item 4
                 </MegaMenuItem>
                 <MegaMenuItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    console.log("[MegaMenu] selected value:", "Item 5");
-                  }}
+                  render={<RouterLink to="/item-5" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/item-5")
+                  }
                 >
                   Item 5
                 </MegaMenuItem>

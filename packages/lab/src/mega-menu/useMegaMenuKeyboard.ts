@@ -8,13 +8,13 @@ export const FOCUSABLE_SELECTOR =
 
 /**
  * Get navigable items within a column.
- * Prefers explicitly marked items (`data-mega-menu-item`), falling back
- * to all focusable elements when no marked items are found.
+ * Prefers explicitly marked items (`data-mega-menu-item`) that are focusable,
+ * falling back to all focusable elements when no usable marked items are found.
  */
 function getColumnItems(column: HTMLElement): HTMLElement[] {
   const marked = Array.from(
     column.querySelectorAll<HTMLElement>(ITEM_SELECTOR),
-  );
+  ).filter((el) => el.matches(FOCUSABLE_SELECTOR));
   if (marked.length > 0) return marked;
   return Array.from(column.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
 }
@@ -43,7 +43,10 @@ function buildGrid(panel: HTMLElement): HTMLElement[][] {
       if (items.length > 0) grid.push(items);
     } else if (el.matches(ITEM_SELECTOR)) {
       const parentCol = el.closest(COLUMN_SELECTOR);
-      if (!parentCol || !columns.has(parentCol as HTMLElement)) {
+      if (
+        (!parentCol || !columns.has(parentCol as HTMLElement)) &&
+        el.matches(FOCUSABLE_SELECTOR)
+      ) {
         grid.push([el]);
       }
     }

@@ -21,13 +21,33 @@ const KeyboardMegaMenu = () => (
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem>Digital Banking</MegaMenuItem>
-                <MegaMenuItem>Risk Management</MegaMenuItem>
+                <MegaMenuItem
+                  href="/digital-banking"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+                <MegaMenuItem
+                  href="/risk-management"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Risk Management
+                </MegaMenuItem>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem>Patient Management</MegaMenuItem>
-                <MegaMenuItem>Telemedicine</MegaMenuItem>
+                <MegaMenuItem
+                  href="/patient-management"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Patient Management
+                </MegaMenuItem>
+                <MegaMenuItem
+                  href="/telemedicine"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Telemedicine
+                </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
           </MegaMenuPanel>
@@ -43,8 +63,18 @@ const KeyboardMegaMenu = () => (
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Consulting</MegaMenuHeader>
-                <MegaMenuItem>Strategy</MegaMenuItem>
-                <MegaMenuItem>Operations</MegaMenuItem>
+                <MegaMenuItem
+                  href="/strategy"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Strategy
+                </MegaMenuItem>
+                <MegaMenuItem
+                  href="/operations"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Operations
+                </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
           </MegaMenuPanel>
@@ -68,13 +98,92 @@ const OrphanedItemMegaMenu = () => (
             <MegaMenuSection>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem>Digital Banking</MegaMenuItem>
-                <MegaMenuItem>Risk Management</MegaMenuItem>
+                <MegaMenuItem
+                  href="/digital-banking"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+                <MegaMenuItem
+                  href="/risk-management"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Risk Management
+                </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuSection>
             <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              <MegaMenuItem>See all solutions</MegaMenuItem>
+              <MegaMenuItem
+                href="/see-all-solutions"
+                onClick={(e) => e.preventDefault()}
+              >
+                See all solutions
+              </MegaMenuItem>
             </ol>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Fixture with a non-focusable item (an `<a>` without `href` and no `render`).
+// Verifies that `useMegaMenuKeyboard` skips it and that keyboard navigation
+// continues to the next reachable item rather than stalling.
+const MixedFocusabilityMegaMenu = () => (
+  <nav>
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel>
+            <MegaMenuSection>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                {/* Intentionally no href and no render — should be skipped. */}
+                <MegaMenuItem>Non Focusable</MegaMenuItem>
+                <MegaMenuItem
+                  href="/digital-banking"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuSection>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Fixture exercising the `render` prop: a router-style component substituted
+// for the default `<a>`. Using a plain `<a href>` here keeps the test free of
+// router dependencies while still verifying that `render` replaces the host
+// element rather than wrapping it (so we should see a single `<a>`, not nested
+// links).
+const RenderPropMegaMenu = () => (
+  <nav>
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel>
+            <MegaMenuSection>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem
+                  render={<a href="/digital-banking" data-custom-link="" />}
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuSection>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -355,6 +464,41 @@ describe("Given a MegaMenu", () => {
       cy.realPress("Tab"); // Risk Management
       cy.realPress("Tab"); // See all solutions
       cy.findByRole("link", { name: "See all solutions" }).should("be.focused");
+    });
+
+    it("skips non-focusable items and focuses the next reachable item", () => {
+      cy.mount(<MixedFocusabilityMegaMenu />);
+      cy.findByRole("button", { name: "Solutions" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      // ArrowDown from the trigger should land on the first focusable item,
+      // skipping the non-focusable "Non Focusable" entry.
+      cy.realPress("ArrowDown");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+    });
+
+    it("treats `render` prop element as the focusable target", () => {
+      cy.mount(<RenderPropMegaMenu />);
+      cy.findByRole("button", { name: "Solutions" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" })
+        .should("be.focused")
+        .and("have.attr", "data-custom-link");
+    });
+
+    it("renders no duplicate <a> when using `render` (render replaces, not wraps)", () => {
+      cy.mount(<RenderPropMegaMenu />);
+      cy.findByRole("button", { name: "Solutions" }).click();
+      // Exactly one anchor for the item — verifies `renderProps` substitutes
+      // the host element instead of wrapping it (no link-in-a-link).
+      cy.get(".saltMegaMenuPanel a[data-mega-menu-item]").should(
+        "have.length",
+        1,
+      );
     });
   });
 });

@@ -32,8 +32,18 @@ const InteractiveMegaMenu = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem>Digital Banking</MegaMenuItem>
-                  <MegaMenuItem>Risk Management</MegaMenuItem>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/risk-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
@@ -52,7 +62,12 @@ const InteractiveMegaMenu = () => {
               <MegaMenuSection>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem>Strategy</MegaMenuItem>
+                  <MegaMenuItem
+                    href="/strategy"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Strategy
+                  </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuSection>
             </MegaMenuPanel>
@@ -125,7 +140,12 @@ describe("Given a MegaMenu", () => {
           <MegaMenuSection>
             <MegaMenuGroup>
               <MegaMenuHeader>Financial Services</MegaMenuHeader>
-              <MegaMenuItem>Digital Banking</MegaMenuItem>
+              <MegaMenuItem
+                href="/digital-banking"
+                onClick={(e) => e.preventDefault()}
+              >
+                Digital Banking
+              </MegaMenuItem>
             </MegaMenuGroup>
           </MegaMenuSection>
         </MegaMenuPanel>

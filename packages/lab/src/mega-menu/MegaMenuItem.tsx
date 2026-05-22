@@ -1,4 +1,8 @@
-import { makePrefixer, renderProps } from "@salt-ds/core";
+import {
+  makePrefixer,
+  type RenderPropsType,
+  renderProps,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -28,14 +32,14 @@ export interface MegaMenuItemProps
    */
   children?: ReactNode;
   /**
-   * Href to be passed to the Link element.
+   * Render prop to enable customization of the underlying action element (e.g. a router `Link`).
    */
-  href?: string;
+  render?: RenderPropsType["render"];
 }
 
 export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
   function MegaMenuItem(
-    { children, className, href = "#", onClick, onKeyDown, ...rest },
+    { children, className, onClick, onKeyDown, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -65,7 +69,6 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
       <li className={clsx(withBaseName(), className)} ref={ref}>
         <ItemAction
           data-mega-menu-item=""
-          href={href}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
           {...rest}
