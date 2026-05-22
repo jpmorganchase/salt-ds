@@ -54,7 +54,7 @@ import type { StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import exampleImage from "../assets/image-skeleton.png";
 import "./mega-menu.stories.css";
-import { Link as RouterLink, MemoryRouter } from "react-router";
+import { MemoryRouter, Link as RouterLink } from "react-router";
 
 export default {
   title: "Lab/Mega Menu",
@@ -108,7 +108,7 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
                   <MegaMenuItem
-                   render={<RouterLink to="/digital-banking" />}
+                    render={<RouterLink to="/digital-banking" />}
                     onClick={() =>
                       console.log("MegaMenuItem clicked:", "/digital-banking")
                     }
@@ -3137,7 +3137,7 @@ export const WithLink: StoryFn = () => {
                     Citizen services
                   </MegaMenuItem>
                   <MegaMenuItem
-                   render={<RouterLink to="/public-safety-solutions" />}
+                    render={<RouterLink to="/public-safety-solutions" />}
                     onClick={() =>
                       console.log(
                         "MegaMenuItem clicked:",

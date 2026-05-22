@@ -40,8 +40,8 @@ import {
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
-import styles from "./index.module.css";
 import { Link } from "react-router";
+import styles from "./index.module.css";
 import { MockHistory } from "./MockHistory";
 
 export const WithIcons = (): ReactElement => {
