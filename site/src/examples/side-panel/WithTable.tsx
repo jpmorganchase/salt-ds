@@ -4,6 +4,12 @@ import {
   FormField,
   FormFieldLabel,
   Input,
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelContent,
+  SidePanelHeader,
+  SidePanelProvider,
+  SidePanelTitle,
   StackLayout,
   Table,
   TableContainer,
@@ -12,16 +18,8 @@ import {
   TH,
   THead,
   TR,
-} from "@salt-ds/core";
-import {
-  SidePanel,
-  SidePanelCloseButton,
-  SidePanelContent,
-  SidePanelHeader,
-  SidePanelProvider,
-  SidePanelTitle,
   useSidePanel,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import type React from "react";
 import { type ChangeEvent, type CSSProperties, useState } from "react";
 import styles from "./WithTable.module.css";

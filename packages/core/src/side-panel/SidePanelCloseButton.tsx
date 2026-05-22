@@ -1,12 +1,8 @@
-import {
-  Button,
-  type ButtonProps,
-  makePrefixer,
-  useIcon,
-  useId,
-} from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, type MouseEvent } from "react";
+import { Button, type ButtonProps } from "../button";
+import { useIcon } from "../semantic-icon-provider";
+import { makePrefixer, useId } from "../utils";
 import { useSidePanelContext } from "./internal";
 
 const withBaseName = makePrefixer("saltSidePanelCloseButton");

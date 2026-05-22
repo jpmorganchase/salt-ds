@@ -1,5 +1,6 @@
-import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
+  Button,
+  FlexLayout,
   SidePanel,
   SidePanelCloseButton,
   SidePanelContent,
@@ -7,7 +8,9 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-} from "@salt-ds/lab";
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import styles from "./index.module.css";
 
 const ScrollableContent = () => (

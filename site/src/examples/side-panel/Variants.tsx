@@ -6,10 +6,6 @@ import {
   FormFieldLabel,
   RadioButton,
   RadioButtonGroup,
-  StackLayout,
-  Text,
-} from "@salt-ds/core";
-import {
   SidePanel,
   SidePanelCloseButton,
   SidePanelContent,
@@ -18,7 +14,9 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-} from "@salt-ds/lab";
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { type ChangeEventHandler, useState } from "react";
 import { ContentExample } from "./ContentExample";
 
