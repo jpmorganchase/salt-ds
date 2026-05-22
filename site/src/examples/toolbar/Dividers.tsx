@@ -15,7 +15,7 @@ export const Dividers = (): ReactElement => {
     <div className={styles.example}>
       <Toolbar aria-label="Payment toolbar with divider">
         <ToolbarContent position="start">
-          <Tooltray overflowMode="none">
+          <Tooltray overflowPriority={1}>
             <Text styleAs="label">Payment</Text>
             <Dropdown
               aria-label="Payment"
@@ -32,7 +32,7 @@ export const Dividers = (): ReactElement => {
           </Tooltray>
         </ToolbarContent>
         <ToolbarContent position="end">
-          <Tooltray overflowMode="none">
+          <Tooltray overflowPriority={2}>
             <Text styleAs="label">Sort</Text>
             <Dropdown
               aria-label="Sort"
@@ -49,7 +49,7 @@ export const Dividers = (): ReactElement => {
           </Tooltray>
           <Divider orientation="vertical" variant="secondary" />
           <Tooltray
-            overflowMode="none"
+            overflowPriority={3}
             role="group"
             aria-label="Payment actions"
           >
@@ -60,7 +60,7 @@ export const Dividers = (): ReactElement => {
       </Toolbar>
       <Toolbar aria-label="Payment toolbar with spacing">
         <ToolbarContent position="start">
-          <Tooltray overflowMode="none">
+          <Tooltray overflowPriority={1}>
             <Text styleAs="label">Payment</Text>
             <Dropdown
               aria-label="Payment"
@@ -77,7 +77,7 @@ export const Dividers = (): ReactElement => {
           </Tooltray>
         </ToolbarContent>
         <ToolbarContent position="end">
-          <Tooltray overflowMode="none">
+          <Tooltray overflowPriority={2}>
             <Text styleAs="label">Sort</Text>
             <Dropdown
               aria-label="Sort"
@@ -93,7 +93,7 @@ export const Dividers = (): ReactElement => {
             </Dropdown>
           </Tooltray>
           <Tooltray
-            overflowMode="none"
+            overflowPriority={3}
             role="group"
             aria-label="Payment actions"
             style={{ marginInlineStart: "var(--salt-spacing-300)" }}

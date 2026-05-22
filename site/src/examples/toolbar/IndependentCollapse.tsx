@@ -14,7 +14,7 @@ import { sortOptions, typeOptions } from "./toolbarExampleData";
 export const IndependentCollapse = (): ReactElement => (
   <div className={styles.narrow}>
     <Toolbar aria-label="Payment toolbar" variant="secondary">
-      <Tooltray overflowMode="none">
+      <Tooltray overflowPriority={1}>
         <Dropdown
           bordered
           defaultSelected={[typeOptions[1]]}

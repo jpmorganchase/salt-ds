@@ -23,12 +23,19 @@ export const Variants = (): ReactElement => (
         key={variant}
         variant={variant}
       >
-        <Tooltray align="end" role="group" aria-label="View settings">
+        <Tooltray overflowPriority={1}>
           <Switch label="Show total" />
+        </Tooltray>
+        <Tooltray
+          align="end"
+          overflowPriority={5}
+          role="group"
+          aria-label="View settings"
+        >
           <Dropdown
             bordered
             defaultSelected={[sortOptions[0]]}
-            style={{ width: 180 }}
+            style={{ width: 140 }}
           >
             {sortOptions.map((option) => (
               <Option key={option} value={option} />

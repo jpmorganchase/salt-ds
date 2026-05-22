@@ -11,7 +11,7 @@ const dateOptions = ["Date: January 2020", "Date: February 2020"];
 export const DynamicCollapse = (): ReactElement => (
   <div className={styles.dynamic}>
     <Toolbar aria-label="Offer toolbar">
-      <Tooltray overflowMode="none">
+      <Tooltray overflowPriority={1}>
         <Dropdown
           bordered
           defaultSelected={[recordOptions[0]]}
@@ -42,7 +42,7 @@ export const DynamicCollapse = (): ReactElement => (
           ))}
         </Dropdown>
       </Tooltray>
-      <Tooltray align="end" overflowMode="none">
+      <Tooltray align="end" overflowPriority={2}>
         <Dropdown
           bordered
           defaultSelected={[sortOptions[0]]}
