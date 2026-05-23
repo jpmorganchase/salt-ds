@@ -22,6 +22,11 @@ function normalizeLineEndings(content: string): string {
   return content.replace(/\r\n/g, "\n");
 }
 
+function readOpenAiDefaultPrompt(content: string): string {
+  const match = content.match(/default_prompt:\s*>-\r?\n((?: {4}.+(?:\r?\n|$))+)/);
+  return (match?.[1] ?? "").replace(/^ {4}/gm, "").trim();
+}
+
 describe("Salt skill contracts", () => {
   it("keeps salt-ds as the only public skill in the collection", async () => {
     const publicSkillEntries = await fs.readdir(skillsRoot, {
@@ -73,6 +78,7 @@ describe("Salt skill contracts", () => {
     const bootstrapScaffolding = await readRepoFile(
       "packages/semantic-core/src/bootstrapScaffolding.ts",
     );
+    const openAiDefaultPrompt = readOpenAiDefaultPrompt(openAiMetadata);
 
     expect(readme).toContain("## Public Skill");
     expect(readme).toContain("`salt-ds`");
@@ -84,29 +90,36 @@ describe("Salt skill contracts", () => {
     expect(agents).not.toContain("`salt-project-conventions`");
     expect(openAiMetadata).toContain('display_name: "Salt DS"');
     expect(openAiMetadata).toContain(
-      'short_description: "agent-agnostic Salt design system workflow for quick checks, create, review, migrate, upgrade, bootstrap, and accessibility audits"',
+      'short_description: "evidence-first, agent-agnostic Salt design system workflow for create, review, migrate, upgrade, bootstrap, quick checks, and accessibility audits"',
     );
-    expect(openAiMetadata).toContain(
-      "Start deep or repo-spanning work from project context through Salt MCP or salt-ds info --json before choosing Salt-specific structure.",
+    expect(openAiDefaultPrompt).toContain(
+      "Gold path: choose init, create, review, migrate, or upgrade",
     );
-    expect(openAiMetadata).toContain(
+    expect(openAiDefaultPrompt).toContain(
+      "for repo-aware work establish trusted project context through Salt MCP or salt-ds info --json before choosing Salt-specific structure",
+    );
+    expect(openAiDefaultPrompt).toContain(
       "Hard Gate: do not edit Salt UI for create, migrate, or upgrade implementation work unless the current workflow contract has status: success, action.kind: implement, safety.exact_request_safe: true, and evidence.status: complete.",
     );
-    expect(openAiMetadata).toContain(
-      "Action Loop: establish trusted project context for repo-aware work",
+    expect(openAiDefaultPrompt).toContain(
+      "Action Loop: stop and wait when action.kind is ask_user",
     );
-    expect(openAiMetadata).toContain(
+    expect(openAiDefaultPrompt).toContain(
       "stop and wait when action.kind is ask_user",
     );
-    expect(openAiMetadata).toContain(
+    expect(openAiDefaultPrompt).toContain(
       "treat the answer as updated workflow input",
     );
-    expect(openAiMetadata).toContain(
+    expect(openAiDefaultPrompt).toContain(
       "Preserve explicit user nouns as unresolved requirements until the workflow contract or support evidence covers them.",
     );
-    expect(openAiMetadata).toContain(
-      "Only use explore-options when the user explicitly wants alternatives.",
+    expect(openAiDefaultPrompt).toContain(
+      "Use explore-options only when the user explicitly asks for alternatives.",
     );
+    expect(openAiDefaultPrompt).toContain(
+      "Load detailed behavior from SKILL.md and the smallest relevant reference files.",
+    );
+    expect(openAiDefaultPrompt.length).toBeLessThan(2300);
     expect(primarySkill).toContain("## Trigger Boundary");
     expect(primarySkill).toContain(
       "description: Agent-agnostic Salt design system workflow for Salt-specific create, review, migrate, upgrade, init, quick-check, accessibility audits, repo conventions, and UI composition/layout work in consumer repos.",

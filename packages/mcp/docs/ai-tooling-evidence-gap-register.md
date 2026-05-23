@@ -819,6 +819,21 @@ details`, `File upload`, `Menu button`, and `Split button`. Remaining pattern
   policy remains `null` and the CLI, MCP, skill, reports, and validators must
   continue exposing unsupported states until source docs or registry policy
   records close the gaps.
+- Pattern replacement-style avoidance extraction on May 15, 2026 now treats
+  source-backed docs callout statements shaped as `Use ... instead if/when/to/for`
+  as pattern `when_not_to_use` guidance. The parser deliberately does not
+  promote broader `instead of ...` prose. This closes the `Selectable card`
+  pattern gap through its pattern docs callout while keeping component-owned
+  behavior and local substructure advice out of generated pattern guidance. A
+  regenerated context gap catalog records 14 total gaps: 11 pattern gaps and 3
+  foundation gaps. The remaining pattern gaps stay unsupported: Comments,
+  Experience customization, File upload, Formatted input, International address
+  form, International phone number, Keyboard shortcuts, and Menu button still
+  lack explicit pattern-level `when_not_to_use` evidence; List filtering still
+  lacks explicit `how_to_build` evidence; and Indication remains a topic-style
+  reference page without source-backed `when_to_use`, `when_not_to_use`, or
+  `how_to_build` guidance for generated pattern context. No production Salt
+  facts were added outside source-backed extraction.
 
 Why this matters:
 

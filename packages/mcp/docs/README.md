@@ -10,6 +10,10 @@ Use this folder as the minimal maintainer set for the current Salt AI direction.
   - reviewer and operator map for evidence-backed Salt AI workflow changes
 - [`ai-tooling-winning-foundation.md`](./ai-tooling-winning-foundation.md)
   - target product shape: registry-first for context, workflow-first for safety
+- [`ai-tooling-competitive-gap-review.md`](./ai-tooling-competitive-gap-review.md)
+  - current competitor and theory comparison with issues, gaps, and opportunities
+- [`ai-tooling-codex-execution-plan.md`](./ai-tooling-codex-execution-plan.md)
+  - concrete Codex handoff plan for implementing the competitive review findings
 - [`ai-tooling-change-review-rubric.md`](./ai-tooling-change-review-rubric.md)
   - change gate for future tooling work
 - [`ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md)

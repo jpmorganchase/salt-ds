@@ -1,5 +1,0 @@
-{
-  "name": "salt-mcp",
-  "version": "0.0.0",
-  "description": "Workflow-first Salt MCP for canonical Salt guidance. Capability manifest: salt://capabilities/manifest."
-}

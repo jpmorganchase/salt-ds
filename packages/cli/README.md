@@ -4,7 +4,9 @@ Salt Design System workflow CLI package.
 
 Use this package as the published fallback/support transport behind `salt-ds` when MCP is blocked or when you need direct manual support/debug access.
 
-Install options:
+Consumer setup lives in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx). This README is the CLI package reference.
+
+Package invocation:
 
 ```sh
 npx -y @salt-ds/cli@latest info . --json
@@ -129,7 +131,7 @@ Support commands:
   - tries browser-session inspection by default, including screenshots, console and page errors, computed layout evidence, bounding boxes, and flex/grid ancestry when a browser runtime is available
   - falls back to `fetched-html` mode when browser-session inspection is unavailable, so consumers can still get structure, landmark, and accessible-name evidence even though computed layout evidence is unavailable
 
-Canonical Salt grounding and declared-project-policy application now happen inside the public workflow commands, MCP tools, and the read-only support commands that mirror `salt_workflow_v1` retrieval actions.
+Canonical Salt grounding and declared-project-policy application happen inside the public workflow commands, MCP tools, and the read-only support commands that mirror `salt_workflow_v1` retrieval actions.
 
 Workflow JSON modes:
 
@@ -142,26 +144,13 @@ Workflow JSON modes:
   - requires `--json`
   - rejects `--full`
 
-The intended model is:
-
-- `salt-ds + MCP` when MCP is available
-- `salt-ds + CLI` when MCP is blocked
-- manual CLI use stays workflow-first
-- `review --url`, `doctor`, and `runtime inspect` are support and evidence tools, not the main consumer story
-
-Example workflow-oriented usage:
+Workflow-oriented examples:
 
 ```sh
-salt-ds init . --json
-salt-ds init . --conventions-pack @acme/salt-conventions#markets --json
 salt-ds info . --json
 salt-ds create "Link to another page from a toolbar action" --json
 salt-ds review src --json
-salt-ds review src --create-report create-plan.json --json
-salt-ds review src --url http://127.0.0.1:3000/ --migration-report migration-plan.json --json
-salt-ds review src --url http://127.0.0.1:6006/?path=/story/example --json
 salt-ds migrate "Translate this external UI toolbar into Salt" --json
-salt-ds migrate "Translate this external UI toolbar into Salt" --url http://127.0.0.1:6006/legacy-toolbar --json --mode fetched-html
 salt-ds upgrade --package @salt-ds/core --from-version 1.1.0 --json
 salt-ds get_salt_entity Avatar --json --include examples,accessibility
 salt-ds get_salt_examples Avatar --json --target-type component
