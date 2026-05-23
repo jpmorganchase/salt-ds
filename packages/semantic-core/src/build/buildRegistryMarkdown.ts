@@ -197,8 +197,13 @@ export function parseStructuredGuidanceCallouts(content: string | null): {
   const regex = /<(Callout|GuidanceCallout)\b([^>]*)>([\s\S]*?)<\/\1>/g;
 
   function isAvoidanceGuidanceStatement(statement: string): boolean {
-    return /^(?:avoid|do not|don't|never|refrain from)\b/i.test(
-      cleanMarkdownText(statement),
+    const cleanStatement = cleanMarkdownText(statement);
+
+    return (
+      /^(?:avoid|do not|don't|never|refrain from)\b/i.test(cleanStatement) ||
+      /^use\b.+\binstead(?:\s+(?:if|when|to|for)\b|[.!?]?$)/i.test(
+        cleanStatement,
+      )
     );
   }
 

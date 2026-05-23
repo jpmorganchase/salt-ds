@@ -11,39 +11,93 @@ Salt gives AI hosts a specialist workflow for applying the Salt design system in
 Salt's AI tooling is experimental, but the product model is stable:
 
 - one public skill: `salt-ds`
-- one workflow vocabulary:
-  - `init`
-  - `create`
-  - `review`
-  - `migrate`
-  - `upgrade`
+- one workflow vocabulary: `init`, `create`, `review`, `migrate`, `upgrade`
 - one preferred transport: MCP
 - one fallback transport: CLI
 
-For most consumers, the transport should stay in the background.
+For most consumers, the transport should stay in the background. Use Salt when you want design-system-aware help inside an existing codebase. Do not use Salt for generic React or CSS advice, freeform prompt-to-app generation, or guessed answers that ignore repo context.
 
-Use Salt when you want design-system-aware help inside an existing codebase.
+## Golden Setup Path
 
-Do not use Salt when you want:
+Use this path first. Package READMEs are reference docs; this page is the consumer setup guide.
 
-- generic React or CSS advice
-- freeform prompt-to-app generation
-- a guessed answer that ignores repo context or project policy
+### 1. Install The Skill
+
+Install the public `salt-ds` workflow skill:
+
+```sh
+npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --list
+npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --skill salt-ds
+```
+
+These commands install the skill, not the CLI binary. Treat them as branch-tracking instructions rather than version-locked package installs.
+
+If you are validating a local checkout or non-main branch, keep the skill, MCP, and CLI on the same checkout or branch instead of mixing a branch-pinned skill source with `@latest` packages.
+
+### 2. Connect Salt MCP
+
+If your host supports MCP, add the published Salt MCP package:
+
+```json
+{
+  "mcpServers": {
+    "Salt": {
+      "command": "npx",
+      "args": ["@salt-ds/mcp@latest"]
+    }
+  }
+}
+```
+
+MCP is the preferred transport because it gives the host direct access to compact workflow tools, repo context, and retrieval follow-through.
+
+### 3. Keep CLI As The Fallback
+
+If MCP is blocked, stay on the same workflow model through the CLI:
+
+```sh
+npx -y @salt-ds/cli@latest info . --json
+npx -y @salt-ds/cli@latest review src --json
+```
+
+Or install it once:
+
+```sh
+npm install -g @salt-ds/cli
+```
+
+After global install, use `salt-ds info`, `salt-ds create`, `salt-ds review`, `salt-ds migrate`, and `salt-ds upgrade` directly.
+
+### 4. Verify The Setup
+
+Run this first check in a consumer repo:
+
+1. Run `npx -y @salt-ds/cli@latest info . --json` and confirm it returns repo context instead of a setup error.
+2. Confirm the JSON includes `capabilityManifest` so hosts can inspect the compact contract version and workflow vocabulary without parsing docs.
+3. If MCP is configured, ask the host to use `salt-ds` on an active Salt file.
+4. Confirm the first answer is a Salt workflow response, not generic React or CSS advice.
+5. Confirm the answer starts from compact workflow state and summary before raw detail.
+
+### 5. Ask For One Clear Workflow
+
+Start with one bounded job:
+
+```text
+Use salt-ds to review this file.
+Focus on primitive choice, layout ownership, deprecated Salt usage, and the safest next fix.
+```
+
+Use `salt-ds init` only when you want durable `.salt` policy and the managed root instruction block after the first useful Salt result.
 
 ## What Salt Is Good At
 
 Salt is strongest when the job is clearly one of these:
 
-- **Review**
-  - review existing Salt UI, diagnose a Salt-specific bug, or validate recent implementation changes
-- **Upgrade**
-  - separate required Salt version changes from optional cleanup
-- **Migrate**
-  - replace non-Salt UI with Salt while preserving task flow, critical states, and interaction anchors
-- **Create**
-  - add new Salt-native UI in an existing repo, especially bounded regions, screens, and workflow surfaces
-- **Init**
-  - bootstrap repo policy and the managed instruction block after the first successful result
+- **Review**: review existing Salt UI, diagnose a Salt-specific bug, or validate recent implementation changes.
+- **Upgrade**: separate required Salt version changes from optional cleanup.
+- **Migrate**: replace non-Salt UI with Salt while preserving task flow, critical states, and interaction anchors.
+- **Create**: add new Salt-native UI in an existing repo, especially bounded regions, screens, and workflow surfaces.
+- **Init**: bootstrap repo policy and the managed instruction block after the first successful result.
 
 `review` is often the best first trust loop, but choose the workflow by job, not by a fixed IDE order.
 
@@ -75,30 +129,7 @@ That means:
 - **declared repo policy** answers how this repo wants Salt applied
 - **runtime evidence** answers what the rendered app is doing right now
 
-Salt knows about:
-
-- components and props
-- patterns and common screen structures
-- foundations, tokens, and theme bootstrap
-- current package and repo context
-- repo-local policy through `.salt/team.json`
-- optional layered policy through `.salt/stack.json`
-
 Do not push repo-local wrappers or local patterns into the canonical Salt step.
-
-## Typical Experience
-
-For most teams, the experience should be simple:
-
-1. install the `salt-ds` skill
-2. tell the host to use `salt-ds`
-3. name the job clearly: `review`, `upgrade`, `migrate`, `create`, or `init`
-4. keep the scope to the active file, folder, region, or screen when possible
-
-When MCP is available, Salt should prefer it.
-When MCP is unavailable, Salt should fall back to the CLI.
-
-Consumers should not need to think much about that distinction unless they are setting up the host or troubleshooting.
 
 ## What Good Salt Output Looks Like
 
@@ -109,69 +140,9 @@ A good Salt answer should:
 - use repo context before making Salt-specific choices
 - respect declared repo policy when it exists
 - ask only the minimum blocking question when safe progress is unclear
-- show the Salt summary before the raw workflow details when available
+- show the Salt summary before raw workflow details when available
 - prefer compact workflow state first and use richer detail only when deeper artifacts are actually needed
 - make the safest next step obvious
-
-## Common Surfaces
-
-These are high-value consumer asks for Salt.
-
-### Dashboard Or Overview Page
-
-Use when the UI needs a page-level summary, metrics, controls, and a main analytical body.
-
-```text
-Use salt-ds to create a Salt-native dashboard page for this feature.
-Keep the main task obvious, preserve the table as the primary detail region, and recommend the page-level structure before writing code.
-```
-
-Salt should keep the request page-level first. It should not collapse the initial ask into a single metric card or widget before the top-level direction is grounded.
-
-### Table Plus Filters
-
-Use when the screen is owned by data review, filtering, selection, and follow-up actions.
-
-```text
-Use salt-ds to review this table-and-filters surface.
-Focus on layout ownership, filter placement, action hierarchy, and whether the current structure matches canonical Salt patterns.
-```
-
-### Form Page
-
-Use when the main job is data entry, editing, validation, and status feedback.
-
-```text
-Use salt-ds to create a Salt-native form page for this workflow.
-Recommend the structure first, keep validation and status feedback clear, and only ask a question if the layout choice is genuinely blocked.
-```
-
-### Dialog Workflow
-
-Use when the task is confirmation, announcement, preferences, or bounded decision-making.
-
-```text
-Use salt-ds to review this dialog workflow.
-Check whether the current primitive choice, action ordering, and supporting content fit canonical Salt guidance.
-```
-
-### Navigation Shell
-
-Use when the UI needs app-level navigation, shell regions, and task switching.
-
-```text
-Use salt-ds to migrate this screen into a Salt-native navigation shell.
-Preserve task flow and landmarks, but move the structure toward canonical Salt patterns instead of cloning the old UI.
-```
-
-### Supporting States
-
-Use when loading, empty, error, and success states matter as much as the steady-state layout.
-
-```text
-Use salt-ds to review the loading, empty, and error states for this screen.
-Focus on hierarchy, action clarity, and whether the states still feel like the same workflow.
-```
 
 ## Prompt Starters
 
@@ -210,130 +181,56 @@ Use salt-ds to show me two Salt-valid directions for this workflow surface.
 Compare the safer default direction with one more opinionated direction, then explain the trade-offs.
 ```
 
+## Common Surfaces
+
+- **Dashboard or overview page**: keep the request page-level first; do not collapse the first ask into one metric card before the top-level direction is grounded.
+- **Table plus filters**: focus on data review, filtering, selection, and follow-up actions.
+- **Form page**: keep validation, status feedback, and action hierarchy clear.
+- **Dialog workflow**: check primitive choice, action ordering, supporting content, and dismissal behavior.
+- **Navigation shell**: preserve task flow and landmarks while moving the structure toward canonical Salt patterns.
+- **Supporting states**: review loading, empty, error, and success states as part of the same workflow.
+
 ## Repo Policy
 
 Use the workflow directly for first-run value.
 
-Use `salt-ds init` when you want to add durable Salt policy and the managed root instruction block after the first successful result.
-
-For most teams, `.salt/team.json` is enough.
+Use `salt-ds init` when you want to add durable Salt policy and the managed root instruction block after the first successful result. For most teams, `.salt/team.json` is enough.
 
 Recommended repo shape:
 
 ```text
 consumer-app/
-├── AGENTS.md
-└── .salt/
-    └── team.json
+|-- AGENTS.md
+`-- .salt/
+    `-- team.json
 ```
 
 Use `.salt/stack.json` only when the repo genuinely needs layering.
 
 ## Visual Inputs
 
-Salt can help with attached screens and mockups, but today it works best when the host turns those inputs into structured migration evidence first.
-
-A good host-side flow is:
+Salt can help with attached screens and mockups, but today it works best when the host turns those inputs into structured migration evidence first:
 
 1. inspect the screenshot or mockup
 2. reduce it to regions, actions, states, and ambiguity notes
 3. pass that structured outline into the Salt migrate workflow
 4. show the Salt summary first
 
+Salt MCP does not treat raw screenshots, image uploads, Figma frames, or design-tool payloads as first-class workflow inputs yet.
+
 ## Runtime Evidence
 
-Do not start with runtime inspection.
+Do not start with runtime inspection. Start with canonical Salt guidance and source validation.
 
-Start with canonical Salt guidance and source validation.
+Escalate to runtime evidence only when you still need confirmation about rendered structure, landmarks and accessible names, runtime errors, screenshots, or layout behavior.
 
-Escalate to runtime evidence only when you still need confirmation about:
+Runtime evidence is evidence, not policy. Do not use runtime inspection to decide canonical Salt component or pattern choice.
 
-- rendered structure
-- landmarks and accessible names
-- runtime errors
-- screenshots or layout behavior
-
-Runtime evidence is evidence, not policy.
-
-Do not use runtime inspection to decide canonical Salt component or pattern choice.
-
-## Setup And Troubleshooting
-
-Most consumers should only need to know:
-
-- use the `salt-ds` skill
-- prefer Salt MCP when the host supports it
-- fall back to the Salt CLI when MCP is unavailable
-
-Keep transport details in the background unless you are setting up the host or troubleshooting.
-
-### Install The Skill
-
-Use the current branch-tracking skill source:
-
-```sh
-npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --list
-npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --skill salt-ds
-```
-
-These commands install the skill, not the CLI binary.
-Treat them as branch-tracking instructions rather than version-locked package installs.
-If you are validating a local checkout or non-main branch, keep the skill, MCP, and CLI on the same checkout or branch instead of mixing a branch-pinned skill source with `@latest` packages.
-If you want to run the CLI without installing it globally, use `npx -y @salt-ds/cli@latest ...`.
-
-### Connect Salt MCP
-
-If your host supports MCP, add the published Salt MCP package:
-
-```json
-{
-  "mcpServers": {
-    "Salt": {
-      "command": "npx",
-      "args": ["@salt-ds/mcp@latest"]
-    }
-  }
-}
-```
-
-### CLI Fallback
-
-If MCP is blocked, stay on the same workflow model through the CLI.
-Use `info` to confirm repo context, then run the matching workflow command in compact JSON mode:
-
-```sh
-npx -y @salt-ds/cli@latest info . --json
-npx -y @salt-ds/cli@latest review src --json
-```
-
-Or install it once:
-
-```sh
-npm install -g @salt-ds/cli
-```
-
-### Verify Setup
-
-Use this quick check after install:
-
-1. run `npx -y @salt-ds/cli@latest info . --json` in a repo and confirm it returns context instead of a setup error
-2. confirm the JSON includes `capabilityManifest` so the host can inspect the compact contract version and workflow vocabulary without parsing docs
-3. if MCP is configured, ask the host to use `salt-ds` on an active file
-4. confirm the first answer is a Salt workflow response, not generic React or CSS advice
-5. confirm the Salt response leads with compact workflow state and summary rather than rich raw detail
-
-### Common Problems
+## Common Problems
 
 **The agent picked the wrong workflow**
 
-Be explicit about the job:
-
-- `review`
-- `upgrade`
-- `migrate`
-- `create`
-
-Scope the request to one file, one region, one feature folder, or one screen when possible.
+Be explicit about the job: `review`, `upgrade`, `migrate`, or `create`. Scope the request to one file, one region, one feature folder, or one screen when possible.
 
 **The answer ignored repo wrappers or local rules**
 
@@ -349,7 +246,7 @@ If MCP project context is in play, also check:
 - `resolution.status` is `resolved`
 - `context_id` is non-null before reusing it on later repo-aware workflow calls
 - `artifacts.summary.context_health.trusted` is `true`
-- `artifacts.summary.retry_with.root_dir` is used when the context came back as `fallback`, `needs_explicit_root`, or `mismatch`
+- `artifacts.summary.retry_with.root_dir` is used when context came back as `fallback`, `needs_explicit_root`, or `mismatch`
 
 **Create started coding too soon**
 
@@ -370,6 +267,14 @@ If you are using the CLI artifact path for starter grounding, keep it explicit:
 **MCP is unavailable**
 
 Stay on the same workflow model and use the CLI fallback.
+
+## Package References
+
+The package READMEs in the repo are reference docs, not alternate setup paths:
+
+- `packages/mcp/README.md`: MCP server package, public tool surface, runtime metadata, and maintainer notes.
+- `packages/cli/README.md`: CLI command reference and support/debug commands.
+- `packages/skills/README.md`: skill authoring source and local validation notes.
 
 ## What Salt Does Not Do
 

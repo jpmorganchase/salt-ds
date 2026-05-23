@@ -326,8 +326,10 @@ The fixture flow keeps source-backed state visible while fixture work is active.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 - Keep fixture state visible while fixture work is active.
+- Use fixture switches only for true fixture toggles, and label final buttons clearly instead of just 'Finish'.
 - Do not use the fixture flow when fixture work has no source-backed hierarchy.
 - Refrain from using fixture labels when several fixture values represent the same channel.
+- Use FixtureAlternative instead if fixture work needs only a single primitive.
 </GuidanceCallout>
 `,
       );
@@ -338,9 +340,13 @@ The fixture flow keeps source-backed state visible while fixture work is active.
       expect(pattern.when_not_to_use).toEqual([
         "Do not use the fixture flow when fixture work has no source-backed hierarchy.",
         "Refrain from using fixture labels when several fixture values represent the same channel.",
+        "Use FixtureAlternative instead if fixture work needs only a single primitive.",
       ]);
       expect(pattern.when_not_to_use.join(" ")).not.toContain(
         "Keep fixture state visible",
+      );
+      expect(pattern.when_not_to_use.join(" ")).not.toContain(
+        "instead of just",
       );
 
       const registry = buildFixtureRegistry(pattern);

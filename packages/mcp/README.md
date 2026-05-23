@@ -122,37 +122,14 @@ Supported root exports:
 Registry build/load entrypoints and canonical workflow operations belong to [`../semantic-core`](../semantic-core), which is the shared owner used by both MCP and CLI. Support helpers such as discovery and entity/example lookup also live there as internal implementation detail. They are no longer part of the supported `@salt-ds/mcp` root API.
 Published package exports now enforce that root-only contract. Deep imports such as `@salt-ds/mcp/server/...` or older helper paths are internal and unsupported.
 
-## Consumer Setup
+## Consumer Setup Reference
 
-For consumer repos, keep the public model small:
+The consumer setup path lives in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
 
-1. install the `salt-ds` skill as the workflow layer
-2. connect Salt MCP when available
-3. keep repo-local rules in `.salt/team.json`
-4. use `salt-ds + CLI` only when MCP is blocked or direct support/debug work is needed
+This README is the MCP package reference. Keep setup sequencing, skill installation, CLI fallback, and first-run verification in the main AI page so consumers have one path to follow.
 
-Published CLI fallback:
+Related maintainer references:
 
-```sh
-npx -y @salt-ds/cli@latest info . --json
-```
-
-Or install it once:
-
-```sh
-npm install -g @salt-ds/cli
-```
-
-When the CLI is used directly, keep it workflow-first through `salt-ds init`, `salt-ds info`, `salt-ds create`, `salt-ds review`, `salt-ds migrate`, and `salt-ds upgrade`. Use `salt-ds review --url <url>` when source validation and runtime evidence should stay in the same workflow pass. Keep `salt-ds doctor` and `salt-ds runtime inspect` in the runtime-evidence layer.
-Advanced retrieval inspection is available through `salt-ds info` and through read-only support command aliases that mirror MCP action names. Use `salt-ds get_salt_entity "<name>" --json` or `salt-ds get_salt_examples "<target>" --json` when a compact workflow returns `retrieve_entity` or `retrieve_examples`; use `salt-ds discover_salt "<prompt>" --json`, `salt-ds info --json --catalog-query "<prompt>"`, `salt-ds info --json --entity "<name>"`, or `salt-ds info --json --family "<category>"` for broader inspection without changing the main workflow story.
-
-Consumer start path:
-
-- start with the main AI page
-
-See:
-
-- [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx)
 - [`./docs/ai-tooling-large-rewrite-plan.md`](./docs/ai-tooling-large-rewrite-plan.md)
 - [`./docs/public-api-matrix.md`](./docs/public-api-matrix.md)
 - [`./docs/maintaining-salt-ai-tooling.md`](./docs/maintaining-salt-ai-tooling.md)
