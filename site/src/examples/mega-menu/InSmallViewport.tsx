@@ -2,10 +2,10 @@ import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
   MegaMenuGroup,
+  MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -48,7 +48,7 @@ export const InSmallViewport = (): ReactElement => {
                   className={styles.smallViewportContainer}
                   aria-label="Solutions menu"
                 >
-                  <MegaMenuSection>
+                  <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuHeader>Financial services</MegaMenuHeader>
                       <MegaMenuItem
@@ -218,7 +218,7 @@ export const InSmallViewport = (): ReactElement => {
                         Public safety solutions
                       </MegaMenuItem>
                     </MegaMenuGroup>
-                  </MegaMenuSection>
+                  </MegaMenuGroups>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>
@@ -236,7 +236,7 @@ export const InSmallViewport = (): ReactElement => {
                   className={styles.smallViewportContainer}
                   aria-label="Services menu"
                 >
-                  <MegaMenuSection>
+                  <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuHeader>Consulting</MegaMenuHeader>
                       <MegaMenuItem
@@ -361,7 +361,7 @@ export const InSmallViewport = (): ReactElement => {
                         Certifications
                       </MegaMenuItem>
                     </MegaMenuGroup>
-                  </MegaMenuSection>
+                  </MegaMenuGroups>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>
@@ -379,7 +379,7 @@ export const InSmallViewport = (): ReactElement => {
                   className={styles.smallViewportContainer}
                   aria-label="Resources menu"
                 >
-                  <MegaMenuSection>
+                  <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuHeader>Documentation</MegaMenuHeader>
                       <MegaMenuItem
@@ -481,7 +481,7 @@ export const InSmallViewport = (): ReactElement => {
                         Best practices
                       </MegaMenuItem>
                     </MegaMenuGroup>
-                  </MegaMenuSection>
+                  </MegaMenuGroups>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>

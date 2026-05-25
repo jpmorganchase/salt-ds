@@ -2,10 +2,10 @@ import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
   MegaMenuGroup,
+  MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -39,7 +39,7 @@ export const Default = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Solutions menu">
-                <MegaMenuSection>
+                <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
                     <MegaMenuItem
@@ -200,7 +200,7 @@ export const Default = (): ReactElement => {
                       Public safety solutions
                     </MegaMenuItem>
                   </MegaMenuGroup>
-                </MegaMenuSection>
+                </MegaMenuGroups>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -215,7 +215,7 @@ export const Default = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Services menu">
-                <MegaMenuSection>
+                <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Consulting</MegaMenuHeader>
                     <MegaMenuItem
@@ -369,7 +369,7 @@ export const Default = (): ReactElement => {
                       Guides
                     </MegaMenuItem>
                   </MegaMenuGroup>
-                </MegaMenuSection>
+                </MegaMenuGroups>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -384,7 +384,7 @@ export const Default = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Resources menu">
-                <MegaMenuSection>
+                <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Documentation</MegaMenuHeader>
                     <MegaMenuItem
@@ -447,7 +447,7 @@ export const Default = (): ReactElement => {
                       Troubleshooting
                     </MegaMenuItem>
                   </MegaMenuGroup>
-                </MegaMenuSection>
+                </MegaMenuGroups>
               </MegaMenuPanel>
             </MegaMenu>
           </li>

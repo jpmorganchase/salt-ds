@@ -3,8 +3,8 @@ nav > ol {
   padding: 0;
 }
 
-.saltMegaMenuSection {
-  --saltMegaMenuSection-columnWidth: 16rem;
+.saltMegaMenuGroups {
+  --saltMegaMenuGroups-columnWidth: 16rem;
 }
 
 .trigger-position-grid {
@@ -43,8 +43,8 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.full-width-panel .saltMegaMenuSection {
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+.full-width-panel .saltMegaMenuGroups {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
 }
 
 .edge-to-edge-wrapper {
@@ -58,12 +58,12 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.max-width-content-panel .saltMegaMenuSection {
+.max-width-content-panel .saltMegaMenuGroups {
   max-inline-size: 920px;
   inline-size: 100%;
   margin-inline: auto;
-  --saltMegaMenuSection-columnWidth: 212px;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+  --saltMegaMenuGroups-columnWidth: 212px;
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
 }
 
 .custom-region-content {
@@ -81,6 +81,10 @@ nav > ol {
   flex: 0 0 auto;
 }
 
+.supporting-actions-first-link {
+  padding-left: var(--salt-spacing-300);
+}
+
 .custom-region {
   background: var(--salt-container-secondary-background);
 }
@@ -94,8 +98,8 @@ nav > ol {
   flex-direction: column;
 }
 
-.withLink-menu-container .saltMegaMenuSection,
-.custom-region-content .saltMegaMenuSection {
+.withLink-menu-container .saltMegaMenuGroups,
+.custom-region-content .saltMegaMenuGroups {
   flex: 1 1 auto;
 }
 
@@ -137,7 +141,7 @@ nav > ol {
     padding-inline: var(--salt-spacing-300);
   }
 
-  .custom-region-side .saltMegaMenuSection {
+  .custom-region-side .saltMegaMenuGroups {
     grid-template-columns: 1fr;
   }
 
@@ -167,23 +171,7 @@ nav > ol {
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
-.link-footer-spacing {
-  padding-top: 0;
-  width: fit-content;
-}
-
-.link-footer-spacing-first-link {
-  padding-right: 0;
-  padding-top: 0;
-  width: fit-content;
-}
-
-.link-footer-spacing-multi-link {
-  padding-left: 0;
-  padding-top: 0;
-  width: fit-content;
-}
-.small-viewport-container .saltMegaMenuSection {
+.small-viewport-container .saltMegaMenuGroups {
   grid-template-columns: 1fr;
   max-inline-size: 100%;
   width: 100%;

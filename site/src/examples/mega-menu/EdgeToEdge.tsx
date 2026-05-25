@@ -18,10 +18,10 @@ import {
 import {
   MegaMenu,
   MegaMenuGroup,
+  MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -64,7 +64,7 @@ export const EdgeToEdge = (): ReactElement => {
                   aria-label="Solutions menu"
                   className={styles.edgeToEdgePanel}
                 >
-                  <MegaMenuSection>
+                  <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuHeader>Financial services</MegaMenuHeader>
                       <MegaMenuItem
@@ -337,7 +337,7 @@ export const EdgeToEdge = (): ReactElement => {
                         Renewable Integration
                       </MegaMenuItem>
                     </MegaMenuGroup>
-                  </MegaMenuSection>
+                  </MegaMenuGroups>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>
@@ -355,7 +355,7 @@ export const EdgeToEdge = (): ReactElement => {
                   aria-label="Services menu"
                   className={styles.edgeToEdgePanel}
                 >
-                  <MegaMenuSection>
+                  <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuHeader>Consulting</MegaMenuHeader>
                       <MegaMenuItem
@@ -416,7 +416,7 @@ export const EdgeToEdge = (): ReactElement => {
                         Certifications
                       </MegaMenuItem>
                     </MegaMenuGroup>
-                  </MegaMenuSection>
+                  </MegaMenuGroups>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>
@@ -434,7 +434,7 @@ export const EdgeToEdge = (): ReactElement => {
                   aria-label="Resources menu"
                   className={styles.edgeToEdgePanel}
                 >
-                  <MegaMenuSection>
+                  <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuHeader>Documentation</MegaMenuHeader>
                       <MegaMenuItem
@@ -479,7 +479,7 @@ export const EdgeToEdge = (): ReactElement => {
                         Community forum
                       </MegaMenuItem>
                     </MegaMenuGroup>
-                  </MegaMenuSection>
+                  </MegaMenuGroups>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>

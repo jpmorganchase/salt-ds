@@ -2,10 +2,10 @@ import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
   MegaMenuGroup,
+  MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -18,7 +18,7 @@ const KeyboardMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuSection>
+            <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
                 <MegaMenuItem
@@ -49,7 +49,7 @@ const KeyboardMegaMenu = () => (
                   Telemedicine
                 </MegaMenuItem>
               </MegaMenuGroup>
-            </MegaMenuSection>
+            </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -60,7 +60,7 @@ const KeyboardMegaMenu = () => (
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuSection>
+            <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuHeader>Consulting</MegaMenuHeader>
                 <MegaMenuItem
@@ -76,7 +76,7 @@ const KeyboardMegaMenu = () => (
                   Operations
                 </MegaMenuItem>
               </MegaMenuGroup>
-            </MegaMenuSection>
+            </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -95,7 +95,7 @@ const OrphanedItemMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuSection>
+            <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
                 <MegaMenuItem
@@ -111,7 +111,7 @@ const OrphanedItemMegaMenu = () => (
                   Risk Management
                 </MegaMenuItem>
               </MegaMenuGroup>
-            </MegaMenuSection>
+            </MegaMenuGroups>
             <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
               <MegaMenuItem
                 href="/see-all-solutions"
@@ -139,7 +139,7 @@ const MixedFocusabilityMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuSection>
+            <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
                 {/* Intentionally no href and no render — should be skipped. */}
@@ -151,7 +151,7 @@ const MixedFocusabilityMegaMenu = () => (
                   Digital Banking
                 </MegaMenuItem>
               </MegaMenuGroup>
-            </MegaMenuSection>
+            </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -173,7 +173,7 @@ const RenderPropMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuSection>
+            <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial Services</MegaMenuHeader>
                 <MegaMenuItem
@@ -183,7 +183,7 @@ const RenderPropMegaMenu = () => (
                   Digital Banking
                 </MegaMenuItem>
               </MegaMenuGroup>
-            </MegaMenuSection>
+            </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
       </li>

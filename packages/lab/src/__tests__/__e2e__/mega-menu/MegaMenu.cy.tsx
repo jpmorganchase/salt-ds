@@ -2,10 +2,10 @@ import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
   MegaMenuGroup,
+  MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { useState } from "react";
@@ -29,7 +29,7 @@ const InteractiveMegaMenu = () => {
               <NavigationItem>Solutions</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuSection>
+              <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
                   <MegaMenuItem
@@ -45,7 +45,7 @@ const InteractiveMegaMenu = () => {
                     Risk Management
                   </MegaMenuItem>
                 </MegaMenuGroup>
-              </MegaMenuSection>
+              </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -59,7 +59,7 @@ const InteractiveMegaMenu = () => {
               <NavigationItem>Services</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuSection>
+              <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
                   <MegaMenuItem
@@ -69,7 +69,7 @@ const InteractiveMegaMenu = () => {
                     Strategy
                   </MegaMenuItem>
                 </MegaMenuGroup>
-              </MegaMenuSection>
+              </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -137,7 +137,7 @@ describe("Given a MegaMenu", () => {
           <NavigationItem>Solutions</NavigationItem>
         </MegaMenuTrigger>
         <MegaMenuPanel>
-          <MegaMenuSection>
+          <MegaMenuGroups>
             <MegaMenuGroup>
               <MegaMenuHeader>Financial Services</MegaMenuHeader>
               <MegaMenuItem
@@ -147,7 +147,7 @@ describe("Given a MegaMenu", () => {
                 Digital Banking
               </MegaMenuItem>
             </MegaMenuGroup>
-          </MegaMenuSection>
+          </MegaMenuGroups>
         </MegaMenuPanel>
       </MegaMenu>,
     );
