@@ -1,6 +1,6 @@
 import { Button, Dropdown, Option } from "@salt-ds/core";
 import { FilterIcon, NotificationIcon } from "@salt-ds/icons";
-import { ToolbarNext as Toolbar, TooltrayNext as Tooltray } from "@salt-ds/lab";
+import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 import { sortOptions } from "./toolbarExampleData";
@@ -10,8 +10,8 @@ const dateOptions = ["Date: January 2020", "Date: February 2020"];
 
 export const DynamicCollapse = (): ReactElement => (
   <div className={styles.dynamic}>
-    <Toolbar aria-label="Offer toolbar">
-      <Tooltray overflowPriority={1}>
+    <ToolbarNext aria-label="Offer toolbar">
+      <TooltrayNext overflowPriority={1}>
         <Dropdown
           bordered
           defaultSelected={[recordOptions[0]]}
@@ -21,8 +21,8 @@ export const DynamicCollapse = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </Tooltray>
-      <Tooltray
+      </TooltrayNext>
+      <TooltrayNext
         overflowGroup="Filters"
         overflowLabel="Filters"
         overflowMode="grouped"
@@ -41,8 +41,8 @@ export const DynamicCollapse = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </Tooltray>
-      <Tooltray align="end" overflowPriority={2}>
+      </TooltrayNext>
+      <TooltrayNext align="end" overflowPriority={2}>
         <Dropdown
           bordered
           defaultSelected={[sortOptions[0]]}
@@ -52,8 +52,8 @@ export const DynamicCollapse = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </Tooltray>
-      <Tooltray
+      </TooltrayNext>
+      <TooltrayNext
         align="end"
         overflowGroup="Actions"
         overflowLabel="Actions"
@@ -67,7 +67,7 @@ export const DynamicCollapse = (): ReactElement => (
           Propose amendment
         </Button>
         <Button appearance="bordered">Decline offer</Button>
-      </Tooltray>
-    </Toolbar>
+      </TooltrayNext>
+    </ToolbarNext>
   </div>
 );

@@ -34,7 +34,7 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
@@ -44,7 +44,7 @@ export default {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarContent,
+    ToolbarContentNext,
     TooltrayNext,
   },
 } as Meta<typeof ToolbarNext>;
@@ -57,7 +57,7 @@ const filterOptions = [
 const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
 
 /**
- * Flat align sugar — no explicit `ToolbarContent` wrappers.
+ * Flat align sugar — no explicit `ToolbarContentNext` wrappers.
  *
  * Intended behavior:
  * - `TooltrayNext` children are bucketed into implicit content via their
@@ -107,10 +107,10 @@ FlatAlignSugar.globals = {
 };
 
 /**
- * Explicit three-content layout using `ToolbarContent`.
+ * Explicit three-content layout using `ToolbarContentNext`.
  *
  * Intended behavior:
- * - The toolbar uses explicit `ToolbarContent` wrappers with `position`
+ * - The toolbar uses explicit `ToolbarContentNext` wrappers with `position`
  *   set to `"start"`, `"center"`, and `"end"`.
  * - The start content holds descriptive text, the center content holds a
  *   toggle button group, and the end content holds the search input.
@@ -121,12 +121,12 @@ FlatAlignSugar.globals = {
  */
 export const ContentFirst: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Content first toolbar">
-    <ToolbarContent position="start">
+    <ToolbarContentNext position="start">
       <TooltrayNext>
         <Text styleAs="label">Description</Text>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="center">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="center">
       <TooltrayNext>
         <ToggleButtonGroup aria-label="Toggle options">
           <ToggleButton value="toggle-1">Toggle</ToggleButton>
@@ -134,8 +134,8 @@ export const ContentFirst: StoryFn<typeof ToolbarNext> = () => (
           <ToggleButton value="toggle-3">Toggle</ToggleButton>
         </ToggleButtonGroup>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="end">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
       <TooltrayNext>
         <Input
           bordered
@@ -144,7 +144,7 @@ export const ContentFirst: StoryFn<typeof ToolbarNext> = () => (
           style={{ width: 180 }}
         />
       </TooltrayNext>
-    </ToolbarContent>
+    </ToolbarContentNext>
   </ToolbarNext>
 );
 ContentFirst.globals = {
@@ -165,17 +165,17 @@ export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
     aria-label="Centered named overflow toolbar"
     style={{ minWidth: "30vw" }}
   >
-    <ToolbarContent position="start">
+    <ToolbarContentNext position="start">
       <TooltrayNext overflowMode="none" role="group" aria-label="Leading">
         <Button style={{ width: 140 }}>Start</Button>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="center">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="center">
       <TooltrayNext overflowMode="none" role="group" aria-label="Centered">
         <Button style={{ width: 180 }}>Center action</Button>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="end">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
       <TooltrayNext
         aria-label="Actions"
         overflowGroup="Actions"
@@ -191,7 +191,7 @@ export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           End secondary
         </Button>
       </TooltrayNext>
-    </ToolbarContent>
+    </ToolbarContentNext>
   </ToolbarNext>
 );
 CenteredNamedOverflow.globals = {
@@ -213,7 +213,7 @@ CenteredNamedOverflow.globals = {
  */
 export const Transparent: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext appearance="transparent" aria-label="App header toolbar">
-    <ToolbarContent position="start">
+    <ToolbarContentNext position="start">
       <TooltrayNext>
         <Dropdown
           aria-label="Filter option"
@@ -226,8 +226,8 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
           ))}
         </Dropdown>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="end">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
       <TooltrayNext role="group" aria-label="Utility actions">
         <Button appearance="transparent" aria-label="Grid view">
           <GridIcon aria-hidden />
@@ -245,7 +245,7 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
           style={{ width: 180 }}
         />
       </TooltrayNext>
-    </ToolbarContent>
+    </ToolbarContentNext>
   </ToolbarNext>
 );
 Transparent.globals = {
@@ -282,7 +282,7 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
           aria-label={`${variant} toolbar`}
           style={{ minWidth: "14vw" }}
         >
-          <ToolbarContent position="start">
+          <ToolbarContentNext position="start">
             <TooltrayNext>
               <Dropdown
                 aria-label="Filter option"
@@ -295,8 +295,8 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
                 ))}
               </Dropdown>
             </TooltrayNext>
-          </ToolbarContent>
-          <ToolbarContent position="end">
+          </ToolbarContentNext>
+          <ToolbarContentNext position="end">
             <TooltrayNext role="group" aria-label="Utility actions">
               <Button appearance="transparent">Export</Button>
               <Button appearance="solid">Button</Button>
@@ -309,7 +309,7 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
                 style={{ width: 180 }}
               />
             </TooltrayNext>
-          </ToolbarContent>
+          </ToolbarContentNext>
         </ToolbarNext>
       </div>
     ))}
@@ -333,7 +333,7 @@ Variants.globals = {
  */
 export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Mixed controls toolbar">
-    <ToolbarContent position="start">
+    <ToolbarContentNext position="start">
       <TooltrayNext role="group" aria-label="Criteria">
         <Dropdown
           aria-label="Criteria option"
@@ -359,8 +359,8 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
           </DatePickerOverlay>
         </DatePicker>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="end">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
       <TooltrayNext role="group" aria-label="Settings and actions">
         <Switch label="Pinned" />
         <Button appearance="solid" disabled focusableWhenDisabled>
@@ -375,7 +375,7 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
           style={{ width: 180 }}
         />
       </TooltrayNext>
-    </ToolbarContent>
+    </ToolbarContentNext>
   </ToolbarNext>
 );
 MixedFormControls.globals = {
@@ -395,7 +395,7 @@ MixedFormControls.globals = {
  */
 export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with independent mixed controls">
-    <ToolbarContent position="start">
+    <ToolbarContentNext position="start">
       <TooltrayNext
         role="group"
         aria-label="Status"
@@ -444,8 +444,8 @@ export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
           <RadioButton label="Approve" value="approve" />
         </RadioButtonGroup>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="end">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
       <TooltrayNext
         role="group"
         aria-label="Help"
@@ -472,7 +472,7 @@ export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
       >
         <Link href="#">View audit trail</Link>
       </TooltrayNext>
-    </ToolbarContent>
+    </ToolbarContentNext>
   </ToolbarNext>
 );
 IndependentMixedControls.globals = {
@@ -601,7 +601,7 @@ DefaultSharedOverflow.globals = {
  * Named overflow — grouped collapse into distinct named overflow triggers.
  *
  * Intended behavior:
- * - Uses explicit `ToolbarContent` wrappers (start and end).
+ * - Uses explicit `ToolbarContentNext` wrappers (start and end).
  * - The "Filters" tray (start content, priority 6, `overflowGroup="Filters"`,
  *   `overflowMode="grouped"`) collapses as a complete unit into its own
  *   overflow trigger labeled "Filters".
@@ -626,7 +626,7 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
     aria-label="Toolbar with named overflow"
     style={{ minWidth: "20vw" }}
   >
-    <ToolbarContent position="start">
+    <ToolbarContentNext position="start">
       <TooltrayNext
         aria-label="Filters"
         overflowGroup="Filters"
@@ -650,8 +650,8 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           Filters
         </Button>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="end">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
       <TooltrayNext
         aria-label="Actions"
         overflowGroup="Actions"
@@ -677,7 +677,7 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           style={{ width: 180 }}
         />
       </TooltrayNext>
-    </ToolbarContent>
+    </ToolbarContentNext>
   </ToolbarNext>
 );
 NamedOverflow.globals = {
@@ -739,7 +739,7 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
     aria-label="Toolbar with overflow menu dividers"
     style={{ minWidth: "26vw" }}
   >
-    <ToolbarContent position="start">
+    <ToolbarContentNext position="start">
       <TooltrayNext overflowMode="none">
         <Dropdown
           aria-label="Filter option"
@@ -752,8 +752,8 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
           ))}
         </Dropdown>
       </TooltrayNext>
-    </ToolbarContent>
-    <ToolbarContent position="end">
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
       <TooltrayNext
         overflowGroup="Actions"
         overflowLabel="Actions"
@@ -791,7 +791,7 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
           style={{ width: 180 }}
         />
       </TooltrayNext>
-    </ToolbarContent>
+    </ToolbarContentNext>
   </ToolbarNext>
 );
 OverflowMenuDividers.globals = {

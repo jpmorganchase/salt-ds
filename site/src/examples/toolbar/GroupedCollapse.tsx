@@ -1,9 +1,9 @@
 import { Button, Dropdown, Option } from "@salt-ds/core";
 import { AddIcon } from "@salt-ds/icons";
 import {
-  ToolbarNext as Toolbar,
-  ToolbarContent,
-  TooltrayNext as Tooltray,
+  ToolbarContentNext,
+  ToolbarNext,
+  TooltrayNext,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
@@ -11,9 +11,9 @@ import { accountOptions, typeOptions } from "./toolbarExampleData";
 
 export const GroupedCollapse = (): ReactElement => (
   <div className={styles.constrained}>
-    <Toolbar aria-label="Account toolbar" variant="tertiary">
-      <ToolbarContent position="start">
-        <Tooltray overflowPriority={1}>
+    <ToolbarNext aria-label="Account toolbar" variant="tertiary">
+      <ToolbarContentNext position="start">
+        <TooltrayNext overflowPriority={1}>
           <Dropdown
             bordered
             defaultSelected={[typeOptions[1]]}
@@ -23,10 +23,10 @@ export const GroupedCollapse = (): ReactElement => (
               <Option key={option} value={option} />
             ))}
           </Dropdown>
-        </Tooltray>
-      </ToolbarContent>
-      <ToolbarContent position="end">
-        <Tooltray
+        </TooltrayNext>
+      </ToolbarContentNext>
+      <ToolbarContentNext position="end">
+        <TooltrayNext
           overflowGroup="Account"
           overflowLabel="Select account"
           overflowMode="grouped"
@@ -46,8 +46,8 @@ export const GroupedCollapse = (): ReactElement => (
           <Button appearance="transparent" aria-label="Add account">
             <AddIcon aria-hidden />
           </Button>
-        </Tooltray>
-      </ToolbarContent>
-    </Toolbar>
+        </TooltrayNext>
+      </ToolbarContentNext>
+    </ToolbarNext>
   </div>
 );

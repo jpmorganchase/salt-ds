@@ -1,14 +1,14 @@
 import { Button, Dropdown, Option } from "@salt-ds/core";
 import { DownloadIcon, SettingsIcon } from "@salt-ds/icons";
-import { ToolbarNext as Toolbar, TooltrayNext as Tooltray } from "@salt-ds/lab";
+import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 import { typeOptions } from "./toolbarExampleData";
 
 export const Appearance = (): ReactElement => (
   <div className={styles.example}>
-    <Toolbar aria-label="Bordered toolbar">
-      <Tooltray>
+    <ToolbarNext aria-label="Bordered toolbar">
+      <TooltrayNext>
         <Dropdown
           bordered
           defaultSelected={[typeOptions[0]]}
@@ -18,8 +18,8 @@ export const Appearance = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </Tooltray>
-      <Tooltray align="end" role="group" aria-label="View actions">
+      </TooltrayNext>
+      <TooltrayNext align="end" role="group" aria-label="View actions">
         <Button appearance="transparent" aria-label="Download">
           <DownloadIcon aria-hidden />
         </Button>
@@ -27,10 +27,10 @@ export const Appearance = (): ReactElement => (
           <SettingsIcon aria-hidden />
         </Button>
         <Button appearance="solid">Create view</Button>
-      </Tooltray>
-    </Toolbar>
-    <Toolbar appearance="transparent" aria-label="Transparent toolbar">
-      <Tooltray>
+      </TooltrayNext>
+    </ToolbarNext>
+    <ToolbarNext appearance="transparent" aria-label="Transparent toolbar">
+      <TooltrayNext>
         <Dropdown
           bordered
           defaultSelected={[typeOptions[0]]}
@@ -40,8 +40,8 @@ export const Appearance = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </Tooltray>
-      <Tooltray align="end" role="group" aria-label="View actions">
+      </TooltrayNext>
+      <TooltrayNext align="end" role="group" aria-label="View actions">
         <Button appearance="transparent" aria-label="Download">
           <DownloadIcon aria-hidden />
         </Button>
@@ -49,7 +49,7 @@ export const Appearance = (): ReactElement => (
           <SettingsIcon aria-hidden />
         </Button>
         <Button appearance="solid">Create view</Button>
-      </Tooltray>
-    </Toolbar>
+      </TooltrayNext>
+    </ToolbarNext>
   </div>
 );

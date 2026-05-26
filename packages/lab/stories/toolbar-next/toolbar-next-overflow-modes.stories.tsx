@@ -7,7 +7,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
-import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ReactNode, useState } from "react";
 
@@ -22,7 +22,7 @@ export default {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarContent,
+    ToolbarContentNext,
     TooltrayNext,
   },
 } as Meta<typeof ToolbarNext>;
@@ -194,7 +194,7 @@ function NamedFiltersToolbar({
 }) {
   return (
     <ToolbarNext aria-label={`${overflowMode} named filters toolbar`}>
-      <ToolbarContent position="start">
+      <ToolbarContentNext position="start">
         <TooltrayNext overflowMode="none">
           <Input
             bordered
@@ -240,8 +240,8 @@ function NamedFiltersToolbar({
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
-      </ToolbarContent>
-      <ToolbarContent position="end">
+      </ToolbarContentNext>
+      <ToolbarContentNext position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -250,7 +250,7 @@ function NamedFiltersToolbar({
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
-      </ToolbarContent>
+      </ToolbarContentNext>
     </ToolbarNext>
   );
 }
@@ -270,7 +270,7 @@ function PriorityOrderingToolbar({
 }) {
   return (
     <ToolbarNext aria-label={ariaLabel}>
-      <ToolbarContent position="start">
+      <ToolbarContentNext position="start">
         <TooltrayNext overflowMode="none">
           <Input
             bordered
@@ -296,8 +296,8 @@ function PriorityOrderingToolbar({
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
-      </ToolbarContent>
-      <ToolbarContent position="end">
+      </ToolbarContentNext>
+      <ToolbarContentNext position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -305,7 +305,7 @@ function PriorityOrderingToolbar({
         >
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
-      </ToolbarContent>
+      </ToolbarContentNext>
     </ToolbarNext>
   );
 }
@@ -533,7 +533,7 @@ export const NamedGroupIndependentProgressive: StoryFn<
     ]}
   >
     <ToolbarNext aria-label="Named independent progressive overflow toolbar">
-      <ToolbarContent position="start">
+      <ToolbarContentNext position="start">
         <TooltrayNext overflowMode="none">
           <Input
             bordered
@@ -579,8 +579,8 @@ export const NamedGroupIndependentProgressive: StoryFn<
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
-      </ToolbarContent>
-      <ToolbarContent position="end">
+      </ToolbarContentNext>
+      <ToolbarContentNext position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -589,7 +589,7 @@ export const NamedGroupIndependentProgressive: StoryFn<
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
-      </ToolbarContent>
+      </ToolbarContentNext>
     </ToolbarNext>
   </StoryExample>
 );
@@ -621,7 +621,7 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
     ]}
   >
     <ToolbarNext aria-label="Named grouped batch overflow toolbar">
-      <ToolbarContent position="start">
+      <ToolbarContentNext position="start">
         <TooltrayNext overflowMode="none">
           <Input
             bordered
@@ -667,8 +667,8 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
-      </ToolbarContent>
-      <ToolbarContent position="end">
+      </ToolbarContentNext>
+      <ToolbarContentNext position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -677,7 +677,7 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
-      </ToolbarContent>
+      </ToolbarContentNext>
     </ToolbarNext>
   </StoryExample>
 );

@@ -19,7 +19,7 @@ The component is not a simple flex wrapper. It is a measured, overflow-aware too
 Primary implementation files:
 
 - `ToolbarNext.tsx`: public root component, top-level rendering, host selection, focus preservation across overflow changes.
-- `ToolbarContent.tsx`: explicit content-section component and CSS injection.
+- `ToolbarContentNext.tsx`: explicit content-section component and CSS injection.
 - `Tooltray.tsx`: tray component, overflow-related props, layout metadata.
 - `toolbarNextUtils.ts`: child normalization and visible-slot construction.
 - `useToolbarNextOverflow.ts`: width measurement, overflow-state computation, resize observation.
@@ -27,7 +27,7 @@ Primary implementation files:
 - `useToolbarNextKeyboardNavigation.ts`: event-level focus memory, Tab handling, arrow navigation integration.
 - `toolbarNextKeyboardUtils.ts`: DOM queries, focus-memory resolution, keyboard policy helpers.
 - `ToolbarNextOverflowFloatingBoundary.tsx`: boundary registration for floating descendants inside overflow panels.
-- `ToolbarNext.css`, `ToolbarContent.css`, `Tooltray.css`, `ToolbarNextOverflow.css`: layout and measurement CSS.
+- `ToolbarNext.css`, `ToolbarContentNext.css`, `Tooltray.css`, `ToolbarNextOverflow.css`: layout and measurement CSS.
 - `index.ts`: package exports.
 
 Behavioral references:
@@ -52,9 +52,9 @@ flowchart TD
   KeyboardHook["useToolbarNextKeyboardNavigation.ts"]
   KeyboardUtils["toolbarNextKeyboardUtils.ts"]
   FloatingBoundary["ToolbarNextOverflowFloatingBoundary.tsx"]
-  ToolbarContent["ToolbarContent.tsx"]
+  ToolbarContentNext["ToolbarContentNext.tsx"]
   Tooltray["Tooltray.tsx"]
-  CSS["ToolbarNext*.css / ToolbarContent.css / Tooltray.css"]
+  CSS["ToolbarNext*.css / ToolbarContentNext.css / Tooltray.css"]
 
   ToolbarNext --> Utils
   ToolbarNext --> OverflowHook
@@ -63,7 +63,7 @@ flowchart TD
   ToolbarNext --> FloatingBoundary
   ToolbarNext --> CSS
 
-  OverflowUI --> ToolbarContent
+  OverflowUI --> ToolbarContentNext
   OverflowUI --> Utils
   OverflowUI --> KeyboardHook
   OverflowUI --> KeyboardUtils
@@ -71,12 +71,12 @@ flowchart TD
   OverflowUI --> CSS
 
   OverflowHook --> Utils
-  OverflowHook --> ToolbarContent
+  OverflowHook --> ToolbarContentNext
 
   KeyboardHook --> KeyboardUtils
   KeyboardUtils --> Utils
 
-  Utils --> ToolbarContent
+  Utils --> ToolbarContentNext
   Utils --> Tooltray
 ```
 
@@ -101,15 +101,15 @@ The root element always receives:
 Consumers are expected to provide an accessible name, usually `aria-label` or `aria-labelledby`,
 through native `div` props.
 
-### `ToolbarContent`
+### `ToolbarContentNext`
 
-`ToolbarContent` is a `forwardRef<HTMLDivElement, ToolbarContentProps>` component. It accepts native
+`ToolbarContentNext` is a `forwardRef<HTMLDivElement, ToolbarContentNextProps>` component. It accepts native
 `div` props and a required:
 
 - `position: "start" | "center" | "end"`.
 
 It renders a flex content section with `data-position={position}`. In explicit authoring mode,
-`ToolbarNext` re-renders normalized `ToolbarContent` elements and forks the consumer ref with its
+`ToolbarNext` re-renders normalized `ToolbarContentNext` elements and forks the consumer ref with its
 internal measurement ref.
 
 ### `TooltrayNext`
@@ -155,7 +155,7 @@ Example:
 
 In this mode, `TooltrayNext.align` is interpreted as a toolbar-band shorthand. Each tray updates the
 current bucket using `align ?? "start"`, and the normalization logic turns those buckets into
-implicit `ToolbarContent` models:
+implicit `ToolbarContentNext` models:
 
 - `"start"` trays go into `start-implicit`;
 - `"center"` trays go into `center-implicit`;
@@ -163,7 +163,7 @@ implicit `ToolbarContent` models:
 - dividers go into the current bucket, which starts as `"start"` and changes whenever a tray is
   encountered.
 
-The rendered `ToolbarContent` receives `data-implicit`. Visible-slot CSS mirrors tray alignment on
+The rendered `ToolbarContentNext` receives `data-implicit`. Visible-slot CSS mirrors tray alignment on
 the slot and resets tray auto-margins inside the slot, so the band and slot control placement rather
 than the portaled tray node.
 
@@ -173,28 +173,28 @@ content area is discarded.
 
 ### Explicit Model
 
-Explicit mode is used when every top-level child is a `ToolbarContent` element.
+Explicit mode is used when every top-level child is a `ToolbarContentNext` element.
 
 Example:
 
 ```tsx
 <ToolbarNext aria-label="Content-first toolbar">
-  <ToolbarContent position="start">
+  <ToolbarContentNext position="start">
     <TooltrayNext>...</TooltrayNext>
-  </ToolbarContent>
-  <ToolbarContent position="center">
+  </ToolbarContentNext>
+  <ToolbarContentNext position="center">
     <TooltrayNext>...</TooltrayNext>
-  </ToolbarContent>
-  <ToolbarContent position="end">
+  </ToolbarContentNext>
+  <ToolbarContentNext position="end">
     <TooltrayNext>...</TooltrayNext>
-  </ToolbarContent>
+  </ToolbarContentNext>
 </ToolbarNext>
 ```
 
-In this mode, the `ToolbarContent.position` prop controls global toolbar placement.
+In this mode, the `ToolbarContentNext.position` prop controls global toolbar placement.
 `TooltrayNext.align` remains local to that content area.
 
-Each explicit `ToolbarContent` is normalized into a `ToolbarNextContentModel` that includes:
+Each explicit `ToolbarContentNext` is normalized into a `ToolbarNextContentModel` that includes:
 
 - a stable content key;
 - its position;
@@ -208,7 +208,7 @@ The content key is the authored React key when present. Otherwise it falls back 
 ### Invalid Model
 
 Invalid mode is used when children mix models or include unsupported elements. For example, a
-top-level `ToolbarContent` beside a top-level `TooltrayNext` is invalid.
+top-level `ToolbarContentNext` beside a top-level `TooltrayNext` is invalid.
 
 Invalid mode intentionally falls back to rendering the original children directly:
 
@@ -219,7 +219,7 @@ Invalid mode intentionally falls back to rendering the original children directl
 - a development-only warning is emitted once until the composition becomes valid again.
 
 The warning text explains that children must use either direct `TooltrayNext`/`Divider` children or
-`ToolbarContent` children containing `TooltrayNext`/`Divider` items.
+`ToolbarContentNext` children containing `TooltrayNext`/`Divider` items.
 
 ## Normalized Data Model
 
@@ -230,8 +230,8 @@ export interface ToolbarNextContentModel {
   implicit: boolean;
   items: ToolbarNextOverflowItem[];
   key: string;
-  position: ToolbarContentPosition;
-  props: Omit<ToolbarContentProps, "children" | "position">;
+  position: ToolbarContentNextPosition;
+  props: Omit<ToolbarContentNextProps, "children" | "position">;
   ref: Ref<HTMLDivElement> | null;
 }
 
@@ -258,7 +258,7 @@ Important details:
 - Item ids are built from `contentKey`, the tray's React key or fallback order key, and its order.
 - Shared overflow always uses the group key `"shared"`.
 - Named overflow group keys are scoped to content: `${contentKey}:${overflowGroup}`.
-- Named groups with the same `overflowGroup` string in different `ToolbarContent` sections are
+- Named groups with the same `overflowGroup` string in different `ToolbarContentNext` sections are
   separate groups.
 - Dividers are not independent items. They become leading or trailing decorations attached to the
   nearest tray.
@@ -618,7 +618,7 @@ width or there are no more units.
 
 ### Computing Content Width
 
-For each `ToolbarContent` area, the solver calls `buildContentOverflowRenderSlots` using:
+For each `ToolbarContentNext` area, the solver calls `buildContentOverflowRenderSlots` using:
 
 - current `overflowedIds`;
 - active named groups that belong to the content area.
@@ -699,7 +699,7 @@ not create named overflow groups or triggers.
 
 Named overflow behavior:
 
-- the group key is scoped to the owning `ToolbarContent` key;
+- the group key is scoped to the owning `ToolbarContentNext` key;
 - the trigger renders inline where the first hidden item in that group would otherwise appear;
 - trigger visible content is the group label;
 - panel label is `${group.label} overflow`;
@@ -966,7 +966,7 @@ Keyboard semantics:
 - applies bordered or transparent appearance;
 - defines the hidden measurements layer.
 
-`ToolbarContent.css`:
+`ToolbarContentNext.css`:
 
 - renders content areas as flex rows;
 - applies content gap;
@@ -996,7 +996,7 @@ The implementation relies on these invariants:
 
 - One normalized item equals one `TooltrayNext`.
 - Normalized item ids must remain stable for equivalent keyed children.
-- Every valid `ToolbarContent` must eventually get a content ref for gap measurement.
+- Every valid `ToolbarContentNext` must eventually get a content ref for gap measurement.
 - Every item must eventually have either a visible slot width, a hidden measurement width, or a
   cached width.
 - Shared overflow trigger widths are available even before shared overflow is active.

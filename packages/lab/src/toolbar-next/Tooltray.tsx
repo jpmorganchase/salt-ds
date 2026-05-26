@@ -18,7 +18,7 @@ export interface TooltrayNextProps
    * Alignment of the tooltray.
    * - When a `TooltrayNext` is used directly inside `ToolbarNext`, this acts as
    *   shorthand for which toolbar band the tray belongs to.
-   * - When a `TooltrayNext` is used inside `ToolbarContent`, this alignment is
+   * - When a `TooltrayNext` is used inside `ToolbarContentNext`, this alignment is
    *   local to that content area.
    *
    * Defaults to `"start"`.

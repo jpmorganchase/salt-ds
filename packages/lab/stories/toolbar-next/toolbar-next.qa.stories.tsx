@@ -17,7 +17,7 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { userEvent, within } from "storybook/test";
@@ -28,7 +28,7 @@ export default {
   title: "Lab/Toolbar Next/QA",
   component: ToolbarNext,
   subcomponents: {
-    ToolbarContent,
+    ToolbarContentNext,
     TooltrayNext,
   },
 } as Meta<typeof ToolbarNext>;
@@ -123,24 +123,24 @@ function BasicToolbar({
 function CenteredToolbar() {
   return (
     <ToolbarNext aria-label="Centered toolbar">
-      <ToolbarContent position="start">
+      <ToolbarContentNext position="start">
         <TooltrayNext>
           <SearchInput width={140} />
         </TooltrayNext>
-      </ToolbarContent>
-      <ToolbarContent position="center">
+      </ToolbarContentNext>
+      <ToolbarContentNext position="center">
         <TooltrayNext>
           <ToggleButtonGroup aria-label="View options" defaultValue="grid">
             <ToggleButton value="grid">Grid</ToggleButton>
             <ToggleButton value="list">List</ToggleButton>
           </ToggleButtonGroup>
         </TooltrayNext>
-      </ToolbarContent>
-      <ToolbarContent position="end">
+      </ToolbarContentNext>
+      <ToolbarContentNext position="end">
         <TooltrayNext role="group" aria-label="Status">
           <Switch label="Pinned" />
         </TooltrayNext>
-      </ToolbarContent>
+      </ToolbarContentNext>
     </ToolbarNext>
   );
 }
@@ -171,7 +171,7 @@ function SharedOverflowToolbar() {
 function NamedOverflowToolbar() {
   return (
     <ToolbarNext aria-label="Named overflow toolbar">
-      <ToolbarContent position="start">
+      <ToolbarContentNext position="start">
         <TooltrayNext overflowMode="none">
           <SearchInput width={120} />
         </TooltrayNext>
@@ -190,8 +190,8 @@ function NamedOverflowToolbar() {
             Filters
           </Button>
         </TooltrayNext>
-      </ToolbarContent>
-      <ToolbarContent position="end">
+      </ToolbarContentNext>
+      <ToolbarContentNext position="end">
         <TooltrayNext
           aria-label="Actions"
           overflowGroup="Actions"
@@ -206,7 +206,7 @@ function NamedOverflowToolbar() {
           </Button>
           <Button appearance="solid">Apply</Button>
         </TooltrayNext>
-      </ToolbarContent>
+      </ToolbarContentNext>
     </ToolbarNext>
   );
 }

@@ -4,12 +4,12 @@
 
 ## Summary
 
-New `ToolbarNext`, `ToolbarContent`, and `TooltrayNext` components for composing horizontal toolbars with responsive overflow, grouped controls, and keyboard navigation.
+New `ToolbarNext`, `ToolbarContentNext`, and `TooltrayNext` components for composing horizontal toolbars with responsive overflow, grouped controls, and keyboard navigation.
 
 **What's included**
 
 - Flat authoring with `TooltrayNext` children aligned to start, center, or end
-- Explicit `ToolbarContent` regions for start, center, and end toolbar layouts
+- Explicit `ToolbarContentNext` regions for start, center, and end toolbar layouts
 - Shared, named, grouped, independent, and non-overflowing tooltray overflow modes
 - Overflow priority control for deciding which trays collapse first
 - Bordered and transparent appearances with primary, secondary, and tertiary variants
@@ -55,19 +55,19 @@ const options = ["Option A", "Option B", "Option C"];
 </ToolbarNext>;
 ```
 
-**Centered Toolbar With Named Overflow** — use `ToolbarContent` when you need explicit start, center, and end regions; named overflow keeps related actions behind a labelled trigger
+**Centered Toolbar With Named Overflow** — use `ToolbarContentNext` when you need explicit start, center, and end regions; named overflow keeps related actions behind a labelled trigger
 
 ```tsx
 import { Button, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
-import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 
 <ToolbarNext aria-label="Centered actions">
-  <ToolbarContent position="start">
+  <ToolbarContentNext position="start">
     <TooltrayNext overflowMode="none" role="group" aria-label="Primary action">
       <Button appearance="solid">Create</Button>
     </TooltrayNext>
-  </ToolbarContent>
-  <ToolbarContent position="center">
+  </ToolbarContentNext>
+  <ToolbarContentNext position="center">
     <TooltrayNext overflowMode="none" role="group" aria-label="View options">
       <ToggleButtonGroup>
         <ToggleButton value="day">Day</ToggleButton>
@@ -75,8 +75,8 @@ import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
         <ToggleButton value="month">Month</ToggleButton>
       </ToggleButtonGroup>
     </TooltrayNext>
-  </ToolbarContent>
-  <ToolbarContent position="end">
+  </ToolbarContentNext>
+  <ToolbarContentNext position="end">
     <TooltrayNext
       overflowGroup="Actions"
       overflowLabel="Actions"
@@ -88,6 +88,6 @@ import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
       <Button appearance="transparent">Export</Button>
       <Button appearance="transparent">Settings</Button>
     </TooltrayNext>
-  </ToolbarContent>
+  </ToolbarContentNext>
 </ToolbarNext>;
 ```

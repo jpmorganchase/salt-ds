@@ -37,7 +37,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { ToolbarContent } from "./ToolbarContent";
+import { ToolbarContentNext } from "./ToolbarContentNext";
 import toolbarNextOverflowCss from "./ToolbarNextOverflow.css";
 import {
   getToolbarNextOverflowBoundaryKey,
@@ -881,7 +881,7 @@ export function ToolbarNextOverflowContent({
   );
 
   return (
-    <ToolbarContent
+    <ToolbarContentNext
       {...contentProps}
       data-implicit={content.implicit || undefined}
       className={clsx(className, withBaseName("content"))}
@@ -947,6 +947,6 @@ export function ToolbarNextOverflowContent({
           );
         },
       )}
-    </ToolbarContent>
+    </ToolbarContentNext>
   );
 }

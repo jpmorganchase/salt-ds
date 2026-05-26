@@ -6,15 +6,15 @@ import {
   ToggleButtonGroup,
 } from "@salt-ds/core";
 import { AddIcon, ExportIcon, FilterIcon } from "@salt-ds/icons";
-import { ToolbarNext as Toolbar, TooltrayNext as Tooltray } from "@salt-ds/lab";
+import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 import { accountOptions } from "./toolbarExampleData";
 
 export const ContentSections = (): ReactElement => (
   <div className={styles.example}>
-    <Toolbar aria-label="Domain toolbar">
-      <Tooltray overflowMode="none">
+    <ToolbarNext aria-label="Domain toolbar">
+      <TooltrayNext overflowMode="none">
         <Dropdown
           bordered
           defaultSelected={[accountOptions[0]]}
@@ -24,8 +24,8 @@ export const ContentSections = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </Tooltray>
-      <Tooltray
+      </TooltrayNext>
+      <TooltrayNext
         align="center"
         overflowPriority={5}
         role="group"
@@ -35,8 +35,8 @@ export const ContentSections = (): ReactElement => (
           <ToggleButton value="reports">Reports</ToggleButton>
           <ToggleButton value="schedules">Schedules</ToggleButton>
         </ToggleButtonGroup>
-      </Tooltray>
-      <Tooltray
+      </TooltrayNext>
+      <TooltrayNext
         align="end"
         overflowPriority={6}
         role="group"
@@ -52,7 +52,7 @@ export const ContentSections = (): ReactElement => (
           <AddIcon aria-hidden />
           Add domain
         </Button>
-      </Tooltray>
-    </Toolbar>
+      </TooltrayNext>
+    </ToolbarNext>
   </div>
 );

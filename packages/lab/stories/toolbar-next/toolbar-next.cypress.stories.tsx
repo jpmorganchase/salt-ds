@@ -16,7 +16,7 @@ import {
   DatePickerTrigger,
 } from "@salt-ds/date-components";
 import { CurrencyIcon, SearchIcon } from "@salt-ds/icons";
-import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react-vite";
 import { type ReactNode, useState } from "react";
 import { AdjustableFlexbox } from "../components";
@@ -230,13 +230,13 @@ export function KeyboardButtonsFixture({ width = 560 }: { width?: number }) {
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard buttons toolbar">
-        <ToolbarContent position="start">
+        <ToolbarContentNext position="start">
           <TooltrayNext overflowMode="none" role="group" aria-label="Editing">
             <Button appearance="transparent">Cut</Button>
             <Button appearance="transparent">Copy</Button>
           </TooltrayNext>
-        </ToolbarContent>
-        <ToolbarContent position="end">
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
           <TooltrayNext
             overflowMode="none"
             role="group"
@@ -244,7 +244,7 @@ export function KeyboardButtonsFixture({ width = 560 }: { width?: number }) {
           >
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
-        </ToolbarContent>
+        </ToolbarContentNext>
       </ToolbarNext>
     </KeyboardHarness>
   );
@@ -322,7 +322,7 @@ export function KeyboardDatePickerFixture({ width = 720 }: { width?: number }) {
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard date picker toolbar">
-        <ToolbarContent position="start">
+        <ToolbarContentNext position="start">
           <TooltrayNext overflowMode="none">
             <DatePicker selectionVariant="single">
               <DatePickerTrigger>
@@ -337,12 +337,12 @@ export function KeyboardDatePickerFixture({ width = 720 }: { width?: number }) {
               </DatePickerOverlay>
             </DatePicker>
           </TooltrayNext>
-        </ToolbarContent>
-        <ToolbarContent position="end">
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
           <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
             <Button appearance="solid">Apply</Button>
           </TooltrayNext>
-        </ToolbarContent>
+        </ToolbarContentNext>
       </ToolbarNext>
     </KeyboardHarness>
   );
@@ -358,12 +358,12 @@ export function KeyboardToggleGroupFixture({
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard toggle group toolbar">
-        <ToolbarContent position="start">
+        <ToolbarContentNext position="start">
           <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
             <Button appearance="solid">First Run</Button>
           </TooltrayNext>
-        </ToolbarContent>
-        <ToolbarContent position="center">
+        </ToolbarContentNext>
+        <ToolbarContentNext position="center">
           <TooltrayNext overflowMode="none">
             <ToggleButtonGroup aria-label="View toggle" defaultValue="all">
               <ToggleButton disabled={disableFirstToggle} value="all">
@@ -373,12 +373,12 @@ export function KeyboardToggleGroupFixture({
               <ToggleButton value="archived">Archived</ToggleButton>
             </ToggleButtonGroup>
           </TooltrayNext>
-        </ToolbarContent>
-        <ToolbarContent position="end">
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
           <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
-        </ToolbarContent>
+        </ToolbarContentNext>
       </ToolbarNext>
     </KeyboardHarness>
   );
@@ -394,12 +394,12 @@ export function KeyboardOverflowToggleGroupFixture({
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard overflow toggle group toolbar">
-        <ToolbarContent position="start">
+        <ToolbarContentNext position="start">
           <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
             <Button appearance="solid">Pinned</Button>
           </TooltrayNext>
-        </ToolbarContent>
-        <ToolbarContent position="end">
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
           <TooltrayNext
             aria-label="Views"
             overflowGroup="Views"
@@ -418,7 +418,7 @@ export function KeyboardOverflowToggleGroupFixture({
             </ToggleButtonGroup>
             <Button appearance="solid">Confirm view</Button>
           </TooltrayNext>
-        </ToolbarContent>
+        </ToolbarContentNext>
       </ToolbarNext>
     </KeyboardHarness>
   );
@@ -428,7 +428,7 @@ export function KeyboardOverflowFixture({ width = 420 }: { width?: number }) {
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard overflow toolbar">
-        <ToolbarContent position="start">
+        <ToolbarContentNext position="start">
           <TooltrayNext overflowMode="none">
             <Input
               bordered
@@ -436,8 +436,8 @@ export function KeyboardOverflowFixture({ width = 420 }: { width?: number }) {
               placeholder="Search"
             />
           </TooltrayNext>
-        </ToolbarContent>
-        <ToolbarContent position="end">
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
           <TooltrayNext
             aria-label="Actions"
             overflowGroup="Actions"
@@ -449,7 +449,7 @@ export function KeyboardOverflowFixture({ width = 420 }: { width?: number }) {
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
-        </ToolbarContent>
+        </ToolbarContentNext>
       </ToolbarNext>
     </KeyboardHarness>
   );
@@ -465,7 +465,7 @@ export function KeyboardOverflowRerenderFixture({
   return (
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard overflow rerender toolbar">
-        <ToolbarContent position="start">
+        <ToolbarContentNext position="start">
           <TooltrayNext overflowMode="none">
             <Input
               bordered
@@ -473,8 +473,8 @@ export function KeyboardOverflowRerenderFixture({
               placeholder="Search"
             />
           </TooltrayNext>
-        </ToolbarContent>
-        <ToolbarContent position="end">
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
           <TooltrayNext
             aria-label="Actions"
             overflowGroup="Actions"
@@ -493,7 +493,7 @@ export function KeyboardOverflowRerenderFixture({
               Re-render {clickCount}
             </Button>
           </TooltrayNext>
-        </ToolbarContent>
+        </ToolbarContentNext>
       </ToolbarNext>
     </KeyboardHarness>
   );

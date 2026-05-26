@@ -17,7 +17,7 @@ import {
   useRef,
   useState,
 } from "react";
-import type { ToolbarContentPosition } from "./ToolbarContent";
+import type { ToolbarContentNextPosition } from "./ToolbarContentNext";
 import toolbarNextCss from "./ToolbarNext.css";
 import {
   type ToolbarNextItemHostKind,
@@ -48,7 +48,7 @@ export interface ToolbarNextProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltToolbarNext");
 const withOverflowBaseName = makePrefixer("saltToolbarNextOverflow");
-const bandPositions: ToolbarContentPosition[] = ["start", "center", "end"];
+const bandPositions: ToolbarContentNextPosition[] = ["start", "center", "end"];
 
 type ToolbarNextItemHostNodes = Partial<
   Record<ToolbarNextItemHostKind, HTMLDivElement | null>
@@ -151,7 +151,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
 
     const bandsByPosition = useMemo(() => {
       return bandPositions.reduce<
-        Record<ToolbarContentPosition, typeof content>
+        Record<ToolbarContentNextPosition, typeof content>
       >(
         (bands, position) => {
           bands[position] = content.filter(
@@ -286,7 +286,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       if (process.env.NODE_ENV !== "production") {
         if (mode === "invalid" && !invalidCompositionWarnedRef.current) {
           console.warn(
-            "ToolbarNext children must be authored in one composition model: either TooltrayNext/Divider children directly in ToolbarNext, or ToolbarContent children containing TooltrayNext/Divider items.",
+            "ToolbarNext children must be authored in one composition model: either TooltrayNext/Divider children directly in ToolbarNext, or ToolbarContentNext children containing TooltrayNext/Divider items.",
           );
           invalidCompositionWarnedRef.current = true;
         }

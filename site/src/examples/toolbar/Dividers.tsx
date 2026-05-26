@@ -1,8 +1,8 @@
 import { Button, Divider, Dropdown, Option, Text } from "@salt-ds/core";
 import {
-  ToolbarNext as Toolbar,
-  ToolbarContent,
-  TooltrayNext as Tooltray,
+  ToolbarContentNext,
+  ToolbarNext,
+  TooltrayNext,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
@@ -13,9 +13,9 @@ const typeOptions = ["Type", "Date", "Status"];
 export const Dividers = (): ReactElement => {
   return (
     <div className={styles.example}>
-      <Toolbar aria-label="Payment toolbar with divider">
-        <ToolbarContent position="start">
-          <Tooltray overflowPriority={1}>
+      <ToolbarNext aria-label="Payment toolbar with divider">
+        <ToolbarContentNext position="start">
+          <TooltrayNext overflowPriority={1}>
             <Text styleAs="label">Payment</Text>
             <Dropdown
               aria-label="Payment"
@@ -29,10 +29,10 @@ export const Dividers = (): ReactElement => {
                 </Option>
               ))}
             </Dropdown>
-          </Tooltray>
-        </ToolbarContent>
-        <ToolbarContent position="end">
-          <Tooltray overflowPriority={2}>
+          </TooltrayNext>
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
+          <TooltrayNext overflowPriority={2}>
             <Text styleAs="label">Sort</Text>
             <Dropdown
               aria-label="Sort"
@@ -46,21 +46,21 @@ export const Dividers = (): ReactElement => {
                 </Option>
               ))}
             </Dropdown>
-          </Tooltray>
+          </TooltrayNext>
           <Divider orientation="vertical" variant="secondary" />
-          <Tooltray
+          <TooltrayNext
             overflowPriority={3}
             role="group"
             aria-label="Payment actions"
           >
             <Button appearance="bordered">Reject</Button>
             <Button appearance="solid">Publish</Button>
-          </Tooltray>
-        </ToolbarContent>
-      </Toolbar>
-      <Toolbar aria-label="Payment toolbar with spacing">
-        <ToolbarContent position="start">
-          <Tooltray overflowPriority={1}>
+          </TooltrayNext>
+        </ToolbarContentNext>
+      </ToolbarNext>
+      <ToolbarNext aria-label="Payment toolbar with spacing">
+        <ToolbarContentNext position="start">
+          <TooltrayNext overflowPriority={1}>
             <Text styleAs="label">Payment</Text>
             <Dropdown
               aria-label="Payment"
@@ -74,10 +74,10 @@ export const Dividers = (): ReactElement => {
                 </Option>
               ))}
             </Dropdown>
-          </Tooltray>
-        </ToolbarContent>
-        <ToolbarContent position="end">
-          <Tooltray overflowPriority={2}>
+          </TooltrayNext>
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
+          <TooltrayNext overflowPriority={2}>
             <Text styleAs="label">Sort</Text>
             <Dropdown
               aria-label="Sort"
@@ -91,8 +91,8 @@ export const Dividers = (): ReactElement => {
                 </Option>
               ))}
             </Dropdown>
-          </Tooltray>
-          <Tooltray
+          </TooltrayNext>
+          <TooltrayNext
             overflowPriority={3}
             role="group"
             aria-label="Payment actions"
@@ -100,9 +100,9 @@ export const Dividers = (): ReactElement => {
           >
             <Button appearance="bordered">Reject</Button>
             <Button appearance="solid">Publish</Button>
-          </Tooltray>
-        </ToolbarContent>
-      </Toolbar>
+          </TooltrayNext>
+        </ToolbarContentNext>
+      </ToolbarNext>
     </div>
   );
 };

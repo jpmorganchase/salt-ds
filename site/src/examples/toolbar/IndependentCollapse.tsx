@@ -6,15 +6,15 @@ import {
   DatePickerSingleInput,
   DatePickerTrigger,
 } from "@salt-ds/date-components";
-import { ToolbarNext as Toolbar, TooltrayNext as Tooltray } from "@salt-ds/lab";
+import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 import { sortOptions, typeOptions } from "./toolbarExampleData";
 
 export const IndependentCollapse = (): ReactElement => (
   <div className={styles.narrow}>
-    <Toolbar aria-label="Payment toolbar" variant="secondary">
-      <Tooltray overflowPriority={1}>
+    <ToolbarNext aria-label="Payment toolbar" variant="secondary">
+      <TooltrayNext overflowPriority={1}>
         <Dropdown
           bordered
           defaultSelected={[typeOptions[1]]}
@@ -24,8 +24,8 @@ export const IndependentCollapse = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </Tooltray>
-      <Tooltray align="end" overflowPriority={5}>
+      </TooltrayNext>
+      <TooltrayNext align="end" overflowPriority={5}>
         <Dropdown
           bordered
           defaultSelected={[sortOptions[1]]}
@@ -35,8 +35,8 @@ export const IndependentCollapse = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </Tooltray>
-      <Tooltray align="end" overflowPriority={4}>
+      </TooltrayNext>
+      <TooltrayNext align="end" overflowPriority={4}>
         <DatePicker selectionVariant="single">
           <DatePickerTrigger>
             <DatePickerSingleInput
@@ -49,7 +49,7 @@ export const IndependentCollapse = (): ReactElement => (
             <DatePickerSingleGridPanel />
           </DatePickerOverlay>
         </DatePicker>
-      </Tooltray>
-    </Toolbar>
+      </TooltrayNext>
+    </ToolbarNext>
   </div>
 );

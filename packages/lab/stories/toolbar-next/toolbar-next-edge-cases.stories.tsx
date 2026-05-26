@@ -8,7 +8,7 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import { ToolbarContent, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ export default {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarContent,
+    ToolbarContentNext,
     TooltrayNext,
   },
 } as Meta<typeof ToolbarNext>;
@@ -130,7 +130,7 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
 
   return (
     <ToolbarNext aria-label="Dynamic toolbar">
-      <ToolbarContent position="start">
+      <ToolbarContentNext position="start">
         <TooltrayNext overflowMode="none">
           <Input
             bordered
@@ -167,8 +167,8 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
             )}
           </TooltrayNext>
         ))}
-      </ToolbarContent>
-      <ToolbarContent position="end">
+      </ToolbarContentNext>
+      <ToolbarContentNext position="end">
         <TooltrayNext
           overflowMode="none"
           role="group"
@@ -201,7 +201,7 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
             Add date
           </Button>
         </TooltrayNext>
-      </ToolbarContent>
+      </ToolbarContentNext>
     </ToolbarNext>
   );
 };
@@ -325,7 +325,7 @@ export const OverflowMenuInClippingContainer: StoryFn<
           appearance="transparent"
           aria-label="Trade exception review toolbar"
         >
-          <ToolbarContent position="start">
+          <ToolbarContentNext position="start">
             <TooltrayNext overflowMode="none">
               <Input
                 bordered
@@ -362,8 +362,8 @@ export const OverflowMenuInClippingContainer: StoryFn<
                 Status
               </Button>
             </TooltrayNext>
-          </ToolbarContent>
-          <ToolbarContent position="end">
+          </ToolbarContentNext>
+          <ToolbarContentNext position="end">
             <TooltrayNext
               aria-label="Review actions"
               overflowGroup="Actions"
@@ -388,7 +388,7 @@ export const OverflowMenuInClippingContainer: StoryFn<
                 <SettingsIcon aria-hidden />
               </Button>
             </TooltrayNext>
-          </ToolbarContent>
+          </ToolbarContentNext>
         </ToolbarNext>
       </div>
     </div>

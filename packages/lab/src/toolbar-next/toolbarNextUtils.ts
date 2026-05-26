@@ -9,10 +9,10 @@ import {
 } from "react";
 
 import {
-  ToolbarContent,
-  type ToolbarContentPosition,
-  type ToolbarContentProps,
-} from "./ToolbarContent";
+  ToolbarContentNext,
+  type ToolbarContentNextPosition,
+  type ToolbarContentNextProps,
+} from "./ToolbarContentNext";
 import {
   TooltrayNext,
   type TooltrayNextOverflowMode,
@@ -50,8 +50,8 @@ export interface ToolbarNextContentModel {
   implicit: boolean;
   items: ToolbarNextOverflowItem[];
   key: string;
-  position: ToolbarContentPosition;
-  props: Omit<ToolbarContentProps, "children" | "position">;
+  position: ToolbarContentNextPosition;
+  props: Omit<ToolbarContentNextProps, "children" | "position">;
   ref: Ref<HTMLDivElement> | null;
 }
 
@@ -130,10 +130,10 @@ export function flattenToolbarChildren(
   return flattened;
 }
 
-function isToolbarContentElement(
+function isToolbarContentNextElement(
   child: ToolbarNextChild,
-): child is ReactElement<ToolbarContentProps> {
-  return isValidElement(child) && child.type === ToolbarContent;
+): child is ReactElement<ToolbarContentNextProps> {
+  return isValidElement(child) && child.type === ToolbarContentNext;
 }
 
 function isTooltrayElement(
@@ -222,7 +222,7 @@ function normalizeExplicitContent(
   const content: ToolbarNextContentModel[] = [];
 
   for (const [index, child] of children.entries()) {
-    if (!isToolbarContentElement(child)) {
+    if (!isToolbarContentNextElement(child)) {
       continue;
     }
 
@@ -253,12 +253,12 @@ function normalizeExplicitContent(
 }
 
 function normalizeFlatChildren(children: ToolbarNextChild[]) {
-  const buckets: Record<ToolbarContentPosition, ToolbarNextChild[]> = {
+  const buckets: Record<ToolbarContentNextPosition, ToolbarNextChild[]> = {
     start: [],
     center: [],
     end: [],
   };
-  let currentPosition: ToolbarContentPosition = "start";
+  let currentPosition: ToolbarContentNextPosition = "start";
 
   for (const child of children) {
     if (isTooltrayElement(child)) {
@@ -275,7 +275,7 @@ function normalizeFlatChildren(children: ToolbarNextChild[]) {
     return null;
   }
 
-  return (Object.keys(buckets) as ToolbarContentPosition[]).reduce<
+  return (Object.keys(buckets) as ToolbarContentNextPosition[]).reduce<
     ToolbarNextContentModel[]
   >((content, position) => {
     const contentKey = `${position}-implicit`;
@@ -302,9 +302,11 @@ export function normalizeToolbarChildren(
   children: ReactNode,
 ): ToolbarNextModel {
   const flattenedChildren = flattenToolbarChildren(children);
-  const hasContentChildren = flattenedChildren.some(isToolbarContentElement);
+  const hasContentChildren = flattenedChildren.some(
+    isToolbarContentNextElement,
+  );
   const hasOnlyContent =
-    hasContentChildren && flattenedChildren.every(isToolbarContentElement);
+    hasContentChildren && flattenedChildren.every(isToolbarContentNextElement);
   const hasOnlyFlatChildren = flattenedChildren.every(
     (child) => isTooltrayElement(child) || isDividerElement(child),
   );
