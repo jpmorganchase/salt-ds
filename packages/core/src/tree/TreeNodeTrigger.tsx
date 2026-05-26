@@ -1,4 +1,3 @@
-import { CheckboxIcon, makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -12,6 +11,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { CheckboxIcon } from "../checkbox";
+import { makePrefixer, useForkRef } from "../utils";
 import { useTreeContext, useTreeNodeContext } from "./TreeContext";
 import { TreeNodeExpansionIcon } from "./TreeNodeExpansionIcon";
 import treeNodeTriggerCss from "./TreeNodeTrigger.css";

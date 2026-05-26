@@ -1,11 +1,16 @@
-import { Tooltip } from "@salt-ds/core";
+import {
+  Tooltip,
+  Tree,
+  TreeNode,
+  TreeNodeLabel,
+  TreeNodeTrigger,
+} from "@salt-ds/core";
 import { DocumentIcon, FolderClosedIcon, FolderOpenIcon } from "@salt-ds/icons";
-import { Tree, TreeNode, TreeNodeLabel, TreeNodeTrigger } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
 export default {
-  title: "Lab/Tree",
+  title: "Core/Tree",
   component: Tree,
   argTypes: {
     multiselect: {

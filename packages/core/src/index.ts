@@ -75,6 +75,7 @@ export * from "./toggle-button";
 export * from "./toggle-button-group";
 export * from "./toggletip";
 export * from "./tooltip";
+export * from "./tree";
 export * from "./types";
 export * from "./utils";
 export * from "./vertical-navigation";
