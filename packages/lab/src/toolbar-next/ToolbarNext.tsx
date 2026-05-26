@@ -337,7 +337,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
               hostNodes={itemOwnerHostNodes}
               items={allItems}
             />
-            <div aria-hidden className={clsx(withBaseName("measurements"))}>
+            <div aria-hidden className={withBaseName("measurements")}>
               {overflowTriggerGroups
                 .filter((group) => !group.named)
                 .map((group) => (
