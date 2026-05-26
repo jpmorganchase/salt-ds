@@ -729,6 +729,10 @@ export function useToolbarNextOverflow({
 
   useIsomorphicLayoutEffect(() => {
     scheduleMeasureRef.current = scheduleMeasure;
+
+    return () => {
+      scheduleMeasureRef.current = () => {};
+    };
   }, [scheduleMeasure]);
 
   const getCachedWidthForObservedTarget = useCallback(
@@ -825,6 +829,7 @@ export function useToolbarNextOverflow({
       return;
     }
 
+    let cancelled = false;
     const win = ownerWindow(container);
     const resizeObserver = new win.ResizeObserver((entries) => {
       let shouldMeasure = false;
@@ -872,11 +877,14 @@ export function useToolbarNextOverflow({
 
     if (win.document.fonts) {
       void win.document.fonts.ready.then(() => {
-        scheduleMeasureRef.current();
+        if (!cancelled) {
+          scheduleMeasureRef.current();
+        }
       });
     }
 
     return () => {
+      cancelled = true;
       resizeObserverRef.current = null;
       resizeObserver.disconnect();
 
