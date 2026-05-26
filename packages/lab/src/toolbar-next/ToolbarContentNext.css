@@ -20,5 +20,6 @@
 
 .saltToolbarContentNext[data-implicit] > .saltTooltrayNext[data-align="center"],
 .saltToolbarContentNext[data-implicit] > .saltTooltrayNext[data-align="end"] {
-  margin-inline: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
 }

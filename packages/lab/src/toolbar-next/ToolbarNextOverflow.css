@@ -16,7 +16,8 @@
 }
 
 .saltToolbarNextOverflow-slot[data-align="center"] {
-  margin-inline: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
 }
 
 .saltToolbarNextOverflow-item {
@@ -69,7 +70,8 @@
 
 .saltToolbarNextOverflow-panel .saltTooltrayNext[data-align="center"],
 .saltToolbarNextOverflow-panel .saltTooltrayNext[data-align="end"] {
-  margin-inline: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
 }
 
 .saltToolbarNextOverflow-panel .saltTooltrayNext > * {
@@ -78,5 +80,6 @@
 
 .saltToolbarNextOverflow-content > .saltToolbarNextOverflow-slot .saltTooltrayNext[data-align="center"],
 .saltToolbarNextOverflow-content > .saltToolbarNextOverflow-slot .saltTooltrayNext[data-align="end"] {
-  margin-inline: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
 }

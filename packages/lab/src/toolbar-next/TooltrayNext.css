@@ -15,5 +15,6 @@
 }
 
 .saltTooltrayNext[data-align="center"] {
-  margin-inline: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
 }
