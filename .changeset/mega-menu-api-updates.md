@@ -8,7 +8,7 @@ Updated `MegaMenu` with several API improvements:
 - **Renamed `MegaMenuContent` to `MegaMenuSupportingContent`** to better convey its purpose as a region for supporting content alongside the menu groups.
 - **Removed `MegaMenuItemContent`.** Pass the label directly to `MegaMenuItem`.
 - **Added `MegaMenuSupportingActions`.** Use it to group one or more supporting action links beneath the menu groups in a `MegaMenuPanel`.
-- **Added a `render` prop to `MegaMenuItem`** for integration with custom link or routing components (such as `react-router`'s `Link`). When no `render` prop or `href` is provided, `MegaMenuItem` falls back to rendering a `<button>` element.
+- **Added a `render` prop to `MegaMenuItem`** for integration with custom link or routing components (such as `react-router`'s `Link`).
 
 ```diff
 - <MegaMenuSection>
