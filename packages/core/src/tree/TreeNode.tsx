@@ -1,4 +1,3 @@
-import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -9,6 +8,7 @@ import {
   useMemo,
   useRef,
 } from "react";
+import { makePrefixer, useForkRef, useIdMemo } from "../utils";
 import {
   TreeNodeProvider,
   useTreeContext,

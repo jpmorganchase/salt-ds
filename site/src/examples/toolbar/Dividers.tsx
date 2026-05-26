@@ -1,9 +1,5 @@
 import { Button, Divider, Dropdown, Option, Text } from "@salt-ds/core";
-import {
-  ToolbarContentNext,
-  ToolbarNext,
-  TooltrayNext,
-} from "@salt-ds/lab";
+import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 

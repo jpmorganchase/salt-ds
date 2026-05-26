@@ -1,10 +1,6 @@
 import { Button, Dropdown, Option } from "@salt-ds/core";
 import { AddIcon } from "@salt-ds/icons";
-import {
-  ToolbarContentNext,
-  ToolbarNext,
-  TooltrayNext,
-} from "@salt-ds/lab";
+import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 import { accountOptions, typeOptions } from "./toolbarExampleData";

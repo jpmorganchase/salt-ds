@@ -1,4 +1,4 @@
-import { Tree, TreeNode } from "@salt-ds/lab";
+import { Tree, TreeNode } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Multiselect = (): ReactElement => (

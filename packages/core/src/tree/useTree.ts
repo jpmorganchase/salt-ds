@@ -1,4 +1,3 @@
-import { useControlled } from "@salt-ds/core";
 import {
   type ReactNode,
   type SyntheticEvent,
@@ -8,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useControlled } from "../utils";
 import { buildTreeModel, type TreeModel, type TreeNodeMeta } from "./treeModel";
 
 export type { TreeModel, TreeNodeMeta } from "./treeModel";

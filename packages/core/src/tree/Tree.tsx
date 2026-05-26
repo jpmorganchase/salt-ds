@@ -1,4 +1,3 @@
-import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -11,6 +10,7 @@ import {
   useEffect,
   useRef,
 } from "react";
+import { makePrefixer, useForkRef } from "../utils";
 import treeCss from "./Tree.css";
 import { TreeProvider } from "./TreeContext";
 import { useTree } from "./useTree";
