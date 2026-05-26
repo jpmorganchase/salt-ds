@@ -161,7 +161,10 @@ ContentFirst.globals = {
  *   off the toolbar midpoint.
  */
 export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Centered named overflow toolbar">
+  <ToolbarNext
+    aria-label="Centered named overflow toolbar"
+    style={{ minWidth: "30vw" }}
+  >
     <ToolbarContent position="start">
       <TooltrayNext overflowMode="none" role="group" aria-label="Leading">
         <Button style={{ width: 140 }}>Start</Button>
@@ -274,7 +277,11 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
         }}
       >
         <Text>{variant}</Text>
-        <ToolbarNext variant={variant} aria-label={`${variant} toolbar`}>
+        <ToolbarNext
+          variant={variant}
+          aria-label={`${variant} toolbar`}
+          style={{ minWidth: "14vw" }}
+        >
           <ToolbarContent position="start">
             <TooltrayNext>
               <Dropdown
@@ -541,7 +548,10 @@ RightToLeft.globals = {
  *   resize and observe the progressive collapse.
  */
 export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Toolbar with shared overflow">
+  <ToolbarNext
+    aria-label="Toolbar with shared overflow"
+    style={{ minWidth: "14vw" }}
+  >
     <TooltrayNext overflowPriority={4}>
       <Dropdown
         aria-label="Filter option"
@@ -612,7 +622,10 @@ DefaultSharedOverflow.globals = {
  *   never collapses.
  */
 export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Toolbar with named overflow">
+  <ToolbarNext
+    aria-label="Toolbar with named overflow"
+    style={{ minWidth: "20vw" }}
+  >
     <ToolbarContent position="start">
       <TooltrayNext
         aria-label="Filters"
@@ -722,7 +735,10 @@ OverflowPriorities.globals = {
  *   overflowed controls and appear between actions inside the overflow panel.
  */
 export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Toolbar with overflow menu dividers">
+  <ToolbarNext
+    aria-label="Toolbar with overflow menu dividers"
+    style={{ minWidth: "26vw" }}
+  >
     <ToolbarContent position="start">
       <TooltrayNext overflowMode="none">
         <Dropdown
@@ -824,7 +840,10 @@ OverflowMenuDividers.globals = {
  *   replacement.
  */
 export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Data entry toolbar with named overflow">
+  <ToolbarNext
+    aria-label="Data entry toolbar with named overflow"
+    style={{ minWidth: "25vw" }}
+  >
     <TooltrayNext
       overflowGroup="Filters"
       overflowLabel="Filters"
