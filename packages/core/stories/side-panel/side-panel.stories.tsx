@@ -12,6 +12,14 @@ import {
   Link,
   RadioButton,
   RadioButtonGroup,
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelContent,
+  SidePanelHeader,
+  type SidePanelProps,
+  SidePanelProvider,
+  SidePanelTitle,
+  SidePanelTrigger,
   StackLayout,
   Table,
   TableContainer,
@@ -22,6 +30,7 @@ import {
   THead,
   Tooltip,
   TR,
+  useSidePanel,
 } from "@salt-ds/core";
 import {
   ChattingIcon,
@@ -30,17 +39,6 @@ import {
   NotificationIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import {
-  SidePanel,
-  SidePanelCloseButton,
-  SidePanelContent,
-  SidePanelHeader,
-  type SidePanelProps,
-  SidePanelProvider,
-  SidePanelTitle,
-  SidePanelTrigger,
-  useSidePanel,
-} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "@salt-ds/react-resizable-panels-theme/index.css";
 import type React from "react";
@@ -62,7 +60,7 @@ import {
 import "./side-panel.stories.css";
 
 export default {
-  title: "Lab/Side Panel",
+  title: "Core/Side Panel",
   component: SidePanel,
   parameters: {
     layout: "fullscreen",

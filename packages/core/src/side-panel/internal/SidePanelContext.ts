@@ -1,6 +1,6 @@
 import type { FloatingRootContext } from "@floating-ui/react";
-import { createContext } from "@salt-ds/core";
 import { type Dispatch, type SetStateAction, useContext } from "react";
+import { createContext } from "../../utils";
 
 export interface SidePanelContextValue {
   /**

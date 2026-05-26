@@ -1,11 +1,3 @@
-import {
-  makePrefixer,
-  useEventCallback,
-  useForkRef,
-  useId,
-  useIsomorphicLayoutEffect,
-  usePrevious,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -20,6 +12,14 @@ import {
   useState,
 } from "react";
 import { tabbable } from "tabbable";
+import {
+  makePrefixer,
+  useEventCallback,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+  usePrevious,
+} from "../utils";
 import { SidePanelContext, useSidePanelContext } from "./internal";
 import sidePanelCss from "./SidePanel.css";
 

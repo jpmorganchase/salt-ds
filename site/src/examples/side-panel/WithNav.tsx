@@ -1,5 +1,6 @@
-import { Button, FlexLayout, Text } from "@salt-ds/core";
 import {
+  Button,
+  FlexLayout,
   SidePanel,
   SidePanelCloseButton,
   SidePanelContent,
@@ -7,7 +8,8 @@ import {
   SidePanelProvider,
   SidePanelTitle,
   SidePanelTrigger,
-} from "@salt-ds/lab";
+  Text,
+} from "@salt-ds/core";
 import { ContentExample } from "./ContentExample";
 import styles from "./index.module.css";
 

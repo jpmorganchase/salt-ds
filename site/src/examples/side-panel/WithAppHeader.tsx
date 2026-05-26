@@ -6,6 +6,13 @@ import {
   FlexLayout,
   Input,
   Link,
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelContent,
+  SidePanelHeader,
+  SidePanelProvider,
+  SidePanelTitle,
+  SidePanelTrigger,
   StackLayout,
   Text,
   Tooltip,
@@ -16,15 +23,6 @@ import {
   NotificationIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import {
-  SidePanel,
-  SidePanelCloseButton,
-  SidePanelContent,
-  SidePanelHeader,
-  SidePanelProvider,
-  SidePanelTitle,
-  SidePanelTrigger,
-} from "@salt-ds/lab";
 import { ContentExample } from "./ContentExample";
 
 const DesktopAppHeader = () => {

@@ -1,5 +1,17 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.93
+
+### Minor Changes
+
+- 8980f01: Removed `SidePanel` and its related components (`SidePanelProvider`, `SidePanelTrigger`, `SidePanelCloseButton`, `SidePanelHeader`, `SidePanelTitle`, `SidePanelContent`, and the `useSidePanel` hook) from lab and promoted to core.
+
+### Patch Changes
+
+- 1718878: Updated Tree node layout to use `spacing-75 + spacing-50` vertical padding and `size-icon` chevron to align with design.
+- Updated dependencies [8980f01]
+  - @salt-ds/core@1.62.0
+
 ## 1.0.0-alpha.92
 
 ### Patch Changes
