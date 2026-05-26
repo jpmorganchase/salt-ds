@@ -186,7 +186,7 @@ function SharedIntrinsicWidthTestCase() {
   return (
     <div className="IntrinsicWidthHarness" style={{ height: 220, width: 500 }}>
       <ToolbarNext aria-label="Toolbar with shared intrinsic width changes">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <WidthChangingButton
             ariaLabel="Toggle shared width"
             collapsedLabel="Search"
@@ -200,11 +200,7 @@ function SharedIntrinsicWidthTestCase() {
             Columns
           </Button>
         </TooltrayNext>
-        <TooltrayNext
-          overflowMode="none"
-          role="group"
-          aria-label="Primary action"
-        >
+        <TooltrayNext overflowMode="none">
           <Button appearance="solid" style={{ width: 100 }}>
             Run
           </Button>
@@ -218,7 +214,7 @@ function GuardedResizeDuringComputeTestCase() {
   return (
     <div className="GuardedResizeHarness" style={{ height: 220, width: 500 }}>
       <ToolbarNext aria-label="Toolbar with guarded resize work">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <Button
             appearance="transparent"
             aria-label="Resize guarded tray"
@@ -232,11 +228,7 @@ function GuardedResizeDuringComputeTestCase() {
             Columns
           </Button>
         </TooltrayNext>
-        <TooltrayNext
-          overflowMode="none"
-          role="group"
-          aria-label="Primary action"
-        >
+        <TooltrayNext overflowMode="none">
           <Button appearance="solid" style={{ width: 100 }}>
             Run
           </Button>
@@ -274,7 +266,7 @@ function NamedGroupCollapseTestCase({
     <div className="Flexbox" style={toolbarHarnessStyle}>
       <ToolbarNext aria-label={`${overflowMode} named filters toolbar`}>
         <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+          <TooltrayNext overflowMode="none">
             <Button style={{ width: 140 }}>Search</Button>
           </TooltrayNext>
           <TooltrayNext
@@ -282,8 +274,6 @@ function NamedGroupCollapseTestCase({
             overflowLabel="Filters"
             overflowMode={overflowMode}
             overflowPriority={3}
-            role="group"
-            aria-label="Primary filters"
           >
             <Button appearance="transparent" style={{ width: 110 }}>
               Filter A
@@ -294,8 +284,6 @@ function NamedGroupCollapseTestCase({
             overflowLabel="Filters"
             overflowMode={overflowMode}
             overflowPriority={4}
-            role="group"
-            aria-label="Secondary filters"
           >
             <Button appearance="transparent" style={{ width: 110 }}>
               Status
@@ -306,8 +294,6 @@ function NamedGroupCollapseTestCase({
             overflowLabel="Filters"
             overflowMode={overflowMode}
             overflowPriority={5}
-            role="group"
-            aria-label="Tertiary filters"
           >
             <Button appearance="transparent" style={{ width: 110 }}>
               Columns
@@ -315,11 +301,7 @@ function NamedGroupCollapseTestCase({
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext
-            overflowMode="none"
-            role="group"
-            aria-label="Quick actions"
-          >
+          <TooltrayNext overflowMode="none">
             <Button appearance="transparent" style={{ width: 100 }}>
               Refresh
             </Button>
@@ -351,24 +333,22 @@ function CenteredToolbarTestCase({
       <ToolbarNext aria-label={ariaLabel}>
         {includeStart ? (
           <ToolbarContentNext position="start">
-            <TooltrayNext overflowMode="none" role="group" aria-label="Leading">
+            <TooltrayNext overflowMode="none">
               <Button style={{ width: startWidth }}>Start</Button>
             </TooltrayNext>
           </ToolbarContentNext>
         ) : null}
         <ToolbarContentNext position="center">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Centered">
+          <TooltrayNext overflowMode="none">
             <Button style={{ width: 140 }}>Center action</Button>
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
           <TooltrayNext
-            aria-label="Actions"
             overflowGroup="Actions"
             overflowLabel="Actions"
             overflowMode={includeOverflow ? "grouped" : "none"}
             overflowPriority={5}
-            role="group"
           >
             <Button appearance="transparent" style={{ width: endWidth }}>
               End primary
@@ -389,7 +369,7 @@ function NamedIntrinsicWidthTestCase() {
   return (
     <div className="IntrinsicWidthHarness" style={{ height: 220, width: 480 }}>
       <ToolbarNext aria-label="Toolbar with named intrinsic width changes">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <WidthChangingButton
             ariaLabel="Toggle named width"
             collapsedLabel="Search"
@@ -400,12 +380,10 @@ function NamedIntrinsicWidthTestCase() {
         </TooltrayNext>
         <TooltrayNext
           align="end"
-          aria-label="Actions"
           overflowGroup="Actions"
           overflowLabel="Actions"
           overflowMode="grouped"
           overflowPriority={5}
-          role="group"
         >
           <Button appearance="transparent">Export</Button>
           <Button appearance="solid">Apply</Button>
@@ -434,7 +412,7 @@ function HiddenOverflowWidthChangeTestCase({
       </Button>
       <div className="Flexbox" style={{ height: 220, width: 260 }}>
         <ToolbarNext aria-label="Toolbar with hidden intrinsic width changes">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+          <TooltrayNext overflowMode="none">
             <Button appearance="transparent" style={{ width: 120 }}>
               Pinned
             </Button>
@@ -444,12 +422,7 @@ function HiddenOverflowWidthChangeTestCase({
               {wide ? "Hidden action with a long label" : "Short"}
             </Button>
           </TooltrayNext>
-          <TooltrayNext
-            align="end"
-            overflowMode="none"
-            role="group"
-            aria-label="Primary action"
-          >
+          <TooltrayNext align="end" overflowMode="none">
             <Button appearance="solid" style={{ width: 100 }}>
               Run
             </Button>
@@ -469,7 +442,7 @@ function NamedOverflowFocusReentryTestCase() {
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Named overflow focus toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+          <TooltrayNext overflowMode="none">
             <Input bordered placeholder="Search" />
           </TooltrayNext>
           <TooltrayNext
@@ -477,8 +450,6 @@ function NamedOverflowFocusReentryTestCase() {
             overflowLabel="Filters"
             overflowMode="grouped"
             overflowPriority={5}
-            role="group"
-            aria-label="Filters"
           >
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
@@ -493,8 +464,6 @@ function NamedOverflowFocusReentryTestCase() {
             overflowLabel="Actions"
             overflowMode="grouped"
             overflowPriority={6}
-            role="group"
-            aria-label="Actions"
           >
             <Button appearance="transparent">Export</Button>
             <Button appearance="transparent">Settings</Button>
@@ -520,8 +489,6 @@ function NamedOverflowInputFocusReentryTestCase() {
             overflowLabel="Filters"
             overflowMode="grouped"
             overflowPriority={6}
-            role="group"
-            aria-label="Filters"
           >
             <Dropdown
               aria-label="Filter option"
@@ -541,8 +508,6 @@ function NamedOverflowInputFocusReentryTestCase() {
             overflowLabel="Actions"
             overflowMode="grouped"
             overflowPriority={5}
-            role="group"
-            aria-label="Actions"
           >
             <Button appearance="transparent">Export</Button>
             <Button appearance="transparent">Settings</Button>
@@ -564,7 +529,7 @@ function SharedOverflowDateInputFocusReentryTestCase() {
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Shared overflow date input focus toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext overflowPriority={6} role="group" aria-label="Criteria">
+          <TooltrayNext overflowPriority={6}>
             <Dropdown
               aria-label="Criteria option"
               bordered
@@ -588,7 +553,7 @@ function SharedOverflowDateInputFocusReentryTestCase() {
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext role="group" aria-label="Actions">
+          <TooltrayNext>
             <Button appearance="transparent">Pinned</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
@@ -608,7 +573,7 @@ function SharedOverflowFocusReentryTestCase() {
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Shared overflow focus toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext role="group" aria-label="Search and filter">
+          <TooltrayNext>
             <Input bordered placeholder="Search" style={{ width: 130 }} />
             <Dropdown
               bordered
@@ -621,7 +586,7 @@ function SharedOverflowFocusReentryTestCase() {
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext role="group" aria-label="Actions">
+          <TooltrayNext>
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
@@ -637,11 +602,7 @@ function PointerEntryControlsTestCase() {
     <div className="Flexbox" style={{ height: 220, width: 640 }}>
       <ToolbarNext aria-label="Pointer entry controls toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext
-            overflowMode="none"
-            role="group"
-            aria-label="Search and filter"
-          >
+          <TooltrayNext overflowMode="none">
             <Input bordered placeholder="Search" />
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
@@ -650,7 +611,7 @@ function PointerEntryControlsTestCase() {
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Settings">
+          <TooltrayNext overflowMode="none">
             <Switch label="Pinned" />
           </TooltrayNext>
         </ToolbarContentNext>
@@ -668,18 +629,14 @@ function OverflowPointerEntryControlsTestCase() {
       <button data-testid="overflow-pointer-before">Before toolbar</button>
       <ToolbarNext aria-label="Overflow pointer entry controls toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+          <TooltrayNext overflowMode="none">
             <Button appearance="transparent" style={{ width: 170 }}>
               Pinned
             </Button>
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext
-            role="group"
-            aria-label="Overflow controls"
-            overflowPriority={5}
-          >
+          <TooltrayNext overflowPriority={5}>
             <Input bordered placeholder="Overflow search" />
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
@@ -702,7 +659,7 @@ function SharedOverflowComboBoxFocusReentryTestCase() {
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Shared overflow combo box toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext role="group" aria-label="Search and filter">
+          <TooltrayNext>
             <Input bordered placeholder="Search" />
             <ComboBox bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
@@ -712,7 +669,7 @@ function SharedOverflowComboBoxFocusReentryTestCase() {
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext role="group" aria-label="Actions">
+          <TooltrayNext>
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
@@ -732,14 +689,14 @@ function SharedOverflowDropdownPopupTestCase() {
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Shared overflow dropdown toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+          <TooltrayNext overflowMode="none">
             <Button appearance="transparent" style={{ width: 170 }}>
               Pinned
             </Button>
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext role="group" aria-label="Filters" overflowPriority={5}>
+          <TooltrayNext overflowPriority={5}>
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
               <Option value="Option B" />
@@ -761,7 +718,7 @@ function MixedControlsWidthChangeTestCase() {
       <button data-testid="toolbar-before">Before toolbar</button>
       <ToolbarNext aria-label="Mixed controls width change toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext role="group" aria-label="Criteria">
+          <TooltrayNext>
             <Input bordered placeholder="Search" style={{ width: 150 }} />
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
@@ -770,7 +727,7 @@ function MixedControlsWidthChangeTestCase() {
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext role="group" aria-label="Actions">
+          <TooltrayNext>
             <Button appearance="transparent">Toggle</Button>
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
@@ -794,8 +751,6 @@ function OverflowTextInputKeyboardTestCase() {
           overflowLabel="Filters"
           overflowMode="grouped"
           overflowPriority={5}
-          role="group"
-          aria-label="Filters"
         >
           <Button appearance="transparent">Reset</Button>
           <Input bordered placeholder="Overflow search" />
@@ -814,7 +769,7 @@ function SharedBoundaryCollapseTestCase() {
       style={{ height: 220, width: 760, flexDirection: "column" }}
     >
       <ToolbarNext aria-label="Shared boundary toolbar">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+        <TooltrayNext overflowMode="none">
           <Button appearance="transparent" style={{ width: 120 }}>
             Pinned
           </Button>
@@ -846,16 +801,12 @@ function MixedTrayCompressionTestCase() {
       style={{ height: 220, width: 760, flexDirection: "column" }}
     >
       <ToolbarNext aria-label="Mixed tray compression toolbar">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+        <TooltrayNext overflowMode="none">
           <Button appearance="transparent" style={{ width: 120 }}>
             Pinned
           </Button>
         </TooltrayNext>
-        <TooltrayNext
-          overflowPriority={5}
-          role="group"
-          aria-label="View settings"
-        >
+        <TooltrayNext overflowPriority={5}>
           <Switch label="Show total" />
           <Dropdown
             bordered

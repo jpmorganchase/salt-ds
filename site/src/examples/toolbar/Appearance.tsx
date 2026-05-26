@@ -19,7 +19,7 @@ export const Appearance = (): ReactElement => (
           ))}
         </Dropdown>
       </TooltrayNext>
-      <TooltrayNext align="end" role="group" aria-label="View actions">
+      <TooltrayNext align="end">
         <Button appearance="transparent" aria-label="Download">
           <DownloadIcon aria-hidden />
         </Button>
@@ -41,7 +41,7 @@ export const Appearance = (): ReactElement => (
           ))}
         </Dropdown>
       </TooltrayNext>
-      <TooltrayNext align="end" role="group" aria-label="View actions">
+      <TooltrayNext align="end">
         <Button appearance="transparent" aria-label="Download">
           <DownloadIcon aria-hidden />
         </Button>

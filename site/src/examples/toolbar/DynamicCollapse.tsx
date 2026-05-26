@@ -27,8 +27,6 @@ export const DynamicCollapse = (): ReactElement => (
         overflowLabel="Filters"
         overflowMode="grouped"
         overflowPriority={6}
-        role="group"
-        aria-label="Filters"
       >
         <Dropdown
           aria-label="Date filter"
@@ -59,8 +57,6 @@ export const DynamicCollapse = (): ReactElement => (
         overflowLabel="Actions"
         overflowMode="grouped"
         overflowPriority={5}
-        role="group"
-        aria-label="Actions"
       >
         <Button appearance="solid">
           <NotificationIcon aria-hidden />

@@ -83,7 +83,7 @@ export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
         ))}
       </Dropdown>
     </TooltrayNext>
-    <TooltrayNext role="group" align="end" aria-label="Actions">
+    <TooltrayNext align="end">
       <Button appearance="transparent" aria-label="Grid view">
         <GridIcon aria-hidden />
       </Button>
@@ -166,23 +166,21 @@ export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
     style={{ minWidth: "30vw" }}
   >
     <ToolbarContentNext position="start">
-      <TooltrayNext overflowMode="none" role="group" aria-label="Leading">
+      <TooltrayNext overflowMode="none">
         <Button style={{ width: 140 }}>Start</Button>
       </TooltrayNext>
     </ToolbarContentNext>
     <ToolbarContentNext position="center">
-      <TooltrayNext overflowMode="none" role="group" aria-label="Centered">
+      <TooltrayNext overflowMode="none">
         <Button style={{ width: 180 }}>Center action</Button>
       </TooltrayNext>
     </ToolbarContentNext>
     <ToolbarContentNext position="end">
       <TooltrayNext
-        aria-label="Actions"
         overflowGroup="Actions"
         overflowLabel="Actions"
         overflowMode="grouped"
         overflowPriority={5}
-        role="group"
       >
         <Button appearance="transparent" style={{ width: 180 }}>
           End primary
@@ -228,7 +226,7 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
       </TooltrayNext>
     </ToolbarContentNext>
     <ToolbarContentNext position="end">
-      <TooltrayNext role="group" aria-label="Utility actions">
+      <TooltrayNext>
         <Button appearance="transparent" aria-label="Grid view">
           <GridIcon aria-hidden />
         </Button>
@@ -297,7 +295,7 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
             </TooltrayNext>
           </ToolbarContentNext>
           <ToolbarContentNext position="end">
-            <TooltrayNext role="group" aria-label="Utility actions">
+            <TooltrayNext>
               <Button appearance="transparent">Export</Button>
               <Button appearance="solid">Button</Button>
             </TooltrayNext>
@@ -334,7 +332,7 @@ Variants.globals = {
 export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Mixed controls toolbar">
     <ToolbarContentNext position="start">
-      <TooltrayNext role="group" aria-label="Criteria">
+      <TooltrayNext>
         <Dropdown
           aria-label="Criteria option"
           bordered
@@ -361,7 +359,7 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
       </TooltrayNext>
     </ToolbarContentNext>
     <ToolbarContentNext position="end">
-      <TooltrayNext role="group" aria-label="Settings and actions">
+      <TooltrayNext>
         <Switch label="Pinned" />
         <Button appearance="solid" disabled focusableWhenDisabled>
           Run
@@ -396,30 +394,15 @@ MixedFormControls.globals = {
 export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext aria-label="Toolbar with independent mixed controls">
     <ToolbarContentNext position="start">
-      <TooltrayNext
-        role="group"
-        aria-label="Status"
-        overflowMode="independent"
-        overflowPriority={1}
-      >
+      <TooltrayNext overflowMode="independent" overflowPriority={1}>
         <Tag category={1} variant="primary">
           Draft
         </Tag>
       </TooltrayNext>
-      <TooltrayNext
-        role="group"
-        aria-label="Archive filter"
-        overflowMode="independent"
-        overflowPriority={2}
-      >
+      <TooltrayNext overflowMode="independent" overflowPriority={2}>
         <Checkbox label="Show archived" />
       </TooltrayNext>
-      <TooltrayNext
-        role="group"
-        aria-label="Due date"
-        overflowMode="independent"
-        overflowPriority={3}
-      >
+      <TooltrayNext overflowMode="independent" overflowPriority={3}>
         <Text styleAs="label">Due date</Text>
         <DatePicker selectionVariant="single">
           <DatePickerTrigger>
@@ -446,12 +429,7 @@ export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
       </TooltrayNext>
     </ToolbarContentNext>
     <ToolbarContentNext position="end">
-      <TooltrayNext
-        role="group"
-        aria-label="Help"
-        overflowMode="independent"
-        overflowPriority={5}
-      >
+      <TooltrayNext overflowMode="independent" overflowPriority={5}>
         <Toggletip placement="bottom">
           <ToggletipTrigger aria-label="Review mode help">
             <HelpCircleIcon aria-hidden />
@@ -464,12 +442,7 @@ export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
           </ToggletipPanel>
         </Toggletip>
       </TooltrayNext>
-      <TooltrayNext
-        role="group"
-        aria-label="Reference"
-        overflowMode="independent"
-        overflowPriority={6}
-      >
+      <TooltrayNext overflowMode="independent" overflowPriority={6}>
         <Link href="#">View audit trail</Link>
       </TooltrayNext>
     </ToolbarContentNext>
@@ -493,7 +466,7 @@ IndependentMixedControls.globals = {
 export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
   <div dir="rtl">
     <ToolbarNext aria-label="RTL toolbar">
-      <TooltrayNext role="group" aria-label="Actions">
+      <TooltrayNext>
         <Button appearance="transparent" aria-label="Grid view">
           <GridIcon aria-hidden />
         </Button>
@@ -502,7 +475,7 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
         </Button>
         <Button appearance="solid">Button</Button>
       </TooltrayNext>
-      <TooltrayNext role="group" align="end" aria-label="Search and filter">
+      <TooltrayNext align="end">
         <Dropdown
           aria-label="Filter option"
           bordered
@@ -568,12 +541,7 @@ export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
         Filters
       </Button>
     </TooltrayNext>
-    <TooltrayNext
-      align="end"
-      aria-label="Actions"
-      overflowPriority={6}
-      role="group"
-    >
+    <TooltrayNext align="end" overflowPriority={6}>
       <Button appearance="transparent">
         <ExportIcon aria-hidden />
         Export
@@ -628,12 +596,10 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
   >
     <ToolbarContentNext position="start">
       <TooltrayNext
-        aria-label="Filters"
         overflowGroup="Filters"
         overflowLabel="Filters"
         overflowMode="grouped"
         overflowPriority={6}
-        role="group"
       >
         <Dropdown
           aria-label="Filter option"
@@ -653,12 +619,10 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
     </ToolbarContentNext>
     <ToolbarContentNext position="end">
       <TooltrayNext
-        aria-label="Actions"
         overflowGroup="Actions"
         overflowLabel="Actions"
         overflowMode="grouped"
         overflowPriority={5}
-        role="group"
       >
         <Button appearance="transparent">
           <ExportIcon aria-hidden />
@@ -882,22 +846,15 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
     </TooltrayNext>
     <Divider aria-hidden orientation="vertical" variant="secondary" />
     <TooltrayNext
-      aria-label="Actions"
       overflowGroup="Actions"
       overflowLabel="Actions"
       overflowMode="grouped"
       overflowPriority={5}
-      role="group"
     >
       <Button appearance="transparent">Decline Request</Button>
       <Button appearance="solid">Adjust Price</Button>
     </TooltrayNext>
-    <TooltrayNext
-      align="end"
-      overflowMode="none"
-      role="group"
-      aria-label="Quick actions"
-    >
+    <TooltrayNext align="end" overflowMode="none">
       <Button appearance="transparent" aria-label="Search">
         <SearchIcon aria-hidden />
       </Button>

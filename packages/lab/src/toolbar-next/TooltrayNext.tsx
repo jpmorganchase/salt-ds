@@ -11,10 +11,6 @@ export type TooltrayNextOverflowMode = "none" | "independent" | "grouped";
 export interface TooltrayNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "align"> {
   /**
-   * `TooltrayNext` is layout-only by default.
-   * Pass `role="group"` with `aria-label` or `aria-labelledby` when the tray
-   * represents a meaningful subgroup inside the toolbar.
-   *
    * Alignment of the tooltray.
    * - When a `TooltrayNext` is used directly inside `ToolbarNext`, this acts as
    *   shorthand for which toolbar band the tray belongs to.

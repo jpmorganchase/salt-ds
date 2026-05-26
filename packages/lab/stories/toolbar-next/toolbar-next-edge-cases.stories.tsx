@@ -169,11 +169,7 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
         ))}
       </ToolbarContentNext>
       <ToolbarContentNext position="end">
-        <TooltrayNext
-          overflowMode="none"
-          role="group"
-          aria-label="Dynamic toolbar actions"
-        >
+        <TooltrayNext overflowMode="none">
           <Button
             appearance="transparent"
             aria-label="Add filter dropdown"
@@ -254,7 +250,7 @@ export const HiddenOverflowRemeasurement: StoryFn<typeof ToolbarNext> = () => {
         }}
       >
         <ToolbarNext aria-label="Hidden overflow measurement toolbar">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+          <TooltrayNext overflowMode="none">
             <Button appearance="transparent" style={{ width: 120 }}>
               Pinned
             </Button>
@@ -267,12 +263,7 @@ export const HiddenOverflowRemeasurement: StoryFn<typeof ToolbarNext> = () => {
               {wideAction ? "Hidden action with a long label" : "Short"}
             </Button>
           </TooltrayNext>
-          <TooltrayNext
-            align="end"
-            overflowMode="none"
-            role="group"
-            aria-label="Primary action"
-          >
+          <TooltrayNext align="end" overflowMode="none">
             <Button appearance="solid" style={{ width: 100 }}>
               Run
             </Button>
@@ -365,12 +356,10 @@ export const OverflowMenuInClippingContainer: StoryFn<
           </ToolbarContentNext>
           <ToolbarContentNext position="end">
             <TooltrayNext
-              aria-label="Review actions"
               overflowGroup="Actions"
               overflowLabel="Actions"
               overflowMode="grouped"
               overflowPriority={6}
-              role="group"
             >
               <Button appearance="transparent">
                 <ExportIcon aria-hidden />
@@ -379,11 +368,7 @@ export const OverflowMenuInClippingContainer: StoryFn<
               <Button appearance="transparent">Reassign</Button>
               <Button appearance="solid">Approve</Button>
             </TooltrayNext>
-            <TooltrayNext
-              overflowMode="none"
-              role="group"
-              aria-label="Toolbar settings"
-            >
+            <TooltrayNext overflowMode="none">
               <Button appearance="transparent" aria-label="Toolbar settings">
                 <SettingsIcon aria-hidden />
               </Button>

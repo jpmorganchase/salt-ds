@@ -133,22 +133,15 @@ export function NamedOverflowWithDividersFixture({
         </TooltrayNext>
         <Divider aria-hidden orientation="vertical" variant="secondary" />
         <TooltrayNext
-          aria-label="Actions"
           overflowGroup="Actions"
           overflowLabel="Actions"
           overflowMode="grouped"
           overflowPriority={5}
-          role="group"
         >
           <Button appearance="transparent">Decline Request</Button>
           <Button appearance="solid">Adjust Price</Button>
         </TooltrayNext>
-        <TooltrayNext
-          align="end"
-          overflowMode="none"
-          role="group"
-          aria-label="Quick actions"
-        >
+        <TooltrayNext align="end" overflowMode="none">
           <Button appearance="transparent">Search</Button>
           <Button appearance="transparent">Settings</Button>
         </TooltrayNext>
@@ -177,18 +170,11 @@ export function SpacingOverflowFixture({ width = 520 }: { width?: number }) {
         <TooltrayNext
           align="end"
           overflowMode="none"
-          role="group"
-          aria-label="Primary action"
           style={{ marginRight: "var(--salt-spacing-300)" }}
         >
           <Button appearance="transparent">Primary</Button>
         </TooltrayNext>
-        <TooltrayNext
-          align="end"
-          overflowMode="none"
-          role="group"
-          aria-label="Run"
-        >
+        <TooltrayNext align="end" overflowMode="none">
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
       </ToolbarNext>
@@ -231,17 +217,13 @@ export function KeyboardButtonsFixture({ width = 560 }: { width?: number }) {
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard buttons toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Editing">
+          <TooltrayNext overflowMode="none">
             <Button appearance="transparent">Cut</Button>
             <Button appearance="transparent">Copy</Button>
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext
-            overflowMode="none"
-            role="group"
-            aria-label="Primary action"
-          >
+          <TooltrayNext overflowMode="none">
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
         </ToolbarContentNext>
@@ -261,7 +243,7 @@ export function KeyboardTextInputFixture({ width = 620 }: { width?: number }) {
             placeholder="Search"
           />
         </TooltrayNext>
-        <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
+        <TooltrayNext overflowMode="none">
           <Button appearance="transparent">Columns</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
@@ -285,7 +267,7 @@ export function KeyboardComboBoxFixture({ width = 620 }: { width?: number }) {
             ))}
           </ComboBox>
         </TooltrayNext>
-        <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
+        <TooltrayNext overflowMode="none">
           <Button appearance="transparent">Columns</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
@@ -309,7 +291,7 @@ export function KeyboardDropdownFixture({ width = 620 }: { width?: number }) {
             ))}
           </Dropdown>
         </TooltrayNext>
-        <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
+        <TooltrayNext overflowMode="none">
           <Button appearance="transparent">Columns</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
@@ -339,7 +321,7 @@ export function KeyboardDatePickerFixture({ width = 720 }: { width?: number }) {
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
+          <TooltrayNext overflowMode="none">
             <Button appearance="solid">Apply</Button>
           </TooltrayNext>
         </ToolbarContentNext>
@@ -359,7 +341,7 @@ export function KeyboardToggleGroupFixture({
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard toggle group toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
+          <TooltrayNext overflowMode="none">
             <Button appearance="solid">First Run</Button>
           </TooltrayNext>
         </ToolbarContentNext>
@@ -375,7 +357,7 @@ export function KeyboardToggleGroupFixture({
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Actions">
+          <TooltrayNext overflowMode="none">
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
         </ToolbarContentNext>
@@ -395,18 +377,16 @@ export function KeyboardOverflowToggleGroupFixture({
     <KeyboardHarness width={width}>
       <ToolbarNext aria-label="Keyboard overflow toggle group toolbar">
         <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none" role="group" aria-label="Pinned">
+          <TooltrayNext overflowMode="none">
             <Button appearance="solid">Pinned</Button>
           </TooltrayNext>
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
           <TooltrayNext
-            aria-label="Views"
             overflowGroup="Views"
             overflowLabel="Views"
             overflowMode="grouped"
             overflowPriority={5}
-            role="group"
           >
             <Button appearance="transparent">Before toggles</Button>
             <ToggleButtonGroup aria-label="View filter" defaultValue="all">
@@ -439,12 +419,10 @@ export function KeyboardOverflowFixture({ width = 420 }: { width?: number }) {
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
           <TooltrayNext
-            aria-label="Actions"
             overflowGroup="Actions"
             overflowLabel="Actions"
             overflowMode="grouped"
             overflowPriority={5}
-            role="group"
           >
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
@@ -476,12 +454,10 @@ export function KeyboardOverflowRerenderFixture({
         </ToolbarContentNext>
         <ToolbarContentNext position="end">
           <TooltrayNext
-            aria-label="Actions"
             overflowGroup="Actions"
             overflowLabel="Actions"
             overflowMode="grouped"
             overflowPriority={5}
-            role="group"
           >
             <Button appearance="transparent">Export</Button>
             <Button
@@ -504,20 +480,11 @@ export function KeyboardRtlFixture({ width = 560 }: { width?: number }) {
     <KeyboardHarness width={width}>
       <div dir="rtl">
         <ToolbarNext aria-label="Keyboard RTL toolbar">
-          <TooltrayNext
-            overflowMode="none"
-            role="group"
-            aria-label="Search and filter"
-          >
+          <TooltrayNext overflowMode="none">
             <Button appearance="transparent">Columns</Button>
             <Button appearance="transparent">Status</Button>
           </TooltrayNext>
-          <TooltrayNext
-            overflowMode="none"
-            role="group"
-            align="end"
-            aria-label="Actions"
-          >
+          <TooltrayNext overflowMode="none" align="end">
             <Button appearance="solid">Run</Button>
           </TooltrayNext>
         </ToolbarNext>

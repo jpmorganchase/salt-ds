@@ -27,8 +27,6 @@ export const GroupedCollapse = (): ReactElement => (
           overflowLabel="Select account"
           overflowMode="grouped"
           overflowPriority={5}
-          role="group"
-          aria-label="Account actions"
         >
           <Dropdown
             bordered

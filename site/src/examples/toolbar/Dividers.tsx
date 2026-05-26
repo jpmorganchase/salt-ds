@@ -44,11 +44,7 @@ export const Dividers = (): ReactElement => {
             </Dropdown>
           </TooltrayNext>
           <Divider orientation="vertical" variant="secondary" />
-          <TooltrayNext
-            overflowPriority={3}
-            role="group"
-            aria-label="Payment actions"
-          >
+          <TooltrayNext overflowPriority={3}>
             <Button appearance="bordered">Reject</Button>
             <Button appearance="solid">Publish</Button>
           </TooltrayNext>
@@ -91,11 +87,7 @@ export const Dividers = (): ReactElement => {
               ))}
             </Dropdown>
           </TooltrayNext>
-          <TooltrayNext
-            overflowPriority={3}
-            role="group"
-            aria-label="Payment actions"
-          >
+          <TooltrayNext overflowPriority={3}>
             <Button appearance="bordered">Reject</Button>
             <Button appearance="solid">Publish</Button>
           </TooltrayNext>

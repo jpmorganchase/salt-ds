@@ -22,12 +22,7 @@ export const Variants = (): ReactElement => (
         <TooltrayNext overflowPriority={1}>
           <Switch label="Show total" />
         </TooltrayNext>
-        <TooltrayNext
-          align="end"
-          overflowPriority={5}
-          role="group"
-          aria-label="View settings"
-        >
+        <TooltrayNext align="end" overflowPriority={5}>
           <Dropdown
             bordered
             defaultSelected={[sortOptions[0]]}

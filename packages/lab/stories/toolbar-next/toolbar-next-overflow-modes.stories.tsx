@@ -131,12 +131,10 @@ function SingleTrayToolbar({
       </TooltrayNext>
       <TooltrayNext
         align="end"
-        aria-label="Actions"
         overflowGroup="Actions"
         overflowLabel="Actions"
         overflowMode={overflowMode}
         overflowPriority={5}
-        role="group"
       >
         <Button appearance="transparent">Export</Button>
         <Button appearance="transparent">Settings</Button>
@@ -178,8 +176,6 @@ function SharedToolbar({
         align="end"
         overflowMode={overflowMode}
         overflowPriority={6}
-        role="group"
-        aria-label="Actions"
       >
         <Button appearance="transparent">Export</Button>
       </TooltrayNext>
@@ -207,8 +203,6 @@ function NamedFiltersToolbar({
           overflowLabel="Filters"
           overflowMode={overflowMode}
           overflowPriority={3}
-          role="group"
-          aria-label="Primary filters"
         >
           <Dropdown
             aria-label="Primary filter"
@@ -225,8 +219,6 @@ function NamedFiltersToolbar({
           overflowLabel="Filters"
           overflowMode={overflowMode}
           overflowPriority={4}
-          role="group"
-          aria-label="Secondary filters"
         >
           <Button appearance="transparent">Status</Button>
         </TooltrayNext>
@@ -235,18 +227,12 @@ function NamedFiltersToolbar({
           overflowLabel="Filters"
           overflowMode={overflowMode}
           overflowPriority={5}
-          role="group"
-          aria-label="Tertiary filters"
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
       </ToolbarContentNext>
       <ToolbarContentNext position="end">
-        <TooltrayNext
-          overflowMode="none"
-          role="group"
-          aria-label="Quick actions"
-        >
+        <TooltrayNext overflowMode="none">
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
@@ -298,11 +284,7 @@ function PriorityOrderingToolbar({
         </TooltrayNext>
       </ToolbarContentNext>
       <ToolbarContentNext position="end">
-        <TooltrayNext
-          overflowMode="none"
-          role="group"
-          aria-label="Primary action"
-        >
+        <TooltrayNext overflowMode="none">
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
       </ToolbarContentNext>
@@ -370,7 +352,7 @@ function SharedIntrinsicWidthToolbar() {
   return (
     <div style={{ width: 500 }}>
       <ToolbarNext aria-label="Shared intrinsic width overflow toolbar">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <IntrinsicWidthToggle
             ariaLabel="Toggle shared tray width"
             collapsedLabel="Search"
@@ -384,11 +366,7 @@ function SharedIntrinsicWidthToolbar() {
             Columns
           </Button>
         </TooltrayNext>
-        <TooltrayNext
-          overflowMode="none"
-          role="group"
-          aria-label="Primary action"
-        >
+        <TooltrayNext overflowMode="none">
           <Button appearance="solid" style={{ width: 100 }}>
             Run
           </Button>
@@ -402,7 +380,7 @@ function NamedIntrinsicWidthToolbar() {
   return (
     <div style={{ width: 480 }}>
       <ToolbarNext aria-label="Named intrinsic width overflow toolbar">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <IntrinsicWidthToggle
             ariaLabel="Toggle named tray width"
             collapsedLabel="Search"
@@ -413,12 +391,10 @@ function NamedIntrinsicWidthToolbar() {
         </TooltrayNext>
         <TooltrayNext
           align="end"
-          aria-label="Actions"
           overflowGroup="Actions"
           overflowLabel="Actions"
           overflowMode="grouped"
           overflowPriority={5}
-          role="group"
         >
           <Button appearance="transparent">Export</Button>
           <Button appearance="solid">Apply</Button>
@@ -546,8 +522,6 @@ export const NamedGroupIndependentProgressive: StoryFn<
           overflowLabel="Filters"
           overflowMode="independent"
           overflowPriority={3}
-          role="group"
-          aria-label="Primary filters"
         >
           <Dropdown
             aria-label="Primary filter"
@@ -564,8 +538,6 @@ export const NamedGroupIndependentProgressive: StoryFn<
           overflowLabel="Filters"
           overflowMode="independent"
           overflowPriority={4}
-          role="group"
-          aria-label="Secondary filters"
         >
           <Button appearance="transparent">Status</Button>
         </TooltrayNext>
@@ -574,18 +546,12 @@ export const NamedGroupIndependentProgressive: StoryFn<
           overflowLabel="Filters"
           overflowMode="independent"
           overflowPriority={5}
-          role="group"
-          aria-label="Tertiary filters"
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
       </ToolbarContentNext>
       <ToolbarContentNext position="end">
-        <TooltrayNext
-          overflowMode="none"
-          role="group"
-          aria-label="Quick actions"
-        >
+        <TooltrayNext overflowMode="none">
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>
@@ -634,8 +600,6 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
           overflowLabel="Filters"
           overflowMode="grouped"
           overflowPriority={3}
-          role="group"
-          aria-label="Primary filters"
         >
           <Dropdown
             aria-label="Primary filter"
@@ -652,8 +616,6 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
           overflowLabel="Filters"
           overflowMode="grouped"
           overflowPriority={4}
-          role="group"
-          aria-label="Secondary filters"
         >
           <Button appearance="transparent">Status</Button>
         </TooltrayNext>
@@ -662,18 +624,12 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
           overflowLabel="Filters"
           overflowMode="grouped"
           overflowPriority={5}
-          role="group"
-          aria-label="Tertiary filters"
         >
           <Button appearance="transparent">Columns</Button>
         </TooltrayNext>
       </ToolbarContentNext>
       <ToolbarContentNext position="end">
-        <TooltrayNext
-          overflowMode="none"
-          role="group"
-          aria-label="Quick actions"
-        >
+        <TooltrayNext overflowMode="none">
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
         </TooltrayNext>

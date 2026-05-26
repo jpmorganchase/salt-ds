@@ -28,11 +28,7 @@ export const ContentSections = (): ReactElement => (
         </TooltrayNext>
       </ToolbarContentNext>
       <ToolbarContentNext position="center">
-        <TooltrayNext
-          overflowPriority={5}
-          role="group"
-          aria-label="Report view"
-        >
+        <TooltrayNext overflowPriority={5}>
           <ToggleButtonGroup defaultValue="reports">
             <ToggleButton value="reports">Reports</ToggleButton>
             <ToggleButton value="schedules">Schedules</ToggleButton>
@@ -40,11 +36,7 @@ export const ContentSections = (): ReactElement => (
         </TooltrayNext>
       </ToolbarContentNext>
       <ToolbarContentNext position="end">
-        <TooltrayNext
-          overflowPriority={6}
-          role="group"
-          aria-label="Domain actions"
-        >
+        <TooltrayNext overflowPriority={6}>
           <Button appearance="transparent" aria-label="Filter">
             <FilterIcon aria-hidden />
           </Button>

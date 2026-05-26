@@ -109,11 +109,11 @@ function BasicToolbar({
       variant={variant}
       aria-label={`${variant ?? "transparent"} toolbar`}
     >
-      <TooltrayNext role="group" aria-label="Search and filter">
+      <TooltrayNext>
         <SearchInput />
         <OptionsDropdown />
       </TooltrayNext>
-      <TooltrayNext role="group" align="end" aria-label="Actions">
+      <TooltrayNext align="end">
         <ViewActions />
       </TooltrayNext>
     </ToolbarNext>
@@ -137,7 +137,7 @@ function CenteredToolbar() {
         </TooltrayNext>
       </ToolbarContentNext>
       <ToolbarContentNext position="end">
-        <TooltrayNext role="group" aria-label="Status">
+        <TooltrayNext>
           <Switch label="Pinned" />
         </TooltrayNext>
       </ToolbarContentNext>
@@ -151,12 +151,7 @@ function SharedOverflowToolbar() {
       <TooltrayNext overflowMode="none">
         <SearchInput width={120} />
       </TooltrayNext>
-      <TooltrayNext
-        align="end"
-        aria-label="Actions"
-        overflowPriority={6}
-        role="group"
-      >
+      <TooltrayNext align="end" overflowPriority={6}>
         <Button appearance="transparent" aria-label="Export">
           <ExportIcon aria-hidden />
         </Button>
@@ -177,12 +172,10 @@ function NamedOverflowToolbar() {
         </TooltrayNext>
         <Divider aria-hidden orientation="vertical" variant="secondary" />
         <TooltrayNext
-          aria-label="Filters"
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="grouped"
           overflowPriority={6}
-          role="group"
         >
           <OptionsDropdown />
           <Button appearance="transparent">
@@ -193,12 +186,10 @@ function NamedOverflowToolbar() {
       </ToolbarContentNext>
       <ToolbarContentNext position="end">
         <TooltrayNext
-          aria-label="Actions"
           overflowGroup="Actions"
           overflowLabel="Actions"
           overflowMode="grouped"
           overflowPriority={5}
-          role="group"
         >
           <Button appearance="transparent">
             <ExportIcon aria-hidden />
