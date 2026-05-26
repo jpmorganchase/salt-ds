@@ -22,7 +22,7 @@ Bordered toolbars are available in three variants: primary, secondary, and terti
 
 ## Content sections
 
-A toolbar is divided into three sections: `start content`, `center content`, and `end content`. Each section can contain groups of components, also known as tool trays. In code, every component is wrapped in a tool tray by default so keyboard navigation can be handled in an accessible, consistent way. Each section can be hidden.
+A toolbar can lay out content in three sections: `start content`, `center content`, and `end content`. Each section can contain `TooltrayNext` groups. For simple toolbars, place `TooltrayNext` children directly in `ToolbarNext` and use `align` to choose their section. For more control, use explicit `ToolbarContentNext` sections. Sections are optional and can be omitted when they are not needed.
 
 <LivePreview componentName="toolbar" exampleName="ContentSections" />
 
@@ -50,10 +50,8 @@ When `overflowMode` is set to `"grouped"`, controls can collapse together when t
 
 By default, controls will move into one overflow. If more are needed, use a named `overflowGroup` to define the trigger label.
 
-<Callout status="success" title="Best practices">
-  If your toolbar has more than one overflow, ensure that their combination of
-  labels and icons is different. For example, if a toolbar uses two overflows,
-  do not use overflow-menu icons for both.
-</Callout>
+#### Best practices
+
+If your toolbar has more than one overflow, ensure that their combination of labels and icons is different. For example, if a toolbar uses two overflows, do not use overflow-menu icons for both.
 
 <LivePreview componentName="toolbar" exampleName="DynamicCollapse" />

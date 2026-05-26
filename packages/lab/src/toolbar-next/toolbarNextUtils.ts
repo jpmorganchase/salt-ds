@@ -17,7 +17,7 @@ import {
   TooltrayNext,
   type TooltrayNextOverflowMode,
   type TooltrayNextProps,
-} from "./Tooltray";
+} from "./TooltrayNext";
 
 export type ToolbarNextMode = "explicit" | "flat" | "invalid";
 

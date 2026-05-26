@@ -4,7 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
-import tooltrayCss from "./Tooltray.css";
+import tooltrayCss from "./TooltrayNext.css";
 
 export type TooltrayNextOverflowMode = "none" | "independent" | "grouped";
 
