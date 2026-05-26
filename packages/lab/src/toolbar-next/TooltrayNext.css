@@ -1,0 +1,20 @@
+.saltTooltrayNext {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: var(--salt-spacing-100);
+  min-width: 0;
+}
+
+.saltTooltrayNext > * {
+  flex-shrink: 0;
+}
+
+.saltTooltrayNext[data-align="end"] {
+  margin-inline-start: auto;
+}
+
+.saltTooltrayNext[data-align="center"] {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}

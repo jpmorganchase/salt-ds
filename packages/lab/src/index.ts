@@ -60,5 +60,6 @@ export * from "./toast-group";
 export * from "./tokenized-input";
 export * from "./tokenized-input-next";
 export * from "./toolbar";
+export * from "./toolbar-next";
 export * from "./utils";
 export * from "./window";

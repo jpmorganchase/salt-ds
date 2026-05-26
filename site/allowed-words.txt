@@ -48,7 +48,8 @@ Tabstrips
 Taurean
 Telemedicine
 Tickbox
+Tooltray
+UITK
+trackpad
 toggletip
 toggletips
-trackpad
-UITK

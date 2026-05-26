@@ -1,0 +1,85 @@
+.saltToolbarNextOverflow-content {
+  position: relative;
+}
+
+.saltToolbarNextOverflow-slot,
+.saltToolbarNextOverflow-panelItem {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--salt-spacing-100);
+  min-width: 0;
+}
+
+.saltToolbarNextOverflow-slot[data-align="end"] {
+  margin-inline-start: auto;
+}
+
+.saltToolbarNextOverflow-slot[data-align="center"] {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.saltToolbarNextOverflow-item {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.saltToolbarNextOverflow-menu {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.saltToolbarNextOverflow-itemHost,
+.saltToolbarNextOverflow-contentHost {
+  display: contents;
+}
+
+.saltToolbarNextOverflow-trigger {
+  white-space: nowrap;
+}
+
+.saltToolbarNextOverflow-panel {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  border-radius: var(--salt-palette-corner, 0);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  box-sizing: border-box;
+  max-width: min(32rem, calc(100vw - var(--salt-spacing-300)));
+  overflow: auto;
+  position: absolute;
+  z-index: var(--salt-zIndex-flyover);
+}
+
+/* TODO: improve this as brittle */
+.saltToolbarNextOverflow-floatingDescendant.saltToolbarNextOverflow-floatingDescendant {
+  z-index: calc(var(--salt-zIndex-flyover) + var(--salt-zIndex-default));
+}
+
+.saltToolbarNextOverflow-panelContent {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-100);
+  max-width: inherit;
+  min-width: max-content;
+  padding: var(--salt-spacing-100);
+}
+
+.saltToolbarNextOverflow-panel .saltTooltrayNext[data-align="center"],
+.saltToolbarNextOverflow-panel .saltTooltrayNext[data-align="end"] {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+.saltToolbarNextOverflow-panel .saltTooltrayNext > * {
+  inline-size: auto;
+}
+
+.saltToolbarNextOverflow-content > .saltToolbarNextOverflow-slot .saltTooltrayNext[data-align="center"],
+.saltToolbarNextOverflow-content > .saltToolbarNextOverflow-slot .saltTooltrayNext[data-align="end"] {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
