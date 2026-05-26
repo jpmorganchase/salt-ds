@@ -50,11 +50,6 @@ Telemedicine
 Tickbox
 Tooltray
 UITK
-frontmatter
-kmbt
-affordances
 trackpad
 toggletip
 toggletips
-trackpad
-UITK
