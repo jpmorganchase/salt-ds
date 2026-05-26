@@ -89,6 +89,10 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
     });
 
     const { mode, content } = normalizeToolbarChildren(children);
+    const overflowContent = useMemo(
+      () => normalizeToolbarChildren(children).content,
+      [children],
+    );
 
     const allItems = useMemo(
       () => content.flatMap((contentArea) => contentArea.items),
@@ -106,7 +110,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       overflowGroups,
       overflowTriggerGroups,
       overflowedIds,
-    } = useToolbarNextOverflow({ content });
+    } = useToolbarNextOverflow({ content: overflowContent });
 
     const handleRef = useForkRef(ref, containerRef);
     const invalidCompositionWarnedRef = useRef(false);
