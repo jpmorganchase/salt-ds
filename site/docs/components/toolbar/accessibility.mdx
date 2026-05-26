@@ -10,7 +10,7 @@ data:
 
 ## Best practices
 
-- Avoid controls that utilize arrow keys, like a text input, in the start or middle of a toolbar. These controls disrupt arrow-key item navigation and make Tab move to the next item instead of exiting, breaking expected toolbar behavior.
+- Avoid controls that utilize arrow keys, like a text input, in the start or middle of a toolbar. These controls disrupt arrow-key navigation and make Tab move to the next item instead of exiting, breaking expected toolbar behavior.
   - If unavoidable, include only one and place it last to preserve arrow-key navigation and normal Tab exit.
 - Use an `aria-label` when there is no visible label on the toolbar element and `aria-labelledby` when there is a visible label.
 - With transparent toolbar, avoid spanning the full width of a page unless it contains enough controls to be recognized as a toolbar. Otherwise, use a bordered toolbar.
