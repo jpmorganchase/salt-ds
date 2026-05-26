@@ -63,7 +63,7 @@ function SearchInput({ width = 160 }: { width?: number }) {
   return (
     <Input
       bordered
-      startAdornment={<SearchIcon />}
+      startAdornment={<SearchIcon aria-hidden />}
       placeholder="Search"
       style={{ width }}
     />
@@ -72,7 +72,12 @@ function SearchInput({ width = 160 }: { width?: number }) {
 
 function OptionsDropdown({ width = 140 }: { width?: number }) {
   return (
-    <Dropdown bordered defaultSelected={["Option A"]} style={{ width }}>
+    <Dropdown
+      aria-label="Filter option"
+      bordered
+      defaultSelected={["Option A"]}
+      style={{ width }}
+    >
       {options.map((option) => (
         <Option value={option} key={option} />
       ))}
@@ -119,13 +124,13 @@ function CenteredToolbar() {
   return (
     <ToolbarNext aria-label="Centered toolbar">
       <ToolbarContent position="start">
-        <TooltrayNext role="group" aria-label="Search">
+        <TooltrayNext>
           <SearchInput width={140} />
         </TooltrayNext>
       </ToolbarContent>
       <ToolbarContent position="center">
-        <TooltrayNext role="group" aria-label="View options">
-          <ToggleButtonGroup defaultValue="grid">
+        <TooltrayNext>
+          <ToggleButtonGroup aria-label="View options" defaultValue="grid">
             <ToggleButton value="grid">Grid</ToggleButton>
             <ToggleButton value="list">List</ToggleButton>
           </ToggleButtonGroup>
@@ -143,7 +148,7 @@ function CenteredToolbar() {
 function SharedOverflowToolbar() {
   return (
     <ToolbarNext aria-label="Shared overflow toolbar">
-      <TooltrayNext role="group" aria-label="Search" overflowMode="none">
+      <TooltrayNext overflowMode="none">
         <SearchInput width={120} />
       </TooltrayNext>
       <TooltrayNext
@@ -167,10 +172,10 @@ function NamedOverflowToolbar() {
   return (
     <ToolbarNext aria-label="Named overflow toolbar">
       <ToolbarContent position="start">
-        <TooltrayNext role="group" aria-label="Search" overflowMode="none">
+        <TooltrayNext overflowMode="none">
           <SearchInput width={120} />
         </TooltrayNext>
-        <Divider orientation="vertical" variant="secondary" />
+        <Divider aria-hidden orientation="vertical" variant="secondary" />
         <TooltrayNext
           aria-label="Filters"
           overflowGroup="Filters"

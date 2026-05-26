@@ -122,8 +122,12 @@ function SingleTrayToolbar({
 }) {
   return (
     <ToolbarNext aria-label={`${overflowMode} single-tray overflow toolbar`}>
-      <TooltrayNext overflowMode="none" role="group" aria-label="Search">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+      <TooltrayNext overflowMode="none">
+        <Input
+          bordered
+          startAdornment={<SearchIcon aria-hidden />}
+          placeholder="Search"
+        />
       </TooltrayNext>
       <TooltrayNext
         align="end"
@@ -149,14 +153,22 @@ function SharedToolbar({
 }) {
   return (
     <ToolbarNext aria-label={`${overflowMode} shared overflow toolbar`}>
-      <TooltrayNext overflowMode="none" role="group" aria-label="Search">
-        <Input bordered startAdornment={<SearchIcon />} placeholder="Search" />
+      <TooltrayNext overflowMode="none">
+        <Input
+          bordered
+          startAdornment={<SearchIcon aria-hidden />}
+          placeholder="Search"
+        />
       </TooltrayNext>
       <TooltrayNext overflowMode={overflowMode} overflowPriority={2}>
         <Button appearance="transparent">Columns</Button>
       </TooltrayNext>
       <TooltrayNext overflowMode={overflowMode} overflowPriority={4}>
-        <Dropdown bordered defaultSelected={["Option A"]}>
+        <Dropdown
+          aria-label="Filter option"
+          bordered
+          defaultSelected={["Option A"]}
+        >
           {options.map((option) => (
             <Option value={option} key={option} />
           ))}
@@ -183,10 +195,10 @@ function NamedFiltersToolbar({
   return (
     <ToolbarNext aria-label={`${overflowMode} named filters toolbar`}>
       <ToolbarContent position="start">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <Input
             bordered
-            startAdornment={<SearchIcon />}
+            startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
           />
         </TooltrayNext>
@@ -198,7 +210,11 @@ function NamedFiltersToolbar({
           role="group"
           aria-label="Primary filters"
         >
-          <Dropdown bordered defaultSelected={["Option A"]}>
+          <Dropdown
+            aria-label="Primary filter"
+            bordered
+            defaultSelected={["Option A"]}
+          >
             {options.map((option) => (
               <Option value={option} key={option} />
             ))}
@@ -255,10 +271,10 @@ function PriorityOrderingToolbar({
   return (
     <ToolbarNext aria-label={ariaLabel}>
       <ToolbarContent position="start">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <Input
             bordered
-            startAdornment={<SearchIcon />}
+            startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
           />
         </TooltrayNext>
@@ -518,10 +534,10 @@ export const NamedGroupIndependentProgressive: StoryFn<
   >
     <ToolbarNext aria-label="Named independent progressive overflow toolbar">
       <ToolbarContent position="start">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <Input
             bordered
-            startAdornment={<SearchIcon />}
+            startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
           />
         </TooltrayNext>
@@ -533,7 +549,11 @@ export const NamedGroupIndependentProgressive: StoryFn<
           role="group"
           aria-label="Primary filters"
         >
-          <Dropdown bordered defaultSelected={["Option A"]}>
+          <Dropdown
+            aria-label="Primary filter"
+            bordered
+            defaultSelected={["Option A"]}
+          >
             {options.map((option) => (
               <Option value={option} key={option} />
             ))}
@@ -602,10 +622,10 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
   >
     <ToolbarNext aria-label="Named grouped batch overflow toolbar">
       <ToolbarContent position="start">
-        <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+        <TooltrayNext overflowMode="none">
           <Input
             bordered
-            startAdornment={<SearchIcon />}
+            startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
           />
         </TooltrayNext>
@@ -617,7 +637,11 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
           role="group"
           aria-label="Primary filters"
         >
-          <Dropdown bordered defaultSelected={["Option A"]}>
+          <Dropdown
+            aria-label="Primary filter"
+            bordered
+            defaultSelected={["Option A"]}
+          >
             {options.map((option) => (
               <Option value={option} key={option} />
             ))}

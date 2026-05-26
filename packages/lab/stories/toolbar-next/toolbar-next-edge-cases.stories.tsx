@@ -131,10 +131,10 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
   return (
     <ToolbarNext aria-label="Dynamic toolbar">
       <ToolbarContent position="start">
-        <TooltrayNext role="group" aria-label="Search" overflowMode="none">
+        <TooltrayNext overflowMode="none">
           <Input
             bordered
-            startAdornment={<SearchIcon />}
+            startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
             style={{ width: 180 }}
           />
@@ -326,11 +326,11 @@ export const OverflowMenuInClippingContainer: StoryFn<
           aria-label="Trade exception review toolbar"
         >
           <ToolbarContent position="start">
-            <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+            <TooltrayNext overflowMode="none">
               <Input
                 bordered
                 placeholder="Search exceptions"
-                startAdornment={<SearchIcon />}
+                startAdornment={<SearchIcon aria-hidden />}
                 style={{ width: 180 }}
               />
             </TooltrayNext>
@@ -341,6 +341,7 @@ export const OverflowMenuInClippingContainer: StoryFn<
               overflowPriority={3}
             >
               <Dropdown
+                aria-label="Desk filter"
                 bordered
                 defaultSelected={["All desks"]}
                 style={{ width: 160 }}

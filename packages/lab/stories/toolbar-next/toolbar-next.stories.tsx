@@ -25,6 +25,7 @@ import {
   DatePickerTrigger,
 } from "@salt-ds/date-components";
 import {
+  CurrencyIcon,
   ExportIcon,
   FilterIcon,
   GridIcon,
@@ -91,10 +92,10 @@ export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
       </Button>
       <Button appearance="solid">Button</Button>
     </TooltrayNext>
-    <TooltrayNext role="group" align="end" aria-label="Search">
+    <TooltrayNext align="end">
       <Input
         bordered
-        startAdornment={<SearchIcon />}
+        startAdornment={<SearchIcon aria-hidden />}
         placeholder="Search"
         style={{ width: 180 }}
       />
@@ -126,8 +127,8 @@ export const ContentFirst: StoryFn<typeof ToolbarNext> = () => (
       </TooltrayNext>
     </ToolbarContent>
     <ToolbarContent position="center">
-      <TooltrayNext role="group" aria-label="Toggle options">
-        <ToggleButtonGroup>
+      <TooltrayNext>
+        <ToggleButtonGroup aria-label="Toggle options">
           <ToggleButton value="toggle-1">Toggle</ToggleButton>
           <ToggleButton value="toggle-2">Toggle</ToggleButton>
           <ToggleButton value="toggle-3">Toggle</ToggleButton>
@@ -135,10 +136,10 @@ export const ContentFirst: StoryFn<typeof ToolbarNext> = () => (
       </TooltrayNext>
     </ToolbarContent>
     <ToolbarContent position="end">
-      <TooltrayNext role="group" aria-label="Search">
+      <TooltrayNext>
         <Input
           bordered
-          startAdornment={<SearchIcon />}
+          startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
@@ -210,7 +211,7 @@ CenteredNamedOverflow.globals = {
 export const Transparent: StoryFn<typeof ToolbarNext> = () => (
   <ToolbarNext appearance="transparent" aria-label="App header toolbar">
     <ToolbarContent position="start">
-      <TooltrayNext role="group" aria-label="Filter">
+      <TooltrayNext>
         <Dropdown
           aria-label="Filter option"
           bordered
@@ -233,10 +234,10 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
         </Button>
         <Button appearance="solid">Button</Button>
       </TooltrayNext>
-      <TooltrayNext role="group" aria-label="Search">
+      <TooltrayNext>
         <Input
           bordered
-          startAdornment={<SearchIcon />}
+          startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
@@ -275,7 +276,7 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
         <Text>{variant}</Text>
         <ToolbarNext variant={variant} aria-label={`${variant} toolbar`}>
           <ToolbarContent position="start">
-            <TooltrayNext role="group" aria-label="Filter">
+            <TooltrayNext>
               <Dropdown
                 aria-label="Filter option"
                 bordered
@@ -293,10 +294,10 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
               <Button appearance="transparent">Export</Button>
               <Button appearance="solid">Button</Button>
             </TooltrayNext>
-            <TooltrayNext role="group" aria-label="Search" overflowMode="none">
+            <TooltrayNext overflowMode="none">
               <Input
                 bordered
-                startAdornment={<SearchIcon />}
+                startAdornment={<SearchIcon aria-hidden />}
                 placeholder="Search"
                 style={{ width: 180 }}
               />
@@ -359,10 +360,10 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
           Run
         </Button>
       </TooltrayNext>
-      <TooltrayNext role="group" aria-label="Search">
+      <TooltrayNext>
         <Input
           bordered
-          startAdornment={<SearchIcon />}
+          startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
@@ -426,12 +427,7 @@ export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
           </DatePickerOverlay>
         </DatePicker>
       </TooltrayNext>
-      <TooltrayNext
-        role="group"
-        aria-label="Review mode"
-        overflowMode="independent"
-        overflowPriority={4}
-      >
+      <TooltrayNext overflowMode="independent" overflowPriority={4}>
         <RadioButtonGroup
           aria-label="Review mode"
           direction="horizontal"
@@ -512,7 +508,7 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
         </Dropdown>
         <Input
           bordered
-          startAdornment={<SearchIcon />}
+          startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
@@ -577,15 +573,10 @@ export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
         Settings
       </Button>
     </TooltrayNext>
-    <TooltrayNext
-      align="end"
-      role="group"
-      aria-label="Search"
-      overflowMode="none"
-    >
+    <TooltrayNext align="end" overflowMode="none">
       <Input
         bordered
-        startAdornment={<SearchIcon />}
+        startAdornment={<SearchIcon aria-hidden />}
         placeholder="Search"
         style={{ width: 180 }}
       />
@@ -665,10 +656,10 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           Settings
         </Button>
       </TooltrayNext>
-      <TooltrayNext role="group" aria-label="Search" overflowMode="none">
+      <TooltrayNext overflowMode="none">
         <Input
           bordered
-          startAdornment={<SearchIcon />}
+          startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
@@ -755,7 +746,7 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
       >
         <Button appearance="transparent">Columns</Button>
       </TooltrayNext>
-      <Divider orientation="vertical" variant="secondary" />
+      <Divider aria-hidden orientation="vertical" variant="secondary" />
       <TooltrayNext
         overflowGroup="Actions"
         overflowLabel="Actions"
@@ -767,7 +758,7 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
           Export
         </Button>
       </TooltrayNext>
-      <Divider orientation="vertical" variant="secondary" />
+      <Divider aria-hidden orientation="vertical" variant="secondary" />
       <TooltrayNext
         overflowGroup="Actions"
         overflowLabel="Actions"
@@ -776,10 +767,10 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
       >
         <Button appearance="solid">Run</Button>
       </TooltrayNext>
-      <TooltrayNext overflowMode="none" role="group" aria-label="Search">
+      <TooltrayNext overflowMode="none">
         <Input
           bordered
-          startAdornment={<SearchIcon />}
+          startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
@@ -870,7 +861,7 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
         ))}
       </Dropdown>
     </TooltrayNext>
-    <Divider orientation="vertical" variant="secondary" />
+    <Divider aria-hidden orientation="vertical" variant="secondary" />
     <TooltrayNext
       aria-label="Actions"
       overflowGroup="Actions"
@@ -896,7 +887,12 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
       </Button>
     </TooltrayNext>
     <TooltrayNext align="end" overflowMode="none">
-      <Input bordered placeholder="Value" style={{ width: 180 }} />
+      <Input
+        bordered
+        startAdornment={<CurrencyIcon aria-hidden />}
+        placeholder="Enter price"
+        style={{ width: 180 }}
+      />
     </TooltrayNext>
   </ToolbarNext>
 );
