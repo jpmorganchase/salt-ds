@@ -76,7 +76,10 @@ export const Dividers = (): ReactElement => {
             </Dropdown>
           </TooltrayNext>
         </ToolbarContentNext>
-        <ToolbarContentNext position="end">
+        <ToolbarContentNext
+          position="end"
+          style={{ gap: "var(--salt-spacing-300)" }}
+        >
           <TooltrayNext overflowPriority={2}>
             <Text styleAs="label">Sort</Text>
             <Dropdown
@@ -96,7 +99,6 @@ export const Dividers = (): ReactElement => {
             overflowPriority={3}
             role="group"
             aria-label="Payment actions"
-            style={{ marginInlineStart: "var(--salt-spacing-300)" }}
           >
             <Button appearance="bordered">Reject</Button>
             <Button appearance="solid">Publish</Button>
