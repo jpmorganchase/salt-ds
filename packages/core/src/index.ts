@@ -55,6 +55,7 @@ export * from "./salt-provider";
 export * from "./scrim";
 export * from "./segmented-button-group";
 export * from "./semantic-icon-provider";
+export * from "./side-panel";
 export * from "./skip-link";
 export * from "./slider";
 export * from "./spinner";

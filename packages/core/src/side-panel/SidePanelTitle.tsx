@@ -1,14 +1,9 @@
-import {
-  makePrefixer,
-  Text,
-  type TextProps,
-  useId,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
+import { Text, type TextProps } from "../text";
+import { makePrefixer, useId, useIsomorphicLayoutEffect } from "../utils";
 import { useSidePanelContext } from "./internal";
 import sidePanelTitleCss from "./SidePanelTitle.css";
 

@@ -4,6 +4,11 @@ import {
   FlexItem,
   FlexLayout,
   Input,
+  SidePanel,
+  SidePanelCloseButton,
+  SidePanelProvider,
+  SidePanelTitle,
+  SidePanelTrigger,
   StackLayout,
   Text,
   Tooltip,
@@ -14,13 +19,6 @@ import {
   NotificationIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import {
-  SidePanel,
-  SidePanelCloseButton,
-  SidePanelProvider,
-  SidePanelTitle,
-  SidePanelTrigger,
-} from "@salt-ds/lab";
 import styles from "./index.module.css";
 
 const AppHeader = () => {

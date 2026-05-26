@@ -1,8 +1,8 @@
-import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithRef, forwardRef, useRef } from "react";
+import { makePrefixer, useId } from "../utils";
 import { useIsScrollable, useSidePanelContext } from "./internal";
 import sidePanelContentCss from "./SidePanelContent.css";
 

@@ -1,10 +1,10 @@
-import { useEventCallback } from "@salt-ds/core";
 import type {
   ComponentPropsWithoutRef,
   MouseEvent,
   MutableRefObject,
   RefCallback,
 } from "react";
+import { useEventCallback } from "../utils";
 import { useSidePanelContext } from "./internal";
 
 export interface SidePanelTriggerExtraProps {
