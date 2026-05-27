@@ -46,7 +46,7 @@ const bulletChartOptions: Options = {
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">${point.y}M</span><br/><span>Target: </span><span class="value">${point.target}M</span>',
+      '<span>{series.name}: </span><span class="value">{point.y}M</span><br/><span>Target: </span><span class="value">{point.target}M</span>',
   },
   series: [
     {
