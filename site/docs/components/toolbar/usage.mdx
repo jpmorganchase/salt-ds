@@ -12,14 +12,13 @@ data:
 
 ### When to use
 
-- To organize and group sets of related controls, such as actions and commands together.
-- To improve the discoverability of related actions.
+- To organize related controls, such as actions, commands, or filters.
+- To improve the discoverability of related controls.
 - To provide a consistent, predictable location for related controls within a page, panel, or section.
 
 ### When not to use
 
-- For placing actions that are not directly related to the current context or content.
-
+- For placing controls that are not directly related to the current context or content.
 - As primary navigation between major sections or pages. Instead, use [`Navigation item`](../navigation-item).
 - To display only one control.
 - To display a brand logo, navigation, and utility actions. Instead, use [`App header`](/salt/patterns/app-header).
@@ -29,7 +28,7 @@ data:
 - Follow the respective content guidance for all components used inside a toolbar.
 - Always place controls inside `TooltrayNext`. Both composition models require it.
 - For simple toolbars, place `TooltrayNext` directly inside `ToolbarNext`. Use the `align` prop to position each tray at the `start`, `center`, or `end`.
-- For more structure, wrap `TooltrayNext` groups in `ToolbarContentNext` and set its `position` prop. Use this when a position needs multiple groups, dividers, custom spacing, or content-level props.
+- When a position needs multiple `TooltrayNext` components, dividers, custom spacing, or content-level props, wrap them in `ToolbarContentNext` and set the `position` prop.
 - Use one composition model per toolbar.
 
 ## Import

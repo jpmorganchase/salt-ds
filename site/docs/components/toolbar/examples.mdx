@@ -38,13 +38,13 @@ Use a [`Divider`](../divider) to separate groups of controls within a toolbar. A
 
 ### Independent collapse
 
-By default, `overflowMode` is set to `"independent"`, which enables controls to collapse from right to left, one tool tray at a time. When the toolbar's available width shrinks and the content no longer fits, controls move into an overflow menu.
+By default, `overflowMode` is set to `"independent"`, which moves each `TooltrayNext` into overflow individually. When the toolbar's available width shrinks and the content no longer fits, `TooltrayNext` components move into an overflow menu.
 
 <LivePreview componentName="toolbar" exampleName="IndependentCollapse" />
 
 ### Grouped collapse
 
-When `overflowMode` is set to `"grouped"`, controls can collapse together when the toolbar can no longer display all components. Use this when controls are interdependent and need to remain together to work effectively.
+When `overflowMode` is set to `"grouped"`, controls in the same `TooltrayNext` move into overflow together. Use this when controls are interdependent and need to remain together to work effectively.
 
 <LivePreview componentName="toolbar" exampleName="GroupedCollapse" />
 
@@ -60,4 +60,4 @@ If your toolbar has more than one overflow, give each named overflow a distinct 
 
 ### Collapse order
 
-Use `overflowPriority` to define a custom collapse order. Tool trays with higher `overflowPriority` values move into overflow before tool trays with lower values.
+Use `overflowPriority` to define a custom collapse order. `TooltrayNext` components with higher `overflowPriority` values move into overflow before those with lower values.
