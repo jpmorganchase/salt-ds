@@ -1505,12 +1505,12 @@ describe("Given ToolbarNext keyboard navigation", () => {
   it("keeps overflow panel text inputs on native left/right behavior and uses Tab within the panel", () => {
     cy.mount(<OverflowTextInputKeyboardTestCase />);
 
-    cy.findByRole("button", { name: /Filters overflow\./i }).realClick();
+    cy.findByRole("button", { name: /Filters overflow\./i }).click();
     cy.findByRole("toolbar", { name: "Filters overflow" }).within(() => {
       cy.findByRole("button", { name: "Reset" }).should("be.visible");
       cy.findByPlaceholderText("Overflow search")
         .should("be.visible")
-        .realClick()
+        .click()
         .should("be.focused");
       cy.findByRole("button", { name: "Apply" }).should("be.visible");
     });
@@ -1523,9 +1523,7 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("button", { name: "Reset" }).should("be.focused");
 
     cy.findByRole("toolbar", { name: "Filters overflow" }).within(() => {
-      cy.findByPlaceholderText("Overflow search")
-        .realClick()
-        .should("be.focused");
+      cy.findByPlaceholderText("Overflow search").click().should("be.focused");
     });
     cy.realPress("Tab");
     cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
