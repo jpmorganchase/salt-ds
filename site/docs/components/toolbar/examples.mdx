@@ -22,9 +22,7 @@ Bordered toolbars are available in three variants: `primary`, `secondary`, and `
 
 ## Content position
 
-Use `ToolbarContentNext` with the `position` prop to set where its `TooltrayNext` children appear: `start`, `center`, or `end` of the toolbar. Each `ToolbarContentNext` can contain one or more `TooltrayNext` components and optional dividers.
-
-For simple toolbars, place `TooltrayNext` children directly in `ToolbarNext` and use `align` as shorthand for the same positions. Use one composition model per toolbar.
+Toolbar supports two positioning models. Use `align` on `TooltrayNext` to place individual trays at the `start`, `center`, or `end` of the toolbar. Use `ToolbarContentNext` with the `position` prop to define a content section that holds one or more `TooltrayNext` components and optional dividers.
 
 <LivePreview componentName="toolbar" exampleName="ContentSections" />
 
