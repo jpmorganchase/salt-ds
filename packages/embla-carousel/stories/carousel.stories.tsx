@@ -119,7 +119,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
     <Carousel
       aria-labelledby={`${carouselId}-title`}
       className="carouselMultipleSlide"
-      emblaOptions={{ align: "center", slidesToScroll: "auto" }}
+      emblaOptions={{ align: "center", slidesToScroll: 2 }}
       {...args}
     >
       <H2 id={`${carouselId}-title`} className="carouselHeading">

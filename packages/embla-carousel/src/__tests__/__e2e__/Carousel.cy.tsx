@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import type { CarouselEmblaApiType } from "../../index";
 
 const composedStories = composeStories(carouselStories);
-const { Default, SlideGroup } = composedStories;
+const { Default, SlideGroup, MultiSlide } = composedStories;
 
 describe("Given a Carousel", () => {
   let emblaTestApi: CarouselEmblaApiType | null | undefined;
@@ -239,6 +239,80 @@ describe("Given a Carousel", () => {
       cy.realPress("End");
       cy.wrap(waitForSettle(emblaApi, 3)).then(() => verifySlide("4", false));
       cy.findAllByRole("tab").eq(3).should("have.focus");
+    });
+  });
+
+  describe("Given a Carousel with odd number of slides in multi-slide mode", () => {
+    let emblaTestApi: CarouselEmblaApiType | null | undefined;
+
+    const mountMultiSlideCarousel =
+      (): Cypress.Chainable<CarouselEmblaApiType> => {
+        const FiveSlideCarousel = () => {
+          const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(
+            null,
+          );
+
+          useEffect(() => {
+            emblaTestApi = emblaApi;
+          }, [emblaApi]);
+
+          return (
+            <MultiSlide
+              emblaOptions={{ align: "start", slidesToScroll: 2 }}
+              getEmblaApi={setEmblaApi}
+            />
+          );
+        };
+
+        cy.mount(<FiveSlideCarousel />);
+        cy.findByRole("region").should("exist");
+
+        return cy.wrap(
+          new Cypress.Promise<CarouselEmblaApiType>((resolve) => {
+            const checkEmblaApi = () => {
+              if (emblaTestApi) {
+                resolve(emblaTestApi);
+              } else {
+                setTimeout(checkEmblaApi, 1000);
+              }
+            };
+            checkEmblaApi();
+          }),
+        );
+      };
+
+    beforeEach(() => {
+      emblaTestApi = null;
+    });
+
+    it("should not snap back to start when clicking Next with 5 slides and 2 per view", () => {
+      mountMultiSlideCarousel().then((emblaApi) => {
+        // Verify we start at snap 0
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        // Click next
+        cy.findByLabelText(/Next slide/).click();
+
+        // Wait for settle and verify we moved forward (not back to 0)
+        cy.wrap(
+          new Cypress.Promise((resolve) => {
+            const handleSettle = () => {
+              emblaApi?.off("settle", handleSettle);
+              resolve();
+            };
+            emblaApi?.on("settle", handleSettle);
+          }),
+        ).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.be.greaterThan(0);
+        });
+
+        // Wait additional time to ensure it doesn't snap back
+        cy.wait(500).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.be.greaterThan(0);
+        });
+      });
     });
   });
 });

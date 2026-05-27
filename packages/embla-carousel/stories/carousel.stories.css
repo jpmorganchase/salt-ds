@@ -49,7 +49,7 @@
 
 .carouselMultipleSlide {
   width: 600px;
-  --carousel-slide-size: 50%;
+  --carousel-slide-size: 48%;
 }
 
 .carouselSlideIsSnapped {

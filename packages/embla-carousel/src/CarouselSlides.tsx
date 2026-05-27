@@ -126,7 +126,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       const numberOfSlidesPerSnap = numberOfSlides / numberOfSnaps;
 
       if (focusedSlideIndex >= 0) {
-        const nearestScrollSnap = Math.floor(
+        const nearestScrollSnap = Math.round(
           focusedSlideIndex / numberOfSlidesPerSnap,
         );
         if (emblaApi.selectedScrollSnap() !== nearestScrollSnap) {
