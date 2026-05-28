@@ -86,7 +86,7 @@ import {
   DatePicker,
   DatePickerSingleInput,
   DatePickerTrigger,
-} from "../../src/date-picker/";
+} from "../../../date-components";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";
