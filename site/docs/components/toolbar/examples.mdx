@@ -10,48 +10,52 @@ data:
 
 ## Appearance
 
-Toolbar supports two appearances: `bordered` or `transparent`. Transparent toolbars are flush with the edges of the toolbar container.
+Toolbar supports two appearances: `bordered` or `transparent`. Transparent toolbars are flush with the edges of the toolbar container. The default appearance is `bordered`.
 
 <LivePreview componentName="toolbar" exampleName="Appearance" />
 
 ## Variants
 
-Bordered toolbars are available in three variants: `primary`, `secondary`, and `tertiary`. The `primary` variant is set by default.
+Bordered toolbars are available in three variants: `primary`, `secondary`, and `tertiary`. The default variant is `primary`.
 
 <LivePreview componentName="toolbar" exampleName="Variants" />
 
-## Content sections
+## Content position
 
-A toolbar can lay out content in three sections: `start content`, `center content`, and `end content`. Each section can contain `TooltrayNext` groups. For simple toolbars, place `TooltrayNext` children directly in `ToolbarNext` and use `align` to choose their section. For more control, use explicit `ToolbarContentNext` sections. Sections are optional and can be omitted when they are not needed.
+Toolbar supports two positioning models. Use `align` on `TooltrayNext` to place individual trays at the `start`, `center`, or `end` of the toolbar. Use `ToolbarContentNext` with the `position` prop to define a content section that holds one or more `TooltrayNext` components and optional dividers.
 
 <LivePreview componentName="toolbar" exampleName="ContentSections" />
 
 ## Dividers
 
-A divider can be used to separate and group like-content together. Alternatively, applying `spacing-300` between these groups can provide the same effect.
+Use a [`Divider`](../divider) to separate groups of controls within a toolbar. Alternatively, apply `spacing-300` between groups when visual separation is enough.
 
 <LivePreview componentName="toolbar" exampleName="Dividers" />
 
 ## Overflow
 
+### Collapse order
+
+Use `overflowPriority` to define a custom collapse order. `TooltrayNext` components with higher `overflowPriority` values move into overflow before those with lower values.
+
 ### Independent collapse
 
-By default, `overflowMode` is set to `"independent"`, which enables controls to collapse from right to left, one tool tray at a time. When the toolbar reduces in length and the content does not fit in the visible area, the controls will overflow into an overflow toolbar. A custom collapse order may be defined using `overflowPriority`.
+By default, `overflowMode` is `"independent"`, which moves each `TooltrayNext` into an overflow individually. When the toolbar's available width shrinks and the content no longer fits, `TooltrayNext` components move into an overflow menu.
 
 <LivePreview componentName="toolbar" exampleName="IndependentCollapse" />
 
 ### Grouped collapse
 
-When `overflowMode` is set to `"grouped"`, controls can collapse together when the toolbar can no longer display all components. This is best for when controls are interdependent, meaning they need to be displayed together in order to work effectively.
+When `overflowMode` is set to `"grouped"`, controls in the same `TooltrayNext` move into overflow together. Use this when controls are interdependent and need to remain together to work effectively.
 
 <LivePreview componentName="toolbar" exampleName="GroupedCollapse" />
 
 ### Dynamic collapse
 
-By default, controls will move into one overflow. If more are needed, use a named `overflowGroup` to define the trigger label.
+By default, controls move into one overflow. To create separate overflow triggers, use named `overflowGroup` values. Use `overflowLabel` when the trigger label should differ from the group name.
 
 #### Best practices
 
-If your toolbar has more than one overflow, ensure that their combination of labels and icons is different. For example, if a toolbar uses two overflows, do not use overflow-menu icons for both.
+If your toolbar has more than one overflow, give each named overflow a distinct label so the triggers are easy to tell apart.
 
 <LivePreview componentName="toolbar" exampleName="DynamicCollapse" />
