@@ -1,7 +1,7 @@
 import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { SaltProvider, SaltProviderNext, Switch, useId } from "@salt-ds/core";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
-import { LocalizationProvider } from "@salt-ds/lab";
+import { LocalizationProvider } from "@salt-ds/date-components";
 import {
   type ChangeEvent,
   type ElementType,
