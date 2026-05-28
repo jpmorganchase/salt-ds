@@ -34,6 +34,10 @@ Use a [`Divider`](../divider) to separate groups of controls within a toolbar. A
 
 ## Overflow
 
+### Collapse order
+
+Use `overflowPriority` to define a custom collapse order. `TooltrayNext` components with higher `overflowPriority` values move into overflow before those with lower values.
+
 ### Independent collapse
 
 By default, `overflowMode` is `"independent"`, which moves each `TooltrayNext` into an overflow individually. When the toolbar's available width shrinks and the content no longer fits, `TooltrayNext` components move into an overflow menu.
@@ -55,7 +59,3 @@ By default, controls move into one overflow. To create separate overflow trigger
 If your toolbar has more than one overflow, give each named overflow a distinct label so the triggers are easy to tell apart.
 
 <LivePreview componentName="toolbar" exampleName="DynamicCollapse" />
-
-### Collapse order
-
-Use `overflowPriority` to define a custom collapse order. `TooltrayNext` components with higher `overflowPriority` values move into overflow before those with lower values.
