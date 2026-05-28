@@ -1506,8 +1506,14 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.mount(<OverflowTextInputKeyboardTestCase />);
 
     cy.findByRole("button", { name: /Filters overflow\./i }).click();
-    cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
-    cy.findByPlaceholderText("Overflow search").focus();
+    cy.findByRole("toolbar", { name: "Filters overflow" }).within(() => {
+      cy.findByRole("button", { name: "Reset" }).should("be.visible");
+      cy.findByPlaceholderText("Overflow search")
+        .should("be.visible")
+        .click()
+        .should("be.focused");
+      cy.findByRole("button", { name: "Apply" }).should("be.visible");
+    });
 
     cy.realPress("ArrowRight");
     cy.findByPlaceholderText("Overflow search").should("be.focused");
@@ -1516,7 +1522,9 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Reset" }).should("be.focused");
 
-    cy.findByPlaceholderText("Overflow search").focus();
+    cy.findByRole("toolbar", { name: "Filters overflow" }).within(() => {
+      cy.findByPlaceholderText("Overflow search").click().should("be.focused");
+    });
     cy.realPress("Tab");
     cy.findByRole("toolbar", { name: "Filters overflow" }).should("be.visible");
     cy.findByRole("button", { name: "Apply" }).should("be.focused");
