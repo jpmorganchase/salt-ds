@@ -13,7 +13,7 @@ import { sortOptions, typeOptions } from "./toolbarExampleData";
 
 export const IndependentCollapse = (): ReactElement => (
   <div className={styles.narrow}>
-    <ToolbarNext aria-label="Payment toolbar" variant="secondary">
+    <ToolbarNext aria-label="Payment toolbar">
       <TooltrayNext overflowPriority={1}>
         <Dropdown
           bordered
