@@ -4,9 +4,9 @@
 "@salt-ds/lab": major
 ---
 
-Date components and related utilities are now stable in `@salt-ds/date-components` and `@salt-ds/date-adapters`.
+`@salt-ds/date-components` and `@salt-ds/date-adapters` are now stable.
 
-New code should import directly from `@salt-ds/date-components` and `@salt-ds/date-adapters`, date component exports have been removed from `@salt-ds/lab`.
+Date-related exports are no longer re-exported from `@salt-ds/lab`. Update imports for components and utilities such as `Calendar`, `DateInput`, `DatePicker`, and `LocalizationProvider` to `@salt-ds/date-components`. Continue importing adapters from `@salt-ds/date-adapters` subpaths such as `@salt-ds/date-adapters/luxon`.
 
 ```
 import {
