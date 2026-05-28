@@ -1,7 +1,7 @@
 ---
 "@salt-ds/date-adapters": major
 "@salt-ds/date-components": major
-"@salt-ds/lab": minor
+"@salt-ds/lab": major
 ---
 
 Date components and related utilities are now stable in `@salt-ds/date-components` and `@salt-ds/date-adapters`.
