@@ -8,17 +8,17 @@ import {
 } from "@salt-ds/date-components";
 import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
-import styles from "./index.module.css";
+import { ResizableExample } from "../components/ResizableExample";
 import { sortOptions, typeOptions } from "./toolbarExampleData";
 
 export const IndependentCollapse = (): ReactElement => (
-  <div className={styles.narrow}>
+  <ResizableExample minWidth={25}>
     <ToolbarNext aria-label="Payment toolbar">
       <TooltrayNext overflowPriority={1}>
         <Dropdown
           bordered
           defaultSelected={[typeOptions[1]]}
-          style={{ width: 140 }}
+          style={{ width: 125 }}
         >
           {typeOptions.map((option) => (
             <Option key={option} value={option} />
@@ -51,5 +51,5 @@ export const IndependentCollapse = (): ReactElement => (
         </DatePicker>
       </TooltrayNext>
     </ToolbarNext>
-  </div>
+  </ResizableExample>
 );
