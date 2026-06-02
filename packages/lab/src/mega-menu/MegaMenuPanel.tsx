@@ -3,7 +3,6 @@ import {
   makePrefixer,
   useFloatingComponent,
   useFloatingUI,
-  useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -44,16 +43,12 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       getFloatingProps,
       setFloating,
       focusFirstItemOnOpen,
-      setPanelId,
+      panelId,
     } = useMegaMenu();
 
-    const id = useId(idProp);
-
-    // Register the panel id in context so the trigger can reference it via aria-controls.
-    useEffect(() => {
-      setPanelId(id);
-      return () => setPanelId(undefined);
-    }, [id, setPanelId]);
+    // The panel id is generated once in the provider so the trigger can
+    // reference it via aria-controls; an explicit `id` prop still wins.
+    const id = idProp ?? panelId;
 
     // Resolve the panel's page-margin to a pixel value to override the margin as required.
     const [pageMargin, setPageMargin] = useState(0);

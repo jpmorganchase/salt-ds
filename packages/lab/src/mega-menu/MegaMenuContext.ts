@@ -29,8 +29,6 @@ export interface MegaMenuContextValue {
   setFocusFirstItemOnOpen: Dispatch<SetStateAction<boolean>>;
   /** The id of the mega menu panel, used for aria-controls on the trigger. */
   panelId: string | undefined;
-  /** Set the panel id when the panel mounts. */
-  setPanelId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const MegaMenuContext = createContext<MegaMenuContextValue | undefined>(

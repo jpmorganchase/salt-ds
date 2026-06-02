@@ -5,7 +5,7 @@ import {
   useFloatingRootContext,
   useInteractions,
 } from "@floating-ui/react";
-import { useControlled } from "@salt-ds/core";
+import { useControlled, useId } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
 import { useMegaMenuKeyboard } from "./useMegaMenuKeyboard";
@@ -52,7 +52,7 @@ export function MegaMenu({
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
   const [focusFirstItemOnOpen, setFocusFirstItemOnOpen] = useState(false);
-  const [panelId, setPanelId] = useState<string | undefined>(undefined);
+  const panelId = useId();
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
@@ -92,7 +92,6 @@ export function MegaMenu({
       focusFirstItemOnOpen,
       setFocusFirstItemOnOpen,
       panelId,
-      setPanelId,
     }),
     [
       openState,
@@ -106,7 +105,6 @@ export function MegaMenu({
       focusFirstItemOnOpen,
       setFocusFirstItemOnOpen,
       panelId,
-      setPanelId,
     ],
   );
 
