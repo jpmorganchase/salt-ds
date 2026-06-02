@@ -1,12 +1,10 @@
 import { makePrefixer } from "@salt-ds/core";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
 } from "react";
+import { MegaMenuSupportingBase } from "./MegaMenuSupportingBase";
 import megaMenuSupportingContentCss from "./MegaMenuSupportingContent.css";
 
 const withBaseName = makePrefixer("saltMegaMenuSupportingContent");
@@ -22,20 +20,14 @@ export interface MegaMenuSupportingContentProps
 export const MegaMenuSupportingContent = forwardRef<
   HTMLDivElement,
   MegaMenuSupportingContentProps
->(function MegaMenuSupportingContent({ className, ...rest }, ref) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-mega-menu-supporting-content",
-    css: megaMenuSupportingContentCss,
-    window: targetWindow,
-  });
-
+>(function MegaMenuSupportingContent(props, ref) {
   return (
-    <div
-      className={clsx(withBaseName(), className)}
-      data-mega-menu-column=""
+    <MegaMenuSupportingBase
+      baseClassName={withBaseName()}
+      cssTestId="salt-mega-menu-supporting-content"
+      css={megaMenuSupportingContentCss}
       ref={ref}
-      {...rest}
+      {...props}
     />
   );
 });
