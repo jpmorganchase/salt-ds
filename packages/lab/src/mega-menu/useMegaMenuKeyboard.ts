@@ -114,7 +114,8 @@ export interface UseMegaMenuKeyboardProps {
  * Floating-ui custom interaction hook for mega menu grid keyboard navigation.
  *
  * Returns `ElementProps` that get merged via `useInteractions`, handling
- * keyboard events on both the reference (trigger) and floating (panel) elements.
+ * keyboard events on the floating (panel) element. Trigger-level keys (e.g.
+ * ArrowDown to enter the panel) are owned by `MegaMenuTrigger`.
  *
  * - **↑ / ↓** move within the current column.
  * - **← / →** jump to the top of the previous / next column.
@@ -138,17 +139,6 @@ export function useMegaMenuKeyboard(
     }
 
     return {
-      reference: {
-        onKeyDown(event: React.KeyboardEvent) {
-          if (event.key === "ArrowDown" && open) {
-            event.preventDefault();
-            const floating = context.elements.floating;
-            if (floating instanceof HTMLElement) {
-              focusFirstItem(floating);
-            }
-          }
-        },
-      },
       floating: {
         onKeyDown(event: React.KeyboardEvent) {
           if (!open) return;

@@ -6,6 +6,7 @@ import {
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
+  MegaMenuSupportingContent,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -192,6 +193,81 @@ const RenderPropMegaMenu = () => (
         </MegaMenu>
       </li>
     </StackLayout>
+  </nav>
+);
+
+// Fixture with a LEFT-positioned custom region (`MegaMenuSupportingContent`)
+// declared before the groups, containing focusable links that cannot
+// self-register. Verifies the managed Tab order visits every item then every
+// custom-region focusable in layout (document) order, before exiting + closing.
+const SupportingContentMegaMenu = () => (
+  <nav>
+    <MegaMenu>
+      <MegaMenuTrigger>
+        <NavigationItem>Solutions</NavigationItem>
+      </MegaMenuTrigger>
+      <MegaMenuPanel>
+        <MegaMenuSupportingContent>
+          <a href="/help" onClick={(e) => e.preventDefault()}>
+            Help Center
+          </a>
+          <a href="/contact" onClick={(e) => e.preventDefault()}>
+            Contact Us
+          </a>
+        </MegaMenuSupportingContent>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+            <MegaMenuHeader>Financial Services</MegaMenuHeader>
+            <MegaMenuItem
+              href="/digital-banking"
+              onClick={(e) => e.preventDefault()}
+            >
+              Digital Banking
+            </MegaMenuItem>
+            <MegaMenuItem
+              href="/risk-management"
+              onClick={(e) => e.preventDefault()}
+            >
+              Risk Management
+            </MegaMenuItem>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+      </MegaMenuPanel>
+    </MegaMenu>
+
+    <button type="button">After Nav</button>
+  </nav>
+);
+
+// Single trigger with no adjacent trigger in the bar. Verifies ArrowRight from
+// the last item is a no-op (menu stays open, focus unmoved) when there is no
+// next trigger to move to.
+const SingleGroupMegaMenu = () => (
+  <nav>
+    <MegaMenu>
+      <MegaMenuTrigger>
+        <NavigationItem>Solutions</NavigationItem>
+      </MegaMenuTrigger>
+      <MegaMenuPanel>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+            <MegaMenuHeader>Financial Services</MegaMenuHeader>
+            <MegaMenuItem
+              href="/digital-banking"
+              onClick={(e) => e.preventDefault()}
+            >
+              Digital Banking
+            </MegaMenuItem>
+            <MegaMenuItem
+              href="/risk-management"
+              onClick={(e) => e.preventDefault()}
+            >
+              Risk Management
+            </MegaMenuItem>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+      </MegaMenuPanel>
+    </MegaMenu>
   </nav>
 );
 
@@ -503,6 +579,64 @@ describe("Given a MegaMenu", () => {
         "have.length",
         1,
       );
+    });
+
+    it("ArrowRight from the last item is a no-op when there is no adjacent trigger", () => {
+      cy.mount(<SingleGroupMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+
+      cy.realPress("ArrowRight");
+      // No next trigger to move to — focus and open state are unchanged.
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+  });
+
+  describe("when the panel has a left-positioned custom region", () => {
+    it("Tab visits every item then the custom-region links in layout order", () => {
+      cy.mount(<SupportingContentMegaMenu />);
+      openSolutionsWithEnter();
+
+      // The custom region is declared first (left), so its focusables come first.
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Help Center" }).should("be.focused");
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Contact Us" }).should("be.focused");
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+    });
+
+    it("Tab from the last focusable exits the panel and collapses it", () => {
+      cy.mount(<SupportingContentMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab"); // Help Center
+      cy.realPress("Tab"); // Contact Us
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+
+      // Past the last focusable, the panel exits and collapses. (Where focus
+      // lands next is covered for the multi-trigger case elsewhere.)
+      cy.realPress("Tab");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+    });
+
+    it("opens into the first custom-region focusable on ArrowDown from the trigger", () => {
+      cy.mount(<SupportingContentMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("ArrowDown");
+      cy.findByRole("link", { name: "Help Center" }).should("be.focused");
     });
   });
 });
