@@ -1,5 +1,5 @@
-import * as flexStories from "@stories/flex-item/flex-item.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as flexStories from "~stories/flex-item/flex-item.stories";
 
 const composedStories = composeStories(flexStories);
 const { FlexItemWrapper } = composedStories;

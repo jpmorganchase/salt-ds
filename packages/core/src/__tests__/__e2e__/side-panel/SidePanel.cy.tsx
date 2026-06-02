@@ -11,10 +11,10 @@ import {
   Text,
   useSidePanel,
 } from "@salt-ds/core";
-import * as sidePanel from "@stories/side-panel/side-panel.stories";
 import { composeStories } from "@storybook/react-vite";
 import { useRef, useState } from "react";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as sidePanel from "~stories/side-panel/side-panel.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(sidePanel);
 const { Left, Default, ManualTrigger, WithTable, Scrollable, WithNav } =

@@ -1,7 +1,7 @@
 import { SaltProvider } from "@salt-ds/core";
-import * as gridStories from "@stories/grid-layout/grid-layout.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as gridStories from "~stories/grid-layout/grid-layout.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(gridStories);
 const { Default, Nested } = composedStories;

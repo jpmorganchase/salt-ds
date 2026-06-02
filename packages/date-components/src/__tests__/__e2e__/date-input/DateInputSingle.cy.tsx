@@ -10,9 +10,9 @@ import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import { DateInputSingle } from "@salt-ds/date-components";
-import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { es as dateFnsEs } from "date-fns/locale";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
+import * as dateInputStories from "~stories/date-input/date-input.stories";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 
