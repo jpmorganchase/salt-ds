@@ -38,10 +38,7 @@
       "type": ["string", "null"]
     },
     "surface_gate": {
-      "anyOf": [
-        { "$ref": "#/$defs/surfaceGate" },
-        { "type": "null" }
-      ]
+      "anyOf": [{ "$ref": "#/$defs/surfaceGate" }, { "type": "null" }]
     },
     "validation_issues": {
       "type": "array",

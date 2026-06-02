@@ -80,7 +80,11 @@ function inferCauseCodes(
 function inferResolution(
   causeCodes: SaltContextCoverageGapReasonCode[],
 ): SaltContextCoverageGapCatalogResolution {
-  return causeCodes.includes("evidence_surface_gate_failed")
+  return causeCodes.some(
+    (causeCode) =>
+      causeCode === "evidence_surface_gate_failed" ||
+      causeCode.startsWith("deprecated_token_"),
+  )
     ? "keep_unsupported_until_source_evidence_exists"
     : "add_source_backed_docs_or_registry_evidence";
 }
@@ -144,9 +148,7 @@ function markdownEscape(value: string): string {
 }
 
 function formatList(values: string[]): string {
-  return values.length > 0
-    ? values.map(markdownEscape).join("<br>")
-    : "None";
+  return values.length > 0 ? values.map(markdownEscape).join("<br>") : "None";
 }
 
 function formatRecords(records: SaltContextCoverageGapCatalogRecord[]): string {

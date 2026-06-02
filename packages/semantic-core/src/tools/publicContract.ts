@@ -1,11 +1,11 @@
 import {
+  type SerializedGeneratedSaltArtifactSurfaceGate,
+  serializeGeneratedSaltArtifactSurfaceGate,
+} from "../generatedArtifactSurface.js";
+import {
   buildReviewReportEvidenceGate,
   type ReviewReportEvidenceGate,
 } from "../reviewReportArtifacts.js";
-import {
-  serializeGeneratedSaltArtifactSurfaceGate,
-  type SerializedGeneratedSaltArtifactSurfaceGate,
-} from "../generatedArtifactSurface.js";
 import type { SaltRegistry } from "../types.js";
 import {
   type CreateRequestMatch,

@@ -12,7 +12,6 @@ import {
   buildSaltReviewReport,
   SALT_REVIEW_REPORT_CONTRACT,
 } from "../reviewReports.js";
-import { validateSaltReviewReportSchema } from "./reviewReportSchemaTestUtils.js";
 import {
   buildTokenPolicyStructuralRoleRulePack,
   type SaltTokenPolicyStructuralRoleRulePack,
@@ -26,6 +25,7 @@ import type {
   SaltRegistry,
   TokenRecord,
 } from "../types.js";
+import { validateSaltReviewReportSchema } from "./reviewReportSchemaTestUtils.js";
 
 type FixtureValidationIssue = ValidationIssue & Record<string, unknown>;
 
@@ -108,10 +108,9 @@ function buildFixturePattern(): PatternRecord {
   };
 }
 
-function buildFixtureRegistry(input: {
-  component?: ComponentRecord;
-  patterns?: PatternRecord[];
-} = {}): SaltRegistry {
+function buildFixtureRegistry(
+  input: { component?: ComponentRecord; patterns?: PatternRecord[] } = {},
+): SaltRegistry {
   return {
     generated_at: "2026-04-30T00:00:00.000Z",
     version: "fixture-registry",
@@ -737,7 +736,8 @@ describe("review report artifacts", () => {
       entityType: "component" as const,
       entityId: "fixture-action",
       entityName: "FixtureAction",
-      fieldPath: "implementation_requirements.required_imports.MissingFixtureImport",
+      fieldPath:
+        "implementation_requirements.required_imports.MissingFixtureImport",
       expectedCode: "missing_registry_field",
     },
     {
@@ -772,76 +772,73 @@ describe("review report artifacts", () => {
       fieldPath: "composed_of.99",
       expectedCode: "missing_registry_field",
     },
-  ])(
-    "degrades durable review reports for undocumented fixture $claimKind claims",
-    ({
-      claimKind,
-      entityType,
-      entityId,
-      entityName,
-      fieldPath,
-      expectedCode,
-    }) => {
-      const review = buildFixtureReviewResult({
-        issues: [
-          buildValidationIssue([
-            buildFixtureEvidenceRef({
-              id: `fixture.${claimKind}.undocumented-review-ref`,
-              claimKind,
-              entityType,
-              entityId,
-              entityName,
-              fieldPath,
-            }),
-          ]),
+  ])("degrades durable review reports for undocumented fixture $claimKind claims", ({
+    claimKind,
+    entityType,
+    entityId,
+    entityName,
+    fieldPath,
+    expectedCode,
+  }) => {
+    const review = buildFixtureReviewResult({
+      issues: [
+        buildValidationIssue([
+          buildFixtureEvidenceRef({
+            id: `fixture.${claimKind}.undocumented-review-ref`,
+            claimKind,
+            entityType,
+            entityId,
+            entityName,
+            fieldPath,
+          }),
+        ]),
+      ],
+    });
+    const report = buildSaltReviewReport({
+      registry: buildFixtureRegistry({
+        patterns:
+          entityType === "pattern" ? [buildFixturePattern()] : undefined,
+      }),
+      generated_at: "2026-04-30T00:00:00.000Z",
+      generator: {
+        name: "semantic-core review report fixture",
+      },
+      transport_used: "cli",
+      review,
+      contract: buildFixtureReviewContract(review),
+      scope: {
+        root_dir: "/fixture",
+        targets: ["src"],
+        file_count: 1,
+        files: [
+          {
+            path: "/fixture/src/App.tsx",
+            relative_path: "src/App.tsx",
+            status: "needs_attention",
+            errors: 0,
+            warnings: 1,
+            infos: 0,
+          },
         ],
-      });
-      const report = buildSaltReviewReport({
-        registry: buildFixtureRegistry({
-          patterns:
-            entityType === "pattern" ? [buildFixturePattern()] : undefined,
-        }),
-        generated_at: "2026-04-30T00:00:00.000Z",
-        generator: {
-          name: "semantic-core review report fixture",
-        },
-        transport_used: "cli",
-        review,
-        contract: buildFixtureReviewContract(review),
-        scope: {
-          root_dir: "/fixture",
-          targets: ["src"],
-          file_count: 1,
-          files: [
-            {
-              path: "/fixture/src/App.tsx",
-              relative_path: "src/App.tsx",
-              status: "needs_attention",
-              errors: 0,
-              warnings: 1,
-              infos: 0,
-            },
-          ],
-        },
-      });
+      },
+    });
 
-      expect(report.status).toBe("unsupported");
-      expect(report.surface_gate.validation_issues).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            code: expectedCode,
-          }),
-        ]),
-      );
-      expect(report.gates).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            id: "report_evidence_validation",
-            status: "unsupported",
-          }),
-        ]),
-      );
-      expectEvidenceValidationMirrorsSurfaceGate(report);
-    },
-  );
+    expect(report.status).toBe("unsupported");
+    expect(report.surface_gate.validation_issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: expectedCode,
+        }),
+      ]),
+    );
+    expect(report.gates).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "report_evidence_validation",
+          status: "unsupported",
+        }),
+      ]),
+    );
+    expectEvidenceValidationMirrorsSurfaceGate(report);
+  });
 });

@@ -6,9 +6,9 @@ import {
   runDoctor,
 } from "@salt-ds/runtime-inspector-core";
 import {
-  buildSaltAiSetupSummary,
-  buildSaltAiEvidenceClosureReport,
   buildDefaultPromptHostInstructionSurfaces,
+  buildSaltAiEvidenceClosureReport,
+  buildSaltAiSetupSummary,
   type SaltAiEvidenceClosureReport,
   type SaltAiSetupSummary,
   type SaltGeneratedContextHealth,

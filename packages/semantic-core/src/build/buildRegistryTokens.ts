@@ -10,8 +10,8 @@ import {
 } from "./buildRegistryShared.js";
 import {
   buildTokenPolicySourceRegistry,
-  getTokenPolicyGap,
   getTokenPolicy,
+  getTokenPolicyGap,
   type TokenPolicySourceRegistry,
 } from "./buildRegistryTokenPolicy.js";
 

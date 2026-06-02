@@ -337,9 +337,10 @@ describe("token policy source registry", () => {
         }),
       );
       expect(
-        [...(token?.policy?.preferred_for ?? []), ...(token?.policy?.notes ?? [])].some(
-          (claim) => claim.includes("--salt-legacyfixture-gap:"),
-        ),
+        [
+          ...(token?.policy?.preferred_for ?? []),
+          ...(token?.policy?.notes ?? []),
+        ].some((claim) => claim.includes("--salt-legacyfixture-gap:")),
       ).toBe(false);
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });

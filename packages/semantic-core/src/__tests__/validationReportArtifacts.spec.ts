@@ -6,10 +6,6 @@ import {
   type SaltEvidenceRegistryEntityType,
 } from "../evidence.js";
 import { validateGeneratedArtifactRegistryEvidence } from "../generatedArtifactValidation.js";
-import {
-  buildValidationReportArtifact,
-  buildValidationReportEvidenceGate,
-} from "../validationReportArtifacts.js";
 import type { ValidationIssue } from "../tools/validation/shared.js";
 import type {
   ComponentRecord,
@@ -18,6 +14,10 @@ import type {
   SaltRegistry,
   TokenRecord,
 } from "../types.js";
+import {
+  buildValidationReportArtifact,
+  buildValidationReportEvidenceGate,
+} from "../validationReportArtifacts.js";
 
 // Fixture-only registry facts: these records are synthetic and exist only to
 // prove validation reports reject claims the fixture registry cannot back.
@@ -225,7 +225,9 @@ function buildEvidenceRef(input: {
   };
 }
 
-function buildIssue(evidenceRefs: SaltEvidenceRef[] | undefined): ValidationIssue {
+function buildIssue(
+  evidenceRefs: SaltEvidenceRef[] | undefined,
+): ValidationIssue {
   return {
     id: "fixture.validation.issue",
     category: "composition",
@@ -358,38 +360,42 @@ describe("validation report artifacts", () => {
       fieldPath: "name",
       expectedCode: "missing_registry_entity",
     },
-  ])(
-    "degrades validation reports for undocumented fixture $claimKind claims",
-    ({ claimKind, entityType, entityId, entityName, fieldPath, expectedCode }) => {
-      const gate = buildValidationReportEvidenceGate({
-        registry: buildFixtureRegistry(),
-        issues: [
-          buildIssue([
-            buildEvidenceRef({
-              claimKind,
-              entityType,
-              entityId,
-              entityName,
-              fieldPath,
-            }),
-          ]),
-        ],
-        generated_at: "2026-04-30T00:00:00.000Z",
-        generator: {
-          name: "semantic-core validation report fixture",
-        },
-      });
-
-      expect(gate.status).toBe("unsupported");
-      expect(gate.validation_issues).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            code: expectedCode,
+  ])("degrades validation reports for undocumented fixture $claimKind claims", ({
+    claimKind,
+    entityType,
+    entityId,
+    entityName,
+    fieldPath,
+    expectedCode,
+  }) => {
+    const gate = buildValidationReportEvidenceGate({
+      registry: buildFixtureRegistry(),
+      issues: [
+        buildIssue([
+          buildEvidenceRef({
+            claimKind,
+            entityType,
+            entityId,
+            entityName,
+            fieldPath,
           }),
         ]),
-      );
-    },
-  );
+      ],
+      generated_at: "2026-04-30T00:00:00.000Z",
+      generator: {
+        name: "semantic-core validation report fixture",
+      },
+    });
+
+    expect(gate.status).toBe("unsupported");
+    expect(gate.validation_issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: expectedCode,
+        }),
+      ]),
+    );
+  });
 
   it("records missing validator provenance as unsupported report state", () => {
     const artifact = buildValidationReportArtifact({

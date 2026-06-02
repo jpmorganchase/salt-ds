@@ -13,8 +13,8 @@ function readJsonSchema(name: string): Record<string, unknown> {
 let validateArtifactPersistence: ValidateFunction | null = null;
 
 function formatErrors(errors: ErrorObject[] | null | undefined): string[] {
-  return (errors ?? []).map(
-    (error) => `${error.instancePath || "/"} ${error.message ?? ""}`.trim(),
+  return (errors ?? []).map((error) =>
+    `${error.instancePath || "/"} ${error.message ?? ""}`.trim(),
   );
 }
 
@@ -27,7 +27,9 @@ function getArtifactPersistenceSchemaValidator(): ValidateFunction {
     allErrors: true,
     strict: false,
   });
-  ajv.addSchema(readJsonSchema("salt-generated-artifact-release-gate.schema.json"));
+  ajv.addSchema(
+    readJsonSchema("salt-generated-artifact-release-gate.schema.json"),
+  );
   validateArtifactPersistence = ajv.compile(
     readJsonSchema("salt-generated-artifact-persistence.schema.json"),
   );

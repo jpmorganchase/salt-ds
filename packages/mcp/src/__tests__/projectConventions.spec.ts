@@ -401,6 +401,76 @@ describe("mergeCanonicalAndProjectConventionLayers with one repo layer", () => {
     });
   });
 
+  it("carries matching approved wrapper imports on preferred component overrides", () => {
+    const merged = mergeWithSingleRepoLayer(
+      {
+        decision: {
+          name: "Button",
+          why: "Nearest canonical Salt primitive for an in-place action.",
+        },
+        guidance_boundary: {
+          guidance_source: "canonical_salt",
+          scope: "official_salt_only",
+          project_conventions: {
+            supported: true,
+            contract: "project_conventions_v1",
+            check_recommended: true,
+            topics: ["wrappers"],
+            reason: "Check repo wrappers.",
+          },
+        },
+      },
+      {
+        preferred_components: [
+          {
+            salt_name: "Button",
+            prefer: "AppButton",
+            reason: "Primary product actions use AppButton.",
+            docs: ["./docs/preferred-actions.md"],
+          },
+        ],
+        approved_wrappers: [
+          {
+            name: "AppButton",
+            wraps: "Button",
+            reason: "Adds analytics and approved defaults.",
+            import: {
+              from: "@/components/AppButton",
+              name: "AppButton",
+            },
+            use_when: ["primary product actions"],
+            docs: ["./docs/app-button.md"],
+          },
+        ],
+      },
+    );
+
+    expect(merged).toMatchObject({
+      project_convention_applied: {
+        type: "preferred-component",
+        replacement: "AppButton",
+        wraps: "Button",
+        import: {
+          from: "@/components/AppButton",
+          name: "AppButton",
+        },
+        use_when: ["primary product actions"],
+        docs: ["./docs/preferred-actions.md", "./docs/app-button.md"],
+      },
+      final_choice: {
+        name: "AppButton",
+        source: "project_conventions",
+        changed: true,
+        based_on: "Button",
+        import: {
+          from: "@/components/AppButton",
+          name: "AppButton",
+        },
+      },
+      final_recommendation: "AppButton",
+    });
+  });
+
   it("applies approved wrappers ahead of pattern preferences when both match", () => {
     const merged = mergeWithSingleRepoLayer(
       {

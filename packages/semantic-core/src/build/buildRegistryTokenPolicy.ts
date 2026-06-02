@@ -834,7 +834,8 @@ function collectMetadataDeprecatedUnsupportedPolicies(
         deprecated,
         replacementKind,
         unsupportedReason,
-        note: typeof metadataEntry.note === "string" ? metadataEntry.note : null,
+        note:
+          typeof metadataEntry.note === "string" ? metadataEntry.note : null,
         basis,
       }),
       line_start: lineStart,
@@ -1090,7 +1091,7 @@ function collectInlineDeprecatedReplacements(
       (replacementsByToken.get(tokenName)?.length ?? 0) > 0;
     const valueReferenceReplacement =
       replacement == null && !hasExplicitReplacementSources
-        ? /^var\(\s*(--salt-[\w-]+)\s*\)$/i.exec(tokenValue)?.[1] ?? null
+        ? (/^var\(\s*(--salt-[\w-]+)\s*\)$/i.exec(tokenValue)?.[1] ?? null)
         : null;
     const sourceReplacement = replacement ?? valueReferenceReplacement;
 
@@ -1990,7 +1991,10 @@ function buildDeprecatedUnsupportedPolicyEvidenceRefs(
   tokenName: string,
   unsupportedSources: readonly DeprecatedTokenUnsupportedPolicySource[],
 ): SaltEvidenceRef[] {
-  const uniqueSources = new Map<string, DeprecatedTokenUnsupportedPolicySource>();
+  const uniqueSources = new Map<
+    string,
+    DeprecatedTokenUnsupportedPolicySource
+  >();
   for (const source of unsupportedSources) {
     uniqueSources.set(
       [

@@ -80,20 +80,16 @@ function hasPatternContextSourceLocator(pattern: PatternRecord): boolean {
 
 function hasReleaseReadyPatternContextInputs(pattern: PatternRecord): boolean {
   return Boolean(
-      hasPatternContextSourceLocator(pattern) &&
+    hasPatternContextSourceLocator(pattern) &&
       pattern.summary.trim().length > 0 &&
       pattern.when_to_use.length > 0 &&
       pattern.when_to_use.every((entry) => entry.trim().length > 0) &&
       pattern.when_not_to_use.every((entry) => entry.trim().length > 0) &&
       pattern.composed_of.length > 0 &&
-      pattern.composed_of.every(
-        (entry) => entry.component.trim().length > 0,
-      ) &&
+      pattern.composed_of.every((entry) => entry.component.trim().length > 0) &&
       pattern.how_to_build.every((entry) => entry.trim().length > 0) &&
       pattern.how_it_works.every((entry) => entry.trim().length > 0) &&
-      pattern.accessibility.summary.every(
-        (entry) => entry.trim().length > 0,
-      ) &&
+      pattern.accessibility.summary.every((entry) => entry.trim().length > 0) &&
       pattern.resources.every(
         (resource) =>
           resource.label.trim().length > 0 && resource.href.trim().length > 0,

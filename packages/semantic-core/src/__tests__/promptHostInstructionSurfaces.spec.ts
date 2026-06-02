@@ -1,24 +1,31 @@
 import { describe, expect, it } from "vitest";
 import {
+  SALT_EVIDENCE_REF_CONTRACT,
+  type SaltEvidenceClaimKind,
+  type SaltEvidenceRef,
+  type SaltEvidenceRegistryEntityType,
+  type SaltGeneratedArtifact,
+} from "../evidence.js";
+import { validateGeneratedArtifactReleaseGate } from "../generatedArtifactReleaseGate.js";
+import {
   buildDefaultPromptHostInstructionSurfaces,
   promptHostInstructionSurfaceFileName,
   SALT_CONTEXT_PROMPT_INSTRUCTION_SURFACE_CONTRACT,
   type SaltPromptHostInstructionSurface,
 } from "../promptHostInstructionSurfaces.js";
-import {
-  SALT_EVIDENCE_REF_CONTRACT,
-  type SaltEvidenceClaimKind,
-  type SaltEvidenceRegistryEntityType,
-  type SaltEvidenceRef,
-  type SaltGeneratedArtifact,
-} from "../evidence.js";
-import { validateGeneratedArtifactReleaseGate } from "../generatedArtifactReleaseGate.js";
 import type { ComponentRecord, SaltRegistry, TokenRecord } from "../types.js";
 import { validateSaltContextPromptHostInstructionSurfaceSchema } from "./promptHostInstructionSurfaceSchemaTestUtils.js";
 
 // These Salt-looking names are intentionally tiny fixture facts for prompt and
 // host-instruction surface guardrail tests.
 const GENERATED_AT = "2026-04-30T00:00:00.000Z";
+
+const HOST_INSTRUCTION_TEXT_BUDGETS = new Map([
+  ["salt-repo-instructions-template", 7_000],
+  ["consumer-repo-agents-template", 7_500],
+  ["vscode-copilot-instructions-template", 4_500],
+  ["vscode-salt-ui-agent-template", 4_500],
+]);
 
 function buildFixtureComponent(): ComponentRecord {
   return {
@@ -250,6 +257,29 @@ describe("prompt and host instruction generated context surfaces", () => {
     }
   });
 
+  it("keeps generated host instruction templates inside progressive disclosure budgets", () => {
+    const registry = buildFixtureRegistry();
+    const hostInstructionSurface = buildDefaultPromptHostInstructionSurfaces({
+      registry,
+      generated_at: GENERATED_AT,
+      generator: buildGenerator(),
+      registry_hash: "fixture-hash",
+    }).find((surface) => surface.surface.id === "host-instructions");
+
+    expect(hostInstructionSurface).toBeDefined();
+
+    // Budgets protect progressive disclosure: split deeper guidance into
+    // references before growing always-on generated host instructions.
+    for (const [fileId, maxChars] of HOST_INSTRUCTION_TEXT_BUDGETS) {
+      const sourceFile = hostInstructionSurface?.source_files.find(
+        (file) => file.id === fileId,
+      );
+
+      expect(sourceFile?.text?.length ?? 0).toBeGreaterThan(0);
+      expect(sourceFile?.text?.length ?? 0).toBeLessThan(maxChars);
+    }
+  });
+
   it.each([
     {
       claim_kind: "prop" as const,
@@ -288,34 +318,31 @@ describe("prompt and host instruction generated context surfaces", () => {
       entity_id: "fixture-action",
       field_path: "accessibility.rules.undocumented-rule",
     },
-  ])(
-    "blocks prompt/instruction surfaces that emit undocumented fixture $claim_kind claims",
-    (undocumentedClaim) => {
-      const registry = buildFixtureRegistry();
-      const [surface] = buildDefaultPromptHostInstructionSurfaces({
-        registry,
-        generated_at: GENERATED_AT,
-        generator: buildGenerator(),
-        registry_hash: "fixture-hash",
-      });
-      const gate = validateGeneratedArtifactReleaseGate({
-        artifact: mutateSurfaceArtifact(surface, undocumentedClaim),
-        registry,
-      });
+  ])("blocks prompt/instruction surfaces that emit undocumented fixture $claim_kind claims", (undocumentedClaim) => {
+    const registry = buildFixtureRegistry();
+    const [surface] = buildDefaultPromptHostInstructionSurfaces({
+      registry,
+      generated_at: GENERATED_AT,
+      generator: buildGenerator(),
+      registry_hash: "fixture-hash",
+    });
+    const gate = validateGeneratedArtifactReleaseGate({
+      artifact: mutateSurfaceArtifact(surface, undocumentedClaim),
+      registry,
+    });
 
-      expect(gate).toEqual(
+    expect(gate).toEqual(
+      expect.objectContaining({
+        status: "blocked",
+        releasable: false,
+      }),
+    );
+    expect(gate.validation_issues).toEqual(
+      expect.arrayContaining([
         expect.objectContaining({
-          status: "blocked",
-          releasable: false,
+          code: "missing_registry_field",
         }),
-      );
-      expect(gate.validation_issues).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            code: "missing_registry_field",
-          }),
-        ]),
-      );
-    },
-  );
+      ]),
+    );
+  });
 });

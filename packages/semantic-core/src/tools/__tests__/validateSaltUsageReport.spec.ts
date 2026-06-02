@@ -244,9 +244,9 @@ describe("validateSaltUsage report artifact", () => {
       missing: result.surface_gate.missing,
       unsupported_claim_count: result.surface_gate.unsupported_claim_count,
     });
-    expect(validateGeneratedArtifactEvidence(result.generated_artifact)).toEqual(
-      [],
-    );
+    expect(
+      validateGeneratedArtifactEvidence(result.generated_artifact),
+    ).toEqual([]);
     expect(
       validateGeneratedArtifactRegistryEvidence(
         result.generated_artifact,
@@ -274,7 +274,7 @@ describe("validateSaltUsage report artifact", () => {
         "export function Fixture() {",
         "  return (",
         "    <>",
-        '      <FixtureDeprecatedAction />',
+        "      <FixtureDeprecatedAction />",
         '      <FixtureAction legacyFixtureProp="yes" />',
         "    </>",
         "  );",
@@ -289,9 +289,7 @@ describe("validateSaltUsage report artifact", () => {
       ),
     );
     const propIssue = result.issues.find((issue) =>
-      issue.id.startsWith(
-        "deprecated.prop.salt-ds-fixture.legacyfixtureprop",
-      ),
+      issue.id.startsWith("deprecated.prop.salt-ds-fixture.legacyfixtureprop"),
     );
 
     expect(importIssue?.evidence_refs).toEqual(

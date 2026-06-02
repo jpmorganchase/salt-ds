@@ -137,10 +137,7 @@ function getIssueSpecificSteps(
       return statement ? [`Use ${guide.name}: ${statement}`] : [];
     }),
   );
-  return unique([
-    ...guideBackedSteps,
-    ...(issue.fix_hints?.extra_steps ?? []),
-  ]);
+  return unique([...guideBackedSteps, ...(issue.fix_hints?.extra_steps ?? [])]);
 }
 
 function getIssueGuideRoutes(

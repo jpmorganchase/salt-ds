@@ -1,13 +1,13 @@
-import type { SaltContextFoundation } from "./contextFoundations.js";
-import type { SaltContextPattern } from "./contextPatterns.js";
 import type { SaltContextComponent } from "./contextArtifacts.js";
+import type { SaltContextFoundation } from "./contextFoundations.js";
 import type { SaltContextComponentMarkdownBridge } from "./contextMarkdown.js";
-import type { SaltPromptHostInstructionSurface } from "./promptHostInstructionSurfaces.js";
+import type { SaltContextPattern } from "./contextPatterns.js";
+import { DEFAULT_UNSUPPORTED_GENERATED_CONTEXT_SURFACE_DESCRIPTORS } from "./contextUnsupportedSurfaces.js";
 import type {
   SaltGeneratedArtifactGenerator,
   SaltGeneratedArtifactRegistry,
 } from "./evidence.js";
-import { DEFAULT_UNSUPPORTED_GENERATED_CONTEXT_SURFACE_DESCRIPTORS } from "./contextUnsupportedSurfaces.js";
+import type { SaltPromptHostInstructionSurface } from "./promptHostInstructionSurfaces.js";
 
 export const SALT_CONTEXT_PACK_MANIFEST_CONTRACT =
   "salt_context_pack_manifest_v1" as const;
@@ -263,13 +263,13 @@ export function buildDefaultContextPackCoverageGaps(
           ? !options.prompt_surfaces
           : !options.instruction_surfaces,
     ).map((descriptor) => ({
-        kind: descriptor.kind,
-        id: descriptor.id,
-        status: "unsupported" as const,
-        reason: descriptor.reason,
-        missing: descriptor.missing,
-        evidence_ref_ids: [],
-      })),
+      kind: descriptor.kind,
+      id: descriptor.id,
+      status: "unsupported" as const,
+      reason: descriptor.reason,
+      missing: descriptor.missing,
+      evidence_ref_ids: [],
+    })),
     ...(options.component_markdown_bridges
       ? []
       : [

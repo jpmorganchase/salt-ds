@@ -275,7 +275,7 @@ function pushTokenTextArrayClaims(input: {
     return;
   }
 
-  input.values.forEach((value, index) =>
+  input.values.forEach((value, index) => {
     pushTokenTextClaim({
       artifactInput: input.artifactInput,
       token: input.token,
@@ -285,8 +285,8 @@ function pushTokenTextArrayClaims(input: {
       fieldPath: `${input.fieldPath}.${index}`,
       value,
       missingReason: `Registry token ${input.fieldPath} entry is empty.`,
-    }),
-  );
+    });
+  });
 }
 
 function findClaimByFieldPath(
@@ -373,7 +373,11 @@ function toEvidenceTextArray(
   values: string[],
 ): SaltContextFoundationEvidenceText[] {
   return values.flatMap((value, index) => {
-    const claim = findClaimByFieldPath(artifact, token, `${fieldPath}.${index}`);
+    const claim = findClaimByFieldPath(
+      artifact,
+      token,
+      `${fieldPath}.${index}`,
+    );
 
     return claim
       ? [
@@ -646,7 +650,7 @@ export function buildFoundationContextArtifact(
         "Registry token policy docs are empty.",
       );
     } else {
-      token.policy.docs.forEach((doc, index) =>
+      token.policy.docs.forEach((doc, index) => {
         pushTokenTextClaim({
           artifactInput: input,
           token,
@@ -657,8 +661,8 @@ export function buildFoundationContextArtifact(
           value: doc,
           missingReason: "Registry token policy doc entry is empty.",
           sourceRef: toTokenDocSourceRef(doc),
-        }),
-      );
+        });
+      });
     }
 
     pushTokenTextArrayClaims({
@@ -729,8 +733,8 @@ export function buildFoundationContext(
     ...new Set(
       input.tokens.flatMap(
         (token) =>
-          findClaimByFieldPath(artifact, token, "category")
-            ?.evidence_ref_ids ?? [],
+          findClaimByFieldPath(artifact, token, "category")?.evidence_ref_ids ??
+          [],
       ),
     ),
   ];

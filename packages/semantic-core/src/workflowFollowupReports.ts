@@ -348,9 +348,7 @@ function statusFromReportState(input: {
 
   if (
     input.unsupported_claims.length > 0 ||
-    input.checks.some(
-      (check) => check.status === "action_required",
-    )
+    input.checks.some((check) => check.status === "action_required")
   ) {
     return "degraded";
   }
@@ -438,7 +436,11 @@ function buildReviewFollowupEvidence(input: {
     }),
   ];
 
-  if (validation?.status === "current" && validation.current && validation.supported) {
+  if (
+    validation?.status === "current" &&
+    validation.current &&
+    validation.supported
+  ) {
     claims.push(
       buildClaim({
         id: `${input.workflow}.followup.review-report-current`,
@@ -659,7 +661,10 @@ function buildMigrationEvidence(input: BuildSaltWorkflowFollowupReportInput): {
       evidence_ref_ids: [ref.id],
       missing: [],
     });
-  } else if (input.runtime?.requested || hasText(input.workflow_input?.runtime_url)) {
+  } else if (
+    input.runtime?.requested ||
+    hasText(input.workflow_input?.runtime_url)
+  ) {
     const missing = "captured runtime evidence";
     checks.push({
       id: "migration_runtime_evidence",
@@ -702,7 +707,8 @@ function buildMigrationEvidence(input: BuildSaltWorkflowFollowupReportInput): {
     source: {
       request_provided: requestProvided,
       source_outline_path: input.workflow_input?.source_outline_path ?? null,
-      runtime_url: input.workflow_input?.runtime_url ?? input.runtime?.url ?? null,
+      runtime_url:
+        input.workflow_input?.runtime_url ?? input.runtime?.url ?? null,
       evidence_ref_ids: sourceEvidenceRefIds,
     },
     reviewEvidence: reviewFollowup.reviewEvidence,
@@ -847,7 +853,8 @@ function buildUpgradeEvidence(input: BuildSaltWorkflowFollowupReportInput): {
       summary: "Upgrade source version boundary is missing.",
       evidence_ref_ids: [],
       missing: [missing],
-      next_action: "Rerun upgrade with --from-version or detectable package metadata.",
+      next_action:
+        "Rerun upgrade with --from-version or detectable package metadata.",
     });
     unsupportedClaims.push(
       buildUnsupportedClaim({

@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { buildPatternValidationRulePack } from "../patternValidationRulePacks.js";
 import {
   REGISTRY_ARRAY_ARTIFACTS,
   REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
@@ -13,7 +14,6 @@ import {
   writeJsonFile,
 } from "../registry/artifacts.js";
 import { findSaltRepoRoot, getPackageRoot } from "../registry/paths.js";
-import { buildPatternValidationRulePack } from "../patternValidationRulePacks.js";
 import { buildSerializedPageSearchIndex } from "../search/pageSearchIndex.js";
 import { buildTokenPolicyStructuralRoleRulePack } from "../tokenPolicyStructuralRoleRules.js";
 import { buildCreateRetrievalIndex } from "../tools/createRetrieval.js";
@@ -31,8 +31,8 @@ import { loadPropMetadata } from "./buildRegistryDocgen.js";
 import { extractGuides, extractPages } from "./buildRegistryDocs.js";
 import {
   createPatternNameBySlug,
-  derivePatternImplementationAccessibilitySignals,
   derivePatternExampleAccessibilitySignals,
+  derivePatternImplementationAccessibilitySignals,
   extractPatternExamplesFromStories,
   extractPatterns,
 } from "./buildRegistryPatterns.js";
@@ -108,9 +108,8 @@ export async function buildRegistry(
   }
 
   for (const pattern of enrichedPatternMap.values()) {
-    let accessibilitySignals = derivePatternExampleAccessibilitySignals(
-      pattern,
-    );
+    let accessibilitySignals =
+      derivePatternExampleAccessibilitySignals(pattern);
     if (accessibilitySignals.length === 0) {
       accessibilitySignals =
         await derivePatternImplementationAccessibilitySignals(

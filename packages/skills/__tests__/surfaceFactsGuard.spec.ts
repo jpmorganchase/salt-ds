@@ -24,7 +24,9 @@ async function collectRepoFiles(
       }
 
       const extension = path.extname(entry.name).toLowerCase();
-      return extensions.has(extension) ? [relativePath.replace(/\\/g, "/")] : [];
+      return extensions.has(extension)
+        ? [relativePath.replace(/\\/g, "/")]
+        : [];
     }),
   );
 
@@ -50,7 +52,11 @@ async function collectFactSensitiveSurfaces(): Promise<string[]> {
     "packages/mcp/src/server/serverMetadata.ts",
   ];
 
-  return [...generatedSkillSurfaces, ...consumerPromptSurfaces, ...sharedCodeSurfaces]
+  return [
+    ...generatedSkillSurfaces,
+    ...consumerPromptSurfaces,
+    ...sharedCodeSurfaces,
+  ]
     .filter((value, index, allValues) => allValues.indexOf(value) === index)
     .sort((left, right) => left.localeCompare(right));
 }
@@ -101,7 +107,9 @@ describe("Salt skill and prompt surface fact guard", () => {
 
     for (const { content, relativePath } of surfaces) {
       expect(content, relativePath).toMatch(/workflow (?:evidence|output)/i);
-      expect(content, relativePath).toMatch(/registry-backed generated context/i);
+      expect(content, relativePath).toMatch(
+        /registry-backed generated context/i,
+      );
       expect(content, relativePath).toMatch(/explicit user input/i);
       expect(content, relativePath).toMatch(/pending or unsupported/i);
     }

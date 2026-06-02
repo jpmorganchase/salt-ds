@@ -4,6 +4,7 @@ import path from "node:path";
 import {
   buildComponentContext,
   buildContextCoverageAudit,
+  buildContextCoverageGapCatalog,
   buildFoundationContext,
   buildPatternContext,
   SALT_CONTEXT_COVERAGE_AUDIT_CONTRACT,
@@ -16,6 +17,7 @@ import {
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { describe, expect, it } from "vitest";
 import { validateSaltContextCoverageAuditSchema } from "../../../semantic-core/src/__tests__/contextCoverageAuditSchemaTestUtils.js";
+import { validateSaltContextCoverageGapCatalogSchema } from "../../../semantic-core/src/__tests__/contextCoverageGapCatalogSchemaTestUtils.js";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import { REPO_ROOT } from "./registryTestUtils.js";
 
@@ -47,6 +49,10 @@ describe("production context coverage audit", () => {
         generated_at: GENERATED_AT,
         generator: GENERATOR,
       });
+      const catalog = buildContextCoverageGapCatalog({
+        audit,
+        generated_at: GENERATED_AT,
+      });
       const reportPath = path.join(registryDir, "context-coverage-audit.json");
 
       await fs.writeFile(
@@ -72,6 +78,7 @@ describe("production context coverage audit", () => {
       expect(validateSaltContextCoverageAuditSchema(persistedAudit)).toEqual(
         [],
       );
+      expect(validateSaltContextCoverageGapCatalogSchema(catalog)).toEqual([]);
       expect(persistedAudit).toEqual(audit);
       expect(audit.contract).toBe(SALT_CONTEXT_COVERAGE_AUDIT_CONTRACT);
       expect(audit.component_contexts.total_records).toBe(
@@ -85,6 +92,35 @@ describe("production context coverage audit", () => {
       expect(audit.status).toBe(
         audit.docs_registry_gaps.length === 0 ? "validated" : "unsupported",
       );
+      expect(catalog.counts).toEqual({
+        total: 3,
+        component: 0,
+        pattern: 0,
+        foundation: 3,
+      });
+      expect(catalog.gaps.map((gap) => gap.id)).toEqual([
+        "tokens.measured",
+        "tokens.opacity",
+        "tokens.track",
+      ]);
+      for (const gap of catalog.gaps) {
+        expect(gap.kind).toBe("foundation");
+        expect(gap.resolution).toBe(
+          "keep_unsupported_until_source_evidence_exists",
+        );
+        expect(
+          gap.cause_codes.every((code) => code.startsWith("deprecated_token_")),
+        ).toBe(true);
+        expect(gap.evidence_ref_ids.length).toBeGreaterThan(0);
+        expect(gap.records.length).toBeGreaterThan(0);
+        for (const record of gap.records) {
+          expect(record.evidence_ref_ids.length).toBeGreaterThan(0);
+          expect(record.cause_code).toMatch(/^deprecated_token_/);
+          expect(record.missing).toEqual(
+            expect.arrayContaining(["token policy"]),
+          );
+        }
+      }
 
       for (const gap of audit.docs_registry_gaps) {
         expect(["component", "pattern", "foundation"]).toContain(gap.kind);
@@ -132,7 +168,9 @@ describe("production context coverage audit", () => {
           token?.policy_gap?.evidence_refs.map((ref) => ref.id),
         );
 
-        if (record.reason_code === "deprecated_token_raw_value_without_policy") {
+        if (
+          record.reason_code === "deprecated_token_raw_value_without_policy"
+        ) {
           expect(pureTokenReference(token?.value ?? "")).toBeNull();
         }
 
@@ -172,16 +210,17 @@ describe("production context coverage audit", () => {
             generator: GENERATOR,
           }),
       );
-      const foundationContexts =
-        selectDefaultContextPackFoundationTokenGroups(registry).map((group) =>
-          buildFoundationContext({
-            registry,
-            category: group.category,
-            tokens: group.tokens,
-            generated_at: GENERATED_AT,
-            generator: GENERATOR,
-          }),
-        );
+      const foundationContexts = selectDefaultContextPackFoundationTokenGroups(
+        registry,
+      ).map((group) =>
+        buildFoundationContext({
+          registry,
+          category: group.category,
+          tokens: group.tokens,
+          generated_at: GENERATED_AT,
+          generator: GENERATOR,
+        }),
+      );
       const generatedArtifacts = [
         ...componentContexts.map((context) => context.generated_artifact),
         ...patternContexts.map((context) => context.generated_artifact),

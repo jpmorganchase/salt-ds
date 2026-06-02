@@ -80,7 +80,7 @@ For `create`, prefer this sequencing by default:
 - `Show me two Salt-valid directions for this workspace shell.`
 - `Review this Salt dialog and tell me the safest next fix.`
 - `Audit this screen for Salt-specific accessibility and hierarchy issues.`
-- `Migrate this MUI page into Salt without changing the task flow.`
+- `Migrate this non-Salt page into Salt without changing the task flow.`
 - `Upgrade this older Salt usage and separate required fixes from cleanup.`
 - `Bootstrap Salt repo policy for this consumer app.`
 
@@ -235,6 +235,15 @@ Do not claim a Salt workflow completed merely because the host emitted a large p
 
 Keep results decision-first.
 When blocked, say exactly what is blocked, what succeeded, and what remains unresolved.
+Summarize blocked, partial, `ask_user`, retrieve, or missing-evidence states from existing fields only; do not invent a new compact field.
+Use `status`, `action.kind`, `next_required_action`, `safety.blocking_reasons`, `questions`, `evidence.missing`, and `summary` to state:
+
+- what is blocked
+- why it is blocked
+- the smallest next action
+- whether coding is allowed
+
+Coding is allowed only when the Hard Gate is satisfied. Otherwise, say "coding is allowed: no" and do not edit the blocked region.
 In `quick-check` mode, keep the answer short and action-oriented: top issues, safest next fix, and any confidence gap.
 In `deep` mode, explain the chosen Salt direction, the validation completed, and any remaining evidence gaps.
 In `explore-options` mode, compare two Salt-valid directions by default, describe the trade-offs in prose, and recommend one default continuation path.

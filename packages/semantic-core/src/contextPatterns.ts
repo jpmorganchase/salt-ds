@@ -18,8 +18,7 @@ import {
 import { createSaltRegistryFingerprint } from "./registry/fingerprint.js";
 import type { ExampleRecord, PatternRecord, SaltRegistry } from "./types.js";
 
-export const SALT_CONTEXT_PATTERN_CONTRACT =
-  "salt_context_pattern_v1" as const;
+export const SALT_CONTEXT_PATTERN_CONTRACT = "salt_context_pattern_v1" as const;
 
 export interface BuildPatternContextArtifactInput {
   registry: Pick<SaltRegistry, "version" | "generated_at">;
@@ -121,7 +120,9 @@ function hasText(value: string | null | undefined): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-function toPatternSourceRef(pattern: PatternRecord): SaltEvidenceSourceRef | null {
+function toPatternSourceRef(
+  pattern: PatternRecord,
+): SaltEvidenceSourceRef | null {
   const url =
     pattern.related_docs.overview ??
     pattern.resources.find((resource) => hasText(resource.href))?.href ??
@@ -225,7 +226,11 @@ function pushIndexedTextClaims(input: {
   claims: SaltGeneratedClaim[];
   evidenceRefs: SaltEvidenceRef[];
   unsupportedClaims: SaltUnsupportedClaim[];
-  fieldPath: "when_to_use" | "when_not_to_use" | "how_to_build" | "how_it_works";
+  fieldPath:
+    | "when_to_use"
+    | "when_not_to_use"
+    | "how_to_build"
+    | "how_it_works";
   kind: SaltEvidenceClaimKind;
   missingReason: string;
   values: string[];
@@ -470,12 +475,7 @@ export function buildPatternContextArtifact(
       text: `Pattern: ${pattern.name}`,
       field_path: "name",
     },
-    buildPatternEvidenceRef(
-      input,
-      `${pattern.id}.name.ref`,
-      "pattern",
-      "name",
-    ),
+    buildPatternEvidenceRef(input, `${pattern.id}.name.ref`, "pattern", "name"),
   );
 
   pushClaim(

@@ -704,6 +704,51 @@ describe("host trace eval", () => {
     );
   });
 
+  it("flags edits after missing-evidence states before the originating workflow is safe", () => {
+    const report = evaluateHostTrace([
+      toolCall(
+        "create_salt_ui",
+        createContract({
+          status: "blocked",
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: ["source-backed examples are missing"],
+          },
+          action: {
+            kind: "retrieve_examples",
+            tool: "get_salt_examples",
+            args: { target_name: "Dialog" },
+            rule_ids: ["create-follow-through-required"],
+            post_action: null,
+          },
+          next_required_action: {
+            kind: "retrieve_examples",
+            tool: "get_salt_examples",
+            args: { target_name: "Dialog" },
+          },
+          allowed_next_actions: ["retrieve_examples"],
+          evidence: {
+            status: "missing",
+            items: [],
+            source_urls: [],
+            missing: ["source-backed examples for Dialog"],
+            heuristic_fallback: false,
+          },
+        }),
+      ),
+      toolCall("copilot_createFile", {}, "create src/DialogFlow.tsx"),
+    ]);
+    const failureCodes = report.critical_failures.map(
+      (failure) => failure.code,
+    );
+
+    expect(failureCodes).toContain("missing_success_contract_before_edit");
+    expect(failureCodes).toContain(
+      "implementation_after_non_implement_contract",
+    );
+  });
+
   it("flags patch and file mutation tool calls after retrieval when the originating workflow was not rerun", () => {
     for (const toolId of [
       "functions.apply_patch",

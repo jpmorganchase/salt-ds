@@ -155,9 +155,9 @@ async function readComponentSourceFiles(
   });
 
   const files = await Promise.all(
-    sourceFilePaths.sort((left, right) => left.localeCompare(right)).map(
-      async (filePath) => readFileOrNull(filePath),
-    ),
+    sourceFilePaths
+      .sort((left, right) => left.localeCompare(right))
+      .map(async (filePath) => readFileOrNull(filePath)),
   );
 
   return files.filter((file): file is string => file !== null);

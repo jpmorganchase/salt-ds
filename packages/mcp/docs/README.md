@@ -8,20 +8,23 @@ Use this folder as the minimal maintainer set for the current Salt AI direction.
   - architectural maintainer guide
 - [`ai-tooling-operator-runbook.md`](./ai-tooling-operator-runbook.md)
   - reviewer and operator map for evidence-backed Salt AI workflow changes
-- [`ai-tooling-winning-foundation.md`](./ai-tooling-winning-foundation.md)
-  - target product shape: registry-first for context, workflow-first for safety
-- [`ai-tooling-competitive-gap-review.md`](./ai-tooling-competitive-gap-review.md)
-  - current competitor and theory comparison with issues, gaps, and opportunities
-- [`ai-tooling-codex-execution-plan.md`](./ai-tooling-codex-execution-plan.md)
-  - concrete Codex handoff plan for implementing the competitive review findings
-- [`ai-tooling-change-review-rubric.md`](./ai-tooling-change-review-rubric.md)
-  - change gate for future tooling work
-- [`ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md)
-  - active rewrite path for the current architecture
-- [`host-validation-checklist.md`](./host-validation-checklist.md)
-  - short real-host validation checklist for the current build
 - [`public-api-matrix.md`](./public-api-matrix.md)
   - current `salt_workflow_v1` public contract matrix
+- [`salt-workflow-v1-host-contract.md`](./salt-workflow-v1-host-contract.md)
+  - compact workflow contract for host and skill consumers
+- [`ai-tooling-security-threat-model.md`](./ai-tooling-security-threat-model.md)
+  - threat model for MCP, generated context, repo policy, host adapters, and persistence
+- [`host-validation-checklist.md`](./host-validation-checklist.md)
+  - short real-host validation checklist for the current build
 
-Consumer-facing guidance lives in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
+## Proof Artifacts
+
+- [`ai-tooling-host-benchmark-packet.md`](./ai-tooling-host-benchmark-packet.md)
+  - host benchmark packet for external validation
+- [`ai-tooling-host-benchmark-scenarios.json`](./ai-tooling-host-benchmark-scenarios.json)
+  - machine-readable scenario list used by the benchmark packet
+- [`host-results/salt-ai-tooling-host-result.schema.json`](./host-results/salt-ai-tooling-host-result.schema.json)
+  - JSON schema for completed S1-S9 host benchmark result artifacts
+
+Consumer-facing guidance lives in [`../../../site/docs/getting-started/ai.mdx`](../../../site/docs/getting-started/ai.mdx).
 Keep only the current direction and live contract docs here. Use Git history for older pre-release planning records.

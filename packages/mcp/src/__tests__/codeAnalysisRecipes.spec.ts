@@ -156,7 +156,10 @@ describe("recommendFixRecipes", () => {
             notes: [
               "Fixed size tokens remain constant across densities and are the correct choice for border and separator thickness.",
             ],
-            docs: ["/salt/foundations/size", "/salt/themes/design-tokens/index"],
+            docs: [
+              "/salt/foundations/size",
+              "/salt/themes/design-tokens/index",
+            ],
             structural_roles: ["border-thickness", "separator-thickness"],
             pairing: null,
           },
@@ -451,7 +454,8 @@ describe("recommendFixRecipes", () => {
     expect(result.fixes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          problem: "Button: Use Link for navigation. Link: Navigate to another route.",
+          problem:
+            "Button: Use Link for navigation. Link: Navigate to another route.",
           category: "primitive-choice",
           rule: "navigation-target-uses-navigation-component",
           recommended_fix: "Use Link for navigation targets instead of Button.",
@@ -662,7 +666,8 @@ describe("recommendFixRecipes", () => {
     expect(result.fixes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          problem: "Link: Use Button for actions. Button: Trigger an immediate action.",
+          problem:
+            "Link: Use Button for actions. Button: Trigger an immediate action.",
           category: "primitive-choice",
           rule: "navigation-component-used-as-action",
           recommended_fix:
@@ -794,8 +799,7 @@ describe("recommendFixRecipes", () => {
     expect(result.fixes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          problem:
-            `Button: Trigger an immediate action. ${PRIMITIVE_GUIDE_NAME}: ${PRIMITIVE_GUIDE_SUMMARY}`,
+          problem: `Button: Trigger an immediate action. ${PRIMITIVE_GUIDE_NAME}: ${PRIMITIVE_GUIDE_SUMMARY}`,
           category: "primitive-choice",
           rule: "native-button-should-prefer-salt-button",
           recommended_fix:
@@ -1011,9 +1015,7 @@ describe("reviewSaltUi", () => {
       ]),
     );
     expect(result.missing_data).not.toEqual(
-      expect.arrayContaining([
-        expect.stringContaining("FixtureWorkflow"),
-      ]),
+      expect.arrayContaining([expect.stringContaining("FixtureWorkflow")]),
     );
   });
 
@@ -1042,9 +1044,7 @@ describe("reviewSaltUi", () => {
       ]),
     );
     expect(result.missing_data).not.toEqual(
-      expect.arrayContaining([
-        expect.stringContaining("FixtureWorkflow"),
-      ]),
+      expect.arrayContaining([expect.stringContaining("FixtureWorkflow")]),
     );
   });
 

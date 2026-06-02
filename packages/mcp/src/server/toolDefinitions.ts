@@ -302,7 +302,10 @@ async function persistContextPack(input: {
     });
     await writeExactText(filePath, file.text);
   }
-  await writeExactText(input.manifestPath, JSON.stringify(bundle.manifest, null, 2));
+  await writeExactText(
+    input.manifestPath,
+    JSON.stringify(bundle.manifest, null, 2),
+  );
 
   const persistedTextByPath: Record<string, string | null> = {
     [manifestPathForCheck]: await readTextIfPresent(input.manifestPath),
@@ -325,7 +328,10 @@ async function persistContextPack(input: {
 
   return {
     contract: "salt_context_pack_persistence_write_v1" as const,
-    status: persistenceCheck.status === "current" ? "written" : persistenceCheck.status,
+    status:
+      persistenceCheck.status === "current"
+        ? "written"
+        : persistenceCheck.status,
     written: persistenceCheck.current,
     root_dir: input.rootDir,
     output_dir: outputDirForManifest,
@@ -385,7 +391,8 @@ const WORKFLOW_COMPOSITION_CONTRACT_SCHEMA = z.object({
 const REVIEW_EXPECTED_TARGETS_SCHEMA = z.object({
   components: z.array(z.string()).optional(),
   patterns: z.array(z.string()).optional(),
-  composition_contract: WORKFLOW_COMPOSITION_CONTRACT_SCHEMA.nullable().optional(),
+  composition_contract:
+    WORKFLOW_COMPOSITION_CONTRACT_SCHEMA.nullable().optional(),
   source: z.enum(["create_report", "workflow_context"]).optional(),
 });
 
@@ -1121,7 +1128,14 @@ const COMPARE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA = z
   .object({
     contract: z.literal("salt_context_pack_persistence_write_v1"),
-    status: z.enum(["written", "passed", "blocked", "invalid", "missing", "stale"]),
+    status: z.enum([
+      "written",
+      "passed",
+      "blocked",
+      "invalid",
+      "missing",
+      "stale",
+    ]),
     written: z.boolean(),
     root_dir: z.string(),
     output_dir: z.string(),
@@ -1382,7 +1396,9 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       artifact_path: z
         .string()
         .min(1)
-        .describe("Output JSON path inside root_dir for the generated artifact."),
+        .describe(
+          "Output JSON path inside root_dir for the generated artifact.",
+        ),
       artifact: UNKNOWN_RECORD_SCHEMA.describe(
         "Generated Salt artifact payload to persist. It must be a salt_generated_artifact_v1 object or contain generated_artifact.",
       ),

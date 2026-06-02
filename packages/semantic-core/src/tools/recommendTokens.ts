@@ -129,9 +129,10 @@ export function recommendTokens(
 
   if (view === "full") {
     return {
-      source_url: rankedCandidates.flatMap((candidate) =>
-        getTokenDocs(candidate.token),
-      )[0] ?? null,
+      source_url:
+        rankedCandidates.flatMap((candidate) =>
+          getTokenDocs(candidate.token),
+        )[0] ?? null,
       recommendations,
       next_step: getTokenNextStep(rankedCandidates[0]?.token),
     };
@@ -140,9 +141,10 @@ export function recommendTokens(
   const [recommended, ...alternatives] = rankedCandidates;
 
   return {
-    source_url: rankedCandidates.flatMap((candidate) =>
-      getTokenDocs(candidate.token),
-    )[0] ?? null,
+    source_url:
+      rankedCandidates.flatMap((candidate) =>
+        getTokenDocs(candidate.token),
+      )[0] ?? null,
     recommended: recommended ? toCompactTokenRecommendation(recommended) : null,
     alternatives: alternatives.map((candidate) =>
       toCompactTokenRecommendation(candidate),

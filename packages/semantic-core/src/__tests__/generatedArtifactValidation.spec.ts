@@ -6,11 +6,11 @@ import {
   type SaltEvidenceRegistryEntityType,
   type SaltGeneratedArtifact,
 } from "../evidence.js";
-import { validateGeneratedArtifactRegistryEvidence } from "../generatedArtifactValidation.js";
 import {
   validateGeneratedArtifactReleaseGate,
   validateGeneratedArtifactReleaseGateBatch,
 } from "../generatedArtifactReleaseGate.js";
+import { validateGeneratedArtifactRegistryEvidence } from "../generatedArtifactValidation.js";
 import type { SaltTokenPolicyStructuralRoleRulePack } from "../tokenPolicyStructuralRoleRules.js";
 import { buildTokenPolicyStructuralRoleRulePack } from "../tokenPolicyStructuralRoleRules.js";
 import type {
@@ -424,7 +424,8 @@ describe("generated artifact registry evidence validation", () => {
           intent: ["fixture"],
           complexity: "basic",
           code: "<FixtureAction />",
-          source_url: "https://example.test/salt/fixture-action/stories/default",
+          source_url:
+            "https://example.test/salt/fixture-action/stories/default",
           package: "@salt-ds/fixture",
           target_type: "component",
           target_name: "FixtureAction",
@@ -480,7 +481,8 @@ describe("generated artifact registry evidence validation", () => {
                 kind: "aria_attribute",
                 values: ["aria-label"],
                 source_kind: "example",
-                source_url: "https://example.test/salt/fixture-workflow/examples/basic",
+                source_url:
+                  "https://example.test/salt/fixture-workflow/examples/basic",
               },
             ],
           },
@@ -508,7 +510,8 @@ describe("generated artifact registry evidence validation", () => {
                 kind: "aria_attribute",
                 values: ["aria-label"],
                 source_kind: "example",
-                source_url: "https://example.test/salt/fixture-workflow/examples/basic",
+                source_url:
+                  "https://example.test/salt/fixture-workflow/examples/basic",
               },
             ],
           },
@@ -716,9 +719,9 @@ describe("generated artifact registry evidence validation", () => {
       ],
     });
 
-    expect(validateSaltGeneratedArtifactReleaseGateSchema(componentGate)).toEqual(
-      [],
-    );
+    expect(
+      validateSaltGeneratedArtifactReleaseGateSchema(componentGate),
+    ).toEqual([]);
     expect(componentGate).toEqual(
       expect.objectContaining({
         status: "passed",

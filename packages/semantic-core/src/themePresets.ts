@@ -49,7 +49,9 @@ const UNSUPPORTED_THEME_PRESET: ThemePreset = {
   props: [],
 };
 
-function resolveThemePreset(input: ThemePresetId | ThemePreset | string): ThemePreset {
+function resolveThemePreset(
+  input: ThemePresetId | ThemePreset | string,
+): ThemePreset {
   return typeof input === "string" ? UNSUPPORTED_THEME_PRESET : input;
 }
 

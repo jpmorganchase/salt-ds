@@ -86,6 +86,43 @@ Capability metadata:
   - `salt://catalog/family/{family}`
 - use that manifest for machine-readable host setup checks instead of scraping prose for workflow vocabulary, contract version, or support-tool policy
 
+Generated context versus direct docs:
+
+- generated context is the machine-readable Salt surface for entity resolution, package status, evidence refs, workflow gates, and repeatable host branching
+- direct docs fetch is supporting context for human-readable source checks, freshness investigation, and upstream docs or registry gap closure
+- do not let a direct docs fetch bypass compact workflow gates such as `status`, `action.kind`, `safety`, or `evidence.status`
+- when docs reveal newer or missing Salt evidence, treat that as gap evidence and rerun the workflow or update source-backed registry/docs inputs before implementation
+
+## Package Size And Publish Boundary
+
+MCP has a broader agent-facing runtime surface than the CLI. It includes the
+generated registry snapshot, schemas, server and tool definitions, resource
+metadata, capability metadata, and stdio entrypoint needed for hosts to resolve
+Salt questions without fetching docs first. Byte size can be close to the CLI
+because both packages carry shared generated context and bundled workflow
+dependencies.
+
+The generated registry is runtime payload. It is part of the published package
+because the default MCP server must answer from a stable source-backed snapshot.
+`--registry-dir` remains a development and test override for custom registry
+builds.
+
+Eval fixtures, replay traces, and scenario harnesses are verification assets,
+not public runtime promises. They can be split from the published MCP package in
+a future packaging pass when the dependent scripts and tests move with them.
+Archive or baseline docs are intentionally outside the core implementation PR;
+restore them in a separate docs-history or generated-baselines PR if that audit
+trail is needed.
+
+Current publish intent is reviewable in `package.json`: the package publishes
+`bin`, `generated`, and `schemas`, bundles shared workflow dependencies, and
+keeps deep imports unsupported through the root-only export contract.
+`packages/mcp/src/__tests__/packagePublishBoundary.spec.ts` guards that
+boundary: benchmark docs, host results, workflow examples, archives, baselines,
+and eval fixtures must stay out of the publish `files` list. The only
+eval-related publish entries are explicit runner entrypoints, not fixture
+payloads.
+
 Build the package from the repo:
 
 ```sh
@@ -130,7 +167,6 @@ This README is the MCP package reference. Keep setup sequencing, skill installat
 
 Related maintainer references:
 
-- [`./docs/ai-tooling-large-rewrite-plan.md`](./docs/ai-tooling-large-rewrite-plan.md)
 - [`./docs/public-api-matrix.md`](./docs/public-api-matrix.md)
 - [`./docs/maintaining-salt-ai-tooling.md`](./docs/maintaining-salt-ai-tooling.md)
 - [`../skills/README.md`](../skills/README.md)
@@ -182,7 +218,7 @@ Use `view: "full"` when you need to understand why the MCP chose a particular pa
 
 For architectural maintenance guidance, see [`docs/maintaining-salt-ai-tooling.md`](./docs/maintaining-salt-ai-tooling.md).
 
-- Registry artifact filenames and payload keys are centralized in [`src/registry/artifacts.ts`](./src/registry/artifacts.ts).
+- Registry artifact filenames and payload keys are centralized in [`../semantic-core/src/registry/artifacts.ts`](../semantic-core/src/registry/artifacts.ts).
 - Canonical registry build/load ownership lives in [`../semantic-core/src/build/buildRegistry.ts`](../semantic-core/src/build/buildRegistry.ts) and [`../semantic-core/src/registry/loadRegistry.ts`](../semantic-core/src/registry/loadRegistry.ts). MCP keeps a small internal runtime loader in [`src/registry/loadRegistry.ts`](./src/registry/loadRegistry.ts) for its bundled `generated/` snapshot and maintainer scripts.
 - MCP tool metadata is defined in [`src/server/toolDefinitions.ts`](./src/server/toolDefinitions.ts). The server registration layer in [`src/server/registerTools.ts`](./src/server/registerTools.ts) and [`src/server/createServer.ts`](./src/server/createServer.ts) stays intentionally thin, with runtime-vs-registry version metadata centralized in [`src/server/serverMetadata.ts`](./src/server/serverMetadata.ts).
 - Lookup, recommendation, search, translation, and code-analysis helpers now live in [`../semantic-core/src/tools`](../semantic-core/src/tools) as internal building blocks. The default public `@salt-ds/mcp` surface is the curated workflow-first set plus read-only Salt support tools, server entrypoints, and tool metadata above.

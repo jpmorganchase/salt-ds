@@ -35,7 +35,7 @@ describe("recipe starter code generation", () => {
           'import { FixturePart } from "@salt-ds/fixture";',
           "",
           "export function FixtureExample() {",
-          "  return <FixturePart aria-label=\"Fixture label\" />;",
+          '  return <FixturePart aria-label="Fixture label" />;',
           "}",
         ].join("\n"),
         source_url: "https://example.test/salt/fixture-pattern/examples/basic",

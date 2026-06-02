@@ -456,7 +456,8 @@ function pickStrongCrossTypeCreateOverride(input: {
     (input.structural_pattern_intent_score ?? 0) >= 4;
 
   if (!topPattern) {
-    return hasHighSignalExplicitCreateGrounding(owner) || owner.owner_score >= 64
+    return hasHighSignalExplicitCreateGrounding(owner) ||
+      owner.owner_score >= 64
       ? owner
       : null;
   }
@@ -605,11 +606,11 @@ export function resolveCreateRecommendation(
       const hintAlignedOverride = anchoredOverride
         ? null
         : anchoredComponentRouteOverride
-        ? null
-        : pickHintAlignedCreateOverride({
-            retrieval,
-            solution_type_hint: solutionTypeHint,
-          });
+          ? null
+          : pickHintAlignedCreateOverride({
+              retrieval,
+              solution_type_hint: solutionTypeHint,
+            });
 
       if (strongCrossTypeOverride) {
         solutionType = strongCrossTypeOverride.entity_type;
@@ -636,12 +637,14 @@ export function resolveCreateRecommendation(
         solutionTypeHint !== "token" &&
         retrieval.status === "ambiguous"
       ) {
-        const ambiguousCrossTypeOverride = pickAmbiguousCrossTypeCreateOverride({
-          retrieval,
-          solution_type_hint: solutionTypeHint,
-          explicit_pattern_hint: explicitPatternHint,
-          structural_pattern_intent_score: structuralPatternIntent.score,
-        });
+        const ambiguousCrossTypeOverride = pickAmbiguousCrossTypeCreateOverride(
+          {
+            retrieval,
+            solution_type_hint: solutionTypeHint,
+            explicit_pattern_hint: explicitPatternHint,
+            structural_pattern_intent_score: structuralPatternIntent.score,
+          },
+        );
         const fallbackOwner = pickRetrievedCreateOwner(retrieval, {
           prefer_component: explicitComponentHint && !explicitPatternHint,
           prefer_structural_patterns:

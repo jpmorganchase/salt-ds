@@ -12,28 +12,30 @@ import {
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { describe, expect, it } from "vitest";
 import * as z from "zod/v4";
-import { validateSaltGeneratedContextHealthSchema } from "../../../semantic-core/src/__tests__/contextCheckSchemaTestUtils.js";
 import { validateSaltAiEvidenceClosureReportSchema } from "../../../semantic-core/src/__tests__/aiEvidenceClosureReportSchemaTestUtils.js";
 import { validateSaltAiSetupSchema } from "../../../semantic-core/src/__tests__/aiSetupSchemaTestUtils.js";
+import { validateSaltGeneratedArtifactPersistenceSchema } from "../../../semantic-core/src/__tests__/artifactPersistenceSchemaTestUtils.js";
+import { validateSaltGeneratedContextHealthSchema } from "../../../semantic-core/src/__tests__/contextCheckSchemaTestUtils.js";
 import { validateSaltContextComponentSchema } from "../../../semantic-core/src/__tests__/contextComponentSchemaTestUtils.js";
 import { validateSaltContextCoverageAuditSchema } from "../../../semantic-core/src/__tests__/contextCoverageAuditSchemaTestUtils.js";
 import { validateSaltContextCoverageGapCatalogSchema } from "../../../semantic-core/src/__tests__/contextCoverageGapCatalogSchemaTestUtils.js";
 import { validateSaltContextFoundationSchema } from "../../../semantic-core/src/__tests__/contextFoundationSchemaTestUtils.js";
-import { validateSaltContextPackBundleSchema } from "../../../semantic-core/src/__tests__/contextPackBundleSchemaTestUtils.js";
-import { validateSaltContextPackPersistenceCheckSchema } from "../../../semantic-core/src/__tests__/contextPackBundleSchemaTestUtils.js";
 import { validateSaltContextPackManifestSchema } from "../../../semantic-core/src/__tests__/contextManifestSchemaTestUtils.js";
+import {
+  validateSaltContextPackBundleSchema,
+  validateSaltContextPackPersistenceCheckSchema,
+} from "../../../semantic-core/src/__tests__/contextPackBundleSchemaTestUtils.js";
 import { validateSaltContextPatternSchema } from "../../../semantic-core/src/__tests__/contextPatternSchemaTestUtils.js";
-import { validateSaltContextPromptHostInstructionSurfaceSchema } from "../../../semantic-core/src/__tests__/promptHostInstructionSurfaceSchemaTestUtils.js";
-import { validateSaltGeneratedArtifactPersistenceSchema } from "../../../semantic-core/src/__tests__/artifactPersistenceSchemaTestUtils.js";
 import { validateSaltGeneratedArtifactReleaseGateBatchSchema } from "../../../semantic-core/src/__tests__/generatedArtifactReleaseGateSchemaTestUtils.js";
+import { validateSaltContextPromptHostInstructionSurfaceSchema } from "../../../semantic-core/src/__tests__/promptHostInstructionSurfaceSchemaTestUtils.js";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import { createSaltMcpServer } from "../server/createServer.js";
 import {
   buildSaltMcpInstructions,
   buildSaltMcpServerInfo,
   getSaltMcpRuntimeMetadata,
-  SALT_MCP_AI_SETUP_URI,
   SALT_MCP_AI_EVIDENCE_CLOSURE_URI,
+  SALT_MCP_AI_SETUP_URI,
   SALT_MCP_CAPABILITY_MANIFEST_URI,
   SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
   SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
@@ -87,6 +89,9 @@ const EXPECTED_DEFAULT_TOOL_ORDER = [
   "migrate_to_salt",
   "upgrade_salt_ui",
 ];
+
+const PUBLIC_MCP_TOOL_DESCRIPTION_MAX_CHARS = 650;
+const PUBLIC_MCP_TOOL_DESCRIPTION_TOTAL_MAX_CHARS = 5_000;
 
 async function createTempDir(name: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), `${name}-`));
@@ -201,6 +206,21 @@ describe("createSaltMcpServer", () => {
       "canonical Salt migration guidance plus repo-policy artifacts",
     );
     expect(translateTool?.description).not.toContain("raw screenshot");
+  });
+
+  it("keeps public MCP tool descriptions compact", () => {
+    const descriptionLengths = TOOL_DEFINITIONS.map(
+      (definition) => definition.description.length,
+    );
+
+    // Budgets protect progressive disclosure: tool metadata should route work,
+    // while richer guidance stays in compact/full workflow output and resources.
+    expect(Math.max(...descriptionLengths)).toBeLessThan(
+      PUBLIC_MCP_TOOL_DESCRIPTION_MAX_CHARS,
+    );
+    expect(
+      descriptionLengths.reduce((total, length) => total + length, 0),
+    ).toBeLessThan(PUBLIC_MCP_TOOL_DESCRIPTION_TOTAL_MAX_CHARS);
   });
 
   it("allows repo-aware workflow execution without an explicit context_id", () => {
@@ -567,8 +587,7 @@ describe("createSaltMcpServer", () => {
         await fs.writeFile(reportPath, JSON.stringify({}, null, 2), "utf8");
 
         const validateTool = TOOL_DEFINITIONS.find(
-          (definition) =>
-            definition.name === "validate_salt_review_report",
+          (definition) => definition.name === "validate_salt_review_report",
         );
         const resumeTool = TOOL_DEFINITIONS.find(
           (definition) => definition.name === "resume_salt_review",
@@ -736,7 +755,12 @@ describe("createSaltMcpServer", () => {
         );
         await expect(
           fs.readFile(
-            path.join(rootDir, ".salt", "reports", "fixture-review-report.json"),
+            path.join(
+              rootDir,
+              ".salt",
+              "reports",
+              "fixture-review-report.json",
+            ),
             "utf8",
           ),
         ).resolves.toBe(JSON.stringify(reportPayload, null, 2));
@@ -778,7 +802,12 @@ describe("createSaltMcpServer", () => {
         );
         await expect(
           fs.readFile(
-            path.join(rootDir, ".salt", "reports", "blocked-review-report.json"),
+            path.join(
+              rootDir,
+              ".salt",
+              "reports",
+              "blocked-review-report.json",
+            ),
             "utf8",
           ),
         ).rejects.toMatchObject({ code: "ENOENT" });
@@ -916,7 +945,8 @@ describe("createSaltMcpServer", () => {
         if (!contextComponentRecord) {
           throw new Error("Expected at least one source-backed component.");
         }
-        const contextPatternRecord = selectDefaultContextPackPatterns(registry)[0];
+        const contextPatternRecord =
+          selectDefaultContextPackPatterns(registry)[0];
         if (!contextPatternRecord) {
           throw new Error("Expected at least one source-backed pattern.");
         }
@@ -1399,9 +1429,7 @@ describe("createSaltMcpServer", () => {
             audit_contract: "salt_context_coverage_audit_v1",
             audit_status: contextCoverage.status,
             counts: expect.objectContaining({
-              total: (
-                contextCoverage.docs_registry_gaps as unknown[]
-              ).length,
+              total: (contextCoverage.docs_registry_gaps as unknown[]).length,
             }),
             gaps: expect.any(Array),
           }),
@@ -1480,9 +1508,9 @@ describe("createSaltMcpServer", () => {
           evidence_ref_ids?: string[];
           text?: string;
         }>;
-        const contextBundleEntries = (
-          (contextBundle.manifest as { entries?: unknown[] }).entries ?? []
-        ) as Array<{
+        const contextBundleEntries = ((
+          contextBundle.manifest as { entries?: unknown[] }
+        ).entries ?? []) as Array<{
           kind?: string;
           output_path?: string;
           contract?: string;
@@ -1586,9 +1614,11 @@ describe("createSaltMcpServer", () => {
           }),
         );
         expect(
-          ((contextReleaseGate.coverage_gaps ?? []) as Array<{
-            kind?: string;
-          }>).filter(
+          (
+            (contextReleaseGate.coverage_gaps ?? []) as Array<{
+              kind?: string;
+            }>
+          ).filter(
             (gap) => gap.kind === "prompt" || gap.kind === "instruction",
           ),
         ).toEqual([]);
@@ -1625,9 +1655,9 @@ describe("createSaltMcpServer", () => {
           aiEvidenceClosureResult.contents[0]?.text ?? "null",
         ) as Record<string, unknown>;
 
-        expect(validateSaltAiEvidenceClosureReportSchema(aiEvidenceClosure)).toEqual(
-          [],
-        );
+        expect(
+          validateSaltAiEvidenceClosureReportSchema(aiEvidenceClosure),
+        ).toEqual([]);
         expect(aiEvidenceClosure).toEqual(
           expect.objectContaining({
             contract: "salt_ai_evidence_closure_report_v1",

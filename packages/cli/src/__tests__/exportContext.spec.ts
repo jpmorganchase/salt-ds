@@ -13,6 +13,8 @@ import {
 } from "@salt-ds/semantic-core";
 import { REGISTRY_ARRAY_ARTIFACTS } from "@salt-ds/semantic-core/registry/artifacts";
 import { afterEach, describe, expect, it } from "vitest";
+import { validateSaltAiEvidenceClosureReportSchema } from "../../../semantic-core/src/__tests__/aiEvidenceClosureReportSchemaTestUtils.js";
+import { validateSaltAiSetupSchema } from "../../../semantic-core/src/__tests__/aiSetupSchemaTestUtils.js";
 import {
   validateSaltContextComponentCheckSchema,
   validateSaltGeneratedContextHealthSchema,
@@ -23,13 +25,11 @@ import { validateSaltContextCoverageGapCatalogSchema } from "../../../semantic-c
 import { validateSaltContextFoundationSchema } from "../../../semantic-core/src/__tests__/contextFoundationSchemaTestUtils.js";
 import { validateSaltContextPackManifestSchema } from "../../../semantic-core/src/__tests__/contextManifestSchemaTestUtils.js";
 import { validateSaltContextPatternSchema } from "../../../semantic-core/src/__tests__/contextPatternSchemaTestUtils.js";
-import { validateSaltContextPromptHostInstructionSurfaceSchema } from "../../../semantic-core/src/__tests__/promptHostInstructionSurfaceSchemaTestUtils.js";
 import {
   validateSaltGeneratedArtifactReleaseGateBatchSchema,
   validateSaltGeneratedArtifactReleaseGateSchema,
 } from "../../../semantic-core/src/__tests__/generatedArtifactReleaseGateSchemaTestUtils.js";
-import { validateSaltAiSetupSchema } from "../../../semantic-core/src/__tests__/aiSetupSchemaTestUtils.js";
-import { validateSaltAiEvidenceClosureReportSchema } from "../../../semantic-core/src/__tests__/aiEvidenceClosureReportSchemaTestUtils.js";
+import { validateSaltContextPromptHostInstructionSurfaceSchema } from "../../../semantic-core/src/__tests__/promptHostInstructionSurfaceSchemaTestUtils.js";
 import { runCli } from "../cli.js";
 
 const tempDirs: string[] = [];
@@ -129,7 +129,9 @@ function buildFixturePattern(
     ],
     related_patterns: [],
     how_to_build: ["Build the fixture workflow from fixture records."],
-    how_it_works: ["The fixture workflow delegates actions to fixture records."],
+    how_it_works: [
+      "The fixture workflow delegates actions to fixture records.",
+    ],
     accessibility: {
       summary: ["Fixture pattern accessibility summary from registry."],
     },
@@ -148,8 +150,7 @@ function buildFixturePattern(
         intent: ["fixture"],
         complexity: "basic",
         code: "<FixtureWorkflow />",
-        source_url:
-          "https://example.test/salt/fixture-workflow/examples/basic",
+        source_url: "https://example.test/salt/fixture-workflow/examples/basic",
         package: "@salt-ds/fixture",
         target_type: "pattern",
         target_name: "FixtureWorkflow",
@@ -895,7 +896,8 @@ describe("salt cli export-context", () => {
           expect.objectContaining({
             kind: "pattern",
             id: "fixture-workflow",
-            output_path: ".salt/context/components/fixture-workflow.pattern.json",
+            output_path:
+              ".salt/context/components/fixture-workflow.pattern.json",
             contract: "salt_context_pattern_v1",
             generated_artifact_kind: "pattern-context",
             evidence_ref_ids: ["fixture-workflow.name.ref"],
@@ -914,7 +916,8 @@ describe("salt cli export-context", () => {
           expect.objectContaining({
             kind: "prompt",
             id: "workflow-prompts",
-            output_path: ".salt/context/components/workflow-prompts.prompt.json",
+            output_path:
+              ".salt/context/components/workflow-prompts.prompt.json",
             contract: "salt_context_prompt_instruction_surface_v1",
             generated_artifact_kind: "prompt",
             evidence_ref_ids: expect.arrayContaining([
@@ -955,15 +958,12 @@ describe("salt cli export-context", () => {
     ).toEqual([]);
     const promptSurface = await readJsonFile(promptSurfacePath);
     const instructionSurface = await readJsonFile(instructionSurfacePath);
-    for (const surface of [
-      promptSurface,
-      instructionSurface,
-    ] as Array<Record<string, unknown>>) {
+    for (const surface of [promptSurface, instructionSurface] as Array<
+      Record<string, unknown>
+    >) {
       expect(
         validateSaltContextPromptHostInstructionSurfaceSchema(surface),
-      ).toEqual(
-        [],
-      );
+      ).toEqual([]);
       expect(surface).toEqual(
         expect.objectContaining({
           contract: "salt_context_prompt_instruction_surface_v1",
@@ -1142,8 +1142,9 @@ describe("salt cli export-context", () => {
       }),
     );
     expect(
-      (manifest.entries as Array<{ kind?: string }>).filter((entry) =>
-        entry.kind === "component" || entry.kind === "component_markdown",
+      (manifest.entries as Array<{ kind?: string }>).filter(
+        (entry) =>
+          entry.kind === "component" || entry.kind === "component_markdown",
       ),
     ).toEqual([]);
   });
@@ -1233,8 +1234,7 @@ describe("salt cli export-context", () => {
                 kind: "token",
                 id: "--salt-fixture-action-color",
                 status: "unsupported",
-                reason_code:
-                  "missing_token_policy_docs_or_source_evidence",
+                reason_code: "missing_token_policy_docs_or_source_evidence",
                 missing: ["policy docs", "source-backed policy evidence"],
                 evidence_ref_ids: [],
               }),
@@ -1247,9 +1247,7 @@ describe("salt cli export-context", () => {
   });
 
   it("emits a fixture gap catalog with causes instead of filling docs or registry gaps", async () => {
-    const rootDir = await createTempDir(
-      "salt-cli-export-context-gap-catalog",
-    );
+    const rootDir = await createTempDir("salt-cli-export-context-gap-catalog");
     const registryDir = path.join(rootDir, "registry");
     const outputPath = path.join(rootDir, ".salt", "gap-catalog.json");
     const markdownPath = path.join(rootDir, ".salt", "gap-catalog.md");
@@ -1555,9 +1553,9 @@ describe("salt cli export-context", () => {
     const unsupportedGate = readJson(unsupportedStdout);
 
     expect(supportedExitCode).toBe(0);
-    expect(validateSaltGeneratedArtifactReleaseGateSchema(supportedGate)).toEqual(
-      [],
-    );
+    expect(
+      validateSaltGeneratedArtifactReleaseGateSchema(supportedGate),
+    ).toEqual([]);
     expect(supportedGate).toEqual(
       expect.objectContaining({
         contract: "salt_generated_artifact_release_gate_v1",
@@ -1639,9 +1637,9 @@ describe("salt cli export-context", () => {
       ),
     ).toBe(0);
     const supportedGate = readJson(supportedStdout);
-    expect(validateSaltGeneratedArtifactReleaseGateSchema(supportedGate)).toEqual(
-      [],
-    );
+    expect(
+      validateSaltGeneratedArtifactReleaseGateSchema(supportedGate),
+    ).toEqual([]);
     expect(supportedGate).toEqual(
       expect.objectContaining({
         status: "passed",
@@ -1652,8 +1650,10 @@ describe("salt cli export-context", () => {
     );
 
     const tamperedContext = await readJsonFile(outputPath);
-    const generatedArtifact =
-      tamperedContext.generated_artifact as Record<string, unknown>;
+    const generatedArtifact = tamperedContext.generated_artifact as Record<
+      string,
+      unknown
+    >;
     const artifactEvidenceRefs = generatedArtifact.evidence_refs as Array<
       Record<string, unknown>
     >;
@@ -1713,7 +1713,12 @@ describe("salt cli export-context", () => {
       "salt-cli-export-context-release-gate-unsupported",
     );
     const registryDir = path.join(rootDir, "registry");
-    const manifestPath = path.join(rootDir, ".salt", "context", "manifest.json");
+    const manifestPath = path.join(
+      rootDir,
+      ".salt",
+      "context",
+      "manifest.json",
+    );
     const outputDir = path.join(rootDir, ".salt", "context", "components");
     await writeFixtureRegistry(registryDir, buildFixtureComponent(), {
       patterns: [buildFixturePattern()],
@@ -1785,7 +1790,12 @@ describe("salt cli export-context", () => {
       "salt-cli-export-context-release-gate-batch",
     );
     const registryDir = path.join(rootDir, "registry");
-    const manifestPath = path.join(rootDir, ".salt", "context", "manifest.json");
+    const manifestPath = path.join(
+      rootDir,
+      ".salt",
+      "context",
+      "manifest.json",
+    );
     const outputDir = path.join(rootDir, ".salt", "context", "components");
     await writeFixtureRegistry(registryDir, buildFixtureComponent(), {
       patterns: [buildFixturePattern()],
@@ -1889,7 +1899,12 @@ describe("salt cli export-context", () => {
       "salt-cli-export-context-release-gate-markdown",
     );
     const registryDir = path.join(rootDir, "registry");
-    const manifestPath = path.join(rootDir, ".salt", "context", "manifest.json");
+    const manifestPath = path.join(
+      rootDir,
+      ".salt",
+      "context",
+      "manifest.json",
+    );
     const outputDir = path.join(rootDir, ".salt", "context", "components");
     const markdownPath = path.join(outputDir, "fixture-action.context.md");
     await writeFixtureRegistry(registryDir, buildFixtureComponent(), {
@@ -1970,7 +1985,12 @@ describe("salt cli export-context", () => {
       "salt-cli-export-context-release-gate-stray-json",
     );
     const registryDir = path.join(rootDir, "registry");
-    const manifestPath = path.join(rootDir, ".salt", "context", "manifest.json");
+    const manifestPath = path.join(
+      rootDir,
+      ".salt",
+      "context",
+      "manifest.json",
+    );
     const outputDir = path.join(rootDir, ".salt", "context", "components");
     await writeFixtureRegistry(registryDir, buildFixtureComponent(), {
       patterns: [buildFixturePattern()],
@@ -2221,7 +2241,9 @@ describe("salt cli export-context", () => {
     }
     expect(
       validateSaltAiEvidenceClosureReportSchema(
-        await readJsonFile(path.join(bundleDir, "ai-evidence-closure-report.json")),
+        await readJsonFile(
+          path.join(bundleDir, "ai-evidence-closure-report.json"),
+        ),
       ),
     ).toEqual([]);
   });

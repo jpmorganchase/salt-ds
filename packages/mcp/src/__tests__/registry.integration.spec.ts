@@ -671,6 +671,169 @@ describe("registry integration", () => {
         expect.stringContaining("Dropdown or another selection control"),
       ]),
     );
+    expect(listFilteringPattern?.how_to_build).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Build the filtering flow around filter logic, no-match feedback, highlighted matching characters, and loading feedback for slow results",
+        ),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for File upload", () => {
+    const fileUploadPattern = registry.patterns.find(
+      (pattern) => pattern.name === "File upload",
+    );
+
+    expect(fileUploadPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("files or records that already exist"),
+        expect.stringContaining("file URL, path, or other text reference"),
+        expect.stringContaining("ongoing file management after upload"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Menu button", () => {
+    const menuButtonPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Menu button",
+    );
+
+    expect(menuButtonPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("one clear action"),
+        expect.stringContaining("high priority and should remain visible"),
+        expect.stringContaining(
+          "choosing a value rather than triggering an action",
+        ),
+        expect.stringContaining("navigate users to another location"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Comments", () => {
+    const commentsPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Comments",
+    );
+
+    expect(commentsPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("system-generated events or history"),
+        expect.stringContaining("private or submitted once"),
+        expect.stringContaining("long-form documentation"),
+        expect.stringContaining("real-time conversation"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Formatted input", () => {
+    const formattedInputPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Formatted input",
+    );
+
+    expect(formattedInputPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "increment, decrement, or adjust a numeric value",
+        ),
+        expect.stringContaining("single date or date range"),
+        expect.stringContaining(
+          "country-specific formatting with a location selector",
+        ),
+        expect.stringContaining("open-ended text"),
+        expect.stringContaining("known set of values"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Indication", () => {
+    const indicationPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Indication",
+    );
+
+    expect(indicationPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("state or condition of a system or process"),
+        expect.stringContaining("visual cues about potential outcomes"),
+        expect.stringContaining("stage of a process or workflow"),
+        expect.stringContaining("level of risk"),
+      ]),
+    );
+    expect(indicationPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("detailed message, recovery instruction"),
+        expect.stringContaining("primary action"),
+        expect.stringContaining("navigate between locations"),
+        expect.stringContaining("only decorative"),
+      ]),
+    );
+    expect(indicationPattern?.how_to_build).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Choose the indication type"),
+        expect.stringContaining("Apply the color, icon, and label guidance"),
+        expect.stringContaining("status for system or process conditions"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Experience customization", () => {
+    const experienceCustomizationPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Experience customization",
+    );
+
+    expect(experienceCustomizationPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("fixed by policy, role, permissions"),
+        expect.stringContaining("current task, page, or data view"),
+        expect.stringContaining("business task"),
+        expect.stringContaining("styling, component design"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for International address form", () => {
+    const internationalAddressFormPattern = registry.patterns.find(
+      (pattern) => pattern.name === "International address form",
+    );
+
+    expect(internationalAddressFormPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("one known country"),
+        expect.stringContaining("only need to select a country or region"),
+        expect.stringContaining("location detection, address lookup"),
+        expect.stringContaining("non-address contact information"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for International phone number", () => {
+    const internationalPhoneNumberPattern = registry.patterns.find(
+      (pattern) => pattern.name === "International phone number",
+    );
+
+    expect(internationalPhoneNumberPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("not country-specific"),
+        expect.stringContaining("only need to select a country or region"),
+        expect.stringContaining("location autodetection"),
+        expect.stringContaining("not phone numbers"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Keyboard shortcuts", () => {
+    const keyboardShortcutsPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Keyboard shortcuts",
+    );
+
+    expect(keyboardShortcutsPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("does not provide keyboard shortcuts"),
+        expect.stringContaining("perform an action directly"),
+        expect.stringContaining("standard keyboard navigation"),
+        expect.stringContaining("conflicts with essential system"),
+      ]),
+    );
   });
 
   it("extracts explicit guidance for List builder", () => {

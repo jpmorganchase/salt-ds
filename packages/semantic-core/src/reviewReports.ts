@@ -7,13 +7,13 @@ import type {
   SaltUnsupportedClaim,
 } from "./evidence.js";
 import {
-  type SerializedGeneratedSaltArtifactSurfaceGate,
-  serializeGeneratedSaltArtifactSurfaceGate,
-} from "./generatedArtifactSurface.js";
-import {
   type SaltGeneratedArtifactReleaseGate,
   validateGeneratedArtifactReleaseGate,
 } from "./generatedArtifactReleaseGate.js";
+import {
+  type SerializedGeneratedSaltArtifactSurfaceGate,
+  serializeGeneratedSaltArtifactSurfaceGate,
+} from "./generatedArtifactSurface.js";
 import { createSaltRegistryFingerprint } from "./registry/fingerprint.js";
 import {
   buildReviewReportEvidenceGate,

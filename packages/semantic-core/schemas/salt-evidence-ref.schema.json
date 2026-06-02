@@ -45,34 +45,19 @@
       ]
     },
     "registry": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/registryRef" }
-      ]
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/registryRef" }]
     },
     "source": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/sourceRef" }
-      ]
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sourceRef" }]
     },
     "package": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/packageRef" }
-      ]
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/packageRef" }]
     },
     "project_policy": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/projectPolicyRef" }
-      ]
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/projectPolicyRef" }]
     },
     "workflow_input": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/workflowInputRef" }
-      ]
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/workflowInputRef" }]
     },
     "confidence": {
       "enum": ["high", "medium", "low"]

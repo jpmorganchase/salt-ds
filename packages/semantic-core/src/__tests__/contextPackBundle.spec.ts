@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildContextPackManifest,
+  type SaltContextPackManifestEntry,
+} from "../contextManifest.js";
+import {
   buildContextPackBundle,
   checkContextPackBundlePersistence,
   SALT_CONTEXT_PACK_BUNDLE_CONTRACT,
@@ -9,17 +13,15 @@ import {
 } from "../contextPackBundle.js";
 import { buildContextPackBundleReleaseGate } from "../contextPackReleaseGate.js";
 import {
-  buildContextPackManifest,
-  type SaltContextPackManifestEntry,
-} from "../contextManifest.js";
-import {
   SALT_EVIDENCE_REF_CONTRACT,
   SALT_GENERATED_ARTIFACT_CONTRACT,
   type SaltGeneratedArtifact,
 } from "../evidence.js";
 import type { ComponentRecord, SaltRegistry } from "../types.js";
-import { validateSaltContextPackBundleSchema } from "./contextPackBundleSchemaTestUtils.js";
-import { validateSaltContextPackPersistenceCheckSchema } from "./contextPackBundleSchemaTestUtils.js";
+import {
+  validateSaltContextPackBundleSchema,
+  validateSaltContextPackPersistenceCheckSchema,
+} from "./contextPackBundleSchemaTestUtils.js";
 import { validateSaltGeneratedArtifactReleaseGateBatchSchema } from "./generatedArtifactReleaseGateSchemaTestUtils.js";
 
 // Context-pack bundle tests use tiny fixture-only names and paths. They do not
@@ -59,7 +61,7 @@ function buildFixtureFile(
     contract: entry.contract,
     generated_artifact_kind: entry.generated_artifact_kind,
     evidence_ref_ids: entry.evidence_ref_ids,
-    text: "{\"contract\":\"salt_context_component_v1\"}",
+    text: '{"contract":"salt_context_component_v1"}',
   };
 }
 

@@ -1281,15 +1281,18 @@ describe("salt cli", () => {
 
     let stdout = "";
     let stderr = "";
-    const exitCode = await runCli(withRegistry(["init", ".", "--ai", "--json"]), {
-      cwd: rootDir,
-      writeStdout: (message) => {
-        stdout += message;
+    const exitCode = await runCli(
+      withRegistry(["init", ".", "--ai", "--json"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
       },
-      writeStderr: (message) => {
-        stderr += message;
-      },
-    });
+    );
     expect({ exitCode, stderr }).toEqual({ exitCode: 0, stderr: "" });
     const payload = JSON.parse(stdout);
     expect(validateSaltAiSetupSchema(payload.aiSetup)).toEqual([]);
@@ -1867,6 +1870,103 @@ describe("salt cli", () => {
     );
   });
 
+  it("routes primary action requests to Button before applying an approved repo wrapper", async () => {
+    const rootDir = await createTempDir(
+      "salt-cli-create-action-wrapper-policy",
+    );
+    await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          packageManager: "pnpm@9.1.0",
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+            react: "^18.3.1",
+            vite: "^7.1.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, ".salt", "team.json"),
+      JSON.stringify(
+        {
+          contract: "project_conventions_v1",
+          approved_wrappers: [
+            {
+              name: "AppButton",
+              wraps: "Button",
+              reason: "Primary product actions use AppButton.",
+              import: {
+                from: "@/components/AppButton",
+                name: "AppButton",
+              },
+              use_when: ["primary product actions"],
+              docs: ["./docs/app-button.md"],
+            },
+          ],
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry([
+        "create",
+        "add a primary action to this view. The repo policy says all Salt buttons in this package must go through the local AppButton wrapper",
+        "--include-starter-code",
+        "--json",
+        "--full",
+      ]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    const payload = readCliJson(stdout);
+    expectWorkflowExitCode(payload, exitCode);
+    expect(stderr).toBe("");
+    expect(payload.status).toBe("partial");
+    expect(payload.request).toEqual(
+      expect.objectContaining({
+        resolved_entity: "Button",
+        match_status: "broadened",
+      }),
+    );
+    expect(payload.result.summary).toEqual(
+      expect.objectContaining({
+        decisionName: "Button",
+        finalDecisionName: "AppButton",
+        finalDecisionSource: "project_policy",
+      }),
+    );
+    expect(payload.artifacts.repoRefinement).toEqual(
+      expect.objectContaining({
+        status: "refined_by_project_policy",
+        canonical_name: "Button",
+        final_name: "AppButton",
+        source: "project_policy",
+      }),
+    );
+    expect(payload.result.recommendation.starter_code?.[0]?.code).toContain(
+      'import { AppButton } from "@/components/AppButton";',
+    );
+  });
+
   it("keeps the create final decision canonical when a repo wrapper has no import metadata", async () => {
     const rootDir = await createTempDir("salt-cli-create-wrapper-warning");
     await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
@@ -2005,24 +2105,16 @@ describe("salt cli", () => {
     );
     const starter = payload.result.recommendation.starter_code?.[0];
     expect(starter?.code).not.toContain("SaltProvider");
-    expect(starter?.code).not.toContain(
-      'accent="teal"',
-    );
-    expect(starter?.code).toContain(
-      "<BorderLayout>",
-    );
+    expect(starter?.code).not.toContain('accent="teal"');
+    expect(starter?.code).toContain("<BorderLayout>");
     expect(starter?.code).toContain(
       '<BorderItem position="north" as="header">',
     );
-    expect(starter?.code).toContain(
-      '<BorderItem position="center" as="main">',
-    );
+    expect(starter?.code).toContain('<BorderItem position="center" as="main">');
     expect(starter?.code).toContain(
       '<GridLayout columns={12} gap={3} aria-label="Dashboard modules">',
     );
-    expect(starter?.code).toContain(
-      "Metric subtitle or subvalue",
-    );
+    expect(starter?.code).toContain("Metric subtitle or subvalue");
     expect(starter?.code).toContain(
       "Fixed panel: filters, toggles, and controls",
     );
@@ -4388,9 +4480,9 @@ describe("salt cli", () => {
     const savedMigrationReport = readCliJson(
       await fs.readFile(reportPath, "utf8"),
     );
-    expect(validateSaltWorkflowFollowupReportSchema(savedMigrationReport)).toEqual(
-      [],
-    );
+    expect(
+      validateSaltWorkflowFollowupReportSchema(savedMigrationReport),
+    ).toEqual([]);
     expect(payload.workflow.confidence).toEqual(
       expect.objectContaining({
         level: expect.any(String),
@@ -5213,9 +5305,9 @@ describe("salt cli", () => {
     const savedUpgradeReport = readCliJson(
       await fs.readFile(reportPath, "utf8"),
     );
-    expect(validateSaltWorkflowFollowupReportSchema(savedUpgradeReport)).toEqual(
-      [],
-    );
+    expect(
+      validateSaltWorkflowFollowupReportSchema(savedUpgradeReport),
+    ).toEqual([]);
     expect(payload.workflow.confidence).toEqual(
       expect.objectContaining({
         level: expect.any(String),
@@ -5303,9 +5395,9 @@ describe("salt cli", () => {
     expect(stderr).toBe("");
     const reviewPayload = readCliJson(reviewStdout);
     expectWorkflowExitCode(reviewPayload, reviewExitCode);
-    expect(validateSaltReviewReportSchema(reviewPayload.artifacts.reviewReport)).toEqual(
-      [],
-    );
+    expect(
+      validateSaltReviewReportSchema(reviewPayload.artifacts.reviewReport),
+    ).toEqual([]);
 
     let migrateStdout = "";
     stderr = "";
