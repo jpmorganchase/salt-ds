@@ -4,13 +4,13 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
-  cloneElement,
   forwardRef,
   type HTMLAttributes,
   isValidElement,
   type ReactNode,
 } from "react";
 import megaMenuGroupCss from "./MegaMenuGroup.css";
+import { MegaMenuGroupContext } from "./MegaMenuGroupContext";
 import { MegaMenuHeader } from "./MegaMenuHeader";
 
 const withBaseName = makePrefixer("saltMegaMenuGroup");
@@ -35,29 +35,33 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
     let header: ReactNode = null;
     const items: ReactNode[] = [];
 
+    // Split the header from the items so the header sits outside the list; the
+    // header reads its id from context rather than being cloned to inject one.
     Children.forEach(children, (child) => {
       if (isValidElement(child) && child.type === MegaMenuHeader && !header) {
-        header = cloneElement(child, { id: headerId });
+        header = child;
       } else {
         items.push(child);
       }
     });
 
     return (
-      <div
-        className={clsx(withBaseName(), className)}
-        data-mega-menu-column=""
-        ref={ref}
-        {...rest}
-      >
-        {header}
-        <ol
-          className={withBaseName("list")}
-          aria-labelledby={header ? headerId : undefined}
+      <MegaMenuGroupContext.Provider value={{ headerId }}>
+        <div
+          className={clsx(withBaseName(), className)}
+          data-mega-menu-column=""
+          ref={ref}
+          {...rest}
         >
-          {items}
-        </ol>
-      </div>
+          {header}
+          <ul
+            className={withBaseName("list")}
+            aria-labelledby={header ? headerId : undefined}
+          >
+            {items}
+          </ul>
+        </div>
+      </MegaMenuGroupContext.Provider>
     );
   },
 );
