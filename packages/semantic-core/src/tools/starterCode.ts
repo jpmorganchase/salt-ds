@@ -428,7 +428,11 @@ export function createRecipeStarterCode(input: {
   const allowGenericComponentStarter =
     input.allow_generic_component_starter ?? true;
 
-  if (input.components.length === 0 && !structuredScaffold && !exampleBackedStarter) {
+  if (
+    input.components.length === 0 &&
+    !structuredScaffold &&
+    !exampleBackedStarter
+  ) {
     return [];
   }
 

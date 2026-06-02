@@ -18,6 +18,8 @@ import {
   promptHostInstructionSurfaceFileName,
   resolveComponentTarget,
   resolvePatternTarget,
+  type SaltContextPackBundleFile,
+  type SaltContextPackManifestEntry,
   selectDefaultContextPackComponents,
   selectDefaultContextPackFoundationTokenGroups,
   selectDefaultContextPackPatterns,
@@ -27,8 +29,6 @@ import {
   toSafeFoundationContextFileName,
   toSafePatternContextFileName,
   toSaltGeneratedArtifactRegistry,
-  type SaltContextPackBundleFile,
-  type SaltContextPackManifestEntry,
 } from "@salt-ds/semantic-core";
 import type { SaltRegistry } from "../types.js";
 import { getSaltMcpRuntimeMetadata } from "./serverMetadata.js";
@@ -207,7 +207,10 @@ function fileOutputPaths(input: {
     promptInstruction: (surface) =>
       toContextPackOutputPathForManifest(
         input.rootDir,
-        path.join(input.outputDir, promptHostInstructionSurfaceFileName(surface)),
+        path.join(
+          input.outputDir,
+          promptHostInstructionSurfaceFileName(surface),
+        ),
       ),
   };
 }

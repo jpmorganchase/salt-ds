@@ -546,12 +546,25 @@ function resolveAppliedProjectConvention(
     (entry) => entry.salt_name === canonicalName,
   );
   if (componentOverride) {
+    const matchingWrapper = composed.conventions.approved_wrappers?.find(
+      (entry) =>
+        entry.wraps === canonicalName &&
+        entry.name === componentOverride.prefer,
+    );
     return {
       type: "preferred-component",
       name: componentOverride.salt_name,
       replacement: componentOverride.prefer,
+      wraps: matchingWrapper?.wraps ?? null,
+      import: matchingWrapper?.import ?? null,
+      use_when: matchingWrapper?.use_when,
+      avoid_when: matchingWrapper?.avoid_when,
+      migration_shim: matchingWrapper?.migration_shim,
       reason: componentOverride.reason,
-      docs: componentOverride.docs,
+      docs: uniqueStrings([
+        ...(componentOverride.docs ?? []),
+        ...(matchingWrapper?.docs ?? []),
+      ]),
       precedence: 2,
       layer: getRuleSource(
         ruleSources,

@@ -9,15 +9,15 @@ import {
   buildPromptHostInstructionSurface,
   buildSaltContextComponentCheck,
   checkComponentContextMarkdownBridge,
+  diffPromptHostInstructionSurfaceForCheck,
   diffSaltContextFoundationForCheck,
   diffSaltContextPatternForCheck,
-  diffPromptHostInstructionSurfaceForCheck,
   findDefaultPromptHostInstructionSurfaceDescriptor,
   SALT_CONTEXT_PACK_MANIFEST_CONTRACT,
-  selectDefaultContextPackFoundationTokenGroups,
   type SaltContextPackManifest,
   type SaltGeneratedContextHealth,
   type SaltRegistry,
+  selectDefaultContextPackFoundationTokenGroups,
   toSaltGeneratedArtifactRegistry,
 } from "@salt-ds/semantic-core";
 import { pathExists } from "./common.js";
@@ -95,7 +95,9 @@ function buildExpectedPatternContext(
   registry: SaltRegistry,
   entry: SaltContextPackManifest["entries"][number],
 ) {
-  const pattern = registry.patterns.find((candidate) => candidate.id === entry.id);
+  const pattern = registry.patterns.find(
+    (candidate) => candidate.id === entry.id,
+  );
 
   if (!pattern) {
     return null;
@@ -119,7 +121,8 @@ function buildExpectedFoundationContext(
     selectDefaultContextPackFoundationTokenGroups(registry).find(
       (group) => group.id === entry.id,
     ) ?? null;
-  const category = selectedGroup?.category ?? entry.id.replace(/^tokens\./u, "");
+  const category =
+    selectedGroup?.category ?? entry.id.replace(/^tokens\./u, "");
   const tokens =
     selectedGroup?.tokens ??
     registry.tokens.filter((token) => token.category === category);
@@ -320,12 +323,11 @@ async function outputChecksByManifestPath(
             entry.output_path,
             {
               outputExists: true,
-              outputStatus:
-                !supported
-                  ? ("unsupported" as const)
-                  : mismatches.length === 0
-                    ? ("current" as const)
-                    : ("stale" as const),
+              outputStatus: !supported
+                ? ("unsupported" as const)
+                : mismatches.length === 0
+                  ? ("current" as const)
+                  : ("stale" as const),
               outputContract: readOutputContract(existingContext),
               mismatches,
               missing: expectedContext.surface_gate.missing,
@@ -355,7 +357,9 @@ async function outputChecksByManifestPath(
               outputStatus: "unsupported" as const,
               outputContract: entry.contract,
               mismatches: [],
-              missing: [`registry foundation token group ${entry.id} is missing`],
+              missing: [
+                `registry foundation token group ${entry.id} is missing`,
+              ],
             },
           ];
         }
@@ -374,12 +378,11 @@ async function outputChecksByManifestPath(
             entry.output_path,
             {
               outputExists: true,
-              outputStatus:
-                !supported
-                  ? ("unsupported" as const)
-                  : mismatches.length === 0
-                    ? ("current" as const)
-                    : ("stale" as const),
+              outputStatus: !supported
+                ? ("unsupported" as const)
+                : mismatches.length === 0
+                  ? ("current" as const)
+                  : ("stale" as const),
               outputContract: readOutputContract(existingContext),
               mismatches,
               missing: expectedContext.surface_gate.missing,
@@ -412,7 +415,9 @@ async function outputChecksByManifestPath(
               outputStatus: "unsupported" as const,
               outputContract: entry.contract,
               mismatches: [],
-              missing: [`registry ${entry.kind} surface ${entry.id} is missing`],
+              missing: [
+                `registry ${entry.kind} surface ${entry.id} is missing`,
+              ],
             },
           ];
         }
@@ -431,12 +436,11 @@ async function outputChecksByManifestPath(
             entry.output_path,
             {
               outputExists: true,
-              outputStatus:
-                !supported
-                  ? ("unsupported" as const)
-                  : mismatches.length === 0
-                    ? ("current" as const)
-                    : ("stale" as const),
+              outputStatus: !supported
+                ? ("unsupported" as const)
+                : mismatches.length === 0
+                  ? ("current" as const)
+                  : ("stale" as const),
               outputContract: readOutputContract(existingSurface),
               mismatches,
               missing: expectedSurface.surface_gate.missing,

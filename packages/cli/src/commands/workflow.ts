@@ -2,8 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { inspectUrl } from "@salt-ds/runtime-inspector-core";
 import {
-  buildSaltWorkflowFollowupReport,
   buildSaltReviewReport,
+  buildSaltWorkflowFollowupReport,
   type SaltReviewReport,
   type SaltReviewReportValidationResult,
   type SaltWorkflowFollowupReport,
@@ -2744,8 +2744,7 @@ export async function runUpgradeCommand(
 
   try {
     const context = await collectSaltInfo(io.cwd, flags["registry-dir"]);
-    const inferredPackage =
-      flags.package ?? context.salt.packages[0]?.name;
+    const inferredPackage = flags.package ?? context.salt.packages[0]?.name;
     const fromVersionWasInferred = !flags["from-version"];
     const inferredFromVersion =
       flags["from-version"] ?? normalizeVersion(context.salt.packageVersion);

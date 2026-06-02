@@ -372,7 +372,10 @@ describe("MCP review report workflow output", () => {
     const output = withAnalyzeWorkflowGuidance(
       buildFixtureRegistry(),
       buildReviewResult(
-        buildValidationIssue([buildAccessibilityEvidenceRef()], "accessibility"),
+        buildValidationIssue(
+          [buildAccessibilityEvidenceRef()],
+          "accessibility",
+        ),
       ),
       {
         code: '<FixtureAction fixtureProp="yes" />',

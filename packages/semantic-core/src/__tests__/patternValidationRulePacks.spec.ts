@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
 import Ajv2020 from "ajv/dist/2020.js";
+import { describe, expect, it } from "vitest";
 import {
   buildPatternValidationRulePack,
   validatePatternValidationRulePackEvidence,
@@ -166,8 +166,7 @@ describe("pattern validation rule packs", () => {
           evidence_refs: expect.arrayContaining([
             expect.objectContaining({
               registry: expect.objectContaining({
-                field_path:
-                  "starter_scaffold.semantics.required_regions.0",
+                field_path: "starter_scaffold.semantics.required_regions.0",
               }),
               source: {
                 url: "https://example.test/salt/fixture-workflow/source",
@@ -196,9 +195,9 @@ describe("pattern validation rule packs", () => {
         }),
       ]),
     );
-    expect(validatePatternValidationRulePackEvidence(rulePack, registry)).toEqual(
-      [],
-    );
+    expect(
+      validatePatternValidationRulePackEvidence(rulePack, registry),
+    ).toEqual([]);
     expect(validateRulePackSchema(rulePack)).toEqual([]);
   });
 
@@ -221,7 +220,9 @@ describe("pattern validation rule packs", () => {
     importRule.evidence_refs[0].registry.field_path =
       "starter_scaffold.template.imports.99.name";
 
-    expect(validatePatternValidationRulePackEvidence(rulePack, registry)).toEqual(
+    expect(
+      validatePatternValidationRulePackEvidence(rulePack, registry),
+    ).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           code: "invalid_rule_evidence_ref",
@@ -269,7 +270,9 @@ describe("pattern validation rule packs", () => {
       },
     });
 
-    expect(validatePatternValidationRulePackEvidence(rulePack, registry)).toEqual(
+    expect(
+      validatePatternValidationRulePackEvidence(rulePack, registry),
+    ).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           code: "missing_source_backed_rule_evidence",

@@ -1,11 +1,11 @@
 import { buildComponentContext } from "./contextArtifacts.js";
 import { buildFoundationContext } from "./contextFoundations.js";
-import { buildPatternContext } from "./contextPatterns.js";
 import {
   selectDefaultContextPackComponents,
   selectDefaultContextPackFoundationTokenGroups,
   selectDefaultContextPackPatterns,
 } from "./contextPackSelection.js";
+import { buildPatternContext } from "./contextPatterns.js";
 import type {
   SaltGeneratedArtifactGenerator,
   SaltGeneratedArtifactRegistry,
@@ -23,10 +23,7 @@ export const SALT_CONTEXT_COVERAGE_AUDIT_CONTRACT =
   "salt_context_coverage_audit_v1" as const;
 
 export type SaltContextCoverageAuditStatus = "validated" | "unsupported";
-export type SaltContextCoverageGapKind =
-  | "component"
-  | "pattern"
-  | "foundation";
+export type SaltContextCoverageGapKind = "component" | "pattern" | "foundation";
 export type SaltContextCoverageGapRecordKind =
   | "component"
   | "pattern"
@@ -383,16 +380,18 @@ function unsupportedClaimMissingFields(claim: SaltUnsupportedClaim): string[] {
 function buildPatternUnsupportedClaimGapRecords(
   unsupportedClaims: SaltUnsupportedClaim[],
 ): SaltContextCoverageGapRecord[] {
-  return unsupportedClaims.map((claim): SaltContextCoverageGapRecord => ({
-    kind: "pattern",
-    id: claim.id,
-    name: claim.text,
-    status: "unsupported",
-    reason_code: "evidence_surface_gate_failed",
-    reason: claim.reason,
-    missing: unsupportedClaimMissingFields(claim),
-    evidence_ref_ids: [],
-  }));
+  return unsupportedClaims.map(
+    (claim): SaltContextCoverageGapRecord => ({
+      kind: "pattern",
+      id: claim.id,
+      name: claim.text,
+      status: "unsupported",
+      reason_code: "evidence_surface_gate_failed",
+      reason: claim.reason,
+      missing: unsupportedClaimMissingFields(claim),
+      evidence_ref_ids: [],
+    }),
+  );
 }
 
 function uniqueStrings(values: string[]): string[] {
@@ -401,16 +400,17 @@ function uniqueStrings(values: string[]): string[] {
   );
 }
 
-function summarizeComponentCoverage(
-  input: BuildContextCoverageAuditInput,
-): {
+function summarizeComponentCoverage(input: BuildContextCoverageAuditInput): {
   section: SaltContextCoverageSection;
   gaps: SaltContextCoverageGap[];
 } {
-  const selectedComponents = selectDefaultContextPackComponents(input.registry, {
-    limit: input.registry.components.length,
-    include_unsupported: true,
-  });
+  const selectedComponents = selectDefaultContextPackComponents(
+    input.registry,
+    {
+      limit: input.registry.components.length,
+      include_unsupported: true,
+    },
+  );
   const selectedIds = new Set(
     selectedComponents.map((component) => component.id),
   );
@@ -424,47 +424,53 @@ function summarizeComponentCoverage(
   );
   const unsupportedRecords = contexts
     .filter((context) => context.status === "unsupported")
-    .map((context): SaltContextCoverageUnsupportedRecord => ({
-      id: context.component.id,
-      name: context.component.name.value,
-      status: "unsupported",
-      missing: context.surface_gate.missing,
-      unsupported_claim_count: context.unsupported_claims.length,
-      validation_issue_count: context.surface_gate.validation_issues.length,
-      evidence_ref_ids: context.component.name.evidence_ref_ids,
-    }));
+    .map(
+      (context): SaltContextCoverageUnsupportedRecord => ({
+        id: context.component.id,
+        name: context.component.name.value,
+        status: "unsupported",
+        missing: context.surface_gate.missing,
+        unsupported_claim_count: context.unsupported_claims.length,
+        validation_issue_count: context.surface_gate.validation_issues.length,
+        evidence_ref_ids: context.component.name.evidence_ref_ids,
+      }),
+    );
   const sourceGaps = input.registry.components
     .filter((component) => component.status === "stable")
     .filter((component) => !selectedIds.has(component.id))
     .filter((component) => !hasComponentContextSourceLocator(component))
-    .map((component): SaltContextCoverageGap => ({
-      kind: "component",
-      id: component.id,
-      name: component.name,
-      status: "unsupported",
-      reason:
-        "Stable component registry record is missing a source, docs, or example locator for generated context.",
-      missing: ["component source locator"],
-      evidence_ref_ids: [],
-      records: [],
-    }));
+    .map(
+      (component): SaltContextCoverageGap => ({
+        kind: "component",
+        id: component.id,
+        name: component.name,
+        status: "unsupported",
+        reason:
+          "Stable component registry record is missing a source, docs, or example locator for generated context.",
+        missing: ["component source locator"],
+        evidence_ref_ids: [],
+        records: [],
+      }),
+    );
   const optionalEvidenceGaps = selectedComponents
     .map((component) => ({
       component,
       missing: missingComponentOptionalContextEvidence(component),
     }))
     .filter((entry) => entry.missing.length > 0)
-    .map(({ component, missing }): SaltContextCoverageGap => ({
-      kind: "component",
-      id: component.id,
-      name: component.name,
-      status: "unsupported",
-      reason:
-        "Component context omitted optional fields because registry or source-backed evidence is missing.",
-      missing,
-      evidence_ref_ids: [],
-      records: [],
-    }));
+    .map(
+      ({ component, missing }): SaltContextCoverageGap => ({
+        kind: "component",
+        id: component.id,
+        name: component.name,
+        status: "unsupported",
+        reason:
+          "Component context omitted optional fields because registry or source-backed evidence is missing.",
+        missing,
+        evidence_ref_ids: [],
+        records: [],
+      }),
+    );
 
   return {
     section: {
@@ -480,24 +486,24 @@ function summarizeComponentCoverage(
     gaps: [
       ...sourceGaps,
       ...optionalEvidenceGaps,
-      ...unsupportedRecords.map((record): SaltContextCoverageGap => ({
-        kind: "component",
-        id: record.id,
-        name: record.name,
-        status: "unsupported",
-        reason:
-          "Selected component context did not pass the evidence surface gate.",
-        missing: record.missing,
-        evidence_ref_ids: record.evidence_ref_ids,
-        records: [],
-      })),
+      ...unsupportedRecords.map(
+        (record): SaltContextCoverageGap => ({
+          kind: "component",
+          id: record.id,
+          name: record.name,
+          status: "unsupported",
+          reason:
+            "Selected component context did not pass the evidence surface gate.",
+          missing: record.missing,
+          evidence_ref_ids: record.evidence_ref_ids,
+          records: [],
+        }),
+      ),
     ],
   };
 }
 
-function summarizePatternCoverage(
-  input: BuildContextCoverageAuditInput,
-): {
+function summarizePatternCoverage(input: BuildContextCoverageAuditInput): {
   section: SaltContextCoverageSection;
   gaps: SaltContextCoverageGap[];
 } {
@@ -519,15 +525,17 @@ function summarizePatternCoverage(
   );
   const unsupportedRecords = contexts
     .filter((context) => context.status === "unsupported")
-    .map((context): SaltContextCoverageUnsupportedRecord => ({
-      id: context.pattern.id,
-      name: context.pattern.name.value,
-      status: "unsupported",
-      missing: context.surface_gate.missing,
-      unsupported_claim_count: context.unsupported_claims.length,
-      validation_issue_count: context.surface_gate.validation_issues.length,
-      evidence_ref_ids: context.pattern.name.evidence_ref_ids,
-    }));
+    .map(
+      (context): SaltContextCoverageUnsupportedRecord => ({
+        id: context.pattern.id,
+        name: context.pattern.name.value,
+        status: "unsupported",
+        missing: context.surface_gate.missing,
+        unsupported_claim_count: context.unsupported_claims.length,
+        validation_issue_count: context.surface_gate.validation_issues.length,
+        evidence_ref_ids: context.pattern.name.evidence_ref_ids,
+      }),
+    );
   const unsupportedContextsByPatternId = new Map(
     contexts
       .filter((context) => context.status === "unsupported")
@@ -537,34 +545,38 @@ function summarizePatternCoverage(
     .filter((pattern) => pattern.status === "stable")
     .filter((pattern) => !selectedIds.has(pattern.id))
     .filter((pattern) => !hasPatternContextSourceLocator(pattern))
-    .map((pattern): SaltContextCoverageGap => ({
-      kind: "pattern",
-      id: pattern.id,
-      name: pattern.name,
-      status: "unsupported",
-      reason:
-        "Stable pattern registry record is missing a docs, resource, or example source locator for generated context.",
-      missing: ["pattern source locator"],
-      evidence_ref_ids: [],
-      records: [],
-    }));
+    .map(
+      (pattern): SaltContextCoverageGap => ({
+        kind: "pattern",
+        id: pattern.id,
+        name: pattern.name,
+        status: "unsupported",
+        reason:
+          "Stable pattern registry record is missing a docs, resource, or example source locator for generated context.",
+        missing: ["pattern source locator"],
+        evidence_ref_ids: [],
+        records: [],
+      }),
+    );
   const optionalEvidenceGaps = selectedPatterns
     .map((pattern) => ({
       pattern,
       missing: missingPatternOptionalContextEvidence(pattern, componentByName),
     }))
     .filter((entry) => entry.missing.length > 0)
-    .map(({ pattern, missing }): SaltContextCoverageGap => ({
-      kind: "pattern",
-      id: pattern.id,
-      name: pattern.name,
-      status: "unsupported",
-      reason:
-        "Pattern context omitted optional fields because registry or source-backed evidence is missing.",
-      missing,
-      evidence_ref_ids: [],
-      records: buildPatternOptionalEvidenceGapRecords(pattern, missing),
-    }));
+    .map(
+      ({ pattern, missing }): SaltContextCoverageGap => ({
+        kind: "pattern",
+        id: pattern.id,
+        name: pattern.name,
+        status: "unsupported",
+        reason:
+          "Pattern context omitted optional fields because registry or source-backed evidence is missing.",
+        missing,
+        evidence_ref_ids: [],
+        records: buildPatternOptionalEvidenceGapRecords(pattern, missing),
+      }),
+    );
 
   return {
     section: {
@@ -580,26 +592,27 @@ function summarizePatternCoverage(
     gaps: [
       ...sourceGaps,
       ...optionalEvidenceGaps,
-      ...unsupportedRecords.map((record): SaltContextCoverageGap => ({
-        kind: "pattern",
-        id: record.id,
-        name: record.name,
-        status: "unsupported",
-        reason: "Selected pattern context did not pass the evidence surface gate.",
-        missing: record.missing,
-        evidence_ref_ids: record.evidence_ref_ids,
-        records: buildPatternUnsupportedClaimGapRecords(
-          unsupportedContextsByPatternId.get(record.id)?.unsupported_claims ??
-            [],
-        ),
-      })),
+      ...unsupportedRecords.map(
+        (record): SaltContextCoverageGap => ({
+          kind: "pattern",
+          id: record.id,
+          name: record.name,
+          status: "unsupported",
+          reason:
+            "Selected pattern context did not pass the evidence surface gate.",
+          missing: record.missing,
+          evidence_ref_ids: record.evidence_ref_ids,
+          records: buildPatternUnsupportedClaimGapRecords(
+            unsupportedContextsByPatternId.get(record.id)?.unsupported_claims ??
+              [],
+          ),
+        }),
+      ),
     ],
   };
 }
 
-function summarizeFoundationCoverage(
-  input: BuildContextCoverageAuditInput,
-): {
+function summarizeFoundationCoverage(input: BuildContextCoverageAuditInput): {
   section: SaltContextCoverageSection;
   gaps: SaltContextCoverageGap[];
 } {
@@ -624,15 +637,17 @@ function summarizeFoundationCoverage(
   );
   const unsupportedRecords = contexts
     .filter((context) => context.status === "unsupported")
-    .map((context): SaltContextCoverageUnsupportedRecord => ({
-      id: context.foundation.id,
-      name: context.foundation.category.value,
-      status: "unsupported",
-      missing: context.surface_gate.missing,
-      unsupported_claim_count: context.unsupported_claims.length,
-      validation_issue_count: context.surface_gate.validation_issues.length,
-      evidence_ref_ids: context.foundation.category.evidence_ref_ids,
-    }));
+    .map(
+      (context): SaltContextCoverageUnsupportedRecord => ({
+        id: context.foundation.id,
+        name: context.foundation.category.value,
+        status: "unsupported",
+        missing: context.surface_gate.missing,
+        unsupported_claim_count: context.unsupported_claims.length,
+        validation_issue_count: context.surface_gate.validation_issues.length,
+        evidence_ref_ids: context.foundation.category.evidence_ref_ids,
+      }),
+    );
   const sourceGapTokens = input.registry.tokens.filter(
     (token) => !hasTokenContextSourceLocator(token),
   );
@@ -667,17 +682,19 @@ function summarizeFoundationCoverage(
     },
     gaps: [
       ...sourceGaps,
-      ...unsupportedRecords.map((record): SaltContextCoverageGap => ({
-        kind: "foundation",
-        id: record.id,
-        name: record.name,
-        status: "unsupported",
-        reason:
-          "Selected foundation context did not pass the evidence surface gate.",
-        missing: record.missing,
-        evidence_ref_ids: record.evidence_ref_ids,
-        records: [],
-      })),
+      ...unsupportedRecords.map(
+        (record): SaltContextCoverageGap => ({
+          kind: "foundation",
+          id: record.id,
+          name: record.name,
+          status: "unsupported",
+          reason:
+            "Selected foundation context did not pass the evidence surface gate.",
+          missing: record.missing,
+          evidence_ref_ids: record.evidence_ref_ids,
+          records: [],
+        }),
+      ),
     ],
   };
 }

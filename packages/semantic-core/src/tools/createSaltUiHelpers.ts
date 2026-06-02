@@ -127,10 +127,7 @@ export function resolveSolutionType(
   ) {
     return "component";
   }
-  if (
-    hasSingleControlIntent(query) &&
-    structuralPatternIntent.score < 4
-  ) {
+  if (hasSingleControlIntent(query) && structuralPatternIntent.score < 4) {
     return "component";
   }
 

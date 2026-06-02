@@ -11,6 +11,7 @@ import {
   parseSectionStatements,
   parseStructuredGuidanceCallouts,
 } from "./buildRegistryMarkdown.js";
+import { buildRetrievalSignals } from "./buildRegistryRetrievalSignals.js";
 import {
   asString,
   asStringArray,
@@ -20,7 +21,6 @@ import {
   toKebabCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
-import { buildRetrievalSignals } from "./buildRegistryRetrievalSignals.js";
 
 function isExportedStoryStatement(statement: ts.Statement): boolean {
   return Boolean(
@@ -252,17 +252,17 @@ function firstNonEmptyText(
   );
 }
 
-function collectPatternDocsExampleTags(content: string): PatternDocsExampleTag[] {
+function collectPatternDocsExampleTags(
+  content: string,
+): PatternDocsExampleTag[] {
   const tags: PatternDocsExampleTag[] = [];
   const tagStartPattern = /^\s*<(Diagram|ImageSwitcher|LivePreview)\b/;
   let currentHeading = "";
-  let activeTag:
-    | {
-        tagName: PatternDocsExampleTag["tagName"];
-        lines: string[];
-        heading: string;
-      }
-    | null = null;
+  let activeTag: {
+    tagName: PatternDocsExampleTag["tagName"];
+    lines: string[];
+    heading: string;
+  } | null = null;
 
   const flushActiveTag = (): void => {
     if (!activeTag) {
@@ -333,8 +333,7 @@ function titleFromPatternDocsExampleTag(
       caption,
       content,
       alt,
-    ]) ??
-      fallback,
+    ]) ?? fallback,
   );
 }
 
@@ -919,7 +918,10 @@ function isExplicitPatternAccessibilityStatement(statement: string): boolean {
 }
 
 function parsePatternAccessibilitySummary(content: string): string[] {
-  const explicitAccessibility = parseSectionStatements(content, "Accessibility");
+  const explicitAccessibility = parseSectionStatements(
+    content,
+    "Accessibility",
+  );
   if (explicitAccessibility.length > 0) {
     return explicitAccessibility;
   }
@@ -1055,7 +1057,10 @@ export function derivePatternExampleAccessibilitySignals(
     return [];
   }
 
-  const signalsBySourceUrl = new Map<string, PatternExampleAccessibilitySignals>();
+  const signalsBySourceUrl = new Map<
+    string,
+    PatternExampleAccessibilitySignals
+  >();
 
   for (const example of pattern.examples) {
     if (!example.source_url || !example.code.trim()) {
@@ -1399,7 +1404,7 @@ export async function extractPatterns(
         structuredGuidance.avoid.length > 0
           ? (["usage-callouts"] as const)
           : []),
-        ],
+      ],
     });
     const retrievalSignals = buildRetrievalSignals({
       caution_statements: whenNotToUse,

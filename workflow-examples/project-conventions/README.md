@@ -16,8 +16,6 @@ Files:
   - Example package export shape for a line-of-business conventions package referenced from `.salt/stack.json`.
 - `conventions-pack.happy-path.md`
   - Short end-to-end beta example for local or package-backed layered policy with `salt-ds info --json`.
-- `alpha-review-migrate-fixtures.md`
-  - Small checked-in alpha tasks for extension-aware `review` and `migrate` coverage.
 - `custom-host-merge.example.ts`
   - Advanced custom-host example for teams that intentionally need to mirror Salt's merge behavior outside the normal `salt-ds` or repo-aware MCP path.
 

@@ -197,40 +197,44 @@ function toEvidenceRefs(input: {
   source_files: PromptHostInstructionSurfaceDescriptor["source_files"];
   verified_at: string;
 }): SaltEvidenceRef[] {
-  return input.source_files.map((sourceFile): SaltEvidenceRef => ({
-    contract: SALT_EVIDENCE_REF_CONTRACT,
-    id: toEvidenceRefId({
-      kind: input.kind,
-      surface_id: input.surface_id,
-      file_id: sourceFile.id,
+  return input.source_files.map(
+    (sourceFile): SaltEvidenceRef => ({
+      contract: SALT_EVIDENCE_REF_CONTRACT,
+      id: toEvidenceRefId({
+        kind: input.kind,
+        surface_id: input.surface_id,
+        file_id: sourceFile.id,
+      }),
+      source_kind: "source",
+      claim_kind: "workflow",
+      source: {
+        repo_path: sourceFile.source_path,
+        section: sourceFile.source_section ?? null,
+      },
+      confidence: "high",
+      verified_at: input.verified_at,
     }),
-    source_kind: "source",
-    claim_kind: "workflow",
-    source: {
-      repo_path: sourceFile.source_path,
-      section: sourceFile.source_section ?? null,
-    },
-    confidence: "high",
-    verified_at: input.verified_at,
-  }));
+  );
 }
 
 function toClaims(input: {
   descriptor: PromptHostInstructionSurfaceDescriptor;
 }): SaltGeneratedClaim[] {
-  return input.descriptor.claims.map((claim): SaltGeneratedClaim => ({
-    id: `${input.descriptor.kind}.${input.descriptor.id}.${claim.id}`,
-    kind: "workflow",
-    text: claim.text,
-    field_path: claim.field_path,
-    evidence_ref_ids: claim.evidence_ref_file_ids.map((fileId) =>
-      toEvidenceRefId({
-        kind: input.descriptor.kind,
-        surface_id: input.descriptor.id,
-        file_id: fileId,
-      }),
-    ),
-  }));
+  return input.descriptor.claims.map(
+    (claim): SaltGeneratedClaim => ({
+      id: `${input.descriptor.kind}.${input.descriptor.id}.${claim.id}`,
+      kind: "workflow",
+      text: claim.text,
+      field_path: claim.field_path,
+      evidence_ref_ids: claim.evidence_ref_file_ids.map((fileId) =>
+        toEvidenceRefId({
+          kind: input.descriptor.kind,
+          surface_id: input.descriptor.id,
+          file_id: fileId,
+        }),
+      ),
+    }),
+  );
 }
 
 export function promptHostInstructionSurfaceFileName(
@@ -287,9 +291,7 @@ export function buildPromptHostInstructionSurface(input: {
   const evidenceRefIds = uniqueStrings(
     input.descriptor.source_files.flatMap((sourceFile) =>
       evidenceRefs
-        .filter((ref) =>
-          ref.id.endsWith(`.${sourceFile.id}.ref`),
-        )
+        .filter((ref) => ref.id.endsWith(`.${sourceFile.id}.ref`))
         .map((ref) => ref.id),
     ),
   );
@@ -333,12 +335,11 @@ export function buildDefaultPromptHostInstructionSurfaces(input: {
   generator: SaltGeneratedArtifactGenerator;
   registry_hash?: string | null;
 }): SaltPromptHostInstructionSurface[] {
-  return DEFAULT_PROMPT_HOST_INSTRUCTION_SURFACE_DESCRIPTORS.map(
-    (descriptor) =>
-      buildPromptHostInstructionSurface({
-        ...input,
-        descriptor,
-      }),
+  return DEFAULT_PROMPT_HOST_INSTRUCTION_SURFACE_DESCRIPTORS.map((descriptor) =>
+    buildPromptHostInstructionSurface({
+      ...input,
+      descriptor,
+    }),
   );
 }
 

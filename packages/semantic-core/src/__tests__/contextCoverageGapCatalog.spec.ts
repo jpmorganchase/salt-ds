@@ -78,7 +78,8 @@ function buildFixtureAudit(): SaltContextCoverageAudit {
         id: "pattern.fixture-flow",
         name: "Fixture flow",
         status: "unsupported",
-        reason: "Selected pattern context did not pass the evidence surface gate.",
+        reason:
+          "Selected pattern context did not pass the evidence surface gate.",
         missing: ["pattern context has 1 unsupported claim(s)"],
         evidence_ref_ids: ["fixture-pattern-gap.ref"],
         records: [
@@ -109,9 +110,9 @@ function buildFixtureAudit(): SaltContextCoverageAudit {
             id: "--fixture-token",
             name: "--fixture-token",
             status: "unsupported",
-            reason_code: "missing_token_policy",
+            reason_code: "deprecated_token_raw_value_without_policy",
             reason:
-              "Registry token is missing a source-backed policy record for generated context.",
+              "Deprecated registry token policy remains unsupported because source-backed policy evidence is missing.",
             missing: ["token policy"],
             evidence_ref_ids: [],
           },
@@ -163,11 +164,12 @@ describe("context coverage gap catalog", () => {
       }),
       expect.objectContaining({
         kind: "foundation",
-        cause_codes: ["missing_token_policy"],
+        cause_codes: ["deprecated_token_raw_value_without_policy"],
+        resolution: "keep_unsupported_until_source_evidence_exists",
         records: [
           expect.objectContaining({
             id: "--fixture-token",
-            cause_code: "missing_token_policy",
+            cause_code: "deprecated_token_raw_value_without_policy",
           }),
         ],
       }),
@@ -227,9 +229,7 @@ describe("context coverage gap catalog", () => {
         ],
       }),
     ).toEqual(
-      expect.arrayContaining([
-        expect.stringContaining("evidence_ref_ids"),
-      ]),
+      expect.arrayContaining([expect.stringContaining("evidence_ref_ids")]),
     );
   });
 
@@ -243,13 +243,12 @@ describe("context coverage gap catalog", () => {
     expect(markdown).toContain(
       "Status: generated from semantic-core context coverage audit",
     );
-    expect(markdown).toContain(
-      "not a source of Salt product guidance",
-    );
+    expect(markdown).toContain("not a source of Salt product guidance");
     expect(markdown).toContain("| component | component.fixture-action |");
     expect(markdown).toContain("missing_optional_evidence");
     expect(markdown).toContain("evidence_surface_gate_failed");
-    expect(markdown).toContain("missing_token_policy");
+    expect(markdown).toContain("deprecated_token_raw_value_without_policy");
+    expect(markdown).toContain("keep_unsupported_until_source_evidence_exists");
     expect(markdown).toContain("fixture-pattern-gap.ref");
     expect(markdown).toContain("fixture-pattern-gap-record.ref");
     expect(markdown).not.toMatch(/recommended replacement|use .+ instead/i);

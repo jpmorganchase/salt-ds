@@ -1,12 +1,7 @@
 export {
-  buildGeneratedArtifactPersistenceResult,
-  SALT_GENERATED_ARTIFACT_PERSISTENCE_CONTRACT,
-  type SaltGeneratedArtifactPersistenceResult,
-} from "./artifactPersistence.js";
-export {
+  type BuildSaltAiEvidenceClosureReportInput,
   buildSaltAiEvidenceClosureReport,
   SALT_AI_EVIDENCE_CLOSURE_REPORT_CONTRACT,
-  type BuildSaltAiEvidenceClosureReportInput,
   type SaltAiEvidenceClosureDocsRegistryGap,
   type SaltAiEvidenceClosureReport,
   type SaltAiEvidenceClosureSlice,
@@ -14,14 +9,19 @@ export {
   type SaltAiEvidenceClosureSliceStatus,
 } from "./aiEvidenceClosureReport.js";
 export {
+  type BuildSaltAiSetupSummaryInput,
   buildSaltAiSetupSummary,
   SALT_AI_SETUP_CONTRACT,
-  type BuildSaltAiSetupSummaryInput,
   type SaltAiSetupStatus,
   type SaltAiSetupStep,
   type SaltAiSetupStepStatus,
   type SaltAiSetupSummary,
 } from "./aiSetup.js";
+export {
+  buildGeneratedArtifactPersistenceResult,
+  SALT_GENERATED_ARTIFACT_PERSISTENCE_CONTRACT,
+  type SaltGeneratedArtifactPersistenceResult,
+} from "./artifactPersistence.js";
 export {
   CONSUMER_REPO_AGENTS_TEMPLATE,
   SALT_REPO_INSTRUCTIONS_BLOCK_END,
@@ -58,8 +58,8 @@ export {
 export {
   buildGeneratedContextManifestHealth,
   buildSaltContextComponentCheck,
-  diffSaltContextFoundationForCheck,
   diffSaltContextComponentForCheck,
+  diffSaltContextFoundationForCheck,
   diffSaltContextPatternForCheck,
   generatedContextHealthToSurfaceGate,
   SALT_CONTEXT_COMPONENT_CHECK_CONTRACT,
@@ -70,25 +70,6 @@ export {
   type SaltGeneratedContextHealthEntry,
   type SaltGeneratedContextHealthStatus,
 } from "./contextChecks.js";
-export {
-  type BuildFoundationContextArtifactInput,
-  type BuildFoundationContextArtifactSurfaceGateInput,
-  type BuildFoundationContextInput,
-  buildFoundationContext,
-  buildFoundationContextArtifact,
-  buildFoundationContextArtifactSurfaceGate,
-  type FoundationContextArtifactSurfaceGate,
-  SALT_CONTEXT_FOUNDATION_CONTRACT,
-  type SaltContextFoundation,
-  type SaltContextFoundationEvidenceBoolean,
-  type SaltContextFoundationEvidenceText,
-  type SaltContextFoundationRecord,
-  type SaltContextFoundationSurfaceGate,
-  type SaltContextFoundationToken,
-  type SaltContextFoundationTokenDoc,
-  type SaltContextFoundationTokenPairing,
-  type SaltContextFoundationTokenPolicy,
-} from "./contextFoundations.js";
 export {
   type BuildContextCoverageAuditInput,
   buildContextCoverageAudit,
@@ -114,45 +95,24 @@ export {
   type SaltContextCoverageGapCatalogResolution,
 } from "./contextCoverageGapCatalog.js";
 export {
-  buildComponentContextMarkdownBridge,
-  checkComponentContextMarkdownBridge,
-  normalizeComponentContextMarkdownForCheck,
-  SALT_CONTEXT_COMPONENT_MARKDOWN_CONTRACT,
-  type SaltContextComponentMarkdownBridge,
-  type SaltContextComponentMarkdownCheckResult,
-} from "./contextMarkdown.js";
-export {
-  type BuildContextPackBundleInput,
-  buildContextPackBundle,
-  checkContextPackBundlePersistence,
-  SALT_CONTEXT_PACK_BUNDLE_CONTRACT,
-  SALT_CONTEXT_PACK_PERSISTENCE_CHECK_CONTRACT,
-  type CheckContextPackBundlePersistenceInput,
-  type SaltContextPackBundle,
-  type SaltContextPackBundleFile,
-  type SaltContextPackBundlePersistence,
-  type SaltContextPackPersistenceCheck,
-  type SaltContextPackPersistenceCheckFile,
-} from "./contextPackBundle.js";
-export { buildContextPackBundleReleaseGate } from "./contextPackReleaseGate.js";
-export {
-  DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
-  DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
-  toContextPackOutputPathForManifest,
-  toSafeContextFileName,
-  toSafeContextMarkdownFileName,
-  toSafeFoundationContextFileName,
-  toSafePatternContextFileName,
-} from "./contextPackPaths.js";
-export {
-  type BuildUnsupportedGeneratedContextSurfaceInput,
-  buildDefaultUnsupportedContextSurfaces,
-  buildUnsupportedGeneratedContextSurface,
-  SALT_CONTEXT_UNSUPPORTED_SURFACE_CONTRACT,
-  type SaltUnsupportedGeneratedSurface,
-  type SaltUnsupportedGeneratedSurfaceKind,
-  unsupportedGeneratedContextSurfaceFileName,
-} from "./contextUnsupportedSurfaces.js";
+  type BuildFoundationContextArtifactInput,
+  type BuildFoundationContextArtifactSurfaceGateInput,
+  type BuildFoundationContextInput,
+  buildFoundationContext,
+  buildFoundationContextArtifact,
+  buildFoundationContextArtifactSurfaceGate,
+  type FoundationContextArtifactSurfaceGate,
+  SALT_CONTEXT_FOUNDATION_CONTRACT,
+  type SaltContextFoundation,
+  type SaltContextFoundationEvidenceBoolean,
+  type SaltContextFoundationEvidenceText,
+  type SaltContextFoundationRecord,
+  type SaltContextFoundationSurfaceGate,
+  type SaltContextFoundationToken,
+  type SaltContextFoundationTokenDoc,
+  type SaltContextFoundationTokenPairing,
+  type SaltContextFoundationTokenPolicy,
+} from "./contextFoundations.js";
 export {
   type BuildContextPackManifestInput,
   buildComponentContextManifestEntry,
@@ -171,18 +131,36 @@ export {
   upsertContextPackManifestEntry,
 } from "./contextManifest.js";
 export {
-  buildDefaultPromptHostInstructionSurfaces,
-  buildPromptHostInstructionSurface,
-  DEFAULT_PROMPT_HOST_INSTRUCTION_SURFACE_DESCRIPTORS,
-  diffPromptHostInstructionSurfaceForCheck,
-  findDefaultPromptHostInstructionSurfaceDescriptor,
-  promptHostInstructionSurfaceFileName,
-  SALT_CONTEXT_PROMPT_INSTRUCTION_SURFACE_CONTRACT,
-  type SaltPromptHostInstructionSurface,
-  type SaltPromptHostInstructionSurfaceKind,
-  type SaltPromptHostInstructionSurfaceSourceFile,
-  type PromptHostInstructionSurfaceDescriptor,
-} from "./promptHostInstructionSurfaces.js";
+  buildComponentContextMarkdownBridge,
+  checkComponentContextMarkdownBridge,
+  normalizeComponentContextMarkdownForCheck,
+  SALT_CONTEXT_COMPONENT_MARKDOWN_CONTRACT,
+  type SaltContextComponentMarkdownBridge,
+  type SaltContextComponentMarkdownCheckResult,
+} from "./contextMarkdown.js";
+export {
+  type BuildContextPackBundleInput,
+  buildContextPackBundle,
+  type CheckContextPackBundlePersistenceInput,
+  checkContextPackBundlePersistence,
+  SALT_CONTEXT_PACK_BUNDLE_CONTRACT,
+  SALT_CONTEXT_PACK_PERSISTENCE_CHECK_CONTRACT,
+  type SaltContextPackBundle,
+  type SaltContextPackBundleFile,
+  type SaltContextPackBundlePersistence,
+  type SaltContextPackPersistenceCheck,
+  type SaltContextPackPersistenceCheckFile,
+} from "./contextPackBundle.js";
+export {
+  DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
+  DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
+  toContextPackOutputPathForManifest,
+  toSafeContextFileName,
+  toSafeContextMarkdownFileName,
+  toSafeFoundationContextFileName,
+  toSafePatternContextFileName,
+} from "./contextPackPaths.js";
+export { buildContextPackBundleReleaseGate } from "./contextPackReleaseGate.js";
 export {
   type SaltContextPackFoundationTokenGroup,
   type SelectDefaultContextPackComponentsOptions,
@@ -211,6 +189,15 @@ export {
   type SaltContextPatternSurfaceGate,
 } from "./contextPatterns.js";
 export {
+  type BuildUnsupportedGeneratedContextSurfaceInput,
+  buildDefaultUnsupportedContextSurfaces,
+  buildUnsupportedGeneratedContextSurface,
+  SALT_CONTEXT_UNSUPPORTED_SURFACE_CONTRACT,
+  type SaltUnsupportedGeneratedSurface,
+  type SaltUnsupportedGeneratedSurfaceKind,
+  unsupportedGeneratedContextSurfaceFileName,
+} from "./contextUnsupportedSurfaces.js";
+export {
   SALT_EVIDENCE_REF_CONTRACT,
   SALT_GENERATED_ARTIFACT_CONTRACT,
   type SaltEvidenceClaimKind,
@@ -234,6 +221,18 @@ export {
   validateGeneratedArtifactEvidence,
 } from "./evidence.js";
 export {
+  SALT_GENERATED_ARTIFACT_RELEASE_GATE_BATCH_CONTRACT,
+  SALT_GENERATED_ARTIFACT_RELEASE_GATE_CONTRACT,
+  type SaltGeneratedArtifactReleaseGate,
+  type SaltGeneratedArtifactReleaseGateBatch,
+  type SaltGeneratedArtifactReleaseGateBatchTarget,
+  type SaltGeneratedArtifactReleaseGateCoverageGap,
+  type SaltGeneratedArtifactReleaseGateStatus,
+  type SaltGeneratedArtifactReleaseGateTargetKind,
+  validateGeneratedArtifactReleaseGate,
+  validateGeneratedArtifactReleaseGateBatch,
+} from "./generatedArtifactReleaseGate.js";
+export {
   type GeneratedSaltArtifactSurfaceGate,
   type GeneratedSaltArtifactSurfaceStatus,
   type SerializedGeneratedSaltArtifactSurfaceGate,
@@ -241,19 +240,35 @@ export {
   type ValidateGeneratedSaltArtifactSurfaceInput,
   validateGeneratedSaltArtifactSurface,
 } from "./generatedArtifactSurface.js";
-export {
-  SALT_GENERATED_ARTIFACT_RELEASE_GATE_BATCH_CONTRACT,
-  SALT_GENERATED_ARTIFACT_RELEASE_GATE_CONTRACT,
-  type SaltGeneratedArtifactReleaseGateBatch,
-  type SaltGeneratedArtifactReleaseGateBatchTarget,
-  type SaltGeneratedArtifactReleaseGateCoverageGap,
-  type SaltGeneratedArtifactReleaseGate,
-  type SaltGeneratedArtifactReleaseGateStatus,
-  type SaltGeneratedArtifactReleaseGateTargetKind,
-  validateGeneratedArtifactReleaseGateBatch,
-  validateGeneratedArtifactReleaseGate,
-} from "./generatedArtifactReleaseGate.js";
 export { validateGeneratedArtifactRegistryEvidence } from "./generatedArtifactValidation.js";
+export {
+  buildPatternValidationRulePack,
+  getPatternValidationRules,
+  SALT_PATTERN_VALIDATION_RULE_PACK_CONTRACT,
+  type SaltPatternValidationRuleKind,
+  type SaltPatternValidationRuleMatch,
+  type SaltPatternValidationRulePack,
+  type SaltPatternValidationRulePackGenerator,
+  type SaltPatternValidationRulePackIssue,
+  type SaltPatternValidationRulePackIssueCode,
+  type SaltPatternValidationRulePackRegistry,
+  type SaltPatternValidationRuleRecord,
+  type SaltPatternValidationRuleStatus,
+  validatePatternValidationRulePackEvidence,
+} from "./patternValidationRulePacks.js";
+export {
+  buildDefaultPromptHostInstructionSurfaces,
+  buildPromptHostInstructionSurface,
+  DEFAULT_PROMPT_HOST_INSTRUCTION_SURFACE_DESCRIPTORS,
+  diffPromptHostInstructionSurfaceForCheck,
+  findDefaultPromptHostInstructionSurfaceDescriptor,
+  type PromptHostInstructionSurfaceDescriptor,
+  promptHostInstructionSurfaceFileName,
+  SALT_CONTEXT_PROMPT_INSTRUCTION_SURFACE_CONTRACT,
+  type SaltPromptHostInstructionSurface,
+  type SaltPromptHostInstructionSurfaceKind,
+  type SaltPromptHostInstructionSurfaceSourceFile,
+} from "./promptHostInstructionSurfaces.js";
 export {
   createSaltRegistryFingerprint,
   stableRegistryJson,
@@ -277,12 +292,6 @@ export {
   type ReviewReportEvidenceGate,
 } from "./reviewReportArtifacts.js";
 export {
-  type BuildValidationReportArtifactInput,
-  buildValidationReportArtifact,
-  buildValidationReportEvidenceGate,
-  type ValidationReportEvidenceGate,
-} from "./validationReportArtifacts.js";
-export {
   type BuildSaltReviewReportInput,
   buildSaltReviewReport,
   SALT_REVIEW_REPORT_CONTRACT,
@@ -299,51 +308,12 @@ export {
   type SaltReviewReportWorkflow,
 } from "./reviewReports.js";
 export {
-  SALT_REVIEW_RESUME_CONTRACT,
   SALT_REVIEW_REPORT_VALIDATION_CONTRACT,
-  type SaltReviewResume,
+  SALT_REVIEW_RESUME_CONTRACT,
   type SaltReviewReportValidationResult,
+  type SaltReviewResume,
   validateSaltReviewReport,
 } from "./reviewReportValidation.js";
-export {
-  buildSaltWorkflowFollowupReport,
-  SALT_WORKFLOW_FOLLOWUP_REPORT_CONTRACT,
-  SALT_WORKFLOW_FOLLOWUP_REPORT_VALIDATION_CONTRACT,
-  type BuildSaltWorkflowFollowupReportInput,
-  type SaltWorkflowFollowupCheck,
-  type SaltWorkflowFollowupCheckId,
-  type SaltWorkflowFollowupCheckStatus,
-  type SaltWorkflowFollowupReport,
-  type SaltWorkflowFollowupReportFollowupInput,
-  type SaltWorkflowFollowupReviewEvidence,
-  type SaltWorkflowFollowupReviewEvidenceStatus,
-  type SaltWorkflowFollowupReportRuntimeEvidence,
-  type SaltWorkflowFollowupReportSource,
-  type SaltWorkflowFollowupReportStatus,
-  type SaltWorkflowFollowupReportSummary,
-  type SaltWorkflowFollowupReportTarget,
-  type SaltWorkflowFollowupReportTargetInput,
-  type SaltWorkflowFollowupReportValidationResult,
-  type SaltWorkflowFollowupReportWorkflow,
-  type SaltWorkflowFollowupReportWorkflowInputEvidence,
-  type SaltWorkflowFollowupReportWorkflowState,
-  validateSaltWorkflowFollowupReport,
-} from "./workflowFollowupReports.js";
-export {
-  buildPatternValidationRulePack,
-  getPatternValidationRules,
-  SALT_PATTERN_VALIDATION_RULE_PACK_CONTRACT,
-  type SaltPatternValidationRuleKind,
-  type SaltPatternValidationRuleMatch,
-  type SaltPatternValidationRulePack,
-  type SaltPatternValidationRulePackGenerator,
-  type SaltPatternValidationRulePackIssue,
-  type SaltPatternValidationRulePackIssueCode,
-  type SaltPatternValidationRulePackRegistry,
-  type SaltPatternValidationRuleRecord,
-  type SaltPatternValidationRuleStatus,
-  validatePatternValidationRulePackEvidence,
-} from "./patternValidationRulePacks.js";
 export {
   buildSerializedPageSearchIndex,
   createPageSearchIndex,
@@ -940,3 +910,33 @@ export type {
   SearchIndexEntry,
   TokenRecord,
 } from "./types.js";
+export {
+  type BuildValidationReportArtifactInput,
+  buildValidationReportArtifact,
+  buildValidationReportEvidenceGate,
+  type ValidationReportEvidenceGate,
+} from "./validationReportArtifacts.js";
+export {
+  type BuildSaltWorkflowFollowupReportInput,
+  buildSaltWorkflowFollowupReport,
+  SALT_WORKFLOW_FOLLOWUP_REPORT_CONTRACT,
+  SALT_WORKFLOW_FOLLOWUP_REPORT_VALIDATION_CONTRACT,
+  type SaltWorkflowFollowupCheck,
+  type SaltWorkflowFollowupCheckId,
+  type SaltWorkflowFollowupCheckStatus,
+  type SaltWorkflowFollowupReport,
+  type SaltWorkflowFollowupReportFollowupInput,
+  type SaltWorkflowFollowupReportRuntimeEvidence,
+  type SaltWorkflowFollowupReportSource,
+  type SaltWorkflowFollowupReportStatus,
+  type SaltWorkflowFollowupReportSummary,
+  type SaltWorkflowFollowupReportTarget,
+  type SaltWorkflowFollowupReportTargetInput,
+  type SaltWorkflowFollowupReportValidationResult,
+  type SaltWorkflowFollowupReportWorkflow,
+  type SaltWorkflowFollowupReportWorkflowInputEvidence,
+  type SaltWorkflowFollowupReportWorkflowState,
+  type SaltWorkflowFollowupReviewEvidence,
+  type SaltWorkflowFollowupReviewEvidenceStatus,
+  validateSaltWorkflowFollowupReport,
+} from "./workflowFollowupReports.js";

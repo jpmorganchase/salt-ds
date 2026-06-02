@@ -221,6 +221,35 @@ function getQueryTerms(query: string): string[] {
   );
 }
 
+function hasPrimaryActionIntent(normalizedQuery: string): boolean {
+  return (
+    /\b(?:primary|main|prominent|principal)\s+(?:product\s+)?action\b/.test(
+      normalizedQuery,
+    ) ||
+    /\btoolbar action\b/.test(normalizedQuery) ||
+    /\bcall to action\b/.test(normalizedQuery) ||
+    /\bcta\b/.test(normalizedQuery)
+  );
+}
+
+function hasNavigationDestinationIntent(normalizedQuery: string): boolean {
+  return (
+    /\b(?:navigate|navigation|route|routes|destination|destinations|href|link|links)\b/.test(
+      normalizedQuery,
+    ) || /\b(?:another|different|external)\s+page\b/.test(normalizedQuery)
+  );
+}
+
+function hasBroadStructuralCreateSurface(normalizedQuery: string): boolean {
+  if (getStructuralPatternIntent(normalizedQuery).score >= 4) {
+    return true;
+  }
+
+  return /\b(?:dashboard|dashboards|table|tables|grid|grids|chart|charts|shell|sidebar|workspace|layout|layouts|tabs|tabbed|avatar|dialog|dialogs|modal|modals|wizard|form|forms|metrics|kpis)\b/.test(
+    normalizedQuery,
+  );
+}
+
 function deriveSemanticCreateQueryExpansions(query: string): string[] {
   const normalizedQuery = normalizeQuery(query);
   if (!normalizedQuery) {
@@ -234,6 +263,14 @@ function deriveSemanticCreateQueryExpansions(query: string): string[] {
     Number(/\berror\b/.test(normalizedQuery)) +
     Number(/\bwarning\b/.test(normalizedQuery)) +
     Number(/\bsuccess\b/.test(normalizedQuery));
+
+  if (
+    hasPrimaryActionIntent(normalizedQuery) &&
+    !hasNavigationDestinationIntent(normalizedQuery) &&
+    !hasBroadStructuralCreateSurface(normalizedQuery)
+  ) {
+    expansions.push("button action submit merge upload trigger function");
+  }
 
   if (
     /\b(navigate|navigation|navigating)\b/.test(normalizedQuery) &&
@@ -498,7 +535,11 @@ function buildRelatedSurfaceRetrievalDocs(
 
   for (const target of targets) {
     for (const text of normalizedTexts) {
-      if (!target.keys.some((key) => containsWholeWordPhrase(text.normalized, key))) {
+      if (
+        !target.keys.some((key) =>
+          containsWholeWordPhrase(text.normalized, key),
+        )
+      ) {
         continue;
       }
 
@@ -1762,7 +1803,8 @@ export function retrieveCreateCandidates(
   }
 
   const topK = Math.max(1, Math.min(input.top_k ?? 5, 25));
-  const semanticExpansions = deriveSemanticCreateQueryExpansions(retrievalQuery);
+  const semanticExpansions =
+    deriveSemanticCreateQueryExpansions(retrievalQuery);
   const semanticQueries = semanticExpansions
     .map((expansion) => normalizeQuery(expansion))
     .filter(Boolean);

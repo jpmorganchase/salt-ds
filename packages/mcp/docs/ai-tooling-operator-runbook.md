@@ -50,8 +50,9 @@ Use this map to review the stack without reading every file first.
 - `packages/skills/salt-ds`
   - host-facing orchestration instructions. Keep the skill thin and point it at
     generated evidence rather than duplicating Salt facts.
-- `packages/mcp/docs/ai-tooling-evidence-gap-register.md`
-  - active list of missing source evidence and unsupported/degraded states.
+- `packages/mcp/docs/ai-tooling-context-gap-catalog.md`
+  - generated catalog of missing source evidence and unsupported/degraded
+    states.
 
 ## Run Phases
 

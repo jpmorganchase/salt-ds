@@ -865,7 +865,9 @@ describe("public contract parity", () => {
       ["details", "result", "summary", "finalDecisionName"],
     ]);
     if (!code || !decisionName) {
-      throw new Error("Expected create workflow output to include starter code.");
+      throw new Error(
+        "Expected create workflow output to include starter code.",
+      );
     }
 
     const createReportPath = path.join(rootDir, "create-report.json");
@@ -1231,53 +1233,41 @@ describe("public contract parity", () => {
     await assertFixture("create-exact.full.json", cliComparable);
   });
 
-  it(
-    "keeps create full top-level facts aligned with compact for mixed-surface prompts",
-    async () => {
-      const rootDir = await createRepo("salt-parity-create-tabs-full-", {
-        name: "parity-create-tabs-full",
-        private: true,
-        dependencies: {
-          "@salt-ds/core": "^2.0.0",
-        },
-      });
-      const query =
-        "User profile page with tabs for different sections (e.g. profile details, settings, activity) and an avatar displaying user initials or image.";
+  it("keeps create full top-level facts aligned with compact for mixed-surface prompts", async () => {
+    const rootDir = await createRepo("salt-parity-create-tabs-full-", {
+      name: "parity-create-tabs-full",
+      private: true,
+      dependencies: {
+        "@salt-ds/core": "^2.0.0",
+      },
+    });
+    const query =
+      "User profile page with tabs for different sections (e.g. profile details, settings, activity) and an avatar displaying user initials or image.";
 
-      const cliCompact = await runCliCreateCompact(rootDir, query);
-      const cliFull = await runCliCreateFull(rootDir, query);
-      const mcpCompact = await runMcpCreate(rootDir, query, "compact");
-      const mcpFull = await runMcpCreate(rootDir, query, "full");
+    const cliCompact = await runCliCreateCompact(rootDir, query);
+    const cliFull = await runCliCreateFull(rootDir, query);
+    const mcpCompact = await runMcpCreate(rootDir, query, "compact");
+    const mcpFull = await runMcpCreate(rootDir, query, "full");
 
-      expect(toComparableCompactContract(cliFull)).toEqual(
-        toComparableCompactContract(cliCompact),
-      );
-      expect(toComparableCompactContract(mcpFull)).toEqual(
-        toComparableCompactContract(mcpCompact),
-      );
-      expect(readString(cliFull, [["request", "resolved_entity"]])).toBe(
-        "Tabs",
-      );
-      expect(readString(mcpFull, [["request", "resolved_entity"]])).toBe(
-        "Tabs",
-      );
-      expect(readString(cliFull, [["action", "kind"]])).toBe(
-        "retrieve_entity",
-      );
-      expect(readString(mcpFull, [["action", "kind"]])).toBe(
-        "retrieve_entity",
-      );
-      expect(readString(cliFull, [["action", "args", "name"]])).toBe("Avatar");
-      expect(readString(mcpFull, [["action", "args", "name"]])).toBe("Avatar");
-      expect(readString(cliFull, [["next_required_action", "kind"]])).toBe(
-        "retrieve_entity",
-      );
-      expect(readString(mcpFull, [["next_required_action", "kind"]])).toBe(
-        "retrieve_entity",
-      );
-    },
-    20_000,
-  );
+    expect(toComparableCompactContract(cliFull)).toEqual(
+      toComparableCompactContract(cliCompact),
+    );
+    expect(toComparableCompactContract(mcpFull)).toEqual(
+      toComparableCompactContract(mcpCompact),
+    );
+    expect(readString(cliFull, [["request", "resolved_entity"]])).toBe("Tabs");
+    expect(readString(mcpFull, [["request", "resolved_entity"]])).toBe("Tabs");
+    expect(readString(cliFull, [["action", "kind"]])).toBe("retrieve_entity");
+    expect(readString(mcpFull, [["action", "kind"]])).toBe("retrieve_entity");
+    expect(readString(cliFull, [["action", "args", "name"]])).toBe("Avatar");
+    expect(readString(mcpFull, [["action", "args", "name"]])).toBe("Avatar");
+    expect(readString(cliFull, [["next_required_action", "kind"]])).toBe(
+      "retrieve_entity",
+    );
+    expect(readString(mcpFull, [["next_required_action", "kind"]])).toBe(
+      "retrieve_entity",
+    );
+  }, 20_000);
 
   it("keeps create full request metadata populated for control prompts", async () => {
     const rootDir = await createRepo("salt-parity-create-switch-full-", {

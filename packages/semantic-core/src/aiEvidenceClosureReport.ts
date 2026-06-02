@@ -1,9 +1,5 @@
-import { buildContextCoverageAudit } from "./contextCoverageAudit.js";
 import type { SaltGeneratedContextHealth } from "./contextChecks.js";
-import {
-  buildDefaultPromptHostInstructionSurfaces,
-  type SaltPromptHostInstructionSurface,
-} from "./promptHostInstructionSurfaces.js";
+import { buildContextCoverageAudit } from "./contextCoverageAudit.js";
 import {
   SALT_GENERATED_ARTIFACT_CONTRACT,
   type SaltEvidenceRef,
@@ -16,9 +12,13 @@ import {
   type SaltGeneratedArtifactReleaseGate,
   validateGeneratedArtifactReleaseGate,
 } from "./generatedArtifactReleaseGate.js";
+import {
+  buildDefaultPromptHostInstructionSurfaces,
+  type SaltPromptHostInstructionSurface,
+} from "./promptHostInstructionSurfaces.js";
 import { createSaltRegistryFingerprint } from "./registry/fingerprint.js";
-import type { SaltWorkflowFollowupReport } from "./workflowFollowupReports.js";
 import type { SaltRegistry } from "./types.js";
+import type { SaltWorkflowFollowupReport } from "./workflowFollowupReports.js";
 
 export const SALT_AI_EVIDENCE_CLOSURE_REPORT_CONTRACT =
   "salt_ai_evidence_closure_report_v1" as const;
@@ -130,9 +130,7 @@ function promptHostInstructionSurfaceMissing(
   surfaces: SaltPromptHostInstructionSurface[],
 ): string[] {
   return uniqueStrings(
-    surfaces.flatMap((surface) => [
-      ...surface.surface_gate.missing,
-    ]),
+    surfaces.flatMap((surface) => [...surface.surface_gate.missing]),
   );
 }
 
@@ -159,16 +157,18 @@ function buildUnsupportedClaims(
 ): SaltUnsupportedClaim[] {
   return slices
     .filter((slice) => slice.status !== "ready")
-    .map((slice): SaltUnsupportedClaim => ({
-      id: `ai-evidence-closure.${slice.id}.unsupported`,
-      kind: "workflow",
-      text: `AI evidence closure slice '${slice.id}' is ${slice.status}.`,
-      field_path: `slices.${slice.id}`,
-      reason:
-        slice.missing.length > 0
-          ? slice.missing.join("; ")
-          : `AI evidence closure slice '${slice.id}' is not ready.`,
-    }));
+    .map(
+      (slice): SaltUnsupportedClaim => ({
+        id: `ai-evidence-closure.${slice.id}.unsupported`,
+        kind: "workflow",
+        text: `AI evidence closure slice '${slice.id}' is ${slice.status}.`,
+        field_path: `slices.${slice.id}`,
+        reason:
+          slice.missing.length > 0
+            ? slice.missing.join("; ")
+            : `AI evidence closure slice '${slice.id}' is not ready.`,
+      }),
+    );
 }
 
 export function buildSaltAiEvidenceClosureReport(
@@ -183,11 +183,11 @@ export function buildSaltAiEvidenceClosureReport(
   });
   const promptHostInstructionSurfaces =
     buildDefaultPromptHostInstructionSurfaces({
-    registry: input.registry,
-    generated_at: input.generated_at,
-    generator: input.generator,
-    registry_hash: registryHash,
-  });
+      registry: input.registry,
+      generated_at: input.generated_at,
+      generator: input.generator,
+      registry_hash: registryHash,
+    });
   const contextCoverageGaps = contextCoverage.docs_registry_gaps.map((gap) =>
     toClosureGap("context-coverage-closure", gap),
   );
@@ -201,10 +201,7 @@ export function buildSaltAiEvidenceClosureReport(
   const followupMissing = uniqueStrings(
     workflowFollowupReports.length > 0
       ? workflowFollowupReports.flatMap((report) => report.missing)
-      : [
-          "migration follow-up report",
-          "upgrade follow-up report",
-        ],
+      : ["migration follow-up report", "upgrade follow-up report"],
   );
   const followupUnsupported = workflowFollowupReports.some(
     (report) => report.status === "unsupported",

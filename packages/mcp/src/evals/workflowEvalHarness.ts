@@ -861,7 +861,10 @@ function extractFinalChoice(
   return extractCanonicalChoice(result);
 }
 
-function readStepArg(step: Record<string, unknown>, key: string): string | null {
+function readStepArg(
+  step: Record<string, unknown>,
+  key: string,
+): string | null {
   return isRecord(step.args) && typeof step.args[key] === "string"
     ? step.args[key]
     : null;
@@ -875,14 +878,16 @@ function getRecipeSteps(recipe: unknown): Array<Record<string, unknown>> {
   return recipe.steps.filter(isRecord);
 }
 
-function getRecipeAction(step: Record<string, unknown>): Record<
-  string,
-  unknown
-> | null {
+function getRecipeAction(
+  step: Record<string, unknown>,
+): Record<string, unknown> | null {
   return isRecord(step.action) ? step.action : null;
 }
 
-function recipeContainsActionKind(recipe: unknown, actionKind: string): boolean {
+function recipeContainsActionKind(
+  recipe: unknown,
+  actionKind: string,
+): boolean {
   return getRecipeSteps(recipe).some((step) => {
     const action = getRecipeAction(step);
     return action?.kind === actionKind;

@@ -1,5 +1,5 @@
 {
-  "task_id": "legacy-orders-migration-visual-grounding-alpha",
+  "task_id": "legacy-orders-migration-visual-grounding",
   "rubric_dimensions": [
     "migration_fidelity",
     "confidence_accuracy",

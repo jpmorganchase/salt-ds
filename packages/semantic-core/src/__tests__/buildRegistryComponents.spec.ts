@@ -84,7 +84,10 @@ Announce fixture state changes through source-backed fixture text.
   await fs.mkdir(componentDir, { recursive: true });
   await fs.mkdir(exampleDir, { recursive: true });
   if (options.sourceContent) {
-    const sourceDir = path.join(repoRoot, "packages/fixture/src/fixture-action");
+    const sourceDir = path.join(
+      repoRoot,
+      "packages/fixture/src/fixture-action",
+    );
     await fs.mkdir(sourceDir, { recursive: true });
     await fs.writeFile(
       path.join(sourceDir, "Foo.tsx"),
@@ -223,9 +226,9 @@ describe("component registry extraction", () => {
           }),
         }),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -289,9 +292,9 @@ title: Fixture action accessibility
           }),
         ]),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -409,9 +412,9 @@ title: Fixture action accessibility
         }),
       );
       expect(accessibilityEvidenceRef?.source?.url ?? null).toBeNull();
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -485,9 +488,9 @@ title: Fixture action accessibility
           }),
         ]),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,

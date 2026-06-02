@@ -125,7 +125,8 @@ function releaseGateStep(
       id: "release-gate",
       status: "action_required",
       summary: "Generated context release gate is waiting for a manifest",
-      command: "salt-ds export-context . --release-gate .salt/context/manifest.json --json",
+      command:
+        "salt-ds export-context . --release-gate .salt/context/manifest.json --json",
       evidence_source: "generated_context",
       missing: ["generated context manifest"],
     };
@@ -136,7 +137,8 @@ function releaseGateStep(
     status:
       generatedContext.status === "current" ? "current" : "action_required",
     summary: "Generated context release gate can validate the manifest",
-    command: "salt-ds export-context . --release-gate .salt/context/manifest.json --json",
+    command:
+      "salt-ds export-context . --release-gate .salt/context/manifest.json --json",
     evidence_source: "generated_context",
     missing:
       generatedContext.status === "current"
@@ -248,7 +250,7 @@ export function buildSaltAiSetupSummary(
     root_dir: input.root_dir,
     next_command:
       firstAction?.command ??
-      "salt-ds create \"describe the Salt UI task\" --json",
+      'salt-ds create "describe the Salt UI task" --json',
     compatibility,
     steps,
   };

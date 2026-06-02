@@ -10,10 +10,6 @@ import {
   buildContextPackManifest,
   buildDefaultContextPackCoverageGaps,
   buildDefaultPromptHostInstructionSurfaces,
-  DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
-  DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
-  formatContextCoverageGapCatalogMarkdown,
-  checkComponentContextMarkdownBridge,
   buildFoundationContext,
   buildFoundationContextManifestEntry,
   buildPatternContext,
@@ -22,6 +18,11 @@ import {
   buildSaltContextComponentCheck,
   type ComponentLookupAmbiguity,
   type ComponentRecord,
+  checkComponentContextMarkdownBridge,
+  DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
+  DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
+  formatContextCoverageGapCatalogMarkdown,
+  promptHostInstructionSurfaceFileName,
   resolveComponentTarget,
   SALT_CONTEXT_PACK_MANIFEST_CONTRACT,
   type SaltContextComponent,
@@ -32,12 +33,11 @@ import {
   selectDefaultContextPackFoundationTokenGroups,
   selectDefaultContextPackPatterns,
   toContextPackOutputPathForManifest,
-  toSaltGeneratedArtifactRegistry,
-  promptHostInstructionSurfaceFileName,
   toSafeContextFileName,
   toSafeContextMarkdownFileName,
   toSafeFoundationContextFileName,
   toSafePatternContextFileName,
+  toSaltGeneratedArtifactRegistry,
   upsertContextPackManifestEntry,
   validateGeneratedArtifactReleaseGate,
   validateGeneratedArtifactReleaseGateBatch,
@@ -112,9 +112,7 @@ function hasGeneratedArtifact(value: unknown): boolean {
 }
 
 function isGeneratedArtifact(value: unknown): boolean {
-  return (
-    isRecord(value) && value.contract === "salt_generated_artifact_v1"
-  );
+  return isRecord(value) && value.contract === "salt_generated_artifact_v1";
 }
 
 function isContextPackManifest(
@@ -128,7 +126,9 @@ function isContextPackManifest(
   );
 }
 
-async function readJsonFileIfPresent(filePath: string): Promise<unknown | null> {
+async function readJsonFileIfPresent(
+  filePath: string,
+): Promise<unknown | null> {
   if (!(await pathExists(filePath))) {
     return null;
   }
@@ -159,10 +159,7 @@ function releaseGateCoverageGap(input: {
   };
 }
 
-function entryPath(input: {
-  rootDir: string;
-  outputPath: string;
-}): string {
+function entryPath(input: { rootDir: string; outputPath: string }): string {
   return path.isAbsolute(input.outputPath)
     ? input.outputPath
     : path.resolve(input.rootDir, input.outputPath);
@@ -202,7 +199,9 @@ async function validateComponentMarkdownEntry(input: {
       releaseGateCoverageGap({
         kind: input.entry.kind,
         id: input.entry.id,
-        missing: [`missing generated markdown output ${input.entry.output_path}`],
+        missing: [
+          `missing generated markdown output ${input.entry.output_path}`,
+        ],
         evidence_ref_ids: input.entry.evidence_ref_ids,
       }),
     ];
@@ -485,8 +484,9 @@ async function writeContextPack(input: {
     package_name: input.flags.package,
   });
   const patterns = selectDefaultContextPackPatterns(input.registry);
-  const foundationTokenGroups =
-    selectDefaultContextPackFoundationTokenGroups(input.registry);
+  const foundationTokenGroups = selectDefaultContextPackFoundationTokenGroups(
+    input.registry,
+  );
   const contexts = components.map((component) =>
     buildComponentContext({
       registry: input.registry,
@@ -514,10 +514,10 @@ async function writeContextPack(input: {
   );
   const promptHostInstructionSurfaces =
     buildDefaultPromptHostInstructionSurfaces({
-    registry: input.registry,
-    generated_at: generatedAt,
-    generator,
-  });
+      registry: input.registry,
+      generated_at: generatedAt,
+      generator,
+    });
   const markdownBridges = contexts.map((context) =>
     buildComponentContextMarkdownBridge(context),
   );

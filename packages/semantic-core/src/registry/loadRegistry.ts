@@ -13,6 +13,7 @@ import type {
 import {
   type MetadataArtifact,
   type PageSearchIndexArtifact,
+  type PatternValidationRulePackArtifact,
   REGISTRY_ARRAY_ARTIFACTS,
   REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
   REGISTRY_METADATA_ARTIFACT,
@@ -20,7 +21,6 @@ import {
   REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT,
   REGISTRY_SEARCH_INDEX_ARTIFACT,
   REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT,
-  type PatternValidationRulePackArtifact,
   type RegistryArrayArtifactDefinition,
   type RegistryArrayArtifactKey,
   readJsonFile,
@@ -278,7 +278,8 @@ async function loadPatternValidationRulePack(
   try {
     const artifact =
       await readJsonFile<PatternValidationRulePackArtifact>(rulePackPath);
-    const rulePack = artifact[REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.key];
+    const rulePack =
+      artifact[REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT.key];
     if (
       typeof artifact.generated_at !== "string" ||
       artifact.generated_at.length === 0

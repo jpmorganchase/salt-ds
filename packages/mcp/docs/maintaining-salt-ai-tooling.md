@@ -5,11 +5,25 @@ This guide is for agents and maintainers working on the Salt AI stack inside thi
 Use it to keep the architecture stable as the MCP, skills, docs extraction, and project conventions evolve.
 
 For the reviewer/operator workflow map, see [`./ai-tooling-operator-runbook.md`](./ai-tooling-operator-runbook.md).
-For the target architecture Salt should now protect, see [`./ai-tooling-winning-foundation.md`](./ai-tooling-winning-foundation.md).
-For the approval rubric future AI tooling work should pass, see [`./ai-tooling-change-review-rubric.md`](./ai-tooling-change-review-rubric.md).
-For the active implementation path, use [`./ai-tooling-large-rewrite-plan.md`](./ai-tooling-large-rewrite-plan.md).
 For the current public contract, use [`./public-api-matrix.md`](./public-api-matrix.md).
 For host and skill consumers of the current action contract, use [`./salt-workflow-v1-host-contract.md`](./salt-workflow-v1-host-contract.md).
+
+## Product Boundary
+
+Salt AI tooling should stay a narrow Salt authority, not a broad agent runtime.
+It owns Salt truth, evidence, workflow gates, repo policy application, and
+unsupported states. The agent or host should own general orchestration, prose,
+host-specific mechanics, and generic engineering behavior.
+
+The durable architecture is:
+
+- registry-first for context
+- workflow-first for safety
+- repo-aware for real implementation
+- thin at the public API boundary
+
+Future work should strengthen those boundaries before adding new public surface
+area.
 
 ## Current Public Workflow Contract
 

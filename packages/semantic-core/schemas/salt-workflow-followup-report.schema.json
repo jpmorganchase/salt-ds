@@ -59,22 +59,13 @@
       "enum": ["ready", "degraded", "unsupported"]
     },
     "target": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/target" }
-      ]
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/target" }]
     },
     "source": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/source" }
-      ]
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/source" }]
     },
     "review_evidence": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/reviewEvidence" }
-      ]
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/reviewEvidence" }]
     },
     "summary": {
       "$ref": "#/$defs/summary"

@@ -90,7 +90,10 @@ export function buildRetrievalSignals(input: {
       const existing = contrastTargetMap.get(key);
       if (existing) {
         existing.evidence.add(cleanedStatement);
-        if (existing.relation !== "prefer-instead" && relation === "prefer-instead") {
+        if (
+          existing.relation !== "prefer-instead" &&
+          relation === "prefer-instead"
+        ) {
           existing.relation = relation;
         }
         continue;
@@ -104,7 +107,9 @@ export function buildRetrievalSignals(input: {
     }
   }
 
-  const contrastTargets: RetrievalContrastTarget[] = [...contrastTargetMap.values()]
+  const contrastTargets: RetrievalContrastTarget[] = [
+    ...contrastTargetMap.values(),
+  ]
     .map((target) => ({
       target: target.target,
       relation: target.relation,

@@ -3,8 +3,8 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  derivePatternImplementationAccessibilitySignals,
   derivePatternExampleAccessibilitySignals,
+  derivePatternImplementationAccessibilitySignals,
   extractPatterns,
 } from "../build/buildRegistryPatterns.js";
 import { buildPatternContext } from "../contextPatterns.js";
@@ -155,9 +155,9 @@ The fixture flow shows source-backed completion text when fixture work is done.
           }),
         }),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -278,9 +278,9 @@ Fixture urgency explains the fixture priority.
           reason: "Registry pattern when_to_use guidance is empty.",
         }),
       ]);
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -384,9 +384,9 @@ The fixture flow keeps source-backed state visible while fixture work is active.
           }),
         }),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -472,9 +472,9 @@ For accessibility, fixture workflows must keep fixture controls reachable to key
           }),
         }),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -537,9 +537,9 @@ Fixture actions remain easily accessible from any fixture page.
           (claim) => claim.kind === "accessibility",
         ),
       ).toEqual([]);
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -663,9 +663,9 @@ export const FixtureStory = () => (
           }),
         }),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -860,9 +860,9 @@ export function FixtureFlow() {
           }),
         }),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,
@@ -1017,9 +1017,9 @@ Add the fixture part to the fixture flow.
           }),
         }),
       );
-      expect(validateGeneratedArtifactEvidence(context.generated_artifact)).toEqual(
-        [],
-      );
+      expect(
+        validateGeneratedArtifactEvidence(context.generated_artifact),
+      ).toEqual([]);
       expect(
         validateGeneratedArtifactRegistryEvidence(
           context.generated_artifact,

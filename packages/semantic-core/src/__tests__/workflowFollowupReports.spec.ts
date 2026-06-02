@@ -1,14 +1,14 @@
 import { readFileSync } from "node:fs";
 import Ajv2020 from "ajv/dist/2020.js";
 import { describe, expect, it } from "vitest";
+import type { SaltReviewReportValidationResult } from "../reviewReportValidation.js";
+import { SALT_REVIEW_REPORT_VALIDATION_CONTRACT } from "../reviewReportValidation.js";
+import type { SaltRegistry } from "../types.js";
 import {
   buildSaltWorkflowFollowupReport,
   SALT_WORKFLOW_FOLLOWUP_REPORT_CONTRACT,
   validateSaltWorkflowFollowupReport,
 } from "../workflowFollowupReports.js";
-import { SALT_REVIEW_REPORT_VALIDATION_CONTRACT } from "../reviewReportValidation.js";
-import type { SaltReviewReportValidationResult } from "../reviewReportValidation.js";
-import type { SaltRegistry } from "../types.js";
 
 const GENERATED_AT = "2026-04-30T00:00:00.000Z";
 
@@ -69,8 +69,7 @@ function buildFixtureReviewReportValidation(
   const supported = overrides.supported ?? status === "current";
   const reportPath =
     overrides.report_path ?? "fixture-post-action-review-report.json";
-  const resumeStatus =
-    status === "current" ? "ready" : status;
+  const resumeStatus = status === "current" ? "ready" : status;
 
   return {
     contract: SALT_REVIEW_REPORT_VALIDATION_CONTRACT,
@@ -434,76 +433,77 @@ describe("workflow follow-up reports", () => {
   it.each([
     ["prop", "component", "props.fixture"],
     ["token", "token", "name"],
-    ["import", "component", "implementation_requirements.required_imports.Fixture"],
+    [
+      "import",
+      "component",
+      "implementation_requirements.required_imports.Fixture",
+    ],
     ["example", "example", "code"],
     ["status", "component", "status"],
     ["accessibility", "component", "accessibility.summary"],
-  ] as const)(
-    "fails validation when a follow-up report emits an undocumented fixture %s claim",
-    (claimKind, entityType, fieldPath) => {
-      const registry = buildFixtureRegistry();
-      const report = buildSaltWorkflowFollowupReport({
-        registry,
-        generated_at: GENERATED_AT,
-        generator: {
-          name: "semantic-core fixture",
-        },
-        workflow: "upgrade",
-        transport_used: "cli",
-        target: {
-          package_name: "@fixture/salt-package",
-          from_version: "1.0.0",
-        },
-        followup: {},
-      });
-      const evidenceRefId = `fixture-undocumented-${claimKind}`;
-      const validation = validateSaltWorkflowFollowupReport({
-        report: {
-          ...report,
-          generated_artifact: {
-            ...report.generated_artifact,
-            claims: [
-              ...report.generated_artifact.claims,
-              {
-                id: `fixture-undocumented-${claimKind}`,
-                kind: claimKind,
-                text: `Fixture-only undocumented ${claimKind} claim.`,
-                field_path: `fixture.${claimKind}`,
-                evidence_ref_ids: [evidenceRefId],
+  ] as const)("fails validation when a follow-up report emits an undocumented fixture %s claim", (claimKind, entityType, fieldPath) => {
+    const registry = buildFixtureRegistry();
+    const report = buildSaltWorkflowFollowupReport({
+      registry,
+      generated_at: GENERATED_AT,
+      generator: {
+        name: "semantic-core fixture",
+      },
+      workflow: "upgrade",
+      transport_used: "cli",
+      target: {
+        package_name: "@fixture/salt-package",
+        from_version: "1.0.0",
+      },
+      followup: {},
+    });
+    const evidenceRefId = `fixture-undocumented-${claimKind}`;
+    const validation = validateSaltWorkflowFollowupReport({
+      report: {
+        ...report,
+        generated_artifact: {
+          ...report.generated_artifact,
+          claims: [
+            ...report.generated_artifact.claims,
+            {
+              id: `fixture-undocumented-${claimKind}`,
+              kind: claimKind,
+              text: `Fixture-only undocumented ${claimKind} claim.`,
+              field_path: `fixture.${claimKind}`,
+              evidence_ref_ids: [evidenceRefId],
+            },
+          ],
+          evidence_refs: [
+            ...report.generated_artifact.evidence_refs,
+            {
+              contract: "salt_evidence_ref_v1",
+              id: evidenceRefId,
+              source_kind: "registry",
+              claim_kind: claimKind,
+              registry: {
+                entity_type: entityType,
+                entity_id: `missing-${claimKind}`,
+                field_path: fieldPath,
               },
-            ],
-            evidence_refs: [
-              ...report.generated_artifact.evidence_refs,
-              {
-                contract: "salt_evidence_ref_v1",
-                id: evidenceRefId,
-                source_kind: "registry",
-                claim_kind: claimKind,
-                registry: {
-                  entity_type: entityType,
-                  entity_id: `missing-${claimKind}`,
-                  field_path: fieldPath,
-                },
-                source: {
-                  repo_path: "fixtures/undocumented.tsx",
-                },
-                confidence: "high",
+              source: {
+                repo_path: "fixtures/undocumented.tsx",
               },
-            ],
-          },
+              confidence: "high",
+            },
+          ],
         },
-        registry,
-        report_path: "fixture-upgrade.json",
-      });
+      },
+      registry,
+      report_path: "fixture-upgrade.json",
+    });
 
-      expect(validation.status).toBe("unsupported");
-      expect(validation.validation_issues).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            code: "missing_registry_entity",
-          }),
-        ]),
-      );
-    },
-  );
+    expect(validation.status).toBe("unsupported");
+    expect(validation.validation_issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: "missing_registry_entity",
+        }),
+      ]),
+    );
+  });
 });

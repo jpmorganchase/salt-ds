@@ -25,7 +25,9 @@ function getReleaseGateSchemaValidator(): ValidateFunction {
   validateReleaseGate = new Ajv2020({
     allErrors: true,
     strict: false,
-  }).compile(readJsonSchema("salt-generated-artifact-release-gate.schema.json"));
+  }).compile(
+    readJsonSchema("salt-generated-artifact-release-gate.schema.json"),
+  );
 
   return validateReleaseGate;
 }

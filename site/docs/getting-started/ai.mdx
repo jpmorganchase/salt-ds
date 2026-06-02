@@ -89,6 +89,195 @@ Focus on primitive choice, layout ownership, deprecated Salt usage, and the safe
 
 Use `salt-ds init` only when you want durable `.salt` policy and the managed root instruction block after the first useful Salt result.
 
+## Host Setup Cards
+
+Use the same Salt workflow in every host. The host owns its MCP settings, local command execution, and natural-language explanation; Salt owns Salt evidence, workflow gates, repo policy, and unsupported states.
+Use the first prompt in each card as the setup smoke check.
+
+Expected consumer priority:
+
+1. Copilot in VS Code or IntelliJ for most teams.
+2. Claude Code for smaller advanced-user groups.
+3. Cursor, Windsurf, Codex, or other MCP-capable hosts when a team already uses them.
+
+### Codex
+
+Install/connect:
+
+- install the `salt-ds` skill from this branch or the published source
+- connect the shared Salt MCP server from the golden setup path
+- keep repo-level Salt guidance in `AGENTS.md` when the repo has been initialized
+
+First prompt / verify:
+
+```text
+Use salt-ds to review this file.
+Report the compact workflow status, action.kind, evidence.status, and summary before any implementation detail.
+```
+
+Expected compact fields:
+
+- `status`
+- `action.kind`
+- `evidence.status`
+- `summary`
+- `request.match_status` or `request.resolved_entity` when present
+
+CLI fallback:
+
+```sh
+npx -y @salt-ds/cli@latest info . --json
+npx -y @salt-ds/cli@latest review src --json
+```
+
+Host owns:
+
+- adapting MCP setup to the Codex app, CLI, or IDE surface
+- choosing which local verification command to run after Salt asks for evidence
+- summarizing the result for the user without bypassing Salt workflow gates
+
+### Claude Code
+
+Install/connect:
+
+- install the `salt-ds` skill if your Claude Code setup supports skills
+- add the shared Salt MCP server through Claude Code MCP setup
+- use project-scoped MCP configuration when the setup should travel with the repo
+- keep repo guidance in `AGENTS.md` or `CLAUDE.md`, depending on the repo convention
+
+First prompt / verify:
+
+```text
+Use salt-ds to review this file.
+Start from the compact workflow status, action.kind, evidence.status, and summary.
+```
+
+Expected compact fields:
+
+- `status`
+- `safety`
+- `action.kind`
+- `evidence.status`
+- `questions` when the workflow asks for user input
+
+CLI fallback:
+
+```sh
+npx -y @salt-ds/cli@latest info . --json
+npx -y @salt-ds/cli@latest review src --json
+```
+
+Host owns:
+
+- selecting local, user, or project MCP scope
+- running `/mcp` or the host's MCP status command to confirm tools are connected
+- converting user answers into updated workflow input, not an evidence bridge
+
+### Cursor
+
+Install/connect:
+
+- install the `salt-ds` skill if your Cursor environment supports skills
+- add the shared Salt MCP server through Cursor MCP settings or the shared MCP configuration used by Cursor Agent
+- keep Salt workflow guidance in `AGENTS.md` or a short `.cursor/rules` project rule that points back to the Salt workflow
+
+First prompt / verify:
+
+```text
+Use salt-ds to create a Metric in Salt.
+Show the compact workflow status, resolved entity, match status, action.kind, and evidence.status before writing code.
+```
+
+Expected compact fields:
+
+- `status`
+- `request.resolved_entity`
+- `request.match_status`
+- `action.kind`
+- `evidence.status`
+
+CLI fallback:
+
+```sh
+npx -y @salt-ds/cli@latest create "Create a Metric in Salt." --json
+```
+
+Host owns:
+
+- deciding whether MCP configuration is project or user scoped
+- using Cursor rules as lightweight host guidance, not as source-backed Salt facts
+- running local repo commands when Salt asks for validation evidence
+
+### Copilot In VS Code Or IntelliJ
+
+Install/connect:
+
+- add the shared Salt MCP server through the Copilot MCP setup available in your editor environment
+- keep repo-wide Salt guidance in `AGENTS.md` and `.github/copilot-instructions.md` when the repo is initialized
+- keep path-specific Copilot instructions short; do not duplicate the full Salt workflow into every file
+
+First prompt / verify:
+
+```text
+Use salt-ds to review this file.
+Before suggesting edits, report status, action.kind, safety.blocking_reasons, evidence.status, and the safest next action.
+```
+
+Expected compact fields:
+
+- `status`
+- `safety.blocking_reasons`
+- `action.kind`
+- `evidence.status`
+- `summary`
+
+CLI fallback:
+
+```sh
+npx -y @salt-ds/cli@latest review src --json
+```
+
+Host owns:
+
+- selecting the right Copilot surface and MCP configuration path
+- applying repo custom instructions without conflicting with Salt workflow gates
+- running editor or repo validation tools after Salt requests evidence
+
+### Windsurf
+
+Install/connect:
+
+- add the shared Salt MCP server through Windsurf Cascade MCP settings or marketplace flow when available
+- keep any Windsurf rule or memory guidance short and pointed at the Salt workflow instead of copying generated Salt facts
+
+First prompt / verify:
+
+```text
+Use salt-ds to review this file.
+Show compact status, action.kind, evidence.status, missing evidence, and the next required action before editing.
+```
+
+Expected compact fields:
+
+- `status`
+- `action.kind`
+- `next_required_action`
+- `evidence.status`
+- `evidence.missing`
+
+CLI fallback:
+
+```sh
+npx -y @salt-ds/cli@latest info . --json
+npx -y @salt-ds/cli@latest review src --json
+```
+
+Host owns:
+
+- configuring Cascade MCP access
+- deciding whether local rules or memories are appropriate for the repo
+- keeping design screenshots or mockups host-mediated until they become structured Salt evidence
+
 ## What Salt Is Good At
 
 Salt is strongest when the job is clearly one of these:
@@ -131,6 +320,14 @@ That means:
 
 Do not push repo-local wrappers or local patterns into the canonical Salt step.
 
+## Generated Context And Direct Docs
+
+Salt uses generated context first because agents need stable, machine-readable facts for workflow decisions. Generated registry and context artifacts are built from Salt sources and are better suited for entity resolution, package status, evidence refs, and workflow gates than a fresh prose-only docs fetch.
+
+Direct docs are still useful. Use them for human-readable provenance, source freshness checks, and identifying docs or registry gaps that should be closed upstream. Do not use a direct docs fetch to bypass the Salt workflow, ignore compact `status` or `action.kind`, or treat unsupported Salt facts as resolved.
+
+When MCP is available, prefer Salt workflow output and its evidence refs first. When MCP is unavailable, use the CLI fallback for the same workflow model. Fetch docs only as supporting context, and feed any confirmed new evidence back through Salt's workflow gates before implementing.
+
 ## What Good Salt Output Looks Like
 
 A good Salt answer should:
@@ -143,6 +340,20 @@ A good Salt answer should:
 - show the Salt summary before raw workflow details when available
 - prefer compact workflow state first and use richer detail only when deeper artifacts are actually needed
 - make the safest next step obvious
+
+## Blocked Output Example
+
+When Salt returns `blocked`, `partial`, `ask_user`, retrieve, or missing-evidence states, summarize the blocker from the compact fields. Do not add a new field; make the existing state obvious.
+
+```text
+Salt workflow: create
+Blocked: profile page implementation is not safe for the exact requested UI yet.
+Why: status=partial; action.kind=retrieve_entity; safety.blocking_reasons says Avatar still needs follow-through; evidence.missing includes "follow-through evidence for Avatar".
+Smallest next action: call get_salt_entity for Avatar, then rerun create_salt_ui with resolved_entities before editing.
+coding is allowed: no. Do not edit the blocked region until the rerun returns status=success, action.kind=implement, safety.exact_request_safe=true, and evidence.status=complete.
+```
+
+If `action.kind` is `ask_user`, ask the returned question and stop. Treat the user's answer as updated workflow input, not as permission to edit.
 
 ## Prompt Starters
 
@@ -209,14 +420,18 @@ Use `.salt/stack.json` only when the repo genuinely needs layering.
 
 ## Visual Inputs
 
-Salt can help with attached screens and mockups, but today it works best when the host turns those inputs into structured migration evidence first:
+Salt can help with attached screens and mockups through structured design evidence. This is the supported handoff lane for visual migration work:
 
-1. inspect the screenshot or mockup
-2. reduce it to regions, actions, states, and ambiguity notes
-3. pass that structured outline into the Salt migrate workflow
+1. the host inspects the screenshot, Figma frame, story, or mockup
+2. the host normalizes what it saw into `migrate_visual_evidence_v1` or a smaller `source_outline`
+3. Salt validates and uses the structured evidence in the migrate workflow
 4. show the Salt summary first
 
-Salt MCP does not treat raw screenshots, image uploads, Figma frames, or design-tool payloads as first-class workflow inputs yet.
+Use [`migrate-visual-evidence-request.schema.json`](../../../packages/semantic-core/schemas/migrate-visual-evidence-request.schema.json) for adapter requests and [`migrate-visual-evidence-response.schema.json`](../../../packages/semantic-core/schemas/migrate-visual-evidence-response.schema.json) for normalized responses. The portable MCP/CLI fallback is still `source_outline` with `regions`, `actions`, `states`, and `notes`.
+
+Keep uncertainty visible. If the host is not sure about a label, landmark, hierarchy, action order, disabled state, or screenshot-derived detail, put that in `notes` or `ambiguities` instead of silently turning it into Salt implementation guidance.
+
+Salt MCP does not treat raw screenshots, image uploads, Figma frames, or design-tool payloads as first-class workflow inputs yet. Do not parse pixels in Salt MCP; let the host or adapter normalize visual evidence first.
 
 ## Runtime Evidence
 
@@ -225,6 +440,16 @@ Do not start with runtime inspection. Start with canonical Salt guidance and sou
 Escalate to runtime evidence only when you still need confirmation about rendered structure, landmarks and accessible names, runtime errors, screenshots, or layout behavior.
 
 Runtime evidence is evidence, not policy. Do not use runtime inspection to decide canonical Salt component or pattern choice.
+
+When a Storybook story or app URL exists, the host should run validation outside Salt and feed the findings back into the Salt workflow:
+
+1. run the available host tool, such as a Storybook preview, app URL check, Playwright test, axe check, browser inspection, or repo script
+2. record the URL or command, relevant state, and concrete observation
+3. classify each finding as a Salt design-system issue, generic runtime issue, generic accessibility issue, build/test issue, or missing evidence
+4. pass only the Salt-relevant observations back into `review` or `migrate` as runtime evidence
+5. rerun validation after edits and report the new result
+
+The host owns command execution, browser control, screenshots, and test logs. Salt owns interpretation of Salt-specific evidence and should not become a Storybook, Playwright, axe, or app runner.
 
 ## Common Problems
 

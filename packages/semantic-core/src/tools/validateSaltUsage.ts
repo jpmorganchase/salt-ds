@@ -1,10 +1,10 @@
 import * as t from "@babel/types";
-import {
-  type SaltEvidenceRef,
-  type SaltEvidenceValidationIssue,
-  type SaltGeneratedArtifact,
-  type SaltGeneratedArtifactGenerator,
-  type SaltUnsupportedClaim,
+import type {
+  SaltEvidenceRef,
+  SaltEvidenceValidationIssue,
+  SaltGeneratedArtifact,
+  SaltGeneratedArtifactGenerator,
+  SaltUnsupportedClaim,
 } from "../evidence.js";
 import {
   type SerializedGeneratedSaltArtifactSurfaceGate,

@@ -83,9 +83,7 @@ describe("AI evidence closure report", () => {
       }),
     );
     expect(
-      report.slices.find(
-        (slice) => slice.id === "migration-upgrade-followup",
-      ),
+      report.slices.find((slice) => slice.id === "migration-upgrade-followup"),
     ).toEqual(
       expect.objectContaining({
         status: "degraded",

@@ -124,7 +124,9 @@ function buildFixturePattern(
     ],
     related_patterns: [],
     how_to_build: ["Build the fixture workflow from fixture records."],
-    how_it_works: ["The fixture workflow delegates actions to fixture records."],
+    how_it_works: [
+      "The fixture workflow delegates actions to fixture records.",
+    ],
     accessibility: {
       summary: ["Fixture pattern accessibility summary from registry."],
     },
@@ -143,8 +145,7 @@ function buildFixturePattern(
         intent: ["fixture"],
         complexity: "basic",
         code: "<FixtureWorkflow />",
-        source_url:
-          "https://example.test/salt/fixture-workflow/examples/basic",
+        source_url: "https://example.test/salt/fixture-workflow/examples/basic",
         package: "@salt-ds/fixture",
         target_type: "pattern",
         target_name: "FixtureWorkflow",
@@ -158,9 +159,7 @@ function buildFixturePattern(
   };
 }
 
-function buildFixtureToken(
-  overrides: Partial<TokenRecord> = {},
-): TokenRecord {
+function buildFixtureToken(overrides: Partial<TokenRecord> = {}): TokenRecord {
   return {
     name: "--salt-fixture-action-color",
     category: "fixture-color",
@@ -818,9 +817,9 @@ describe("component context artifacts", () => {
     });
 
     expect(validateGeneratedArtifactEvidence(artifact)).toEqual([]);
-    expect(validateGeneratedArtifactRegistryEvidence(artifact, registry)).toEqual(
-      [],
-    );
+    expect(
+      validateGeneratedArtifactRegistryEvidence(artifact, registry),
+    ).toEqual([]);
     expect(artifact.claims).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -986,9 +985,9 @@ describe("component context artifacts", () => {
     });
 
     expect(validateGeneratedArtifactEvidence(artifact)).toEqual([]);
-    expect(validateGeneratedArtifactRegistryEvidence(artifact, registry)).toEqual(
-      [],
-    );
+    expect(
+      validateGeneratedArtifactRegistryEvidence(artifact, registry),
+    ).toEqual([]);
 
     const context = buildFoundationContext({
       registry,

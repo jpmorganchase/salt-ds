@@ -145,8 +145,8 @@ export {
   derivePublicSafeToImplementExactRequest,
   derivePublicWorkflowStatus,
   getPublicContractValidationErrors,
-  type PublicAskUserStep,
   type PublicActionKind,
+  type PublicAskUserStep,
   type PublicBootstrapRepoStep,
   type PublicContract,
   type PublicContractBuildOptions,
@@ -222,11 +222,11 @@ export {
   upgradeSaltUi,
 } from "./upgradeSaltUi.js";
 export {
-  type ValidateSaltUsageInput,
+  buildValidateSaltUsageResult,
   type ValidateSaltUsageEvidenceValidation,
+  type ValidateSaltUsageInput,
   type ValidateSaltUsageResult,
   type ValidationIssue,
-  buildValidateSaltUsageResult,
   validateSaltUsage,
 } from "./validateSaltUsage.js";
 export {

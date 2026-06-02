@@ -325,9 +325,7 @@ export function buildDefaultWorkflowEvalScenarios(
             mode: "exact_name",
             query: "Data grid",
           },
-          summary_includes: [
-            "broader Salt entity Analytical dashboard",
-          ],
+          summary_includes: ["broader Salt entity Analytical dashboard"],
         },
         canonical_choice: "Analytical dashboard",
         final_choice: "Analytical dashboard",

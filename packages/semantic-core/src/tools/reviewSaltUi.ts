@@ -30,8 +30,8 @@ import {
 } from "./validateSaltUsage.js";
 import type { ValidationIssue } from "./validation/shared.js";
 import {
-  buildEvidence,
   buildComponentRegistryEvidenceRef,
+  buildEvidence,
   componentDocUrls,
   createIssueCollector,
   finalizeValidationIssues,
@@ -242,12 +242,16 @@ function findExpectedPatternRecord(
     registry.patterns.find(
       (pattern) =>
         normalizeTargetName(pattern.name) === normalized ||
-        pattern.aliases.some((alias) => normalizeTargetName(alias) === normalized),
+        pattern.aliases.some(
+          (alias) => normalizeTargetName(alias) === normalized,
+        ),
     ) ?? null
   );
 }
 
-function patternSourceUrls(pattern: SaltRegistry["patterns"][number]): string[] {
+function patternSourceUrls(
+  pattern: SaltRegistry["patterns"][number],
+): string[] {
   return unique(
     [
       pattern.related_docs.overview,
@@ -350,7 +354,8 @@ function findExpectedComponentRecord(
     registry.components.find(
       (component) =>
         normalizeTargetName(component.name) === normalized ||
-        normalizeTargetName(component.source.export_name ?? "") === normalized ||
+        normalizeTargetName(component.source.export_name ?? "") ===
+          normalized ||
         component.aliases.some(
           (alias) => normalizeTargetName(alias) === normalized,
         ),
@@ -410,10 +415,7 @@ function buildExpectedPatternImportIssue(input: {
     ? findExpectedComponentRecord(input.registry, importMatch.name)
     : null;
   const componentSourceUrls = component
-    ? componentDocUrls(input.registry, component.name, [
-        "overview",
-        "usage",
-      ])
+    ? componentDocUrls(input.registry, component.name, ["overview", "usage"])
     : [];
   const sourceUrls = unique([
     ...(input.rule.source_urls ?? []),
@@ -428,7 +430,7 @@ function buildExpectedPatternImportIssue(input: {
     category: "composition",
     rule: "workflow-expected-pattern-import-not-found",
     severity: "warning",
-    title: `Expected workflow pattern import not found`,
+    title: "Expected workflow pattern import not found",
     message: `The workflow expected the ${input.pattern.name} pattern, and source-backed pattern rule evidence lists ${expectedImport}, but no matching @salt-ds import was found.`,
     evidence: [
       ...buildEvidence(
@@ -486,7 +488,7 @@ function buildExpectedPatternRegionIssue(input: {
     category: "composition",
     rule: "workflow-expected-pattern-region-not-found",
     severity: "warning",
-    title: `Expected workflow pattern region not found`,
+    title: "Expected workflow pattern region not found",
     message: `The workflow expected the ${input.pattern.name} pattern, and source-backed pattern rule evidence lists the ${input.rule.value} starter region, but no matching region marker was found in the reviewed code.`,
     evidence: [
       ...buildEvidence(
@@ -533,7 +535,7 @@ function buildExpectedPatternBuildAroundIssue(input: {
     category: "composition",
     rule: "workflow-expected-pattern-build-around-not-found",
     severity: "warning",
-    title: `Expected workflow pattern build-around marker not found`,
+    title: "Expected workflow pattern build-around marker not found",
     message: `The workflow expected the ${input.pattern.name} pattern, and source-backed pattern rule evidence lists ${input.rule.value} as build-around guidance, but no matching marker was found in the reviewed code.`,
     evidence: [
       ...buildEvidence(
@@ -611,7 +613,9 @@ function buildExpectedPatternIssues(input: {
     pattern,
     status: "unsupported",
   });
-  const unsupportedRuleKinds = unique(unsupportedRules.map((rule) => rule.kind));
+  const unsupportedRuleKinds = unique(
+    unsupportedRules.map((rule) => rule.kind),
+  );
 
   if (
     supportedImportRules.length === 0 &&
@@ -646,8 +650,7 @@ function buildExpectedPatternIssues(input: {
       : [];
 
   for (const rule of supportedImportRules) {
-    const importMatch =
-      rule.match?.kind === "salt_import" ? rule.match : null;
+    const importMatch = rule.match?.kind === "salt_import" ? rule.match : null;
     if (
       importMatch &&
       input.importedSaltImportKeys.has(
@@ -715,9 +718,14 @@ function collectExpectedComponentTargets(
   );
   const targets: ExpectedComponentTarget[] = [];
 
-  for (const name of normalizeExpectedTargetNames(expectedTargets?.components)) {
+  for (const name of normalizeExpectedTargetNames(
+    expectedTargets?.components,
+  )) {
     if (!slotComponentNames.has(normalizeTargetName(name))) {
-      targets.push({ names: [name], field_path: "expected_targets.components" });
+      targets.push({
+        names: [name],
+        field_path: "expected_targets.components",
+      });
     }
   }
 
@@ -783,7 +791,9 @@ function collectImportedSaltNames(analysis: SaltCodeAnalysis): Set<string> {
   return importedNames;
 }
 
-function collectImportedSaltImportKeys(analysis: SaltCodeAnalysis): Set<string> {
+function collectImportedSaltImportKeys(
+  analysis: SaltCodeAnalysis,
+): Set<string> {
   const importedKeys = new Set(
     [...analysis.directImportByLocal.values()].map((symbol) =>
       buildImportRuleKey(symbol.packageName, symbol.imported),
@@ -799,7 +809,9 @@ function collectImportedSaltImportKeys(analysis: SaltCodeAnalysis): Set<string> 
       );
 
       if (imported) {
-        importedKeys.add(buildImportRuleKey(imported.packageName, imported.imported));
+        importedKeys.add(
+          buildImportRuleKey(imported.packageName, imported.imported),
+        );
       }
     },
   });
@@ -854,7 +866,7 @@ function buildExpectedComponentIssue(
       category: "composition",
       rule: "workflow-expected-component-not-imported",
       severity: "warning",
-      title: `Expected workflow component target not found`,
+      title: "Expected workflow component target not found",
       message: `The workflow expected ${expectationText}${regionMessage}, but no corresponding @salt-ds import was found.`,
       evidence: [
         ...buildEvidence(

@@ -19,11 +19,9 @@ export const SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI =
 export const SALT_MCP_CONTEXT_MANIFEST_URI = "salt://context/manifest";
 export const SALT_MCP_CONTEXT_HEALTH_URI = "salt://context/health";
 export const SALT_MCP_CONTEXT_COVERAGE_URI = "salt://context/coverage";
-export const SALT_MCP_CONTEXT_GAP_CATALOG_URI =
-  "salt://context/gap-catalog";
+export const SALT_MCP_CONTEXT_GAP_CATALOG_URI = "salt://context/gap-catalog";
 export const SALT_MCP_CONTEXT_PACK_URI = "salt://context/pack";
-export const SALT_MCP_CONTEXT_RELEASE_GATE_URI =
-  "salt://context/release-gate";
+export const SALT_MCP_CONTEXT_RELEASE_GATE_URI = "salt://context/release-gate";
 export const SALT_MCP_AI_SETUP_URI = "salt://setup/ai";
 export const SALT_MCP_AI_EVIDENCE_CLOSURE_URI =
   "salt://setup/ai/evidence-closure";
@@ -166,8 +164,7 @@ export function getSaltMcpRuntimeMetadata(
       context_component_markdown_template_uri:
         SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI,
       context_pattern_template_uri: SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI,
-      context_foundation_template_uri:
-        SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
+      context_foundation_template_uri: SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
     },
   });
 

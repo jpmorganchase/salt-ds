@@ -1,6 +1,6 @@
 import type { SaltEvidenceValidationIssue } from "./evidence.js";
-import { validateGeneratedSaltArtifactSurface } from "./generatedArtifactSurface.js";
 import { validateGeneratedArtifactReleaseGate } from "./generatedArtifactReleaseGate.js";
+import { validateGeneratedSaltArtifactSurface } from "./generatedArtifactSurface.js";
 import { createSaltRegistryFingerprint } from "./registry/fingerprint.js";
 import {
   SALT_REVIEW_REPORT_CONTRACT,
@@ -99,7 +99,7 @@ function buildReviewResume(input: {
     report_path: input.report_path,
     reusable_evidence_ref_ids:
       input.status === "current"
-        ? input.report?.evidence_refs.map((ref) => ref.id) ?? []
+        ? (input.report?.evidence_refs.map((ref) => ref.id) ?? [])
         : [],
     unsupported_claim_ids:
       input.report?.unsupported_claims.map((claim) => claim.id) ?? [],

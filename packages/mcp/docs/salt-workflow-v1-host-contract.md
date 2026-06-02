@@ -2,7 +2,7 @@
 
 Use this guide when wiring Salt into an agent host, skill, prompt, MCP client, or CLI adapter.
 
-`salt_workflow_v1` is the public compact workflow contract. It is agent-agnostic: Copilot, Claude, Codex, and other hosts should branch on the same top-level fields before reading rich details.
+`salt_workflow_v1` is the public compact workflow contract. It is agent-agnostic: every host should branch on the same top-level fields before reading rich details.
 
 ## Read Order
 

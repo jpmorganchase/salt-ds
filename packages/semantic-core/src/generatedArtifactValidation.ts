@@ -390,7 +390,9 @@ function patternFieldExists(
     "starter_scaffold.source_urls.",
   );
   if (starterSourceUrlIndex != null) {
-    return hasText(pattern.starter_scaffold?.source_urls?.[starterSourceUrlIndex]);
+    return hasText(
+      pattern.starter_scaffold?.source_urls?.[starterSourceUrlIndex],
+    );
   }
 
   const starterExampleSourceUrlIndex = parseArrayIndex(
@@ -445,9 +447,7 @@ function patternFieldExists(
   );
   if (starterBuildAroundIndex != null) {
     return hasText(
-      pattern.starter_scaffold?.semantics.build_around[
-        starterBuildAroundIndex
-      ],
+      pattern.starter_scaffold?.semantics.build_around[starterBuildAroundIndex],
     );
   }
 
@@ -481,7 +481,9 @@ function patternFieldExists(
   );
   if (starterTemplateJsxLineIndex != null) {
     return hasText(
-      pattern.starter_scaffold?.template?.jsx_lines[starterTemplateJsxLineIndex],
+      pattern.starter_scaffold?.template?.jsx_lines[
+        starterTemplateJsxLineIndex
+      ],
     );
   }
 

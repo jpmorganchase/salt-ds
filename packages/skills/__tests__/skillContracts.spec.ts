@@ -23,9 +23,16 @@ function normalizeLineEndings(content: string): string {
 }
 
 function readOpenAiDefaultPrompt(content: string): string {
-  const match = content.match(/default_prompt:\s*>-\r?\n((?: {4}.+(?:\r?\n|$))+)/);
+  const match = content.match(
+    /default_prompt:\s*>-\r?\n((?: {4}.+(?:\r?\n|$))+)/,
+  );
   return (match?.[1] ?? "").replace(/^ {4}/gm, "").trim();
 }
+
+const PROMPT_CONTEXT_BUDGETS = {
+  skillEntrypointChars: 18_000,
+  openAiDefaultPromptChars: 2_300,
+} as const;
 
 describe("Salt skill contracts", () => {
   it("keeps salt-ds as the only public skill in the collection", async () => {
@@ -119,7 +126,9 @@ describe("Salt skill contracts", () => {
     expect(openAiDefaultPrompt).toContain(
       "Load detailed behavior from SKILL.md and the smallest relevant reference files.",
     );
-    expect(openAiDefaultPrompt.length).toBeLessThan(2300);
+    expect(openAiDefaultPrompt.length).toBeLessThan(
+      PROMPT_CONTEXT_BUDGETS.openAiDefaultPromptChars,
+    );
     expect(primarySkill).toContain("## Trigger Boundary");
     expect(primarySkill).toContain(
       "description: Agent-agnostic Salt design system workflow for Salt-specific create, review, migrate, upgrade, init, quick-check, accessibility audits, repo conventions, and UI composition/layout work in consumer repos.",
@@ -375,6 +384,21 @@ describe("Salt skill contracts", () => {
     );
     expect(bootstrapScaffolding).toContain(
       "for repo-aware workflow calls, pass a trusted `root_dir` or reuse a trusted `context_id` so package state and repo policy can be applied",
+    );
+  });
+
+  it("keeps always-on skill prompt surfaces inside progressive disclosure budgets", async () => {
+    const primarySkill = await readSkill("salt-ds/SKILL.md");
+    const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
+    const openAiDefaultPrompt = readOpenAiDefaultPrompt(openAiMetadata);
+
+    // Budgets protect progressive disclosure: add detail to references before
+    // growing the skill entrypoint or host default prompt.
+    expect(primarySkill.length).toBeLessThan(
+      PROMPT_CONTEXT_BUDGETS.skillEntrypointChars,
+    );
+    expect(openAiDefaultPrompt.length).toBeLessThan(
+      PROMPT_CONTEXT_BUDGETS.openAiDefaultPromptChars,
     );
   });
 
