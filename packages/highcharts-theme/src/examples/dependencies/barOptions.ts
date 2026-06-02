@@ -29,7 +29,7 @@ export const barOptions: Options = {
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
-      '<span>{series.name}: </span><span class="value">${point.y}M</span>',
+      '<span>{series.name}: </span><span class="value">&dollar;{point.y}M</span>',
   },
   series: [
     {
