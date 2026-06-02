@@ -1,6 +1,6 @@
-import * as overlayStories from "@stories/overlay/overlay.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as overlayStories from "~stories/overlay/overlay.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
 const { Default, Right, Bottom, Left, CloseButton, LongContent, WithTooltip } =

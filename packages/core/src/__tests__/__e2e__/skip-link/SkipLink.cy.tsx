@@ -1,6 +1,6 @@
-import * as skipLinkStories from "@stories/skip-link/skip-link.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as skipLinkStories from "~stories/skip-link/skip-link.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(skipLinkStories);
 const { Default } = composedStories;

@@ -1,6 +1,6 @@
-import * as sliderStories from "@stories/slider/slider.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
+import * as sliderStories from "~stories/slider/slider.stories";
 
 const composedStories = composeStories(sliderStories);
 

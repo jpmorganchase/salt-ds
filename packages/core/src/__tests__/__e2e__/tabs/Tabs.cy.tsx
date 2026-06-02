@@ -6,9 +6,9 @@ import {
   Tabs,
   TabTrigger,
 } from "@salt-ds/core";
-import * as tabsStories from "@stories/tabs/tabs.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type ReactElement, useEffect, useState } from "react";
+import * as tabsStories from "~stories/tabs/tabs.stories";
 
 const {
   Bordered,

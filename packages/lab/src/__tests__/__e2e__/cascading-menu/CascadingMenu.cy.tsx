@@ -1,6 +1,6 @@
-import * as cascadingMenuStories from "@stories/cascading-menu/cascading-menu.stories";
 import { composeStories } from "@storybook/react-vite";
 import { version } from "react";
+import * as cascadingMenuStories from "~stories/cascading-menu/cascading-menu.stories";
 
 const { Default } = composeStories(cascadingMenuStories);
 

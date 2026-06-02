@@ -16,10 +16,10 @@ import {
   DatePickerSingleInput,
   DatePickerTrigger,
 } from "@salt-ds/date-components";
-import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment";
+import * as datePickerStories from "~stories/date-picker/date-picker.stories";
 
 // Initialize adapters
 const adapterDateFnsTZ = new AdapterDateFnsTZ();

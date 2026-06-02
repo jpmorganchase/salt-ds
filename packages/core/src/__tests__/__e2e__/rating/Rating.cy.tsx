@@ -1,6 +1,6 @@
-import * as ratingStories from "@stories/rating/rating.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as ratingStories from "~stories/rating/rating.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(ratingStories);
 const {

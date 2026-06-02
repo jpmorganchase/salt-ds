@@ -1,7 +1,7 @@
 import { UserGroupSolidIcon } from "@salt-ds/icons";
-import * as avatarStories from "@stories/avatar/avatar.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as avatarStories from "~stories/avatar/avatar.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(avatarStories);
 const { Default } = composedStories;

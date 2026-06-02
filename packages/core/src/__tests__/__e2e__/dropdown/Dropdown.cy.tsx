@@ -1,7 +1,7 @@
 import { Dropdown, Option } from "@salt-ds/core";
-import * as dropdownStories from "@stories/dropdown/dropdown.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
+import * as dropdownStories from "~stories/dropdown/dropdown.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const {

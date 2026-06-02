@@ -1,8 +1,8 @@
 import { Banner, BannerActions, BannerContent, Button } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
-import * as bannerStories from "@stories/banner/banner.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as bannerStories from "~stories/banner/banner.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(bannerStories);
 const { StatusesPrimary } = composedStories;

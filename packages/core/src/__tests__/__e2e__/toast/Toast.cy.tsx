@@ -1,8 +1,8 @@
 import { Toast, ToastContent } from "@salt-ds/core";
 import { LinkedIcon } from "@salt-ds/icons";
-import * as toastStories from "@stories/toast/toast.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as toastStories from "~stories/toast/toast.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(toastStories);
 

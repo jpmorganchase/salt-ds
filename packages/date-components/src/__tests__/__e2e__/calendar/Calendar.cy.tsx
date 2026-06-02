@@ -8,7 +8,7 @@ import {
   CalendarGrid,
   CalendarNavigation,
 } from "@salt-ds/date-components";
-import * as calendarStories from "@stories/calendar/calendar.stories";
+import * as calendarStories from "~stories/calendar/calendar.stories";
 import "moment/dist/locale/es";
 
 // Initialize adapters
