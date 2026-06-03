@@ -157,7 +157,7 @@ nav > ol {
   height: var(--salt-size-base);
 }
 
-.saltMegaMenuItem > a {
+.saltMegaMenuItem {
   inline-size: 100%;
 }
 
