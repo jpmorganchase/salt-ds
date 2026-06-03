@@ -55,7 +55,12 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
           className={withBaseName("list")}
           aria-labelledby={header ? headerId : undefined}
         >
-          {items}
+          {items.map((item, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: children have no stable identity
+            <li key={index} className={withBaseName("item")}>
+              {item}
+            </li>
+          ))}
         </ol>
       </MegaMenuColumn>
     );

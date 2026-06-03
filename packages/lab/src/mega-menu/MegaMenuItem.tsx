@@ -5,7 +5,6 @@ import { clsx } from "clsx";
 import {
   type AnchorHTMLAttributes,
   Children,
-  type ComponentPropsWithoutRef,
   forwardRef,
   type KeyboardEvent,
   type MouseEvent,
@@ -15,11 +14,6 @@ import megaMenuItemCss from "./MegaMenuItem.css";
 import { useMegaMenu } from "./useMegaMenu";
 
 const withBaseName = makePrefixer("saltMegaMenuItem");
-
-// biome-ignore lint/suspicious/noExplicitAny: We don't know the exact type here
-function ItemAction(props: ComponentPropsWithoutRef<any>) {
-  return renderProps("a", props);
-}
 
 export interface MegaMenuItemProps
   extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -33,7 +27,7 @@ export interface MegaMenuItemProps
   render?: RenderPropsType["render"];
 }
 
-export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
+export const MegaMenuItem = forwardRef<HTMLAnchorElement, MegaMenuItemProps>(
   function MegaMenuItem(
     { children, className, onClick, onKeyDown, ...rest },
     ref,
@@ -61,23 +55,19 @@ export const MegaMenuItem = forwardRef<HTMLLIElement, MegaMenuItemProps>(
       }
     };
 
-    return (
-      <li className={clsx(withBaseName(), className)} ref={ref}>
-        <ItemAction
-          data-mega-menu-item=""
-          onClick={handleClick}
-          onKeyDown={handleKeyDown}
-          {...rest}
-        >
-          {Children.map(children, (child) =>
-            typeof child === "string" || typeof child === "number" ? (
-              <span className={withBaseName("content")}>{child}</span>
-            ) : (
-              child
-            ),
-          )}
-        </ItemAction>
-      </li>
-    );
+    return renderProps("a", {
+      className: clsx(withBaseName(), className),
+      ref,
+      onClick: handleClick,
+      onKeyDown: handleKeyDown,
+      ...rest,
+      children: Children.map(children, (child) =>
+        typeof child === "string" || typeof child === "number" ? (
+          <span className={withBaseName("content")}>{child}</span>
+        ) : (
+          child
+        ),
+      ),
+    });
   },
 );
