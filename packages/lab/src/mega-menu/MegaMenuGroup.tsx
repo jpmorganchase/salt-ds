@@ -1,4 +1,4 @@
-import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -9,7 +9,6 @@ import {
   isValidElement,
   type ReactNode,
 } from "react";
-import { useRegisterColumn } from "./MegaMenuGridContext";
 import megaMenuGroupCss from "./MegaMenuGroup.css";
 import { MegaMenuGroupContext } from "./MegaMenuGroupContext";
 import { MegaMenuHeader } from "./MegaMenuHeader";
@@ -32,9 +31,6 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
       window: targetWindow,
     });
 
-    const registerColumn = useRegisterColumn();
-    const columnRef = useForkRef<HTMLDivElement>(ref, registerColumn);
-
     const headerId = useId();
     let header: ReactNode = null;
     const items: ReactNode[] = [];
@@ -53,7 +49,8 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
       <MegaMenuGroupContext.Provider value={{ headerId }}>
         <div
           className={clsx(withBaseName(), className)}
-          ref={columnRef}
+          data-mega-menu-column=""
+          ref={ref}
           {...rest}
         >
           {header}

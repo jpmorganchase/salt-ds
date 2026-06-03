@@ -38,7 +38,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       getFloatingProps,
       setFloating,
       panelId,
-      focusFirstOnOpenRef,
+      getInitialFocus,
     } = useMegaMenu();
 
     // The panel id is generated once in the provider so the trigger can
@@ -86,7 +86,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
           // first item" (index 0, resolved by FFM from DOM tabbable order).
           // Every other open path (click, Enter, Space) leaves focus on the
           // trigger (-1); Tab then moves focus in via FloatingFocusManager.
-          initialFocus: focusFirstOnOpenRef.current ? 0 : -1,
+          initialFocus: getInitialFocus(),
           returnFocus: true,
           closeOnFocusOut: true,
           guards: true,

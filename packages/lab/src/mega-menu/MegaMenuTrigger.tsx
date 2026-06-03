@@ -13,7 +13,7 @@ import {
   type Ref,
   useCallback,
 } from "react";
-import { FOCUSABLE_SELECTOR, useMegaMenuGrid } from "./MegaMenuGridContext";
+import { getAdjacentTrigger, getModel } from "./megaMenuModel";
 import { useMegaMenu } from "./useMegaMenu";
 
 export interface MegaMenuTriggerProps {
@@ -21,18 +21,6 @@ export interface MegaMenuTriggerProps {
    * The trigger element for the mega menu, typically a `NavigationItem` or `Button`.
    */
   children?: ReactNode;
-}
-
-function getAdjacentTrigger(
-  currentTarget: HTMLElement,
-  direction: "next" | "previous",
-): HTMLElement | null {
-  const li = currentTarget.closest("li");
-  if (!li) return null;
-  const sibling =
-    direction === "next" ? li.nextElementSibling : li.previousElementSibling;
-  if (!(sibling instanceof HTMLElement)) return null;
-  return sibling.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
 }
 
 export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
@@ -46,9 +34,9 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
       setOpen,
       openState,
       panelId,
-      focusFirstOnOpenRef,
+      floatingRootContext,
+      openWithFirstItemFocus,
     } = megaMenu;
-    const grid = useMegaMenuGrid();
 
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLElement>) => {
@@ -70,18 +58,17 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
           event.preventDefault();
           if (openState) {
             // Menu already open (e.g. opened by click): move focus into the
-            // first navigable item, resolved from the registration model.
-            grid?.getModel()[0]?.[0]?.focus();
+            // first navigable item, resolved from the panel DOM.
+            const panel = floatingRootContext.elements
+              .floating as HTMLElement | null;
+            if (panel) getModel(panel)[0]?.[0]?.focus();
           } else {
-            // Menu closed: open AND focus the first item in one press. The ref
-            // is set synchronously so the panel's `initialFocus` reads it on
-            // mount (FFM resolves index 0 from DOM tabbable order).
-            focusFirstOnOpenRef.current = true;
-            setOpen(true);
+            // Menu closed: open AND focus the first item in one press.
+            openWithFirstItemFocus();
           }
         }
       },
-      [openState, setOpen, grid, focusFirstOnOpenRef],
+      [openState, setOpen, floatingRootContext, openWithFirstItemFocus],
     );
 
     const handleFloatingRef = useForkRef(

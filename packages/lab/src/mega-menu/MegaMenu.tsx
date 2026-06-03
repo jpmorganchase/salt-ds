@@ -8,10 +8,6 @@ import {
 import { useControlled, useId } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
-import {
-  MegaMenuGridProvider,
-  useMegaMenuGridRegistry,
-} from "./MegaMenuGridContext";
 import { useMegaMenuKeyboard } from "./useMegaMenuKeyboard";
 
 export interface MegaMenuProps {
@@ -57,22 +53,34 @@ export function MegaMenu({
   const [floating, setFloating] = useState<HTMLElement | null>(null);
   const panelId = useId();
 
-  // Transient "open + focus the first item" intent, set synchronously by the
-  // trigger's ArrowDown-from-closed handler and read by the panel's
-  // `initialFocus`. A ref (not state) so it causes no extra render and keeps
-  // focus-on-open off the render path. Reset on close so a later click-open
-  // does not steal focus into the panel.
-  const focusFirstOnOpenRef = useRef(false);
+  // Transient "open + focus the first item" intent, owned here. Set by
+  // `openWithFirstItemFocus` (the trigger's ArrowDown-from-closed path) and read
+  // by the panel via `getInitialFocus`. A ref (not state) so it causes no extra
+  // render and keeps focus-on-open off the render path. Reset on close so a
+  // later click-open does not steal focus into the panel.
+  const pendingInitialFocusRef = useRef(false);
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
       if (!newOpen) {
-        focusFirstOnOpenRef.current = false;
+        pendingInitialFocusRef.current = false;
       }
       setOpenState(newOpen);
       onOpenChange?.(newOpen);
     },
     [onOpenChange],
+  );
+
+  const openWithFirstItemFocus = useCallback(() => {
+    pendingInitialFocusRef.current = true;
+    setOpen(true);
+  }, [setOpen]);
+
+  // FloatingFocusManager `initialFocus`: 0 focuses the first item (ArrowDown
+  // open), -1 leaves focus on the trigger (click / Enter / Space open).
+  const getInitialFocus = useCallback(
+    () => (pendingInitialFocusRef.current ? 0 : -1),
+    [],
   );
 
   const floatingRootContext = useFloatingRootContext({
@@ -81,13 +89,7 @@ export function MegaMenu({
     elements: { reference, floating },
   });
 
-  // Document-position registration store. Created here (above the panel) so the
-  // keyboard handler can read the model, while columns/items register below.
-  const grid = useMegaMenuGridRegistry();
-  const megaMenuKeyboard = useMegaMenuKeyboard(
-    floatingRootContext,
-    grid.getModel,
-  );
+  const megaMenuKeyboard = useMegaMenuKeyboard(floatingRootContext);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useClick(floatingRootContext),
@@ -105,8 +107,9 @@ export function MegaMenu({
       setFloating,
       setReference,
       setOpen,
+      openWithFirstItemFocus,
+      getInitialFocus,
       panelId,
-      focusFirstOnOpenRef,
     }),
     [
       openState,
@@ -117,13 +120,15 @@ export function MegaMenu({
       setFloating,
       setReference,
       setOpen,
+      openWithFirstItemFocus,
+      getInitialFocus,
       panelId,
     ],
   );
 
   return (
     <MegaMenuContext.Provider value={contextValue}>
-      <MegaMenuGridProvider value={grid}>{children}</MegaMenuGridProvider>
+      {children}
     </MegaMenuContext.Provider>
   );
 }

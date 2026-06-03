@@ -1,6 +1,11 @@
 import type { ElementProps, FloatingRootContext } from "@floating-ui/react";
 import { useMemo } from "react";
-import { FOCUSABLE_SELECTOR } from "./MegaMenuGridContext";
+import {
+  FOCUSABLE_SELECTOR,
+  getAdjacentTrigger,
+  getModel,
+  getTriggerFocusable,
+} from "./megaMenuModel";
 
 function findPosition(
   grid: HTMLElement[][],
@@ -11,13 +16,6 @@ function findPosition(
     if (row !== -1) return { col, row };
   }
   return null;
-}
-
-function focusTrigger(context: FloatingRootContext) {
-  const reference = context.elements.reference as HTMLElement | null;
-  const focusable =
-    reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? reference;
-  focusable?.focus();
 }
 
 export interface UseMegaMenuKeyboardProps {
@@ -35,8 +33,8 @@ export interface UseMegaMenuKeyboardProps {
  * keyboard events on the floating (panel) element. Trigger-level keys (e.g.
  * ArrowDown to enter the panel) are owned by `MegaMenuTrigger`.
  *
- * The 2D model is supplied by the registration store (`getModel`) and rebuilt
- * lazily on each keystroke, so a DOM reorder never leaves a stale grid behind.
+ * The 2D model is derived directly from the open panel's DOM (`getModel`) on
+ * each keystroke, so a DOM reorder never leaves a stale grid behind.
  *
  * - **↑ / ↓** move within the current group (column). ↓ on the last item is a
  *   no-op; ↑ on the first item returns focus to the trigger.
@@ -48,7 +46,6 @@ export interface UseMegaMenuKeyboardProps {
  */
 export function useMegaMenuKeyboard(
   context: FloatingRootContext,
-  getModel: () => HTMLElement[][],
   props: UseMegaMenuKeyboardProps = {},
 ): ElementProps {
   const { enabled = true } = props;
@@ -59,6 +56,12 @@ export function useMegaMenuKeyboard(
       return {};
     }
 
+    const focusTrigger = () => {
+      getTriggerFocusable(
+        context.elements.reference as HTMLElement | null,
+      )?.focus();
+    };
+
     return {
       floating: {
         onKeyDown(event: React.KeyboardEvent) {
@@ -68,9 +71,9 @@ export function useMegaMenuKeyboard(
           const focusedItem = target.closest<HTMLElement>(FOCUSABLE_SELECTOR);
           if (!focusedItem) return;
 
-          // Built lazily here (never memoised) so dynamic mount/unmount reorder
-          // is always reflected.
-          const grid = getModel();
+          const panel = event.currentTarget as HTMLElement;
+          // Derived lazily here so dynamic mount/unmount is always reflected.
+          const grid = getModel(panel);
           const pos = findPosition(grid, focusedItem);
           if (!pos) return;
 
@@ -91,7 +94,7 @@ export function useMegaMenuKeyboard(
               if (pos.row > 0) {
                 grid[pos.col][pos.row - 1].focus();
               } else {
-                focusTrigger(context);
+                focusTrigger();
               }
               break;
             }
@@ -103,21 +106,13 @@ export function useMegaMenuKeyboard(
                 grid[nextCol][0].focus();
               } else {
                 // On the last column — close panel and move to next trigger.
-                const reference = context.elements
-                  .reference as HTMLElement | null;
-                const trigger =
-                  reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ??
-                  reference;
-                const li = trigger?.closest("li");
-                const nextSibling =
-                  li?.nextElementSibling instanceof HTMLElement
-                    ? li.nextElementSibling.querySelector<HTMLElement>(
-                        FOCUSABLE_SELECTOR,
-                      )
-                    : null;
-                if (nextSibling) {
+                const trigger = getTriggerFocusable(
+                  context.elements.reference as HTMLElement | null,
+                );
+                const nextTrigger = getAdjacentTrigger(trigger, "next");
+                if (nextTrigger) {
                   onOpenChange(false);
-                  nextSibling.focus();
+                  nextTrigger.focus();
                 }
               }
               break;
@@ -129,7 +124,7 @@ export function useMegaMenuKeyboard(
               if (prevCol >= 0) {
                 grid[prevCol][0].focus();
               } else {
-                focusTrigger(context);
+                focusTrigger();
               }
               break;
             }
@@ -152,5 +147,5 @@ export function useMegaMenuKeyboard(
         },
       },
     };
-  }, [enabled, open, context, onOpenChange, getModel]);
+  }, [enabled, open, context, onOpenChange]);
 }
