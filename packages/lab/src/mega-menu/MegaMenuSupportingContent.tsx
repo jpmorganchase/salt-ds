@@ -7,6 +7,7 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
+import { MegaMenuColumn } from "./MegaMenuColumn";
 import megaMenuSupportingContentCss from "./MegaMenuSupportingContent.css";
 
 const withBaseName = makePrefixer("saltMegaMenuSupportingContent");
@@ -31,9 +32,8 @@ export const MegaMenuSupportingContent = forwardRef<
   });
 
   return (
-    <div
+    <MegaMenuColumn
       className={clsx(withBaseName(), className)}
-      data-mega-menu-column=""
       ref={ref}
       {...rest}
     />

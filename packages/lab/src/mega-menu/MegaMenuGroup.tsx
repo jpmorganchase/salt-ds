@@ -10,6 +10,7 @@ import {
   isValidElement,
   type ReactNode,
 } from "react";
+import { MegaMenuColumn } from "./MegaMenuColumn";
 import megaMenuGroupCss from "./MegaMenuGroup.css";
 import { MegaMenuHeader } from "./MegaMenuHeader";
 
@@ -44,9 +45,8 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
     });
 
     return (
-      <div
+      <MegaMenuColumn
         className={clsx(withBaseName(), className)}
-        data-mega-menu-column=""
         ref={ref}
         {...rest}
       >
@@ -57,7 +57,7 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
         >
           {items}
         </ol>
-      </div>
+      </MegaMenuColumn>
     );
   },
 );
