@@ -1,22 +1,13 @@
 import type { ElementProps, FloatingRootContext } from "@floating-ui/react";
 import { useMemo } from "react";
 import {
+  COLUMN_SELECTOR,
+  columnsOf,
   FOCUSABLE_SELECTOR,
+  focusablesIn,
   getAdjacentTrigger,
-  getModel,
   getTriggerFocusable,
-} from "./megaMenuModel";
-
-function findPosition(
-  grid: HTMLElement[][],
-  el: HTMLElement,
-): { col: number; row: number } | null {
-  for (let col = 0; col < grid.length; col++) {
-    const row = grid[col].indexOf(el);
-    if (row !== -1) return { col, row };
-  }
-  return null;
-}
+} from "./megaMenuNavigation";
 
 export interface UseMegaMenuKeyboardProps {
   /**
@@ -27,22 +18,21 @@ export interface UseMegaMenuKeyboardProps {
 }
 
 /**
- * Floating-ui custom interaction hook for mega menu grid keyboard navigation.
+ * Floating-ui interaction for the open panel's arrow-key navigation. Tab /
+ * Shift+Tab / Escape / focus-out are handled natively by `FloatingFocusManager`
+ * + `useDismiss`; trigger-level keys live in `MegaMenuTrigger`.
  *
- * Returns `ElementProps` that get merged via `useInteractions`, handling
- * keyboard events on the floating (panel) element. Trigger-level keys (e.g.
- * ArrowDown to enter the panel) are owned by `MegaMenuTrigger`.
+ * Position is read straight from the live DOM each keystroke — `closest` for the
+ * current column, `columnsOf` for the column order — so dynamic mounts are always
+ * reflected and there is no model to build or keep in sync. Columns are
+ * `[data-mega-menu-column]` (groups and supporting regions alike); items are the
+ * focusables within a column.
  *
- * The 2D model is derived directly from the open panel's DOM (`getModel`) on
- * each keystroke, so a DOM reorder never leaves a stale grid behind.
- *
- * - **↑ / ↓** move within the current group (column). ↓ on the last item is a
- *   no-op; ↑ on the first item returns focus to the trigger.
- * - **← / →** jump to the top of the previous / next column. ← on the first
- *   column returns focus to the trigger.
+ * - **↑ / ↓** move within the column, then fall through to the previous / next
+ *   column. ↑ off the very first item → trigger; ↓ off the very last item → no-op.
+ * - **← / →** jump to the first item of the previous / next column. ← off the
+ *   first column → trigger; → off the last column → next trigger + close.
  * - **Home / End** jump to the first / last item in the column.
- * - **→ from the last column** closes the panel and moves focus to the next
- *   sibling trigger (no-op if there is none).
  */
 export function useMegaMenuKeyboard(
   context: FloatingRootContext,
@@ -56,10 +46,13 @@ export function useMegaMenuKeyboard(
       return {};
     }
 
-    const focusTrigger = () => {
-      getTriggerFocusable(
-        context.elements.reference as HTMLElement | null,
-      )?.focus();
+    const reference = () => context.elements.reference as HTMLElement | null;
+    const focusTrigger = () => getTriggerFocusable(reference())?.focus();
+    const firstOf = (column: HTMLElement | undefined) =>
+      column ? focusablesIn(column)[0] : undefined;
+    const lastOf = (column: HTMLElement | undefined) => {
+      const items = column ? focusablesIn(column) : [];
+      return items[items.length - 1];
     };
 
     return {
@@ -67,79 +60,66 @@ export function useMegaMenuKeyboard(
         onKeyDown(event: React.KeyboardEvent) {
           if (!open) return;
 
-          const target = event.target as HTMLElement;
-          const focusedItem = target.closest<HTMLElement>(FOCUSABLE_SELECTOR);
-          if (!focusedItem) return;
+          const item = (event.target as HTMLElement).closest<HTMLElement>(
+            FOCUSABLE_SELECTOR,
+          );
+          const column = item?.closest<HTMLElement>(COLUMN_SELECTOR);
+          if (!item || !column) return;
 
           const panel = event.currentTarget as HTMLElement;
-          // Derived lazily here so dynamic mount/unmount is always reflected.
-          const grid = getModel(panel);
-          const pos = findPosition(grid, focusedItem);
-          if (!pos) return;
+          const columns = columnsOf(panel);
+          const items = focusablesIn(column);
+          const col = columns.indexOf(column);
+          const row = items.indexOf(item);
 
           switch (event.key) {
-            case "ArrowDown": {
+            case "ArrowDown":
               event.preventDefault();
-              const next = pos.row + 1;
-              // Strictly within the group — last item is a no-op.
-              if (next < grid[pos.col].length) {
-                grid[pos.col][next].focus();
-              }
+              (row < items.length - 1
+                ? items[row + 1]
+                : firstOf(columns[col + 1])
+              )?.focus();
               break;
-            }
 
-            case "ArrowUp": {
+            case "ArrowUp":
               event.preventDefault();
-              // Strictly within the group — first item returns to the trigger.
-              if (pos.row > 0) {
-                grid[pos.col][pos.row - 1].focus();
-              } else {
-                focusTrigger();
-              }
+              if (row > 0) items[row - 1].focus();
+              else if (col > 0) lastOf(columns[col - 1])?.focus();
+              else focusTrigger();
               break;
-            }
 
-            case "ArrowRight": {
+            case "ArrowRight":
               event.preventDefault();
-              const nextCol = pos.col + 1;
-              if (nextCol < grid.length) {
-                grid[nextCol][0].focus();
+              if (col < columns.length - 1) {
+                firstOf(columns[col + 1])?.focus();
               } else {
-                // On the last column — close panel and move to next trigger.
-                const trigger = getTriggerFocusable(
-                  context.elements.reference as HTMLElement | null,
+                // Past the last column — close and move to the next trigger.
+                const next = getAdjacentTrigger(
+                  getTriggerFocusable(reference()),
+                  "next",
                 );
-                const nextTrigger = getAdjacentTrigger(trigger, "next");
-                if (nextTrigger) {
+                if (next) {
                   onOpenChange(false);
-                  nextTrigger.focus();
+                  next.focus();
                 }
               }
               break;
-            }
 
-            case "ArrowLeft": {
+            case "ArrowLeft":
               event.preventDefault();
-              const prevCol = pos.col - 1;
-              if (prevCol >= 0) {
-                grid[prevCol][0].focus();
-              } else {
-                focusTrigger();
-              }
+              if (col > 0) firstOf(columns[col - 1])?.focus();
+              else focusTrigger();
               break;
-            }
 
-            case "Home": {
+            case "Home":
               event.preventDefault();
-              grid[pos.col][0]?.focus();
+              items[0]?.focus();
               break;
-            }
 
-            case "End": {
+            case "End":
               event.preventDefault();
-              grid[pos.col][grid[pos.col].length - 1]?.focus();
+              items[items.length - 1]?.focus();
               break;
-            }
 
             default:
               break;

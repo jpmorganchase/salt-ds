@@ -44,6 +44,30 @@ export const WithLink = (): ReactElement => {
                 className={styles.withLinkMenuContainer}
                 aria-label="Solutions menu"
               >
+                <FlexLayout wrap gap={3}>
+                  <MegaMenuSupportingActions
+                    className={styles.linkFooterSpacingFirstLinkStart}
+                  >
+                    <Link
+                      color="primary"
+                      underline="default"
+                      href="#link"
+                      IconComponent={ChevronRightIcon}
+                    >
+                      Book a demo
+                    </Link>
+                  </MegaMenuSupportingActions>
+                  <MegaMenuSupportingActions>
+                    <Link
+                      color="primary"
+                      underline="default"
+                      href="#link"
+                      IconComponent={ChevronRightIcon}
+                    >
+                      Support center
+                    </Link>
+                  </MegaMenuSupportingActions>
+                </FlexLayout>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuHeader>Financial services</MegaMenuHeader>
@@ -206,30 +230,6 @@ export const WithLink = (): ReactElement => {
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-                <FlexLayout wrap gap={3}>
-                  <MegaMenuSupportingActions
-                    className={styles.linkFooterSpacingFirstLinkStart}
-                  >
-                    <Link
-                      color="primary"
-                      underline="default"
-                      href="#link"
-                      IconComponent={ChevronRightIcon}
-                    >
-                      Book a demo
-                    </Link>
-                  </MegaMenuSupportingActions>
-                  <MegaMenuSupportingActions>
-                    <Link
-                      color="primary"
-                      underline="default"
-                      href="#link"
-                      IconComponent={ChevronRightIcon}
-                    >
-                      Support center
-                    </Link>
-                  </MegaMenuSupportingActions>
-                </FlexLayout>
               </MegaMenuPanel>
             </MegaMenu>
           </li>

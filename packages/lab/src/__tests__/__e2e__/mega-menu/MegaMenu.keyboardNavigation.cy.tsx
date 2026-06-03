@@ -6,6 +6,7 @@ import {
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
+  MegaMenuSupportingActions,
   MegaMenuSupportingContent,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -271,6 +272,74 @@ const SingleGroupMegaMenu = () => (
   </nav>
 );
 
+// Panel with a group followed by two bottom supporting-action regions. From a
+// navigation standpoint the supporting regions are columns (one item each), so
+// they are reached by ArrowDown / ArrowRight off the end of the last group, and
+// ArrowLeft/Right move between them. A second trigger lets us assert that
+// ArrowRight off the final region exits to the next trigger.
+const BottomLinksMegaMenu = () => (
+  <nav>
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem
+                  href="/digital-banking"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+                <MegaMenuItem
+                  href="/risk-management"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Risk Management
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+            <MegaMenuSupportingActions>
+              <a href="/book" onClick={(e) => e.preventDefault()}>
+                Book a demo
+              </a>
+            </MegaMenuSupportingActions>
+            <MegaMenuSupportingActions>
+              <a href="/all" onClick={(e) => e.preventDefault()}>
+                See all
+              </a>
+            </MegaMenuSupportingActions>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Services</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Consulting</MegaMenuHeader>
+                <MegaMenuItem
+                  href="/strategy"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Strategy
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
 const focusSolutionsTrigger = () => {
   cy.findByRole("button", { name: "Solutions" }).focus().should("be.focused");
 };
@@ -374,7 +443,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
     });
 
-    it("keeps ArrowDown and ArrowUp strictly within the current group", () => {
+    it("ArrowDown and ArrowUp fall through to the adjacent column at the boundary", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
@@ -385,18 +454,22 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
 
-      // Down on the last item of the group is a no-op — it does NOT cross into
-      // the next group (cross-group movement is via ArrowLeft/ArrowRight).
+      // Down off the bottom of the first group falls through to the first item
+      // of the next group.
       cy.realPress("ArrowDown");
-      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
-      cy.get(".saltMegaMenuPanel").should("exist");
+      cy.findByRole("link", { name: "Patient Management" }).should(
+        "be.focused",
+      );
 
-      // Up moves within the group...
+      // Up off the top of the second group falls through to the last item of the
+      // previous group.
+      cy.realPress("ArrowUp");
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+
       cy.realPress("ArrowUp");
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
 
-      // ...and Up on the first item returns to the trigger (not the previous
-      // group), keeping the menu open.
+      // Up on the very first item returns to the trigger, keeping the menu open.
       cy.realPress("ArrowUp");
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
@@ -663,6 +736,61 @@ describe("Given a MegaMenu", () => {
 
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Help Center" }).should("be.focused");
+    });
+  });
+
+  describe("when the panel has bottom supporting links", () => {
+    const focusBookADemo = () => {
+      openSolutionsWithEnter();
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowDown"); // Risk Management
+      cy.realPress("ArrowDown"); // falls through to Book a demo
+      cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
+    };
+
+    it("ArrowDown from the last group item moves into the bottom links", () => {
+      cy.mount(<BottomLinksMegaMenu />);
+      focusBookADemo();
+    });
+
+    it("ArrowRight from a group item moves into the bottom links", () => {
+      cy.mount(<BottomLinksMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowRight");
+      cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
+    });
+
+    it("ArrowRight and ArrowLeft move between the bottom links", () => {
+      cy.mount(<BottomLinksMegaMenu />);
+      focusBookADemo();
+
+      cy.realPress("ArrowRight");
+      cy.findByRole("link", { name: "See all" }).should("be.focused");
+
+      cy.realPress("ArrowLeft");
+      cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
+    });
+
+    it("ArrowUp from a bottom link returns to the last item of the previous column", () => {
+      cy.mount(<BottomLinksMegaMenu />);
+      focusBookADemo();
+
+      cy.realPress("ArrowUp");
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+    });
+
+    it("ArrowRight from the last bottom link exits to the next trigger and closes", () => {
+      cy.mount(<BottomLinksMegaMenu />);
+      focusBookADemo();
+
+      cy.realPress("ArrowRight"); // See all (last column)
+      cy.findByRole("link", { name: "See all" }).should("be.focused");
+
+      cy.realPress("ArrowRight");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
     });
   });
 });

@@ -13,7 +13,7 @@ import {
   type Ref,
   useCallback,
 } from "react";
-import { getAdjacentTrigger, getModel } from "./megaMenuModel";
+import { firstFocusable, getAdjacentTrigger } from "./megaMenuNavigation";
 import { useMegaMenu } from "./useMegaMenu";
 
 export interface MegaMenuTriggerProps {
@@ -58,10 +58,10 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
           event.preventDefault();
           if (openState) {
             // Menu already open (e.g. opened by click): move focus into the
-            // first navigable item, resolved from the panel DOM.
+            // first item of the first column.
             const panel = floatingRootContext.elements
               .floating as HTMLElement | null;
-            if (panel) getModel(panel)[0]?.[0]?.focus();
+            if (panel) firstFocusable(panel)?.focus();
           } else {
             // Menu closed: open AND focus the first item in one press.
             openWithFirstItemFocus();

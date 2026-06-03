@@ -16,8 +16,8 @@ export interface MegaMenuSupportingBaseProps
 /**
  * Shared internal base for the supporting columns (`MegaMenuSupportingActions`
  * and `MegaMenuSupportingContent`), which differ only by their prefixer/CSS.
- * Marked as a navigable column; its custom-region focusables are discovered
- * directly from the DOM by `getModel`.
+ * Marked as a navigable column (`data-mega-menu-column`); for arrow navigation
+ * it behaves like a group, while keeping its own custom-region semantics.
  */
 export const MegaMenuSupportingBase = forwardRef<
   HTMLDivElement,
