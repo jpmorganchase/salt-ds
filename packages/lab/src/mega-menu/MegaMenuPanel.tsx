@@ -7,15 +7,10 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
 import { useMegaMenu } from "./useMegaMenu";
+import { usePageMargin } from "./usePageMargin";
 
 const withBaseName = makePrefixer("saltMegaMenuPanel");
 
@@ -43,35 +38,19 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       getFloatingProps,
       setFloating,
       panelId,
+      focusFirstOnOpenRef,
     } = useMegaMenu();
 
     // The panel id is generated once in the provider so the trigger can
     // reference it via aria-controls; an explicit `id` prop still wins.
     const id = idProp ?? panelId;
 
-    // Resolve the panel's page-margin to a pixel value to override the margin as required.
-    const [pageMargin, setPageMargin] = useState(0);
-    useEffect(() => {
-      if (!targetWindow) return;
-      const referenceEl = floatingRootContext.elements.domReference as
-        | HTMLElement
-        | null
-        | undefined;
-      const host = referenceEl ?? targetWindow.document.body;
-      const doc = targetWindow.document;
-      const measure = () => {
-        const probe = doc.createElement("div");
-        probe.style.cssText =
-          "position:absolute;visibility:hidden;pointer-events:none;width:var(--saltMegaMenuPanel-pageMargin, var(--salt-layout-page-margin));";
-        host.appendChild(probe);
-        const width = probe.getBoundingClientRect().width;
-        probe.remove();
-        setPageMargin((prev) => (prev === width ? prev : width));
-      };
-      measure();
-      targetWindow.addEventListener("resize", measure);
-      return () => targetWindow.removeEventListener("resize", measure);
-    }, [targetWindow, floatingRootContext]);
+    // Resolve the panel's page-margin to a pixel value (calc-based custom
+    // property — see usePageMargin for why a laid-out probe is required) to
+    // pad the flip / shift / size middleware.
+    const referenceEl = floatingRootContext.elements
+      .domReference as HTMLElement | null;
+    const pageMargin = usePageMargin(referenceEl);
 
     const floatingUIResult = useFloatingUI({
       rootContext: floatingRootContext,
@@ -103,9 +82,11 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
         focusManagerProps={{
           context: floatingUIResult.context,
           modal: false,
-          // Don't pull focus into the panel on open; focus is moved in
-          // deliberately by Tab (FloatingFocusManager) or ArrowDown (trigger).
-          initialFocus: -1,
+          // ArrowDown on a closed trigger requests one-press "open + focus the
+          // first item" (index 0, resolved by FFM from DOM tabbable order).
+          // Every other open path (click, Enter, Space) leaves focus on the
+          // trigger (-1); Tab then moves focus in via FloatingFocusManager.
+          initialFocus: focusFirstOnOpenRef.current ? 0 : -1,
           returnFocus: true,
           closeOnFocusOut: true,
           guards: true,
