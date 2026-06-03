@@ -40,8 +40,14 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
     const { children, ...rest } = props;
     const megaMenu = useMegaMenu();
 
-    const { getReferenceProps, setReference, setOpen, openState, panelId } =
-      megaMenu;
+    const {
+      getReferenceProps,
+      setReference,
+      setOpen,
+      openState,
+      panelId,
+      focusFirstOnOpenRef,
+    } = megaMenu;
     const grid = useMegaMenuGrid();
 
     const handleKeyDown = useCallback(
@@ -63,16 +69,19 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
         if (key === "ArrowDown") {
           event.preventDefault();
           if (openState) {
-            // Menu already open: move focus into the first navigable item,
-            // resolved from the registration model (empty until open).
+            // Menu already open (e.g. opened by click): move focus into the
+            // first navigable item, resolved from the registration model.
             grid?.getModel()[0]?.[0]?.focus();
           } else {
-            // Menu closed: open it. A subsequent ArrowDown enters the panel.
+            // Menu closed: open AND focus the first item in one press. The ref
+            // is set synchronously so the panel's `initialFocus` reads it on
+            // mount (FFM resolves index 0 from DOM tabbable order).
+            focusFirstOnOpenRef.current = true;
             setOpen(true);
           }
         }
       },
-      [openState, setOpen, grid],
+      [openState, setOpen, grid, focusFirstOnOpenRef],
     );
 
     const handleFloatingRef = useForkRef(

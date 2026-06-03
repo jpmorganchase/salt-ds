@@ -292,6 +292,26 @@ describe("Given a MegaMenu", () => {
       });
     });
 
+    it("opens AND focuses the first item on ArrowDown in one press", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      focusSolutionsTrigger();
+
+      cy.realPress("ArrowDown");
+      cy.get(".saltMegaMenuPanel").should("exist");
+      // One press: the panel opens and the first item is focused immediately,
+      // without requiring a second ArrowDown.
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+    });
+
+    it("keeps focus on the trigger when opened by click", () => {
+      cy.mount(<KeyboardMegaMenu />);
+
+      cy.findByRole("button", { name: "Solutions" }).click();
+      cy.get(".saltMegaMenuPanel").should("exist");
+      // Click-open must not pull focus into the panel (initialFocus -1).
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+    });
+
     it("does not open on Tab", () => {
       cy.mount(<KeyboardMegaMenu />);
       focusSolutionsTrigger();

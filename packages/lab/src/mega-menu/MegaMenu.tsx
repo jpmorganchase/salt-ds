@@ -6,7 +6,7 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { useControlled, useId } from "@salt-ds/core";
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
 import {
   MegaMenuGridProvider,
@@ -57,8 +57,18 @@ export function MegaMenu({
   const [floating, setFloating] = useState<HTMLElement | null>(null);
   const panelId = useId();
 
+  // Transient "open + focus the first item" intent, set synchronously by the
+  // trigger's ArrowDown-from-closed handler and read by the panel's
+  // `initialFocus`. A ref (not state) so it causes no extra render and keeps
+  // focus-on-open off the render path. Reset on close so a later click-open
+  // does not steal focus into the panel.
+  const focusFirstOnOpenRef = useRef(false);
+
   const setOpen = useCallback(
     (newOpen: boolean) => {
+      if (!newOpen) {
+        focusFirstOnOpenRef.current = false;
+      }
       setOpenState(newOpen);
       onOpenChange?.(newOpen);
     },
@@ -96,6 +106,7 @@ export function MegaMenu({
       setReference,
       setOpen,
       panelId,
+      focusFirstOnOpenRef,
     }),
     [
       openState,

@@ -1,6 +1,11 @@
 import type { FloatingRootContext, Placement } from "@floating-ui/react";
 import { createContext } from "@salt-ds/core";
-import type { Dispatch, HTMLProps, SetStateAction } from "react";
+import type {
+  Dispatch,
+  HTMLProps,
+  MutableRefObject,
+  SetStateAction,
+} from "react";
 
 export interface MegaMenuContextValue {
   /** Whether the mega menu is currently open. */
@@ -25,6 +30,13 @@ export interface MegaMenuContextValue {
   setReference: Dispatch<SetStateAction<HTMLElement | null>>;
   /** The id of the mega menu panel, used for aria-controls on the trigger. */
   panelId: string | undefined;
+  /**
+   * Transient intent to focus the first item when the panel opens. Set
+   * synchronously by the trigger's ArrowDown-from-closed handler and read by
+   * the panel's `initialFocus`; reset on close. A ref so it never triggers a
+   * render.
+   */
+  focusFirstOnOpenRef: MutableRefObject<boolean>;
 }
 
 export const MegaMenuContext = createContext<MegaMenuContextValue | undefined>(
