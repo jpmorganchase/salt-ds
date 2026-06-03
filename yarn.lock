@@ -2322,10 +2322,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/open-sans@npm:^4.5.13":
-  version: 4.5.13
-  resolution: "@fontsource/open-sans@npm:4.5.13"
-  checksum: 10/ea251ce4dad7086479356a3a0e7ad794c15b53121a59ded5e4b4eee483e671882bfa6c0f0eaf40cfc13bc732e3fe3b2e52d4a7a16a5ae65486750fbd900d6a15
+"@fontsource/open-sans@npm:^5.0.0":
+  version: 5.2.7
+  resolution: "@fontsource/open-sans@npm:5.2.7"
+  checksum: 10/7a1e17c852e0d84f5b7f61a1cbbe6eb829df1086b65205bedff92d626794f848039b3b9b580d56aedf6689d25b2b7da0c1b9489069a79077938f812eac9e612f
   languageName: node
   linkType: hard
 
@@ -4184,7 +4184,7 @@ __metadata:
     "@date-fns/tz": "npm:^1.4.1"
     "@e965/xlsx": "npm:^0.20.3"
     "@faker-js/faker": "npm:^8.0.0"
-    "@fontsource/open-sans": "npm:^4.5.13"
+    "@fontsource/open-sans": "npm:^5.0.0"
     "@fontsource/pt-mono": "npm:^5.0.12"
     "@msw/data": "npm:^1.0.0"
     "@rollup/plugin-commonjs": "npm:^28.0.1"
