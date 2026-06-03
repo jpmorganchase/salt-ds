@@ -23,6 +23,15 @@
   align-items: center;
 }
 
+.saltMegaMenuItem-content {
+  flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+}
+
 .saltMegaMenuItem > a:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);

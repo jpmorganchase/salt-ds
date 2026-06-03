@@ -18,15 +18,16 @@ import {
 import {
   MegaMenu,
   MegaMenuGroup,
+  MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
-  MegaMenuItemContent,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
+import { Link } from "react-router";
 import styles from "./index.module.css";
+import { MockHistory } from "./MockHistory";
 
 export const EdgeToEdge = (): ReactElement => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -40,486 +41,451 @@ export const EdgeToEdge = (): ReactElement => {
   };
 
   return (
-    <div className={styles.edgeToEdgeWrapper}>
-      <nav>
-        <StackLayout as="ol" direction="row" gap={1} className={styles.navList}>
-          <li>
-            <MegaMenu
-              open={openMenu === "solutions"}
-              onOpenChange={handleOpenChange("solutions")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "solutions"}>
-                  Solutions
-                </NavigationItem>
-              </MegaMenuTrigger>
-              <MegaMenuPanel
-                aria-label="Solutions menu"
-                className={styles.edgeToEdgePanel}
+    <MockHistory>
+      <div className={styles.edgeToEdgeWrapper}>
+        <nav>
+          <StackLayout
+            as="ol"
+            direction="row"
+            gap={1}
+            className={styles.navList}
+          >
+            <li>
+              <MegaMenu
+                open={openMenu === "solutions"}
+                onOpenChange={handleOpenChange("solutions")}
               >
-                <MegaMenuSection>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Financial services</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Digital banking",
-                        );
-                      }}
-                    >
-                      <DevicesIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Risk management",
-                        );
-                      }}
-                    >
-                      <DatasetManagerIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>Risk management</MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Patient management",
-                        );
-                      }}
-                    >
-                      <UserSearchIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>
+                <MegaMenuTrigger>
+                  <NavigationItem active={activeMenu === "solutions"}>
+                    Solutions
+                  </NavigationItem>
+                </MegaMenuTrigger>
+                <MegaMenuPanel
+                  aria-label="Solutions menu"
+                  className={styles.edgeToEdgePanel}
+                >
+                  <MegaMenuGroups>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Financial services</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/digital-banking" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/digital-banking",
+                          )
+                        }
+                      >
+                        <DevicesIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
+                        Digital banking
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/risk-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/risk-management",
+                          )
+                        }
+                      >
+                        <DatasetManagerIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
+                        Risk management
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Healthcare</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/patient-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/patient-management",
+                          )
+                        }
+                      >
+                        <UserSearchIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Patient management
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Telemedicine",
-                        );
-                      }}
-                    >
-                      <CallIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>Telemedicine</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Compliance solutions",
-                        );
-                      }}
-                    >
-                      <PasteIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/telemedicine" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/telemedicine")
+                        }
+                      >
+                        <CallIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
+                        Telemedicine
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/compliance-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/compliance-solutions",
+                          )
+                        }
+                      >
+                        <PasteIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Compliance solutions
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Retail</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "E-commerce platforms",
-                        );
-                      }}
-                    >
-                      <CartIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Retail</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/e-commerce-platforms" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/e-commerce-platforms",
+                          )
+                        }
+                      >
+                        <CartIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         E-commerce platforms
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Manufacturing</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Supply chain optimization",
-                        );
-                      }}
-                    >
-                      <LinkedIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Manufacturing</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/supply-chain-optimization" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/supply-chain-optimization",
+                          )
+                        }
+                      >
+                        <LinkedIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Supply chain optimization
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Quality control",
-                        );
-                      }}
-                    >
-                      <SettingsIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>Quality control</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Production planning",
-                        );
-                      }}
-                    >
-                      <NotificationIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/quality-control" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/quality-control",
+                          )
+                        }
+                      >
+                        <SettingsIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
+                        Quality control
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/production-planning" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/production-planning",
+                          )
+                        }
+                      >
+                        <NotificationIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Production planning
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Education</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Learning management systems",
-                        );
-                      }}
-                    >
-                      <GuideOpenIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Education</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/learning-management-systems" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/learning-management-systems",
+                          )
+                        }
+                      >
+                        <GuideOpenIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Learning management systems
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Virtual classrooms",
-                        );
-                      }}
-                    >
-                      <LaptopIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/virtual-classrooms" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/virtual-classrooms",
+                          )
+                        }
+                      >
+                        <LaptopIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Virtual classrooms
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Government</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Document management",
-                        );
-                      }}
-                    >
-                      <DocumentIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Government</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/document-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/document-management",
+                          )
+                        }
+                      >
+                        <DocumentIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Document management
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Citizen services",
-                        );
-                      }}
-                    >
-                      <PinIcon aria-hidden className="saltMegaMenuItem-icon" />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/citizen-services" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/citizen-services",
+                          )
+                        }
+                      >
+                        <PinIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Citizen services
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Public safety solutions",
-                        );
-                      }}
-                    >
-                      <UserGroupIcon
-                        aria-hidden
-                        className="saltMegaMenuItem-icon"
-                      />
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/public-safety-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/public-safety-solutions",
+                          )
+                        }
+                      >
+                        <UserGroupIcon
+                          aria-hidden
+                          className="saltMegaMenuItem-icon"
+                        />
                         Public safety solutions
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Technology</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Cloud solutions",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Cloud solutions</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Cybersecurity",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Cybersecurity</MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Energy</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Smart Grid Management",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Technology</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/cloud-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/cloud-solutions",
+                          )
+                        }
+                      >
+                        Cloud solutions
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/cybersecurity" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/cybersecurity")
+                        }
+                      >
+                        Cybersecurity
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Energy</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/smart-grid-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/smart-grid-management",
+                          )
+                        }
+                      >
                         Smart Grid Management
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Renewable Integration",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/renewable-integration" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/renewable-integration",
+                          )
+                        }
+                      >
                         Renewable Integration
-                      </MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                </MegaMenuSection>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-          <li>
-            <MegaMenu
-              open={openMenu === "services"}
-              onOpenChange={handleOpenChange("services")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "services"}>
-                  Services
-                </NavigationItem>
-              </MegaMenuTrigger>
-              <MegaMenuPanel
-                aria-label="Services menu"
-                className={styles.edgeToEdgePanel}
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                  </MegaMenuGroups>
+                </MegaMenuPanel>
+              </MegaMenu>
+            </li>
+            <li>
+              <MegaMenu
+                open={openMenu === "services"}
+                onOpenChange={handleOpenChange("services")}
               >
-                <MegaMenuSection>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Consulting</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Strategy",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Strategy</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Operations",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Operations</MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Implementation</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Onboarding",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Onboarding</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Migration",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Migration</MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Training</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Workshops",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Workshops</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Certifications",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Certifications</MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                </MegaMenuSection>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-          <li>
-            <MegaMenu
-              open={openMenu === "resources"}
-              onOpenChange={handleOpenChange("resources")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "resources"}>
-                  Resources
-                </NavigationItem>
-              </MegaMenuTrigger>
-              <MegaMenuPanel
-                aria-label="Resources menu"
-                className={styles.edgeToEdgePanel}
+                <MegaMenuTrigger>
+                  <NavigationItem active={activeMenu === "services"}>
+                    Services
+                  </NavigationItem>
+                </MegaMenuTrigger>
+                <MegaMenuPanel
+                  aria-label="Services menu"
+                  className={styles.edgeToEdgePanel}
+                >
+                  <MegaMenuGroups>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Consulting</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/strategy" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/strategy")
+                        }
+                      >
+                        Strategy
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/operations" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/operations")
+                        }
+                      >
+                        Operations
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Implementation</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/onboarding" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/onboarding")
+                        }
+                      >
+                        Onboarding
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/migration" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/migration")
+                        }
+                      >
+                        Migration
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Training</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/workshops" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/workshops")
+                        }
+                      >
+                        Workshops
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/certifications" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/certifications",
+                          )
+                        }
+                      >
+                        Certifications
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                  </MegaMenuGroups>
+                </MegaMenuPanel>
+              </MegaMenu>
+            </li>
+            <li>
+              <MegaMenu
+                open={openMenu === "resources"}
+                onOpenChange={handleOpenChange("resources")}
               >
-                <MegaMenuSection>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Documentation</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "User guides",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>User guides</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "API reference",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>API reference</MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuHeader>Support &amp; help</MegaMenuHeader>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Contact support",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Contact support</MegaMenuItemContent>
-                    </MegaMenuItem>
-                    <MegaMenuItem
-                      onClick={(event) => {
-                        event.preventDefault();
-                        console.log(
-                          "[EdgeToEdge MegaMenu] selected value:",
-                          "Community forum",
-                        );
-                      }}
-                    >
-                      <MegaMenuItemContent>Community forum</MegaMenuItemContent>
-                    </MegaMenuItem>
-                  </MegaMenuGroup>
-                </MegaMenuSection>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-        </StackLayout>
-      </nav>
-    </div>
+                <MegaMenuTrigger>
+                  <NavigationItem active={activeMenu === "resources"}>
+                    Resources
+                  </NavigationItem>
+                </MegaMenuTrigger>
+                <MegaMenuPanel
+                  aria-label="Resources menu"
+                  className={styles.edgeToEdgePanel}
+                >
+                  <MegaMenuGroups>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Documentation</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/user-guides" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/user-guides")
+                        }
+                      >
+                        User guides
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/api-reference" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/api-reference")
+                        }
+                      >
+                        API reference
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                    <MegaMenuGroup>
+                      <MegaMenuHeader>Support &amp; help</MegaMenuHeader>
+                      <MegaMenuItem
+                        render={<Link to="/contact-support" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/contact-support",
+                          )
+                        }
+                      >
+                        Contact support
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<Link to="/community-forum" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/community-forum",
+                          )
+                        }
+                      >
+                        Community forum
+                      </MegaMenuItem>
+                    </MegaMenuGroup>
+                  </MegaMenuGroups>
+                </MegaMenuPanel>
+              </MegaMenu>
+            </li>
+          </StackLayout>
+        </nav>
+      </div>
+    </MockHistory>
   );
 };

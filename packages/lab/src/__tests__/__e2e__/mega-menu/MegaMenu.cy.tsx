@@ -2,10 +2,10 @@ import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
   MegaMenuGroup,
+  MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { useState } from "react";
@@ -29,13 +29,23 @@ const InteractiveMegaMenu = () => {
               <NavigationItem>Solutions</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuSection>
+              <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem>Digital Banking</MegaMenuItem>
-                  <MegaMenuItem>Risk Management</MegaMenuItem>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/risk-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
                 </MegaMenuGroup>
-              </MegaMenuSection>
+              </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -49,12 +59,17 @@ const InteractiveMegaMenu = () => {
               <NavigationItem>Services</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuSection>
+              <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem>Strategy</MegaMenuItem>
+                  <MegaMenuItem
+                    href="/strategy"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Strategy
+                  </MegaMenuItem>
                 </MegaMenuGroup>
-              </MegaMenuSection>
+              </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -89,18 +104,18 @@ describe("Given a MegaMenu", () => {
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.get(".saltMegaMenuPanel").should("exist");
-    cy.findByText("Digital Banking").should("exist");
+    cy.findByRole("link", { name: "Digital Banking" }).should("exist");
 
     cy.findByRole("button", { name: "Services" }).click();
-    cy.findByText("Strategy").should("exist");
-    cy.findByText("Digital Banking").should("not.exist");
+    cy.findByRole("link", { name: "Strategy" }).should("exist");
+    cy.findByRole("link", { name: "Digital Banking" }).should("not.exist");
   });
 
   it("selects an item and closes the menu", () => {
     cy.mount(<InteractiveMegaMenu />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByText("Digital Banking").click();
+    cy.findByRole("link", { name: "Digital Banking" }).click();
 
     cy.get(".saltMegaMenuPanel").should("not.exist");
   });
@@ -122,28 +137,36 @@ describe("Given a MegaMenu", () => {
           <NavigationItem>Solutions</NavigationItem>
         </MegaMenuTrigger>
         <MegaMenuPanel>
-          <MegaMenuSection>
+          <MegaMenuGroups>
             <MegaMenuGroup>
               <MegaMenuHeader>Financial Services</MegaMenuHeader>
-              <MegaMenuItem>Digital Banking</MegaMenuItem>
+              <MegaMenuItem
+                href="/digital-banking"
+                onClick={(e) => e.preventDefault()}
+              >
+                Digital Banking
+              </MegaMenuItem>
             </MegaMenuGroup>
-          </MegaMenuSection>
+          </MegaMenuGroups>
         </MegaMenuPanel>
       </MegaMenu>,
     );
 
     cy.get(".saltMegaMenuPanel").should("exist");
-    cy.findByText("Digital Banking").should("exist");
+    cy.findByRole("link", { name: "Digital Banking" }).should("exist");
   });
 
   it("does not persist item active state after selection", () => {
     cy.mount(<InteractiveMegaMenu />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByText("Digital Banking").click();
+    cy.findByRole("link", { name: "Digital Banking" }).click();
     cy.get(".saltMegaMenuPanel").should("not.exist");
 
     cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByText("Digital Banking").should("not.have.attr", "aria-current");
+    cy.findByRole("link", { name: "Digital Banking" }).should(
+      "not.have.attr",
+      "aria-current",
+    );
   });
 });

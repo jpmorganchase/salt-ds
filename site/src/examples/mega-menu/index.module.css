@@ -13,8 +13,8 @@
   box-sizing: border-box;
 }
 
-.fullWidthPanel :global(.saltMegaMenuSection) {
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+.fullWidthPanel :global(.saltMegaMenuGroups) {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
 }
 
 .edgeToEdgeWrapper {
@@ -33,12 +33,12 @@
   box-sizing: border-box;
 }
 
-.edgeToEdgePanel :global(.saltMegaMenuSection) {
-  --saltMegaMenuSection-columnWidth: 212px;
+.edgeToEdgePanel :global(.saltMegaMenuGroups) {
+  --saltMegaMenuGroups-columnWidth: 212px;
   max-inline-size: 920px;
   inline-size: 100%;
   margin-inline: auto;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuSection-columnWidth, 16rem)));
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
 }
 
 .menuItemAdornment {
@@ -53,14 +53,9 @@
 }
 
 .linkFooterSpacingFirstLinkStart {
-  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
-  width: fit-content;
+  padding-left: var(--salt-spacing-300);
 }
 
-.linkFooterSpacingMultiLink {
-  padding: 0 0 var(--salt-spacing-300) 0;
-  width: fit-content;
-}
 .customRegionContent {
   flex: 1;
   display: flex;
@@ -69,11 +64,6 @@
 
 .customRegionContent > :last-child {
   margin-top: auto;
-}
-
-.linkFooterSpacing {
-  padding: 0 0 var(--salt-spacing-300) var(--salt-spacing-300);
-  width: fit-content;
 }
 
 .withLinkMenuContainer {
@@ -90,7 +80,7 @@
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
-.smallViewportContainer :global(.saltMegaMenuSection) {
+.smallViewportContainer :global(.saltMegaMenuGroups) {
   grid-template-columns: 1fr;
   max-inline-size: 100%;
   width: 100%;

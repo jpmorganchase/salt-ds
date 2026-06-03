@@ -1,0 +1,6 @@
+.saltMegaMenuSupportingActions {
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  padding-bottom: var(--salt-spacing-300);
+}
