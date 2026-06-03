@@ -230,10 +230,7 @@ const CustomRegionMegaMenu = () => (
               </MegaMenuGroup>
             </MegaMenuGroups>
             <MegaMenuSupportingActions>
-              {/* biome-ignore lint/a11y/useValidAnchor: test fixture link */}
-              <a href="/book-a-demo" onClick={(e) => e.preventDefault()}>
-                Book a demo
-              </a>
+              <a href="/book-a-demo">Book a demo</a>
             </MegaMenuSupportingActions>
             <MegaMenuSupportingContent>
               <button type="button">View guidelines</button>
@@ -311,6 +308,30 @@ describe("Given a MegaMenu", () => {
 
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+    });
+
+    it("ArrowRight on an open trigger closes the panel and moves to the next trigger", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      // Focus stays on the trigger after opening with Enter.
+      openSolutionsWithEnter();
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+
+      cy.realPress("ArrowRight");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
+      // The previously-open Solutions panel must collapse.
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+    });
+
+    it("ArrowLeft on an open trigger closes the panel and moves to the previous trigger", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      cy.findByRole("button", { name: "Services" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
+
+      cy.realPress("ArrowLeft");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
     it("supports ArrowDown and ArrowUp between items and trigger", () => {
@@ -677,6 +698,33 @@ describe("Given a MegaMenu", () => {
       // Focus must move to the next real focusable element after the menu —
       // not be lost to a hidden focus-guard span (and thus to <body>).
       cy.findByRole("button", { name: "After Nav" }).should("be.focused");
+    });
+
+    it("walks Shift+Tab backwards through custom-region elements without losing focus", () => {
+      cy.mount(<CustomRegionMegaMenu />);
+      openSolutions();
+
+      // Forward to the last custom-region element.
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management
+      cy.realPress("Tab"); // Book a demo (supporting actions)
+      cy.realPress("Tab"); // View guidelines (supporting content)
+      cy.findByRole("button", { name: "View guidelines" }).should("be.focused");
+
+      // Reverse must mirror the forward order exactly, never dropping focus.
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      // From the first item, Shift+Tab returns to the trigger (menu stays open).
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
     });
 
     it("moves into and across custom-region columns with ArrowRight", () => {
