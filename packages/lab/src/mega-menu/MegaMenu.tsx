@@ -8,6 +8,10 @@ import {
 import { useControlled, useId } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
+import {
+  MegaMenuGridProvider,
+  useMegaMenuGridRegistry,
+} from "./MegaMenuGridContext";
 import { useMegaMenuKeyboard } from "./useMegaMenuKeyboard";
 
 export interface MegaMenuProps {
@@ -51,14 +55,10 @@ export function MegaMenu({
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
-  const [focusFirstItemOnOpen, setFocusFirstItemOnOpen] = useState(false);
   const panelId = useId();
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
-      if (!newOpen) {
-        setFocusFirstItemOnOpen(false);
-      }
       setOpenState(newOpen);
       onOpenChange?.(newOpen);
     },
@@ -71,7 +71,13 @@ export function MegaMenu({
     elements: { reference, floating },
   });
 
-  const megaMenuKeyboard = useMegaMenuKeyboard(floatingRootContext);
+  // Document-position registration store. Created here (above the panel) so the
+  // keyboard handler can read the model, while columns/items register below.
+  const grid = useMegaMenuGridRegistry();
+  const megaMenuKeyboard = useMegaMenuKeyboard(
+    floatingRootContext,
+    grid.getModel,
+  );
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useClick(floatingRootContext),
@@ -89,8 +95,6 @@ export function MegaMenu({
       setFloating,
       setReference,
       setOpen,
-      focusFirstItemOnOpen,
-      setFocusFirstItemOnOpen,
       panelId,
     }),
     [
@@ -102,15 +106,13 @@ export function MegaMenu({
       setFloating,
       setReference,
       setOpen,
-      focusFirstItemOnOpen,
-      setFocusFirstItemOnOpen,
       panelId,
     ],
   );
 
   return (
     <MegaMenuContext.Provider value={contextValue}>
-      {children}
+      <MegaMenuGridProvider value={grid}>{children}</MegaMenuGridProvider>
     </MegaMenuContext.Provider>
   );
 }

@@ -1,7 +1,9 @@
+import { useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { useRegisterColumn } from "./MegaMenuGridContext";
 
 export interface MegaMenuSupportingBaseProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -16,7 +18,8 @@ export interface MegaMenuSupportingBaseProps
 /**
  * Shared internal base for the supporting columns (`MegaMenuSupportingActions`
  * and `MegaMenuSupportingContent`), which differ only by their prefixer/CSS.
- * Renders a `[data-mega-menu-column]` div so the column is navigable.
+ * Registers as a navigable column; its custom-region focusables are discovered
+ * by the scoped fallback in `buildModelFromRegistry`.
  */
 export const MegaMenuSupportingBase = forwardRef<
   HTMLDivElement,
@@ -32,12 +35,10 @@ export const MegaMenuSupportingBase = forwardRef<
     window: targetWindow,
   });
 
+  const registerColumn = useRegisterColumn();
+  const columnRef = useForkRef<HTMLDivElement>(ref, registerColumn);
+
   return (
-    <div
-      className={clsx(baseClassName, className)}
-      data-mega-menu-column=""
-      ref={ref}
-      {...rest}
-    />
+    <div className={clsx(baseClassName, className)} ref={columnRef} {...rest} />
   );
 });

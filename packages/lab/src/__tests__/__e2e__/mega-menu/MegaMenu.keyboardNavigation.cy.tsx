@@ -354,7 +354,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
     });
 
-    it("supports ArrowDown and ArrowUp within and across groups", () => {
+    it("keeps ArrowDown and ArrowUp strictly within the current group", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
@@ -365,15 +365,21 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
 
-      // Last item of first group -> first item of next group
+      // Down on the last item of the group is a no-op — it does NOT cross into
+      // the next group (cross-group movement is via ArrowLeft/ArrowRight).
       cy.realPress("ArrowDown");
-      cy.findByRole("link", { name: "Patient Management" }).should(
-        "be.focused",
-      );
-
-      // First item of second group -> last item of previous group
-      cy.realPress("ArrowUp");
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      // Up moves within the group...
+      cy.realPress("ArrowUp");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      // ...and Up on the first item returns to the trigger (not the previous
+      // group), keeping the menu open.
+      cy.realPress("ArrowUp");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
     });
 
     it("supports ArrowRight and ArrowLeft across groups", () => {

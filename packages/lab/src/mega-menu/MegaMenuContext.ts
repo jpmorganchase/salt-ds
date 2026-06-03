@@ -23,10 +23,6 @@ export interface MegaMenuContextValue {
   setFloating: Dispatch<SetStateAction<HTMLElement | null>>;
   /** Ref setter for the trigger (reference) element. */
   setReference: Dispatch<SetStateAction<HTMLElement | null>>;
-  /** Whether the first item should receive focus when the panel opens. */
-  focusFirstItemOnOpen: boolean;
-  /** Toggle the focus-first-item-on-open flag. */
-  setFocusFirstItemOnOpen: Dispatch<SetStateAction<boolean>>;
   /** The id of the mega menu panel, used for aria-controls on the trigger. */
   panelId: string | undefined;
 }

@@ -1,59 +1,6 @@
 import type { ElementProps, FloatingRootContext } from "@floating-ui/react";
 import { useMemo } from "react";
-
-const COLUMN_SELECTOR = "[data-mega-menu-column]";
-const ITEM_SELECTOR = "[data-mega-menu-item]";
-export const FOCUSABLE_SELECTOR =
-  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-/**
- * Get navigable items within a column.
- * Prefers explicitly marked items (`data-mega-menu-item`) that are focusable,
- * falling back to all focusable elements when no usable marked items are found.
- */
-function getColumnItems(column: HTMLElement): HTMLElement[] {
-  const marked = Array.from(
-    column.querySelectorAll<HTMLElement>(ITEM_SELECTOR),
-  ).filter((el) => el.matches(FOCUSABLE_SELECTOR));
-  if (marked.length > 0) return marked;
-  return Array.from(column.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
-}
-
-/**
- * Build a 2D grid of navigable items from the panel DOM.
- * Each column is a `[data-mega-menu-column]` wrapper; items within each
- * column are discovered via `getColumnItems`.
- * Items not inside any column (orphans) are inserted at their DOM position
- * as single-item columns so keyboard navigation follows visual order.
- */
-function buildGrid(panel: HTMLElement): HTMLElement[][] {
-  const columns = new Set(panel.querySelectorAll<HTMLElement>(COLUMN_SELECTOR));
-  const grid: HTMLElement[][] = [];
-  const processedColumns = new Set<HTMLElement>();
-
-  // Walk columns and items in DOM order so orphans are interleaved correctly.
-  const all = panel.querySelectorAll<HTMLElement>(
-    `${COLUMN_SELECTOR}, ${ITEM_SELECTOR}`,
-  );
-
-  for (const el of all) {
-    if (columns.has(el) && !processedColumns.has(el)) {
-      processedColumns.add(el);
-      const items = getColumnItems(el);
-      if (items.length > 0) grid.push(items);
-    } else if (el.matches(ITEM_SELECTOR)) {
-      const parentCol = el.closest(COLUMN_SELECTOR);
-      if (
-        (!parentCol || !columns.has(parentCol as HTMLElement)) &&
-        el.matches(FOCUSABLE_SELECTOR)
-      ) {
-        grid.push([el]);
-      }
-    }
-  }
-
-  return grid;
-}
+import { FOCUSABLE_SELECTOR } from "./MegaMenuGridContext";
 
 function findPosition(
   grid: HTMLElement[][],
@@ -88,16 +35,20 @@ export interface UseMegaMenuKeyboardProps {
  * keyboard events on the floating (panel) element. Trigger-level keys (e.g.
  * ArrowDown to enter the panel) are owned by `MegaMenuTrigger`.
  *
- * - **↑ / ↓** move within the current column.
- * - **← / →** jump to the top of the previous / next column.
+ * The 2D model is supplied by the registration store (`getModel`) and rebuilt
+ * lazily on each keystroke, so a DOM reorder never leaves a stale grid behind.
+ *
+ * - **↑ / ↓** move within the current group (column). ↓ on the last item is a
+ *   no-op; ↑ on the first item returns focus to the trigger.
+ * - **← / →** jump to the top of the previous / next column. ← on the first
+ *   column returns focus to the trigger.
  * - **Home / End** jump to the first / last item in the column.
- * - **↑ from the first item** or **← from the first column** returns
- *   focus to the trigger.
- * - **→ from the last column** closes the panel and moves focus to the
- *   next sibling trigger.
+ * - **→ from the last column** closes the panel and moves focus to the next
+ *   sibling trigger (no-op if there is none).
  */
 export function useMegaMenuKeyboard(
   context: FloatingRootContext,
+  getModel: () => HTMLElement[][],
   props: UseMegaMenuKeyboardProps = {},
 ): ElementProps {
   const { enabled = true } = props;
@@ -113,15 +64,13 @@ export function useMegaMenuKeyboard(
         onKeyDown(event: React.KeyboardEvent) {
           if (!open) return;
 
-          const panel = event.currentTarget as HTMLElement;
           const target = event.target as HTMLElement;
-
-          const focusedItem =
-            target.closest<HTMLElement>(ITEM_SELECTOR) ??
-            target.closest<HTMLElement>(FOCUSABLE_SELECTOR);
+          const focusedItem = target.closest<HTMLElement>(FOCUSABLE_SELECTOR);
           if (!focusedItem) return;
 
-          const grid = buildGrid(panel);
+          // Built lazily here (never memoised) so dynamic mount/unmount reorder
+          // is always reflected.
+          const grid = getModel();
           const pos = findPosition(grid, focusedItem);
           if (!pos) return;
 
@@ -129,28 +78,20 @@ export function useMegaMenuKeyboard(
             case "ArrowDown": {
               event.preventDefault();
               const next = pos.row + 1;
+              // Strictly within the group — last item is a no-op.
               if (next < grid[pos.col].length) {
                 grid[pos.col][next].focus();
-              } else {
-                const nextCol = pos.col + 1;
-                if (nextCol < grid.length) {
-                  grid[nextCol][0].focus();
-                }
               }
               break;
             }
 
             case "ArrowUp": {
               event.preventDefault();
+              // Strictly within the group — first item returns to the trigger.
               if (pos.row > 0) {
                 grid[pos.col][pos.row - 1].focus();
               } else {
-                const prevCol = pos.col - 1;
-                if (prevCol >= 0) {
-                  grid[prevCol][grid[prevCol].length - 1].focus();
-                } else {
-                  focusTrigger(context);
-                }
+                focusTrigger(context);
               }
               break;
             }
@@ -161,7 +102,7 @@ export function useMegaMenuKeyboard(
               if (nextCol < grid.length) {
                 grid[nextCol][0].focus();
               } else {
-                // On the last column — close panel and move to next trigger
+                // On the last column — close panel and move to next trigger.
                 const reference = context.elements
                   .reference as HTMLElement | null;
                 const trigger =
@@ -211,24 +152,5 @@ export function useMegaMenuKeyboard(
         },
       },
     };
-  }, [enabled, open, context, onOpenChange]);
-}
-
-/**
- * Focus the first navigable item inside a mega menu panel.
- * Retries with `requestAnimationFrame` if content has not yet rendered.
- */
-export function focusFirstItem(panel: HTMLElement, attempt = 0): void {
-  const grid = buildGrid(panel);
-  const firstItem = grid[0]?.[0];
-
-  if (firstItem) {
-    firstItem.focus();
-    return;
-  }
-
-  const view = panel.ownerDocument.defaultView;
-  if (attempt < 3 && view) {
-    view.requestAnimationFrame(() => focusFirstItem(panel, attempt + 1));
-  }
+  }, [enabled, open, context, onOpenChange, getModel]);
 }

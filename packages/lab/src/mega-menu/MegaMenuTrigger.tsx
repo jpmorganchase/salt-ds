@@ -13,8 +13,8 @@ import {
   type Ref,
   useCallback,
 } from "react";
+import { FOCUSABLE_SELECTOR, useMegaMenuGrid } from "./MegaMenuGridContext";
 import { useMegaMenu } from "./useMegaMenu";
-import { FOCUSABLE_SELECTOR, focusFirstItem } from "./useMegaMenuKeyboard";
 
 export interface MegaMenuTriggerProps {
   /**
@@ -40,15 +40,9 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
     const { children, ...rest } = props;
     const megaMenu = useMegaMenu();
 
-    const {
-      getReferenceProps,
-      setReference,
-      setOpen,
-      openState,
-      setFocusFirstItemOnOpen,
-      floatingRootContext,
-      panelId,
-    } = megaMenu;
+    const { getReferenceProps, setReference, setOpen, openState, panelId } =
+      megaMenu;
+    const grid = useMegaMenuGrid();
 
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLElement>) => {
@@ -61,35 +55,24 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
           const adjacent = getAdjacentTrigger(event.currentTarget, direction);
           if (adjacent) {
             if (openState) setOpen(false);
-            setFocusFirstItemOnOpen(false);
             adjacent.focus();
           }
           return;
         }
 
-        // When menu is open: ArrowDown moves focus into the menu
-        if (openState && key === "ArrowDown") {
+        if (key === "ArrowDown") {
           event.preventDefault();
-          const floating = floatingRootContext.elements
-            .floating as HTMLElement | null;
-          if (floating) focusFirstItem(floating);
-          return;
-        }
-
-        // When menu is closed: ArrowDown opens and focuses first item
-        if (!openState && key === "ArrowDown") {
-          event.preventDefault();
-          setFocusFirstItemOnOpen(true);
-          setOpen(true);
-          return;
+          if (openState) {
+            // Menu already open: move focus into the first navigable item,
+            // resolved from the registration model (empty until open).
+            grid?.getModel()[0]?.[0]?.focus();
+          } else {
+            // Menu closed: open it. A subsequent ArrowDown enters the panel.
+            setOpen(true);
+          }
         }
       },
-      [
-        openState,
-        setOpen,
-        setFocusFirstItemOnOpen,
-        floatingRootContext.elements.floating,
-      ],
+      [openState, setOpen, grid],
     );
 
     const handleFloatingRef = useForkRef(

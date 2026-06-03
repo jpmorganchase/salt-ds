@@ -42,7 +42,6 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       placement,
       getFloatingProps,
       setFloating,
-      focusFirstItemOnOpen,
       panelId,
     } = useMegaMenu();
 
@@ -104,7 +103,9 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
         focusManagerProps={{
           context: floatingUIResult.context,
           modal: false,
-          initialFocus: focusFirstItemOnOpen ? 0 : -1,
+          // Don't pull focus into the panel on open; focus is moved in
+          // deliberately by Tab (FloatingFocusManager) or ArrowDown (trigger).
+          initialFocus: -1,
           returnFocus: true,
           closeOnFocusOut: true,
           guards: true,
