@@ -6,6 +6,8 @@ import {
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
+  MegaMenuSupportingActions,
+  MegaMenuSupportingContent,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -195,6 +197,56 @@ const RenderPropMegaMenu = () => (
   </nav>
 );
 
+// Fixture exercising custom regions (`MegaMenuSupportingActions` /
+// `MegaMenuSupportingContent`). Both render a non-focusable wrapper carrying
+// `data-mega-menu-column`, so their interactive children should join the
+// keyboard navigation sequence in layout order while the wrapper itself stays
+// out of the tab order. The interactive children are deliberately different
+// element types (an `<a href>` and a `<button>`) to prove both are picked up.
+const CustomRegionMegaMenu = () => (
+  <nav>
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem
+                  href="/digital-banking"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+                <MegaMenuItem
+                  href="/risk-management"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Risk Management
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+            <MegaMenuSupportingActions>
+              {/* biome-ignore lint/a11y/useValidAnchor: test fixture link */}
+              <a href="/book-a-demo" onClick={(e) => e.preventDefault()}>
+                Book a demo
+              </a>
+            </MegaMenuSupportingActions>
+            <MegaMenuSupportingContent>
+              <button type="button">View guidelines</button>
+            </MegaMenuSupportingContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+
+    <button type="button">After Nav</button>
+  </nav>
+);
+
 const focusSolutionsTrigger = () => {
   cy.findByRole("button", { name: "Solutions" }).focus().should("be.focused");
 };
@@ -316,6 +368,47 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
 
+    it("ArrowUp on the first item returns focus to the trigger and keeps the menu open", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      cy.realPress("ArrowUp");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("ArrowLeft on the first item returns focus to the trigger and keeps the menu open", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      cy.realPress("ArrowLeft");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("ArrowRight from the last column has no effect when there is no next trigger", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      // Open the last menu (Services), which has no trigger after it.
+      cy.findByRole("button", { name: "Services" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      cy.realPress("Tab"); // Strategy
+      cy.realPress("Tab"); // Operations
+      cy.findByRole("link", { name: "Operations" }).should("be.focused");
+
+      cy.realPress("ArrowRight");
+      // Nothing happens: focus stays put and the panel remains open.
+      cy.findByRole("link", { name: "Operations" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
     it("ArrowRight from last column closes menu and moves to next trigger", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
@@ -393,6 +486,19 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
 
       cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+    });
+
+    it("activates item on Space and closes menu", () => {
+      // Native anchors activate on Enter but not Space — MegaMenuItem adds
+      // Space handling for parity, so this exercises that custom branch.
+      cy.mount(<KeyboardMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      cy.realPress("Space");
       cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
@@ -503,6 +609,95 @@ describe("Given a MegaMenu", () => {
         "have.length",
         1,
       );
+    });
+  });
+
+  describe("when the menu has custom regions", () => {
+    const openSolutions = () => {
+      cy.findByRole("button", { name: "Solutions" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    };
+
+    it("includes interactive elements from custom regions in the Tab sequence, in layout order", () => {
+      cy.mount(<CustomRegionMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+
+      // Continues into the supporting actions region (an `<a>`)...
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
+
+      // ...then the supporting content region (a `<button>`).
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "View guidelines" }).should("be.focused");
+    });
+
+    it("does not put the custom region wrapper itself in the tab order", () => {
+      cy.mount(<CustomRegionMegaMenu />);
+      openSolutions();
+
+      // The wrappers must not be focusable (no tabindex).
+      cy.get(".saltMegaMenuSupportingActions").should(
+        "not.have.attr",
+        "tabindex",
+      );
+      cy.get(".saltMegaMenuSupportingContent").should(
+        "not.have.attr",
+        "tabindex",
+      );
+
+      // Tabbing from the last group item lands directly on the interactive
+      // child, never on the wrapper element.
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management
+      cy.realPress("Tab"); // Book a demo (inside supporting actions)
+      cy.focused()
+        .should("have.attr", "href", "/book-a-demo")
+        .and("not.have.class", "saltMegaMenuSupportingActions");
+    });
+
+    it("tabs out of the menu and closes it after the last custom-region element", () => {
+      cy.mount(<CustomRegionMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management
+      cy.realPress("Tab"); // Book a demo
+      cy.realPress("Tab"); // View guidelines
+      cy.findByRole("button", { name: "View guidelines" }).should("be.focused");
+
+      cy.realPress("Tab");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      // Focus must move to the next real focusable element after the menu —
+      // not be lost to a hidden focus-guard span (and thus to <body>).
+      cy.findByRole("button", { name: "After Nav" }).should("be.focused");
+    });
+
+    it("moves into and across custom-region columns with ArrowRight", () => {
+      cy.mount(<CustomRegionMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      // Group column -> supporting actions column.
+      cy.realPress("ArrowRight");
+      cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
+
+      // Supporting actions column -> supporting content column.
+      cy.realPress("ArrowRight");
+      cy.findByRole("button", { name: "View guidelines" }).should("be.focused");
+
+      // Last column, no next trigger -> no-op, focus stays put.
+      cy.realPress("ArrowRight");
+      cy.findByRole("button", { name: "View guidelines" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
     });
   });
 });
