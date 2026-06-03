@@ -6,17 +6,38 @@ const ITEM_SELECTOR = "[data-mega-menu-item]";
 export const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+// Elements within an aria-hidden or inert subtree are outside the focus order,
+// including floating-ui's focus guards. `:not()` cannot match on an ancestor,
+// so candidates are filtered by ancestor lookup rather than by selector.
+const HIDDEN_ANCESTOR_SELECTOR = '[aria-hidden="true"], [inert]';
+
+function isNavigable(el: HTMLElement): boolean {
+  return (
+    el.matches(FOCUSABLE_SELECTOR) && !el.closest(HIDDEN_ANCESTOR_SELECTOR)
+  );
+}
+
+function queryFocusables(root: HTMLElement): HTMLElement[] {
+  return Array.from(
+    root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+  ).filter((el) => !el.closest(HIDDEN_ANCESTOR_SELECTOR));
+}
+
+function firstFocusable(root: HTMLElement | null): HTMLElement | null {
+  return root ? (queryFocusables(root)[0] ?? null) : null;
+}
+
 /**
  * Get navigable items within a column.
- * Prefers explicitly marked items (`data-mega-menu-item`) that are focusable,
+ * Prefers explicitly marked items (`data-mega-menu-item`) that are navigable,
  * falling back to all focusable elements when no usable marked items are found.
  */
 function getColumnItems(column: HTMLElement): HTMLElement[] {
   const marked = Array.from(
     column.querySelectorAll<HTMLElement>(ITEM_SELECTOR),
-  ).filter((el) => el.matches(FOCUSABLE_SELECTOR));
+  ).filter(isNavigable);
   if (marked.length > 0) return marked;
-  return Array.from(column.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
+  return queryFocusables(column);
 }
 
 /**
@@ -45,7 +66,7 @@ function buildGrid(panel: HTMLElement): HTMLElement[][] {
       const parentCol = el.closest(COLUMN_SELECTOR);
       if (
         (!parentCol || !columns.has(parentCol as HTMLElement)) &&
-        el.matches(FOCUSABLE_SELECTOR)
+        isNavigable(el)
       ) {
         grid.push([el]);
       }
@@ -68,25 +89,22 @@ function findPosition(
 
 function focusTrigger(context: FloatingRootContext) {
   const reference = context.elements.reference as HTMLElement | null;
-  const focusable =
-    reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? reference;
-  focusable?.focus();
+  (firstFocusable(reference) ?? reference)?.focus();
 }
 
 function focusNextAfterPanel(context: FloatingRootContext, panel: HTMLElement) {
   const reference = context.elements.reference as HTMLElement | null;
-  const refFocusable =
-    reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? reference;
+  const refFocusable = firstFocusable(reference) ?? reference;
 
-  const nextSibling = refFocusable
-    ?.closest("li")
-    ?.nextElementSibling?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+  const nextLi = refFocusable?.closest("li")?.nextElementSibling;
+  const nextSibling =
+    nextLi instanceof HTMLElement ? firstFocusable(nextLi) : null;
 
   const nextOutside =
     nextSibling ||
     (() => {
-      const allFocusable = Array.from(
-        panel.ownerDocument.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      const allFocusable = queryFocusables(
+        panel.ownerDocument.documentElement,
       ).filter((el) => !panel.contains(el));
       const idx = refFocusable ? allFocusable.indexOf(refFocusable) : -1;
       return idx >= 0 ? allFocusable[idx + 1] : undefined;
@@ -207,15 +225,11 @@ export function useMegaMenuKeyboard(
                 // On the last column — close panel and move to next trigger
                 const reference = context.elements
                   .reference as HTMLElement | null;
-                const trigger =
-                  reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ??
-                  reference;
+                const trigger = firstFocusable(reference) ?? reference;
                 const li = trigger?.closest("li");
                 const nextSibling =
                   li?.nextElementSibling instanceof HTMLElement
-                    ? li.nextElementSibling.querySelector<HTMLElement>(
-                        FOCUSABLE_SELECTOR,
-                      )
+                    ? firstFocusable(li.nextElementSibling)
                     : null;
                 if (nextSibling) {
                   onOpenChange(false);
