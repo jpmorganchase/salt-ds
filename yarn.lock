@@ -4210,7 +4210,7 @@ __metadata:
     ag-grid-react: "npm:^32.0.0"
     axe-core: "npm:^4.11.2"
     browserslist-to-esbuild: "npm:^2.1.1"
-    chromatic: "npm:^16.0.0"
+    chromatic: "npm:^17.0.0"
     ci-info: "npm:^4.0.0"
     clsx: "npm:^2.0.0"
     cypress: "npm:15.10.0"
@@ -7560,22 +7560,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^16.0.0":
-  version: 16.0.0
-  resolution: "chromatic@npm:16.0.0"
+"chromatic@npm:^17.0.0":
+  version: 17.2.0
+  resolution: "chromatic@npm:17.2.0"
+  dependencies:
+    semver: "npm:^7.3.5"
   peerDependencies:
     "@chromatic-com/cypress": ^0.*.* || ^1.0.0
     "@chromatic-com/playwright": ^0.*.* || ^1.0.0
+    "@chromatic-com/vitest": ^0.*.* || ^1.0.0
   peerDependenciesMeta:
     "@chromatic-com/cypress":
       optional: true
     "@chromatic-com/playwright":
       optional: true
+    "@chromatic-com/vitest":
+      optional: true
   bin:
-    chroma: dist/bin.js
-    chromatic: dist/bin.js
-    chromatic-cli: dist/bin.js
-  checksum: 10/ee5223da81048458a67d274b9ac96a9446708f1b8fe12742d8888e052ebede9f318075eef75512eb2bdc47e82090485dc5bbe4d8df0f7a025816a8db597aa32d
+    chroma: dist/bin.cjs
+    chromatic: dist/bin.cjs
+    chromatic-cli: dist/bin.cjs
+  checksum: 10/198fdfe2ddc376a748d4d50ff05a87b50539c8213ff015dcbb13c7ffd6e2e218af809bbb6f46b42e76da14906f114761fde62357c31d4307880a227f84a864e7
   languageName: node
   linkType: hard
 
