@@ -106,8 +106,8 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
           modal: false,
           initialFocus: focusFirstItemOnOpen ? 0 : -1,
           returnFocus: true,
-          closeOnFocusOut: false,
-          guards: false,
+          closeOnFocusOut: true,
+          guards: true,
         }}
         ref={setFloating}
       >

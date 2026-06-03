@@ -73,35 +73,6 @@ function focusTrigger(context: FloatingRootContext) {
   focusable?.focus();
 }
 
-function focusNextAfterPanel(context: FloatingRootContext, panel: HTMLElement) {
-  const reference = context.elements.reference as HTMLElement | null;
-  const refFocusable =
-    reference?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? reference;
-
-  const nextSibling = refFocusable
-    ?.closest("li")
-    ?.nextElementSibling?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
-
-  const nextOutside =
-    nextSibling ||
-    (() => {
-      const allFocusable = Array.from(
-        panel.ownerDocument.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
-      ).filter((el) => !panel.contains(el));
-      const idx = refFocusable ? allFocusable.indexOf(refFocusable) : -1;
-      return idx >= 0 ? allFocusable[idx + 1] : undefined;
-    })();
-
-  if (nextOutside) {
-    const view = panel.ownerDocument.defaultView;
-    view?.requestAnimationFrame(() => {
-      view?.requestAnimationFrame(() => {
-        nextOutside.focus();
-      });
-    });
-  }
-}
-
 export interface UseMegaMenuKeyboardProps {
   /**
    * Whether the interaction is enabled.
@@ -119,7 +90,6 @@ export interface UseMegaMenuKeyboardProps {
  *
  * - **↑ / ↓** move within the current column.
  * - **← / →** jump to the top of the previous / next column.
- * - **Tab / Shift+Tab** move linearly through every item.
  * - **Home / End** jump to the first / last item in the column.
  * - **↑ from the first item** or **← from the first column** returns
  *   focus to the trigger.
@@ -154,9 +124,6 @@ export function useMegaMenuKeyboard(
           const grid = buildGrid(panel);
           const pos = findPosition(grid, focusedItem);
           if (!pos) return;
-
-          const allItems = grid.flat();
-          const linearIndex = allItems.indexOf(focusedItem);
 
           switch (event.key) {
             case "ArrowDown": {
@@ -222,25 +189,6 @@ export function useMegaMenuKeyboard(
                 grid[prevCol][0].focus();
               } else {
                 focusTrigger(context);
-              }
-              break;
-            }
-
-            case "Tab": {
-              event.preventDefault();
-              if (event.shiftKey) {
-                if (linearIndex === 0) {
-                  focusTrigger(context);
-                } else {
-                  allItems[linearIndex - 1]?.focus();
-                }
-              } else {
-                if (linearIndex === allItems.length - 1) {
-                  onOpenChange(false);
-                  focusNextAfterPanel(context, panel);
-                } else {
-                  allItems[linearIndex + 1]?.focus();
-                }
               }
               break;
             }

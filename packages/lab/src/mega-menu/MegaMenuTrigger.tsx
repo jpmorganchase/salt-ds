@@ -52,7 +52,7 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
 
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLElement>) => {
-        const { key, shiftKey } = event;
+        const { key } = event;
 
         // ArrowLeft/Right: move to adjacent trigger in nav bar
         if (key === "ArrowRight" || key === "ArrowLeft") {
@@ -67,11 +67,8 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
           return;
         }
 
-        // When menu is open: ArrowDown or Tab moves focus into the menu
-        if (
-          openState &&
-          (key === "ArrowDown" || (key === "Tab" && !shiftKey))
-        ) {
+        // When menu is open: ArrowDown moves focus into the menu
+        if (openState && key === "ArrowDown") {
           event.preventDefault();
           const floating = floatingRootContext.elements
             .floating as HTMLElement | null;
