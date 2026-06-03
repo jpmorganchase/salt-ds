@@ -1,0 +1,5 @@
+.saltMegaMenuRegion {
+  display: flex;
+  flex-direction: column;
+  padding: var(--salt-spacing-300);
+}

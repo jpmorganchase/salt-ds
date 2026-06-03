@@ -6,6 +6,7 @@ import {
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
+  MegaMenuRegion,
   MegaMenuSupportingActions,
   MegaMenuSupportingContent,
   MegaMenuTrigger,
@@ -114,14 +115,14 @@ const OrphanedItemMegaMenu = () => (
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuGroups>
-            <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            <MegaMenuRegion>
               <MegaMenuItem
                 href="/see-all-solutions"
                 onClick={(e) => e.preventDefault()}
               >
                 See all solutions
               </MegaMenuItem>
-            </ol>
+            </MegaMenuRegion>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -585,7 +586,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
     });
 
-    it("can navigate to orphaned items outside groups", () => {
+    it("can navigate to items in a side region outside groups", () => {
       cy.mount(<OrphanedItemMegaMenu />);
       cy.findByRole("button", { name: "Solutions" }).focus();
       cy.realPress("Enter");
@@ -626,10 +627,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).click();
       // Exactly one anchor for the item — verifies `renderProps` substitutes
       // the host element instead of wrapping it (no link-in-a-link).
-      cy.get(".saltMegaMenuPanel a[data-mega-menu-item]").should(
-        "have.length",
-        1,
-      );
+      cy.get(".saltMegaMenuPanel a.saltMegaMenuItem").should("have.length", 1);
     });
   });
 
