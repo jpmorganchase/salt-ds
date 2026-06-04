@@ -1,0 +1,381 @@
+import type { ElementProps, FloatingRootContext } from "@floating-ui/react";
+import { useMemo } from "react";
+
+const COLUMN_SELECTOR = "[data-mega-menu-column]";
+const BAND_SELECTOR = "[data-mega-menu-band]";
+
+export const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+// Controls that own the arrow keys for their own behaviour (text editing,
+// option lists, value steppers …). When focus is inside one of these the
+// engine must NOT hijack the keys — it returns early and lets the control
+// keep them.
+const SELF_CONSUMING_SELECTOR =
+  'input, textarea, select, [contenteditable], [role="combobox"], [role="listbox"], [role="slider"], [role="spinbutton"], [role="textbox"]';
+
+// Elements within an aria-hidden or inert subtree are outside the focus order,
+// including floating-ui's focus guards. `:not()` cannot match on an ancestor,
+// so candidates are filtered by ancestor lookup rather than by selector.
+const HIDDEN_ANCESTOR_SELECTOR = '[aria-hidden="true"], [inert]';
+
+function queryFocusables(root: HTMLElement): HTMLElement[] {
+  return Array.from(
+    root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+  ).filter((el) => !el.closest(HIDDEN_ANCESTOR_SELECTOR));
+}
+
+function firstFocusable(root: HTMLElement | null): HTMLElement | null {
+  return root ? (queryFocusables(root)[0] ?? null) : null;
+}
+
+interface NavModel {
+  /** Column elements (`data-mega-menu-column`) in DOM order, each with ≥1 cell. */
+  columns: HTMLElement[];
+  /** Full-width band elements rendered above the column row. */
+  topBands: HTMLElement[];
+  /** Full-width band elements rendered below the column row. */
+  bottomBands: HTMLElement[];
+}
+
+/**
+ * Build the navigation model from the panel DOM at keypress time.
+ * Columns and bands are discovered via the structural attributes; their cells
+ * are any focusable descendants. There is a single query path — focusability is
+ * the only signal, with no per-item marker or fallback.
+ */
+function buildModel(panel: HTMLElement): NavModel {
+  const columns = Array.from(
+    panel.querySelectorAll<HTMLElement>(COLUMN_SELECTOR),
+  ).filter((el) => queryFocusables(el).length > 0);
+
+  const bands = Array.from(
+    panel.querySelectorAll<HTMLElement>(BAND_SELECTOR),
+  ).filter((el) => queryFocusables(el).length > 0);
+
+  const firstColumn = columns[0];
+  const topBands: HTMLElement[] = [];
+  const bottomBands: HTMLElement[] = [];
+  for (const band of bands) {
+    // A band sits on top when it precedes the column row in DOM order.
+    const isTop =
+      firstColumn &&
+      firstColumn.compareDocumentPosition(band) &
+        Node.DOCUMENT_POSITION_PRECEDING;
+    if (isTop) {
+      topBands.push(band);
+    } else {
+      bottomBands.push(band);
+    }
+  }
+
+  return { columns, topBands, bottomBands };
+}
+
+function focusTrigger(context: FloatingRootContext) {
+  const reference = context.elements.reference as HTMLElement | null;
+  (firstFocusable(reference) ?? reference)?.focus();
+}
+
+function focusNextTriggerAndClose(context: FloatingRootContext) {
+  const reference = context.elements.reference as HTMLElement | null;
+  const trigger = firstFocusable(reference) ?? reference;
+  const li = trigger?.closest("li");
+  const next =
+    li?.nextElementSibling instanceof HTMLElement
+      ? firstFocusable(li.nextElementSibling)
+      : null;
+  if (next) {
+    context.onOpenChange(false);
+    next.focus();
+  }
+}
+
+/**
+ * Apply an arrow/Home/End movement from `cell`. Returns `true` when the key was
+ * consumed (so the caller can `preventDefault`).
+ *
+ * - **Columns** (groups + side regions): Up/Down move within the column,
+ *   Left/Right cross to the adjacent column. Reaching the top/bottom edge
+ *   crosses to the top/bottom band; with no band, Up returns to the trigger and
+ *   Down is a no-op.
+ * - **Bands** (full-width rows): Left/Right move within, Up/Down cross to the
+ *   column grid (entering the first column's first item).
+ * - **Edges**: Left/Up on the very first item → trigger (menu stays open);
+ *   Right on the last column → next sibling trigger + close (no-op if none).
+ */
+function handleArrow(
+  key: string,
+  cell: HTMLElement,
+  panel: HTMLElement,
+  context: FloatingRootContext,
+): boolean {
+  const { columns, topBands, bottomBands } = buildModel(panel);
+  const column = cell.closest<HTMLElement>(COLUMN_SELECTOR);
+  const band = cell.closest<HTMLElement>(BAND_SELECTOR);
+
+  if (column) {
+    const colIndex = columns.indexOf(column);
+    const cells = queryFocusables(column);
+    const rowIndex = cells.indexOf(cell);
+
+    switch (key) {
+      case "ArrowDown": {
+        if (rowIndex < cells.length - 1) {
+          cells[rowIndex + 1].focus();
+        } else if (bottomBands.length > 0) {
+          firstFocusable(bottomBands[0])?.focus();
+        }
+        return true;
+      }
+      case "ArrowUp": {
+        if (rowIndex > 0) {
+          cells[rowIndex - 1].focus();
+        } else if (topBands.length > 0) {
+          firstFocusable(topBands[0])?.focus();
+        } else {
+          focusTrigger(context);
+        }
+        return true;
+      }
+      case "ArrowRight": {
+        if (colIndex < columns.length - 1) {
+          firstFocusable(columns[colIndex + 1])?.focus();
+        } else {
+          focusNextTriggerAndClose(context);
+        }
+        return true;
+      }
+      case "ArrowLeft": {
+        if (colIndex > 0) {
+          firstFocusable(columns[colIndex - 1])?.focus();
+        } else {
+          focusTrigger(context);
+        }
+        return true;
+      }
+      case "Home": {
+        cells[0]?.focus();
+        return true;
+      }
+      case "End": {
+        cells[cells.length - 1]?.focus();
+        return true;
+      }
+      default:
+        return false;
+    }
+  }
+
+  if (band) {
+    const cells = queryFocusables(band);
+    const index = cells.indexOf(cell);
+    const isTop = topBands.includes(band);
+
+    switch (key) {
+      case "ArrowRight": {
+        if (index < cells.length - 1) {
+          cells[index + 1].focus();
+        }
+        return true;
+      }
+      case "ArrowLeft": {
+        if (index > 0) {
+          cells[index - 1].focus();
+        } else if (cell === firstFocusable(panel)) {
+          // The very first item in layout order returns to the trigger.
+          focusTrigger(context);
+        }
+        return true;
+      }
+      case "ArrowUp": {
+        if (isTop) {
+          // The very first item in layout order returns to the trigger.
+          focusTrigger(context);
+        } else if (columns.length > 0) {
+          firstFocusable(columns[0])?.focus();
+        } else {
+          focusTrigger(context);
+        }
+        return true;
+      }
+      case "ArrowDown": {
+        // From a top band, drop into the column grid; a bottom band has
+        // nothing below it.
+        if (isTop && columns.length > 0) {
+          firstFocusable(columns[0])?.focus();
+        }
+        return true;
+      }
+      case "Home": {
+        cells[0]?.focus();
+        return true;
+      }
+      case "End": {
+        cells[cells.length - 1]?.focus();
+        return true;
+      }
+      default:
+        return false;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Move focus to the first document-focusable after the panel, retrying across
+ * two animation frames so the panel has unmounted. Mirrors the next-sibling
+ * trigger first, then falls back to the next focusable outside the panel.
+ */
+function focusNextAfterPanel(context: FloatingRootContext, panel: HTMLElement) {
+  const reference = context.elements.reference as HTMLElement | null;
+  const refFocusable = firstFocusable(reference) ?? reference;
+
+  const nextLi = refFocusable?.closest("li")?.nextElementSibling;
+  const nextSibling =
+    nextLi instanceof HTMLElement ? firstFocusable(nextLi) : null;
+
+  const nextOutside =
+    nextSibling ||
+    (() => {
+      const allFocusable = queryFocusables(
+        panel.ownerDocument.documentElement,
+      ).filter((el) => !panel.contains(el));
+      const idx = refFocusable ? allFocusable.indexOf(refFocusable) : -1;
+      return idx >= 0 ? allFocusable[idx + 1] : undefined;
+    })();
+
+  if (nextOutside) {
+    const view = panel.ownerDocument.defaultView;
+    view?.requestAnimationFrame(() => {
+      view?.requestAnimationFrame(() => {
+        nextOutside.focus();
+      });
+    });
+  }
+}
+
+export interface UseMegaMenuNavigationProps {
+  /**
+   * Whether the interaction is enabled.
+   * @default true
+   */
+  enabled?: boolean;
+}
+
+/**
+ * Floating-ui custom interaction hook for mega menu keyboard navigation.
+ *
+ * Returns `ElementProps` merged via `useInteractions`, handling key events on
+ * the reference (trigger) and floating (panel) elements. The navigation model
+ * is rebuilt from the panel DOM on every keypress from the structural
+ * attributes (`data-mega-menu-column`, `data-mega-menu-band`); cells are the
+ * focusable descendants of each container.
+ *
+ * - **↑ / ↓** move within a column; **← / →** cross between columns.
+ * - Within a band **← / →** move along it and **↑ / ↓** cross to the columns.
+ * - **Tab / Shift+Tab** move linearly through every cell in layout order.
+ * - **Home / End** jump to the first / last cell in the column.
+ * - **↑ / ←** on the very first item returns focus to the trigger (menu open).
+ * - **→** on the last column closes the menu and focuses the next trigger.
+ * - Focus inside a self-consuming control (input, combobox, slider …) keeps its
+ *   own keys — the engine returns early without preventing default.
+ */
+export function useMegaMenuNavigation(
+  context: FloatingRootContext,
+  props: UseMegaMenuNavigationProps = {},
+): ElementProps {
+  const { enabled = true } = props;
+  const { open, onOpenChange } = context;
+
+  return useMemo(() => {
+    if (!enabled) {
+      return {};
+    }
+
+    return {
+      reference: {
+        onKeyDown(event: React.KeyboardEvent) {
+          if (event.key === "ArrowDown" && open) {
+            event.preventDefault();
+            const floating = context.elements.floating;
+            if (floating instanceof HTMLElement) {
+              focusFirstItem(floating);
+            }
+          }
+        },
+      },
+      floating: {
+        onKeyDown(event: React.KeyboardEvent) {
+          if (!open) return;
+
+          const panel = event.currentTarget as HTMLElement;
+          const target = event.target as HTMLElement;
+          const { key } = event;
+
+          const isArrowOrEdge =
+            key === "ArrowUp" ||
+            key === "ArrowDown" ||
+            key === "ArrowLeft" ||
+            key === "ArrowRight" ||
+            key === "Home" ||
+            key === "End";
+
+          // ROLE-AWARE: a self-consuming control keeps its own navigation keys.
+          if (isArrowOrEdge && target.closest(SELF_CONSUMING_SELECTOR)) {
+            return;
+          }
+
+          const cell = target.closest<HTMLElement>(FOCUSABLE_SELECTOR);
+
+          // Tab traversal walks every cell in layout (DOM) order. The panel is
+          // portaled, so the boundary transitions are handled manually.
+          if (key === "Tab") {
+            const allCells = queryFocusables(panel);
+            const linearIndex = cell ? allCells.indexOf(cell) : -1;
+            if (linearIndex === -1) return;
+            event.preventDefault();
+            if (event.shiftKey) {
+              if (linearIndex === 0) {
+                focusTrigger(context);
+              } else {
+                allCells[linearIndex - 1]?.focus();
+              }
+            } else if (linearIndex === allCells.length - 1) {
+              onOpenChange(false);
+              focusNextAfterPanel(context, panel);
+            } else {
+              allCells[linearIndex + 1]?.focus();
+            }
+            return;
+          }
+
+          if (!cell || !isArrowOrEdge) return;
+
+          if (handleArrow(key, cell, panel, context)) {
+            event.preventDefault();
+          }
+        },
+      },
+    };
+  }, [enabled, open, context, onOpenChange]);
+}
+
+/**
+ * Focus the first navigable item inside a mega menu panel.
+ * Retries with `requestAnimationFrame` if content has not yet rendered.
+ */
+export function focusFirstItem(panel: HTMLElement, attempt = 0): void {
+  const firstItem = firstFocusable(panel);
+
+  if (firstItem) {
+    firstItem.focus();
+    return;
+  }
+
+  const view = panel.ownerDocument.defaultView;
+  if (attempt < 3 && view) {
+    view.requestAnimationFrame(() => focusFirstItem(panel, attempt + 1));
+  }
+}

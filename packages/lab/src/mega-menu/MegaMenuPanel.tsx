@@ -9,16 +9,64 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  Children,
+  type CSSProperties,
+  cloneElement,
   forwardRef,
   type HTMLAttributes,
+  isValidElement,
+  type ReactElement,
   type ReactNode,
   useEffect,
   useState,
 } from "react";
+import { MegaMenuBand } from "./MegaMenuBand";
+import { MegaMenuGroups } from "./MegaMenuGroups";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
+import { MegaMenuRegion } from "./MegaMenuRegion";
 import { useMegaMenu } from "./useMegaMenu";
 
 const withBaseName = makePrefixer("saltMegaMenuPanel");
+
+/**
+ * Assign each first-layer child to a grid area from its component type and
+ * source order relative to `MegaMenuGroups`:
+ * - `MegaMenuGroups` → the center cell.
+ * - `MegaMenuRegion` → `left` when before groups, `right` when after.
+ * - `MegaMenuBand`   → `top` when before groups, `bottom` when after.
+ * Other children are left untouched (auto-placed). This lets authors position
+ * content by source order alone, without wrapper scaffolding.
+ */
+function positionChildren(children: ReactNode): ReactNode {
+  const childArray = Children.toArray(children);
+  const groupsIndex = childArray.findIndex(
+    (child) => isValidElement(child) && child.type === MegaMenuGroups,
+  );
+
+  if (groupsIndex === -1) {
+    return children;
+  }
+
+  return childArray.map((child, index) => {
+    if (!isValidElement(child)) return child;
+
+    let gridArea: string | undefined;
+    if (child.type === MegaMenuGroups) {
+      gridArea = "center";
+    } else if (child.type === MegaMenuRegion) {
+      gridArea = index < groupsIndex ? "left" : "right";
+    } else if (child.type === MegaMenuBand) {
+      gridArea = index < groupsIndex ? "top" : "bottom";
+    }
+
+    if (!gridArea) return child;
+
+    const element = child as ReactElement<{ style?: CSSProperties }>;
+    return cloneElement(element, {
+      style: { ...element.props.style, gridArea },
+    });
+  });
+}
 
 export interface MegaMenuPanelProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -124,7 +172,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
           {...floatingProps}
           {...rest}
         >
-          {children}
+          {positionChildren(children)}
         </div>
       </FloatingComponent>
     );

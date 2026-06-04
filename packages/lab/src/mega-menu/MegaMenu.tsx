@@ -8,7 +8,7 @@ import {
 import { useControlled } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
-import { useMegaMenuKeyboard } from "./useMegaMenuKeyboard";
+import { useMegaMenuNavigation } from "./useMegaMenuNavigation";
 
 export interface MegaMenuProps {
   /**
@@ -71,12 +71,12 @@ export function MegaMenu({
     elements: { reference, floating },
   });
 
-  const megaMenuKeyboard = useMegaMenuKeyboard(floatingRootContext);
+  const megaMenuNavigation = useMegaMenuNavigation(floatingRootContext);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useClick(floatingRootContext),
     useDismiss(floatingRootContext),
-    megaMenuKeyboard,
+    megaMenuNavigation,
   ]);
 
   const contextValue = useMemo(

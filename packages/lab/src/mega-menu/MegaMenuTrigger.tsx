@@ -14,7 +14,7 @@ import {
   useCallback,
 } from "react";
 import { useMegaMenu } from "./useMegaMenu";
-import { FOCUSABLE_SELECTOR, focusFirstItem } from "./useMegaMenuKeyboard";
+import { FOCUSABLE_SELECTOR, focusFirstItem } from "./useMegaMenuNavigation";
 
 export interface MegaMenuTriggerProps {
   /**
