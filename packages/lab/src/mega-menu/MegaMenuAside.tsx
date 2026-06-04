@@ -14,8 +14,8 @@ const withBaseName = makePrefixer("saltMegaMenuAside");
 
 export interface MegaMenuAsideProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of the region. Renders to the left of the groups when placed
-   * before `MegaMenuGroups`, and to the right when placed after.
+   * The content of the aside. Renders to the left of `MegaMenuMain` when placed
+   * before it, and to the right when placed after.
    */
   children?: ReactNode;
 }

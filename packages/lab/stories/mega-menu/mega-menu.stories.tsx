@@ -42,13 +42,13 @@ import {
 } from "@salt-ds/icons";
 import {
   MegaMenu,
+  MegaMenuAside,
   MegaMenuFooter,
-  MegaMenuSection,
-  MegaMenuGroups,
   MegaMenuHeading,
   MegaMenuLink,
+  MegaMenuMain,
   MegaMenuPanel,
-  MegaMenuAside,
+  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
@@ -105,7 +105,7 @@ export const WithIcons: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Financial services</MegaMenuHeading>
                   <MegaMenuLink
@@ -301,7 +301,7 @@ export const WithIcons: StoryFn = () => {
                     Public safety solutions
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -317,7 +317,7 @@ export const WithIcons: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Consulting</MegaMenuHeading>
                   <MegaMenuLink
@@ -512,7 +512,7 @@ export const WithIcons: StoryFn = () => {
                     Guides
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -527,7 +527,7 @@ export const WithIcons: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Documentation</MegaMenuHeading>
                   <MegaMenuLink
@@ -609,7 +609,7 @@ export const WithIcons: StoryFn = () => {
                     Troubleshooting
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -643,7 +643,7 @@ export const WithAdornment: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Financial services</MegaMenuHeading>
                   <MegaMenuLink
@@ -811,7 +811,7 @@ export const WithAdornment: StoryFn = () => {
                     Public safety solutions
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -827,7 +827,7 @@ export const WithAdornment: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Consulting</MegaMenuHeading>
                   <MegaMenuLink
@@ -985,7 +985,7 @@ export const WithAdornment: StoryFn = () => {
                     Guides
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1000,7 +1000,7 @@ export const WithAdornment: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Documentation</MegaMenuHeading>
                   <MegaMenuLink
@@ -1071,7 +1071,7 @@ export const WithAdornment: StoryFn = () => {
                     Troubleshooting
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1095,7 +1095,7 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="Near Left Edge menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Menu Header 1</MegaMenuHeading>
                 <MegaMenuLink
@@ -1204,7 +1204,7 @@ export const TriggerPosition: StoryFn = () => {
                   Mega menu item 12
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1218,7 +1218,7 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="On Center menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Menu Header 1</MegaMenuHeading>
                 <MegaMenuLink
@@ -1327,7 +1327,7 @@ export const TriggerPosition: StoryFn = () => {
                   Mega menu item 12
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1341,7 +1341,7 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="Slightly Offset menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Menu Header 1</MegaMenuHeading>
                 <MegaMenuLink
@@ -1450,7 +1450,7 @@ export const TriggerPosition: StoryFn = () => {
                   Mega menu item 12
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1464,7 +1464,7 @@ export const TriggerPosition: StoryFn = () => {
             <Button>Near The Edge</Button>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Near The Edge menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Menu Header 1</MegaMenuHeading>
                 <MegaMenuLink
@@ -1573,7 +1573,7 @@ export const TriggerPosition: StoryFn = () => {
                   Mega menu item 12
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1611,7 +1611,7 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Solutions menu"
                 className="full-width-panel"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Financial services</MegaMenuHeading>
                     <MegaMenuLink
@@ -1816,7 +1816,7 @@ export const FullWidthContainer: StoryFn = () => {
                       Renewable Integration
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -1835,7 +1835,7 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Services menu"
                 className="full-width-panel"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Consulting</MegaMenuHeading>
                     <MegaMenuLink
@@ -1992,7 +1992,7 @@ export const FullWidthContainer: StoryFn = () => {
                       Guides
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2010,7 +2010,7 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Resources menu"
                 className="full-width-panel"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Documentation</MegaMenuHeading>
                     <MegaMenuLink
@@ -2073,7 +2073,7 @@ export const FullWidthContainer: StoryFn = () => {
                       Troubleshooting
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2117,7 +2117,7 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Solutions menu"
                 className="max-width-content-panel"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Financial services</MegaMenuHeading>
                     <MegaMenuLink
@@ -2369,7 +2369,7 @@ export const EdgeToEdge: StoryFn = () => {
                       Renewable Integration
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2388,7 +2388,7 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Services menu"
                 className="max-width-content-panel"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Consulting</MegaMenuHeading>
                     <MegaMenuLink
@@ -2542,7 +2542,7 @@ export const EdgeToEdge: StoryFn = () => {
                       Guides
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2560,7 +2560,7 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Resources menu"
                 className="max-width-content-panel"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Documentation</MegaMenuHeading>
                     <MegaMenuLink
@@ -2623,7 +2623,7 @@ export const EdgeToEdge: StoryFn = () => {
                       Troubleshooting
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2653,121 +2653,115 @@ export const WithContent: StoryFn = () => {
           aria-label="Content on right menu"
           className="custom-region-no-container-padding custom-region-side"
         >
-          <MegaMenuGroups>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial services</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/digital-banking" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/digital-banking")
-                  }
-                >
-                  Digital banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/risk-management" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/risk-management")
-                  }
-                >
-                  Risk management
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/patient-management" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/patient-management")
-                  }
-                >
-                  Patient management
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/telemedicine" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/telemedicine")
-                  }
-                >
-                  Telemedicine
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/compliance-solutions" />}
-                  onClick={() =>
-                    console.log(
-                      "MegaMenuLink clicked:",
-                      "/compliance-solutions",
-                    )
-                  }
-                >
-                  Compliance solutions
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Retail</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/e-commerce-platforms" />}
-                  onClick={() =>
-                    console.log(
-                      "MegaMenuLink clicked:",
-                      "/e-commerce-platforms",
-                    )
-                  }
-                >
-                  E-commerce platforms
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/supply-chain-optimization" />}
-                  onClick={() =>
-                    console.log(
-                      "MegaMenuLink clicked:",
-                      "/supply-chain-optimization",
-                    )
-                  }
-                >
-                  Supply chain optimization
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/quality-control" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/quality-control")
-                  }
-                >
-                  Quality control
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/production-planning" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/production-planning")
-                  }
-                >
-                  Production planning
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuGroups>
-          <MegaMenuFooter>
-            <FlexLayout gap={3}>
-              <Link
-                color="primary"
-                underline="default"
-                href="#link"
-                IconComponent={ChevronRightIcon}
+          <MegaMenuMain>
+            <MegaMenuSection>
+              <MegaMenuHeading>Financial services</MegaMenuHeading>
+              <MegaMenuLink
+                render={<RouterLink to="/digital-banking" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/digital-banking")
+                }
               >
-                Book a demo
-              </Link>
-              <Link
-                color="primary"
-                underline="default"
-                href="#link"
-                IconComponent={ChevronRightIcon}
+                Digital banking
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/risk-management" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/risk-management")
+                }
               >
-                Support center
-              </Link>
-            </FlexLayout>
-          </MegaMenuFooter>
+                Risk management
+              </MegaMenuLink>
+            </MegaMenuSection>
+            <MegaMenuSection>
+              <MegaMenuHeading>Healthcare</MegaMenuHeading>
+              <MegaMenuLink
+                render={<RouterLink to="/patient-management" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/patient-management")
+                }
+              >
+                Patient management
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/telemedicine" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/telemedicine")
+                }
+              >
+                Telemedicine
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/compliance-solutions" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/compliance-solutions")
+                }
+              >
+                Compliance solutions
+              </MegaMenuLink>
+            </MegaMenuSection>
+            <MegaMenuSection>
+              <MegaMenuHeading>Retail</MegaMenuHeading>
+              <MegaMenuLink
+                render={<RouterLink to="/e-commerce-platforms" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/e-commerce-platforms")
+                }
+              >
+                E-commerce platforms
+              </MegaMenuLink>
+            </MegaMenuSection>
+            <MegaMenuSection>
+              <MegaMenuHeading>Manufacturing</MegaMenuHeading>
+              <MegaMenuLink
+                render={<RouterLink to="/supply-chain-optimization" />}
+                onClick={() =>
+                  console.log(
+                    "MegaMenuLink clicked:",
+                    "/supply-chain-optimization",
+                  )
+                }
+              >
+                Supply chain optimization
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/quality-control" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/quality-control")
+                }
+              >
+                Quality control
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/production-planning" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/production-planning")
+                }
+              >
+                Production planning
+              </MegaMenuLink>
+            </MegaMenuSection>
+            <MegaMenuFooter>
+              <FlexLayout gap={3}>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Book a demo
+                </Link>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Support center
+                </Link>
+              </FlexLayout>
+            </MegaMenuFooter>
+          </MegaMenuMain>
           <MegaMenuAside className="custom-region">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
@@ -2842,121 +2836,115 @@ export const WithContent: StoryFn = () => {
               </StackLayout>
             </FlexLayout>
           </MegaMenuAside>
-          <MegaMenuGroups>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial services</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/digital-banking" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/digital-banking")
-                  }
-                >
-                  Digital banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/risk-management" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/risk-management")
-                  }
-                >
-                  Risk management
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/patient-management" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/patient-management")
-                  }
-                >
-                  Patient management
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/telemedicine" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/telemedicine")
-                  }
-                >
-                  Telemedicine
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/compliance-solutions" />}
-                  onClick={() =>
-                    console.log(
-                      "MegaMenuLink clicked:",
-                      "/compliance-solutions",
-                    )
-                  }
-                >
-                  Compliance solutions
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Retail</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/e-commerce-platforms" />}
-                  onClick={() =>
-                    console.log(
-                      "MegaMenuLink clicked:",
-                      "/e-commerce-platforms",
-                    )
-                  }
-                >
-                  E-commerce platforms
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/supply-chain-optimization" />}
-                  onClick={() =>
-                    console.log(
-                      "MegaMenuLink clicked:",
-                      "/supply-chain-optimization",
-                    )
-                  }
-                >
-                  Supply chain optimization
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/quality-control" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/quality-control")
-                  }
-                >
-                  Quality control
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/production-planning" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/production-planning")
-                  }
-                >
-                  Production planning
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuGroups>
-          <MegaMenuFooter>
-            <FlexLayout gap={3}>
-              <Link
-                color="primary"
-                underline="default"
-                href="#link"
-                IconComponent={ChevronRightIcon}
+          <MegaMenuMain>
+            <MegaMenuSection>
+              <MegaMenuHeading>Financial services</MegaMenuHeading>
+              <MegaMenuLink
+                render={<RouterLink to="/digital-banking" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/digital-banking")
+                }
               >
-                Book a demo
-              </Link>
-              <Link
-                color="primary"
-                underline="default"
-                href="#link"
-                IconComponent={ChevronRightIcon}
+                Digital banking
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/risk-management" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/risk-management")
+                }
               >
-                Support center
-              </Link>
-            </FlexLayout>
-          </MegaMenuFooter>
+                Risk management
+              </MegaMenuLink>
+            </MegaMenuSection>
+            <MegaMenuSection>
+              <MegaMenuHeading>Healthcare</MegaMenuHeading>
+              <MegaMenuLink
+                render={<RouterLink to="/patient-management" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/patient-management")
+                }
+              >
+                Patient management
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/telemedicine" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/telemedicine")
+                }
+              >
+                Telemedicine
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/compliance-solutions" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/compliance-solutions")
+                }
+              >
+                Compliance solutions
+              </MegaMenuLink>
+            </MegaMenuSection>
+            <MegaMenuSection>
+              <MegaMenuHeading>Retail</MegaMenuHeading>
+              <MegaMenuLink
+                render={<RouterLink to="/e-commerce-platforms" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/e-commerce-platforms")
+                }
+              >
+                E-commerce platforms
+              </MegaMenuLink>
+            </MegaMenuSection>
+            <MegaMenuSection>
+              <MegaMenuHeading>Manufacturing</MegaMenuHeading>
+              <MegaMenuLink
+                render={<RouterLink to="/supply-chain-optimization" />}
+                onClick={() =>
+                  console.log(
+                    "MegaMenuLink clicked:",
+                    "/supply-chain-optimization",
+                  )
+                }
+              >
+                Supply chain optimization
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/quality-control" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/quality-control")
+                }
+              >
+                Quality control
+              </MegaMenuLink>
+              <MegaMenuLink
+                render={<RouterLink to="/production-planning" />}
+                onClick={() =>
+                  console.log("MegaMenuLink clicked:", "/production-planning")
+                }
+              >
+                Production planning
+              </MegaMenuLink>
+            </MegaMenuSection>
+            <MegaMenuFooter>
+              <FlexLayout gap={3}>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Book a demo
+                </Link>
+                <Link
+                  color="primary"
+                  underline="default"
+                  href="#link"
+                  IconComponent={ChevronRightIcon}
+                >
+                  Support center
+                </Link>
+              </FlexLayout>
+            </MegaMenuFooter>
+          </MegaMenuMain>
         </MegaMenuPanel>
       </MegaMenu>
     </FlexLayout>
@@ -2989,7 +2977,7 @@ export const WithLink: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel>
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Financial services</MegaMenuHeading>
                   <MegaMenuLink
@@ -3147,27 +3135,27 @@ export const WithLink: StoryFn = () => {
                     Public safety solutions
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
-              <MegaMenuFooter>
-                <FlexLayout wrap gap={3}>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Book a demo
-                  </Link>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Support center
-                  </Link>
-                </FlexLayout>
-              </MegaMenuFooter>
+                <MegaMenuFooter>
+                  <FlexLayout wrap gap={3}>
+                    <Link
+                      color="primary"
+                      underline="default"
+                      href="#link"
+                      IconComponent={ChevronRightIcon}
+                    >
+                      Book a demo
+                    </Link>
+                    <Link
+                      color="primary"
+                      underline="default"
+                      href="#link"
+                      IconComponent={ChevronRightIcon}
+                    >
+                      Support center
+                    </Link>
+                  </FlexLayout>
+                </MegaMenuFooter>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3183,7 +3171,7 @@ export const WithLink: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel>
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Consulting</MegaMenuHeading>
                   <MegaMenuLink
@@ -3333,17 +3321,17 @@ export const WithLink: StoryFn = () => {
                     Guides
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
-              <MegaMenuFooter>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  Service status
-                </Link>
-              </MegaMenuFooter>
+                <MegaMenuFooter>
+                  <Link
+                    color="primary"
+                    underline="default"
+                    href="#link"
+                    IconComponent={ChevronRightIcon}
+                  >
+                    Service status
+                  </Link>
+                </MegaMenuFooter>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3358,7 +3346,7 @@ export const WithLink: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Documentation</MegaMenuHeading>
                   <MegaMenuLink
@@ -3421,17 +3409,17 @@ export const WithLink: StoryFn = () => {
                     Troubleshooting
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
-              <MegaMenuFooter>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  Browse documentation
-                </Link>
-              </MegaMenuFooter>
+                <MegaMenuFooter>
+                  <Link
+                    color="primary"
+                    underline="default"
+                    href="#link"
+                    IconComponent={ChevronRightIcon}
+                  >
+                    Browse documentation
+                  </Link>
+                </MegaMenuFooter>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3469,7 +3457,7 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Solutions menu"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Financial services</MegaMenuHeading>
                     <MegaMenuLink
@@ -3630,7 +3618,7 @@ export const InSmallViewport: StoryFn = () => {
                       Public safety solutions
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -3648,7 +3636,7 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Services menu"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Consulting</MegaMenuHeading>
                     <MegaMenuLink
@@ -3770,7 +3758,7 @@ export const InSmallViewport: StoryFn = () => {
                       Certifications
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -3788,7 +3776,7 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Resources menu"
               >
-                <MegaMenuGroups>
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Documentation</MegaMenuHeading>
                     <MegaMenuLink
@@ -3878,7 +3866,7 @@ export const InSmallViewport: StoryFn = () => {
                       Best practices
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -3899,7 +3887,7 @@ export const DefaultOpen: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Financial services</MegaMenuHeading>
                   <MegaMenuLink
@@ -3966,7 +3954,7 @@ export const DefaultOpen: StoryFn = () => {
                     E-commerce platforms
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -4005,7 +3993,7 @@ export const Placement: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label={`${placement} menu`}>
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Group A</MegaMenuHeading>
                 <MegaMenuLink
@@ -4052,7 +4040,7 @@ export const Placement: StoryFn = () => {
                   Item 5
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       ))}

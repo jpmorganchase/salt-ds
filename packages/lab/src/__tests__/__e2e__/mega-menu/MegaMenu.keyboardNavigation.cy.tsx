@@ -3,9 +3,9 @@ import {
   MegaMenu,
   MegaMenuAside,
   MegaMenuFooter,
-  MegaMenuGroups,
   MegaMenuHeading,
   MegaMenuLink,
+  MegaMenuMain,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -20,7 +20,7 @@ const KeyboardMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -51,7 +51,7 @@ const KeyboardMegaMenu = () => (
                   Telemedicine
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -62,7 +62,7 @@ const KeyboardMegaMenu = () => (
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Consulting</MegaMenuHeading>
                 <MegaMenuLink
@@ -78,7 +78,7 @@ const KeyboardMegaMenu = () => (
                   Operations
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -88,9 +88,9 @@ const KeyboardMegaMenu = () => (
   </nav>
 );
 
-// Groups followed by a trailing `MegaMenuAside`. Source order places the
-// region to the right of the groups; its interactive children become a
-// navigable column carrying `data-mega-menu-column`.
+// `MegaMenuMain` followed by a trailing `MegaMenuAside`. Source order places
+// the aside to the right of Main; its interactive children become a navigable
+// column carrying `data-mega-menu-column`.
 const SideRegionMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
@@ -100,7 +100,7 @@ const SideRegionMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -116,7 +116,7 @@ const SideRegionMegaMenu = () => (
                   Risk Management
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
             <MegaMenuAside>
               <a href="/see-all">See all solutions</a>
               <button type="button">Contact sales</button>
@@ -130,8 +130,8 @@ const SideRegionMegaMenu = () => (
   </nav>
 );
 
-// A leading `MegaMenuAside` placed before groups renders to the left, so it
-// becomes the first navigable column.
+// A leading `MegaMenuAside` placed before `MegaMenuMain` renders to the left,
+// so it becomes the first navigable column.
 const LeadingRegionMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
@@ -144,7 +144,7 @@ const LeadingRegionMegaMenu = () => (
             <MegaMenuAside>
               <a href="/featured">Featured</a>
             </MegaMenuAside>
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -160,7 +160,7 @@ const LeadingRegionMegaMenu = () => (
                   Risk Management
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -168,9 +168,9 @@ const LeadingRegionMegaMenu = () => (
   </nav>
 );
 
-// Groups followed by a full-width `MegaMenuFooter`. Source order after groups
-// renders the band on the bottom; it carries `data-mega-menu-band` and its
-// children move horizontally.
+// Sections followed by a full-width `MegaMenuFooter`, both inside `MegaMenuMain`.
+// The footer is always the bottom of the center area; it carries
+// `data-mega-menu-band` and its children move horizontally.
 const BottomBandMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
@@ -180,7 +180,7 @@ const BottomBandMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -196,49 +196,11 @@ const BottomBandMegaMenu = () => (
                   Risk Management
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
-            <MegaMenuFooter>
-              <a href="/book-a-demo">Book a demo</a>
-              <button type="button">Support center</button>
-            </MegaMenuFooter>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
-
-// A full-width `MegaMenuFooter` placed before groups renders on top.
-const TopBandMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuFooter>
-              <a href="/whats-new">What's new</a>
-              <button type="button">Announcements</button>
-            </MegaMenuFooter>
-            <MegaMenuGroups>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/risk-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Risk Management
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuGroups>
+              <MegaMenuFooter>
+                <a href="/book-a-demo">Book a demo</a>
+                <button type="button">Support center</button>
+              </MegaMenuFooter>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -257,7 +219,7 @@ const RoleAwareMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -267,7 +229,7 @@ const RoleAwareMegaMenu = () => (
                   Digital Banking
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
             <MegaMenuAside>
               <input aria-label="Search" defaultValue="hello" />
             </MegaMenuAside>
@@ -289,7 +251,7 @@ const RoleAwareTabMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -299,7 +261,7 @@ const RoleAwareTabMegaMenu = () => (
                   Digital Banking
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
             <MegaMenuAside>
               <input aria-label="Search" defaultValue="hello" />
               <a href="/go">Go</a>
@@ -322,7 +284,7 @@ const StaticContentMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -338,13 +300,13 @@ const StaticContentMegaMenu = () => (
                   Risk Management
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+              <MegaMenuFooter>
+                <span>Footer note, nothing focusable.</span>
+              </MegaMenuFooter>
+            </MegaMenuMain>
             <MegaMenuAside>
               <p>Static promotional text with no links.</p>
             </MegaMenuAside>
-            <MegaMenuFooter>
-              <span>Footer note, nothing focusable.</span>
-            </MegaMenuFooter>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -366,7 +328,7 @@ const MixedFocusabilityMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 {/* Intentionally no href and no render — should be skipped. */}
@@ -378,7 +340,7 @@ const MixedFocusabilityMegaMenu = () => (
                   Digital Banking
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -399,7 +361,7 @@ const RenderPropMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -413,7 +375,7 @@ const RenderPropMegaMenu = () => (
                   Digital Banking
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -964,28 +926,6 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
 
-    it("crosses from the column grid into a top band on ArrowUp and back down again", () => {
-      cy.mount(<TopBandMegaMenu />);
-      openSolutions();
-
-      // Tab lands on the band first (it is the topmost element).
-      cy.realPress("Tab");
-      cy.findByRole("link", { name: "What's new" }).should("be.focused");
-
-      // ArrowDown from the top band drops into the column grid.
-      cy.realPress("ArrowDown");
-      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
-
-      // ArrowUp on the first column item crosses back up into the top band.
-      cy.realPress("ArrowUp");
-      cy.findByRole("link", { name: "What's new" }).should("be.focused");
-
-      // ArrowUp on the top band returns to the trigger (menu stays open).
-      cy.realPress("ArrowUp");
-      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
-      cy.get(".saltMegaMenuPanel").should("exist");
-    });
-
     it("has no effect on ArrowDown from the last item of a bottom band", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
@@ -1014,18 +954,6 @@ describe("Given a MegaMenu", () => {
 
       cy.realPress("Home");
       cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
-    });
-
-    it("returns to the trigger on ArrowLeft from the first item of a top band", () => {
-      cy.mount(<TopBandMegaMenu />);
-      openSolutions();
-
-      cy.realPress("Tab"); // What's new (first focusable in the panel)
-      cy.findByRole("link", { name: "What's new" }).should("be.focused");
-
-      cy.realPress("ArrowLeft");
-      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
-      cy.get(".saltMegaMenuPanel").should("exist");
     });
 
     it("does not put the band wrapper itself in the tab order", () => {

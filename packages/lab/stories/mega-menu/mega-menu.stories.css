@@ -3,8 +3,8 @@ nav > ol {
   padding: 0;
 }
 
-.saltMegaMenuGroups {
-  --saltMegaMenuGroups-columnWidth: 16rem;
+.saltMegaMenuMain {
+  --saltMegaMenuMain-columnWidth: 16rem;
 }
 
 .trigger-position-grid {
@@ -43,8 +43,8 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.full-width-panel .saltMegaMenuGroups {
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
+.full-width-panel .saltMegaMenuMain {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuMain-columnWidth, 16rem)));
 }
 
 .edge-to-edge-wrapper {
@@ -58,12 +58,12 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.max-width-content-panel .saltMegaMenuGroups {
+.max-width-content-panel .saltMegaMenuMain {
   max-inline-size: 920px;
   inline-size: 100%;
   margin-inline: auto;
-  --saltMegaMenuGroups-columnWidth: 212px;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
+  --saltMegaMenuMain-columnWidth: 212px;
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuMain-columnWidth, 16rem)));
 }
 
 .custom-region-no-container-padding {
@@ -114,7 +114,7 @@ nav > ol {
     padding-inline: var(--salt-spacing-300);
   }
 
-  .custom-region-side .saltMegaMenuGroups {
+  .custom-region-side .saltMegaMenuMain {
     grid-template-columns: 1fr;
   }
 
@@ -144,7 +144,7 @@ nav > ol {
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
-.small-viewport-container .saltMegaMenuGroups {
+.small-viewport-container .saltMegaMenuMain {
   grid-template-columns: 1fr;
   max-inline-size: 100%;
   width: 100%;

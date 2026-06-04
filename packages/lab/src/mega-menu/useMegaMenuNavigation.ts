@@ -32,17 +32,16 @@ function firstFocusable(root: HTMLElement | null): HTMLElement | null {
 interface NavModel {
   /** Column elements (`data-mega-menu-column`) in DOM order, each with ≥1 cell. */
   columns: HTMLElement[];
-  /** Full-width band elements rendered above the column row. */
-  topBands: HTMLElement[];
-  /** Full-width band elements rendered below the column row. */
-  bottomBands: HTMLElement[];
+  /** Full-width band (footer) elements; always the bottom of the center area. */
+  bands: HTMLElement[];
 }
 
 /**
  * Build the navigation model from the panel DOM at keypress time.
  * Columns and bands are discovered via the structural attributes; their cells
  * are any focusable descendants. There is a single query path — focusability is
- * the only signal, with no per-item marker or fallback.
+ * the only signal, with no per-item marker or fallback. A band (`MegaMenuFooter`)
+ * is always the bottom of the center area, so there is no top/bottom split.
  */
 function buildModel(panel: HTMLElement): NavModel {
   const columns = Array.from(
@@ -53,23 +52,7 @@ function buildModel(panel: HTMLElement): NavModel {
     panel.querySelectorAll<HTMLElement>(BAND_SELECTOR),
   ).filter((el) => queryFocusables(el).length > 0);
 
-  const firstColumn = columns[0];
-  const topBands: HTMLElement[] = [];
-  const bottomBands: HTMLElement[] = [];
-  for (const band of bands) {
-    // A band sits on top when it precedes the column row in DOM order.
-    const isTop =
-      firstColumn &&
-      firstColumn.compareDocumentPosition(band) &
-        Node.DOCUMENT_POSITION_PRECEDING;
-    if (isTop) {
-      topBands.push(band);
-    } else {
-      bottomBands.push(band);
-    }
-  }
-
-  return { columns, topBands, bottomBands };
+  return { columns, bands };
 }
 
 function focusTrigger(context: FloatingRootContext) {
@@ -153,12 +136,12 @@ function handleLinear(
  * Apply an arrow/Home/End movement from `cell`. Returns `true` when the key was
  * consumed (so the caller can `preventDefault`).
  *
- * - **Columns** (groups + side regions): Up/Down move within the column,
- *   Left/Right cross to the adjacent column. Reaching the top/bottom edge
- *   crosses to the top/bottom band; with no band, Up returns to the trigger and
- *   Down is a no-op.
- * - **Bands** (full-width rows): Left/Right move within, Up/Down cross to the
- *   column grid (entering the first column's first item).
+ * - **Columns** (sections + side content): Up/Down move within the column,
+ *   Left/Right cross to the adjacent column. Down on the last cell crosses into
+ *   the bottom band (footer) if one exists, otherwise no-op; Up on the first
+ *   cell returns to the trigger.
+ * - **Bands** (the full-width footer row): Left/Right move within, Up crosses
+ *   into the first column's first item, Down is a no-op.
  * - **Edges**: Left/Up on the very first item → trigger (menu stays open);
  *   Right on the last column → next sibling trigger + close (no-op if none).
  */
@@ -168,7 +151,7 @@ function handleArrow(
   panel: HTMLElement,
   context: FloatingRootContext,
 ): boolean {
-  const { columns, topBands, bottomBands } = buildModel(panel);
+  const { columns, bands } = buildModel(panel);
 
   // Small viewport: the grid is stacked into one column, so arrows degrade to a
   // single linear Up/Down (and Left/Right) walk through every cell in order.
@@ -188,17 +171,17 @@ function handleArrow(
       case "ArrowDown": {
         if (rowIndex < cells.length - 1) {
           cells[rowIndex + 1].focus();
-        } else if (bottomBands.length > 0) {
-          firstFocusable(bottomBands[0])?.focus();
+        } else if (bands.length > 0) {
+          firstFocusable(bands[0])?.focus();
         }
         return true;
       }
       case "ArrowUp": {
         if (rowIndex > 0) {
           cells[rowIndex - 1].focus();
-        } else if (topBands.length > 0) {
-          firstFocusable(topBands[0])?.focus();
         } else {
+          // The footer is always below the columns, so there is nothing above
+          // the first cell — return to the trigger (menu stays open).
           focusTrigger(context);
         }
         return true;
@@ -235,7 +218,6 @@ function handleArrow(
   if (band) {
     const cells = queryFocusables(band);
     const index = cells.indexOf(cell);
-    const isTop = topBands.includes(band);
 
     switch (key) {
       case "ArrowRight": {
@@ -254,10 +236,9 @@ function handleArrow(
         return true;
       }
       case "ArrowUp": {
-        if (isTop) {
-          // The very first item in layout order returns to the trigger.
-          focusTrigger(context);
-        } else if (columns.length > 0) {
+        // The footer is the bottom of the center area, so Up crosses into the
+        // first cell of the first column.
+        if (columns.length > 0) {
           firstFocusable(columns[0])?.focus();
         } else {
           focusTrigger(context);
@@ -265,11 +246,7 @@ function handleArrow(
         return true;
       }
       case "ArrowDown": {
-        // From a top band, drop into the column grid; a bottom band has
-        // nothing below it.
-        if (isTop && columns.length > 0) {
-          firstFocusable(columns[0])?.focus();
-        }
+        // A footer is always the bottom — nothing below it.
         return true;
       }
       case "Home": {
