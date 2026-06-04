@@ -7,23 +7,23 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
-import megaMenuHeaderCss from "./MegaMenuHeader.css";
+import megaMenuHeadingCss from "./MegaMenuHeading.css";
 
-const withBaseName = makePrefixer("saltMegaMenuHeader");
+const withBaseName = makePrefixer("saltMegaMenuHeading");
 
-export interface MegaMenuHeaderProps extends ComponentPropsWithoutRef<"div"> {
+export interface MegaMenuHeadingProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of the mega menu header.
+   * The content of the mega menu heading.
    */
   children?: ReactNode;
 }
 
-export const MegaMenuHeader = forwardRef<HTMLDivElement, MegaMenuHeaderProps>(
-  function MegaMenuHeader({ children, className, ...rest }, ref) {
+export const MegaMenuHeading = forwardRef<HTMLDivElement, MegaMenuHeadingProps>(
+  function MegaMenuHeading({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-mega-menu-header",
-      css: megaMenuHeaderCss,
+      testId: "salt-mega-menu-heading",
+      css: megaMenuHeadingCss,
       window: targetWindow,
     });
 

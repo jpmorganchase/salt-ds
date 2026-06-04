@@ -11,34 +11,34 @@ import {
   type ReactNode,
 } from "react";
 import { MegaMenuColumn } from "./MegaMenuColumn";
-import megaMenuGroupCss from "./MegaMenuGroup.css";
-import { MegaMenuHeader } from "./MegaMenuHeader";
+import { MegaMenuHeading } from "./MegaMenuHeading";
+import megaMenuSectionCss from "./MegaMenuSection.css";
 
-const withBaseName = makePrefixer("saltMegaMenuGroup");
+const withBaseName = makePrefixer("saltMegaMenuSection");
 
-export interface MegaMenuGroupProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuSectionProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The content of the mega menu group, typically MegaMenuHeader and MegaMenuItem components.
+   * The content of the mega menu section, typically MegaMenuHeading and MegaMenuLink components.
    */
   children?: ReactNode;
 }
 
-export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
-  function MegaMenuGroup({ children, className, ...rest }, ref) {
+export const MegaMenuSection = forwardRef<HTMLDivElement, MegaMenuSectionProps>(
+  function MegaMenuSection({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-mega-menu-group",
-      css: megaMenuGroupCss,
+      testId: "salt-mega-menu-section",
+      css: megaMenuSectionCss,
       window: targetWindow,
     });
 
-    const headerId = useId();
-    let header: ReactNode = null;
+    const headingId = useId();
+    let heading: ReactNode = null;
     const items: ReactNode[] = [];
 
     Children.forEach(children, (child) => {
-      if (isValidElement(child) && child.type === MegaMenuHeader && !header) {
-        header = cloneElement(child, { id: headerId });
+      if (isValidElement(child) && child.type === MegaMenuHeading && !heading) {
+        heading = cloneElement(child, { id: headingId });
       } else {
         items.push(child);
       }
@@ -50,10 +50,10 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
         ref={ref}
         {...rest}
       >
-        {header}
+        {heading}
         <ul
           className={withBaseName("list")}
-          aria-labelledby={header ? headerId : undefined}
+          aria-labelledby={heading ? headingId : undefined}
         >
           {items.map((item, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: children have no stable identity

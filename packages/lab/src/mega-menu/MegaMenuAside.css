@@ -1,5 +1,5 @@
-.saltMegaMenuBand {
+.saltMegaMenuAside {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   padding: var(--salt-spacing-300);
 }

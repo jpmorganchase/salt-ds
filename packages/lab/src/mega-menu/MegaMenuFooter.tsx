@@ -7,11 +7,11 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
-import megaMenuBandCss from "./MegaMenuBand.css";
+import megaMenuFooterCss from "./MegaMenuFooter.css";
 
-const withBaseName = makePrefixer("saltMegaMenuBand");
+const withBaseName = makePrefixer("saltMegaMenuFooter");
 
-export interface MegaMenuBandProps extends ComponentPropsWithoutRef<"div"> {
+export interface MegaMenuFooterProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of the band. Renders as a full-width row on top when placed
    * before `MegaMenuGroups`, and on the bottom when placed after.
@@ -19,12 +19,12 @@ export interface MegaMenuBandProps extends ComponentPropsWithoutRef<"div"> {
   children?: ReactNode;
 }
 
-export const MegaMenuBand = forwardRef<HTMLDivElement, MegaMenuBandProps>(
-  function MegaMenuBand({ className, ...rest }, ref) {
+export const MegaMenuFooter = forwardRef<HTMLDivElement, MegaMenuFooterProps>(
+  function MegaMenuFooter({ className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-mega-menu-band",
-      css: megaMenuBandCss,
+      testId: "salt-mega-menu-footer",
+      css: megaMenuFooterCss,
       window: targetWindow,
     });
 

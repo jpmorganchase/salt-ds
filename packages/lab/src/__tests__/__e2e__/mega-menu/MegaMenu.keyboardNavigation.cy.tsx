@@ -1,13 +1,13 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBand,
-  MegaMenuGroup,
+  MegaMenuAside,
+  MegaMenuFooter,
   MegaMenuGroups,
-  MegaMenuHeader,
-  MegaMenuItem,
+  MegaMenuHeading,
+  MegaMenuLink,
   MegaMenuPanel,
-  MegaMenuRegion,
+  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -21,36 +21,36 @@ const KeyboardMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel>
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/risk-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Risk Management
-                </MegaMenuItem>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem
+                </MegaMenuLink>
+              </MegaMenuSection>
+              <MegaMenuSection>
+                <MegaMenuHeading>Healthcare</MegaMenuHeading>
+                <MegaMenuLink
                   href="/patient-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Patient Management
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/telemedicine"
                   onClick={(e) => e.preventDefault()}
                 >
                   Telemedicine
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
@@ -63,21 +63,21 @@ const KeyboardMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel>
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Consulting</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Consulting</MegaMenuHeading>
+                <MegaMenuLink
                   href="/strategy"
                   onClick={(e) => e.preventDefault()}
                 >
                   Strategy
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/operations"
                   onClick={(e) => e.preventDefault()}
                 >
                   Operations
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
@@ -88,7 +88,7 @@ const KeyboardMegaMenu = () => (
   </nav>
 );
 
-// Groups followed by a trailing `MegaMenuRegion`. Source order places the
+// Groups followed by a trailing `MegaMenuAside`. Source order places the
 // region to the right of the groups; its interactive children become a
 // navigable column carrying `data-mega-menu-column`.
 const SideRegionMegaMenu = () => (
@@ -101,26 +101,26 @@ const SideRegionMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/risk-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Risk Management
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
-            <MegaMenuRegion>
+            <MegaMenuAside>
               <a href="/see-all">See all solutions</a>
               <button type="button">Contact sales</button>
-            </MegaMenuRegion>
+            </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -130,7 +130,7 @@ const SideRegionMegaMenu = () => (
   </nav>
 );
 
-// A leading `MegaMenuRegion` placed before groups renders to the left, so it
+// A leading `MegaMenuAside` placed before groups renders to the left, so it
 // becomes the first navigable column.
 const LeadingRegionMegaMenu = () => (
   <nav>
@@ -141,25 +141,25 @@ const LeadingRegionMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuRegion>
+            <MegaMenuAside>
               <a href="/featured">Featured</a>
-            </MegaMenuRegion>
+            </MegaMenuAside>
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/risk-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Risk Management
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
@@ -168,7 +168,7 @@ const LeadingRegionMegaMenu = () => (
   </nav>
 );
 
-// Groups followed by a full-width `MegaMenuBand`. Source order after groups
+// Groups followed by a full-width `MegaMenuFooter`. Source order after groups
 // renders the band on the bottom; it carries `data-mega-menu-band` and its
 // children move horizontally.
 const BottomBandMegaMenu = () => (
@@ -181,26 +181,26 @@ const BottomBandMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/risk-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Risk Management
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
-            <MegaMenuBand>
+            <MegaMenuFooter>
               <a href="/book-a-demo">Book a demo</a>
               <button type="button">Support center</button>
-            </MegaMenuBand>
+            </MegaMenuFooter>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -208,7 +208,7 @@ const BottomBandMegaMenu = () => (
   </nav>
 );
 
-// A full-width `MegaMenuBand` placed before groups renders on top.
+// A full-width `MegaMenuFooter` placed before groups renders on top.
 const TopBandMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
@@ -218,26 +218,26 @@ const TopBandMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBand>
+            <MegaMenuFooter>
               <a href="/whats-new">What's new</a>
               <button type="button">Announcements</button>
-            </MegaMenuBand>
+            </MegaMenuFooter>
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/risk-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Risk Management
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
@@ -246,7 +246,7 @@ const TopBandMegaMenu = () => (
   </nav>
 );
 
-// A `MegaMenuRegion` containing a self-consuming control (a text input). The
+// A `MegaMenuAside` containing a self-consuming control (a text input). The
 // engine must not hijack arrow keys while focus is inside it.
 const RoleAwareMegaMenu = () => (
   <nav>
@@ -258,19 +258,19 @@ const RoleAwareMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
-            <MegaMenuRegion>
+            <MegaMenuAside>
               <input aria-label="Search" defaultValue="hello" />
-            </MegaMenuRegion>
+            </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -290,20 +290,20 @@ const RoleAwareTabMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
-            <MegaMenuRegion>
+            <MegaMenuAside>
               <input aria-label="Search" defaultValue="hello" />
               <a href="/go">Go</a>
-            </MegaMenuRegion>
+            </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -323,28 +323,28 @@ const StaticContentMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/risk-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Risk Management
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
-            <MegaMenuRegion>
+            <MegaMenuAside>
               <p>Static promotional text with no links.</p>
-            </MegaMenuRegion>
-            <MegaMenuBand>
+            </MegaMenuAside>
+            <MegaMenuFooter>
               <span>Footer note, nothing focusable.</span>
-            </MegaMenuBand>
+            </MegaMenuFooter>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -367,17 +367,17 @@ const MixedFocusabilityMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel>
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 {/* Intentionally no href and no render — should be skipped. */}
-                <MegaMenuItem>Non Focusable</MegaMenuItem>
-                <MegaMenuItem
+                <MegaMenuLink>Non Focusable</MegaMenuLink>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
@@ -400,9 +400,9 @@ const RenderPropMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel>
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   render={
                     <a href="/digital-banking" data-custom-link="">
                       Digital Banking
@@ -411,8 +411,8 @@ const RenderPropMegaMenu = () => (
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
@@ -699,7 +699,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("activates item on Space and closes menu", () => {
-      // Native anchors activate on Enter but not Space — MegaMenuItem adds
+      // Native anchors activate on Enter but not Space — MegaMenuLink adds
       // Space handling for parity, so this exercises that custom branch.
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
@@ -802,7 +802,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).click();
       // Exactly one anchor for the item — verifies `renderProps` substitutes
       // the host element instead of wrapping it (no link-in-a-link).
-      cy.get(".saltMegaMenuPanel a.saltMegaMenuItem").should("have.length", 1);
+      cy.get(".saltMegaMenuPanel a.saltMegaMenuLink").should("have.length", 1);
     });
   });
 
@@ -835,7 +835,7 @@ describe("Given a MegaMenu", () => {
       cy.mount(<SideRegionMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuRegion").should("not.have.attr", "tabindex");
+      cy.get(".saltMegaMenuAside").should("not.have.attr", "tabindex");
     });
 
     it("crosses into the region column with ArrowRight and within it with ArrowDown", () => {
@@ -1032,7 +1032,7 @@ describe("Given a MegaMenu", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuBand").should("not.have.attr", "tabindex");
+      cy.get(".saltMegaMenuFooter").should("not.have.attr", "tabindex");
     });
   });
 

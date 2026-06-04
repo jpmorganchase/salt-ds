@@ -1,13 +1,13 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBand,
-  MegaMenuGroup,
+  MegaMenuAside,
+  MegaMenuFooter,
   MegaMenuGroups,
-  MegaMenuHeader,
-  MegaMenuItem,
+  MegaMenuHeading,
+  MegaMenuLink,
   MegaMenuPanel,
-  MegaMenuRegion,
+  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -25,30 +25,30 @@ const AccessibleMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-                <MegaMenuItem
+                </MegaMenuLink>
+                <MegaMenuLink
                   href="/risk-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Risk Management
-                </MegaMenuItem>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Healthcare</MegaMenuHeader>
-                <MegaMenuItem
+                </MegaMenuLink>
+              </MegaMenuSection>
+              <MegaMenuSection>
+                <MegaMenuHeading>Healthcare</MegaMenuHeading>
+                <MegaMenuLink
                   href="/patient-management"
                   onClick={(e) => e.preventDefault()}
                 >
                   Patient Management
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
@@ -61,15 +61,15 @@ const AccessibleMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Services menu">
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Consulting</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Consulting</MegaMenuHeading>
+                <MegaMenuLink
                   href="/strategy"
                   onClick={(e) => e.preventDefault()}
                 >
                   Strategy
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
           </MegaMenuPanel>
         </MegaMenu>
@@ -89,29 +89,29 @@ const LayoutMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBand>
+            <MegaMenuFooter>
               <a href="/top">Top band link</a>
-            </MegaMenuBand>
-            <MegaMenuRegion>
+            </MegaMenuFooter>
+            <MegaMenuAside>
               <a href="/left">Left region link</a>
-            </MegaMenuRegion>
+            </MegaMenuAside>
             <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                <MegaMenuItem
+              <MegaMenuSection>
+                <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                <MegaMenuLink
                   href="/digital-banking"
                   onClick={(e) => e.preventDefault()}
                 >
                   Digital Banking
-                </MegaMenuItem>
-              </MegaMenuGroup>
+                </MegaMenuLink>
+              </MegaMenuSection>
             </MegaMenuGroups>
-            <MegaMenuRegion>
+            <MegaMenuAside>
               <a href="/right">Right region link</a>
-            </MegaMenuRegion>
-            <MegaMenuBand>
+            </MegaMenuAside>
+            <MegaMenuFooter>
               <a href="/bottom">Bottom band link</a>
-            </MegaMenuBand>
+            </MegaMenuFooter>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -316,19 +316,19 @@ describe("Given a MegaMenu", () => {
     it("assigns grid areas from component type and source order", () => {
       cy.mount(<LayoutMegaMenu />);
 
-      cy.contains(".saltMegaMenuBand", "Top band link")
+      cy.contains(".saltMegaMenuFooter", "Top band link")
         .should("have.attr", "style")
         .and("match", /grid-area:\s*top/);
-      cy.contains(".saltMegaMenuRegion", "Left region link")
+      cy.contains(".saltMegaMenuAside", "Left region link")
         .should("have.attr", "style")
         .and("match", /grid-area:\s*left/);
       cy.contains(".saltMegaMenuGroups", "Digital Banking")
         .should("have.attr", "style")
         .and("match", /grid-area:\s*center/);
-      cy.contains(".saltMegaMenuRegion", "Right region link")
+      cy.contains(".saltMegaMenuAside", "Right region link")
         .should("have.attr", "style")
         .and("match", /grid-area:\s*right/);
-      cy.contains(".saltMegaMenuBand", "Bottom band link")
+      cy.contains(".saltMegaMenuFooter", "Bottom band link")
         .should("have.attr", "style")
         .and("match", /grid-area:\s*bottom/);
     });

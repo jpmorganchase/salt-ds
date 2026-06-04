@@ -16,10 +16,10 @@ disagree, that is a bug in one of them — reconcile, don't guess.
   each needs an accessible name.)
 - **Panel** — a `<div role="region">`. The author must provide an `aria-label`
   describing the menu (e.g. `aria-label="Solutions menu"`).
-- **Group** — renders a `<ul>` with `aria-labelledby` pointing at its
-  `MegaMenuHeader`; each item is wrapped in an `<li>`.
-- **Header** — supplies the group list's accessible name.
-- **Region / Band** — generic content wrappers. The wrapper itself is **not
+- **Section** — renders a `<ul>` with `aria-labelledby` pointing at its
+  `MegaMenuHeading`; each item is wrapped in an `<li>`.
+- **Heading** — supplies the section list's accessible name.
+- **Aside / Footer** — generic content wrappers. The wrapper itself is **not
   focusable** (no `tabindex`); only its interactive descendants participate in
   navigation.
 
@@ -31,8 +31,8 @@ are no placement props:
 
 | Child | Before `MegaMenuGroups` | After `MegaMenuGroups` |
 | --- | --- | --- |
-| `MegaMenuRegion` (side content) | left | right |
-| `MegaMenuBand` (full-width content) | top | bottom |
+| `MegaMenuAside` (side content) | left | right |
+| `MegaMenuFooter` (full-width content) | top | bottom |
 | `MegaMenuGroups` | — (the center; exactly one) | — |
 
 **Focus order equals source (DOM) order.** Because the panel maps source order
@@ -44,10 +44,10 @@ after (right/bottom) is reached after them.
 
 Keyboard navigation is built from the panel DOM on each keypress:
 
-- A **column** is any element with `data-mega-menu-column` (every `MegaMenuGroup`
-  and `MegaMenuRegion`). Columns are vertical; arrow movement within a column is
+- A **column** is any element with `data-mega-menu-column` (every `MegaMenuSection`
+  and `MegaMenuAside`). Columns are vertical; arrow movement within a column is
   **Up/Down**.
-- A **band** is any element with `data-mega-menu-band` (every `MegaMenuBand`),
+- A **band** is any element with `data-mega-menu-band` (every `MegaMenuFooter`),
   classified **top** or **bottom** by its DOM position relative to the columns.
   Bands are horizontal rows; arrow movement within a band is **Left/Right**.
 - A **cell** is any focusable descendant of a column/band
@@ -149,9 +149,9 @@ order:
   navigation.
 - Interactive content participates in **both** Tab and arrow navigation, in
   layout order (§2).
-- **Side content** (`MegaMenuRegion`) behaves as a column: Up/Down within it,
+- **Side content** (`MegaMenuAside`) behaves as a column: Up/Down within it,
   Left/Right to cross to/from neighbouring columns.
-- **Full-width content** (`MegaMenuBand`) behaves as a row: Left/Right within it,
+- **Full-width content** (`MegaMenuFooter`) behaves as a row: Left/Right within it,
   Up/Down to cross to/from the link lists.
 - Arrow keys move *between cells*, not into unrelated regions: from a group cell,
   Left/Right step to the adjacent **column**, not to content elsewhere in the

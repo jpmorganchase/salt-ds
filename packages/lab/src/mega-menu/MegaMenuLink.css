@@ -1,4 +1,4 @@
-.saltMegaMenuItem {
+.saltMegaMenuLink {
   display: flex;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
   align-items: flex-start;
@@ -13,13 +13,13 @@
   text-decoration: none;
 }
 
-.saltMegaMenuItem > .saltIcon {
+.saltMegaMenuLink > .saltIcon {
   display: flex;
   height: var(--salt-size-base);
   align-items: center;
 }
 
-.saltMegaMenuItem-content {
+.saltMegaMenuLink-content {
   flex: 1 0;
   margin: var(--salt-spacing-75) 0;
   font-family: var(--salt-text-fontFamily);
@@ -28,21 +28,21 @@
   line-height: var(--salt-text-lineHeight);
 }
 
-.saltMegaMenuItem:focus-visible {
+.saltMegaMenuLink:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltMegaMenuItem:hover {
+.saltMegaMenuLink:hover {
   outline: none;
   background: var(--salt-navigable-background-hover);
 }
 
-.saltMegaMenuItem:active {
+.saltMegaMenuLink:active {
   background: var(--salt-navigable-accent-background-active);
 }
 
-.saltMegaMenuItem:active::before {
+.saltMegaMenuLink:active::before {
   content: "";
   position: absolute;
   inset: 0;

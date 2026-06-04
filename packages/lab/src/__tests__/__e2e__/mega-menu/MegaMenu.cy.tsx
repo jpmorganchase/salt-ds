@@ -1,11 +1,11 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuGroup,
   MegaMenuGroups,
-  MegaMenuHeader,
-  MegaMenuItem,
+  MegaMenuHeading,
+  MegaMenuLink,
   MegaMenuPanel,
+  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { useState } from "react";
@@ -30,21 +30,21 @@ const InteractiveMegaMenu = () => {
             </MegaMenuTrigger>
             <MegaMenuPanel>
               <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Financial Services</MegaMenuHeader>
-                  <MegaMenuItem
+                <MegaMenuSection>
+                  <MegaMenuHeading>Financial Services</MegaMenuHeading>
+                  <MegaMenuLink
                     href="/digital-banking"
                     onClick={(e) => e.preventDefault()}
                   >
                     Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem
+                  </MegaMenuLink>
+                  <MegaMenuLink
                     href="/risk-management"
                     onClick={(e) => e.preventDefault()}
                   >
                     Risk Management
-                  </MegaMenuItem>
-                </MegaMenuGroup>
+                  </MegaMenuLink>
+                </MegaMenuSection>
               </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>
@@ -60,15 +60,15 @@ const InteractiveMegaMenu = () => {
             </MegaMenuTrigger>
             <MegaMenuPanel>
               <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Consulting</MegaMenuHeader>
-                  <MegaMenuItem
+                <MegaMenuSection>
+                  <MegaMenuHeading>Consulting</MegaMenuHeading>
+                  <MegaMenuLink
                     href="/strategy"
                     onClick={(e) => e.preventDefault()}
                   >
                     Strategy
-                  </MegaMenuItem>
-                </MegaMenuGroup>
+                  </MegaMenuLink>
+                </MegaMenuSection>
               </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>
@@ -138,15 +138,15 @@ describe("Given a MegaMenu", () => {
         </MegaMenuTrigger>
         <MegaMenuPanel>
           <MegaMenuGroups>
-            <MegaMenuGroup>
-              <MegaMenuHeader>Financial Services</MegaMenuHeader>
-              <MegaMenuItem
+            <MegaMenuSection>
+              <MegaMenuHeading>Financial Services</MegaMenuHeading>
+              <MegaMenuLink
                 href="/digital-banking"
                 onClick={(e) => e.preventDefault()}
               >
                 Digital Banking
-              </MegaMenuItem>
-            </MegaMenuGroup>
+              </MegaMenuLink>
+            </MegaMenuSection>
           </MegaMenuGroups>
         </MegaMenuPanel>
       </MegaMenu>,
