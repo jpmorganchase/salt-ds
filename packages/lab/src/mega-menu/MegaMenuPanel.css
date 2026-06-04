@@ -1,6 +1,14 @@
 .saltMegaMenuPanel {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  /* Source-order layout: a full-width band row on top, a middle row of
+     [region-left | groups | region-right], and a full-width band row below.
+     Empty tracks collapse, so authors need no wrapper scaffolding. */
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "top    top    top"
+    "left   center right"
+    "bottom bottom bottom";
   inline-size: var(--saltMegaMenuPanel-inlineSize, fit-content);
   max-inline-size: var(--saltMegaMenuPanel-maxInlineSize, var(--saltMegaMenuPanel-availableWidth, calc(100vw - var(--salt-spacing-600))));
   max-height: 90%;
