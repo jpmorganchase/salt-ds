@@ -1,11 +1,13 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
+  MegaMenuBand,
   MegaMenuGroup,
   MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
+  MegaMenuRegion,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -69,6 +71,47 @@ const AccessibleMegaMenu = () => (
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuGroups>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// All four content positions around the groups, to verify the panel assigns
+// grid areas purely from component type and source order (no placement props).
+const LayoutMegaMenu = () => (
+  <nav aria-label="Main">
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu defaultOpen>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuBand>
+              <a href="/top">Top band link</a>
+            </MegaMenuBand>
+            <MegaMenuRegion>
+              <a href="/left">Left region link</a>
+            </MegaMenuRegion>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem
+                  href="/digital-banking"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+            <MegaMenuRegion>
+              <a href="/right">Right region link</a>
+            </MegaMenuRegion>
+            <MegaMenuBand>
+              <a href="/bottom">Bottom band link</a>
+            </MegaMenuBand>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -171,7 +214,7 @@ describe("Given a MegaMenu", () => {
 
       cy.findByRole("button", { name: "Solutions" }).click();
 
-      // Each group renders an `<ol>` (role="list") whose accessible name is
+      // Each group renders a `<ul>` (role="list") whose accessible name is
       // derived from the group header via aria-labelledby.
       cy.findByRole("list", { name: "Financial Services" })
         .findAllByRole("listitem")
@@ -254,6 +297,41 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowUp");
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
     });
+
+    it("returns focus to the trigger on ArrowUp from the first item when stacked", () => {
+      cy.viewport(375, 667);
+      cy.mount(<AccessibleMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      cy.realPress("ArrowUp");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+  });
+
+  describe("panel layout (source-order positioning)", () => {
+    it("assigns grid areas from component type and source order", () => {
+      cy.mount(<LayoutMegaMenu />);
+
+      cy.contains(".saltMegaMenuBand", "Top band link")
+        .should("have.attr", "style")
+        .and("match", /grid-area:\s*top/);
+      cy.contains(".saltMegaMenuRegion", "Left region link")
+        .should("have.attr", "style")
+        .and("match", /grid-area:\s*left/);
+      cy.contains(".saltMegaMenuGroups", "Digital Banking")
+        .should("have.attr", "style")
+        .and("match", /grid-area:\s*center/);
+      cy.contains(".saltMegaMenuRegion", "Right region link")
+        .should("have.attr", "style")
+        .and("match", /grid-area:\s*right/);
+      cy.contains(".saltMegaMenuBand", "Bottom band link")
+        .should("have.attr", "style")
+        .and("match", /grid-area:\s*bottom/);
+    });
   });
 
   describe("axe checks", () => {
@@ -265,6 +343,12 @@ describe("Given a MegaMenu", () => {
     it("has no detectable a11y violations when open", () => {
       cy.mount(<AccessibleMegaMenu />);
       cy.findByRole("button", { name: "Solutions" }).click();
+      cy.findByRole("region", { name: "Solutions menu" }).should("exist");
+      cy.checkAxeComponent();
+    });
+
+    it("has no detectable a11y violations with regions and bands open", () => {
+      cy.mount(<LayoutMegaMenu />);
       cy.findByRole("region", { name: "Solutions menu" }).should("exist");
       cy.checkAxeComponent();
     });
