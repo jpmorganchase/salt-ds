@@ -278,6 +278,82 @@ const RoleAwareMegaMenu = () => (
   </nav>
 );
 
+// A region (input + following link) used to verify Tab/Shift+Tab still traverse
+// across a self-consuming control — only arrows/Home/End are yielded to it.
+const RoleAwareTabMegaMenu = () => (
+  <nav>
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem
+                  href="/digital-banking"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+            <MegaMenuRegion>
+              <input aria-label="Search" defaultValue="hello" />
+              <a href="/go">Go</a>
+            </MegaMenuRegion>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Static-only content (no interactive descendants). The region and band must
+// contribute no navigable cells and stay out of tab + arrow navigation.
+const StaticContentMegaMenu = () => (
+  <nav>
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuHeader>Financial Services</MegaMenuHeader>
+                <MegaMenuItem
+                  href="/digital-banking"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Digital Banking
+                </MegaMenuItem>
+                <MegaMenuItem
+                  href="/risk-management"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Risk Management
+                </MegaMenuItem>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+            <MegaMenuRegion>
+              <p>Static promotional text with no links.</p>
+            </MegaMenuRegion>
+            <MegaMenuBand>
+              <span>Footer note, nothing focusable.</span>
+            </MegaMenuBand>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+
+    <button type="button">After Nav</button>
+  </nav>
+);
+
 // Fixture with a non-focusable item (an `<a>` without `href` and no `render`).
 // Verifies the engine skips it and navigation continues to the next reachable
 // item rather than stalling.
@@ -433,6 +509,24 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowLeft");
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("not.exist");
+    });
+
+    it("re-enters items on ArrowDown after ArrowUp returns to trigger (opened via ArrowDown)", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      focusSolutionsTrigger();
+
+      // Open with ArrowDown — focuses the first item.
+      cy.realPress("ArrowDown");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      // ArrowUp returns to the trigger, menu stays open.
+      cy.realPress("ArrowUp");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      // ArrowDown again should re-enter the first item, NOT hang on the panel.
+      cy.realPress("ArrowDown");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
 
     it("supports ArrowDown and ArrowUp between items and trigger", () => {
@@ -891,6 +985,92 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
     });
+
+    it("has no effect on ArrowDown from the last item of a bottom band", () => {
+      cy.mount(<BottomBandMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowDown"); // Risk Management
+      cy.realPress("ArrowDown"); // Book a demo (band)
+      cy.realPress("ArrowRight"); // Support center (last band item)
+      cy.findByRole("button", { name: "Support center" }).should("be.focused");
+
+      cy.realPress("ArrowDown");
+      cy.findByRole("button", { name: "Support center" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("supports Home and End within a band", () => {
+      cy.mount(<BottomBandMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowDown"); // Risk Management
+      cy.realPress("ArrowDown"); // Book a demo (band)
+
+      cy.realPress("End");
+      cy.findByRole("button", { name: "Support center" }).should("be.focused");
+
+      cy.realPress("Home");
+      cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
+    });
+
+    it("returns to the trigger on ArrowLeft from the first item of a top band", () => {
+      cy.mount(<TopBandMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // What's new (first focusable in the panel)
+      cy.findByRole("link", { name: "What's new" }).should("be.focused");
+
+      cy.realPress("ArrowLeft");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("does not put the band wrapper itself in the tab order", () => {
+      cy.mount(<BottomBandMegaMenu />);
+      openSolutions();
+
+      cy.get(".saltMegaMenuBand").should("not.have.attr", "tabindex");
+    });
+  });
+
+  describe("when the menu has static-only content", () => {
+    const openSolutions = () => {
+      cy.findByRole("button", { name: "Solutions" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    };
+
+    it("excludes a static-only region and band from the Tab sequence", () => {
+      cy.mount(<StaticContentMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management (last real cell)
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+
+      // The static region/band contribute no cells, so Tab exits the menu.
+      cy.realPress("Tab");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "After Nav" }).should("be.focused");
+    });
+
+    it("does not cross into static content with arrow keys", () => {
+      cy.mount(<StaticContentMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowDown"); // Risk Management (last item; static band below)
+      cy.realPress("ArrowDown"); // no band cell below → no effect
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+
+      // Static region carries no cells, so it is not a column to cross into.
+      cy.realPress("ArrowRight");
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
   });
 
   describe("when focus is inside a self-consuming control", () => {
@@ -904,10 +1084,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("textbox", { name: "Search" }).then(($input) => {
         const input = $input[0] as HTMLInputElement;
         input.focus();
-        input.setSelectionRange(
-          input.value.length,
-          input.value.length,
-        );
+        input.setSelectionRange(input.value.length, input.value.length);
       });
       cy.findByRole("textbox", { name: "Search" }).should("be.focused");
 
@@ -920,6 +1097,23 @@ describe("Given a MegaMenu", () => {
           const input = $input[0] as HTMLInputElement;
           expect(input.selectionStart).to.be.lessThan(input.value.length);
         });
+    });
+
+    it("still advances Tab and Shift+Tab across a control to neighbouring cells", () => {
+      cy.mount(<RoleAwareTabMegaMenu />);
+      cy.findByRole("button", { name: "Solutions" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      // Tab is never yielded — it moves from the input to the next cell.
+      cy.findByRole("textbox", { name: "Search" }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Go" }).should("be.focused");
+
+      // Shift+Tab moves from the input back to the previous cell.
+      cy.findByRole("textbox", { name: "Search" }).focus();
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
   });
 });
