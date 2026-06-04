@@ -51,7 +51,7 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
         {...rest}
       >
         {header}
-        <ol
+        <ul
           className={withBaseName("list")}
           aria-labelledby={header ? headerId : undefined}
         >
@@ -61,7 +61,7 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
               {item}
             </li>
           ))}
-        </ol>
+        </ul>
       </MegaMenuColumn>
     );
   },
