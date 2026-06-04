@@ -92,6 +92,64 @@ function focusNextTriggerAndClose(context: FloatingRootContext) {
 }
 
 /**
+ * Whether the columns are laid out as a single stacked column rather than a row.
+ * At small viewports the panel grid collapses to one column (see
+ * `MegaMenuPanel.css`), so columns flow top-to-bottom. Detected geometrically:
+ * the second column begins at or below the bottom of the first.
+ */
+function columnsStacked(columns: HTMLElement[]): boolean {
+  if (columns.length < 2) return false;
+  const first = columns[0].getBoundingClientRect();
+  const second = columns[1].getBoundingClientRect();
+  return second.top >= first.bottom - 1;
+}
+
+/**
+ * Stacked (small-viewport) movement: every cell forms one linear list in layout
+ * order, so all four arrows degrade to previous/next. Up/Left on the very first
+ * item returns focus to the trigger (menu stays open).
+ */
+function handleLinear(
+  key: string,
+  cell: HTMLElement,
+  panel: HTMLElement,
+  context: FloatingRootContext,
+): boolean {
+  const cells = queryFocusables(panel);
+  const index = cells.indexOf(cell);
+  if (index === -1) return false;
+
+  switch (key) {
+    case "ArrowDown":
+    case "ArrowRight": {
+      if (index < cells.length - 1) {
+        cells[index + 1].focus();
+      }
+      return true;
+    }
+    case "ArrowUp":
+    case "ArrowLeft": {
+      if (index > 0) {
+        cells[index - 1].focus();
+      } else {
+        focusTrigger(context);
+      }
+      return true;
+    }
+    case "Home": {
+      cells[0]?.focus();
+      return true;
+    }
+    case "End": {
+      cells[cells.length - 1]?.focus();
+      return true;
+    }
+    default:
+      return false;
+  }
+}
+
+/**
  * Apply an arrow/Home/End movement from `cell`. Returns `true` when the key was
  * consumed (so the caller can `preventDefault`).
  *
@@ -111,6 +169,13 @@ function handleArrow(
   context: FloatingRootContext,
 ): boolean {
   const { columns, topBands, bottomBands } = buildModel(panel);
+
+  // Small viewport: the grid is stacked into one column, so arrows degrade to a
+  // single linear Up/Down (and Left/Right) walk through every cell in order.
+  if (columnsStacked(columns)) {
+    return handleLinear(key, cell, panel, context);
+  }
+
   const column = cell.closest<HTMLElement>(COLUMN_SELECTOR);
   const band = cell.closest<HTMLElement>(BAND_SELECTOR);
 
@@ -268,10 +333,10 @@ export interface UseMegaMenuNavigationProps {
  * Floating-ui custom interaction hook for mega menu keyboard navigation.
  *
  * Returns `ElementProps` merged via `useInteractions`, handling key events on
- * the reference (trigger) and floating (panel) elements. The navigation model
- * is rebuilt from the panel DOM on every keypress from the structural
- * attributes (`data-mega-menu-column`, `data-mega-menu-band`); cells are the
- * focusable descendants of each container.
+ * the floating (panel) element only. The reference (trigger) keys are owned by
+ * `MegaMenuTrigger`. The navigation model is rebuilt from the panel DOM on every
+ * keypress from the structural attributes (`data-mega-menu-column`,
+ * `data-mega-menu-band`); cells are the focusable descendants of each container.
  *
  * - **↑ / ↓** move within a column; **← / →** cross between columns.
  * - Within a band **← / →** move along it and **↑ / ↓** cross to the columns.
@@ -279,6 +344,8 @@ export interface UseMegaMenuNavigationProps {
  * - **Home / End** jump to the first / last cell in the column.
  * - **↑ / ←** on the very first item returns focus to the trigger (menu open).
  * - **→** on the last column closes the menu and focuses the next trigger.
+ * - At a small viewport the grid stacks into one column and all arrows degrade
+ *   to a single linear walk over every cell.
  * - Focus inside a self-consuming control (input, combobox, slider …) keeps its
  *   own keys — the engine returns early without preventing default.
  */
@@ -295,17 +362,9 @@ export function useMegaMenuNavigation(
     }
 
     return {
-      reference: {
-        onKeyDown(event: React.KeyboardEvent) {
-          if (event.key === "ArrowDown" && open) {
-            event.preventDefault();
-            const floating = context.elements.floating;
-            if (floating instanceof HTMLElement) {
-              focusFirstItem(floating);
-            }
-          }
-        },
-      },
+      // The reference (trigger) keys — Left/Right between siblings and Down to
+      // open and enter the panel — are owned solely by `MegaMenuTrigger`. The
+      // engine only handles keys once focus is inside the floating panel.
       floating: {
         onKeyDown(event: React.KeyboardEvent) {
           if (!open) return;

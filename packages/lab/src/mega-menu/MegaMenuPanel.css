@@ -20,3 +20,24 @@
   background: var(--salt-container-primary-background);
   box-shadow: var(--salt-overlayable-shadow-popout);
 }
+
+/* Small viewport: collapse the layout grid to a single column. Bands, regions
+   and groups stack top-to-bottom in source order (before-band, before-region,
+   groups, after-region, after-band) with no wrapper scaffolding. The keyboard
+   engine detects the stacked layout and degrades arrows to a linear walk. */
+@media (max-width: 600px) {
+  .saltMegaMenuPanel {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "top"
+      "left"
+      "center"
+      "right"
+      "bottom";
+  }
+
+  /* Collapse the group columns too, so every group stacks in source order. */
+  .saltMegaMenuPanel .saltMegaMenuGroups {
+    grid-template-columns: 1fr;
+  }
+}
