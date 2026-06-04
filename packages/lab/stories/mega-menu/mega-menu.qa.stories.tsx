@@ -1,10 +1,10 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuGroup,
+  MegaMenuSection,
   MegaMenuGroups,
-  MegaMenuHeader,
-  MegaMenuItem,
+  MegaMenuHeading,
+  MegaMenuLink,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -32,10 +32,10 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Group</MegaMenuHeader>
-                  <MegaMenuItem href="#">Item</MegaMenuItem>
-                </MegaMenuGroup>
+                <MegaMenuSection>
+                  <MegaMenuHeading>Group</MegaMenuHeading>
+                  <MegaMenuLink href="#">Item</MegaMenuLink>
+                </MegaMenuSection>
               </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>
@@ -47,10 +47,10 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Services menu">
               <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Group</MegaMenuHeader>
-                  <MegaMenuItem href="#">Item</MegaMenuItem>
-                </MegaMenuGroup>
+                <MegaMenuSection>
+                  <MegaMenuHeading>Group</MegaMenuHeading>
+                  <MegaMenuLink href="#">Item</MegaMenuLink>
+                </MegaMenuSection>
               </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>
@@ -62,10 +62,10 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Resources menu">
               <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuHeader>Group</MegaMenuHeader>
-                  <MegaMenuItem href="#">Item</MegaMenuItem>
-                </MegaMenuGroup>
+                <MegaMenuSection>
+                  <MegaMenuHeading>Group</MegaMenuHeading>
+                  <MegaMenuLink href="#">Item</MegaMenuLink>
+                </MegaMenuSection>
               </MegaMenuGroups>
             </MegaMenuPanel>
           </MegaMenu>

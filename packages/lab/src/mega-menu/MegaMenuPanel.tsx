@@ -20,10 +20,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { MegaMenuBand } from "./MegaMenuBand";
+import { MegaMenuAside } from "./MegaMenuAside";
+import { MegaMenuFooter } from "./MegaMenuFooter";
 import { MegaMenuGroups } from "./MegaMenuGroups";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
-import { MegaMenuRegion } from "./MegaMenuRegion";
 import { useMegaMenu } from "./useMegaMenu";
 
 const withBaseName = makePrefixer("saltMegaMenuPanel");
@@ -32,8 +32,8 @@ const withBaseName = makePrefixer("saltMegaMenuPanel");
  * Assign each first-layer child to a grid area from its component type and
  * source order relative to `MegaMenuGroups`:
  * - `MegaMenuGroups` → the center cell.
- * - `MegaMenuRegion` → `left` when before groups, `right` when after.
- * - `MegaMenuBand`   → `top` when before groups, `bottom` when after.
+ * - `MegaMenuAside`  → `left` when before groups, `right` when after.
+ * - `MegaMenuFooter` → `top` when before groups, `bottom` when after.
  * Other children are left untouched (auto-placed). This lets authors position
  * content by source order alone, without wrapper scaffolding.
  */
@@ -53,9 +53,9 @@ function positionChildren(children: ReactNode): ReactNode {
     let gridArea: string | undefined;
     if (child.type === MegaMenuGroups) {
       gridArea = "center";
-    } else if (child.type === MegaMenuRegion) {
+    } else if (child.type === MegaMenuAside) {
       gridArea = index < groupsIndex ? "left" : "right";
-    } else if (child.type === MegaMenuBand) {
+    } else if (child.type === MegaMenuFooter) {
       gridArea = index < groupsIndex ? "top" : "bottom";
     }
 

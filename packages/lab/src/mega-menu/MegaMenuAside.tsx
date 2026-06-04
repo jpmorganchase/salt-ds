@@ -7,12 +7,12 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
+import megaMenuAsideCss from "./MegaMenuAside.css";
 import { MegaMenuColumn } from "./MegaMenuColumn";
-import megaMenuRegionCss from "./MegaMenuRegion.css";
 
-const withBaseName = makePrefixer("saltMegaMenuRegion");
+const withBaseName = makePrefixer("saltMegaMenuAside");
 
-export interface MegaMenuRegionProps extends ComponentPropsWithoutRef<"div"> {
+export interface MegaMenuAsideProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of the region. Renders to the left of the groups when placed
    * before `MegaMenuGroups`, and to the right when placed after.
@@ -20,12 +20,12 @@ export interface MegaMenuRegionProps extends ComponentPropsWithoutRef<"div"> {
   children?: ReactNode;
 }
 
-export const MegaMenuRegion = forwardRef<HTMLDivElement, MegaMenuRegionProps>(
-  function MegaMenuRegion({ className, ...rest }, ref) {
+export const MegaMenuAside = forwardRef<HTMLDivElement, MegaMenuAsideProps>(
+  function MegaMenuAside({ className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-mega-menu-region",
-      css: megaMenuRegionCss,
+      testId: "salt-mega-menu-aside",
+      css: megaMenuAsideCss,
       window: targetWindow,
     });
 

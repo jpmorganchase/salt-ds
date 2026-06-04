@@ -118,7 +118,7 @@ nav > ol {
     grid-template-columns: 1fr;
   }
 
-  .custom-region-side .saltMegaMenuItem {
+  .custom-region-side .saltMegaMenuLink {
     inline-size: 100%;
   }
 }
@@ -130,7 +130,7 @@ nav > ol {
   height: var(--salt-size-base);
 }
 
-.saltMegaMenuItem {
+.saltMegaMenuLink {
   inline-size: 100%;
 }
 

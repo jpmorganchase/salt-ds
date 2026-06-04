@@ -1,5 +1,5 @@
-.saltMegaMenuRegion {
+.saltMegaMenuFooter {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   padding: var(--salt-spacing-300);
 }
