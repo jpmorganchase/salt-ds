@@ -92,6 +92,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       getFloatingProps,
       setFloating,
       focusFirstItemOnOpen,
+      setFocusFirstItemOnOpen,
       setPanelId,
     } = useMegaMenu();
 
@@ -102,6 +103,18 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       setPanelId(id);
       return () => setPanelId(undefined);
     }, [id, setPanelId]);
+
+    // `focusFirstItemOnOpen` only drives the FloatingFocusManager's initial focus
+    // when the panel mounts. The focus manager consumes it during its own (child)
+    // effect, which runs before this one. Reset it afterwards so that while the
+    // menu stays open the manager is in its hands-off (`initialFocus = -1`) mode —
+    // otherwise re-entering the panel (e.g. ArrowUp to the trigger then ArrowDown)
+    // fights the manager and focus lands on the panel container instead of an item.
+    useEffect(() => {
+      if (focusFirstItemOnOpen) {
+        setFocusFirstItemOnOpen(false);
+      }
+    }, [focusFirstItemOnOpen, setFocusFirstItemOnOpen]);
 
     // Resolve the panel's page-margin to a pixel value to override the margin as required.
     const [pageMargin, setPageMargin] = useState(0);
