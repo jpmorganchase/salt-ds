@@ -25,20 +25,25 @@ disagree, that is a bug in one of them — reconcile, don't guess.
 
 ## 2. Layout & focus order
 
-The panel owns its layout. A first-layer child's position is derived from its
-**component type** and its **source order** relative to `MegaMenuGroups` — there
-are no placement props:
+The panel is a single horizontal row — `[Aside | Main | Aside]`: optional side
+content, the center navigation area, optional side content. The panel's only
+direct children are `MegaMenuAside` (side content) and `MegaMenuMain` (the center;
+exactly one). A `MegaMenuAside`'s side is derived from its **source order**
+relative to `MegaMenuMain` — there are no placement props:
 
-| Child | Before `MegaMenuGroups` | After `MegaMenuGroups` |
+| Child | Before `MegaMenuMain` | After `MegaMenuMain` |
 | --- | --- | --- |
 | `MegaMenuAside` (side content) | left | right |
-| `MegaMenuFooter` (full-width content) | top | bottom |
-| `MegaMenuGroups` | — (the center; exactly one) | — |
+| `MegaMenuMain` | — (the center; exactly one) | — |
+
+Inside `MegaMenuMain`, the `MegaMenuSection` columns lay out left-to-right and the
+optional `MegaMenuFooter` sits on its own row **beneath** them, width-bound to the
+columns. There is no top band.
 
 **Focus order equals source (DOM) order.** Because the panel maps source order
-onto position, visual order and focus order cannot diverge: content placed
-before the groups (top/left) is reached before the link lists; content placed
-after (right/bottom) is reached after them.
+onto position, visual order and focus order cannot diverge: a left aside is
+reached before the columns, a right aside after them, and the footer after the
+columns it sits beneath.
 
 ## 3. The navigation model
 
@@ -47,9 +52,9 @@ Keyboard navigation is built from the panel DOM on each keypress:
 - A **column** is any element with `data-mega-menu-column` (every `MegaMenuSection`
   and `MegaMenuAside`). Columns are vertical; arrow movement within a column is
   **Up/Down**.
-- A **band** is any element with `data-mega-menu-band` (every `MegaMenuFooter`),
-  classified **top** or **bottom** by its DOM position relative to the columns.
-  Bands are horizontal rows; arrow movement within a band is **Left/Right**.
+- A **band** is the element with `data-mega-menu-band` (the `MegaMenuFooter`). It
+  always sits at the **bottom** of the center area, beneath the columns. Bands are
+  horizontal rows; arrow movement within a band is **Left/Right**.
 - A **cell** is any focusable descendant of a column/band
   (`a[href]`, `button:not([disabled])`, `[tabindex]:not([tabindex="-1"])`),
   excluding anything inside an `aria-hidden`/`inert` subtree. Items carry **no**
@@ -84,12 +89,12 @@ link and closes the menu.
 
 ## 6. In-panel arrow navigation
 
-### Columns (groups and side regions)
+### Columns (sections and side asides)
 - **Up / Down** — move between cells within the column.
-- **Down on the last cell** — cross into the first cell of the **bottom band**
+- **Down on the last cell** — cross into the first cell of the **footer band**
   if one exists; otherwise **no effect** (does not wrap, does not change column).
-- **Up on the first cell** — cross into the first cell of the **top band** if one
-  exists; otherwise return focus to the **trigger** (menu stays open).
+- **Up on the first cell** — return focus to the **trigger** (menu stays open).
+  The footer is always below the columns, so there is nothing above the first cell.
 - **Right / Left** — cross to the **adjacent column**, landing on its **first**
   cell. (Crossing happens from any row — you need not be at the column's edge.)
 - **Right on the last column** — close the menu and focus the **next sibling
@@ -98,15 +103,14 @@ link and closes the menu.
   open).
 - **Home / End** — first / last cell of the current column.
 
-### Bands (full-width top/bottom content)
+### Bands (the full-width footer)
 - **Left / Right** — move between cells within the band.
-- **Up** — from a **top** band, return to the trigger; from a **bottom** band,
-  cross into the first cell of the first column.
-- **Down** — from a **top** band, cross into the first cell of the first column;
-  from a **bottom** band, **no effect**.
+- **Up** — cross into the first cell of the first column (the footer is the
+  bottom of the center area). If there are no columns, return to the trigger.
+- **Down** — **no effect** (the footer is always the bottom; nothing is below it).
 - **Left on the first cell** — if that cell is the very first focusable in the
-  panel (a top band before everything), return to the trigger; otherwise no
-  effect. Bands do not cross horizontally to other regions.
+  panel (a footer with no columns or aside before it), return to the trigger;
+  otherwise no effect. Bands do not cross horizontally to other regions.
 - **Home / End** — first / last cell of the band.
 
 ## 7. Tab / Shift+Tab inside the panel
@@ -169,7 +173,7 @@ order:
 | `ArrowRight` / `ArrowLeft` (trigger) | Move to next/previous trigger; closes the menu if it was open. |
 | `Tab` (in panel) | Next cell in layout order; past the last cell, close and move to the next focusable after the menu. |
 | `Shift`+`Tab` (in panel) | Previous cell; from the first cell, return to the trigger (menu stays open). |
-| `ArrowUp` / `ArrowDown` (column) | Move within the column; at the top/bottom edge cross to a band, or (top, no band) return to the trigger, or (bottom, no band) no effect. |
+| `ArrowUp` / `ArrowDown` (column) | Move within the column; Up on the first cell returns to the trigger; Down on the last cell crosses into the footer band if one exists, otherwise no effect. |
 | `ArrowLeft` / `ArrowRight` (column) | Cross to the adjacent column's first cell. Left on the first column → trigger (stays open). Right on the last column → next trigger + close (no effect if none). |
 | `ArrowLeft` / `ArrowRight` (band) | Move within the band. |
 | `ArrowUp` / `ArrowDown` (band) | Cross between the band and the column grid (per §6). |

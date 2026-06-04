@@ -2,39 +2,56 @@
 "@salt-ds/lab": minor
 ---
 
-Updated `MegaMenu` with several API improvements:
+Updated `MegaMenu` with a revised component structure and API.
 
-- **Renamed `MegaMenuSection` to `MegaMenuGroups`.** The associated CSS custom property `--saltMegaMenuSection-columnWidth` has been renamed to `--saltMegaMenuGroups-columnWidth`.
-- **Removed `MegaMenuItemContent`.** Pass the label directly to `MegaMenuItem`.
-- **Added a `render` prop to `MegaMenuItem`** for integration with custom link or routing components (such as `react-router`'s `Link`). `MegaMenuItem` is now the single focusable link, with Space-activation parity and closing the menu on click.
-- **Removed `MegaMenuSupportingContent` and `MegaMenuSupportingActions`.** Use `MegaMenuRegion` and `MegaMenuBand` instead.
-- **Added `MegaMenuRegion`** for side content. It renders to the left of `MegaMenuGroups` when placed before it in the panel, and to the right when placed after.
-- **Added `MegaMenuBand`** for full-width content. It renders as a band on top when placed before `MegaMenuGroups`, and on the bottom when placed after.
+The panel is now a single horizontal row — `[Aside | Main | Aside]` — whose only
+direct children are `MegaMenuAside` (side content) and a single `MegaMenuMain`
+(the navigation area). `MegaMenuMain` lays its `MegaMenuSection` columns out and
+renders an optional `MegaMenuFooter` beneath them. Position is derived from
+component type and source order alone — there are no placement props.
 
-`MegaMenuPanel` now owns a CSS grid that positions its children from their type and source order alone — a `MegaMenuGroups` in the center, `MegaMenuRegion`s to the sides and `MegaMenuBand`s top/bottom — so authors no longer need wrapper `<div>`/`FlexLayout` scaffolding to lay out a panel.
+- **Added `MegaMenuMain`**, the center navigation area. It holds the
+  `MegaMenuSection` columns and the optional `MegaMenuFooter`, and absorbs the
+  removed `MegaMenuGroups`. The CSS custom property for column width is
+  `--saltMegaMenuMain-columnWidth`.
+- **Removed `MegaMenuGroups`.** Wrap sections in `MegaMenuMain` instead.
+- **Renamed `MegaMenuGroup` to `MegaMenuSection`** — one category column
+  (heading + links).
+- **Renamed `MegaMenuHeader` to `MegaMenuHeading`** — a section's label.
+- **Renamed `MegaMenuItem` to `MegaMenuLink`** — the single focusable link, with
+  Space-activation parity and closing the menu on click. It keeps the `render`
+  prop for custom link/routing components (such as `react-router`'s `Link`).
+- **Renamed `MegaMenuRegion` to `MegaMenuAside`** for side content. It renders to
+  the left of `MegaMenuMain` when placed before it, and to the right when placed
+  after.
+- **Renamed `MegaMenuBand` to `MegaMenuFooter`** for full-width content. The
+  footer now lives **inside `MegaMenuMain`** and is **bottom-only**, width-bound
+  to the columns above it — there is no top band.
 
 ```diff
-- <MegaMenuSection>
-+ <MegaMenuGroups>
-    <MegaMenuGroup>
-      <MegaMenuHeader>Financial services</MegaMenuHeader>
--     <MegaMenuItem>
--       <Icon aria-hidden />
--       <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
--     </MegaMenuItem>
-+     <MegaMenuItem render={<Link to="/digital-banking" />}>
-+       <Icon aria-hidden />
-+       Digital banking
-+     </MegaMenuItem>
-    </MegaMenuGroup>
-- </MegaMenuSection>
-+ </MegaMenuGroups>
-- <MegaMenuContent>...</MegaMenuContent>
-+ <MegaMenuRegion>...</MegaMenuRegion>
-- <MegaMenuSupportingActions>
--   <Link href="#demo" IconComponent={ChevronRightIcon}>Book a demo</Link>
-- </MegaMenuSupportingActions>
-+ <MegaMenuBand>
-+   <Link href="#demo" IconComponent={ChevronRightIcon}>Book a demo</Link>
-+ </MegaMenuBand>
+  <MegaMenuPanel aria-label="Solutions menu">
++   <MegaMenuMain>
+-     <MegaMenuGroups>
+-       <MegaMenuGroup>
+-         <MegaMenuHeader>Financial services</MegaMenuHeader>
+-         <MegaMenuItem render={<Link to="/digital-banking" />}>
++       <MegaMenuSection>
++         <MegaMenuHeading>Financial services</MegaMenuHeading>
++         <MegaMenuLink render={<Link to="/digital-banking" />}>
+            <Icon aria-hidden />
+            Digital banking
+-         </MegaMenuItem>
+-       </MegaMenuGroup>
+-     </MegaMenuGroups>
++         </MegaMenuLink>
++       </MegaMenuSection>
+-     <MegaMenuBand>
++       <MegaMenuFooter>
+          <Link href="#demo" IconComponent={ChevronRightIcon}>Book a demo</Link>
+-     </MegaMenuBand>
++       </MegaMenuFooter>
++   </MegaMenuMain>
+-   <MegaMenuRegion>...</MegaMenuRegion>
++   <MegaMenuAside>...</MegaMenuAside>
+  </MegaMenuPanel>
 ```
