@@ -1,9 +1,9 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuGroups,
   MegaMenuHeading,
   MegaMenuLink,
+  MegaMenuMain,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -29,7 +29,7 @@ const InteractiveMegaMenu = () => {
               <NavigationItem>Solutions</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Financial Services</MegaMenuHeading>
                   <MegaMenuLink
@@ -45,7 +45,7 @@ const InteractiveMegaMenu = () => {
                     Risk Management
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -59,7 +59,7 @@ const InteractiveMegaMenu = () => {
               <NavigationItem>Services</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuGroups>
+              <MegaMenuMain>
                 <MegaMenuSection>
                   <MegaMenuHeading>Consulting</MegaMenuHeading>
                   <MegaMenuLink
@@ -69,7 +69,7 @@ const InteractiveMegaMenu = () => {
                     Strategy
                   </MegaMenuLink>
                 </MegaMenuSection>
-              </MegaMenuGroups>
+              </MegaMenuMain>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -137,7 +137,7 @@ describe("Given a MegaMenu", () => {
           <NavigationItem>Solutions</NavigationItem>
         </MegaMenuTrigger>
         <MegaMenuPanel>
-          <MegaMenuGroups>
+          <MegaMenuMain>
             <MegaMenuSection>
               <MegaMenuHeading>Financial Services</MegaMenuHeading>
               <MegaMenuLink
@@ -147,7 +147,7 @@ describe("Given a MegaMenu", () => {
                 Digital Banking
               </MegaMenuLink>
             </MegaMenuSection>
-          </MegaMenuGroups>
+          </MegaMenuMain>
         </MegaMenuPanel>
       </MegaMenu>,
     );

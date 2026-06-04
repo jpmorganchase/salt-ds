@@ -1,14 +1,9 @@
 .saltMegaMenuPanel {
-  display: grid;
-  /* Source-order layout: a full-width band row on top, a middle row of
-     [region-left | groups | region-right], and a full-width band row below.
-     Empty tracks collapse, so authors need no wrapper scaffolding. */
-  grid-template-columns: auto 1fr auto;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "top    top    top"
-    "left   center right"
-    "bottom bottom bottom";
+  /* Single horizontal row: optional side content, the center navigation area,
+     optional side content. Position is derived from source order alone, so
+     authors need no wrapper scaffolding. */
+  display: flex;
+  align-items: stretch;
   inline-size: var(--saltMegaMenuPanel-inlineSize, fit-content);
   max-inline-size: var(--saltMegaMenuPanel-maxInlineSize, var(--saltMegaMenuPanel-availableWidth, calc(100vw - var(--salt-spacing-600))));
   max-height: 90%;
@@ -21,23 +16,11 @@
   box-shadow: var(--salt-overlayable-shadow-popout);
 }
 
-/* Small viewport: collapse the layout grid to a single column. Bands, regions
-   and groups stack top-to-bottom in source order (before-band, before-region,
-   groups, after-region, after-band) with no wrapper scaffolding. The keyboard
-   engine detects the stacked layout and degrades arrows to a linear walk. */
+/* Small viewport: stack side content and the navigation area top-to-bottom in
+   source order. The keyboard engine detects the stacked layout and degrades
+   arrows to a linear walk. */
 @media (max-width: 600px) {
   .saltMegaMenuPanel {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "top"
-      "left"
-      "center"
-      "right"
-      "bottom";
-  }
-
-  /* Collapse the group columns too, so every group stacks in source order. */
-  .saltMegaMenuPanel .saltMegaMenuGroups {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 }

@@ -2,13 +2,13 @@ import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
+  MegaMenuAside,
   MegaMenuFooter,
-  MegaMenuSection,
-  MegaMenuGroups,
   MegaMenuHeading,
   MegaMenuLink,
+  MegaMenuMain,
   MegaMenuPanel,
-  MegaMenuAside,
+  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -69,8 +69,8 @@ const supportingLinks = (
   </FlexLayout>
 );
 
-const groups = (
-  <MegaMenuGroups className={styles.customRegionSideSection}>
+const main = (
+  <MegaMenuMain className={styles.customRegionSideSection}>
     <MegaMenuSection>
       <MegaMenuHeading>Financial services</MegaMenuHeading>
       <MegaMenuLink
@@ -147,7 +147,8 @@ const groups = (
         Production planning
       </MegaMenuLink>
     </MegaMenuSection>
-  </MegaMenuGroups>
+    <MegaMenuFooter>{supportingLinks}</MegaMenuFooter>
+  </MegaMenuMain>
 );
 
 export const WithContent = (): ReactElement => {
@@ -163,14 +164,13 @@ export const WithContent = (): ReactElement => {
           <MegaMenuTrigger>
             <Button>Content on right</Button>
           </MegaMenuTrigger>
-          {/* Region placed after Groups renders to the right; Band after
-              Groups renders along the bottom. */}
+          {/* Aside placed after Main renders to the right. The footer lives
+              inside Main, along the bottom of the columns. */}
           <MegaMenuPanel
             aria-label="Content on right menu"
             className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
           >
-            {groups}
-            <MegaMenuFooter>{supportingLinks}</MegaMenuFooter>
+            {main}
             <MegaMenuAside className={styles.customRegionSideContent}>
               {featuredResource}
             </MegaMenuAside>
@@ -184,7 +184,8 @@ export const WithContent = (): ReactElement => {
           <MegaMenuTrigger>
             <Button>Content on left</Button>
           </MegaMenuTrigger>
-          {/* Region placed before Groups renders to the left. */}
+          {/* Aside placed before Main renders to the left. The footer lives
+              inside Main, along the bottom of the columns. */}
           <MegaMenuPanel
             aria-label="Content on left menu"
             className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
@@ -192,8 +193,7 @@ export const WithContent = (): ReactElement => {
             <MegaMenuAside className={styles.customRegionSideContent}>
               {featuredResource}
             </MegaMenuAside>
-            {groups}
-            <MegaMenuFooter>{supportingLinks}</MegaMenuFooter>
+            {main}
           </MegaMenuPanel>
         </MegaMenu>
       </FlexLayout>

@@ -3,11 +3,11 @@ import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
   MegaMenuFooter,
-  MegaMenuSection,
-  MegaMenuGroups,
   MegaMenuHeading,
   MegaMenuLink,
+  MegaMenuMain,
   MegaMenuPanel,
+  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -40,10 +40,8 @@ export const WithLink = (): ReactElement => {
                   Solutions
                 </NavigationItem>
               </MegaMenuTrigger>
-              <MegaMenuPanel
-                aria-label="Solutions menu"
-              >
-                <MegaMenuGroups>
+              <MegaMenuPanel aria-label="Solutions menu">
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Financial services</MegaMenuHeading>
                     <MegaMenuLink
@@ -204,27 +202,27 @@ export const WithLink = (): ReactElement => {
                       Public safety solutions
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
-                <MegaMenuFooter>
-                  <FlexLayout wrap gap={3}>
-                    <Link
-                      color="primary"
-                      underline="default"
-                      href="#link"
-                      IconComponent={ChevronRightIcon}
-                    >
-                      Book a demo
-                    </Link>
-                    <Link
-                      color="primary"
-                      underline="default"
-                      href="#link"
-                      IconComponent={ChevronRightIcon}
-                    >
-                      Support center
-                    </Link>
-                  </FlexLayout>
-                </MegaMenuFooter>
+                  <MegaMenuFooter>
+                    <FlexLayout wrap gap={3}>
+                      <Link
+                        color="primary"
+                        underline="default"
+                        href="#link"
+                        IconComponent={ChevronRightIcon}
+                      >
+                        Book a demo
+                      </Link>
+                      <Link
+                        color="primary"
+                        underline="default"
+                        href="#link"
+                        IconComponent={ChevronRightIcon}
+                      >
+                        Support center
+                      </Link>
+                    </FlexLayout>
+                  </MegaMenuFooter>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -238,10 +236,8 @@ export const WithLink = (): ReactElement => {
                   Services
                 </NavigationItem>
               </MegaMenuTrigger>
-              <MegaMenuPanel
-                aria-label="Services menu"
-              >
-                <MegaMenuGroups>
+              <MegaMenuPanel aria-label="Services menu">
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Consulting</MegaMenuHeading>
                     <MegaMenuLink
@@ -395,17 +391,17 @@ export const WithLink = (): ReactElement => {
                       Guides
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
-                <MegaMenuFooter>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Service status
-                  </Link>
-                </MegaMenuFooter>
+                  <MegaMenuFooter>
+                    <Link
+                      color="primary"
+                      underline="default"
+                      href="#link"
+                      IconComponent={ChevronRightIcon}
+                    >
+                      Service status
+                    </Link>
+                  </MegaMenuFooter>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -419,10 +415,8 @@ export const WithLink = (): ReactElement => {
                   Resources
                 </NavigationItem>
               </MegaMenuTrigger>
-              <MegaMenuPanel
-                aria-label="Resources menu"
-              >
-                <MegaMenuGroups>
+              <MegaMenuPanel aria-label="Resources menu">
+                <MegaMenuMain>
                   <MegaMenuSection>
                     <MegaMenuHeading>Documentation</MegaMenuHeading>
                     <MegaMenuLink
@@ -485,17 +479,17 @@ export const WithLink = (): ReactElement => {
                       Troubleshooting
                     </MegaMenuLink>
                   </MegaMenuSection>
-                </MegaMenuGroups>
-                <MegaMenuFooter>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
-                    Browse documentation
-                  </Link>
-                </MegaMenuFooter>
+                  <MegaMenuFooter>
+                    <Link
+                      color="primary"
+                      underline="default"
+                      href="#link"
+                      IconComponent={ChevronRightIcon}
+                    >
+                      Browse documentation
+                    </Link>
+                  </MegaMenuFooter>
+                </MegaMenuMain>
               </MegaMenuPanel>
             </MegaMenu>
           </li>

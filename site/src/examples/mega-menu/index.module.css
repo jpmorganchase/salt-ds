@@ -13,8 +13,8 @@
   box-sizing: border-box;
 }
 
-.fullWidthPanel :global(.saltMegaMenuGroups) {
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
+.fullWidthPanel :global(.saltMegaMenuMain) {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuMain-columnWidth, 16rem)));
 }
 
 .edgeToEdgeWrapper {
@@ -33,12 +33,12 @@
   box-sizing: border-box;
 }
 
-.edgeToEdgePanel :global(.saltMegaMenuGroups) {
-  --saltMegaMenuGroups-columnWidth: 212px;
+.edgeToEdgePanel :global(.saltMegaMenuMain) {
+  --saltMegaMenuMain-columnWidth: 212px;
   max-inline-size: 920px;
   inline-size: 100%;
   margin-inline: auto;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuMain-columnWidth, 16rem)));
 }
 
 .menuItemAdornment {
@@ -62,7 +62,7 @@
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
-.smallViewportContainer :global(.saltMegaMenuGroups) {
+.smallViewportContainer :global(.saltMegaMenuMain) {
   grid-template-columns: 1fr;
   max-inline-size: 100%;
   width: 100%;

@@ -13,8 +13,8 @@ const withBaseName = makePrefixer("saltMegaMenuFooter");
 
 export interface MegaMenuFooterProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of the band. Renders as a full-width row on top when placed
-   * before `MegaMenuGroups`, and on the bottom when placed after.
+   * The content of the footer. Renders as a full-width row beneath the sections,
+   * at the bottom of `MegaMenuMain`.
    */
   children?: ReactNode;
 }

@@ -3,9 +3,9 @@ import {
   MegaMenu,
   MegaMenuAside,
   MegaMenuFooter,
-  MegaMenuGroups,
   MegaMenuHeading,
   MegaMenuLink,
+  MegaMenuMain,
   MegaMenuPanel,
   MegaMenuSection,
   MegaMenuTrigger,
@@ -24,7 +24,7 @@ const AccessibleMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -49,7 +49,7 @@ const AccessibleMegaMenu = () => (
                   Patient Management
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -60,7 +60,7 @@ const AccessibleMegaMenu = () => (
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Services menu">
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Consulting</MegaMenuHeading>
                 <MegaMenuLink
@@ -70,7 +70,7 @@ const AccessibleMegaMenu = () => (
                   Strategy
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+            </MegaMenuMain>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -78,8 +78,10 @@ const AccessibleMegaMenu = () => (
   </nav>
 );
 
-// All four content positions around the groups, to verify the panel assigns
-// grid areas purely from component type and source order (no placement props).
+// Asides flanking the center and a footer inside it, to verify the panel
+// derives position purely from component type and source order (no placement
+// props): an aside before `MegaMenuMain` is the left column, one after is the
+// right column, and the footer sits inside `MegaMenuMain` beneath the sections.
 const LayoutMegaMenu = () => (
   <nav aria-label="Main">
     <StackLayout as="ol" direction="row" gap={1}>
@@ -89,13 +91,10 @@ const LayoutMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuFooter>
-              <a href="/top">Top band link</a>
-            </MegaMenuFooter>
             <MegaMenuAside>
               <a href="/left">Left region link</a>
             </MegaMenuAside>
-            <MegaMenuGroups>
+            <MegaMenuMain>
               <MegaMenuSection>
                 <MegaMenuHeading>Financial Services</MegaMenuHeading>
                 <MegaMenuLink
@@ -105,13 +104,13 @@ const LayoutMegaMenu = () => (
                   Digital Banking
                 </MegaMenuLink>
               </MegaMenuSection>
-            </MegaMenuGroups>
+              <MegaMenuFooter>
+                <a href="/bottom">Bottom band link</a>
+              </MegaMenuFooter>
+            </MegaMenuMain>
             <MegaMenuAside>
               <a href="/right">Right region link</a>
             </MegaMenuAside>
-            <MegaMenuFooter>
-              <a href="/bottom">Bottom band link</a>
-            </MegaMenuFooter>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -313,24 +312,38 @@ describe("Given a MegaMenu", () => {
   });
 
   describe("panel layout (source-order positioning)", () => {
-    it("assigns grid areas from component type and source order", () => {
+    it("places asides around Main and the footer inside Main, from source order", () => {
       cy.mount(<LayoutMegaMenu />);
 
-      cy.contains(".saltMegaMenuFooter", "Top band link")
-        .should("have.attr", "style")
-        .and("match", /grid-area:\s*top/);
-      cy.contains(".saltMegaMenuAside", "Left region link")
-        .should("have.attr", "style")
-        .and("match", /grid-area:\s*left/);
-      cy.contains(".saltMegaMenuGroups", "Digital Banking")
-        .should("have.attr", "style")
-        .and("match", /grid-area:\s*center/);
-      cy.contains(".saltMegaMenuAside", "Right region link")
-        .should("have.attr", "style")
-        .and("match", /grid-area:\s*right/);
-      cy.contains(".saltMegaMenuFooter", "Bottom band link")
-        .should("have.attr", "style")
-        .and("match", /grid-area:\s*bottom/);
+      // The panel is a single row whose direct children are, in source order,
+      // the left aside, the center (Main), and the right aside.
+      cy.get(".saltMegaMenuPanel")
+        .children()
+        .then(($children) => {
+          const classes = [...$children].map((el) => el.classList[0]);
+          expect(classes).to.deep.equal([
+            "saltMegaMenuAside",
+            "saltMegaMenuMain",
+            "saltMegaMenuAside",
+          ]);
+        });
+
+      // The aside before Main carries the left content; the one after, the right.
+      cy.contains(".saltMegaMenuPanel > .saltMegaMenuAside", "Left region link")
+        .next()
+        .should("have.class", "saltMegaMenuMain");
+      cy.contains(
+        ".saltMegaMenuPanel > .saltMegaMenuAside",
+        "Right region link",
+      )
+        .prev()
+        .should("have.class", "saltMegaMenuMain");
+
+      // The footer lives inside Main, beneath the sections (never beside the
+      // asides, which are outside Main).
+      cy.contains(".saltMegaMenuMain", "Digital Banking")
+        .find(".saltMegaMenuFooter")
+        .should("contain.text", "Bottom band link");
     });
   });
 
@@ -347,7 +360,7 @@ describe("Given a MegaMenu", () => {
       cy.checkAxeComponent();
     });
 
-    it("has no detectable a11y violations with regions and bands open", () => {
+    it("has no detectable a11y violations with asides and a footer open", () => {
       cy.mount(<LayoutMegaMenu />);
       cy.findByRole("region", { name: "Solutions menu" }).should("exist");
       cy.checkAxeComponent();

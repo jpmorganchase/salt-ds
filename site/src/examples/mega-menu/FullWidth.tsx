@@ -1,11 +1,11 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuSection,
-  MegaMenuGroups,
   MegaMenuHeading,
   MegaMenuLink,
+  MegaMenuMain,
   MegaMenuPanel,
+  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -48,7 +48,7 @@ export const FullWidth = (): ReactElement => {
                   aria-label="Solutions menu"
                   className={styles.fullWidthPanel}
                 >
-                  <MegaMenuGroups>
+                  <MegaMenuMain>
                     <MegaMenuSection>
                       <MegaMenuHeading>Financial services</MegaMenuHeading>
                       <MegaMenuLink
@@ -218,7 +218,7 @@ export const FullWidth = (): ReactElement => {
                         Cybersecurity
                       </MegaMenuLink>
                     </MegaMenuSection>
-                  </MegaMenuGroups>
+                  </MegaMenuMain>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>
@@ -236,7 +236,7 @@ export const FullWidth = (): ReactElement => {
                   aria-label="Services menu"
                   className={styles.fullWidthPanel}
                 >
-                  <MegaMenuGroups>
+                  <MegaMenuMain>
                     <MegaMenuSection>
                       <MegaMenuHeading>Consulting</MegaMenuHeading>
                       <MegaMenuLink
@@ -297,7 +297,7 @@ export const FullWidth = (): ReactElement => {
                         Certifications
                       </MegaMenuLink>
                     </MegaMenuSection>
-                  </MegaMenuGroups>
+                  </MegaMenuMain>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>
@@ -315,7 +315,7 @@ export const FullWidth = (): ReactElement => {
                   aria-label="Resources menu"
                   className={styles.fullWidthPanel}
                 >
-                  <MegaMenuGroups>
+                  <MegaMenuMain>
                     <MegaMenuSection>
                       <MegaMenuHeading>Documentation</MegaMenuHeading>
                       <MegaMenuLink
@@ -360,7 +360,7 @@ export const FullWidth = (): ReactElement => {
                         Community forum
                       </MegaMenuLink>
                     </MegaMenuSection>
-                  </MegaMenuGroups>
+                  </MegaMenuMain>
                 </MegaMenuPanel>
               </MegaMenu>
             </li>

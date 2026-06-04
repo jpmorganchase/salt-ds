@@ -1,0 +1,18 @@
+.saltMegaMenuMain {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, var(--saltMegaMenuMain-columnWidth, 12rem));
+  gap: var(--salt-spacing-300);
+  padding: var(--salt-spacing-300);
+  min-width: 0;
+  flex: 0 1 auto;
+  max-inline-size: var(--saltMegaMenuPanel-availableWidth, calc(100vw - var(--salt-spacing-600)));
+}
+
+/* Small viewport: collapse the column grid to a single stacked column. The
+   keyboard engine detects the stacked layout and degrades arrows to a linear
+   walk. */
+@media (max-width: 600px) {
+  .saltMegaMenuMain {
+    grid-template-columns: 1fr;
+  }
+}
