@@ -42,13 +42,13 @@ import {
 } from "@salt-ds/icons";
 import {
   MegaMenu,
+  MegaMenuBand,
   MegaMenuGroup,
   MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
-  MegaMenuSupportingActions,
-  MegaMenuSupportingContent,
+  MegaMenuRegion,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
@@ -2637,7 +2637,7 @@ EdgeToEdge.parameters = {
   layout: "fullscreen",
 };
 
-export const WithSupportingContent: StoryFn = () => {
+export const WithContent: StoryFn = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
@@ -2649,9 +2649,11 @@ export const WithSupportingContent: StoryFn = () => {
         <MegaMenuTrigger>
           <Button>Content on right</Button>
         </MegaMenuTrigger>
-        <MegaMenuPanel className="custom-region-no-container-padding custom-region-side">
-          <div className="custom-region-content">
-            <MegaMenuGroups>
+        <MegaMenuPanel
+          aria-label="Content on right menu"
+          className="custom-region-no-container-padding custom-region-side"
+        >
+          <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
                 <MegaMenuItem
@@ -2746,30 +2748,27 @@ export const WithSupportingContent: StoryFn = () => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuGroups>
+          <MegaMenuBand>
             <FlexLayout gap={3}>
-              <MegaMenuSupportingActions className="supporting-actions-first-link">
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  Book a demo
-                </Link>
-              </MegaMenuSupportingActions>
-              <MegaMenuSupportingActions>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  Support center
-                </Link>
-              </MegaMenuSupportingActions>
+              <Link
+                color="primary"
+                underline="default"
+                href="#link"
+                IconComponent={ChevronRightIcon}
+              >
+                Book a demo
+              </Link>
+              <Link
+                color="primary"
+                underline="default"
+                href="#link"
+                IconComponent={ChevronRightIcon}
+              >
+                Support center
+              </Link>
             </FlexLayout>
-          </div>
-          <MegaMenuSupportingContent className="custom-region">
+          </MegaMenuBand>
+          <MegaMenuRegion className="custom-region">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
                 alt="example"
@@ -2798,7 +2797,7 @@ export const WithSupportingContent: StoryFn = () => {
                 </Link>
               </StackLayout>
             </FlexLayout>
-          </MegaMenuSupportingContent>
+          </MegaMenuRegion>
         </MegaMenuPanel>
       </MegaMenu>
 
@@ -2809,8 +2808,11 @@ export const WithSupportingContent: StoryFn = () => {
         <MegaMenuTrigger>
           <Button>Content on left</Button>
         </MegaMenuTrigger>
-        <MegaMenuPanel className="custom-region-no-container-padding custom-region-side">
-          <MegaMenuSupportingContent className="custom-region">
+        <MegaMenuPanel
+          aria-label="Content on left menu"
+          className="custom-region-no-container-padding custom-region-side"
+        >
+          <MegaMenuRegion className="custom-region">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
                 alt="example"
@@ -2839,9 +2841,8 @@ export const WithSupportingContent: StoryFn = () => {
                 </Link>
               </StackLayout>
             </FlexLayout>
-          </MegaMenuSupportingContent>
-          <div className="custom-region-content">
-            <MegaMenuGroups>
+          </MegaMenuRegion>
+          <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuHeader>Financial services</MegaMenuHeader>
                 <MegaMenuItem
@@ -2936,29 +2937,26 @@ export const WithSupportingContent: StoryFn = () => {
                 </MegaMenuItem>
               </MegaMenuGroup>
             </MegaMenuGroups>
+          <MegaMenuBand>
             <FlexLayout gap={3}>
-              <MegaMenuSupportingActions className="supporting-actions-first-link">
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  Book a demo
-                </Link>
-              </MegaMenuSupportingActions>
-              <MegaMenuSupportingActions>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
-                  Support center
-                </Link>
-              </MegaMenuSupportingActions>
+              <Link
+                color="primary"
+                underline="default"
+                href="#link"
+                IconComponent={ChevronRightIcon}
+              >
+                Book a demo
+              </Link>
+              <Link
+                color="primary"
+                underline="default"
+                href="#link"
+                IconComponent={ChevronRightIcon}
+              >
+                Support center
+              </Link>
             </FlexLayout>
-          </div>
+          </MegaMenuBand>
         </MegaMenuPanel>
       </MegaMenu>
     </FlexLayout>
@@ -2990,7 +2988,7 @@ export const WithLink: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuPanel className="withLink-menu-container">
+            <MegaMenuPanel>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Financial services</MegaMenuHeader>
@@ -3150,8 +3148,8 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-              <FlexLayout wrap gap={3}>
-                <MegaMenuSupportingActions className="supporting-actions-first-link">
+              <MegaMenuBand>
+                <FlexLayout wrap gap={3}>
                   <Link
                     color="primary"
                     underline="default"
@@ -3160,8 +3158,6 @@ export const WithLink: StoryFn = () => {
                   >
                     Book a demo
                   </Link>
-                </MegaMenuSupportingActions>
-                <MegaMenuSupportingActions>
                   <Link
                     color="primary"
                     underline="default"
@@ -3170,8 +3166,8 @@ export const WithLink: StoryFn = () => {
                   >
                     Support center
                   </Link>
-                </MegaMenuSupportingActions>
-              </FlexLayout>
+                </FlexLayout>
+              </MegaMenuBand>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3186,7 +3182,7 @@ export const WithLink: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuPanel className="withLink-menu-container">
+            <MegaMenuPanel>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Consulting</MegaMenuHeader>
@@ -3338,7 +3334,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-              <MegaMenuSupportingActions className="supporting-actions-first-link">
+              <MegaMenuBand>
                 <Link
                   color="primary"
                   underline="default"
@@ -3347,7 +3343,7 @@ export const WithLink: StoryFn = () => {
                 >
                   Service status
                 </Link>
-              </MegaMenuSupportingActions>
+              </MegaMenuBand>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3361,7 +3357,7 @@ export const WithLink: StoryFn = () => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuPanel className="withLink-menu-container">
+            <MegaMenuPanel>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuHeader>Documentation</MegaMenuHeader>
@@ -3426,7 +3422,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuItem>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-              <MegaMenuSupportingActions supporting-actions-first-link>
+              <MegaMenuBand>
                 <Link
                   color="primary"
                   underline="default"
@@ -3435,7 +3431,7 @@ export const WithLink: StoryFn = () => {
                 >
                   Browse documentation
                 </Link>
-              </MegaMenuSupportingActions>
+              </MegaMenuBand>
             </MegaMenuPanel>
           </MegaMenu>
         </li>

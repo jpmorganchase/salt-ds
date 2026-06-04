@@ -66,13 +66,6 @@ nav > ol {
   grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
 }
 
-.custom-region-content {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  min-inline-size: 0;
-}
-
 .custom-region-no-container-padding {
   padding: 0;
 }
@@ -81,32 +74,12 @@ nav > ol {
   flex: 0 0 auto;
 }
 
-.supporting-actions-first-link {
-  padding-left: var(--salt-spacing-300);
-}
-
 .custom-region {
   background: var(--salt-container-secondary-background);
 }
 
 .custom-region-right-description {
   max-inline-size: 240px;
-}
-
-.withLink-menu-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.withLink-menu-container .saltMegaMenuGroups,
-.custom-region-content .saltMegaMenuGroups {
-  flex: 1 1 auto;
-}
-
-.withLink-menu-container > .saltMegaMenuGroup,
-.custom-region-content > .saltMegaMenuGroup {
-  margin-top: auto;
-  align-self: flex-start;
 }
 
 .custom-region-image {

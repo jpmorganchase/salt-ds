@@ -52,24 +52,6 @@
   inline-size: 100%;
 }
 
-.linkFooterSpacingFirstLinkStart {
-  padding-left: var(--salt-spacing-300);
-}
-
-.customRegionContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.customRegionContent > :last-child {
-  margin-top: auto;
-}
-
-.withLinkMenuContainer {
-  flex-direction: column;
-}
-
 .smallViewportWrapper {
   inline-size: 320px;
   max-inline-size: 100%;
