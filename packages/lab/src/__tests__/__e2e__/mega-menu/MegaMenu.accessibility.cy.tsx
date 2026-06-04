@@ -183,6 +183,79 @@ describe("Given a MegaMenu", () => {
     });
   });
 
+  describe("keyboard focus boundaries", () => {
+    const openSolutions = () => {
+      cy.findByRole("button", { name: "Solutions" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    };
+
+    it("collapses the menu and moves focus out when Tab passes the last item", () => {
+      cy.mount(<AccessibleMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("Tab"); // Risk Management
+      cy.realPress("Tab"); // Patient Management (last focusable)
+      cy.findByRole("link", { name: "Patient Management" }).should(
+        "be.focused",
+      );
+
+      cy.realPress("Tab");
+      // Menu collapses and focus lands on the next trigger outside the panel.
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
+    });
+
+    it("returns focus to the trigger when Shift+Tab passes the first item, keeping the menu open", () => {
+      cy.mount(<AccessibleMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking (first focusable)
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("closes and returns focus to the trigger on Escape", () => {
+      cy.mount(<AccessibleMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      cy.realPress("Escape");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+    });
+
+    it("degrades arrows to a linear walk when the grid is stacked at a small viewport", () => {
+      cy.viewport(375, 667);
+      cy.mount(<AccessibleMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+
+      // Within the first group.
+      cy.realPress("ArrowDown");
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+
+      // Stacked: ArrowDown crosses the group boundary linearly rather than
+      // stopping at the column edge (which is the side-by-side behaviour).
+      cy.realPress("ArrowDown");
+      cy.findByRole("link", { name: "Patient Management" }).should(
+        "be.focused",
+      );
+
+      // ArrowUp walks back up the same linear order.
+      cy.realPress("ArrowUp");
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+    });
+  });
+
   describe("axe checks", () => {
     it("has no detectable a11y violations when closed", () => {
       cy.mount(<AccessibleMegaMenu />);
