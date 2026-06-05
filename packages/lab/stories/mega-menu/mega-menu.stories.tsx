@@ -42,13 +42,14 @@ import {
 } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuAside,
-  MegaMenuFooter,
-  MegaMenuHeading,
-  MegaMenuLink,
-  MegaMenuMain,
+  MegaMenuActionBar,
+  MegaMenuBody,
+  MegaMenuContent,
+  MegaMenuGroup,
+  MegaMenuGroupHeading,
+  MegaMenuItem,
+  MegaMenuItemList,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
@@ -105,203 +106,196 @@ export const WithIcons: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Financial services</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/digital-banking" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/digital-banking")
-                    }
-                  >
-                    <DevicesIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Digital banking
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/risk-management" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/risk-management")
-                    }
-                  >
-                    <DatasetManagerIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Risk management
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/patient-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/patient-management",
-                      )
-                    }
-                  >
-                    <UserSearchIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Patient management
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/telemedicine" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/telemedicine")
-                    }
-                  >
-                    <CallIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Telemedicine
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/compliance-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/compliance-solutions",
-                      )
-                    }
-                  >
-                    <PasteIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Compliance solutions
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Retail</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/e-commerce-platforms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/e-commerce-platforms",
-                      )
-                    }
-                  >
-                    <CartIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    E-commerce platforms
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/supply-chain-optimization" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/supply-chain-optimization",
-                      )
-                    }
-                  >
-                    <LinkedIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Supply chain optimization
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/quality-control" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/quality-control")
-                    }
-                  >
-                    <SettingsIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Quality control
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/production-planning" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/production-planning",
-                      )
-                    }
-                  >
-                    <NotificationIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Production planning
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Education</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/learning-management-systems" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/learning-management-systems",
-                      )
-                    }
-                  >
-                    <GuideOpenIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Learning management systems
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/virtual-classrooms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/virtual-classrooms",
-                      )
-                    }
-                  >
-                    <LaptopIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Virtual classrooms
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Government</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/document-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/document-management",
-                      )
-                    }
-                  >
-                    <DocumentIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Document management
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/citizen-services" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/citizen-services")
-                    }
-                  >
-                    <PinIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Citizen services
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/public-safety-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/public-safety-solutions",
-                      )
-                    }
-                  >
-                    <UserGroupIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Public safety solutions
-                  </MegaMenuLink>
-                </MegaMenuSection>
-              </MegaMenuMain>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/digital-banking" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/digital-banking")
+                      }
+                    >
+                      <DevicesIcon aria-hidden />
+                      Digital banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/risk-management" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/risk-management")
+                      }
+                    >
+                      <DatasetManagerIcon aria-hidden />
+                      Risk management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/patient-management" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/patient-management",
+                        )
+                      }
+                    >
+                      <UserSearchIcon aria-hidden />
+                      Patient management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/telemedicine" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/telemedicine")
+                      }
+                    >
+                      <CallIcon aria-hidden />
+                      Telemedicine
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/compliance-solutions" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/compliance-solutions",
+                        )
+                      }
+                    >
+                      <PasteIcon aria-hidden />
+                      Compliance solutions
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/e-commerce-platforms" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/e-commerce-platforms",
+                        )
+                      }
+                    >
+                      <CartIcon aria-hidden />
+                      E-commerce platforms
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/supply-chain-optimization" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/supply-chain-optimization",
+                        )
+                      }
+                    >
+                      <LinkedIcon aria-hidden />
+                      Supply chain optimization
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/quality-control" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/quality-control")
+                      }
+                    >
+                      <SettingsIcon aria-hidden />
+                      Quality control
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/production-planning" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/production-planning",
+                        )
+                      }
+                    >
+                      <NotificationIcon aria-hidden />
+                      Production planning
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/learning-management-systems" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/learning-management-systems",
+                        )
+                      }
+                    >
+                      <GuideOpenIcon aria-hidden />
+                      Learning management systems
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/virtual-classrooms" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/virtual-classrooms",
+                        )
+                      }
+                    >
+                      <LaptopIcon aria-hidden />
+                      Virtual classrooms
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/document-management" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/document-management",
+                        )
+                      }
+                    >
+                      <DocumentIcon aria-hidden />
+                      Document management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/citizen-services" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/citizen-services",
+                        )
+                      }
+                    >
+                      <PinIcon aria-hidden />
+                      Citizen services
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/public-safety-solutions" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/public-safety-solutions",
+                        )
+                      }
+                    >
+                      <UserGroupIcon aria-hidden />
+                      Public safety solutions
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -317,202 +311,185 @@ export const WithIcons: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Consulting</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/strategy" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/strategy")
-                    }
-                  >
-                    <ChartBubbleIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Strategy
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/it" />}
-                    onClick={() => console.log("MegaMenuLink clicked:", "/it")}
-                  >
-                    <LaptopIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    IT
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/hr" />}
-                    onClick={() => console.log("MegaMenuLink clicked:", "/hr")}
-                  >
-                    <UserGroupIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    HR
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/marketing" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/marketing")
-                    }
-                  >
-                    <MarkerIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Marketing
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/operations" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/operations")
-                    }
-                  >
-                    <SettingsIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Operations
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Implementation</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/onboarding" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/onboarding")
-                    }
-                  >
-                    <PasteIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Onboarding
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/migration" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/migration")
-                    }
-                  >
-                    <SwapIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Migration
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/customization" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/customization")
-                    }
-                  >
-                    <PinIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Customization
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/training" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/training")
-                    }
-                  >
-                    <GuideClosedIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Training
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/support" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/support")
-                    }
-                  >
-                    <InfoIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Support
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/testing" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/testing")
-                    }
-                  >
-                    <MaintenanceIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Testing
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/rollout" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/rollout")
-                    }
-                  >
-                    <SaveIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Rollout
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Training</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/online" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/online")
-                    }
-                  >
-                    <DisplayIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Online
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/in-person" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/in-person")
-                    }
-                  >
-                    <UserIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    In-person
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/workshops" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/workshops")
-                    }
-                  >
-                    <KeyIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Workshops
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/certifications" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/certifications")
-                    }
-                  >
-                    <DocumentIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Certifications
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/tutorials" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/tutorials")
-                    }
-                  >
-                    <DocumentEditIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Tutorials
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/guides" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/guides")
-                    }
-                  >
-                    <GuideOpenIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Guides
-                  </MegaMenuLink>
-                </MegaMenuSection>
-              </MegaMenuMain>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/strategy" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/strategy")
+                      }
+                    >
+                      <ChartBubbleIcon aria-hidden />
+                      Strategy
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/it" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/it")
+                      }
+                    >
+                      <LaptopIcon aria-hidden />
+                      IT
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/hr" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/hr")
+                      }
+                    >
+                      <UserGroupIcon aria-hidden />
+                      HR
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/marketing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/marketing")
+                      }
+                    >
+                      <MarkerIcon aria-hidden />
+                      Marketing
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/operations" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/operations")
+                      }
+                    >
+                      <SettingsIcon aria-hidden />
+                      Operations
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/onboarding" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/onboarding")
+                      }
+                    >
+                      <PasteIcon aria-hidden />
+                      Onboarding
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/migration" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/migration")
+                      }
+                    >
+                      <SwapIcon aria-hidden />
+                      Migration
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/customization" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/customization")
+                      }
+                    >
+                      <PinIcon aria-hidden />
+                      Customization
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/training" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/training")
+                      }
+                    >
+                      <GuideClosedIcon aria-hidden />
+                      Training
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/support")
+                      }
+                    >
+                      <InfoIcon aria-hidden />
+                      Support
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/testing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/testing")
+                      }
+                    >
+                      <MaintenanceIcon aria-hidden />
+                      Testing
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/rollout" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/rollout")
+                      }
+                    >
+                      <SaveIcon aria-hidden />
+                      Rollout
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/online" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/online")
+                      }
+                    >
+                      <DisplayIcon aria-hidden />
+                      Online
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/in-person" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/in-person")
+                      }
+                    >
+                      <UserIcon aria-hidden />
+                      In-person
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/workshops" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/workshops")
+                      }
+                    >
+                      <KeyIcon aria-hidden />
+                      Workshops
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/certifications" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/certifications")
+                      }
+                    >
+                      <DocumentIcon aria-hidden />
+                      Certifications
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/tutorials" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/tutorials")
+                      }
+                    >
+                      <DocumentEditIcon aria-hidden />
+                      Tutorials
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/guides")
+                      }
+                    >
+                      <GuideOpenIcon aria-hidden />
+                      Guides
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -527,89 +504,81 @@ export const WithIcons: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Documentation</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/user-guides" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/user-guides")
-                    }
-                  >
-                    <GuideClosedIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    User guides
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/api-reference" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/api-reference")
-                    }
-                  >
-                    <ApiIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    API reference
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/release-notes" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/release-notes")
-                    }
-                  >
-                    <NotificationIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Release notes
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/faqs" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/faqs")
-                    }
-                  >
-                    <HelpIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    FAQs
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Support & help</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/contact-support" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/contact-support")
-                    }
-                  >
-                    <InfoIcon aria-hidden className="saltMegaMenuLink-icon" />
-                    Contact support
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/community-forum" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/community-forum")
-                    }
-                  >
-                    <ChatGroupIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Community forum
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/troubleshooting" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/troubleshooting")
-                    }
-                  >
-                    <AnnouncementIcon
-                      aria-hidden
-                      className="saltMegaMenuLink-icon"
-                    />
-                    Troubleshooting
-                  </MegaMenuLink>
-                </MegaMenuSection>
-              </MegaMenuMain>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/user-guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/user-guides")
+                      }
+                    >
+                      <GuideClosedIcon aria-hidden />
+                      User guides
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/api-reference" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/api-reference")
+                      }
+                    >
+                      <ApiIcon aria-hidden />
+                      API reference
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/release-notes" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/release-notes")
+                      }
+                    >
+                      <NotificationIcon aria-hidden />
+                      Release notes
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/faqs" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/faqs")
+                      }
+                    >
+                      <HelpIcon aria-hidden />
+                      FAQs
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/contact-support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/contact-support")
+                      }
+                    >
+                      <InfoIcon aria-hidden />
+                      Contact support
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/community-forum" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/community-forum")
+                      }
+                    >
+                      <ChatGroupIcon aria-hidden />
+                      Community forum
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/troubleshooting" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/troubleshooting")
+                      }
+                    >
+                      <AnnouncementIcon aria-hidden />
+                      Troubleshooting
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -643,175 +612,192 @@ export const WithAdornment: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Financial services</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/digital-banking" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/digital-banking")
-                    }
-                  >
-                    Digital banking
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/risk-management" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/risk-management")
-                    }
-                  >
-                    Risk management
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/patient-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/patient-management",
-                      )
-                    }
-                  >
-                    Patient management
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/telemedicine" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/telemedicine")
-                    }
-                  >
-                    Telemedicine
-                    <div className="menu-item-adornment">
-                      <Tag category={1} variant="primary">
-                        Premium
-                      </Tag>
-                    </div>
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/compliance-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/compliance-solutions",
-                      )
-                    }
-                  >
-                    Compliance solutions
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Retail</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/e-commerce-platforms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/e-commerce-platforms",
-                      )
-                    }
-                  >
-                    E-commerce platforms
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/supply-chain-optimization" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/supply-chain-optimization",
-                      )
-                    }
-                  >
-                    Supply chain optimization
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/quality-control" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/quality-control")
-                    }
-                  >
-                    Quality control
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/production-planning" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/production-planning",
-                      )
-                    }
-                  >
-                    Production planning
-                    <div className="menu-item-adornment">
-                      <Tag category={2} variant="primary">
-                        New
-                      </Tag>
-                    </div>
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Education</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/learning-management-systems" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/learning-management-systems",
-                      )
-                    }
-                  >
-                    Learning management systems
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/virtual-classrooms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/virtual-classrooms",
-                      )
-                    }
-                  >
-                    Virtual classrooms
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Government</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/document-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/document-management",
-                      )
-                    }
-                  >
-                    Document management
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/citizen-services" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/citizen-services")
-                    }
-                  >
-                    Citizen services
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/public-safety-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/public-safety-solutions",
-                      )
-                    }
-                  >
-                    Public safety solutions
-                  </MegaMenuLink>
-                </MegaMenuSection>
-              </MegaMenuMain>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/digital-banking" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/digital-banking")
+                      }
+                    >
+                      Digital banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/risk-management" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/risk-management")
+                      }
+                    >
+                      Risk management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/patient-management" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/patient-management",
+                        )
+                      }
+                    >
+                      Patient management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/telemedicine" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/telemedicine")
+                      }
+                    >
+                      Telemedicine
+                      <div className="menu-item-adornment">
+                        <Tag category={1} variant="primary">
+                          Premium
+                        </Tag>
+                      </div>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/compliance-solutions" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/compliance-solutions",
+                        )
+                      }
+                    >
+                      Compliance solutions
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/e-commerce-platforms" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/e-commerce-platforms",
+                        )
+                      }
+                    >
+                      E-commerce platforms
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/supply-chain-optimization" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/supply-chain-optimization",
+                        )
+                      }
+                    >
+                      Supply chain optimization
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/quality-control" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/quality-control")
+                      }
+                    >
+                      Quality control
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/production-planning" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/production-planning",
+                        )
+                      }
+                    >
+                      Production planning
+                      <div className="menu-item-adornment">
+                        <Tag category={2} variant="primary">
+                          New
+                        </Tag>
+                      </div>
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/learning-management-systems" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/learning-management-systems",
+                        )
+                      }
+                    >
+                      Learning management systems
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/virtual-classrooms" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/virtual-classrooms",
+                        )
+                      }
+                    >
+                      Virtual classrooms
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/document-management" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/document-management",
+                        )
+                      }
+                    >
+                      Document management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/citizen-services" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/citizen-services",
+                        )
+                      }
+                    >
+                      Citizen services
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/public-safety-solutions" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/public-safety-solutions",
+                        )
+                      }
+                    >
+                      Public safety solutions
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -827,165 +813,175 @@ export const WithAdornment: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Consulting</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/strategy" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/strategy")
-                    }
-                  >
-                    Strategy
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/it" />}
-                    onClick={() => console.log("MegaMenuLink clicked:", "/it")}
-                  >
-                    IT
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/hr" />}
-                    onClick={() => console.log("MegaMenuLink clicked:", "/hr")}
-                  >
-                    HR
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/marketing" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/marketing")
-                    }
-                  >
-                    Marketing
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/operations" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/operations")
-                    }
-                  >
-                    Operations
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Implementation</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/onboarding" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/onboarding")
-                    }
-                  >
-                    Onboarding
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/migration" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/migration")
-                    }
-                  >
-                    Migration
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/customization" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/customization")
-                    }
-                  >
-                    Customization
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/training" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/training")
-                    }
-                  >
-                    Training
-                    <div className="menu-item-adornment">
-                      {" "}
-                      <Badge value="1" />
-                    </div>
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/support" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/support")
-                    }
-                  >
-                    Support
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/testing" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/testing")
-                    }
-                  >
-                    Testing
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/rollout" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/rollout")
-                    }
-                  >
-                    Rollout
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Training</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/online" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/online")
-                    }
-                  >
-                    Online
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/in-person" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/in-person")
-                    }
-                  >
-                    In-person
-                    <div className="menu-item-adornment">
-                      {" "}
-                      <Badge className="menu-item-adornment" />
-                    </div>
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/workshops" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/workshops")
-                    }
-                  >
-                    Workshops
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/certifications" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/certifications")
-                    }
-                  >
-                    Certifications
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/tutorials" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/tutorials")
-                    }
-                  >
-                    Tutorials
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/guides" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/guides")
-                    }
-                  >
-                    Guides
-                  </MegaMenuLink>
-                </MegaMenuSection>
-              </MegaMenuMain>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/strategy" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/strategy")
+                      }
+                    >
+                      Strategy
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/it" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/it")
+                      }
+                    >
+                      IT
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/hr" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/hr")
+                      }
+                    >
+                      HR
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/marketing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/marketing")
+                      }
+                    >
+                      Marketing
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/operations" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/operations")
+                      }
+                    >
+                      Operations
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/onboarding" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/onboarding")
+                      }
+                    >
+                      Onboarding
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/migration" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/migration")
+                      }
+                    >
+                      Migration
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/customization" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/customization")
+                      }
+                    >
+                      Customization
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/training" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/training")
+                      }
+                    >
+                      Training
+                      <div className="menu-item-adornment">
+                        {" "}
+                        <Badge value="1" />
+                      </div>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/support")
+                      }
+                    >
+                      Support
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/testing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/testing")
+                      }
+                    >
+                      Testing
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/rollout" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/rollout")
+                      }
+                    >
+                      Rollout
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/online" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/online")
+                      }
+                    >
+                      Online
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/in-person" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/in-person")
+                      }
+                    >
+                      In-person
+                      <div className="menu-item-adornment">
+                        {" "}
+                        <Badge className="menu-item-adornment" />
+                      </div>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/workshops" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/workshops")
+                      }
+                    >
+                      Workshops
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/certifications" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/certifications")
+                      }
+                    >
+                      Certifications
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/tutorials" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/tutorials")
+                      }
+                    >
+                      Tutorials
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/guides")
+                      }
+                    >
+                      Guides
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1000,78 +996,82 @@ export const WithAdornment: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Documentation</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/user-guides" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/user-guides")
-                    }
-                  >
-                    User guides
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/api-reference" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/api-reference")
-                    }
-                  >
-                    API reference
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/release-notes" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/release-notes")
-                    }
-                  >
-                    Release notes
-                    <div className="menu-item-adornment">
-                      <Badge />
-                    </div>
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/faqs" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/faqs")
-                    }
-                  >
-                    FAQs
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Support & help</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/contact-support" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/contact-support")
-                    }
-                  >
-                    Contact support
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/community-forum" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/community-forum")
-                    }
-                  >
-                    Community forum
-                    <div className="menu-item-adornment">
-                      <Tag category={2} variant="primary">
-                        New
-                      </Tag>
-                    </div>
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/troubleshooting" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/troubleshooting")
-                    }
-                  >
-                    Troubleshooting
-                  </MegaMenuLink>
-                </MegaMenuSection>
-              </MegaMenuMain>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/user-guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/user-guides")
+                      }
+                    >
+                      User guides
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/api-reference" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/api-reference")
+                      }
+                    >
+                      API reference
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/release-notes" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/release-notes")
+                      }
+                    >
+                      Release notes
+                      <div className="menu-item-adornment">
+                        <Badge />
+                      </div>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/faqs" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/faqs")
+                      }
+                    >
+                      FAQs
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/contact-support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/contact-support")
+                      }
+                    >
+                      Contact support
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/community-forum" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/community-forum")
+                      }
+                    >
+                      Community forum
+                      <div className="menu-item-adornment">
+                        <Tag category={2} variant="primary">
+                          New
+                        </Tag>
+                      </div>
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/troubleshooting" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/troubleshooting")
+                      }
+                    >
+                      Troubleshooting
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1095,116 +1095,124 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="Near Left Edge menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 1</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-1" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-1")
-                  }
-                >
-                  Mega menu item 1
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-2" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-2")
-                  }
-                >
-                  Mega menu item 2
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-3" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-3")
-                  }
-                >
-                  Mega menu item 3
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 2</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-4" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-4")
-                  }
-                >
-                  Mega menu item 4
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-5" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-5")
-                  }
-                >
-                  Mega menu item 5
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-6" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-6")
-                  }
-                >
-                  Mega menu item 6
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 3</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-7" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-7")
-                  }
-                >
-                  Mega menu item 7
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-8" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-8")
-                  }
-                >
-                  Mega menu item 8
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-9" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-9")
-                  }
-                >
-                  Mega menu item 9
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 4</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-10" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-10")
-                  }
-                >
-                  Mega menu item 10
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-11" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-11")
-                  }
-                >
-                  Mega menu item 11
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-12" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-12")
-                  }
-                >
-                  Mega menu item 12
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-1" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-1")
+                    }
+                  >
+                    Mega menu item 1
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-2" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-2")
+                    }
+                  >
+                    Mega menu item 2
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-3" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-3")
+                    }
+                  >
+                    Mega menu item 3
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-4" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-4")
+                    }
+                  >
+                    Mega menu item 4
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-5" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-5")
+                    }
+                  >
+                    Mega menu item 5
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-6" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-6")
+                    }
+                  >
+                    Mega menu item 6
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-7" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-7")
+                    }
+                  >
+                    Mega menu item 7
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-8" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-8")
+                    }
+                  >
+                    Mega menu item 8
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-9" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-9")
+                    }
+                  >
+                    Mega menu item 9
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-10" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-10")
+                    }
+                  >
+                    Mega menu item 10
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-11" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-11")
+                    }
+                  >
+                    Mega menu item 11
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-12" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-12")
+                    }
+                  >
+                    Mega menu item 12
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1218,116 +1226,124 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="On Center menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 1</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-1" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-1")
-                  }
-                >
-                  Mega menu item 1
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-2" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-2")
-                  }
-                >
-                  Mega menu item 2
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-3" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-3")
-                  }
-                >
-                  Mega menu item 3
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 2</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-4" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-4")
-                  }
-                >
-                  Mega menu item 4
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-5" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-5")
-                  }
-                >
-                  Mega menu item 5
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-6" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-6")
-                  }
-                >
-                  Mega menu item 6
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 3</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-7" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-7")
-                  }
-                >
-                  Mega menu item 7
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-8" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-8")
-                  }
-                >
-                  Mega menu item 8
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-9" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-9")
-                  }
-                >
-                  Mega menu item 9
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 4</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-10" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-10")
-                  }
-                >
-                  Mega menu item 10
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-11" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-11")
-                  }
-                >
-                  Mega menu item 11
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-12" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-12")
-                  }
-                >
-                  Mega menu item 12
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-1" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-1")
+                    }
+                  >
+                    Mega menu item 1
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-2" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-2")
+                    }
+                  >
+                    Mega menu item 2
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-3" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-3")
+                    }
+                  >
+                    Mega menu item 3
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-4" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-4")
+                    }
+                  >
+                    Mega menu item 4
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-5" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-5")
+                    }
+                  >
+                    Mega menu item 5
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-6" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-6")
+                    }
+                  >
+                    Mega menu item 6
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-7" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-7")
+                    }
+                  >
+                    Mega menu item 7
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-8" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-8")
+                    }
+                  >
+                    Mega menu item 8
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-9" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-9")
+                    }
+                  >
+                    Mega menu item 9
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-10" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-10")
+                    }
+                  >
+                    Mega menu item 10
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-11" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-11")
+                    }
+                  >
+                    Mega menu item 11
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-12" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-12")
+                    }
+                  >
+                    Mega menu item 12
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1341,116 +1357,124 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="Slightly Offset menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 1</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-1" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-1")
-                  }
-                >
-                  Mega menu item 1
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-2" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-2")
-                  }
-                >
-                  Mega menu item 2
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-3" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-3")
-                  }
-                >
-                  Mega menu item 3
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 2</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-4" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-4")
-                  }
-                >
-                  Mega menu item 4
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-5" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-5")
-                  }
-                >
-                  Mega menu item 5
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-6" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-6")
-                  }
-                >
-                  Mega menu item 6
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 3</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-7" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-7")
-                  }
-                >
-                  Mega menu item 7
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-8" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-8")
-                  }
-                >
-                  Mega menu item 8
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-9" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-9")
-                  }
-                >
-                  Mega menu item 9
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 4</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-10" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-10")
-                  }
-                >
-                  Mega menu item 10
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-11" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-11")
-                  }
-                >
-                  Mega menu item 11
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-12" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-12")
-                  }
-                >
-                  Mega menu item 12
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-1" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-1")
+                    }
+                  >
+                    Mega menu item 1
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-2" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-2")
+                    }
+                  >
+                    Mega menu item 2
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-3" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-3")
+                    }
+                  >
+                    Mega menu item 3
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-4" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-4")
+                    }
+                  >
+                    Mega menu item 4
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-5" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-5")
+                    }
+                  >
+                    Mega menu item 5
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-6" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-6")
+                    }
+                  >
+                    Mega menu item 6
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-7" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-7")
+                    }
+                  >
+                    Mega menu item 7
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-8" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-8")
+                    }
+                  >
+                    Mega menu item 8
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-9" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-9")
+                    }
+                  >
+                    Mega menu item 9
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-10" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-10")
+                    }
+                  >
+                    Mega menu item 10
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-11" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-11")
+                    }
+                  >
+                    Mega menu item 11
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-12" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-12")
+                    }
+                  >
+                    Mega menu item 12
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1464,116 +1488,124 @@ export const TriggerPosition: StoryFn = () => {
             <Button>Near The Edge</Button>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Near The Edge menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 1</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-1" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-1")
-                  }
-                >
-                  Mega menu item 1
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-2" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-2")
-                  }
-                >
-                  Mega menu item 2
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-3" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-3")
-                  }
-                >
-                  Mega menu item 3
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 2</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-4" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-4")
-                  }
-                >
-                  Mega menu item 4
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-5" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-5")
-                  }
-                >
-                  Mega menu item 5
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-6" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-6")
-                  }
-                >
-                  Mega menu item 6
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 3</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-7" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-7")
-                  }
-                >
-                  Mega menu item 7
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-8" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-8")
-                  }
-                >
-                  Mega menu item 8
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-9" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-9")
-                  }
-                >
-                  Mega menu item 9
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Menu Header 4</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-10" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-10")
-                  }
-                >
-                  Mega menu item 10
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-11" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-11")
-                  }
-                >
-                  Mega menu item 11
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/mega-menu-item-12" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/mega-menu-item-12")
-                  }
-                >
-                  Mega menu item 12
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-1" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-1")
+                    }
+                  >
+                    Mega menu item 1
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-2" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-2")
+                    }
+                  >
+                    Mega menu item 2
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-3" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-3")
+                    }
+                  >
+                    Mega menu item 3
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-4" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-4")
+                    }
+                  >
+                    Mega menu item 4
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-5" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-5")
+                    }
+                  >
+                    Mega menu item 5
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-6" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-6")
+                    }
+                  >
+                    Mega menu item 6
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-7" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-7")
+                    }
+                  >
+                    Mega menu item 7
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-8" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-8")
+                    }
+                  >
+                    Mega menu item 8
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-9" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-9")
+                    }
+                  >
+                    Mega menu item 9
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-10" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-10")
+                    }
+                  >
+                    Mega menu item 10
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-11" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-11")
+                    }
+                  >
+                    Mega menu item 11
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/mega-menu-item-12" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/mega-menu-item-12")
+                    }
+                  >
+                    Mega menu item 12
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1611,212 +1643,244 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Solutions menu"
                 className="full-width-panel"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Financial services</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/digital-banking" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/digital-banking")
-                      }
-                    >
-                      Digital banking
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/risk-management" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/risk-management")
-                      }
-                    >
-                      Risk management
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/patient-management" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/patient-management",
-                        )
-                      }
-                    >
-                      Patient management
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/telemedicine" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/telemedicine")
-                      }
-                    >
-                      Telemedicine
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/compliance-solutions" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/compliance-solutions",
-                        )
-                      }
-                    >
-                      Compliance solutions
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Retail</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/e-commerce-platforms" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/e-commerce-platforms",
-                        )
-                      }
-                    >
-                      E-commerce platforms
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/supply-chain-optimization" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/supply-chain-optimization",
-                        )
-                      }
-                    >
-                      Supply chain optimization
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/quality-control" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/quality-control")
-                      }
-                    >
-                      Quality control
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/production-planning" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/production-planning",
-                        )
-                      }
-                    >
-                      Production planning
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Education</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/learning-management-systems" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/learning-management-systems",
-                        )
-                      }
-                    >
-                      Learning management systems
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/virtual-classrooms" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/virtual-classrooms",
-                        )
-                      }
-                    >
-                      Virtual classrooms
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Government</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/document-management" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/document-management",
-                        )
-                      }
-                    >
-                      Document management
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/citizen-services" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/citizen-services",
-                        )
-                      }
-                    >
-                      Citizen services
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/public-safety-solutions" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/public-safety-solutions",
-                        )
-                      }
-                    >
-                      Public safety solutions
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Technology</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/cloud-solutions" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/cloud-solutions")
-                      }
-                    >
-                      Cloud solutions
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/cybersecurity" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/cybersecurity")
-                      }
-                    >
-                      Cybersecurity
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Energy</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/smart-grid-management" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/smart-grid-management",
-                        )
-                      }
-                    >
-                      Smart Grid Management
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/renewable-integration" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/renewable-integration",
-                        )
-                      }
-                    >
-                      Renewable Integration
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>
+                      Financial services
+                    </MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/digital-banking" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/digital-banking",
+                          )
+                        }
+                      >
+                        Digital banking
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/risk-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/risk-management",
+                          )
+                        }
+                      >
+                        Risk management
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/patient-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/patient-management",
+                          )
+                        }
+                      >
+                        Patient management
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/telemedicine" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/telemedicine")
+                        }
+                      >
+                        Telemedicine
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/compliance-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/compliance-solutions",
+                          )
+                        }
+                      >
+                        Compliance solutions
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/e-commerce-platforms" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/e-commerce-platforms",
+                          )
+                        }
+                      >
+                        E-commerce platforms
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/supply-chain-optimization" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/supply-chain-optimization",
+                          )
+                        }
+                      >
+                        Supply chain optimization
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/quality-control" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/quality-control",
+                          )
+                        }
+                      >
+                        Quality control
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/production-planning" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/production-planning",
+                          )
+                        }
+                      >
+                        Production planning
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={
+                          <RouterLink to="/learning-management-systems" />
+                        }
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/learning-management-systems",
+                          )
+                        }
+                      >
+                        Learning management systems
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/virtual-classrooms" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/virtual-classrooms",
+                          )
+                        }
+                      >
+                        Virtual classrooms
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/document-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/document-management",
+                          )
+                        }
+                      >
+                        Document management
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/citizen-services" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/citizen-services",
+                          )
+                        }
+                      >
+                        Citizen services
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/public-safety-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/public-safety-solutions",
+                          )
+                        }
+                      >
+                        Public safety solutions
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/cloud-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/cloud-solutions",
+                          )
+                        }
+                      >
+                        Cloud solutions
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/cybersecurity" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/cybersecurity")
+                        }
+                      >
+                        Cybersecurity
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Energy</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/smart-grid-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/smart-grid-management",
+                          )
+                        }
+                      >
+                        Smart Grid Management
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/renewable-integration" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/renewable-integration",
+                          )
+                        }
+                      >
+                        Renewable Integration
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -1835,164 +1899,170 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Services menu"
                 className="full-width-panel"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Consulting</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/strategy" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/strategy")
-                      }
-                    >
-                      Strategy
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/it" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/it")
-                      }
-                    >
-                      IT
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/hr" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/hr")
-                      }
-                    >
-                      HR
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/marketing" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/marketing")
-                      }
-                    >
-                      Marketing
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/operations" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/operations")
-                      }
-                    >
-                      Operations
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Implementation</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/onboarding" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/onboarding")
-                      }
-                    >
-                      Onboarding
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/migration" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/migration")
-                      }
-                    >
-                      Migration
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/customization" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/customization")
-                      }
-                    >
-                      Customization
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/training" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/training")
-                      }
-                    >
-                      Training
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/support" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/support")
-                      }
-                    >
-                      Support
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/testing" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/testing")
-                      }
-                    >
-                      Testing
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/rollout" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/rollout")
-                      }
-                    >
-                      Rollout
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Training</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/online" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/online")
-                      }
-                    >
-                      <DisplayIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/in-person" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/in-person")
-                      }
-                    >
-                      In-person
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/workshops" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/workshops")
-                      }
-                    >
-                      Workshops
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/certifications" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/certifications")
-                      }
-                    >
-                      Certifications
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/tutorials" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/tutorials")
-                      }
-                    >
-                      Tutorials
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/guides" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/guides")
-                      }
-                    >
-                      Guides
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/strategy" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/strategy")
+                        }
+                      >
+                        Strategy
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/it" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/it")
+                        }
+                      >
+                        IT
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/hr" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/hr")
+                        }
+                      >
+                        HR
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/marketing" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/marketing")
+                        }
+                      >
+                        Marketing
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/operations" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/operations")
+                        }
+                      >
+                        Operations
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/onboarding" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/onboarding")
+                        }
+                      >
+                        Onboarding
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/migration" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/migration")
+                        }
+                      >
+                        Migration
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/customization" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/customization")
+                        }
+                      >
+                        Customization
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/training" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/training")
+                        }
+                      >
+                        Training
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/support" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/support")
+                        }
+                      >
+                        Support
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/testing" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/testing")
+                        }
+                      >
+                        Testing
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/rollout" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/rollout")
+                        }
+                      >
+                        Rollout
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/online" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/online")
+                        }
+                      >
+                        <DisplayIcon aria-hidden />
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/in-person" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/in-person")
+                        }
+                      >
+                        In-person
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/workshops" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/workshops")
+                        }
+                      >
+                        Workshops
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/certifications" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/certifications",
+                          )
+                        }
+                      >
+                        Certifications
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/tutorials" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/tutorials")
+                        }
+                      >
+                        Tutorials
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/guides" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/guides")
+                        }
+                      >
+                        Guides
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2010,70 +2080,85 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Resources menu"
                 className="full-width-panel"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Documentation</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/user-guides" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/user-guides")
-                      }
-                    >
-                      User guides
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/api-reference" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/api-reference")
-                      }
-                    >
-                      API reference
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/release-notes" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/release-notes")
-                      }
-                    >
-                      Release notes
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/faqs" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/faqs")
-                      }
-                    >
-                      FAQs
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Support &amp; help</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/contact-support" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/contact-support")
-                      }
-                    >
-                      Contact support
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/community-forum" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/community-forum")
-                      }
-                    >
-                      Community forum
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/troubleshooting" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/troubleshooting")
-                      }
-                    >
-                      Troubleshooting
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/user-guides" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/user-guides")
+                        }
+                      >
+                        User guides
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/api-reference" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/api-reference")
+                        }
+                      >
+                        API reference
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/release-notes" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/release-notes")
+                        }
+                      >
+                        Release notes
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/faqs" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/faqs")
+                        }
+                      >
+                        FAQs
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>
+                      Support &amp; help
+                    </MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/contact-support" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/contact-support",
+                          )
+                        }
+                      >
+                        Contact support
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/community-forum" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/community-forum",
+                          )
+                        }
+                      >
+                        Community forum
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/troubleshooting" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/troubleshooting",
+                          )
+                        }
+                      >
+                        Troubleshooting
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2117,259 +2202,258 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Solutions menu"
                 className="max-width-content-panel"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Financial services</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/digital-banking" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/digital-banking")
-                      }
-                    >
-                      <DevicesIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Digital banking
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/risk-management" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/risk-management")
-                      }
-                    >
-                      <DatasetManagerIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Risk management
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/patient-management" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/patient-management",
-                        )
-                      }
-                    >
-                      <UserSearchIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Patient management
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/telemedicine" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/telemedicine")
-                      }
-                    >
-                      <CallIcon aria-hidden className="saltMegaMenuLink-icon" />
-                      Telemedicine
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/compliance-solutions" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/compliance-solutions",
-                        )
-                      }
-                    >
-                      <PasteIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Compliance solutions
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Retail</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/e-commerce-platforms" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/e-commerce-platforms",
-                        )
-                      }
-                    >
-                      <CartIcon aria-hidden className="saltMegaMenuLink-icon" />
-                      E-commerce platforms
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/supply-chain-optimization" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/supply-chain-optimization",
-                        )
-                      }
-                    >
-                      <LinkedIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Supply chain optimization
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/quality-control" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/quality-control")
-                      }
-                    >
-                      <SettingsIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Quality control
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/production-planning" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/production-planning",
-                        )
-                      }
-                    >
-                      <NotificationIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Production planning
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Education</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/learning-management-systems" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/learning-management-systems",
-                        )
-                      }
-                    >
-                      <GuideOpenIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Learning management systems
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/virtual-classrooms" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/virtual-classrooms",
-                        )
-                      }
-                    >
-                      <LaptopIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Virtual classrooms
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Government</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/document-management" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/document-management",
-                        )
-                      }
-                    >
-                      <DocumentIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Document management
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/citizen-services" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/citizen-services",
-                        )
-                      }
-                    >
-                      <PinIcon aria-hidden className="saltMegaMenuLink-icon" />
-                      Citizen services
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/public-safety-solutions" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/public-safety-solutions",
-                        )
-                      }
-                    >
-                      <UserGroupIcon
-                        aria-hidden
-                        className="saltMegaMenuLink-icon"
-                      />
-                      Public safety solutions
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Technology</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/cloud-solutions" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/cloud-solutions")
-                      }
-                    >
-                      Cloud solutions
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/cybersecurity" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/cybersecurity")
-                      }
-                    >
-                      Cybersecurity
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Energy</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/smart-grid-management" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/smart-grid-management",
-                        )
-                      }
-                    >
-                      Smart Grid Management
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/renewable-integration" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/renewable-integration",
-                        )
-                      }
-                    >
-                      Renewable Integration
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>
+                      Financial services
+                    </MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/digital-banking" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/digital-banking",
+                          )
+                        }
+                      >
+                        <DevicesIcon aria-hidden />
+                        Digital banking
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/risk-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/risk-management",
+                          )
+                        }
+                      >
+                        <DatasetManagerIcon aria-hidden />
+                        Risk management
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/patient-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/patient-management",
+                          )
+                        }
+                      >
+                        <UserSearchIcon aria-hidden />
+                        Patient management
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/telemedicine" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/telemedicine")
+                        }
+                      >
+                        <CallIcon aria-hidden />
+                        Telemedicine
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/compliance-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/compliance-solutions",
+                          )
+                        }
+                      >
+                        <PasteIcon aria-hidden />
+                        Compliance solutions
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/e-commerce-platforms" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/e-commerce-platforms",
+                          )
+                        }
+                      >
+                        <CartIcon aria-hidden />
+                        E-commerce platforms
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/supply-chain-optimization" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/supply-chain-optimization",
+                          )
+                        }
+                      >
+                        <LinkedIcon aria-hidden />
+                        Supply chain optimization
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/quality-control" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/quality-control",
+                          )
+                        }
+                      >
+                        <SettingsIcon aria-hidden />
+                        Quality control
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/production-planning" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/production-planning",
+                          )
+                        }
+                      >
+                        <NotificationIcon aria-hidden />
+                        Production planning
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={
+                          <RouterLink to="/learning-management-systems" />
+                        }
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/learning-management-systems",
+                          )
+                        }
+                      >
+                        <GuideOpenIcon aria-hidden />
+                        Learning management systems
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/virtual-classrooms" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/virtual-classrooms",
+                          )
+                        }
+                      >
+                        <LaptopIcon aria-hidden />
+                        Virtual classrooms
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/document-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/document-management",
+                          )
+                        }
+                      >
+                        <DocumentIcon aria-hidden />
+                        Document management
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/citizen-services" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/citizen-services",
+                          )
+                        }
+                      >
+                        <PinIcon aria-hidden />
+                        Citizen services
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/public-safety-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/public-safety-solutions",
+                          )
+                        }
+                      >
+                        <UserGroupIcon aria-hidden />
+                        Public safety solutions
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/cloud-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/cloud-solutions",
+                          )
+                        }
+                      >
+                        Cloud solutions
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/cybersecurity" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/cybersecurity")
+                        }
+                      >
+                        Cybersecurity
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Energy</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/smart-grid-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/smart-grid-management",
+                          )
+                        }
+                      >
+                        Smart Grid Management
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/renewable-integration" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/renewable-integration",
+                          )
+                        }
+                      >
+                        Renewable Integration
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2388,161 +2472,170 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Services menu"
                 className="max-width-content-panel"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Consulting</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/strategy" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/strategy")
-                      }
-                    >
-                      Strategy
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/it" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/it")
-                      }
-                    >
-                      IT
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/hr" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/hr")
-                      }
-                    >
-                      HR
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/marketing" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/marketing")
-                      }
-                    >
-                      Marketing
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/operations" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/operations")
-                      }
-                    >
-                      Operations
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Implementation</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/onboarding" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/onboarding")
-                      }
-                    >
-                      Onboarding
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/migration" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/migration")
-                      }
-                    >
-                      Migration
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/customization" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/customization")
-                      }
-                    >
-                      Customization
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/training" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/training")
-                      }
-                    >
-                      Training
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/support" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/support")
-                      }
-                    >
-                      Support
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/testing" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/testing")
-                      }
-                    >
-                      Testing
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/rollout" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/rollout")
-                      }
-                    >
-                      Rollout
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Training</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/online" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/online")
-                      }
-                    >
-                      Online
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/in-person" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/in-person")
-                      }
-                    >
-                      In-person
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/workshops" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/workshops")
-                      }
-                    >
-                      Workshops
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/certifications" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/certifications")
-                      }
-                    >
-                      Certifications
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/tutorials" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/tutorials")
-                      }
-                    >
-                      Tutorials
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/guides" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/guides")
-                      }
-                    >
-                      Guides
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/strategy" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/strategy")
+                        }
+                      >
+                        Strategy
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/it" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/it")
+                        }
+                      >
+                        IT
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/hr" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/hr")
+                        }
+                      >
+                        HR
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/marketing" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/marketing")
+                        }
+                      >
+                        Marketing
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/operations" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/operations")
+                        }
+                      >
+                        Operations
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/onboarding" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/onboarding")
+                        }
+                      >
+                        Onboarding
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/migration" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/migration")
+                        }
+                      >
+                        Migration
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/customization" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/customization")
+                        }
+                      >
+                        Customization
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/training" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/training")
+                        }
+                      >
+                        Training
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/support" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/support")
+                        }
+                      >
+                        Support
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/testing" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/testing")
+                        }
+                      >
+                        Testing
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/rollout" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/rollout")
+                        }
+                      >
+                        Rollout
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/online" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/online")
+                        }
+                      >
+                        Online
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/in-person" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/in-person")
+                        }
+                      >
+                        In-person
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/workshops" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/workshops")
+                        }
+                      >
+                        Workshops
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/certifications" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/certifications",
+                          )
+                        }
+                      >
+                        Certifications
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/tutorials" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/tutorials")
+                        }
+                      >
+                        Tutorials
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/guides" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/guides")
+                        }
+                      >
+                        Guides
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2560,70 +2653,85 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Resources menu"
                 className="max-width-content-panel"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Documentation</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/user-guides" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/user-guides")
-                      }
-                    >
-                      User guides
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/api-reference" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/api-reference")
-                      }
-                    >
-                      API reference
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/release-notes" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/release-notes")
-                      }
-                    >
-                      Release notes
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/faqs" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/faqs")
-                      }
-                    >
-                      FAQs
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Support &amp; help</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/contact-support" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/contact-support")
-                      }
-                    >
-                      Contact support
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/community-forum" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/community-forum")
-                      }
-                    >
-                      Community forum
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/troubleshooting" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/troubleshooting")
-                      }
-                    >
-                      Troubleshooting
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/user-guides" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/user-guides")
+                        }
+                      >
+                        User guides
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/api-reference" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/api-reference")
+                        }
+                      >
+                        API reference
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/release-notes" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/release-notes")
+                        }
+                      >
+                        Release notes
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/faqs" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/faqs")
+                        }
+                      >
+                        FAQs
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>
+                      Support &amp; help
+                    </MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/contact-support" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/contact-support",
+                          )
+                        }
+                      >
+                        Contact support
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/community-forum" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/community-forum",
+                          )
+                        }
+                      >
+                        Community forum
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/troubleshooting" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/troubleshooting",
+                          )
+                        }
+                      >
+                        Troubleshooting
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2653,95 +2761,109 @@ export const WithContent: StoryFn = () => {
           aria-label="Content on right menu"
           className="custom-region-no-container-padding custom-region-side"
         >
-          <MegaMenuMain>
-            <MegaMenuSection>
-              <MegaMenuHeading>Financial services</MegaMenuHeading>
-              <MegaMenuLink
-                render={<RouterLink to="/digital-banking" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/digital-banking")
-                }
-              >
-                Digital banking
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/risk-management" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/risk-management")
-                }
-              >
-                Risk management
-              </MegaMenuLink>
-            </MegaMenuSection>
-            <MegaMenuSection>
-              <MegaMenuHeading>Healthcare</MegaMenuHeading>
-              <MegaMenuLink
-                render={<RouterLink to="/patient-management" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/patient-management")
-                }
-              >
-                Patient management
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/telemedicine" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/telemedicine")
-                }
-              >
-                Telemedicine
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/compliance-solutions" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/compliance-solutions")
-                }
-              >
-                Compliance solutions
-              </MegaMenuLink>
-            </MegaMenuSection>
-            <MegaMenuSection>
-              <MegaMenuHeading>Retail</MegaMenuHeading>
-              <MegaMenuLink
-                render={<RouterLink to="/e-commerce-platforms" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/e-commerce-platforms")
-                }
-              >
-                E-commerce platforms
-              </MegaMenuLink>
-            </MegaMenuSection>
-            <MegaMenuSection>
-              <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-              <MegaMenuLink
-                render={<RouterLink to="/supply-chain-optimization" />}
-                onClick={() =>
-                  console.log(
-                    "MegaMenuLink clicked:",
-                    "/supply-chain-optimization",
-                  )
-                }
-              >
-                Supply chain optimization
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/quality-control" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/quality-control")
-                }
-              >
-                Quality control
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/production-planning" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/production-planning")
-                }
-              >
-                Production planning
-              </MegaMenuLink>
-            </MegaMenuSection>
-            <MegaMenuFooter>
+          <MegaMenuBody>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+              <MegaMenuItemList>
+                <MegaMenuItem
+                  render={<RouterLink to="/digital-banking" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/digital-banking")
+                  }
+                >
+                  Digital banking
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/risk-management" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/risk-management")
+                  }
+                >
+                  Risk management
+                </MegaMenuItem>
+              </MegaMenuItemList>
+            </MegaMenuGroup>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+              <MegaMenuItemList>
+                <MegaMenuItem
+                  render={<RouterLink to="/patient-management" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/patient-management")
+                  }
+                >
+                  Patient management
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/telemedicine" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/telemedicine")
+                  }
+                >
+                  Telemedicine
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/compliance-solutions" />}
+                  onClick={() =>
+                    console.log(
+                      "MegaMenuItem clicked:",
+                      "/compliance-solutions",
+                    )
+                  }
+                >
+                  Compliance solutions
+                </MegaMenuItem>
+              </MegaMenuItemList>
+            </MegaMenuGroup>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+              <MegaMenuItemList>
+                <MegaMenuItem
+                  render={<RouterLink to="/e-commerce-platforms" />}
+                  onClick={() =>
+                    console.log(
+                      "MegaMenuItem clicked:",
+                      "/e-commerce-platforms",
+                    )
+                  }
+                >
+                  E-commerce platforms
+                </MegaMenuItem>
+              </MegaMenuItemList>
+            </MegaMenuGroup>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+              <MegaMenuItemList>
+                <MegaMenuItem
+                  render={<RouterLink to="/supply-chain-optimization" />}
+                  onClick={() =>
+                    console.log(
+                      "MegaMenuItem clicked:",
+                      "/supply-chain-optimization",
+                    )
+                  }
+                >
+                  Supply chain optimization
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/quality-control" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/quality-control")
+                  }
+                >
+                  Quality control
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/production-planning" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/production-planning")
+                  }
+                >
+                  Production planning
+                </MegaMenuItem>
+              </MegaMenuItemList>
+            </MegaMenuGroup>
+            <MegaMenuActionBar>
               <FlexLayout gap={3}>
                 <Link
                   color="primary"
@@ -2760,9 +2882,9 @@ export const WithContent: StoryFn = () => {
                   Support center
                 </Link>
               </FlexLayout>
-            </MegaMenuFooter>
-          </MegaMenuMain>
-          <MegaMenuAside className="custom-region">
+            </MegaMenuActionBar>
+          </MegaMenuBody>
+          <MegaMenuContent className="custom-region">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
                 alt="example"
@@ -2791,7 +2913,7 @@ export const WithContent: StoryFn = () => {
                 </Link>
               </StackLayout>
             </FlexLayout>
-          </MegaMenuAside>
+          </MegaMenuContent>
         </MegaMenuPanel>
       </MegaMenu>
 
@@ -2806,7 +2928,7 @@ export const WithContent: StoryFn = () => {
           aria-label="Content on left menu"
           className="custom-region-no-container-padding custom-region-side"
         >
-          <MegaMenuAside className="custom-region">
+          <MegaMenuContent className="custom-region">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
                 alt="example"
@@ -2835,96 +2957,110 @@ export const WithContent: StoryFn = () => {
                 </Link>
               </StackLayout>
             </FlexLayout>
-          </MegaMenuAside>
-          <MegaMenuMain>
-            <MegaMenuSection>
-              <MegaMenuHeading>Financial services</MegaMenuHeading>
-              <MegaMenuLink
-                render={<RouterLink to="/digital-banking" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/digital-banking")
-                }
-              >
-                Digital banking
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/risk-management" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/risk-management")
-                }
-              >
-                Risk management
-              </MegaMenuLink>
-            </MegaMenuSection>
-            <MegaMenuSection>
-              <MegaMenuHeading>Healthcare</MegaMenuHeading>
-              <MegaMenuLink
-                render={<RouterLink to="/patient-management" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/patient-management")
-                }
-              >
-                Patient management
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/telemedicine" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/telemedicine")
-                }
-              >
-                Telemedicine
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/compliance-solutions" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/compliance-solutions")
-                }
-              >
-                Compliance solutions
-              </MegaMenuLink>
-            </MegaMenuSection>
-            <MegaMenuSection>
-              <MegaMenuHeading>Retail</MegaMenuHeading>
-              <MegaMenuLink
-                render={<RouterLink to="/e-commerce-platforms" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/e-commerce-platforms")
-                }
-              >
-                E-commerce platforms
-              </MegaMenuLink>
-            </MegaMenuSection>
-            <MegaMenuSection>
-              <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-              <MegaMenuLink
-                render={<RouterLink to="/supply-chain-optimization" />}
-                onClick={() =>
-                  console.log(
-                    "MegaMenuLink clicked:",
-                    "/supply-chain-optimization",
-                  )
-                }
-              >
-                Supply chain optimization
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/quality-control" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/quality-control")
-                }
-              >
-                Quality control
-              </MegaMenuLink>
-              <MegaMenuLink
-                render={<RouterLink to="/production-planning" />}
-                onClick={() =>
-                  console.log("MegaMenuLink clicked:", "/production-planning")
-                }
-              >
-                Production planning
-              </MegaMenuLink>
-            </MegaMenuSection>
-            <MegaMenuFooter>
+          </MegaMenuContent>
+          <MegaMenuBody>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+              <MegaMenuItemList>
+                <MegaMenuItem
+                  render={<RouterLink to="/digital-banking" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/digital-banking")
+                  }
+                >
+                  Digital banking
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/risk-management" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/risk-management")
+                  }
+                >
+                  Risk management
+                </MegaMenuItem>
+              </MegaMenuItemList>
+            </MegaMenuGroup>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+              <MegaMenuItemList>
+                <MegaMenuItem
+                  render={<RouterLink to="/patient-management" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/patient-management")
+                  }
+                >
+                  Patient management
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/telemedicine" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/telemedicine")
+                  }
+                >
+                  Telemedicine
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/compliance-solutions" />}
+                  onClick={() =>
+                    console.log(
+                      "MegaMenuItem clicked:",
+                      "/compliance-solutions",
+                    )
+                  }
+                >
+                  Compliance solutions
+                </MegaMenuItem>
+              </MegaMenuItemList>
+            </MegaMenuGroup>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+              <MegaMenuItemList>
+                <MegaMenuItem
+                  render={<RouterLink to="/e-commerce-platforms" />}
+                  onClick={() =>
+                    console.log(
+                      "MegaMenuItem clicked:",
+                      "/e-commerce-platforms",
+                    )
+                  }
+                >
+                  E-commerce platforms
+                </MegaMenuItem>
+              </MegaMenuItemList>
+            </MegaMenuGroup>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+              <MegaMenuItemList>
+                <MegaMenuItem
+                  render={<RouterLink to="/supply-chain-optimization" />}
+                  onClick={() =>
+                    console.log(
+                      "MegaMenuItem clicked:",
+                      "/supply-chain-optimization",
+                    )
+                  }
+                >
+                  Supply chain optimization
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/quality-control" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/quality-control")
+                  }
+                >
+                  Quality control
+                </MegaMenuItem>
+                <MegaMenuItem
+                  render={<RouterLink to="/production-planning" />}
+                  onClick={() =>
+                    console.log("MegaMenuItem clicked:", "/production-planning")
+                  }
+                >
+                  Production planning
+                </MegaMenuItem>
+              </MegaMenuItemList>
+            </MegaMenuGroup>
+            <MegaMenuActionBar>
               <FlexLayout gap={3}>
                 <Link
                   color="primary"
@@ -2943,8 +3079,8 @@ export const WithContent: StoryFn = () => {
                   Support center
                 </Link>
               </FlexLayout>
-            </MegaMenuFooter>
-          </MegaMenuMain>
+            </MegaMenuActionBar>
+          </MegaMenuBody>
         </MegaMenuPanel>
       </MegaMenu>
     </FlexLayout>
@@ -2977,165 +3113,182 @@ export const WithLink: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel>
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Financial services</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/digital-banking" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/digital-banking")
-                    }
-                  >
-                    Digital banking
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/risk-management" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/risk-management")
-                    }
-                  >
-                    Risk management
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/patient-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/patient-management",
-                      )
-                    }
-                  >
-                    Patient management
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/telemedicine" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/telemedicine")
-                    }
-                  >
-                    Telemedicine
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/compliance-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/compliance-solutions",
-                      )
-                    }
-                  >
-                    Compliance solutions
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Retail</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/e-commerce-platforms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/e-commerce-platforms",
-                      )
-                    }
-                  >
-                    E-commerce platforms
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/supply-chain-optimization" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/supply-chain-optimization",
-                      )
-                    }
-                  >
-                    Supply chain optimization
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/quality-control" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/quality-control")
-                    }
-                  >
-                    Quality control
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/production-planning" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/production-planning",
-                      )
-                    }
-                  >
-                    Production planning
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Education</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/learning-management-systems" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/learning-management-systems",
-                      )
-                    }
-                  >
-                    Learning management systems
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/virtual-classrooms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/virtual-classrooms",
-                      )
-                    }
-                  >
-                    Virtual classrooms
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Government</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/document-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/document-management",
-                      )
-                    }
-                  >
-                    Document management
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/citizen-services" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/citizen-services")
-                    }
-                  >
-                    Citizen services
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/public-safety-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/public-safety-solutions",
-                      )
-                    }
-                  >
-                    Public safety solutions
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuFooter>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/digital-banking" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/digital-banking")
+                      }
+                    >
+                      Digital banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/risk-management" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/risk-management")
+                      }
+                    >
+                      Risk management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/patient-management" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/patient-management",
+                        )
+                      }
+                    >
+                      Patient management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/telemedicine" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/telemedicine")
+                      }
+                    >
+                      Telemedicine
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/compliance-solutions" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/compliance-solutions",
+                        )
+                      }
+                    >
+                      Compliance solutions
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/e-commerce-platforms" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/e-commerce-platforms",
+                        )
+                      }
+                    >
+                      E-commerce platforms
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/supply-chain-optimization" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/supply-chain-optimization",
+                        )
+                      }
+                    >
+                      Supply chain optimization
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/quality-control" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/quality-control")
+                      }
+                    >
+                      Quality control
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/production-planning" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/production-planning",
+                        )
+                      }
+                    >
+                      Production planning
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/learning-management-systems" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/learning-management-systems",
+                        )
+                      }
+                    >
+                      Learning management systems
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/virtual-classrooms" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/virtual-classrooms",
+                        )
+                      }
+                    >
+                      Virtual classrooms
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/document-management" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/document-management",
+                        )
+                      }
+                    >
+                      Document management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/citizen-services" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/citizen-services",
+                        )
+                      }
+                    >
+                      Citizen services
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/public-safety-solutions" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/public-safety-solutions",
+                        )
+                      }
+                    >
+                      Public safety solutions
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuActionBar>
                   <FlexLayout wrap gap={3}>
                     <Link
                       color="primary"
@@ -3154,8 +3307,8 @@ export const WithLink: StoryFn = () => {
                       Support center
                     </Link>
                   </FlexLayout>
-                </MegaMenuFooter>
-              </MegaMenuMain>
+                </MegaMenuActionBar>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3171,157 +3324,167 @@ export const WithLink: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel>
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Consulting</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/strategy" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/strategy")
-                    }
-                  >
-                    Strategy
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/it" />}
-                    onClick={() => console.log("MegaMenuLink clicked:", "/it")}
-                  >
-                    IT
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/hr" />}
-                    onClick={() => console.log("MegaMenuLink clicked:", "/hr")}
-                  >
-                    HR
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/marketing" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/marketing")
-                    }
-                  >
-                    Marketing
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/operations" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/operations")
-                    }
-                  >
-                    Operations
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Implementation</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/onboarding" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/onboarding")
-                    }
-                  >
-                    Onboarding
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/migration" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/migration")
-                    }
-                  >
-                    Migration
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/customization" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/customization")
-                    }
-                  >
-                    Customization
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/training" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/training")
-                    }
-                  >
-                    Training
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/support" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/support")
-                    }
-                  >
-                    Support
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/testing" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/testing")
-                    }
-                  >
-                    Testing
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/rollout" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/rollout")
-                    }
-                  >
-                    Rollout
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Training</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/online" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/online")
-                    }
-                  >
-                    Online
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/in-person" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/in-person")
-                    }
-                  >
-                    In-person
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/workshops" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/workshops")
-                    }
-                  >
-                    Workshops
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/certifications" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/certifications")
-                    }
-                  >
-                    Certifications
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/tutorials" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/tutorials")
-                    }
-                  >
-                    Tutorials
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/guides" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/guides")
-                    }
-                  >
-                    Guides
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuFooter>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/strategy" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/strategy")
+                      }
+                    >
+                      Strategy
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/it" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/it")
+                      }
+                    >
+                      IT
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/hr" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/hr")
+                      }
+                    >
+                      HR
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/marketing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/marketing")
+                      }
+                    >
+                      Marketing
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/operations" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/operations")
+                      }
+                    >
+                      Operations
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/onboarding" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/onboarding")
+                      }
+                    >
+                      Onboarding
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/migration" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/migration")
+                      }
+                    >
+                      Migration
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/customization" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/customization")
+                      }
+                    >
+                      Customization
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/training" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/training")
+                      }
+                    >
+                      Training
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/support")
+                      }
+                    >
+                      Support
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/testing" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/testing")
+                      }
+                    >
+                      Testing
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/rollout" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/rollout")
+                      }
+                    >
+                      Rollout
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/online" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/online")
+                      }
+                    >
+                      Online
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/in-person" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/in-person")
+                      }
+                    >
+                      In-person
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/workshops" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/workshops")
+                      }
+                    >
+                      Workshops
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/certifications" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/certifications")
+                      }
+                    >
+                      Certifications
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/tutorials" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/tutorials")
+                      }
+                    >
+                      Tutorials
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/guides")
+                      }
+                    >
+                      Guides
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuActionBar>
                   <Link
                     color="primary"
                     underline="default"
@@ -3330,8 +3493,8 @@ export const WithLink: StoryFn = () => {
                   >
                     Service status
                   </Link>
-                </MegaMenuFooter>
-              </MegaMenuMain>
+                </MegaMenuActionBar>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3346,70 +3509,74 @@ export const WithLink: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Documentation</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/user-guides" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/user-guides")
-                    }
-                  >
-                    User guides
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/api-reference" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/api-reference")
-                    }
-                  >
-                    API reference
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/release-notes" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/release-notes")
-                    }
-                  >
-                    Release notes
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/faqs" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/faqs")
-                    }
-                  >
-                    FAQs
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Support & help</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/contact-support" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/contact-support")
-                    }
-                  >
-                    Contact support
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/community-forum" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/community-forum")
-                    }
-                  >
-                    Community forum
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/troubleshooting" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/troubleshooting")
-                    }
-                  >
-                    Troubleshooting
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuFooter>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/user-guides" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/user-guides")
+                      }
+                    >
+                      User guides
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/api-reference" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/api-reference")
+                      }
+                    >
+                      API reference
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/release-notes" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/release-notes")
+                      }
+                    >
+                      Release notes
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/faqs" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/faqs")
+                      }
+                    >
+                      FAQs
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/contact-support" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/contact-support")
+                      }
+                    >
+                      Contact support
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/community-forum" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/community-forum")
+                      }
+                    >
+                      Community forum
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/troubleshooting" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/troubleshooting")
+                      }
+                    >
+                      Troubleshooting
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuActionBar>
                   <Link
                     color="primary"
                     underline="default"
@@ -3418,8 +3585,8 @@ export const WithLink: StoryFn = () => {
                   >
                     Browse documentation
                   </Link>
-                </MegaMenuFooter>
-              </MegaMenuMain>
+                </MegaMenuActionBar>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3457,168 +3624,193 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Solutions menu"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Financial services</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/digital-banking" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/digital-banking")
-                      }
-                    >
-                      Digital banking
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/risk-management" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/risk-management")
-                      }
-                    >
-                      Risk management
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/patient-management" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/patient-management",
-                        )
-                      }
-                    >
-                      Patient management
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/telemedicine" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/telemedicine")
-                      }
-                    >
-                      Telemedicine
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/compliance-solutions" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/compliance-solutions",
-                        )
-                      }
-                    >
-                      Compliance solutions
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Retail</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/e-commerce-platforms" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/e-commerce-platforms",
-                        )
-                      }
-                    >
-                      E-commerce platforms
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/supply-chain-optimization" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/supply-chain-optimization",
-                        )
-                      }
-                    >
-                      Supply chain optimization
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/quality-control" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/quality-control")
-                      }
-                    >
-                      Quality control
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/production-planning" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/production-planning",
-                        )
-                      }
-                    >
-                      Production planning
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Education</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/learning-management-systems" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/learning-management-systems",
-                        )
-                      }
-                    >
-                      Learning management systems
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/virtual-classrooms" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/virtual-classrooms",
-                        )
-                      }
-                    >
-                      Virtual classrooms
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Government</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/document-management" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/document-management",
-                        )
-                      }
-                    >
-                      Document management
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/citizen-services" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/citizen-services",
-                        )
-                      }
-                    >
-                      Citizen services
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/public-safety-solutions" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuLink clicked:",
-                          "/public-safety-solutions",
-                        )
-                      }
-                    >
-                      Public safety solutions
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>
+                      Financial services
+                    </MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/digital-banking" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/digital-banking",
+                          )
+                        }
+                      >
+                        Digital banking
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/risk-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/risk-management",
+                          )
+                        }
+                      >
+                        Risk management
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/patient-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/patient-management",
+                          )
+                        }
+                      >
+                        Patient management
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/telemedicine" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/telemedicine")
+                        }
+                      >
+                        Telemedicine
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/compliance-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/compliance-solutions",
+                          )
+                        }
+                      >
+                        Compliance solutions
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/e-commerce-platforms" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/e-commerce-platforms",
+                          )
+                        }
+                      >
+                        E-commerce platforms
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/supply-chain-optimization" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/supply-chain-optimization",
+                          )
+                        }
+                      >
+                        Supply chain optimization
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/quality-control" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/quality-control",
+                          )
+                        }
+                      >
+                        Quality control
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/production-planning" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/production-planning",
+                          )
+                        }
+                      >
+                        Production planning
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={
+                          <RouterLink to="/learning-management-systems" />
+                        }
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/learning-management-systems",
+                          )
+                        }
+                      >
+                        Learning management systems
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/virtual-classrooms" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/virtual-classrooms",
+                          )
+                        }
+                      >
+                        Virtual classrooms
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/document-management" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/document-management",
+                          )
+                        }
+                      >
+                        Document management
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/citizen-services" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/citizen-services",
+                          )
+                        }
+                      >
+                        Citizen services
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/public-safety-solutions" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/public-safety-solutions",
+                          )
+                        }
+                      >
+                        Public safety solutions
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -3636,129 +3828,138 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Services menu"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Consulting</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/strategy" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/strategy")
-                      }
-                    >
-                      Strategy
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/it" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/it")
-                      }
-                    >
-                      IT
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/hr" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/hr")
-                      }
-                    >
-                      HR
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/marketing" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/marketing")
-                      }
-                    >
-                      Marketing
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/operations" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/operations")
-                      }
-                    >
-                      Operations
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Implementation</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/onboarding" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/onboarding")
-                      }
-                    >
-                      Onboarding
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/migration" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/migration")
-                      }
-                    >
-                      Migration
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/customization" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/customization")
-                      }
-                    >
-                      Customization
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/training" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/training")
-                      }
-                    >
-                      Training
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/support" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/support")
-                      }
-                    >
-                      Support
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Training</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/online" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/online")
-                      }
-                    >
-                      Online
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/in-person" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/in-person")
-                      }
-                    >
-                      In-person
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/workshops" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/workshops")
-                      }
-                    >
-                      Workshops
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/certifications" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/certifications")
-                      }
-                    >
-                      Certifications
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/strategy" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/strategy")
+                        }
+                      >
+                        Strategy
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/it" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/it")
+                        }
+                      >
+                        IT
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/hr" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/hr")
+                        }
+                      >
+                        HR
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/marketing" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/marketing")
+                        }
+                      >
+                        Marketing
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/operations" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/operations")
+                        }
+                      >
+                        Operations
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/onboarding" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/onboarding")
+                        }
+                      >
+                        Onboarding
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/migration" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/migration")
+                        }
+                      >
+                        Migration
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/customization" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/customization")
+                        }
+                      >
+                        Customization
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/training" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/training")
+                        }
+                      >
+                        Training
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/support" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/support")
+                        }
+                      >
+                        Support
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/online" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/online")
+                        }
+                      >
+                        Online
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/in-person" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/in-person")
+                        }
+                      >
+                        In-person
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/workshops" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/workshops")
+                        }
+                      >
+                        Workshops
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/certifications" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/certifications",
+                          )
+                        }
+                      >
+                        Certifications
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -3776,97 +3977,115 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Resources menu"
               >
-                <MegaMenuMain>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Documentation</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/user-guides" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/user-guides")
-                      }
-                    >
-                      User guides
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/api-reference" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/api-reference")
-                      }
-                    >
-                      API reference
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/release-notes" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/release-notes")
-                      }
-                    >
-                      Release notes
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/faqs" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/faqs")
-                      }
-                    >
-                      FAQs
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Support</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/contact-support" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/contact-support")
-                      }
-                    >
-                      Contact support
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/community-forum" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/community-forum")
-                      }
-                    >
-                      Community forum
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/troubleshooting" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/troubleshooting")
-                      }
-                    >
-                      Troubleshooting
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                  <MegaMenuSection>
-                    <MegaMenuHeading>Learn</MegaMenuHeading>
-                    <MegaMenuLink
-                      render={<RouterLink to="/tutorials" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/tutorials")
-                      }
-                    >
-                      Tutorials
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/guides" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/guides")
-                      }
-                    >
-                      Guides
-                    </MegaMenuLink>
-                    <MegaMenuLink
-                      render={<RouterLink to="/best-practices" />}
-                      onClick={() =>
-                        console.log("MegaMenuLink clicked:", "/best-practices")
-                      }
-                    >
-                      Best practices
-                    </MegaMenuLink>
-                  </MegaMenuSection>
-                </MegaMenuMain>
+                <MegaMenuBody>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/user-guides" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/user-guides")
+                        }
+                      >
+                        User guides
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/api-reference" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/api-reference")
+                        }
+                      >
+                        API reference
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/release-notes" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/release-notes")
+                        }
+                      >
+                        Release notes
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/faqs" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/faqs")
+                        }
+                      >
+                        FAQs
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Support</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/contact-support" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/contact-support",
+                          )
+                        }
+                      >
+                        Contact support
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/community-forum" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/community-forum",
+                          )
+                        }
+                      >
+                        Community forum
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/troubleshooting" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/troubleshooting",
+                          )
+                        }
+                      >
+                        Troubleshooting
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Learn</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem
+                        render={<RouterLink to="/tutorials" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/tutorials")
+                        }
+                      >
+                        Tutorials
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/guides" />}
+                        onClick={() =>
+                          console.log("MegaMenuItem clicked:", "/guides")
+                        }
+                      >
+                        Guides
+                      </MegaMenuItem>
+                      <MegaMenuItem
+                        render={<RouterLink to="/best-practices" />}
+                        onClick={() =>
+                          console.log(
+                            "MegaMenuItem clicked:",
+                            "/best-practices",
+                          )
+                        }
+                      >
+                        Best practices
+                      </MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -3887,74 +4106,82 @@ export const DefaultOpen: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuMain>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Financial services</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/digital-banking" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/digital-banking")
-                    }
-                  >
-                    Digital banking
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/risk-management" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/risk-management")
-                    }
-                  >
-                    Risk management
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/patient-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/patient-management",
-                      )
-                    }
-                  >
-                    Patient management
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/telemedicine" />}
-                    onClick={() =>
-                      console.log("MegaMenuLink clicked:", "/telemedicine")
-                    }
-                  >
-                    Telemedicine
-                  </MegaMenuLink>
-                  <MegaMenuLink
-                    render={<RouterLink to="/compliance-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/compliance-solutions",
-                      )
-                    }
-                  >
-                    Compliance solutions
-                  </MegaMenuLink>
-                </MegaMenuSection>
-                <MegaMenuSection>
-                  <MegaMenuHeading>Retail</MegaMenuHeading>
-                  <MegaMenuLink
-                    render={<RouterLink to="/e-commerce-platforms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuLink clicked:",
-                        "/e-commerce-platforms",
-                      )
-                    }
-                  >
-                    E-commerce platforms
-                  </MegaMenuLink>
-                </MegaMenuSection>
-              </MegaMenuMain>
+              <MegaMenuBody>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/digital-banking" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/digital-banking")
+                      }
+                    >
+                      Digital banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/risk-management" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/risk-management")
+                      }
+                    >
+                      Risk management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/patient-management" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/patient-management",
+                        )
+                      }
+                    >
+                      Patient management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/telemedicine" />}
+                      onClick={() =>
+                        console.log("MegaMenuItem clicked:", "/telemedicine")
+                      }
+                    >
+                      Telemedicine
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      render={<RouterLink to="/compliance-solutions" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/compliance-solutions",
+                        )
+                      }
+                    >
+                      Compliance solutions
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={<RouterLink to="/e-commerce-platforms" />}
+                      onClick={() =>
+                        console.log(
+                          "MegaMenuItem clicked:",
+                          "/e-commerce-platforms",
+                        )
+                      }
+                    >
+                      E-commerce platforms
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3993,54 +4220,58 @@ export const Placement: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label={`${placement} menu`}>
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Group A</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/item-1" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/item-1")
-                  }
-                >
-                  Item 1
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/item-2" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/item-2")
-                  }
-                >
-                  Item 2
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/item-3" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/item-3")
-                  }
-                >
-                  Item 3
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Group B</MegaMenuHeading>
-                <MegaMenuLink
-                  render={<RouterLink to="/item-4" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/item-4")
-                  }
-                >
-                  Item 4
-                </MegaMenuLink>
-                <MegaMenuLink
-                  render={<RouterLink to="/item-5" />}
-                  onClick={() =>
-                    console.log("MegaMenuLink clicked:", "/item-5")
-                  }
-                >
-                  Item 5
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Group A</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/item-1" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/item-1")
+                    }
+                  >
+                    Item 1
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/item-2" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/item-2")
+                    }
+                  >
+                    Item 2
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/item-3" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/item-3")
+                    }
+                  >
+                    Item 3
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Group B</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={<RouterLink to="/item-4" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/item-4")
+                    }
+                  >
+                    Item 4
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    render={<RouterLink to="/item-5" />}
+                    onClick={() =>
+                      console.log("MegaMenuItem clicked:", "/item-5")
+                    }
+                  >
+                    Item 5
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       ))}
