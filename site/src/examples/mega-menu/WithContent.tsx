@@ -2,14 +2,14 @@ import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuAside,
-  MegaMenuFooter,
-  MegaMenuHeading,
-  MegaMenuLink,
-  MegaMenuList,
-  MegaMenuMain,
+  MegaMenuActionBar,
+  MegaMenuBody,
+  MegaMenuContent,
+  MegaMenuGroup,
+  MegaMenuGroupHeading,
+  MegaMenuItem,
+  MegaMenuItemList,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -71,99 +71,99 @@ const supportingLinks = (
 );
 
 const main = (
-  <MegaMenuMain className={styles.customRegionSideSection}>
-    <MegaMenuSection>
-      <MegaMenuHeading>Financial services</MegaMenuHeading>
-      <MegaMenuList>
-        <MegaMenuLink
+  <MegaMenuBody className={styles.customRegionSideSection}>
+    <MegaMenuGroup>
+      <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+      <MegaMenuItemList>
+        <MegaMenuItem
           render={<RouterLink to="/digital-banking" />}
           onClick={() =>
-            console.log("MegaMenuLink clicked:", "/digital-banking")
+            console.log("MegaMenuItem clicked:", "/digital-banking")
           }
         >
           Digital banking
-        </MegaMenuLink>
-        <MegaMenuLink
+        </MegaMenuItem>
+        <MegaMenuItem
           render={<RouterLink to="/risk-management" />}
           onClick={() =>
-            console.log("MegaMenuLink clicked:", "/risk-management")
+            console.log("MegaMenuItem clicked:", "/risk-management")
           }
         >
           Risk management
-        </MegaMenuLink>
-      </MegaMenuList>
-    </MegaMenuSection>
-    <MegaMenuSection>
-      <MegaMenuHeading>Healthcare</MegaMenuHeading>
-      <MegaMenuList>
-        <MegaMenuLink
+        </MegaMenuItem>
+      </MegaMenuItemList>
+    </MegaMenuGroup>
+    <MegaMenuGroup>
+      <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+      <MegaMenuItemList>
+        <MegaMenuItem
           render={<RouterLink to="/patient-management" />}
           onClick={() =>
-            console.log("MegaMenuLink clicked:", "/patient-management")
+            console.log("MegaMenuItem clicked:", "/patient-management")
           }
         >
           Patient management
-        </MegaMenuLink>
-        <MegaMenuLink
+        </MegaMenuItem>
+        <MegaMenuItem
           render={<RouterLink to="/telemedicine" />}
-          onClick={() => console.log("MegaMenuLink clicked:", "/telemedicine")}
+          onClick={() => console.log("MegaMenuItem clicked:", "/telemedicine")}
         >
           Telemedicine
-        </MegaMenuLink>
-        <MegaMenuLink
+        </MegaMenuItem>
+        <MegaMenuItem
           render={<RouterLink to="/compliance-solutions" />}
           onClick={() =>
-            console.log("MegaMenuLink clicked:", "/compliance-solutions")
+            console.log("MegaMenuItem clicked:", "/compliance-solutions")
           }
         >
           Compliance solutions
-        </MegaMenuLink>
-      </MegaMenuList>
-    </MegaMenuSection>
-    <MegaMenuSection>
-      <MegaMenuHeading>Retail</MegaMenuHeading>
-      <MegaMenuList>
-        <MegaMenuLink
+        </MegaMenuItem>
+      </MegaMenuItemList>
+    </MegaMenuGroup>
+    <MegaMenuGroup>
+      <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+      <MegaMenuItemList>
+        <MegaMenuItem
           render={<RouterLink to="/e-commerce-platforms" />}
           onClick={() =>
-            console.log("MegaMenuLink clicked:", "/e-commerce-platforms")
+            console.log("MegaMenuItem clicked:", "/e-commerce-platforms")
           }
         >
           E-commerce platforms
-        </MegaMenuLink>
-      </MegaMenuList>
-    </MegaMenuSection>
-    <MegaMenuSection>
-      <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-      <MegaMenuList>
-        <MegaMenuLink
+        </MegaMenuItem>
+      </MegaMenuItemList>
+    </MegaMenuGroup>
+    <MegaMenuGroup>
+      <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+      <MegaMenuItemList>
+        <MegaMenuItem
           render={<RouterLink to="/supply-chain-optimization" />}
           onClick={() =>
-            console.log("MegaMenuLink clicked:", "/supply-chain-optimization")
+            console.log("MegaMenuItem clicked:", "/supply-chain-optimization")
           }
         >
           Supply chain optimization
-        </MegaMenuLink>
-        <MegaMenuLink
+        </MegaMenuItem>
+        <MegaMenuItem
           render={<RouterLink to="/quality-control" />}
           onClick={() =>
-            console.log("MegaMenuLink clicked:", "/quality-control")
+            console.log("MegaMenuItem clicked:", "/quality-control")
           }
         >
           Quality control
-        </MegaMenuLink>
-        <MegaMenuLink
+        </MegaMenuItem>
+        <MegaMenuItem
           render={<RouterLink to="/production-planning" />}
           onClick={() =>
-            console.log("MegaMenuLink clicked:", "/production-planning")
+            console.log("MegaMenuItem clicked:", "/production-planning")
           }
         >
           Production planning
-        </MegaMenuLink>
-      </MegaMenuList>
-    </MegaMenuSection>
-    <MegaMenuFooter>{supportingLinks}</MegaMenuFooter>
-  </MegaMenuMain>
+        </MegaMenuItem>
+      </MegaMenuItemList>
+    </MegaMenuGroup>
+    <MegaMenuActionBar>{supportingLinks}</MegaMenuActionBar>
+  </MegaMenuBody>
 );
 
 export const WithContent = (): ReactElement => {
@@ -186,9 +186,9 @@ export const WithContent = (): ReactElement => {
             className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
           >
             {main}
-            <MegaMenuAside className={styles.customRegionSideContent}>
+            <MegaMenuContent className={styles.customRegionSideContent}>
               {featuredResource}
-            </MegaMenuAside>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
 
@@ -205,9 +205,9 @@ export const WithContent = (): ReactElement => {
             aria-label="Content on left menu"
             className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
           >
-            <MegaMenuAside className={styles.customRegionSideContent}>
+            <MegaMenuContent className={styles.customRegionSideContent}>
               {featuredResource}
-            </MegaMenuAside>
+            </MegaMenuContent>
             {main}
           </MegaMenuPanel>
         </MegaMenu>
