@@ -3,22 +3,21 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  Children,
-  cloneElement,
   forwardRef,
   type HTMLAttributes,
-  isValidElement,
   type ReactNode,
+  useMemo,
 } from "react";
 import { MegaMenuColumn } from "./MegaMenuColumn";
-import { MegaMenuHeading } from "./MegaMenuHeading";
 import megaMenuSectionCss from "./MegaMenuSection.css";
+import { MegaMenuSectionContext } from "./MegaMenuSectionContext";
 
 const withBaseName = makePrefixer("saltMegaMenuSection");
 
 export interface MegaMenuSectionProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The content of the mega menu section, typically MegaMenuHeading and MegaMenuLink components.
+   * The content of the mega menu section: a `MegaMenuHeading` and a
+   * `MegaMenuList` of `MegaMenuLink`s.
    */
   children?: ReactNode;
 }
@@ -32,37 +31,21 @@ export const MegaMenuSection = forwardRef<HTMLDivElement, MegaMenuSectionProps>(
       window: targetWindow,
     });
 
+    // Generate the heading id here and share it via context: the heading wears
+    // it and the list points `aria-labelledby` at it. No child inspection.
     const headingId = useId();
-    let heading: ReactNode = null;
-    const items: ReactNode[] = [];
-
-    Children.forEach(children, (child) => {
-      if (isValidElement(child) && child.type === MegaMenuHeading && !heading) {
-        heading = cloneElement(child, { id: headingId });
-      } else {
-        items.push(child);
-      }
-    });
+    const contextValue = useMemo(() => ({ headingId }), [headingId]);
 
     return (
-      <MegaMenuColumn
-        className={clsx(withBaseName(), className)}
-        ref={ref}
-        {...rest}
-      >
-        {heading}
-        <ul
-          className={withBaseName("list")}
-          aria-labelledby={heading ? headingId : undefined}
+      <MegaMenuSectionContext.Provider value={contextValue}>
+        <MegaMenuColumn
+          className={clsx(withBaseName(), className)}
+          ref={ref}
+          {...rest}
         >
-          {items.map((item, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: children have no stable identity
-            <li key={index} className={withBaseName("item")}>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </MegaMenuColumn>
+          {children}
+        </MegaMenuColumn>
+      </MegaMenuSectionContext.Provider>
     );
   },
 );

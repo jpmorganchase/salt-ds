@@ -6,6 +6,7 @@ import {
   MegaMenuFooter,
   MegaMenuHeading,
   MegaMenuLink,
+  MegaMenuList,
   MegaMenuMain,
   MegaMenuPanel,
   MegaMenuSection,
@@ -73,79 +74,93 @@ const main = (
   <MegaMenuMain className={styles.customRegionSideSection}>
     <MegaMenuSection>
       <MegaMenuHeading>Financial services</MegaMenuHeading>
-      <MegaMenuLink
-        render={<RouterLink to="/digital-banking" />}
-        onClick={() => console.log("MegaMenuLink clicked:", "/digital-banking")}
-      >
-        Digital banking
-      </MegaMenuLink>
-      <MegaMenuLink
-        render={<RouterLink to="/risk-management" />}
-        onClick={() => console.log("MegaMenuLink clicked:", "/risk-management")}
-      >
-        Risk management
-      </MegaMenuLink>
+      <MegaMenuList>
+        <MegaMenuLink
+          render={<RouterLink to="/digital-banking" />}
+          onClick={() =>
+            console.log("MegaMenuLink clicked:", "/digital-banking")
+          }
+        >
+          Digital banking
+        </MegaMenuLink>
+        <MegaMenuLink
+          render={<RouterLink to="/risk-management" />}
+          onClick={() =>
+            console.log("MegaMenuLink clicked:", "/risk-management")
+          }
+        >
+          Risk management
+        </MegaMenuLink>
+      </MegaMenuList>
     </MegaMenuSection>
     <MegaMenuSection>
       <MegaMenuHeading>Healthcare</MegaMenuHeading>
-      <MegaMenuLink
-        render={<RouterLink to="/patient-management" />}
-        onClick={() =>
-          console.log("MegaMenuLink clicked:", "/patient-management")
-        }
-      >
-        Patient management
-      </MegaMenuLink>
-      <MegaMenuLink
-        render={<RouterLink to="/telemedicine" />}
-        onClick={() => console.log("MegaMenuLink clicked:", "/telemedicine")}
-      >
-        Telemedicine
-      </MegaMenuLink>
-      <MegaMenuLink
-        render={<RouterLink to="/compliance-solutions" />}
-        onClick={() =>
-          console.log("MegaMenuLink clicked:", "/compliance-solutions")
-        }
-      >
-        Compliance solutions
-      </MegaMenuLink>
+      <MegaMenuList>
+        <MegaMenuLink
+          render={<RouterLink to="/patient-management" />}
+          onClick={() =>
+            console.log("MegaMenuLink clicked:", "/patient-management")
+          }
+        >
+          Patient management
+        </MegaMenuLink>
+        <MegaMenuLink
+          render={<RouterLink to="/telemedicine" />}
+          onClick={() => console.log("MegaMenuLink clicked:", "/telemedicine")}
+        >
+          Telemedicine
+        </MegaMenuLink>
+        <MegaMenuLink
+          render={<RouterLink to="/compliance-solutions" />}
+          onClick={() =>
+            console.log("MegaMenuLink clicked:", "/compliance-solutions")
+          }
+        >
+          Compliance solutions
+        </MegaMenuLink>
+      </MegaMenuList>
     </MegaMenuSection>
     <MegaMenuSection>
       <MegaMenuHeading>Retail</MegaMenuHeading>
-      <MegaMenuLink
-        render={<RouterLink to="/e-commerce-platforms" />}
-        onClick={() =>
-          console.log("MegaMenuLink clicked:", "/e-commerce-platforms")
-        }
-      >
-        E-commerce platforms
-      </MegaMenuLink>
+      <MegaMenuList>
+        <MegaMenuLink
+          render={<RouterLink to="/e-commerce-platforms" />}
+          onClick={() =>
+            console.log("MegaMenuLink clicked:", "/e-commerce-platforms")
+          }
+        >
+          E-commerce platforms
+        </MegaMenuLink>
+      </MegaMenuList>
     </MegaMenuSection>
     <MegaMenuSection>
       <MegaMenuHeading>Manufacturing</MegaMenuHeading>
-      <MegaMenuLink
-        render={<RouterLink to="/supply-chain-optimization" />}
-        onClick={() =>
-          console.log("MegaMenuLink clicked:", "/supply-chain-optimization")
-        }
-      >
-        Supply chain optimization
-      </MegaMenuLink>
-      <MegaMenuLink
-        render={<RouterLink to="/quality-control" />}
-        onClick={() => console.log("MegaMenuLink clicked:", "/quality-control")}
-      >
-        Quality control
-      </MegaMenuLink>
-      <MegaMenuLink
-        render={<RouterLink to="/production-planning" />}
-        onClick={() =>
-          console.log("MegaMenuLink clicked:", "/production-planning")
-        }
-      >
-        Production planning
-      </MegaMenuLink>
+      <MegaMenuList>
+        <MegaMenuLink
+          render={<RouterLink to="/supply-chain-optimization" />}
+          onClick={() =>
+            console.log("MegaMenuLink clicked:", "/supply-chain-optimization")
+          }
+        >
+          Supply chain optimization
+        </MegaMenuLink>
+        <MegaMenuLink
+          render={<RouterLink to="/quality-control" />}
+          onClick={() =>
+            console.log("MegaMenuLink clicked:", "/quality-control")
+          }
+        >
+          Quality control
+        </MegaMenuLink>
+        <MegaMenuLink
+          render={<RouterLink to="/production-planning" />}
+          onClick={() =>
+            console.log("MegaMenuLink clicked:", "/production-planning")
+          }
+        >
+          Production planning
+        </MegaMenuLink>
+      </MegaMenuList>
     </MegaMenuSection>
     <MegaMenuFooter>{supportingLinks}</MegaMenuFooter>
   </MegaMenuMain>
