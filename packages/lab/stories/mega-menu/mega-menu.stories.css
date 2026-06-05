@@ -3,8 +3,8 @@ nav > ol {
   padding: 0;
 }
 
-.saltMegaMenuMain {
-  --saltMegaMenuMain-columnWidth: 16rem;
+.saltMegaMenuBody {
+  --saltMegaMenuBody-columnWidth: 16rem;
 }
 
 .trigger-position-grid {
@@ -43,8 +43,8 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.full-width-panel .saltMegaMenuMain {
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuMain-columnWidth, 16rem)));
+.full-width-panel .saltMegaMenuBody {
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 16rem)));
 }
 
 .edge-to-edge-wrapper {
@@ -58,12 +58,12 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.max-width-content-panel .saltMegaMenuMain {
+.max-width-content-panel .saltMegaMenuBody {
   max-inline-size: 920px;
   inline-size: 100%;
   margin-inline: auto;
-  --saltMegaMenuMain-columnWidth: 212px;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuMain-columnWidth, 16rem)));
+  --saltMegaMenuBody-columnWidth: 212px;
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 16rem)));
 }
 
 .custom-region-no-container-padding {
@@ -114,11 +114,11 @@ nav > ol {
     padding-inline: var(--salt-spacing-300);
   }
 
-  .custom-region-side .saltMegaMenuMain {
+  .custom-region-side .saltMegaMenuBody {
     grid-template-columns: 1fr;
   }
 
-  .custom-region-side .saltMegaMenuLink {
+  .custom-region-side .saltMegaMenuItem {
     inline-size: 100%;
   }
 }
@@ -130,7 +130,7 @@ nav > ol {
   height: var(--salt-size-base);
 }
 
-.saltMegaMenuLink {
+.saltMegaMenuItem {
   inline-size: 100%;
 }
 
@@ -144,7 +144,7 @@ nav > ol {
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
-.small-viewport-container .saltMegaMenuMain {
+.small-viewport-container .saltMegaMenuBody {
   grid-template-columns: 1fr;
   max-inline-size: 100%;
   width: 100%;
