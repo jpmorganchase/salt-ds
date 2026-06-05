@@ -1,13 +1,14 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuAside,
-  MegaMenuFooter,
-  MegaMenuHeading,
-  MegaMenuLink,
-  MegaMenuMain,
+  MegaMenuActionBar,
+  MegaMenuBody,
+  MegaMenuContent,
+  MegaMenuGroup,
+  MegaMenuGroupHeading,
+  MegaMenuItem,
+  MegaMenuItemList,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -24,32 +25,36 @@ const AccessibleMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/risk-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Risk Management
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/patient-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Patient Management
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/risk-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/patient-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Patient Management
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -60,17 +65,19 @@ const AccessibleMegaMenu = () => (
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Services menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Consulting</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/strategy"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Strategy
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/strategy"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Strategy
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -78,10 +85,11 @@ const AccessibleMegaMenu = () => (
   </nav>
 );
 
-// Asides flanking the center and a footer inside it, to verify the panel
-// derives position purely from component type and source order (no placement
-// props): an aside before `MegaMenuMain` is the left column, one after is the
-// right column, and the footer sits inside `MegaMenuMain` beneath the sections.
+// Content regions flanking the center and an action bar inside it, to verify the
+// panel derives position purely from component type and source order (no placement
+// props): a `MegaMenuContent` before `MegaMenuBody` is the left column, one after
+// is the right column, and the action bar sits inside `MegaMenuBody` beneath the
+// groups.
 const LayoutMegaMenu = () => (
   <nav aria-label="Main">
     <StackLayout as="ol" direction="row" gap={1}>
@@ -91,26 +99,28 @@ const LayoutMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuAside>
+            <MegaMenuContent>
               <a href="/left">Left region link</a>
-            </MegaMenuAside>
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuFooter>
+            </MegaMenuContent>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuActionBar>
                 <a href="/bottom">Bottom band link</a>
-              </MegaMenuFooter>
-            </MegaMenuMain>
-            <MegaMenuAside>
+              </MegaMenuActionBar>
+            </MegaMenuBody>
+            <MegaMenuContent>
               <a href="/right">Right region link</a>
-            </MegaMenuAside>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -312,37 +322,40 @@ describe("Given a MegaMenu", () => {
   });
 
   describe("panel layout (source-order positioning)", () => {
-    it("places asides around Main and the footer inside Main, from source order", () => {
+    it("places content regions around the body and the action bar inside it, from source order", () => {
       cy.mount(<LayoutMegaMenu />);
 
       // The panel is a single row whose direct children are, in source order,
-      // the left aside, the center (Main), and the right aside.
+      // the left content region, the center (body), and the right content region.
       cy.get(".saltMegaMenuPanel")
         .children()
         .then(($children) => {
           const classes = [...$children].map((el) => el.classList[0]);
           expect(classes).to.deep.equal([
-            "saltMegaMenuAside",
-            "saltMegaMenuMain",
-            "saltMegaMenuAside",
+            "saltMegaMenuContent",
+            "saltMegaMenuBody",
+            "saltMegaMenuContent",
           ]);
         });
 
-      // The aside before Main carries the left content; the one after, the right.
-      cy.contains(".saltMegaMenuPanel > .saltMegaMenuAside", "Left region link")
-        .next()
-        .should("have.class", "saltMegaMenuMain");
+      // The content region before the body carries the left content; the one after, the right.
       cy.contains(
-        ".saltMegaMenuPanel > .saltMegaMenuAside",
+        ".saltMegaMenuPanel > .saltMegaMenuContent",
+        "Left region link",
+      )
+        .next()
+        .should("have.class", "saltMegaMenuBody");
+      cy.contains(
+        ".saltMegaMenuPanel > .saltMegaMenuContent",
         "Right region link",
       )
         .prev()
-        .should("have.class", "saltMegaMenuMain");
+        .should("have.class", "saltMegaMenuBody");
 
-      // The footer lives inside Main, beneath the sections (never beside the
-      // asides, which are outside Main).
-      cy.contains(".saltMegaMenuMain", "Digital Banking")
-        .find(".saltMegaMenuFooter")
+      // The action bar lives inside the body, beneath the groups (never beside the
+      // content regions, which are outside the body).
+      cy.contains(".saltMegaMenuBody", "Digital Banking")
+        .find(".saltMegaMenuActionBar")
         .should("contain.text", "Bottom band link");
     });
   });
@@ -360,7 +373,7 @@ describe("Given a MegaMenu", () => {
       cy.checkAxeComponent();
     });
 
-    it("has no detectable a11y violations with asides and a footer open", () => {
+    it("has no detectable a11y violations with content regions and an action bar open", () => {
       cy.mount(<LayoutMegaMenu />);
       cy.findByRole("region", { name: "Solutions menu" }).should("exist");
       cy.checkAxeComponent();

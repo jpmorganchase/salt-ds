@@ -1,13 +1,14 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuAside,
-  MegaMenuFooter,
-  MegaMenuHeading,
-  MegaMenuLink,
-  MegaMenuMain,
+  MegaMenuActionBar,
+  MegaMenuBody,
+  MegaMenuContent,
+  MegaMenuGroup,
+  MegaMenuGroupHeading,
+  MegaMenuItem,
+  MegaMenuItemList,
   MegaMenuPanel,
-  MegaMenuSection,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -20,38 +21,42 @@ const KeyboardMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/risk-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Risk Management
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuSection>
-                <MegaMenuHeading>Healthcare</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/patient-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Patient Management
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/telemedicine"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Telemedicine
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/risk-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/patient-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Patient Management
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/telemedicine"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Telemedicine
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -62,23 +67,25 @@ const KeyboardMegaMenu = () => (
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Consulting</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/strategy"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Strategy
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/operations"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Operations
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/strategy"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Strategy
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/operations"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Operations
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -88,9 +95,9 @@ const KeyboardMegaMenu = () => (
   </nav>
 );
 
-// `MegaMenuMain` followed by a trailing `MegaMenuAside`. Source order places
-// the aside to the right of Main; its interactive children become a navigable
-// column carrying `data-mega-menu-column`.
+// `MegaMenuBody` followed by a trailing `MegaMenuContent`. Source order places
+// the content region to the right of the body; its interactive children become a
+// navigable column carrying `data-mega-menu-column`.
 const SideRegionMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
@@ -100,27 +107,29 @@ const SideRegionMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/risk-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Risk Management
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
-            <MegaMenuAside>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/risk-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
+            <MegaMenuContent>
               <a href="/see-all">See all solutions</a>
               <button type="button">Contact sales</button>
-            </MegaMenuAside>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -130,7 +139,7 @@ const SideRegionMegaMenu = () => (
   </nav>
 );
 
-// A leading `MegaMenuAside` placed before `MegaMenuMain` renders to the left,
+// A leading `MegaMenuContent` placed before `MegaMenuBody` renders to the left,
 // so it becomes the first navigable column.
 const LeadingRegionMegaMenu = () => (
   <nav>
@@ -141,26 +150,28 @@ const LeadingRegionMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuAside>
+            <MegaMenuContent>
               <a href="/featured">Featured</a>
-            </MegaMenuAside>
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/risk-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Risk Management
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            </MegaMenuContent>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/risk-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -168,9 +179,9 @@ const LeadingRegionMegaMenu = () => (
   </nav>
 );
 
-// Sections followed by a full-width `MegaMenuFooter`, both inside `MegaMenuMain`.
-// The footer is always the bottom of the center area; it carries
-// `data-mega-menu-band` and its children move horizontally.
+// Groups followed by a full-width `MegaMenuActionBar`, both inside `MegaMenuBody`.
+// The action bar is always the bottom of the center area; it carries
+// `data-mega-menu-action-bar` and its children move horizontally.
 const BottomBandMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
@@ -180,27 +191,29 @@ const BottomBandMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/risk-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Risk Management
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuFooter>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/risk-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuActionBar>
                 <a href="/book-a-demo">Book a demo</a>
                 <button type="button">Support center</button>
-              </MegaMenuFooter>
-            </MegaMenuMain>
+              </MegaMenuActionBar>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -208,7 +221,7 @@ const BottomBandMegaMenu = () => (
   </nav>
 );
 
-// A `MegaMenuAside` containing a self-consuming control (a text input). The
+// A `MegaMenuContent` containing a self-consuming control (a text input). The
 // engine must not hijack arrow keys while focus is inside it.
 const RoleAwareMegaMenu = () => (
   <nav>
@@ -219,20 +232,22 @@ const RoleAwareMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
-            <MegaMenuAside>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
+            <MegaMenuContent>
               <input aria-label="Search" defaultValue="hello" />
-            </MegaMenuAside>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -251,21 +266,23 @@ const RoleAwareTabMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
-            <MegaMenuAside>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
+            <MegaMenuContent>
               <input aria-label="Search" defaultValue="hello" />
               <a href="/go">Go</a>
-            </MegaMenuAside>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -273,7 +290,7 @@ const RoleAwareTabMegaMenu = () => (
   </nav>
 );
 
-// Static-only content (no interactive descendants). The region and band must
+// Static-only content (no interactive descendants). The region and action bar must
 // contribute no navigable cells and stay out of tab + arrow navigation.
 const StaticContentMegaMenu = () => (
   <nav>
@@ -284,29 +301,31 @@ const StaticContentMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-                <MegaMenuLink
-                  href="/risk-management"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Risk Management
-                </MegaMenuLink>
-              </MegaMenuSection>
-              <MegaMenuFooter>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                  <MegaMenuItem
+                    href="/risk-management"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Risk Management
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuActionBar>
                 <span>Footer note, nothing focusable.</span>
-              </MegaMenuFooter>
-            </MegaMenuMain>
-            <MegaMenuAside>
+              </MegaMenuActionBar>
+            </MegaMenuBody>
+            <MegaMenuContent>
               <p>Static promotional text with no links.</p>
-            </MegaMenuAside>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -328,19 +347,21 @@ const MixedFocusabilityMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                {/* Intentionally no href and no render — should be skipped. */}
-                <MegaMenuLink>Non Focusable</MegaMenuLink>
-                <MegaMenuLink
-                  href="/digital-banking"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  {/* Intentionally no href and no render — should be skipped. */}
+                  <MegaMenuItem>Non Focusable</MegaMenuItem>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -361,21 +382,23 @@ const RenderPropMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuMain>
-              <MegaMenuSection>
-                <MegaMenuHeading>Financial Services</MegaMenuHeading>
-                <MegaMenuLink
-                  render={
-                    <a href="/digital-banking" data-custom-link="">
-                      Digital Banking
-                    </a>
-                  }
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Digital Banking
-                </MegaMenuLink>
-              </MegaMenuSection>
-            </MegaMenuMain>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    render={
+                      <a href="/digital-banking" data-custom-link="">
+                        Digital Banking
+                      </a>
+                    }
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -519,7 +542,7 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
 
-      // Last item of the column with no band below — ArrowDown is a no-op and
+      // Last item of the column with no action bar below — ArrowDown is a no-op and
       // does NOT cross into the next column.
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
@@ -661,7 +684,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("activates item on Space and closes menu", () => {
-      // Native anchors activate on Enter but not Space — MegaMenuLink adds
+      // Native anchors activate on Enter but not Space — MegaMenuItem adds
       // Space handling for parity, so this exercises that custom branch.
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
@@ -764,7 +787,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).click();
       // Exactly one anchor for the item — verifies `renderProps` substitutes
       // the host element instead of wrapping it (no link-in-a-link).
-      cy.get(".saltMegaMenuPanel a.saltMegaMenuLink").should("have.length", 1);
+      cy.get(".saltMegaMenuPanel a.saltMegaMenuItem").should("have.length", 1);
     });
   });
 
@@ -797,7 +820,7 @@ describe("Given a MegaMenu", () => {
       cy.mount(<SideRegionMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuAside").should("not.have.attr", "tabindex");
+      cy.get(".saltMegaMenuContent").should("not.have.attr", "tabindex");
     });
 
     it("crosses into the region column with ArrowRight and within it with ArrowDown", () => {
@@ -886,14 +909,14 @@ describe("Given a MegaMenu", () => {
     });
   });
 
-  describe("when the menu has a band", () => {
+  describe("when the menu has an action bar", () => {
     const openSolutions = () => {
       cy.findByRole("button", { name: "Solutions" }).focus();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
     };
 
-    it("crosses from the column grid into a bottom band on ArrowDown and moves within it", () => {
+    it("crosses from the column grid into a bottom action bar on ArrowDown and moves within it", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
@@ -901,11 +924,11 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowDown"); // Risk Management (last item in column)
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
 
-      // ArrowDown on the last column item crosses into the bottom band.
+      // ArrowDown on the last column item crosses into the bottom action bar.
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
 
-      // Within the band, Left/Right move horizontally.
+      // Within the action bar, Left/Right move horizontally.
       cy.realPress("ArrowRight");
       cy.findByRole("button", { name: "Support center" }).should("be.focused");
 
@@ -913,27 +936,27 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
     });
 
-    it("crosses from a bottom band back into the column grid on ArrowUp", () => {
+    it("crosses from a bottom action bar back into the column grid on ArrowUp", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
       cy.realPress("ArrowDown"); // Risk Management
-      cy.realPress("ArrowDown"); // Book a demo (band)
+      cy.realPress("ArrowDown"); // Book a demo (action bar)
       cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
 
       cy.realPress("ArrowUp");
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
 
-    it("has no effect on ArrowDown from the last item of a bottom band", () => {
+    it("has no effect on ArrowDown from the last item of a bottom action bar", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
       cy.realPress("ArrowDown"); // Risk Management
-      cy.realPress("ArrowDown"); // Book a demo (band)
-      cy.realPress("ArrowRight"); // Support center (last band item)
+      cy.realPress("ArrowDown"); // Book a demo (action bar)
+      cy.realPress("ArrowRight"); // Support center (last action bar item)
       cy.findByRole("button", { name: "Support center" }).should("be.focused");
 
       cy.realPress("ArrowDown");
@@ -941,13 +964,13 @@ describe("Given a MegaMenu", () => {
       cy.get(".saltMegaMenuPanel").should("exist");
     });
 
-    it("supports Home and End within a band", () => {
+    it("supports Home and End within an action bar", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
       cy.realPress("ArrowDown"); // Risk Management
-      cy.realPress("ArrowDown"); // Book a demo (band)
+      cy.realPress("ArrowDown"); // Book a demo (action bar)
 
       cy.realPress("End");
       cy.findByRole("button", { name: "Support center" }).should("be.focused");
@@ -956,11 +979,11 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
     });
 
-    it("does not put the band wrapper itself in the tab order", () => {
+    it("does not put the action bar wrapper itself in the tab order", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuFooter").should("not.have.attr", "tabindex");
+      cy.get(".saltMegaMenuActionBar").should("not.have.attr", "tabindex");
     });
   });
 
@@ -971,7 +994,7 @@ describe("Given a MegaMenu", () => {
       cy.get(".saltMegaMenuPanel").should("exist");
     };
 
-    it("excludes a static-only region and band from the Tab sequence", () => {
+    it("excludes a static-only region and action bar from the Tab sequence", () => {
       cy.mount(<StaticContentMegaMenu />);
       openSolutions();
 
@@ -979,7 +1002,7 @@ describe("Given a MegaMenu", () => {
       cy.realPress("Tab"); // Risk Management (last real cell)
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
 
-      // The static region/band contribute no cells, so Tab exits the menu.
+      // The static region/action bar contribute no cells, so Tab exits the menu.
       cy.realPress("Tab");
       cy.get(".saltMegaMenuPanel").should("not.exist");
       cy.findByRole("button", { name: "After Nav" }).should("be.focused");
@@ -990,8 +1013,8 @@ describe("Given a MegaMenu", () => {
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
-      cy.realPress("ArrowDown"); // Risk Management (last item; static band below)
-      cy.realPress("ArrowDown"); // no band cell below → no effect
+      cy.realPress("ArrowDown"); // Risk Management (last item; static action bar below)
+      cy.realPress("ArrowDown"); // no action bar cell below → no effect
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
 
       // Static region carries no cells, so it is not a column to cross into.
