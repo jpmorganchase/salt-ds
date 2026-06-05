@@ -6,7 +6,6 @@ import {
   type AnchorHTMLAttributes,
   Children,
   forwardRef,
-  type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
 } from "react";
@@ -28,10 +27,7 @@ export interface MegaMenuItemProps
 }
 
 export const MegaMenuItem = forwardRef<HTMLAnchorElement, MegaMenuItemProps>(
-  function MegaMenuItem(
-    { children, className, onClick, onKeyDown, ...rest },
-    ref,
-  ) {
+  function MegaMenuItem({ children, className, onClick, ...rest }, ref) {
     const targetWindow = useWindow();
     const megaMenu = useMegaMenu();
 
@@ -46,20 +42,10 @@ export const MegaMenuItem = forwardRef<HTMLAnchorElement, MegaMenuItemProps>(
       megaMenu.setOpen(false);
     };
 
-    // Native `<a>` activates on Enter but not Space — handle Space here for parity.
-    const handleKeyDown = (event: KeyboardEvent<HTMLAnchorElement>) => {
-      onKeyDown?.(event);
-      if (!event.defaultPrevented && event.key === " ") {
-        event.preventDefault();
-        event.currentTarget.click();
-      }
-    };
-
     return renderProps("a", {
       className: clsx(withBaseName(), className),
       ref,
       onClick: handleClick,
-      onKeyDown: handleKeyDown,
       ...rest,
       children: Children.map(children, (child) =>
         typeof child === "string" || typeof child === "number" ? (
