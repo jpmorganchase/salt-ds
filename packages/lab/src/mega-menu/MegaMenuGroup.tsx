@@ -8,44 +8,45 @@ import {
   type ReactNode,
   useMemo,
 } from "react";
-import { MegaMenuColumn } from "./MegaMenuColumn";
-import megaMenuSectionCss from "./MegaMenuSection.css";
-import { MegaMenuSectionContext } from "./MegaMenuSectionContext";
+import megaMenuGroupCss from "./MegaMenuGroup.css";
+import { MegaMenuGroupContext } from "./MegaMenuGroupContext";
 
-const withBaseName = makePrefixer("saltMegaMenuSection");
+const withBaseName = makePrefixer("saltMegaMenuGroup");
 
-export interface MegaMenuSectionProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The content of the mega menu section: a `MegaMenuHeading` and a
-   * `MegaMenuList` of `MegaMenuLink`s.
+   * The content of the mega menu group: a `MegaMenuGroupHeading` and a
+   * `MegaMenuItemList` of `MegaMenuItem`s.
    */
   children?: ReactNode;
 }
 
-export const MegaMenuSection = forwardRef<HTMLDivElement, MegaMenuSectionProps>(
-  function MegaMenuSection({ children, className, ...rest }, ref) {
+export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
+  function MegaMenuGroup({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-mega-menu-section",
-      css: megaMenuSectionCss,
+      testId: "salt-mega-menu-group",
+      css: megaMenuGroupCss,
       window: targetWindow,
     });
 
     // Generate the heading id here and share it via context: the heading wears
     // it and the list points `aria-labelledby` at it. No child inspection.
+    // The group is also a navigation column (`data-mega-menu-column`).
     const headingId = useId();
     const contextValue = useMemo(() => ({ headingId }), [headingId]);
 
     return (
-      <MegaMenuSectionContext.Provider value={contextValue}>
-        <MegaMenuColumn
+      <MegaMenuGroupContext.Provider value={contextValue}>
+        <div
+          data-mega-menu-column=""
           className={clsx(withBaseName(), className)}
           ref={ref}
           {...rest}
         >
           {children}
-        </MegaMenuColumn>
-      </MegaMenuSectionContext.Provider>
+        </div>
+      </MegaMenuGroupContext.Provider>
     );
   },
 );

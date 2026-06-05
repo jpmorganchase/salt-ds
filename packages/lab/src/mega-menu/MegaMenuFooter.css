@@ -1,8 +1,0 @@
-.saltMegaMenuFooter {
-  /* Inside `MegaMenuMain`'s column grid, the footer drops onto its own
-     full-width row beneath the sections. */
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  padding: var(--salt-spacing-300);
-}

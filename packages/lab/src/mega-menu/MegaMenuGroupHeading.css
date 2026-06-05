@@ -1,4 +1,4 @@
-.saltMegaMenuHeading-content {
+.saltMegaMenuGroupHeading-content {
   display: flex;
   align-items: center;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
@@ -9,7 +9,7 @@
   min-height: var(--salt-size-base);
   color: var(--salt-content-secondary-foreground);
 }
-.saltMegaMenuHeading {
+.saltMegaMenuGroupHeading {
   margin-bottom: var(--salt-spacing-50);
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
 }

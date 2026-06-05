@@ -3,24 +3,24 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
-import megaMenuMainCss from "./MegaMenuMain.css";
+import megaMenuBodyCss from "./MegaMenuBody.css";
 
-const withBaseName = makePrefixer("saltMegaMenuMain");
+const withBaseName = makePrefixer("saltMegaMenuBody");
 
-export interface MegaMenuMainProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuBodyProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The content of the mega menu navigation area, typically `MegaMenuSection`
-   * columns and an optional `MegaMenuFooter`.
+   * The content of the mega menu navigation area, typically `MegaMenuGroup`
+   * columns and an optional `MegaMenuActionBar`.
    */
   children?: ReactNode;
 }
 
-export const MegaMenuMain = forwardRef<HTMLDivElement, MegaMenuMainProps>(
-  function MegaMenuMain({ children, className, ...rest }, ref) {
+export const MegaMenuBody = forwardRef<HTMLDivElement, MegaMenuBodyProps>(
+  function MegaMenuBody({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-mega-menu-main",
-      css: megaMenuMainCss,
+      testId: "salt-mega-menu-body",
+      css: megaMenuBodyCss,
       window: targetWindow,
     });
 
