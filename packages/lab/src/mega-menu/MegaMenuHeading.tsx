@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import megaMenuHeadingCss from "./MegaMenuHeading.css";
+import { useMegaMenuSection } from "./MegaMenuSectionContext";
 
 const withBaseName = makePrefixer("saltMegaMenuHeading");
 
@@ -27,8 +28,17 @@ export const MegaMenuHeading = forwardRef<HTMLDivElement, MegaMenuHeadingProps>(
       window: targetWindow,
     });
 
+    // The section owns the id and shares it via context; the heading wears it so
+    // the sibling `MegaMenuList` can reference it with `aria-labelledby`.
+    const { headingId } = useMegaMenuSection() ?? {};
+
     return (
-      <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
+      <div
+        className={clsx(withBaseName(), className)}
+        ref={ref}
+        {...rest}
+        id={headingId}
+      >
         <div className={clsx(withBaseName("content"))}>{children}</div>
       </div>
     );

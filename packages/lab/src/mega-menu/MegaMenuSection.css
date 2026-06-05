@@ -2,18 +2,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.saltMegaMenuSection-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: var(--salt-spacing-fixed-100);
-  flex-direction: column;
-}
-
-.saltMegaMenuSection-item {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-}
