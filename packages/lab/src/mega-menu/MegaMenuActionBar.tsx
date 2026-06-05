@@ -33,7 +33,7 @@ export const MegaMenuActionBar = forwardRef<
 
   return (
     <div
-      data-mega-menu-band=""
+      data-mega-menu-action-bar=""
       className={clsx(withBaseName(), className)}
       ref={ref}
       {...rest}
