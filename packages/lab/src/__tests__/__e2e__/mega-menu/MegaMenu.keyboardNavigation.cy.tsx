@@ -683,17 +683,18 @@ describe("Given a MegaMenu", () => {
       cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
-    it("activates item on Space and closes menu", () => {
-      // Native anchors activate on Enter but not Space — MegaMenuItem adds
-      // Space handling for parity, so this exercises that custom branch.
+    it("does not activate an item on Space (links activate on Enter only)", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
 
+      // A link activates on Enter, not Space, so the menu stays open and focus
+      // is unchanged.
       cy.realPress("Space");
-      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.get(".saltMegaMenuPanel").should("exist");
+      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
 
     it("tabs from the last item to the next trigger and closes the panel", () => {
