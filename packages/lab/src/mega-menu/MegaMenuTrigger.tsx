@@ -113,8 +113,7 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
     return cloneElement(children, {
       ...mergeProps(
         getReferenceProps({
-          // For NavigationItem, sync via the `expanded` prop (which maps to aria-expanded internally).
-          // For all other elements, set aria-expanded directly.
+          // NavigationItem maps `expanded` to aria-expanded; others get it directly.
           ...(shouldSyncExpanded
             ? { expanded: openState }
             : { "aria-expanded": openState }),

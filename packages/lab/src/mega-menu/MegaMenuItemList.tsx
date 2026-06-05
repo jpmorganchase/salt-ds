@@ -33,8 +33,7 @@ export const MegaMenuItemList = forwardRef<
     window: targetWindow,
   });
 
-  // Labelled by the sibling `MegaMenuGroupHeading`, whose id is shared via the
-  // group context — no child inspection on either side.
+  // Labelled by the group's heading via the shared id.
   const { headingId } = useMegaMenuGroup() ?? {};
 
   return (

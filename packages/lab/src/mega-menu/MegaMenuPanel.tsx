@@ -56,12 +56,9 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       return () => setPanelId(undefined);
     }, [id, setPanelId]);
 
-    // `focusFirstItemOnOpen` only drives the FloatingFocusManager's initial focus
-    // when the panel mounts. The focus manager consumes it during its own (child)
-    // effect, which runs before this one. Reset it afterwards so that while the
-    // menu stays open the manager is in its hands-off (`initialFocus = -1`) mode —
-    // otherwise re-entering the panel (e.g. ArrowUp to the trigger then ArrowDown)
-    // fights the manager and focus lands on the panel container instead of an item.
+    // Reset after the focus manager has consumed it on mount, so it stays
+    // hands-off (`initialFocus = -1`) while the menu is open and doesn't fight
+    // re-entry into the panel.
     useEffect(() => {
       if (focusFirstItemOnOpen) {
         setFocusFirstItemOnOpen(false);
