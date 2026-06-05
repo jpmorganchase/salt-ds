@@ -30,9 +30,8 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
       window: targetWindow,
     });
 
-    // Generate the heading id here and share it via context: the heading wears
-    // it and the list points `aria-labelledby` at it. No child inspection.
-    // The group is also a navigation column (`data-mega-menu-column`).
+    // Share the heading id via context so the list can label itself; the group
+    // is also a navigation column (`data-mega-menu-column`).
     const headingId = useId();
     const contextValue = useMemo(() => ({ headingId }), [headingId]);
 

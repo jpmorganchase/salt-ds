@@ -7,16 +7,13 @@ const ACTION_BAR_SELECTOR = "[data-mega-menu-action-bar]";
 export const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-// Controls that own the arrow keys for their own behaviour (text editing,
-// option lists, value steppers …). When focus is inside one of these the
-// engine must NOT hijack the keys — it returns early and lets the control
-// keep them.
+// Controls that own the arrow keys (caret, option lists, steppers); the engine
+// leaves their keys alone when focus is inside one.
 const SELF_CONSUMING_SELECTOR =
   'input, textarea, select, [contenteditable], [role="combobox"], [role="listbox"], [role="slider"], [role="spinbutton"], [role="textbox"]';
 
-// Elements within an aria-hidden or inert subtree are outside the focus order,
-// including floating-ui's focus guards. `:not()` cannot match on an ancestor,
-// so candidates are filtered by ancestor lookup rather than by selector.
+// aria-hidden / inert subtrees are out of the focus order; filtered by ancestor
+// lookup since `:not()` cannot match on an ancestor.
 const HIDDEN_ANCESTOR_SELECTOR = '[aria-hidden="true"], [inert]';
 
 function queryFocusables(root: HTMLElement): HTMLElement[] {
@@ -30,20 +27,13 @@ function firstFocusable(root: HTMLElement | null): HTMLElement | null {
 }
 
 interface NavModel {
-  /** Column elements (`data-mega-menu-column`) in DOM order, each with ≥1 cell. */
+  /** Columns (`data-mega-menu-column`) in DOM order, each with ≥1 cell. */
   columns: HTMLElement[];
-  /** Full-width action-bar elements (`MegaMenuActionBar`); always the bottom of the center area. */
+  /** Full-width action bars; the bottom of the center area. */
   actionBars: HTMLElement[];
 }
 
-/**
- * Build the navigation model from the panel DOM at keypress time.
- * Columns and action bars are discovered via the structural attributes; their
- * cells are any focusable descendants. There is a single query path — focusability
- * is the only signal, with no per-item marker or fallback. An action bar
- * (`MegaMenuActionBar`) is always the bottom of the center area, so there is no
- * top/bottom split.
- */
+/** Build the navigation model from the panel DOM at keypress time. */
 function buildModel(panel: HTMLElement): NavModel {
   const columns = Array.from(
     panel.querySelectorAll<HTMLElement>(COLUMN_SELECTOR),
@@ -75,12 +65,7 @@ function focusNextTriggerAndClose(context: FloatingRootContext) {
   }
 }
 
-/**
- * Whether the columns are laid out as a single stacked column rather than a row.
- * At small viewports the panel grid collapses to one column (see
- * `MegaMenuPanel.css`), so columns flow top-to-bottom. Detected geometrically:
- * the second column begins at or below the bottom of the first.
- */
+/** True when the grid has collapsed to one stacked column (small viewport). */
 function columnsStacked(columns: HTMLElement[]): boolean {
   if (columns.length < 2) return false;
   const first = columns[0].getBoundingClientRect();
@@ -88,11 +73,7 @@ function columnsStacked(columns: HTMLElement[]): boolean {
   return second.top >= first.bottom - 1;
 }
 
-/**
- * Stacked (small-viewport) movement: every cell forms one linear list in layout
- * order, so all four arrows degrade to previous/next. Up/Left on the very first
- * item returns focus to the trigger (menu stays open).
- */
+/** Stacked layout: all arrows degrade to prev/next over every cell. */
 function handleLinear(
   key: string,
   cell: HTMLElement,
@@ -133,19 +114,7 @@ function handleLinear(
   }
 }
 
-/**
- * Apply an arrow/Home/End movement from `cell`. Returns `true` when the key was
- * consumed (so the caller can `preventDefault`).
- *
- * - **Columns** (groups + side content): Up/Down move within the column,
- *   Left/Right cross to the adjacent column. Down on the last cell crosses into
- *   the bottom action bar if one exists, otherwise no-op; Up on the first
- *   cell returns to the trigger.
- * - **Action bars** (the full-width row): Left/Right move within, Up crosses
- *   into the first column's first item, Down is a no-op.
- * - **Edges**: Left/Up on the very first item → trigger (menu stays open);
- *   Right on the last column → next sibling trigger + close (no-op if none).
- */
+/** Arrow/Home/End movement from `cell`. Returns `true` when the key was consumed. */
 function handleArrow(
   key: string,
   cell: HTMLElement,
@@ -154,8 +123,6 @@ function handleArrow(
 ): boolean {
   const { columns, actionBars } = buildModel(panel);
 
-  // Small viewport: the grid is stacked into one column, so arrows degrade to a
-  // single linear Up/Down (and Left/Right) walk through every cell in order.
   if (columnsStacked(columns)) {
     return handleLinear(key, cell, panel, context);
   }
@@ -181,8 +148,6 @@ function handleArrow(
         if (rowIndex > 0) {
           cells[rowIndex - 1].focus();
         } else {
-          // The action bar is always below the columns, so there is nothing above
-          // the first cell — return to the trigger (menu stays open).
           focusTrigger(context);
         }
         return true;
@@ -231,14 +196,11 @@ function handleArrow(
         if (index > 0) {
           cells[index - 1].focus();
         } else if (cell === firstFocusable(panel)) {
-          // The very first item in layout order returns to the trigger.
           focusTrigger(context);
         }
         return true;
       }
       case "ArrowUp": {
-        // The action bar is the bottom of the center area, so Up crosses into the
-        // first cell of the first column.
         if (columns.length > 0) {
           firstFocusable(columns[0])?.focus();
         } else {
@@ -247,7 +209,6 @@ function handleArrow(
         return true;
       }
       case "ArrowDown": {
-        // An action bar is always the bottom — nothing below it.
         return true;
       }
       case "Home": {
@@ -266,11 +227,7 @@ function handleArrow(
   return false;
 }
 
-/**
- * Move focus to the first document-focusable after the panel, retrying across
- * two animation frames so the panel has unmounted. Mirrors the next-sibling
- * trigger first, then falls back to the next focusable outside the panel.
- */
+/** Focus the first document-focusable after the panel, once it has unmounted. */
 function focusNextAfterPanel(context: FloatingRootContext, panel: HTMLElement) {
   const reference = context.elements.reference as HTMLElement | null;
   const refFocusable = firstFocusable(reference) ?? reference;
@@ -308,24 +265,8 @@ export interface UseMegaMenuNavigationProps {
 }
 
 /**
- * Floating-ui custom interaction hook for mega menu keyboard navigation.
- *
- * Returns `ElementProps` merged via `useInteractions`, handling key events on
- * the floating (panel) element only. The reference (trigger) keys are owned by
- * `MegaMenuTrigger`. The navigation model is rebuilt from the panel DOM on every
- * keypress from the structural attributes (`data-mega-menu-column`,
- * `data-mega-menu-action-bar`); cells are the focusable descendants of each container.
- *
- * - **↑ / ↓** move within a column; **← / →** cross between columns.
- * - Within an action bar **← / →** move along it and **↑ / ↓** cross to the columns.
- * - **Tab / Shift+Tab** move linearly through every cell in layout order.
- * - **Home / End** jump to the first / last cell in the column.
- * - **↑ / ←** on the very first item returns focus to the trigger (menu open).
- * - **→** on the last column closes the menu and focuses the next trigger.
- * - At a small viewport the grid stacks into one column and all arrows degrade
- *   to a single linear walk over every cell.
- * - Focus inside a self-consuming control (input, combobox, slider …) keeps its
- *   own keys — the engine returns early without preventing default.
+ * Floating-ui interaction hook for mega menu keyboard navigation. Handles keys
+ * on the panel only; the trigger keys are owned by `MegaMenuTrigger`.
  */
 export function useMegaMenuNavigation(
   context: FloatingRootContext,
@@ -340,9 +281,6 @@ export function useMegaMenuNavigation(
     }
 
     return {
-      // The reference (trigger) keys — Left/Right between siblings and Down to
-      // open and enter the panel — are owned solely by `MegaMenuTrigger`. The
-      // engine only handles keys once focus is inside the floating panel.
       floating: {
         onKeyDown(event: React.KeyboardEvent) {
           if (!open) return;
@@ -359,15 +297,15 @@ export function useMegaMenuNavigation(
             key === "Home" ||
             key === "End";
 
-          // ROLE-AWARE: a self-consuming control keeps its own navigation keys.
+          // A self-consuming control keeps its own navigation keys.
           if (isArrowOrEdge && target.closest(SELF_CONSUMING_SELECTOR)) {
             return;
           }
 
           const cell = target.closest<HTMLElement>(FOCUSABLE_SELECTOR);
 
-          // Tab traversal walks every cell in layout (DOM) order. The panel is
-          // portaled, so the boundary transitions are handled manually.
+          // Tab walks every cell in layout order; the panel is portaled, so the
+          // boundary transitions are handled manually.
           if (key === "Tab") {
             const allCells = queryFocusables(panel);
             const linearIndex = cell ? allCells.indexOf(cell) : -1;
@@ -399,10 +337,7 @@ export function useMegaMenuNavigation(
   }, [enabled, open, context, onOpenChange]);
 }
 
-/**
- * Focus the first navigable item inside a mega menu panel.
- * Retries with `requestAnimationFrame` if content has not yet rendered.
- */
+/** Focus the first navigable item inside a mega menu panel, retrying until rendered. */
 export function focusFirstItem(panel: HTMLElement, attempt = 0): void {
   const firstItem = firstFocusable(panel);
 

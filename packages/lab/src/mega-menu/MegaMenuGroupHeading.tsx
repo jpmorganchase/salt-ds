@@ -7,8 +7,8 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
-import megaMenuGroupHeadingCss from "./MegaMenuGroupHeading.css";
 import { useMegaMenuGroup } from "./MegaMenuGroupContext";
+import megaMenuGroupHeadingCss from "./MegaMenuGroupHeading.css";
 
 const withBaseName = makePrefixer("saltMegaMenuGroupHeading");
 
@@ -31,8 +31,7 @@ export const MegaMenuGroupHeading = forwardRef<
     window: targetWindow,
   });
 
-  // The group owns the id and shares it via context; the heading wears it so
-  // the sibling `MegaMenuItemList` can reference it with `aria-labelledby`.
+  // Wear the id shared by the group so the list can reference it.
   const { headingId } = useMegaMenuGroup() ?? {};
 
   return (
