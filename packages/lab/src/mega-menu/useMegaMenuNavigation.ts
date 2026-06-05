@@ -2,7 +2,7 @@ import type { ElementProps, FloatingRootContext } from "@floating-ui/react";
 import { useMemo } from "react";
 
 const COLUMN_SELECTOR = "[data-mega-menu-column]";
-const BAND_SELECTOR = "[data-mega-menu-band]";
+const ACTION_BAR_SELECTOR = "[data-mega-menu-action-bar]";
 
 export const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -32,27 +32,28 @@ function firstFocusable(root: HTMLElement | null): HTMLElement | null {
 interface NavModel {
   /** Column elements (`data-mega-menu-column`) in DOM order, each with ≥1 cell. */
   columns: HTMLElement[];
-  /** Full-width band (footer) elements; always the bottom of the center area. */
-  bands: HTMLElement[];
+  /** Full-width action-bar elements (`MegaMenuActionBar`); always the bottom of the center area. */
+  actionBars: HTMLElement[];
 }
 
 /**
  * Build the navigation model from the panel DOM at keypress time.
- * Columns and bands are discovered via the structural attributes; their cells
- * are any focusable descendants. There is a single query path — focusability is
- * the only signal, with no per-item marker or fallback. A band (`MegaMenuFooter`)
- * is always the bottom of the center area, so there is no top/bottom split.
+ * Columns and action bars are discovered via the structural attributes; their
+ * cells are any focusable descendants. There is a single query path — focusability
+ * is the only signal, with no per-item marker or fallback. An action bar
+ * (`MegaMenuActionBar`) is always the bottom of the center area, so there is no
+ * top/bottom split.
  */
 function buildModel(panel: HTMLElement): NavModel {
   const columns = Array.from(
     panel.querySelectorAll<HTMLElement>(COLUMN_SELECTOR),
   ).filter((el) => queryFocusables(el).length > 0);
 
-  const bands = Array.from(
-    panel.querySelectorAll<HTMLElement>(BAND_SELECTOR),
+  const actionBars = Array.from(
+    panel.querySelectorAll<HTMLElement>(ACTION_BAR_SELECTOR),
   ).filter((el) => queryFocusables(el).length > 0);
 
-  return { columns, bands };
+  return { columns, actionBars };
 }
 
 function focusTrigger(context: FloatingRootContext) {
@@ -136,11 +137,11 @@ function handleLinear(
  * Apply an arrow/Home/End movement from `cell`. Returns `true` when the key was
  * consumed (so the caller can `preventDefault`).
  *
- * - **Columns** (sections + side content): Up/Down move within the column,
+ * - **Columns** (groups + side content): Up/Down move within the column,
  *   Left/Right cross to the adjacent column. Down on the last cell crosses into
- *   the bottom band (footer) if one exists, otherwise no-op; Up on the first
+ *   the bottom action bar if one exists, otherwise no-op; Up on the first
  *   cell returns to the trigger.
- * - **Bands** (the full-width footer row): Left/Right move within, Up crosses
+ * - **Action bars** (the full-width row): Left/Right move within, Up crosses
  *   into the first column's first item, Down is a no-op.
  * - **Edges**: Left/Up on the very first item → trigger (menu stays open);
  *   Right on the last column → next sibling trigger + close (no-op if none).
@@ -151,7 +152,7 @@ function handleArrow(
   panel: HTMLElement,
   context: FloatingRootContext,
 ): boolean {
-  const { columns, bands } = buildModel(panel);
+  const { columns, actionBars } = buildModel(panel);
 
   // Small viewport: the grid is stacked into one column, so arrows degrade to a
   // single linear Up/Down (and Left/Right) walk through every cell in order.
@@ -160,7 +161,7 @@ function handleArrow(
   }
 
   const column = cell.closest<HTMLElement>(COLUMN_SELECTOR);
-  const band = cell.closest<HTMLElement>(BAND_SELECTOR);
+  const actionBar = cell.closest<HTMLElement>(ACTION_BAR_SELECTOR);
 
   if (column) {
     const colIndex = columns.indexOf(column);
@@ -171,8 +172,8 @@ function handleArrow(
       case "ArrowDown": {
         if (rowIndex < cells.length - 1) {
           cells[rowIndex + 1].focus();
-        } else if (bands.length > 0) {
-          firstFocusable(bands[0])?.focus();
+        } else if (actionBars.length > 0) {
+          firstFocusable(actionBars[0])?.focus();
         }
         return true;
       }
@@ -180,7 +181,7 @@ function handleArrow(
         if (rowIndex > 0) {
           cells[rowIndex - 1].focus();
         } else {
-          // The footer is always below the columns, so there is nothing above
+          // The action bar is always below the columns, so there is nothing above
           // the first cell — return to the trigger (menu stays open).
           focusTrigger(context);
         }
@@ -215,8 +216,8 @@ function handleArrow(
     }
   }
 
-  if (band) {
-    const cells = queryFocusables(band);
+  if (actionBar) {
+    const cells = queryFocusables(actionBar);
     const index = cells.indexOf(cell);
 
     switch (key) {
@@ -236,7 +237,7 @@ function handleArrow(
         return true;
       }
       case "ArrowUp": {
-        // The footer is the bottom of the center area, so Up crosses into the
+        // The action bar is the bottom of the center area, so Up crosses into the
         // first cell of the first column.
         if (columns.length > 0) {
           firstFocusable(columns[0])?.focus();
@@ -246,7 +247,7 @@ function handleArrow(
         return true;
       }
       case "ArrowDown": {
-        // A footer is always the bottom — nothing below it.
+        // An action bar is always the bottom — nothing below it.
         return true;
       }
       case "Home": {
@@ -313,10 +314,10 @@ export interface UseMegaMenuNavigationProps {
  * the floating (panel) element only. The reference (trigger) keys are owned by
  * `MegaMenuTrigger`. The navigation model is rebuilt from the panel DOM on every
  * keypress from the structural attributes (`data-mega-menu-column`,
- * `data-mega-menu-band`); cells are the focusable descendants of each container.
+ * `data-mega-menu-action-bar`); cells are the focusable descendants of each container.
  *
  * - **↑ / ↓** move within a column; **← / →** cross between columns.
- * - Within a band **← / →** move along it and **↑ / ↓** cross to the columns.
+ * - Within an action bar **← / →** move along it and **↑ / ↓** cross to the columns.
  * - **Tab / Shift+Tab** move linearly through every cell in layout order.
  * - **Home / End** jump to the first / last cell in the column.
  * - **↑ / ←** on the very first item returns focus to the trigger (menu open).
