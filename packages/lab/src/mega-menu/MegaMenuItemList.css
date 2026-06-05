@@ -1,4 +1,4 @@
-.saltMegaMenuList {
+.saltMegaMenuItemList {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -7,7 +7,7 @@
   flex-direction: column;
 }
 
-.saltMegaMenuList-item {
+.saltMegaMenuItemList-item {
   list-style: none;
   display: flex;
   flex-direction: column;

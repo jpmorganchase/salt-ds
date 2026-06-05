@@ -10,15 +10,15 @@ import {
   type MouseEvent,
   type ReactNode,
 } from "react";
-import megaMenuLinkCss from "./MegaMenuLink.css";
+import megaMenuItemCss from "./MegaMenuItem.css";
 import { useMegaMenu } from "./useMegaMenu";
 
-const withBaseName = makePrefixer("saltMegaMenuLink");
+const withBaseName = makePrefixer("saltMegaMenuItem");
 
-export interface MegaMenuLinkProps
+export interface MegaMenuItemProps
   extends AnchorHTMLAttributes<HTMLAnchorElement> {
   /**
-   * The content of the mega menu link.
+   * The content of the mega menu item.
    */
   children?: ReactNode;
   /**
@@ -27,8 +27,8 @@ export interface MegaMenuLinkProps
   render?: RenderPropsType["render"];
 }
 
-export const MegaMenuLink = forwardRef<HTMLAnchorElement, MegaMenuLinkProps>(
-  function MegaMenuLink(
+export const MegaMenuItem = forwardRef<HTMLAnchorElement, MegaMenuItemProps>(
+  function MegaMenuItem(
     { children, className, onClick, onKeyDown, ...rest },
     ref,
   ) {
@@ -36,8 +36,8 @@ export const MegaMenuLink = forwardRef<HTMLAnchorElement, MegaMenuLinkProps>(
     const megaMenu = useMegaMenu();
 
     useComponentCssInjection({
-      testId: "salt-mega-menu-link",
-      css: megaMenuLinkCss,
+      testId: "salt-mega-menu-item",
+      css: megaMenuItemCss,
       window: targetWindow,
     });
 
