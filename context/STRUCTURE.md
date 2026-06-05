@@ -9,6 +9,7 @@ Companion to `ACCESSIBILITY.md` (behavior). This is the canonical structure.
 
 Nine public components. Six are essential, two are optional content slots, one is a
 section label. A basic menu uses six; `Aside`/`Footer` appear only when used.
+components located in: packages/lab/src/mega-menu
 
 | Component | Role | Renders (intent) | Essential? |
 | --- | --- | --- | --- |
