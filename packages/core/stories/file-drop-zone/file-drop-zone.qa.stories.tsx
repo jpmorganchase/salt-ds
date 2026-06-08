@@ -26,6 +26,11 @@ export const AllExamplesGrid: StoryFn = () => {
         <strong>Drop files here or</strong>
         <FileDropZoneTrigger />
       </FileDropZone>
+      <FileDropZoneTrigger appearance="bordered" />
+      <FileDropZoneTrigger appearance="transparent" />
+      <FileDropZoneTrigger sentiment="accented" appearance="solid" />
+      <FileDropZoneTrigger sentiment="accented" appearance="bordered" />
+      <FileDropZoneTrigger sentiment="accented" appearance="transparent" />
     </QAContainer>
   );
 };
