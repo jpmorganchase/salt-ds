@@ -49,6 +49,7 @@ Taurean
 Telemedicine
 Tickbox
 Tooltray
+Tooltrays
 UITK
 trackpad
 toggletip

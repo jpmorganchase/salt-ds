@@ -1,0 +1,17 @@
+.root {
+  display: grid;
+  gap: var(--salt-spacing-300);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.control {
+  display: grid;
+  gap: var(--salt-spacing-100);
+  max-inline-size: 280px;
+}
+
+.preview {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}

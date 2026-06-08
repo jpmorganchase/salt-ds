@@ -2,14 +2,14 @@ import { Button, Dropdown, Option } from "@salt-ds/core";
 import { FilterIcon, NotificationIcon } from "@salt-ds/icons";
 import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
-import styles from "./index.module.css";
+import { ResizableExample } from "../components/ResizableExample";
 import { sortOptions } from "./toolbarExampleData";
 
 const recordOptions = ["Record: Daily", "Record: Weekly", "Record: Monthly"];
 const dateOptions = ["Date: January 2020", "Date: February 2020"];
 
-export const DynamicCollapse = (): ReactElement => (
-  <div className={styles.dynamic}>
+export const NamedOverflows = (): ReactElement => (
+  <ResizableExample>
     <ToolbarNext aria-label="Offer toolbar">
       <TooltrayNext overflowPriority={1}>
         <Dropdown
@@ -65,5 +65,5 @@ export const DynamicCollapse = (): ReactElement => (
         <Button appearance="bordered">Decline offer</Button>
       </TooltrayNext>
     </ToolbarNext>
-  </div>
+  </ResizableExample>
 );
