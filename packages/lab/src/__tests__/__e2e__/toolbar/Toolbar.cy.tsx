@@ -1,6 +1,6 @@
-import * as toolbarStories from "@stories/toolbar/toolbar.cypress.stories";
 import { composeStories } from "@storybook/react-vite";
 import { version } from "react";
+import * as toolbarStories from "~stories/toolbar/toolbar.cypress.stories";
 
 const {
   SimpleToolbar,

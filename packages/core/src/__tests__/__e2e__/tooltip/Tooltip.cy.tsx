@@ -1,8 +1,8 @@
 import { FormField, Tooltip } from "@salt-ds/core";
 import { InfoIcon } from "@salt-ds/icons";
-import * as tooltipStories from "@stories/tooltip/tooltip.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as tooltipStories from "~stories/tooltip/tooltip.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 

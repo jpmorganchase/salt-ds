@@ -70,10 +70,10 @@ import "dayjs/locale/es";
 import "dayjs/locale/zh-cn";
 import { es as dateFnsEs, zhCN as dateFnsZhCn } from "date-fns/locale";
 import "./date-picker.stories.css";
-import { withDateMock } from ".storybook/decorators/withDateMock";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
+import { withDateMock } from "~storybook-decorators/withDateMock";
 
 export default {
   title: "Date Components/Date Picker",

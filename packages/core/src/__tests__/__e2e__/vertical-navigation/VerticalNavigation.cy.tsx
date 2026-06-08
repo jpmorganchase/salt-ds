@@ -1,5 +1,5 @@
-import * as verticalNavigationStories from "@stories/vertical-navigation/vertical-navigation.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as verticalNavigationStories from "~stories/vertical-navigation/vertical-navigation.stories";
 
 const { Basic, CollapsibleSubmenu, WithExpandButton } = composeStories(
   verticalNavigationStories,

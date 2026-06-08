@@ -13,7 +13,7 @@ import {
   type DateRangeSelection,
 } from "@salt-ds/date-components";
 
-import * as dateInputStories from "@stories/calendar/calendar.stories";
+import * as dateInputStories from "~stories/calendar/calendar.stories";
 
 const {
   // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories

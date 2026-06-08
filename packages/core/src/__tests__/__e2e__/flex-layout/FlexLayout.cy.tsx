@@ -1,7 +1,7 @@
 import { SaltProvider } from "@salt-ds/core";
-import * as flexStories from "@stories/flex-layout/flex-layout.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as flexStories from "~stories/flex-layout/flex-layout.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(flexStories);
 const { Default, Nested } = composedStories;

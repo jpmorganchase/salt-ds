@@ -10,8 +10,10 @@ import {
   useResponsiveProp,
 } from "@salt-ds/core";
 import type { StoryFn } from "@storybook/react-vite";
-import { toFloat } from "packages/core/src/slider/internal/utils";
 import { type ChangeEvent, useState } from "react";
+
+const toFloat = (value: number | string) =>
+  typeof value === "string" ? Number.parseFloat(value) : value;
 
 const marks = [
   {

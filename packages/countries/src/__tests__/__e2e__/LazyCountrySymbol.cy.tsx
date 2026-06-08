@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 import * as countrySymbolStory from "../../../stories/LazyCountrySymbol.stories";
 
 const composedStories = composeStories(countrySymbolStory);

@@ -4,10 +4,10 @@ import {
   type InteractableCardGroupProps,
   type InteractableCardValue,
 } from "@salt-ds/core";
-import * as cardStories from "@stories/interactable-card/interactable-card.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type SyntheticEvent, useState } from "react";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as cardStories from "~stories/interactable-card/interactable-card.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(cardStories);
 const { Default } = composedStories;

@@ -5,7 +5,6 @@ import { cssInline } from "css-inline-plugin";
 import { defineConfig } from "cypress";
 import { version as reactVersion } from "react";
 import type { UserConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 const isReact16Or17 =
   reactVersion.startsWith("16") || reactVersion.startsWith("17");
@@ -13,7 +12,7 @@ const isReact16Or17 =
 async function getViteConfig(config: UserConfig) {
   const { mergeConfig } = await import("vite");
   let viteConfig: UserConfig = {
-    plugins: [react(), tsconfigPaths(), cssInline()],
+    plugins: [react(), cssInline()],
     define: {
       "process.env": {},
     },
@@ -26,6 +25,7 @@ async function getViteConfig(config: UserConfig) {
       sourcemap: !isCI,
     },
     resolve: {
+      tsconfigPaths: true,
       alias: {
         "cypress/react": !isReact16Or17 ? "cypress/react" : "@cypress/react",
       },

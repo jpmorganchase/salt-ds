@@ -1,6 +1,6 @@
 import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import * as pillGroupStories from "@stories/pill/pill-group.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as pillGroupStories from "~stories/pill/pill-group.stories";
 
 const {
   Default,

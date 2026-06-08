@@ -1,5 +1,5 @@
-import * as comboBoxStories from "@stories/combobox/combobox.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as comboBoxStories from "~stories/combobox/combobox.stories";
 
 const {
   Default,
