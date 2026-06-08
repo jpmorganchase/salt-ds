@@ -55,13 +55,7 @@ const filterOptions = [
   "Filter: Option B",
   "Filter: Option C",
 ];
-const statusOptions = [
-  "All",
-  "New",
-  "Working",
-  "Fully Filled",
-  "Cancelled",
-];
+const statusOptions = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
 
 /**
