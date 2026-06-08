@@ -17,6 +17,7 @@ import {
 } from "react";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
 import { useMegaMenu } from "./useMegaMenu";
+import { focusFirstItem } from "./useMegaMenuNavigation";
 
 const withBaseName = makePrefixer("saltMegaMenuPanel");
 
@@ -44,7 +45,6 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       getFloatingProps,
       setFloating,
       focusFirstItemOnOpen,
-      setFocusFirstItemOnOpen,
       setPanelId,
     } = useMegaMenu();
 
@@ -56,14 +56,16 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       return () => setPanelId(undefined);
     }, [id, setPanelId]);
 
-    // Reset after the focus manager has consumed it on mount, so it stays
-    // hands-off (`initialFocus = -1`) while the menu is open and doesn't fight
-    // re-entry into the panel.
+    // Focus the first item on ArrowDown open. floating-ui's `initialFocus` is
+    // unreliable on React <18, so retry across frames instead.
+    const floatingEl = floatingRootContext.elements.floating as
+      | HTMLElement
+      | null;
     useEffect(() => {
-      if (focusFirstItemOnOpen) {
-        setFocusFirstItemOnOpen(false);
+      if (focusFirstItemOnOpen && floatingEl) {
+        focusFirstItem(floatingEl);
       }
-    }, [focusFirstItemOnOpen, setFocusFirstItemOnOpen]);
+    }, [focusFirstItemOnOpen, floatingEl]);
 
     // Resolve the panel's page-margin to a pixel value to override the margin as required.
     const [pageMargin, setPageMargin] = useState(0);
@@ -119,7 +121,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
         focusManagerProps={{
           context: floatingUIResult.context,
           modal: false,
-          initialFocus: focusFirstItemOnOpen ? 0 : -1,
+          initialFocus: -1,
           returnFocus: true,
           closeOnFocusOut: false,
           guards: false,
