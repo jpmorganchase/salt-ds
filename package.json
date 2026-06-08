@@ -27,6 +27,8 @@
     "test": "vitest",
     "test:components": "cypress run --component --browser chrome --headless",
     "test:components:local": "cypress open --component --browser electron",
+    "test:components:react": "scripts/cypress-react.sh",
+    "test:components:react:reset": "scripts/cypress-react.sh reset",
     "prettier": "prettier --write .",
     "prettier:ci": "prettier --check .",
     "lint": "biome check",
