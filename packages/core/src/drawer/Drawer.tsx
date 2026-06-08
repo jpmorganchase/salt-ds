@@ -1,4 +1,9 @@
-import { useClick, useDismiss, useInteractions } from "@floating-ui/react";
+import {
+  type FloatingFocusManager,
+  useClick,
+  useDismiss,
+  useInteractions,
+} from "@floating-ui/react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -54,6 +59,13 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * Prevent Scrim from rendering
    * */
   disableScrim?: boolean;
+  /**
+   * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
+   * Default value is 0 (first tabbable element).
+   * */
+  initialFocus?: ComponentPropsWithoutRef<
+    typeof FloatingFocusManager
+  >["initialFocus"];
 }
 
 const withBaseName = makePrefixer("saltDrawer");
@@ -69,6 +81,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       variant = "primary",
       disableDismiss,
       disableScrim,
+      initialFocus,
       ...rest
     } = props;
 
@@ -118,6 +131,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           aria-modal="true"
           focusManagerProps={{
             context: context,
+            initialFocus,
           }}
           className={clsx(
             withBaseName(),
