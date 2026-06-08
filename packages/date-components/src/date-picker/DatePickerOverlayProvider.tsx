@@ -80,7 +80,7 @@ interface DatePickerOverlayHelpers {
 /**
  * Interface representing the context type for a DatePicker overlay.
  */
-interface DatePickerOverlayContextType {
+export interface DatePickerOverlayContextType {
   /**
    * The state of the DatePicker overlay.
    */
@@ -101,7 +101,7 @@ const DatePickerOverlayContext = createContext<
 /**
  * Props for the DatePickerOverlayProvider component.
  */
-interface DatePickerOverlayProviderProps {
+export interface DatePickerOverlayProviderProps {
   /**
    * If `true`, the overlay is disabled.
    */
