@@ -42,7 +42,11 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       ref={ref}
       {...rest}
     >
-      <StatusIndicator status={status} className={withBaseName("icon")} />
+      <StatusIndicator
+        aria-hidden
+        status={status}
+        className={withBaseName("icon")}
+      />
       {children}
     </div>
   );
