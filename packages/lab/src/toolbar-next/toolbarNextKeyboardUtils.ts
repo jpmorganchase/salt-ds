@@ -466,7 +466,8 @@ function getToolbarNextKeyboardPolicy(
   if (
     target.isContentEditable ||
     isPlainTextInput(target) ||
-    isComboBoxInput(target)
+    isComboBoxInput(target) ||
+    isPillInputPill(target)
   ) {
     return {
       preserveHorizontalArrows: true,
@@ -501,6 +502,14 @@ function isComboBoxInput(target: HTMLElement) {
   return (
     target.tagName === "INPUT" &&
     target.closest('[role="combobox"], .saltComboBox') != null
+  );
+}
+
+function isPillInputPill(target: HTMLElement) {
+  return (
+    target.tagName === "BUTTON" &&
+    target.classList.contains("saltPill") &&
+    target.closest(".saltPillInput") != null
   );
 }
 
