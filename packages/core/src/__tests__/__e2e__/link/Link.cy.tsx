@@ -30,6 +30,24 @@ describe("GIVEN a link", () => {
     );
   });
 
+  it('WHEN passed target="_blank", THEN the "Opens in a new tab" ADA text should NOT be included when the link is copied', () => {
+    cy.mount(
+      <Link href="#root" target="_blank">
+        Action
+      </Link>,
+    );
+
+    cy.findByRole("link").then(($link) => {
+      const doc = $link[0].ownerDocument;
+      const range = doc.createRange();
+      range.selectNodeContents($link[0]);
+      const selection = doc.defaultView?.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+      expect(selection?.toString()).to.equal("Action");
+    });
+  });
+
   it('WHEN passed target="_blank" AND passed IconComponent, THEN should render the Link with the tear out icon', () => {
     cy.mount(<TargetBlankCustomIcon />);
 
