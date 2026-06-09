@@ -141,13 +141,22 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       const numberOfSlidesPerSnap = Math.ceil(numberOfSlides / numberOfSnaps);
 
       if (focusedSlideIndex >= 0) {
-        const nearestScrollSnap = Math.min(
-          Math.floor(focusedSlideIndex / numberOfSlidesPerSnap),
-          numberOfSnaps - 1,
+        const currentSnap = emblaApi.selectedScrollSnap();
+        const currentVisibleIndexes = getVisibleSlideIndexes(
+          emblaApi,
+          currentSnap,
         );
-        if (emblaApi.selectedScrollSnap() !== nearestScrollSnap) {
-          emblaApi.scrollTo(nearestScrollSnap);
-          focusOnSettle.current = true;
+
+        // Don't scroll if the focused slide is already visible in the current snap
+        if (!currentVisibleIndexes.includes(focusedSlideIndex + 1)) {
+          const nearestScrollSnap = Math.min(
+            Math.floor(focusedSlideIndex / numberOfSlidesPerSnap),
+            numberOfSnaps - 1,
+          );
+          if (currentSnap !== nearestScrollSnap) {
+            emblaApi.scrollTo(nearestScrollSnap);
+            focusOnSettle.current = true;
+          }
         }
       } else if (focusedSlideIndex === -1) {
         const initialSnap = emblaApi.selectedScrollSnap();
@@ -221,15 +230,19 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       if (newFocusIndex === focusedSlideIndex) return;
 
       const currentSnap = emblaApi.selectedScrollSnap();
-      const targetSnap = Math.floor(newFocusIndex / numberOfSlidesPerSnap);
+      const currentVisibleIndexes = getVisibleSlideIndexes(
+        emblaApi,
+        currentSnap,
+      );
 
-      if (targetSnap === currentSnap) {
-        // Same group - move focus directly without scrolling
+      if (currentVisibleIndexes.includes(newFocusIndex + 1)) {
+        // Slide is already visible in current snap - move focus directly without scrolling
         setFocusedSlideIndex(newFocusIndex);
-        slideRefs.current[newFocusIndex]?.focus();
+        slideRefs.current[newFocusIndex]?.focus({ preventScroll: true });
         setAnnouncementState("focus");
       } else {
         // Different group - scroll first, then focus on settle
+        const targetSnap = Math.floor(newFocusIndex / numberOfSlidesPerSnap);
         hasSettled.current = false;
         pendingFocusIndex.current = newFocusIndex;
         emblaApi.scrollTo(targetSnap);
@@ -267,8 +280,8 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
             const childElement = child as ReactElement;
             const existingId = childElement.props.id;
             const isFocused = focusedSlideIndex === index;
-            const isHidden =
-              !visibleSlideIndexes.includes(index + 1) && !isFocused;
+            const isVisible = visibleSlideIndexes.includes(index + 1);
+            const isHidden = !isVisible && !isFocused;
             const element = child as ReactElement;
             return cloneElement(element, {
               "aria-hidden": isHidden,
@@ -277,7 +290,10 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
                 setFocusedSlideIndex(index);
                 element.props?.onFocus?.(event);
               },
-              tabIndex: !isHidden ? 0 : -1,
+              // Only visible slides are tabbable. overflow:clip on the container
+              // prevents native browser scroll, and watchFocus:false on Embla
+              // prevents Embla from scrolling on Tab-triggered focus.
+              tabIndex: isVisible ? 0 : -1,
               ref: (el: HTMLDivElement) => {
                 slideRefs.current[index] = el;
               },
