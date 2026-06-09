@@ -27,7 +27,10 @@ export interface MegaMenuItemProps
 }
 
 export const MegaMenuItem = forwardRef<HTMLAnchorElement, MegaMenuItemProps>(
-  function MegaMenuItem({ children, className, onClick, ...rest }, ref) {
+  function MegaMenuItem(
+    { children, className, onClick, render, href, ...rest },
+    ref,
+  ) {
     const targetWindow = useWindow();
     const megaMenu = useMegaMenu();
 
@@ -42,10 +45,14 @@ export const MegaMenuItem = forwardRef<HTMLAnchorElement, MegaMenuItemProps>(
       megaMenu.setOpen(false);
     };
 
+    const isLink = href != null;
+
     return renderProps("a", {
       className: clsx(withBaseName(), className),
       ref,
+      href,
       onClick: handleClick,
+      render: render ?? (isLink ? undefined : <button type="button" />),
       ...rest,
       children: Children.map(children, (child) =>
         typeof child === "string" || typeof child === "number" ? (
