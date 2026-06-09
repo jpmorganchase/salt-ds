@@ -162,7 +162,10 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         const initialSnap = emblaApi.selectedScrollSnap();
         const initialSlideIndex =
           initialSnap !== undefined
-            ? Math.floor(initialSnap * numberOfSlidesPerSnap)
+            ? Math.min(
+                Math.floor(initialSnap * numberOfSlidesPerSnap),
+                numberOfSlides - 1,
+              )
             : 0;
 
         setFocusedSlideIndex(initialSlideIndex);
@@ -242,7 +245,10 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         setAnnouncementState("focus");
       } else {
         // Different group - scroll first, then focus on settle
-        const targetSnap = Math.floor(newFocusIndex / numberOfSlidesPerSnap);
+        const targetSnap = Math.min(
+          Math.floor(newFocusIndex / numberOfSlidesPerSnap),
+          numberOfSnaps - 1,
+        );
         hasSettled.current = false;
         pendingFocusIndex.current = newFocusIndex;
         emblaApi.scrollTo(targetSnap);

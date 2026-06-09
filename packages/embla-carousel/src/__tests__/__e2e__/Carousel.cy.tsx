@@ -154,7 +154,6 @@ describe("Given a Carousel", () => {
 
       cy.realPress("ArrowLeft");
       cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2", true));
-      cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2", true));
 
       cy.realPress("ArrowLeft");
       cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1", true));
@@ -258,7 +257,11 @@ describe("Given a Carousel", () => {
 
           return (
             <MultiSlide
-              emblaOptions={{ align: "start", slidesToScroll: 2 }}
+              emblaOptions={{
+                align: "start",
+                slidesToScroll: 2,
+                duration: 1,
+              }}
               getEmblaApi={setEmblaApi}
             />
           );
@@ -311,6 +314,77 @@ describe("Given a Carousel", () => {
         // Wait additional time to ensure it doesn't snap back
         cy.wait(500).then(() => {
           expect(emblaApi?.selectedScrollSnap()).to.be.greaterThan(0);
+        });
+      });
+    });
+
+    it("should move focus within the current snap without scrolling, and only scroll when crossing snap groups", () => {
+      mountMultiSlideCarousel().then((emblaApi) => {
+        // Focus the first slide
+        cy.get(".carouselSlide").eq(0).focus();
+        cy.get(".carouselSlide").eq(0).should("be.focused");
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        // ArrowRight within snap 0: focus moves to slide 2, snap unchanged.
+        cy.realPress("ArrowRight");
+        cy.get(".carouselSlide").eq(1).should("be.focused");
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        // ArrowRight crossing snap boundary: focus moves to slide 3 and the
+        // carousel scrolls to snap 1.
+        cy.realPress("ArrowRight");
+        cy.wrap(waitForSettle(emblaApi, 1)).then(() => {
+          cy.get(".carouselSlide").eq(2).should("be.focused");
+          expect(emblaApi?.selectedScrollSnap()).to.equal(1);
+        });
+
+        // ArrowLeft crossing snap boundary the other way: focus moves to
+        // slide 2 and the carousel scrolls back to snap 0.
+        cy.realPress("ArrowLeft");
+        cy.wrap(waitForSettle(emblaApi, 0)).then(() => {
+          cy.get(".carouselSlide").eq(1).should("be.focused");
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        // ArrowLeft within snap 0: focus moves to slide 1, snap unchanged.
+        cy.realPress("ArrowLeft");
+        cy.get(".carouselSlide").eq(0).should("be.focused");
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+      });
+    });
+
+    it("should expose every visible slide as an independent tab stop and exclude off-screen slides", () => {
+      mountMultiSlideCarousel().then((emblaApi) => {
+        // Initially visible: slides 1 and 2. The other three slides must not
+        // be reachable with Tab.
+        cy.get(".carouselSlide").eq(0).should("have.attr", "tabindex", "0");
+        cy.get(".carouselSlide").eq(1).should("have.attr", "tabindex", "0");
+        cy.get(".carouselSlide").eq(2).should("have.attr", "tabindex", "-1");
+        cy.get(".carouselSlide").eq(3).should("have.attr", "tabindex", "-1");
+        cy.get(".carouselSlide").eq(4).should("have.attr", "tabindex", "-1");
+
+        // Tab from the first visible slide should land on the second visible
+        // slide, proving each visible slide is an independent tab stop
+        // rather than a single roving tabindex entry.
+        cy.get(".carouselSlide").eq(0).focus();
+        cy.realPress("Tab");
+        cy.get(".carouselSlide").eq(1).should("be.focused");
+
+        // After scrolling to the next snap, the tab-stop set must shift to
+        // the newly visible slides.
+        cy.findByLabelText(/Next slide group/).click();
+        cy.wrap(waitForSettle(emblaApi, 1)).then(() => {
+          cy.get(".carouselSlide").eq(0).should("have.attr", "tabindex", "-1");
+          cy.get(".carouselSlide").eq(1).should("have.attr", "tabindex", "-1");
+          cy.get(".carouselSlide").eq(2).should("have.attr", "tabindex", "0");
+          cy.get(".carouselSlide").eq(3).should("have.attr", "tabindex", "0");
+          cy.get(".carouselSlide").eq(4).should("have.attr", "tabindex", "-1");
         });
       });
     });
