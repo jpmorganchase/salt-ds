@@ -590,7 +590,7 @@ describe("Given a MegaMenu", () => {
       cy.get(".saltMegaMenuPanel").should("exist");
     });
 
-    it("ArrowRight from the last column has no effect when there is no next trigger", () => {
+    it("ArrowRight from the bottom of the last column is a no-op when there is no next trigger", () => {
       cy.mount(<KeyboardMegaMenu />);
       // Open the last menu (Services), which has no trigger after it.
       cy.findByRole("button", { name: "Services" }).focus();
@@ -598,41 +598,58 @@ describe("Given a MegaMenu", () => {
       cy.get(".saltMegaMenuPanel").should("exist");
 
       cy.realPress("Tab"); // Strategy
-      cy.findByRole("link", { name: "Strategy" }).should("be.focused");
+      cy.realPress("ArrowDown"); // Operations (bottom of the only/last column)
+      cy.findByRole("link", { name: "Operations" }).should("be.focused");
 
       cy.realPress("ArrowRight");
-      // Nothing happens: focus stays put and the panel remains open.
-      cy.findByRole("link", { name: "Strategy" }).should("be.focused");
+      // No next trigger: focus stays put and the panel remains open.
+      cy.findByRole("link", { name: "Operations" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
     });
 
-    it("ArrowRight from last column closes menu and moves to next trigger", () => {
+    it("ArrowRight from a non-bottom item of the last column is a no-op", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
-      cy.realPress("ArrowRight"); // Patient Management (second column)
+      cy.realPress("ArrowRight"); // Patient Management (top of last column)
       cy.findByRole("link", { name: "Patient Management" }).should(
         "be.focused",
       );
+
+      cy.realPress("ArrowRight");
+      cy.findByRole("link", { name: "Patient Management" }).should(
+        "be.focused",
+      );
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("ArrowRight from the bottom of the last column closes menu and moves to next trigger", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      openSolutionsWithEnter();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowRight"); // Patient Management (top of last column)
+      cy.realPress("ArrowDown"); // Telemedicine (bottom of last column)
+      cy.findByRole("link", { name: "Telemedicine" }).should("be.focused");
 
       cy.realPress("ArrowRight");
       cy.get(".saltMegaMenuPanel").should("not.exist");
       cy.findByRole("button", { name: "Services" }).should("be.focused");
     });
 
-    it("has no effect on ArrowDown from last item in last column", () => {
+    it("ArrowDown from the bottom of the last column closes menu and moves to next trigger", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
       cy.realPress("ArrowRight"); // Patient Management
-      cy.realPress("ArrowDown"); // Telemedicine (last item, last column)
+      cy.realPress("ArrowDown"); // Telemedicine (bottom item, last column)
       cy.findByRole("link", { name: "Telemedicine" }).should("be.focused");
 
       cy.realPress("ArrowDown");
-      cy.findByRole("link", { name: "Telemedicine" }).should("be.focused");
-      cy.get(".saltMegaMenuPanel").should("exist");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
     });
 
     it("supports Tab and Shift+Tab inside menu", () => {
