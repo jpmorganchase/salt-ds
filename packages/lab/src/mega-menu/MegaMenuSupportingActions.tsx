@@ -7,33 +7,33 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
-import megaMenuActionBarCss from "./MegaMenuActionBar.css";
+import megaMenuSupportingActionsCss from "./MegaMenuSupportingActions.css";
 
-const withBaseName = makePrefixer("saltMegaMenuActionBar");
+const withBaseName = makePrefixer("saltMegaMenuSupportingActions");
 
-export interface MegaMenuActionBarProps
+export interface MegaMenuSupportingActionsProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of the action bar. Renders as a full-width row beneath the
+   * The content of the supporting actions. Renders as a full-width row beneath the
    * groups, at the bottom of `MegaMenuBody`.
    */
   children?: ReactNode;
 }
 
-export const MegaMenuActionBar = forwardRef<
+export const MegaMenuSupportingActions = forwardRef<
   HTMLDivElement,
-  MegaMenuActionBarProps
->(function MegaMenuActionBar({ className, ...rest }, ref) {
+  MegaMenuSupportingActionsProps
+>(function MegaMenuSupportingActions({ className, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-mega-menu-action-bar",
-    css: megaMenuActionBarCss,
+    testId: "salt-mega-menu-supporting-actions",
+    css: megaMenuSupportingActionsCss,
     window: targetWindow,
   });
 
   return (
     <div
-      data-mega-menu-action-bar=""
+      data-mega-menu-supporting-actions=""
       className={clsx(withBaseName(), className)}
       ref={ref}
       {...rest}

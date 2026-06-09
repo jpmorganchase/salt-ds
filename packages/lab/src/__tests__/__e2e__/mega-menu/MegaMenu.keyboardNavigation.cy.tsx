@@ -1,14 +1,14 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuActionBar,
   MegaMenuBody,
-  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
+  MegaMenuSupportingActions,
+  MegaMenuSupportingContent,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -95,7 +95,7 @@ const KeyboardMegaMenu = () => (
   </nav>
 );
 
-// `MegaMenuBody` followed by a trailing `MegaMenuContent`. Source order places
+// `MegaMenuBody` followed by a trailing `MegaMenuSupportingContent`. Source order places
 // the content region to the right of the body; its interactive children become a
 // navigable column carrying `data-mega-menu-column`.
 const SideRegionMegaMenu = () => (
@@ -126,10 +126,10 @@ const SideRegionMegaMenu = () => (
                 </MegaMenuItemList>
               </MegaMenuGroup>
             </MegaMenuBody>
-            <MegaMenuContent>
+            <MegaMenuSupportingContent>
               <a href="/see-all">See all solutions</a>
               <button type="button">Contact sales</button>
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -139,7 +139,7 @@ const SideRegionMegaMenu = () => (
   </nav>
 );
 
-// A leading `MegaMenuContent` placed before `MegaMenuBody` renders to the left,
+// A leading `MegaMenuSupportingContent` placed before `MegaMenuBody` renders to the left,
 // so it becomes the first navigable column.
 const LeadingRegionMegaMenu = () => (
   <nav>
@@ -150,9 +150,9 @@ const LeadingRegionMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
+            <MegaMenuSupportingContent>
               <a href="/featured">Featured</a>
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
             <MegaMenuBody>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
@@ -179,9 +179,9 @@ const LeadingRegionMegaMenu = () => (
   </nav>
 );
 
-// Groups followed by a full-width `MegaMenuActionBar`, both inside `MegaMenuBody`.
+// Groups followed by a full-width `MegaMenuSupportingActions`, both inside `MegaMenuBody`.
 // The action bar is always the bottom of the center area; it carries
-// `data-mega-menu-action-bar` and its children move horizontally.
+// `data-mega-menu-supporting-actions` and its children move horizontally.
 const BottomBandMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
@@ -209,10 +209,10 @@ const BottomBandMegaMenu = () => (
                   </MegaMenuItem>
                 </MegaMenuItemList>
               </MegaMenuGroup>
-              <MegaMenuActionBar>
+              <MegaMenuSupportingActions>
                 <a href="/book-a-demo">Book a demo</a>
                 <button type="button">Support center</button>
-              </MegaMenuActionBar>
+              </MegaMenuSupportingActions>
             </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
@@ -221,7 +221,7 @@ const BottomBandMegaMenu = () => (
   </nav>
 );
 
-// A `MegaMenuContent` containing a self-consuming control (a text input). The
+// A `MegaMenuSupportingContent` containing a self-consuming control (a text input). The
 // engine must not hijack arrow keys while focus is inside it.
 const RoleAwareMegaMenu = () => (
   <nav>
@@ -245,9 +245,9 @@ const RoleAwareMegaMenu = () => (
                 </MegaMenuItemList>
               </MegaMenuGroup>
             </MegaMenuBody>
-            <MegaMenuContent>
+            <MegaMenuSupportingContent>
               <input aria-label="Search" defaultValue="hello" />
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -279,10 +279,10 @@ const RoleAwareTabMegaMenu = () => (
                 </MegaMenuItemList>
               </MegaMenuGroup>
             </MegaMenuBody>
-            <MegaMenuContent>
+            <MegaMenuSupportingContent>
               <input aria-label="Search" defaultValue="hello" />
               <a href="/go">Go</a>
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -319,13 +319,13 @@ const StaticContentMegaMenu = () => (
                   </MegaMenuItem>
                 </MegaMenuItemList>
               </MegaMenuGroup>
-              <MegaMenuActionBar>
+              <MegaMenuSupportingActions>
                 <span>Footer note, nothing focusable.</span>
-              </MegaMenuActionBar>
+              </MegaMenuSupportingActions>
             </MegaMenuBody>
-            <MegaMenuContent>
+            <MegaMenuSupportingContent>
               <p>Static promotional text with no links.</p>
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -843,7 +843,10 @@ describe("Given a MegaMenu", () => {
       cy.mount(<SideRegionMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuContent").should("not.have.attr", "tabindex");
+      cy.get(".saltMegaMenuSupportingContent").should(
+        "not.have.attr",
+        "tabindex",
+      );
     });
 
     it("crosses into the region column with ArrowRight and within it with ArrowDown", () => {
@@ -1006,7 +1009,10 @@ describe("Given a MegaMenu", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuActionBar").should("not.have.attr", "tabindex");
+      cy.get(".saltMegaMenuSupportingActions").should(
+        "not.have.attr",
+        "tabindex",
+      );
     });
   });
 
