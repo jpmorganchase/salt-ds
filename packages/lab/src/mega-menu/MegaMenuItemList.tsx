@@ -25,7 +25,10 @@ export interface MegaMenuItemListProps
 export const MegaMenuItemList = forwardRef<
   HTMLUListElement,
   MegaMenuItemListProps
->(function MegaMenuItemList({ children, className, ...rest }, ref) {
+>(function MegaMenuItemList(
+  { children, className, "aria-labelledby": ariaLabelledBy, ...rest },
+  ref,
+) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-mega-menu-item-list",
@@ -38,7 +41,7 @@ export const MegaMenuItemList = forwardRef<
   return (
     <ul
       className={clsx(withBaseName(), className)}
-      aria-labelledby={headingId}
+      aria-labelledby={clsx(headingId, ariaLabelledBy) || undefined}
       ref={ref}
       {...rest}
     >

@@ -294,6 +294,35 @@ describe("Given a MegaMenu", () => {
       // dangling reference to a non-existent id.
       cy.findByRole("list").should("not.have.attr", "aria-labelledby");
     });
+
+    it("combines the group heading with a consumer-provided aria-labelledby", () => {
+      cy.mount(
+        <MegaMenu defaultOpen>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <span id="extra-label">Recommended</span>
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList aria-labelledby="extra-label">
+                  <MegaMenuItem href="/digital-banking">
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
+          </MegaMenuPanel>
+        </MegaMenu>,
+      );
+
+      // The accessible name concatenates the heading and the consumer's element,
+      // heading first.
+      cy.findByRole("list", {
+        name: "Financial Services Recommended",
+      }).should("exist");
+    });
   });
 
   describe("keyboard focus boundaries", () => {
