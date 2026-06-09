@@ -2,14 +2,14 @@ import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuActionBar,
   MegaMenuBody,
-  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
+  MegaMenuSupportingActions,
+  MegaMenuSupportingContent,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -162,7 +162,7 @@ const main = (
         </MegaMenuItem>
       </MegaMenuItemList>
     </MegaMenuGroup>
-    <MegaMenuActionBar>{supportingLinks}</MegaMenuActionBar>
+    <MegaMenuSupportingActions>{supportingLinks}</MegaMenuSupportingActions>
   </MegaMenuBody>
 );
 
@@ -186,9 +186,11 @@ export const WithContent = (): ReactElement => {
             className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
           >
             {main}
-            <MegaMenuContent className={styles.customRegionSideContent}>
+            <MegaMenuSupportingContent
+              className={styles.customRegionSideContent}
+            >
               {featuredResource}
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
           </MegaMenuPanel>
         </MegaMenu>
 
@@ -205,9 +207,11 @@ export const WithContent = (): ReactElement => {
             aria-label="Content on left menu"
             className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
           >
-            <MegaMenuContent className={styles.customRegionSideContent}>
+            <MegaMenuSupportingContent
+              className={styles.customRegionSideContent}
+            >
               {featuredResource}
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
             {main}
           </MegaMenuPanel>
         </MegaMenu>

@@ -1,14 +1,14 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuActionBar,
   MegaMenuBody,
-  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
+  MegaMenuSupportingActions,
+  MegaMenuSupportingContent,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -87,7 +87,7 @@ const AccessibleMegaMenu = () => (
 
 // Content regions flanking the center and an action bar inside it, to verify the
 // panel derives position purely from component type and source order (no placement
-// props): a `MegaMenuContent` before `MegaMenuBody` is the left column, one after
+// props): a `MegaMenuSupportingContent` before `MegaMenuBody` is the left column, one after
 // is the right column, and the action bar sits inside `MegaMenuBody` beneath the
 // groups.
 const LayoutMegaMenu = () => (
@@ -99,9 +99,9 @@ const LayoutMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
+            <MegaMenuSupportingContent>
               <a href="/left">Left region link</a>
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
             <MegaMenuBody>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
@@ -114,13 +114,13 @@ const LayoutMegaMenu = () => (
                   </MegaMenuItem>
                 </MegaMenuItemList>
               </MegaMenuGroup>
-              <MegaMenuActionBar>
+              <MegaMenuSupportingActions>
                 <a href="/bottom">Bottom band link</a>
-              </MegaMenuActionBar>
+              </MegaMenuSupportingActions>
             </MegaMenuBody>
-            <MegaMenuContent>
+            <MegaMenuSupportingContent>
               <a href="/right">Right region link</a>
-            </MegaMenuContent>
+            </MegaMenuSupportingContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -332,21 +332,21 @@ describe("Given a MegaMenu", () => {
         .then(($children) => {
           const classes = [...$children].map((el) => el.classList[0]);
           expect(classes).to.deep.equal([
-            "saltMegaMenuContent",
+            "saltMegaMenuSupportingContent",
             "saltMegaMenuBody",
-            "saltMegaMenuContent",
+            "saltMegaMenuSupportingContent",
           ]);
         });
 
       // The content region before the body carries the left content; the one after, the right.
       cy.contains(
-        ".saltMegaMenuPanel > .saltMegaMenuContent",
+        ".saltMegaMenuPanel > .saltMegaMenuSupportingContent",
         "Left region link",
       )
         .next()
         .should("have.class", "saltMegaMenuBody");
       cy.contains(
-        ".saltMegaMenuPanel > .saltMegaMenuContent",
+        ".saltMegaMenuPanel > .saltMegaMenuSupportingContent",
         "Right region link",
       )
         .prev()
@@ -355,7 +355,7 @@ describe("Given a MegaMenu", () => {
       // The action bar lives inside the body, beneath the groups (never beside the
       // content regions, which are outside the body).
       cy.contains(".saltMegaMenuBody", "Digital Banking")
-        .find(".saltMegaMenuActionBar")
+        .find(".saltMegaMenuSupportingActions")
         .should("contain.text", "Bottom band link");
     });
   });

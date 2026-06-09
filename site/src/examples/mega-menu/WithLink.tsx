@@ -2,13 +2,13 @@ import { FlexLayout, Link, NavigationItem, StackLayout } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuActionBar,
   MegaMenuBody,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
+  MegaMenuSupportingActions,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -228,7 +228,7 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
-                  <MegaMenuActionBar>
+                  <MegaMenuSupportingActions>
                     <FlexLayout wrap gap={3}>
                       <Link
                         color="primary"
@@ -247,7 +247,7 @@ export const WithLink = (): ReactElement => {
                         Support center
                       </Link>
                     </FlexLayout>
-                  </MegaMenuActionBar>
+                  </MegaMenuSupportingActions>
                 </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
@@ -426,7 +426,7 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
-                  <MegaMenuActionBar>
+                  <MegaMenuSupportingActions>
                     <Link
                       color="primary"
                       underline="default"
@@ -435,7 +435,7 @@ export const WithLink = (): ReactElement => {
                     >
                       Service status
                     </Link>
-                  </MegaMenuActionBar>
+                  </MegaMenuSupportingActions>
                 </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
@@ -527,7 +527,7 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
-                  <MegaMenuActionBar>
+                  <MegaMenuSupportingActions>
                     <Link
                       color="primary"
                       underline="default"
@@ -536,7 +536,7 @@ export const WithLink = (): ReactElement => {
                     >
                       Browse documentation
                     </Link>
-                  </MegaMenuActionBar>
+                  </MegaMenuSupportingActions>
                 </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>

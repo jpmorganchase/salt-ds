@@ -10,7 +10,7 @@ const withBaseName = makePrefixer("saltMegaMenuBody");
 export interface MegaMenuBodyProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The content of the mega menu navigation area, typically `MegaMenuGroup`
-   * columns and an optional `MegaMenuActionBar`.
+   * columns and an optional `MegaMenuSupportingActions`.
    */
   children?: ReactNode;
 }

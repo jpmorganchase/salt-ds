@@ -1,0 +1,7 @@
+.saltMegaMenuSupportingActions {
+  /* Inside `MegaMenuBody`'s column grid, the supporting actions drop onto their own
+     full-width row beneath the groups. */
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+}

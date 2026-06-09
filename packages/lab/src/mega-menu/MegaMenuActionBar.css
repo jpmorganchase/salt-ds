@@ -1,7 +1,0 @@
-.saltMegaMenuActionBar {
-  /* Inside `MegaMenuBody`'s column grid, the action bar drops onto its own
-     full-width row beneath the groups. */
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-}
