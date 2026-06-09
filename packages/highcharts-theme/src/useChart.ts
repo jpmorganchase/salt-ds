@@ -82,5 +82,50 @@ export const useChart = (
     setMergedOptions(getMergedOptions(elementUsed));
   }, [chartRef, getMergedOptions, mode, targetWindow, theme]);
 
+  useEffect(() => {
+    const fontFaceSet = targetWindow?.document?.fonts;
+
+    // `document.fonts` is unavailable in non-DOM/legacy environments. When the
+    // fonts are already loaded (warm navigations, or hosts that load the font
+    // before the chart mounts) the first measurement is correct, so there is
+    // nothing to re-layout
+    if (!fontFaceSet || fontFaceSet.status === "loaded") {
+      return;
+    }
+
+    let cancelled = false;
+
+    void fontFaceSet.ready.then(() => {
+      const chart = chartRef.current?.chart as Highcharts.Chart | undefined;
+      const renderer = chart?.renderer as unknown as
+        | { cache?: Record<string, unknown>; cacheKeys?: string[] }
+        | undefined;
+
+      if (cancelled || !chart || !renderer) {
+        return;
+      }
+
+      // Highcharts caches SVG text bounding boxes on the renderer, but the
+      // cache key (text + fontSize + fontWeight + width + rotation + align)
+      // omits the font family. Any label measured before the web font finished
+      // loading is therefore stored against fallback-font metrics and reused for
+      // the life of the chart, leaving data labels (e.g. pie/donut connectors)
+      // positioned as if the fallback font were still active. Clearing the cache
+      // forces Highcharts to re-measure with the (now)loaded font - which is the same
+      // thing an unmount/remount (e.g. navigating away and back) does implicitly
+      renderer.cache = {};
+      renderer.cacheKeys = [];
+
+      // `setSize` with undefined dimensions preserves the current (responsive)
+      // size while flagging the chart dirty, which forces every visible series -
+      // and its data labels - to be re-rendered and re-measured.
+      chart.setSize(undefined, undefined, false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [chartRef, targetWindow]);
+
   return mergedOptions;
 };
