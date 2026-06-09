@@ -15,12 +15,3 @@
   background: var(--salt-container-primary-background);
   box-shadow: var(--salt-overlayable-shadow-popout);
 }
-
-/* Small viewport: stack side content and the navigation area top-to-bottom in
-   source order. The keyboard engine detects the stacked layout and degrades
-   arrows to a linear walk. */
-@media (max-width: 600px) {
-  .saltMegaMenuPanel {
-    flex-direction: column;
-  }
-}
