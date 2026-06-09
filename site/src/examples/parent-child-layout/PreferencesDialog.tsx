@@ -232,6 +232,7 @@ export const PreferencesDialog = () => {
     <>
       <Button onClick={handleRequestOpen}>Open Preferences Dialog</Button>
       <Dialog
+        aria-label="Preferences"
         size={"medium"}
         open={open}
         onOpenChange={onOpenChange}

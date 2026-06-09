@@ -8,7 +8,7 @@ export const Sizes = (): ReactElement => {
     <FlowLayout gap={7} align="end">
       {sizes.map((size) => (
         <StackLayout key={size} align="center">
-          <Avatar key={size} size={size} />
+          <Avatar aria-hidden key={size} size={size} />
           <Label>Size: {size}x</Label>
         </StackLayout>
       ))}
