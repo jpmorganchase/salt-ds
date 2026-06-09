@@ -56,16 +56,6 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       return () => setPanelId(undefined);
     }, [id, setPanelId]);
 
-    // Focus the first item on ArrowDown open. floating-ui's `initialFocus` is
-    // unreliable on React <18, so retry across frames instead.
-    const floatingEl = floatingRootContext.elements
-      .floating as HTMLElement | null;
-    useEffect(() => {
-      if (focusFirstItemOnOpen && floatingEl) {
-        focusFirstItem(floatingEl);
-      }
-    }, [focusFirstItemOnOpen, floatingEl]);
-
     // Resolve the panel's page-margin to a pixel value to override the margin as required.
     const [pageMargin, setPageMargin] = useState(0);
     useEffect(() => {
@@ -92,6 +82,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
 
     const floatingUIResult = useFloatingUI({
       rootContext: floatingRootContext,
+      open: isOpen,
       placement,
       middleware: [
         offset(1),
@@ -108,6 +99,16 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
         }),
       ],
     });
+
+    // Focus the first item on ArrowDown open, after floating-ui has positioned the panel
+    const floatingEl = floatingRootContext.elements
+      .floating as HTMLElement | null;
+    const { isPositioned } = floatingUIResult;
+    useEffect(() => {
+      if (focusFirstItemOnOpen && isPositioned && floatingEl) {
+        focusFirstItem(floatingEl);
+      }
+    }, [focusFirstItemOnOpen, isPositioned, floatingEl]);
 
     const floatingProps = getFloatingProps();
 
