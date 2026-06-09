@@ -169,6 +169,72 @@ Support helpers:
 - must stay secondary to the workflow-first public story
 - must not change workflow contract meaning when absent
 
+### Public Support Tools
+
+Read-only retrieval support (always safe):
+
+- `get_salt_entity` — retrieve canonical Salt entity details by name
+- `get_salt_examples` — retrieve canonical Salt examples for an entity
+- `discover_salt` — broad Salt discovery and routing for exploratory requests
+
+Advanced support tools (optional, for sophisticated hosts):
+
+- `validate_salt_review_report` — validate durable review reports (read-only)
+- `resume_salt_review` — resume state for durable review reports (read-only)
+- `persist_salt_context_pack` — write release-gated context pack (**readOnlyHint: false**, **destructiveHint: true**, idempotent)
+- `persist_salt_generated_artifact` — write release-gated artifact (**readOnlyHint: false**, **destructiveHint: true**, idempotent)
+
+Rules:
+
+- All thirteen tools are part of the default public MCP surface
+- The four advanced tools are clearly marked as optional/advanced in capability manifest `support_tools`
+- The two persistence tools have `readOnlyHint: false` and `destructiveHint: true` because caller-supplied paths inside `root_dir` may overwrite existing files (see §Annotation Audit below)
+- Report validation and persistence tools do not change workflow contract semantics
+- Hosts may choose to expose only workflow tools and basic support tools; advanced tools remain discoverable
+
+## Annotation Audit (Task 0.8)
+
+Performed: 2026-06-09. Source: [Tool Annotations as Risk Vocabulary](https://blog.modelcontextprotocol.io/posts/2026-03-16-tool-annotations/) (David Soria Parra et al., MCP blog, 2026-03-16).
+
+The post defines what each existing hint should drive in a client and gives five evaluation questions: (1) what client behavior does it enable, (2) does it need trust to be useful, (3) could `_meta` handle it instead, (4) does it help reason about combinations, (5) is it a hint or a contract.
+
+The Salt MCP tool surface (13 tools) was audited against the table below.
+
+| Hint | Client behavior the spec wants it to drive |
+|---|---|
+| `readOnlyHint: true` | Skip the confirmation dialog |
+| `destructiveHint: true` | Show a warning before executing |
+| `idempotentHint: true` | Safe to retry on failure |
+| `openWorldHint: true` | Scrutinize output for untrusted content; flag a trust-boundary cross |
+
+### Findings
+
+| Tool | Before | After | Change |
+|---|---|---|---|
+| `get_salt_project_context`, `discover_salt`, `migrate_to_salt`, `create_salt_ui`, `get_salt_entity`, `get_salt_examples`, `review_salt_ui`, `upgrade_salt_ui`, `validate_salt_review_report`, `resume_salt_review` | readOnly:true / destructive:false / idempotent:true / openWorld:false | unchanged | All ten are pure read-only against the bundled registry and the local repo. `openWorldHint: false` is correct — the only external surface (`siteBaseUrl`) is read-only. |
+| `bootstrap_salt_repo` | readOnly:false / destructive:false / idempotent:true / openWorld:false | unchanged | Writes managed blocks to `AGENTS.md` (or `CLAUDE.md`), `.salt/team.json`, optionally `.salt/stack.json` and a `ui:verify` script. These are additive managed-block edits to known target files, not arbitrary writes. Per the spec definition of `destructiveHint` ("the tool may perform destructive updates"), this is genuinely additive. |
+| `persist_salt_context_pack` | readOnly:false / destructive:**false** / idempotent:true / openWorld:false | `destructive:` **true** | Defaults write inside `.salt/context/`, but `output_dir` and `manifest_path` are caller-overridable. Any existing files at the resolved paths are overwritten. Per spec ("may perform destructive updates"), `destructiveHint: true` is the honest answer. |
+| `persist_salt_generated_artifact` | readOnly:false / destructive:**false** / idempotent:true / openWorld:false | `destructive:` **true** | `artifact_path` is always caller-supplied and may resolve to any file inside `root_dir`. The tool overwrites whatever is there when the release gate passes. The path guard (`resolveWritablePathInsideRoot`) prevents traversal outside `root_dir` but does not constrain the destination. This is exactly the case the post says `destructiveHint: true` exists for. |
+
+### Open SEPs reviewed and deliberately not adopted
+
+The post lists five in-flight annotation SEPs: #1913 Trust and Sensitivity, #1984 Comprehensive Governance/UX, #1561 `unsafeOutputHint`, #1560 `secretHint`, #1487 `trustedHint`. None apply to Salt today: the registry data is canonical, no tool returns secrets, none reaches untrusted networks. Re-evaluate if any of these land in the spec or if Salt MCP grows a remote transport or an open-world tool.
+
+### Things we deliberately did not change
+
+- **No new annotation namespacing via `_meta`.** The post's question 3 says `_meta` is for namespaced metadata only one deployment style cares about. Nothing Salt-specific qualifies today.
+- **`openWorldHint` stays `false` on `review_salt_ui`** even though it accepts caller-supplied source code. User-supplied input is not "open-world" in the spec sense; openWorld is reserved for tools whose output crosses a trust boundary (web fetch, external API, etc.).
+- **No annotation downgrades from `readOnlyHint: true`.** Per the post's question 5, our read-only tools are honest hints; downgrading just to be conservative would defeat the host UX (auto-approval of safe lookups).
+
+### Re-audit triggers
+
+Re-run this audit when any of the following happen:
+
+1. A new tool is added to `ALL_TOOL_DEFINITIONS` in `packages/mcp/src/server/toolDefinitions.ts`.
+2. A tool starts reaching an external network (would flip `openWorldHint`).
+3. The MCP spec adds new annotation hints (track via the MCP blog and the Tool Annotations Interest Group).
+4. A Salt MCP user reports unexpected host approval-prompt behavior in a real session.
+
 ## Current Contract Facts
 
 1. Compact CLI and MCP emit `salt_workflow_v1`.

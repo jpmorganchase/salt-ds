@@ -1329,7 +1329,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   }>({
     name: "persist_salt_context_pack",
     description:
-      "Write the default release-gated Salt generated context pack to durable project files and return the shared semantic-core persistence check.",
+      "Write the default release-gated Salt generated context pack to durable project files inside root_dir. Overwrites any existing manifest and per-component pack files at the configured output paths. Returns the shared semantic-core persistence check.",
     inputSchema: {
       root_dir: z
         .string()
@@ -1341,19 +1341,23 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .string()
         .optional()
         .describe(
-          "Directory inside root_dir for generated context files. Defaults to .salt/context/components.",
+          "Directory inside root_dir for generated context files. Defaults to .salt/context/components. Any existing files at the resolved paths are overwritten.",
         ),
       manifest_path: z
         .string()
         .optional()
         .describe(
-          "Manifest path inside root_dir. Defaults to .salt/context/manifest.json.",
+          "Manifest path inside root_dir. Defaults to .salt/context/manifest.json. Any existing file at the resolved path is overwritten.",
         ),
     },
     outputSchema: CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA,
     annotations: {
       readOnlyHint: false,
-      destructiveHint: false,
+      // destructiveHint reflects that caller-supplied output_dir / manifest_path
+      // overrides may point at any path inside root_dir, and the tool will
+      // overwrite whatever exists there. See packages/mcp/docs/public-api-matrix.md
+      // §Annotation Audit (Task 0.8) for the rationale.
+      destructiveHint: true,
       idempotentHint: true,
       openWorldHint: false,
     },
@@ -1385,7 +1389,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   }>({
     name: "persist_salt_generated_artifact",
     description:
-      "Write one generated Salt report or artifact JSON payload only after the shared semantic-core release gate validates its EvidenceRefs.",
+      "Write one generated Salt report or artifact JSON payload to a caller-supplied artifact_path inside root_dir, overwriting any file at that path, but only after the shared semantic-core release gate validates its EvidenceRefs.",
     inputSchema: {
       root_dir: z
         .string()
@@ -1397,7 +1401,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .string()
         .min(1)
         .describe(
-          "Output JSON path inside root_dir for the generated artifact.",
+          "Output JSON path inside root_dir for the generated artifact. Any existing file at this path is overwritten when the release gate passes.",
         ),
       artifact: UNKNOWN_RECORD_SCHEMA.describe(
         "Generated Salt artifact payload to persist. It must be a salt_generated_artifact_v1 object or contain generated_artifact.",
@@ -1406,7 +1410,11 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     outputSchema: GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA,
     annotations: {
       readOnlyHint: false,
-      destructiveHint: false,
+      // destructiveHint reflects that artifact_path is always caller-supplied
+      // and may point at any path inside root_dir; the tool will overwrite
+      // whatever exists there when the release gate passes. See
+      // packages/mcp/docs/public-api-matrix.md §Annotation Audit (Task 0.8).
+      destructiveHint: true,
       idempotentHint: true,
       openWorldHint: false,
     },
