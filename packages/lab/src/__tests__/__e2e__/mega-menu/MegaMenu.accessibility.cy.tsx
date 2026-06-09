@@ -233,6 +233,67 @@ describe("Given a MegaMenu", () => {
         .findAllByRole("listitem")
         .should("have.length", 1);
     });
+
+    it("honours a consumer-provided heading id and labels the list with it", () => {
+      cy.mount(
+        <MegaMenu defaultOpen>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading id="custom-heading-id">
+                  Financial Services
+                </MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem href="/digital-banking">
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
+          </MegaMenuPanel>
+        </MegaMenu>,
+      );
+
+      // The heading wears the consumer's id...
+      cy.get('[id="custom-heading-id"]').should(
+        "contain.text",
+        "Financial Services",
+      );
+      // ...and the list is labelled by exactly that id (not an internal one).
+      cy.findByRole("list", { name: "Financial Services" }).should(
+        "have.attr",
+        "aria-labelledby",
+        "custom-heading-id",
+      );
+    });
+
+    it("omits aria-labelledby when the group has no heading", () => {
+      cy.mount(
+        <MegaMenu defaultOpen>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuItemList>
+                  <MegaMenuItem href="/digital-banking">
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
+          </MegaMenuPanel>
+        </MegaMenu>,
+      );
+
+      // No heading means no label target — the attribute must be absent, not a
+      // dangling reference to a non-existent id.
+      cy.findByRole("list").should("not.have.attr", "aria-labelledby");
+    });
   });
 
   describe("keyboard focus boundaries", () => {

@@ -33,8 +33,7 @@ export const MegaMenuItemList = forwardRef<
     window: targetWindow,
   });
 
-  // Labelled by the group's heading via the shared id.
-  const { headingId } = useMegaMenuGroup() ?? {};
+  const { headingId } = useMegaMenuGroup();
 
   return (
     <ul

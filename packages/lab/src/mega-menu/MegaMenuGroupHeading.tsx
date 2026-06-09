@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -23,7 +23,10 @@ export interface MegaMenuGroupHeadingProps
 export const MegaMenuGroupHeading = forwardRef<
   HTMLDivElement,
   MegaMenuGroupHeadingProps
->(function MegaMenuGroupHeading({ children, className, ...rest }, ref) {
+>(function MegaMenuGroupHeading(
+  { children, className, id: idProp, ...rest },
+  ref,
+) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-mega-menu-group-heading",
@@ -31,15 +34,19 @@ export const MegaMenuGroupHeading = forwardRef<
     window: targetWindow,
   });
 
-  // Wear the id shared by the group so the list can reference it.
-  const { headingId } = useMegaMenuGroup() ?? {};
+  const id = useId(idProp);
+  const { setHeadingId } = useMegaMenuGroup();
+  useIsomorphicLayoutEffect(() => {
+    setHeadingId(id);
+    return () => setHeadingId(undefined);
+  }, [id, setHeadingId]);
 
   return (
     <div
       className={clsx(withBaseName(), className)}
       ref={ref}
       {...rest}
-      id={headingId}
+      id={id}
     >
       <div className={clsx(withBaseName("content"))}>{children}</div>
     </div>
