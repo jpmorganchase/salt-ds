@@ -236,6 +236,7 @@ const KeyboardShortcuts: FC = () => {
         )}
       </StackLayout>
       <Dialog
+        aria-label="Keyboard shortcuts"
         open={open}
         onOpenChange={handleDialogChange}
         size="medium"

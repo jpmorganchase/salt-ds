@@ -8,6 +8,7 @@ export const DisableScrim = (): ReactElement => {
     <StackLayout>
       <Button onClick={() => setOpen(true)}>Open Primary Drawer</Button>
       <Drawer
+        aria-label="Drawer without scrim"
         open={open}
         onOpenChange={(newOpen) => setOpen(newOpen)}
         style={{ width: 200 }}

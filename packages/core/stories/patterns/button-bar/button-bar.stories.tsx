@@ -400,6 +400,7 @@ export const DialogForm = () => {
     <>
       <Button onClick={handleRequestOpen}>Open default dialog</Button>
       <Dialog
+        aria-label="Form"
         open={open}
         onOpenChange={onOpenChange}
         style={{ width: "378px" }}

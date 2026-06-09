@@ -32,8 +32,11 @@ function ExpandButtonItem(props: { item: Item }) {
               </VerticalNavigationItemLabel>
             </VerticalNavigationItemTrigger>
             <CollapsibleTrigger>
-              <Button appearance="transparent">
-                <VerticalNavigationItemExpansionIcon />
+              <Button
+                aria-label={`Toggle ${item.title} submenu`}
+                appearance="transparent"
+              >
+                <VerticalNavigationItemExpansionIcon aria-hidden />
               </Button>
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
