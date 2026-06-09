@@ -100,13 +100,9 @@ export function MegaMenu({
       placement,
       getFloatingProps,
       getReferenceProps,
-      setFloating,
-      setReference,
       setOpen,
       focusFirstItemOnOpen,
-      setFocusFirstItemOnOpen,
       panelId,
-      setPanelId,
     ],
   );
 
