@@ -1,4 +1,4 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -7,6 +7,7 @@ import {
   type HTMLAttributes,
   type ReactNode,
   useMemo,
+  useState,
 } from "react";
 import megaMenuGroupCss from "./MegaMenuGroup.css";
 import { MegaMenuGroupContext } from "./MegaMenuGroupContext";
@@ -30,10 +31,13 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
       window: targetWindow,
     });
 
-    // Share the heading id via context so the list can label itself; the group
-    // is also a navigation column (`data-mega-menu-column`).
-    const headingId = useId();
-    const contextValue = useMemo(() => ({ headingId }), [headingId]);
+    // The heading registers its id so the list can label itself; `undefined`
+    // with no heading. The group is also a navigation column.
+    const [headingId, setHeadingId] = useState<string | undefined>(undefined);
+    const contextValue = useMemo(
+      () => ({ headingId, setHeadingId }),
+      [headingId],
+    );
 
     return (
       <MegaMenuGroupContext.Provider value={contextValue}>

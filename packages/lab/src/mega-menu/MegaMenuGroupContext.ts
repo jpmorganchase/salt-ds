@@ -2,18 +2,21 @@ import { createContext } from "@salt-ds/core";
 import { useContext } from "react";
 
 export interface MegaMenuGroupContextValue {
-  /** The group heading's id, used to label the item list via `aria-labelledby`. */
+  /**
+   * The rendered heading's id, used to label the item list via `aria-labelledby`.
+   * `undefined` when the group has no `MegaMenuGroupHeading`.
+   */
   headingId: string | undefined;
+  /** Register (or clear, with `undefined`) the heading's id. */
+  setHeadingId: (id: string | undefined) => void;
 }
 
-export const MegaMenuGroupContext = createContext<
-  MegaMenuGroupContextValue | undefined
->("MegaMenuGroupContext", undefined);
+export const MegaMenuGroupContext = createContext<MegaMenuGroupContextValue>(
+  "MegaMenuGroupContext",
+  { headingId: undefined, setHeadingId: () => {} },
+);
 
-/**
- * Access the nearest `MegaMenuGroup` context. Returns `undefined` when used
- * outside a group.
- */
-export function useMegaMenuGroup(): MegaMenuGroupContextValue | undefined {
+/** Access the nearest `MegaMenuGroup` context. */
+export function useMegaMenuGroup(): MegaMenuGroupContextValue {
   return useContext(MegaMenuGroupContext);
 }
