@@ -338,7 +338,7 @@ const StaticContentMegaMenu = () => (
 // Fixture with a non-focusable item (an `<a>` without `href` and no `render`).
 // Verifies the engine skips it and navigation continues to the next reachable
 // item rather than stalling.
-const MixedFocusabilityMegaMenu = () => (
+const ActionItemMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
       <li>
@@ -351,8 +351,10 @@ const MixedFocusabilityMegaMenu = () => (
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
                 <MegaMenuItemList>
-                  {/* Intentionally no href and no render — should be skipped. */}
-                  <MegaMenuItem>Non Focusable</MegaMenuItem>
+                  {/* No href and no render — renders as a focusable button. */}
+                  <MegaMenuItem onClick={(e) => e.preventDefault()}>
+                    Telemedicine
+                  </MegaMenuItem>
                   <MegaMenuItem
                     href="/digital-banking"
                     onClick={(e) => e.preventDefault()}
@@ -759,14 +761,17 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
     });
 
-    it("skips non-focusable items and focuses the next reachable item", () => {
-      cy.mount(<MixedFocusabilityMegaMenu />);
+    it("renders an action item (no href/render) as a focusable button", () => {
+      cy.mount(<ActionItemMegaMenu />);
       cy.findByRole("button", { name: "Solutions" }).focus();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
 
-      // ArrowDown from the trigger should land on the first focusable item,
-      // skipping the non-focusable "Non Focusable" entry.
+      // ArrowDown lands on the action item, rendered as a focusable button.
+      cy.realPress("ArrowDown");
+      cy.findByRole("button", { name: "Telemedicine" }).should("be.focused");
+
+      // ...and continues to the link beneath it.
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });

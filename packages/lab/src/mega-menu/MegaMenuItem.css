@@ -11,6 +11,8 @@
   position: relative;
   border-radius: var(--salt-palette-corner-weak);
   text-decoration: none;
+  border: none;
+  font: inherit;
 }
 
 .saltMegaMenuItem > .saltIcon {
