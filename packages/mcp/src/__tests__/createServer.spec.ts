@@ -3747,7 +3747,7 @@ describe("createSaltMcpServer", () => {
           fs.access(
             path.join(rootDir, ".github", "agents", "salt-ui.agent.md"),
           ),
-        ).resolves.toBeUndefined();
+        ).rejects.toBeTruthy();
 
         const packageJson = JSON.parse(
           await fs.readFile(path.join(rootDir, "package.json"), "utf8"),

@@ -1253,7 +1253,7 @@ describe("salt cli", () => {
     ).resolves.toBeUndefined();
     await expect(
       fs.access(path.join(rootDir, ".github", "agents", "salt-ui.agent.md")),
-    ).resolves.toBeUndefined();
+    ).rejects.toBeTruthy();
 
     const packageJson = JSON.parse(
       await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
@@ -1327,7 +1327,7 @@ describe("salt cli", () => {
     ).resolves.toBeUndefined();
     await expect(
       fs.access(path.join(rootDir, ".github", "agents", "salt-ui.agent.md")),
-    ).resolves.toBeUndefined();
+    ).rejects.toBeTruthy();
     const packageJson = JSON.parse(
       await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
     ) as { scripts?: Record<string, string> };

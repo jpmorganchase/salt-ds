@@ -27,8 +27,6 @@ consumer-app/
   - the default repo-local conventions file
 - `.github/copilot-instructions.md`
   - optional VS Code adapter generated only when a repo wants host-specific scaffolding
-- `.github/agents/salt-ui.agent.md`
-  - optional VS Code Salt UI custom agent for broad Salt UI tasks
 
 ## What This Example Shows
 
@@ -38,7 +36,6 @@ consumer-app/
 - `.salt/team.json` as the default conventions layer
 - root `AGENTS.md` as the shared cross-IDE workflow contract
 - VS Code adapters generated from the same repo contract only when explicitly requested
-- the Salt UI agent as the preferred path for broad asks like `create a dashboard`, `add tabs`, `add a table`, or `fix this layout`
 - `salt-ds init` as the optional step that adds durable repo policy and the managed root instruction block after first-run value
 - `ui:verify` as an optional repo-local wrapper around `salt-ds review`
 - `salt-ds + CLI` as the restricted-environment fallback when MCP is blocked

@@ -34,8 +34,6 @@ export {
   VSCODE_COPILOT_BLOCK_END,
   VSCODE_COPILOT_BLOCK_START,
   VSCODE_COPILOT_INSTRUCTIONS_TEMPLATE,
-  VSCODE_SALT_UI_AGENT_MARKER,
-  VSCODE_SALT_UI_AGENT_TEMPLATE,
 } from "./bootstrapScaffolding.js";
 export {
   type BuildComponentContextArtifactInput,

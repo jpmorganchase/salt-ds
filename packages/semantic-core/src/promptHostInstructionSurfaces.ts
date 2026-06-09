@@ -2,7 +2,6 @@ import {
   CONSUMER_REPO_AGENTS_TEMPLATE,
   SALT_REPO_INSTRUCTIONS_TEMPLATE,
   VSCODE_COPILOT_INSTRUCTIONS_TEMPLATE,
-  VSCODE_SALT_UI_AGENT_TEMPLATE,
 } from "./bootstrapScaffolding.js";
 import {
   SALT_EVIDENCE_REF_CONTRACT,
@@ -143,14 +142,6 @@ export const DEFAULT_PROMPT_HOST_INSTRUCTION_SURFACE_DESCRIPTORS: PromptHostInst
           generated_path: ".github/copilot-instructions.md",
           text: VSCODE_COPILOT_INSTRUCTIONS_TEMPLATE,
         },
-        {
-          id: "vscode-salt-ui-agent-template",
-          name: "VS Code Salt UI agent instructions",
-          source_path: "packages/semantic-core/src/bootstrapScaffolding.ts",
-          source_section: "VSCODE_SALT_UI_AGENT_TEMPLATE",
-          generated_path: ".github/agents/salt-ui.agent.md",
-          text: VSCODE_SALT_UI_AGENT_TEMPLATE,
-        },
       ],
       claims: [
         {
@@ -160,7 +151,6 @@ export const DEFAULT_PROMPT_HOST_INSTRUCTION_SURFACE_DESCRIPTORS: PromptHostInst
           evidence_ref_file_ids: [
             "salt-repo-instructions-template",
             "vscode-copilot-instructions-template",
-            "vscode-salt-ui-agent-template",
           ],
         },
         {
@@ -170,7 +160,6 @@ export const DEFAULT_PROMPT_HOST_INSTRUCTION_SURFACE_DESCRIPTORS: PromptHostInst
           evidence_ref_file_ids: [
             "salt-repo-instructions-template",
             "vscode-copilot-instructions-template",
-            "vscode-salt-ui-agent-template",
           ],
         },
       ],
