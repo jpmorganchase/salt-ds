@@ -13,6 +13,7 @@
   text-decoration: none;
   border: none;
   font: inherit;
+  text-align: start;
 }
 
 .saltMegaMenuItem > .saltIcon {
