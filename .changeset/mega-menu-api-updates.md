@@ -27,6 +27,13 @@ there are no placement props.
 - **`MegaMenuSupportingActions`** — a full-width row of supporting actions,
   inside `MegaMenuBody` beneath the groups.
 
+Responsive behaviour is left to consumers. `MegaMenuBody` lays its columns out
+with grid `auto-fit` and `minmax(0, …)`, so they shrink and wrap to the
+available width rather than overflowing; there is no built-in viewport
+breakpoint. To stack the panel on small screens, set `flex-direction: column` on
+`MegaMenuPanel` at your own breakpoint. Keyboard navigation degrades to a linear
+walk automatically when the columns are stacked.
+
 ```tsx
 <MegaMenuPanel aria-label="Solutions menu">
   <MegaMenuBody>
