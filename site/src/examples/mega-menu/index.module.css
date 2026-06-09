@@ -101,6 +101,7 @@
   .customRegionSide {
     --saltMegaMenuPanel-inlineSize: 320px;
     --saltMegaMenuPanel-maxInlineSize: 320px;
+    flex-direction: column;
   }
 
   .customRegionSideContent {
