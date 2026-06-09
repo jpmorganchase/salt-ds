@@ -498,6 +498,18 @@ describe("Given a MegaMenu", () => {
       cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
+    it("Shift+Tab on an open trigger closes the panel and moves to the previous trigger", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      cy.findByRole("button", { name: "Services" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
+
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+    });
+
     it("re-enters items on ArrowDown after ArrowUp returns to trigger (opened via ArrowDown)", () => {
       cy.mount(<KeyboardMegaMenu />);
       focusSolutionsTrigger();

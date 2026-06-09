@@ -79,6 +79,13 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
           return;
         }
 
+        // When menu is open: Shift+Tab mirrors arrow left
+        if (openState && key === "Tab" && shiftKey) {
+          setFocusFirstItemOnOpen(false);
+          setOpen(false);
+          return;
+        }
+
         // When menu is closed: ArrowDown opens and focuses first item
         if (!openState && key === "ArrowDown") {
           event.preventDefault();
