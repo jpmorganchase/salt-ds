@@ -10,7 +10,7 @@ data:
 
 ## Appearance
 
-Toolbar supports two appearances: `bordered` or `transparent`. Transparent toolbars are flush with the edges of the toolbar container. The default appearance is `bordered`.
+Toolbar supports two appearances: `bordered` or `transparent`. Transparent toolbars remove the default inset padding, so their contents align with the toolbar container edges. The default appearance is `bordered`.
 
 <LivePreview componentName="toolbar" exampleName="Appearance" />
 
@@ -22,40 +22,47 @@ Bordered toolbars are available in three variants: `primary`, `secondary`, and `
 
 ## Content position
 
-Toolbar supports two positioning models. Use `align` on `TooltrayNext` to place individual trays at the `start`, `center`, or `end` of the toolbar. Use `ToolbarContentNext` with the `position` prop to define a content section that holds one or more `TooltrayNext` components and optional dividers.
+Controls must be placed into `TooltrayNext` trays to participate in grouping and overflow behavior.
+
+Toolbar supports two positioning models:
+
+- Use `align` on `TooltrayNext` to place individual trays at the `start`, `center`, or `end` of the toolbar.
+- Use `ToolbarContentNext` with the `position` prop to define a content section that holds one or more `TooltrayNext`.
 
 <LivePreview componentName="toolbar" exampleName="ContentSections" />
 
 ## Dividers
 
-Use a [`Divider`](../divider) to separate groups of controls within a toolbar. Alternatively, apply `spacing-300` between groups when visual separation is enough.
+Use a [`Divider`](../divider) to separate groups of controls within a toolbar.
 
 <LivePreview componentName="toolbar" exampleName="Dividers" />
 
 ## Overflow
 
+When the toolbar width is reduced and there isn't enough space for every control, trays move into overflow. Each tray collapses as a whole, keeping its controls grouped together.
+
 ### Collapse order
 
-Use `overflowPriority` to define a custom collapse order. `TooltrayNext` components with higher `overflowPriority` values move into overflow before those with lower values.
+Use `overflowPriority` to define a custom collapse order. Higher priority values collapse sooner. Tooltrays with higher `overflowPriority` values move into the overflow before those with lower values.
 
 ### Independent collapse
 
-By default, `overflowMode` is `"independent"`, which moves each `TooltrayNext` into an overflow individually. When the toolbar's available width shrinks and the content no longer fits, `TooltrayNext` components move into an overflow menu.
+By default, `overflowMode` is `"independent"`, so each `TooltrayNext` collapses on its own. As the toolbar width is reduced, trays move into the overflow one at a time, following their `overflowPriority`.
 
 <LivePreview componentName="toolbar" exampleName="IndependentCollapse" />
 
-### Grouped collapse
+### Named overflows
 
-When `overflowMode` is set to `"grouped"`, controls in the same `TooltrayNext` move into overflow together. Use this when controls are interdependent and need to remain together to work effectively.
-
-<LivePreview componentName="toolbar" exampleName="GroupedCollapse" />
-
-### Dynamic collapse
-
-By default, controls move into one overflow. To create separate overflow triggers, use named `overflowGroup` values. Use `overflowLabel` when the trigger label should differ from the group name.
+By default, trays collapse into a single shared overflow. Assign a named `overflowGroup` to move trays into their own overflow, each with its own overflow trigger.
 
 #### Best practices
 
-If your toolbar has more than one overflow, give each named overflow a distinct label so the triggers are easy to tell apart.
+Use `overflowLabel` when the overflow trigger label should differ from the group name.
 
-<LivePreview componentName="toolbar" exampleName="DynamicCollapse" />
+<LivePreview componentName="toolbar" exampleName="NamedOverflows" />
+
+### Grouped collapse
+
+Within a named overflow, set `overflowMode` to `"grouped"` on its trays to collapse them together as a single unit, rather than one at a time. Use this when trays are interdependent and should always appear together.
+
+<LivePreview componentName="toolbar" exampleName="GroupedCollapse" />

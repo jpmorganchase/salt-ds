@@ -10,7 +10,7 @@ export const IconOnly = (): ReactElement => (
         sentiment="accented"
         aria-label="Search document"
       >
-        <SearchIcon />
+        <SearchIcon aria-hidden />
       </Button>
     </Tooltip>
     <Tooltip placement="top" content="Print document">
@@ -19,7 +19,7 @@ export const IconOnly = (): ReactElement => (
         sentiment="accented"
         aria-label="Print document"
       >
-        <PrintIcon />
+        <PrintIcon aria-hidden />
       </Button>
     </Tooltip>
     <Tooltip placement="top" content="Share document">
@@ -28,7 +28,7 @@ export const IconOnly = (): ReactElement => (
         sentiment="accented"
         aria-label="Share document"
       >
-        <ShareIcon />
+        <ShareIcon aria-hidden />
       </Button>
     </Tooltip>
   </FlowLayout>

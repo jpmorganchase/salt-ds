@@ -380,7 +380,7 @@ export const List = () => {
       style={{ width: "266px" }}
       startAdornment={
         selectedContact.length === 1 && (
-          <Avatar src={selectedContact[0].avatarImage} size={1} />
+          <Avatar aria-hidden src={selectedContact[0].avatarImage} size={1} />
         )
       }
       onSelectionChange={handleSelectionChange}

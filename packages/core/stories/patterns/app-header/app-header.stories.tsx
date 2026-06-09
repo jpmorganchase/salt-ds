@@ -154,20 +154,22 @@ const MobileAppHeader: FC<{
         >
           {!drawerOpen && (
             <Button
+              aria-label="Open navigation"
               onClick={() => setDrawerOpen(true)}
               style={{ alignSelf: "center" }}
               appearance="transparent"
             >
-              <MenuIcon />
+              <MenuIcon aria-hidden />
             </Button>
           )}
           {drawerOpen && (
             <Button
+              aria-label="Close navigation"
               onClick={() => setDrawerOpen(false)}
               style={{ alignSelf: "center" }}
               appearance="transparent"
             >
-              <CloseIcon />
+              <CloseIcon aria-hidden />
             </Button>
           )}
         </FlexItem>
@@ -183,6 +185,7 @@ const MobileAppHeader: FC<{
         </FlexItem>
       </StackLayout>
       <Drawer
+        aria-label="Main navigation"
         style={{
           paddingTop: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
           paddingLeft: "0",

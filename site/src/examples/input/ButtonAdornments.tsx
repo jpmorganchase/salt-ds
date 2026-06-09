@@ -12,16 +12,16 @@ export const ButtonAdornments = (): ReactElement => (
   <FlowLayout style={{ width: "266px" }}>
     <Input
       startAdornment={
-        <Button>
-          <NoteIcon />
+        <Button aria-label="Note">
+          <NoteIcon aria-hidden />
         </Button>
       }
       defaultValue="Value"
     />
     <Input
       endAdornment={
-        <Button sentiment="accented">
-          <RefreshIcon />
+        <Button aria-label="Refresh" sentiment="accented">
+          <RefreshIcon aria-hidden />
         </Button>
       }
       defaultValue="Value"
@@ -29,11 +29,11 @@ export const ButtonAdornments = (): ReactElement => (
     <Input
       startAdornment={
         <>
-          <Button>
-            <SendIcon />
+          <Button aria-label="Send">
+            <SendIcon aria-hidden />
           </Button>
-          <Button sentiment="accented">
-            <FlagIcon />
+          <Button aria-label="Flag" sentiment="accented">
+            <FlagIcon aria-hidden />
           </Button>
         </>
       }
@@ -42,11 +42,11 @@ export const ButtonAdornments = (): ReactElement => (
     <Input
       endAdornment={
         <>
-          <Button appearance="transparent">
-            <CloseIcon />
+          <Button aria-label="Clear" appearance="transparent">
+            <CloseIcon aria-hidden />
           </Button>
-          <Button sentiment="accented">
-            <FlagIcon />
+          <Button aria-label="Flag" sentiment="accented">
+            <FlagIcon aria-hidden />
           </Button>
         </>
       }
@@ -56,14 +56,14 @@ export const ButtonAdornments = (): ReactElement => (
       disabled
       endAdornment={
         <>
-          <Button disabled>
-            <SendIcon />
+          <Button aria-label="Send" disabled>
+            <SendIcon aria-hidden />
           </Button>
-          <Button disabled appearance="transparent">
-            <CloseIcon />
+          <Button aria-label="Clear" disabled appearance="transparent">
+            <CloseIcon aria-hidden />
           </Button>
-          <Button disabled sentiment="accented">
-            <FlagIcon />
+          <Button aria-label="Flag" disabled sentiment="accented">
+            <FlagIcon aria-hidden />
           </Button>
         </>
       }
@@ -73,14 +73,14 @@ export const ButtonAdornments = (): ReactElement => (
       readOnly
       startAdornment={
         <>
-          <Button disabled>
-            <SendIcon />
+          <Button aria-label="Send" disabled>
+            <SendIcon aria-hidden />
           </Button>
-          <Button disabled appearance="transparent">
-            <CloseIcon />
+          <Button aria-label="Clear" disabled appearance="transparent">
+            <CloseIcon aria-hidden />
           </Button>
-          <Button disabled sentiment="accented">
-            <FlagIcon />
+          <Button aria-label="Flag" disabled sentiment="accented">
+            <FlagIcon aria-hidden />
           </Button>
         </>
       }
@@ -90,17 +90,17 @@ export const ButtonAdornments = (): ReactElement => (
       disabled
       startAdornment={
         <>
-          <Button disabled>
-            <CloseIcon />
+          <Button aria-label="Clear" disabled>
+            <CloseIcon aria-hidden />
           </Button>
-          <Button disabled appearance="transparent">
-            <FlagIcon />
+          <Button aria-label="Flag" disabled appearance="transparent">
+            <FlagIcon aria-hidden />
           </Button>
         </>
       }
       endAdornment={
-        <Button sentiment="accented" disabled>
-          <SendIcon />
+        <Button aria-label="Send" sentiment="accented" disabled>
+          <SendIcon aria-hidden />
         </Button>
       }
       defaultValue="Value"

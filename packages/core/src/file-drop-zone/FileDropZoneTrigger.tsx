@@ -1,16 +1,16 @@
 import {
   type ChangeEvent,
+  type ComponentPropsWithoutRef,
   type FocusEvent,
   forwardRef,
-  type HTMLAttributes,
   type SyntheticEvent,
   useRef,
 } from "react";
-import { Button } from "../button";
+import { Button, type ButtonProps } from "../button";
 import { useForkRef } from "../utils";
 
 export interface FileDropZoneTriggerProps
-  extends Omit<HTMLAttributes<HTMLButtonElement>, "onChange"> {
+  extends Omit<ComponentPropsWithoutRef<"button">, "onChange"> {
   /**
    * `accept` attribute for HTML <input>.
    *
@@ -29,6 +29,17 @@ export interface FileDropZoneTriggerProps
    * Callback for input change event
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, files: File[]) => void;
+  /**
+   * The appearance of the button. Options are 'solid', 'bordered', and 'transparent'.
+   * 'solid' is the default value.
+   */
+  appearance?: ButtonProps["appearance"];
+  /**
+   * The sentiment of the button. Options are 'accented' and 'neutral'.
+   * 'neutral' is the default value.
+   *
+   */
+  sentiment?: Extract<ButtonProps["sentiment"], "accented" | "neutral">;
 }
 
 export const FileDropZoneTrigger = forwardRef<
