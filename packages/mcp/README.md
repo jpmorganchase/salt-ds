@@ -45,8 +45,36 @@ Primary repo-aware workflow tools:
 - `upgrade_salt_ui`
   - upgrade workflow
 
-The default beta MCP surface exposes these six repo-aware workflow tools first, followed by read-only Salt support tools: `get_salt_entity`, `get_salt_examples`, and `discover_salt`.
-The support tools exist so `salt_workflow_v1` actions such as `retrieve_entity` and `retrieve_examples` are directly followable by MCP hosts.
+Read-only support tools for workflow follow-through:
+
+- `get_salt_entity`
+  - retrieve canonical Salt entity details by name
+  - used for `retrieve_entity` actions in `salt_workflow_v1`
+- `get_salt_examples`
+  - retrieve canonical Salt examples for an entity
+  - used for `retrieve_examples` actions in `salt_workflow_v1`
+- `discover_salt`
+  - broad Salt discovery and routing for exploratory or ambiguous requests
+  - use when the caller is not yet sure which entity or workflow they need
+
+Advanced support tools (optional, for sophisticated hosts):
+
+- `validate_salt_review_report` (read-only)
+  - validate a durable `salt_review_report_v1` JSON file against the current registry
+  - recomputes evidence, mirror, and release-gate state
+  - returns current, stale, unsupported, or invalid status
+- `resume_salt_review` (read-only)
+  - return conservative resume state for a durable Salt review report
+  - only current source-backed reports expose reusable EvidenceRef ids
+- `persist_salt_context_pack` (**readOnlyHint: false**, **destructiveHint: true**)
+  - write the default release-gated Salt generated context pack to durable project files
+  - returns the shared semantic-core persistence check
+  - idempotent; overwrites the manifest and per-component pack files at the configured paths inside `root_dir`
+- `persist_salt_generated_artifact` (**readOnlyHint: false**, **destructiveHint: true**)
+  - write one generated Salt report or artifact JSON payload after semantic-core release gate validation
+  - idempotent; overwrites the file at the caller-supplied `artifact_path` inside `root_dir`
+
+The default public MCP surface exposes all thirteen tools. The six workflow tools come first, followed by the three read-only support tools that enable `salt_workflow_v1` action follow-through, and finally the four advanced support tools for report validation and durable artifact persistence.
 
 ## Workflow Boundary
 

@@ -65,20 +65,24 @@ import {
   writeBaseArtifacts,
 } from "./registryTestUtils.js";
 
+// Default public MCP surface: 6 workflow tools + 3 read-only support tools + 4 advanced support tools = 13 total
 const EXPECTED_TOOL_NAMES = [
+  // Primary workflow tools (6)
   "bootstrap_salt_repo",
+  "create_salt_ui",
+  "get_salt_project_context",
+  "migrate_to_salt",
+  "review_salt_ui",
+  "upgrade_salt_ui",
+  // Read-only support tools (3)
   "discover_salt",
   "get_salt_entity",
   "get_salt_examples",
-  "resume_salt_review",
-  "review_salt_ui",
-  "create_salt_ui",
-  "upgrade_salt_ui",
-  "validate_salt_review_report",
-  "get_salt_project_context",
-  "migrate_to_salt",
-  "persist_salt_context_pack",
-  "persist_salt_generated_artifact",
+  // Advanced support tools (4)
+  "persist_salt_context_pack",        // readOnlyHint: false, destructiveHint: true (idempotent persistence; may overwrite caller-supplied paths inside root_dir)
+  "persist_salt_generated_artifact",  // readOnlyHint: false, destructiveHint: true (idempotent persistence; may overwrite caller-supplied paths inside root_dir)
+  "resume_salt_review",               // read-only
+  "validate_salt_review_report",      // read-only
 ].sort();
 
 const EXPECTED_DEFAULT_TOOL_ORDER = [
@@ -1885,15 +1889,26 @@ describe("createSaltMcpServer", () => {
 
         for (const toolName of EXPECTED_TOOL_NAMES) {
           expect(registeredTools[toolName]).toBeTruthy();
-          if (
-            toolName === "bootstrap_salt_repo" ||
-            toolName === "persist_salt_context_pack" ||
-            toolName === "persist_salt_generated_artifact"
-          ) {
+          if (toolName === "bootstrap_salt_repo") {
             expect(registeredTools[toolName]?.annotations).toEqual(
               expect.objectContaining({
                 readOnlyHint: false,
                 destructiveHint: false,
+                idempotentHint: true,
+                openWorldHint: false,
+              }),
+            );
+          } else if (
+            toolName === "persist_salt_context_pack" ||
+            toolName === "persist_salt_generated_artifact"
+          ) {
+            // Task 0.8 annotation audit: persist_* tools may overwrite
+            // caller-supplied paths inside root_dir, so destructiveHint is
+            // true. See packages/mcp/docs/public-api-matrix.md.
+            expect(registeredTools[toolName]?.annotations).toEqual(
+              expect.objectContaining({
+                readOnlyHint: false,
+                destructiveHint: true,
                 idempotentHint: true,
                 openWorldHint: false,
               }),
