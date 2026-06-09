@@ -8,6 +8,7 @@ Use this as a printable cheat sheet when starting each PR. Each section is paste
 
 > **Revision history**
 >
+> - **2026-06-10 rev 7:** Authored the two §3 paste-ready prompts that had been deferred since rev 3 — **PR 8 (task 2.13: CI required check + E2)** and **PR 9 (task 2.9: split `status: partial` into `partial` + `internal_limitations`)**. PR 8's prompt also folds in the §8.4 cleanup (the CI-side label gate that PR 18 left half-done waiting on `salt-ds review --since`), so closing both lands together. The "deferred prompt" note between PR 7 and PR 10 is replaced with a forward-pointer to PR 18's §8.4 cleanup. No code changes.
 > - **2026-06-10 rev 6:** Full audit pass against the live working tree (no source-code changes; tracker-only). Marked PRs 4, 5, 6, 7, and 12 ✅ Done (their code, tests, and untracked artifacts are all on the branch — they had simply never been ticked off in §2). Marked PR 10 (task 0.7) and PR 18 (task 2.16) ⚠️ Partial with the specific subtasks that remain. PR 19 (Phase 1 mega-file splits) explicitly noted as not started — `workflow.ts` is 3,350 lines (slight growth) and `toolDefinitions.ts` is 2,222 lines (grew with 0.9 work). Roadmap task **0.5** (tidy `chat.json` + `component-category-map.json`) flagged in §8.3 as partly done. Confirmed the four pre-existing failures recorded in §8.2 still reproduce.
 > - **2026-06-09 rev 5:** PRs 13 (task 0.10) and 14 (task 0.8) marked ✅ Done with commit anchors. New §8 "Known follow-ups" added capturing (a) the 0.8 `composition.nested-interactive-primitives` heuristic-repair gap list surfaced by the new canonical-example round-trip spec, (b) pre-existing `publicContractParity.spec.ts` upgrade/migrate semantic mismatches discovered while verifying 0.10, and (c) the pre-existing `agenticEvals.spec.ts > falls back to component routing` reproducible failure. Companion roadmap change: `gold-standard-roadmap.md` row **0.8a** added (the explicit follow-up to 0.8, mirroring the 0.6 → 0.7 chain).
 > - **2026-06-09 rev 4:** Audit pass against the live repo. PR 1 (task 0.3) marked ✅ Done (Option B shipped). PR 2 (F11) reclassified ✅ Done (Option C landed, not the prompt's requested Option A — see `session-findings-2026-06.md` root cause #9 "Decision (2026-06)" for the ratification). PR 2 §3 prompt annotated as superseded. No code or scope change in this rev — just bringing the tracker in line with what's already on `mcp`.
@@ -342,7 +343,165 @@ need separate PRs to keep diffs small.
 Tell me the hookIO API surface before implementing.
 ```
 
-> **Note on PR 8 and PR 9 prompts:** these are listed in §2 but their paste-ready §3 prompts have not been authored yet. Use the §2 row for scope and the matching roadmap task (2.13 and 2.9) for context, or author the prompts when you take them on.
+> **Note on PR 18's CI half:** PR 8 ships `salt-ds review --since` and the `.github/workflows/salt-review.yml` writer. PR 18's `require_human_review_for` PreToolUse branch is already landed (see §8.4) but its CI-side label gate is gated on PR 8 — close the §8.4 loop in the same PR 8 session.
+
+### PR 8 — Task 2.13 (CI required check — E2)
+
+```
+Implement Phase 2 task 2.13 from packages/mcp/docs/gold-standard-roadmap.md
+(also session-findings-2026-06.md E2). This pairs with PR 7's hook layer
+to give Salt cross-host server-side enforcement: bypassable only by a
+repo admin removing the required check.
+
+Read first:
+- packages/mcp/docs/gold-standard-roadmap.md §Phase 2 task 2.13
+- packages/mcp/docs/session-findings-2026-06.md E2
+- packages/cli/src/commands/workflow.ts — existing `salt-ds review`
+  command and its file-args path (the --since mode extends this, it
+  does not replace it)
+- packages/cli/src/commands/init.ts — existing `--add-agent-hooks`
+  option (the --add-ci-checks option mirrors it)
+- packages/cli/src/lib/args.ts — CLI flag parsing surface
+
+This is one PR with three pieces:
+
+1. New `--since <ref>` mode on `salt-ds review`. When set:
+   - Resolve the diff list between HEAD and <ref> via `git diff --name-only --diff-filter=ACMR <ref>`.
+   - Filter to Salt-affected files (TSX/TS/JSX/JS/MDX with @salt-ds
+     imports, plus .salt/team.json, .salt/stack.json).
+   - Run review on the filtered set.
+   - Exit non-zero (use the existing review exit-code helper) when any
+     blocking finding is detected. Print findings to stdout in the
+     normal compact-JSON format unless --pretty is set.
+   - Also fold in PR 18's CI-side label gate: if
+     `.salt/team.json` `require_human_review_for` matches any of the
+     changed files AND the env var `SALT_REVIEW_HUMAN_REVIEWED_LABEL`
+     is not "true", exit non-zero with a structured reason naming the
+     rule. This closes §8.4 and the half-landed PR 18.
+
+2. New `--add-ci-checks` option on `salt-ds init`. When set:
+   - Write `.github/workflows/salt-review.yml` running
+     `npx salt-ds review --since "${{ github.event.pull_request.base.sha }}"`
+     against PR events, marked as a required check.
+   - Write `.gitlab-ci.yml` snippet (or `.gitlab/salt-review.yml`
+     conditional include) doing the same against
+     `$CI_MERGE_REQUEST_DIFF_BASE_SHA`.
+   - Both files must include the SALT_REVIEW_HUMAN_REVIEWED_LABEL
+     plumbing: GitHub Actions reads the PR labels and exports the env
+     var if `salt-human-reviewed` is present; GitLab reads
+     `$CI_MERGE_REQUEST_LABELS`.
+   - Skip writing when an existing file at the path already declares
+     the salt-review job, same idempotence pattern as
+     `--add-agent-hooks` in init.ts.
+
+3. Tests:
+   - cli.spec.ts cases: --since exits 0 on a clean diff, exits non-zero
+     on a blocking finding, exits 0 when the diff has no Salt files,
+     exits non-zero with the policy-gate reason when
+     require_human_review_for matches and the label env is absent,
+     exits 0 when the same diff has the label env set.
+   - cli.spec.ts cases: --add-ci-checks writes the two CI files
+     (create + idempotent update + no-op when already wired); init
+     without --add-ci-checks does not write them.
+
+Tell me the --since git-resolution helper API and the
+`workflow-examples/consumer-repo/.salt/team.json`
+`require_human_review_for` example BEFORE editing. (The example was
+deferred from PR 18 — surface it here so §8.4 closes cleanly.)
+
+Then implement and run:
+yarn vitest run packages/cli/src/__tests__/cli.spec.ts
+yarn vitest run packages/cli/src/__tests__/hookIO.spec.ts
+
+Do not modify PR 7's hookIO.ts surface (E1 / E6 / E7 are settled). Do
+not introduce a new public CLI surface beyond the two flags above.
+```
+
+**Verify yourself:** with two repos open — one with a clean Salt diff, one with a deprecated-prop diff — run `salt-ds review --since main` in each and confirm exit codes 0 and non-zero respectively. Then add `salt-human-reviewed` to your local label env and confirm a `require_human_review_for`-matching diff still fails without it and passes with it.
+
+### PR 9 — Task 2.9 (split `status: partial` into `partial` + `internal_limitations`)
+
+```
+Implement Phase 2 task 2.9 from packages/mcp/docs/gold-standard-roadmap.md
+(also session-findings-2026-06.md F3 / root cause #2). This is a
+contract-shape change to salt_workflow_v1 — coordinate carefully with
+publicContractParity.spec.ts (which already has 4 pre-existing failures
+recorded in §8.2.2; do not let this PR add a 5th).
+
+Read first:
+- packages/mcp/docs/gold-standard-roadmap.md §Phase 2 task 2.9
+- packages/mcp/docs/session-findings-2026-06.md root cause #2
+- packages/semantic-core/src/tools/publicContract.ts — where status is
+  emitted today (look for `status: "partial"` paths)
+- packages/semantic-core/src/tools/workflowContracts.ts — review /
+  migrate / upgrade contract builders that populate status
+- packages/semantic-core/src/tools/capabilityManifest.ts —
+  contract_lifecycle that needs the version bump
+- packages/skills/salt-ds/SKILL.md and references/shared/*.md —
+  agent-facing prose mentioning "partial"
+
+Goal: `status: partial` today overloads two unrelated states:
+  (1) "the user request is partly addressed; more follow-through is
+      needed" — legitimate partial.
+  (2) "the workflow itself could not validate part of its own output
+      because the registry has internal gaps (unsupported_claim_count
+      > 0)" — internal limitation.
+
+After this PR, `partial` means only (1). State (2) becomes a separate
+top-level `internal_limitations: { unsupported_claim_count: number,
+unsupported_rule_kinds: string[] }` block that is independent of
+`status`. A clean run with internal limitations is now
+`status: success, internal_limitations: { … }`.
+
+Required:
+1. Pin the new `internal_limitations` shape in
+   `packages/semantic-core/src/tools/publicContract.ts` next to the
+   existing top-level fields. Zod schema, types, and the discriminant
+   that splits (1) from (2).
+2. Update every status-producing site in workflowContracts.ts and the
+   individual workflow contracts to emit the new shape:
+   - workflows that today emit `status: partial` purely for
+     `unsupported_claim_count > 0` reasons should emit
+     `status: success, internal_limitations: { … }`.
+   - workflows that today emit `status: partial` for genuine
+     user-facing remaining work should keep `status: partial` AND
+     populate `internal_limitations` when both are true.
+3. Bump the salt_workflow_v1 contract version per the SemVer policy
+   (this is an additive top-level field plus a status-meaning change,
+   so a MINOR bump is the floor). Update
+   `capabilityManifest.ts` `contract_lifecycle` accordingly.
+4. Update skill prose in `packages/skills/salt-ds/SKILL.md` and
+   `packages/skills/salt-ds/references/shared/transport.md` so the
+   agent treats `partial` only as user-facing remaining work and
+   reads `internal_limitations` as a separate signal.
+5. Add a regression test:
+   `packages/mcp/src/__tests__/statusPartialSplit.spec.ts` covering all
+   four combinations: (success, no limitations), (success, with
+   limitations), (partial, no limitations), (partial, with
+   limitations). Assert the field is present even when empty so hosts
+   can branch on its presence without runtime checks.
+6. Update `publicContractParity.spec.ts` to assert CLI and MCP emit
+   the same `internal_limitations` block. The 4 pre-existing failures
+   recorded in §8.2.2 are unrelated and must not be papered over —
+   verify they still reproduce after your change.
+7. Update `packages/mcp/docs/salt-workflow-v1-host-contract.md` with
+   the new field, the version bump note, and a migration paragraph
+   covering the renamed-semantics of `partial`.
+
+Tell me the exact `internal_limitations` Zod shape (mandatory? always
+present? defaults?) and the version-bump string BEFORE editing. Do not
+introduce other top-level fields. Do not touch the action vocabulary
+(that's task 2.4) or the ask_user payload (that's task 2.10).
+
+Run:
+yarn vitest run packages/mcp/src/__tests__/publicContractParity.spec.ts
+yarn vitest run packages/mcp/src/__tests__/createServer.spec.ts
+yarn vitest run packages/mcp/src/__tests__/agenticEvals.spec.ts
+yarn vitest run packages/cli/src/__tests__/cli.spec.ts
+yarn vitest run packages/skills/__tests__
+```
+
+**Verify yourself:** capture a `review_salt_ui` result that previously came back as `status: partial` purely for validator coverage gaps (the consumer trace turn 5 case) and confirm it now comes back as `status: success` with `internal_limitations.unsupported_claim_count > 0`. Also confirm the contract version bump appears in `salt://capabilities/manifest`.
 
 ### PR 10 — Task 0.7 (close the 0.6 coverage gap list)
 
@@ -827,6 +986,8 @@ Both items below were verified pre-existing by stashing the in-flight changes an
 - **Track as part of PR 8 or as a fast-follow** once PR 8 lands — do not re-open the policy-schema work, only the CI gate.
 
 End of handoff.
+
+
 
 
 
