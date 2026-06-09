@@ -11,8 +11,6 @@ import {
   VSCODE_COPILOT_BLOCK_END,
   VSCODE_COPILOT_BLOCK_START,
   VSCODE_COPILOT_INSTRUCTIONS_TEMPLATE,
-  VSCODE_SALT_UI_AGENT_MARKER,
-  VSCODE_SALT_UI_AGENT_TEMPLATE,
 } from "@salt-ds/semantic-core/bootstrapScaffolding";
 import { pathExists, writeJsonFile } from "../lib/common.js";
 import { collectSaltInfo } from "../lib/infoContext.js";
@@ -244,28 +242,6 @@ async function ensureCopilotInstructions(
   }
 
   await fs.writeFile(instructionsPath, `${nextContent.content}\n`, "utf8");
-  return "updated";
-}
-
-async function ensureSaltUiAgentFile(
-  rootDir: string,
-): Promise<"created" | "updated" | "unchanged" | "preserved_existing"> {
-  const agentPath = path.join(rootDir, ".github", "agents", "salt-ui.agent.md");
-  if (!(await pathExists(agentPath))) {
-    await fs.mkdir(path.dirname(agentPath), { recursive: true });
-    await fs.writeFile(agentPath, VSCODE_SALT_UI_AGENT_TEMPLATE, "utf8");
-    return "created";
-  }
-
-  const existingContent = await fs.readFile(agentPath, "utf8");
-  if (!existingContent.includes(VSCODE_SALT_UI_AGENT_MARKER)) {
-    return "preserved_existing";
-  }
-  if (existingContent === VSCODE_SALT_UI_AGENT_TEMPLATE) {
-    return "unchanged";
-  }
-
-  await fs.writeFile(agentPath, VSCODE_SALT_UI_AGENT_TEMPLATE, "utf8");
   return "updated";
 }
 
@@ -523,9 +499,6 @@ export async function runInitCommand(
     const copilotInstructionsAction = hostAdapters.has("vscode")
       ? await ensureCopilotInstructions(rootDir)
       : null;
-    const saltUiAgentAction = hostAdapters.has("vscode")
-      ? await ensureSaltUiAgentFile(rootDir)
-      : null;
     const verifyScript = addUiVerify
       ? await ensureUiVerifyScript(rootDir)
       : null;
@@ -613,23 +586,6 @@ export async function runInitCommand(
                 : [
                     "VS Code Copilot instructions already contained the Salt workflow block.",
                   ]),
-          ...(saltUiAgentAction === "created"
-            ? [
-                "Created .github/agents/salt-ui.agent.md as the VS Code Salt UI custom agent.",
-              ]
-            : saltUiAgentAction === "updated"
-              ? [
-                  "Updated .github/agents/salt-ui.agent.md with the current Salt UI custom agent instructions.",
-                ]
-              : saltUiAgentAction === "preserved_existing"
-                ? [
-                    "Left the existing .github/agents/salt-ui.agent.md unchanged because it is user-managed.",
-                  ]
-                : saltUiAgentAction === null
-                  ? []
-                  : [
-                      "VS Code Salt UI custom agent already existed with the current Salt workflow guidance.",
-                    ]),
           ...(verifyScript?.action === "created"
             ? [
                 `Added ui:verify to ${verifyScript.packageJsonPath} using \`${verifyScript.command}\`.`,

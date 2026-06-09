@@ -34,9 +34,6 @@ describe("deterministic agentic policy evals", () => {
     const consumerCopilotInstructions = await readRepoFile(
       "workflow-examples/consumer-repo/.github/copilot-instructions.md",
     );
-    const consumerSaltUiAgent = await readRepoFile(
-      "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
-    );
 
     expect(skill).toContain(
       "Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.",
@@ -91,9 +88,6 @@ describe("deterministic agentic policy evals", () => {
     expect(consumerCopilotInstructions).toContain(
       "If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked region.",
     );
-    expect(consumerSaltUiAgent).toContain(
-      "If compact create output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before implementing the blocked region.",
-    );
     expect(repoInstructions).not.toContain(
       "canonical selection step and the validation step have completed successfully",
     );
@@ -114,9 +108,6 @@ describe("deterministic agentic policy evals", () => {
     const consumerCopilotInstructions = await readRepoFile(
       "workflow-examples/consumer-repo/.github/copilot-instructions.md",
     );
-    const consumerSaltUiAgent = await readRepoFile(
-      "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
-    );
 
     expect(skill).toContain(
       "Read compact workflow output from stable top-level workflow signals first:",
@@ -136,9 +127,6 @@ describe("deterministic agentic policy evals", () => {
     expect(consumerCopilotInstructions).toContain(
       "When Salt returns compact workflow output, read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first.",
     );
-    expect(consumerSaltUiAgent).toContain(
-      "When Salt returns compact workflow output, read `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, and `summary` first.",
-    );
   });
 
   it("keeps v1 action semantics aligned across skill and host adapter guidance", async () => {
@@ -155,9 +143,6 @@ describe("deterministic agentic policy evals", () => {
     );
     const consumerCopilotInstructions = await readRepoFile(
       "workflow-examples/consumer-repo/.github/copilot-instructions.md",
-    );
-    const consumerSaltUiAgent = await readRepoFile(
-      "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
     );
 
     expect(skill).toContain("Treat `salt_workflow_v1.action.kind` as binding");
@@ -179,13 +164,7 @@ describe("deterministic agentic policy evals", () => {
     expect(consumerCopilotInstructions).toContain(
       "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask and stop until the user provides updated input, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages and then rerun the originating workflow, and only `implement` permits editing Salt UI.",
     );
-    expect(consumerSaltUiAgent).toContain(
-      "Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask and stop until the user provides updated input, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages and then rerun the originating workflow, and only `implement` permits editing Salt UI.",
-    );
     expect(consumerCopilotInstructions).toContain(
-      "For create entity follow-through, use MCP `resolved_entities` or CLI `--resolved-entity` on the rerun.",
-    );
-    expect(consumerSaltUiAgent).toContain(
       "For create entity follow-through, use MCP `resolved_entities` or CLI `--resolved-entity` on the rerun.",
     );
     expect(skill).not.toContain(
@@ -227,9 +206,6 @@ describe("deterministic agentic policy evals", () => {
     const consumerCopilotInstructions = await readRepoFile(
       "workflow-examples/consumer-repo/.github/copilot-instructions.md",
     );
-    const consumerSaltUiAgent = await readRepoFile(
-      "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
-    );
 
     const requiredConcepts = [
       /do not (?:guess|invent|hallucinate)[\s\S]+Salt APIs/i,
@@ -250,7 +226,6 @@ describe("deterministic agentic policy evals", () => {
       repoInstructions,
       consumerAgents,
       consumerCopilotInstructions,
-      consumerSaltUiAgent,
     ]) {
       expectAllConcepts(source, requiredConcepts);
     }
@@ -280,9 +255,6 @@ describe("deterministic agentic policy evals", () => {
     const consumerCopilotInstructions = await readRepoFile(
       "workflow-examples/consumer-repo/.github/copilot-instructions.md",
     );
-    const consumerSaltUiAgent = await readRepoFile(
-      "workflow-examples/consumer-repo/.github/agents/salt-ui.agent.md",
-    );
 
     const requiredThemeGuardrails = [
       /provider(?: and| or) theme bootstrap/i,
@@ -310,7 +282,6 @@ describe("deterministic agentic policy evals", () => {
       repoInstructions,
       consumerAgents,
       consumerCopilotInstructions,
-      consumerSaltUiAgent,
     ]) {
       expectAllConcepts(source, requiredThemeGuardrails);
       for (const bannedFact of bannedStaticThemeFacts) {
