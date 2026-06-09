@@ -58,9 +58,8 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
 
     // Focus the first item on ArrowDown open. floating-ui's `initialFocus` is
     // unreliable on React <18, so retry across frames instead.
-    const floatingEl = floatingRootContext.elements.floating as
-      | HTMLElement
-      | null;
+    const floatingEl = floatingRootContext.elements
+      .floating as HTMLElement | null;
     useEffect(() => {
       if (focusFirstItemOnOpen && floatingEl) {
         focusFirstItem(floatingEl);
