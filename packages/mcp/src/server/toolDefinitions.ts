@@ -1513,7 +1513,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "migrate_to_salt",
     description:
-      "Primary fit for the salt-ds migrate workflow. Use this when the input is non-Salt UI code, external UI, native/custom React UI, or a rough interface description that needs to be translated into Salt primitives, patterns, and migration steps. It returns canonical Salt migration guidance plus repo-policy artifacts from the resolved project context when declared policy exists. If context_id is omitted, the MCP collects repo context automatically before continuing.",
+      "Primary fit for the salt-ds migrate workflow. Use this to convert non-Salt UI code, external UI (Material UI, Chakra UI, Ant Design, in-house React), a mockup or screen outline, or a rough interface description that needs to be translated into Salt primitives, patterns, and migration steps. It returns canonical Salt migration guidance plus repo-policy artifacts from the resolved project context when declared policy exists. If context_id is omitted, the MCP collects repo context automatically before continuing.",
     inputSchema: {
       code: z
         .string()
@@ -1614,7 +1614,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "create_salt_ui",
     description:
-      "Primary Salt create workflow. Resolve the nearest canonical Salt owner and current workflow state from query, or compare exact names side by side with names. Use retrieval catalog resources for richer candidate inspection instead of forcing full-mode create to act like broad search.",
+      "Primary Salt create workflow for building new Salt UI: scaffold, generate, or implement a Salt component, form, page, dashboard, screen, or layout from a feature description. Resolve the nearest canonical Salt owner and current workflow state from query, or compare exact names side by side with names. Use retrieval catalog resources for richer candidate inspection instead of forcing full-mode create to act like broad search.",
     inputSchema: {
       query: z
         .string()
@@ -1725,7 +1725,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   defineTool<Parameters<typeof getSaltEntity>[1]>({
     name: "get_salt_entity",
     description:
-      "Use this as a support lookup when a create, migrate, or review workflow already knows the Salt entity it needs to ground. Resolve a specific or almost-specific component, pattern, foundation, token, guide, page, package, icon, or country symbol. Do not use this for broad discovery or recommendation/comparison.",
+      "Support tool to look up or resolve a specific or almost-specific Salt component, pattern, foundation, token, guide, page, package, icon, or country symbol and return its details, props, and metadata. Use this when a create, migrate, or review workflow already knows the Salt entity name it needs to ground. Do not use this for broad discovery or recommendation/comparison.",
     inputSchema: {
       entity_type: z
         .enum([
@@ -1813,7 +1813,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   defineTool<Parameters<typeof getSaltExamples>[1]>({
     name: "get_salt_examples",
     description:
-      "Use this as a grounding step after create or migrate when the agent already has a likely Salt target and needs stronger implementation evidence before writing code.",
+      "Support lookup that returns canonical Salt example code and sample snippets for a known component or pattern. Use this as a grounding step after create or migrate when the agent already has a likely Salt target and needs stronger implementation evidence or a canonical code example before writing code.",
     inputSchema: {
       target_type: z.enum(["component", "pattern"]).optional(),
       target_name: z.string().optional(),
