@@ -72,6 +72,7 @@ const withBaseName = makePrefixer("saltToolbarNextOverflow");
 export type ToolbarNextItemHostKind = "main" | "measurement" | "overflow";
 
 const toolbarNextStatefulFocusRootSelector = [
+  ".saltComboBox-focused",
   ".saltDateInput-focused",
   ".saltInput-focused",
 ].join(", ");
@@ -116,8 +117,10 @@ function notifyToolbarNextReparentedFocusLoss(mountNode: HTMLDivElement) {
       toolbarNextStatefulFocusRootSelector,
     ),
   )
-    .map((root) =>
-      root.querySelector<HTMLElement>(toolbarNextFocusableSelector),
+    .map(
+      (root) =>
+        root.querySelector<HTMLElement>("input") ??
+        root.querySelector<HTMLElement>(toolbarNextFocusableSelector),
     )
     .filter((target): target is HTMLElement => target != null);
 

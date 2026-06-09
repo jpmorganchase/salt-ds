@@ -396,10 +396,7 @@ MixedFormControls.globals = {
  *   into the generic overflow trigger when width is constrained.
  */
 export const MultiselectComboBoxPills: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext
-    aria-label="Toolbar with multiselect combo box"
-    style={{ minWidth: "20vw" }}
-  >
+  <ToolbarNext aria-label="Toolbar with multiselect combo box">
     <ToolbarContentNext position="start">
       <TooltrayNext overflowPriority={4}>
         <ComboBox
