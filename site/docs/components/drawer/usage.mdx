@@ -16,14 +16,12 @@ Always set a logical width suitable for the content inside the drawer. Refer to 
 
 ### When to use
 
-- To reveal additional functionality or information contextual to on-screen content which the user can close when not required.
-- To display additional relevant functionality or information, such as a form or sidebar navigation, in a specific area of the screen.
-- To allow the user to show and hide additional relevant content.
+- To complete quick, self-contained actions with minimal disruption—such as quick selections, lightweight submissions, or confirmations—then return to the prior context.
+- To present on-demand, contextual supporting content or controls (e.g., short forms, secondary actions, or relevant information) that can be dismissed when no longer needed.
 
 ### When not to use
 
-- To provide an inlaid drawer that opens in-line with content. Instead, use [`BorderLayout`](../layouts/border-layout).
-- To provide a docked drawer that's fixed in the application layout and always visible. Instead, use [`Panel`](../panel) with styles to expand and collapse a non-modal surface.
+- For ongoing parallel work that benefits from persistent visibility. If supporting information and controls should remain available while the main task continues (e.g., referencing details, inspecting data, filtering results, editing attributes), use [Side panel](/salt/components/side-panel) instead.
 
 ## Import
 
