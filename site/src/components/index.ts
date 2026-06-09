@@ -32,6 +32,7 @@ export * from "./country-symbol-preview";
 export * from "./css-display";
 export * from "./css-display";
 export * from "./diagrams";
+export * from "./disclosure";
 export * from "./footer";
 export * from "./getting-started";
 export * from "./guidance-callout";

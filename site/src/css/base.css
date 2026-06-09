@@ -3,6 +3,8 @@
 
   --site-app-header-height: calc(var(--salt-spacing-200) + var(--salt-size-base));
   --site-content-max-width: 100ch;
+
+  scroll-padding-top: calc(var(--site-app-header-height) + var(--salt-spacing-100));
 }
 
 *,
