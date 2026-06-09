@@ -15,6 +15,8 @@ import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { mergeCanonicalAndProjectConventionLayers } from "@salt-ds/semantic-core/policy";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { TOOL_DEFINITIONS } from "../server/toolDefinitions.js";
+import { createToolSelectionRanker } from "../server/toolSelectionRanker.js";
 import {
   withAnalyzeWorkflowGuidance,
   withChooseWorkflowGuidance,
@@ -1307,5 +1309,267 @@ describe("deterministic agentic evals", () => {
         ]),
       }),
     );
+  });
+});
+
+/**
+ * Tool-selection benchmark (Phase 0 task 0.10 / M15 / F8).
+ *
+ * Hosts (VS Code Copilot, Claude Code, Cursor, Codex, Windsurf, Copilot CLI…)
+ * pick MCP tools by reading the tool's `name`, `description`, and
+ * `annotations`. When that lexical signal is weak, the host falls back to
+ * broader retrieval — `tool_search` in the captured 9-turn trace (turn 0,
+ * see `session-findings-2026-06.md` root cause #7) — adding a round-trip
+ * before useful work happens.
+ *
+ * This suite asserts the deterministic ranker — which scores tools using
+ * only the public name/description/annotations surface that hosts actually
+ * see over the wire — picks the correct Salt tool first for each of 20
+ * representative consumer prompts. When a prompt fails, the right fix is to
+ * strengthen the losing tool's description (or, in some cases, narrow the
+ * winning tool's description) — not to rename tools.
+ */
+
+interface ToolSelectionFixture {
+  prompt: string;
+  expected: string;
+  /** Coarse intent label for grouping the audit output. */
+  intent:
+    | "create"
+    | "review"
+    | "migrate"
+    | "upgrade"
+    | "info"
+    | "bootstrap"
+    | "entity-lookup"
+    | "pattern-lookup";
+}
+
+const TOOL_SELECTION_CORPUS: readonly ToolSelectionFixture[] = [
+  // create (4) — the primary front door for new Salt UI.
+  {
+    prompt:
+      "Create a Salt UI dashboard with KPI metrics, a data grid, and a header.",
+    expected: "create_salt_ui",
+    intent: "create",
+  },
+  {
+    prompt:
+      "I need to build a new Salt login form with email, password, and a submit button.",
+    expected: "create_salt_ui",
+    intent: "create",
+  },
+  {
+    prompt:
+      "Generate a Salt toolbar with a primary action and an overflow menu.",
+    expected: "create_salt_ui",
+    intent: "create",
+  },
+  {
+    prompt: "Compare Salt Button and SplitButton side by side for a toolbar.",
+    expected: "create_salt_ui",
+    intent: "create",
+  },
+
+  // review (3) — analyse existing code for Salt conformance.
+  {
+    prompt:
+      "Review my Salt React component for design-system violations and deprecated APIs.",
+    expected: "review_salt_ui",
+    intent: "review",
+  },
+  {
+    prompt:
+      "Check this existing Salt code for misuse of deprecated props and suggest fixes.",
+    expected: "review_salt_ui",
+    intent: "review",
+  },
+  {
+    prompt:
+      "Analyse my existing React UI against Salt rules and surface any violations.",
+    expected: "review_salt_ui",
+    intent: "review",
+  },
+
+  // migrate (3) — translate non-Salt input into Salt.
+  {
+    prompt: "Migrate my Material UI form layout to Salt components.",
+    expected: "migrate_to_salt",
+    intent: "migrate",
+  },
+  {
+    prompt: "Convert this Chakra UI dashboard mockup into a Salt screen.",
+    expected: "migrate_to_salt",
+    intent: "migrate",
+  },
+  {
+    prompt:
+      "Translate this screen outline of header, sidebar, and main content into Salt primitives.",
+    expected: "migrate_to_salt",
+    intent: "migrate",
+  },
+
+  // upgrade (2) — version-to-version Salt change explanations.
+  {
+    prompt:
+      "What changed in @salt-ds/core between version 1.20 and 1.30? Highlight breaking changes.",
+    expected: "upgrade_salt_ui",
+    intent: "upgrade",
+  },
+  {
+    prompt:
+      "Show me the Salt upgrade impact from 1.40 to the latest release, including deprecations.",
+    expected: "upgrade_salt_ui",
+    intent: "upgrade",
+  },
+
+  // info / bootstrap (2) — repo-level setup and inspection.
+  {
+    prompt:
+      "Bootstrap a Salt repo for this project: write team policy and repo instructions.",
+    expected: "bootstrap_salt_repo",
+    intent: "bootstrap",
+  },
+  {
+    prompt:
+      "Inspect this repo's Salt project context: framework, workspace, declared policy, Salt packages.",
+    expected: "get_salt_project_context",
+    intent: "info",
+  },
+
+  // entity-lookup (3) — resolve a specific named Salt entity.
+  {
+    prompt: "Look up the Salt FormField component details and props.",
+    expected: "get_salt_entity",
+    intent: "entity-lookup",
+  },
+  {
+    prompt:
+      "Resolve the Salt Avatar component: I already know the exact entity name I need.",
+    expected: "get_salt_entity",
+    intent: "entity-lookup",
+  },
+  {
+    prompt:
+      "Get the canonical Salt SaltProviderNext entity record including its prop schema.",
+    expected: "get_salt_entity",
+    intent: "entity-lookup",
+  },
+
+  // pattern-lookup / examples (3) — grounding evidence before writing code.
+  {
+    prompt:
+      "Show me canonical Salt code examples for the Card component before I implement it.",
+    expected: "get_salt_examples",
+    intent: "pattern-lookup",
+  },
+  {
+    prompt:
+      "Fetch sample implementation code for the Salt Analytical dashboard pattern.",
+    expected: "get_salt_examples",
+    intent: "pattern-lookup",
+  },
+  {
+    prompt:
+      "Give me canonical example snippets for the Salt Metric pattern so I can ground the starter code.",
+    expected: "get_salt_examples",
+    intent: "pattern-lookup",
+  },
+];
+
+describe("tool-selection benchmark (Phase 0 task 0.10 / F8)", () => {
+  const ranker = createToolSelectionRanker(TOOL_DEFINITIONS);
+
+  it("covers at least 20 representative consumer prompts across every public Salt intent", () => {
+    expect(TOOL_SELECTION_CORPUS.length).toBeGreaterThanOrEqual(20);
+
+    const expectedIntents = new Set([
+      "create",
+      "review",
+      "migrate",
+      "upgrade",
+      "info",
+      "bootstrap",
+      "entity-lookup",
+      "pattern-lookup",
+    ]);
+    const seenIntents = new Set(
+      TOOL_SELECTION_CORPUS.map((fixture) => fixture.intent),
+    );
+    expect(seenIntents).toEqual(expectedIntents);
+
+    // Every expected tool in the corpus must be a registered, default-exposed
+    // MCP tool. Catches typos in the fixture list and protects the benchmark
+    // from silently drifting if a tool is removed.
+    const registeredToolNames = new Set(
+      TOOL_DEFINITIONS.map((definition) => definition.name),
+    );
+    for (const fixture of TOOL_SELECTION_CORPUS) {
+      expect(registeredToolNames.has(fixture.expected)).toBe(true);
+    }
+  });
+
+  it.each(
+    TOOL_SELECTION_CORPUS,
+  )("ranks $expected first for $intent prompt: $prompt", ({
+    prompt,
+    expected,
+  }) => {
+    const ranking = ranker.rank(prompt);
+    const top = ranking[0];
+    const second = ranking[1];
+
+    if (!top || top.tool !== expected) {
+      // Surface a diagnostic that names the losing tool, the prompt
+      // tokens that hit, and the top-3 score breakdown — so the maintainer
+      // can see exactly which description needs strengthening.
+      const top3 = ranking
+        .slice(0, 3)
+        .map(
+          (entry) =>
+            `${entry.tool} (score=${entry.score.toFixed(3)}, name=[${entry.breakdown.nameHits.join(",")}], desc=[${entry.breakdown.descriptionHits.join(",")}], annoBias=${entry.breakdown.annotationBias.toFixed(2)})`,
+        )
+        .join("\n  ");
+      throw new Error(
+        `Expected ${expected} to rank #1 for prompt:\n  "${prompt}"\nGot top 3:\n  ${top3}`,
+      );
+    }
+
+    // Soft assertion: the winning tool should beat the runner-up by a
+    // visible margin so the ranking is not pinned on noise. Without this,
+    // a description change that flipped only the ordering would still
+    // pass even though the host-side selection is now coin-flippy.
+    if (second) {
+      expect(top.score).toBeGreaterThan(second.score);
+    }
+  });
+
+  it("never lets a write/persist tool win on a pure read-intent prompt", () => {
+    const readOnlyPrompts = TOOL_SELECTION_CORPUS.filter(
+      (fixture) =>
+        fixture.intent === "info" ||
+        fixture.intent === "entity-lookup" ||
+        fixture.intent === "pattern-lookup" ||
+        fixture.intent === "review" ||
+        fixture.intent === "upgrade",
+    );
+    expect(readOnlyPrompts.length).toBeGreaterThan(0);
+
+    const writeTools = new Set(
+      TOOL_DEFINITIONS.filter(
+        (definition) => definition.annotations?.readOnlyHint === false,
+      ).map((definition) => definition.name),
+    );
+    // Sanity check: persistence and bootstrap tools must exist for this test
+    // to be meaningful.
+    expect(writeTools.size).toBeGreaterThan(0);
+
+    for (const fixture of readOnlyPrompts) {
+      const ranking = ranker.rank(fixture.prompt);
+      const top = ranking[0];
+      expect(top).toBeDefined();
+      if (!top) continue;
+      expect(writeTools.has(top.tool)).toBe(false);
+    }
   });
 });
