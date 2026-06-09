@@ -8,6 +8,7 @@ Use this as a printable cheat sheet when starting each PR. Each section is paste
 
 > **Revision history**
 >
+> - **2026-06-10 rev 6:** Full audit pass against the live working tree (no source-code changes; tracker-only). Marked PRs 4, 5, 6, 7, and 12 ✅ Done (their code, tests, and untracked artifacts are all on the branch — they had simply never been ticked off in §2). Marked PR 10 (task 0.7) and PR 18 (task 2.16) ⚠️ Partial with the specific subtasks that remain. PR 19 (Phase 1 mega-file splits) explicitly noted as not started — `workflow.ts` is 3,350 lines (slight growth) and `toolDefinitions.ts` is 2,222 lines (grew with 0.9 work). Roadmap task **0.5** (tidy `chat.json` + `component-category-map.json`) flagged in §8.3 as partly done. Confirmed the four pre-existing failures recorded in §8.2 still reproduce.
 > - **2026-06-09 rev 5:** PRs 13 (task 0.10) and 14 (task 0.8) marked ✅ Done with commit anchors. New §8 "Known follow-ups" added capturing (a) the 0.8 `composition.nested-interactive-primitives` heuristic-repair gap list surfaced by the new canonical-example round-trip spec, (b) pre-existing `publicContractParity.spec.ts` upgrade/migrate semantic mismatches discovered while verifying 0.10, and (c) the pre-existing `agenticEvals.spec.ts > falls back to component routing` reproducible failure. Companion roadmap change: `gold-standard-roadmap.md` row **0.8a** added (the explicit follow-up to 0.8, mirroring the 0.6 → 0.7 chain).
 > - **2026-06-09 rev 4:** Audit pass against the live repo. PR 1 (task 0.3) marked ✅ Done (Option B shipped). PR 2 (F11) reclassified ✅ Done (Option C landed, not the prompt's requested Option A — see `session-findings-2026-06.md` root cause #9 "Decision (2026-06)" for the ratification). PR 2 §3 prompt annotated as superseded. No code or scope change in this rev — just bringing the tracker in line with what's already on `mcp`.
 > - **2026-06-09 rev 3:** PR 3 (task 0.6) marked done. §2 table extended with PRs 10–18 covering the remaining Phase 0–2 work (0.7, 0.8, 0.9, 0.10, 0.11/2.11, 1.8, 2.10, 2.15, 2.16) and the §3 paste-ready prompts added in numerical order. Status column added to §2 so future PRs can be marked done in-place. Header status line reframed: this doc is a working tracker for PR sequencing; `gold-standard-roadmap.md` remains the source of truth for scope. §5 budget extended with the PRs 10–18 tranche. Phase 1 mega-file splits moved to row 19 to preserve numerical ordering.
@@ -85,22 +86,22 @@ Recommended order. Estimates are wall-clock for a focused session including the 
 | 1 | **0.3** tool-surface reconciliation | Sonnet 4.5 | Agent | 30 min | Low | ✅ Done (Option B) |
 | 2 | **F11** drop `@SaltUI` agent | Sonnet 4.5 | Agent | 45 min | Low | ✅ Done (Option C: host-conditional opt-in; default no-write) |
 | 3 | **0.6** registry coverage CI assertion | Opus 4.7 (medium reasoning) | Agent | 1.5 hr | Medium | ✅ Done |
-| 4 | **0.4** `doctor --check-install` | Sonnet 4.5 thinking | Agent | 1 hr | Low | |
-| 5 | **0.1** Playwright split | **Opus 4.7 High 1M** | Agent | 3–4 hr | High | |
-| 6 | **0.2** lazy registry loader | Opus 4.7 (medium) | Agent | 2 hr | Medium | |
-| 7 | **2.12 + 2.17 + 2.18** `--hook` flags (E1, E6, E7) | Opus 4.7 (medium) | Agent | 3 hr | Medium | |
+| 4 | **0.4** `doctor --check-install` | Sonnet 4.5 thinking | Agent | 1 hr | Low | ✅ Done (`packages/cli/src/commands/doctor.ts` + cli.spec.ts coverage; all `--check-install` paths pass) |
+| 5 | **0.1** Playwright split | **Opus 4.7 High 1M** | Agent | 3–4 hr | High | ✅ Done (new `packages/runtime-inspector-browser/` workspace; `inspectShared.ts` + `inspectLazyLoader.spec.ts` added; `runtime-inspector-core/package.json` peer-deps updated; `scripts/build.mjs` skip-optional-peer logic added; `packagePublishBoundary.spec.ts` updated to assert playwright is **not** bundled) |
+| 6 | **0.2** lazy registry loader | Opus 4.7 (medium) | Agent | 2 hr | Medium | ✅ Done (`packages/semantic-core/src/registry/lazyRegistry.ts` + `artifactCache.ts`; `LoadRegistryOptions.prefetch` field; `infoBytesBudget.spec.ts` measures `salt-ds info` at **1.2 KB** of registry artifacts vs. the <2 MB target) |
+| 7 | **2.12 + 2.17 + 2.18** `--hook` flags (E1, E6, E7) | Opus 4.7 (medium) | Agent | 3 hr | Medium | ✅ Done (`packages/cli/src/lib/hookIO.ts` internal helper; `--hook` flag on `review` and `info`; `init --add-agent-hooks` writes `.github/hooks/salt.json`; `hookIO.spec.ts` 18/18 + cli.spec.ts hook scenarios pass) |
 | 8 | **2.13** CI required check (E2) | Sonnet 4.5 | Agent | 1.5 hr | Low | |
 | 9 | **2.9** split `status: partial` | Opus 4.7 High | Agent | 2 hr | Medium | |
-| 10 | **0.7** close the 0.6 coverage gap list (upstream fixes) | Opus 4.7 (medium) | Agent | 3 hr | Medium | |
+| 10 | **0.7** close the 0.6 coverage gap list (upstream fixes) | Opus 4.7 (medium) | Agent | 3 hr | Medium | ⚠️ Partial — (a) **landed**: `SaltProviderNext` props are in the registry, brand-prop defaults extracted, JPM Brand example present in `examples.json`. (b) **not landed**: `composition_contract` field still missing on 28 pattern records (0.6 spec fails). (c) **not landed**: 24 foundation entities still have no canonical example, no `site/foundation-category-map.json`. Also: the `SaltProviderNext` first-class-entity check in `registryCoverage.spec.ts` still raises 2 gaps because the spec searches for the exact name and the extracted entity record name doesn't match — bisect before assuming this is registry vs. spec. |
 | 11 | **0.11 + 2.11** plain-text file-path fallback | Sonnet 4.5 | Agent | 45 min | Low | |
-| 12 | **0.9** auto-invalidate context on `install_dependencies` | Sonnet 4.5 thinking | Agent | 1 hr | Low | |
+| 12 | **0.9** auto-invalidate context on `install_dependencies` | Sonnet 4.5 thinking | Agent | 1 hr | Low | ✅ Done (`packages/mcp/src/__tests__/installDependenciesContextInvalidation.spec.ts` 2/2 pass; `staleProjectContextIds` set added to `ToolExecutionRuntime` in `toolDefinitions.ts`; `packages/skills/salt-ds/agents/openai.yaml` action-loop guidance updated to drop the manual `get_salt_project_context` rerun instruction) |
 | 13 | **0.10** tool-selection benchmark | Sonnet 4.5 | Agent | 1.5 hr | Low | ✅ Done (commit `3b1118187`; ranker + 20-prompt corpus + 4 description swaps; see §8.2 for pre-existing failures unmasked while verifying) |
 | 14 | **0.8** canonical-example round-trip test (depends on PR 10) | Opus 4.7 (medium) | Agent | 1.5 hr | Medium | ✅ Done as a failing spec (commit `73913767a`); follow-up heuristic-repair work is **roadmap row 0.8a** — see §8.1 for the 9-story gap list |
 | 15 | **1.8** `get_salt_entities` batch lookup (M13 / F6) | Opus 4.7 (medium) | Agent | 2 hr | Medium | |
 | 16 | **2.10** theme-aware `create_salt_ui` (depends on PR 10) | Opus 4.7 (medium) | Agent | 2 hr | Medium | |
 | 17 | **2.15** agent provenance attestations (E4, depends on PR 7) | Opus 4.7 (medium) | Agent | 3 hr | Medium | |
-| 18 | **2.16** policy-driven escalation (E5, depends on PR 7) | Sonnet 4.5 | Agent | 1.5 hr | Low | |
-| 19 | **Phase 1** mega-file splits (one per task: 1.1, 1.2, 1.3) | **Opus 4.7 High 1M** | Agent | 4–6 hr each | High | |
+| 18 | **2.16** policy-driven escalation (E5, depends on PR 7) | Sonnet 4.5 | Agent | 1.5 hr | Low | ⚠️ Partial — PreToolUse `require_human_review_for` branch landed in `salt-ds review --hook` (rule schema in `packages/cli/src/commands/workflow.ts`; help text in `packages/cli/src/lib/args.ts`; cli.spec.ts test at line 6457 passes). **Not landed**: the CI-side label gate, because it needs PR 8's `salt-ds review --since` which is still open. Also no example added to `workflow-examples/consumer-repo/.salt/team.json` yet. |
+| 19 | **Phase 1** mega-file splits (one per task: 1.1, 1.2, 1.3) | **Opus 4.7 High 1M** | Agent | 4–6 hr each | High | Not started — `workflow.ts` is 3,350 lines (slight growth on the 3,337 baseline), `toolDefinitions.ts` is 2,222 lines (grew with 0.9 work). Both files now urgently need splitting before any further Phase 2 work lands. |
 
 Sonnet for mechanical / well-bounded work. Opus High 1M only when cross-file architectural reasoning is the bottleneck — never just because "the task feels important." Dependency order matters: PR 10 unblocks PRs 14 and 16; PR 7 unblocks PRs 17 and 18.
 
@@ -812,7 +813,23 @@ Both items below were verified pre-existing by stashing the in-flight changes an
 - **Owner code:** likely the workflow-output envelope on one of the two surfaces; not yet bisected.
 - **Note:** these did not block any of PRs 11 / 12 / 13 / 14 landing, but the CLI/MCP parity contract is one of the explicit invariants the spec exists to protect, so this should not stay broken indefinitely.
 
+### 8.3 Roadmap task 0.5 (tidy working-tree noise) — partly done
+
+- **Source of truth:** `gold-standard-roadmap.md` row 0.5 (Phase 0).
+- **Status:** `chat.json` is no longer tracked in the working tree (likely already deleted). `site/component-category-map.json` is still in the modified-but-uncommitted set on this branch.
+- **Action:** include the category-map change in whatever PR is shipping the matching docs/extraction work it belongs to, or back it out if it was incidental.
+
+### 8.4 PR 18 (task 2.16) is half-done and waiting on PR 8 (task 2.13)
+
+- **Status:** PreToolUse `require_human_review_for` matching is implemented behind `salt-ds review --hook` (rule schema in `packages/cli/src/commands/workflow.ts` ~line 3423; help text in `packages/cli/src/lib/args.ts`; a passing cli.spec.ts case at line 6457).
+- **Blocked-on:** the CI-side label gate (`salt-ds review --since <ref>` + `salt-human-reviewed` label) needs the `--since` CLI plumbing that PR 8 introduces. Until PR 8 lands, the policy can only be enforced via the agent hook, not via the PR check.
+- **Cleanup also pending:** add a non-trivial `require_human_review_for` example to `workflow-examples/consumer-repo/.salt/team.json` per the original PR 18 brief (step 5).
+- **Track as part of PR 8 or as a fast-follow** once PR 8 lands — do not re-open the policy-schema work, only the CI gate.
+
 End of handoff.
+
+
+
 
 
 
