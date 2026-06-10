@@ -10,9 +10,10 @@ alongside it — to the left when placed before `MegaMenuBody`, to the right whe
 placed after. Position is derived from component type and source order alone —
 there are no placement props.
 
-- **`MegaMenuBody`** — the center navigation area. It arranges `MegaMenuGroup`
-  columns in a grid and renders an optional `MegaMenuSupportingActions` band
-  beneath them. Column width is set with the `--saltMegaMenuBody-columnWidth`
+- **`MegaMenuBody`** — the center navigation area. It stacks a `MegaMenuGroups`
+  and an optional `MegaMenuSupportingActions` band beneath it.
+- **`MegaMenuGroups`** — arranges the `MegaMenuGroup` columns in a grid that hugs
+  its content. Column width is set with the `--saltMegaMenuGroups-columnWidth`
   custom property (default `12rem`).
 - **`MegaMenuGroup`** — one category column, composed of a `MegaMenuGroupHeading`
   and a `MegaMenuItemList`.
@@ -24,10 +25,10 @@ there are no placement props.
   `<button>` otherwise; it closes the menu on activation.
 - **`MegaMenuSupportingContent`** — side content beside `MegaMenuBody`, placed to
   the left or right by source order.
-- **`MegaMenuSupportingActions`** — a full-width row of supporting actions,
-  inside `MegaMenuBody` beneath the groups.
+- **`MegaMenuSupportingActions`** — a row of supporting actions inside
+  `MegaMenuBody`, beneath the groups and spanning their width.
 
-Responsive behaviour is left to consumers. `MegaMenuBody` lays its columns out
+Responsive behaviour is left to consumers. `MegaMenuGroups` lays its columns out
 with grid `auto-fit` and `minmax(0, …)`, so they shrink and wrap to the
 available width rather than overflowing; there is no built-in viewport
 breakpoint. To stack the panel on small screens, set `flex-direction: column` on
@@ -45,14 +46,16 @@ to a linear walk when the columns are stacked.
 ```tsx
 <MegaMenuPanel aria-label="Solutions menu">
   <MegaMenuBody>
-    <MegaMenuGroup>
-      <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-      <MegaMenuItemList>
-        <MegaMenuItem render={<Link to="/digital-banking" />}>
-          Digital banking
-        </MegaMenuItem>
-      </MegaMenuItemList>
-    </MegaMenuGroup>
+    <MegaMenuGroups>
+      <MegaMenuGroup>
+        <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+        <MegaMenuItemList>
+          <MegaMenuItem render={<Link to="/digital-banking" />}>
+            Digital banking
+          </MegaMenuItem>
+        </MegaMenuItemList>
+      </MegaMenuGroup>
+    </MegaMenuGroups>
     <MegaMenuSupportingActions>
       <Link href="#demo">Book a demo</Link>
     </MegaMenuSupportingActions>
