@@ -5,6 +5,7 @@ import {
   MegaMenuBody,
   MegaMenuGroup,
   MegaMenuGroupHeading,
+  MegaMenuGroups,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
@@ -43,6 +44,7 @@ export const WithLink = (): ReactElement => {
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Solutions menu">
                 <MegaMenuBody>
+                  <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>
                       Financial services
@@ -228,6 +230,7 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
+                  </MegaMenuGroups>
                   <MegaMenuSupportingActions>
                     <FlexLayout wrap gap={3}>
                       <Link
@@ -264,6 +267,7 @@ export const WithLink = (): ReactElement => {
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Services menu">
                 <MegaMenuBody>
+                  <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                     <MegaMenuItemList>
@@ -426,6 +430,7 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
+                  </MegaMenuGroups>
                   <MegaMenuSupportingActions>
                     <Link
                       color="primary"
@@ -452,6 +457,7 @@ export const WithLink = (): ReactElement => {
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Resources menu">
                 <MegaMenuBody>
+                  <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
                     <MegaMenuItemList>
@@ -527,6 +533,7 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
+                  </MegaMenuGroups>
                   <MegaMenuSupportingActions>
                     <Link
                       color="primary"

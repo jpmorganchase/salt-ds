@@ -3,8 +3,8 @@ nav > ol {
   padding: 0;
 }
 
-.saltMegaMenuBody {
-  --saltMegaMenuBody-columnWidth: 16rem;
+.saltMegaMenuGroups {
+  --saltMegaMenuGroups-columnWidth: 16rem;
 }
 
 .trigger-position-grid {
@@ -43,8 +43,9 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.full-width-panel .saltMegaMenuBody {
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 16rem)));
+.full-width-panel .saltMegaMenuGroups {
+  --saltMegaMenuGroups-columnWidth: 16rem;
+  align-self: stretch;
 }
 
 .edge-to-edge-wrapper {
@@ -59,11 +60,14 @@ nav > ol {
 }
 
 .max-width-content-panel .saltMegaMenuBody {
+  max-inline-size: 100%;
+}
+
+.max-width-content-panel .saltMegaMenuGroups {
   max-inline-size: 920px;
   inline-size: 100%;
   margin-inline: auto;
-  --saltMegaMenuBody-columnWidth: 212px;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 16rem)));
+  --saltMegaMenuGroups-columnWidth: 212px;
 }
 
 .custom-region-no-container-padding {
@@ -114,7 +118,7 @@ nav > ol {
     padding-inline: var(--salt-spacing-300);
   }
 
-  .custom-region-side .saltMegaMenuBody {
+  .custom-region-side .saltMegaMenuGroups {
     grid-template-columns: 1fr;
   }
 
@@ -145,10 +149,15 @@ nav > ol {
 }
 
 .small-viewport-container .saltMegaMenuBody {
-  grid-template-columns: 1fr;
   max-inline-size: 100%;
   width: 100%;
   box-sizing: border-box;
+}
+
+.small-viewport-container .saltMegaMenuGroups {
+  grid-template-columns: 1fr;
+  max-inline-size: 100%;
+  width: 100%;
 }
 
 .saltMegaMenuPanel {

@@ -4,6 +4,7 @@ import {
   MegaMenuBody,
   MegaMenuGroup,
   MegaMenuGroupHeading,
+  MegaMenuGroups,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
@@ -50,6 +51,7 @@ export const FullWidth = (): ReactElement => {
                   className={styles.fullWidthPanel}
                 >
                   <MegaMenuBody>
+                    <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Financial services
@@ -241,6 +243,7 @@ export const FullWidth = (): ReactElement => {
                         </MegaMenuItem>
                       </MegaMenuItemList>
                     </MegaMenuGroup>
+                    </MegaMenuGroups>
                   </MegaMenuBody>
                 </MegaMenuPanel>
               </MegaMenu>
@@ -260,6 +263,7 @@ export const FullWidth = (): ReactElement => {
                   className={styles.fullWidthPanel}
                 >
                   <MegaMenuBody>
+                    <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                       <MegaMenuItemList>
@@ -328,6 +332,7 @@ export const FullWidth = (): ReactElement => {
                         </MegaMenuItem>
                       </MegaMenuItemList>
                     </MegaMenuGroup>
+                    </MegaMenuGroups>
                   </MegaMenuBody>
                 </MegaMenuPanel>
               </MegaMenu>
@@ -347,6 +352,7 @@ export const FullWidth = (): ReactElement => {
                   className={styles.fullWidthPanel}
                 >
                   <MegaMenuBody>
+                    <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
                       <MegaMenuItemList>
@@ -400,6 +406,7 @@ export const FullWidth = (): ReactElement => {
                         </MegaMenuItem>
                       </MegaMenuItemList>
                     </MegaMenuGroup>
+                    </MegaMenuGroups>
                   </MegaMenuBody>
                 </MegaMenuPanel>
               </MegaMenu>

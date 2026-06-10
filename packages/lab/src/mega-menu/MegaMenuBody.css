@@ -1,9 +1,13 @@
 .saltMegaMenuBody {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 12rem)));
+  display: flex;
+  flex-direction: column;
   gap: var(--salt-spacing-300);
   padding: var(--salt-spacing-300);
   min-width: 0;
   flex: 0 1 auto;
-  max-inline-size: var(--saltMegaMenuPanel-availableWidth, calc(100vw - var(--salt-spacing-600)));
+  max-inline-size: var(
+    --saltMegaMenuPanel-availableWidth,
+    calc(100vw - var(--salt-spacing-600))
+  );
+  box-sizing: border-box;
 }

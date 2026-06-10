@@ -35,6 +35,7 @@ import {
   MegaMenuBody,
   MegaMenuGroup,
   MegaMenuGroupHeading,
+  MegaMenuGroups,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
@@ -72,6 +73,7 @@ export const WithIcons = (): ReactElement => {
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Solutions menu">
                 <MegaMenuBody>
+                  <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>
                       Financial services
@@ -269,6 +271,7 @@ export const WithIcons = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
+                  </MegaMenuGroups>
                 </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
@@ -285,6 +288,7 @@ export const WithIcons = (): ReactElement => {
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Services menu">
                 <MegaMenuBody>
+                  <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                     <MegaMenuItemList>
@@ -465,6 +469,7 @@ export const WithIcons = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
+                  </MegaMenuGroups>
                 </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>
@@ -481,6 +486,7 @@ export const WithIcons = (): ReactElement => {
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Resources menu">
                 <MegaMenuBody>
+                  <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
                     <MegaMenuItemList>
@@ -563,6 +569,7 @@ export const WithIcons = (): ReactElement => {
                       </MegaMenuItem>
                     </MegaMenuItemList>
                   </MegaMenuGroup>
+                  </MegaMenuGroups>
                 </MegaMenuBody>
               </MegaMenuPanel>
             </MegaMenu>

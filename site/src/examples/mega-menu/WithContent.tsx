@@ -5,6 +5,7 @@ import {
   MegaMenuBody,
   MegaMenuGroup,
   MegaMenuGroupHeading,
+  MegaMenuGroups,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
@@ -71,7 +72,8 @@ const supportingLinks = (
 );
 
 const main = (
-  <MegaMenuBody className={styles.customRegionSideSection}>
+  <MegaMenuBody>
+    <MegaMenuGroups className={styles.customRegionSideSection}>
     <MegaMenuGroup>
       <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
       <MegaMenuItemList>
@@ -162,6 +164,7 @@ const main = (
         </MegaMenuItem>
       </MegaMenuItemList>
     </MegaMenuGroup>
+    </MegaMenuGroups>
     <MegaMenuSupportingActions>{supportingLinks}</MegaMenuSupportingActions>
   </MegaMenuBody>
 );

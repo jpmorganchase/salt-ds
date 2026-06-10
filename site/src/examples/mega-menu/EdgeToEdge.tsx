@@ -4,6 +4,7 @@ import {
   MegaMenuBody,
   MegaMenuGroup,
   MegaMenuGroupHeading,
+  MegaMenuGroups,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
@@ -50,6 +51,7 @@ export const EdgeToEdge = (): ReactElement => {
                   className={styles.edgeToEdgePanel}
                 >
                   <MegaMenuBody>
+                    <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Financial services
@@ -290,6 +292,7 @@ export const EdgeToEdge = (): ReactElement => {
                         </MegaMenuItem>
                       </MegaMenuItemList>
                     </MegaMenuGroup>
+                    </MegaMenuGroups>
                   </MegaMenuBody>
                 </MegaMenuPanel>
               </MegaMenu>
@@ -309,6 +312,7 @@ export const EdgeToEdge = (): ReactElement => {
                   className={styles.edgeToEdgePanel}
                 >
                   <MegaMenuBody>
+                    <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                       <MegaMenuItemList>
@@ -377,6 +381,7 @@ export const EdgeToEdge = (): ReactElement => {
                         </MegaMenuItem>
                       </MegaMenuItemList>
                     </MegaMenuGroup>
+                    </MegaMenuGroups>
                   </MegaMenuBody>
                 </MegaMenuPanel>
               </MegaMenu>
@@ -396,6 +401,7 @@ export const EdgeToEdge = (): ReactElement => {
                   className={styles.edgeToEdgePanel}
                 >
                   <MegaMenuBody>
+                    <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
                       <MegaMenuItemList>
@@ -449,6 +455,7 @@ export const EdgeToEdge = (): ReactElement => {
                         </MegaMenuItem>
                       </MegaMenuItemList>
                     </MegaMenuGroup>
+                    </MegaMenuGroups>
                   </MegaMenuBody>
                 </MegaMenuPanel>
               </MegaMenu>

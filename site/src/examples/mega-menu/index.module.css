@@ -13,8 +13,9 @@
   box-sizing: border-box;
 }
 
-.fullWidthPanel :global(.saltMegaMenuBody) {
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 16rem)));
+.fullWidthPanel :global(.saltMegaMenuGroups) {
+  --saltMegaMenuGroups-columnWidth: 16rem;
+  align-self: stretch;
 }
 
 .edgeToEdgeWrapper {
@@ -34,11 +35,14 @@
 }
 
 .edgeToEdgePanel :global(.saltMegaMenuBody) {
-  --saltMegaMenuBody-columnWidth: 212px;
+  max-inline-size: 100%;
+}
+
+.edgeToEdgePanel :global(.saltMegaMenuGroups) {
+  --saltMegaMenuGroups-columnWidth: 212px;
   max-inline-size: 920px;
   inline-size: 100%;
   margin-inline: auto;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 16rem)));
 }
 
 .menuItemAdornment {
@@ -63,10 +67,15 @@
 }
 
 .smallViewportContainer :global(.saltMegaMenuBody) {
-  grid-template-columns: 1fr;
   max-inline-size: 100%;
   width: 100%;
   box-sizing: border-box;
+}
+
+.smallViewportContainer :global(.saltMegaMenuGroups) {
+  grid-template-columns: 1fr;
+  max-inline-size: 100%;
+  width: 100%;
 }
 
 .customRegionNoContainerPadding {
@@ -121,7 +130,6 @@
   }
 
   .customRegionSideSection {
-    grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 12rem)));
-    grid-template-rows: 1fr auto;
+    grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 12rem)));
   }
 }

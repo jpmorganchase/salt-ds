@@ -2,6 +2,7 @@ export * from "./MegaMenu";
 export * from "./MegaMenuBody";
 export * from "./MegaMenuGroup";
 export * from "./MegaMenuGroupHeading";
+export * from "./MegaMenuGroups";
 export * from "./MegaMenuItem";
 export * from "./MegaMenuItemList";
 export * from "./MegaMenuPanel";

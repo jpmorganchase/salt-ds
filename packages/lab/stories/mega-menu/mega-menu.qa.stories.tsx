@@ -4,6 +4,7 @@ import {
   MegaMenuBody,
   MegaMenuGroup,
   MegaMenuGroupHeading,
+  MegaMenuGroups,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
@@ -33,12 +34,14 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuBody>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
-                    <MegaMenuItem href="#">Item</MegaMenuItem>
-                  </MegaMenuItemList>
-                </MegaMenuGroup>
+                <MegaMenuGroups>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem href="#">Item</MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuGroups>
               </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
@@ -50,12 +53,14 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Services menu">
               <MegaMenuBody>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
-                    <MegaMenuItem href="#">Item</MegaMenuItem>
-                  </MegaMenuItemList>
-                </MegaMenuGroup>
+                <MegaMenuGroups>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem href="#">Item</MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuGroups>
               </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
@@ -67,12 +72,14 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Resources menu">
               <MegaMenuBody>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
-                    <MegaMenuItem href="#">Item</MegaMenuItem>
-                  </MegaMenuItemList>
-                </MegaMenuGroup>
+                <MegaMenuGroups>
+                  <MegaMenuGroup>
+                    <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
+                    <MegaMenuItemList>
+                      <MegaMenuItem href="#">Item</MegaMenuItem>
+                    </MegaMenuItemList>
+                  </MegaMenuGroup>
+                </MegaMenuGroups>
               </MegaMenuBody>
             </MegaMenuPanel>
           </MegaMenu>
