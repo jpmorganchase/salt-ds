@@ -4,6 +4,7 @@ import {
   MegaMenuBody,
   MegaMenuGroup,
   MegaMenuGroupHeading,
+  MegaMenuGroups,
   MegaMenuItem,
   MegaMenuItemList,
   MegaMenuPanel,
@@ -22,40 +23,44 @@ const KeyboardMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel>
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    href="/risk-management"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Risk Management
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/patient-management"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Patient Management
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    href="/telemedicine"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Telemedicine
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      href="/risk-management"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Risk Management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/patient-management"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Patient Management
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      href="/telemedicine"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Telemedicine
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
@@ -68,23 +73,25 @@ const KeyboardMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel>
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/strategy"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Strategy
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    href="/operations"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Operations
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/strategy"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Strategy
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      href="/operations"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Operations
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
@@ -108,23 +115,27 @@ const SideRegionMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    href="/risk-management"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Risk Management
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      href="/risk-management"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Risk Management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
             <MegaMenuSupportingContent>
               <a href="/see-all">See all solutions</a>
@@ -154,23 +165,27 @@ const LeadingRegionMegaMenu = () => (
               <a href="/featured">Featured</a>
             </MegaMenuSupportingContent>
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    href="/risk-management"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Risk Management
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      href="/risk-management"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Risk Management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
@@ -192,23 +207,27 @@ const BottomBandMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    href="/risk-management"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Risk Management
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      href="/risk-management"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Risk Management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
               <MegaMenuSupportingActions>
                 <a href="/book-a-demo">Book a demo</a>
                 <button type="button">Support center</button>
@@ -233,17 +252,21 @@ const BottomBandWithNextMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
               <MegaMenuSupportingActions>
                 <a href="/book-a-demo">Book a demo</a>
                 <button type="button">Support center</button>
@@ -259,17 +282,19 @@ const BottomBandWithNextMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Services menu">
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/strategy"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Strategy
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/strategy"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Strategy
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
@@ -290,17 +315,21 @@ const RoleAwareMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
             <MegaMenuSupportingContent>
               <input aria-label="Search" defaultValue="hello" />
@@ -324,17 +353,21 @@ const RoleAwareTabMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
             <MegaMenuSupportingContent>
               <input aria-label="Search" defaultValue="hello" />
@@ -359,23 +392,27 @@ const StaticContentMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    href="/risk-management"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Risk Management
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      href="/risk-management"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Risk Management
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
               <MegaMenuSupportingActions>
                 <span>Footer note, nothing focusable.</span>
               </MegaMenuSupportingActions>
@@ -405,21 +442,25 @@ const ActionItemMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel>
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  {/* No href and no render — renders as a focusable button. */}
-                  <MegaMenuItem onClick={(e) => e.preventDefault()}>
-                    Telemedicine
-                  </MegaMenuItem>
-                  <MegaMenuItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    {/* No href and no render — renders as a focusable button. */}
+                    <MegaMenuItem onClick={(e) => e.preventDefault()}>
+                      Telemedicine
+                    </MegaMenuItem>
+                    <MegaMenuItem
+                      href="/digital-banking"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
@@ -442,21 +483,25 @@ const RenderPropMegaMenu = () => (
           </MegaMenuTrigger>
           <MegaMenuPanel>
             <MegaMenuBody>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
-                  <MegaMenuItem
-                    render={
-                      <a href="/digital-banking" data-custom-link="">
-                        Digital Banking
-                      </a>
-                    }
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuItem>
-                </MegaMenuItemList>
-              </MegaMenuGroup>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuItemList>
+                    <MegaMenuItem
+                      render={
+                        <a href="/digital-banking" data-custom-link="">
+                          Digital Banking
+                        </a>
+                      }
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Digital Banking
+                    </MegaMenuItem>
+                  </MegaMenuItemList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
             </MegaMenuBody>
           </MegaMenuPanel>
         </MegaMenu>
