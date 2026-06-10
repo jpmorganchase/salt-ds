@@ -1,5 +1,21 @@
 # @salt-ds/embla-carousel
 
+## 1.1.4
+
+### Patch Changes
+
+- 588b358: Fixed several issues with `Carousel` when used in multi-slide mode:
+
+  - The carousel no longer snaps back to the first slide when the number of slides is not evenly divisible by `slidesToScroll` (e.g. 5 slides with `slidesToScroll: 2`).
+  - Arrow key navigation now moves focus one slide at a time, only scrolling the track when the next slide is in a different snap group.
+  - `Tab` and `Shift+Tab` now move focus only between currently visible slides, preventing unintended scrolling when focusing the last slide group.
+
+- Updated dependencies [9729a10]
+- Updated dependencies [52daa64]
+- Updated dependencies [ed2779c]
+- Updated dependencies [07e4d5d]
+  - @salt-ds/core@1.64.0
+
 ## 1.1.3
 
 ### Patch Changes

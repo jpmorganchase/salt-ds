@@ -1,5 +1,34 @@
 # @salt-ds/date-components
 
+## 1.0.0
+
+### Major Changes
+
+- 8687aa7: `@salt-ds/date-components` is now stable.
+
+  **Breaking change:** the React `Context` objects backing the date components are no longer part of the public API of `@salt-ds/date-components`. The following symbols have been removed from the package entry point:
+
+  - `LocalizationProviderContext` (the context value; the type alias of the same name remains exported)
+  - `SingleDateSelectionContext`
+  - `DateRangeSelectionContext`
+
+  Consumers should read context state through the provided hooks and configure providers through the exported `Provider` components instead:
+
+  - Use `useLocalization()` with `<LocalizationProvider>` in place of `LocalizationProviderContext`.
+  - Use `useDatePickerContext({ selectionVariant })` with `<DatePicker>` in place of `SingleDateSelectionContext` / `DateRangeSelectionContext`.
+
+  The value types (`LocalizationProviderValue`, `SingleDatePickerState`, `RangeDatePickerState`, `DatePickerState`) remain exported for typing.
+
+### Patch Changes
+
+- Updated dependencies [9729a10]
+- Updated dependencies [52daa64]
+- Updated dependencies [ed2779c]
+- Updated dependencies [07e4d5d]
+- Updated dependencies [8687aa7]
+  - @salt-ds/core@1.64.0
+  - @salt-ds/date-adapters@1.0.0
+
 ## 0.1.0
 
 ### Minor Changes

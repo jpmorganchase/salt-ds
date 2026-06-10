@@ -1,5 +1,16 @@
 # @salt-ds/highcharts-theme
 
+## 1.0.1
+
+### Patch Changes
+
+- ed7fc43: Fixed `useChart` so charts rendered before web fonts finish loading re-measure their text once the fonts are ready. Highcharts caches text bounding boxes without accounting for font family, so labels measured against a fallback font (e.g. pie and donut data labels and their connectors) previously stayed mispositioned until the chart was remounted. Charts now re-layout once `document.fonts.ready` resolves, making first-load rendering consistent with subsequent renders.
+- Updated dependencies [9729a10]
+- Updated dependencies [52daa64]
+- Updated dependencies [ed2779c]
+- Updated dependencies [07e4d5d]
+  - @salt-ds/core@1.64.0
+
 ## 1.0.0
 
 ### Major Changes
