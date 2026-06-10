@@ -34,6 +34,13 @@ data:
 ## Keyboard interactions
 
 <KeyboardControls>
+<KeyboardControl keyOrCombos="Enter / Spacebar / Down arrow">
+
+- When the trigger has focus, pressing Enter, Spacebar, or the Down arrow opens the mega menu.
+- The Down arrow additionally moves focus to the first mega menu item.
+
+</KeyboardControl>
+
 <KeyboardControl keyOrCombos="Tab">
 
 - Focus starts on the first mega menu item and moves sequentially through each item in a group, then continues to the first item of the next group once the last item is reached.
@@ -62,6 +69,15 @@ data:
 - Pressing the Left or Up arrow on the first item moves focus to the trigger and keeps the menu open.
 - Pressing Right arrow on the last item moves focus to the following trigger elements and close the mega menu panel. If there is no next trigger, nothing happens.
 - Pressing the Down arrow on the last item has no effect.
+- Within the supporting actions row beneath the groups, the Left and Right arrow keys move between actions, and the Up arrow returns focus to the menu groups above.
+- Pressing the Right arrow on the last action moves focus to the next trigger and closes the mega menu panel, the same as on the last item of the last group. If there is no next trigger, nothing happens.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Home / End">
+
+- Home moves focus to the first item in the current group.
+- End moves focus to the last item in the current group.
 
 </KeyboardControl>
 
