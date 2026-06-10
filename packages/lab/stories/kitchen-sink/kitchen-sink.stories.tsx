@@ -31,6 +31,13 @@ import {
 } from "@salt-ds/core";
 import { AD, GB, UN, US } from "@salt-ds/countries";
 import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleGridPanel,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+} from "@salt-ds/date-components";
+import {
   NotificationIcon,
   NotificationSolidIcon,
   SaltShakerIcon,
@@ -82,11 +89,6 @@ import {
   HorizontalIconOnly as ToggleButtonGroupHorizontalIon,
   HorizontalTextOnly as ToggleButtonGroupHorizontalText,
 } from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
-import {
-  DatePicker,
-  DatePickerSingleInput,
-  DatePickerTrigger,
-} from "../../../date-components";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";
@@ -473,6 +475,9 @@ export const FormStatusAlignment = () => {
             validationStatus="error"
           />
         </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerSingleGridPanel />
+        </DatePickerOverlay>
       </DatePicker>
       <NumberInput defaultValue={0} validationStatus="error" />
     </StackLayout>
