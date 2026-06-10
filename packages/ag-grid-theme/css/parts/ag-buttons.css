@@ -3,9 +3,9 @@
 .ag-theme-salt-dark .ag-standard-button,
 .ag-theme-salt-compact-light .ag-standard-button,
 .ag-theme-salt-compact-dark .ag-standard-button {
-  background: var(--salt-actionable-secondary-background);
+  background: var(--salt-actionable-subtle-background);
   border: 0;
-  color: var(--salt-actionable-secondary-foreground);
+  color: var(--salt-actionable-subtle-foreground);
   font-size: var(--salt-text-fontSize);
   font-weight: 600;
   height: var(--salt-size-base);
@@ -17,15 +17,15 @@
 .ag-theme-salt-dark .ag-standard-button:hover,
 .ag-theme-salt-compact-light .ag-standard-button:hover,
 .ag-theme-salt-compact-dark .ag-standard-button:hover {
-  background-color: var(--salt-actionable-secondary-background-hover);
-  color: var(--salt-actionable-secondary-foreground-hover);
+  background-color: var(--salt-actionable-subtle-background-hover);
+  color: var(--salt-actionable-subtle-foreground-hover);
 }
 
 .ag-theme-salt-light .ag-ltr .ag-filter-apply-panel-button,
 .ag-theme-salt-dark .ag-ltr .ag-filter-apply-panel-button,
 .ag-theme-salt-compact-light .ag-ltr .ag-filter-apply-panel-button,
 .ag-theme-salt-compact-dark .ag-ltr .ag-filter-apply-panel-button {
-  margin-left: 8px;
+  margin-left: var(--salt-spacing-100);
 }
 
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
@@ -36,8 +36,8 @@
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
-  background: var(--salt-actionable-cta-background);
-  color: var(--salt-actionable-cta-foreground);
+  background: var(--salt-actionable-accented-bold-background);
+  color: var(--salt-actionable-accented-bold-foreground);
 }
 
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
@@ -48,14 +48,14 @@
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
-  background: var(--salt-actionable-cta-background-hover);
-  color: var(--salt-actionable-cta-foreground-hover);
+  background: var(--salt-actionable-accented-bold-background-hover);
+  color: var(--salt-actionable-accented-bold-foreground-hover);
 }
 
-.ag-theme-salt-light .ag-keyboard-focus .ag-header-cell:focus:after,
-.ag-theme-salt-dark .ag-keyboard-focus .ag-header-cell:focus:after,
-.ag-theme-salt-compact-light .ag-keyboard-focus .ag-header-cell:focus:after,
-.ag-theme-salt-compact-dark .ag-keyboard-focus .ag-header-cell:focus:after {
+.ag-theme-salt-light .ag-keyboard-focus .ag-header-cell:focus::after,
+.ag-theme-salt-dark .ag-keyboard-focus .ag-header-cell:focus::after,
+.ag-theme-salt-compact-light .ag-keyboard-focus .ag-header-cell:focus::after,
+.ag-theme-salt-compact-dark .ag-keyboard-focus .ag-header-cell:focus::after {
   border: 0;
 }
 
