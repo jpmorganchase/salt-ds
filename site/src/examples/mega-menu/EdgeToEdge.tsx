@@ -82,7 +82,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <DevicesIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Digital banking
                         </MegaMenuItem>
@@ -97,7 +96,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <DatasetManagerIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Risk management
                         </MegaMenuItem>
@@ -117,7 +115,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <UserSearchIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Patient management
                         </MegaMenuItem>
@@ -132,7 +129,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <CallIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Telemedicine
                         </MegaMenuItem>
@@ -147,7 +143,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <PasteIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Compliance solutions
                         </MegaMenuItem>
@@ -167,7 +162,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <CartIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           E-commerce platforms
                         </MegaMenuItem>
@@ -187,7 +181,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <LinkedIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Supply chain optimization
                         </MegaMenuItem>
@@ -202,7 +195,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <SettingsIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Quality control
                         </MegaMenuItem>
@@ -217,7 +209,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <NotificationIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Production planning
                         </MegaMenuItem>
@@ -237,7 +228,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <GuideOpenIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Learning management systems
                         </MegaMenuItem>
@@ -252,7 +242,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <LaptopIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Virtual classrooms
                         </MegaMenuItem>
@@ -272,7 +261,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <DocumentIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Document management
                         </MegaMenuItem>
@@ -287,7 +275,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <PinIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Citizen services
                         </MegaMenuItem>
@@ -302,7 +289,6 @@ export const EdgeToEdge = (): ReactElement => {
                         >
                           <UserGroupIcon
                             aria-hidden
-                            className="saltMegaMenuItem-icon"
                           />
                           Public safety solutions
                         </MegaMenuItem>
