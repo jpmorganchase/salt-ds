@@ -1,5 +1,5 @@
-import type { ElementProps, FloatingRootContext } from "@floating-ui/react";
-import { useMemo } from "react";
+import type {ElementProps, FloatingRootContext} from "@floating-ui/react";
+import {useMemo} from "react";
 
 const COLUMN_SELECTOR = "[data-mega-menu-column]";
 const SUPPORTING_ACTIONS_SELECTOR = "[data-mega-menu-supporting-actions]";
@@ -43,7 +43,7 @@ function buildModel(panel: HTMLElement): NavModel {
     panel.querySelectorAll<HTMLElement>(SUPPORTING_ACTIONS_SELECTOR),
   ).filter((el) => queryFocusables(el).length > 0);
 
-  return { columns, supportingActions };
+  return {columns, supportingActions};
 }
 
 function focusTrigger(context: FloatingRootContext) {
@@ -121,7 +121,7 @@ function handleArrow(
   panel: HTMLElement,
   context: FloatingRootContext,
 ): boolean {
-  const { columns, supportingActions } = buildModel(panel);
+  const {columns, supportingActions} = buildModel(panel);
 
   if (columnsStacked(columns)) {
     return handleLinear(key, cell, panel, context);
@@ -141,10 +141,10 @@ function handleArrow(
       case "ArrowDown": {
         if (rowIndex < cells.length - 1) {
           cells[rowIndex + 1].focus();
-        } else if (supportingActions.length > 0) {
-          firstFocusable(supportingActions[0])?.focus();
         } else if (colIndex < columns.length - 1) {
           firstFocusable(columns[colIndex + 1])?.focus();
+        } else if (supportingActions.length > 0) {
+          firstFocusable(supportingActions[0])?.focus();
         } else {
           focusNextTriggerAndClose(context);
         }
@@ -210,13 +210,17 @@ function handleArrow(
       }
       case "ArrowUp": {
         if (columns.length > 0) {
-          firstFocusable(columns[0])?.focus();
+          const lastColumnCells = queryFocusables(columns[columns.length - 1]);
+          lastColumnCells[lastColumnCells.length - 1]?.focus();
         } else {
           focusTrigger(context);
         }
         return true;
       }
       case "ArrowDown": {
+        if (index === cells.length - 1) {
+          focusNextTriggerAndClose(context);
+        }
         return true;
       }
       case "Home": {
@@ -280,8 +284,8 @@ export function useMegaMenuNavigation(
   context: FloatingRootContext,
   props: UseMegaMenuNavigationProps = {},
 ): ElementProps {
-  const { enabled = true } = props;
-  const { open, onOpenChange } = context;
+  const {enabled = true} = props;
+  const {open, onOpenChange} = context;
 
   return useMemo(() => {
     if (!enabled) {
@@ -295,7 +299,7 @@ export function useMegaMenuNavigation(
 
           const panel = event.currentTarget as HTMLElement;
           const target = event.target as HTMLElement;
-          const { key } = event;
+          const {key} = event;
 
           const isArrowOrEdge =
             key === "ArrowUp" ||

@@ -64,13 +64,12 @@ data:
 
 <KeyboardControl keyOrCombos="Up arrow / Down arrow / Left arrow / Right arrow">
 
-- Pressing the Up and Down arrow key moves focus between items within the current group.
-- Pressing the Left or Right arrow key will shift focus to the first item of the adjacent mega menu group.
-- Pressing the Left or Up arrow on the first item moves focus to the trigger and keeps the menu open.
-- Pressing Right arrow on the last item moves focus to the following trigger elements and close the mega menu panel. If there is no next trigger, nothing happens.
-- Pressing the Down arrow on the last item has no effect.
-- Within the supporting actions row beneath the groups, the Left and Right arrow keys move between actions, and the Up arrow returns focus to the menu groups above.
-- Pressing the Right arrow on the last action moves focus to the next trigger and closes the mega menu panel, the same as on the last item of the last group. If there is no next trigger, nothing happens.
+- Up and Down arrows move focus between items within a column.
+- Left and Right arrows move focus to the first item of the previous or next column.
+- Up on the first item of a column, or Left on the first column, moves focus to the trigger and keeps the menu open.
+- Down on the last item of a column moves focus to the first item of the next column. On the last item of the last column, it moves into the supporting actions row if one is present; otherwise it closes the mega menu panel and moves focus to the next trigger. If there is no next trigger, nothing happens.
+- Right on the last item of the last column closes the mega menu panel and moves focus to the next trigger. If there is no next trigger, nothing happens.
+- Within the supporting actions row beneath the groups, Left and Right move between actions, and Up returns focus to the last column. Right or Down on the last action closes the mega menu panel and moves focus to the next trigger, the same as the last item of the last column. If there is no next trigger, nothing happens.
 
 </KeyboardControl>
 
