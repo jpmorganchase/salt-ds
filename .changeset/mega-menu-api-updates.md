@@ -63,3 +63,13 @@ to a linear walk when the columns are stacked.
   <MegaMenuSupportingContent>...</MegaMenuSupportingContent>
 </MegaMenuPanel>
 ```
+//TODO: verify if that's needed before merging to lab
+**Breaking changes**
+
+- `MegaMenuHeader` has been removed. Use `MegaMenuGroupHeading` for a group's
+  label instead.
+- `MegaMenuItem` can no longer be placed directly inside a `MegaMenuGroup`. Wrap
+  the items in a `MegaMenuItemList`, which renders the `<ul>`/`<li>` structure.
+- `MegaMenuItem` is no longer the list item — it now renders an `<a>` or
+  `<button>` (the surrounding `<li>` comes from `MegaMenuItemList`). Update any
+  refs or styles that assumed an `<li>` element.
