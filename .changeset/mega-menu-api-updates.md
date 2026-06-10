@@ -31,8 +31,16 @@ Responsive behaviour is left to consumers. `MegaMenuBody` lays its columns out
 with grid `auto-fit` and `minmax(0, …)`, so they shrink and wrap to the
 available width rather than overflowing; there is no built-in viewport
 breakpoint. To stack the panel on small screens, set `flex-direction: column` on
-`MegaMenuPanel` at your own breakpoint. Keyboard navigation degrades to a linear
-walk automatically when the columns are stacked.
+`MegaMenuPanel` at your own breakpoint.
+
+Keyboard navigation follows the panel layout. Up and Down move within a column,
+with Down continuing at the top of the next column; Left and Right move between
+columns and, on the outer columns, return focus to the trigger while keeping the
+menu open. At the end of the last column — or the supporting actions row — Down
+and Right move to the next trigger and close the panel (and do nothing, or wrap
+back to the current trigger, when there is no next trigger). Tab and Shift+Tab
+walk every item in layout order, Escape closes the menu, and navigation degrades
+to a linear walk when the columns are stacked.
 
 ```tsx
 <MegaMenuPanel aria-label="Solutions menu">
