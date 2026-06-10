@@ -1,6 +1,16 @@
 export * from "./DatePicker";
 export * from "./DatePickerActions";
-export * from "./DatePickerContext";
+// Re-export only the public API from DatePickerContext.
+// SingleDateSelectionContext and DateRangeSelectionContext are intentionally
+// kept module-private (used internally by DatePicker); consumers should use
+// the `useDatePickerContext` hook instead.
+export {
+  type DatePickerState,
+  type RangeDatePickerState,
+  type SingleDatePickerState,
+  type UseDatePickerContextProps,
+  useDatePickerContext,
+} from "./DatePickerContext";
 export * from "./DatePickerHelperText";
 export * from "./DatePickerOverlay";
 export * from "./DatePickerOverlayProvider";
