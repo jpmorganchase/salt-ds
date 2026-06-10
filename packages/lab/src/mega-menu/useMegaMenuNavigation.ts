@@ -51,7 +51,8 @@ function focusTrigger(context: FloatingRootContext) {
   (firstFocusable(reference) ?? reference)?.focus();
 }
 
-function focusNextTriggerAndClose(context: FloatingRootContext) {
+/** Exit to the next nav-bar trigger and close. Returns false when there is none. */
+function focusNextTriggerAndClose(context: FloatingRootContext): boolean {
   const reference = context.elements.reference as HTMLElement | null;
   const trigger = firstFocusable(reference) ?? reference;
   const li = trigger?.closest("li");
@@ -62,7 +63,9 @@ function focusNextTriggerAndClose(context: FloatingRootContext) {
   if (next) {
     context.onOpenChange(false);
     next.focus();
+    return true;
   }
+  return false;
 }
 
 /** True when the grid has collapsed to one stacked column (small viewport). */
@@ -161,8 +164,15 @@ function handleArrow(
       case "ArrowRight": {
         if (colIndex < columns.length - 1) {
           firstFocusable(columns[colIndex + 1])?.focus();
-        } else if (rowIndex === cells.length - 1) {
-          focusNextTriggerAndClose(context);
+        } else if (
+          rowIndex === cells.length - 1 &&
+          focusNextTriggerAndClose(context)
+        ) {
+          // Last item of the last column with a next trigger: exit + close.
+        } else {
+          // Right border column otherwise: wrap to the current trigger and keep
+          // the menu open, mirroring Left in the first column.
+          focusTrigger(context);
         }
         return true;
       }
@@ -195,8 +205,9 @@ function handleArrow(
       case "ArrowRight": {
         if (index < cells.length - 1) {
           cells[index + 1].focus();
-        } else {
-          focusNextTriggerAndClose(context);
+        } else if (!focusNextTriggerAndClose(context)) {
+          // Last action with no next trigger: wrap to the current trigger.
+          focusTrigger(context);
         }
         return true;
       }

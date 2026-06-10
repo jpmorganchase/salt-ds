@@ -66,10 +66,10 @@ data:
 
 - Up and Down arrows move focus between items within a column.
 - Left and Right arrows move focus to the first item of the previous or next column.
-- Up on the first item of a column, or Left on the first column, moves focus to the trigger and keeps the menu open.
-- Down on the last item of a column moves focus to the first item of the next column. On the last item of the last column, it moves into the supporting actions row if one is present; otherwise it closes the mega menu panel and moves focus to the next trigger. If there is no next trigger, nothing happens.
-- Right on the last item of the last column closes the mega menu panel and moves focus to the next trigger. If there is no next trigger, nothing happens.
-- Within the supporting actions row beneath the groups, Left and Right move between actions, and Up returns focus to the last column. Right or Down on the last action closes the mega menu panel and moves focus to the next trigger, the same as the last item of the last column. If there is no next trigger, nothing happens.
+- Up on the first item of a column moves focus to the trigger and keeps the menu open.
+- Left on the first column moves focus to the trigger and keeps the menu open. Right on the last column does the same, except on its last item: when there is a next trigger, it instead closes the mega menu panel and moves focus to that trigger.
+- Down on the last item of a column moves focus to the first item of the next column. On the last item of the last column, it moves into the supporting actions row if one is present; otherwise, when there is a next trigger, it closes the mega menu panel and moves focus to that trigger, and does nothing when there is none.
+- Within the supporting actions row beneath the groups, Left and Right move between actions, and Up returns focus to the last column. On the last action, Right behaves like the last item of the last column, and Down closes the mega menu panel and moves focus to the next trigger, or does nothing when there is none.
 
 </KeyboardControl>
 
