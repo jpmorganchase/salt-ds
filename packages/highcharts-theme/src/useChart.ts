@@ -112,7 +112,7 @@ export const useChart = (
       // the life of the chart, leaving data labels (e.g. pie/donut connectors)
       // positioned as if the fallback font were still active. Clearing the cache
       // forces Highcharts to re-measure with the (now)loaded font - which is the same
-      // thing an unmount/remount (e.g. navigating away and back) does implicitly
+      // thing an unmount/remount (e.g. navigating away and back) does implicitly.
       renderer.cache = {};
       renderer.cacheKeys = [];
 
