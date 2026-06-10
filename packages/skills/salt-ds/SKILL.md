@@ -236,6 +236,8 @@ Do not claim a Salt workflow completed merely because the host emitted a large p
 Keep results decision-first.
 When blocked, say exactly what is blocked, what succeeded, and what remains unresolved.
 Summarize blocked, partial, `ask_user`, retrieve, or missing-evidence states from existing fields only; do not invent a new compact field.
+Treat `status: "partial"` as **user-facing remaining work** only — unresolved regions, follow-through entities, composite plans that still need grounding. It does not mean the workflow's own validator coverage is incomplete.
+Read the top-level `internal_limitations` block (`unsupported_claim_count`, `unsupported_rule_kinds`) as a separate signal: registry/validator coverage gaps that the workflow itself could not confirm. A clean run with `internal_limitations.unsupported_claim_count > 0` is still `status: "success"` and still implementation-safe — surface the limitation transparently in your reply, but do not block, retry, or escalate on it.
 Use `status`, `action.kind`, `next_required_action`, `safety.blocking_reasons`, `questions`, `evidence.missing`, and `summary` to state:
 
 - what is blocked

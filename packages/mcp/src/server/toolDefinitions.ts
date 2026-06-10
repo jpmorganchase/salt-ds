@@ -1114,6 +1114,15 @@ const MCP_WORKFLOW_OUTPUT_SCHEMA = z
     recipe: PUBLIC_RECIPE_SCHEMA,
     questions: z.array(z.string()),
     evidence: PUBLIC_EVIDENCE_SCHEMA,
+    // Task 2.9 / root cause #2: every salt_workflow_v1 contract carries
+    // the top-level `internal_limitations` block (semver 1.1.0).
+    // Mandatory and always present so hosts can branch on the inner
+    // fields without runtime nullish checks. Default =
+    // { unsupported_claim_count: 0, unsupported_rule_kinds: [] }.
+    internal_limitations: z.object({
+      unsupported_claim_count: z.number().int().nonnegative(),
+      unsupported_rule_kinds: z.array(z.string()),
+    }),
     summary: z.string().min(1),
     truncated: z.boolean().optional(),
     available_expansions: z.array(z.string()).optional(),

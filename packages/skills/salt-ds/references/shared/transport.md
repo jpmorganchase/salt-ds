@@ -141,6 +141,7 @@ Treat these as blocking items when they affect the regions you plan to implement
 For page-level and multi-region work, do not treat one valid sub-pattern as permission to skip unresolved peer regions.
 If a required sub-surface is still unresolved, either keep that region pending or stop before final implementation.
 Do not treat `status: partial` as completion just because a starter file, scaffold, or initial diff was created.
+`status: partial` means **user-facing remaining work** — unresolved regions, follow-through entities, composite plans that still need grounding. It does not mean Salt's own validator coverage is incomplete. Registry coverage gaps live in the top-level `internal_limitations` block (`unsupported_claim_count`, `unsupported_rule_kinds`) and are independent of `status`. A clean run with `internal_limitations.unsupported_claim_count > 0` is still `status: success` and still implementation-safe; surface the limitation in your reply but do not retry, block, or escalate on it.
 Request or inspect `full` workflow output only when the blocking signal points to deeper artifacts such as composition details, starter snippets, or validation internals.
 
 ## Noisy Or Partial Results

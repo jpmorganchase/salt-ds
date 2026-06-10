@@ -22,5 +22,9 @@
       "tool": "review_salt_ui"
     }
   },
+  "internal_limitations": {
+    "unsupported_claim_count": 0,
+    "unsupported_rule_kinds": []
+  },
   "summary": "Salt grounded the exact requested entity Metric."
 }

@@ -5,6 +5,10 @@ import type {
   PublicWorkflowId,
   PublicWorkflowStatus,
 } from "./publicContract.js";
+import {
+  PUBLIC_WORKFLOW_CONTRACT_VERSION,
+  SALT_WORKFLOW_CONTRACT_SEMVER,
+} from "./publicContract.js";
 
 export const SALT_CAPABILITY_MANIFEST_VERSION =
   "salt_capability_manifest_v1" as const;
@@ -87,6 +91,17 @@ export interface SaltCapabilityManifest {
     compact_workflow_contract_version: typeof SALT_COMPACT_WORKFLOW_CONTRACT_VERSION;
     compact_workflow_ids: Array<(typeof SALT_COMPACT_WORKFLOW_IDS)[number]>;
     setup_contract_ids: string[];
+    /**
+     * SemVer + changelog for the salt_workflow_v1 contract. Bootstraps the
+     * Phase 2 task 2.6 surface; today carries just the version, contract
+     * token, and a per-bump changelog. Bumped whenever the contract shape
+     * changes within the v1 major (e.g. additive top-level fields).
+     */
+    contract_lifecycle: {
+      contract: typeof PUBLIC_WORKFLOW_CONTRACT_VERSION;
+      semver: typeof SALT_WORKFLOW_CONTRACT_SEMVER;
+      changelog: Array<{ semver: string; summary: string }>;
+    };
     workflow_action_contract: {
       authoritative_fields: string[];
       implementation_gate: {
@@ -239,6 +254,21 @@ export function buildSaltCapabilityManifest(
       compact_workflow_contract_version: SALT_COMPACT_WORKFLOW_CONTRACT_VERSION,
       compact_workflow_ids: [...SALT_COMPACT_WORKFLOW_IDS],
       setup_contract_ids: [...options.contracts.setup_contract_ids],
+      contract_lifecycle: {
+        contract: PUBLIC_WORKFLOW_CONTRACT_VERSION,
+        semver: SALT_WORKFLOW_CONTRACT_SEMVER,
+        changelog: [
+          {
+            semver: "1.0.0",
+            summary: "Initial salt_workflow_v1.",
+          },
+          {
+            semver: "1.1.0",
+            summary:
+              "Split status:partial into partial + internal_limitations; partial now means user-facing remaining work only (root cause #2 / task 2.9).",
+          },
+        ],
+      },
       workflow_action_contract: {
         authoritative_fields: [
           "status",
@@ -258,6 +288,9 @@ export function buildSaltCapabilityManifest(
           "evidence.items",
           "evidence.source_urls",
           "evidence.input_context",
+          "internal_limitations",
+          "internal_limitations.unsupported_claim_count",
+          "internal_limitations.unsupported_rule_kinds",
           "summary",
         ],
         implementation_gate: {

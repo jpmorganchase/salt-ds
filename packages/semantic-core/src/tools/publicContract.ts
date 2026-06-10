@@ -150,7 +150,43 @@ export type PublicNextStep =
 
 export const PUBLIC_WORKFLOW_CONTRACT_VERSION = "salt_workflow_v1";
 
+/**
+ * SemVer string for the salt_workflow_v1 contract surface. Bumped per the
+ * SemVer policy whenever the contract shape changes within the v1 major.
+ *
+ * - 1.0.0 - Initial salt_workflow_v1.
+ * - 1.1.0 - Split status:partial into partial (legitimate user-facing
+ *   remaining work) + new top-level internal_limitations block (registry
+ *   coverage gaps). Additive top-level field + narrowed partial semantics:
+ *   MINOR per SemVer.
+ */
+export const SALT_WORKFLOW_CONTRACT_SEMVER = "1.1.0" as const;
+
 export type PublicActionKind = PublicNextStep["kind"];
+
+/**
+ * Top-level block recording validator/registry coverage gaps that are
+ * independent of workflow status. Always present so hosts can branch on
+ * the fields without runtime nullish checks. See
+ * packages/mcp/docs/salt-workflow-v1-host-contract.md for the semantics.
+ *
+ * - unsupported_claim_count - number of generated-artifact claims the
+ *   registry could not validate (e.g. components/patterns not yet covered).
+ * - unsupported_rule_kinds - unique, sorted list of SaltEvidenceClaimKind
+ *   values that contributed to the unsupported claim count.
+ *
+ * These come from the review evidence gate only. Create / migrate / upgrade
+ * leave both fields at the default empty values.
+ */
+export interface PublicInternalLimitations {
+  unsupported_claim_count: number;
+  unsupported_rule_kinds: string[];
+}
+
+export const EMPTY_PUBLIC_INTERNAL_LIMITATIONS: PublicInternalLimitations = {
+  unsupported_claim_count: 0,
+  unsupported_rule_kinds: [],
+};
 
 export type PublicEvidenceKind =
   | "docs"
@@ -249,6 +285,13 @@ export interface PublicContract {
   recipe: PublicRecipe;
   questions: string[];
   evidence: PublicEvidenceSummary;
+  /**
+   * Validator/registry coverage gaps that do not change the workflow status.
+   * Always present (default = EMPTY_PUBLIC_INTERNAL_LIMITATIONS) so hosts
+   * can branch on the fields without runtime nullish checks. Added in
+   * salt_workflow_v1 semver 1.1.0 (task 2.9 / root cause #2).
+   */
+  internal_limitations: PublicInternalLimitations;
   summary: string;
   truncated?: boolean;
   available_expansions?: string[];
@@ -285,6 +328,13 @@ export interface PublicContractInput {
   transport_used: PublicTransportUsed;
   exact_request?: PublicContractExactRequest;
   state: PublicContractState;
+  /**
+   * Optional override. When omitted, buildPublicContract emits
+   * EMPTY_PUBLIC_INTERNAL_LIMITATIONS. Builders for workflows that surface
+   * registry/validator coverage gaps (today: review) populate this
+   * explicitly. See PublicInternalLimitations.
+   */
+  internal_limitations?: PublicInternalLimitations;
   summary: string;
   next_step: PublicNextStep;
   questions?: string[];
@@ -322,6 +372,27 @@ function uniqueNonEmptyStrings(
         .filter((value) => value.length > 0),
     ),
   ];
+}
+
+function normalizeInternalLimitations(
+  value: PublicInternalLimitations | undefined,
+): PublicInternalLimitations {
+  if (!value) {
+    return {
+      unsupported_claim_count: 0,
+      unsupported_rule_kinds: [],
+    };
+  }
+
+  const count = Number.isFinite(value.unsupported_claim_count)
+    ? Math.max(0, Math.trunc(value.unsupported_claim_count))
+    : 0;
+  const kinds = uniqueNonEmptyStrings(value.unsupported_rule_kinds).sort();
+
+  return {
+    unsupported_claim_count: count,
+    unsupported_rule_kinds: kinds,
+  };
 }
 
 function readStringValue(value: unknown): string | null {
@@ -1056,6 +1127,9 @@ export function buildPublicContract(
     ),
     questions,
     evidence,
+    internal_limitations: normalizeInternalLimitations(
+      input.internal_limitations,
+    ),
     summary: input.summary.trim(),
     ...(input.truncated ? { truncated: true } : {}),
     ...(input.available_expansions?.length
@@ -1676,17 +1750,55 @@ function applyReviewEvidenceGate(
     validation_issue_count: surfaceGate.validation_issues.length,
   };
 
-  if (gate.status === "validated") {
+  // Task 2.9 / root cause #2: only true validator failures degrade the
+  // workflow status. Registry coverage gaps (unsupported_claim_count > 0)
+  // are surfaced via the top-level internal_limitations block instead so
+  // hosts can branch on them without misreading them as "the user request
+  // is only partly addressed."
+  if (surfaceGate.validation_issues.length === 0) {
     return evidenceWithGate;
   }
 
-  const missing = uniqueNonEmptyStrings([...evidence.missing, ...gate.missing]);
+  const validationLabel = gate.artifact.artifact_kind;
+  const validationOnlyMissing = surfaceGate.validation_issues.map(
+    (issue) =>
+      `${validationLabel} evidence validation failed: ${issue.code} at ${issue.path}`,
+  );
+  const missing = uniqueNonEmptyStrings([
+    ...evidence.missing,
+    ...validationOnlyMissing,
+  ]);
 
   return {
     ...evidenceWithGate,
     status: evidence.items.length > 0 ? "partial" : "missing",
     missing:
       missing.length > 0 ? missing : ["review report evidence is incomplete"],
+  };
+}
+
+function deriveReviewInternalLimitations(
+  gate: ReviewReportEvidenceGate | null,
+): PublicInternalLimitations {
+  if (!gate) {
+    return {
+      unsupported_claim_count: 0,
+      unsupported_rule_kinds: [],
+    };
+  }
+
+  const unsupportedClaims = gate.artifact.unsupported_claims ?? [];
+  const ruleKinds = [
+    ...new Set(
+      unsupportedClaims
+        .map((claim) => claim.kind)
+        .filter((kind): kind is string => typeof kind === "string"),
+    ),
+  ].sort();
+
+  return {
+    unsupported_claim_count: gate.unsupported_claim_count,
+    unsupported_rule_kinds: ruleKinds,
   };
 }
 
@@ -2259,6 +2371,7 @@ export function buildReviewPublicContract(
         : "Salt review found issues that still need attention.",
     next_step: nextStep,
     evidence,
+    internal_limitations: deriveReviewInternalLimitations(evidenceGate),
     rule_ids: contract.rule_ids,
     blocking_reasons:
       options.blocking_reasons ?? buildReviewBlockingReasons(contract, result),
