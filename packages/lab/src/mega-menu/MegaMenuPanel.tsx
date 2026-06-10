@@ -13,11 +13,11 @@ import {
   type HTMLAttributes,
   type ReactNode,
   useEffect,
-  useState,
 } from "react";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
 import { useMegaMenu } from "./useMegaMenu";
 import { focusFirstItem } from "./useMegaMenuNavigation";
+import { usePageMargin } from "./usePageMargin";
 
 const withBaseName = makePrefixer("saltMegaMenuPanel");
 
@@ -50,35 +50,17 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
 
     const id = useId(idProp);
 
-    // Register the panel id in context so the trigger can reference it via aria-controls.
+    // Expose panel id for trigger.
     useEffect(() => {
       setPanelId(id);
       return () => setPanelId(undefined);
     }, [id, setPanelId]);
 
-    // Resolve the panel's page-margin to a pixel value to override the margin as required.
-    const [pageMargin, setPageMargin] = useState(0);
-    useEffect(() => {
-      if (!targetWindow) return;
-      const referenceEl = floatingRootContext.elements.domReference as
-        | HTMLElement
-        | null
-        | undefined;
-      const host = referenceEl ?? targetWindow.document.body;
-      const doc = targetWindow.document;
-      const measure = () => {
-        const probe = doc.createElement("div");
-        probe.style.cssText =
-          "position:absolute;visibility:hidden;pointer-events:none;width:var(--saltMegaMenuPanel-pageMargin, var(--salt-layout-page-margin));";
-        host.appendChild(probe);
-        const width = probe.getBoundingClientRect().width;
-        probe.remove();
-        setPageMargin((prev) => (prev === width ? prev : width));
-      };
-      measure();
-      targetWindow.addEventListener("resize", measure);
-      return () => targetWindow.removeEventListener("resize", measure);
-    }, [targetWindow, floatingRootContext]);
+    const referenceEl = floatingRootContext.elements.domReference as
+      | HTMLElement
+      | null
+      | undefined;
+    const pageMargin = usePageMargin(referenceEl);
 
     const floatingUIResult = useFloatingUI({
       rootContext: floatingRootContext,
