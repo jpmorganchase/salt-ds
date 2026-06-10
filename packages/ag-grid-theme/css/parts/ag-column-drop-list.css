@@ -1,13 +1,32 @@
 /* Column Drop List */
-.ag-column-drop-cell-drag-handle {
+[class*="ag-theme-salt"] .ag-column-drop-cell-drag-handle {
   margin-left: 0;
 }
 
-.ag-column-drop-cell {
+[class*="ag-theme-salt"] .ag-column-drop-cell {
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   padding: 0 var(--salt-spacing-50);
 }
 
-.ag-column-drop-cell-button {
+[class*="ag-theme-salt"] .ag-column-drop-cell-button {
   min-width: unset;
+}
+
+div[class*="ag-theme-salt"] .ag-column-drop-cell {
+  --ag-secondary-foreground-color: var(--salt-actionable-bold-foreground);
+  --ag-icon-font-color: var(--salt-actionable-bold-foreground);
+  --ag-chip-background-color: var(--salt-actionable-bold-background);
+}
+
+div[class*="ag-theme-salt"] .ag-column-drop-cell:hover {
+  --ag-secondary-foreground-color: var(--salt-actionable-bold-foreground-hover);
+  --ag-icon-font-color: var(--salt-actionable-bold-foreground-hover);
+  --ag-chip-background-color: var(--salt-actionable-bold-background-hover);
+}
+
+div[class*="ag-theme-salt"] .ag-column-drop-cell:active,
+div[class*="ag-theme-salt"] .ag-column-drop-cell[aria-expanded="true"] {
+  --ag-secondary-foreground-color: var(--salt-actionable-bold-foreground-active);
+  --ag-icon-font-color: var(--salt-actionable-bold-foreground-active);
+  --ag-chip-background-color: var(--salt-actionable-bold-background-active);
 }
