@@ -1,6 +1,7 @@
 import {
   Button,
   Checkbox,
+  ComboBox,
   Divider,
   Dropdown,
   Input,
@@ -54,6 +55,7 @@ const filterOptions = [
   "Filter: Option B",
   "Filter: Option C",
 ];
+const statusOptions = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
 
 /**
@@ -377,6 +379,63 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
   </ToolbarNext>
 );
 MixedFormControls.globals = {
+  responsive: "wrap",
+};
+
+/**
+ * Multiselect combo box with pill selection in the toolbar.
+ *
+ * Intended behavior:
+ * - A `ComboBox` with `multiselect` shows selected options as removable pills
+ *   inside the field, which is a common filter pattern in data toolbars.
+ * - `truncate` keeps the field at toolbar height when unfocused; it expands on
+ *   focus or when the list is open so users can reach all pills.
+ * - The status filter sits in the start band; utility actions and search stay
+ *   on the end band.
+ * - The filter tray uses default shared overflow so the combo box can collapse
+ *   into the generic overflow trigger when width is constrained.
+ */
+export const MultiselectComboBoxPills: StoryFn<typeof ToolbarNext> = () => (
+  <ToolbarNext aria-label="Toolbar with multiselect combo box">
+    <ToolbarContentNext position="start">
+      <TooltrayNext overflowPriority={4}>
+        <ComboBox
+          aria-label="Status filter"
+          bordered
+          defaultSelected={["New", "Working"]}
+          multiselect
+          truncate
+          style={{ width: 260 }}
+        >
+          {statusOptions.map((option) => (
+            <Option key={option} value={option} />
+          ))}
+        </ComboBox>
+      </TooltrayNext>
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
+      <TooltrayNext align="end" overflowPriority={6}>
+        <Button appearance="transparent">
+          <ExportIcon aria-hidden />
+          Export
+        </Button>
+        <Button appearance="transparent">
+          <SettingsIcon aria-hidden />
+          Settings
+        </Button>
+      </TooltrayNext>
+      <TooltrayNext align="end" overflowMode="none">
+        <Input
+          bordered
+          startAdornment={<SearchIcon aria-hidden />}
+          placeholder="Search"
+          style={{ width: 180 }}
+        />
+      </TooltrayNext>
+    </ToolbarContentNext>
+  </ToolbarNext>
+);
+MultiselectComboBoxPills.globals = {
   responsive: "wrap",
 };
 

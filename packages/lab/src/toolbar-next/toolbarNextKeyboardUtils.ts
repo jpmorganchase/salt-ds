@@ -466,7 +466,8 @@ function getToolbarNextKeyboardPolicy(
   if (
     target.isContentEditable ||
     isPlainTextInput(target) ||
-    isComboBoxInput(target)
+    isComboBoxInput(target) ||
+    isPillInputPill(target)
   ) {
     return {
       preserveHorizontalArrows: true,
@@ -501,6 +502,14 @@ function isComboBoxInput(target: HTMLElement) {
   return (
     target.tagName === "INPUT" &&
     target.closest('[role="combobox"], .saltComboBox') != null
+  );
+}
+
+function isPillInputPill(target: HTMLElement) {
+  return (
+    target.tagName === "BUTTON" &&
+    target.classList.contains("saltPill") &&
+    target.closest(".saltPillInput") != null
   );
 }
 
@@ -571,12 +580,38 @@ export function isToolbarNextFocusable(
   return target.getClientRects().length > 0;
 }
 
+// Composite controls whose focus root (the element toolbar focus restore lands
+// on) differs from the inner element that handles keyboard interaction.
+// Restoring focus to the root would leave ArrowDown/Enter/Space targeting a
+// non-interactive wrapper, so we redirect to the interactive element
+const toolbarNextFocusEntryOverrides = [
+  { root: ".saltComboBox", interactive: 'input[role="combobox"]' },
+] as const;
+
 export function focusToolbarNextElement(
   target: HTMLElement | null | undefined,
 ) {
-  if (target?.isConnected) {
-    target.focus({ preventScroll: true });
+  const focusTarget = resolveToolbarNextFocusEntryTarget(target);
+
+  if (focusTarget?.isConnected) {
+    focusTarget.focus({ preventScroll: true });
   }
+}
+
+function resolveToolbarNextFocusEntryTarget(
+  target: HTMLElement | null | undefined,
+) {
+  if (!target) {
+    return target;
+  }
+
+  for (const { root, interactive } of toolbarNextFocusEntryOverrides) {
+    if (target.matches(root)) {
+      return target.querySelector<HTMLElement>(interactive) ?? target;
+    }
+  }
+
+  return target;
 }
 
 export function scheduleToolbarNextFocus(

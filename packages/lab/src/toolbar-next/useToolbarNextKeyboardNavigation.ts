@@ -4,7 +4,6 @@ import {
   type PointerEventHandler,
   type RefObject,
   useCallback,
-  useEffect,
   useRef,
 } from "react";
 import {
@@ -34,6 +33,7 @@ interface UseToolbarNextKeyboardNavigationProps {
 
 interface ToolbarNextFocusEvent {
   relatedTarget: EventTarget | null;
+  stopPropagation: () => void;
   target: EventTarget | null;
 }
 
@@ -61,7 +61,6 @@ export function useToolbarNextKeyboardNavigation({
   const rememberedFocusRef = useRef<ToolbarNextFocusMemory | null>(null);
   const pointerDownTargetRef = useRef<EventTarget | null>(null);
   const restoringEntryFocusRef = useRef(false);
-  const restoreFrameRef = useRef<number | null>(null);
 
   const shouldPreserveItemMemoryForTrigger = useCallback(
     (groupKey: string) => {
@@ -80,17 +79,6 @@ export function useToolbarNextKeyboardNavigation({
     },
     [items, overflowedIds],
   );
-
-  useEffect(() => {
-    return () => {
-      const frame = restoreFrameRef.current;
-      const win = scopeRef.current?.ownerDocument.defaultView;
-
-      if (frame != null && win) {
-        win.cancelAnimationFrame(frame);
-      }
-    };
-  }, [scopeRef]);
 
   const rememberTarget = useCallback(
     (target: HTMLElement) => {
@@ -196,24 +184,7 @@ export function useToolbarNextKeyboardNavigation({
 
   const restoreEntryFocus = useCallback((target: HTMLElement) => {
     restoringEntryFocusRef.current = true;
-
-    const restoreFocus = () => {
-      restoreFrameRef.current = null;
-
-      focusToolbarNextElement(target);
-    };
-    const win = target.ownerDocument.defaultView;
-
-    if (win?.requestAnimationFrame) {
-      const currentFrame = restoreFrameRef.current;
-      if (currentFrame != null) {
-        win.cancelAnimationFrame(currentFrame);
-      }
-
-      restoreFrameRef.current = win.requestAnimationFrame(restoreFocus);
-    } else {
-      queueMicrotask(restoreFocus);
-    }
+    focusToolbarNextElement(target);
   }, []);
 
   const handleScopeFocus = useCallback(
@@ -282,6 +253,7 @@ export function useToolbarNextKeyboardNavigation({
           );
 
           if (restoreTarget && restoreTarget !== target) {
+            event.stopPropagation();
             restoreEntryFocus(restoreTarget);
             return;
           }
@@ -302,6 +274,7 @@ export function useToolbarNextKeyboardNavigation({
       );
 
       if (restoreTarget && restoreTarget !== target) {
+        event.stopPropagation();
         restoreEntryFocus(restoreTarget);
         return;
       }

@@ -16,7 +16,7 @@ import {
 } from "@salt-ds/date-components";
 import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
-import { useState } from "react";
+import { type FocusEventHandler, useState } from "react";
 import * as toolbarNextStories from "../../../../stories/toolbar-next/toolbar-next.cypress.stories";
 
 const {
@@ -37,6 +37,7 @@ const {
 } = composeStories(toolbarNextStories);
 const adapterDayjs = new AdapterDayjs();
 const toolbarHarnessStyle = { height: 220, width: 760 };
+const statusOptions = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 
 function openOverflowWithKeyboard(name: string | RegExp) {
   cy.findByRole("button", { name }).focus().should("be.focused");
@@ -672,6 +673,43 @@ function SharedOverflowComboBoxFocusReentryTestCase() {
           <TooltrayNext>
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
+          </TooltrayNext>
+        </ToolbarContentNext>
+      </ToolbarNext>
+      <button data-testid="toolbar-after">After toolbar</button>
+    </div>
+  );
+}
+
+function MultiselectComboBoxKeyboardTestCase({
+  onComboBoxFocus,
+}: {
+  onComboBoxFocus?: FocusEventHandler<HTMLDivElement>;
+}) {
+  return (
+    <div className="Flexbox" style={{ height: 240, width: 680 }}>
+      <button data-testid="toolbar-before">Before toolbar</button>
+      <ToolbarNext aria-label="Multiselect combo box keyboard toolbar">
+        <ToolbarContentNext position="start">
+          <TooltrayNext overflowMode="none">
+            <ComboBox
+              aria-label="Status filter"
+              bordered
+              defaultSelected={["New", "Working"]}
+              multiselect
+              onFocus={onComboBoxFocus}
+              truncate
+              style={{ width: 260 }}
+            >
+              {statusOptions.map((option) => (
+                <Option key={option} value={option} />
+              ))}
+            </ComboBox>
+          </TooltrayNext>
+        </ToolbarContentNext>
+        <ToolbarContentNext position="end">
+          <TooltrayNext overflowMode="none">
+            <Button appearance="transparent">Export</Button>
           </TooltrayNext>
         </ToolbarContentNext>
       </ToolbarNext>
@@ -1548,6 +1586,46 @@ describe("Given ToolbarNext keyboard navigation", () => {
     cy.findByRole("button", { name: "Columns" }).should("be.focused");
     cy.realPress("Tab");
     cy.findByTestId("toolbar-after").should("be.focused");
+  });
+
+  it("keeps multiselect combo box pill arrow navigation inside the combo box", () => {
+    cy.mount(<MultiselectComboBoxKeyboardTestCase />);
+
+    cy.findByTestId("toolbar-before").focus();
+    cy.realPress("Tab");
+    cy.contains("button", "New").should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.contains("button", "Working").should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("combobox").should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.contains("button", "Working").should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.contains("button", "New").should("be.focused");
+  });
+
+  it("restores remembered focus without firing combo box focus on toolbar re-entry", () => {
+    const comboBoxFocusSpy = cy.stub().as("comboBoxFocus");
+
+    cy.mount(
+      <MultiselectComboBoxKeyboardTestCase
+        onComboBoxFocus={comboBoxFocusSpy}
+      />,
+    );
+
+    cy.findByRole("button", { name: "Export" })
+      .realClick()
+      .should("be.focused");
+    cy.findByTestId("toolbar-before").focus();
+    cy.get("@comboBoxFocus").should("not.have.been.called");
+
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "Export" }).should("be.focused");
+    cy.get("@comboBoxFocus").should("not.have.been.called");
   });
 
   it("uses Left and Right to move through the toolbar from a dropdown", () => {
