@@ -143,7 +143,9 @@ function handleArrow(
           cells[rowIndex + 1].focus();
         } else if (supportingActions.length > 0) {
           firstFocusable(supportingActions[0])?.focus();
-        } else if (colIndex === columns.length - 1) {
+        } else if (colIndex < columns.length - 1) {
+          firstFocusable(columns[colIndex + 1])?.focus();
+        } else {
           focusNextTriggerAndClose(context);
         }
         return true;
@@ -193,6 +195,8 @@ function handleArrow(
       case "ArrowRight": {
         if (index < cells.length - 1) {
           cells[index + 1].focus();
+        } else {
+          focusNextTriggerAndClose(context);
         }
         return true;
       }
