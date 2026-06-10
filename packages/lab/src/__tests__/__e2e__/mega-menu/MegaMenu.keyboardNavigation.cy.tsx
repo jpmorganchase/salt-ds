@@ -221,6 +221,63 @@ const BottomBandMegaMenu = () => (
   </nav>
 );
 
+// Like `BottomBandMegaMenu` but with a following trigger, so the action bar's last
+// action can exit to the next trigger on ArrowRight/ArrowDown.
+const BottomBandWithNextMegaMenu = () => (
+  <nav>
+    <StackLayout as="ol" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/digital-banking"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Digital Banking
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+              <MegaMenuSupportingActions>
+                <a href="/book-a-demo">Book a demo</a>
+                <button type="button">Support center</button>
+              </MegaMenuSupportingActions>
+            </MegaMenuBody>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Services</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Services menu">
+            <MegaMenuBody>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                <MegaMenuItemList>
+                  <MegaMenuItem
+                    href="/strategy"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Strategy
+                  </MegaMenuItem>
+                </MegaMenuItemList>
+              </MegaMenuGroup>
+            </MegaMenuBody>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
 // A `MegaMenuSupportingContent` containing a self-consuming control (a text input). The
 // engine must not hijack arrow keys while focus is inside it.
 const RoleAwareMegaMenu = () => (
@@ -545,7 +602,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
     });
 
-    it("keeps ArrowUp/ArrowDown within a column", () => {
+    it("moves to the next column on ArrowDown from the last item of a non-last column", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
@@ -556,10 +613,12 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowDown");
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
 
-      // Last item of the column with no action bar below — ArrowDown is a no-op and
-      // does NOT cross into the next column.
+      // Last item of a non-last column: ArrowDown continues at the top of the
+      // next column.
       cy.realPress("ArrowDown");
-      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+      cy.findByRole("link", { name: "Patient Management" }).should(
+        "be.focused",
+      );
     });
 
     it("crosses columns with ArrowRight and ArrowLeft", () => {
@@ -602,7 +661,24 @@ describe("Given a MegaMenu", () => {
       cy.get(".saltMegaMenuPanel").should("exist");
     });
 
-    it("ArrowRight from the bottom of the last column is a no-op when there is no next trigger", () => {
+    it("ArrowDown from the bottom of the last column is a no-op when there is no next trigger", () => {
+      cy.mount(<KeyboardMegaMenu />);
+      // Open the last menu (Services), which has no trigger after it.
+      cy.findByRole("button", { name: "Services" }).focus();
+      cy.realPress("Enter");
+      cy.get(".saltMegaMenuPanel").should("exist");
+
+      cy.realPress("Tab"); // Strategy
+      cy.realPress("ArrowDown"); // Operations (bottom of the only/last column)
+      cy.findByRole("link", { name: "Operations" }).should("be.focused");
+
+      // No next trigger: Down has nowhere to go, so it is a no-op.
+      cy.realPress("ArrowDown");
+      cy.findByRole("link", { name: "Operations" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("ArrowRight from the bottom of the last column returns to the current trigger when there is no next trigger", () => {
       cy.mount(<KeyboardMegaMenu />);
       // Open the last menu (Services), which has no trigger after it.
       cy.findByRole("button", { name: "Services" }).focus();
@@ -614,12 +690,12 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("link", { name: "Operations" }).should("be.focused");
 
       cy.realPress("ArrowRight");
-      // No next trigger: focus stays put and the panel remains open.
-      cy.findByRole("link", { name: "Operations" }).should("be.focused");
+      // No next trigger: Right wraps to the current trigger, panel stays open.
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
     });
 
-    it("ArrowRight from a non-bottom item of the last column is a no-op", () => {
+    it("ArrowRight from a non-bottom item of the last column returns to the current trigger", () => {
       cy.mount(<KeyboardMegaMenu />);
       openSolutionsWithEnter();
 
@@ -629,10 +705,10 @@ describe("Given a MegaMenu", () => {
         "be.focused",
       );
 
+      // Right in the last column wraps to the current trigger (menu stays open),
+      // except on the last item where it exits to the next trigger.
       cy.realPress("ArrowRight");
-      cy.findByRole("link", { name: "Patient Management" }).should(
-        "be.focused",
-      );
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
     });
 
@@ -876,9 +952,9 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowDown");
       cy.findByRole("button", { name: "Contact sales" }).should("be.focused");
 
-      // Last column, no next trigger -> no-op.
+      // Last item of the last column, no next trigger -> wrap to the current trigger.
       cy.realPress("ArrowRight");
-      cy.findByRole("button", { name: "Contact sales" }).should("be.focused");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
     });
 
@@ -983,11 +1059,13 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowDown"); // Book a demo (action bar)
       cy.findByRole("link", { name: "Book a demo" }).should("be.focused");
 
+      // ArrowUp reverses entry into the band: it returns to the last column's
+      // last item (where ArrowDown dropped in from).
       cy.realPress("ArrowUp");
-      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
+      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
     });
 
-    it("has no effect on ArrowDown from the last item of a bottom action bar", () => {
+    it("has no effect on ArrowDown from the last action when there is no next trigger", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
@@ -997,9 +1075,54 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowRight"); // Support center (last action bar item)
       cy.findByRole("button", { name: "Support center" }).should("be.focused");
 
+      // No next trigger: Down has nowhere to go, so it is a no-op.
       cy.realPress("ArrowDown");
       cy.findByRole("button", { name: "Support center" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("returns to the current trigger on ArrowRight from the last action when there is no next trigger", () => {
+      cy.mount(<BottomBandMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowDown"); // Risk Management
+      cy.realPress("ArrowDown"); // Book a demo (action bar)
+      cy.realPress("ArrowRight"); // Support center (last action bar item)
+      cy.findByRole("button", { name: "Support center" }).should("be.focused");
+
+      // No next trigger: Right wraps to the current trigger, panel stays open.
+      cy.realPress("ArrowRight");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
+      cy.get(".saltMegaMenuPanel").should("exist");
+    });
+
+    it("exits to the next trigger on ArrowRight from the last action", () => {
+      cy.mount(<BottomBandWithNextMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowDown"); // Book a demo (action bar)
+      cy.realPress("ArrowRight"); // Support center (last action bar item)
+      cy.findByRole("button", { name: "Support center" }).should("be.focused");
+
+      cy.realPress("ArrowRight");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
+    });
+
+    it("exits to the next trigger on ArrowDown from the last action", () => {
+      cy.mount(<BottomBandWithNextMegaMenu />);
+      openSolutions();
+
+      cy.realPress("Tab"); // Digital Banking
+      cy.realPress("ArrowDown"); // Book a demo (action bar)
+      cy.realPress("ArrowRight"); // Support center (last action bar item)
+      cy.findByRole("button", { name: "Support center" }).should("be.focused");
+
+      cy.realPress("ArrowDown");
+      cy.get(".saltMegaMenuPanel").should("not.exist");
+      cy.findByRole("button", { name: "Services" }).should("be.focused");
     });
 
     it("supports Home and End within an action bar", () => {
@@ -1058,9 +1181,10 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowDown"); // no action bar cell below → no effect
       cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
 
-      // Static region carries no cells, so it is not a column to cross into.
+      // Static region carries no cells, so it is not a column to cross into;
+      // Right in the last column wraps to the trigger instead of entering it.
       cy.realPress("ArrowRight");
-      cy.findByRole("link", { name: "Risk Management" }).should("be.focused");
+      cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
     });
   });
