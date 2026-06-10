@@ -4383,7 +4383,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/date-components@workspace:*, @salt-ds/date-components@workspace:packages/date-components":
+"@salt-ds/date-components@workspace:packages/date-components":
   version: 0.0.0-use.local
   resolution: "@salt-ds/date-components@workspace:packages/date-components"
   dependencies:
@@ -4475,7 +4475,6 @@ __metadata:
   dependencies:
     "@floating-ui/react": "npm:^0.26.28"
     "@salt-ds/core": "workspace:^"
-    "@salt-ds/date-components": "workspace:*"
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
@@ -4489,7 +4488,6 @@ __metadata:
     rifm: "npm:^0.12.0"
     tinycolor2: "npm:^1.4.2"
   peerDependencies:
-    "@salt-ds/date-adapters": ">=0.1.0-alpha.7"
     "@types/react": ">=16.14.0"
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
