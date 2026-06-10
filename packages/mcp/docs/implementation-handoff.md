@@ -8,7 +8,10 @@ Use this as a printable cheat sheet when starting each PR. Each section is paste
 
 > **Revision history**
 >
-> - **2026-06-10 rev 7:** Authored the two §3 paste-ready prompts that had been deferred since rev 3 — **PR 8 (task 2.13: CI required check + E2)** and **PR 9 (task 2.9: split `status: partial` into `partial` + `internal_limitations`)**. PR 8's prompt also folds in the §8.4 cleanup (the CI-side label gate that PR 18 left half-done waiting on `salt-ds review --since`), so closing both lands together. The "deferred prompt" note between PR 7 and PR 10 is replaced with a forward-pointer to PR 18's §8.4 cleanup. No code changes.
+> - **2026-06-10 rev 10:** Picks up the roadmap **rev-3 foundation-strict pass** (`gold-standard-roadmap.md` revision history rev 3 + new §2.1.6 cut table + new §2.1.7 flag-budget rule). Tracker-only changes: (a) **Expanded PR 8 (task 2.13) scope** to also remove the already-shipped CI-YAML emitter from `packages/semantic-core/src/bootstrapScaffolding.ts` and the `SALT_REVIEW_HUMAN_REVIEWED_LABEL` bleed into `packages/semantic-core/schemas/project-conventions.schema.json` (roadmap task **0.5b**, folded into lean PR 8). The new PR 8 scope is: back out the rev-7 CLI surface (per §8.6) + remove the bootstrap CI emitter (0.5b) + surface `require_human_review_for` as ordinary blocking findings + add `packages/cli/docs/ci-integration.md` + add `workflow-examples/consumer-repo/.salt/team.json` example. (b) **Added PR 20** for roadmap task **0.12** (published-schema vendor-name regression test — makes the schema-leak class impossible going forward). (c) **Added PR 21** for roadmap task **1.1b** (shrink `init.ts` from 895 lines to <500; mostly falls out of 0.5b's CI-YAML removal, with minor extraction of the remaining init concerns). (d) **Bumped PR 11 (task 2.3 skill trim)** ahead of PRs 15–18 in the recommended-order column — the skill is growing (2,383 lines / 39 files vs. M5's 2,335 / 36 baseline) while every Phase 2 item that touches skill prose adds more. Land 2.3 before further skill prose. (e) Updated PR 17 (task 2.15 attestations) note to reflect the rev-3 narrowing: ship the attestation **payload** as a published Zod schema, emit on stdout when `--emit-attestation` is set; the `.salt/attestations/<hash>.json` on-disk layout becomes a demo default in `workflow-examples/`, not a Salt foundation commitment. (f) Updated PR 19c (task 1.3) note to point at the rev-3 cross-cutting §3.3 narrowing (pure async functions, no state-machine DSL); the rev-2 `.step()` chain is no longer the target shape.
+> - **2026-06-10 rev 9:** Tracker maintenance pass against the live working tree (no source-code changes). (a) Re-snapshotted mega-file line counts in the §2 PR 19 row — `workflow.ts` is now **3,913 lines** (the rev-6 audit cited 3,350; the rev-8 reading cited 3,350; both stale by +576), `toolDefinitions.ts` is **2,051 lines** (rev 6 cited 2,222 "after PR 9 work"; the actual current value is below that because §8.5's PR 12 revert pulled the file back to its 3b1118187 baseline). (b) **Split §2 PR 19 into three rows (19a / 19b / 19c)** — one per Phase 1 task (1.1, 1.2, 1.3) — so each split can be marked done independently and so the row-level status column matches reality. (c) **Expanded §8.6 back-out list with the two files the rev-8 enumeration missed:** `packages/semantic-core/src/bootstrapScaffolding.ts` (8 SALT_REVIEW... hits; the writer that emits the CI YAML, so the env-var name survives in newly-bootstrapped consumer repos until it's removed) and `packages/semantic-core/schemas/project-conventions.schema.json` (1 hit in the `require_human_review_for` description that documents the env-var as the bypass mechanism in the published JSON Schema). Also added a missing entry for `packages/cli/README.md` (1 hit). (d) **Rewrote §8.6 anchors as `git grep` patterns + symbol excerpts** rather than line numbers; the line numbers were uncommitted-edit anchors that would shift the moment anything else touched the files, but the symbols (`resolveSinceDiff`, `addCiChecks`, `gitlabSnippet`, `SALT_REVIEW_HUMAN_REVIEWED_LABEL_ENV_VAR`, `setupSinceFixtureRepo`) are stable. (e) Updated §0 "If you're in IntelliJ" paragraph to reflect that PR 2 landed Option C (conditional opt-in, default no-write) rather than the dropped Option A. (f) Removed an orphan "End of handoff." line that was stranded between §8.4 and §8.5 from a pre-rev-5 layout, and added one at the actual end of the doc. (g) Companion roadmap edit: `gold-standard-roadmap.md` §1.3 M1 row had `projectContext.ts` cited at a path that no longer exists (`packages/semantic-core/src/tools/projectContext.ts`); the file actually lives at `packages/mcp/src/server/projectContext.ts` and is still 1,335 lines. Also added a snapshot-date stamp to M1 since the count drift is now in three of seven cited files, and tightened the Phase 0 exit criterion so the "every pattern story passes `review_salt_ui` clean" line is attributed to 0.8a (its actual outcome) rather than 0.8 (which ships the failing spec).
+> - **2026-06-10 rev 8:** Redesigned PR 8 (task 2.13) after a maintainer review concluded the rev-7 prompt over-extended the CLI surface — it drove a `--since` flag, an `--add-ci-checks` init option that writes opinionated CI files at canonical paths, and a `SALT_REVIEW_HUMAN_REVIEWED_LABEL` env var the CLI reads to flip its own exit code. Rev 8 swaps all three for a single composable primitive: `require_human_review_for` violations surface as ordinary blocking findings on `salt-ds review <files...>`, CI does diff-mode in a 5-line shell snippet wired in by the consumer, and a new `packages/cli/docs/ci-integration.md` documents the composition. §8.4 is folded into the lean PR 8 scope (the deferred `team.json` example closes there). New **§8.6** lists the in-flight CLI surface that was scaffolded in the working tree under the rev-7 prompt and needs to be backed out before PR 8 lands. No source-code changes in this rev; the tracker now points at the lean design.
+> - **2026-06-10 rev 7:** Authored the two §3 paste-ready prompts that had been deferred since rev 3 — **PR 8 (task 2.13: CI required check + E2)** and **PR 9 (task 2.9: split `status: partial` into `partial` + `internal_limitations`)**. PR 8's prompt also folds in the §8.4 cleanup (the CI-side label gate that PR 18 left half-done waiting on `salt-ds review --since`), so closing both lands together. The "deferred prompt" note between PR 7 and PR 10 is replaced with a forward-pointer to PR 18's §8.4 cleanup. No code changes. **Superseded in part by rev 8** — the PR 8 prompt in §3 is now the rev-8 lean version; the rev-7 design is preserved in §8.6 as the back-out list.
 > - **2026-06-10 rev 6:** Full audit pass against the live working tree (no source-code changes; tracker-only). Marked PRs 4, 5, 6, 7, and 12 ✅ Done (their code, tests, and untracked artifacts are all on the branch — they had simply never been ticked off in §2). Marked PR 10 (task 0.7) and PR 18 (task 2.16) ⚠️ Partial with the specific subtasks that remain. PR 19 (Phase 1 mega-file splits) explicitly noted as not started — `workflow.ts` is 3,350 lines (slight growth) and `toolDefinitions.ts` is 2,222 lines (grew with 0.9 work). Roadmap task **0.5** (tidy `chat.json` + `component-category-map.json`) flagged in §8.3 as partly done. Confirmed the four pre-existing failures recorded in §8.2 still reproduce.
 > - **2026-06-09 rev 5:** PRs 13 (task 0.10) and 14 (task 0.8) marked ✅ Done with commit anchors. New §8 "Known follow-ups" added capturing (a) the 0.8 `composition.nested-interactive-primitives` heuristic-repair gap list surfaced by the new canonical-example round-trip spec, (b) pre-existing `publicContractParity.spec.ts` upgrade/migrate semantic mismatches discovered while verifying 0.10, and (c) the pre-existing `agenticEvals.spec.ts > falls back to component routing` reproducible failure. Companion roadmap change: `gold-standard-roadmap.md` row **0.8a** added (the explicit follow-up to 0.8, mirroring the 0.6 → 0.7 chain).
 > - **2026-06-09 rev 4:** Audit pass against the live repo. PR 1 (task 0.3) marked ✅ Done (Option B shipped). PR 2 (F11) reclassified ✅ Done (Option C landed, not the prompt's requested Option A — see `session-findings-2026-06.md` root cause #9 "Decision (2026-06)" for the ratification). PR 2 §3 prompt annotated as superseded. No code or scope change in this rev — just bringing the tracker in line with what's already on `mcp`.
@@ -27,7 +30,7 @@ This work is IDE-agnostic. Pick your editor; both paths reach the same end state
 1. **Settings → Tools → GitHub Copilot → Chat:**
    - Ensure "Agent mode" is enabled (it's the default in recent builds).
    - Ensure "Use instruction files" / "Use AGENTS.md" is on so the workspace `AGENTS.md` and `.github/copilot-instructions.md` load automatically.
-   - If a "Custom agents" or "Experimental features" toggle exists, leave custom agents OFF (we're dropping `@SaltUI` in PR 2 anyway).
+   - If a "Custom agents" or "Experimental features" toggle exists, leave custom agents OFF (PR 2 landed **Option C**: `@SaltUI` is no longer written by default, but the conditional opt-in path is retained for hosts that advertise custom-agent support — IntelliJ doesn't yet, so the default is correct for you).
 
 2. **Chat input controls:**
    - **Mode dropdown** (next to the model picker): set to **Agent** for every PR. Ask mode can't write files; Edit mode is too conservative for multi-file work.
@@ -91,20 +94,27 @@ Recommended order. Estimates are wall-clock for a focused session including the 
 | 5 | **0.1** Playwright split | **Opus 4.7 High 1M** | Agent | 3–4 hr | High | ✅ Done (new `packages/runtime-inspector-browser/` workspace; `inspectShared.ts` + `inspectLazyLoader.spec.ts` added; `runtime-inspector-core/package.json` peer-deps updated; `scripts/build.mjs` skip-optional-peer logic added; `packagePublishBoundary.spec.ts` updated to assert playwright is **not** bundled) |
 | 6 | **0.2** lazy registry loader | Opus 4.7 (medium) | Agent | 2 hr | Medium | ✅ Done (`packages/semantic-core/src/registry/lazyRegistry.ts` + `artifactCache.ts`; `LoadRegistryOptions.prefetch` field; `infoBytesBudget.spec.ts` measures `salt-ds info` at **1.2 KB** of registry artifacts vs. the <2 MB target) |
 | 7 | **2.12 + 2.17 + 2.18** `--hook` flags (E1, E6, E7) | Opus 4.7 (medium) | Agent | 3 hr | Medium | ✅ Done (`packages/cli/src/lib/hookIO.ts` internal helper; `--hook` flag on `review` and `info`; `init --add-agent-hooks` writes `.github/hooks/salt.json`; `hookIO.spec.ts` 18/18 + cli.spec.ts hook scenarios pass) |
-| 8 | **2.13** CI required check (E2) | Sonnet 4.5 | Agent | 1.5 hr | Low | |
+| 8 | **2.13 + 0.5b** CI required check (E2) + drop bootstrap CI emitter — *lean rev-8 design + rev-10 expansion* | Sonnet 4.5 | Agent | 1.5 hr | Low | ⚠️ Redesigned in rev 8, **expanded in rev 10** to cover task 0.5b. Scope: (i) back out the rev-7 CLI surface per §8.6 (still 7 files: `args.ts`, `init.ts`, `workflow.ts`, `cli.spec.ts`, `cli/README.md`, plus the rev-9 additions `bootstrapScaffolding.ts` and `project-conventions.schema.json`); (ii) surface `require_human_review_for` matches as blocking findings on `salt-ds review <files...>` with rule id `policy.require_human_review_for.<kind>`; (iii) add `packages/cli/docs/ci-integration.md` with 5-line GH Actions and GitLab snippets; (iv) add a non-trivial example to `workflow-examples/consumer-repo/.salt/team.json`. After this lands: `bootstrapScaffolding.ts` drops from 597 to ~450 lines; `init.ts` drops from 895 to ~700 lines (PR 21 closes the rest); `git grep SALT_REVIEW_HUMAN_REVIEWED_LABEL` returns zero hits outside this doc. |
 | 9 | **2.9** split `status: partial` | Opus 4.7 High | Agent | 2 hr | Medium | ✅ Done — `packages/mcp/src/__tests__/statusPartialSplit.spec.ts` 5/5 pass covering all four `(status, internal_limitations)` combinations. `PublicInternalLimitations` shape + `EMPTY_PUBLIC_INTERNAL_LIMITATIONS` + `normalizeInternalLimitations` pinned in `packages/semantic-core/src/tools/publicContract.ts`; `MCP_WORKFLOW_OUTPUT_SCHEMA` carries the new field in `packages/mcp/src/server/toolDefinitions.ts`; `applyReviewEvidenceGate` no longer downgrades `status` to `partial` for `unsupported_claim_count > 0` alone (only true `validation_issues` do); `SALT_WORKFLOW_CONTRACT_SEMVER` bumped `1.0.0 → 1.1.0` + capability-manifest `contract_lifecycle` changelog entry; `packages/mcp/docs/salt-workflow-v1-host-contract.md` + `SKILL.md` + `references/shared/transport.md` updated to treat `partial` as user-facing remaining work only and read `internal_limitations` as a separate signal; `publicContractParity.spec.ts` now asserts `internal_limitations` parity across all 6 compact tests via the new `expectInternalLimitationsParity` helper; compact byte budgets bumped to absorb the new field; **no new parity failures introduced** — the 4 pre-existing failures in §8.2.2 still reproduce verbatim. **See §8.5** for a regression in PR 12 surfaced during this work. |
 | 10 | **0.7** close the 0.6 coverage gap list (upstream fixes) | Opus 4.7 (medium) | Agent | 3 hr | Medium | ⚠️ Partial — (a) **landed**: `SaltProviderNext` props are in the registry, brand-prop defaults extracted, JPM Brand example present in `examples.json`. (b) **not landed**: `composition_contract` field still missing on 28 pattern records (0.6 spec fails). (c) **not landed**: 24 foundation entities still have no canonical example, no `site/foundation-category-map.json`. Also: the `SaltProviderNext` first-class-entity check in `registryCoverage.spec.ts` still raises 2 gaps because the spec searches for the exact name and the extracted entity record name doesn't match — bisect before assuming this is registry vs. spec. |
 | 11 | **0.11 + 2.11** plain-text file-path fallback | Sonnet 4.5 | Agent | 45 min | Low | |
+| 11.5 | **2.3** trim skill *(rev-10 priority bump: land before any further skill-prose adds)* | Opus 4.7 (medium) | Agent | 2 hr | Medium | Not started — skill is **2,383 lines / 39 files** today vs. roadmap M5's 2,335 / 36 baseline (it grew, not shrank). Every later Phase 2 item that touches skill prose (PR 16 ask_user; PR 17 attestations; PR 18 escalation; PR 15 batch-lookup skill update) will be rewriting whatever 2.3 produces, so land 2.3 *first*. Convert `skillContracts.spec.ts` from text-match to structural assertions in the same PR. |
 | 12 | **0.9** auto-invalidate context on `install_dependencies` | Sonnet 4.5 thinking | Agent | 1 hr | Low | ⚠️ Partial — landed in the working tree but **reverted from `packages/mcp/src/server/toolDefinitions.ts`** during PR 9 (task 2.9) because the in-flight edits had left that file with multiple orphaned function bodies (`resolveProjectContext`, `resolveOrCollectProjectContext`, and `decodeProjectContextId` were all partially deleted), making the entire MCP package fail to parse. The untracked regression spec `packages/mcp/src/__tests__/installDependenciesContextInvalidation.spec.ts` and the still-present `packages/skills/salt-ds/agents/openai.yaml` change are intact; only the `toolDefinitions.ts` half needs to be re-landed cleanly (add `staleProjectContextIds` to `ToolExecutionRuntime`, `markProjectContextStale` / `isProjectContextStale` helpers, the `install_dependencies` post-execution invalidation hook, and the stale-context refresh branch inside `resolveOrCollectProjectContext`). See §8.5 for the reproduction details. |
 | 13 | **0.10** tool-selection benchmark | Sonnet 4.5 | Agent | 1.5 hr | Low | ✅ Done (commit `3b1118187`; ranker + 20-prompt corpus + 4 description swaps; see §8.2 for pre-existing failures unmasked while verifying) |
 | 14 | **0.8** canonical-example round-trip test (depends on PR 10) | Opus 4.7 (medium) | Agent | 1.5 hr | Medium | ✅ Done as a failing spec (commit `73913767a`); follow-up heuristic-repair work is **roadmap row 0.8a** — see §8.1 for the 9-story gap list |
 | 15 | **1.8** `get_salt_entities` batch lookup (M13 / F6) | Opus 4.7 (medium) | Agent | 2 hr | Medium | |
 | 16 | **2.10** theme-aware `create_salt_ui` (depends on PR 10) | Opus 4.7 (medium) | Agent | 2 hr | Medium | |
-| 17 | **2.15** agent provenance attestations (E4, depends on PR 7) | Opus 4.7 (medium) | Agent | 3 hr | Medium | |
+| 17 | **2.15** agent provenance attestations (E4, depends on PR 7) | Opus 4.7 (medium) | Agent | 3 hr | Medium | *Rev-10 narrowing:* ship the attestation **payload** as a published Zod schema at `salt-ds.dev/schemas/attestation/v1`; emit on stdout when `--emit-attestation` is set; the `--verify-attestations` flag reads from stdin (or any consumer-chosen store). The `.salt/attestations/<hash>.json` on-disk layout becomes a demo default in `workflow-examples/`, **not** a foundation commitment. Do not pick the hashing algorithm, the retention policy, the GC story, or the sharding strategy for the consumer's audit store. |
 | 18 | **2.16** policy-driven escalation (E5, depends on PR 7) | Sonnet 4.5 | Agent | 1.5 hr | Low | ⚠️ Partial — PreToolUse `require_human_review_for` branch landed in `salt-ds review --hook` (rule schema in `packages/cli/src/commands/workflow.ts`; help text in `packages/cli/src/lib/args.ts`; cli.spec.ts test at line 6457 passes). **Not landed**: the CI-side label gate, because it needs PR 8's `salt-ds review --since` which is still open. Also no example added to `workflow-examples/consumer-repo/.salt/team.json` yet. |
-| 19 | **Phase 1** mega-file splits (one per task: 1.1, 1.2, 1.3) | **Opus 4.7 High 1M** | Agent | 4–6 hr each | High | Not started — `workflow.ts` is 3,350 lines (slight growth on the 3,337 baseline), `toolDefinitions.ts` is 2,222 lines (grew with 0.9 work). Both files now urgently need splitting before any further Phase 2 work lands. |
+| 19a | **Task 1.1** split `packages/cli/src/commands/workflow.ts` | **Opus 4.7 High 1M** | Agent | 4–6 hr | High | Not started — file is **3,913 lines** as of 2026-06-10 (+576 over the roadmap §1.3 baseline of 3,337 and +563 over rev-6's 3,350 reading). Highest-leverage of the three splits; should land first per Appendix A's safe-split order. |
+| 19b | **Task 1.2** split `packages/mcp/src/server/toolDefinitions.ts` | **Opus 4.7 High 1M** | Agent | 4–6 hr | High | Not started — file is **2,051 lines** as of 2026-06-10. The rev-6 audit cited 2,222 "after 0.9 work" but §8.5's PR 12 revert pulled the file back to its 3b1118187 baseline, hence the smaller count today. |
+| 19c | **Task 1.3** split `packages/semantic-core/src/tools/publicContract.ts` + `workflowContracts.ts` | **Opus 4.7 High 1M** | Agent | 4–6 hr | High | Not started — `publicContract.ts` is **2,486 lines** as of 2026-06-10 (+112 from PR 9's `internal_limitations` work), `workflowContracts.ts` is **2,334 lines** (unchanged). Roadmap Appendix A says do the types extraction (step 1) and `publicContract` barrel (step 2) before any of the workflow-side splits; sequence accordingly. **Rev-10 note:** target shape is plain async functions per the rev-3 cross-cutting §3.3 narrowing (no state-machine DSL, no `.step()` chain) and explicit dependency arguments per the rev-3 cross-cutting §3.4 cut (no React-style hooks). |
+| 20 | **0.12** published-schema vendor-name regression test *(rev 3 / rev 10)* | Sonnet 4.5 | Agent | 45 min | Low | Not started — walks every JSON Schema in `packages/semantic-core/schemas/` and every Zod schema's `.describe()` / `.title()`, asserting **zero** mentions of `github`, `gitlab`, `bitbucket`, `circleci`, `jenkins`, `azure`, `buildkite`, `SALT_*` env-var names, or specific tool names (`AGENTS.md`, `vscode`, `cursor`). The current `SALT_REVIEW_HUMAN_REVIEWED_LABEL` leak in `project-conventions.schema.json` is the motivation; PR 8 removes it, PR 20 makes the regression impossible. Land *after* PR 8 (so the test is green when it lands). |
+| 21 | **1.1b** shrink `init.ts` to <500 lines *(rev 3 / rev 10)* | Opus 4.7 (medium) | Agent | 2 hr | Medium | Not started — `packages/cli/src/commands/init.ts` is **895 lines** today (second-largest violation of the Phase 1 800-line target after `workflow.ts`; was not on the rev-2 §1.3 M1 list — quiet drift). PR 8's 0.5b removal drops ~200 lines naturally; PR 21 extracts the rest into `commands/init/{bootstrap,hostAdapters,uiVerify,agentHooks}.ts` so `init.ts` becomes a router. Land *after* PR 8 (so the post-0.5b shape is the baseline). |
 
-Sonnet for mechanical / well-bounded work. Opus High 1M only when cross-file architectural reasoning is the bottleneck — never just because "the task feels important." Dependency order matters: PR 10 unblocks PRs 14 and 16; PR 7 unblocks PRs 17 and 18.
+Sonnet for mechanical / well-bounded work. Opus High 1M only when cross-file architectural reasoning is the bottleneck — never just because "the task feels important." Dependency order matters: PR 10 unblocks PRs 14 and 16; PR 7 unblocks PRs 17 and 18; **PR 8 unblocks PR 20 and PR 21**; **PR 11.5 (skill trim) should land before any later PR that adds skill prose** (PRs 15, 16, 17, 18 all do).
+
+**Rev-10 sequencing tl;dr.** The next 5 PRs in priority order are now: **PR 8** (lean 2.13 + 0.5b bootstrap CI emitter removal), **PR 12 re-land** (task 0.9 toolDefinitions.ts staleProjectContextIds per §8.5), **PR 11.5** (task 2.3 skill trim, before further skill prose), **PR 19a** (task 1.1 workflow.ts split, before any further Phase 2 work touches the 3,913-line file), **PR 20** (task 0.12 schema vendor-name test, makes the rev-7 leak class impossible going forward). Everything else slots in after these.
 
 ## 3. Paste-ready prompts
 
@@ -343,81 +353,94 @@ need separate PRs to keep diffs small.
 Tell me the hookIO API surface before implementing.
 ```
 
-> **Note on PR 18's CI half:** PR 8 ships `salt-ds review --since` and the `.github/workflows/salt-review.yml` writer. PR 18's `require_human_review_for` PreToolUse branch is already landed (see §8.4) but its CI-side label gate is gated on PR 8 — close the §8.4 loop in the same PR 8 session.
+> **Note on PR 18's CI half (rev 8):** The rev-7 framing said PR 8 ships `salt-ds review --since` and the `.github/workflows/salt-review.yml` writer, and PR 18's CI-side label gate was blocked on that plumbing. Rev 8 (see the PR 8 prompt below) drops `--since` and `--add-ci-checks` entirely — the CI gate is now whatever the consumer's CI already uses (labels, CODEOWNERS, branch protection), and the lean PR 8 surfaces `require_human_review_for` matches as ordinary blocking findings so CI and the agent hook reach the same primitive. §8.4 closes inside PR 8.
 
-### PR 8 — Task 2.13 (CI required check — E2)
+### PR 8 — Task 2.13 (CI required check — E2) — *rev-8 lean redesign*
+
+> **Why this prompt changed:** the rev-7 prompt drove `--since`, `--pretty`, `--add-ci-checks`, and a `SALT_REVIEW_HUMAN_REVIEWED_LABEL` env var into the CLI. A maintainer review concluded that crossed the line from "primitive" to "policy": the diff resolution is one shell line over the existing `salt-ds review [target ...]` primitive, the canonical-path CI writer hard-codes the consumer's CI vendor and file layout, and the env-var bypass couples the CLI to a specific override mechanism. Rev 8 keeps PR 8 as a small composable primitive plus a docs page; CI integration is composed by the consumer.
 
 ```
 Implement Phase 2 task 2.13 from packages/mcp/docs/gold-standard-roadmap.md
-(also session-findings-2026-06.md E2). This pairs with PR 7's hook layer
-to give Salt cross-host server-side enforcement: bypassable only by a
-repo admin removing the required check.
+(also session-findings-2026-06.md E2) under the lean rev-8 scope. The
+earlier rev of this prompt drove `--since`, `--add-ci-checks`, and a
+SALT_REVIEW_HUMAN_REVIEWED_LABEL env var into the CLI. That work is
+partially in the working tree (see §8.6 of implementation-handoff.md)
+and is being intentionally backed out — the design rationale in revs
+7→8 of the handoff concluded the CLI should stay a small composable
+primitive and CI integration belongs in docs, not in the CLI surface.
 
 Read first:
 - packages/mcp/docs/gold-standard-roadmap.md §Phase 2 task 2.13
 - packages/mcp/docs/session-findings-2026-06.md E2
+- packages/mcp/docs/implementation-handoff.md §8.4 and §8.6 (back-out
+  list and design rationale)
 - packages/cli/src/commands/workflow.ts — existing `salt-ds review`
-  command and its file-args path (the --since mode extends this, it
-  does not replace it)
-- packages/cli/src/commands/init.ts — existing `--add-agent-hooks`
-  option (the --add-ci-checks option mirrors it)
-- packages/cli/src/lib/args.ts — CLI flag parsing surface
+  command (positional file/dir args are already the documented
+  "scan a target" primitive: `salt-ds review src`)
+- packages/cli/src/lib/args.ts — current CLI flag surface (note the
+  `--since`, `--pretty`, and `--add-ci-checks` entries you will be
+  removing per §8.6)
+- packages/cli/src/commands/init.ts — current init scaffolding
+  (`--add-agent-hooks` stays; the `--add-ci-checks` branch added by
+  the rev-7 work is being removed)
 
-This is one PR with three pieces:
+This PR ships three small pieces:
 
-1. New `--since <ref>` mode on `salt-ds review`. When set:
-   - Resolve the diff list between HEAD and <ref> via `git diff --name-only --diff-filter=ACMR <ref>`.
-   - Filter to Salt-affected files (TSX/TS/JSX/JS/MDX with @salt-ds
-     imports, plus .salt/team.json, .salt/stack.json).
-   - Run review on the filtered set.
-   - Exit non-zero (use the existing review exit-code helper) when any
-     blocking finding is detected. Print findings to stdout in the
-     normal compact-JSON format unless --pretty is set.
-   - Also fold in PR 18's CI-side label gate: if
-     `.salt/team.json` `require_human_review_for` matches any of the
-     changed files AND the env var `SALT_REVIEW_HUMAN_REVIEWED_LABEL`
-     is not "true", exit non-zero with a structured reason naming the
-     rule. This closes §8.4 and the half-landed PR 18.
+1. Back out the in-flight CLI surface listed in §8.6. No `--since`,
+   no `--pretty`, no `--add-ci-checks`, no `SALT_REVIEW_HUMAN_REVIEWED_LABEL`
+   read anywhere in the CLI. Delete the matching cli.spec.ts cases
+   (the four `--add-ci-checks` cases, the `--since` cases, the
+   env-var-bypass case, and the `initGitRepo` / `commitAll` /
+   `setupSinceFixtureRepo` helpers if they have no other consumer).
+   The `salt-ds review [target ...]` primitive remains exactly as it
+   is today.
 
-2. New `--add-ci-checks` option on `salt-ds init`. When set:
-   - Write `.github/workflows/salt-review.yml` running
-     `npx salt-ds review --since "${{ github.event.pull_request.base.sha }}"`
-     against PR events, marked as a required check.
-   - Write `.gitlab-ci.yml` snippet (or `.gitlab/salt-review.yml`
-     conditional include) doing the same against
-     `$CI_MERGE_REQUEST_DIFF_BASE_SHA`.
-   - Both files must include the SALT_REVIEW_HUMAN_REVIEWED_LABEL
-     plumbing: GitHub Actions reads the PR labels and exports the env
-     var if `salt-human-reviewed` is present; GitLab reads
-     `$CI_MERGE_REQUEST_LABELS`.
-   - Skip writing when an existing file at the path already declares
-     the salt-review job, same idempotence pattern as
-     `--add-agent-hooks` in init.ts.
+2. Surface `require_human_review_for` policy violations as ordinary
+   blocking findings on `salt-ds review`. The finding carries a
+   stable rule id (proposal: `policy.require_human_review_for.<kind>`)
+   and the matched file path. The CLI emits the finding and exits
+   non-zero via the existing review exit-code helper; it has no
+   opinion about labels, env vars, or bypass mechanisms. Reuse the
+   policy-matching helper that the existing PreToolUse hook branch
+   already uses (it lives in workflow.ts ~line 3423 per §8.4) — do
+   not duplicate the matching logic.
 
-3. Tests:
-   - cli.spec.ts cases: --since exits 0 on a clean diff, exits non-zero
-     on a blocking finding, exits 0 when the diff has no Salt files,
-     exits non-zero with the policy-gate reason when
-     require_human_review_for matches and the label env is absent,
-     exits 0 when the same diff has the label env set.
-   - cli.spec.ts cases: --add-ci-checks writes the two CI files
-     (create + idempotent update + no-op when already wired); init
-     without --add-ci-checks does not write them.
+3. Document CI composition in a new
+   packages/cli/docs/ci-integration.md. Include copy-paste ~5-line
+   snippets for GitHub Actions and GitLab CI. Each snippet is just:
+   compute the changed file list with
+   `git diff --name-only --diff-filter=ACMR "$BASE" -- '*.{ts,tsx,jsx,js,mdx}'`,
+   pipe to `xargs -r npx salt-ds review`, branch-protect the job.
+   Include one paragraph on bypass: "if your org needs a manual
+   override, gate the job in your CI config — labels, CODEOWNERS,
+   branch protection rules, whatever your repo already uses. The CLI
+   doesn't know about your bypass model and shouldn't." Cross-link
+   from packages/cli/README.md. Also add a non-trivial
+   `require_human_review_for` example to
+   `workflow-examples/consumer-repo/.salt/team.json` (this closes the
+   §8.4 cleanup).
 
-Tell me the --since git-resolution helper API and the
-`workflow-examples/consumer-repo/.salt/team.json`
-`require_human_review_for` example BEFORE editing. (The example was
-deferred from PR 18 — surface it here so §8.4 closes cleanly.)
+Tests (cli.spec.ts):
+- `salt-ds review <file>` against a file matching
+  `require_human_review_for` returns one blocking finding with the
+  expected rule id and exits non-zero.
+- Same file with the policy not matching returns no policy finding
+  and exits per the usual review outcome.
+- Drop the four `--add-ci-checks` cases, all `--since` cases, and
+  the env-var-bypass case.
+- Drop any unused git-fixture helpers introduced by the rev-7 work.
 
-Then implement and run:
+Tell me the rule-id naming and the team.json example shape BEFORE
+editing. Do not add new CLI flags. Do not write CI files into the
+consumer repo. Do not add init scaffolding. Do not modify PR 7's
+hookIO.ts surface.
+
+Run:
 yarn vitest run packages/cli/src/__tests__/cli.spec.ts
 yarn vitest run packages/cli/src/__tests__/hookIO.spec.ts
-
-Do not modify PR 7's hookIO.ts surface (E1 / E6 / E7 are settled). Do
-not introduce a new public CLI surface beyond the two flags above.
 ```
 
-**Verify yourself:** with two repos open — one with a clean Salt diff, one with a deprecated-prop diff — run `salt-ds review --since main` in each and confirm exit codes 0 and non-zero respectively. Then add `salt-human-reviewed` to your local label env and confirm a `require_human_review_for`-matching diff still fails without it and passes with it.
+**Verify yourself:** after this PR, `git diff packages/cli/src/lib/args.ts` against `mcp` HEAD should show zero new `salt-ds review` flags and zero new `salt-ds init` flags. `git grep SALT_REVIEW_HUMAN_REVIEWED_LABEL` should return zero hits. `salt-ds review <file-matching-require_human_review_for-rule>` should exit non-zero with a finding whose `rule_id` starts with `policy.require_human_review_for.`. The two snippets in `packages/cli/docs/ci-integration.md` should be runnable as-is when pasted into a real GitHub Actions or GitLab CI job.
 
 ### PR 9 — Task 2.9 (split `status: partial` into `partial` + `internal_limitations`)
 
@@ -978,14 +1001,15 @@ Both items below were verified pre-existing by stashing the in-flight changes an
 - **Status:** `chat.json` is no longer tracked in the working tree (likely already deleted). `site/component-category-map.json` is still in the modified-but-uncommitted set on this branch.
 - **Action:** include the category-map change in whatever PR is shipping the matching docs/extraction work it belongs to, or back it out if it was incidental.
 
-### 8.4 PR 18 (task 2.16) is half-done and waiting on PR 8 (task 2.13)
+### 8.4 PR 18 (task 2.16) cleanup is folded into the lean PR 8 (rev 8)
 
-- **Status:** PreToolUse `require_human_review_for` matching is implemented behind `salt-ds review --hook` (rule schema in `packages/cli/src/commands/workflow.ts` ~line 3423; help text in `packages/cli/src/lib/args.ts`; a passing cli.spec.ts case at line 6457).
-- **Blocked-on:** the CI-side label gate (`salt-ds review --since <ref>` + `salt-human-reviewed` label) needs the `--since` CLI plumbing that PR 8 introduces. Until PR 8 lands, the policy can only be enforced via the agent hook, not via the PR check.
-- **Cleanup also pending:** add a non-trivial `require_human_review_for` example to `workflow-examples/consumer-repo/.salt/team.json` per the original PR 18 brief (step 5).
-- **Track as part of PR 8 or as a fast-follow** once PR 8 lands — do not re-open the policy-schema work, only the CI gate.
-
-End of handoff.
+- **Original framing (rev 7):** PR 18's CI-side label gate was "blocked" on PR 8's `--since` plumbing and the `salt-human-reviewed` label convention.
+- **Rev-8 redesign:** PR 8 drops `--since` and `--add-ci-checks` entirely (see §8.6). The CI gate is now whatever the consumer's CI already uses — labels, CODEOWNERS, branch protection — and the CLI is no longer in the bypass-mechanism business.
+- **What remains:**
+  - PreToolUse `require_human_review_for` matching is already landed in `salt-ds review --hook` (rule schema in `packages/cli/src/commands/workflow.ts` ~line 3423; help text in `packages/cli/src/lib/args.ts`; cli.spec.ts test at line 6457).
+  - Lean PR 8 surfaces the same policy as an ordinary blocking finding on `salt-ds review <files...>` so CI and the agent hook reach the same primitive through different entry points. No new flags, no env-var plumbing.
+  - Add a non-trivial `require_human_review_for` example to `workflow-examples/consumer-repo/.salt/team.json` per the original PR 18 brief (step 5) — included in PR 8's scope.
+- **Action:** no separate fast-follow needed; the cleanup closes inside the lean PR 8 session.
 
 ### 8.5 PR 12 (task 0.9) `toolDefinitions.ts` regression — reverted during PR 9
 
@@ -1005,3 +1029,41 @@ End of handoff.
 - **Verification:** `yarn vitest run packages/mcp/src/__tests__/installDependenciesContextInvalidation.spec.ts` should pass 2/2 after re-landing.
 - **Process lesson for future PRs:** the IDE/editor agent had a write-race that silently dropped edits across tool calls, which is how PR 12's `toolDefinitions.ts` work corroded over the past few sessions without anybody catching it. Mitigations: (a) commit each PR as soon as it's verified green instead of letting the working tree accumulate dozens of half-applied edits across overlapping PRs; (b) when an edit tool reports success but a follow-up `git diff` shows nothing landed, fall back to a python/sed script that bypasses the editor surface; (c) before starting any cross-file refactor, snapshot the affected files (`cp`, `git stash`, or a branch) so a corrupted in-flight state is recoverable.
 
+
+### 8.6 PR 8 (task 2.13) rev-7 CLI surface to back out — *added rev 8*
+
+Discovered while reviewing the rev-8 design question: does `--since` pull its weight, and is the CLI taking on too many flags? Conclusion was **no** and **yes** respectively — see the rev-8 entry in the Revision history and the redesigned PR 8 prompt in §3. The rev-7 prompt drove a chunk of CLI surface into the working tree that is uncommitted and **must be removed before PR 8 lands in its lean form**, otherwise the lean prompt above will be working against scaffolding that contradicts it.
+
+- **What's on disk (uncommitted as of 2026-06-10).** Anchored by `git grep` patterns + symbol excerpts rather than line numbers — the rev-8 line-number anchors were brittle to any other edit landing in the same files, but the symbols and the help-text strings are stable enough to re-find reliably. Run each grep before editing to confirm the hit list is still what's described here.
+  - **`packages/cli/src/lib/args.ts`** (1 `SALT_REVIEW_HUMAN_REVIEWED_LABEL` hit, 4 mentions of the rev-7 flags). `git grep -n -- '--since\|--pretty\|--add-ci-checks\|SALT_REVIEW_HUMAN_REVIEWED_LABEL' packages/cli/src/lib/args.ts` enumerates the help-text and usage-example lines that advertise the rev-7 surface (currently 4 lines in the `salt-ds init` / `salt-ds review` synopses and the explanatory paragraph that describes the env-var gate).
+  - **`packages/cli/src/commands/init.ts`** — the `flags["add-ci-checks"]` branch plus the `.github/workflows/salt-review.yml` and GitLab snippet/root writers. `git grep -n 'add-ci-checks\|gitlabSnippet\|gitlabRoot\|SALT_GITLAB_CI_ROOT_RELATIVE_PATH' packages/cli/src/commands/init.ts` enumerates the call sites; the GitHub Actions writer lives in the `addCiChecks` branch (currently a single `flags["add-ci-checks"] === "true"` test), the GitLab snippet/root writers live in dedicated `gitlabSnippetPath` / `gitlabRootPath` blocks earlier in the file. Remove all of them; the lean PR 8 ships no init-side CI scaffolding.
+  - **`packages/cli/src/commands/workflow.ts`** (7 `SALT_REVIEW_HUMAN_REVIEWED_LABEL` hits) — the `--since` resolver, the Salt-affected-file filter built on top of it, and the exit-code branches that consume the env var. `git grep -n 'resolveSinceDiff\|review --since\|SALT_REVIEW_HUMAN_REVIEWED_LABEL' packages/cli/src/commands/workflow.ts` enumerates the work. The whole `// ---------- salt-ds review --since <ref> (Phase 2 task 2.13 / E2) ----------` block comes out, including the `SALT_REVIEW_HUMAN_REVIEWED_LABEL_ENV_VAR` / `SALT_REVIEW_HUMAN_REVIEWED_LABEL_VALUE` constants and the structured `env_var` reason emitted on policy match.
+  - **`packages/cli/src/__tests__/cli.spec.ts`** (12 `SALT_REVIEW_HUMAN_REVIEWED_LABEL` hits) — the `--since` cases, the four `--add-ci-checks` cases, the env-var bypass cases, and the `initGitRepo` / `commitAll` / `setupSinceFixtureRepo` helpers (back out the helpers only if no other test consumes them; check with `git grep -n 'setupSinceFixtureRepo\|initGitRepo\|commitAll' packages/cli/src/__tests__/cli.spec.ts`). For the test enumeration, use `git grep -n 'review --since\|add-ci-checks\|SALT_REVIEW_HUMAN_REVIEWED_LABEL' packages/cli/src/__tests__/cli.spec.ts` and remove whole `describe` / `it` blocks rather than picking off individual lines.
+  - **`packages/cli/README.md`** (1 `SALT_REVIEW_HUMAN_REVIEWED_LABEL` hit) — one paragraph in the documented `salt-ds review` flag list that describes the `--since` + env-var integration. `git grep -n -- '--since\|SALT_REVIEW_HUMAN_REVIEWED_LABEL' packages/cli/README.md` finds it. Replace with a one-line pointer to `packages/cli/docs/ci-integration.md`.
+  - **`packages/semantic-core/src/bootstrapScaffolding.ts`** (8 `SALT_REVIEW_HUMAN_REVIEWED_LABEL` hits) — *added rev 9.* This is the bootstrap-side writer that produces the `.github/workflows/salt-review.yml` and `.gitlab-ci.yml` blocks `init --add-ci-checks` emits. It exports `SALT_REVIEW_HUMAN_REVIEWED_LABEL_ENV_VAR` and `SALT_REVIEW_HUMAN_REVIEWED_LABEL_NAME` as constants and embeds both names verbatim in the generated YAML, so the env-var convention survives in newly-bootstrapped consumer repos even when the CLI surface is gone. `git grep -n 'SALT_REVIEW_HUMAN_REVIEWED_LABEL\|salt-human-reviewed\|salt-review\.yml\|gitlab-ci' packages/semantic-core/src/bootstrapScaffolding.ts` enumerates the call sites. Remove the constants and the CI-YAML emitter together; the lean PR 8 ships no bootstrap CI scaffolding.
+  - **`packages/semantic-core/schemas/project-conventions.schema.json`** (1 `SALT_REVIEW_HUMAN_REVIEWED_LABEL` hit) — *added rev 9.* The `require_human_review_for` description string in the published JSON Schema documents the env-var as the CI bypass mechanism. `git grep -n SALT_REVIEW_HUMAN_REVIEWED_LABEL packages/semantic-core/schemas/project-conventions.schema.json` finds it. Rewrite the description to describe what the rule **does** (escalates matching changes to human review and surfaces as a blocking `policy.require_human_review_for.<kind>` finding) and point at `packages/cli/docs/ci-integration.md` for the consumer-side bypass story; the published schema should not describe the bypass mechanism of one specific CI integration.
+  - Any `SALT_REVIEW_HUMAN_REVIEWED_LABEL` env-var read anywhere else in the tree. `git grep SALT_REVIEW_HUMAN_REVIEWED_LABEL` should return zero hits outside `packages/mcp/docs/implementation-handoff.md` (i.e. this doc) when back-out is complete.
+
+- **Why back it out (the rev-8 design rationale):**
+  - `--since` is a 1-line shell wrapper around the existing `salt-ds review [target ...]` primitive (`git diff --name-only --diff-filter=ACMR "$BASE" -- '*.{ts,tsx,jsx,js,mdx}' | xargs -r npx salt-ds review`). The CLI does not earn a flag for saving five lines of shell glue per CI integration.
+  - Most teams want to know about the **current state** of their UI (drift, deprecation debt, brand-migration progress), not the diff. `salt-ds review .` already does that; `--since` would tilt the tool's center of gravity toward CI-only usage and away from the developer-on-laptop case.
+  - `--add-ci-checks` writes opinionated CI files at canonical paths (`.github/workflows/salt-review.yml`, `.gitlab-ci.yml`). That crosses the line from primitive into policy and silently assumes GitHub or GitLab — no Bitbucket, CircleCI, Jenkins, Azure DevOps, Buildkite, etc.
+  - `SALT_REVIEW_HUMAN_REVIEWED_LABEL` couples the CLI to a specific bypass mechanism (env-var-flips-result, with the label noun baked in). Gold-standard CLIs exit non-zero on the violation and let the CI wrapper decide whether to swallow the exit code based on labels, approvals, CODEOWNERS, branch protection, ticket-system gates, or whatever convention the org already runs.
+  - Today's `salt-ds review` is being asked to do too many orthogonal jobs by the time PRs 7 / 8 / 17 stack: review files, do hook IO, do diff-mode, verify attestations. That is not a primitive any more. Gold standard = one verb does one thing well, plus great composition docs.
+
+- **What replaces it (the lean PR 8, in §3):**
+  - `salt-ds review <files...>` stays exactly as it is today.
+  - `require_human_review_for` violations are surfaced as ordinary blocking findings with a stable rule id (`policy.require_human_review_for.<kind>`).
+  - `packages/cli/docs/ci-integration.md` documents the 5-line GH Actions snippet, the 5-line GitLab snippet, and one paragraph on bypass mechanisms living in the consumer's CI config.
+  - `workflow-examples/consumer-repo/.salt/team.json` gets a non-trivial `require_human_review_for` example.
+
+- **Verification when back-out + lean PR 8 lands:**
+  - `git diff packages/cli/src/lib/args.ts` against `mcp` HEAD: zero new `salt-ds review` flags, zero new `salt-ds init` flags.
+  - `git grep SALT_REVIEW_HUMAN_REVIEWED_LABEL`: zero hits.
+  - `git grep -- '--since'` inside `packages/cli/src/`: zero hits (other than this doc).
+  - `salt-ds review <file-matching-the-policy>` exits non-zero with one blocking finding whose `rule_id` starts with `policy.require_human_review_for.`.
+  - The two snippets in `packages/cli/docs/ci-integration.md` are runnable as-is when pasted into a real GitHub Actions or GitLab CI job.
+
+- **If you disagree with the rev-8 redesign:** before re-expanding the surface, write down which specific gold-standard property the lean shape fails (e.g. "consumers reported they couldn't compose `git diff | xargs salt-ds review` reliably because X"). Speculative re-expansion is the same trap that produced the rev-7 prompt — every flag we ship is a flag we can't quietly remove later.
+
+End of handoff.
