@@ -938,7 +938,6 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Training
                         <div className="menu-item-adornment">
-                          {" "}
                           <Badge value="1" />
                         </div>
                       </MegaMenuItem>
@@ -987,8 +986,7 @@ export const WithAdornment: StoryFn = () => {
                       >
                         In-person
                         <div className="menu-item-adornment">
-                          {" "}
-                          <Badge className="menu-item-adornment" />
+                          <Badge />
                         </div>
                       </MegaMenuItem>
                       <MegaMenuItem
@@ -2242,7 +2240,7 @@ export const FullWidthContainer: StoryFn = () => {
                             console.log("MegaMenuItem clicked:", "/online")
                           }
                         >
-                          <DisplayIcon aria-hidden />
+                          Online
                         </MegaMenuItem>
                         <MegaMenuItem
                           render={<RouterLink to="/in-person" />}
@@ -2436,7 +2434,7 @@ export const EdgeToEdge: StoryFn = () => {
 
               <MegaMenuPanel
                 aria-label="Solutions menu"
-                className="max-width-content-panel"
+                className="edge-to-edge-panel"
               >
                 <MegaMenuBody>
                   <MegaMenuGroups>
@@ -2454,7 +2452,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <DevicesIcon aria-hidden />
                           Digital banking
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -2466,7 +2463,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <DatasetManagerIcon aria-hidden />
                           Risk management
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -2483,7 +2479,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <UserSearchIcon aria-hidden />
                           Patient management
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -2495,7 +2490,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <CallIcon aria-hidden />
                           Telemedicine
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -2507,7 +2501,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <PasteIcon aria-hidden />
                           Compliance solutions
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -2524,7 +2517,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <CartIcon aria-hidden />
                           E-commerce platforms
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -2543,7 +2535,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <LinkedIcon aria-hidden />
                           Supply chain optimization
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -2555,7 +2546,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <SettingsIcon aria-hidden />
                           Quality control
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -2567,7 +2557,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <NotificationIcon aria-hidden />
                           Production planning
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -2586,7 +2575,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <GuideOpenIcon aria-hidden />
                           Learning management systems
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -2598,7 +2586,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <LaptopIcon aria-hidden />
                           Virtual classrooms
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -2615,7 +2602,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <DocumentIcon aria-hidden />
                           Document management
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -2627,7 +2613,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <PinIcon aria-hidden />
                           Citizen services
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -2639,7 +2624,6 @@ export const EdgeToEdge: StoryFn = () => {
                             )
                           }
                         >
-                          <UserGroupIcon aria-hidden />
                           Public safety solutions
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -2716,7 +2700,7 @@ export const EdgeToEdge: StoryFn = () => {
 
               <MegaMenuPanel
                 aria-label="Services menu"
-                className="max-width-content-panel"
+                className="edge-to-edge-panel"
               >
                 <MegaMenuBody>
                   <MegaMenuGroups>
@@ -2904,7 +2888,7 @@ export const EdgeToEdge: StoryFn = () => {
               </MegaMenuTrigger>
               <MegaMenuPanel
                 aria-label="Resources menu"
-                className="max-width-content-panel"
+                className="edge-to-edge-panel"
               >
                 <MegaMenuBody>
                   <MegaMenuGroups>
@@ -3023,7 +3007,7 @@ export const WithContent: StoryFn = () => {
           className="custom-region-no-container-padding custom-region-side"
         >
           <MegaMenuBody>
-            <MegaMenuGroups>
+            <MegaMenuGroups className="custom-region-side-section">
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
                 <MegaMenuItemList>
@@ -3153,7 +3137,7 @@ export const WithContent: StoryFn = () => {
               </FlexLayout>
             </MegaMenuSupportingActions>
           </MegaMenuBody>
-          <MegaMenuSupportingContent className="custom-region">
+          <MegaMenuSupportingContent className="custom-region-side-content">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
                 alt="example"
@@ -3197,7 +3181,7 @@ export const WithContent: StoryFn = () => {
           aria-label="Content on left menu"
           className="custom-region-no-container-padding custom-region-side"
         >
-          <MegaMenuSupportingContent className="custom-region">
+          <MegaMenuSupportingContent className="custom-region-side-content">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
                 alt="example"
@@ -3228,7 +3212,7 @@ export const WithContent: StoryFn = () => {
             </FlexLayout>
           </MegaMenuSupportingContent>
           <MegaMenuBody>
-            <MegaMenuGroups>
+            <MegaMenuGroups className="custom-region-side-section">
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
                 <MegaMenuItemList>
