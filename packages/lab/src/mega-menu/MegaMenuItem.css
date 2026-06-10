@@ -38,7 +38,7 @@
 
 .saltMegaMenuItem:hover {
   outline: none;
-  background: var(--salt-navigable-background-hover);
+  background: var(--salt-overlayable-background-hover);
 }
 
 .saltMegaMenuItem:active {
