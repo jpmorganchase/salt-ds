@@ -33,6 +33,8 @@ data:
 
 ## Keyboard interactions
 
+### Opening and closing
+
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Enter / Spacebar / Down arrow">
 
@@ -41,43 +43,72 @@ data:
 
 </KeyboardControl>
 
-<KeyboardControl keyOrCombos="Tab">
-
-- Focus starts on the first mega menu item and moves sequentially through each item in a group, then continues to the first item of the next group once the last item is reached.
-- Tab includes interactive elements within custom regions in the focus sequence, based on their position in the layout. The custom region itself is not focusable.
-- Exits and collapses menu: After the last focusable element, Tab moves focus out of the mega menu and collapses it.
-
-</KeyboardControl>
-
-<KeyboardControl keyOrCombos="Shift + Tab">
-
-- If focus is in the mega menu, this action sets focus to the previous focusable component in the tab order.
-- If the first element in the mega menu has focus, Shift+Tab moves focus to the previous focusable element outside of the mega menu.
-
-</KeyboardControl>
-
 <KeyboardControl keyOrCombos="Escape">
 
 - If focus is in the mega menu, Escape closes the mega menu and returns focus to the triggering element.
 
 </KeyboardControl>
+</KeyboardControls>
 
-<KeyboardControl keyOrCombos="Up arrow / Down arrow / Left arrow / Right arrow">
+### Tab navigation
 
-- Up and Down arrows move focus between items within a column.
-- Left and Right arrows move focus to the first item of the previous or next column.
-- Up on the first item of a column moves focus to the trigger and keeps the menu open.
-- Left on the first column moves focus to the trigger and keeps the menu open. Right on the last column does the same, except on its last item: when there is a next trigger, it instead closes the mega menu panel and moves focus to that trigger.
-- Down on the last item of a column moves focus to the first item of the next column. On the last item of the last column, it moves into the supporting actions row if one is present; otherwise, when there is a next trigger, it closes the mega menu panel and moves focus to that trigger, and does nothing when there is none.
-- Within the supporting actions row beneath the groups, Left and Right move between actions, and Up returns focus to the last column. On the last action, Right behaves like the last item of the last column, and Down closes the mega menu panel and moves focus to the next trigger, or does nothing when there is none.
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Focus starts on the first mega menu item and moves sequentially through each item in a group, then continues to the first item of the next group once the last item is reached.
+- Tab includes interactive elements within custom regions in the focus sequence, based on their position in the layout. The custom region itself is not focusable.
+- After the last focusable element, Tab moves focus out of the mega menu and collapses it.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is in the mega menu, Shift+Tab sets focus to the previous focusable component in the tab order.
+- If the first element in the mega menu has focus, Shift+Tab moves focus to the previous focusable element outside of the mega menu.
+
+</KeyboardControl>
+</KeyboardControls>
+
+### Arrow navigation
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Up arrow">
+
+- Moves focus to the previous item within a column.
+- On the first item of a column, moves focus to the trigger and keeps the menu open.
+- In the supporting actions row, returns focus to the last column.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Down arrow">
+
+- Moves focus to the next item within a column.
+- On the last item of a column, moves focus to the first item of the next column.
+- On the last item of the last column, moves into the supporting actions row if one is present; otherwise it moves focus to the next trigger and closes the menu, or does nothing when there is no next trigger.
+- In the supporting actions row, the last action moves focus to the next trigger and closes the menu, or does nothing when there is no next trigger.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Left arrow">
+
+- Moves focus to the first item of the previous column.
+- On the first column, moves focus to the trigger and keeps the menu open.
+- In the supporting actions row, moves focus to the previous action.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Right arrow">
+
+- Moves focus to the first item of the next column.
+- On the last column, moves focus to the trigger and keeps the menu open — except on the last item, where it moves focus to the next trigger and closes the menu when one exists.
+- In the supporting actions row, moves focus to the next action; on the last action it behaves like the last item of the last column.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Home / End">
 
-- Home moves focus to the first item in the current group.
-- End moves focus to the last item in the current group.
+- Home moves focus to the first item in the current group, and End to the last.
+- In the supporting actions row, they move to the first and last action.
 
 </KeyboardControl>
-
 </KeyboardControls>
