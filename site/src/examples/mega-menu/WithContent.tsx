@@ -74,96 +74,98 @@ const supportingLinks = (
 const main = (
   <MegaMenuBody>
     <MegaMenuGroups className={styles.customRegionSideSection}>
-    <MegaMenuGroup>
-      <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-      <MegaMenuItemList>
-        <MegaMenuItem
-          render={<RouterLink to="/digital-banking" />}
-          onClick={() =>
-            console.log("MegaMenuItem clicked:", "/digital-banking")
-          }
-        >
-          Digital banking
-        </MegaMenuItem>
-        <MegaMenuItem
-          render={<RouterLink to="/risk-management" />}
-          onClick={() =>
-            console.log("MegaMenuItem clicked:", "/risk-management")
-          }
-        >
-          Risk management
-        </MegaMenuItem>
-      </MegaMenuItemList>
-    </MegaMenuGroup>
-    <MegaMenuGroup>
-      <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-      <MegaMenuItemList>
-        <MegaMenuItem
-          render={<RouterLink to="/patient-management" />}
-          onClick={() =>
-            console.log("MegaMenuItem clicked:", "/patient-management")
-          }
-        >
-          Patient management
-        </MegaMenuItem>
-        <MegaMenuItem
-          render={<RouterLink to="/telemedicine" />}
-          onClick={() => console.log("MegaMenuItem clicked:", "/telemedicine")}
-        >
-          Telemedicine
-        </MegaMenuItem>
-        <MegaMenuItem
-          render={<RouterLink to="/compliance-solutions" />}
-          onClick={() =>
-            console.log("MegaMenuItem clicked:", "/compliance-solutions")
-          }
-        >
-          Compliance solutions
-        </MegaMenuItem>
-      </MegaMenuItemList>
-    </MegaMenuGroup>
-    <MegaMenuGroup>
-      <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-      <MegaMenuItemList>
-        <MegaMenuItem
-          render={<RouterLink to="/e-commerce-platforms" />}
-          onClick={() =>
-            console.log("MegaMenuItem clicked:", "/e-commerce-platforms")
-          }
-        >
-          E-commerce platforms
-        </MegaMenuItem>
-      </MegaMenuItemList>
-    </MegaMenuGroup>
-    <MegaMenuGroup>
-      <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-      <MegaMenuItemList>
-        <MegaMenuItem
-          render={<RouterLink to="/supply-chain-optimization" />}
-          onClick={() =>
-            console.log("MegaMenuItem clicked:", "/supply-chain-optimization")
-          }
-        >
-          Supply chain optimization
-        </MegaMenuItem>
-        <MegaMenuItem
-          render={<RouterLink to="/quality-control" />}
-          onClick={() =>
-            console.log("MegaMenuItem clicked:", "/quality-control")
-          }
-        >
-          Quality control
-        </MegaMenuItem>
-        <MegaMenuItem
-          render={<RouterLink to="/production-planning" />}
-          onClick={() =>
-            console.log("MegaMenuItem clicked:", "/production-planning")
-          }
-        >
-          Production planning
-        </MegaMenuItem>
-      </MegaMenuItemList>
-    </MegaMenuGroup>
+      <MegaMenuGroup>
+        <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+        <MegaMenuItemList>
+          <MegaMenuItem
+            render={<RouterLink to="/digital-banking" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/digital-banking")
+            }
+          >
+            Digital banking
+          </MegaMenuItem>
+          <MegaMenuItem
+            render={<RouterLink to="/risk-management" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/risk-management")
+            }
+          >
+            Risk management
+          </MegaMenuItem>
+        </MegaMenuItemList>
+      </MegaMenuGroup>
+      <MegaMenuGroup>
+        <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+        <MegaMenuItemList>
+          <MegaMenuItem
+            render={<RouterLink to="/patient-management" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/patient-management")
+            }
+          >
+            Patient management
+          </MegaMenuItem>
+          <MegaMenuItem
+            render={<RouterLink to="/telemedicine" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/telemedicine")
+            }
+          >
+            Telemedicine
+          </MegaMenuItem>
+          <MegaMenuItem
+            render={<RouterLink to="/compliance-solutions" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/compliance-solutions")
+            }
+          >
+            Compliance solutions
+          </MegaMenuItem>
+        </MegaMenuItemList>
+      </MegaMenuGroup>
+      <MegaMenuGroup>
+        <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+        <MegaMenuItemList>
+          <MegaMenuItem
+            render={<RouterLink to="/e-commerce-platforms" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/e-commerce-platforms")
+            }
+          >
+            E-commerce platforms
+          </MegaMenuItem>
+        </MegaMenuItemList>
+      </MegaMenuGroup>
+      <MegaMenuGroup>
+        <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
+        <MegaMenuItemList>
+          <MegaMenuItem
+            render={<RouterLink to="/supply-chain-optimization" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/supply-chain-optimization")
+            }
+          >
+            Supply chain optimization
+          </MegaMenuItem>
+          <MegaMenuItem
+            render={<RouterLink to="/quality-control" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/quality-control")
+            }
+          >
+            Quality control
+          </MegaMenuItem>
+          <MegaMenuItem
+            render={<RouterLink to="/production-planning" />}
+            onClick={() =>
+              console.log("MegaMenuItem clicked:", "/production-planning")
+            }
+          >
+            Production planning
+          </MegaMenuItem>
+        </MegaMenuItemList>
+      </MegaMenuGroup>
     </MegaMenuGroups>
     <MegaMenuSupportingActions>{supportingLinks}</MegaMenuSupportingActions>
   </MegaMenuBody>

@@ -1,14 +1,8 @@
 .saltMegaMenuGroups {
   align-self: start;
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(0, var(--saltMegaMenuGroups-columnWidth, 12rem))
-  );
+  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 12rem)));
   gap: var(--salt-spacing-300);
   min-width: 0;
-  max-inline-size: var(
-    --saltMegaMenuPanel-availableWidth,
-    calc(100vw - var(--salt-spacing-600))
-  );
+  max-inline-size: var(--saltMegaMenuPanel-availableWidth, calc(100vw - var(--salt-spacing-600)));
 }
