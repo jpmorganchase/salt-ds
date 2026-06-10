@@ -122,5 +122,6 @@
 
   .customRegionSideSection {
     grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuBody-columnWidth, 12rem)));
+    grid-template-rows: 1fr auto;
   }
 }
