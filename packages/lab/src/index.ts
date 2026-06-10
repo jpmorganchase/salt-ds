@@ -1,7 +1,6 @@
 export * from "./app-header";
 export * from "./breadcrumbs";
 export * from "./button-bar";
-export * from "./calendar";
 export * from "./cascading-menu";
 export * from "./color-chooser";
 export * from "./combo-box";
@@ -14,8 +13,6 @@ export type {
 } from "./common-hooks";
 export * from "./contact-details";
 export * from "./content-status";
-export * from "./date-input";
-export * from "./date-picker";
 export * from "./deck-item";
 export * from "./deck-layout";
 export * from "./dropdown";
@@ -44,7 +41,6 @@ export {
   useListItem as useListItemDeprecated,
 } from "./list-deprecated";
 export * from "./list-next";
-export * from "./localization-provider";
 export * from "./logo";
 export * from "./mega-menu";
 export * from "./menu-button";

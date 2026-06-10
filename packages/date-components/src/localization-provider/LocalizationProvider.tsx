@@ -73,7 +73,8 @@ export type LocalizationProviderContext<
     | null;
 };
 
-export const LocalizationProviderContext =
+// Internal: consumers should use `useLocalization` or `<LocalizationProvider>`.
+const LocalizationProviderContext =
   // biome-ignore lint/suspicious/noExplicitAny: date frameworl
   createContext<LocalizationProviderValue<any> | null>(null);
 

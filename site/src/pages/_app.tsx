@@ -1,6 +1,6 @@
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
-import { LocalizationProvider } from "@salt-ds/lab";
+import { LocalizationProvider } from "@salt-ds/date-components";
 import { clsx } from "clsx";
 import type { AppProps } from "next/app";
 import * as saltComponents from "../components";
