@@ -30,6 +30,15 @@ data:
 - If multiple top-level navigation items belong to the same navigation system, use one same pattern across them to keep the experience consistent.
 - If any top-level item requires a mega menu, use the mega menu for all top-level items in that navigation system.
 
+### Opening and closing
+
+- The mega menu opens on click, not on hover, so it does not expand unexpectedly as the pointer moves across the navigation.
+- It closes when the trigger is clicked again, an item is selected, the user clicks outside the panel, or the user presses `Escape`.
+
+### Grouping items
+
+- Give each `MegaMenuGroup` a single `MegaMenuGroupHeading` and keep it to around 10 items at most; split larger sets into additional groups so the menu stays scannable.
+
 ## Import
 
 To import `MegaMenu` and related components from the lab package, use:

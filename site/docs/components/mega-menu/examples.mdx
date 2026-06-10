@@ -10,9 +10,9 @@ data:
 
 ## Default
 
-The mega menu displays grouped navigation links in a multi-column layout sized to hug its contents.
+The mega menu displays grouped navigation links in a multi-column layout sized to hug its contents. On open, the panel is centered beneath its trigger and constrained to the viewport.
 
-As the content grows wider, the container expands until it reaches the default max-width (100% of the viewport minus the `--salt-layout-page-margin` on both sides). At that point, the mega menu groups wrap to fit.
+As the content grows wider — or the viewport shrinks — the container expands until it reaches the default max-width (100% of the viewport minus the `--salt-layout-page-margin` on both sides). It clamps to the nearest viewport edge first, so a trigger close to an edge reaches that edge sooner than the far one. Once there is no more room, the groups wrap to fewer columns, down to a single column. If the panel is taller than the viewport, it scrolls vertically.
 
 <LivePreview componentName="mega-menu" exampleName="Default" />
 
