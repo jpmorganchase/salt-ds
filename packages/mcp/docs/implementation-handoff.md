@@ -355,22 +355,27 @@ Tell me the hookIO API surface before implementing.
 
 > **Note on PR 18's CI half (rev 8):** The rev-7 framing said PR 8 ships `salt-ds review --since` and the `.github/workflows/salt-review.yml` writer, and PR 18's CI-side label gate was blocked on that plumbing. Rev 8 (see the PR 8 prompt below) drops `--since` and `--add-ci-checks` entirely — the CI gate is now whatever the consumer's CI already uses (labels, CODEOWNERS, branch protection), and the lean PR 8 surfaces `require_human_review_for` matches as ordinary blocking findings so CI and the agent hook reach the same primitive. §8.4 closes inside PR 8.
 
-### PR 8 — Task 2.13 (CI required check — E2) — *rev-8 lean redesign*
+### PR 8 — Task 2.13 (CI required check — E2) + Task 0.5b (drop bootstrap CI emitter) — *rev-8 lean redesign + rev-10 expansion*
 
-> **Why this prompt changed:** the rev-7 prompt drove `--since`, `--pretty`, `--add-ci-checks`, and a `SALT_REVIEW_HUMAN_REVIEWED_LABEL` env var into the CLI. A maintainer review concluded that crossed the line from "primitive" to "policy": the diff resolution is one shell line over the existing `salt-ds review [target ...]` primitive, the canonical-path CI writer hard-codes the consumer's CI vendor and file layout, and the env-var bypass couples the CLI to a specific override mechanism. Rev 8 keeps PR 8 as a small composable primitive plus a docs page; CI integration is composed by the consumer.
+> **Why this prompt changed:** the rev-7 prompt drove `--since`, `--pretty`, `--add-ci-checks`, and a `SALT_REVIEW_HUMAN_REVIEWED_LABEL` env var into the CLI. A maintainer review concluded that crossed the line from "primitive" to "policy": the diff resolution is one shell line over the existing `salt-ds review [target ...]` primitive, the canonical-path CI writer hard-codes the consumer's CI vendor and file layout, and the env-var bypass couples the CLI to a specific override mechanism. Rev 8 keeps PR 8 as a small composable primitive plus a docs page; CI integration is composed by the consumer. **Rev 10 expansion:** also remove the already-shipped CI-YAML emitter from `packages/semantic-core/src/bootstrapScaffolding.ts` and the `SALT_REVIEW_HUMAN_REVIEWED_LABEL` description bleed in `packages/semantic-core/schemas/project-conventions.schema.json` (roadmap task 0.5b). The rev-9 §8.6 audit found these two files in the back-out list but the original rev-8 prompt didn't enumerate them; they're added here.
 
 ```
-Implement Phase 2 task 2.13 from packages/mcp/docs/gold-standard-roadmap.md
-(also session-findings-2026-06.md E2) under the lean rev-8 scope. The
-earlier rev of this prompt drove `--since`, `--add-ci-checks`, and a
-SALT_REVIEW_HUMAN_REVIEWED_LABEL env var into the CLI. That work is
-partially in the working tree (see §8.6 of implementation-handoff.md)
-and is being intentionally backed out — the design rationale in revs
-7→8 of the handoff concluded the CLI should stay a small composable
-primitive and CI integration belongs in docs, not in the CLI surface.
+Implement Phase 2 task 2.13 + Phase 0 task 0.5b from
+packages/mcp/docs/gold-standard-roadmap.md (also session-findings-2026-06.md
+E2) under the lean rev-8 + rev-10 scope. The earlier rev of this prompt drove
+`--since`, `--add-ci-checks`, and a SALT_REVIEW_HUMAN_REVIEWED_LABEL env var
+into the CLI plus a CI-YAML emitter into bootstrapScaffolding.ts. That work is
+partially in the working tree (see §8.6 of implementation-handoff.md) and is
+being intentionally backed out — the design rationale in revs 7→8→10 of the
+handoff concluded the CLI should stay a small composable primitive and CI
+integration belongs in docs, not in the CLI surface and not in bootstrap output.
 
 Read first:
-- packages/mcp/docs/gold-standard-roadmap.md §Phase 2 task 2.13
+- packages/mcp/docs/gold-standard-roadmap.md §Phase 2 task 2.13 and
+  §Phase 0 task 0.5b
+- packages/mcp/docs/gold-standard-roadmap.md §2.1.6 (the foundation-strict
+  cut rationale, including "no Salt-shipped CI YAML" and "no env-var-named
+  bypass mechanisms")
 - packages/mcp/docs/session-findings-2026-06.md E2
 - packages/mcp/docs/implementation-handoff.md §8.4 and §8.6 (back-out
   list and design rationale)
@@ -383,8 +388,16 @@ Read first:
 - packages/cli/src/commands/init.ts — current init scaffolding
   (`--add-agent-hooks` stays; the `--add-ci-checks` branch added by
   the rev-7 work is being removed)
+- packages/semantic-core/src/bootstrapScaffolding.ts — the CI-YAML
+  emitter you will be removing (the GitHub Actions writer, the GitLab
+  snippet/root writers, the SALT_REVIEW_HUMAN_REVIEWED_LABEL_* and
+  SALT_GITLAB_CI_* constants, the salt-human-reviewed label-name
+  constant; ~150 lines total)
+- packages/semantic-core/schemas/project-conventions.schema.json —
+  the `require_human_review_for` description string that names the
+  env-var bypass mechanism
 
-This PR ships three small pieces:
+This PR ships four small pieces:
 
 1. Back out the in-flight CLI surface listed in §8.6. No `--since`,
    no `--pretty`, no `--add-ci-checks`, no `SALT_REVIEW_HUMAN_REVIEWED_LABEL`
@@ -395,7 +408,24 @@ This PR ships three small pieces:
    The `salt-ds review [target ...]` primitive remains exactly as it
    is today.
 
-2. Surface `require_human_review_for` policy violations as ordinary
+2. **(0.5b, rev-10 addition)** Remove the CI-YAML emitter from
+   `packages/semantic-core/src/bootstrapScaffolding.ts`: the
+   `.github/workflows/salt-review.yml` writer, the
+   `.gitlab/salt-review.yml` writer, the `.gitlab-ci.yml`
+   "conservative merge" logic, the `SALT_REVIEW_HUMAN_REVIEWED_LABEL_*`
+   and `SALT_GITLAB_CI_*` constants, and the `salt-human-reviewed`
+   label-name constant baked into emitted YAML. After this lands,
+   `bootstrapScaffolding.ts` shrinks from ~597 to ~450 lines. Rewrite
+   the `require_human_review_for` description in
+   `packages/semantic-core/schemas/project-conventions.schema.json`
+   so it describes what the rule does (escalates matching changes to
+   human review and surfaces as a blocking
+   `policy.require_human_review_for.<kind>` finding) and points at
+   `packages/cli/docs/ci-integration.md` for the consumer-side bypass
+   story — no mention of `SALT_REVIEW_HUMAN_REVIEWED_LABEL`, no
+   mention of GitHub or GitLab.
+
+3. Surface `require_human_review_for` policy violations as ordinary
    blocking findings on `salt-ds review`. The finding carries a
    stable rule id (proposal: `policy.require_human_review_for.<kind>`)
    and the matched file path. The CLI emits the finding and exits
@@ -405,7 +435,7 @@ This PR ships three small pieces:
    already uses (it lives in workflow.ts ~line 3423 per §8.4) — do
    not duplicate the matching logic.
 
-3. Document CI composition in a new
+4. Document CI composition in a new
    packages/cli/docs/ci-integration.md. Include copy-paste ~5-line
    snippets for GitHub Actions and GitLab CI. Each snippet is just:
    compute the changed file list with
@@ -430,9 +460,18 @@ Tests (cli.spec.ts):
   the env-var-bypass case.
 - Drop any unused git-fixture helpers introduced by the rev-7 work.
 
-Tell me the rule-id naming and the team.json example shape BEFORE
-editing. Do not add new CLI flags. Do not write CI files into the
-consumer repo. Do not add init scaffolding. Do not modify PR 7's
+Tests (semantic-core / bootstrap):
+- `bootstrap_salt_repo` no longer emits `.github/workflows/salt-review.yml`
+  or `.gitlab/salt-review.yml` or any `.gitlab-ci.yml` merge.
+- `git grep SALT_REVIEW_HUMAN_REVIEWED_LABEL` returns zero hits
+  outside `packages/mcp/docs/implementation-handoff.md`.
+- Any existing bootstrapScaffolding spec covering the removed writers
+  is deleted, not silenced.
+
+Tell me the rule-id naming, the team.json example shape, and the
+follow-up `init.ts` line count (PR 21's baseline) BEFORE editing. Do
+not add new CLI flags. Do not write CI files into the consumer repo.
+Do not add init scaffolding. Do not modify PR 7's
 hookIO.ts surface.
 
 Run:
@@ -777,40 +816,75 @@ Required:
 Do not change the ask_user contract shape — that's 2.4.
 ```
 
-### PR 17 — Task 2.15 (E4 agent provenance attestations)
+### PR 17 — Task 2.15 (E4 agent provenance attestations) — *rev-3 narrowing: payload, not on-disk format*
 
 **Depends on PR 7.** Reuses the `--hook` flag and `hookIO` helper landed there.
 
+> **Why this prompt changed (rev 10):** the rev-2 design wrote attestations to a Salt-chosen on-disk layout (`.salt/attestations/<hash>.json`). The rev-3 foundation-strict pass (roadmap §2.1.6 and Appendix B) cut that: Salt does not pick the disk layout, the hashing algorithm, the retention policy, the GC story, or the sharding strategy for the consumer's audit store. The narrowed shape ships the attestation **payload** as a published Zod schema and emits it on stdout when `--emit-attestation` is set. Consumers wire stdout to whatever audit store they already have (git notes, signed commits, GitHub check API, SIEM, internal audit log, plain file). The `.salt/attestations/<hash>.json` directory becomes a demo default in `workflow-examples/`, not a Salt foundation commitment.
+
 ```
-Implement task 2.15 from packages/mcp/docs/gold-standard-roadmap.md.
+Implement task 2.15 from packages/mcp/docs/gold-standard-roadmap.md
+under the rev-3 "ship payloads, not formats" narrowing.
 
 Read first:
 - packages/mcp/docs/gold-standard-roadmap.md §Phase 2 task 2.15
+  (the rev-3 narrowing is in the row note)
+- packages/mcp/docs/gold-standard-roadmap.md §2.1.6 ("ship payloads,
+  not formats" principle, attestation row in the cut table)
 - packages/mcp/docs/session-findings-2026-06.md E4
 - packages/cli/src/lib/hookIO.ts (landed in PR 7)
 - packages/cli/src/commands/workflow.ts — the --hook implementation
 
-Goal: when salt-ds review --hook runs from PostToolUse, write an
-attestation record to .salt/attestations/<hash>.json capturing
-registry_hash, evidence_refs, files_touched (with post-edit content
-hash), post_action_ran, trace_id (placeholder for Phase 4.1 replay),
-and a timestamp.
-
-Add salt-ds review --hook --verify-attestations: invoked from a Stop
-hook or standalone in CI. Verifies recorded attestations match current
-committed file hashes; fails on drift.
+Goal: when salt-ds review --hook runs from PostToolUse, EMIT a
+Zod-typed attestation payload on stdout when --emit-attestation is
+set. The payload captures registry_hash, evidence_refs, files_touched
+(with post-edit content hash), post_action_ran, trace_id (placeholder
+for Phase 4.1 replay), and a timestamp. Salt does NOT write the
+payload to a Salt-chosen file path; consumers pipe stdout to whatever
+audit store they already use.
 
 Required:
-1. Attestation writer in packages/cli/src/lib/attestations.ts
-   (internal-only, do not export).
-2. --verify-attestations flag on salt-ds review.
-3. Update bootstrap_salt_repo to write the Stop hook alongside the
-   PostToolUse hook from PR 7.
-4. Tests: write-on-PostToolUse, verify-pass, verify-fail after a
-   manual edit, verify-pass after a clean rerun.
-5. Document .salt/attestations in packages/cli/README.md.
+1. Pin the attestation payload as a Zod schema in
+   packages/semantic-core/src/tools/publicContract.ts (or a sibling
+   contract module). Export the TypeScript type. The schema will be
+   published at salt-ds.dev/schemas/attestation/v1 by Phase 5; for
+   this PR just pin the Zod source-of-truth.
+2. Add a --emit-attestation flag on salt-ds review (within the
+   §2.1.7 flag budget — review is at 12 currently after PR 8's cleanup;
+   --emit-attestation makes it 13, so you must remove a flag in the
+   same PR or split this to a separate PR. Check the post-PR-8 flag
+   count before editing). When set, on a clean PostToolUse review,
+   emit the attestation payload as NDJSON on stdout (one line).
+3. Add a --verify-attestations flag on salt-ds review. Reads
+   attestation payloads from stdin (one per line), verifies the
+   recorded file hashes against the current committed file hashes,
+   exits non-zero on drift. Standalone-usable in CI as well as from a
+   Stop hook.
+4. Update bootstrap_salt_repo to write a Stop hook alongside the
+   PostToolUse hook from PR 7. The Stop hook should pipe stdin (the
+   consumer's chosen audit store output) into
+   `salt-ds review --verify-attestations`. Document the default
+   demo pattern (a file at workflow-examples/.../attestations.ndjson)
+   in workflow-examples/, NOT as a Salt-side foundation commitment.
+5. Tests: emit-on-PostToolUse (parses as the published Zod schema);
+   verify-pass on consistent input; verify-fail after a manual edit;
+   verify-pass after a clean rerun.
+6. Document the attestation payload schema and the consumer
+   composition pattern (git notes, signed commits, GitHub check API,
+   SIEM, audit log, plain file) in packages/cli/README.md and
+   packages/cli/docs/ci-integration.md (which PR 8 created).
 
-Do not implement 2.16 in this PR.
+Do NOT:
+- Write attestations to a Salt-chosen file path. The CLI emits to
+  stdout; consumers redirect.
+- Pick a hashing algorithm in the contract — leave hashing to a
+  per-payload field (`hash_alg: "sha256"` etc.) so consumers can
+  upgrade independently.
+- Add a retention / GC policy. That's the consumer's audit store's job.
+- Implement 2.16 in this PR.
+
+Tell me the Zod schema shape, the flag-budget impact, and the
+workflow-examples/ demo path BEFORE editing.
 ```
 
 ### PR 18 — Task 2.16 (E5 policy-driven escalation)
