@@ -1,5 +1,19 @@
 # @salt-ds/date-adapters
 
+## 1.0.0
+
+### Major Changes
+
+- 8687aa7: `@salt-ds/date-adapters` is now stable.
+
+  Adapters continue to be available from their dedicated subpaths:
+
+  - `@salt-ds/date-adapters/date-fns`
+  - `@salt-ds/date-adapters/date-fns-tz`
+  - `@salt-ds/date-adapters/dayjs`
+  - `@salt-ds/date-adapters/luxon`
+  - `@salt-ds/date-adapters/moment`
+
 ## 0.1.0-alpha.7
 
 ### Patch Changes

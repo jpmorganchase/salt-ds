@@ -1,5 +1,115 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.95
+
+### Minor Changes
+
+- 8043fee: Updated `MegaMenu` with several API improvements:
+
+  - **Renamed `MegaMenuSection` to `MegaMenuGroups`.** The associated CSS custom property `--saltMegaMenuSection-columnWidth` has been renamed to `--saltMegaMenuGroups-columnWidth`.
+  - **Renamed `MegaMenuContent` to `MegaMenuSupportingContent`** to better convey its purpose as a region for supporting content alongside the menu groups.
+  - **Removed `MegaMenuItemContent`.** Pass the label directly to `MegaMenuItem`.
+  - **Added `MegaMenuSupportingActions`.** Use it to group one or more supporting action links beneath the menu groups in a `MegaMenuPanel`.
+  - **Added a `render` prop to `MegaMenuItem`** for integration with custom link or routing components (such as `react-router`'s `Link`).
+
+  ```diff
+  - <MegaMenuSection>
+  + <MegaMenuGroups>
+      <MegaMenuGroup>
+        <MegaMenuHeader>Financial services</MegaMenuHeader>
+  -     <MegaMenuItem>
+  -       <Icon aria-hidden />
+  -       <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+  -     </MegaMenuItem>
+  +     <MegaMenuItem render={<Link to="/digital-banking" />}>
+  +       <Icon aria-hidden />
+  +       Digital banking
+  +     </MegaMenuItem>
+      </MegaMenuGroup>
+  - </MegaMenuSection>
+  + </MegaMenuGroups>
+  - <MegaMenuContent>...</MegaMenuContent>
+  + <MegaMenuSupportingContent>...</MegaMenuSupportingContent>
+  + <MegaMenuSupportingActions>
+  +   <Link href="#demo" IconComponent={ChevronRightIcon}>Book a demo</Link>
+  + </MegaMenuSupportingActions>
+  ```
+
+- 8687aa7: Date-related components and utilities are no longer re-exported from `@salt-ds/lab`. Update the import source to `@salt-ds/date-components`.
+
+  The exact set of components depends on the selection variant you're using.
+
+  **Single-date selection** (`DateInputSingle`, single `DatePicker`, `DatePickerSingleInput`, `DatePickerSingleGridPanel`, single `Calendar`):
+
+  ```diff
+    import {
+      type DateInputSingleDetails,
+      DateInputSingle,
+      DatePicker,
+      DatePickerOverlay,
+      DatePickerSingleGridPanel,
+      DatePickerSingleInput,
+      DatePickerTrigger,
+      type SingleDateSelection,
+      Calendar,
+      CalendarGrid,
+      CalendarNavigation,
+      LocalizationProvider,
+      useLocalization,
+  - } from "@salt-ds/lab";
+  + } from "@salt-ds/date-components";
+  ```
+
+  **Range selection** (`DateInputRange`, range `DatePicker`, `DatePickerRangeInput`, `DatePickerRangePanel`, `DatePickerRangeGridPanel`, range `Calendar`):
+
+  ```diff
+    import {
+      type DateInputRangeDetails,
+      DateInputRange,
+      DatePicker,
+      DatePickerOverlay,
+      DatePickerRangeGridPanel,
+      DatePickerRangeInput,
+      DatePickerRangePanel,
+      DatePickerTrigger,
+      type DateRangeSelection,
+      Calendar,
+      CalendarGrid,
+      CalendarNavigation,
+      LocalizationProvider,
+      useLocalization,
+  - } from "@salt-ds/lab";
+  + } from "@salt-ds/date-components";
+  ```
+
+  **Offset selection** (offset `Calendar`; offset `DatePicker` built from the range input + range panel with `selectionVariant="offset"`):
+
+  ```diff
+    import {
+      type DateRangeSelection,
+      Calendar,
+      CalendarGrid,
+      CalendarNavigation,
+      DatePicker,
+      DatePickerOverlay,
+      DatePickerRangeInput,
+      DatePickerRangePanel,
+      DatePickerTrigger,
+      LocalizationProvider,
+      useLocalization,
+  - } from "@salt-ds/lab";
+  + } from "@salt-ds/date-components";
+  ```
+
+### Patch Changes
+
+- 4314ca5: Fixed `ToolbarNext` focus handling when composing multiselect `ComboBox` controls, preserving pill keyboard navigation and preventing focus flashes when restoring toolbar focus.
+- Updated dependencies [9729a10]
+- Updated dependencies [52daa64]
+- Updated dependencies [ed2779c]
+- Updated dependencies [07e4d5d]
+  - @salt-ds/core@1.64.0
+
 ## 1.0.0-alpha.94
 
 ### Minor Changes

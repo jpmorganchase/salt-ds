@@ -1,5 +1,23 @@
 # @salt-ds/core
 
+## 1.64.0
+
+### Minor Changes
+
+- 52daa64: Added an `initialFocus` prop to `Drawer` to allow customizing which element receives focus when the drawer opens.
+- ed2779c: Added `appearance` and `sentiment` props to `FileDropZoneTrigger`. `sentiment` accepts `'accented' | 'neutral'` (defaults to `'neutral'`) and `appearance` accepts `'solid' | 'bordered' | 'transparent'` (defaults to `'solid'`).
+
+  ```tsx
+  <FileDropZoneTrigger appearance="bordered" sentiment="accented" />
+  ```
+
+  Also widened the props type so all native `<button>` attributes (e.g. `type`, `name`, `form`, `value`) are now accepted.
+
+### Patch Changes
+
+- 9729a10: Fixed the status indicator in Banner being visible to screen readers.
+- 07e4d5d: Fixed an issue where the visually hidden "Opens in a new tab" text on `Link` (when `target="_blank"`) was included when users selected and copied the link's contents.
+
 ## 1.63.0
 
 ### Minor Changes
