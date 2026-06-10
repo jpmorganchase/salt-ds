@@ -2,15 +2,14 @@
   padding-inline: var(--salt-spacing-200);
 }
 
-.root ul {
-  margin-bottom: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--salt-spacing-fixed-100);
+.heading {
+  margin-block: 0 var(--salt-spacing-100);
 }
 
-.root li {
-  list-style: none;
+/* `VerticalNavigation` renders its own `<nav>` + `<ol>` and resets list
+   styling internally, so we only need to control the outer spacing
+   previously applied to the `<ul>`. */
+.nav {
+  margin: var(--salt-spacing-100) 0 var(--salt-spacing-300);
   padding: 0;
 }
