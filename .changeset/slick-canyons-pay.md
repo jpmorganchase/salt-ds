@@ -1,5 +1,5 @@
 ---
-"@salt-ds/lab": major
+"@salt-ds/lab": minor
 ---
 
 Date-related components and utilities are no longer re-exported from `@salt-ds/lab`. Update the import source to `@salt-ds/date-components`.
