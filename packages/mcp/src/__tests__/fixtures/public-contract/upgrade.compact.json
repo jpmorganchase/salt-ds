@@ -19,8 +19,14 @@
     "kind": "review",
     "tool": "review_salt_ui",
     "args": {},
-    "rule_ids": ["upgrade-review-version-risks"],
+    "rule_ids": [
+      "upgrade-review-version-risks"
+    ],
     "post_action": null
+  },
+  "internal_limitations": {
+    "unsupported_claim_count": 0,
+    "unsupported_rule_kinds": []
   },
   "summary": "Salt produced upgrade guidance for @salt-ds/core."
 }

@@ -18,10 +18,19 @@
   },
   "action": {
     "kind": "install_dependencies",
-    "packages": ["@salt-ds/core", "@salt-ds/theme"],
+    "packages": [
+      "@salt-ds/core",
+      "@salt-ds/theme"
+    ],
     "package_manager": "pnpm",
-    "rule_ids": ["create-follow-through-required"],
+    "rule_ids": [
+      "create-follow-through-required"
+    ],
     "post_action": null
+  },
+  "internal_limitations": {
+    "unsupported_claim_count": 0,
+    "unsupported_rule_kinds": []
   },
   "summary": "Salt interpreted analytical dashboard body as the broader Salt entity Analytical dashboard."
 }

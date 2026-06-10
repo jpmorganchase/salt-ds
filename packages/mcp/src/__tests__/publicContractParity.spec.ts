@@ -30,10 +30,15 @@ const UPDATE_FIXTURES = process.env.UPDATE_PUBLIC_CONTRACT_FIXTURES === "true";
 let registryDir = "";
 
 const COMPACT_BYTE_BUDGETS = {
-  create: 9_000,
-  review: 1_800,
-  migrate: 2_600,
-  upgrade: 2_500,
+  // Bumped in semver 1.1.0 (task 2.9) to absorb the new top-level
+  // `internal_limitations` block on every workflow result. Empty default
+  // costs ~80 bytes after pretty-printing; populated values add a handful
+  // more per unsupported_rule_kind. The previous budgets all assumed the
+  // pre-1.1.0 contract shape.
+  create: 9_200,
+  review: 1_900,
+  migrate: 2_700,
+  upgrade: 2_700,
 } as const;
 
 const FULL_BYTE_BUDGETS = {
@@ -303,8 +308,65 @@ function toComparableCompactContract(value: Record<string, unknown>) {
             : null,
         }
       : null,
+    internal_limitations: toComparableInternalLimitations(
+      value.internal_limitations,
+    ),
     summary: value.summary,
   };
+}
+
+// Task 2.9 / root cause #2: every salt_workflow_v1 contract carries the
+// top-level `internal_limitations` block (semver 1.1.0). CLI and MCP both
+// flow through buildPublicContract, so the field must match across
+// transports. Folded into `toComparableCompactContract` above so the
+// comparable record participates in fixture and parity comparisons.
+function toComparableInternalLimitations(value: unknown): {
+  unsupported_claim_count: number;
+  unsupported_rule_kinds: string[];
+} {
+  const record = asRecord(value);
+  const count =
+    typeof record?.unsupported_claim_count === "number"
+      ? record.unsupported_claim_count
+      : 0;
+  const kinds = Array.isArray(record?.unsupported_rule_kinds)
+    ? (record.unsupported_rule_kinds as unknown[]).filter(
+        (entry): entry is string => typeof entry === "string",
+      )
+    : [];
+  return {
+    unsupported_claim_count: count,
+    unsupported_rule_kinds: kinds,
+  };
+}
+
+function expectInternalLimitationsParity(
+  cliResult: Record<string, unknown>,
+  mcpResult: Record<string, unknown>,
+): void {
+  // Both transports must always emit the top-level internal_limitations
+  // block (salt_workflow_v1 semver 1.1.0 — task 2.9 / root cause #2).
+  // Assert mandatory presence + structural shape on each side, then check
+  // the two values match. Hosts branch on the inner fields without runtime
+  // nullish checks, so presence is part of the contract.
+  for (const [label, value] of [
+    ["cli", cliResult],
+    ["mcp", mcpResult],
+  ] as const) {
+    expect(
+      Object.hasOwn(value, "internal_limitations"),
+      `${label} contract is missing the internal_limitations block`,
+    ).toBe(true);
+    const block = asRecord(value.internal_limitations);
+    expect(block, `${label} internal_limitations must be an object`).not.toBe(
+      null,
+    );
+    expect(typeof block?.unsupported_claim_count).toBe("number");
+    expect(Array.isArray(block?.unsupported_rule_kinds)).toBe(true);
+  }
+  expect(
+    toComparableInternalLimitations(cliResult.internal_limitations),
+  ).toEqual(toComparableInternalLimitations(mcpResult.internal_limitations));
 }
 
 function readRecipeActionHints(value: Record<string, unknown>) {
@@ -695,6 +757,7 @@ describe("public contract parity", () => {
     const mcpComparable = toComparableCompactContract(mcpResult);
 
     expect(cliComparable).toEqual(mcpComparable);
+    expectInternalLimitationsParity(cliResult, mcpResult);
     expectPublicActionHintParity(cliResult, mcpResult);
     expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
       COMPACT_BYTE_BUDGETS.create,
@@ -737,6 +800,7 @@ describe("public contract parity", () => {
     const mcpComparable = toComparableCompactContract(mcpResult);
 
     expect(cliComparable).toEqual(mcpComparable);
+    expectInternalLimitationsParity(cliResult, mcpResult);
     expectPublicActionHintParity(cliResult, mcpResult);
     expect(readString(cliResult, [["next_required_action", "cli"]])).toBe(
       "pnpm add @salt-ds/core @salt-ds/theme",
@@ -820,6 +884,7 @@ describe("public contract parity", () => {
     const mcpComparable = toComparableCompactContract(mcpResult);
 
     expect(cliComparable).toEqual(mcpComparable);
+    expectInternalLimitationsParity(cliResult, mcpResult);
     expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
       COMPACT_BYTE_BUDGETS.review,
     );
@@ -992,12 +1057,26 @@ describe("public contract parity", () => {
     expect(toComparableCompactContract(cliCompact)).toEqual(
       toComparableCompactContract(mcpCompact),
     );
+    expectInternalLimitationsParity(cliCompact, mcpCompact);
     expect(readStringArray(cliCompact, [["evidence", "missing"]])).toEqual(
       readStringArray(mcpCompact, [["evidence", "missing"]]),
     );
-    expect(readStringArray(cliCompact, [["evidence", "missing"]])).toEqual(
-      expect.arrayContaining([expect.stringContaining("unsupported claim")]),
-    );
+    // Task 2.9 / root cause #2: registry coverage gaps no longer leak
+    // into `evidence.missing` (which means "user-facing follow-through
+    // still required"). They surface via the top-level
+    // `internal_limitations` block instead, where hosts can branch on
+    // them without misreading them as the user request being only
+    // partly addressed.
+    expect(
+      readNumber(cliCompact, [
+        ["internal_limitations", "unsupported_claim_count"],
+      ]),
+    ).toBeGreaterThan(0);
+    expect(
+      readNumber(mcpCompact, [
+        ["internal_limitations", "unsupported_claim_count"],
+      ]),
+    ).toBeGreaterThan(0);
 
     const durableReport = JSON.parse(
       await fs.readFile(reportPath, "utf8"),
@@ -1048,6 +1127,7 @@ describe("public contract parity", () => {
     expect(toComparableCompactContract(cliResult)).toEqual(
       toComparableCompactContract(mcpResult),
     );
+    expectInternalLimitationsParity(cliResult, mcpResult);
     expectPublicActionHintParity(cliResult, mcpResult);
     expect(readString(cliResult, [["action", "kind"]])).toBe("complete");
     expect(readString(cliResult, [["next_required_action", "kind"]])).toBe(
@@ -1082,6 +1162,7 @@ describe("public contract parity", () => {
     const mcpComparable = toComparableCompactContract(mcpResult);
 
     expect(cliComparable).toEqual(mcpComparable);
+    expectInternalLimitationsParity(cliResult, mcpResult);
     expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
       COMPACT_BYTE_BUDGETS.migrate,
     );
@@ -1188,6 +1269,7 @@ describe("public contract parity", () => {
     const mcpComparable = toComparableCompactContract(mcpResult);
 
     expect(cliComparable).toEqual(mcpComparable);
+    expectInternalLimitationsParity(cliResult, mcpResult);
     expect(jsonByteLength(cliResult)).toBeLessThanOrEqual(
       COMPACT_BYTE_BUDGETS.upgrade,
     );

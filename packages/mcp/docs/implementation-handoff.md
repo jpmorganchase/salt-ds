@@ -92,10 +92,10 @@ Recommended order. Estimates are wall-clock for a focused session including the 
 | 6 | **0.2** lazy registry loader | Opus 4.7 (medium) | Agent | 2 hr | Medium | ✅ Done (`packages/semantic-core/src/registry/lazyRegistry.ts` + `artifactCache.ts`; `LoadRegistryOptions.prefetch` field; `infoBytesBudget.spec.ts` measures `salt-ds info` at **1.2 KB** of registry artifacts vs. the <2 MB target) |
 | 7 | **2.12 + 2.17 + 2.18** `--hook` flags (E1, E6, E7) | Opus 4.7 (medium) | Agent | 3 hr | Medium | ✅ Done (`packages/cli/src/lib/hookIO.ts` internal helper; `--hook` flag on `review` and `info`; `init --add-agent-hooks` writes `.github/hooks/salt.json`; `hookIO.spec.ts` 18/18 + cli.spec.ts hook scenarios pass) |
 | 8 | **2.13** CI required check (E2) | Sonnet 4.5 | Agent | 1.5 hr | Low | |
-| 9 | **2.9** split `status: partial` | Opus 4.7 High | Agent | 2 hr | Medium | |
+| 9 | **2.9** split `status: partial` | Opus 4.7 High | Agent | 2 hr | Medium | ✅ Done — `packages/mcp/src/__tests__/statusPartialSplit.spec.ts` 5/5 pass covering all four `(status, internal_limitations)` combinations. `PublicInternalLimitations` shape + `EMPTY_PUBLIC_INTERNAL_LIMITATIONS` + `normalizeInternalLimitations` pinned in `packages/semantic-core/src/tools/publicContract.ts`; `MCP_WORKFLOW_OUTPUT_SCHEMA` carries the new field in `packages/mcp/src/server/toolDefinitions.ts`; `applyReviewEvidenceGate` no longer downgrades `status` to `partial` for `unsupported_claim_count > 0` alone (only true `validation_issues` do); `SALT_WORKFLOW_CONTRACT_SEMVER` bumped `1.0.0 → 1.1.0` + capability-manifest `contract_lifecycle` changelog entry; `packages/mcp/docs/salt-workflow-v1-host-contract.md` + `SKILL.md` + `references/shared/transport.md` updated to treat `partial` as user-facing remaining work only and read `internal_limitations` as a separate signal; `publicContractParity.spec.ts` now asserts `internal_limitations` parity across all 6 compact tests via the new `expectInternalLimitationsParity` helper; compact byte budgets bumped to absorb the new field; **no new parity failures introduced** — the 4 pre-existing failures in §8.2.2 still reproduce verbatim. **See §8.5** for a regression in PR 12 surfaced during this work. |
 | 10 | **0.7** close the 0.6 coverage gap list (upstream fixes) | Opus 4.7 (medium) | Agent | 3 hr | Medium | ⚠️ Partial — (a) **landed**: `SaltProviderNext` props are in the registry, brand-prop defaults extracted, JPM Brand example present in `examples.json`. (b) **not landed**: `composition_contract` field still missing on 28 pattern records (0.6 spec fails). (c) **not landed**: 24 foundation entities still have no canonical example, no `site/foundation-category-map.json`. Also: the `SaltProviderNext` first-class-entity check in `registryCoverage.spec.ts` still raises 2 gaps because the spec searches for the exact name and the extracted entity record name doesn't match — bisect before assuming this is registry vs. spec. |
 | 11 | **0.11 + 2.11** plain-text file-path fallback | Sonnet 4.5 | Agent | 45 min | Low | |
-| 12 | **0.9** auto-invalidate context on `install_dependencies` | Sonnet 4.5 thinking | Agent | 1 hr | Low | ✅ Done (`packages/mcp/src/__tests__/installDependenciesContextInvalidation.spec.ts` 2/2 pass; `staleProjectContextIds` set added to `ToolExecutionRuntime` in `toolDefinitions.ts`; `packages/skills/salt-ds/agents/openai.yaml` action-loop guidance updated to drop the manual `get_salt_project_context` rerun instruction) |
+| 12 | **0.9** auto-invalidate context on `install_dependencies` | Sonnet 4.5 thinking | Agent | 1 hr | Low | ⚠️ Partial — landed in the working tree but **reverted from `packages/mcp/src/server/toolDefinitions.ts`** during PR 9 (task 2.9) because the in-flight edits had left that file with multiple orphaned function bodies (`resolveProjectContext`, `resolveOrCollectProjectContext`, and `decodeProjectContextId` were all partially deleted), making the entire MCP package fail to parse. The untracked regression spec `packages/mcp/src/__tests__/installDependenciesContextInvalidation.spec.ts` and the still-present `packages/skills/salt-ds/agents/openai.yaml` change are intact; only the `toolDefinitions.ts` half needs to be re-landed cleanly (add `staleProjectContextIds` to `ToolExecutionRuntime`, `markProjectContextStale` / `isProjectContextStale` helpers, the `install_dependencies` post-execution invalidation hook, and the stale-context refresh branch inside `resolveOrCollectProjectContext`). See §8.5 for the reproduction details. |
 | 13 | **0.10** tool-selection benchmark | Sonnet 4.5 | Agent | 1.5 hr | Low | ✅ Done (commit `3b1118187`; ranker + 20-prompt corpus + 4 description swaps; see §8.2 for pre-existing failures unmasked while verifying) |
 | 14 | **0.8** canonical-example round-trip test (depends on PR 10) | Opus 4.7 (medium) | Agent | 1.5 hr | Medium | ✅ Done as a failing spec (commit `73913767a`); follow-up heuristic-repair work is **roadmap row 0.8a** — see §8.1 for the 9-story gap list |
 | 15 | **1.8** `get_salt_entities` batch lookup (M13 / F6) | Opus 4.7 (medium) | Agent | 2 hr | Medium | |
@@ -987,27 +987,21 @@ Both items below were verified pre-existing by stashing the in-flight changes an
 
 End of handoff.
 
+### 8.5 PR 12 (task 0.9) `toolDefinitions.ts` regression — reverted during PR 9
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- **Source of truth:** `git --no-pager log --oneline packages/mcp/src/server/toolDefinitions.ts` still shows commit `3b1118187` as HEAD; the in-flight PR 12 work in that file is **not** in the working tree any more.
+- **Why it was reverted:** the in-flight edits had partially deleted `resolveProjectContext`, `resolveOrCollectProjectContext`, and `decodeProjectContextId` (function signatures removed but their bodies left as orphan blocks), and the `ToolExecutionRuntime` interface lost its `projectContexts` and `lastProjectContextId` fields. esbuild refused to parse the file, which took down every MCP-side suite. PR 9 needed those suites green to verify task 2.9; reverting `toolDefinitions.ts` to HEAD was the only path that kept PR 9's contract-shape change verifiable without spending the session re-deriving PR 12's intended shape from a half-corrupted diff.
+- **What's still on disk (intact and committable):**
+  - `packages/mcp/src/__tests__/installDependenciesContextInvalidation.spec.ts` (untracked, expects the runtime to invalidate the cached context after `install_dependencies` completes)
+  - `packages/skills/salt-ds/agents/openai.yaml` (action-loop guidance dropped the manual `get_salt_project_context` rerun instruction)
+  - The skill-prose updates in `SKILL.md`, `transport.md`, and `copilot-hosts.md` describing the new behavior
+- **What needs to be re-landed in `toolDefinitions.ts`:**
+  1. `staleProjectContextIds: Set<string>` field on `ToolExecutionRuntime` (keep `projectContexts` and `lastProjectContextId` as well).
+  2. `staleProjectContextIds: new Set()` initialization in `createToolExecutionRuntime`.
+  3. `runtime.staleProjectContextIds.delete(contextId)` line inside `cacheProjectContext` so successful caching clears the stale flag.
+  4. New helpers `isProjectContextStale(runtime, contextId): boolean` and `markProjectContextStale(runtime, rootDir): void`.
+  5. Stale-context refresh branch inside `resolveOrCollectProjectContext`: when the requested `contextId` is in `staleProjectContextIds`, re-collect via `collectSaltProjectContextData` before returning, and skip the auto-reuse of `lastProjectContextId` when it is stale.
+  6. `markProjectContextStale` call at every `install_dependencies` post-execution site so the next workflow turn transparently refetches package state.
+- **Verification:** `yarn vitest run packages/mcp/src/__tests__/installDependenciesContextInvalidation.spec.ts` should pass 2/2 after re-landing.
+- **Process lesson for future PRs:** the IDE/editor agent had a write-race that silently dropped edits across tool calls, which is how PR 12's `toolDefinitions.ts` work corroded over the past few sessions without anybody catching it. Mitigations: (a) commit each PR as soon as it's verified green instead of letting the working tree accumulate dozens of half-applied edits across overlapping PRs; (b) when an edit tool reports success but a follow-up `git diff` shows nothing landed, fall back to a python/sed script that bypasses the editor surface; (c) before starting any cross-file refactor, snapshot the affected files (`cp`, `git stash`, or a branch) so a corrupted in-flight state is recoverable.
 

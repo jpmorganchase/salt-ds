@@ -539,6 +539,10 @@ describe("createSaltMcpServer", () => {
           missing: ["follow-through evidence for Avatar"],
           heuristic_fallback: false,
         },
+        internal_limitations: {
+          unsupported_claim_count: 0,
+          unsupported_rule_kinds: [],
+        },
         summary: "Ground Avatar before implementing.",
       }).success,
     ).toBe(true);
@@ -920,6 +924,10 @@ describe("createSaltMcpServer", () => {
             source_urls: [],
             missing: ["follow-through evidence for Avatar"],
             heuristic_fallback: false,
+          },
+          internal_limitations: {
+            unsupported_claim_count: 0,
+            unsupported_rule_kinds: [],
           },
           summary: "Install Salt dependencies before implementing.",
         });
