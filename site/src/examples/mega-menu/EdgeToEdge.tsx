@@ -1,21 +1,5 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
-  CallIcon,
-  CartIcon,
-  DatasetManagerIcon,
-  DevicesIcon,
-  DocumentIcon,
-  GuideOpenIcon,
-  LaptopIcon,
-  LinkedIcon,
-  NotificationIcon,
-  PasteIcon,
-  PinIcon,
-  SettingsIcon,
-  UserGroupIcon,
-  UserSearchIcon,
-} from "@salt-ds/icons";
-import {
   MegaMenu,
   MegaMenuBody,
   MegaMenuGroup,
@@ -80,7 +64,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <DevicesIcon aria-hidden />
                           Digital banking
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -92,7 +75,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <DatasetManagerIcon aria-hidden />
                           Risk management
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -109,7 +91,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <UserSearchIcon aria-hidden />
                           Patient management
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -121,7 +102,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <CallIcon aria-hidden />
                           Telemedicine
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -133,7 +113,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <PasteIcon aria-hidden />
                           Compliance solutions
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -150,7 +129,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <CartIcon aria-hidden />
                           E-commerce platforms
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -167,7 +145,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <LinkedIcon aria-hidden />
                           Supply chain optimization
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -179,7 +156,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <SettingsIcon aria-hidden />
                           Quality control
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -191,7 +167,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <NotificationIcon aria-hidden />
                           Production planning
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -208,7 +183,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <GuideOpenIcon aria-hidden />
                           Learning management systems
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -220,7 +194,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <LaptopIcon aria-hidden />
                           Virtual classrooms
                         </MegaMenuItem>
                       </MegaMenuItemList>
@@ -237,7 +210,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <DocumentIcon aria-hidden />
                           Document management
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -249,7 +221,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <PinIcon aria-hidden />
                           Citizen services
                         </MegaMenuItem>
                         <MegaMenuItem
@@ -261,7 +232,6 @@ export const EdgeToEdge = (): ReactElement => {
                             )
                           }
                         >
-                          <UserGroupIcon aria-hidden />
                           Public safety solutions
                         </MegaMenuItem>
                       </MegaMenuItemList>
