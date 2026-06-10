@@ -11,7 +11,7 @@ div[class*="ag-theme-salt"] {
   --ag-checkbox-checked-color: var(--salt-selectable-foreground-selected);
   --ag-checkbox-indeterminate-color: var(--salt-selectable-foreground);
   --ag-checkbox-unchecked-color: var(--salt-selectable-borderColor);
-  --ag-chip-background-color: var(--salt-actionable-primary-background);
+  --ag-chip-background-color: var(--salt-actionable-bold-background);
   --ag-data-color: var(--salt-content-primary-foreground);
   --ag-disabled-foreground-color: var(--salt-content-primary-foreground-disabled);
   --ag-font-family: var(--salt-text-fontFamily);
