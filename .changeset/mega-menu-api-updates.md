@@ -63,6 +63,7 @@ to a linear walk when the columns are stacked.
   <MegaMenuSupportingContent>...</MegaMenuSupportingContent>
 </MegaMenuPanel>
 ```
+
 //TODO: verify if that's needed before merging to lab
 **Breaking changes**
 
