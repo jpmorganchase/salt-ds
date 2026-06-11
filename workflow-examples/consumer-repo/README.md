@@ -49,6 +49,51 @@ consumer-app/
 - `.salt/stack.json` is optional and advanced, not the default.
 - runtime evidence supports a workflow; it does not replace canonical Salt guidance.
 
+## Demo: agent provenance attestations
+
+`salt-ds init --add-agent-hooks` writes a `.github/hooks/salt.json` manifest
+that wires three hook commands: `PostToolUse` runs review on edited files,
+`SessionStart` warms the agent's context, and `Stop` verifies attestation
+drift at end of session.
+
+This example uses a single-file NDJSON store at `.salt/attestations.ndjson`
+because it is the smallest thing that works. **Salt does not pick this
+path**; it is a demo default. Production repos can substitute git notes,
+signed commits, a check-API call, a SIEM event, or any other audit store
+they already operate. The Stop hook command Salt writes is:
+
+```
+npx salt-ds review --verify-attestations
+```
+
+…which reads from stdin. The wiring that gets your store into stdin is the
+consumer's choice.
+
+### Wiring for this demo
+
+1. The `PostToolUse` hook pipes its stdout (the attestation NDJSON line) into
+   `.salt/attestations.ndjson`. In `.github/hooks/salt.json`, change the
+   `PostToolUse` command from `npx salt-ds review --hook` to:
+
+   ```
+   npx salt-ds review --hook --emit-attestation >> .salt/attestations.ndjson
+   ```
+
+2. The `Stop` hook reads the same file back. Change the `Stop` command from
+   `npx salt-ds review --verify-attestations` to:
+
+   ```
+   npx salt-ds review --verify-attestations < .salt/attestations.ndjson
+   ```
+
+3. Add `.salt/attestations.ndjson` to `.gitignore` if you do not want the
+   audit log committed. Adding the file to git is also a valid choice — that
+   is exactly what makes `git notes` a viable alternative store.
+
+Salt does not pick the hashing algorithm (`hash_alg` is per-payload, default
+`sha256`), the retention policy, the GC story, or the bypass mechanism. See
+`packages/cli/docs/ci-integration.md` for the full composition pattern.
+
 ## Related Docs
 
 - [`../../packages/skills/README.md`](../../packages/skills/README.md)

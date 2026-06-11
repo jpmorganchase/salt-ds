@@ -71,3 +71,45 @@ branch-protection bypass rules, `if:` conditions in the workflow file, manual
 job approval in GitLab, and so on. The CLI deliberately has no opinion on
 labels, env vars, or vendor-specific bypass mechanisms; that responsibility
 stays in your CI configuration where the rest of your release policy lives.
+
+## Provenance attestations
+
+`salt-ds review --hook --emit-attestation` emits a `SaltAttestationV1` payload
+(salt-ds.dev/schemas/attestation/v1) as one NDJSON line on stdout after a clean
+PostToolUse review. The payload captures the registry identity, the per-file
+SHA-256 content hash, the review verdict, an opaque trace id, and a UTC
+timestamp.
+
+`salt-ds review --verify-attestations` reads payloads back from stdin (one per
+line), validates each against the published Zod schema, re-hashes the
+`files_touched` entries, and exits non-zero on drift. Use it standalone or from
+a Stop hook.
+
+Salt owns the **payload**. Consumers own the audit store, the storage format,
+the retention policy, the GC story, and the bypass model. The CLI does not pick
+a hashing algorithm in the contract — each payload carries `hash_alg` so
+consumers can upgrade independently.
+
+### Compose attestations into your audit store
+
+Whatever store you already operate, the pattern is the same: pipe the emit
+output in, pipe the same lines back into verify.
+
+```yaml
+# Sketch — adapt to whatever runner / vendor / store your repo uses
+- name: Emit attestations during the agent loop
+  run: |
+    # Your agent / hook runner pipes stdout from the PostToolUse hook to
+    # wherever you already store audit lines (git notes, signed commits,
+    # check-API payloads, SIEM, internal audit log, a plain file).
+
+- name: Verify attestations against current file state
+  run: |
+    # Whatever produced the lines pipes them back into verify.
+    cat /path/to/your/store | npx --yes salt-ds review --verify-attestations
+```
+
+`salt-ds review --verify-attestations <path>` is a convenience for the
+`workflow-examples/consumer-repo` demo and is equivalent to
+`< <path>`; in production composition, prefer the stdin pipe so the CLI never
+needs to know your store layout.

@@ -49,14 +49,13 @@ Primary workflow commands:
   - supports `--create-report <path>`
   - supports `--migration-report <path>`
   - supports `--json`
-  - supports `--output <path>`
   - supports `--registry-dir <path>`
   - supports `--timeout <ms>`
   - supports `--mode <auto|browser|fetched-html>`
-  - supports `--output-dir <path>`
-  - supports `--no-screenshot`
   - supports `--full`
   - supports `--hook` (PostToolUse/PreToolUse agent hook over stdin; see `docs/agent-customization/hooks`)
+  - supports `--emit-attestation` (with `--hook`): on a clean PostToolUse review, emits a `SaltAttestationV1` payload (salt-ds.dev/schemas/attestation/v1) as one NDJSON line on stdout. Salt owns the payload; consumers pipe stdout to whatever audit store they already operate. See [`docs/ci-integration.md`](./docs/ci-integration.md) for composition patterns.
+  - supports `--verify-attestations [<path>]`: reads `SaltAttestationV1` NDJSON from stdin (or the provided path), re-hashes the recorded files against the current on-disk state, and exits non-zero on drift. Standalone-usable in CI or from a Stop hook.
   - surfaces `require_human_review_for` policy matches from `.salt/team.json` as ordinary blocking findings with rule id `policy.require_human_review_for.<kind>`; the command exits non-zero on the violation. See [`docs/ci-integration.md`](./docs/ci-integration.md) for composing `git diff | xargs salt-ds review` into a CI required check and for the bypass story (labels, CODEOWNERS, branch protection, etc. all live in your CI config — the CLI has no opinion).
   - runs source-first Salt review for existing Salt code and can attach runtime evidence in the same pass when `--url` is provided
   - returns structured `confidence`, `raiseConfidence`, and `fixCandidates` in JSON output so the agent can judge whether to edit, inspect further, or ask follow-up questions without the CLI mutating files directly
