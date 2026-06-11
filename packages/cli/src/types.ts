@@ -18,9 +18,16 @@ export interface CliIo {
   cwd?: string;
   writeStdout?: (message: string) => void;
   writeStderr?: (message: string) => void;
+  /**
+   * Optional stdin stream override. Used by `--hook` so tests can inject
+   * hook JSON without rebinding process.stdin. Defaults to process.stdin.
+   */
+  stdin?: NodeJS.ReadableStream;
 }
 
-export type RequiredCliIo = Required<CliIo>;
+export type RequiredCliIo = Required<Omit<CliIo, "stdin">> & {
+  stdin?: NodeJS.ReadableStream;
+};
 
 export interface ResolvedLintTarget {
   input: string;
