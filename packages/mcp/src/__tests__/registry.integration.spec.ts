@@ -10,6 +10,7 @@ import {
   getIcon,
   getPage,
   getPattern,
+  getSaltEntities,
   getSaltEntity,
   recommendComponent,
   searchSaltDocs,
@@ -1592,5 +1593,56 @@ describe("registry integration", () => {
           change.target_name === "Button" && change.package === "@salt-ds/core",
       ),
     ).toBe(true);
+  });
+
+  it("get_salt_entities resolves a batch of known names in input order", () => {
+    const batch = getSaltEntities(registry, {
+      names: ["Button", "Card", "Input"],
+    });
+
+    expect(batch.decision.status).toBe("results");
+    expect(batch.requested_count).toBe(3);
+    expect(batch.found_count).toBe(3);
+    expect(batch.not_found_count).toBe(0);
+    expect(batch.ambiguous_count).toBe(0);
+    expect(batch.unresolved_names).toEqual([]);
+    expect(batch.results.map((row) => row.name)).toEqual([
+      "Button",
+      "Card",
+      "Input",
+    ]);
+    // Per-row guidance boundary must still be attached so callers can grade
+    // each entity independently.
+    for (const row of batch.results) {
+      expect(row.result.decision.status).toBe("found");
+      expect(row.result.entity).not.toBeNull();
+      expect(row.result.guidance_boundary).toBeTruthy();
+    }
+  });
+
+  it("get_salt_entities reports partial status when only some names resolve", () => {
+    const batch = getSaltEntities(registry, {
+      names: ["Button", "this-component-does-not-exist-zzz"],
+    });
+
+    expect(batch.decision.status).toBe("partial");
+    expect(batch.found_count).toBe(1);
+    expect(batch.unresolved_names).toEqual([
+      "this-component-does-not-exist-zzz",
+    ]);
+    // First row still bound to a real entity; second row exposes the failure
+    // without blocking the batch.
+    expect(batch.results[0]?.result.decision.status).toBe("found");
+    expect(batch.results[1]?.result.decision.status).not.toBe("found");
+    expect(batch.next_step).toMatch(/this-component-does-not-exist-zzz/);
+  });
+
+  it("get_salt_entities returns status:empty when names array is empty", () => {
+    const batch = getSaltEntities(registry, { names: [] });
+
+    expect(batch.decision.status).toBe("empty");
+    expect(batch.requested_count).toBe(0);
+    expect(batch.results).toEqual([]);
+    expect(batch.unresolved_names).toEqual([]);
   });
 });

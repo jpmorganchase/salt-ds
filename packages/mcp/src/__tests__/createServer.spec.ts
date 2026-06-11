@@ -65,7 +65,7 @@ import {
   writeBaseArtifacts,
 } from "./registryTestUtils.js";
 
-// Default public MCP surface: 6 workflow tools + 3 read-only support tools + 4 advanced support tools = 13 total
+// Default public MCP surface: 6 workflow tools + 4 read-only support tools + 4 advanced support tools = 14 total
 const EXPECTED_TOOL_NAMES = [
   // Primary workflow tools (6)
   "bootstrap_salt_repo",
@@ -74,8 +74,9 @@ const EXPECTED_TOOL_NAMES = [
   "migrate_to_salt",
   "review_salt_ui",
   "upgrade_salt_ui",
-  // Read-only support tools (3)
+  // Read-only support tools (4)
   "discover_salt",
+  "get_salt_entities",
   "get_salt_entity",
   "get_salt_examples",
   // Advanced support tools (4)
