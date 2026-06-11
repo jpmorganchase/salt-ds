@@ -98,6 +98,7 @@ describe("deterministic agentic policy evals", () => {
 
   it("keeps compact workflow follow-through aligned across the skill, transport contract, repo instructions, and consumer examples", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
+    const core = await readSkill("salt-ds/references/shared/core.md");
     const transport = await readSkill("salt-ds/references/shared/transport.md");
     const repoInstructions = await readSkill(
       "salt-ds/assets/repo-instructions.template.md",
@@ -109,10 +110,14 @@ describe("deterministic agentic policy evals", () => {
       "workflow-examples/consumer-repo/.github/copilot-instructions.md",
     );
 
-    expect(skill).toContain(
+    // The compact-output summary moved from SKILL.md into the always-loaded
+    // references/shared/core.md as part of the PR 11.5 router trim. Skill +
+    // core are loaded together, so the first-load contract is preserved.
+    expect(skill).toContain("references/shared/core.md");
+    expect(core).toContain(
       "Read compact workflow output from stable top-level workflow signals first:",
     );
-    expect(skill).toContain(
+    expect(core).toContain(
       "`status`, `safety`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`.",
     );
     expect(transport).toContain(
@@ -131,6 +136,7 @@ describe("deterministic agentic policy evals", () => {
 
   it("keeps v1 action semantics aligned across skill and host adapter guidance", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
+    const core = await readSkill("salt-ds/references/shared/core.md");
     const transport = await readSkill("salt-ds/references/shared/transport.md");
     const copilotHosts = await readSkill(
       "salt-ds/references/shared/copilot-hosts.md",
@@ -145,8 +151,13 @@ describe("deterministic agentic policy evals", () => {
       "workflow-examples/consumer-repo/.github/copilot-instructions.md",
     );
 
-    expect(skill).toContain("Treat `salt_workflow_v1.action.kind` as binding");
+    // Action semantics moved into the always-loaded core; SKILL.md still
+    // routes there.
+    expect(core).toContain("Treat `salt_workflow_v1.action.kind` as binding");
     expect(skill).not.toContain(
+      "Treat `salt_workflow_v1` action kinds as binding:",
+    );
+    expect(core).not.toContain(
       "Treat `salt_workflow_v1` action kinds as binding:",
     );
     expect(transport).toContain(
@@ -170,6 +181,9 @@ describe("deterministic agentic policy evals", () => {
     expect(skill).not.toContain(
       "`install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission",
     );
+    expect(core).not.toContain(
+      "`install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission",
+    );
     expect(transport).toContain(
       "`install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission",
     );
@@ -191,6 +205,7 @@ describe("deterministic agentic policy evals", () => {
 
   it("keeps anti-hallucination, hard gate, rerun, and review semantics on first-load skill surfaces", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
+    const core = await readSkill("salt-ds/references/shared/core.md");
     const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
     const transport = await readSkill("salt-ds/references/shared/transport.md");
     const copilotHosts = await readSkill(
@@ -218,8 +233,11 @@ describe("deterministic agentic policy evals", () => {
       /run (?:the returned )?review/i,
     ];
 
+    // SKILL.md is now a thin router; the always-loaded behavior contract lives
+    // in references/shared/core.md. The first-load surface is skill + core.
+    const skillAndCore = `${skill}\n${core}`;
     for (const source of [
-      skill,
+      skillAndCore,
       openAiMetadata,
       transport,
       copilotHosts,
@@ -230,10 +248,6 @@ describe("deterministic agentic policy evals", () => {
       expectAllConcepts(source, requiredConcepts);
     }
 
-    expectAllConcepts(skill, [
-      /quick-check[\s\S]+not permission to implement/i,
-      /quick-check[\s\S]+Salt-specific props[\s\S]+canonical/i,
-    ]);
     expectAllConcepts(modes, [
       /quick-check is not permission to implement create, migrate, or upgrade work/i,
       /Salt-specific props[\s\S]+verified through MCP or CLI evidence/i,
@@ -242,6 +256,7 @@ describe("deterministic agentic policy evals", () => {
 
   it("keeps provider and theme bootstrap evidence-gated across first-load agent surfaces", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
+    const core = await readSkill("salt-ds/references/shared/core.md");
     const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
     const themeReference = await readSkill(
       "salt-ds/references/shared/theme.md",
@@ -275,8 +290,11 @@ describe("deterministic agentic policy evals", () => {
       /Amplitude/,
     ];
 
+    // Theme Evidence Rule moved into references/shared/core.md (always-loaded
+    // alongside the SKILL.md router). The first-load surface is skill + core.
+    const skillAndCore = `${skill}\n${core}`;
     for (const source of [
-      skill,
+      skillAndCore,
       openAiMetadata,
       themeReference,
       repoInstructions,
@@ -292,12 +310,14 @@ describe("deterministic agentic policy evals", () => {
 
   it("keeps explicit user nouns as evidence-backed unresolved requirements instead of magic inferred implementation", async () => {
     const skill = await readSkill("salt-ds/SKILL.md");
+    const core = await readSkill("salt-ds/references/shared/core.md");
     const createRules = await readSkill("salt-ds/references/create/rules.md");
     const surfaceResolution = await readSkill(
       "salt-ds/references/shared/surface-resolution.md",
     );
 
-    expectAllConcepts(skill, [
+    const skillAndCore = `${skill}\n${core}`;
+    expectAllConcepts(skillAndCore, [
       /preserve explicit user nouns[\s\S]+unresolved requirements/i,
       /retrieve canonical evidence[\s\S]+do not implement those regions/i,
       /workflow contract or support evidence covers them/i,

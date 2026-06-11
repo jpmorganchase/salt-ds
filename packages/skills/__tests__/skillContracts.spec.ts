@@ -29,10 +29,80 @@ function readOpenAiDefaultPrompt(content: string): string {
   return (match?.[1] ?? "").replace(/^ {4}/gm, "").trim();
 }
 
+function extractFrontmatter(content: string): Record<string, string> {
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!match) return {};
+  const block = match[1];
+  const out: Record<string, string> = {};
+  let currentKey: string | null = null;
+  let currentValue: string[] = [];
+  for (const rawLine of block.split(/\r?\n/)) {
+    const fieldMatch = rawLine.match(/^([a-zA-Z_][\w-]*):\s*(.*)$/);
+    if (fieldMatch) {
+      if (currentKey !== null) {
+        out[currentKey] = currentValue.join(" ").trim();
+      }
+      currentKey = fieldMatch[1];
+      currentValue = fieldMatch[2] ? [fieldMatch[2]] : [];
+    } else if (currentKey !== null) {
+      currentValue.push(rawLine.trim());
+    }
+  }
+  if (currentKey !== null) {
+    out[currentKey] = currentValue.join(" ").trim();
+  }
+  return out;
+}
+
+function extractHeaders(content: string, level: number): string[] {
+  const prefix = "#".repeat(level);
+  const re = new RegExp(`^${prefix} (?!#)(.+)$`, "gm");
+  const out: string[] = [];
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(content)) !== null) {
+    out.push(match[1].trim());
+  }
+  return out;
+}
+
+function extractReferenceLinks(content: string): string[] {
+  const re = /references\/[\w./-]+\.md/g;
+  return Array.from(new Set(content.match(re) ?? []));
+}
+
 const PROMPT_CONTEXT_BUDGETS = {
   skillEntrypointChars: 18_000,
   openAiDefaultPromptChars: 2_300,
 } as const;
+
+const EXPECTED_SKILL_HEADERS = [
+  "Always-Load First",
+  "Example Triggers",
+  "Trigger Boundary",
+  "Workflow Selection",
+  "Reference Routing",
+];
+
+const EXPECTED_CORE_HEADERS = [
+  "No Salt Invention Rule",
+  "Theme Evidence Rule",
+  "Hard Gate",
+  "Action Loop",
+  "Project Context First",
+  "Shared Workflow Contract",
+  "Output Posture",
+];
+
+const BANNED_LEGACY_PATHS = [
+  "references/create-rules.md",
+  "references/review-rules.md",
+  "references/migration-rules.md",
+  "references/canonical-salt-tool-surfaces.md",
+  "references/builder/",
+  "references/reviewer/",
+  "references/migration/",
+  "references/project-conventions/",
+];
 
 describe("Salt skill contracts", () => {
   it("keeps salt-ds as the only public skill in the collection", async () => {
@@ -53,10 +123,72 @@ describe("Salt skill contracts", () => {
     ).toEqual(["salt-ds"]);
   });
 
-  it("keeps salt-ds self-contained with a workflow-based reference layout", async () => {
+  it("keeps SKILL.md as a thin router that points at references/shared/core.md", async () => {
+    const primarySkill = await readSkill("salt-ds/SKILL.md");
+    const core = await readSkill("salt-ds/references/shared/core.md");
+
+    // Frontmatter: structural parse, not free-text substring match.
+    const frontmatter = extractFrontmatter(primarySkill);
+    expect(frontmatter.name).toBe("salt-ds");
+    expect(frontmatter.description).toMatch(
+      /^Agent-agnostic Salt design system workflow/,
+    );
+    expect(frontmatter.description).toMatch(
+      /Use only when @salt-ds packages, \.salt policy, Salt MCP\/CLI, or explicit Salt adoption is involved; leave non-Salt work to the host\.$/,
+    );
+    // Router description must not advertise generic non-Salt work.
+    expect(frontmatter.description).not.toMatch(
+      /\b(?:React|CSS|TypeScript|build|test|CI|debugging|generic repo)\b/i,
+    );
+
+    // ToC: exactly the router headers, in order; no behavior sections.
+    const headers = extractHeaders(primarySkill, 2);
+    expect(headers).toEqual(EXPECTED_SKILL_HEADERS);
+    for (const movedHeader of EXPECTED_CORE_HEADERS) {
+      expect(headers).not.toContain(movedHeader);
+    }
+
+    // Router must direct callers to load core.md first and must call out
+    // every workflow surface and the public Salt CLI / MCP transport layer.
+    expect(primarySkill).toContain("references/shared/core.md");
+    expect(primarySkill).toContain(
+      "Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.",
+    );
+    expect(primarySkill).toContain(
+      "Keep one public workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`.",
+    );
+    expect(primarySkill).toContain("Route by user job, not by IDE presence:");
+
+    // Link integrity: every reference path in the router resolves on disk.
+    const referencedPaths = extractReferenceLinks(primarySkill);
+    expect(referencedPaths.length).toBeGreaterThan(0);
+    for (const ref of referencedPaths) {
+      await fs.access(path.join(skillsRoot, "salt-ds", ref));
+    }
+
+    // No legacy reference paths leak back in.
+    for (const banned of BANNED_LEGACY_PATHS) {
+      expect(primarySkill).not.toContain(banned);
+    }
+
+    // core.md owns the always-loaded behavior contract.
+    const coreHeaders = extractHeaders(core, 2);
+    for (const header of EXPECTED_CORE_HEADERS) {
+      expect(coreHeaders).toContain(header);
+    }
+
+    // Two semantic-level checks: anti-invention bullet and Hard-Gate fields.
+    expect(core).toMatch(
+      /Do not (?:guess|invent|hallucinate)[\s\S]{0,200}Salt APIs/,
+    );
+    expect(core).toContain(
+      "Do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has all of these fields:",
+    );
+  });
+
+  it("keeps downstream skill surfaces aligned with workflow contract", async () => {
     const readme = await readSkill("README.md");
     const agents = await readSkill("AGENTS.md");
-    const primarySkill = await readSkill("salt-ds/SKILL.md");
     const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
     const createRules = await readSkill("salt-ds/references/create/rules.md");
     const createWorkflow = await readSkill(
@@ -78,7 +210,6 @@ describe("Salt skill contracts", () => {
       "salt-ds/references/shared/design-principles.md",
     );
     const sharedTheme = await readSkill("salt-ds/references/shared/theme.md");
-    const transport = await readSkill("salt-ds/references/shared/transport.md");
     const repoInstructionsTemplate = await readSkill(
       "salt-ds/assets/repo-instructions.template.md",
     );
@@ -95,6 +226,7 @@ describe("Salt skill contracts", () => {
     expect(agents).not.toContain("`salt-ui-reviewer`");
     expect(agents).not.toContain("`salt-migration-helper`");
     expect(agents).not.toContain("`salt-project-conventions`");
+
     expect(openAiMetadata).toContain('display_name: "Salt DS"');
     expect(openAiMetadata).toContain(
       'short_description: "evidence-first, agent-agnostic Salt design system workflow for create, review, migrate, upgrade, bootstrap, quick checks, and accessibility audits"',
@@ -112,9 +244,6 @@ describe("Salt skill contracts", () => {
       "Action Loop: stop and wait when action.kind is ask_user",
     );
     expect(openAiDefaultPrompt).toContain(
-      "stop and wait when action.kind is ask_user",
-    );
-    expect(openAiDefaultPrompt).toContain(
       "treat the answer as updated workflow input",
     );
     expect(openAiDefaultPrompt).toContain(
@@ -129,92 +258,7 @@ describe("Salt skill contracts", () => {
     expect(openAiDefaultPrompt.length).toBeLessThan(
       PROMPT_CONTEXT_BUDGETS.openAiDefaultPromptChars,
     );
-    expect(primarySkill).toContain("## Trigger Boundary");
-    expect(primarySkill).toContain(
-      "description: Agent-agnostic Salt design system workflow for Salt-specific create, review, migrate, upgrade, init, quick-check, accessibility audits, repo conventions, and UI composition/layout work in consumer repos.",
-    );
-    expect(primarySkill).toContain(
-      "Use only when @salt-ds packages, .salt policy, Salt MCP/CLI, or explicit Salt adoption is involved; leave non-Salt work to the host.",
-    );
-    expect(primarySkill.match(/^description: (.*)$/m)?.[1] ?? "").not.toMatch(
-      /\b(?:React|CSS|TypeScript|build|test|CI|debugging|generic repo)\b/i,
-    );
-    expect(primarySkill).toContain("## Example Triggers");
-    expect(primarySkill).toContain("## No Salt Invention Rule");
-    expect(primarySkill).toContain("## Hard Gate");
-    expect(primarySkill).toContain("## Action Loop");
-    expect(primarySkill).toContain("## Project Context First");
-    expect(primarySkill).toContain("Route by user job, not by IDE presence:");
-    expect(primarySkill).not.toContain("## IDE-First Job Order");
-    expect(primarySkill).toContain(
-      "Do not use this skill for generic React, CSS, accessibility, or product-design work that does not require Salt-specific guidance.",
-    );
-    expect(primarySkill).toContain(
-      "Review this Salt dialog and tell me the safest next fix.",
-    );
-    expect(primarySkill).toContain(
-      "Create a Salt-native dashboard page for this feature.",
-    );
-    expect(primarySkill).toContain("## Reference Routing");
-    expect(primarySkill).toContain(
-      "Keep one public workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`.",
-    );
-    expect(primarySkill).toContain(
-      "Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.",
-    );
-    expect(primarySkill).toContain(
-      "For repo-aware work, establish trusted project context first",
-    );
-    expect(primarySkill).toContain(
-      "If `action.kind` is `ask_user`, stop and wait for the user answer; treat the answer as a new or updated workflow input, not as an evidence bridge.",
-    );
-    expect(primarySkill).toContain(
-      'For create entity follow-through, pass MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.',
-    );
-    expect(primarySkill).toContain(
-      "Read compact workflow output from stable top-level workflow signals first: `status`, `safety`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`.",
-    );
-    expect(primarySkill).toContain(
-      "Preserve explicit user nouns that are not yet covered as unresolved requirements.",
-    );
-    expect(primarySkill).toContain(
-      "Treat `salt_workflow_v1.action.kind` as binding: perform exactly the returned action, and only edit when the Hard Gate is satisfied.",
-    );
-    expect(primarySkill).toContain(
-      "Do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has all of these fields:",
-    );
-    expect(primarySkill).not.toContain(
-      "Treat `salt_workflow_v1` action kinds as binding:",
-    );
-    expect(primarySkill).not.toContain(
-      "`install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission",
-    );
-    expect(primarySkill).not.toContain(
-      "If compact `create` output is `blocked`, `partial`, or not yet safe for the exact request, follow the returned action before implementing the blocked region.",
-    );
-    expect(primarySkill).not.toContain("or an answered `ask_user`");
-    expect(primarySkill).not.toContain("`ask_user` asks, `retrieve_entity`");
-    expect(primarySkill).toContain(
-      "Do not claim a Salt workflow completed merely because the host emitted a large payload.",
-    );
-    expect(primarySkill).toContain("references/shared/transport.md");
-    expect(primarySkill).toContain("references/shared/theme.md");
-    expect(primarySkill).toContain("references/shared/surfaces.md");
-    expect(primarySkill).toContain("references/shared/design-principles.md");
-    expect(primarySkill).toContain("references/create/rules.md");
-    expect(primarySkill).toContain("references/review/rubric.md");
-    expect(primarySkill).toContain("references/migrate/workflow.md");
-    expect(primarySkill).toContain("references/conventions/contract.md");
-    expect(primarySkill).not.toContain("references/create-rules.md");
-    expect(primarySkill).not.toContain("references/review-rules.md");
-    expect(primarySkill).not.toContain("references/migration-rules.md");
-    expect(primarySkill).not.toContain(
-      "references/canonical-salt-tool-surfaces.md",
-    );
-    expect(primarySkill).not.toContain("references/builder/");
-    expect(primarySkill).not.toContain("references/reviewer/");
-    expect(primarySkill).not.toContain("references/migration/");
-    expect(primarySkill).not.toContain("references/project-conventions/");
+
     expect(createRules).toContain("create-task-first");
     expect(createRules).toContain("create-verify-named-salt-details");
     expect(createRules).toContain(
@@ -301,37 +345,6 @@ describe("Salt skill contracts", () => {
     expect(designPrinciples).toContain("## Task-First Composition");
     expect(designPrinciples).toContain("## Layout Ownership");
     expect(designPrinciples).toContain("## Ask Instead Of Guess");
-    expect(transport).toContain("Salt MCP");
-    expect(transport).toContain(
-      "Read compact workflow output from top-level fields first:",
-    );
-    expect(transport).toContain(
-      "Treat `salt_workflow_v1` action kinds as binding:",
-    );
-    expect(transport).toContain(
-      "`install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission",
-    );
-    expect(transport).toContain(
-      "`ask_user`: stop and ask the returned question before writing code; when the user answers, treat it as a new or updated workflow input, not as an evidence bridge",
-    );
-    expect(transport).toContain(
-      'For create entity follow-through, the evidence bridge is MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.',
-    );
-    expect(transport).toContain(
-      "Action Loop: establish trusted project context for repo-aware work",
-    );
-    expect(transport).toContain(
-      "Hard Gate: do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has `status: success`, `action.kind: implement`, `safety.exact_request_safe: true`, and `evidence.status: complete`.",
-    );
-    expect(transport).toContain(
-      "`salt-ds migrate [query] --source-outline <path>` when migration starts from a mockup or rough design outline that should be converted into structured evidence before translation",
-    );
-    expect(transport).toContain(
-      "raw image attachments only after the host or adapter has normalized them into structured migration evidence",
-    );
-    expect(transport).toContain(
-      "If Salt-managed repo instructions or host adapter files may be stale, rerun `bootstrap_salt_repo` or `salt-ds init` to refresh the managed Salt blocks instead of hand-rewriting them.",
-    );
     expect(repoInstructionsTemplate).toContain("salt-ds review");
     expect(repoInstructionsTemplate).toContain(
       "keep the first result canonical-only",
@@ -425,6 +438,39 @@ describe("Salt skill contracts", () => {
     );
     expect(contract).toContain(
       "If both MCP and CLI fail, resolve the blocker or ask the user before proceeding.",
+    );
+    // Transport contract still owns the deep v1-action map even after the
+    // skill router trim moves the always-on summary into core.md.
+    expect(contract).toContain("Salt MCP");
+    expect(contract).toContain(
+      "Read compact workflow output from top-level fields first:",
+    );
+    expect(contract).toContain(
+      "Treat `salt_workflow_v1` action kinds as binding:",
+    );
+    expect(contract).toContain(
+      "`install_dependencies`: install the listed Salt packages, then rerun the originating workflow; installing packages is not implementation permission",
+    );
+    expect(contract).toContain(
+      "`ask_user`: stop and ask the returned question before writing code; when the user answers, treat it as a new or updated workflow input, not as an evidence bridge",
+    );
+    expect(contract).toContain(
+      'For create entity follow-through, the evidence bridge is MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.',
+    );
+    expect(contract).toContain(
+      "Action Loop: establish trusted project context for repo-aware work",
+    );
+    expect(contract).toContain(
+      "Hard Gate: do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has `status: success`, `action.kind: implement`, `safety.exact_request_safe: true`, and `evidence.status: complete`.",
+    );
+    expect(contract).toContain(
+      "`salt-ds migrate [query] --source-outline <path>` when migration starts from a mockup or rough design outline that should be converted into structured evidence before translation",
+    );
+    expect(contract).toContain(
+      "raw image attachments only after the host or adapter has normalized them into structured migration evidence",
+    );
+    expect(contract).toContain(
+      "If Salt-managed repo instructions or host adapter files may be stale, rerun `bootstrap_salt_repo` or `salt-ds init` to refresh the managed Salt blocks instead of hand-rewriting them.",
     );
     expect(consumerExampleAgents).toContain("salt-ds doctor");
     expect(consumerExampleAgents).toContain(
