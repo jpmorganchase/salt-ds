@@ -1550,11 +1550,7 @@ function deriveReviewInternalLimitations(
 
   const unsupportedClaims = gate.artifact.unsupported_claims ?? [];
   const ruleKinds = [
-    ...new Set(
-      unsupportedClaims
-        .map((claim) => claim.kind)
-        .filter((kind): kind is string => typeof kind === "string"),
-    ),
+    ...new Set(unsupportedClaims.map((claim) => claim.kind as string)),
   ].sort();
 
   return {
