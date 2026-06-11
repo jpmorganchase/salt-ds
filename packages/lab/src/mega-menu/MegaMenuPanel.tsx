@@ -1,4 +1,4 @@
-import { flip, limitShift, offset, shift, size } from "@floating-ui/react";
+import { flip, limitShift, offset, shift } from "@floating-ui/react";
 import {
   makePrefixer,
   useFloatingComponent,
@@ -70,15 +70,6 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
         offset(1),
         flip({ padding: pageMargin }),
         shift({ padding: pageMargin, limiter: limitShift() }),
-        size({
-          padding: pageMargin,
-          apply({ availableWidth, elements }) {
-            elements.floating.style.setProperty(
-              "--saltMegaMenuPanel-availableWidth",
-              `${availableWidth}px`,
-            );
-          },
-        }),
       ],
     });
 
