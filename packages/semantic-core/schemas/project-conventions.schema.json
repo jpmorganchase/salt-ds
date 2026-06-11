@@ -66,6 +66,13 @@
         "$ref": "#/$defs/bannedChoice"
       }
     },
+    "require_human_review_for": {
+      "type": "array",
+      "description": "Optional policy rules that escalate matching changes to human review. Matches surface as blocking findings on `salt-ds review` with rule id `policy.require_human_review_for.<kind>`, and the PreToolUse agent hook emits `permissionDecision: ask` for the same matches. See `packages/cli/docs/ci-integration.md` for composing the CLI exit code with your existing CI bypass conventions.",
+      "items": {
+        "$ref": "#/$defs/humanReviewRule"
+      }
+    },
     "notes": {
       "type": "array",
       "items": {
@@ -322,6 +329,28 @@
           "items": {
             "type": "string"
           }
+        }
+      }
+    },
+    "humanReviewRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Single rule consulted by `salt-ds review` (file scan) and `salt-ds review --hook` (PreToolUse). A match escalates the change to human review and emits a blocking `policy.require_human_review_for.<kind>` finding. See `packages/cli/docs/ci-integration.md` for composing the CLI exit code with your existing CI bypass conventions.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable identifier for the kind of change being escalated (e.g. \"auth-flow-edit\", \"theme-provider-edit\", \"license-change\")."
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Substring matched against changed file paths relative to the repo root."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable rationale surfaced in the review block reason."
         }
       }
     }

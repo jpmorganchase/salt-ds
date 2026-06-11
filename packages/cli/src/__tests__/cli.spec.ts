@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import http from "node:http";
 import os from "node:os";
 import path from "node:path";
+import { Readable } from "node:stream";
 import { fileURLToPath } from "node:url";
 import { upsertSaltRepoInstructions } from "@salt-ds/semantic-core/bootstrapScaffolding";
 import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
@@ -3268,6 +3269,270 @@ describe("salt cli", () => {
     ).resolves.toBeUndefined();
   });
 
+  it("emits a warn check when playwright is a transitive dep but no browser-mode usage is detected", async () => {
+    const rootDir = await createTempDir("salt-cli-doctor-check-install-warn");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify({ dependencies: { "@salt-ds/core": "^1.0.0" } }, null, 2),
+      "utf8",
+    );
+    // Simulate @salt-ds/cli installed with a transitive playwright dep
+    await fs.mkdir(path.join(rootDir, "node_modules", "@salt-ds", "cli"), {
+      recursive: true,
+    });
+    await fs.writeFile(
+      path.join(rootDir, "node_modules", "@salt-ds", "cli", "package.json"),
+      JSON.stringify(
+        {
+          name: "@salt-ds/cli",
+          version: "1.0.0",
+          dependencies: { "@salt-ds/runtime-inspector-core": "^1.0.0" },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    await fs.mkdir(
+      path.join(rootDir, "node_modules", "@salt-ds", "runtime-inspector-core"),
+      { recursive: true },
+    );
+    await fs.writeFile(
+      path.join(
+        rootDir,
+        "node_modules",
+        "@salt-ds",
+        "runtime-inspector-core",
+        "package.json",
+      ),
+      JSON.stringify(
+        {
+          name: "@salt-ds/runtime-inspector-core",
+          version: "1.0.0",
+          dependencies: { playwright: "^1.40.0" },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    // No browser-mode usage anywhere in the repo
+
+    let stdout = "";
+    const exitCode = await runCli(
+      ["doctor", ".", "--json", "--check-install"],
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    const payload = JSON.parse(stdout);
+    const warnCheck = payload.checks.find(
+      (c: { id: string }) => c.id === "check-install-playwright-unused",
+    );
+    expect(warnCheck).toBeDefined();
+    expect(warnCheck.status).toBe("warn");
+    expect(warnCheck.summary).toContain("playwright");
+    expect(warnCheck.details).toContain("--mode fetched-html");
+  });
+
+  it("emits a pass check when playwright is installed and browser-mode usage is detected in package.json scripts", async () => {
+    const rootDir = await createTempDir("salt-cli-doctor-check-install-pass");
+    // Root package.json with a script that uses --mode browser
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: { "@salt-ds/core": "^1.0.0" },
+          scripts: {
+            inspect:
+              "salt-ds runtime inspect http://localhost:6006 --mode browser",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    // @salt-ds/cli with playwright in transitive deps
+    await fs.mkdir(path.join(rootDir, "node_modules", "@salt-ds", "cli"), {
+      recursive: true,
+    });
+    await fs.writeFile(
+      path.join(rootDir, "node_modules", "@salt-ds", "cli", "package.json"),
+      JSON.stringify(
+        {
+          name: "@salt-ds/cli",
+          version: "1.0.0",
+          dependencies: { playwright: "^1.40.0" },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    const exitCode = await runCli(
+      ["doctor", ".", "--json", "--check-install"],
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    const payload = JSON.parse(stdout);
+    const passCheck = payload.checks.find(
+      (c: { id: string }) => c.id === "check-install-playwright-used",
+    );
+    expect(passCheck).toBeDefined();
+    expect(passCheck.status).toBe("pass");
+    expect(passCheck.details).toContain("package.json");
+  });
+
+  it("emits a pass check when playwright is not a transitive dep of @salt-ds/cli or @salt-ds/mcp", async () => {
+    const rootDir = await createTempDir("salt-cli-doctor-check-install-absent");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify({ dependencies: { "@salt-ds/core": "^1.0.0" } }, null, 2),
+      "utf8",
+    );
+    // @salt-ds/cli with no playwright in its deps
+    await fs.mkdir(path.join(rootDir, "node_modules", "@salt-ds", "cli"), {
+      recursive: true,
+    });
+    await fs.writeFile(
+      path.join(rootDir, "node_modules", "@salt-ds", "cli", "package.json"),
+      JSON.stringify(
+        {
+          name: "@salt-ds/cli",
+          version: "1.0.0",
+          dependencies: { "@salt-ds/semantic-core": "^1.0.0" },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+
+    let stdout = "";
+    const exitCode = await runCli(
+      ["doctor", ".", "--json", "--check-install"],
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    const payload = JSON.parse(stdout);
+    const absentCheck = payload.checks.find(
+      (c: { id: string }) => c.id === "check-install-playwright-absent",
+    );
+    expect(absentCheck).toBeDefined();
+    expect(absentCheck.status).toBe("pass");
+  });
+
+  it("does not emit check-install checks when --check-install flag is absent", async () => {
+    const rootDir = await createTempDir("salt-cli-doctor-no-check-install");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify({ dependencies: { "@salt-ds/core": "^1.0.0" } }, null, 2),
+      "utf8",
+    );
+
+    let stdout = "";
+    const exitCode = await runCli(["doctor", ".", "--json"], {
+      cwd: rootDir,
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: () => {},
+    });
+
+    expect(exitCode).toBe(0);
+    const payload = JSON.parse(stdout);
+    const checkInstallChecks = payload.checks.filter((c: { id: string }) =>
+      c.id.startsWith("check-install-"),
+    );
+    expect(checkInstallChecks).toHaveLength(0);
+  });
+
+  it("emits a pass check when playwright is detected via --mode auto usage in a CI yaml file", async () => {
+    const rootDir = await createTempDir(
+      "salt-cli-doctor-check-install-ci-yaml",
+    );
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify({ dependencies: { "@salt-ds/core": "^1.0.0" } }, null, 2),
+      "utf8",
+    );
+    // playwright in @salt-ds/mcp
+    await fs.mkdir(path.join(rootDir, "node_modules", "@salt-ds", "mcp"), {
+      recursive: true,
+    });
+    await fs.writeFile(
+      path.join(rootDir, "node_modules", "@salt-ds", "mcp", "package.json"),
+      JSON.stringify(
+        {
+          name: "@salt-ds/mcp",
+          version: "1.0.0",
+          dependencies: { playwright: "^1.40.0" },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    // CI file that uses --mode auto
+    await fs.mkdir(path.join(rootDir, ".github", "workflows"), {
+      recursive: true,
+    });
+    await fs.writeFile(
+      path.join(rootDir, ".github", "workflows", "ci.yml"),
+      [
+        "jobs:",
+        "  inspect:",
+        "    steps:",
+        "      - run: salt-ds runtime inspect $URL --mode auto --json",
+      ].join("\n"),
+      "utf8",
+    );
+
+    let stdout = "";
+    const exitCode = await runCli(
+      ["doctor", ".", "--json", "--check-install"],
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    const payload = JSON.parse(stdout);
+    const passCheck = payload.checks.find(
+      (c: { id: string }) => c.id === "check-install-playwright-used",
+    );
+    expect(passCheck).toBeDefined();
+    expect(passCheck.status).toBe("pass");
+    expect(passCheck.details).toContain("ci.yml");
+  });
+
   it("returns 1 for an unknown command", async () => {
     let stderr = "";
     const exitCode = await runCli(["nope"], {
@@ -6039,4 +6304,680 @@ describe("salt cli", () => {
       fs.access(payload.screenshots[0].path),
     ).resolves.toBeUndefined();
   }, 15_000);
+
+  // ----- salt-ds review --hook (Phase 2 task 2.12 / E1) -----
+
+  it("review --hook PostToolUse exits 2 with stderr findings when the edited Salt file fails review", async () => {
+    const rootDir = await createTempDir("salt-cli-review-hook-block");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        {
+          dependencies: {
+            "@salt-ds/core": "^2.0.0",
+          },
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    const filePath = path.join(rootDir, "App.tsx");
+    await fs.writeFile(
+      filePath,
+      [
+        'import { Button } from "@salt-ds/core";',
+        "",
+        "export function App() {",
+        '  return <Button href="/next">Go</Button>;',
+        "}",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(
+      ["review", "--hook", "--registry-dir", registryDir],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(
+          Buffer.from(
+            JSON.stringify({
+              session_id: "sess-block",
+              cwd: rootDir,
+              hook_event_name: "PostToolUse",
+              tool_name: "Edit",
+              tool_input: { file_path: filePath },
+            }),
+            "utf8",
+          ),
+        ),
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(code).toBe(2);
+    expect(stdout).toBe("");
+    expect(stderr).toMatch(/salt-ds review blocked/);
+    expect(stderr).toMatch(/App\.tsx/);
+  });
+
+  it("review --hook PostToolUse exits 0 silently when the edited file has no Salt imports", async () => {
+    const rootDir = await createTempDir("salt-cli-review-hook-pass-nonsalt");
+    const filePath = path.join(rootDir, "Plain.tsx");
+    await fs.writeFile(
+      filePath,
+      "export function Plain() {\n  return 'plain';\n}\n",
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(
+      ["review", "--hook", "--registry-dir", registryDir],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(
+          Buffer.from(
+            JSON.stringify({
+              hook_event_name: "PostToolUse",
+              tool_name: "Edit",
+              tool_input: { file_path: filePath },
+            }),
+            "utf8",
+          ),
+        ),
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(code).toBe(0);
+    expect(stdout).toBe("");
+    expect(stderr).toBe("");
+  });
+
+  it("review --hook PreToolUse emits permissionDecision: allow when no rules are declared", async () => {
+    const rootDir = await createTempDir("salt-cli-review-hook-pre-allow");
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(["review", "--hook"], {
+      cwd: rootDir,
+      stdin: Readable.from(
+        Buffer.from(
+          JSON.stringify({
+            hook_event_name: "PreToolUse",
+            tool_name: "Edit",
+            tool_input: { file_path: path.join(rootDir, "src", "App.tsx") },
+          }),
+          "utf8",
+        ),
+      ),
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+
+    expect(code).toBe(0);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    expect(payload).toEqual({
+      hookSpecificOutput: {
+        hookEventName: "PreToolUse",
+        permissionDecision: "allow",
+      },
+    });
+  });
+
+  it("review --hook PreToolUse emits permissionDecision: ask when a scope rule matches", async () => {
+    const rootDir = await createTempDir("salt-cli-review-hook-pre-ask");
+    await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, ".salt", "team.json"),
+      `${JSON.stringify(
+        {
+          contract: "project_conventions_v1",
+          version: "1.0.0",
+          project: "test",
+          require_human_review_for: [
+            { kind: "auth-flow-edit", scope: "auth", reason: "needs review" },
+          ],
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(["review", "--hook"], {
+      cwd: rootDir,
+      stdin: Readable.from(
+        Buffer.from(
+          JSON.stringify({
+            cwd: rootDir,
+            hook_event_name: "PreToolUse",
+            tool_name: "Edit",
+            tool_input: {
+              file_path: path.join(rootDir, "src", "auth", "Login.tsx"),
+            },
+          }),
+          "utf8",
+        ),
+      ),
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+
+    expect(code).toBe(0);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    expect(payload.hookSpecificOutput).toMatchObject({
+      hookEventName: "PreToolUse",
+      permissionDecision: "ask",
+    });
+    expect(payload.hookSpecificOutput.permissionDecisionReason).toMatch(
+      /scope=auth/,
+    );
+    expect(payload.hookSpecificOutput.permissionDecisionReason).toMatch(
+      /reason=needs review/,
+    );
+  });
+
+  it("review --hook PostToolUse passes silently for events with no edited Salt files", async () => {
+    const rootDir = await createTempDir("salt-cli-review-hook-pass-empty");
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(
+      ["review", "--hook", "--registry-dir", registryDir],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(
+          Buffer.from(
+            JSON.stringify({
+              hook_event_name: "PostToolUse",
+              tool_name: "Bash",
+              tool_input: { command: "ls" },
+            }),
+            "utf8",
+          ),
+        ),
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+    expect(code).toBe(0);
+    expect(stdout).toBe("");
+    expect(stderr).toBe("");
+  });
+
+  it("review --hook errors out when stdin is empty", async () => {
+    const rootDir = await createTempDir("salt-cli-review-hook-empty-stdin");
+
+    let stderr = "";
+    const code = await runCli(["review", "--hook"], {
+      cwd: rootDir,
+      stdin: Readable.from([]),
+      writeStdout: () => {},
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+    expect(code).toBe(1);
+    expect(stderr).toMatch(/requires hook JSON on stdin/);
+  });
+
+  it("review --hook errors out on malformed JSON", async () => {
+    const rootDir = await createTempDir("salt-cli-review-hook-bad-stdin");
+
+    let stderr = "";
+    const code = await runCli(["review", "--hook"], {
+      cwd: rootDir,
+      stdin: Readable.from(Buffer.from("{not json}", "utf8")),
+      writeStdout: () => {},
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+    expect(code).toBe(1);
+    expect(stderr).toMatch(/Invalid JSON on hook stdin/);
+  });
+
+  it("review --hook silently passes for unhandled events", async () => {
+    const rootDir = await createTempDir("salt-cli-review-hook-other");
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(["review", "--hook"], {
+      cwd: rootDir,
+      stdin: Readable.from(
+        Buffer.from(
+          JSON.stringify({ hook_event_name: "Notification" }),
+          "utf8",
+        ),
+      ),
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+    expect(code).toBe(0);
+    expect(stdout).toBe("");
+    expect(stderr).toBe("");
+  });
+
+  // ----- salt-ds info --hook (Phase 2 task 2.17 / E6) -----
+
+  it("info --hook SessionStart emits additionalContext summarizing repo Salt state", async () => {
+    const rootDir = await createTempDir("salt-cli-info-hook");
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(
+      ["info", "--hook", "--registry-dir", registryDir],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(
+          Buffer.from(
+            JSON.stringify({
+              cwd: rootDir,
+              hook_event_name: "SessionStart",
+            }),
+            "utf8",
+          ),
+        ),
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(code).toBe(0);
+    expect(stderr).toBe("");
+    const payload = JSON.parse(stdout);
+    expect(payload.hookSpecificOutput.hookEventName).toBe("SessionStart");
+    expect(typeof payload.hookSpecificOutput.additionalContext).toBe("string");
+    expect(payload.hookSpecificOutput.additionalContext).toMatch(
+      /Salt DS context for/,
+    );
+    expect(payload.hookSpecificOutput.additionalContext).toMatch(/Registry:/);
+    expect(payload.hookSpecificOutput.additionalContext).toMatch(/Policy:/);
+  });
+
+  it("info --hook silently passes for non-SessionStart events", async () => {
+    const rootDir = await createTempDir("salt-cli-info-hook-other");
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(["info", "--hook"], {
+      cwd: rootDir,
+      stdin: Readable.from(
+        Buffer.from(JSON.stringify({ hook_event_name: "PostToolUse" }), "utf8"),
+      ),
+      writeStdout: (message) => {
+        stdout += message;
+      },
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+    expect(code).toBe(0);
+    expect(stdout).toBe("");
+    expect(stderr).toBe("");
+  });
+
+  it("info --hook errors out when stdin is empty", async () => {
+    const rootDir = await createTempDir("salt-cli-info-hook-empty");
+
+    let stderr = "";
+    const code = await runCli(["info", "--hook"], {
+      cwd: rootDir,
+      stdin: Readable.from([]),
+      writeStdout: () => {},
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
+    expect(code).toBe(1);
+    expect(stderr).toMatch(/requires hook JSON on stdin/);
+  });
+
+  // ----- salt-ds init --add-agent-hooks (Phase 2 task 2.12 wiring) -----
+
+  it("init --add-agent-hooks writes .github/hooks/salt.json with Salt PostToolUse + SessionStart commands", async () => {
+    const rootDir = await createTempDir("salt-cli-init-add-agent-hooks");
+
+    let stdout = "";
+    const code = await runCli(
+      [
+        "init",
+        rootDir,
+        "--add-agent-hooks",
+        "--json",
+        "--registry-dir",
+        registryDir,
+      ],
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(code).toBe(0);
+    const payload = JSON.parse(stdout) as {
+      agentHooks: { path: string; action: string };
+      notes: string[];
+    };
+    expect(payload.agentHooks.action).toBe("created");
+    expect(payload.agentHooks.path).toMatch(/\.github\/hooks\/salt\.json$/);
+    expect(
+      payload.notes.some((note) =>
+        note.includes("Created Salt agent hook manifest"),
+      ),
+    ).toBe(true);
+
+    const manifestPath = path.join(rootDir, ".github", "hooks", "salt.json");
+    const manifestRaw = await fs.readFile(manifestPath, "utf8");
+    const manifest = JSON.parse(manifestRaw) as {
+      hooks: {
+        PostToolUse: Array<{ type: string; command: string }>;
+        SessionStart: Array<{ type: string; command: string }>;
+      };
+    };
+    expect(manifest.hooks.PostToolUse).toEqual([
+      { type: "command", command: "npx salt-ds review --hook" },
+    ]);
+    expect(manifest.hooks.SessionStart).toEqual([
+      { type: "command", command: "npx salt-ds info --hook" },
+    ]);
+  });
+
+  it("init --add-agent-hooks is idempotent and preserves existing entries", async () => {
+    const rootDir = await createTempDir("salt-cli-init-agent-hooks-idempotent");
+    await fs.mkdir(path.join(rootDir, ".github", "hooks"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, ".github", "hooks", "salt.json"),
+      `${JSON.stringify(
+        {
+          hooks: {
+            PostToolUse: [
+              { type: "command", command: "npx salt-ds review --hook" },
+              { type: "command", command: "echo custom" },
+            ],
+            SessionStart: [
+              { type: "command", command: "npx salt-ds info --hook" },
+            ],
+          },
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+
+    let stdout = "";
+    const code = await runCli(
+      [
+        "init",
+        rootDir,
+        "--add-agent-hooks",
+        "--json",
+        "--registry-dir",
+        registryDir,
+      ],
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(code).toBe(0);
+    const payload = JSON.parse(stdout) as {
+      agentHooks: { action: string };
+    };
+    expect(payload.agentHooks.action).toBe("unchanged");
+    const manifest = JSON.parse(
+      await fs.readFile(
+        path.join(rootDir, ".github", "hooks", "salt.json"),
+        "utf8",
+      ),
+    ) as {
+      hooks: {
+        PostToolUse: Array<{ command: string }>;
+        SessionStart: Array<{ command: string }>;
+      };
+    };
+    expect(
+      manifest.hooks.PostToolUse.some(
+        (entry) => entry.command === "echo custom",
+      ),
+    ).toBe(true);
+    expect(
+      manifest.hooks.PostToolUse.some(
+        (entry) => entry.command === "npx salt-ds review --hook",
+      ),
+    ).toBe(true);
+  });
+
+  it("init without --add-agent-hooks does not write the hook manifest", async () => {
+    const rootDir = await createTempDir("salt-cli-init-no-hooks");
+
+    let stdout = "";
+    const code = await runCli(
+      ["init", rootDir, "--json", "--registry-dir", registryDir],
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+
+    expect(code).toBe(0);
+    const payload = JSON.parse(stdout) as {
+      agentHooks: { action: string; path: string | null };
+    };
+    expect(payload.agentHooks.action).toBe("not_requested");
+    expect(payload.agentHooks.path).toBeNull();
+    await expect(
+      fs.access(path.join(rootDir, ".github", "hooks", "salt.json")),
+    ).rejects.toThrow();
+  });
+
+  // ----- salt-ds review require_human_review_for policy findings (Phase 2 task 2.13, rev-8 / rev-10) -----
+
+  it("review surfaces require_human_review_for matches as blocking policy findings with rule_id policy.require_human_review_for.<kind>", async () => {
+    const rootDir = await createTempDir("salt-cli-review-policy-finding");
+    await fs.mkdir(path.join(rootDir, "src", "auth"), { recursive: true });
+    await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        { dependencies: { "@salt-ds/core": "^2.0.0" } },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, "src", "auth", "Login.tsx"),
+      [
+        'import { Button } from "@salt-ds/core";',
+        "",
+        "export function Login() {",
+        "  return <Button>Sign in</Button>;",
+        "}",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, ".salt", "team.json"),
+      `${JSON.stringify(
+        {
+          contract: "project_conventions_v1",
+          version: "1.0.0",
+          project: "policy-finding-test",
+          require_human_review_for: [
+            {
+              kind: "auth-flow-edit",
+              scope: "src/auth",
+              reason: "needs security guild review",
+            },
+          ],
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry(["review", "src", "--json", "--full"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(exitCode).toBe(20);
+    expect(stderr).toBe("");
+    const payload = readCliJson(stdout);
+    expect(payload).toMatchObject({
+      contract: "salt_workflow_v1",
+      status: "blocked",
+    });
+    expect(payload.workflow.id).toBe("review");
+    expect((payload.safety.blocking_reasons as string[]).join(" ")).toMatch(
+      /require_human_review_for/,
+    );
+    const issueClasses = payload.artifacts.issueClasses as Array<{
+      ruleId: string;
+      semanticRules: string[];
+    }>;
+    const semanticRules = issueClasses.flatMap((entry) => entry.semanticRules);
+    expect(semanticRules).toEqual(
+      expect.arrayContaining([
+        "policy.require_human_review_for.auth-flow-edit",
+      ]),
+    );
+  });
+
+  it("review emits no policy finding when require_human_review_for does not match the reviewed files", async () => {
+    const rootDir = await createTempDir("salt-cli-review-policy-no-match");
+    await fs.mkdir(path.join(rootDir, "src", "auth"), { recursive: true });
+    await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        { dependencies: { "@salt-ds/core": "^2.0.0" } },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, "src", "auth", "Login.tsx"),
+      [
+        'import { Button } from "@salt-ds/core";',
+        "",
+        "export function Login() {",
+        "  return <Button>Sign in</Button>;",
+        "}",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, ".salt", "team.json"),
+      `${JSON.stringify(
+        {
+          contract: "project_conventions_v1",
+          version: "1.0.0",
+          project: "policy-no-match-test",
+          require_human_review_for: [
+            {
+              kind: "billing-edit",
+              scope: "src/billing",
+              reason: "needs finance reviewer",
+            },
+          ],
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const exitCode = await runCli(
+      withRegistry(["review", "src", "--json", "--full"]),
+      {
+        cwd: rootDir,
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    // Non-matching policy must not contribute its own blocking finding. The
+    // review may still return another status if normal Salt findings exist;
+    // for this clean fixture we expect success.
+    expect(stderr).toBe("");
+    expect(exitCode).toBe(0);
+    const payload = readCliJson(stdout);
+    expect(payload.status).toBe("success");
+    expect(JSON.stringify(payload)).not.toMatch(/require_human_review_for/);
+    expect(JSON.stringify(payload)).not.toMatch(
+      /policy\.require_human_review_for/,
+    );
+  });
 });

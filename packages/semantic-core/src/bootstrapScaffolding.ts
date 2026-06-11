@@ -12,7 +12,7 @@ const SALT_WORKFLOW_V1_ACTION_LINES = [
   '- `action.kind: "install_dependencies"`: install the listed packages, then rerun the originating workflow; installing packages is not implementation permission',
   '- `action.kind: "fix_context"` or `"bootstrap_repo"`: resolve repo setup or context before repo-specific edits',
   "- after `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, or `bootstrap_repo`, rerun the originating workflow with the returned evidence bridge before editing; if `action.kind` is `ask_user`, stop and treat the user's answer as updated workflow input",
-  "- installing Salt packages is not implementation permission; after installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`",
+  "- installing Salt packages is not implementation permission; after installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`. Do not insert a manual `get_salt_project_context` call between the install and the rerun — Salt MCP marks the cached project context for the affected `root_dir` stale as soon as the workflow emits `install_dependencies`, so the next rerun transparently refetches new package state.",
   "- use `recipe.steps`, `questions`, and `evidence.missing` to report remaining work instead of guessing",
 ];
 
@@ -230,7 +230,7 @@ export const VSCODE_COPILOT_INSTRUCTIONS_TEMPLATE = [
   "- Do not guess or hallucinate Salt APIs, props, imports, package names, tokens, component capabilities, composition rules, examples, or documentation links.",
   "- Provider and theme bootstrap names, imports, props, fonts, and package paths must come from workflow evidence, registry-backed generated context, `.salt` policy, or explicit user input. If that evidence is missing, report theme bootstrap as pending or unsupported instead of naming defaults.",
   "- Treat the compact `salt_workflow_v1` action as binding: `ask_user` means ask and stop until the user provides updated input, `retrieve_entity`/`retrieve_examples` means gather evidence and rerun with the returned evidence bridge, `install_dependencies` means install packages and then rerun the originating workflow, and only `implement` permits editing Salt UI.",
-  "- Installing Salt packages is not implementation permission; after installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`.",
+  "- Installing Salt packages is not implementation permission; after installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`. Do not insert a manual `get_salt_project_context` call between the install and the rerun — Salt MCP marks the cached project context for the affected `root_dir` stale as soon as the workflow emits `install_dependencies`, so the next rerun transparently refetches new package state.",
   "- Only implement when `status` is `success`, `action.kind` is `implement`, `safety.exact_request_safe` is true, and `evidence.status` is `complete`; run the returned review/post action after editing.",
   "- After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, or `bootstrap_repo`, rerun the originating workflow with the returned evidence bridge before editing. For create entity follow-through, use MCP `resolved_entities` or CLI `--resolved-entity` on the rerun. If `action.kind` is `ask_user`, stop and treat the user's answer as updated workflow input.",
   "- Use `recipe.steps`, `questions`, and `evidence.missing` to explain remaining work instead of guessing past a partial result.",
@@ -246,7 +246,6 @@ export const VSCODE_COPILOT_INSTRUCTIONS_TEMPLATE = [
   VSCODE_COPILOT_BLOCK_END,
   "",
 ].join("\n");
-
 
 function stripExactBlock(content: string, block: string): string {
   if (!content.includes(block)) {
@@ -312,3 +311,127 @@ export function upsertSaltRepoInstructions(existingContent: string): {
     SALT_REPO_INSTRUCTIONS_BLOCK_END,
   );
 }
+
+// ---------- Agent hook scaffolding (VS Code / Claude Code / Copilot CLI) ----------
+
+/**
+ * Relative path inside the repo where the Salt-managed agent hook manifest lives.
+ * Picked up by the editor's hookFilesLocations setting.
+ */
+export const SALT_AGENT_HOOKS_FILE_RELATIVE_PATH = ".github/hooks/salt.json";
+
+/** Salt-managed command emitted into PostToolUse. */
+export const SALT_POST_TOOL_USE_HOOK_COMMAND = "npx salt-ds review --hook";
+/** Salt-managed command emitted into SessionStart. */
+export const SALT_SESSION_START_HOOK_COMMAND = "npx salt-ds info --hook";
+
+interface HookCommandEntry {
+  type: "command";
+  command: string;
+}
+
+interface SaltAgentHooksManifest {
+  hooks: {
+    PostToolUse?: HookCommandEntry[];
+    SessionStart?: HookCommandEntry[];
+    [event: string]: HookCommandEntry[] | undefined;
+  };
+}
+
+function buildDefaultSaltAgentHooks(): SaltAgentHooksManifest {
+  return {
+    hooks: {
+      PostToolUse: [
+        { type: "command", command: SALT_POST_TOOL_USE_HOOK_COMMAND },
+      ],
+      SessionStart: [
+        { type: "command", command: SALT_SESSION_START_HOOK_COMMAND },
+      ],
+    },
+  };
+}
+
+function isHookCommandEntry(value: unknown): value is HookCommandEntry {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return false;
+  }
+  const record = value as Record<string, unknown>;
+  return record.type === "command" && typeof record.command === "string";
+}
+
+function ensureSaltCommand(
+  entries: HookCommandEntry[],
+  command: string,
+): { entries: HookCommandEntry[]; changed: boolean } {
+  if (entries.some((entry) => entry.command === command)) {
+    return { entries, changed: false };
+  }
+  return {
+    entries: [...entries, { type: "command", command }],
+    changed: true,
+  };
+}
+
+/**
+ * Merge Salt-managed hook entries into an existing JSON manifest.
+ *
+ * - If `existing` is null/undefined/empty, returns the default scaffold.
+ * - If `existing` already contains the Salt commands under PostToolUse and
+ *   SessionStart, returns unchanged.
+ * - Preserves any user-added entries for other events or other commands.
+ * - Rejects malformed input by replacing the document with the default scaffold
+ *   (we own this file via the marked relative path).
+ */
+export function mergeSaltAgentHooksManifest(existing: unknown): {
+  content: SaltAgentHooksManifest;
+  changed: boolean;
+} {
+  if (!existing || typeof existing !== "object" || Array.isArray(existing)) {
+    return { content: buildDefaultSaltAgentHooks(), changed: true };
+  }
+
+  const existingRecord = existing as Record<string, unknown>;
+  const existingHooksValue = existingRecord.hooks;
+  const existingHooks: Record<string, unknown> =
+    existingHooksValue &&
+    typeof existingHooksValue === "object" &&
+    !Array.isArray(existingHooksValue)
+      ? (existingHooksValue as Record<string, unknown>)
+      : {};
+
+  const merged: Record<string, HookCommandEntry[]> = {};
+  let changed = false;
+
+  for (const [event, raw] of Object.entries(existingHooks)) {
+    if (Array.isArray(raw)) {
+      const filtered = raw.filter(isHookCommandEntry);
+      if (filtered.length !== raw.length) {
+        changed = true;
+      }
+      merged[event] = filtered;
+    } else if (raw !== undefined) {
+      changed = true;
+    }
+  }
+
+  const postToolUse = ensureSaltCommand(
+    merged.PostToolUse ?? [],
+    SALT_POST_TOOL_USE_HOOK_COMMAND,
+  );
+  if (postToolUse.changed || !merged.PostToolUse) {
+    changed = true;
+  }
+  merged.PostToolUse = postToolUse.entries;
+
+  const sessionStart = ensureSaltCommand(
+    merged.SessionStart ?? [],
+    SALT_SESSION_START_HOOK_COMMAND,
+  );
+  if (sessionStart.changed || !merged.SessionStart) {
+    changed = true;
+  }
+  merged.SessionStart = sessionStart.entries;
+
+  return { content: { hooks: merged }, changed };
+}
+

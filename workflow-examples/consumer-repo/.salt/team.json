@@ -74,6 +74,22 @@
       "docs": ["./docs/platform-conventions.md"]
     }
   ],
+  "require_human_review_for": [
+    {
+      "kind": "auth-flow-edit",
+      "scope": "src/auth",
+      "reason": "Authentication flows must be co-reviewed with the security guild before merge. Surfaces as a blocking `policy.require_human_review_for.auth-flow-edit` finding on `salt-ds review` and triggers `permissionDecision: ask` from the PreToolUse hook."
+    },
+    {
+      "kind": "theme-provider-edit",
+      "scope": "src/theme/ConsumerBrandProvider",
+      "reason": "Brand theme changes need design-system sign-off before merge. Surfaces as a blocking `policy.require_human_review_for.theme-provider-edit` finding on `salt-ds review` and triggers `permissionDecision: ask` from the PreToolUse hook."
+    },
+    {
+      "scope": "src/billing",
+      "reason": "Anything touching billing surfaces requires a Finance Engineering reviewer before merge — no `kind` declared, so the matching finding uses `policy.require_human_review_for.unspecified`."
+    }
+  ],
   "notes": [
     "Keep canonical Salt guidance and project conventions separate in final recommendations.",
     "Do not present repo wrappers as if they were part of the official Salt registry."
