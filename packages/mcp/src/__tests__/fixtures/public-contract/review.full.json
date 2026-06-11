@@ -2,8 +2,12 @@
   "workflow_id": "review",
   "confidence_level": "medium",
   "decision_status": "needs_attention",
-  "rule_ids": ["review-canonical-mismatch"],
-  "issue_class_ids": ["canonical mismatch"],
+  "rule_ids": [
+    "review-canonical-mismatch"
+  ],
+  "issue_class_ids": [
+    "canonical mismatch"
+  ],
   "project_policy_present": false,
   "runtime_evidence_requested": false
 }

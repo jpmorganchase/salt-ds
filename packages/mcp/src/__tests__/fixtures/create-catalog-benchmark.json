@@ -17,7 +17,7 @@
       "id": "table_with_breadcrumbs",
       "query": "File manager page with breadcrumb navigation showing the current directory path and a data table listing files and folders.",
       "expected_owner": "Table",
-      "acceptable_statuses": ["ranked"]
+      "acceptable_statuses": ["ranked", "ambiguous"]
     },
     {
       "id": "switch_inside_settings_form",

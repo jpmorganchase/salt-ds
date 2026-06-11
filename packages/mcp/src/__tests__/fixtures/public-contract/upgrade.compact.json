@@ -12,7 +12,8 @@
     "canonical_complete": true,
     "exact_request_safe": false,
     "blocking_reasons": [
-      "1.57.1: Removed a self-import that caused issues in module federation environments."
+      "1.64.0: Fixed the status indicator in Banner being visible to screen readers.",
+      "1.64.0: Added an initialFocus prop to Drawer to allow customizing which element receives focus when the drawer opens."
     ]
   },
   "action": {

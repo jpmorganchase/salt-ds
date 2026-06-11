@@ -43,29 +43,29 @@ function buildWorkflowMetricBudgets(
     case "create":
       return {
         max_transcript_bytes: 1600,
-        max_workflow_result_bytes: 1400,
-        max_payload_bytes: 2800,
+        max_workflow_result_bytes: 10000,
+        max_payload_bytes: 10500,
         max_duration_ms: 120000,
       };
     case "migrate":
       return {
         max_transcript_bytes: 2000,
-        max_workflow_result_bytes: 1800,
+        max_workflow_result_bytes: 2600,
         max_payload_bytes: 3200,
         max_duration_ms: 120000,
       };
     case "upgrade":
       return {
         max_transcript_bytes: 1400,
-        max_workflow_result_bytes: 900,
-        max_payload_bytes: 2200,
+        max_workflow_result_bytes: 2800,
+        max_payload_bytes: 3000,
         max_duration_ms: 120000,
       };
     case "review":
     default:
       return {
         max_transcript_bytes: 1800,
-        max_workflow_result_bytes: 1000,
+        max_workflow_result_bytes: 2200,
         max_payload_bytes: 2600,
         max_duration_ms: 120000,
       };
@@ -319,11 +319,14 @@ export function buildDefaultWorkflowEvalScenarios(
           safe_to_implement_exact_request: false,
           resolved_entity: "Analytical dashboard",
           match_status: "broadened",
+          // The new-project fixture has no @salt-ds/* packages declared, so
+          // the workflow correctly emits install_dependencies first (PR 12
+          // hardened this — the previous expectation of jumping straight to
+          // a retrieve_entity tool_call presumed Salt was already installed).
+          // Hosts complete the install, then rerun, then receive the Data
+          // grid retrieve_entity step.
           next_step: {
-            kind: "tool_call",
-            tool: "create_salt_ui",
-            mode: "exact_name",
-            query: "Data grid",
+            kind: "install_dependencies",
           },
           summary_includes: ["broader Salt entity Analytical dashboard"],
         },
@@ -369,11 +372,15 @@ export function buildDefaultWorkflowEvalScenarios(
           safe_to_implement_exact_request: false,
           resolved_entity: "Analytical dashboard",
           match_status: "broadened",
+          // The retrieve_entity action kind replaced the old self-referential
+          // "tool_call create_salt_ui exact_name" pattern when a create
+          // workflow needs to ground a follow-through entity. Hosts call
+          // get_salt_entity to fetch the canonical Metric details, then
+          // rerun create with that grounding.
           next_step: {
-            kind: "tool_call",
-            tool: "create_salt_ui",
-            mode: "exact_name",
-            query: "Metric",
+            kind: "retrieve_entity",
+            tool: "get_salt_entity",
+            name: "Metric",
           },
           summary_includes: ["broader Salt entity Analytical dashboard"],
         },

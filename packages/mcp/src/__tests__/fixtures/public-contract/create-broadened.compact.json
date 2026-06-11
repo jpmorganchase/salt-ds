@@ -18,11 +18,11 @@
   },
   "action": {
     "kind": "install_dependencies",
+    "package_manager": "pnpm",
     "packages": [
       "@salt-ds/core",
       "@salt-ds/theme"
     ],
-    "package_manager": "pnpm",
     "rule_ids": [
       "create-follow-through-required"
     ],

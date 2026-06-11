@@ -1973,7 +1973,7 @@ export function judgeWorkflowEvalScenario(
       metrics.transcript_bytes > limits.max_transcript_bytes
     ) {
       failures.push(
-        `Workflow trace for ${scenario.id} exceeded the transcript byte budget ${limits.max_transcript_bytes}.`,
+        `Workflow trace for ${scenario.id} exceeded the transcript byte budget ${limits.max_transcript_bytes} (actual: ${metrics.transcript_bytes}).`,
       );
     }
     if (
@@ -1981,7 +1981,7 @@ export function judgeWorkflowEvalScenario(
       metrics.workflow_result_bytes > limits.max_workflow_result_bytes
     ) {
       failures.push(
-        `Workflow trace for ${scenario.id} exceeded the workflow result byte budget ${limits.max_workflow_result_bytes}.`,
+        `Workflow trace for ${scenario.id} exceeded the workflow result byte budget ${limits.max_workflow_result_bytes} (actual: ${metrics.workflow_result_bytes}).`,
       );
     }
     if (
@@ -1989,7 +1989,7 @@ export function judgeWorkflowEvalScenario(
       metrics.logs_bytes > limits.max_logs_bytes
     ) {
       failures.push(
-        `Workflow trace for ${scenario.id} exceeded the logs byte budget ${limits.max_logs_bytes}.`,
+        `Workflow trace for ${scenario.id} exceeded the logs byte budget ${limits.max_logs_bytes} (actual: ${metrics.logs_bytes}).`,
       );
     }
     if (
@@ -1997,7 +1997,7 @@ export function judgeWorkflowEvalScenario(
       metrics.payload_bytes > limits.max_payload_bytes
     ) {
       failures.push(
-        `Workflow trace for ${scenario.id} exceeded the payload byte budget ${limits.max_payload_bytes}.`,
+        `Workflow trace for ${scenario.id} exceeded the payload byte budget ${limits.max_payload_bytes} (actual: ${metrics.payload_bytes}).`,
       );
     }
     if (
@@ -2005,7 +2005,7 @@ export function judgeWorkflowEvalScenario(
       metrics.duration_ms > limits.max_duration_ms
     ) {
       failures.push(
-        `Workflow trace for ${scenario.id} exceeded the duration budget ${limits.max_duration_ms}ms.`,
+        `Workflow trace for ${scenario.id} exceeded the duration budget ${limits.max_duration_ms}ms (actual: ${metrics.duration_ms}ms).`,
       );
     }
   }

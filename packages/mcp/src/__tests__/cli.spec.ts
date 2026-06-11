@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const {
@@ -24,8 +25,18 @@ vi.mock("@modelcontextprotocol/sdk/server/stdio.js", () => ({
 
 import { runCli } from "../cli.js";
 
+// Resolve packages/mcp/package.json relative to this spec so the test works
+// regardless of whether vitest is invoked from the repo root or from
+// packages/mcp directly. The previous path.resolve("packages/mcp/package.json")
+// only worked when cwd was the repo root.
 const packageVersion = JSON.parse(
-  fs.readFileSync(path.resolve("packages/mcp/package.json"), "utf8"),
+  fs.readFileSync(
+    path.resolve(
+      path.dirname(fileURLToPath(import.meta.url)),
+      "../../package.json",
+    ),
+    "utf8",
+  ),
 ).version as string;
 
 describe("runCli", () => {
