@@ -172,7 +172,7 @@ export interface ExampleRecord {
   code: string;
   source_url: string | null;
   package: string | null;
-  target_type: "component" | "pattern";
+  target_type: "component" | "pattern" | "foundation";
   target_name: string;
 }
 
@@ -341,12 +341,51 @@ export interface PatternRecord {
       notes?: string[];
     };
   };
+  /**
+   * Machine-readable description of how a pattern is assembled from its
+   * constituent components. Pinned by gold-standard roadmap task 0.7(b)
+   * so `create_salt_ui`, `review_salt_ui`, and any agent surface can
+   * branch on it without re-reading the pattern docs.
+   *
+   * - `components`: every component the pattern composes, classified as
+   *   `required` (appears in a canonical pattern story) or `optional`
+   *   (declared in `composed_of` but not in any canonical example). The
+   *   `role` mirrors the `composed_of` role string.
+   * - `regions` / `required_regions` / `optional_regions`: the spatial
+   *   regions extracted from the pattern docs anatomy and dashboard
+   *   regions sections. Mirrors the `starter_scaffold.semantics`
+   *   region fields so consumers only have to read one place.
+   * - `build_around`: anchor concepts the agent should build the JSX
+   *   around (e.g. the dashboard header for an analytical dashboard).
+   * - `preserve_constraints`: normative statements lifted from the
+   *   pattern docs that must not be relaxed by an automated edit.
+   *
+   * The field is optional only on legacy partial extractions; the build
+   * extractor (`extractPatterns`) always populates it for pattern docs
+   * that resolve to at least one composed component or one region.
+   */
+  composition_contract?: PatternCompositionContract;
   related_docs: {
     overview: string | null;
   };
   semantics?: UsageSemanticsRecord;
   retrieval_signals?: RetrievalSignalsRecord;
   last_verified_at: string;
+}
+
+export interface PatternCompositionComponent {
+  component: string;
+  role: string | null;
+  requirement: "required" | "optional";
+}
+
+export interface PatternCompositionContract {
+  components: PatternCompositionComponent[];
+  regions: string[];
+  required_regions: string[];
+  optional_regions: string[];
+  build_around: string[];
+  preserve_constraints: string[];
 }
 
 export interface GuideSnippet {
@@ -571,4 +610,15 @@ export interface BuildRegistryOptions {
 
 export interface LoadRegistryOptions {
   registryDir?: string;
+  /**
+   * When `true`, eagerly read every registry artifact (components,
+   * patterns, tokens, examples, indexes, rule packs) up front. Defaults
+   * to `false`: only metadata.json is loaded eagerly and each other
+   * artifact loads from disk on first property touch.
+   *
+   * Pass `true` from hosts that know they will touch most of the
+   * registry and want a single bounded warm-up cost instead of
+   * per-touch latency (Phase 0 task 0.2).
+   */
+  prefetch?: boolean;
 }

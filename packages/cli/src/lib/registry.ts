@@ -31,11 +31,13 @@ export async function findAncestorWithChild(
 export async function resolveSemanticRegistry(
   cwd: string,
   explicitRegistryDir?: string,
+  options: { prefetch?: boolean } = {},
 ): Promise<{
   registry: SaltRegistry;
   registryDir: string;
   registrySource: "explicit" | "bundled-cli" | "monorepo";
 }> {
+  const prefetch = options.prefetch === true;
   if (explicitRegistryDir) {
     const registryDir = path.resolve(cwd, explicitRegistryDir);
     if (!(await pathExists(registryDir))) {
@@ -44,7 +46,7 @@ export async function resolveSemanticRegistry(
       );
     }
     return {
-      registry: await loadRegistry({ registryDir }),
+      registry: await loadRegistry({ registryDir, prefetch }),
       registryDir,
       registrySource: "explicit",
     };
@@ -58,7 +60,10 @@ export async function resolveSemanticRegistry(
     : null;
   if (bundledRegistryDir && (await pathExists(bundledRegistryDir))) {
     return {
-      registry: await loadRegistry({ registryDir: bundledRegistryDir }),
+      registry: await loadRegistry({
+        registryDir: bundledRegistryDir,
+        prefetch,
+      }),
       registryDir: bundledRegistryDir,
       registrySource: "bundled-cli",
     };
@@ -72,7 +77,10 @@ export async function resolveSemanticRegistry(
     ]);
     if (cliRegistryDir) {
       return {
-        registry: await loadRegistry({ registryDir: cliRegistryDir }),
+        registry: await loadRegistry({
+          registryDir: cliRegistryDir,
+          prefetch,
+        }),
         registryDir: cliRegistryDir,
         registrySource: "monorepo",
       };
@@ -82,6 +90,22 @@ export async function resolveSemanticRegistry(
   throw new Error(
     "Could not resolve a Salt registry. Rebuild @salt-ds/cli or pass --registry-dir <path>.",
   );
+}
+
+/**
+ * Returns `{ prefetch: true }` when the CLI's `--prefetch` flag was set.
+ * Use at every `resolveSemanticRegistry` call site so the global flag
+ * reaches the lazy/eager toggle in @salt-ds/semantic-core consistently.
+ *
+ * Per Phase 0 task 0.2: lazy is the default; `--prefetch` is the opt-in
+ * escape hatch for hosts that know they will touch most of the
+ * registry and want a single bounded warm-up cost instead of per-touch
+ * latency.
+ */
+export function readRegistryLoadOptionsFromFlags(
+  flags: Record<string, string>,
+): { prefetch?: boolean } {
+  return flags.prefetch === "true" ? { prefetch: true } : {};
 }
 
 export async function detectSaltPackageVersion(
