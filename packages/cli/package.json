@@ -29,6 +29,7 @@
   ],
   "publishBundledWorkspaceDependencies": [
     "@salt-ds/runtime-inspector-core",
+    "@salt-ds/runtime-inspector-browser",
     "@salt-ds/semantic-core"
   ],
   "bin": {
@@ -50,6 +51,7 @@
     "prepack": "yarn build"
   },
   "dependencies": {
+    "@salt-ds/runtime-inspector-browser": "workspace:*",
     "@salt-ds/runtime-inspector-core": "workspace:*",
     "@salt-ds/semantic-core": "workspace:*",
     "get-tsconfig": "^4.7.5"

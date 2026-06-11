@@ -85,8 +85,24 @@ async function collectBundledWorkspaceDependencies(
         with: { type: "json" },
       })
     ).default;
+    // Skip peerDeps that the bundled workspace package declared optional
+    // via peerDependenciesMeta. This mirrors standard npm/yarn semantics
+    // and is what keeps heavy optional peers (e.g. playwright on
+    // @salt-ds/runtime-inspector-browser) out of the published transitive
+    // dependency tree of downstream packages like @salt-ds/cli and
+    // @salt-ds/mcp. See packages/mcp/docs/gold-standard-roadmap.md task 0.1.
+    const optionalPeerDependencyNames = new Set(
+      Object.entries(bundledPackageJson.peerDependenciesMeta ?? {})
+        .filter(([, meta]) => meta && meta.optional === true)
+        .map(([name]) => name),
+    );
+    const requiredPeerDependencies = Object.fromEntries(
+      Object.entries(bundledPackageJson.peerDependencies ?? {}).filter(
+        ([name]) => !optionalPeerDependencyNames.has(name),
+      ),
+    );
     const bundledPackageDependencies = {
-      ...(bundledPackageJson.peerDependencies ?? {}),
+      ...requiredPeerDependencies,
       ...(bundledPackageJson.dependencies ?? {}),
     };
     const nestedWorkspaceDependencies = [];

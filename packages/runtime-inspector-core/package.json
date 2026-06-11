@@ -7,6 +7,7 @@
   "main": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./inspect-internals": "./src/inspectShared.ts",
     "./package.json": "./package.json"
   },
   "sideEffects": false,
@@ -21,7 +22,6 @@
     "@salt-ds/semantic-core": "workspace:*",
     "dom-accessibility-api": "^0.7.0",
     "jsdom": "^26.1.0",
-    "playwright": "^1.55.1",
     "semver": "^7.7.3",
     "zod": "^4.1.11"
   },
