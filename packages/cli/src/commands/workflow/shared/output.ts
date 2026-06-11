@@ -3,7 +3,7 @@ import {
   attachPublicContractDetails,
   type PublicContract,
 } from "@salt-ds/semantic-core/tools/publicContract";
-import { writeJsonFile } from "../../../lib/jsonOutput.js";
+import { writeJsonFile } from "../../../lib/common.js";
 import { resolveSemanticRegistry } from "../../../lib/semanticRuntime.js";
 import type { SaltReviewReportValidationResult } from "@salt-ds/semantic-core/tools/saltReviewReport";
 import { validateSaltReviewReportFile } from "@salt-ds/semantic-core/tools/saltReviewReport";
