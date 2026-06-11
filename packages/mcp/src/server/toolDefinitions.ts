@@ -1776,6 +1776,12 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .describe(
           "Names of follow-through entities already resolved through canonical support tools. Use when rerunning create after retrieve_entity or retrieve_examples.",
         ),
+      repo_has_theme_provider: z
+        .boolean()
+        .optional()
+        .describe(
+          "Set true when the host has detected a declared theme provider (SaltProvider or SaltProviderNext) in the repo. When false or omitted, theme- or brand-ambiguous prompts trigger a one-time ask_user question so the consumer can choose between SaltProvider (stable base theme) and SaltProviderNext (JPM Brand) before create commits to either path.",
+        ),
       view: z
         .enum(VIEWS)
         .optional()

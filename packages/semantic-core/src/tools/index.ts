@@ -29,6 +29,13 @@ export {
   type SaltSolutionType,
 } from "./createSaltUi.js";
 export {
+  type CreateThemeProviderQuestion,
+  type CreateThemeProviderQuestionOptions,
+  evaluateCreateThemeProviderQuestion,
+  isThemeAmbiguousQuery,
+  type ThemeProviderChoiceOption,
+} from "./createSaltUiThemeQuestion.js";
+export {
   type DiscoverSaltInput,
   type DiscoverSaltResult,
   discoverSalt,

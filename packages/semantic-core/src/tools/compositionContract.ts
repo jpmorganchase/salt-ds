@@ -35,7 +35,12 @@ export interface WorkflowCompositionSlot {
 }
 
 export interface WorkflowOpenQuestion {
-  kind: "component-choice" | "pattern-scope" | "layout-choice" | "evidence-gap";
+  kind:
+    | "component-choice"
+    | "pattern-scope"
+    | "layout-choice"
+    | "evidence-gap"
+    | "theme-provider-choice";
   topic: string;
   prompt: string;
   choices: string[];
