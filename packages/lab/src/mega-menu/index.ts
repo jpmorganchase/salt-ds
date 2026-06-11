@@ -6,6 +6,4 @@ export * from "./MegaMenuHeader";
 export * from "./MegaMenuItem";
 export * from "./MegaMenuPanel";
 export * from "./MegaMenuRegion";
-export * from "./MegaMenuSupportingActions";
-export * from "./MegaMenuSupportingContent";
 export * from "./MegaMenuTrigger";

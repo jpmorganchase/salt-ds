@@ -2,12 +2,12 @@ import { FlexLayout, Link, NavigationItem, StackLayout } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
+  MegaMenuBand,
   MegaMenuGroup,
   MegaMenuGroups,
   MegaMenuHeader,
   MegaMenuItem,
   MegaMenuPanel,
-  MegaMenuSupportingActions,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -41,7 +41,6 @@ export const WithLink = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel
-                className={styles.withLinkMenuContainer}
                 aria-label="Solutions menu"
               >
                 <MegaMenuGroups>
@@ -206,10 +205,8 @@ export const WithLink = (): ReactElement => {
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-                <FlexLayout wrap gap={3}>
-                  <MegaMenuSupportingActions
-                    className={styles.linkFooterSpacingFirstLinkStart}
-                  >
+                <MegaMenuBand>
+                  <FlexLayout wrap gap={3}>
                     <Link
                       color="primary"
                       underline="default"
@@ -218,8 +215,6 @@ export const WithLink = (): ReactElement => {
                     >
                       Book a demo
                     </Link>
-                  </MegaMenuSupportingActions>
-                  <MegaMenuSupportingActions>
                     <Link
                       color="primary"
                       underline="default"
@@ -228,8 +223,8 @@ export const WithLink = (): ReactElement => {
                     >
                       Support center
                     </Link>
-                  </MegaMenuSupportingActions>
-                </FlexLayout>
+                  </FlexLayout>
+                </MegaMenuBand>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -244,7 +239,6 @@ export const WithLink = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel
-                className={styles.withLinkMenuContainer}
                 aria-label="Services menu"
               >
                 <MegaMenuGroups>
@@ -402,9 +396,7 @@ export const WithLink = (): ReactElement => {
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-                <MegaMenuSupportingActions
-                  className={styles.linkFooterSpacingFirstLinkStart}
-                >
+                <MegaMenuBand>
                   <Link
                     color="primary"
                     underline="default"
@@ -413,7 +405,7 @@ export const WithLink = (): ReactElement => {
                   >
                     Service status
                   </Link>
-                </MegaMenuSupportingActions>
+                </MegaMenuBand>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -428,7 +420,6 @@ export const WithLink = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel
-                className={styles.withLinkMenuContainer}
                 aria-label="Resources menu"
               >
                 <MegaMenuGroups>
@@ -495,9 +486,7 @@ export const WithLink = (): ReactElement => {
                     </MegaMenuItem>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-                <MegaMenuSupportingActions
-                  className={styles.linkFooterSpacingFirstLinkStart}
-                >
+                <MegaMenuBand>
                   <Link
                     color="primary"
                     underline="default"
@@ -506,7 +495,7 @@ export const WithLink = (): ReactElement => {
                   >
                     Browse documentation
                   </Link>
-                </MegaMenuSupportingActions>
+                </MegaMenuBand>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
