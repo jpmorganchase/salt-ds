@@ -1,7 +1,5 @@
 import fs from "node:fs/promises";
 import http from "node:http";
-import os from "node:os";
-import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { inspectUrl } from "../inspect.js";
 
@@ -42,29 +40,6 @@ async function closeServer(server: http.Server): Promise<void> {
   });
 }
 
-async function createTempDir(name: string): Promise<string> {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), `${name}-`));
-  tempDirs.push(tempDir);
-  return tempDir;
-}
-
-let browserAvailabilityPromise: Promise<boolean> | null = null;
-
-function canLaunchBrowser(): Promise<boolean> {
-  browserAvailabilityPromise ??= (async () => {
-    try {
-      const { chromium } = await import("playwright");
-      const browser = await chromium.launch({ headless: true });
-      await browser.close();
-      return true;
-    } catch {
-      return false;
-    }
-  })();
-
-  return browserAvailabilityPromise;
-}
-
 let activeServer: http.Server | null = null;
 
 afterEach(async () => {
@@ -79,7 +54,11 @@ afterEach(async () => {
   }
 });
 
-describe("inspectUrl", () => {
+// Browser-session coverage moved to
+// packages/runtime-inspector-browser/src/__tests__/inspectBrowserSession.spec.ts
+// alongside the playwright-backed adapter. This spec retains the
+// jsdom/fetched-html coverage that the core package owns.
+describe("inspectUrl (fetched-html path in @salt-ds/runtime-inspector-core)", () => {
   it("extracts fetched-html evidence from a page", async () => {
     const serverInfo = await startServer(`
       <!doctype html>
@@ -144,84 +123,5 @@ describe("inspectUrl", () => {
     expect(result.page.statusCode).toBe(404);
     expect(result.errors.some((error) => error.kind === "http")).toBe(true);
   });
-
-  it("captures browser-session evidence including screenshots and console errors", async (context) => {
-    if (!(await canLaunchBrowser())) {
-      context.skip();
-      return;
-    }
-
-    const outputDir = await createTempDir("salt-runtime-browser");
-    const serverInfo = await startServer(`
-      <!doctype html>
-      <html>
-        <head>
-          <title>Initial Title</title>
-          <style>
-            .shell {
-              display: flex;
-              justify-content: center;
-            }
-
-            nav {
-              display: flex;
-              align-items: center;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="shell">
-            <nav aria-label="Primary navigation" id="top-nav"></nav>
-          </div>
-          <main id="app"></main>
-          <script>
-            document.title = "Hydrated Title";
-            document.getElementById("app").innerHTML = '<button aria-label="Save Changes">Save</button>';
-            console.error("Runtime boom");
-          </script>
-        </body>
-      </html>
-    `);
-    activeServer = serverInfo.server;
-
-    const result = await inspectUrl(serverInfo.url, {
-      mode: "browser",
-      outputDir,
-      timeoutMs: 15000,
-      toolVersion: "1.0.0",
-      timestamp: "2026-03-25T12:00:00Z",
-    });
-
-    expect(result.inspectionMode).toBe("browser-session");
-    expect(result.page.title).toBe("Hydrated Title");
-    expect(result.errors.some((error) => error.kind === "console")).toBe(true);
-    expect(
-      result.accessibility.roles.some(
-        (entry) => entry.role === "button" && entry.name === "Save Changes",
-      ),
-    ).toBe(true);
-    expect(result.layout.available).toBe(true);
-    expect(result.layout.mode).toBe("computed-style");
-    expect(result.layout.nodes.length).toBeGreaterThan(0);
-    expect(
-      result.layout.nodes.some(
-        (node) =>
-          node.selector.includes("nav#top-nav") &&
-          node.computedStyle.display === "flex" &&
-          node.ancestorChain.some(
-            (ancestor) =>
-              ancestor.selector.includes("div.shell") &&
-              ancestor.computedStyle.justifyContent === "center",
-          ),
-      ),
-    ).toBe(true);
-    expect(result.layout.hints.some((hint) => hint.includes("center"))).toBe(
-      true,
-    );
-    expect(result.screenshots.length).toBeGreaterThan(0);
-    await expect(
-      fs.access(result.screenshots[0]?.path ?? ""),
-    ).resolves.toBeUndefined();
-    expect(result.notes).toEqual([]);
-  }, 20000);
 });
+

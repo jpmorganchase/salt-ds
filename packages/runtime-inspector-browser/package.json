@@ -1,0 +1,38 @@
+{
+  "name": "@salt-ds/runtime-inspector-browser",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Optional browser-session adapter for @salt-ds/runtime-inspector-core (Playwright-backed).",
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "typescriptRootDir": "src",
+  "publishBundledWorkspaceDependencies": [
+    "@salt-ds/runtime-inspector-core"
+  ],
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs"
+  },
+  "dependencies": {
+    "@salt-ds/runtime-inspector-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "playwright": "^1.55.1"
+  },
+  "peerDependenciesMeta": {
+    "playwright": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "playwright": "^1.55.1"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-runtime-inspector-browser",
+    "provenance": true
+  }
+}
