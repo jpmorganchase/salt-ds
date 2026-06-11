@@ -1,3 +1,4 @@
+import "../dependencies/setupAgGridLegacy";
 import {
   Button,
   DialogActions,

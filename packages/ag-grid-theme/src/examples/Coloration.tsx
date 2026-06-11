@@ -1,3 +1,4 @@
+import "../dependencies/setupAgGridLegacy";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumnsColoration from "../dependencies/dataGridExampleColumnsColoration";
 import dataGridExampleData from "../dependencies/dataGridExampleData";

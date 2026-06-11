@@ -1,3 +1,4 @@
+import "../dependencies/setupAgGridLegacy";
 import {
   FlexLayout,
   Label,
@@ -69,3 +70,5 @@ const HeaderVariants = (props: AgGridReactProps) => {
 };
 
 export default HeaderVariants;
+
+

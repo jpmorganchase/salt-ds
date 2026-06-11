@@ -1,3 +1,4 @@
+import "../dependencies/setupAgGridLegacy";
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import type { FilterModel } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";

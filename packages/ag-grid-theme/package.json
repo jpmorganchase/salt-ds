@@ -14,7 +14,8 @@
     "/salt-ag-theme.css"
   ],
   "sideEffects": [
-    "*.css"
+    "*.css",
+    "src/dependencies/setupAgGridLegacy.ts"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",

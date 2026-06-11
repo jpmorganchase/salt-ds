@@ -1,3 +1,4 @@
+import "../dependencies/setupAgGridLegacy";
 import type { DateStringDataTypeDefinition } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import agProvidedCellEditorsExampleColumns from "../dependencies/agProvidedCellEditorsExampleColumns";

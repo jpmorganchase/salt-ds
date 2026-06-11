@@ -1,3 +1,4 @@
+import "../dependencies/setupAgGridLegacy";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { validationCellExampleColumns } from "../dependencies/validationExampleColumns";

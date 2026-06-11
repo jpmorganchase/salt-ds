@@ -1,3 +1,4 @@
+import "../dependencies/setupAgGridLegacy";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";

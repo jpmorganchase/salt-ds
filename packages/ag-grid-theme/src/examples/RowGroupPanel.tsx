@@ -1,3 +1,4 @@
+import "../dependencies/setupAgGridLegacy";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleRowGroupPanel from "../dependencies/dataGridExampleRowGroupPanel";
