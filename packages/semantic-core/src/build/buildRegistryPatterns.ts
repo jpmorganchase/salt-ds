@@ -3,7 +3,12 @@ import fg from "fast-glob";
 import matter from "gray-matter";
 import ts from "typescript";
 import { toPosixPath } from "../registry/paths.js";
-import type { ExampleRecord, PatternRecord } from "../types.js";
+import type {
+  ExampleRecord,
+  PatternCompositionComponent,
+  PatternCompositionContract,
+  PatternRecord,
+} from "../types.js";
 import {
   extractFirstParagraph,
   extractStatementsFromSection,
@@ -1291,6 +1296,97 @@ function getRouteSlug(route: string | null): string | null {
   return parts.at(-1) ?? null;
 }
 
+/**
+ * Derive the machine-readable composition contract for a pattern from
+ * its `composed_of` declarations, the starter-scaffold semantics, and
+ * the code of every canonical example currently attached to the
+ * pattern. Roadmap task 0.7(b): keep this UPSTREAM of the registry so
+ * agents branch on a real, extracted contract instead of re-reading the
+ * pattern docs.
+ *
+ * - `components`: each entry in `composed_of`, classified `required` if
+ *   the component name (or its PascalCase form) appears in any example
+ *   code or in a fallback-template JSX line. `optional` otherwise.
+ * - `regions` / `required_regions` / `optional_regions` /
+ *   `build_around` / `preserve_constraints`: lifted verbatim from
+ *   `starter_scaffold.semantics` when present so consumers only have to
+ *   read one place.
+ *
+ * Returns `undefined` when both `composed_of` and the scaffold are
+ * empty so the field stays unset for malformed pattern docs rather
+ * than emitting an empty contract.
+ */
+export function buildPatternCompositionContract(input: {
+  composed_of: PatternRecord["composed_of"];
+  starter_scaffold?: PatternRecord["starter_scaffold"];
+  examples: ExampleRecord[];
+}): PatternCompositionContract | undefined {
+  const composed = input.composed_of ?? [];
+  const scaffold = input.starter_scaffold;
+  const semantics = scaffold?.semantics;
+  const regions = semantics?.regions ?? [];
+  const requiredRegions = semantics?.required_regions ?? [];
+  const optionalRegions = semantics?.optional_regions ?? [];
+  const buildAround = semantics?.build_around ?? [];
+  const preserveConstraints = semantics?.preserve_constraints ?? [];
+
+  // Build the haystack of every observed canonical reference. JSX
+  // openings like `<Card` are the strongest signal a component is
+  // required by the pattern; the fallback-template JSX lines count
+  // because docs that lack story code still pin the structure.
+  const exampleCorpus = input.examples
+    .map((example) => example.code ?? "")
+    .filter((code) => code.length > 0)
+    .join("\n");
+  const templateLines = scaffold?.template?.jsx_lines ?? [];
+  const templateCorpus = templateLines.join("\n");
+  const haystack = `${exampleCorpus}\n${templateCorpus}`;
+
+  const components: PatternCompositionComponent[] = composed.map((entry) => {
+    const componentName = entry.component;
+    const pascal = componentName.replace(/\s+/g, "");
+    // Match an opening tag like `<Card` or `<BorderLayout direction`
+    // but never a substring inside another component name (so `<Card`
+    // does not match `<CardActions`).
+    const tagPattern = new RegExp(
+      `<(?:${escapeRegExpForComposition(componentName)}|${escapeRegExpForComposition(
+        pascal,
+      )})(?:\\s|>|/)`,
+    );
+    const requirement = tagPattern.test(haystack) ? "required" : "optional";
+    return {
+      component: componentName,
+      role: entry.role ?? null,
+      requirement,
+    };
+  });
+
+  const hasComponents = components.length > 0;
+  const hasScaffold =
+    regions.length > 0 ||
+    requiredRegions.length > 0 ||
+    optionalRegions.length > 0 ||
+    buildAround.length > 0 ||
+    preserveConstraints.length > 0;
+
+  if (!hasComponents && !hasScaffold) {
+    return undefined;
+  }
+
+  return {
+    components,
+    regions: uniqueStrings(regions),
+    required_regions: uniqueStrings(requiredRegions),
+    optional_regions: uniqueStrings(optionalRegions),
+    build_around: uniqueStrings(buildAround),
+    preserve_constraints: uniqueStrings(preserveConstraints),
+  };
+}
+
+function escapeRegExpForComposition(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 export function createPatternNameBySlug(
   patterns: PatternRecord[],
 ): Map<string, string> {
@@ -1477,6 +1573,19 @@ export async function extractPatterns(
         route,
         data,
         exampleSourceUrls: resourceRecords.map((resource) => resource.href),
+      }),
+      composition_contract: buildPatternCompositionContract({
+        composed_of: components.map((componentName) => ({
+          component: componentName,
+          role: componentRoles.get(componentName) ?? null,
+        })),
+        starter_scaffold: getPatternStarterScaffold({
+          content: parsed.content,
+          route,
+          data,
+          exampleSourceUrls: resourceRecords.map((resource) => resource.href),
+        }),
+        examples: [...examples, ...docsExamples],
       }),
       related_docs: {
         overview: route,

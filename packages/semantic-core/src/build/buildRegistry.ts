@@ -28,8 +28,13 @@ import {
 } from "./buildRegistryComponents.js";
 import { extractDeprecations } from "./buildRegistryDeprecations.js";
 import { loadPropMetadata } from "./buildRegistryDocgen.js";
-import { extractGuides, extractPages } from "./buildRegistryDocs.js";
 import {
+  extractFoundationExamples,
+  extractGuides,
+  extractPages,
+} from "./buildRegistryDocs.js";
+import {
+  buildPatternCompositionContract,
   createPatternNameBySlug,
   derivePatternExampleAccessibilitySignals,
   derivePatternImplementationAccessibilitySignals,
@@ -125,6 +130,23 @@ export async function buildRegistry(
     pattern.accessibility.implementation_signals = accessibilitySignals;
   }
 
+  // Re-derive composition_contract now that pattern-story examples are
+  // merged into each pattern. The first pass (in extractPatterns) sees
+  // only docs-derived examples; story code is the strongest signal for
+  // classifying a composed component as `required`, so refining here
+  // promotes optional → required for components that show up in a real
+  // canonical story. Roadmap task 0.7(b).
+  for (const pattern of enrichedPatternMap.values()) {
+    const refined = buildPatternCompositionContract({
+      composed_of: pattern.composed_of,
+      starter_scaffold: pattern.starter_scaffold,
+      examples: pattern.examples,
+    });
+    if (refined) {
+      pattern.composition_contract = refined;
+    }
+  }
+
   const enrichedPatterns = [...enrichedPatternMap.values()];
   const linkedTokens = await linkTokensToComponents(
     sourceRoot,
@@ -157,9 +179,18 @@ export async function buildRegistry(
   const patternExamples = enrichedPatterns.flatMap(
     (pattern) => pattern.examples,
   );
-  const examples = [...componentExamples, ...patternExamples].sort(
-    (left, right) => left.id.localeCompare(right.id),
-  );
+  // Foundation examples are extracted from site/docs/foundations/** so
+  // every public foundation page resolves through the same target_name
+  // lookup as components and patterns. Required by the gold-standard
+  // roadmap task 0.6 registry coverage spec and consumed by task 2.10
+  // (theme-aware create_salt_ui). The records are not attached to any
+  // component or pattern; they flow straight into examples.json.
+  const foundationExamples = await extractFoundationExamples(sourceRoot);
+  const examples = [
+    ...componentExamples,
+    ...patternExamples,
+    ...foundationExamples,
+  ].sort((left, right) => left.id.localeCompare(right.id));
   const registryArrays: RegistryArrayCollections = {
     packages,
     components: enrichedComponents,

@@ -26,6 +26,19 @@ export interface GetExamplesInput {
   view?: "compact" | "full";
 }
 
+/**
+ * The subset of `ExampleRecord.target_type` values that `getExamples`
+ * is willing to *resolve* a query against. Foundations are emitted as
+ * canonical examples for the registry coverage audit (roadmap task
+ * 0.6) but are not yet reachable through the example-search resolver;
+ * `target_type: "foundation"` would never make it to this surface
+ * unless a future PR adds a foundation candidate collector. Keeping
+ * the public surface narrowed here means foundation examples flow
+ * through `examples.json` without breaking the existing consumer-side
+ * tools (`getSaltExamples`, `consumerPresentation`).
+ */
+export type ResolvableExampleTargetType = "component" | "pattern";
+
 export interface GetExamplesResult {
   examples: Array<Record<string, unknown>>;
   best_example?: Record<string, unknown> | null;
@@ -36,7 +49,7 @@ export interface GetExamplesResult {
   did_you_mean?: string[];
   resolved_target?: {
     query: string;
-    target_type: ExampleRecord["target_type"];
+    target_type: ResolvableExampleTargetType;
     name: string;
     package: string | null;
     matched_by?: Array<"name" | "alias" | "slug">;
@@ -44,7 +57,7 @@ export interface GetExamplesResult {
   ambiguity?: {
     query: string;
     matches: Array<{
-      target_type: ExampleRecord["target_type"];
+      target_type: ResolvableExampleTargetType;
       name: string;
       package: string | null;
       matched_by: Array<"name" | "alias" | "slug">;
@@ -53,7 +66,7 @@ export interface GetExamplesResult {
 }
 
 interface ExampleTargetCandidate {
-  target_type: ExampleRecord["target_type"];
+  target_type: ResolvableExampleTargetType;
   name: string;
   package: string | null;
   matched_by: Array<"name" | "alias" | "slug">;
