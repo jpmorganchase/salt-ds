@@ -13,7 +13,7 @@ To start developing with Salt, you should:
 
 - Be familiar with [React](https://react.dev/) and web development fundamentals (such as HTML, CSS and JavaScript).
 - Have [Node.js](https://nodejs.org/) (version 22 or later) installed on your system.
-- Create a React (version 18 or later) web application project. For new projects, see the React docs for [Creating a React App](https://react.dev/learn/creating-a-react-app).
+- Create a React (version 16.14 or later) web application project. For new projects, see the React docs for [Creating a React App](https://react.dev/learn/creating-a-react-app).
 
 ## The step-by-step process
 
@@ -38,14 +38,14 @@ To install with [yarn](https://yarnpkg.com/) or another package manager, run the
   summary="View all additional Salt packages"
 >
 
-| Package                                                                 | Purpose                                                                                                                                  |
-| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [`@salt-ds/ag-grid-theme`](../components/ag-grid-theme/usage)           | Salt styling for [AG Grid](https://www.ag-grid.com/) data grids.                                                                         |
-| [`@salt-ds/countries`](../components/country-symbol/usage)              | Country flag symbols used by [Country Symbol](../components/country-symbol).                                                             |
-| [`@salt-ds/date-adapters`](../components/localization-provider/usage)   | Adapters that let date components work with Luxon, Moment, date-fns or Day.js.                                                           |
-| [`@salt-ds/date-components`](../components/date-input/usage)            | Date input, date picker and calendar components.                                                                                         |
-| [`@salt-ds/embla-carousel`](../components/carousel/usage)               | [Carousel](../components/carousel) component built on [Embla](https://www.embla-carousel.com/).                                          |
-| [`@salt-ds/highcharts-theme`](../components/chart/usage)                | Theme and `useChart` hook for [Highcharts](https://www.highcharts.com/), used by [Chart](../components/chart).                           |
+| Package                                                                 | Purpose                                                                                                                                   |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@salt-ds/ag-grid-theme`](../components/ag-grid-theme/usage)           | Salt styling for [AG Grid](https://www.ag-grid.com/) data grids.                                                                          |
+| [`@salt-ds/countries`](../components/country-symbol/usage)              | Country flag symbols used by [Country Symbol](../components/country-symbol).                                                              |
+| [`@salt-ds/date-adapters`](../components/localization-provider/usage)   | Adapters that let date components work with Luxon, Moment, date-fns or Day.js.                                                            |
+| [`@salt-ds/date-components`](../components/date-input/usage)            | Date input, date picker and calendar components.                                                                                          |
+| [`@salt-ds/embla-carousel`](../components/carousel/usage)               | [Carousel](../components/carousel) component built on [Embla](https://www.embla-carousel.com/).                                           |
+| [`@salt-ds/highcharts-theme`](../components/chart/usage)                | Theme and `useChart` hook for [Highcharts](https://www.highcharts.com/), used by [Chart](../components/chart).                            |
 | [`@salt-ds/react-resizable-panels-theme`](../components/splitter/usage) | Salt styling for [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels), used by [Splitter](../components/splitter). |
 
 </Disclosure>
@@ -155,7 +155,7 @@ import { SaltProviderNext } from "@salt-ds/core";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/css/global.css";
 import "@salt-ds/theme/css/theme-next.css";
 
 const container = document.getElementById("root");
@@ -252,6 +252,6 @@ npm install @salt-ds/lab
 ```
 
 <Callout title="Need support?">
-  Feedback, bug reports and feature requests are all welcome—[raise a new
-  issue or comment on an existing one](../support-and-contributions).
+  Feedback, bug reports and feature requests are all welcome—[raise a new issue
+  or comment on an existing one](../support-and-contributions).
 </Callout>
