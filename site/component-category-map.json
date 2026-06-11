@@ -2,7 +2,7 @@
   "meta": {
     "source": "site/public/search-data.json",
     "generatedOn": "2026-03-20",
-    "componentCount": 74,
+    "componentCount": 75,
     "categoryCount": 12
   },
   "categoryOrder": [
@@ -274,6 +274,11 @@
       "route": "/salt/components/salt-provider/index",
       "category": "Providers"
     },
+    "salt-provider-next": {
+      "title": "SaltProviderNext",
+      "route": "/salt/components/salt-provider-next/index",
+      "category": "Providers"
+    },
     "scrim": {
       "title": "Scrim",
       "route": "/salt/components/scrim/index",
@@ -379,6 +384,12 @@
       "title": "Toggle button",
       "route": "/salt/components/toggle-button/index",
       "category": "Selection controls"
+    },
+    "toolbar": {
+      "title": "Toolbar",
+      "route": "/salt/components/toolbar/index",
+      "category": "Containers and disclosure",
+      "secondaryCategories": ["Actions"]
     },
     "tokenized-input-next": {
       "title": "Tokenized input",

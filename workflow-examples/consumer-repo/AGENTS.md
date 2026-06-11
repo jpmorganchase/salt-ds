@@ -33,7 +33,7 @@ Treat the compact `salt_workflow_v1` action as a command, not advice:
 - `action.kind: "install_dependencies"`: install the listed packages, then rerun the originating workflow; installing packages is not implementation permission
 - `action.kind: "fix_context"` or `"bootstrap_repo"`: resolve repo setup or context before repo-specific edits
 - after `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, or `bootstrap_repo`, rerun the originating workflow with the returned evidence bridge before editing; if `action.kind` is `ask_user`, stop and treat the user's answer as updated workflow input
-- installing Salt packages is not implementation permission; after installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`
+- installing Salt packages is not implementation permission; after installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`. Do not insert a manual `get_salt_project_context` call between the install and the rerun — Salt MCP marks the cached project context for the affected `root_dir` stale as soon as the workflow emits `install_dependencies`, so the next rerun transparently refetches new package state.
 - use `recipe.steps`, `questions`, and `evidence.missing` to report remaining work instead of guessing
 
 If screenshots or mockups are involved in migration work, normalize them into structured outline evidence before the canonical Salt migrate step. Do not send raw image attachments directly to Salt MCP.

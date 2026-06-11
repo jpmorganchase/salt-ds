@@ -284,7 +284,7 @@ describe("registry integration", () => {
         "Use tabs to organize logically related but mutually exclusive content on a single page.",
       ]),
       not_for: expect.arrayContaining([
-        "Don’t use tabs for primary navigation, taking the user off the current page. Instead, use Navigation Item.",
+        "Don’t use tabs for primary navigation, taking the user off the current page. Instead, use NavigationItem.",
       ]),
     });
 
@@ -393,7 +393,7 @@ describe("registry integration", () => {
     expect(result.recommendations?.[0]).toMatchObject({
       name: "Tabs",
       component: {
-        package: "@salt-ds/lab",
+        package: "@salt-ds/core",
       },
     });
   });
@@ -1572,7 +1572,8 @@ describe("registry integration", () => {
       registry.examples.every(
         (example) =>
           example.target_type === "component" ||
-          example.target_type === "pattern",
+          example.target_type === "pattern" ||
+          example.target_type === "foundation",
       ),
     ).toBe(true);
   });

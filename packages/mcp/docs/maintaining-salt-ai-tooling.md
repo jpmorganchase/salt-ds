@@ -79,6 +79,11 @@ If a new behavior can be expressed in docs, category maps, or build extraction, 
   - should remain the shared canonical owner used by both MCP and CLI
   - should prefer docs-derived regions, anatomy, and composition constraints before any hand-authored starter metadata
   - if a pattern still needs starter JSX, treat it as a fallback template layered after extracted semantics rather than as the canonical source of truth
+  - `PatternRecord.composition_contract` is the pinned, machine-readable assembly contract for every pattern. It is **always** derived in build extraction (`buildRegistryPatterns.buildPatternCompositionContract`) from `composed_of` plus the starter-scaffold semantics plus the pattern's canonical example code; never hand-authored into `patterns.json`. Shape (also pinned in `packages/semantic-core/src/types.ts`):
+    - `components`: every entry in `composed_of`, each classified `required` if the component appears in any canonical example or fallback-template JSX line, `optional` otherwise. `role` mirrors `composed_of`.
+    - `regions`, `required_regions`, `optional_regions`, `build_around`, `preserve_constraints`: lifted from `starter_scaffold.semantics` so agents only have to read one place.
+    - The contract is re-derived after pattern-story examples are merged, so story code can promote `optional` → `required`. Adding a new canonical story is enough to refine the contract; no runtime change required.
+  - foundations are first-class entities derived from `site/docs/foundations/**/*.mdx`. `buildRegistryDocs.extractFoundationExamples` emits one `ExampleRecord` per foundation page (`target_type: "foundation"`, `target_name` = page title) so the registry coverage audit (task 0.6) and `create_salt_ui` (task 2.10) can resolve foundations with the same `target_name` lookup they use for components and patterns. Fragments under `site/docs/foundations/fragments/**` and any doc marked `sidebar.exclude: true` are intentionally skipped — they're shared MDX includes, not standalone foundations.
 - semantic core in `packages/semantic-core/src/tools`
   - recommendation, translation, validation, migration, and lookup
   - should consume registry semantics, not become a second rulebook

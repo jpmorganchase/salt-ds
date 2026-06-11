@@ -3,6 +3,7 @@ import fg from "fast-glob";
 import matter from "gray-matter";
 import { toPosixPath } from "../registry/paths.js";
 import type {
+  ExampleRecord,
   GuideRecord,
   GuideSnippet,
   PageKind,
@@ -20,6 +21,7 @@ import {
   cleanMarkdownText,
   normalizeWhitespace,
   readFileOrNull,
+  toKebabCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
 import { extractMdxTextBlocks } from "./pageTextExtractor.js";
@@ -269,6 +271,14 @@ function classifyPageKind(route: string): PageKind {
     return "pattern-doc";
   }
   if (normalizedRoute.startsWith("salt/foundations/")) {
+    // Pages under salt/foundations/fragments/** are reusable MDX
+    // includes (sidebar: exclude), not standalone foundations. Treat
+    // them as generic pages so the registry coverage audit (gold-
+    // standard roadmap task 0.6) does not demand a canonical example
+    // for them.
+    if (normalizedRoute.includes("/fragments/")) {
+      return "other";
+    }
     return "foundation";
   }
   if (normalizedRoute.startsWith("salt/themes/")) {
@@ -628,3 +638,107 @@ export async function extractGuides(
 
   return guides.sort((left, right) => left.name.localeCompare(right.name));
 }
+
+/**
+ * Extract one canonical `ExampleRecord` per foundation page so the
+ * registry-coverage audit (gold-standard roadmap task 0.6) and any
+ * theme-aware `create_salt_ui` follow-up (task 2.10) can resolve
+ * foundations through the same `target_name` lookup it uses for
+ * components and patterns.
+ *
+ * Source of truth: `site/docs/foundations/**\/*.mdx`. The first fenced
+ * code block (or the first paragraph as a fallback) becomes the
+ * example body so a model can read structured evidence without having
+ * to scrape the foundation page itself. Fragments
+ * (`site/docs/foundations/fragments/**`) are intentionally skipped —
+ * they are reusable MDX includes, not foundation entities, and
+ * `classifyPageKind` already routes them to `page_kind: other`.
+ *
+ * Each emitted example uses:
+ * - `target_type: "foundation"`
+ * - `target_name`: the page frontmatter title (lowercase match for the
+ *   coverage spec)
+ * - `source_url`: the foundation page route (so consumers can fetch
+ *   the full doc when they need it).
+ */
+export async function extractFoundationExamples(
+  repoRoot: string,
+): Promise<ExampleRecord[]> {
+  const foundationDocPaths = (
+    await fg("site/docs/foundations/**/*.mdx", {
+      cwd: repoRoot,
+      absolute: true,
+      onlyFiles: true,
+      // Mirror the pattern docs extractor: skip fragments and any
+      // index-only pages that don't classify as foundations.
+      ignore: [
+        "site/docs/foundations/fragments/**",
+        "site/docs/foundations/**/fragments/**",
+      ],
+    })
+  ).sort((left, right) => left.localeCompare(right));
+
+  const examples: ExampleRecord[] = [];
+
+  for (const foundationPath of foundationDocPaths) {
+    const source = await readFileOrNull(foundationPath);
+    if (!source) {
+      continue;
+    }
+
+    const parsed = matter(source);
+    const title = asString(parsed.data.title);
+    if (!title) {
+      continue;
+    }
+
+    // Skip docs explicitly marked as sidebar excludes that are not
+    // real foundations (these are typically embedded fragments or
+    // duplicated landing sections). We still extract index.mdx pages
+    // that are landing pages for a category (e.g. assets/index.mdx
+    // titled "Icons") because they carry primary foundation content.
+    const sidebarConfig = parsed.data.sidebar as
+      | { exclude?: unknown }
+      | undefined;
+    if (sidebarConfig?.exclude === true) {
+      continue;
+    }
+
+    const relativePath = toPosixPath(
+      path.relative(path.join(repoRoot, "site/docs/foundations"), foundationPath),
+    );
+    const routeSuffix = relativePath.replace(/\.mdx$/i, "");
+    const route = `/salt/foundations/${routeSuffix}`;
+
+    const codeBlocks = extractFencedCodeBlocks(parsed.content);
+    const firstSnippet = codeBlocks.find((block) => block.code.length > 0);
+    const summary = extractFirstParagraph(parsed.content);
+
+    const fallbackBody = summary
+      ? `// ${cleanMarkdownText(summary).slice(0, 480)}\n// See ${route}`
+      : `// Salt foundation: ${title}\n// See ${route}`;
+
+    examples.push({
+      id: `foundation.${toKebabCase(routeSuffix)}`,
+      title,
+      description: cleanMarkdownText(summary ?? title).slice(0, 500),
+      intent: uniqueStrings([
+        `${title.toLowerCase()} foundation`,
+        "foundation guidance",
+        ...title
+          .toLowerCase()
+          .split(/\s+/)
+          .filter((word) => word.length >= 3),
+      ]),
+      complexity: "basic",
+      code: firstSnippet?.code ?? fallbackBody,
+      source_url: route,
+      package: null,
+      target_type: "foundation",
+      target_name: title,
+    });
+  }
+
+  return examples;
+}
+
