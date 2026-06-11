@@ -5,6 +5,8 @@ import {
   type SaltAiSetupSummary,
 } from "@salt-ds/semantic-core";
 import {
+  mergeSaltAgentHooksManifest,
+  SALT_AGENT_HOOKS_FILE_RELATIVE_PATH,
   SALT_REPO_INSTRUCTIONS_TEMPLATE,
   upsertMarkedBlock,
   upsertSaltRepoInstructions,
@@ -35,6 +37,10 @@ interface InitWorkflowResult {
     path: string;
     filename: "AGENTS.md" | "CLAUDE.md" | null;
     action: "created" | "updated" | "unchanged";
+  };
+  agentHooks: {
+    path: string | null;
+    action: "created" | "updated" | "unchanged" | "not_requested";
   };
   summary: {
     readyForCreate: boolean;
@@ -322,11 +328,54 @@ function formatInitReport(result: InitWorkflowResult): string {
     `Policy: ${result.policy.action}${result.policy.path ? ` (${result.policy.path})` : ""}`,
     `Stack: ${result.stack.action}${result.stack.path ? ` (${result.stack.path})` : ""}`,
     `Repo instructions: ${result.repoInstructions.action} (${result.repoInstructions.path})`,
+    ...(result.agentHooks.action !== "not_requested"
+      ? [
+          `Agent hooks: ${result.agentHooks.action}${result.agentHooks.path ? ` (${result.agentHooks.path})` : ""}`,
+        ]
+      : []),
     ...(result.aiSetup ? [`AI setup: ${result.aiSetup.status}`] : []),
     `Next step: ${result.summary.nextStep}`,
   ]
     .join("\n")
     .concat("\n");
+}
+
+async function ensureSaltAgentHooksManifest(rootDir: string): Promise<{
+  action: "created" | "updated" | "unchanged";
+  path: string;
+}> {
+  const manifestPath = path.join(
+    rootDir,
+    ...SALT_AGENT_HOOKS_FILE_RELATIVE_PATH.split("/"),
+  );
+  const exists = await pathExists(manifestPath);
+  if (!exists) {
+    await fs.mkdir(path.dirname(manifestPath), { recursive: true });
+    const initial = mergeSaltAgentHooksManifest(null);
+    await fs.writeFile(
+      manifestPath,
+      `${JSON.stringify(initial.content, null, 2)}\n`,
+      "utf8",
+    );
+    return { action: "created", path: toPosix(manifestPath) };
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(await fs.readFile(manifestPath, "utf8"));
+  } catch {
+    parsed = null;
+  }
+  const merged = mergeSaltAgentHooksManifest(parsed);
+  if (!merged.changed) {
+    return { action: "unchanged", path: toPosix(manifestPath) };
+  }
+  await fs.writeFile(
+    manifestPath,
+    `${JSON.stringify(merged.content, null, 2)}\n`,
+    "utf8",
+  );
+  return { action: "updated", path: toPosix(manifestPath) };
 }
 
 function buildStackNextStep(input: {
@@ -426,6 +475,7 @@ export async function runInitCommand(
       hostAdapters.add("vscode");
     }
     const addUiVerify = flags["add-ui-verify"] === "true" || aiSetupRequested;
+    const addAgentHooks = flags["add-agent-hooks"] === "true";
     const teamConfigPath = path.join(rootDir, ".salt", "team.json");
     const stackConfigPath = path.join(rootDir, ".salt", "stack.json");
     const stackConfigExists = await pathExists(stackConfigPath);
@@ -502,6 +552,9 @@ export async function runInitCommand(
     const verifyScript = addUiVerify
       ? await ensureUiVerifyScript(rootDir)
       : null;
+    const agentHooksResult = addAgentHooks
+      ? await ensureSaltAgentHooksManifest(rootDir)
+      : null;
 
     const context = await collectSaltInfo(rootDir, flags["registry-dir"], {
       policyDetail: "resolved",
@@ -532,6 +585,15 @@ export async function runInitCommand(
           inferInstructionFilename(instructionPath),
         action: repoInstructionAction,
       },
+      agentHooks: agentHooksResult
+        ? {
+            path: agentHooksResult.path,
+            action: agentHooksResult.action,
+          }
+        : ({
+            path: null,
+            action: "not_requested",
+          } as const),
       summary: {
         readyForCreate:
           context.policy.mode === "team" || context.policy.mode === "stack",
@@ -607,6 +669,19 @@ export async function runInitCommand(
                     : [
                         `Skipped ui:verify scaffolding because ${verifyScript.packageJsonPath} could not be parsed.`,
                       ]),
+          ...(agentHooksResult?.action === "created"
+            ? [
+                `Created Salt agent hook manifest at ${agentHooksResult.path}. Enable .github/hooks in VS Code chat.hookFilesLocations to wire PostToolUse + SessionStart.`,
+              ]
+            : agentHooksResult?.action === "updated"
+              ? [
+                  `Updated ${agentHooksResult.path} to include the Salt PostToolUse and SessionStart hook commands.`,
+                ]
+              : agentHooksResult?.action === "unchanged"
+                ? [
+                    `${agentHooksResult.path} already wired Salt PostToolUse and SessionStart hook commands.`,
+                  ]
+                : []),
         ]),
       ),
       aiSetup: aiSetupRequested
