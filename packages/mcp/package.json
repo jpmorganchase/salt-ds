@@ -54,7 +54,7 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@salt-ds/runtime-inspector-browser": "workspace:*",
     "@salt-ds/runtime-inspector-core": "workspace:*",
     "@salt-ds/semantic-core": "workspace:*",
