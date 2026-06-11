@@ -6,9 +6,6 @@
   margin-block: 0 var(--salt-spacing-100);
 }
 
-/* `VerticalNavigation` renders its own `<nav>` + `<ol>` and resets list
-   styling internally, so we only need to control the outer spacing
-   previously applied to the `<ul>`. */
 .nav {
   margin: var(--salt-spacing-100) 0 var(--salt-spacing-300);
   padding: 0;
