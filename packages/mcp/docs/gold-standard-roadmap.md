@@ -97,10 +97,10 @@ These are the moats. The rest of the plan must protect, not erode, them.
 
 | # | Gap | Beaten by |
 |---|---|---|
-| G1 | Cold-start install footprint. | shadcn (sub-second), MUI MCP |
-| G2 | Pixel-to-code path. Refusing to parse images is correct but loses the "I have a screenshot, build it now" UX. | v0, Builder Visual Copilot, Figma Dev Mode MCP |
-| G3 | Generation demo flair. `create` returns a recommendation + bounded starter, not a finished page. | v0 |
-| G4 | Ecosystem gravity / registry network effects. | shadcn |
+| G1 | Cold-start install footprint. | Lightweight component-library MCPs (sub-second install footprints reported elsewhere) |
+| G2 | Pixel-to-code path. Refusing to parse images is correct but loses the "I have a screenshot, build it now" UX. | Hosted pixel-to-code tools and design-tool MCPs |
+| G3 | Generation demo flair. `create` returns a recommendation + bounded starter, not a finished page. | Hosted pixel-to-code tools |
+| G4 | Ecosystem gravity / registry network effects. | Copy-paste registry ecosystems |
 | G5 | Single-product first-run wow moment. The first compelling Salt result requires repo context + workflow + retrieval + rerun. | All hosted tools |
 
 ### 1.6 Competitive moats to extend
@@ -137,10 +137,10 @@ Rev 1 of this plan accumulated ~60 proposed items across phases and findings. A 
 | **Streaming workflows** as a Salt feature | Phase 4.1 | Demoted to **contract-only**. Publish the `SaltStreamEvent` shape so hosts that want to stream can. No new code in Salt. |
 | **Calibrated confidence as a product** | Phase 4.3 | Demoted to **publish telemetry, not run a calibration service**. Salt collects opt-in data; consumers/hosts/future PRs do their own confidence math. Binding Salt's identity to "running a calibration service" turns it into a different product. |
 | **OpenTelemetry-style workflow spans** | Phase 4.4 | Reduced to **`trace_id` in the result**. OpenTelemetry already has a span format; Salt doesn't need to invent one. |
-| **Vision adapter shipped by Salt** | Phase 4.5 | Vision is the host's job (Copilot, Claude Code, GPT all have vision models). Salt's contribution is the `migrate_visual_evidence_v1` contract, which already exists. Reference adapters can be community-built. Closing v0's demo gap is competitive thinking, not product thinking — we don't have to win demos. |
+| **Vision adapter shipped by Salt** | Phase 4.5 | Vision is the host's job (Copilot, Claude Code, GPT all have vision models). Salt's contribution is the `migrate_visual_evidence_v1` contract, which already exists. Reference adapters can be community-built. Closing demo-tool gaps is competitive thinking, not product thinking — we don't have to win demos. |
 | **LSP-style adapter for non-MCP editors** | Phase 5.6 | MCP has won. JetBrains, VS Code, Cursor, Claude Code, Codex, Windsurf, Copilot CLI all speak it. Building LSP-as-fallback is preparing for a world that isn't materializing. |
-| **Multi-DS host (one Salt runtime serving MUI/Chakra registries)** | Phase 5.7 | Workflow-runtime business, not design-system business. Salt should not host other libraries' registries. If multi-DS happens, it happens in a separate community project that adopts the spec. |
-| **Public `salt-ds-bench` scoreboard** | Phase 5.4 | Reduced to **publishing the benchmark protocol and scoring methodology**. Use it internally for our own regression suite. A public scoreboard turns into PR work and "Salt vs MUI" marketing — wrong product motion. |
+| **Multi-DS host (one Salt runtime serving other DS registries)** | Phase 5.7 | Workflow-runtime business, not design-system business. Salt should not host other libraries' registries. If multi-DS happens, it happens in a separate community project that adopts the spec. |
+| **Public `salt-ds-bench` scoreboard** | Phase 5.4 | Reduced to **publishing the benchmark protocol and scoring methodology**. Use it internally for our own regression suite. A public scoreboard turns into PR work and competitive-comparison marketing — wrong product motion. |
 | **Rollback / undo via `.salt/edit-sets/`** | Findings followup #1 | Git already solves this. If attestations (E4) record file hashes and trace IDs, `git revert` is the recovery tool. Reinventing a wheel git owns is bloat. |
 | **Multi-tenant MCP hardening** | Findings followup #2 | Stated as a one-line spec rule ("MCP is single-tenant per process") rather than engineered. Hosted Salt-as-a-service is a different product. |
 | **Token cost transparency, bad-guidance feedback loop, non-React framework support** | Findings followup #10–12 | Host territory, existing channel (GitHub Issues), and out-of-scope-by-design respectively. Document the boundaries; don't build the features. |
@@ -403,7 +403,7 @@ Rev 1 named Phase 5 "Open standards and ecosystem" with seven tasks including a 
 
 | Task | Refs | Outcome | Size |
 |---|---|---|---|
-| 5.1 Extract `project_conventions_v1` schema into a standalone published JSON Schema spec at a stable URL (`https://salt-ds.dev/schemas/project-conventions/v1`). Versioned, citeable, library-neutral. **Includes an explicit schema-evolution policy** (additive-within-major, ignore-unknown-additive, documented migration command). | W2, +schema-evolution | MUI / Chakra / in-house DS teams can adopt the same schema and the same `.salt/team.json` shape without silent drift. | M |
+| 5.1 Extract `project_conventions_v1` schema into a standalone published JSON Schema spec at a stable URL (`https://salt-ds.dev/schemas/project-conventions/v1`). Versioned, citeable, library-neutral. **Includes an explicit schema-evolution policy** (additive-within-major, ignore-unknown-additive, documented migration command). | W2, +schema-evolution | External and in-house DS teams can adopt the same schema and the same `.salt/team.json` shape without silent drift. | M |
 | 5.2 Extract `migrate_visual_evidence_v1` to the same docs site as a portable spec. Reference adapter pattern + worked example in `workflow-examples/` (no Salt-shipped adapter package). | W2 | Adapter ecosystem can grow outside Salt. | S |
 | 5.3 Extract `salt_workflow_v1` to the same site as the "Workflow-aware DS Contract." **Author-only**: publish the spec, don't run relationship work to coerce another DS into adopting it. If adoption happens, it happens. | W1 | Salt becomes the spec author. | M |
 | 5.4 Publish the internal benchmark **protocol and scoring methodology** at `salt-ds.dev/bench`. Run it against Salt's own release pipeline for regression detection. **No public scoreboard**; that's PR work and turns into the wrong product motion. | W3 | Reproducible internal regression suite, citeable methodology. | M |
@@ -544,7 +544,7 @@ Each step lands as its own PR; no PR may grow a touched file's line count.
 
 The original five (rev 1):
 
-- **No prompt-to-page generation.** v0 owns that space; competing dilutes the product.
+- **No prompt-to-page generation.** Hosted pixel-to-code tools own that space; competing dilutes the product.
 - **No hosted Salt service.** Salt stays a local tool consumers run inside their repos.
 - **No pixel parsing in core.** Visual evidence always arrives normalized via the documented contract or an adapter.
 - **No agent-only summary docs.** If something matters, it goes in canonical docs and is extracted, per `maintaining-salt-ai-tooling.md`.
@@ -558,8 +558,8 @@ Added in rev 2 (scope-discipline cuts; see §2.1.5):
 - **No Salt-defined observability span format.** OpenTelemetry already has one. Salt ships `trace_id` in results.
 - **No Salt-managed streaming runtime.** Streaming is contract-only: publish the `SaltStreamEvent` shape so hosts that want it can wire it up.
 - **No LSP-style protocol adapter.** MCP has won. JetBrains, VS Code, Cursor, Claude Code, Codex, Windsurf, Copilot CLI all speak it.
-- **No multi-DS host.** Salt should not host MUI's or Chakra's registries. If multi-DS happens, it happens in a separate community project that adopts the spec.
-- **No public `salt-ds-bench` scoreboard.** Publish the benchmark protocol and methodology. Use it internally. A public leaderboard turns into PR work and "Salt vs MUI" marketing — wrong product motion.
+- **No multi-DS host.** Salt should not host other DS registries. If multi-DS happens, it happens in a separate community project that adopts the spec.
+- **No public `salt-ds-bench` scoreboard.** Publish the benchmark protocol and methodology. Use it internally. A public leaderboard turns into PR work and competitive-comparison marketing — wrong product motion.
 - **No `.salt/edit-sets/` rollback system.** Git already solves this. Attestations (E4) record what was touched; `git revert` is the recovery tool.
 - **No multi-tenant MCP runtime.** Stated as a one-line spec rule ("MCP is single-tenant per process"). Hosted Salt-as-a-service is a different product.
 - **No token-cost surfacing, bad-guidance feedback infrastructure, or non-React framework support.** Host territory, existing channel (GitHub Issues), and out-of-scope-by-design respectively. Document the boundaries; don't build the features.
