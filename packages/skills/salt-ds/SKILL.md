@@ -9,69 +9,13 @@ Salt's public orchestrator skill for repo-aware design-system work in consumer r
 Keep one public workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`.
 Do not make the user choose between separate builder, reviewer, migration, accessibility, or conventions skills.
 
-## No Salt Invention Rule
+## Always-Load First
 
-Do not guess or hallucinate Salt APIs, props, imports, package names, tokens, component capabilities, composition rules, examples, or documentation links.
-Before naming or implementing Salt-specific structure, fetch canonical Salt evidence through MCP or CLI.
-If evidence is missing, follow `next_required_action`, retrieve the required entity or examples, ask the user, or stop with the blocker.
-Do not fill gaps from generic React, CSS, HTML, copied repo code, or model memory.
-
-## Theme Evidence Rule
-
-Do not name Salt provider or theme imports, provider props, fonts, accent/corner values, package paths, or compatibility paths from this skill.
-When provider or theme bootstrap matters, obtain those facts from workflow output, registry-backed generated context with evidence refs, `.salt` project policy, or explicit user input.
-If that evidence is missing, report theme bootstrap as pending or unsupported and continue only with workflow steps that do not require the missing theme facts.
-
-## Hard Gate
-
-Do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has all of these fields:
-
-- `status: success`
-- `action.kind: implement`
-- `safety.exact_request_safe: true`
-- `evidence.status: complete`
-
-After editing, run the returned review or post action before calling the work complete.
-Treat quick-check observations, starter snippets, package installs, retrieval results, successful builds, and partial scaffolds as non-implementation approval.
-
-## Action Loop
-
-For implementation-capable Salt workflows:
-
-1. For repo-aware work, establish trusted project context first, or pass a known `root_dir` or `context_id` to the workflow.
-2. Call the workflow.
-3. Read `status`, `action.kind`, `next_required_action`, `safety`, `questions`, and `evidence`.
-4. Perform exactly the returned action.
-5. If `action.kind` is `ask_user`, stop and wait for the user answer; treat the answer as a new or updated workflow input, not as an evidence bridge.
-6. After `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, or `bootstrap_repo`, rerun the originating workflow with the returned evidence bridge. For create entity follow-through, pass MCP `resolved_entities: ["Name"]` or CLI `--resolved-entity Name`.
-7. Edit only when the rerun satisfies the Hard Gate.
-8. Run review after edits.
-
-Installing Salt packages is not implementation permission. After installing, immediately rerun the originating workflow and edit only if that rerun returns `status: success`, `action.kind: implement`, and `evidence.status: complete`.
-
-## Root Execution Flow
-
-For every Salt task, follow this order:
-
-1. Identify the workflow: `review`, `upgrade`, `migrate`, `create`, or `init`.
-2. Choose the lightest safe mode:
-   - `quick-check` for narrow, local, low-ambiguity work
-   - `deep` when full canonical reasoning is needed
-   - `explore-options` only when the user explicitly wants alternatives
-   - `clarify-blockers` when one unresolved decision prevents safe progress
-3. Establish project context when the task is repo-aware or the answer could change based on repo state.
-4. Load only the minimal shared and workflow references needed for the current step.
-5. Execute the workflow.
-6. Check whether canonical reasoning is complete enough for the current step.
-7. If safe progress is blocked, stop or ask one blocker question instead of guessing.
-8. Answer in the workflow-appropriate format, leading with the summary and current workflow state.
-
-For `create`, prefer this sequencing by default:
-
-1. compact workflow result
-2. retrieval support inspection when the owner is still broad or mixed-surface
-3. exact named follow-through for owner or supporting surfaces
-4. `full` only when additive details are actually needed
+Before any other Salt-specific reasoning, load `references/shared/core.md`. It carries the always-on behavior bullets every Salt workflow shares: the No Salt Invention Rule, the Theme Evidence Rule, the Hard Gate, the Action Loop, Project Context First, the Shared Workflow Contract, the Stable-First Rule, and the Output Posture.
+This file (SKILL.md) is a thin router; the binding behavior contract lives in `references/shared/core.md`.
+For VS Code or IntelliJ Copilot-specific host behavior, load `references/shared/copilot-hosts.md`.
+For degraded MCP or CLI handling, load `references/shared/degraded-tooling.md`.
+Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.
 
 ## Example Triggers
 
@@ -83,6 +27,17 @@ For `create`, prefer this sequencing by default:
 - `Migrate this non-Salt page into Salt without changing the task flow.`
 - `Upgrade this older Salt usage and separate required fixes from cleanup.`
 - `Bootstrap Salt repo policy for this consumer app.`
+
+## Trigger Boundary
+
+Use this skill when:
+
+- the repo already shows Salt signals such as `@salt-ds/*` packages, `.salt/team.json`, `.salt/stack.json`, Salt MCP workflows, or the `salt-ds` CLI
+- the user explicitly asks to adopt Salt, migrate non-Salt UI into Salt, or bootstrap Salt repo policy
+- the task touches Salt-specific UI structure, layout, hierarchy, navigation, forms, dialogs, tables, dashboards, accessibility, migration, or upgrades in a Salt consumer repo
+
+Do not use this skill for generic React, CSS, accessibility, or product-design work that does not require Salt-specific guidance.
+Do not use this skill for generic repo work that merely happens in a Salt repo, including generic refactors, TypeScript cleanup, CSS-only fixes, build/test/CI/package-management work, or generic debugging where Salt primitives, patterns, policy, migration, or upgrade logic are not part of the answer.
 
 ## Workflow Selection
 
@@ -97,78 +52,14 @@ Route by user job, not by IDE presence:
 Accessibility audits normally route through `review`.
 Bootstrap tasks normally route through `init`.
 Ask instead of guessing when the task genuinely spans more than one workflow.
-Split into phases only when the user goal requires it.
 
-## Mode Selection
-
-Choose the lightest mode that still preserves Salt correctness.
-Load `references/shared/modes.md` before acting when the user intent is not obvious.
-
-- `quick-check`: fast gut-checks, current-file sanity reviews, current-diff feedback, or a short accessibility/composition pass before commit.
-- `deep`: the default for implementation, comprehensive review, migration, upgrade, bootstrap, and any task that needs canonical completion.
-- `explore-options`: only when the user explicitly asks for alternatives, options, comparisons, or “design it twice”.
-- `clarify-blockers`: when canonical progress is blocked by one or two structural decisions; ask focused questions one at a time and provide a recommended default answer.
-
-`quick-check` may start from the current file, selection, or diff when the answer is clearly bounded.
-`quick-check` may return bounded provisional observations, but it is not permission to implement `create`, `migrate`, or `upgrade` work.
-Do not state Salt-specific props, tokens, imports, package names, or composition rules as canonical in quick-check mode unless they were verified through MCP or CLI evidence.
-Escalate to `deep` when the issue is structurally ambiguous, a canonical mismatch is likely, repo policy clearly matters, or transport/tooling must be consulted to answer safely.
-Do not force `explore-options` or `clarify-blockers` when the user wants straightforward execution.
-Do not let `quick-check` quietly turn into a full migration or deep redesign without saying so.
-
-## Root Output Contract
-
-Every Salt answer should make these things clear before any deeper detail:
-
-- what workflow Salt chose
-- whether the current step is grounded enough to continue safely
-- whether implementation is safe for the exact requested region or entity
-- what blockers or follow-through remain
-- what the safest next action is
-
-Prefer a compact summary first.
-Do not hide unresolved follow-through behind confident implementation.
-Do not let structural detail crowd out the workflow state.
-When stable top-level workflow fields are available from MCP or CLI, read them first.
-Do not assume that transport-specific field names are the only way to satisfy this contract.
-
-## Project Context First
-
-For deep or repo-spanning Salt work, start from project context before choosing Salt-specific structure.
-In `quick-check`, you may start from the current file, selection, or diff when the answer is clearly bounded, then add project context when feasibility or safety requires it.
-
-When repo-aware guidance needs project context:
-
-- prefer Salt MCP project context when available
-- if the host already knows the active workspace path, pass it as `root_dir` on `get_salt_project_context` or the repo-aware workflow call instead of relying on cwd inference
-- use `salt-ds info --json` as the CLI equivalent when MCP is blocked or unavailable
-- treat repo context as the first pass for framework, package, import, runtime-target, and policy detection
-- if project-context resolution returns `needs_explicit_root`, `mismatch`, or resolves a root without the expected manifest, stop and retry with explicit `root_dir` or a known `context_id`
-- skip project context only for clearly Salt-agnostic exploration where repo shape does not affect the answer
-
-## Project Memory
-
-Load `references/shared/project-memory.md` when the repo already has local Salt policy, accepted deviations, or recurring host/tool constraints.
-Prefer existing durable sources first:
-
-- `.salt/team.json`
-- `.salt/stack.json`
-- repo instruction files such as `AGENTS.md`
-- ADRs, architecture notes, or repo docs that capture repeated Salt decisions
-- an optional repo-local working agreement created from `assets/salt-working-agreement.template.md`
-
-Treat project memory as downstream context that reduces repeat friction.
-Do not present it as canonical Salt guidance.
+For `create`, prefer this sequencing by default: compact workflow result; retrieval support inspection when the owner is still broad or mixed-surface; exact named follow-through for owner or supporting surfaces; `full` only when additive details are actually needed.
 
 ## Reference Routing
 
-Load only the minimum shared and workflow references needed for the chosen mode and current step.
-Do not treat `quick-check` as a deep workflow unless ambiguity, policy, or evidence requirements clearly force escalation.
+Load `references/shared/core.md` first. Then load only the minimum shared and workflow references needed for the chosen mode and current step. Load `references/shared/modes.md` before acting when the user intent is not obvious.
 
-- `quick-check`: start with `references/shared/modes.md`; add `references/shared/transport.md` when canonical validation or transport handling is needed; add other shared references only when the bounded check depends on them.
-- `deep`, `explore-options`, and `clarify-blockers`: load the shared references that match the task before acting.
-
-Shared references:
+Shared references (load on demand):
 
 - `references/shared/transport.md` for the workflow and transport contract.
 - `references/shared/degraded-tooling.md` when MCP or CLI output is noisy, partial, truncated, misrouted, or unavailable.
@@ -181,7 +72,7 @@ Shared references:
 - `references/shared/copilot-hosts.md` for VS Code / IntelliJ Copilot host behavior and repo-scoping rules.
 - `references/shared/anti-patterns.md` for behaviors that commonly derail otherwise-correct Salt answers.
 
-Then load workflow-specific references:
+Workflow-specific references:
 
 - `create`: `references/create/rules.md`, `references/create/workflow.md`, `references/create/gotchas.md`, `references/create/output.md`, `references/create/questions.md`
 - `create` + `explore-options`: also load `references/create/explore-options.md`
@@ -189,65 +80,3 @@ Then load workflow-specific references:
 - `migrate`: `references/migrate/rules.md`, `references/migrate/workflow.md`, `references/migrate/gotchas.md`, `references/migrate/output.md`
 - `upgrade`: `references/upgrade/rules.md`, `references/upgrade/workflow.md`, `references/upgrade/gotchas.md`, `references/upgrade/output.md`
 - `init` / conventions-sensitive work: `references/conventions/rules.md`, `references/conventions/contract.md`, `references/conventions/examples.md`, `references/conventions/review-checklist.md`
-
-## Trigger Boundary
-
-Use this skill when:
-
-- the repo already shows Salt signals such as `@salt-ds/*` packages, `.salt/team.json`, `.salt/stack.json`, Salt MCP workflows, or the `salt-ds` CLI
-- the user explicitly asks to adopt Salt, migrate non-Salt UI into Salt, or bootstrap Salt repo policy
-- the task touches Salt-specific UI structure, layout, hierarchy, navigation, forms, dialogs, tables, dashboards, accessibility, migration, or upgrades in a Salt consumer repo
-
-Do not use this skill for generic React, CSS, accessibility, or product-design work that does not require Salt-specific guidance.
-Do not use this skill for generic repo work that merely happens in a Salt repo, including generic refactors, TypeScript cleanup, CSS-only fixes, build/test/CI/package-management work, or generic debugging where Salt primitives, patterns, policy, migration, or upgrade logic are not part of the answer.
-
-## Shared Workflow Contract
-
-Keep this section as the first-load summary.
-Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.
-
-For every Salt workflow:
-
-1. Obtain canonical Salt guidance through MCP or CLI before making Salt-specific choices.
-2. Keep the user task and page-level framing intact in the first canonical step.
-3. Treat repo conventions and project memory as downstream context, not canonical Salt guidance.
-4. Read compact workflow output from stable top-level workflow signals first: `status`, `safety`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`.
-5. Treat `salt_workflow_v1.action.kind` as binding: perform exactly the returned action, and only edit when the Hard Gate is satisfied.
-6. Validate with the returned review or post action before treating implementation work as done.
-
-Preserve explicit user nouns that are not yet covered as unresolved requirements.
-Retrieve canonical evidence for those nouns, but do not implement those regions until the workflow contract or support evidence covers them.
-Use `recipe.steps`, `questions`, and `evidence.missing` to explain what remains unresolved instead of filling gaps with guessed Salt structure.
-
-### Stable-First Rule
-
-Prefer stable production-ready Salt directions first.
-Do not reach for custom UI, lab/experimental usage, or decorative styling until the nearest canonical Salt pattern, primitive, composition, and foundation have been ruled out.
-If the transport or validation warns that a recommendation is unstable, noisy, or needs attention, do not finalize it as the main answer without saying so.
-
-## Host Behavior
-
-For VS Code or IntelliJ Copilot-specific host behavior, load `references/shared/copilot-hosts.md`.
-For degraded MCP or CLI handling, load `references/shared/degraded-tooling.md`.
-Do not claim a Salt workflow completed merely because the host emitted a large payload.
-
-## Output Posture
-
-Keep results decision-first.
-When blocked, say exactly what is blocked, what succeeded, and what remains unresolved.
-Summarize blocked, partial, `ask_user`, retrieve, or missing-evidence states from existing fields only; do not invent a new compact field.
-Treat `status: "partial"` as **user-facing remaining work** only — unresolved regions, follow-through entities, composite plans that still need grounding. It does not mean the workflow's own validator coverage is incomplete.
-Read the top-level `internal_limitations` block (`unsupported_claim_count`, `unsupported_rule_kinds`) as a separate signal: registry/validator coverage gaps that the workflow itself could not confirm. A clean run with `internal_limitations.unsupported_claim_count > 0` is still `status: "success"` and still implementation-safe — surface the limitation transparently in your reply, but do not block, retry, or escalate on it.
-Use `status`, `action.kind`, `next_required_action`, `safety.blocking_reasons`, `questions`, `evidence.missing`, and `summary` to state:
-
-- what is blocked
-- why it is blocked
-- the smallest next action
-- whether coding is allowed
-
-Coding is allowed only when the Hard Gate is satisfied. Otherwise, say "coding is allowed: no" and do not edit the blocked region.
-In `quick-check` mode, keep the answer short and action-oriented: top issues, safest next fix, and any confidence gap.
-In `deep` mode, explain the chosen Salt direction, the validation completed, and any remaining evidence gaps.
-In `explore-options` mode, compare two Salt-valid directions by default, describe the trade-offs in prose, and recommend one default continuation path.
-Only exceed two directions when the user explicitly asks for more.
-When a task includes code generation, prefer the shortest valid Salt-native scaffold that preserves the grounded structure.
