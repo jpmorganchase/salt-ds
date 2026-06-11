@@ -24,6 +24,10 @@ import {
   toFoundationDifference,
   uniqueNormalized,
 } from "./createSaltUiHelpers.js";
+import {
+  type CreateThemeProviderQuestion,
+  evaluateCreateThemeProviderQuestion,
+} from "./createSaltUiThemeQuestion.js";
 import { getCompositionRecipe } from "./getCompositionRecipe.js";
 import { getFoundation } from "./getFoundation.js";
 import { getSaltEntity } from "./getSaltEntity.js";
@@ -65,6 +69,18 @@ export interface CreateSaltUiInput {
   include_starter_code?: boolean;
   resolved_entities?: string[];
   view?: "compact" | "full";
+  /**
+   * Three-valued provider-declaration signal from the calling host.
+   * - `true` — the host detected a declared theme provider in the repo;
+   *   create_salt_ui will NOT emit the SaltProvider vs SaltProviderNext
+   *   theme-provider-choice question even if the query is theme-ambiguous.
+   * - `false` — the host confirmed no provider is declared; the
+   *   theme-provider-choice question is eligible whenever the query is
+   *   theme- or brand-ambiguous.
+   * - `undefined` — the host has no signal; ambiguity alone triggers the
+   *   question because there is no evidence either way.
+   */
+  repo_has_theme_provider?: boolean;
 }
 
 export interface CreateSaltUiResult {
@@ -765,20 +781,59 @@ export function createSaltUi(
   const requestedView = input.view ?? "compact";
   const resolution = resolveCreateRecommendation(registry, input);
 
-  if (requestedView !== "full" || hasCreateComparisonInput(input)) {
-    return createSaltUiAtView(registry, input, resolution);
+  const baseResult =
+    requestedView !== "full" || hasCreateComparisonInput(input)
+      ? createSaltUiAtView(registry, input, resolution)
+      : enrichResolvedCreateResult(
+          registry,
+          input,
+          createSaltUiAtView(
+            registry,
+            { ...input, view: "compact" },
+            resolution,
+          ),
+          resolution,
+        );
+
+  return applyThemeProviderQuestion(registry, input, baseResult);
+}
+
+function applyThemeProviderQuestion(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  result: CreateSaltUiResult,
+): CreateSaltUiResult {
+  // Comparison mode and name lookups are not theme-ambiguous in the same way
+  // as a free-form recommendation — skip the check when the caller already
+  // pinned exact names.
+  if (hasCreateComparisonInput(input)) {
+    return result;
   }
 
-  // Owner resolution happens once through the compact path. Full mode only
-  // enriches that resolved owner so the public workflow contract cannot drift.
-  const compactResult = createSaltUiAtView(
-    registry,
-    {
-      ...input,
-      view: "compact",
-    },
-    resolution,
-  );
+  const themeQuestion = evaluateCreateThemeProviderQuestion(registry, {
+    query: input.query,
+    repoHasThemeProvider: input.repo_has_theme_provider,
+  });
+  if (!themeQuestion) {
+    return result;
+  }
 
-  return enrichResolvedCreateResult(registry, input, compactResult, resolution);
+  const existing = result.open_questions ?? [];
+  const alreadyPresent = existing.some(
+    (question) => question.kind === "theme-provider-choice",
+  );
+  if (alreadyPresent) {
+    return result;
+  }
+
+  // Prepend so the theme-provider choice is the first thing the agent
+  // resolves; downstream evaluators read open_questions[0] for the leading
+  // ask_user prompt.
+  return {
+    ...result,
+    open_questions: [
+      themeQuestion satisfies CreateThemeProviderQuestion,
+      ...existing,
+    ],
+  };
 }

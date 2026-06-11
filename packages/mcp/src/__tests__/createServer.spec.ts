@@ -169,6 +169,7 @@ describe("createSaltMcpServer", () => {
       "form_field_support",
       "include_starter_code",
       "resolved_entities",
+      "repo_has_theme_provider",
       "view",
       "context_id",
       "root_dir",

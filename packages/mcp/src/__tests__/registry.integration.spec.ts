@@ -16,6 +16,7 @@ import {
   searchSaltDocs,
   validateSaltUsage,
 } from "@salt-ds/semantic-core";
+import { createSaltUi } from "@salt-ds/semantic-core/tools/createSaltUi";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { buildRegistry } from "../build/buildRegistry.js";
@@ -1644,5 +1645,33 @@ describe("registry integration", () => {
     expect(batch.requested_count).toBe(0);
     expect(batch.results).toEqual([]);
     expect(batch.unresolved_names).toEqual([]);
+  });
+
+  it("create_salt_ui emits a SaltProvider vs SaltProviderNext open_question for theme-ambiguous prompts against the bundled registry", async () => {
+    // The freshly-built registry does not yet emit SaltProviderNext as a
+    // first-class component (separate registry-build follow-up). The PR 16
+    // detector reads the live registry, so this integration test uses the
+    // bundled on-disk registry artifact that exposes SaltProviderNext today.
+    const { loadRegistry } = await import("../registry/loadRegistry.js");
+    const bundledRegistry = await loadRegistry();
+
+    const result = createSaltUi(bundledRegistry, {
+      query: "apply the JPM brand theme to my page",
+    });
+    const themeQuestions = (result.open_questions ?? []).filter(
+      (entry) => entry.kind === "theme-provider-choice",
+    );
+    expect(themeQuestions).toHaveLength(1);
+    expect(themeQuestions[0]?.prompt).toMatch(/SaltProviderNext/);
+
+    // When the host signals a declared provider, the question is suppressed.
+    const skipped = createSaltUi(bundledRegistry, {
+      query: "apply the JPM brand theme to my page",
+      repo_has_theme_provider: true,
+    });
+    const skippedThemeQuestions = (skipped.open_questions ?? []).filter(
+      (entry) => entry.kind === "theme-provider-choice",
+    );
+    expect(skippedThemeQuestions).toEqual([]);
   });
 });
