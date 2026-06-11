@@ -8,6 +8,7 @@
     "directory": "packages/ag-grid-theme"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
   "style": "salt-ag-theme.css",
   "files": [
     "/fonts",

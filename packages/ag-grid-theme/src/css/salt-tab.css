@@ -1,0 +1,15 @@
+/* Salt tab layout — carried over from packages/ag-grid-theme/css/parts/ag-menus.css
+   (lines 8-13 and 61-66 in the 2.x source). Loaded via the `saltTabStyle` part
+   so it only ships when the part is registered. In v3 the part loader scopes the
+   selectors via CSS nesting, replacing the 2.x `[class*="ag-theme-salt"]`
+   prefix dance. */
+
+.ag-tabs {
+    padding: var(--salt-spacing-100);
+}
+
+.ag-tab {
+    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+    flex: 1 1 auto;
+}
+
