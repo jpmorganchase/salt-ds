@@ -6715,6 +6715,7 @@ describe("salt cli", () => {
       hooks: {
         PostToolUse: Array<{ type: string; command: string }>;
         SessionStart: Array<{ type: string; command: string }>;
+        Stop: Array<{ type: string; command: string }>;
       };
     };
     expect(manifest.hooks.PostToolUse).toEqual([
@@ -6722,6 +6723,12 @@ describe("salt cli", () => {
     ]);
     expect(manifest.hooks.SessionStart).toEqual([
       { type: "command", command: "npx salt-ds info --hook" },
+    ]);
+    expect(manifest.hooks.Stop).toEqual([
+      {
+        type: "command",
+        command: "npx salt-ds review --verify-attestations",
+      },
     ]);
   });
 
@@ -6739,6 +6746,12 @@ describe("salt cli", () => {
             ],
             SessionStart: [
               { type: "command", command: "npx salt-ds info --hook" },
+            ],
+            Stop: [
+              {
+                type: "command",
+                command: "npx salt-ds review --verify-attestations",
+              },
             ],
           },
         },

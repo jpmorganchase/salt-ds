@@ -324,6 +324,16 @@ export const SALT_AGENT_HOOKS_FILE_RELATIVE_PATH = ".github/hooks/salt.json";
 export const SALT_POST_TOOL_USE_HOOK_COMMAND = "npx salt-ds review --hook";
 /** Salt-managed command emitted into SessionStart. */
 export const SALT_SESSION_START_HOOK_COMMAND = "npx salt-ds info --hook";
+/**
+ * Salt-managed command emitted into Stop. Reads SaltAttestationV1 NDJSON from
+ * stdin and verifies recorded file hashes against the current on-disk state.
+ * Consumers wire stdin to whatever audit store they already operate; Salt does
+ * not pick the store path. See `workflow-examples/consumer-repo/README.md` for
+ * one wiring pattern (a single-file NDJSON default at
+ * `.salt/attestations.ndjson`).
+ */
+export const SALT_STOP_HOOK_COMMAND =
+  "npx salt-ds review --verify-attestations";
 
 interface HookCommandEntry {
   type: "command";
@@ -334,6 +344,7 @@ interface SaltAgentHooksManifest {
   hooks: {
     PostToolUse?: HookCommandEntry[];
     SessionStart?: HookCommandEntry[];
+    Stop?: HookCommandEntry[];
     [event: string]: HookCommandEntry[] | undefined;
   };
 }
@@ -347,6 +358,7 @@ function buildDefaultSaltAgentHooks(): SaltAgentHooksManifest {
       SessionStart: [
         { type: "command", command: SALT_SESSION_START_HOOK_COMMAND },
       ],
+      Stop: [{ type: "command", command: SALT_STOP_HOOK_COMMAND }],
     },
   };
 }
@@ -431,6 +443,12 @@ export function mergeSaltAgentHooksManifest(existing: unknown): {
     changed = true;
   }
   merged.SessionStart = sessionStart.entries;
+
+  const stop = ensureSaltCommand(merged.Stop ?? [], SALT_STOP_HOOK_COMMAND);
+  if (stop.changed || !merged.Stop) {
+    changed = true;
+  }
+  merged.Stop = stop.entries;
 
   return { content: { hooks: merged }, changed };
 }
