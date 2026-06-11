@@ -111,6 +111,7 @@ export function getSaltMcpRuntimeMetadata(
         "migrate_to_salt",
         "upgrade_salt_ui",
         "get_salt_entity",
+        "get_salt_entities",
         "get_salt_examples",
         "discover_salt",
         "validate_salt_review_report",

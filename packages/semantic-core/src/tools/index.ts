@@ -110,6 +110,12 @@ export {
   type SaltEntityType,
 } from "./getSaltEntity.js";
 export {
+  getSaltEntities,
+  type GetSaltEntitiesInput,
+  type GetSaltEntitiesResult,
+  type GetSaltEntitiesRow,
+} from "./getSaltEntities.js";
+export {
   type GetSaltExamplesInput,
   type GetSaltExamplesResult,
   getSaltExamples,

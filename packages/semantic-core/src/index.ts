@@ -530,6 +530,12 @@ export {
   type SaltEntityType,
 } from "./tools/getSaltEntity.js";
 export {
+  getSaltEntities,
+  type GetSaltEntitiesInput,
+  type GetSaltEntitiesResult,
+  type GetSaltEntitiesRow,
+} from "./tools/getSaltEntities.js";
+export {
   createGetSaltEntityContext,
   type GetSaltEntityContext,
   resolveAutoSaltEntity,

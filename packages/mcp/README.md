@@ -50,6 +50,9 @@ Read-only support tools for workflow follow-through:
 - `get_salt_entity`
   - retrieve canonical Salt entity details by name
   - used for `retrieve_entity` actions in `salt_workflow_v1`
+- `get_salt_entities`
+  - batch-resolve several known Salt entity names in one call
+  - prefer over repeated `get_salt_entity` calls when two or more entity names are already known
 - `get_salt_examples`
   - retrieve canonical Salt examples for an entity
   - used for `retrieve_examples` actions in `salt_workflow_v1`

@@ -174,6 +174,7 @@ Support helpers:
 Read-only retrieval support (always safe):
 
 - `get_salt_entity` — retrieve canonical Salt entity details by name
+- `get_salt_entities` — batch-resolve several known Salt entity names in one call (prefer over repeated `get_salt_entity` calls when ≥2 names are known)
 - `get_salt_examples` — retrieve canonical Salt examples for an entity
 - `discover_salt` — broad Salt discovery and routing for exploratory requests
 
@@ -186,7 +187,7 @@ Advanced support tools (optional, for sophisticated hosts):
 
 Rules:
 
-- All thirteen tools are part of the default public MCP surface
+- All fourteen tools are part of the default public MCP surface
 - The four advanced tools are clearly marked as optional/advanced in capability manifest `support_tools`
 - The two persistence tools have `readOnlyHint: false` and `destructiveHint: true` because caller-supplied paths inside `root_dir` may overwrite existing files (see §Annotation Audit below)
 - Report validation and persistence tools do not change workflow contract semantics
@@ -198,7 +199,7 @@ Performed: 2026-06-09. Source: [Tool Annotations as Risk Vocabulary](https://blo
 
 The post defines what each existing hint should drive in a client and gives five evaluation questions: (1) what client behavior does it enable, (2) does it need trust to be useful, (3) could `_meta` handle it instead, (4) does it help reason about combinations, (5) is it a hint or a contract.
 
-The Salt MCP tool surface (13 tools) was audited against the table below.
+The Salt MCP tool surface (14 tools) was audited against the table below.
 
 | Hint | Client behavior the spec wants it to drive |
 |---|---|
@@ -211,7 +212,7 @@ The Salt MCP tool surface (13 tools) was audited against the table below.
 
 | Tool | Before | After | Change |
 |---|---|---|---|
-| `get_salt_project_context`, `discover_salt`, `migrate_to_salt`, `create_salt_ui`, `get_salt_entity`, `get_salt_examples`, `review_salt_ui`, `upgrade_salt_ui`, `validate_salt_review_report`, `resume_salt_review` | readOnly:true / destructive:false / idempotent:true / openWorld:false | unchanged | All ten are pure read-only against the bundled registry and the local repo. `openWorldHint: false` is correct — the only external surface (`siteBaseUrl`) is read-only. |
+| `get_salt_project_context`, `discover_salt`, `migrate_to_salt`, `create_salt_ui`, `get_salt_entity`, `get_salt_entities`, `get_salt_examples`, `review_salt_ui`, `upgrade_salt_ui`, `validate_salt_review_report`, `resume_salt_review` | readOnly:true / destructive:false / idempotent:true / openWorld:false | unchanged | All eleven are pure read-only against the bundled registry and the local repo. `openWorldHint: false` is correct — the only external surface (`siteBaseUrl`) is read-only. |
 | `bootstrap_salt_repo` | readOnly:false / destructive:false / idempotent:true / openWorld:false | unchanged | Writes managed blocks to `AGENTS.md` (or `CLAUDE.md`), `.salt/team.json`, optionally `.salt/stack.json` and a `ui:verify` script. These are additive managed-block edits to known target files, not arbitrary writes. Per the spec definition of `destructiveHint` ("the tool may perform destructive updates"), this is genuinely additive. |
 | `persist_salt_context_pack` | readOnly:false / destructive:**false** / idempotent:true / openWorld:false | `destructive:` **true** | Defaults write inside `.salt/context/`, but `output_dir` and `manifest_path` are caller-overridable. Any existing files at the resolved paths are overwritten. Per spec ("may perform destructive updates"), `destructiveHint: true` is the honest answer. |
 | `persist_salt_generated_artifact` | readOnly:false / destructive:**false** / idempotent:true / openWorld:false | `destructive:` **true** | `artifact_path` is always caller-supplied and may resolve to any file inside `root_dir`. The tool overwrites whatever is there when the release gate passes. The path guard (`resolveWritablePathInsideRoot`) prevents traversal outside `root_dir` but does not constrain the destination. This is exactly the case the post says `destructiveHint: true` exists for. |

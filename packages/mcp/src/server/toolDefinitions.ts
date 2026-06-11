@@ -13,6 +13,7 @@ import {
 import {
   createSaltUi,
   discoverSalt,
+  getSaltEntities,
   getSaltEntity,
   getSaltExamples,
   migrateToSalt,
@@ -1126,6 +1127,31 @@ const GET_SALT_ENTITY_OUTPUT_SCHEMA = z
     ...SUPPORT_SOURCES_SHAPE,
   })
   .passthrough();
+const GET_SALT_ENTITIES_OUTPUT_SCHEMA = z
+  .object({
+    guidance_boundary: GUIDANCE_BOUNDARY_SCHEMA,
+    decision: z.object({
+      status: z.enum(["results", "partial", "not_found", "empty"]),
+      why: z.string(),
+    }),
+    requested_count: z.number().int().min(0),
+    found_count: z.number().int().min(0),
+    not_found_count: z.number().int().min(0),
+    ambiguous_count: z.number().int().min(0),
+    results: z
+      .array(
+        z
+          .object({
+            name: z.string(),
+            result: GET_SALT_ENTITY_OUTPUT_SCHEMA,
+          })
+          .passthrough(),
+      )
+      .min(0),
+    unresolved_names: z.array(z.string()),
+    next_step: z.string().optional(),
+  })
+  .passthrough();
 const GET_SALT_EXAMPLES_OUTPUT_SCHEMA = z
   .object({
     guidance_boundary: UNKNOWN_RECORD_SCHEMA,
@@ -1236,6 +1262,7 @@ const GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA = z
 
 const SUPPORT_TOOL_ORDER = [
   "get_salt_entity",
+  "get_salt_entities",
   "get_salt_examples",
   "discover_salt",
   "validate_salt_review_report",
@@ -1902,6 +1929,53 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     outputSchema: GET_SALT_ENTITY_OUTPUT_SCHEMA,
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: getSaltEntity,
+  }),
+  defineTool<Parameters<typeof getSaltEntities>[1]>({
+    name: "get_salt_entities",
+    description:
+      "Support tool that batch-resolves several known Salt entity names in a single call. Use this when a create, migrate, or review workflow already has two or more specific Salt component, pattern, foundation, token, guide, page, package, icon, or country symbol names to ground. Each name is looked up independently with entity_type auto and returned in the original order, so per-name ambiguity never blocks the rest of the batch. Prefer this over repeated get_salt_entity calls; reserve get_salt_entity for a single specific or near-specific name.",
+    inputSchema: {
+      names: z
+        .array(z.string().min(1))
+        .min(1)
+        .max(25)
+        .describe(
+          "Ordered list of Salt entity names to resolve. Each is looked up with entity_type auto. Duplicates are preserved. Cap is 25 names per call; longer batches must be split.",
+        ),
+      package: z
+        .string()
+        .optional()
+        .describe(
+          "Optional package filter applied to every name in the batch, such as @salt-ds/core or @salt-ds/lab.",
+        ),
+      include: z
+        .array(z.enum(INCLUDE_SECTIONS))
+        .optional()
+        .describe(
+          "Optional extra sections to include on every resolved entity (examples, props, tokens, accessibility, deprecations, changes).",
+        ),
+      include_related: z
+        .boolean()
+        .optional()
+        .describe(
+          "Include nearby related Salt entities for each resolved match.",
+        ),
+      include_starter_code: z
+        .boolean()
+        .optional()
+        .describe(
+          "Include a lightweight starter snippet for each resolved entity that has one.",
+        ),
+      view: z
+        .enum(VIEWS)
+        .optional()
+        .describe(
+          "Use full to include raw lookup and fallback search payloads on every per-name result.",
+        ),
+    },
+    outputSchema: GET_SALT_ENTITIES_OUTPUT_SCHEMA,
+    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
+    execute: getSaltEntities,
   }),
   defineTool<Parameters<typeof getSaltExamples>[1]>({
     name: "get_salt_examples",
