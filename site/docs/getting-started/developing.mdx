@@ -31,7 +31,24 @@ Install all three in one go:
 npm install @salt-ds/core @salt-ds/theme @salt-ds/icons
 ```
 
-If you prefer not to use npm, you can install the packages using [yarn](https://yarnpkg.com/) or other package managers. Salt ships additional packages for specific use cases—such as [`@salt-ds/lab`](#5-optional-play-with-lab-components) for experimental components, plus charting, data grid and date utilities—which you can add as you need them.
+To install with [yarn](https://yarnpkg.com/) or another package manager, run the equivalent command. Salt ships additional packages for specific use cases—including [`@salt-ds/lab`](#5-optional-play-with-lab-components) for experimental components—which you can add as you need them.
+
+<Disclosure
+  id="additional-salt-packages"
+  summary="View all additional Salt packages"
+>
+
+| Package                                                                 | Purpose                                                                                                                                  |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@salt-ds/ag-grid-theme`](../components/ag-grid-theme/usage)           | Salt styling for [AG Grid](https://www.ag-grid.com/) data grids.                                                                         |
+| [`@salt-ds/countries`](../components/country-symbol/usage)              | Country flag symbols used by [Country Symbol](../components/country-symbol).                                                             |
+| [`@salt-ds/date-adapters`](../components/localization-provider/usage)   | Adapters that let date components work with Luxon, Moment, date-fns or Day.js.                                                           |
+| [`@salt-ds/date-components`](../components/date-input/usage)            | Date input, date picker and calendar components.                                                                                         |
+| [`@salt-ds/embla-carousel`](../components/carousel/usage)               | [Carousel](../components/carousel) component built on [Embla](https://www.embla-carousel.com/).                                          |
+| [`@salt-ds/highcharts-theme`](../components/chart/usage)                | Theme and `useChart` hook for [Highcharts](https://www.highcharts.com/), used by [Chart](../components/chart).                           |
+| [`@salt-ds/react-resizable-panels-theme`](../components/splitter/usage) | Salt styling for [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels), used by [Splitter](../components/splitter). |
+
+</Disclosure>
 
 ### 2. Add required web fonts
 
@@ -122,28 +139,25 @@ If you prefer not to use Fontsource or Google Fonts, you can use any other metho
 
 The `@salt-ds/theme` package ships two themes:
 
-- **JPM Brand**—_recommended for all new projects._ Salt’s long-term visual style, aligned with the JPMorgan brand.
+- **JPM Brand**—_recommended for all new projects._ Salt’s long-term visual style, aligned with the J.P. Morgan brand.
 - **Legacy (UITK)**—for applications migrating from UITK that need to preserve the existing visual style.
 
 Additional themes, such as Chase, are distributed as separate packages. See [Themes](../themes) for a full comparison.
 
-Whichever theme you choose, you’ll import the theme CSS and wrap your application in `<SaltProvider>` or `<SaltProviderNext>`.
+Apply themes using the provider components (`<SaltProvider>` or `<SaltProviderNext>`), which also provide context for other settings such as mode and density.
 
 #### Using the JPM Brand theme (recommended)
 
-Make sure you’ve added the **Amplitude** web font (see [step 2](#2-add-required-web-fonts)). In a typical React project, set up the provider in your `src/index.tsx` as follows:
+Set up the **Amplitude** web font first (see [step 2](#2-add-required-web-fonts)). In a typical React project, add the provider to `src/index.tsx` as follows:
 
 ```tsx
-// Import <SaltProviderNext>
 import { SaltProviderNext } from "@salt-ds/core";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-// Import the base theme CSS plus the JPM Brand layer
 import "@salt-ds/theme/index.css";
 import "@salt-ds/theme/css/theme-next.css";
 
-// Wrap your application in a <SaltProviderNext>
 const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");
 const root = ReactDOM.createRoot(container);
@@ -164,18 +178,15 @@ root.render(
   summary="Using the Legacy theme"
 >
 
-Use this provider if you’re migrating from UITK and need to preserve the existing visual style.
+Use this provider when migrating an existing UITK application that needs to preserve its visual style.
 
 ```tsx
-// Import <SaltProvider>
 import { SaltProvider } from "@salt-ds/core";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-// Import theme CSS
 import "@salt-ds/theme/index.css";
 
-// Wrap your application in a <SaltProvider>
 const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");
 const root = ReactDOM.createRoot(container);
@@ -195,7 +206,7 @@ Both `<SaltProvider>` and `<SaltProviderNext>` accept `mode` and `density` props
 - `mode`—`"light"` (default) or `"dark"`. See [Modes](../foundations/modes).
 - `density`—`"high"`, `"medium"` (default), `"low"`, `"touch"` or `"mobile"`. See [Density](../foundations/density).
 
-Add these props to your provider, alongside any theme props from earlier:
+Add these props to the provider, alongside any theme props from earlier:
 
 ```tsx
 <SaltProviderNext mode="dark" density="low">
@@ -207,7 +218,7 @@ Refer to the [SaltProvider](../components/salt-provider) docs for the full API.
 
 ### 4. Import components
 
-Now that you’re ready to use our UI components, you can import them from the `@salt-ds/core` package and use them in your JSX code.
+To use a Salt UI component, import it from the `@salt-ds/core` package and reference it in your JSX.
 
 For example:
 
@@ -226,13 +237,13 @@ function App() {
 export default App;
 ```
 
-Head over to our available [components](../components) to view their respective APIs.
+Browse the available [components](../components) for their full APIs.
 
 ### 5. (Optional) Play with lab components
 
-Our `@salt-ds/lab` package is where we introduce new components that are in the initial stages of development. Once they’re stable, we move them over to the core package.
+The `@salt-ds/lab` package contains new components that are in the early stages of development. Once they’re stable, they’re promoted to the core package.
 
-Because it’s an unstable environment that may cause major breaking changes, we don’t recommend using lab components in production applications. However, early adopters are welcome to use and experiment with them.
+Because the package is unstable and may introduce major breaking changes, lab components aren’t recommended for production. Early adopters are welcome to experiment with them.
 
 To try them out, install the package:
 
@@ -241,7 +252,6 @@ npm install @salt-ds/lab
 ```
 
 <Callout title="Need support?">
-  We’re keen to hear your feedback, bug reports and feature requests, so please
-  don’t hesitate to [raise new issues or comment on existing
-  ones](../support-and-contributions).
+  Feedback, bug reports and feature requests are all welcome—[raise a new
+  issue or comment on an existing one](../support-and-contributions).
 </Callout>
