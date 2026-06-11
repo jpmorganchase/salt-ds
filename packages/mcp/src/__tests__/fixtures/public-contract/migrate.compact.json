@@ -13,6 +13,7 @@
     "exact_request_safe": false,
     "blocking_reasons": [
       "Does the repo already have an approved shell or navigation wrapper for this app-level region, or a page layout that should take precedence?",
+      "Migration has unresolved decision gates that must be confirmed before implementation is ready.",
       "blocking questions remain"
     ]
   },
