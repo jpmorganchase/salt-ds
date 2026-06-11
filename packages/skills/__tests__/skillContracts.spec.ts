@@ -184,6 +184,11 @@ describe("Salt skill contracts", () => {
     expect(core).toContain(
       "Do not edit Salt UI for `create`, `migrate`, or `upgrade` implementation work unless the current workflow contract has all of these fields:",
     );
+    // Plain-text file-path fallback guidance (root cause #8 / F9): the model
+    // must repeat file paths as plain strings so hosts that strip inline file
+    // widgets still expose the path to the user.
+    expect(core).toMatch(/plain-text path/i);
+    expect(core).toContain(".salt/team.json");
   });
 
   it("keeps downstream skill surfaces aligned with workflow contract", async () => {
