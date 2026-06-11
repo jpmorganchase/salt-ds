@@ -8,10 +8,10 @@ import {
   type HookInput,
   HookInputError,
   readHookInput,
-} from "../../../lib/hookIO.js";
-import { analyzeLintTargets } from "../../../lib/lintAnalysis.js";
-import { readRegistryLoadOptionsFromFlags } from "../../../lib/registry.js";
-import type { LintCommandResult, RequiredCliIo } from "../../../types.js";
+} from "../../../../lib/hookIO.js";
+import { analyzeLintTargets } from "../../../../lib/lintAnalysis.js";
+import { readRegistryLoadOptionsFromFlags } from "../../../../lib/registry.js";
+import type { LintCommandResult, RequiredCliIo } from "../../../../types.js";
 
 export const HOOK_LINTABLE_EXTENSIONS = new Set([
   ".js",

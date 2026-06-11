@@ -185,6 +185,10 @@ import type {
 } from "../shared/types.js";
 
 import { runReviewHookCommand } from "./hook/index.js";
+import {
+  applyRequireHumanReviewPolicyFindings,
+  readReviewHookPolicyRules,
+} from "./hook/index.js";
 import { formatReviewReport } from "./format.js";
 
 export async function runReviewCommand(
@@ -208,6 +212,8 @@ export async function runReviewCommand(
   return runReviewLikeCommand(positionals, flags, io);
 }
 
+async function runReviewLikeCommand(
+  positionals: string[],
   flags: Record<string, string>,
   io: RequiredCliIo,
 ): Promise<number> {

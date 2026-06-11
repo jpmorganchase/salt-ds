@@ -8,12 +8,10 @@ import {
   runGetSaltEntityCommand,
   runGetSaltExamplesCommand,
 } from "./commands/support.js";
-import {
-  runCreateCommand,
-  runMigrateCommand,
-  runReviewCommand,
-  runUpgradeCommand,
-} from "./commands/workflow.js";
+import { runCreateCommand } from "./commands/workflow/create/index.js";
+import { runMigrateCommand } from "./commands/workflow/migrate/index.js";
+import { runReviewCommand } from "./commands/workflow/review/index.js";
+import { runUpgradeCommand } from "./commands/workflow/upgrade/index.js";
 import { parseArgs, printHelp } from "./lib/args.js";
 import type { CliIo, RequiredCliIo } from "./types.js";
 
@@ -27,6 +25,7 @@ function normalizeIo(io: CliIo): RequiredCliIo {
     cwd: io.cwd ?? process.cwd(),
     writeStdout,
     writeStderr,
+    stdin: io.stdin,
   };
 }
 

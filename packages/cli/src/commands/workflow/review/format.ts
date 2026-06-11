@@ -184,6 +184,7 @@ import type {
   WorkflowReadiness,
 } from "../shared/types.js";
 
+export function formatReviewReport(result: ReviewWorkflowResult): string {
   const lines = [
     "Salt DS Review",
     `Root: ${result.artifacts.context.rootDir}`,

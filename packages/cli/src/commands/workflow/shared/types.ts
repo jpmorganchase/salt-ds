@@ -24,14 +24,14 @@ import type {
   UpgradeRuleId,
   WorkflowIssueClass,
 } from "@salt-ds/semantic-core/tools/workflowRuleIds";
-import type { MigrationVerificationSummary } from "../../lib/migrationVerification.js";
+import type { MigrationVerificationSummary } from "../../../lib/migrationVerification.js";
 import type {
   WorkflowProjectConventionsCheckSummary,
   WorkflowProjectConventionsSummary,
   WorkflowProjectPolicySummary,
-} from "../../lib/projectConventionsWorkflow.js";
-import type { ReviewFixCandidatesResult } from "../../lib/reviewFixCandidates.js";
-import type { LintCommandResult, SaltInfoResult } from "../../types.js";
+} from "../../../lib/projectConventionsWorkflow.js";
+import type { ReviewFixCandidatesResult } from "../../../lib/reviewFixCandidates.js";
+import type { LintCommandResult, SaltInfoResult } from "../../../types.js";
 
 export type RuntimeInspectResult = Awaited<ReturnType<typeof inspectUrl>>;
 
@@ -176,6 +176,134 @@ export interface MigrateWorkflowResult {
     confidence: WorkflowConfidence;
     readiness: WorkflowReadiness;
     contextRequirement: WorkflowContextRequirement;
+    projectConventionsCheck: WorkflowProjectConventionsCheckSummary | null;
+    provenance: WorkflowProvenance;
+  };
+  result: {
+    translation: PublicTranslateResult;
+    migrationScope: {
+      questions: string[];
+      preserveFocus: string[];
+      allowSaltChanges: string[];
+      confirmationTriggers: string[];
+      currentExperienceCaptured: boolean;
+      runtimeRecommended: boolean;
+    };
+    summary: {
+      translationCount: number;
+      manualReviews: number;
+      confirmationRequired: number;
+      runtimeMode: string | null;
+      starterValidationStatus: "clean" | "needs_attention" | "not_run";
+      nextStep: string;
+    };
+  };
+  artifacts: {
+    context: SaltInfoResult;
+    starterValidation: WorkflowStarterValidation | null;
+    projectPolicy: WorkflowProjectPolicySummary | null;
+    ruleIds: MigrationRuleId[];
+    visualEvidence: {
+      contract: {
+        role: "supporting-evidence";
+        notCanonicalSourceOfTruth: true;
+        supportedInputs: Array<
+          | "structured-outline"
+          | "current-ui-capture"
+          | "mockup-image"
+          | "screenshot-file"
+          | "image-url"
+        >;
+        interpretationOwner: "agent-or-adapter";
+        normalizationRequired: true;
+        normalizationContract: "migrate_visual_evidence_v1";
+        structuredOutputs: Array<
+          | "landmarks"
+          | "action-hierarchy"
+          | "layout-signals"
+          | "familiarity-anchors"
+          | "confidence-impact"
+        >;
+      };
+      interpretationOwner: "agent-or-adapter";
+      inputs: {
+        structuredOutline: {
+          provided: boolean;
+          path: string | null;
+          regions: number;
+          actions: number;
+          states: number;
+          notes: number;
+        };
+        currentUiCapture: {
+          requested: boolean;
+          url: string | null;
+          mode: string | null;
+          currentExperienceCaptured: boolean;
+          screenshotArtifacts: number;
+        };
+        mockups: Array<{
+          sourceType: "file" | "url";
+          source: string;
+          label: string | null;
+          confidence: "low" | "medium" | "high";
+          regions: number;
+          actions: number;
+          states: number;
+          notes: number;
+          adapterNotes: string[];
+        }>;
+        screenshots: Array<{
+          sourceType: "file" | "url";
+          source: string;
+          label: string | null;
+          confidence: "low" | "medium" | "high";
+          regions: number;
+          actions: number;
+          states: number;
+          notes: number;
+          adapterNotes: string[];
+        }>;
+      };
+      derivedOutline: {
+        available: boolean;
+        regions: number;
+        actions: number;
+        states: number;
+        notes: number;
+      };
+      confidenceImpact: {
+        level: "none" | "supporting" | "stronger-scoping";
+        reasons: string[];
+        changedScoping: boolean;
+        changedConfidence: boolean;
+      };
+      ambiguities: string[];
+    };
+    postMigrationVerification: {
+      sourceChecks: string[];
+      runtimeChecks: string[];
+      preserveChecks: string[];
+      confirmationChecks: string[];
+      suggestedWorkflow: "review";
+      suggestedCommand: string;
+    };
+    workflowFollowupReport: SaltWorkflowFollowupReport;
+    runtimeEvidence: {
+      requested: boolean;
+      url: string | null;
+      result: RuntimeInspectResult | null;
+      currentExperience: {
+        pageTitle: string;
+        landmarks: string[];
+        interactionAnchors: string[];
+        structure: string[];
+        layoutSignals: string[];
+      } | null;
+    };
+    notes: string[];
+  };
+}
 
 export interface UpgradeWorkflowResult {
   workflow: {
