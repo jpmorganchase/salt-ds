@@ -20,8 +20,264 @@ import {
   writeJsonFile,
 } from "../lib/common.js";
 import { inspectGeneratedContext } from "../lib/generatedContext.js";
-import { resolveSemanticRegistry } from "../lib/registry.js";
+import { resolveSemanticRegistry, readRegistryLoadOptionsFromFlags } from "../lib/registry.js";
 import type { RequiredCliIo } from "../types.js";
+
+// --- check-install helpers ---
+
+const PLAYWRIGHT_PACKAGE_NAMES = new Set([
+  "playwright",
+  "playwright-core",
+  "@playwright/test",
+]);
+
+const BROWSER_MODE_PATTERNS = ["--mode browser", "--mode auto"];
+
+interface PackageJsonDeps {
+  dependencies?: Record<string, string>;
+}
+
+async function tryReadPackageJsonDeps(
+  pkgPath: string,
+): Promise<PackageJsonDeps | null> {
+  try {
+    const content = await fs.readFile(pkgPath, "utf8");
+    return JSON.parse(content) as PackageJsonDeps;
+  } catch {
+    return null;
+  }
+}
+
+function resolveNodeModulesPath(
+  nodeModulesDir: string,
+  pkgName: string,
+): string {
+  // Handles both scoped (@scope/name) and unscoped (name) packages.
+  const parts = pkgName.startsWith("@")
+    ? pkgName.split("/").slice(0, 2)
+    : [pkgName];
+  return path.join(nodeModulesDir, ...parts, "package.json");
+}
+
+interface PlaywrightSearchResult {
+  found: boolean;
+  foundInPackage: string | null;
+  viaPackage: string | null;
+}
+
+/**
+ * BFS-walk the transitive dependency tree of `startPackage` in `rootDir/node_modules`
+ * to detect whether any playwright package is reachable.
+ */
+async function findPlaywrightInTransitiveDeps(
+  rootDir: string,
+  startPackage: string,
+  maxDepth = 6,
+): Promise<PlaywrightSearchResult> {
+  const nodeModulesDir = path.join(rootDir, "node_modules");
+  const visited = new Set<string>();
+  const queue: Array<{ name: string; depth: number }> = [
+    { name: startPackage, depth: 0 },
+  ];
+
+  while (queue.length > 0) {
+    const item = queue.shift()!;
+    if (visited.has(item.name) || item.depth > maxDepth) continue;
+    visited.add(item.name);
+
+    const pkgJsonPath = resolveNodeModulesPath(nodeModulesDir, item.name);
+    const pkg = await tryReadPackageJsonDeps(pkgJsonPath);
+    if (!pkg) continue;
+
+    const deps = Object.keys(pkg.dependencies ?? {});
+    for (const depName of deps) {
+      if (PLAYWRIGHT_PACKAGE_NAMES.has(depName)) {
+        return {
+          found: true,
+          foundInPackage: item.name,
+          viaPackage: depName,
+        };
+      }
+      if (!visited.has(depName)) {
+        queue.push({ name: depName, depth: item.depth + 1 });
+      }
+    }
+  }
+
+  return { found: false, foundInPackage: null, viaPackage: null };
+}
+
+async function scanFileContentForBrowserMode(
+  filePath: string,
+): Promise<boolean> {
+  try {
+    const content = await fs.readFile(filePath, "utf8");
+    return BROWSER_MODE_PATTERNS.some((p) => content.includes(p));
+  } catch {
+    return false;
+  }
+}
+
+async function walkDirForFiles(
+  dir: string,
+  predicate: (name: string) => boolean,
+  skipDir: (name: string) => boolean,
+  maxDepth: number,
+): Promise<string[]> {
+  const results: string[] = [];
+
+  async function walk(currentDir: string, depth: number): Promise<void> {
+    if (depth > maxDepth) return;
+    let entries: Awaited<ReturnType<typeof fs.readdir>>;
+    try {
+      entries = await fs.readdir(currentDir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const fullPath = path.join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        if (!skipDir(entry.name)) {
+          await walk(fullPath, depth + 1);
+        }
+      } else if (predicate(entry.name)) {
+        results.push(fullPath);
+      }
+    }
+  }
+
+  await walk(dir, 0);
+  return results;
+}
+
+/**
+ * Scan the repo for `--mode browser` or `--mode auto` usage in:
+ * - package.json scripts (recursive, excluding node_modules)
+ * - .github/**\/*.yml and *.yaml (CI files)
+ * - AGENTS.md files (root and .github/)
+ */
+async function scanForBrowserModeUsage(rootDir: string): Promise<string[]> {
+  const found: string[] = [];
+
+  // 1. package.json scripts (recursive, skip node_modules and hidden dirs)
+  const pkgJsonFiles = await walkDirForFiles(
+    rootDir,
+    (name) => name === "package.json",
+    (name) => name === "node_modules" || name.startsWith("."),
+    5,
+  );
+  for (const pkgFile of pkgJsonFiles) {
+    try {
+      const content = await fs.readFile(pkgFile, "utf8");
+      const pkg = JSON.parse(content) as {
+        scripts?: Record<string, string>;
+      };
+      if (pkg.scripts) {
+        const hasMatch = Object.values(pkg.scripts).some((script) =>
+          BROWSER_MODE_PATTERNS.some((p) => script.includes(p)),
+        );
+        if (hasMatch) found.push(pkgFile);
+      }
+    } catch {
+      // skip unreadable files
+    }
+  }
+
+  // 2. CI files under .github/
+  const githubDir = path.join(rootDir, ".github");
+  const ciFiles = await walkDirForFiles(
+    githubDir,
+    (name) => name.endsWith(".yml") || name.endsWith(".yaml"),
+    () => false,
+    4,
+  );
+  for (const ciFile of ciFiles) {
+    if (await scanFileContentForBrowserMode(ciFile)) {
+      found.push(ciFile);
+    }
+  }
+
+  // 3. AGENTS.md files (root and .github/)
+  const agentFiles = [
+    path.join(rootDir, "AGENTS.md"),
+    path.join(rootDir, ".github", "AGENTS.md"),
+    path.join(rootDir, ".github", "copilot-instructions.md"),
+  ];
+  for (const agentFile of agentFiles) {
+    if (await scanFileContentForBrowserMode(agentFile)) {
+      found.push(agentFile);
+    }
+  }
+
+  return found;
+}
+
+/**
+ * Run the --check-install diagnostic:
+ * 1. Walk @salt-ds/cli and @salt-ds/mcp transitive deps for playwright.
+ * 2. If found, scan repo for browser-mode usage.
+ * 3. Emit warn if playwright is present but unused in browser mode.
+ */
+async function runCheckInstallChecks(
+  rootDir: string,
+): Promise<DoctorCheck[]> {
+  const [cliResult, mcpResult] = await Promise.all([
+    findPlaywrightInTransitiveDeps(rootDir, "@salt-ds/cli"),
+    findPlaywrightInTransitiveDeps(rootDir, "@salt-ds/mcp"),
+  ]);
+
+  const playwrightFound = cliResult.found || mcpResult.found;
+
+  if (!playwrightFound) {
+    return [
+      {
+        id: "check-install-playwright-absent",
+        status: "pass",
+        summary:
+          "playwright is not a transitive dependency of @salt-ds/cli or @salt-ds/mcp",
+      },
+    ];
+  }
+
+  const origins = [
+    cliResult.found
+      ? `@salt-ds/cli → ${cliResult.foundInPackage} (${cliResult.viaPackage})`
+      : null,
+    mcpResult.found
+      ? `@salt-ds/mcp → ${mcpResult.foundInPackage} (${mcpResult.viaPackage})`
+      : null,
+  ]
+    .filter(Boolean)
+    .join("; ");
+
+  const browserModeFiles = await scanForBrowserModeUsage(rootDir);
+
+  if (browserModeFiles.length === 0) {
+    return [
+      {
+        id: "check-install-playwright-unused",
+        status: "warn",
+        summary:
+          "playwright is a transitive dependency but no --mode browser or --mode auto usage was detected",
+        details: [
+          `Origin: ${origins}.`,
+          "Playwright adds ~250 MB to cold installs.",
+          "Switch to --mode fetched-html, or remove runtime-inspector-browser once task 0.1 (Playwright split) lands.",
+        ].join(" "),
+      },
+    ];
+  }
+
+  return [
+    {
+      id: "check-install-playwright-used",
+      status: "pass",
+      summary:
+        "playwright is a transitive dependency and browser-mode usage was detected",
+      details: `Origin: ${origins}. Used in: ${browserModeFiles.map((f) => path.relative(rootDir, f)).join(", ")}.`,
+    },
+  ];
+}
 
 type DoctorCommandResult = Awaited<ReturnType<typeof runDoctor>> & {
   generatedContext: SaltGeneratedContextHealth;
@@ -422,6 +678,8 @@ export async function runDoctorCommand(
     resolvedRegistry = await resolveSemanticRegistry(
       rootDir,
       flags["registry-dir"],
+
+      readRegistryLoadOptionsFromFlags(flags),
     );
   } catch {
     resolvedRegistry = null;
@@ -463,12 +721,17 @@ export async function runDoctorCommand(
           generated_context: generatedContext,
         })
       : null;
+  const checkInstallChecks =
+    flags["check-install"] === "true"
+      ? await runCheckInstallChecks(result.rootDir)
+      : [];
+
   const resultWithGeneratedContext: DoctorCommandResult = {
     ...result,
     generatedContext,
     aiSetup,
     aiEvidenceClosure,
-    checks: [...result.checks, generatedContextCheck],
+    checks: [...result.checks, generatedContextCheck, ...checkInstallChecks],
     artifacts: [...result.artifacts, ...generatedContextBundleArtifacts],
   };
   if (supportBundleDir) {
