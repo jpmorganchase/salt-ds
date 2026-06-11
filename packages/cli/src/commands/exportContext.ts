@@ -44,7 +44,7 @@ import {
 } from "@salt-ds/semantic-core";
 import { pathExists, writeJsonFile } from "../lib/common.js";
 import { inspectGeneratedContext } from "../lib/generatedContext.js";
-import { resolveSemanticRegistry } from "../lib/registry.js";
+import { resolveSemanticRegistry, readRegistryLoadOptionsFromFlags } from "../lib/registry.js";
 import { getSaltCliRuntimeMetadata } from "../lib/runtimeMetadata.js";
 import type { RequiredCliIo } from "../types.js";
 
@@ -1006,6 +1006,8 @@ export async function runExportContextCommand(
     const { registry } = await resolveSemanticRegistry(
       rootDir,
       flags["registry-dir"],
+
+      readRegistryLoadOptionsFromFlags(flags),
     );
 
     if (releaseGateRequested && releaseGatePath) {

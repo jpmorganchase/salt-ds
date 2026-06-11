@@ -3,7 +3,7 @@ import { discoverSalt } from "@salt-ds/semantic-core/tools/discoverSalt";
 import { getSaltEntity } from "@salt-ds/semantic-core/tools/getSaltEntity";
 import { getSaltExamples } from "@salt-ds/semantic-core/tools/getSaltExamples";
 import { writeJsonFile } from "../lib/common.js";
-import { resolveSemanticRegistry } from "../lib/registry.js";
+import { resolveSemanticRegistry, readRegistryLoadOptionsFromFlags } from "../lib/registry.js";
 import type { RequiredCliIo } from "../types.js";
 
 function readBooleanFlag(value: string | undefined): boolean | undefined {
@@ -153,6 +153,8 @@ export async function runGetSaltEntityCommand(
     const { registry } = await resolveSemanticRegistry(
       io.cwd,
       flags["registry-dir"],
+
+      readRegistryLoadOptionsFromFlags(flags),
     );
     const payload = getSaltEntity(registry, {
       entity_type: flags["entity-type"] as Parameters<
@@ -200,6 +202,8 @@ export async function runGetSaltExamplesCommand(
     const { registry } = await resolveSemanticRegistry(
       io.cwd,
       flags["registry-dir"],
+
+      readRegistryLoadOptionsFromFlags(flags),
     );
     const payload = getSaltExamples(registry, {
       target_type: flags["target-type"] as Parameters<
@@ -238,6 +242,8 @@ export async function runDiscoverSaltCommand(
     const { registry } = await resolveSemanticRegistry(
       io.cwd,
       flags["registry-dir"],
+
+      readRegistryLoadOptionsFromFlags(flags),
     );
     const payload = discoverSalt(registry, {
       query,

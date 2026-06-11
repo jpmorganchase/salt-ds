@@ -7,7 +7,14 @@ import {
   writeBaseArtifacts,
 } from "./registryTestUtils.js";
 
-describe("loadRegistry", () => {
+// loadRegistry is lazy by default after Phase 0 task 0.2: per-artifact
+// validation fires on first property touch, not during the loadRegistry
+// call itself. These two tests assert the eager-validation contract via
+// `prefetch: true`, which is the option hosts choose when they want a
+// single bounded warm-up cost and want every consistency error surfaced
+// at load time. The lazy/property-touch validation path is covered by
+// packages/semantic-core/src/__tests__/lazyRegistry.spec.ts.
+describe("loadRegistry (prefetch mode — eager validation)", () => {
   it("fails when an artifact has an invalid array field", async () => {
     await withRegistryDir(
       async (registryDir) => {
@@ -20,9 +27,9 @@ describe("loadRegistry", () => {
         });
       },
       async (registryDir) => {
-        await expect(loadRegistry({ registryDir })).rejects.toThrow(
-          "components.json",
-        );
+        await expect(
+          loadRegistry({ registryDir, prefetch: true }),
+        ).rejects.toThrow("components.json");
       },
     );
   });
@@ -39,9 +46,9 @@ describe("loadRegistry", () => {
         });
       },
       async (registryDir) => {
-        await expect(loadRegistry({ registryDir })).rejects.toThrow(
-          /version mismatch/i,
-        );
+        await expect(
+          loadRegistry({ registryDir, prefetch: true }),
+        ).rejects.toThrow(/version mismatch/i);
       },
     );
   });

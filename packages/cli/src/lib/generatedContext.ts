@@ -485,17 +485,24 @@ export async function inspectGeneratedContext(
     manifestPathInput ??
     path.join(rootDir, ".salt", "context", "manifest.json");
   const manifestPathForOutput = toPosix(manifestPath) ?? manifestPath;
-  const artifactRegistry = registry
-    ? toSaltGeneratedArtifactRegistry(registry)
-    : null;
+
+  // Phase 0 task 0.2: defer the registry fingerprint until we actually
+  // have a manifest to validate. `toSaltGeneratedArtifactRegistry` SHA-256s
+  // every registry array, which would otherwise force the lazy loader to
+  // pull all ~24 MB of artifacts off disk during `salt-ds info` on repos
+  // with no context manifest (the common case).
+  const computeArtifactRegistry = () =>
+    registry ? toSaltGeneratedArtifactRegistry(registry) : null;
 
   if (!(await pathExists(manifestPath))) {
     return buildGeneratedContextManifestHealth({
       manifest_path: manifestPathForOutput,
       manifest: null,
-      registry: artifactRegistry,
+      registry: null,
     });
   }
+
+  const artifactRegistry = computeArtifactRegistry();
 
   try {
     const manifest = await readContextManifest(manifestPath);

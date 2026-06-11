@@ -166,10 +166,42 @@ export function setSerializedPageSearchIndex(
   }
 }
 
+/**
+ * Deferred-loader registry for the serialized page-search index, used by
+ * the lazy registry (Phase 0 task 0.2). When a consumer calls
+ * `getSerializedPageSearchIndex(registry)` and the WeakMap is empty, we
+ * invoke the registered loader to populate it on demand. This keeps
+ * page-search-index.json (~1.9 MB) off the hot `salt-ds info` path.
+ */
+const PAGE_SEARCH_INDEX_LAZY_LOADERS = new WeakMap<
+  SaltRegistry,
+  () => SerializedPageSearchIndex | null
+>();
+
+export function registerSerializedPageSearchIndexLoader(
+  registry: SaltRegistry,
+  loader: () => SerializedPageSearchIndex | null,
+): void {
+  PAGE_SEARCH_INDEX_LAZY_LOADERS.set(registry, loader);
+}
+
 export function getSerializedPageSearchIndex(
   registry: SaltRegistry,
 ): SerializedPageSearchIndex | null {
-  return SERIALIZED_PAGE_SEARCH_INDEX_CACHE.get(registry) ?? null;
+  const cached = SERIALIZED_PAGE_SEARCH_INDEX_CACHE.get(registry);
+  if (cached !== undefined) {
+    return cached;
+  }
+  const loader = PAGE_SEARCH_INDEX_LAZY_LOADERS.get(registry);
+  if (!loader) {
+    return null;
+  }
+  const value = loader();
+  setSerializedPageSearchIndex(registry, value);
+  // The loader has fired; drop it so we don't keep reading on subsequent
+  // calls if the consumer explicitly cleared the WeakMap.
+  PAGE_SEARCH_INDEX_LAZY_LOADERS.delete(registry);
+  return value;
 }
 
 export function getCachedPageSearchIndex(
