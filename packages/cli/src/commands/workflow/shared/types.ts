@@ -8,10 +8,9 @@ import type { MigrateToSaltResult } from "@salt-ds/semantic-core/tools/migrateTo
 import type { ReviewExpectedTargets } from "@salt-ds/semantic-core/tools/reviewSaltUi";
 import type { UpgradeSaltUiResult } from "@salt-ds/semantic-core/tools/upgradeSaltUi";
 import type {
-  CreateSaltUiWorkflowContract,
-  WorkflowConfidence as CoreWorkflowConfidence,
   WorkflowContextRequirement as CoreWorkflowContextRequirement,
   WorkflowReadiness as CoreWorkflowReadiness,
+  CreateSaltUiWorkflowContract,
   WorkflowCreateImplementationGate,
   WorkflowProvenance,
   WorkflowStarterValidation,

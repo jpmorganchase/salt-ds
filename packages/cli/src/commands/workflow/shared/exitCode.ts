@@ -1,4 +1,7 @@
-import type { PublicContract, PublicWorkflowStatus } from "@salt-ds/semantic-core/tools/publicContract";
+import type {
+  PublicContract,
+  PublicWorkflowStatus,
+} from "@salt-ds/semantic-core/tools/publicContract";
 import type { RequiredCliIo } from "../../../types.js";
 
 export type WorkflowExitCode = 0 | 10 | 20 | 30;
@@ -13,7 +16,6 @@ export function normalizeVersion(
   const match = rawVersion.match(/\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?/);
   return match?.[0] ?? null;
 }
-
 
 export function workflowStatusToExitCode(
   workflowStatus: PublicWorkflowStatus,
@@ -30,11 +32,15 @@ export function workflowStatusToExitCode(
   }
 }
 
-export function getWorkflowExitCode(contract: PublicContract): WorkflowExitCode {
+export function getWorkflowExitCode(
+  contract: PublicContract,
+): WorkflowExitCode {
   return workflowStatusToExitCode(contract.status);
 }
 
-export function shouldEmitCompactWorkflowJson(flags: Record<string, string>): boolean {
+export function shouldEmitCompactWorkflowJson(
+  flags: Record<string, string>,
+): boolean {
   return flags.json === "true" && flags.full !== "true";
 }
 

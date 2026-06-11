@@ -27,4 +27,3 @@ export function buildReviewNotes(
 
   return Array.from(new Set(notes));
 }
-
