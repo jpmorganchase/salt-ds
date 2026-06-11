@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { inspectUrl } from "@salt-ds/runtime-inspector-core";
+import { describeMigrateVisualEvidence } from "./visualEvidence.js";
 import {
   buildSaltReviewReport,
   buildSaltWorkflowFollowupReport,

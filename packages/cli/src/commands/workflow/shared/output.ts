@@ -1,3 +1,4 @@
+import fs from "node:fs/promises";
 import path from "node:path";
 import {
   attachPublicContractDetails,
@@ -5,8 +6,8 @@ import {
 } from "@salt-ds/semantic-core/tools/publicContract";
 import { writeJsonFile } from "../../../lib/common.js";
 import { resolveSemanticRegistry } from "../../../lib/semanticRuntime.js";
-import type { SaltReviewReportValidationResult } from "@salt-ds/semantic-core/tools/saltReviewReport";
-import { validateSaltReviewReportFile } from "@salt-ds/semantic-core/tools/saltReviewReport";
+import type { SaltReviewReportValidationResult } from "@salt-ds/semantic-core";
+import { validateSaltReviewReport } from "@salt-ds/semantic-core";
 import type { RequiredCliIo } from "../../../types.js";
 import { shouldEmitCompactWorkflowJson } from "./exitCode.js";
 import type {
