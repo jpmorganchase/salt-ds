@@ -8,6 +8,9 @@ import {
   Text,
   ToggleButton,
   ToggleButtonGroup,
+  Toolbar,
+  ToolbarContent,
+  Tooltray,
 } from "@salt-ds/core";
 import {
   ExportIcon,
@@ -17,7 +20,6 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { userEvent, within } from "storybook/test";
@@ -25,13 +27,13 @@ import { userEvent, within } from "storybook/test";
 import "docs/story.css";
 
 export default {
-  title: "Lab/Toolbar Next/QA",
-  component: ToolbarNext,
+  title: "Core/Toolbar/QA",
+  component: Toolbar,
   subcomponents: {
-    ToolbarContentNext,
-    TooltrayNext,
+    ToolbarContent,
+    Tooltray,
   },
-} as Meta<typeof ToolbarNext>;
+} as Meta<typeof Toolbar>;
 
 const options = ["Option A", "Option B", "Option C"];
 const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
@@ -102,76 +104,76 @@ function ViewActions() {
 function BasicToolbar({
   appearance,
   variant,
-}: Pick<React.ComponentProps<typeof ToolbarNext>, "appearance" | "variant">) {
+}: Pick<React.ComponentProps<typeof Toolbar>, "appearance" | "variant">) {
   return (
-    <ToolbarNext
+    <Toolbar
       appearance={appearance}
       variant={variant}
       aria-label={`${variant ?? "transparent"} toolbar`}
     >
-      <TooltrayNext>
+      <Tooltray>
         <SearchInput />
         <OptionsDropdown />
-      </TooltrayNext>
-      <TooltrayNext align="end">
+      </Tooltray>
+      <Tooltray align="end">
         <ViewActions />
-      </TooltrayNext>
-    </ToolbarNext>
+      </Tooltray>
+    </Toolbar>
   );
 }
 
 function CenteredToolbar() {
   return (
-    <ToolbarNext aria-label="Centered toolbar">
-      <ToolbarContentNext position="start">
-        <TooltrayNext>
+    <Toolbar aria-label="Centered toolbar">
+      <ToolbarContent position="start">
+        <Tooltray>
           <SearchInput width={140} />
-        </TooltrayNext>
-      </ToolbarContentNext>
-      <ToolbarContentNext position="center">
-        <TooltrayNext>
+        </Tooltray>
+      </ToolbarContent>
+      <ToolbarContent position="center">
+        <Tooltray>
           <ToggleButtonGroup aria-label="View options" defaultValue="grid">
             <ToggleButton value="grid">Grid</ToggleButton>
             <ToggleButton value="list">List</ToggleButton>
           </ToggleButtonGroup>
-        </TooltrayNext>
-      </ToolbarContentNext>
-      <ToolbarContentNext position="end">
-        <TooltrayNext>
+        </Tooltray>
+      </ToolbarContent>
+      <ToolbarContent position="end">
+        <Tooltray>
           <Switch label="Pinned" />
-        </TooltrayNext>
-      </ToolbarContentNext>
-    </ToolbarNext>
+        </Tooltray>
+      </ToolbarContent>
+    </Toolbar>
   );
 }
 
 function SharedOverflowToolbar() {
   return (
-    <ToolbarNext aria-label="Shared overflow toolbar">
-      <TooltrayNext overflowMode="none">
+    <Toolbar aria-label="Shared overflow toolbar">
+      <Tooltray overflowMode="none">
         <SearchInput width={120} />
-      </TooltrayNext>
-      <TooltrayNext align="end" overflowPriority={6}>
+      </Tooltray>
+      <Tooltray align="end" overflowPriority={6}>
         <Button appearance="transparent" aria-label="Export">
           <ExportIcon aria-hidden />
         </Button>
         <Button appearance="transparent" aria-label="Settings">
           <SettingsIcon aria-hidden />
         </Button>
-      </TooltrayNext>
-    </ToolbarNext>
+      </Tooltray>
+    </Toolbar>
   );
 }
 
 function NamedOverflowToolbar() {
   return (
-    <ToolbarNext aria-label="Named overflow toolbar">
-      <ToolbarContentNext position="start">
-        <TooltrayNext overflowMode="none">
+    <Toolbar aria-label="Named overflow toolbar">
+      <ToolbarContent position="start">
+        <Tooltray overflowMode="none">
           <SearchInput width={120} />
-        </TooltrayNext>
+        </Tooltray>
         <Divider aria-hidden orientation="vertical" variant="secondary" />
-        <TooltrayNext
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="grouped"
@@ -182,10 +184,10 @@ function NamedOverflowToolbar() {
             <FilterIcon aria-hidden />
             Filters
           </Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-      <ToolbarContentNext position="end">
-        <TooltrayNext
+        </Tooltray>
+      </ToolbarContent>
+      <ToolbarContent position="end">
+        <Tooltray
           overflowGroup="Actions"
           overflowLabel="Actions"
           overflowMode="grouped"
@@ -196,9 +198,9 @@ function NamedOverflowToolbar() {
             Export
           </Button>
           <Button appearance="solid">Apply</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-    </ToolbarNext>
+        </Tooltray>
+      </ToolbarContent>
+    </Toolbar>
   );
 }
 

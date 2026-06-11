@@ -17,6 +17,9 @@ import {
   Toggletip,
   ToggletipPanel,
   ToggletipTrigger,
+  Toolbar,
+  ToolbarContent,
+  Tooltray,
 } from "@salt-ds/core";
 import {
   DatePicker,
@@ -35,20 +38,19 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
-  title: "Lab/Toolbar Next",
-  component: ToolbarNext,
+  title: "Core/Toolbar",
+  component: Toolbar,
   parameters: {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarContentNext,
-    TooltrayNext,
+    ToolbarContent,
+    Tooltray,
   },
-} as Meta<typeof ToolbarNext>;
+} as Meta<typeof Toolbar>;
 
 const filterOptions = [
   "Filter: Option A",
@@ -59,10 +61,10 @@ const statusOptions = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
 
 /**
- * Flat align sugar — no explicit `ToolbarContentNext` wrappers.
+ * Flat align sugar — no explicit `ToolbarContent` wrappers.
  *
  * Intended behavior:
- * - `TooltrayNext` children are bucketed into implicit content via their
+ * - `Tooltray` children are bucketed into implicit content via their
  *   `align` prop (`"start"` by default, `"end"` for the actions and search
  *   trays).
  * - The toolbar renders a start content with the dropdown on the left, and an
@@ -71,9 +73,9 @@ const toolbarVariants = ["primary", "secondary", "tertiary"] as const;
  * - The trays use the default shared overflow behavior, so constrained width
  *   collapses content into the generic overflow trigger.
  */
-export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Flat toolbar">
-    <TooltrayNext>
+export const FlatAlignSugar: StoryFn<typeof Toolbar> = () => (
+  <Toolbar aria-label="Flat toolbar">
+    <Tooltray>
       <Dropdown
         aria-label="Filter option"
         bordered
@@ -84,8 +86,8 @@ export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
-    </TooltrayNext>
-    <TooltrayNext align="end">
+    </Tooltray>
+    <Tooltray align="end">
       <Button appearance="transparent" aria-label="Grid view">
         <GridIcon aria-hidden />
       </Button>
@@ -93,26 +95,26 @@ export const FlatAlignSugar: StoryFn<typeof ToolbarNext> = () => (
         <ListIcon aria-hidden />
       </Button>
       <Button appearance="solid">Button</Button>
-    </TooltrayNext>
-    <TooltrayNext align="end">
+    </Tooltray>
+    <Tooltray align="end">
       <Input
         bordered
         startAdornment={<SearchIcon aria-hidden />}
         placeholder="Search"
         style={{ width: 180 }}
       />
-    </TooltrayNext>
-  </ToolbarNext>
+    </Tooltray>
+  </Toolbar>
 );
 FlatAlignSugar.globals = {
   responsive: "wrap",
 };
 
 /**
- * Explicit three-content layout using `ToolbarContentNext`.
+ * Explicit three-content layout using `ToolbarContent`.
  *
  * Intended behavior:
- * - The toolbar uses explicit `ToolbarContentNext` wrappers with `position`
+ * - The toolbar uses explicit `ToolbarContent` wrappers with `position`
  *   set to `"start"`, `"center"`, and `"end"`.
  * - The start content holds descriptive text, the center content holds a
  *   toggle button group, and the end content holds the search input.
@@ -121,33 +123,33 @@ FlatAlignSugar.globals = {
  * - Trays use the default shared overflow behavior, validating that the
  *   content-first authoring model also collapses responsively.
  */
-export const ContentFirst: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Content first toolbar">
-    <ToolbarContentNext position="start">
-      <TooltrayNext>
+export const ContentFirst: StoryFn<typeof Toolbar> = () => (
+  <Toolbar aria-label="Content first toolbar">
+    <ToolbarContent position="start">
+      <Tooltray>
         <Text styleAs="label">Description</Text>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="center">
-      <TooltrayNext>
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="center">
+      <Tooltray>
         <ToggleButtonGroup aria-label="Toggle options">
           <ToggleButton value="toggle-1">Toggle</ToggleButton>
           <ToggleButton value="toggle-2">Toggle</ToggleButton>
           <ToggleButton value="toggle-3">Toggle</ToggleButton>
         </ToggleButtonGroup>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="end">
-      <TooltrayNext>
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray>
         <Input
           bordered
           startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
-      </TooltrayNext>
-    </ToolbarContentNext>
-  </ToolbarNext>
+      </Tooltray>
+    </ToolbarContent>
+  </Toolbar>
 );
 ContentFirst.globals = {
   responsive: "wrap",
@@ -162,23 +164,23 @@ ContentFirst.globals = {
  * - Replacing the end tray with that trigger must not pull the center control
  *   off the toolbar midpoint.
  */
-export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext
+export const CenteredNamedOverflow: StoryFn<typeof Toolbar> = () => (
+  <Toolbar
     aria-label="Centered named overflow toolbar"
     style={{ minWidth: "30vw" }}
   >
-    <ToolbarContentNext position="start">
-      <TooltrayNext overflowMode="none">
+    <ToolbarContent position="start">
+      <Tooltray overflowMode="none">
         <Button style={{ width: 140 }}>Start</Button>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="center">
-      <TooltrayNext overflowMode="none">
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="center">
+      <Tooltray overflowMode="none">
         <Button style={{ width: 180 }}>Center action</Button>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="end">
-      <TooltrayNext
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray
         overflowGroup="Actions"
         overflowLabel="Actions"
         overflowMode="grouped"
@@ -190,9 +192,9 @@ export const CenteredNamedOverflow: StoryFn<typeof ToolbarNext> = () => (
         <Button appearance="transparent" style={{ width: 180 }}>
           End secondary
         </Button>
-      </TooltrayNext>
-    </ToolbarContentNext>
-  </ToolbarNext>
+      </Tooltray>
+    </ToolbarContent>
+  </Toolbar>
 );
 CenteredNamedOverflow.globals = {
   responsive: "wrap",
@@ -211,10 +213,10 @@ CenteredNamedOverflow.globals = {
  * - The trays still use default shared overflow, validating the transparent
  *   treatment with the generic trigger.
  */
-export const Transparent: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext appearance="transparent" aria-label="App header toolbar">
-    <ToolbarContentNext position="start">
-      <TooltrayNext>
+export const Transparent: StoryFn<typeof Toolbar> = () => (
+  <Toolbar appearance="transparent" aria-label="App header toolbar">
+    <ToolbarContent position="start">
+      <Tooltray>
         <Dropdown
           aria-label="Filter option"
           bordered
@@ -225,10 +227,10 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="end">
-      <TooltrayNext>
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray>
         <Button appearance="transparent" aria-label="Grid view">
           <GridIcon aria-hidden />
         </Button>
@@ -236,17 +238,17 @@ export const Transparent: StoryFn<typeof ToolbarNext> = () => (
           <ListIcon aria-hidden />
         </Button>
         <Button appearance="solid">Button</Button>
-      </TooltrayNext>
-      <TooltrayNext>
+      </Tooltray>
+      <Tooltray>
         <Input
           bordered
           startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
-      </TooltrayNext>
-    </ToolbarContentNext>
-  </ToolbarNext>
+      </Tooltray>
+    </ToolbarContent>
+  </Toolbar>
 );
 Transparent.globals = {
   responsive: "wrap",
@@ -261,7 +263,7 @@ Transparent.globals = {
  * - `primary` is the default variant; `secondary` and `tertiary` are available
  *   for embedding the toolbar in lower-emphasis surfaces.
  */
-export const Variants: StoryFn<typeof ToolbarNext> = () => (
+export const Variants: StoryFn<typeof Toolbar> = () => (
   <div
     style={{
       display: "grid",
@@ -277,13 +279,13 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
         }}
       >
         <Text>{variant}</Text>
-        <ToolbarNext
+        <Toolbar
           variant={variant}
           aria-label={`${variant} toolbar`}
           style={{ minWidth: "14vw" }}
         >
-          <ToolbarContentNext position="start">
-            <TooltrayNext>
+          <ToolbarContent position="start">
+            <Tooltray>
               <Dropdown
                 aria-label="Filter option"
                 bordered
@@ -294,23 +296,23 @@ export const Variants: StoryFn<typeof ToolbarNext> = () => (
                   <Option value={option} key={option} />
                 ))}
               </Dropdown>
-            </TooltrayNext>
-          </ToolbarContentNext>
-          <ToolbarContentNext position="end">
-            <TooltrayNext>
+            </Tooltray>
+          </ToolbarContent>
+          <ToolbarContent position="end">
+            <Tooltray>
               <Button appearance="transparent">Export</Button>
               <Button appearance="solid">Button</Button>
-            </TooltrayNext>
-            <TooltrayNext overflowMode="none">
+            </Tooltray>
+            <Tooltray overflowMode="none">
               <Input
                 bordered
                 startAdornment={<SearchIcon aria-hidden />}
                 placeholder="Search"
                 style={{ width: 180 }}
               />
-            </TooltrayNext>
-          </ToolbarContentNext>
-        </ToolbarNext>
+            </Tooltray>
+          </ToolbarContent>
+        </Toolbar>
       </div>
     ))}
   </div>
@@ -323,7 +325,7 @@ Variants.globals = {
  * Mixed form control types inside tooltray groups.
  *
  * Intended behavior:
- * - Demonstrates that `TooltrayNext` can hold arbitrary Salt form
+ * - Demonstrates that `Tooltray` can hold arbitrary Salt form
  *   controls (Input, Dropdown, DatePicker, Switch, Button), not
  *   only buttons.
  * - The start content groups filtering criteria; the end content groups
@@ -331,10 +333,10 @@ Variants.globals = {
  * - The groups use default shared overflow, so non-button controls can collapse
  *   into the generic overflow menu.
  */
-export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Mixed controls toolbar">
-    <ToolbarContentNext position="start">
-      <TooltrayNext>
+export const MixedFormControls: StoryFn<typeof Toolbar> = () => (
+  <Toolbar aria-label="Mixed controls toolbar">
+    <ToolbarContent position="start">
+      <Tooltray>
         <Dropdown
           aria-label="Criteria option"
           bordered
@@ -358,25 +360,25 @@ export const MixedFormControls: StoryFn<typeof ToolbarNext> = () => (
             <DatePickerSingleGridPanel />
           </DatePickerOverlay>
         </DatePicker>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="end">
-      <TooltrayNext>
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray>
         <Switch label="Pinned" />
         <Button appearance="solid" disabled focusableWhenDisabled>
           Run
         </Button>
-      </TooltrayNext>
-      <TooltrayNext>
+      </Tooltray>
+      <Tooltray>
         <Input
           bordered
           startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
-      </TooltrayNext>
-    </ToolbarContentNext>
-  </ToolbarNext>
+      </Tooltray>
+    </ToolbarContent>
+  </Toolbar>
 );
 MixedFormControls.globals = {
   responsive: "wrap",
@@ -395,10 +397,10 @@ MixedFormControls.globals = {
  * - The filter tray uses default shared overflow so the combo box can collapse
  *   into the generic overflow trigger when width is constrained.
  */
-export const MultiselectComboBoxPills: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Toolbar with multiselect combo box">
-    <ToolbarContentNext position="start">
-      <TooltrayNext overflowPriority={4}>
+export const MultiselectComboBoxPills: StoryFn<typeof Toolbar> = () => (
+  <Toolbar aria-label="Toolbar with multiselect combo box">
+    <ToolbarContent position="start">
+      <Tooltray overflowPriority={4}>
         <ComboBox
           aria-label="Status filter"
           bordered
@@ -411,10 +413,10 @@ export const MultiselectComboBoxPills: StoryFn<typeof ToolbarNext> = () => (
             <Option key={option} value={option} />
           ))}
         </ComboBox>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="end">
-      <TooltrayNext align="end" overflowPriority={6}>
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray align="end" overflowPriority={6}>
         <Button appearance="transparent">
           <ExportIcon aria-hidden />
           Export
@@ -423,17 +425,17 @@ export const MultiselectComboBoxPills: StoryFn<typeof ToolbarNext> = () => (
           <SettingsIcon aria-hidden />
           Settings
         </Button>
-      </TooltrayNext>
-      <TooltrayNext align="end" overflowMode="none">
+      </Tooltray>
+      <Tooltray align="end" overflowMode="none">
         <Input
           bordered
           startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
-      </TooltrayNext>
-    </ToolbarContentNext>
-  </ToolbarNext>
+      </Tooltray>
+    </ToolbarContent>
+  </Toolbar>
 );
 MultiselectComboBoxPills.globals = {
   responsive: "wrap",
@@ -443,25 +445,25 @@ MultiselectComboBoxPills.globals = {
  * Mixed Salt core controls with independent overflow.
  *
  * Intended behavior:
- * - Demonstrates that `TooltrayNext` can compose Tag, Checkbox,
+ * - Demonstrates that `Tooltray` can compose Tag, Checkbox,
  *   RadioButtonGroup/RadioButton, DatePicker, Toggletip, and Link.
  * - Each control is authored in an independent tray with a distinct overflow
  *   priority, so reducing width collapses them one by one.
  * - The varied control types provide a keyboard navigation surface across
  *   buttons, inputs, toggles, and links.
  */
-export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Toolbar with independent mixed controls">
-    <ToolbarContentNext position="start">
-      <TooltrayNext overflowMode="independent" overflowPriority={1}>
+export const IndependentMixedControls: StoryFn<typeof Toolbar> = () => (
+  <Toolbar aria-label="Toolbar with independent mixed controls">
+    <ToolbarContent position="start">
+      <Tooltray overflowMode="independent" overflowPriority={1}>
         <Tag category={1} variant="primary">
           Draft
         </Tag>
-      </TooltrayNext>
-      <TooltrayNext overflowMode="independent" overflowPriority={2}>
+      </Tooltray>
+      <Tooltray overflowMode="independent" overflowPriority={2}>
         <Checkbox label="Show archived" />
-      </TooltrayNext>
-      <TooltrayNext overflowMode="independent" overflowPriority={3}>
+      </Tooltray>
+      <Tooltray overflowMode="independent" overflowPriority={3}>
         <Text styleAs="label">Due date</Text>
         <DatePicker selectionVariant="single">
           <DatePickerTrigger>
@@ -475,8 +477,8 @@ export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
             <DatePickerSingleGridPanel />
           </DatePickerOverlay>
         </DatePicker>
-      </TooltrayNext>
-      <TooltrayNext overflowMode="independent" overflowPriority={4}>
+      </Tooltray>
+      <Tooltray overflowMode="independent" overflowPriority={4}>
         <RadioButtonGroup
           aria-label="Review mode"
           direction="horizontal"
@@ -485,10 +487,10 @@ export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
           <RadioButton label="Review" value="review" />
           <RadioButton label="Approve" value="approve" />
         </RadioButtonGroup>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="end">
-      <TooltrayNext overflowMode="independent" overflowPriority={5}>
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray overflowMode="independent" overflowPriority={5}>
         <Toggletip placement="bottom">
           <ToggletipTrigger aria-label="Review mode help">
             <HelpCircleIcon aria-hidden />
@@ -500,12 +502,12 @@ export const IndependentMixedControls: StoryFn<typeof ToolbarNext> = () => (
             </Text>
           </ToggletipPanel>
         </Toggletip>
-      </TooltrayNext>
-      <TooltrayNext overflowMode="independent" overflowPriority={6}>
+      </Tooltray>
+      <Tooltray overflowMode="independent" overflowPriority={6}>
         <Link href="#">View audit trail</Link>
-      </TooltrayNext>
-    </ToolbarContentNext>
-  </ToolbarNext>
+      </Tooltray>
+    </ToolbarContent>
+  </Toolbar>
 );
 IndependentMixedControls.globals = {
   responsive: "wrap",
@@ -522,10 +524,10 @@ IndependentMixedControls.globals = {
  * - The groups use default shared overflow, validating the generic trigger
  *   under RTL.
  */
-export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
+export const RightToLeft: StoryFn<typeof Toolbar> = () => (
   <div dir="rtl">
-    <ToolbarNext aria-label="RTL toolbar">
-      <TooltrayNext>
+    <Toolbar aria-label="RTL toolbar">
+      <Tooltray>
         <Button appearance="transparent" aria-label="Grid view">
           <GridIcon aria-hidden />
         </Button>
@@ -533,8 +535,8 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
           <ListIcon aria-hidden />
         </Button>
         <Button appearance="solid">Button</Button>
-      </TooltrayNext>
-      <TooltrayNext align="end">
+      </Tooltray>
+      <Tooltray align="end">
         <Dropdown
           aria-label="Filter option"
           bordered
@@ -551,8 +553,8 @@ export const RightToLeft: StoryFn<typeof ToolbarNext> = () => (
           placeholder="Search"
           style={{ width: 180 }}
         />
-      </TooltrayNext>
-    </ToolbarNext>
+      </Tooltray>
+    </Toolbar>
   </div>
 );
 RightToLeft.globals = {
@@ -579,12 +581,12 @@ RightToLeft.globals = {
  * - Use the Storybook responsive wrapper (wrap/unwrap toggle) to
  *   resize and observe the progressive collapse.
  */
-export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext
+export const DefaultSharedOverflow: StoryFn<typeof Toolbar> = () => (
+  <Toolbar
     aria-label="Toolbar with shared overflow"
     style={{ minWidth: "14vw" }}
   >
-    <TooltrayNext overflowPriority={4}>
+    <Tooltray overflowPriority={4}>
       <Dropdown
         aria-label="Filter option"
         bordered
@@ -599,8 +601,8 @@ export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
         <FilterIcon aria-hidden />
         Filters
       </Button>
-    </TooltrayNext>
-    <TooltrayNext align="end" overflowPriority={6}>
+    </Tooltray>
+    <Tooltray align="end" overflowPriority={6}>
       <Button appearance="transparent">
         <ExportIcon aria-hidden />
         Export
@@ -609,16 +611,16 @@ export const DefaultSharedOverflow: StoryFn<typeof ToolbarNext> = () => (
         <SettingsIcon aria-hidden />
         Settings
       </Button>
-    </TooltrayNext>
-    <TooltrayNext align="end" overflowMode="none">
+    </Tooltray>
+    <Tooltray align="end" overflowMode="none">
       <Input
         bordered
         startAdornment={<SearchIcon aria-hidden />}
         placeholder="Search"
         style={{ width: 180 }}
       />
-    </TooltrayNext>
-  </ToolbarNext>
+    </Tooltray>
+  </Toolbar>
 );
 DefaultSharedOverflow.globals = {
   responsive: "wrap",
@@ -628,7 +630,7 @@ DefaultSharedOverflow.globals = {
  * Named overflow — grouped collapse into distinct named overflow triggers.
  *
  * Intended behavior:
- * - Uses explicit `ToolbarContentNext` wrappers (start and end).
+ * - Uses explicit `ToolbarContent` wrappers (start and end).
  * - The "Filters" tray (start content, priority 6, `overflowGroup="Filters"`,
  *   `overflowMode="grouped"`) collapses as a complete unit into its own
  *   overflow trigger labeled "Filters".
@@ -648,13 +650,13 @@ DefaultSharedOverflow.globals = {
  * - The search tray (`overflowMode="none"`) is the final toolbar control and
  *   never collapses.
  */
-export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext
+export const NamedOverflow: StoryFn<typeof Toolbar> = () => (
+  <Toolbar
     aria-label="Toolbar with named overflow"
     style={{ minWidth: "20vw" }}
   >
-    <ToolbarContentNext position="start">
-      <TooltrayNext
+    <ToolbarContent position="start">
+      <Tooltray
         overflowGroup="Filters"
         overflowLabel="Filters"
         overflowMode="grouped"
@@ -674,10 +676,10 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           <FilterIcon aria-hidden />
           Filters
         </Button>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="end">
-      <TooltrayNext
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray
         overflowGroup="Actions"
         overflowLabel="Actions"
         overflowMode="grouped"
@@ -691,17 +693,17 @@ export const NamedOverflow: StoryFn<typeof ToolbarNext> = () => (
           <SettingsIcon aria-hidden />
           Settings
         </Button>
-      </TooltrayNext>
-      <TooltrayNext overflowMode="none">
+      </Tooltray>
+      <Tooltray overflowMode="none">
         <Input
           bordered
           startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
-      </TooltrayNext>
-    </ToolbarContentNext>
-  </ToolbarNext>
+      </Tooltray>
+    </ToolbarContent>
+  </Toolbar>
 );
 NamedOverflow.globals = {
   responsive: "wrap",
@@ -722,24 +724,24 @@ NamedOverflow.globals = {
  *   collapse sequence: higher numbers overflow before lower numbers,
  *   and equal priorities collapse from trailing edge to leading edge.
  */
-export const OverflowPriorities: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext aria-label="Toolbar with overflow priorities">
-    <TooltrayNext overflowMode="independent" overflowPriority={1}>
+export const OverflowPriorities: StoryFn<typeof Toolbar> = () => (
+  <Toolbar aria-label="Toolbar with overflow priorities">
+    <Tooltray overflowMode="independent" overflowPriority={1}>
       <Button appearance="transparent">Pinned</Button>
-    </TooltrayNext>
-    <TooltrayNext overflowMode="independent" overflowPriority={1}>
+    </Tooltray>
+    <Tooltray overflowMode="independent" overflowPriority={1}>
       <Button appearance="transparent">Views</Button>
-    </TooltrayNext>
-    <TooltrayNext overflowMode="independent" overflowPriority={3}>
+    </Tooltray>
+    <Tooltray overflowMode="independent" overflowPriority={3}>
       <Button appearance="transparent">Status</Button>
-    </TooltrayNext>
-    <TooltrayNext align="end" overflowMode="independent" overflowPriority={5}>
+    </Tooltray>
+    <Tooltray align="end" overflowMode="independent" overflowPriority={5}>
       <Button appearance="transparent">
         <ExportIcon aria-hidden />
         Export
       </Button>
-    </TooltrayNext>
-  </ToolbarNext>
+    </Tooltray>
+  </Toolbar>
 );
 OverflowPriorities.globals = {
   responsive: "wrap",
@@ -757,13 +759,13 @@ OverflowPriorities.globals = {
  * - The dividers are authored between those trays, so they move with the
  *   overflowed controls and appear between actions inside the overflow panel.
  */
-export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext
+export const OverflowMenuDividers: StoryFn<typeof Toolbar> = () => (
+  <Toolbar
     aria-label="Toolbar with overflow menu dividers"
     style={{ minWidth: "26vw" }}
   >
-    <ToolbarContentNext position="start">
-      <TooltrayNext overflowMode="none">
+    <ToolbarContent position="start">
+      <Tooltray overflowMode="none">
         <Dropdown
           aria-label="Filter option"
           bordered
@@ -774,19 +776,19 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
             <Option value={option} key={option} />
           ))}
         </Dropdown>
-      </TooltrayNext>
-    </ToolbarContentNext>
-    <ToolbarContentNext position="end">
-      <TooltrayNext
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray
         overflowGroup="Actions"
         overflowLabel="Actions"
         overflowMode="grouped"
         overflowPriority={5}
       >
         <Button appearance="transparent">Columns</Button>
-      </TooltrayNext>
+      </Tooltray>
       <Divider aria-hidden orientation="vertical" variant="secondary" />
-      <TooltrayNext
+      <Tooltray
         overflowGroup="Actions"
         overflowLabel="Actions"
         overflowMode="grouped"
@@ -796,26 +798,26 @@ export const OverflowMenuDividers: StoryFn<typeof ToolbarNext> = () => (
           <ExportIcon aria-hidden />
           Export
         </Button>
-      </TooltrayNext>
+      </Tooltray>
       <Divider aria-hidden orientation="vertical" variant="secondary" />
-      <TooltrayNext
+      <Tooltray
         overflowGroup="Actions"
         overflowLabel="Actions"
         overflowMode="grouped"
         overflowPriority={5}
       >
         <Button appearance="solid">Run</Button>
-      </TooltrayNext>
-      <TooltrayNext overflowMode="none">
+      </Tooltray>
+      <Tooltray overflowMode="none">
         <Input
           bordered
           startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
           style={{ width: 180 }}
         />
-      </TooltrayNext>
-    </ToolbarContentNext>
-  </ToolbarNext>
+      </Tooltray>
+    </ToolbarContent>
+  </Toolbar>
 );
 OverflowMenuDividers.globals = {
   responsive: "wrap",
@@ -862,12 +864,12 @@ OverflowMenuDividers.globals = {
  *   action group and disappear only when their slot has no visible
  *   replacement.
  */
-export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
-  <ToolbarNext
+export const NamedOverflowWithDividers: StoryFn<typeof Toolbar> = () => (
+  <Toolbar
     aria-label="Data entry toolbar with named overflow"
     style={{ minWidth: "25vw" }}
   >
-    <TooltrayNext
+    <Tooltray
       overflowGroup="Filters"
       overflowLabel="Filters"
       overflowMode="independent"
@@ -884,8 +886,8 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
-    </TooltrayNext>
-    <TooltrayNext
+    </Tooltray>
+    <Tooltray
       overflowGroup="Filters"
       overflowLabel="Filters"
       overflowMode="independent"
@@ -902,9 +904,9 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
           <Option value={option} key={option} />
         ))}
       </Dropdown>
-    </TooltrayNext>
+    </Tooltray>
     <Divider aria-hidden orientation="vertical" variant="secondary" />
-    <TooltrayNext
+    <Tooltray
       overflowGroup="Actions"
       overflowLabel="Actions"
       overflowMode="grouped"
@@ -912,24 +914,24 @@ export const NamedOverflowWithDividers: StoryFn<typeof ToolbarNext> = () => (
     >
       <Button appearance="transparent">Decline Request</Button>
       <Button appearance="solid">Adjust Price</Button>
-    </TooltrayNext>
-    <TooltrayNext align="end" overflowMode="none">
+    </Tooltray>
+    <Tooltray align="end" overflowMode="none">
       <Button appearance="transparent" aria-label="Search">
         <SearchIcon aria-hidden />
       </Button>
       <Button appearance="transparent" aria-label="Settings">
         <SettingsIcon aria-hidden />
       </Button>
-    </TooltrayNext>
-    <TooltrayNext align="end" overflowMode="none">
+    </Tooltray>
+    <Tooltray align="end" overflowMode="none">
       <Input
         bordered
         startAdornment={<CurrencyIcon aria-hidden />}
         placeholder="Enter price"
         style={{ width: 180 }}
       />
-    </TooltrayNext>
-  </ToolbarNext>
+    </Tooltray>
+  </Toolbar>
 );
 NamedOverflowWithDividers.globals = {
   responsive: "wrap",

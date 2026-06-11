@@ -1,12 +1,19 @@
-import { Button, Dropdown, Option, Switch } from "@salt-ds/core";
+import {
+  Button,
+  Dropdown,
+  Option,
+  Switch,
+  Toolbar,
+  type ToolbarProps,
+  Tooltray,
+} from "@salt-ds/core";
 import { AddIcon } from "@salt-ds/icons";
-import { ToolbarNext, type ToolbarNextProps, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { ResizableExample } from "../components/ResizableExample";
 import styles from "./index.module.css";
 import { sortOptions } from "./toolbarExampleData";
 
-const variants: NonNullable<ToolbarNextProps["variant"]>[] = [
+const variants: NonNullable<ToolbarProps["variant"]>[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -16,15 +23,15 @@ export const Variants = (): ReactElement => (
   <ResizableExample>
     <div className={styles.example}>
       {variants.map((variant) => (
-        <ToolbarNext
+        <Toolbar
           aria-label={`${variant} toolbar`}
           key={variant}
           variant={variant}
         >
-          <TooltrayNext overflowPriority={1}>
+          <Tooltray overflowPriority={1}>
             <Switch label="Show total" />
-          </TooltrayNext>
-          <TooltrayNext align="end" overflowPriority={5}>
+          </Tooltray>
+          <Tooltray align="end" overflowPriority={5}>
             <Dropdown
               bordered
               defaultSelected={[sortOptions[0]]}
@@ -38,8 +45,8 @@ export const Variants = (): ReactElement => (
               <AddIcon aria-hidden />
               Add view
             </Button>
-          </TooltrayNext>
-        </ToolbarNext>
+          </Tooltray>
+        </Toolbar>
       ))}
     </div>
   </ResizableExample>

@@ -1,0 +1,100 @@
+.saltToolbar {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-width: 0;
+  position: relative;
+}
+
+.saltToolbar-layout {
+  align-items: center;
+  --saltToolbar-band-gap: var(--salt-spacing-100);
+}
+
+.saltToolbar-layout:not([data-centered]) {
+  display: flex;
+  column-gap: var(--saltToolbar-band-gap);
+}
+
+.saltToolbar-layout[data-centered] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.saltToolbar-band {
+  display: flex;
+  align-items: center;
+  gap: var(--saltToolbar-band-gap);
+  min-width: 0;
+}
+
+.saltToolbar-layout:not([data-centered]) > .saltToolbar-band[data-band-position="end"] {
+  justify-content: flex-end;
+  margin-inline-start: auto;
+}
+
+.saltToolbar-layout[data-centered] > .saltToolbar-band[data-band-position="start"] {
+  grid-column: 1;
+}
+
+.saltToolbar-layout[data-centered] > .saltToolbar-band[data-band-position="center"] {
+  grid-column: 2;
+  justify-content: center;
+}
+
+.saltToolbar-layout[data-centered] > .saltToolbar-band[data-band-position="end"] {
+  grid-column: 3;
+  justify-content: flex-end;
+}
+
+.saltToolbar-fallback {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.saltToolbar-layout > * {
+  min-width: 0;
+}
+
+.saltToolbar-primary {
+  --toolbar-background: var(--salt-container-primary-background);
+  --toolbar-borderColor: var(--salt-container-primary-borderColor);
+}
+
+.saltToolbar-secondary {
+  --toolbar-background: var(--salt-container-secondary-background);
+  --toolbar-borderColor: var(--salt-container-secondary-borderColor);
+}
+
+.saltToolbar-tertiary {
+  --toolbar-background: var(--salt-container-tertiary-background);
+  --toolbar-borderColor: var(--salt-container-tertiary-borderColor);
+}
+
+.saltToolbar-bordered {
+  background: var(--saltToolbar-background, var(--toolbar-background));
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--saltToolbar-borderColor, var(--toolbar-borderColor));
+  border-radius: var(--salt-palette-corner, 0);
+  padding: var(--salt-spacing-100);
+}
+
+.saltToolbar-transparent {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.saltToolbar-measurements {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  inset: 0 auto auto 0;
+  block-size: 0;
+  overflow: hidden;
+}
+
+.saltToolbar-measureTrigger {
+  white-space: nowrap;
+}

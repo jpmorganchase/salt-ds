@@ -7,37 +7,37 @@ import {
   useRef,
 } from "react";
 import {
-  focusToolbarNextElement,
-  getClosestToolbarNextScopeRoot,
-  getToolbarNextDirectionalMoveTarget,
-  getToolbarNextFocusMemory,
-  getToolbarNextScopeFocusableElements,
-  getToolbarNextTabMoveTarget,
-  isToolbarNextFocusFromPointerTarget,
-  resolveToolbarNextFocusTarget,
-  shouldToolbarNextPreserveNativeTab,
-  TOOLBAR_NEXT_GROUP_KEY_ATTR,
-  TOOLBAR_NEXT_ITEM_ATTR,
-  TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR,
-  TOOLBAR_NEXT_SCOPE_ROOT_ATTR,
-  type ToolbarNextFocusMemory,
-} from "./toolbarNextKeyboardUtils";
-import type { ToolbarNextOverflowItem } from "./toolbarNextUtils";
+  focusToolbarElement,
+  getClosestToolbarScopeRoot,
+  getToolbarDirectionalMoveTarget,
+  getToolbarFocusMemory,
+  getToolbarScopeFocusableElements,
+  getToolbarTabMoveTarget,
+  isToolbarFocusFromPointerTarget,
+  resolveToolbarFocusTarget,
+  shouldToolbarPreserveNativeTab,
+  TOOLBAR_GROUP_KEY_ATTR,
+  TOOLBAR_ITEM_ATTR,
+  TOOLBAR_OVERFLOW_TRIGGER_ATTR,
+  TOOLBAR_SCOPE_ROOT_ATTR,
+  type ToolbarFocusMemory,
+} from "./toolbarKeyboardUtils";
+import type { ToolbarOverflowItem } from "./toolbarUtils";
 
-interface UseToolbarNextKeyboardNavigationProps {
+interface UseToolbarKeyboardNavigationProps {
   includeTabIndexMinusOne?: boolean;
-  items?: ToolbarNextOverflowItem[];
+  items?: ToolbarOverflowItem[];
   overflowedIds?: Set<string>;
   scopeRef: RefObject<HTMLElement | null>;
 }
 
-interface ToolbarNextFocusEvent {
+interface ToolbarFocusEvent {
   relatedTarget: EventTarget | null;
   stopPropagation: () => void;
   target: EventTarget | null;
 }
 
-interface ToolbarNextKeyDownEvent {
+interface ToolbarKeyDownEvent {
   altKey: boolean;
   ctrlKey: boolean;
   key: string;
@@ -48,17 +48,17 @@ interface ToolbarNextKeyDownEvent {
   target: EventTarget | null;
 }
 
-interface ToolbarNextPointerEvent {
+interface ToolbarPointerEvent {
   target: EventTarget | null;
 }
 
-export function useToolbarNextKeyboardNavigation({
+export function useToolbarKeyboardNavigation({
   includeTabIndexMinusOne = false,
   items = [],
   overflowedIds,
   scopeRef,
-}: UseToolbarNextKeyboardNavigationProps) {
-  const rememberedFocusRef = useRef<ToolbarNextFocusMemory | null>(null);
+}: UseToolbarKeyboardNavigationProps) {
+  const rememberedFocusRef = useRef<ToolbarFocusMemory | null>(null);
   const pointerDownTargetRef = useRef<EventTarget | null>(null);
   const restoringEntryFocusRef = useRef(false);
 
@@ -88,7 +88,7 @@ export function useToolbarNextKeyboardNavigation({
         return;
       }
 
-      const focusMemory = getToolbarNextFocusMemory(scopeRoot, target, {
+      const focusMemory = getToolbarFocusMemory(scopeRoot, target, {
         includeTabIndexMinusOne,
       });
 
@@ -114,14 +114,14 @@ export function useToolbarNextKeyboardNavigation({
         return;
       }
 
-      const focusables = getToolbarNextScopeFocusableElements(scopeRoot, {
+      const focusables = getToolbarScopeFocusableElements(scopeRoot, {
         includeTabIndexMinusOne,
       });
       const itemFocusables = focusables.filter((element) => {
         return (
           element
-            .closest<HTMLElement>(`[${TOOLBAR_NEXT_ITEM_ATTR}]`)
-            ?.getAttribute(TOOLBAR_NEXT_ITEM_ATTR) === itemId
+            .closest<HTMLElement>(`[${TOOLBAR_ITEM_ATTR}]`)
+            ?.getAttribute(TOOLBAR_ITEM_ATTR) === itemId
         );
       });
       const item = items.find((entry) => entry.id === itemId);
@@ -131,11 +131,11 @@ export function useToolbarNextKeyboardNavigation({
       const overflowTriggerTarget = item
         ? focusables.find((element) => {
             const trigger = element.closest<HTMLElement>(
-              `[${TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR}]`,
+              `[${TOOLBAR_OVERFLOW_TRIGGER_ATTR}]`,
             );
 
             return (
-              trigger?.getAttribute(TOOLBAR_NEXT_GROUP_KEY_ATTR) ===
+              trigger?.getAttribute(TOOLBAR_GROUP_KEY_ATTR) ===
               item.overflowGroupKey
             );
           })
@@ -144,7 +144,7 @@ export function useToolbarNextKeyboardNavigation({
         focusables.indexOf(visibleItemTarget ?? overflowTriggerTarget),
         rememberedFocusRef.current?.scopeIndex ?? 0,
       );
-      const focusMemory: ToolbarNextFocusMemory = {
+      const focusMemory: ToolbarFocusMemory = {
         controlIndex,
         itemId,
         scopeIndex,
@@ -163,7 +163,7 @@ export function useToolbarNextKeyboardNavigation({
       return;
     }
 
-    const target = resolveToolbarNextFocusTarget(
+    const target = resolveToolbarFocusTarget(
       scopeRoot,
       rememberedFocusRef.current,
       {
@@ -178,24 +178,24 @@ export function useToolbarNextKeyboardNavigation({
     }
 
     queueMicrotask(() => {
-      focusToolbarNextElement(target);
+      focusToolbarElement(target);
     });
   }, [includeTabIndexMinusOne, items, overflowedIds, scopeRef]);
 
   const restoreEntryFocus = useCallback((target: HTMLElement) => {
     restoringEntryFocusRef.current = true;
-    focusToolbarNextElement(target);
+    focusToolbarElement(target);
   }, []);
 
   const handleScopeFocus = useCallback(
-    (event: ToolbarNextFocusEvent) => {
+    (event: ToolbarFocusEvent) => {
       const scopeRoot = scopeRef.current;
       const target = event.target;
 
       if (
         !scopeRoot ||
         !(target instanceof HTMLElement) ||
-        getClosestToolbarNextScopeRoot(target) !== scopeRoot
+        getClosestToolbarScopeRoot(target) !== scopeRoot
       ) {
         return;
       }
@@ -210,7 +210,7 @@ export function useToolbarNextKeyboardNavigation({
       const relatedTarget = event.relatedTarget;
       const enteringFromOutside =
         !(relatedTarget instanceof HTMLElement) ||
-        getClosestToolbarNextScopeRoot(relatedTarget) !== scopeRoot;
+        getClosestToolbarScopeRoot(relatedTarget) !== scopeRoot;
 
       if (!enteringFromOutside) {
         pointerDownTargetRef.current = null;
@@ -218,12 +218,12 @@ export function useToolbarNextKeyboardNavigation({
         return;
       }
 
-      const targetMemory = getToolbarNextFocusMemory(scopeRoot, target, {
+      const targetMemory = getToolbarFocusMemory(scopeRoot, target, {
         includeTabIndexMinusOne,
       });
       const pointerDownTarget = pointerDownTargetRef.current;
       pointerDownTargetRef.current = null;
-      const focusFromPointerTarget = isToolbarNextFocusFromPointerTarget(
+      const focusFromPointerTarget = isToolbarFocusFromPointerTarget(
         target,
         pointerDownTarget,
       );
@@ -242,7 +242,7 @@ export function useToolbarNextKeyboardNavigation({
         }
 
         if (rememberedFocusRef.current?.type === "item") {
-          const restoreTarget = resolveToolbarNextFocusTarget(
+          const restoreTarget = resolveToolbarFocusTarget(
             scopeRoot,
             rememberedFocusRef.current,
             {
@@ -263,7 +263,7 @@ export function useToolbarNextKeyboardNavigation({
         return;
       }
 
-      const restoreTarget = resolveToolbarNextFocusTarget(
+      const restoreTarget = resolveToolbarFocusTarget(
         scopeRoot,
         rememberedFocusRef.current,
         {
@@ -300,14 +300,14 @@ export function useToolbarNextKeyboardNavigation({
   );
 
   const handleScopePointerDown = useCallback(
-    (event: ToolbarNextPointerEvent) => {
+    (event: ToolbarPointerEvent) => {
       const scopeRoot = scopeRef.current;
       const target = event.target;
 
       if (
         !scopeRoot ||
         !(target instanceof Element) ||
-        getClosestToolbarNextScopeRoot(target) !== scopeRoot
+        getClosestToolbarScopeRoot(target) !== scopeRoot
       ) {
         pointerDownTargetRef.current = null;
         return;
@@ -328,14 +328,14 @@ export function useToolbarNextKeyboardNavigation({
   );
 
   const handleScopeBlur = useCallback(
-    (event: ToolbarNextFocusEvent) => {
+    (event: ToolbarFocusEvent) => {
       const scopeRoot = scopeRef.current;
       const target = event.target;
 
       if (
         !scopeRoot ||
         !(target instanceof HTMLElement) ||
-        getClosestToolbarNextScopeRoot(target) !== scopeRoot
+        getClosestToolbarScopeRoot(target) !== scopeRoot
       ) {
         return;
       }
@@ -343,7 +343,7 @@ export function useToolbarNextKeyboardNavigation({
       const relatedTarget = event.relatedTarget;
       const leavingScope =
         !(relatedTarget instanceof HTMLElement) ||
-        getClosestToolbarNextScopeRoot(relatedTarget) !== scopeRoot;
+        getClosestToolbarScopeRoot(relatedTarget) !== scopeRoot;
 
       if (leavingScope) {
         rememberTarget(target);
@@ -360,14 +360,14 @@ export function useToolbarNextKeyboardNavigation({
   );
 
   const handleScopeKeyDown = useCallback(
-    (event: ToolbarNextKeyDownEvent) => {
+    (event: ToolbarKeyDownEvent) => {
       const scopeRoot = scopeRef.current;
       const target = event.target;
 
       if (
         !scopeRoot ||
         !(target instanceof HTMLElement) ||
-        getClosestToolbarNextScopeRoot(target) !== scopeRoot ||
+        getClosestToolbarScopeRoot(target) !== scopeRoot ||
         event.altKey ||
         event.ctrlKey ||
         event.metaKey
@@ -377,13 +377,10 @@ export function useToolbarNextKeyboardNavigation({
 
       if (
         event.key === "Tab" &&
-        scopeRoot.getAttribute(TOOLBAR_NEXT_SCOPE_ROOT_ATTR) === "main" &&
-        !shouldToolbarNextPreserveNativeTab(target)
+        scopeRoot.getAttribute(TOOLBAR_SCOPE_ROOT_ATTR) === "main" &&
+        !shouldToolbarPreserveNativeTab(target)
       ) {
-        const moveTarget = getToolbarNextTabMoveTarget(
-          scopeRoot,
-          event.shiftKey,
-        );
+        const moveTarget = getToolbarTabMoveTarget(scopeRoot, event.shiftKey);
 
         event.preventDefault();
         event.stopPropagation();
@@ -391,7 +388,7 @@ export function useToolbarNextKeyboardNavigation({
         rememberTarget(target);
         queueMicrotask(() => {
           if (moveTarget?.isConnected) {
-            focusToolbarNextElement(moveTarget);
+            focusToolbarElement(moveTarget);
           } else {
             target.blur();
           }
@@ -399,7 +396,7 @@ export function useToolbarNextKeyboardNavigation({
         return;
       }
 
-      const moveTarget = getToolbarNextDirectionalMoveTarget(
+      const moveTarget = getToolbarDirectionalMoveTarget(
         scopeRoot,
         target,
         event.key,
@@ -414,7 +411,7 @@ export function useToolbarNextKeyboardNavigation({
       event.stopPropagation();
 
       rememberTarget(moveTarget);
-      focusToolbarNextElement(moveTarget);
+      focusToolbarElement(moveTarget);
     },
     [includeTabIndexMinusOne, rememberTarget, scopeRef],
   );
@@ -434,12 +431,12 @@ export function useToolbarNextKeyboardNavigation({
     }
 
     return (
-      resolveToolbarNextFocusTarget(scopeRoot, rememberedFocusRef.current, {
+      resolveToolbarFocusTarget(scopeRoot, rememberedFocusRef.current, {
         items,
         includeTabIndexMinusOne,
         overflowedIds,
       }) ??
-      getToolbarNextScopeFocusableElements(scopeRoot, {
+      getToolbarScopeFocusableElements(scopeRoot, {
         includeTabIndexMinusOne,
       })[0] ??
       null

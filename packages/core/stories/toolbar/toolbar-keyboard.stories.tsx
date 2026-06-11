@@ -1,4 +1,4 @@
-import { ToolbarNext } from "@salt-ds/lab";
+import { Toolbar } from "@salt-ds/core";
 import type { Meta } from "@storybook/react-vite";
 
 import {
@@ -9,15 +9,15 @@ import {
   KeyboardRtlFixture,
   KeyboardTextInputFixture,
   KeyboardToggleGroupFixture,
-} from "./toolbar-next.cypress.stories";
+} from "./toolbar.cypress.stories";
 
 export default {
-  title: "Lab/Toolbar Next/Keyboard",
-  component: ToolbarNext,
+  title: "Core/Toolbar/Keyboard",
+  component: Toolbar,
   parameters: {
     layout: "padded",
   },
-} as Meta<typeof ToolbarNext>;
+} as Meta<typeof Toolbar>;
 
 export const EntryAndWrap = () => <KeyboardButtonsFixture width={560} />;
 

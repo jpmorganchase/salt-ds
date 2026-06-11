@@ -1,5 +1,13 @@
-import { Button, Divider, Dropdown, Option, Text } from "@salt-ds/core";
-import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import {
+  Button,
+  Divider,
+  Dropdown,
+  Option,
+  Text,
+  Toolbar,
+  ToolbarContent,
+  Tooltray,
+} from "@salt-ds/core";
 import type { ReactElement } from "react";
 import { ResizableExample } from "../components/ResizableExample";
 import styles from "./index.module.css";
@@ -11,9 +19,9 @@ export const Dividers = (): ReactElement => {
   return (
     <ResizableExample minWidth={30}>
       <div className={styles.example}>
-        <ToolbarNext aria-label="Payment toolbar with divider">
-          <ToolbarContentNext position="start">
-            <TooltrayNext overflowPriority={1}>
+        <Toolbar aria-label="Payment toolbar with divider">
+          <ToolbarContent position="start">
+            <Tooltray overflowPriority={1}>
               <Text styleAs="label">Payment</Text>
               <Dropdown
                 aria-label="Payment"
@@ -27,10 +35,10 @@ export const Dividers = (): ReactElement => {
                   </Option>
                 ))}
               </Dropdown>
-            </TooltrayNext>
-          </ToolbarContentNext>
-          <ToolbarContentNext position="end">
-            <TooltrayNext overflowPriority={2}>
+            </Tooltray>
+          </ToolbarContent>
+          <ToolbarContent position="end">
+            <Tooltray overflowPriority={2}>
               <Text styleAs="label">Sort</Text>
               <Dropdown
                 aria-label="Sort"
@@ -44,14 +52,14 @@ export const Dividers = (): ReactElement => {
                   </Option>
                 ))}
               </Dropdown>
-            </TooltrayNext>
+            </Tooltray>
             <Divider orientation="vertical" variant="secondary" />
-            <TooltrayNext overflowPriority={3}>
+            <Tooltray overflowPriority={3}>
               <Button appearance="bordered">Reject</Button>
               <Button appearance="solid">Publish</Button>
-            </TooltrayNext>
-          </ToolbarContentNext>
-        </ToolbarNext>
+            </Tooltray>
+          </ToolbarContent>
+        </Toolbar>
       </div>
     </ResizableExample>
   );

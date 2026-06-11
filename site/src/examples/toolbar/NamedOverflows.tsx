@@ -1,6 +1,5 @@
-import { Button, Dropdown, Option } from "@salt-ds/core";
+import { Button, Dropdown, Option, Toolbar, Tooltray } from "@salt-ds/core";
 import { FilterIcon, NotificationIcon } from "@salt-ds/icons";
-import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { ResizableExample } from "../components/ResizableExample";
 import { sortOptions } from "./toolbarExampleData";
@@ -10,8 +9,8 @@ const dateOptions = ["Date: January 2020", "Date: February 2020"];
 
 export const NamedOverflows = (): ReactElement => (
   <ResizableExample>
-    <ToolbarNext aria-label="Offer toolbar">
-      <TooltrayNext overflowPriority={1}>
+    <Toolbar aria-label="Offer toolbar">
+      <Tooltray overflowPriority={1}>
         <Dropdown
           bordered
           defaultSelected={[recordOptions[0]]}
@@ -21,8 +20,8 @@ export const NamedOverflows = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </TooltrayNext>
-      <TooltrayNext
+      </Tooltray>
+      <Tooltray
         overflowGroup="Filters"
         overflowLabel="Filters"
         overflowMode="grouped"
@@ -39,8 +38,8 @@ export const NamedOverflows = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </TooltrayNext>
-      <TooltrayNext align="end" overflowPriority={2}>
+      </Tooltray>
+      <Tooltray align="end" overflowPriority={2}>
         <Dropdown
           bordered
           defaultSelected={[sortOptions[0]]}
@@ -50,8 +49,8 @@ export const NamedOverflows = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </TooltrayNext>
-      <TooltrayNext
+      </Tooltray>
+      <Tooltray
         align="end"
         overflowGroup="Actions"
         overflowLabel="Actions"
@@ -63,7 +62,7 @@ export const NamedOverflows = (): ReactElement => (
           Propose amendment
         </Button>
         <Button appearance="bordered">Decline offer</Button>
-      </TooltrayNext>
-    </ToolbarNext>
+      </Tooltray>
+    </Toolbar>
   </ResizableExample>
 );

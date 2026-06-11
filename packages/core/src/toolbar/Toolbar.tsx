@@ -1,9 +1,3 @@
-import {
-  Button,
-  makePrefixer,
-  useForkRef,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -17,25 +11,27 @@ import {
   useRef,
   useState,
 } from "react";
-import type { ToolbarContentNextPosition } from "./ToolbarContentNext";
-import toolbarNextCss from "./ToolbarNext.css";
+import { Button } from "../button";
+import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
+import toolbarCss from "./Toolbar.css";
+import type { ToolbarContentPosition } from "./ToolbarContent";
 import {
-  type ToolbarNextItemHostKind,
-  ToolbarNextOverflowContent,
-  ToolbarNextOverflowMenu,
-  ToolbarNextOverflowOwners,
-  ToolbarNextOverflowTriggerContent,
-} from "./ToolbarNextOverflow";
-import { ToolbarNextOverflowFloatingBoundaryProvider } from "./ToolbarNextOverflowFloatingBoundary";
-import { TOOLBAR_NEXT_SCOPE_ROOT_ATTR } from "./toolbarNextKeyboardUtils";
+  type ToolbarItemHostKind,
+  ToolbarOverflowContent,
+  ToolbarOverflowMenu,
+  ToolbarOverflowOwners,
+  ToolbarOverflowTriggerContent,
+} from "./ToolbarOverflow";
+import { ToolbarOverflowFloatingBoundaryProvider } from "./ToolbarOverflowFloatingBoundary";
+import { TOOLBAR_SCOPE_ROOT_ATTR } from "./toolbarKeyboardUtils";
 import {
   normalizeToolbarChildren,
-  type ToolbarNextOverflowItem,
-} from "./toolbarNextUtils";
-import { useToolbarNextKeyboardNavigation } from "./useToolbarNextKeyboardNavigation";
-import { useToolbarNextOverflow } from "./useToolbarNextOverflow";
+  type ToolbarOverflowItem,
+} from "./toolbarUtils";
+import { useToolbarKeyboardNavigation } from "./useToolbarKeyboardNavigation";
+import { useToolbarOverflow } from "./useToolbarOverflow";
 
-export interface ToolbarNextProps extends ComponentPropsWithoutRef<"div"> {
+export interface ToolbarProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Visual treatment of the toolbar. Defaults to `"bordered"`.
    */
@@ -46,18 +42,18 @@ export interface ToolbarNextProps extends ComponentPropsWithoutRef<"div"> {
   variant?: "primary" | "secondary" | "tertiary";
 }
 
-const withBaseName = makePrefixer("saltToolbarNext");
-const withOverflowBaseName = makePrefixer("saltToolbarNextOverflow");
-const bandPositions: ToolbarContentNextPosition[] = ["start", "center", "end"];
+const withBaseName = makePrefixer("saltToolbar");
+const withOverflowBaseName = makePrefixer("saltToolbarOverflow");
+const bandPositions: ToolbarContentPosition[] = ["start", "center", "end"];
 
-type ToolbarNextItemHostNodes = Partial<
-  Record<ToolbarNextItemHostKind, HTMLDivElement | null>
+type ToolbarItemHostNodes = Partial<
+  Record<ToolbarItemHostKind, HTMLDivElement | null>
 >;
 
 function cloneMeasureDecorations(
   itemId: string,
   slot: "leading" | "trailing",
-  decorations: ToolbarNextOverflowItem["leadingDecorations"],
+  decorations: ToolbarOverflowItem["leadingDecorations"],
 ) {
   return decorations.map((decoration, index) => {
     return cloneElement(decoration, {
@@ -66,8 +62,8 @@ function cloneMeasureDecorations(
   });
 }
 
-export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
-  function ToolbarNext(
+export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
+  function Toolbar(
     {
       children,
       className,
@@ -83,8 +79,8 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-toolbar-next",
-      css: toolbarNextCss,
+      testId: "salt-toolbar",
+      css: toolbarCss,
       window: targetWindow,
     });
 
@@ -110,7 +106,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       overflowGroups,
       overflowTriggerGroups,
       overflowedIds,
-    } = useToolbarNextOverflow({ content: overflowContent });
+    } = useToolbarOverflow({ content: overflowContent });
 
     const handleRef = useForkRef(ref, containerRef);
     const invalidCompositionWarnedRef = useRef(false);
@@ -118,7 +114,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       new Map<string, (node: HTMLDivElement | null) => void>(),
     );
     const [itemHostNodes, setItemHostNodes] = useState<
-      Record<string, ToolbarNextItemHostNodes>
+      Record<string, ToolbarItemHostNodes>
     >({});
 
     const sharedOverflowGroups = useMemo(
@@ -151,7 +147,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
 
     const bandsByPosition = useMemo(() => {
       return bandPositions.reduce<
-        Record<ToolbarContentNextPosition, typeof content>
+        Record<ToolbarContentPosition, typeof content>
       >(
         (bands, position) => {
           bands[position] = content.filter(
@@ -167,7 +163,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       );
     }, [content]);
     const hasCenteredLayout = bandsByPosition.center.length > 0;
-    const keyboardNavigation = useToolbarNextKeyboardNavigation({
+    const keyboardNavigation = useToolbarKeyboardNavigation({
       items: allItems,
       overflowedIds,
       scopeRef: containerRef,
@@ -179,7 +175,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
     const previousOverflowedIdsKeyRef = useRef(overflowedIdsKey);
 
     const getItemHostRef = useCallback(
-      (id: string, kind: ToolbarNextItemHostKind) => {
+      (id: string, kind: ToolbarItemHostKind) => {
         const callbackKey = `${id}:${kind}`;
         const existing = itemHostRefCallbacks.current.get(callbackKey);
 
@@ -286,7 +282,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
       if (process.env.NODE_ENV !== "production") {
         if (mode === "invalid" && !invalidCompositionWarnedRef.current) {
           console.warn(
-            "ToolbarNext children must be authored in one composition model: either TooltrayNext/Divider children directly in ToolbarNext, or ToolbarContentNext children containing TooltrayNext/Divider items.",
+            "Toolbar children must be authored in one composition model: either Tooltray/Divider children directly in Toolbar, or ToolbarContent children containing Tooltray/Divider items.",
           );
           invalidCompositionWarnedRef.current = true;
         }
@@ -312,7 +308,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
         {...rest}
         data-centered={mode !== "invalid" && hasCenteredLayout ? "" : undefined}
         data-mode={mode}
-        {...{ [TOOLBAR_NEXT_SCOPE_ROOT_ATTR]: "main" }}
+        {...{ [TOOLBAR_SCOPE_ROOT_ATTR]: "main" }}
         ref={handleRef}
         onBlurCapture={(event) => {
           keyboardNavigation.handleBlurCapture(event);
@@ -336,8 +332,8 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
         {mode === "invalid" ? (
           children
         ) : (
-          <ToolbarNextOverflowFloatingBoundaryProvider>
-            <ToolbarNextOverflowOwners
+          <ToolbarOverflowFloatingBoundaryProvider>
+            <ToolbarOverflowOwners
               hostNodes={itemOwnerHostNodes}
               items={allItems}
             />
@@ -353,7 +349,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                     sentiment="neutral"
                     tabIndex={-1}
                   >
-                    <ToolbarNextOverflowTriggerContent
+                    <ToolbarOverflowTriggerContent
                       label={group.label}
                       named={group.named}
                     />
@@ -386,7 +382,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                         sentiment="neutral"
                         tabIndex={-1}
                       >
-                        <ToolbarNextOverflowTriggerContent
+                        <ToolbarOverflowTriggerContent
                           label={group.label}
                           named={group.named}
                         />
@@ -440,7 +436,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                   ref={getBandRef(position)}
                 >
                   {bandContent.map((contentArea) => (
-                    <ToolbarNextOverflowContent
+                    <ToolbarOverflowContent
                       focusMemoryRef={keyboardNavigation.rememberedFocusRef}
                       getItemHostRef={getItemHostRef}
                       getItemRef={getItemRef}
@@ -457,7 +453,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                   ))}
                   {position === "end"
                     ? sharedOverflowGroups.map((group) => (
-                        <ToolbarNextOverflowMenu
+                        <ToolbarOverflowMenu
                           focusMemoryRef={keyboardNavigation.rememberedFocusRef}
                           getItemHostRef={getItemHostRef}
                           group={group}
@@ -469,7 +465,7 @@ export const ToolbarNext = forwardRef<HTMLDivElement, ToolbarNextProps>(
                 </div>
               );
             })}
-          </ToolbarNextOverflowFloatingBoundaryProvider>
+          </ToolbarOverflowFloatingBoundaryProvider>
         )}
       </div>
     );

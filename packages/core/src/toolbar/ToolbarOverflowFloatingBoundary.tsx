@@ -1,11 +1,3 @@
-import {
-  type FloatingComponentProps,
-  FloatingComponentProvider,
-  type FloatingComponentProviderProps,
-  makePrefixer,
-  useFloatingComponent,
-  useForkRef,
-} from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   createContext,
@@ -17,12 +9,20 @@ import {
   useMemo,
   useRef,
 } from "react";
+import {
+  type FloatingComponentProps,
+  FloatingComponentProvider,
+  type FloatingComponentProviderProps,
+  makePrefixer,
+  useFloatingComponent,
+  useForkRef,
+} from "../utils";
 
-import { TOOLBAR_NEXT_SCOPE_ROOT_ATTR } from "./toolbarNextKeyboardUtils";
+import { TOOLBAR_SCOPE_ROOT_ATTR } from "./toolbarKeyboardUtils";
 
-const withBaseName = makePrefixer("saltToolbarNextOverflow");
+const withBaseName = makePrefixer("saltToolbarOverflow");
 
-interface ToolbarNextOverflowFloatingBoundaryContextValue {
+interface ToolbarOverflowFloatingBoundaryContextValue {
   isTargetInsideBoundary: (
     boundaryKey: string,
     target: EventTarget | null,
@@ -30,17 +30,17 @@ interface ToolbarNextOverflowFloatingBoundaryContextValue {
   registerFloatingRoot: (boundaryKey: string, root: HTMLElement) => () => void;
 }
 
-const ToolbarNextOverflowFloatingBoundaryContext =
-  createContext<ToolbarNextOverflowFloatingBoundaryContextValue | null>(null);
+const ToolbarOverflowFloatingBoundaryContext =
+  createContext<ToolbarOverflowFloatingBoundaryContextValue | null>(null);
 
-interface ToolbarNextOverflowFloatingComponentContextValue {
+interface ToolbarOverflowFloatingComponentContextValue {
   boundaryKey: string | null;
-  floatingBoundary: ToolbarNextOverflowFloatingBoundaryContextValue | null;
+  floatingBoundary: ToolbarOverflowFloatingBoundaryContextValue | null;
   ParentFloatingComponent: FloatingComponentProviderProps["Component"];
 }
 
-const ToolbarNextOverflowFloatingComponentContext =
-  createContext<ToolbarNextOverflowFloatingComponentContextValue | null>(null);
+const ToolbarOverflowFloatingComponentContext =
+  createContext<ToolbarOverflowFloatingComponentContextValue | null>(null);
 
 function isNodeTarget(target: EventTarget | null): target is Node {
   return target != null && "nodeType" in target;
@@ -57,7 +57,7 @@ function containsTarget(
   return element === target || element.contains(target);
 }
 
-export function ToolbarNextOverflowFloatingBoundaryProvider({
+export function ToolbarOverflowFloatingBoundaryProvider({
   children,
 }: {
   children: ReactNode;
@@ -129,19 +129,19 @@ export function ToolbarNextOverflowFloatingBoundaryProvider({
   );
 
   return (
-    <ToolbarNextOverflowFloatingBoundaryContext.Provider value={value}>
+    <ToolbarOverflowFloatingBoundaryContext.Provider value={value}>
       {children}
-    </ToolbarNextOverflowFloatingBoundaryContext.Provider>
+    </ToolbarOverflowFloatingBoundaryContext.Provider>
   );
 }
 
-export function useToolbarNextOverflowFloatingBoundary() {
-  return useContext(ToolbarNextOverflowFloatingBoundaryContext);
+export function useToolbarOverflowFloatingBoundary() {
+  return useContext(ToolbarOverflowFloatingBoundaryContext);
 }
 
 export function isTargetInsideOverflowBoundary(
   panelContent: HTMLElement | null,
-  floatingBoundary: ToolbarNextOverflowFloatingBoundaryContextValue | null,
+  floatingBoundary: ToolbarOverflowFloatingBoundaryContextValue | null,
   boundaryKey: string,
   target: EventTarget | null,
 ) {
@@ -152,25 +152,21 @@ export function isTargetInsideOverflowBoundary(
   return floatingBoundary?.isTargetInsideBoundary(boundaryKey, target) ?? false;
 }
 
-export function getToolbarNextOverflowBoundaryKey(host: HTMLElement | null) {
-  const scopeRoot = host?.closest<HTMLElement>(
-    `[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`,
-  );
-  const boundaryKey = scopeRoot?.getAttribute(TOOLBAR_NEXT_SCOPE_ROOT_ATTR);
+export function getToolbarOverflowBoundaryKey(host: HTMLElement | null) {
+  const scopeRoot = host?.closest<HTMLElement>(`[${TOOLBAR_SCOPE_ROOT_ATTR}]`);
+  const boundaryKey = scopeRoot?.getAttribute(TOOLBAR_SCOPE_ROOT_ATTR);
 
   return boundaryKey && boundaryKey !== "main" ? boundaryKey : null;
 }
 
-const ToolbarNextOverflowFloatingComponent = forwardRef<
+const ToolbarOverflowFloatingComponent = forwardRef<
   HTMLDivElement,
   FloatingComponentProps
->(function ToolbarNextOverflowFloatingComponent(
+>(function ToolbarOverflowFloatingComponent(
   { className, open, ...props },
   ref,
 ) {
-  const componentContext = useContext(
-    ToolbarNextOverflowFloatingComponentContext,
-  );
+  const componentContext = useContext(ToolbarOverflowFloatingComponentContext);
   const unregisterRef = useRef<(() => void) | null>(null);
   const registerRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -218,7 +214,7 @@ const ToolbarNextOverflowFloatingComponent = forwardRef<
   );
 });
 
-export function ToolbarNextOverflowFloatingComponentProvider({
+export function ToolbarOverflowFloatingComponentProvider({
   boundaryKey,
   children,
 }: {
@@ -226,7 +222,7 @@ export function ToolbarNextOverflowFloatingComponentProvider({
   children: ReactNode;
 }) {
   const { Component: ParentFloatingComponent } = useFloatingComponent();
-  const floatingBoundary = useToolbarNextOverflowFloatingBoundary();
+  const floatingBoundary = useToolbarOverflowFloatingBoundary();
   const value = useMemo(
     () => ({
       boundaryKey,
@@ -237,12 +233,10 @@ export function ToolbarNextOverflowFloatingComponentProvider({
   );
 
   return (
-    <ToolbarNextOverflowFloatingComponentContext.Provider value={value}>
-      <FloatingComponentProvider
-        Component={ToolbarNextOverflowFloatingComponent}
-      >
+    <ToolbarOverflowFloatingComponentContext.Provider value={value}>
+      <FloatingComponentProvider Component={ToolbarOverflowFloatingComponent}>
         {children}
       </FloatingComponentProvider>
-    </ToolbarNextOverflowFloatingComponentContext.Provider>
+    </ToolbarOverflowFloatingComponentContext.Provider>
   );
 }

@@ -5,15 +5,17 @@ import {
   Option,
   StackLayout,
   Text,
+  Toolbar,
+  ToolbarContent,
+  Tooltray,
 } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
-import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ReactNode, useState } from "react";
 
 export default {
-  title: "Lab/Toolbar Next/Overflow Modes",
-  component: ToolbarNext,
+  title: "Core/Toolbar/Overflow Modes",
+  component: Toolbar,
   includeStories: [
     "NamedOverflowModesComparison",
     "PriorityOrderingComparison",
@@ -22,10 +24,10 @@ export default {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarContentNext,
-    TooltrayNext,
+    ToolbarContent,
+    Tooltray,
   },
-} as Meta<typeof ToolbarNext>;
+} as Meta<typeof Toolbar>;
 
 const options = ["Option A", "Option B", "Option C"];
 
@@ -121,15 +123,15 @@ function SingleTrayToolbar({
   overflowMode: "independent" | "grouped";
 }) {
   return (
-    <ToolbarNext aria-label={`${overflowMode} single-tray overflow toolbar`}>
-      <TooltrayNext overflowMode="none">
+    <Toolbar aria-label={`${overflowMode} single-tray overflow toolbar`}>
+      <Tooltray overflowMode="none">
         <Input
           bordered
           startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
         />
-      </TooltrayNext>
-      <TooltrayNext
+      </Tooltray>
+      <Tooltray
         align="end"
         overflowGroup="Actions"
         overflowLabel="Actions"
@@ -139,8 +141,8 @@ function SingleTrayToolbar({
         <Button appearance="transparent">Export</Button>
         <Button appearance="transparent">Settings</Button>
         <Button appearance="solid">Run</Button>
-      </TooltrayNext>
-    </ToolbarNext>
+      </Tooltray>
+    </Toolbar>
   );
 }
 
@@ -150,18 +152,18 @@ function SharedToolbar({
   overflowMode: "independent" | "grouped";
 }) {
   return (
-    <ToolbarNext aria-label={`${overflowMode} shared overflow toolbar`}>
-      <TooltrayNext overflowMode="none">
+    <Toolbar aria-label={`${overflowMode} shared overflow toolbar`}>
+      <Tooltray overflowMode="none">
         <Input
           bordered
           startAdornment={<SearchIcon aria-hidden />}
           placeholder="Search"
         />
-      </TooltrayNext>
-      <TooltrayNext overflowMode={overflowMode} overflowPriority={2}>
+      </Tooltray>
+      <Tooltray overflowMode={overflowMode} overflowPriority={2}>
         <Button appearance="transparent">Columns</Button>
-      </TooltrayNext>
-      <TooltrayNext overflowMode={overflowMode} overflowPriority={4}>
+      </Tooltray>
+      <Tooltray overflowMode={overflowMode} overflowPriority={4}>
         <Dropdown
           aria-label="Filter option"
           bordered
@@ -171,15 +173,11 @@ function SharedToolbar({
             <Option value={option} key={option} />
           ))}
         </Dropdown>
-      </TooltrayNext>
-      <TooltrayNext
-        align="end"
-        overflowMode={overflowMode}
-        overflowPriority={6}
-      >
+      </Tooltray>
+      <Tooltray align="end" overflowMode={overflowMode} overflowPriority={6}>
         <Button appearance="transparent">Export</Button>
-      </TooltrayNext>
-    </ToolbarNext>
+      </Tooltray>
+    </Toolbar>
   );
 }
 
@@ -189,16 +187,16 @@ function NamedFiltersToolbar({
   overflowMode: "independent" | "grouped";
 }) {
   return (
-    <ToolbarNext aria-label={`${overflowMode} named filters toolbar`}>
-      <ToolbarContentNext position="start">
-        <TooltrayNext overflowMode="none">
+    <Toolbar aria-label={`${overflowMode} named filters toolbar`}>
+      <ToolbarContent position="start">
+        <Tooltray overflowMode="none">
           <Input
             bordered
             startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
           />
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode={overflowMode}
@@ -213,31 +211,31 @@ function NamedFiltersToolbar({
               <Option value={option} key={option} />
             ))}
           </Dropdown>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode={overflowMode}
           overflowPriority={4}
         >
           <Button appearance="transparent">Status</Button>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode={overflowMode}
           overflowPriority={5}
         >
           <Button appearance="transparent">Columns</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-      <ToolbarContentNext position="end">
-        <TooltrayNext overflowMode="none">
+        </Tooltray>
+      </ToolbarContent>
+      <ToolbarContent position="end">
+        <Tooltray overflowMode="none">
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-    </ToolbarNext>
+        </Tooltray>
+      </ToolbarContent>
+    </Toolbar>
   );
 }
 
@@ -255,40 +253,40 @@ function PriorityOrderingToolbar({
   priorities: PriorityOrdering;
 }) {
   return (
-    <ToolbarNext aria-label={ariaLabel}>
-      <ToolbarContentNext position="start">
-        <TooltrayNext overflowMode="none">
+    <Toolbar aria-label={ariaLabel}>
+      <ToolbarContent position="start">
+        <Tooltray overflowMode="none">
           <Input
             bordered
             startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
           />
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowMode="independent"
           overflowPriority={priorities.views}
         >
           <Button appearance="transparent">Views</Button>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowMode="independent"
           overflowPriority={priorities.status}
         >
           <Button appearance="transparent">Status</Button>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowMode="independent"
           overflowPriority={priorities.columns}
         >
           <Button appearance="transparent">Columns</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-      <ToolbarContentNext position="end">
-        <TooltrayNext overflowMode="none">
+        </Tooltray>
+      </ToolbarContent>
+      <ToolbarContent position="end">
+        <Tooltray overflowMode="none">
           <Button appearance="solid">Run</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-    </ToolbarNext>
+        </Tooltray>
+      </ToolbarContent>
+    </Toolbar>
   );
 }
 
@@ -351,8 +349,8 @@ function IntrinsicWidthToggle({
 function SharedIntrinsicWidthToolbar() {
   return (
     <div style={{ width: 500 }}>
-      <ToolbarNext aria-label="Shared intrinsic width overflow toolbar">
-        <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Shared intrinsic width overflow toolbar">
+        <Tooltray overflowMode="none">
           <IntrinsicWidthToggle
             ariaLabel="Toggle shared tray width"
             collapsedLabel="Search"
@@ -360,18 +358,18 @@ function SharedIntrinsicWidthToolbar() {
             expandedLabel="Search with advanced filters"
             expandedWidth={300}
           />
-        </TooltrayNext>
-        <TooltrayNext overflowMode="independent" overflowPriority={5}>
+        </Tooltray>
+        <Tooltray overflowMode="independent" overflowPriority={5}>
           <Button appearance="transparent" style={{ width: 150 }}>
             Columns
           </Button>
-        </TooltrayNext>
-        <TooltrayNext overflowMode="none">
+        </Tooltray>
+        <Tooltray overflowMode="none">
           <Button appearance="solid" style={{ width: 100 }}>
             Run
           </Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
     </div>
   );
 }
@@ -379,8 +377,8 @@ function SharedIntrinsicWidthToolbar() {
 function NamedIntrinsicWidthToolbar() {
   return (
     <div style={{ width: 480 }}>
-      <ToolbarNext aria-label="Named intrinsic width overflow toolbar">
-        <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Named intrinsic width overflow toolbar">
+        <Tooltray overflowMode="none">
           <IntrinsicWidthToggle
             ariaLabel="Toggle named tray width"
             collapsedLabel="Search"
@@ -388,8 +386,8 @@ function NamedIntrinsicWidthToolbar() {
             expandedLabel="Search with advanced filters"
             expandedWidth={360}
           />
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           align="end"
           overflowGroup="Actions"
           overflowLabel="Actions"
@@ -398,8 +396,8 @@ function NamedIntrinsicWidthToolbar() {
         >
           <Button appearance="transparent">Export</Button>
           <Button appearance="solid">Apply</Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
     </div>
   );
 }
@@ -413,7 +411,7 @@ function NamedIntrinsicWidthToolbar() {
  * - Both examples keep Search and quick actions visible, so the difference is
  *   isolated to the named overflow mode.
  */
-export const NamedOverflowModesComparison: StoryFn<typeof ToolbarNext> = () => (
+export const NamedOverflowModesComparison: StoryFn<typeof Toolbar> = () => (
   <StoryExample
     title="Named overflow modes: progressive or batched collapse"
     expectedBehavior={[
@@ -423,7 +421,7 @@ export const NamedOverflowModesComparison: StoryFn<typeof ToolbarNext> = () => (
     ]}
     codeRelation={[
       "All Filters trays share the same non-shared overflowGroup, so they render under one named trigger when hidden.",
-      "With independent, each TooltrayNext remains its own collapse unit.",
+      "With independent, each Tooltray remains its own collapse unit.",
       "With grouped, trays in the same named group are merged into one collapse unit.",
     ]}
   >
@@ -453,7 +451,7 @@ NamedOverflowModesComparison.globals = wrapGlobals;
  *   only
  *   diverge once there are multiple trays in the same named group.
  */
-export const SingleTrayComparison: StoryFn<typeof ToolbarNext> = () => (
+export const SingleTrayComparison: StoryFn<typeof Toolbar> = () => (
   <StoryExample
     title="Single tray: independent and grouped look the same"
     expectedBehavior={[
@@ -462,7 +460,7 @@ export const SingleTrayComparison: StoryFn<typeof ToolbarNext> = () => (
       "This example is intentionally not visually distinct: it shows that a single tray is one overflow unit regardless of whether the mode is independent or grouped.",
     ]}
     codeRelation={[
-      "The overflow engine measures TooltrayNext, not the controls inside it, so one tray becomes one ToolbarNextOverflowItem.",
+      "The overflow engine measures Tooltray, not the controls inside it, so one tray becomes one ToolbarOverflowItem.",
       "With only one tray in the Actions group, grouped has nothing to batch together and ends up behaving the same as independent.",
       "The difference between the modes only becomes visible when multiple non-shared named trays share the same overflow group.",
     ]}
@@ -486,15 +484,13 @@ SingleTrayComparison.globals = wrapGlobals;
  *
  * Intended behavior:
  * - The search tray and end-content quick actions never overflow.
- * - The three `Filters` trays collapse progressively, one `TooltrayNext` at a
+ * - The three `Filters` trays collapse progressively, one `Tooltray` at a
  *   time, because they are separate trays in the same named group.
  * - The highest-priority tray overflows first, then the next, then the next.
  * - The named `Filters` trigger stays inline in the start content and represents
  *   whichever subset of the group is currently hidden.
  */
-export const NamedGroupIndependentProgressive: StoryFn<
-  typeof ToolbarNext
-> = () => (
+export const NamedGroupIndependentProgressive: StoryFn<typeof Toolbar> = () => (
   <StoryExample
     title="Named group with independent: progressive tray-by-tray collapse"
     expectedBehavior={[
@@ -504,20 +500,20 @@ export const NamedGroupIndependentProgressive: StoryFn<
     ]}
     codeRelation={[
       "All three Filters trays share the same non-shared overflowGroup, so they end up under one named trigger.",
-      "Because the mode is independent, buildCollapseUnits creates one collapse unit per TooltrayNext, which allows the group to disappear progressively.",
+      "Because the mode is independent, buildCollapseUnits creates one collapse unit per Tooltray, which allows the group to disappear progressively.",
       "The trigger sits where the first hidden tray used to be, so it behaves like an inline replacement rather than a trailing shared overflow button.",
     ]}
   >
-    <ToolbarNext aria-label="Named independent progressive overflow toolbar">
-      <ToolbarContentNext position="start">
-        <TooltrayNext overflowMode="none">
+    <Toolbar aria-label="Named independent progressive overflow toolbar">
+      <ToolbarContent position="start">
+        <Tooltray overflowMode="none">
           <Input
             bordered
             startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
           />
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="independent"
@@ -532,31 +528,31 @@ export const NamedGroupIndependentProgressive: StoryFn<
               <Option value={option} key={option} />
             ))}
           </Dropdown>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="independent"
           overflowPriority={4}
         >
           <Button appearance="transparent">Status</Button>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="independent"
           overflowPriority={5}
         >
           <Button appearance="transparent">Columns</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-      <ToolbarContentNext position="end">
-        <TooltrayNext overflowMode="none">
+        </Tooltray>
+      </ToolbarContent>
+      <ToolbarContent position="end">
+        <Tooltray overflowMode="none">
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-    </ToolbarNext>
+        </Tooltray>
+      </ToolbarContent>
+    </Toolbar>
   </StoryExample>
 );
 NamedGroupIndependentProgressive.globals = wrapGlobals;
@@ -572,7 +568,7 @@ NamedGroupIndependentProgressive.globals = wrapGlobals;
  *   while the others have already overflowed.
  * - Compared with the independent example, this should feel like a single jump.
  */
-export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
+export const NamedGroupGroupedBatch: StoryFn<typeof Toolbar> = () => (
   <StoryExample
     title="Named group with grouped: the whole batch disappears together"
     expectedBehavior={[
@@ -586,16 +582,16 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
       "The visible result is one named trigger representing the whole group at once.",
     ]}
   >
-    <ToolbarNext aria-label="Named grouped batch overflow toolbar">
-      <ToolbarContentNext position="start">
-        <TooltrayNext overflowMode="none">
+    <Toolbar aria-label="Named grouped batch overflow toolbar">
+      <ToolbarContent position="start">
+        <Tooltray overflowMode="none">
           <Input
             bordered
             startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
           />
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="grouped"
@@ -610,31 +606,31 @@ export const NamedGroupGroupedBatch: StoryFn<typeof ToolbarNext> = () => (
               <Option value={option} key={option} />
             ))}
           </Dropdown>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="grouped"
           overflowPriority={4}
         >
           <Button appearance="transparent">Status</Button>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="grouped"
           overflowPriority={5}
         >
           <Button appearance="transparent">Columns</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-      <ToolbarContentNext position="end">
-        <TooltrayNext overflowMode="none">
+        </Tooltray>
+      </ToolbarContent>
+      <ToolbarContent position="end">
+        <Tooltray overflowMode="none">
           <Button appearance="transparent">Refresh</Button>
           <Button appearance="solid">Run</Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-    </ToolbarNext>
+        </Tooltray>
+      </ToolbarContent>
+    </Toolbar>
   </StoryExample>
 );
 NamedGroupGroupedBatch.globals = wrapGlobals;
@@ -650,7 +646,7 @@ NamedGroupGroupedBatch.globals = wrapGlobals;
  * - This is a deliberate comparison showing that shared overflow does not get a
  *   special batching behavior from `grouped` in the current implementation.
  */
-export const SharedOverflowComparison: StoryFn<typeof ToolbarNext> = () => (
+export const SharedOverflowComparison: StoryFn<typeof Toolbar> = () => (
   <StoryExample
     title="Shared overflow: independent and grouped still behave the same today"
     expectedBehavior={[
@@ -660,7 +656,7 @@ export const SharedOverflowComparison: StoryFn<typeof ToolbarNext> = () => (
     ]}
     codeRelation={[
       "The special grouped path only applies when overflowGroup is not shared.",
-      "For shared overflow, each TooltrayNext remains its own collapse unit even when the mode is grouped.",
+      "For shared overflow, each Tooltray remains its own collapse unit even when the mode is grouped.",
       "That means both shared examples still collapse tray by tray according to overflowPriority and source order.",
     ]}
   >
@@ -686,7 +682,7 @@ SharedOverflowComparison.globals = wrapGlobals;
  * - This makes priority ordering easy to compare side by side without relying
  *   on a large resize.
  */
-export const PriorityOrderingComparison: StoryFn<typeof ToolbarNext> = () => (
+export const PriorityOrderingComparison: StoryFn<typeof Toolbar> = () => (
   <StoryExample
     title="Priority ordering: the same toolbar preserves different trays"
     expectedBehavior={[
@@ -733,7 +729,7 @@ PriorityOrderingComparison.globals = wrapGlobals;
  *   toolbar should react immediately even though the container width never
  *   changes.
  */
-export const IntrinsicWidthChanges: StoryFn<typeof ToolbarNext> = () => (
+export const IntrinsicWidthChanges: StoryFn<typeof Toolbar> = () => (
   <StoryExample
     title="Intrinsic tray width changes now invalidate overflow"
     expectedBehavior={[
@@ -743,8 +739,8 @@ export const IntrinsicWidthChanges: StoryFn<typeof ToolbarNext> = () => (
       "In the named example, the Actions tray should be replaced by its inline Actions trigger when the first tray grows and return when it shrinks.",
     ]}
     codeRelation={[
-      "The width change comes from state local to the child control, not from resizing the toolbar or rerendering ToolbarNext from above.",
-      "useToolbarNextOverflow now observes the same measured slot wrappers and trigger measurement nodes that the overflow solver already uses.",
+      "The width change comes from state local to the child control, not from resizing the toolbar or rerendering Toolbar from above.",
+      "useToolbarOverflow now observes the same measured slot wrappers and trigger measurement nodes that the overflow solver already uses.",
       "That means internal tray-width changes can invalidate cached widths and trigger a fresh overflow computation immediately.",
     ]}
   >
