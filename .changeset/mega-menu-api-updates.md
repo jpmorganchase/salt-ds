@@ -7,8 +7,8 @@ Updated `MegaMenu` with a revised component structure and API.
 `MegaMenuPanel` lays its children out as a single horizontal row. `MegaMenuBody`
 is the center navigation area; an optional `MegaMenuSupportingContent` renders
 alongside it — to the left when placed before `MegaMenuBody`, to the right when
-placed after. Position is derived from component type and source order alone —
-there are no placement props.
+placed after. Position is derived from source order alone — there are no
+placement props.
 
 - **`MegaMenuBody`** — the center navigation area. It stacks a `MegaMenuGroups`
   and an optional `MegaMenuSupportingActions` band beneath it.
@@ -43,6 +43,10 @@ back to the current trigger, when there is no next trigger). Tab and Shift+Tab
 walk every item in layout order, Escape closes the menu, and navigation degrades
 to a linear walk when the columns are stacked.
 
+A `MegaMenuItem` activates on Enter and closes the menu. An item rendered as a
+`<button>` (no `href`) also activates on Space; link items follow native `<a>`
+behaviour and do not activate on Space.
+
 ```tsx
 <MegaMenuPanel aria-label="Solutions menu">
   <MegaMenuBody>
@@ -64,7 +68,6 @@ to a linear walk when the columns are stacked.
 </MegaMenuPanel>
 ```
 
-//TODO: verify if that's needed before merging to lab
 **Breaking changes**
 
 - `MegaMenuHeader` has been removed. Use `MegaMenuGroupHeading` for a group's
