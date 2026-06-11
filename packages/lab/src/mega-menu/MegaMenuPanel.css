@@ -2,7 +2,7 @@
   /* Single horizontal row: optional side content, the center navigation area,
      optional side content. Position is derived from source order alone, so
      authors need no wrapper scaffolding. */
-  --saltMegaMenuPanel-availableWidth: calc(100vw - 2 * var(--saltMegaMenuPanel-pageMargin, var(--salt-layout-page-margin)));
+  --saltMegaMenuPanel-availableWidth: calc(100vw - var(--salt-spacing-600));
   display: flex;
   align-items: stretch;
   inline-size: var(--saltMegaMenuPanel-inlineSize, fit-content);
