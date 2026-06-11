@@ -1,4 +1,6 @@
-export default {
+type TokenTier = "characteristic" | "foundation";
+
+const characteristic: Record<string, string> = {
   accent:
     "Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.",
   actionable:
@@ -28,4 +30,28 @@ export default {
   target:
     "Target defines the styles for areas where draggable items, such as documents for attaching or uploading, can be dropped.",
   text: "Text defines all typographic styles and variants, such as font weight, and is used alongside other characteristics to style all textual content.",
-} as Record<string, string>;
+};
+
+const foundation: Record<string, string> = {
+  cursor:
+    "The cursor foundation controls how the cursor appears when positioned over or interacting with a component.",
+  duration:
+    "Duration represents the time between a user performing an action and the system giving feedback.",
+  zindex:
+    "Salt provides z-index tokens that determine an item’s position in the layering order.",
+  size: "Size defines the height and width of components within the design system, ensuring consistent and harmonious design across applications.",
+  spacing:
+    "Spacing is a key tool for positioning elements in relation to each other, highlighting some while downplaying others.",
+};
+
+const descriptions: Record<TokenTier, Record<string, string>> = {
+  characteristic,
+  foundation,
+};
+
+export function getTokenGroupDescription(
+  tier: TokenTier,
+  group: string,
+): string | undefined {
+  return descriptions[tier]?.[group.toLowerCase()];
+}

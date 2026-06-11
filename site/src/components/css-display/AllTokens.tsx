@@ -26,7 +26,7 @@ import { useEffect, useState } from "react";
 import { Callout } from "../callout";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import styles from "./AllTokens.module.css";
-import descriptions from "./descriptions";
+import { getTokenGroupDescription } from "./descriptions";
 import { TokenPreview } from "./TokenPreview";
 import {
   filterFoundationTokens,
@@ -314,7 +314,7 @@ function TokenTable({
           <H3 id={getGroupHeadingId(tier, group)} data-mdx="heading3">
             {capitalize(group)}
           </H3>
-          <Text>{descriptions[group.toLowerCase()]}</Text>
+          <Text>{getTokenGroupDescription(tier, group)}</Text>
           <div className={styles.tableWrap}>
             <Table zebra divider="none">
               <THead>
