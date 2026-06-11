@@ -144,7 +144,9 @@ export {
   derivePublicCanonicalComplete,
   derivePublicSafeToImplementExactRequest,
   derivePublicWorkflowStatus,
+  EMPTY_PUBLIC_INTERNAL_LIMITATIONS,
   getPublicContractValidationErrors,
+  PUBLIC_WORKFLOW_CONTRACT_VERSION,
   type PublicActionKind,
   type PublicAskUserStep,
   type PublicBootstrapRepoStep,
@@ -159,6 +161,7 @@ export {
   type PublicFixContextStep,
   type PublicImplementStep,
   type PublicInstallDependenciesStep,
+  type PublicInternalLimitations,
   type PublicMatchStatus,
   type PublicNextStep,
   type PublicNextStepMode,
@@ -171,6 +174,7 @@ export {
   type PublicTransportUsed,
   type PublicWorkflowId,
   type PublicWorkflowStatus,
+  SALT_WORKFLOW_CONTRACT_SEMVER,
 } from "./publicContract.js";
 export {
   type RecommendComponentInput,
