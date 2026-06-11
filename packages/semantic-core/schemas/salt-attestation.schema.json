@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saltdesignsystem.com/schemas/salt-attestation.schema.json",
+  "title": "Salt Agent Provenance Attestation (v1)",
+  "description": "Payload emitted by `salt-ds review --hook --emit-attestation` after a clean PostToolUse review. Consumers pipe the payload to whatever audit store they already operate. Salt does not pick the disk layout, the hashing algorithm, the retention policy, or the GC story. The Zod source-of-truth lives at packages/semantic-core/src/tools/attestation.ts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "contract",
+    "attested_at",
+    "trace_id",
+    "registry",
+    "evidence_refs",
+    "post_action",
+    "files_touched"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "salt-ds.dev/schemas/attestation/v1"
+    },
+    "contract": {
+      "const": "salt_attestation_v1"
+    },
+    "attested_at": {
+      "type": "string",
+      "description": "ISO 8601 UTC timestamp of attestation emit."
+    },
+    "trace_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque trace id; placeholder for Phase 4.1 replay correlation."
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hash", "hash_alg"],
+      "properties": {
+        "hash": { "type": "string", "minLength": 1 },
+        "hash_alg": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "description": "Stable evidence_ref_ids copied from the source review report.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "post_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ran", "review_status"],
+      "properties": {
+        "kind": { "const": "PostToolUse" },
+        "ran": { "type": "boolean" },
+        "review_status": {
+          "enum": ["ready", "needs_attention", "blocked"]
+        }
+      }
+    },
+    "files_touched": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "hash", "hash_alg"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Path relative to repo root."
+          },
+          "hash": { "type": "string", "minLength": 1 },
+          "hash_alg": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Hash algorithm identifier (e.g. \"sha256\"). Per-payload so consumers can upgrade independently."
+          }
+        }
+      }
+    }
+  }
+}
