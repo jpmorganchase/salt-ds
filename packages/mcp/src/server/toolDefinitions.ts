@@ -117,12 +117,23 @@ export interface ToolDefinition {
 export interface ToolExecutionRuntime {
   projectContexts: Map<string, SaltProjectContextData>;
   lastProjectContextId: string | null;
+  /**
+   * Context ids whose cached snapshot is known to be out of date relative to
+   * the on-disk state — most often because a workflow turn just emitted
+   * `install_dependencies` and the next host turn will mutate `package.json`
+   * before re-entering the MCP. The next call that touches a stale id
+   * transparently refetches via `collectSaltProjectContextData`, so hosts no
+   * longer need to call `get_salt_project_context` between an install and
+   * the rerun. See Phase 0 task 0.9 / PR 12.
+   */
+  staleProjectContextIds: Set<string>;
 }
 
 export function createToolExecutionRuntime(): ToolExecutionRuntime {
   return {
     projectContexts: new Map(),
     lastProjectContextId: null,
+    staleProjectContextIds: new Set(),
   };
 }
 
@@ -138,12 +149,55 @@ function cacheProjectContext(
     if (context.resolution.status === "resolved" && contextId) {
       runtime.projectContexts.set(contextId, context);
       runtime.lastProjectContextId = contextId;
+      // Successful caching clears the stale flag — the snapshot we just
+      // stored *is* the fresh state.
+      runtime.staleProjectContextIds.delete(contextId);
     } else {
       runtime.lastProjectContextId = null;
     }
   }
 
   return contextId;
+}
+
+/**
+ * Returns whether the runtime has marked `contextId` as stale via
+ * {@link markProjectContextStale}. The next call that touches a stale id
+ * refetches before serving the cached value (see
+ * {@link resolveOrCollectProjectContext}).
+ */
+export function isProjectContextStale(
+  runtime: ToolExecutionRuntime | undefined,
+  contextId: string,
+): boolean {
+  return runtime?.staleProjectContextIds.has(contextId) ?? false;
+}
+
+/**
+ * Marks the cached project context for `rootDir` stale so the next workflow
+ * turn refetches package state from disk. Called automatically after any
+ * workflow result that requests `install_dependencies`; consumers do not
+ * normally need to call this directly.
+ */
+export function markProjectContextStale(
+  runtime: ToolExecutionRuntime | undefined,
+  rootDir: string,
+): void {
+  if (!runtime) return;
+  const contextId = buildSaltProjectContextId(rootDir);
+  runtime.staleProjectContextIds.add(contextId);
+}
+
+function resultRequestsInstallDependencies(result: unknown): boolean {
+  if (result === null || typeof result !== "object") return false;
+  const envelope = result as {
+    action?: { kind?: unknown } | null;
+    next_required_action?: { kind?: unknown } | null;
+  };
+  return (
+    envelope.action?.kind === "install_dependencies" ||
+    envelope.next_required_action?.kind === "install_dependencies"
+  );
 }
 
 function resolveProjectContext(
@@ -166,7 +220,19 @@ async function resolveOrCollectProjectContext(
   options: { contextId?: string; rootDir?: string } = {},
 ): Promise<SaltProjectContextData> {
   if (options.contextId) {
-    return resolveProjectContext(runtime, options.contextId);
+    const cached = resolveProjectContext(runtime, options.contextId);
+    if (isProjectContextStale(runtime, options.contextId)) {
+      // The cached snapshot is known stale (most often because a prior
+      // workflow turn requested install_dependencies). Refetch transparently
+      // so the host does not need to call get_salt_project_context between
+      // the install and the rerun.
+      const refreshed = await collectSaltProjectContextData(registry, {
+        root_dir: cached.root_dir,
+      });
+      cacheProjectContext(runtime, refreshed);
+      return refreshed;
+    }
+    return cached;
   }
 
   if (options.rootDir) {
@@ -178,7 +244,11 @@ async function resolveOrCollectProjectContext(
   }
 
   const lastProjectContextId = runtime?.lastProjectContextId;
-  if (lastProjectContextId && runtime?.projectContexts.size === 1) {
+  if (
+    lastProjectContextId &&
+    runtime?.projectContexts.size === 1 &&
+    !isProjectContextStale(runtime, lastProjectContextId)
+  ) {
     const cachedContext = runtime?.projectContexts.get(lastProjectContextId);
     if (cachedContext && cachedContext.resolution.status === "resolved") {
       return cachedContext;
@@ -1592,7 +1662,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       );
       const semanticView = normalizeWorkflowView(workflowArgs.view);
 
-      return withTranslateWorkflowGuidance(
+      const result = withTranslateWorkflowGuidance(
         registry,
         migrateToSalt(registry, {
           ...workflowArgs,
@@ -1613,6 +1683,13 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           view: workflowArgs.view,
         },
       );
+      if (
+        isSaltProjectContextReadyForRepoAwareWork(projectContext) &&
+        resultRequestsInstallDependencies(result)
+      ) {
+        markProjectContextStale(runtime, projectContext.root_dir);
+      }
+      return result;
     },
   }),
   defineTool<
@@ -1702,7 +1779,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       );
       const semanticView = normalizeWorkflowView(workflowArgs.view);
 
-      return withChooseWorkflowGuidance(
+      const result = withChooseWorkflowGuidance(
         registry,
         createSaltUi(registry, {
           ...workflowArgs,
@@ -1729,6 +1806,13 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           resolved_entities: workflowArgs.resolved_entities,
         },
       );
+      if (
+        isSaltProjectContextReadyForRepoAwareWork(projectContext) &&
+        resultRequestsInstallDependencies(result)
+      ) {
+        markProjectContextStale(runtime, projectContext.root_dir);
+      }
+      return result;
     },
   }),
   defineTool<Parameters<typeof getSaltEntity>[1]>({
@@ -1906,7 +1990,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       );
       const semanticView = normalizeWorkflowView(workflowArgs.view);
 
-      return withAnalyzeWorkflowGuidance(
+      const result = withAnalyzeWorkflowGuidance(
         registry,
         reviewSaltUi(registry, {
           ...workflowArgs,
@@ -1921,6 +2005,13 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           view: workflowArgs.view,
         },
       );
+      if (
+        isSaltProjectContextReadyForRepoAwareWork(projectContext) &&
+        resultRequestsInstallDependencies(result)
+      ) {
+        markProjectContextStale(runtime, projectContext.root_dir);
+      }
+      return result;
     },
   }),
   defineTool<
@@ -1975,7 +2066,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       );
       const semanticView = normalizeWorkflowView(workflowArgs.view);
 
-      return withCompareWorkflowGuidance(
+      const result = withCompareWorkflowGuidance(
         upgradeSaltUi(registry, {
           ...workflowArgs,
           view: semanticView,
@@ -1986,6 +2077,13 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           view: workflowArgs.view,
         },
       );
+      if (
+        isSaltProjectContextReadyForRepoAwareWork(projectContext) &&
+        resultRequestsInstallDependencies(result)
+      ) {
+        markProjectContextStale(runtime, projectContext.root_dir);
+      }
+      return result;
     },
   }),
 ];
