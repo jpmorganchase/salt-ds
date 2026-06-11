@@ -671,15 +671,15 @@ export async function runInitCommand(
                       ]),
           ...(agentHooksResult?.action === "created"
             ? [
-                `Created Salt agent hook manifest at ${agentHooksResult.path}. Enable .github/hooks in VS Code chat.hookFilesLocations to wire PostToolUse + SessionStart.`,
+                `Created Salt agent hook manifest at ${agentHooksResult.path}. Enable .github/hooks in VS Code chat.hookFilesLocations to wire PostToolUse + SessionStart + Stop.`,
               ]
             : agentHooksResult?.action === "updated"
               ? [
-                  `Updated ${agentHooksResult.path} to include the Salt PostToolUse and SessionStart hook commands.`,
+                  `Updated ${agentHooksResult.path} to include the Salt PostToolUse, SessionStart, and Stop hook commands.`,
                 ]
               : agentHooksResult?.action === "unchanged"
                 ? [
-                    `${agentHooksResult.path} already wired Salt PostToolUse and SessionStart hook commands.`,
+                    `${agentHooksResult.path} already wired Salt PostToolUse, SessionStart, and Stop hook commands.`,
                   ]
                 : []),
         ]),
