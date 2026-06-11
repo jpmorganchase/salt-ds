@@ -1,4 +1,4 @@
-import { Dropdown, Option } from "@salt-ds/core";
+import { Dropdown, Option, Toolbar, Tooltray } from "@salt-ds/core";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -6,15 +6,14 @@ import {
   DatePickerSingleInput,
   DatePickerTrigger,
 } from "@salt-ds/date-components";
-import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { ResizableExample } from "../components/ResizableExample";
 import { sortOptions, typeOptions } from "./toolbarExampleData";
 
 export const IndependentCollapse = (): ReactElement => (
   <ResizableExample minWidth={25}>
-    <ToolbarNext aria-label="Payment toolbar">
-      <TooltrayNext overflowPriority={1}>
+    <Toolbar aria-label="Payment toolbar">
+      <Tooltray overflowPriority={1}>
         <Dropdown
           bordered
           defaultSelected={[typeOptions[1]]}
@@ -24,8 +23,8 @@ export const IndependentCollapse = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </TooltrayNext>
-      <TooltrayNext align="end" overflowPriority={5}>
+      </Tooltray>
+      <Tooltray align="end" overflowPriority={5}>
         <Dropdown
           bordered
           defaultSelected={[sortOptions[1]]}
@@ -35,8 +34,8 @@ export const IndependentCollapse = (): ReactElement => (
             <Option key={option} value={option} />
           ))}
         </Dropdown>
-      </TooltrayNext>
-      <TooltrayNext align="end" overflowPriority={4}>
+      </Tooltray>
+      <Tooltray align="end" overflowPriority={4}>
         <DatePicker selectionVariant="single">
           <DatePickerTrigger>
             <DatePickerSingleInput
@@ -49,7 +48,7 @@ export const IndependentCollapse = (): ReactElement => (
             <DatePickerSingleGridPanel />
           </DatePickerOverlay>
         </DatePicker>
-      </TooltrayNext>
-    </ToolbarNext>
+      </Tooltray>
+    </Toolbar>
   </ResizableExample>
 );

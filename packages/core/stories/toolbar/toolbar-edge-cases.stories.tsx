@@ -1,4 +1,13 @@
-import { Button, Dropdown, Input, Option, Text } from "@salt-ds/core";
+import {
+  Button,
+  Dropdown,
+  Input,
+  Option,
+  Text,
+  Toolbar,
+  ToolbarContent,
+  Tooltray,
+} from "@salt-ds/core";
 import { DateInputSingle } from "@salt-ds/date-components";
 import {
   AddIcon,
@@ -8,13 +17,12 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
 export default {
-  title: "Lab/Toolbar Next/Edge Cases",
-  component: ToolbarNext,
+  title: "Core/Toolbar/Edge Cases",
+  component: Toolbar,
   includeStories: [
     "DynamicElements",
     "HiddenOverflowRemeasurement",
@@ -24,10 +32,10 @@ export default {
     layout: "padded",
   },
   subcomponents: {
-    ToolbarContentNext,
-    TooltrayNext,
+    ToolbarContent,
+    Tooltray,
   },
-} as Meta<typeof ToolbarNext>;
+} as Meta<typeof Toolbar>;
 
 const options = ["Option A", "Option B", "Option C"];
 
@@ -123,24 +131,24 @@ const clippingValidationNoteStyle = {
  * - The buttons that mutate the toolbar live in an `overflowMode="none"` tray,
  *   so they stay visible and never move into the overflow menu.
  */
-export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
+export const DynamicElements: StoryFn<typeof Toolbar> = () => {
   const [controls, setControls] = useState<
     Array<{ id: number; type: "date" | "dropdown" }>
   >([{ id: 1, type: "dropdown" }]);
 
   return (
-    <ToolbarNext aria-label="Dynamic toolbar">
-      <ToolbarContentNext position="start">
-        <TooltrayNext overflowMode="none">
+    <Toolbar aria-label="Dynamic toolbar">
+      <ToolbarContent position="start">
+        <Tooltray overflowMode="none">
           <Input
             bordered
             startAdornment={<SearchIcon aria-hidden />}
             placeholder="Search"
             style={{ width: 180 }}
           />
-        </TooltrayNext>
+        </Tooltray>
         {controls.map((control) => (
-          <TooltrayNext
+          <Tooltray
             key={control.id}
             overflowGroup="Filters"
             overflowLabel="Filters"
@@ -165,11 +173,11 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
                 style={{ width: 180 }}
               />
             )}
-          </TooltrayNext>
+          </Tooltray>
         ))}
-      </ToolbarContentNext>
-      <ToolbarContentNext position="end">
-        <TooltrayNext overflowMode="none">
+      </ToolbarContent>
+      <ToolbarContent position="end">
+        <Tooltray overflowMode="none">
           <Button
             appearance="transparent"
             aria-label="Add filter dropdown"
@@ -196,9 +204,9 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
             <CalendarIcon aria-hidden />
             Add date
           </Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-    </ToolbarNext>
+        </Tooltray>
+      </ToolbarContent>
+    </Toolbar>
   );
 };
 DynamicElements.globals = {
@@ -217,7 +225,7 @@ DynamicElements.globals = {
  * - The shared overflow trigger should remain visible after expansion. If the
  *   long action appears in the toolbar, hidden overflow measurements are stale.
  */
-export const HiddenOverflowRemeasurement: StoryFn<typeof ToolbarNext> = () => {
+export const HiddenOverflowRemeasurement: StoryFn<typeof Toolbar> = () => {
   const [expandedWidth, setExpandedWidth] = useState(false);
   const [wideAction, setWideAction] = useState(false);
   const toolbarWidth = expandedWidth ? 420 : 300;
@@ -249,26 +257,26 @@ export const HiddenOverflowRemeasurement: StoryFn<typeof ToolbarNext> = () => {
           width: toolbarWidth,
         }}
       >
-        <ToolbarNext aria-label="Hidden overflow measurement toolbar">
-          <TooltrayNext overflowMode="none">
+        <Toolbar aria-label="Hidden overflow measurement toolbar">
+          <Tooltray overflowMode="none">
             <Button appearance="transparent" style={{ width: 120 }}>
               Pinned
             </Button>
-          </TooltrayNext>
-          <TooltrayNext overflowMode="independent" overflowPriority={5}>
+          </Tooltray>
+          <Tooltray overflowMode="independent" overflowPriority={5}>
             <Button
               appearance="transparent"
               style={{ width: wideAction ? 320 : 80 }}
             >
               {wideAction ? "Hidden action with a long label" : "Short"}
             </Button>
-          </TooltrayNext>
-          <TooltrayNext align="end" overflowMode="none">
+          </Tooltray>
+          <Tooltray align="end" overflowMode="none">
             <Button appearance="solid" style={{ width: 100 }}>
               Run
             </Button>
-          </TooltrayNext>
-        </ToolbarNext>
+          </Tooltray>
+        </Toolbar>
       </div>
     </div>
   );
@@ -291,9 +299,7 @@ HiddenOverflowRemeasurement.globals = {
  * - This validates that the overflow surface is portalled and positioned by
  *   Floating UI rather than being rendered inside the clipped toolbar context.
  */
-export const OverflowMenuInClippingContainer: StoryFn<
-  typeof ToolbarNext
-> = () => (
+export const OverflowMenuInClippingContainer: StoryFn<typeof Toolbar> = () => (
   <div style={clippingValidationShellStyle}>
     <div style={clippingValidationCardStyle}>
       <div style={clippingValidationHeaderStyle}>
@@ -312,20 +318,20 @@ export const OverflowMenuInClippingContainer: StoryFn<
         ))}
       </div>
       <div style={clippingValidationToolbarDockStyle}>
-        <ToolbarNext
+        <Toolbar
           appearance="transparent"
           aria-label="Trade exception review toolbar"
         >
-          <ToolbarContentNext position="start">
-            <TooltrayNext overflowMode="none">
+          <ToolbarContent position="start">
+            <Tooltray overflowMode="none">
               <Input
                 bordered
                 placeholder="Search exceptions"
                 startAdornment={<SearchIcon aria-hidden />}
                 style={{ width: 180 }}
               />
-            </TooltrayNext>
-            <TooltrayNext
+            </Tooltray>
+            <Tooltray
               overflowGroup="Filters"
               overflowLabel="Filters"
               overflowMode="independent"
@@ -341,8 +347,8 @@ export const OverflowMenuInClippingContainer: StoryFn<
                   <Option value={option} key={option} />
                 ))}
               </Dropdown>
-            </TooltrayNext>
-            <TooltrayNext
+            </Tooltray>
+            <Tooltray
               overflowGroup="Filters"
               overflowLabel="Filters"
               overflowMode="independent"
@@ -352,10 +358,10 @@ export const OverflowMenuInClippingContainer: StoryFn<
                 <FilterIcon aria-hidden />
                 Status
               </Button>
-            </TooltrayNext>
-          </ToolbarContentNext>
-          <ToolbarContentNext position="end">
-            <TooltrayNext
+            </Tooltray>
+          </ToolbarContent>
+          <ToolbarContent position="end">
+            <Tooltray
               overflowGroup="Actions"
               overflowLabel="Actions"
               overflowMode="grouped"
@@ -367,14 +373,14 @@ export const OverflowMenuInClippingContainer: StoryFn<
               </Button>
               <Button appearance="transparent">Reassign</Button>
               <Button appearance="solid">Approve</Button>
-            </TooltrayNext>
-            <TooltrayNext overflowMode="none">
+            </Tooltray>
+            <Tooltray overflowMode="none">
               <Button appearance="transparent" aria-label="Toolbar settings">
                 <SettingsIcon aria-hidden />
               </Button>
-            </TooltrayNext>
-          </ToolbarContentNext>
-        </ToolbarNext>
+            </Tooltray>
+          </ToolbarContent>
+        </Toolbar>
       </div>
     </div>
     <Text style={clippingValidationNoteStyle}>

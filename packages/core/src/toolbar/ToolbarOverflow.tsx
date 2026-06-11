@@ -7,16 +7,6 @@ import {
   useDismiss,
   useInteractions,
 } from "@floating-ui/react";
-import {
-  Button,
-  makePrefixer,
-  useFloatingComponent,
-  useFloatingUI,
-  useForkRef,
-  useIcon,
-  useId,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -37,47 +27,54 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { ToolbarContentNext } from "./ToolbarContentNext";
-import toolbarNextOverflowCss from "./ToolbarNextOverflow.css";
+import { Button } from "../button";
+import { useIcon } from "../semantic-icon-provider";
 import {
-  getToolbarNextOverflowBoundaryKey,
+  makePrefixer,
+  useFloatingComponent,
+  useFloatingUI,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "../utils";
+import { ToolbarContent } from "./ToolbarContent";
+import toolbarOverflowCss from "./ToolbarOverflow.css";
+import {
+  getToolbarOverflowBoundaryKey,
   isTargetInsideOverflowBoundary,
-  ToolbarNextOverflowFloatingComponentProvider,
-  useToolbarNextOverflowFloatingBoundary,
-} from "./ToolbarNextOverflowFloatingBoundary";
+  ToolbarOverflowFloatingComponentProvider,
+  useToolbarOverflowFloatingBoundary,
+} from "./ToolbarOverflowFloatingBoundary";
 import {
   getDocumentFocusableElements,
-  getToolbarNextFocusMemory,
-  getToolbarNextScopeFocusableElements,
-  getToolbarNextTabMoveTarget,
-  scheduleToolbarNextFocus,
-  shouldToolbarNextPreserveNativeTab,
-  TOOLBAR_NEXT_GROUP_KEY_ATTR,
-  TOOLBAR_NEXT_ITEM_ATTR,
-  TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR,
-  TOOLBAR_NEXT_SCOPE_ROOT_ATTR,
-  type ToolbarNextFocusMemory,
-  toolbarNextFocusableSelector,
-} from "./toolbarNextKeyboardUtils";
-import type {
-  ToolbarNextContentModel,
-  ToolbarNextOverflowItem,
-} from "./toolbarNextUtils";
-import { buildContentOverflowRenderSlots } from "./toolbarNextUtils";
-import { useToolbarNextKeyboardNavigation } from "./useToolbarNextKeyboardNavigation";
-import type { ToolbarNextOverflowGroup } from "./useToolbarNextOverflow";
+  getToolbarFocusMemory,
+  getToolbarScopeFocusableElements,
+  getToolbarTabMoveTarget,
+  scheduleToolbarFocus,
+  shouldToolbarPreserveNativeTab,
+  TOOLBAR_GROUP_KEY_ATTR,
+  TOOLBAR_ITEM_ATTR,
+  TOOLBAR_OVERFLOW_TRIGGER_ATTR,
+  TOOLBAR_SCOPE_ROOT_ATTR,
+  type ToolbarFocusMemory,
+  toolbarFocusableSelector,
+} from "./toolbarKeyboardUtils";
+import type { ToolbarContentModel, ToolbarOverflowItem } from "./toolbarUtils";
+import { buildContentOverflowRenderSlots } from "./toolbarUtils";
+import { useToolbarKeyboardNavigation } from "./useToolbarKeyboardNavigation";
+import type { ToolbarOverflowGroup } from "./useToolbarOverflow";
 
-const withBaseName = makePrefixer("saltToolbarNextOverflow");
+const withBaseName = makePrefixer("saltToolbarOverflow");
 
-export type ToolbarNextItemHostKind = "main" | "measurement" | "overflow";
+export type ToolbarItemHostKind = "main" | "measurement" | "overflow";
 
-const toolbarNextStatefulFocusRootSelector = [
+const toolbarStatefulFocusRootSelector = [
   ".saltComboBox-focused",
   ".saltDateInput-focused",
   ".saltInput-focused",
 ].join(", ");
 
-const toolbarNextOverflowFocusScrollRootSelector = [
+const toolbarOverflowFocusScrollRootSelector = [
   ".saltComboBox",
   ".saltDateInput",
   ".saltDropdown",
@@ -85,9 +82,9 @@ const toolbarNextOverflowFocusScrollRootSelector = [
   ".saltSwitch",
 ].join(", ");
 
-type ToolbarNextOverflowOpenModality = "keyboard" | "pointer" | null;
+type ToolbarOverflowOpenModality = "keyboard" | "pointer" | null;
 
-function createToolbarNextFocusEvent(
+function createToolbarFocusEvent(
   eventName: "blur" | "focusout",
   target: HTMLElement,
   relatedTarget: Element | null,
@@ -103,7 +100,7 @@ function createToolbarNextFocusEvent(
     : new Event(eventName, eventInit);
 }
 
-function notifyToolbarNextReparentedFocusLoss(mountNode: HTMLDivElement) {
+function notifyToolbarReparentedFocusLoss(mountNode: HTMLDivElement) {
   const activeElement = mountNode.ownerDocument.activeElement;
 
   if (mountNode.contains(activeElement)) {
@@ -113,14 +110,12 @@ function notifyToolbarNextReparentedFocusLoss(mountNode: HTMLDivElement) {
   // Browser focus can move to the document when a portaled toolbar item is
   // reparented, without notifying controls that keep their own focused state.
   const staleFocusTargets = Array.from(
-    mountNode.querySelectorAll<HTMLElement>(
-      toolbarNextStatefulFocusRootSelector,
-    ),
+    mountNode.querySelectorAll<HTMLElement>(toolbarStatefulFocusRootSelector),
   )
     .map(
       (root) =>
         root.querySelector<HTMLElement>("input") ??
-        root.querySelector<HTMLElement>(toolbarNextFocusableSelector),
+        root.querySelector<HTMLElement>(toolbarFocusableSelector),
     )
     .filter((target): target is HTMLElement => target != null);
 
@@ -129,26 +124,26 @@ function notifyToolbarNextReparentedFocusLoss(mountNode: HTMLDivElement) {
       activeElement instanceof Element ? activeElement : null;
 
     target.dispatchEvent(
-      createToolbarNextFocusEvent("blur", target, relatedTarget),
+      createToolbarFocusEvent("blur", target, relatedTarget),
     );
     target.dispatchEvent(
-      createToolbarNextFocusEvent("focusout", target, relatedTarget),
+      createToolbarFocusEvent("focusout", target, relatedTarget),
     );
   }
 }
 
-function getToolbarNextOverflowFocusScrollTarget(target: HTMLElement) {
-  const itemRoot = target.closest<HTMLElement>(`[${TOOLBAR_NEXT_ITEM_ATTR}]`);
+function getToolbarOverflowFocusScrollTarget(target: HTMLElement) {
+  const itemRoot = target.closest<HTMLElement>(`[${TOOLBAR_ITEM_ATTR}]`);
   const controlRoot = target.closest<HTMLElement>(
-    toolbarNextOverflowFocusScrollRootSelector,
+    toolbarOverflowFocusScrollRootSelector,
   );
 
   return controlRoot && itemRoot?.contains(controlRoot) ? controlRoot : target;
 }
 
-function getToolbarNextOverflowPanelInlinePadding(target: HTMLElement) {
+function getToolbarOverflowPanelInlinePadding(target: HTMLElement) {
   const panelContent = target.closest<HTMLElement>(
-    `[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`,
+    `[${TOOLBAR_SCOPE_ROOT_ATTR}]`,
   );
   const styles =
     panelContent?.ownerDocument.defaultView?.getComputedStyle(panelContent);
@@ -159,7 +154,7 @@ function getToolbarNextOverflowPanelInlinePadding(target: HTMLElement) {
   };
 }
 
-function scrollToolbarNextOverflowTargetIntoView(
+function scrollToolbarOverflowTargetIntoView(
   panel: HTMLDivElement | null,
   target: HTMLElement,
 ) {
@@ -167,7 +162,7 @@ function scrollToolbarNextOverflowTargetIntoView(
     return;
   }
 
-  const scrollTarget = getToolbarNextOverflowFocusScrollTarget(target);
+  const scrollTarget = getToolbarOverflowFocusScrollTarget(target);
   const actions = compute(scrollTarget, {
     block: "nearest",
     boundary: panel,
@@ -181,7 +176,7 @@ function scrollToolbarNextOverflowTargetIntoView(
       const panelRect = panel.getBoundingClientRect();
       const viewportLeft = panelRect.left + panel.clientLeft;
       const viewportRight = viewportLeft + panel.clientWidth;
-      const padding = getToolbarNextOverflowPanelInlinePadding(scrollTarget);
+      const padding = getToolbarOverflowPanelInlinePadding(scrollTarget);
       const nextLeft =
         targetRect.left < viewportLeft + padding.left
           ? left - padding.left
@@ -199,26 +194,26 @@ function scrollToolbarNextOverflowTargetIntoView(
 }
 
 function canSeedOverflowFocusMemory(
-  focusMemory: ToolbarNextFocusMemory | null | undefined,
-  group: ToolbarNextOverflowGroup,
-): focusMemory is Extract<ToolbarNextFocusMemory, { type: "item" }> {
+  focusMemory: ToolbarFocusMemory | null | undefined,
+  group: ToolbarOverflowGroup,
+): focusMemory is Extract<ToolbarFocusMemory, { type: "item" }> {
   return (
     focusMemory?.type === "item" &&
     group.items.some((item) => item.id === focusMemory.itemId)
   );
 }
 
-interface ToolbarNextOverflowOwnersProps {
+interface ToolbarOverflowOwnersProps {
   hostNodes: Record<string, HTMLDivElement | null>;
-  items: ToolbarNextOverflowItem[];
+  items: ToolbarOverflowItem[];
 }
 
-function ToolbarNextOverflowItemOwner({
+function ToolbarOverflowItemOwner({
   host,
   item,
 }: {
   host: HTMLDivElement | null;
-  item: ToolbarNextOverflowItem;
+  item: ToolbarOverflowItem;
 }) {
   const targetWindow = useWindow();
   const [mountNode, setMountNode] = useState<HTMLDivElement | null>(null);
@@ -226,7 +221,7 @@ function ToolbarNextOverflowItemOwner({
     new WeakMap<HTMLElement, string | null>(),
   );
   const lastOverflowBoundaryKeyRef = useRef<string | null>(null);
-  const currentOverflowBoundaryKey = getToolbarNextOverflowBoundaryKey(host);
+  const currentOverflowBoundaryKey = getToolbarOverflowBoundaryKey(host);
 
   if (host) {
     lastOverflowBoundaryKeyRef.current = currentOverflowBoundaryKey;
@@ -259,17 +254,17 @@ function ToolbarNextOverflowItemOwner({
     if (host) {
       if (mountNode.parentElement !== host) {
         host.appendChild(mountNode);
-        notifyToolbarNextReparentedFocusLoss(mountNode);
+        notifyToolbarReparentedFocusLoss(mountNode);
       }
 
       const isMainToolbarHost =
         host
-          .closest(`[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`)
-          ?.getAttribute(TOOLBAR_NEXT_SCOPE_ROOT_ATTR) === "main";
+          .closest(`[${TOOLBAR_SCOPE_ROOT_ATTR}]`)
+          ?.getAttribute(TOOLBAR_SCOPE_ROOT_ATTR) === "main";
 
       if (isMainToolbarHost) {
         const focusableElements = Array.from(
-          mountNode.querySelectorAll<HTMLElement>(toolbarNextFocusableSelector),
+          mountNode.querySelectorAll<HTMLElement>(toolbarFocusableSelector),
         );
 
         for (const element of focusableElements) {
@@ -296,7 +291,7 @@ function ToolbarNextOverflowItemOwner({
       return;
     }
 
-    notifyToolbarNextReparentedFocusLoss(mountNode);
+    notifyToolbarReparentedFocusLoss(mountNode);
     mountNode.parentElement?.removeChild(mountNode);
   }, [host, mountNode]);
 
@@ -307,27 +302,27 @@ function ToolbarNextOverflowItemOwner({
   const clonedItem = cloneElement(
     item.element as ReactElement<Record<string, ReactNode>>,
     {
-      [TOOLBAR_NEXT_GROUP_KEY_ATTR]: item.overflowGroupKey,
-      [TOOLBAR_NEXT_ITEM_ATTR]: item.id,
+      [TOOLBAR_GROUP_KEY_ATTR]: item.overflowGroupKey,
+      [TOOLBAR_ITEM_ATTR]: item.id,
     },
   );
   const itemContent = (
-    <ToolbarNextOverflowFloatingComponentProvider boundaryKey={boundaryKey}>
+    <ToolbarOverflowFloatingComponentProvider boundaryKey={boundaryKey}>
       {clonedItem}
-    </ToolbarNextOverflowFloatingComponentProvider>
+    </ToolbarOverflowFloatingComponentProvider>
   );
 
   return createPortal(itemContent, mountNode);
 }
 
-export function ToolbarNextOverflowOwners({
+export function ToolbarOverflowOwners({
   hostNodes,
   items,
-}: ToolbarNextOverflowOwnersProps) {
+}: ToolbarOverflowOwnersProps) {
   return (
     <>
       {items.map((item) => (
-        <ToolbarNextOverflowItemOwner
+        <ToolbarOverflowItemOwner
           host={hostNodes[item.id] ?? null}
           item={item}
           key={item.id}
@@ -360,7 +355,7 @@ function cloneDecorations(
   });
 }
 
-export function ToolbarNextOverflowTriggerContent({
+export function ToolbarOverflowTriggerContent({
   label,
   named,
 }: {
@@ -376,28 +371,28 @@ export function ToolbarNextOverflowTriggerContent({
   return <OverflowIcon aria-hidden />;
 }
 
-function getOverflowTriggerLabel(group: ToolbarNextOverflowGroup) {
+function getOverflowTriggerLabel(group: ToolbarOverflowGroup) {
   return group.named
     ? `${group.label} overflow. Hidden controls.`
     : "Overflow. Hidden controls.";
 }
 
-interface ToolbarNextOverflowMenuProps {
-  focusMemoryRef?: RefObject<ToolbarNextFocusMemory | null>;
+interface ToolbarOverflowMenuProps {
+  focusMemoryRef?: RefObject<ToolbarFocusMemory | null>;
   getItemHostRef: (
     id: string,
-    kind: ToolbarNextItemHostKind,
+    kind: ToolbarItemHostKind,
   ) => (node: HTMLDivElement | null) => void;
-  group: ToolbarNextOverflowGroup;
+  group: ToolbarOverflowGroup;
   onItemFocus?: (itemId: string, controlIndex: number) => void;
 }
 
-export function ToolbarNextOverflowMenu({
+export function ToolbarOverflowMenu({
   focusMemoryRef,
   getItemHostRef,
   group,
   onItemFocus,
-}: ToolbarNextOverflowMenuProps) {
+}: ToolbarOverflowMenuProps) {
   const panelId = useId();
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -407,8 +402,8 @@ export function ToolbarNextOverflowMenu({
     useState<HTMLDivElement | null>(null);
   const wasOpenRef = useRef(false);
   const focusedOpenPanelRef = useRef(false);
-  const openModalityRef = useRef<ToolbarNextOverflowOpenModality>(null);
-  const floatingBoundary = useToolbarNextOverflowFloatingBoundary();
+  const openModalityRef = useRef<ToolbarOverflowOpenModality>(null);
+  const floatingBoundary = useToolbarOverflowFloatingBoundary();
   const {
     focusEntryTarget,
     handleScopeBlur,
@@ -416,7 +411,7 @@ export function ToolbarNextOverflowMenu({
     handleScopeKeyDown,
     handleScopePointerDown,
     rememberedFocusRef,
-  } = useToolbarNextKeyboardNavigation({
+  } = useToolbarKeyboardNavigation({
     includeTabIndexMinusOne: true,
     items: group.items,
     scopeRef: panelContentRef,
@@ -432,7 +427,7 @@ export function ToolbarNextOverflowMenu({
       }
 
       if (!nextOpen && reason === "escape-key") {
-        scheduleToolbarNextFocus(triggerRef.current);
+        scheduleToolbarFocus(triggerRef.current);
       }
     },
     placement: "bottom-end",
@@ -478,7 +473,7 @@ export function ToolbarNextOverflowMenu({
       if (open && event.key === "Escape") {
         event.preventDefault();
         setOpen(false);
-        scheduleToolbarNextFocus(triggerRef.current);
+        scheduleToolbarFocus(triggerRef.current);
       }
     },
     [open],
@@ -510,7 +505,7 @@ export function ToolbarNextOverflowMenu({
       if (
         panelContent &&
         target instanceof HTMLElement &&
-        shouldToolbarNextPreserveNativeTab(target)
+        shouldToolbarPreserveNativeTab(target)
       ) {
         const focusableElements = getDocumentFocusableElements(
           panelContent.ownerDocument,
@@ -531,17 +526,17 @@ export function ToolbarNextOverflowMenu({
 
     if (event.key === "Tab" && !event.shiftKey) {
       const toolbarRoot = triggerRef.current?.closest<HTMLElement>(
-        `[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`,
+        `[${TOOLBAR_SCOPE_ROOT_ATTR}]`,
       );
       const nextFocusTarget = toolbarRoot
-        ? getToolbarNextTabMoveTarget(toolbarRoot, false)
+        ? getToolbarTabMoveTarget(toolbarRoot, false)
         : null;
 
       if (nextFocusTarget) {
         event.preventDefault();
         event.stopPropagation();
         setOpen(false);
-        scheduleToolbarNextFocus(nextFocusTarget);
+        scheduleToolbarFocus(nextFocusTarget);
       }
 
       return;
@@ -551,7 +546,7 @@ export function ToolbarNextOverflowMenu({
       event.preventDefault();
       event.stopPropagation();
       setOpen(false);
-      scheduleToolbarNextFocus(triggerRef.current);
+      scheduleToolbarFocus(triggerRef.current);
       return;
     }
 
@@ -559,7 +554,7 @@ export function ToolbarNextOverflowMenu({
       event.preventDefault();
       event.stopPropagation();
       setOpen(false);
-      scheduleToolbarNextFocus(triggerRef.current);
+      scheduleToolbarFocus(triggerRef.current);
     }
   }, []);
 
@@ -583,7 +578,7 @@ export function ToolbarNextOverflowMenu({
         return;
       }
 
-      const focusMemory = getToolbarNextFocusMemory(panelContent, target, {
+      const focusMemory = getToolbarFocusMemory(panelContent, target, {
         includeTabIndexMinusOne: true,
       });
 
@@ -591,7 +586,7 @@ export function ToolbarNextOverflowMenu({
         return;
       }
 
-      scrollToolbarNextOverflowTargetIntoView(panelRef.current, target);
+      scrollToolbarOverflowTargetIntoView(panelRef.current, target);
       onItemFocus?.(focusMemory.itemId, focusMemory.controlIndex);
     },
     [handleScopeFocus, onItemFocus],
@@ -700,7 +695,7 @@ export function ToolbarNextOverflowMenu({
     }
 
     const getPanelFocusables = () =>
-      getToolbarNextScopeFocusableElements(panelContentNode, {
+      getToolbarScopeFocusableElements(panelContentNode, {
         includeTabIndexMinusOne: true,
       });
     const focusEntryWhenReady = () => {
@@ -768,8 +763,8 @@ export function ToolbarNextOverflowMenu({
         aria-label={getOverflowTriggerLabel(group)}
         className={withBaseName("trigger")}
         {...{
-          [TOOLBAR_NEXT_GROUP_KEY_ATTR]: group.key,
-          [TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR]: "",
+          [TOOLBAR_GROUP_KEY_ATTR]: group.key,
+          [TOOLBAR_OVERFLOW_TRIGGER_ATTR]: "",
         }}
         {...getReferenceProps({
           onKeyDown: handleTriggerKeyDown,
@@ -779,7 +774,7 @@ export function ToolbarNextOverflowMenu({
         ref={handleTriggerRef}
         sentiment="neutral"
       >
-        <ToolbarNextOverflowTriggerContent
+        <ToolbarOverflowTriggerContent
           label={group.label}
           named={group.named}
         />
@@ -813,7 +808,7 @@ export function ToolbarNextOverflowMenu({
           aria-label={`${group.label} overflow`}
           aria-orientation="horizontal"
           className={withBaseName("panelContent")}
-          {...{ [TOOLBAR_NEXT_SCOPE_ROOT_ATTR]: group.key }}
+          {...{ [TOOLBAR_SCOPE_ROOT_ATTR]: group.key }}
           role="toolbar"
           ref={handlePanelContentRef}
         >
@@ -838,22 +833,22 @@ export function ToolbarNextOverflowMenu({
   );
 }
 
-export interface ToolbarNextOverflowContentProps {
-  focusMemoryRef?: RefObject<ToolbarNextFocusMemory | null>;
+export interface ToolbarOverflowContentProps {
+  focusMemoryRef?: RefObject<ToolbarFocusMemory | null>;
   getItemHostRef: (
     id: string,
-    kind: ToolbarNextItemHostKind,
+    kind: ToolbarItemHostKind,
   ) => (node: HTMLDivElement | null) => void;
   getItemRef: (id: string) => (node: HTMLDivElement | null) => void;
   getNamedTriggerRef: (id: string) => (node: HTMLDivElement | null) => void;
   getContentRef: (contentKey: string) => (node: HTMLDivElement | null) => void;
   onItemFocus?: (itemId: string, controlIndex: number) => void;
-  overflowGroups: ToolbarNextOverflowGroup[];
+  overflowGroups: ToolbarOverflowGroup[];
   overflowedIds: Set<string>;
-  content: ToolbarNextContentModel;
+  content: ToolbarContentModel;
 }
 
-export function ToolbarNextOverflowContent({
+export function ToolbarOverflowContent({
   content,
   focusMemoryRef,
   getItemHostRef,
@@ -863,11 +858,11 @@ export function ToolbarNextOverflowContent({
   onItemFocus,
   overflowGroups,
   overflowedIds,
-}: ToolbarNextOverflowContentProps) {
+}: ToolbarOverflowContentProps) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-toolbar-next-overflow",
-    css: toolbarNextOverflowCss,
+    testId: "salt-toolbar-overflow",
+    css: toolbarOverflowCss,
     window: targetWindow,
   });
 
@@ -884,7 +879,7 @@ export function ToolbarNextOverflowContent({
   );
 
   return (
-    <ToolbarContentNext
+    <ToolbarContent
       {...contentProps}
       data-implicit={content.implicit || undefined}
       className={clsx(className, withBaseName("content"))}
@@ -931,7 +926,7 @@ export function ToolbarNextOverflowContent({
               ) : null}
               {triggerGroup ? (
                 <div className={withBaseName("item")}>
-                  <ToolbarNextOverflowMenu
+                  <ToolbarOverflowMenu
                     focusMemoryRef={focusMemoryRef}
                     getItemHostRef={getItemHostRef}
                     group={triggerGroup}
@@ -950,6 +945,6 @@ export function ToolbarNextOverflowContent({
           );
         },
       )}
-    </ToolbarContentNext>
+    </ToolbarContent>
   );
 }

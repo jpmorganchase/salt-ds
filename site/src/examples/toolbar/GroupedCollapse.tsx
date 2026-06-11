@@ -1,15 +1,21 @@
-import { Button, Dropdown, Option } from "@salt-ds/core";
+import {
+  Button,
+  Dropdown,
+  Option,
+  Toolbar,
+  ToolbarContent,
+  Tooltray,
+} from "@salt-ds/core";
 import { AddIcon } from "@salt-ds/icons";
-import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { ResizableExample } from "../components/ResizableExample";
 import { accountOptions, typeOptions } from "./toolbarExampleData";
 
 export const GroupedCollapse = (): ReactElement => (
   <ResizableExample>
-    <ToolbarNext aria-label="Account toolbar">
-      <ToolbarContentNext position="start">
-        <TooltrayNext overflowPriority={1}>
+    <Toolbar aria-label="Account toolbar">
+      <ToolbarContent position="start">
+        <Tooltray overflowPriority={1}>
           <Dropdown
             bordered
             defaultSelected={[typeOptions[1]]}
@@ -19,10 +25,10 @@ export const GroupedCollapse = (): ReactElement => (
               <Option key={option} value={option} />
             ))}
           </Dropdown>
-        </TooltrayNext>
-      </ToolbarContentNext>
-      <ToolbarContentNext position="end">
-        <TooltrayNext
+        </Tooltray>
+      </ToolbarContent>
+      <ToolbarContent position="end">
+        <Tooltray
           overflowGroup="Account"
           overflowLabel="Select account"
           overflowMode="grouped"
@@ -37,8 +43,8 @@ export const GroupedCollapse = (): ReactElement => (
               <Option key={option} value={option} />
             ))}
           </Dropdown>
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           overflowGroup="Account"
           overflowLabel="Select account"
           overflowMode="grouped"
@@ -47,8 +53,8 @@ export const GroupedCollapse = (): ReactElement => (
           <Button appearance="transparent" aria-label="Add account">
             <AddIcon aria-hidden />
           </Button>
-        </TooltrayNext>
-      </ToolbarContentNext>
-    </ToolbarNext>
+        </Tooltray>
+      </ToolbarContent>
+    </Toolbar>
   </ResizableExample>
 );

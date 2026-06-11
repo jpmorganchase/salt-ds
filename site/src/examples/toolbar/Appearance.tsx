@@ -1,6 +1,5 @@
-import { Button, Dropdown, Option } from "@salt-ds/core";
+import { Button, Dropdown, Option, Toolbar, Tooltray } from "@salt-ds/core";
 import { DownloadIcon, SettingsIcon } from "@salt-ds/icons";
-import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { ResizableExample } from "../components/ResizableExample";
 import styles from "./index.module.css";
@@ -9,8 +8,8 @@ import { typeOptions } from "./toolbarExampleData";
 export const Appearance = (): ReactElement => (
   <ResizableExample>
     <div className={styles.example}>
-      <ToolbarNext aria-label="Bordered toolbar">
-        <TooltrayNext>
+      <Toolbar aria-label="Bordered toolbar">
+        <Tooltray>
           <Dropdown
             bordered
             defaultSelected={[typeOptions[0]]}
@@ -20,8 +19,8 @@ export const Appearance = (): ReactElement => (
               <Option key={option} value={option} />
             ))}
           </Dropdown>
-        </TooltrayNext>
-        <TooltrayNext align="end">
+        </Tooltray>
+        <Tooltray align="end">
           <Button appearance="transparent" aria-label="Download">
             <DownloadIcon aria-hidden />
           </Button>
@@ -29,10 +28,10 @@ export const Appearance = (): ReactElement => (
             <SettingsIcon aria-hidden />
           </Button>
           <Button appearance="solid">Create view</Button>
-        </TooltrayNext>
-      </ToolbarNext>
-      <ToolbarNext appearance="transparent" aria-label="Transparent toolbar">
-        <TooltrayNext>
+        </Tooltray>
+      </Toolbar>
+      <Toolbar appearance="transparent" aria-label="Transparent toolbar">
+        <Tooltray>
           <Dropdown
             bordered
             defaultSelected={[typeOptions[0]]}
@@ -42,8 +41,8 @@ export const Appearance = (): ReactElement => (
               <Option key={option} value={option} />
             ))}
           </Dropdown>
-        </TooltrayNext>
-        <TooltrayNext align="end">
+        </Tooltray>
+        <Tooltray align="end">
           <Button appearance="transparent" aria-label="Download">
             <DownloadIcon aria-hidden />
           </Button>
@@ -51,8 +50,8 @@ export const Appearance = (): ReactElement => (
             <SettingsIcon aria-hidden />
           </Button>
           <Button appearance="solid">Create view</Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
     </div>
   </ResizableExample>
 );

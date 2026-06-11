@@ -74,6 +74,7 @@ export * from "./toast";
 export * from "./toggle-button";
 export * from "./toggle-button-group";
 export * from "./toggletip";
+export * from "./toolbar";
 export * from "./tooltip";
 export * from "./tree";
 export * from "./types";
