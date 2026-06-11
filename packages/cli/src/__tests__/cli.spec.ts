@@ -6980,4 +6980,291 @@ describe("salt cli", () => {
       /policy\.require_human_review_for/,
     );
   });
+
+  // ----- salt-ds review --emit-attestation / --verify-attestations (Phase 2 task 2.15 / E4, rev-3 narrowing) -----
+
+  it("review --hook --emit-attestation emits a SaltAttestationV1 NDJSON line on a clean PostToolUse review", async () => {
+    const rootDir = await createTempDir("salt-cli-attest-emit");
+    const filePath = path.join(rootDir, "Clean.tsx");
+    await fs.writeFile(
+      filePath,
+      [
+        'import { Card } from "@salt-ds/core";',
+        "",
+        "export function Clean() {",
+        "  return <Card>ok</Card>;",
+        "}",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(
+      [
+        "review",
+        "--hook",
+        "--emit-attestation",
+        "--registry-dir",
+        registryDir,
+      ],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(
+          Buffer.from(
+            JSON.stringify({
+              session_id: "sess-attest-emit",
+              cwd: rootDir,
+              hook_event_name: "PostToolUse",
+              tool_name: "Edit",
+              tool_input: { file_path: filePath },
+            }),
+            "utf8",
+          ),
+        ),
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(code).toBe(0);
+    expect(stderr).toBe("");
+    const lines = stdout.split("\n").filter((line) => line.length > 0);
+    expect(lines).toHaveLength(1);
+    const payload = JSON.parse(lines[0]);
+    expect(payload.$schema).toBe("salt-ds.dev/schemas/attestation/v1");
+    expect(payload.contract).toBe("salt_attestation_v1");
+    expect(payload.post_action).toEqual({
+      kind: "PostToolUse",
+      ran: true,
+      review_status: "ready",
+    });
+    expect(payload.files_touched).toHaveLength(1);
+    expect(payload.files_touched[0].path).toBe("Clean.tsx");
+    expect(payload.files_touched[0].hash_alg).toBe("sha256");
+    expect(payload.files_touched[0].hash).toMatch(/^[a-f0-9]{64}$/);
+    expect(payload.registry.hash).toMatch(/^[a-f0-9]{64}$/);
+    expect(payload.trace_id).toMatch(/^trace_[a-f0-9]{16}$/);
+  });
+
+  it("review --hook --emit-attestation emits no payload when review is blocking", async () => {
+    const rootDir = await createTempDir("salt-cli-attest-no-emit-on-block");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify(
+        { dependencies: { "@salt-ds/core": "^2.0.0" } },
+        null,
+        2,
+      ),
+      "utf8",
+    );
+    const filePath = path.join(rootDir, "App.tsx");
+    await fs.writeFile(
+      filePath,
+      [
+        'import { Button } from "@salt-ds/core";',
+        "",
+        "export function App() {",
+        '  return <Button href="/next">Go</Button>;',
+        "}",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+
+    let stdout = "";
+    let stderr = "";
+    const code = await runCli(
+      [
+        "review",
+        "--hook",
+        "--emit-attestation",
+        "--registry-dir",
+        registryDir,
+      ],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(
+          Buffer.from(
+            JSON.stringify({
+              cwd: rootDir,
+              hook_event_name: "PostToolUse",
+              tool_name: "Edit",
+              tool_input: { file_path: filePath },
+            }),
+            "utf8",
+          ),
+        ),
+        writeStdout: (message) => {
+          stdout += message;
+        },
+        writeStderr: (message) => {
+          stderr += message;
+        },
+      },
+    );
+
+    expect(code).toBe(2);
+    expect(stdout).toBe("");
+    expect(stderr).toMatch(/salt-ds review blocked/);
+  });
+
+  it("review --verify-attestations exits 0 when attestations match on-disk file hashes", async () => {
+    const rootDir = await createTempDir("salt-cli-attest-verify-pass");
+    const filePath = path.join(rootDir, "Clean.tsx");
+    await fs.writeFile(
+      filePath,
+      [
+        'import { Card } from "@salt-ds/core";',
+        "",
+        "export function Clean() {",
+        "  return <Card>ok</Card>;",
+        "}",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+
+    // Step 1: emit attestation via clean PostToolUse.
+    let emitStdout = "";
+    await runCli(
+      [
+        "review",
+        "--hook",
+        "--emit-attestation",
+        "--registry-dir",
+        registryDir,
+      ],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(
+          Buffer.from(
+            JSON.stringify({
+              cwd: rootDir,
+              hook_event_name: "PostToolUse",
+              tool_name: "Edit",
+              tool_input: { file_path: filePath },
+            }),
+            "utf8",
+          ),
+        ),
+        writeStdout: (message) => {
+          emitStdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+    expect(emitStdout.trim().length).toBeGreaterThan(0);
+
+    // Step 2: verify via stdin pipe.
+    let verifyStdout = "";
+    let verifyStderr = "";
+    const code = await runCli(
+      ["review", "--verify-attestations"],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
+        writeStdout: (message) => {
+          verifyStdout += message;
+        },
+        writeStderr: (message) => {
+          verifyStderr += message;
+        },
+      },
+    );
+
+    expect(code).toBe(0);
+    expect(verifyStderr).toBe("");
+    expect(verifyStdout).toMatch(/Verified 1 attestation/);
+  });
+
+  it("review --verify-attestations exits 2 with drift findings after a file is edited post-attestation", async () => {
+    const rootDir = await createTempDir("salt-cli-attest-verify-fail");
+    const filePath = path.join(rootDir, "Clean.tsx");
+    const original = [
+      'import { Card } from "@salt-ds/core";',
+      "",
+      "export function Clean() {",
+      "  return <Card>ok</Card>;",
+      "}",
+      "",
+    ].join("\n");
+    await fs.writeFile(filePath, original, "utf8");
+
+    let emitStdout = "";
+    await runCli(
+      [
+        "review",
+        "--hook",
+        "--emit-attestation",
+        "--registry-dir",
+        registryDir,
+      ],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(
+          Buffer.from(
+            JSON.stringify({
+              cwd: rootDir,
+              hook_event_name: "PostToolUse",
+              tool_name: "Edit",
+              tool_input: { file_path: filePath },
+            }),
+            "utf8",
+          ),
+        ),
+        writeStdout: (message) => {
+          emitStdout += message;
+        },
+        writeStderr: () => {},
+      },
+    );
+    expect(emitStdout.trim().length).toBeGreaterThan(0);
+
+    // Mutate the file after the attestation was emitted.
+    await fs.writeFile(filePath, `${original}// drift\n`, "utf8");
+
+    let verifyStderr = "";
+    const code = await runCli(
+      ["review", "--verify-attestations"],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
+        writeStdout: () => {},
+        writeStderr: (message) => {
+          verifyStderr += message;
+        },
+      },
+    );
+
+    expect(code).toBe(2);
+    expect(verifyStderr).toMatch(/drift finding/);
+    expect(verifyStderr).toMatch(/Clean\.tsx: expected /);
+
+    // Restoring the file should put verify back to clean (idempotency check).
+    await fs.writeFile(filePath, original, "utf8");
+    let verifyAgainStderr = "";
+    let verifyAgainStdout = "";
+    const cleanAgain = await runCli(
+      ["review", "--verify-attestations"],
+      {
+        cwd: rootDir,
+        stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
+        writeStdout: (message) => {
+          verifyAgainStdout += message;
+        },
+        writeStderr: (message) => {
+          verifyAgainStderr += message;
+        },
+      },
+    );
+    expect(cleanAgain).toBe(0);
+    expect(verifyAgainStderr).toBe("");
+    expect(verifyAgainStdout).toMatch(/All file hashes match/);
+  });
 });

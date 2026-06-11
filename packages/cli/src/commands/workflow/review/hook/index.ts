@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { ValidationSeverity } from "@salt-ds/semantic-core/validation/shared";
+import { buildAttestation } from "../../../../lib/attestation.js";
 import {
   emitHookAdvice,
   emitHookBlock,
@@ -10,7 +11,10 @@ import {
   readHookInput,
 } from "../../../../lib/hookIO.js";
 import { analyzeLintTargets } from "../../../../lib/lintAnalysis.js";
-import { readRegistryLoadOptionsFromFlags } from "../../../../lib/registry.js";
+import {
+  readRegistryLoadOptionsFromFlags,
+  resolveSemanticRegistry,
+} from "../../../../lib/registry.js";
 import type { LintCommandResult, RequiredCliIo } from "../../../../types.js";
 
 export const HOOK_LINTABLE_EXTENSIONS = new Set([
@@ -361,6 +365,23 @@ export async function runReviewHookPostToolUse(
 
     const blocking = summarizeReviewHookBlockingFindings(sourceValidation);
     if (blocking.length === 0) {
+      if (flags["emit-attestation"] === "true") {
+        const { registry } = await resolveSemanticRegistry(
+          io.cwd,
+          flags["registry-dir"],
+          readRegistryLoadOptionsFromFlags(flags),
+        );
+        const attestation = await buildAttestation({
+          cwd: hookInput.hookCwd ?? io.cwd,
+          registryVersion: registry.version,
+          registryGeneratedAt: registry.generated_at,
+          reviewedAbsolutePaths: saltBearing,
+          evidenceRefs: [],
+          postActionRan: true,
+          reviewStatus: "ready",
+        });
+        io.writeStdout(`${JSON.stringify(attestation)}\n`);
+      }
       return emitHookPass();
     }
     return emitHookBlock(formatReviewHookBlockingReason(blocking), io);

@@ -67,12 +67,17 @@ import {
   readReviewHookPolicyRules,
   runReviewHookCommand,
 } from "./hook/index.js";
+import { runVerifyAttestationsCommand } from "./verify/index.js";
 
 export async function runReviewCommand(
   positionals: string[],
   flags: Record<string, string>,
   io: RequiredCliIo,
 ): Promise<number> {
+  if (flags["verify-attestations"] != null) {
+    return runVerifyAttestationsCommand(flags, { io });
+  }
+
   if (flags.hook === "true") {
     return runReviewHookCommand(positionals, flags, io);
   }
@@ -251,10 +256,6 @@ async function runReviewLikeCommand(
             ? flags.mode
             : "auto",
         timeoutMs: Number.isFinite(timeoutMs) ? timeoutMs : undefined,
-        outputDir: flags["output-dir"]
-          ? path.resolve(io.cwd, flags["output-dir"])
-          : undefined,
-        captureScreenshot: flags["no-screenshot"] !== "true",
       });
     }
 
