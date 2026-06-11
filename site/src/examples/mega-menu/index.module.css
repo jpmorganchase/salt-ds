@@ -1,11 +1,7 @@
 .navList {
   list-style: none;
   padding: 0;
-}
-
-.fullWidthWrapper {
-  padding: var(--salt-layout-page-margin);
-  box-sizing: border-box;
+  justify-content: center;
 }
 
 .fullWidthPanel {
@@ -54,11 +50,6 @@
 
 .menuItemFullWidth > a {
   inline-size: 100%;
-}
-
-.smallViewportWrapper {
-  inline-size: 320px;
-  max-inline-size: 100%;
 }
 
 .smallViewportContainer {
