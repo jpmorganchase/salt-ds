@@ -1,18 +1,22 @@
+import type {
+  MigrateToSaltResult,
+  MigrateToSaltWorkflowContract,
+} from "@salt-ds/semantic-core/tools/migrateToSalt";
+import type { PublicContract } from "@salt-ds/semantic-core/tools/publicContract";
 import {
   buildCreatePublicContract,
   buildMigratePublicContract,
   buildReviewPublicContract,
   buildUpgradePublicContract,
 } from "@salt-ds/semantic-core/tools/publicContract";
-import type { PublicContract } from "@salt-ds/semantic-core/tools/publicContract";
-import type { MigrateToSaltResult } from "@salt-ds/semantic-core/tools/migrateToSalt";
-import type { MigrateToSaltWorkflowContract } from "@salt-ds/semantic-core/tools/migrateToSalt";
 import type {
   ReviewSaltUiResult,
   ReviewSaltUiWorkflowContract,
 } from "@salt-ds/semantic-core/tools/reviewSaltUi";
-import type { UpgradeSaltUiResult } from "@salt-ds/semantic-core/tools/upgradeSaltUi";
-import type { UpgradeSaltUiWorkflowContract } from "@salt-ds/semantic-core/tools/upgradeSaltUi";
+import type {
+  UpgradeSaltUiResult,
+  UpgradeSaltUiWorkflowContract,
+} from "@salt-ds/semantic-core/tools/upgradeSaltUi";
 import type { CreateSaltUiWorkflowContract } from "@salt-ds/semantic-core/tools/workflowContracts";
 import type { resolveSemanticRegistry } from "../../../lib/semanticRuntime.js";
 import type { CreateWorkflowResult } from "./types.js";

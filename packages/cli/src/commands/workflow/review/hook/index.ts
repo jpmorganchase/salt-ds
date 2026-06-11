@@ -30,7 +30,9 @@ export function isLikelyLintableExtension(filePath: string): boolean {
   return HOOK_LINTABLE_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
 
-export async function fileContainsSaltImport(filePath: string): Promise<boolean> {
+export async function fileContainsSaltImport(
+  filePath: string,
+): Promise<boolean> {
   try {
     const content = await fs.readFile(filePath, "utf8");
     return content.includes(SALT_PACKAGE_IMPORT_NEEDLE);
@@ -167,11 +169,12 @@ export function applyRequireHumanReviewPolicyFindings(
     const policyIssues: Array<Record<string, unknown>> = [];
     let topMessage: string | null = null;
     for (const rule of matchedRules) {
-      const kindSlug = (rule.kind ?? "unspecified")
-        .trim()
-        .replace(/[^a-zA-Z0-9._-]+/g, "-")
-        .replace(/^-+|-+$/g, "")
-        .toLowerCase() || "unspecified";
+      const kindSlug =
+        (rule.kind ?? "unspecified")
+          .trim()
+          .replace(/[^a-zA-Z0-9._-]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .toLowerCase() || "unspecified";
       const ruleId = `policy.require_human_review_for.${kindSlug}`;
       const summary = describeMatchedRule(rule, [file.relativePath]);
       const message = `require_human_review_for: ${summary}`;
