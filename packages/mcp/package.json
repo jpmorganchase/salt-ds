@@ -33,7 +33,6 @@
   "typescriptRootDir": "src",
   "publishBundledWorkspaceDependencies": [
     "@salt-ds/runtime-inspector-core",
-    "@salt-ds/runtime-inspector-browser",
     "@salt-ds/semantic-core"
   ],
   "publishAdditionalEntryPaths": [
@@ -60,7 +59,6 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "@salt-ds/runtime-inspector-browser": "workspace:*",
     "@salt-ds/runtime-inspector-core": "workspace:*",
     "@salt-ds/semantic-core": "workspace:*",
     "get-tsconfig": "^4.7.5",

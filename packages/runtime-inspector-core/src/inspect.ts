@@ -1,8 +1,4 @@
-import type {
-  ArtifactDescriptor,
-  RuntimeErrorRecord,
-  RuntimeInspectResult,
-} from "./schemas.js";
+import { inspectBrowserSession } from "./inspectBrowserSession.js";
 import {
   createBaseResult,
   createUnavailableLayoutEvidence,
@@ -10,13 +6,13 @@ import {
   type RuntimeInspectOptions,
   summarizeHtmlDocument,
 } from "./inspectShared.js";
+import type {
+  ArtifactDescriptor,
+  RuntimeErrorRecord,
+  RuntimeInspectResult,
+} from "./schemas.js";
 
 export type { RuntimeInspectOptions } from "./inspectShared.js";
-
-const BROWSER_INSPECTOR_PACKAGE = "@salt-ds/runtime-inspector-browser";
-
-const BROWSER_INSTALL_HINT =
-  "Browser-session inspection requires Playwright. Install it with `npm install playwright` (or `yarn add playwright`), then rerun. To skip browser inspection, use `--mode fetched-html`.";
 
 async function fetchWithTimeout(
   url: string,
@@ -85,74 +81,17 @@ async function inspectFetchedHtml(
   });
 }
 
-type BrowserInspectFn = (
-  url: string,
-  options: RuntimeInspectOptions,
-) => Promise<RuntimeInspectResult>;
-
-type BrowserInspectorLoadResult =
-  | { ok: true; inspect: BrowserInspectFn }
-  | { ok: false; error: unknown };
-
-let cachedBrowserInspector: BrowserInspectorLoadResult | null = null;
-
-async function loadBrowserInspector(): Promise<BrowserInspectorLoadResult> {
-  if (cachedBrowserInspector) {
-    return cachedBrowserInspector;
-  }
-
-  try {
-    // Literal import specifier so:
-    // 1. Rollup (with @salt-ds/runtime-inspector-browser in
-    //    publishBundledWorkspaceDependencies for @salt-ds/cli and
-    //    @salt-ds/mcp) bundles the adapter source as a preserved sibling
-    //    module and rewrites this dynamic import to the relative path —
-    //    consumers do not need a second `npm install` to get browser-mode
-    //    code, only `playwright` itself if they want to use it.
-    // 2. Vitest's vi.doMock can intercept this site for the lazy-loader
-    //    unit tests in inspectLazyLoader.spec.ts.
-    // Playwright remains lazy-required from inside the browser adapter so
-    // its ~250 MB cost only materialises when --mode browser actually runs.
-    const browserModule = (await import(
-      "@salt-ds/runtime-inspector-browser"
-    )) as {
-      inspectBrowserSession?: BrowserInspectFn;
-    };
-
-    if (typeof browserModule.inspectBrowserSession !== "function") {
-      cachedBrowserInspector = {
-        ok: false,
-        error: new Error(
-          `${BROWSER_INSPECTOR_PACKAGE} did not export inspectBrowserSession`,
-        ),
-      };
-      return cachedBrowserInspector;
-    }
-
-    cachedBrowserInspector = {
-      ok: true,
-      inspect: browserModule.inspectBrowserSession,
-    };
-  } catch (error) {
-    cachedBrowserInspector = { ok: false, error };
-  }
-
-  return cachedBrowserInspector;
-}
-
 /**
- * Test-only hook: clear the memoised browser-adapter lookup so a fresh
- * dynamic import can be observed. Not part of the public surface.
+ * Inspect a URL. In `auto` mode (default) tries `playwright` first and
+ * silently falls back to fetched-HTML if Playwright is not installed. In
+ * `browser` mode throws on missing Playwright. In `fetched-html` mode
+ * skips Playwright entirely.
+ *
+ * Playwright is an optional peer dependency: install it with
+ * `npm install playwright` (or `yarn add playwright`) only if you want
+ * browser-session evidence. The ~250 MB cost is paid only when
+ * `inspectBrowserSession` actually runs.
  */
-export function __resetBrowserInspectorCacheForTests(): void {
-  cachedBrowserInspector = null;
-}
-
-function describeMissingBrowserAdapter(error: unknown): string {
-  const detail = getErrorMessage(error);
-  return `${BROWSER_INSTALL_HINT} (detail: ${detail})`;
-}
-
 export async function inspectUrl(
   url: string,
   options: RuntimeInspectOptions = {},
@@ -163,20 +102,8 @@ export async function inspectUrl(
     return inspectFetchedHtml(url, options);
   }
 
-  const browserInspector = await loadBrowserInspector();
-
-  if (!browserInspector.ok) {
-    if (mode === "browser") {
-      throw new Error(describeMissingBrowserAdapter(browserInspector.error));
-    }
-
-    return inspectFetchedHtml(url, options, [
-      `Browser-session inspection was unavailable, so the inspector fell back to fetched-html mode: ${describeMissingBrowserAdapter(browserInspector.error)}`,
-    ]);
-  }
-
   try {
-    return await browserInspector.inspect(url, options);
+    return await inspectBrowserSession(url, options);
   } catch (error) {
     if (mode === "browser") {
       throw error;
@@ -187,5 +114,3 @@ export async function inspectUrl(
     ]);
   }
 }
-
-

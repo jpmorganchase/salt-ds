@@ -9,14 +9,14 @@ import {
   type RuntimeInspectOptions,
   sanitizeArtifactStem,
   summarizeHtmlDocument,
-} from "@salt-ds/runtime-inspector-core/inspect-internals";
+} from "./inspectShared.js";
 import type {
   ArtifactDescriptor,
   RuntimeErrorRecord,
   RuntimeInspectResult,
-} from "@salt-ds/runtime-inspector-core";
+} from "./schemas.js";
 
-export type { RuntimeInspectOptions } from "@salt-ds/runtime-inspector-core/inspect-internals";
+export type { RuntimeInspectOptions } from "./inspectShared.js";
 
 const PLAYWRIGHT_INSTALL_HINT =
   "Browser-session inspection requires the optional `playwright` peer dependency. Install it with `npm install playwright` (or `yarn add playwright`) and rerun, or use `--mode fetched-html`.";

@@ -10,13 +10,9 @@ import type {
 } from "./schemas.js";
 
 /**
- * Shared helpers and types used by both the jsdom-only inspector in this
- * package and the optional browser-session adapter in
- * `@salt-ds/runtime-inspector-browser`.
- *
- * Intentionally exported via the `./inspect-internals` subpath. This is an
- * internal contract between the two runtime-inspector packages, NOT a
- * stable public API.
+ * Shared helpers and types used by both the fetched-HTML inspector and
+ * the optional Playwright browser-session inspector. Internal to this
+ * package; not a stable public API.
  */
 
 export interface RuntimeInspectOptions {

@@ -4396,7 +4396,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/cli@workspace:packages/cli"
   dependencies:
-    "@salt-ds/runtime-inspector-browser": "workspace:*"
     "@salt-ds/runtime-inspector-core": "workspace:*"
     "@salt-ds/semantic-core": "workspace:*"
     get-tsconfig: "npm:^4.7.5"
@@ -4616,7 +4615,6 @@ __metadata:
   resolution: "@salt-ds/mcp@workspace:packages/mcp"
   dependencies:
     "@modelcontextprotocol/sdk": "npm:^1.29.0"
-    "@salt-ds/runtime-inspector-browser": "workspace:*"
     "@salt-ds/runtime-inspector-core": "workspace:*"
     "@salt-ds/semantic-core": "workspace:*"
     "@types/semver": "npm:^7.7.1"
@@ -4720,20 +4718,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/runtime-inspector-browser@workspace:*, @salt-ds/runtime-inspector-browser@workspace:packages/runtime-inspector-browser":
-  version: 0.0.0-use.local
-  resolution: "@salt-ds/runtime-inspector-browser@workspace:packages/runtime-inspector-browser"
-  dependencies:
-    "@salt-ds/runtime-inspector-core": "workspace:*"
-    playwright: "npm:^1.55.1"
-  peerDependencies:
-    playwright: ^1.55.1
-  peerDependenciesMeta:
-    playwright:
-      optional: true
-  languageName: unknown
-  linkType: soft
-
 "@salt-ds/runtime-inspector-core@workspace:*, @salt-ds/runtime-inspector-core@workspace:packages/runtime-inspector-core":
   version: 0.0.0-use.local
   resolution: "@salt-ds/runtime-inspector-core@workspace:packages/runtime-inspector-core"
@@ -4742,8 +4726,14 @@ __metadata:
     "@types/jsdom": "npm:^21.1.7"
     dom-accessibility-api: "npm:^0.7.0"
     jsdom: "npm:^26.1.0"
+    playwright: "npm:^1.55.1"
     semver: "npm:^7.7.3"
     zod: "npm:^4.1.11"
+  peerDependencies:
+    playwright: ^1.55.1
+  peerDependenciesMeta:
+    playwright:
+      optional: true
   languageName: unknown
   linkType: soft
 

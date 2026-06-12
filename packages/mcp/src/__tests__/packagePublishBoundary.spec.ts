@@ -159,7 +159,6 @@ const FORBIDDEN_EVAL_PAYLOAD_REFERENCES = [
 
 const SHARED_WORKFLOW_DEPENDENCIES = [
   "@salt-ds/runtime-inspector-core",
-  "@salt-ds/runtime-inspector-browser",
   "@salt-ds/semantic-core",
 ];
 
@@ -181,7 +180,7 @@ describe("package publish boundaries", () => {
     const manifest = readJson<PackageManifest>("../../package.json");
 
     expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-mcp");
-    expect(manifest.files).toEqual(["bin", "generated", "schemas"]);
+    expect(manifest.files).toEqual(["bin"]);
     expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
     expect(manifest.publishBundledWorkspaceDependencies).toEqual(
       SHARED_WORKFLOW_DEPENDENCIES,
@@ -190,18 +189,32 @@ describe("package publish boundaries", () => {
       ".",
       "./package.json",
     ]);
+    expect(manifest.publishExtraCopyPaths).toEqual([
+      {
+        from: "../semantic-core/generated",
+        to: "generated",
+      },
+      {
+        from: "../semantic-core/schemas",
+        to: "schemas",
+      },
+    ]);
   });
 
   it("keeps CLI published file roots limited to fallback runtime payload", () => {
     const manifest = readJson<PackageManifest>("../../../cli/package.json");
 
     expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-cli");
-    expect(manifest.files).toEqual(["bin", "generated"]);
+    expect(manifest.files).toEqual(["bin"]);
     expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
     expect(manifest.publishBundledWorkspaceDependencies).toEqual(
       SHARED_WORKFLOW_DEPENDENCIES,
     );
     expect(manifest.publishExtraCopyPaths).toEqual([
+      {
+        from: "../semantic-core/generated",
+        to: "generated",
+      },
       {
         from: "../semantic-core/schemas",
         to: "schemas",
@@ -241,9 +254,9 @@ describe("package publish boundaries", () => {
     );
   });
 
-  it("declares playwright as an optional peer of @salt-ds/runtime-inspector-browser so the build script keeps it unbundled", () => {
+  it("declares playwright as an optional peer of @salt-ds/runtime-inspector-core so the build script keeps it unbundled", () => {
     const manifest = readWorkspacePackageManifest(
-      "@salt-ds/runtime-inspector-browser",
+      "@salt-ds/runtime-inspector-core",
     );
     expect(manifest.peerDependencies?.playwright).toBeDefined();
     expect(manifest.peerDependenciesMeta?.playwright?.optional).toBe(true);

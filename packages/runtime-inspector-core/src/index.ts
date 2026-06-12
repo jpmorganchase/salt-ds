@@ -4,6 +4,7 @@ export {
   runDoctor,
 } from "./doctor.js";
 export { inspectUrl, type RuntimeInspectOptions } from "./inspect.js";
+export { inspectBrowserSession } from "./inspectBrowserSession.js";
 export {
   type DetectedRuntimeTarget,
   detectLocalRuntimeTargets,
