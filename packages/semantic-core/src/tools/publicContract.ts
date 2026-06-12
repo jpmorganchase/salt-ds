@@ -167,8 +167,7 @@ export type PublicActionKind = PublicNextStep["kind"];
 /**
  * Top-level block recording validator/registry coverage gaps that are
  * independent of workflow status. Always present so hosts can branch on
- * the fields without runtime nullish checks. See
- * packages/mcp/docs/salt-workflow-v1-host-contract.md for the semantics.
+ * the fields without runtime nullish checks.
  *
  * - unsupported_claim_count - number of generated-artifact claims the
  *   registry could not validate (e.g. components/patterns not yet covered).

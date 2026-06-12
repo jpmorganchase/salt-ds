@@ -126,7 +126,7 @@ const COMMAND_HELP: Record<string, string[]> = {
     "  --verify-attestations reads attestation payloads from stdin (one per line), verifies the recorded file hashes against the current on-disk file hashes, and exits non-zero on drift. Standalone-usable in CI or from a Stop hook.",
     "",
     "Policy findings:",
-    "  When .salt/team.json declares require_human_review_for rules, each matching file surfaces a blocking finding with rule id policy.require_human_review_for.<kind>. The review exits non-zero through the standard contract status (blocked), with no opinion about labels, env vars, or bypass mechanisms. See packages/cli/docs/ci-integration.md for composing this with your CI bypass conventions.",
+    "  When .salt/team.json declares require_human_review_for rules, each matching file surfaces a blocking finding with rule id policy.require_human_review_for.<kind>. The review exits non-zero through the standard contract status (blocked), with no opinion about labels, env vars, or bypass mechanisms.",
     "",
     "JSON statuses:",
     "  success: clean review; action.kind is complete and outcome is no_changes_required.",

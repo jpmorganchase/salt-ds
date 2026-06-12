@@ -1,6 +1,5 @@
 /**
- * Tests for behaviour fixes B1–B12 documented in
- * packages/mcp/docs/behaviour-issues-audit.md
+ * Tests for behaviour fixes B1–B12.
  */
 import { describe, expect, it } from "vitest";
 import { type QueryField, scoreQueryFields } from "../consumerSignals.js";

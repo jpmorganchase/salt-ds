@@ -180,9 +180,8 @@ describe("published JSON schemas — vendor-name regression test (PR 20 / task 0
         `Found ${allHits.length} forbidden vendor/env-var/tool reference(s) ` +
           `in published JSON schemas. Published schemas describe what data ` +
           `means, never which CI integration or host consumes it. Move the ` +
-          `vendor-specific guidance to consumer-facing docs (e.g. ` +
-          `packages/cli/docs/ci-integration.md) and leave the schema ` +
-          `description vendor-agnostic.\n${formatHits(allHits)}`,
+          `vendor-specific guidance to consumer-facing docs and leave the ` +
+          `schema description vendor-agnostic.\n${formatHits(allHits)}`,
       );
     }
     expect(allHits).toEqual([]);

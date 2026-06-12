@@ -1481,8 +1481,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       readOnlyHint: false,
       // destructiveHint reflects that caller-supplied output_dir / manifest_path
       // overrides may point at any path inside root_dir, and the tool will
-      // overwrite whatever exists there. See packages/mcp/docs/public-api-matrix.md
-      // §Annotation Audit (Task 0.8) for the rationale.
+      // overwrite whatever exists there.
       destructiveHint: true,
       idempotentHint: true,
       openWorldHint: false,
@@ -1538,8 +1537,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       readOnlyHint: false,
       // destructiveHint reflects that artifact_path is always caller-supplied
       // and may point at any path inside root_dir; the tool will overwrite
-      // whatever exists there when the release gate passes. See
-      // packages/mcp/docs/public-api-matrix.md §Annotation Audit (Task 0.8).
+      // whatever exists there when the release gate passes.
       destructiveHint: true,
       idempotentHint: true,
       openWorldHint: false,

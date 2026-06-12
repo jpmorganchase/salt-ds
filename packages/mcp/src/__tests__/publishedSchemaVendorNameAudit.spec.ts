@@ -234,9 +234,8 @@ describe("published Zod tool schemas — vendor-name regression test (PR 20 / ta
         `Found ${allHits.length} forbidden vendor/env-var/tool reference(s) ` +
           `in published MCP tool schemas. Published schemas describe what ` +
           `data means, never which CI integration or host consumes it. ` +
-          `Move the vendor-specific guidance to consumer-facing docs (e.g. ` +
-          `packages/cli/docs/ci-integration.md) and leave the schema ` +
-          `.describe() string vendor-agnostic.\n${formatHits(allHits)}`,
+          `Move the vendor-specific guidance to consumer-facing docs and ` +
+          `leave the schema .describe() string vendor-agnostic.\n${formatHits(allHits)}`,
       );
     }
     expect(allHits).toEqual([]);

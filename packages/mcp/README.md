@@ -198,8 +198,6 @@ This README is the MCP package reference. Keep setup sequencing, skill installat
 
 Related maintainer references:
 
-- [`./docs/public-api-matrix.md`](./docs/public-api-matrix.md)
-- [`./docs/maintaining-salt-ai-tooling.md`](./docs/maintaining-salt-ai-tooling.md)
 - [`../skills/README.md`](../skills/README.md)
 
 ## Notes
@@ -247,10 +245,7 @@ Use `view: "full"` when you need to understand why the MCP chose a particular pa
 
 ## Maintainer Notes
 
-For architectural maintenance guidance, see [`docs/maintaining-salt-ai-tooling.md`](./docs/maintaining-salt-ai-tooling.md).
-
-- Registry artifact filenames and payload keys are centralized in [`../semantic-core/src/registry/artifacts.ts`](../semantic-core/src/registry/artifacts.ts).
-- Canonical registry build/load ownership lives in [`../semantic-core/src/build/buildRegistry.ts`](../semantic-core/src/build/buildRegistry.ts) and [`../semantic-core/src/registry/loadRegistry.ts`](../semantic-core/src/registry/loadRegistry.ts). MCP keeps a small internal runtime loader in [`src/registry/loadRegistry.ts`](./src/registry/loadRegistry.ts) for its bundled `generated/` snapshot and maintainer scripts.
+- Canonical registry build/load ownership lives in [`../semantic-core/src/build/buildRegistry.ts`](../semantic-core/src/build/buildRegistry.ts) and [`../semantic-core/src/registry/loadRegistry.ts`](../semantic-core/src/registry/loadRegistry.ts). MCP keeps a small internal runtime loader in [`src/registry/loadRegistry.ts`](./src/registry/loadRegistry.ts) that resolves the bundled `generated/` directory shipped via `publishExtraCopyPaths`.
 - MCP tool metadata is defined in [`src/server/toolDefinitions.ts`](./src/server/toolDefinitions.ts). The server registration layer in [`src/server/registerTools.ts`](./src/server/registerTools.ts) and [`src/server/createServer.ts`](./src/server/createServer.ts) stays intentionally thin, with runtime-vs-registry version metadata centralized in [`src/server/serverMetadata.ts`](./src/server/serverMetadata.ts).
 - Lookup, recommendation, search, translation, and code-analysis helpers now live in [`../semantic-core/src/tools`](../semantic-core/src/tools) as internal building blocks. The default public `@salt-ds/mcp` surface is the curated workflow-first set plus read-only Salt support tools, server entrypoints, and tool metadata above.
 - The main test entry points are:
