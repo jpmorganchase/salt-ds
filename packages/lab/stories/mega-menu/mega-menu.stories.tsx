@@ -15,7 +15,6 @@ import {
   CartIcon,
   ChartBubbleIcon,
   ChatGroupIcon,
-  ChevronRightIcon,
   DatasetManagerIcon,
   DevicesIcon,
   DisplayIcon,
@@ -23,7 +22,7 @@ import {
   DocumentIcon,
   GuideClosedIcon,
   GuideOpenIcon,
-  HelpIcon,
+  HelpCircleIcon,
   InfoIcon,
   KeyIcon,
   LaptopIcon,
@@ -561,7 +560,7 @@ export const WithIcons: StoryFn = () => {
                           console.log("MegaMenuItem clicked:", "/faqs")
                         }
                       >
-                        <HelpIcon aria-hidden />
+                        <HelpCircleIcon aria-hidden />
                         FAQs
                       </MegaMenuItem>
                     </MegaMenuItemList>
@@ -3118,20 +3117,10 @@ export const WithContent: StoryFn = () => {
             </MegaMenuGroups>
             <MegaMenuSupportingActions>
               <FlexLayout gap={3}>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
+                <Link color="primary" underline="default" href="#link">
                   Book a demo
                 </Link>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
+                <Link color="primary" underline="default" href="#link">
                   Support center
                 </Link>
               </FlexLayout>
@@ -3159,7 +3148,6 @@ export const WithContent: StoryFn = () => {
                   color="primary"
                   underline="default"
                   href="#link"
-                  IconComponent={ChevronRightIcon}
                   style={{ width: "fit-content" }}
                 >
                   View guidelines
@@ -3203,7 +3191,6 @@ export const WithContent: StoryFn = () => {
                   color="primary"
                   underline="default"
                   href="#link"
-                  IconComponent={ChevronRightIcon}
                   style={{ width: "fit-content" }}
                 >
                   View guidelines
@@ -3323,20 +3310,10 @@ export const WithContent: StoryFn = () => {
             </MegaMenuGroups>
             <MegaMenuSupportingActions>
               <FlexLayout gap={3}>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
+                <Link color="primary" underline="default" href="#link">
                   Book a demo
                 </Link>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  IconComponent={ChevronRightIcon}
-                >
+                <Link color="primary" underline="default" href="#link">
                   Support center
                 </Link>
               </FlexLayout>
@@ -3564,20 +3541,10 @@ export const WithLink: StoryFn = () => {
                 </MegaMenuGroups>
                 <MegaMenuSupportingActions>
                   <FlexLayout wrap gap={3}>
-                    <Link
-                      color="primary"
-                      underline="default"
-                      href="#link"
-                      IconComponent={ChevronRightIcon}
-                    >
+                    <Link color="primary" underline="default" href="#link">
                       Book a demo
                     </Link>
-                    <Link
-                      color="primary"
-                      underline="default"
-                      href="#link"
-                      IconComponent={ChevronRightIcon}
-                    >
+                    <Link color="primary" underline="default" href="#link">
                       Support center
                     </Link>
                   </FlexLayout>
@@ -3764,12 +3731,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuGroup>
                 </MegaMenuGroups>
                 <MegaMenuSupportingActions>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
+                  <Link color="primary" underline="default" href="#link">
                     Service status
                   </Link>
                 </MegaMenuSupportingActions>
@@ -3867,12 +3829,7 @@ export const WithLink: StoryFn = () => {
                   </MegaMenuGroup>
                 </MegaMenuGroups>
                 <MegaMenuSupportingActions>
-                  <Link
-                    color="primary"
-                    underline="default"
-                    href="#link"
-                    IconComponent={ChevronRightIcon}
-                  >
+                  <Link color="primary" underline="default" href="#link">
                     Browse documentation
                   </Link>
                 </MegaMenuSupportingActions>

@@ -1,5 +1,4 @@
 import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
-import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
   MegaMenuBody,
@@ -41,7 +40,6 @@ const featuredResource = (
         color="primary"
         underline="default"
         href="#link"
-        IconComponent={ChevronRightIcon}
         style={{ width: "fit-content" }}
       >
         View guidelines
@@ -52,20 +50,10 @@ const featuredResource = (
 
 const supportingLinks = (
   <FlexLayout gap={3}>
-    <Link
-      color="primary"
-      underline="default"
-      href="#link"
-      IconComponent={ChevronRightIcon}
-    >
+    <Link color="primary" underline="default" href="#link">
       Book a demo
     </Link>
-    <Link
-      color="primary"
-      underline="default"
-      href="#link"
-      IconComponent={ChevronRightIcon}
-    >
+    <Link color="primary" underline="default" href="#link">
       Support center
     </Link>
   </FlexLayout>

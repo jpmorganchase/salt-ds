@@ -1,5 +1,4 @@
 import { FlexLayout, Link, NavigationItem, StackLayout } from "@salt-ds/core";
-import { ChevronRightIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
   MegaMenuBody,
@@ -238,20 +237,10 @@ export const WithLink = (): ReactElement => {
                   </MegaMenuGroups>
                   <MegaMenuSupportingActions>
                     <FlexLayout wrap gap={3}>
-                      <Link
-                        color="primary"
-                        underline="default"
-                        href="#link"
-                        IconComponent={ChevronRightIcon}
-                      >
+                      <Link color="primary" underline="default" href="#link">
                         Book a demo
                       </Link>
-                      <Link
-                        color="primary"
-                        underline="default"
-                        href="#link"
-                        IconComponent={ChevronRightIcon}
-                      >
+                      <Link color="primary" underline="default" href="#link">
                         Support center
                       </Link>
                     </FlexLayout>
@@ -442,12 +431,7 @@ export const WithLink = (): ReactElement => {
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                   <MegaMenuSupportingActions>
-                    <Link
-                      color="primary"
-                      underline="default"
-                      href="#link"
-                      IconComponent={ChevronRightIcon}
-                    >
+                    <Link color="primary" underline="default" href="#link">
                       Service status
                     </Link>
                   </MegaMenuSupportingActions>
@@ -553,12 +537,7 @@ export const WithLink = (): ReactElement => {
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                   <MegaMenuSupportingActions>
-                    <Link
-                      color="primary"
-                      underline="default"
-                      href="#link"
-                      IconComponent={ChevronRightIcon}
-                    >
+                    <Link color="primary" underline="default" href="#link">
                       Browse documentation
                     </Link>
                   </MegaMenuSupportingActions>
