@@ -12,6 +12,7 @@ import {
   MegaMenuSupportingContent,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
+import Image from "next/image";
 import { type ReactElement, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import styles from "./index.module.css";
@@ -21,9 +22,11 @@ const exampleImage = "/img/examples/image-skeleton.png";
 
 const featuredResource = (
   <>
-    <img
+    <Image
       alt="Featured resource"
       src={exampleImage}
+      width={480}
+      height={400}
       className={`${styles.customRegionImage} ${styles.customRegionSideImage}`}
     />
     <StackLayout gap={1}>
