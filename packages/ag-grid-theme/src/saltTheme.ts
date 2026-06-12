@@ -74,6 +74,7 @@ export const saltTheme = createTheme()
     // typography
     fontFamily: "var(--salt-text-fontFamily)",
     fontSize: "var(--salt-text-fontSize)",
+    headerFontSize: "var(--salt-text-label-fontSize)",
     headerFontWeight: "var(--salt-text-label-fontWeight-strong)",
 
     // colours — key
