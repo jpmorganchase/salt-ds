@@ -5,7 +5,7 @@ sidebar:
   label: Developing
 ---
 
-Learn how to use Salt's UI components in your React web applications.
+Learn how to use Salt’s UI components in your React web applications.
 
 ## What you’ll need
 
@@ -13,56 +13,65 @@ To start developing with Salt, you should:
 
 - Be familiar with [React](https://react.dev/) and web development fundamentals (such as HTML, CSS and JavaScript).
 - Have [Node.js](https://nodejs.org/) (version 22 or later) installed on your system.
-- Create a React (version 16.14 or later) web application project. For new projects, follow [React installation](https://react.dev/learn/installation) page for recommendations.
+- Create a React (version 16.14 or later) web application project. For new projects, see the React docs for [Creating a React App](https://react.dev/learn/creating-a-react-app).
 
 ## The step-by-step process
 
 ### 1. Install the Salt packages
 
-There are three packages that you need to add to your project:
+The three main packages you’ll need are:
 
 - `@salt-ds/core` contains production-ready UI components.
-- `@salt-ds/theme` contains CSS files that apply Salt's default theme.
+- `@salt-ds/theme` contains the CSS for Salt’s themes.
 - `@salt-ds/icons` contains SVG-based icons.
 
-Use this npm command to install all three packages in one go:
+Install all three in one go:
 
-```
+```bash
 npm install @salt-ds/core @salt-ds/theme @salt-ds/icons
 ```
 
-If you prefer not to use npm, you can install the packages using [yarn](https://yarnpkg.com/) or other package managers.
+To install with [yarn](https://yarnpkg.com/) or another package manager, run the equivalent command. Salt ships additional packages for specific use cases—including [`@salt-ds/lab`](#5-optional-play-with-lab-components) for experimental components—which you can add as you need them.
+
+<Disclosure
+  id="additional-salt-packages"
+  summary="View all additional Salt packages"
+>
+
+| Package                                                                 | Purpose                                                                                                                                   |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@salt-ds/ag-grid-theme`](../components/ag-grid-theme/usage)           | Salt styling for [AG Grid](https://www.ag-grid.com/) data grids.                                                                          |
+| [`@salt-ds/countries`](../components/country-symbol/usage)              | Country flag symbols used by [Country Symbol](../components/country-symbol).                                                              |
+| [`@salt-ds/date-adapters`](../components/localization-provider/usage)   | Adapters that let date components work with Luxon, Moment, date-fns or Day.js.                                                            |
+| [`@salt-ds/date-components`](../components/date-input/usage)            | Date input, date picker and calendar components.                                                                                          |
+| [`@salt-ds/embla-carousel`](../components/carousel/usage)               | [Carousel](../components/carousel) component built on [Embla](https://www.embla-carousel.com/).                                           |
+| [`@salt-ds/highcharts-theme`](../components/chart/usage)                | Theme and `useChart` hook for [Highcharts](https://www.highcharts.com/), used by [Chart](../components/chart).                            |
+| [`@salt-ds/react-resizable-panels-theme`](../components/splitter/usage) | Salt styling for [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels), used by [Splitter](../components/splitter). |
+
+</Disclosure>
 
 ### 2. Add required web fonts
 
-Salt’s default theme requires the Open Sans and PT Mono web fonts. You can integrate them into your application using one of the following methods.
+Salt requires the Open Sans and PT Mono web fonts. You can integrate them into your application using one of the following methods.
 
-#### Use Google Fonts
+If you’re planning to use the JPM Brand theme (recommended in step 3), you’ll also need the **Amplitude** web font—see [Setting up the JPM Brand theme](../themes#setting-up-the-jpm-brand-theme) in Themes for where to obtain the font files and the `@font-face` declarations.
 
-To load the fonts directly from Google Fonts, add the following into your application’s `index.html` file:
+#### Use Fontsource (recommended)
 
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=PT+Mono&display=swap"
-  rel="stylesheet"
-/>
-```
-
-Refer to the [Google Fonts page](https://fonts.google.com/share?selection.family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800|PT+Mono) for more information.
-
-#### Use Fontsource
-
-With Fontsource, you can include the web font files into your build and self-host them.
+With Fontsource, you can include the web font files into your build and self-host them. This is the recommended approach for enterprise applications because it avoids third-party requests at runtime.
 
 First, install the relevant npm packages:
 
-```
+```bash
 npm install @fontsource/open-sans @fontsource/pt-mono
 ```
 
-Next, import the CSS for the weights and styles that Salt requires. In a typical React project setup, the best place to put these imports is in your `src/index.js` file:
+Next, import the CSS for the weights and styles that Salt requires. In a typical React project setup, the best place to put these imports is in your `src/index.tsx` file:
+
+<Disclosure
+  id="fontsource-imports"
+  summary="View the Fontsource import list"
+>
 
 ```tsx
 import "@fontsource/open-sans/300.css";
@@ -80,55 +89,107 @@ import "@fontsource/open-sans/800-italic.css";
 import "@fontsource/pt-mono";
 ```
 
+</Disclosure>
+
 Learn more about [Fontsource](https://fontsource.org/).
+
+#### Use Google Fonts
+
+To load the fonts directly from Google Fonts, add the following into your application’s `index.html` file:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=PT+Mono&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Refer to the [Google Fonts page](https://fonts.google.com/share?selection.family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800|PT+Mono) for more information.
 
 #### Use another method
 
-If you prefer not to use Google Fonts or Fontsource, you can use any other method to incorporate the web fonts. Make sure the CSS `@font-face` declarations associate the correct `font-family`, `font-weight`and`font-style` with the corresponding web fonts.
+If you prefer not to use Fontsource or Google Fonts, you can use any other method to incorporate the web fonts. Make sure the CSS `@font-face` declarations associate the correct `font-family`, `font-weight` and `font-style` with the corresponding web fonts.
 
-<Accordion>
-    <AccordionHeader id="font-file-table">View the web fonts, widths and styles</AccordionHeader>
-    <AccordionPanel>
+<Disclosure
+  id="font-file-table"
+  summary="View the web fonts, widths and styles"
+>
 
-        | Font family | Weight           | Style    |
-        | ----------- | ---------------- | -------- |
-        | Open Sans   | `300`            | `normal` |
-        | Open Sans   | `300`            | `italic` |
-        | Open Sans   | `400` / `normal` | `normal` |
-        | Open Sans   | `400` / `normal` | `italic` |
-        | Open Sans   | `500`            | `normal` |
-        | Open Sans   | `500`            | `italic` |
-        | Open Sans   | `600`            | `normal` |
-        | Open Sans   | `600`            | `italic` |
-        | Open Sans   | `700` / `bold`   | `normal` |
-        | Open Sans   | `700` / `bold`   | `italic` |
-        | Open Sans   | `800`            | `normal` |
-        | Open Sans   | `800`            | `italic` |
-        | PT Sans     | `400` / `normal` | `normal` |
+| Font family | Weight           | Style    |
+| ----------- | ---------------- | -------- |
+| Open Sans   | `300`            | `normal` |
+| Open Sans   | `300`            | `italic` |
+| Open Sans   | `400` / `normal` | `normal` |
+| Open Sans   | `400` / `normal` | `italic` |
+| Open Sans   | `500`            | `normal` |
+| Open Sans   | `500`            | `italic` |
+| Open Sans   | `600`            | `normal` |
+| Open Sans   | `600`            | `italic` |
+| Open Sans   | `700` / `bold`   | `normal` |
+| Open Sans   | `700` / `bold`   | `italic` |
+| Open Sans   | `800`            | `normal` |
+| Open Sans   | `800`            | `italic` |
+| PT Mono     | `400` / `normal` | `normal` |
 
-    </AccordionPanel>
+</Disclosure>
 
-</Accordion>
+### 3. Choose your theme and integrate Salt
 
-### 3. Integrate Salt into your app
+The `@salt-ds/theme` package ships two themes:
 
-To integrate Salt into your project, import the CSS theme and [Salt Provider](../components/salt-provider) component—and then wrap your application in it.
+- **JPM Brand**—_recommended for all new projects._ Salt’s long-term visual style, aligned with the J.P. Morgan brand.
+- **Legacy (UITK)**—for applications migrating from UITK that need to preserve the existing visual style.
 
-For example, in a typical React project, you can do this in your `src/index.js` as follows:
+Additional themes, such as Chase, are distributed as separate packages. See [Themes](../themes) for a full comparison.
+
+Apply themes using the provider components (`<SaltProvider>` or `<SaltProviderNext>`), which also provide context for other settings such as mode and density.
+
+#### Using the JPM Brand theme (recommended)
+
+Set up the **Amplitude** web font first (see [step 2](#2-add-required-web-fonts)). In a typical React project, add the provider to `src/index.tsx` as follows:
 
 ```tsx
-import React from "react";
+import { SaltProviderNext } from "@salt-ds/core";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-// Import <SaltProvider>
-import { SaltProvider } from "@salt-ds/core";
+import "@salt-ds/theme/css/global.css";
+import "@salt-ds/theme/css/theme-next.css";
 
-// Import theme CSS
+const container = document.getElementById("root");
+if (!container) throw new Error("Failed to find the root element");
+const root = ReactDOM.createRoot(container);
+root.render(
+  <SaltProviderNext
+    accent="teal"
+    corner="rounded"
+    headingFont="Amplitude"
+    actionFont="Amplitude"
+  >
+    <App />
+  </SaltProviderNext>,
+);
+```
+
+<Disclosure
+  id="using-the-legacy-uitk-theme"
+  summary="Using the Legacy theme"
+>
+
+Use this provider when migrating an existing UITK application that needs to preserve its visual style.
+
+```tsx
+import { SaltProvider } from "@salt-ds/core";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
 import "@salt-ds/theme/index.css";
 
-// Wrap your application in a <SaltProvider>
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const container = document.getElementById("root");
+if (!container) throw new Error("Failed to find the root element");
+const root = ReactDOM.createRoot(container);
 root.render(
   <SaltProvider>
     <App />
@@ -136,32 +197,61 @@ root.render(
 );
 ```
 
+</Disclosure>
+
+#### Set mode and density
+
+Both `<SaltProvider>` and `<SaltProviderNext>` accept `mode` and `density` props that control the overall look and feel of your application:
+
+- `mode`—`"light"` (default) or `"dark"`. See [Modes](../foundations/modes).
+- `density`—`"high"`, `"medium"` (default), `"low"`, `"touch"` or `"mobile"`. See [Density](../foundations/density).
+
+Add these props to the provider, alongside any theme props from earlier:
+
+```tsx
+<SaltProviderNext mode="dark" density="low">
+  <App />
+</SaltProviderNext>
+```
+
+Refer to the [SaltProvider](../components/salt-provider) docs for the full API.
+
 ### 4. Import components
 
-Now that you’re ready to use our UI components, you can import them from the `@salt-ds/core` package and use them in your JSX code.
+To use a Salt UI component, import it from the `@salt-ds/core` package and reference it in your JSX.
 
 For example:
 
 ```tsx
 import { Button } from "@salt-ds/core";
+import { AddIcon } from "@salt-ds/icons";
 
 function App() {
-  return <Button>Click me</Button>;
+  return (
+    <Button>
+      <AddIcon aria-hidden /> Click me
+    </Button>
+  );
 }
 
 export default App;
 ```
 
-Head over to our available [components](../components/) to view their respective APIs.
+Browse the available [components](../components) for their full APIs.
 
 ### 5. (Optional) Play with lab components
 
-Our `@salt-ds/lab` package is where we introduce new components that are in the initial stages of development. Once they’re stable, we move them over to the core package.
+The `@salt-ds/lab` package contains new components that are in the early stages of development. Once they’re stable, they’re promoted to the core package.
 
-Because it’s an unstable environment that may cause major breaking changes, we don’t recommend using lab components in production applications. However, early adopters are welcome to use and experiment with them.
+Because the package is unstable and may introduce major breaking changes, lab components aren’t recommended for production. Early adopters are welcome to experiment with them.
+
+To try them out, install the package:
+
+```bash
+npm install @salt-ds/lab
+```
 
 <Callout title="Need support?">
-  We're keen to hear your feedback, bug reports and feature requests, so please
-  don't hesitate to [raise new issues or comment on existing
-  ones](../support-and-contributions).
+  Feedback, bug reports and feature requests are all welcome—[raise a new issue
+  or comment on an existing one](../support-and-contributions).
 </Callout>

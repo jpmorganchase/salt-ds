@@ -1,0 +1,97 @@
+/* Visually mirrors Salt's <Accordion>:
+   - Top border per item (.summary), using the same separable-tertiary
+     border token as AccordionGroup/Accordion.
+   - Header spacing, typography (strong weight) and focus ring from
+     AccordionHeader.
+   - Panel padding from AccordionPanel-content.
+   We can't import Salt's React component because <details>/<summary> is
+   required for browser find-in-page to auto-expand hidden content. */
+
+.root {
+  margin-block: var(--salt-spacing-200);
+  interpolate-size: allow-keywords;
+}
+
+.root::details-content {
+  block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    block-size var(--salt-duration-perceptible) var(--salt-animation-timing-function),
+    opacity var(--salt-duration-perceptible) var(--salt-animation-timing-function),
+    content-visibility var(--salt-duration-perceptible) var(--salt-animation-timing-function) allow-discrete;
+}
+
+.root[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root::details-content {
+    transition: none;
+  }
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+  background: transparent;
+  color: var(--salt-content-primary-foreground);
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-weight: var(--salt-text-fontWeight-strong);
+  text-align: left;
+  cursor: var(--salt-cursor-hover);
+  box-sizing: border-box;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Suppress the native disclosure triangle in all browsers. */
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary::marker {
+  content: "";
+}
+
+.summary:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+}
+
+.summaryText {
+  flex: 1;
+  min-width: 0;
+  padding: var(--salt-spacing-75) 0;
+}
+
+.icon {
+  flex: none;
+  height: var(--salt-size-base);
+}
+
+.root[open] .iconClosed,
+.root:not([open]) .iconOpen {
+  display: none;
+}
+
+.panel {
+  padding: var(--salt-spacing-100) var(--salt-spacing-100) var(--salt-spacing-150) calc(var(--salt-spacing-200) + var(--salt-size-icon));
+}
+
+.panel > :first-child {
+  margin-top: 0;
+}
+
+.panel > :last-child {
+  margin-bottom: 0;
+}
