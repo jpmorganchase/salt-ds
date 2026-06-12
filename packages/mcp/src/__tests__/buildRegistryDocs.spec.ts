@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { extractGuides } from "../build/buildRegistryDocs.js";
+import { extractGuides } from "@salt-ds/semantic-core/build/buildRegistryDocs";
 
 const TIMESTAMP = "2026-03-10T00:00:00Z";
 const tempRoots: string[] = [];

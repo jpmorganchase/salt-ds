@@ -21,6 +21,10 @@
   },
   "sideEffects": false,
   "typescriptRootDir": "src",
+  "files": [
+    "generated",
+    "schemas"
+  ],
   "publishAdditionalEntryPaths": [
     "src/build/buildRegistry.ts"
   ],
@@ -43,7 +47,9 @@
     "unified": "^11.0.5"
   },
   "scripts": {
-    "build": "yarn node ../../scripts/build.mjs"
+    "build:package": "yarn node ../../scripts/build.mjs",
+    "build:registry": "node ./scripts/buildRegistry.mjs",
+    "build": "yarn build:package && yarn build:registry"
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-semantic-core",

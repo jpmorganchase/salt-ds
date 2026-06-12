@@ -52,6 +52,9 @@ export async function resolveSemanticRegistry(
     };
   }
 
+  // Published install: `generated/` was copied into the CLI tarball at pack
+  // time from packages/semantic-core/generated via `publishExtraCopyPaths`.
+  // Resolve from the CLI's own package root.
   const packageManifestPath = await findAncestorWithChild(cliModuleDir, [
     "package.json",
   ]);
@@ -69,27 +72,16 @@ export async function resolveSemanticRegistry(
     };
   }
 
-  for (const startPath of [cwd, cliModuleDir]) {
-    const cliRegistryDir = await findAncestorWithChild(startPath, [
-      "packages",
-      "cli",
-      "generated",
-    ]);
-    if (cliRegistryDir) {
-      return {
-        registry: await loadRegistry({
-          registryDir: cliRegistryDir,
-          prefetch,
-        }),
-        registryDir: cliRegistryDir,
-        registrySource: "monorepo",
-      };
-    }
-  }
-
-  throw new Error(
-    "Could not resolve a Salt registry. Rebuild @salt-ds/cli or pass --registry-dir <path>.",
-  );
+  // Monorepo dev: defer to semantic-core's own default registry path
+  // (packages/semantic-core/generated). This is the single canonical
+  // source — neither @salt-ds/cli nor @salt-ds/mcp maintains a per-package
+  // copy any more.
+  const registry = await loadRegistry({ prefetch });
+  return {
+    registry,
+    registryDir: "(@salt-ds/semantic-core default)",
+    registrySource: "monorepo",
+  };
 }
 
 /**

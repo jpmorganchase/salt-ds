@@ -5,7 +5,7 @@ import {
   buildSaltCapabilityManifest,
   type SaltCapabilityManifest,
 } from "@salt-ds/semantic-core/tools/capabilityManifest";
-import type { SaltRegistry } from "../types.js";
+import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 
 const SALT_MCP_SERVER_NAME = "salt-mcp";
 export const SALT_MCP_CAPABILITY_MANIFEST_URI = "salt://capabilities/manifest";

@@ -19,7 +19,7 @@ import {
 import { createSaltUi } from "@salt-ds/semantic-core/tools/createSaltUi";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { buildRegistry } from "../build/buildRegistry.js";
+import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import { REPO_ROOT } from "./registryTestUtils.js";
 

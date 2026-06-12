@@ -1,5 +1,5 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { SaltRegistry } from "../types.js";
+import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import {
   buildStructuredToolContent,
   type SourceAttributionOptions,

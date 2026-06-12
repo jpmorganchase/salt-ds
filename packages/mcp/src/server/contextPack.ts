@@ -30,7 +30,7 @@ import {
   toSafePatternContextFileName,
   toSaltGeneratedArtifactRegistry,
 } from "@salt-ds/semantic-core";
-import type { SaltRegistry } from "../types.js";
+import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import { getSaltMcpRuntimeMetadata } from "./serverMetadata.js";
 
 export function buildContextResourceGenerator(registry: SaltRegistry) {

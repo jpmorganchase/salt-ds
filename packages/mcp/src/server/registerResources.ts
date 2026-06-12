@@ -20,7 +20,7 @@ import {
   lookupCreateCatalogEntity,
   lookupCreateCatalogFamily,
 } from "@salt-ds/semantic-core/tools/createCatalogSupport";
-import type { SaltRegistry } from "../types.js";
+import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import {
   buildContextRegistryRef,
   buildContextResourceGenerator,

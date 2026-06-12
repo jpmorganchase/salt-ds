@@ -11,8 +11,7 @@
   "main": "src/index.ts",
   "sideEffects": false,
   "files": [
-    "bin",
-    "generated"
+    "bin"
   ],
   "publishBinEntrypoints": {
     "bin/salt-ds.js": {
@@ -22,8 +21,6 @@
   },
   "publishScriptExcludes": [
     "build",
-    "build:generated",
-    "build:package",
     "doctor",
     "prepack"
   ],
@@ -39,14 +36,16 @@
   "publishEntryPath": "cli/src/index.js",
   "publishExtraCopyPaths": [
     {
+      "from": "../semantic-core/generated",
+      "to": "generated"
+    },
+    {
       "from": "../semantic-core/schemas",
       "to": "schemas"
     }
   ],
   "scripts": {
-    "build:generated": "node ./scripts/buildGenerated.mjs",
-    "build:package": "yarn node ../../scripts/build.mjs",
-    "build": "yarn build:generated && yarn build:package",
+    "build": "yarn workspace @salt-ds/semantic-core build && yarn node ../../scripts/build.mjs",
     "doctor": "node ./bin/salt-ds.js doctor",
     "prepack": "yarn build"
   },
