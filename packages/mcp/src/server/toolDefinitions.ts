@@ -965,7 +965,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .boolean()
         .optional()
         .describe(
-          "Set true when the host has detected a declared theme provider (SaltProvider or SaltProviderNext) in the repo. When false or omitted, theme- or brand-ambiguous prompts trigger a one-time ask_user question so the consumer can choose between SaltProvider (stable base theme) and SaltProviderNext (JPM Brand) before create commits to either path.",
+          "Set true when the host has detected a declared theme provider (SaltProvider or SaltProviderNext) in the repo. When false or omitted, theme- or brand-ambiguous prompts trigger a one-time ask_user question that recommends SaltProviderNext for brand-aware accent/font/corner overrides today and lets the consumer downgrade to the stable SaltProvider if no brand overrides are needed. The question is transitional — once SaltProvider absorbs the brand props, SaltProviderNext becomes a deprecation alias and the question disappears.",
         ),
       view: z
         .enum(VIEWS)

@@ -1650,25 +1650,16 @@ describe("registry integration", () => {
   });
 
   it("create_salt_ui emits a SaltProvider vs SaltProviderNext open_question for theme-ambiguous prompts against the bundled registry", async () => {
-    // The PR 16 detector reads the live registry, but neither the freshly-
-    // built registry NOR the bundled artifact reliably exposes
-    // SaltProviderNext as a first-class component today (roadmap F1 /
-    // registryCoverage.spec.ts continues to assert this gap independently).
-    // The semantic-core unit spec at
+    // PR 10 closed the registry-build gap so SaltProviderNext now resolves
+    // as a first-class component record on every clean build. The semantic-
+    // core unit spec at
     // packages/semantic-core/src/tools/__tests__/createSaltUiThemeQuestion.spec.ts
-    // exercises the full createSaltUi → theme-provider-choice flow against a
-    // synthetic registry that does have SaltProviderNext, so this integration
-    // test gracefully no-ops when the build pipeline hasn't extracted the
-    // entity yet rather than failing on registry-build drift.
+    // pins the question shape (transitional framing, recommended option,
+    // convergence_note) against a synthetic registry; this integration
+    // test verifies the same flow lands end-to-end against the bundled
+    // registry artifact that real CLI/MCP callers load.
     const { loadRegistry } = await import("../registry/loadRegistry.js");
     const bundledRegistry = await loadRegistry();
-
-    const hasSaltProviderNext = bundledRegistry.components.some(
-      (component) => component.name === "SaltProviderNext",
-    );
-    if (!hasSaltProviderNext) {
-      return;
-    }
 
     const result = createSaltUi(bundledRegistry, {
       query: "apply the JPM brand theme to my page",
