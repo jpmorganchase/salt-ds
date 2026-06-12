@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -20,13 +20,17 @@ export interface MegaMenuItemListProps
    * wrapped in its own `<li>`.
    */
   children?: ReactNode;
+  /**
+   * Render prop to customize the underlying list element. Defaults to a `<ul>`;
+   */
+  render?: RenderPropsType["render"];
 }
 
 export const MegaMenuItemList = forwardRef<
   HTMLUListElement,
   MegaMenuItemListProps
 >(function MegaMenuItemList(
-  { children, className, "aria-labelledby": ariaLabelledBy, ...rest },
+  { children, className, "aria-labelledby": ariaLabelledBy, render, ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -38,19 +42,17 @@ export const MegaMenuItemList = forwardRef<
 
   const { headingId } = useMegaMenuGroup();
 
-  return (
-    <ul
-      className={clsx(withBaseName(), className)}
-      aria-labelledby={clsx(headingId, ariaLabelledBy) || undefined}
-      ref={ref}
-      {...rest}
-    >
-      {Children.map(children, (item, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: children have no stable identity
-        <li key={index} className={withBaseName("item")}>
-          {item}
-        </li>
-      ))}
-    </ul>
-  );
+  return renderProps("ul", {
+    className: clsx(withBaseName(), className),
+    "aria-labelledby": clsx(headingId, ariaLabelledBy) || undefined,
+    ref,
+    render,
+    ...rest,
+    children: Children.map(children, (item, index) => (
+      // biome-ignore lint/suspicious/noArrayIndexKey: children have no stable identity
+      <li key={index} className={withBaseName("item")}>
+        {item}
+      </li>
+    )),
+  });
 });
