@@ -27,3 +27,10 @@ export { saltHeaderDividerSecondary } from "./parts/header/saltHeaderDividerSeco
 export { saltHeaderDividerTertiary } from "./parts/header/saltHeaderDividerTertiary";
 export { saltHeaderDividerNone } from "./parts/header/saltHeaderDividerNone";
 
+// Row variant parts (proposal §4.6) — saltRowVariant{Secondary,Tertiary} are
+// mutually exclusive via `feature: "saltRowVariant"`; saltZebra is a toggle on
+// its own `feature: "saltZebra"` key. Default ("Primary") needs no extra part.
+export { saltRowVariantSecondary } from "./parts/variants/saltRowVariantSecondary";
+export { saltRowVariantTertiary } from "./parts/variants/saltRowVariantTertiary";
+export { saltZebra } from "./parts/variants/saltZebra";
+
