@@ -262,7 +262,7 @@ export function upsertSaltRepoInstructions(existingContent: string): {
 export const SALT_AGENT_HOOKS_FILE_RELATIVE_PATH = ".github/hooks/salt.json";
 
 /** Salt-managed command emitted into PostToolUse. */
-export const SALT_POST_TOOL_USE_HOOK_COMMAND = "npx salt-ds review --hook";
+export const SALT_POST_TOOL_USE_HOOK_COMMAND = "npx salt-ds hook";
 /** Salt-managed command emitted into SessionStart. */
 export const SALT_SESSION_START_HOOK_COMMAND = "npx salt-ds info --hook";
 /**
@@ -273,8 +273,7 @@ export const SALT_SESSION_START_HOOK_COMMAND = "npx salt-ds info --hook";
  * one wiring pattern (a single-file NDJSON default at
  * `.salt/attestations.ndjson`).
  */
-export const SALT_STOP_HOOK_COMMAND =
-  "npx salt-ds review --verify-attestations";
+export const SALT_STOP_HOOK_COMMAND = "npx salt-ds verify";
 
 interface HookCommandEntry {
   type: "command";

@@ -3,14 +3,11 @@ import { runExportContextCommand } from "./commands/exportContext.js";
 import { runInfoCommand } from "./commands/info.js";
 import { runInitCommand } from "./commands/init.js";
 import { runRuntimeInspectCommand } from "./commands/runtimeInspect.js";
-import {
-  runDiscoverSaltCommand,
-  runGetSaltEntityCommand,
-  runGetSaltExamplesCommand,
-} from "./commands/support.js";
 import { runCreateCommand } from "./commands/workflow/create/index.js";
 import { runMigrateCommand } from "./commands/workflow/migrate/index.js";
 import { runReviewCommand } from "./commands/workflow/review/index.js";
+import { runReviewHookCommand } from "./commands/workflow/review/hook/index.js";
+import { runVerifyAttestationsCommand } from "./commands/workflow/review/verify/index.js";
 import { runUpgradeCommand } from "./commands/workflow/upgrade/index.js";
 import { parseArgs, printHelp } from "./lib/args.js";
 import type { CliIo, RequiredCliIo } from "./types.js";
@@ -73,16 +70,12 @@ export async function runCli(
     return runExportContextCommand(positionals, flags, normalizedIo);
   }
 
-  if (command === "get_salt_entity" || command === "get-salt-entity") {
-    return runGetSaltEntityCommand(positionals, flags, normalizedIo);
+  if (command === "hook") {
+    return runReviewHookCommand(positionals, flags, normalizedIo);
   }
 
-  if (command === "get_salt_examples" || command === "get-salt-examples") {
-    return runGetSaltExamplesCommand(positionals, flags, normalizedIo);
-  }
-
-  if (command === "discover_salt" || command === "discover-salt") {
-    return runDiscoverSaltCommand(positionals, flags, normalizedIo);
+  if (command === "verify") {
+    return runVerifyAttestationsCommand(flags, { io: normalizedIo });
   }
 
   if (command === "runtime" && positionals[0] === "inspect") {

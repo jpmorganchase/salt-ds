@@ -309,9 +309,6 @@ describe("salt cli", () => {
     expect(createHelp).toContain(
       "Compact JSON is a workflow contract only and does not include starter code.",
     );
-    expect(createHelp).toContain(
-      "salt-ds get_salt_entity <entity-name> --json",
-    );
     expect(createHelp).not.toContain(
       "salt-ds create <query> [--json] [--full] [--include-starter-code]",
     );
@@ -444,10 +441,9 @@ describe("salt cli", () => {
             "review",
             "migrate",
             "upgrade",
+            "hook",
+            "verify",
             "export-context",
-            "get_salt_entity",
-            "get_salt_examples",
-            "discover_salt",
           ],
           advanced_output_ids: ["full", "starter-only"],
         }),
@@ -1008,16 +1004,12 @@ describe("salt cli", () => {
     expect(teamConfig.project).toBe("salt-cli-init");
 
     const agents = await fs.readFile(path.join(rootDir, "AGENTS.md"), "utf8");
-    expect(agents).toContain(
-      "use repo-aware Salt workflows so Salt applies the declared project conventions",
-    );
+    expect(agents).toContain(".salt/team.json");
     expect(agents).toContain("salt-ds review");
-    expect(agents).toContain("Do not inspect `node_modules`");
+    expect(agents).toContain("Do not invent Salt APIs");
     expect(agents).toContain("run the repo `ui:verify` script");
-    expect(agents).toContain("keep the first result canonical-only");
-    expect(agents).toContain(
-      "follow the returned top-level `action` before editing",
-    );
+    expect(agents).toContain("canonical-only");
+    expect(agents).toContain("`status: success`");
     expect(agents).not.toContain("entity-grounding step");
     expect(agents).not.toContain("salt lint");
     expect(agents).not.toContain("salt doctor");
@@ -1405,9 +1397,9 @@ describe("salt cli", () => {
     const agents = await fs.readFile(path.join(rootDir, "AGENTS.md"), "utf8");
     expect(agents).toContain("Team-specific notes stay here.");
     expect(agents).toContain("<!-- salt-ds:repo-instructions:start -->");
-    expect(agents).toContain("keep the first result canonical-only");
+    expect(agents).toContain("canonical-only");
     expect(
-      agents.match(/Use the Salt MCP for canonical Salt guidance\./g),
+      agents.match(/Use the Salt MCP \(or the `salt-ds` CLI fallback\) for any Salt UI task\./g),
     ).toHaveLength(1);
     expect(agents).not.toContain("- a selection step through Salt MCP");
     expect(agents).not.toContain(
@@ -1460,7 +1452,7 @@ describe("salt cli", () => {
     expect(content).toContain("Team-specific notes stay here.");
     expect(content).toContain("<!-- salt-ds:repo-instructions:start -->");
     expect(
-      content.match(/Use the Salt MCP for canonical Salt guidance\./g),
+      content.match(/Use the Salt MCP \(or the `salt-ds` CLI fallback\) for any Salt UI task\./g),
     ).toHaveLength(1);
     expect(content).not.toContain("- a selection step through Salt MCP");
     expect(content).not.toContain(
@@ -1516,9 +1508,7 @@ describe("salt cli", () => {
     ).rejects.toBeTruthy();
     const claude = await fs.readFile(path.join(rootDir, "CLAUDE.md"), "utf8");
     expect(claude).toContain("# Existing repo instructions");
-    expect(claude).toContain(
-      "use repo-aware Salt workflows so Salt applies the declared project conventions",
-    );
+    expect(claude).toContain(".salt/team.json");
   });
 
   it("skips team bootstrap when layered stack policy already exists", async () => {
@@ -2883,152 +2873,6 @@ describe("salt cli", () => {
               ]),
             }),
           ]),
-        }),
-      }),
-    );
-  });
-
-  it("exposes workflow action support commands through CLI aliases", async () => {
-    const rootDir = await createTempDir("salt-cli-support-tools");
-    await fs.writeFile(
-      path.join(rootDir, "package.json"),
-      JSON.stringify(
-        {
-          dependencies: {
-            "@salt-ds/core": "^2.0.0",
-          },
-        },
-        null,
-        2,
-      ),
-      "utf8",
-    );
-
-    let entityStdout = "";
-    let bareEntityStdout = "";
-    let examplesStdout = "";
-    let discoverStdout = "";
-    let stderr = "";
-
-    const entityExitCode = await runCli(
-      withRegistry([
-        "get_salt_entity",
-        "Avatar",
-        "--json",
-        "--entity-type",
-        "component",
-        "--include",
-        "examples,accessibility",
-      ]),
-      {
-        cwd: rootDir,
-        writeStdout: (message) => {
-          entityStdout += message;
-        },
-        writeStderr: (message) => {
-          stderr += message;
-        },
-      },
-    );
-    const bareEntityExitCode = await runCli(
-      withRegistry(["get_salt_entity", "Avatar", "--json"]),
-      {
-        cwd: rootDir,
-        writeStdout: (message) => {
-          bareEntityStdout += message;
-        },
-        writeStderr: (message) => {
-          stderr += message;
-        },
-      },
-    );
-    const examplesExitCode = await runCli(
-      withRegistry([
-        "get_salt_examples",
-        "Avatar",
-        "--json",
-        "--target-type",
-        "component",
-      ]),
-      {
-        cwd: rootDir,
-        writeStdout: (message) => {
-          examplesStdout += message;
-        },
-        writeStderr: (message) => {
-          stderr += message;
-        },
-      },
-    );
-    const discoverExitCode = await runCli(
-      withRegistry(["discover_salt", "profile avatar tabs", "--json"]),
-      {
-        cwd: rootDir,
-        writeStdout: (message) => {
-          discoverStdout += message;
-        },
-        writeStderr: (message) => {
-          stderr += message;
-        },
-      },
-    );
-
-    expect(stderr).toBe("");
-    expect(entityExitCode).toBe(0);
-    expect(bareEntityExitCode).toBe(0);
-    expect(examplesExitCode).toBe(0);
-    expect(discoverExitCode).toBe(0);
-
-    const entityPayload = JSON.parse(entityStdout);
-    const bareEntityPayload = JSON.parse(bareEntityStdout);
-    const examplesPayload = JSON.parse(examplesStdout);
-    const discoverPayload = JSON.parse(discoverStdout);
-
-    expect(entityPayload).toEqual(
-      expect.objectContaining({
-        entity_type: "component",
-        decision: expect.objectContaining({
-          status: "found",
-        }),
-        entity: expect.objectContaining({
-          name: "Avatar",
-        }),
-        guidance_boundary: expect.objectContaining({
-          guidance_source: "canonical_salt",
-        }),
-      }),
-    );
-    expect(bareEntityPayload).toEqual(
-      expect.objectContaining({
-        entity_type: "component",
-        decision: expect.objectContaining({
-          status: "found",
-        }),
-        entity: expect.objectContaining({
-          name: "Avatar",
-        }),
-      }),
-    );
-    expect(examplesPayload).toEqual(
-      expect.objectContaining({
-        decision: expect.objectContaining({
-          target_name: "Avatar",
-          target_type: "component",
-        }),
-        best_example: expect.any(Object),
-        guidance_boundary: expect.objectContaining({
-          guidance_source: "canonical_salt",
-        }),
-      }),
-    );
-    expect(discoverPayload).toEqual(
-      expect.objectContaining({
-        mode: "route",
-        decision: expect.objectContaining({
-          workflow: expect.any(String),
-        }),
-        guidance_boundary: expect.objectContaining({
-          guidance_source: "canonical_salt",
         }),
       }),
     );
@@ -6733,7 +6577,7 @@ describe("salt cli", () => {
       };
     };
     expect(manifest.hooks.PostToolUse).toEqual([
-      { type: "command", command: "npx salt-ds review --hook" },
+      { type: "command", command: "npx salt-ds hook" },
     ]);
     expect(manifest.hooks.SessionStart).toEqual([
       { type: "command", command: "npx salt-ds info --hook" },
@@ -6741,7 +6585,7 @@ describe("salt cli", () => {
     expect(manifest.hooks.Stop).toEqual([
       {
         type: "command",
-        command: "npx salt-ds review --verify-attestations",
+        command: "npx salt-ds verify",
       },
     ]);
   });
@@ -6755,7 +6599,7 @@ describe("salt cli", () => {
         {
           hooks: {
             PostToolUse: [
-              { type: "command", command: "npx salt-ds review --hook" },
+              { type: "command", command: "npx salt-ds hook" },
               { type: "command", command: "echo custom" },
             ],
             SessionStart: [
@@ -6764,7 +6608,7 @@ describe("salt cli", () => {
             Stop: [
               {
                 type: "command",
-                command: "npx salt-ds review --verify-attestations",
+                command: "npx salt-ds verify",
               },
             ],
           },
@@ -6817,7 +6661,7 @@ describe("salt cli", () => {
     ).toBe(true);
     expect(
       manifest.hooks.PostToolUse.some(
-        (entry) => entry.command === "npx salt-ds review --hook",
+        (entry) => entry.command === "npx salt-ds hook",
       ),
     ).toBe(true);
   });
