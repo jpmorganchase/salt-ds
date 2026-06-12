@@ -34,6 +34,10 @@ available width rather than overflowing; there is no built-in viewport
 breakpoint. To stack the panel on small screens, set `flex-direction: column` on
 `MegaMenuPanel` at your own breakpoint.
 
+The panel width is controlled with the `--saltMegaMenuPanel-inlineSize` (default
+`fit-content`) and `--saltMegaMenuPanel-maxInlineSize` (default
+`--saltMegaMenuPanel-availableWidth`) custom properties.
+
 Keyboard navigation follows the panel layout. Up and Down move within a column,
 with Down continuing at the top of the next column; Left and Right move between
 columns and, on the outer columns, return focus to the trigger while keeping the
