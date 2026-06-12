@@ -1,3 +1,4 @@
+import "./_setupV3";
 /**
  * Phase 1 V3 spike — `RowGroupPanel` story rendered against `saltTheme`.
  *

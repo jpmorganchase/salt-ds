@@ -1,3 +1,4 @@
+import "./_setupV3";
 /**
  * Phase 0 V3 spike — `Default` story rendered against the new `saltTheme`.
  *
