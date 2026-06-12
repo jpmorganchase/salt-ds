@@ -3670,9 +3670,11 @@ describe("createSaltMcpServer", () => {
           path.join(rootDir, "AGENTS.md"),
           "utf8",
         );
-        expect(agents).toContain("Do not inspect `node_modules`");
+        expect(agents).toContain(
+          "Use the Salt MCP (or the `salt-ds` CLI fallback) for any Salt UI task.",
+        );
         expect(agents).toContain("run the repo `ui:verify` script");
-        expect(agents).toContain("keep the first result canonical-only");
+        expect(agents).toContain("keep the first answer canonical-only");
 
         await expect(
           fs.access(path.join(rootDir, ".github", "copilot-instructions.md")),
@@ -3853,7 +3855,7 @@ describe("createSaltMcpServer", () => {
         );
         expect(agents).toContain("Team-specific notes stay here.");
         expect(agents).toContain("<!-- salt-ds:repo-instructions:start -->");
-        expect(agents).toContain("keep the first result canonical-only");
+        expect(agents).toContain("keep the first answer canonical-only");
       },
     );
   }, 30000);
