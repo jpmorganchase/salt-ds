@@ -467,14 +467,12 @@ function buildRetrieveEntityCliHint(
     return null;
   }
 
-  const entityType = readStringValue(step.args.entity_type);
-  const typeFlag = entityType
-    ? ` --entity-type ${quoteCliArgument(entityType)}`
-    : "";
-
-  return step.tool === "get_salt_entity"
-    ? `salt-ds get_salt_entity ${quoteCliArgument(name)}${typeFlag} --json`
-    : `salt-ds create ${quoteCliArgument(name)} --json`;
+  // `get_salt_entity` is an MCP-only tool; the CLI surface was removed.
+  // Fall back to `salt-ds create` for the create-tool branch only.
+  if (step.tool === "get_salt_entity") {
+    return null;
+  }
+  return `salt-ds create ${quoteCliArgument(name)} --json`;
 }
 
 function buildRetrieveExamplesCliHint(
@@ -488,16 +486,12 @@ function buildRetrieveExamplesCliHint(
     return null;
   }
 
-  const targetType = readStringValue(step.args.target_type);
-  const query = readStringValue(step.args.query);
-  const typeFlag = targetType
-    ? ` --target-type ${quoteCliArgument(targetType)}`
-    : "";
-  const queryFlag = query ? ` --query ${quoteCliArgument(query)}` : "";
-
-  return step.tool === "get_salt_examples"
-    ? `salt-ds get_salt_examples ${quoteCliArgument(target)}${typeFlag}${queryFlag} --json`
-    : `salt-ds create ${quoteCliArgument(target)} --json`;
+  // `get_salt_examples` is an MCP-only tool; the CLI surface was removed.
+  // Fall back to `salt-ds create` for the create-tool branch only.
+  if (step.tool === "get_salt_examples") {
+    return null;
+  }
+  return `salt-ds create ${quoteCliArgument(target)} --json`;
 }
 
 function buildReviewCliHint(step: PublicReviewStep): string {

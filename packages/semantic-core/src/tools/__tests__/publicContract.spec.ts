@@ -1801,7 +1801,6 @@ describe("publicContract workflow adapters", () => {
     );
     expect(compact.next_required_action).toEqual(
       expect.objectContaining({
-        cli: "salt-ds get_salt_entity Breadcrumbs --json",
         mcp: {
           tool: "get_salt_entity",
           args: {
@@ -1810,6 +1809,7 @@ describe("publicContract workflow adapters", () => {
         },
       }),
     );
+    expect(compact.next_required_action).not.toHaveProperty("cli");
     expect(compact.allowed_next_actions).toEqual(
       expect.arrayContaining(["retrieve_entity", "rerun_workflow"]),
     );
