@@ -14,7 +14,7 @@ import {
 } from "@salt-ds/semantic-core/policy/detection";
 import { deriveComparableSaltVersion } from "@salt-ds/semantic-core/policy/layerDiagnostics";
 import { parseTsconfig } from "get-tsconfig";
-import type { SaltRegistry } from "../types.js";
+import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import { getSaltMcpRuntimeMetadata } from "./serverMetadata.js";
 
 interface PackageJsonLike {

@@ -11,9 +11,7 @@
   "main": "src/index.ts",
   "sideEffects": false,
   "files": [
-    "bin",
-    "generated",
-    "schemas"
+    "bin"
   ],
   "publishBinEntrypoints": {
     "bin/salt-mcp.js": {
@@ -43,14 +41,21 @@
     "src/evals/runWorkflowEvalReplay.ts",
     "src/evals/runHostTraceEval.ts"
   ],
+  "publishExtraCopyPaths": [
+    {
+      "from": "../semantic-core/generated",
+      "to": "generated"
+    },
+    {
+      "from": "../semantic-core/schemas",
+      "to": "schemas"
+    }
+  ],
   "bin": {
     "salt-mcp": "bin/salt-mcp.js"
   },
   "scripts": {
-    "build:package": "yarn node ../../scripts/build.mjs",
-    "build:registry": "yarn workspace @salt-ds/semantic-core build && node ./scripts/buildRegistry.mjs",
-    "sync:generated": "node ./scripts/syncGenerated.mjs",
-    "build": "yarn build:package && yarn build:registry && yarn sync:generated",
+    "build": "yarn workspace @salt-ds/semantic-core build && yarn node ../../scripts/build.mjs",
     "prepack": "yarn build"
   },
   "dependencies": {

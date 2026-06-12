@@ -6,7 +6,7 @@ import {
   REGISTRY_ARRAY_ARTIFACTS,
   REGISTRY_SEARCH_INDEX_ARTIFACT,
   writeJsonFile,
-} from "../registry/artifacts.js";
+} from "@salt-ds/semantic-core/registry/artifacts";
 
 export const GENERATED_AT = "2026-03-10T00:00:00Z";
 export const VERSION = "1.0.0";

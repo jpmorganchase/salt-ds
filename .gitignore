@@ -52,6 +52,5 @@ yarn-error.log*
 
 # MCP registry
 
-/packages/mcp/generated
-/packages/cli/generated
+/packages/semantic-core/generated
 .salt-eval-cache

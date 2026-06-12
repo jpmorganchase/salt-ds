@@ -1,5 +1,5 @@
 import { buildTokenPolicyStructuralRoleRulePack } from "@salt-ds/semantic-core";
-import type { SaltRegistry } from "../../types.js";
+import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 
 export const TIMESTAMP = "2026-03-10T00:00:00Z";
 

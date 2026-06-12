@@ -8,7 +8,7 @@ import {
   VSCODE_COPILOT_BLOCK_START,
   VSCODE_COPILOT_INSTRUCTIONS_TEMPLATE,
 } from "@salt-ds/semantic-core/bootstrapScaffolding";
-import type { SaltRegistry } from "../types.js";
+import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import {
   buildSaltProjectContextId,
   collectSaltProjectContextData,

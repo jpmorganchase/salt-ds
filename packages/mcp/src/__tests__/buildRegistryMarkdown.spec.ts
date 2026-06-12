@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseStructuredGuidanceCallouts } from "../build/buildRegistryMarkdown.js";
+import { parseStructuredGuidanceCallouts } from "@salt-ds/semantic-core/build/buildRegistryMarkdown";
 
 describe("parseStructuredGuidanceCallouts", () => {
   it("extracts preferred and avoid guidance only from explicitly structured callouts", () => {
