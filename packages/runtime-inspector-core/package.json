@@ -7,7 +7,6 @@
   "main": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./inspect-internals": "./src/inspectShared.ts",
     "./package.json": "./package.json"
   },
   "sideEffects": false,
@@ -26,7 +25,16 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@types/jsdom": "^21.1.7"
+    "@types/jsdom": "^21.1.7",
+    "playwright": "^1.55.1"
+  },
+  "peerDependencies": {
+    "playwright": "^1.55.1"
+  },
+  "peerDependenciesMeta": {
+    "playwright": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-runtime-inspector-core",

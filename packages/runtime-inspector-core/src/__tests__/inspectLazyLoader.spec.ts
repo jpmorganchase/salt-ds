@@ -3,48 +3,41 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 afterEach(() => {
   vi.resetModules();
   vi.unstubAllGlobals();
+  vi.doUnmock("playwright");
 });
 
 beforeEach(() => {
   vi.resetModules();
 });
 
-describe("inspectUrl lazy browser-adapter loader", () => {
-  it("throws with the install hint when the browser adapter cannot be resolved and --mode browser was requested", async () => {
-    vi.doMock("@salt-ds/runtime-inspector-browser", () => {
-      throw new Error(
-        "Cannot find module '@salt-ds/runtime-inspector-browser'",
-      );
+describe("inspectUrl lazy Playwright loader", () => {
+  it("throws with the install hint when playwright cannot be resolved and --mode browser was requested", async () => {
+    vi.doMock("playwright", () => {
+      throw new Error("Cannot find module 'playwright'");
     });
 
-    const { inspectUrl, __resetBrowserInspectorCacheForTests } = await import(
-      "../inspect.js"
-    );
-    __resetBrowserInspectorCacheForTests();
+    const { inspectUrl } = await import("../inspect.js");
 
     await expect(
       inspectUrl("http://127.0.0.1/", { mode: "browser" }),
-    ).rejects.toThrow(/Browser-session inspection requires Playwright/);
+    ).rejects.toThrow(
+      /Browser-session inspection requires the optional `playwright` peer dependency/,
+    );
   });
 
-  it("throws an install-hint that names --mode fetched-html as the alternative", async () => {
-    vi.doMock("@salt-ds/runtime-inspector-browser", () => {
-      throw new Error(
-        "Cannot find module '@salt-ds/runtime-inspector-browser'",
-      );
+  it("install hint names --mode fetched-html as the alternative", async () => {
+    vi.doMock("playwright", () => {
+      throw new Error("Cannot find module 'playwright'");
     });
 
-    const { inspectUrl, __resetBrowserInspectorCacheForTests } = await import(
-      "../inspect.js"
-    );
-    __resetBrowserInspectorCacheForTests();
+    const { inspectUrl } = await import("../inspect.js");
 
     await expect(
       inspectUrl("http://127.0.0.1/", { mode: "browser" }),
     ).rejects.toThrow(/--mode fetched-html/);
   });
 
-  it("uses the bundled browser adapter when it resolves successfully", async () => {
+  it("calls the bundled inspectBrowserSession adapter when playwright resolves", async () => {
     const stubResult = {
       toolVersion: "test",
       timestamp: "2026-03-25T12:00:00Z",
@@ -70,14 +63,11 @@ describe("inspectUrl lazy browser-adapter loader", () => {
       artifacts: [],
     };
     const inspectBrowserSession = vi.fn(async () => stubResult);
-    vi.doMock("@salt-ds/runtime-inspector-browser", () => ({
+    vi.doMock("../inspectBrowserSession.js", () => ({
       inspectBrowserSession,
     }));
 
-    const { inspectUrl, __resetBrowserInspectorCacheForTests } = await import(
-      "../inspect.js"
-    );
-    __resetBrowserInspectorCacheForTests();
+    const { inspectUrl } = await import("../inspect.js");
 
     const result = await inspectUrl("http://localhost/", {
       mode: "browser",
@@ -87,4 +77,3 @@ describe("inspectUrl lazy browser-adapter loader", () => {
     expect(result.inspectionMode).toBe("browser-session");
   });
 });
-
