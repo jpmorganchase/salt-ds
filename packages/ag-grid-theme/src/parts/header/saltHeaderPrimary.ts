@@ -8,6 +8,11 @@
  * `feature: "saltHeaderBackground"` key so they're mutually exclusive with
  * each other but compose freely with the divider parts.
  *
+ * Token mapping (verbatim from `css/parts/ag-root-var.css` lines 21-28):
+ *   --ag-header-background-color            ← --salt-container-primary-background
+ *   --ag-header-cell-hover-background-color ← same as background (no hover delta)
+ *   --ag-header-foreground-color            ← --salt-content-secondary-foreground
+ *
  * The `headerCellHoverBackgroundColor` / `headerTextColor` defaults that the
  * §4.3 example notes as "set by the header parts above" are declared here.
  */
@@ -16,9 +21,9 @@ import { createPart } from "ag-grid-community";
 export const saltHeaderPrimary = createPart({
   feature: "saltHeaderBackground",
   params: {
-    headerBackgroundColor: "var(--salt-container-secondary-background)",
-    headerCellHoverBackgroundColor: "var(--salt-selectable-background-hover)",
-    headerTextColor: "var(--salt-content-primary-foreground)",
+    headerBackgroundColor: "var(--salt-container-primary-background)",
+    headerCellHoverBackgroundColor: "var(--salt-container-primary-background)",
+    headerTextColor: "var(--salt-content-secondary-foreground)",
   },
 });
 
