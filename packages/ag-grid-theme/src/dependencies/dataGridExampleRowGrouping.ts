@@ -1,4 +1,6 @@
-const dataGridExampleRowGrouping = [
+import type { ColDef } from "ag-grid-community";
+
+const dataGridExampleRowGrouping: ColDef[] = [
   {
     headerName: "Name",
     field: "name",

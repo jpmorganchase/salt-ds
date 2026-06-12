@@ -20,6 +20,10 @@ node_modules
 /coverage
 .nyc_output
 
+# Migration validation artefacts (Phase 4+ density/mode/visual probes — local only)
+/.migration-screenshots/
+/.playwright-cli/
+
 # production
 /packages/*/build
 /packages/*/dist-cjs/

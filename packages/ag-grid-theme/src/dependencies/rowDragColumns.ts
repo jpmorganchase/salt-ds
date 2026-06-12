@@ -1,4 +1,6 @@
-const rowDragColumns = [
+import type { ColDef } from "ag-grid-community";
+
+const rowDragColumns: ColDef[] = [
   {
     headerName: "Name",
     field: "name",

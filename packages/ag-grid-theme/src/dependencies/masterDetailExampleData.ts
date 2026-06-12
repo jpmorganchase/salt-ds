@@ -1,4 +1,6 @@
-export const masterDetailExampleData = [
+import type { ColDef } from "ag-grid-community";
+
+export const masterDetailExampleData: ColDef[] = [
   {
     field: "name",
     cellRenderer: "agGroupCellRenderer",

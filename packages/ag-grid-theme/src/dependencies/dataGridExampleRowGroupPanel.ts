@@ -1,4 +1,6 @@
-const dataGridExampleRowGroupPanel = [
+import type { ColDef } from "ag-grid-community";
+
+const dataGridExampleRowGroupPanel: ColDef[] = [
   {
     headerName: "Name",
     field: "name",

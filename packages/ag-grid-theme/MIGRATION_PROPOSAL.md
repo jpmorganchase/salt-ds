@@ -270,7 +270,7 @@ export const saltTheme = createTheme()
     // typography
     fontFamily:                 "var(--salt-text-fontFamily)",
     fontSize:                   "var(--salt-text-fontSize)",
-    headerFontWeight:           "var(--salt-text-label-fontWeight-strong)",
+    invalidColor:               "var(--salt-status-error-foreground-informative)",
 
     // colours — key
     backgroundColor:            "var(--salt-container-primary-background)",
@@ -676,7 +676,7 @@ Re-baseline the Chromatic snapshots for every story under `packages/ag-grid-them
 | **1. Parameter coverage** | Map all `ag-root-var.css` tokens to `withParams`; cover all simple stories (Default, ColumnGroup, PinnedRows, etc.) | 2–3 | All non-variant, non-validation stories visually equivalent |
 | **2. Bespoke CSS migration** | Lift `ag-body.css`, `ag-header.css`, `ag-header-variants.css`, `ag-row.css`, `ag-input.css`, `ag-menus.css`, `ag-tool-panel.css`, `ag-buttons.css`, `ag-column-drop-list.css` into the typed parts (header + columnDrop) and the three adjustment parts (§4.4); collapse the four hard-coded mode/density selectors down to one selector per rule (§3.3) | 3–5 | Snapshots match within tolerance; CSS size reduction ≥ 50 %; `HeaderVariants` story re-implemented against the header parts |
 | **3. Parts** | Implement `saltIconSet`, `saltCheckboxStyle`, `saltInputStyle`, `saltColumnDropStyle`, header parts, variant parts; verify Icons / CheckboxSelection / RowVariantSecondary / Zebra stories | 2 | All variant stories pass; toggle button rebuilt with `toggleButtonSwitchInset` |
-| **4. Mode & density** | Validate `--salt-*` write-through (§4.8 option A); remove mode-specific class names and density branching from `useAgGridHelpers`; delete the hook; export `saltAgGridDefaults` plain object | 1 | Mode toggle + density change update grid live; legacy density switch removed; consumers can spread `saltAgGridDefaults` for opt-in defaults |
+| **4. Mode & density** ✅ | Validate `--salt-*` write-through (§4.8 option A); remove mode-specific class names and density branching from `useAgGridHelpers`; delete the hook; export `saltAgGridDefaults` plain object | 1 | Mode toggle + density change update grid live; legacy density switch removed; consumers can spread `saltAgGridDefaults` for opt-in defaults — **validated 2026-06-12, see [`PHASE_4_DENSITY_VALIDATION.md`](./PHASE_4_DENSITY_VALIDATION.md). Hook file deletion deferred until 2.x EOL (legacy stories still import it); not exported from `src/index.ts` in v3.** |
 | **5. Build & package** | Rewrite `scripts/build.mjs` to emit JS+types+fonts; update `package.json` exports / peerDependencies; verify against the docs site and consuming apps | 1 | `yarn build` produces a working `dist/`; smoke test in the site |
 | **6. Docs, changeset, ESLint rule** | Update `usage.mdx` with side-by-side migration guide (including the new 2.x header variants → v3 parts mapping); write changeset (major); add ESLint rule flagging legacy class names and CSS import | 1 | Docs reviewed; changeset merged; ESLint rule wired into the monorepo lint job |
 | **7. Regression & release** | Re-baseline Chromatic; review snapshots; cut `3.0.0-next.0` after Phase 4; hold ≥ 4 weeks; promote to stable after ≥ 1 partner-team sign-off | 1 (+4 weeks soak) | Pre-release published; partner feedback addressed; stable cut |

@@ -1,7 +1,7 @@
 # Hand-off — `@salt-ds/ag-grid-theme` v3 migration
 
 **Last updated:** 2026-06-12
-**Status:** Phase −1 + Phase 0 spike both complete on `fix/ag-grid-theme-align-with-table` (uncommitted). Two §4.3 resolutions decided + applied. Typecheck green; visual diff vs legacy not yet captured.
+**Status:** Phase −1 + Phase 0 + Phase 1 + Phase 2 (32/32 V3 stories) + Phase 4 (density/mode write-through validated) all complete on `feat/ag-grid-theme-v3-phase-0` (uncommitted since last spike commit). Remaining: Phase 5 (build & package), Phase 6 (docs migration), Phase 7 (Chromatic re-baseline), Phase 8 (RC + soak). Typecheck green; vitest 260/260 green; visual diff vs legacy not yet captured (Phase 7).
 **Source of truth:** [`MIGRATION_PROPOSAL.md`](./MIGRATION_PROPOSAL.md) — read this in full before doing anything.
 
 ---

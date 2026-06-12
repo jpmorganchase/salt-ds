@@ -1,6 +1,6 @@
-import type { CellClassParams } from "ag-grid-community";
+import type { CellClassParams, ColDef } from "ag-grid-community";
 
-const dataGridExampleColumnsColoration = [
+const dataGridExampleColumnsColoration: ColDef[] = [
   {
     headerName: "Name",
     field: "name",

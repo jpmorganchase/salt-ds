@@ -1,5 +1,9 @@
 import "../dependencies/setupAgGridLegacy";
-import type { GetContextMenuItemsParams } from "ag-grid-community";
+import type {
+  DefaultMenuItem,
+  GetContextMenuItemsParams,
+  MenuItemDef,
+} from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
@@ -10,8 +14,10 @@ import windows from "../dependencies/windows.png";
 const ContextMenu = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
-  const getContextMenuItems = (params: GetContextMenuItemsParams) => {
-    const result = [
+  const getContextMenuItems = (
+    params: GetContextMenuItemsParams,
+  ): (MenuItemDef | DefaultMenuItem)[] => {
+    const result: (MenuItemDef | DefaultMenuItem)[] = [
       {
         name: `Alert ${params.value}`,
         action() {
@@ -154,3 +160,4 @@ const ContextMenu = (props: AgGridReactProps) => {
 };
 
 export default ContextMenu;
+
