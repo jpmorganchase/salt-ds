@@ -24,7 +24,6 @@ const HOST_INSTRUCTION_TEXT_BUDGETS = new Map([
   ["salt-repo-instructions-template", 7_000],
   ["consumer-repo-agents-template", 7_500],
   ["vscode-copilot-instructions-template", 4_500],
-  ["vscode-salt-ui-agent-template", 4_500],
 ]);
 
 function buildFixtureComponent(): ComponentRecord {
