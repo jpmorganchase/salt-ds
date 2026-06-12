@@ -758,13 +758,12 @@ When compact `create` remains `partial` or `blocked` on a broad or mixed-surface
   - `salt://catalog/candidates/{query}`
   - `salt://catalog/entity/{name}`
   - `salt://catalog/family/{family}`
+  - tools: `discover_salt`, `get_salt_entity`, `get_salt_examples`
 - CLI:
-  - `salt-ds discover_salt "<prompt>" --json`
-  - `salt-ds get_salt_entity "<name>" --json`
-  - `salt-ds get_salt_examples "<target>" --json`
   - `salt-ds info --json --catalog-query "<prompt>"`
   - `salt-ds info --json --entity "<name>"`
   - `salt-ds info --json --family "<category>"`
+  - `salt-ds create "<entity>" --json --include-starter-code --starter-only` (entity grounding fallback)
 
 Use that support surface to inspect grounded candidates, `when_to_use`, `when_not_to_use`, and supporting surfaces.
 Do not treat it as a replacement for the workflow contract.
@@ -835,9 +834,7 @@ When CLI is the transport:
 - `review`: `salt-ds review`
 - `migrate`: `salt-ds migrate`
 - `upgrade`: `salt-ds upgrade`
-- `retrieve_entity`: `salt-ds get_salt_entity`
-- `retrieve_examples`: `salt-ds get_salt_examples`
-- broad support routing: `salt-ds discover_salt`
+- `retrieve_entity` / `retrieve_examples` / broad routing: MCP-only tools (`get_salt_entity`, `get_salt_examples`, `discover_salt`). On the CLI, ground entities with `salt-ds create "<entity>" --json --include-starter-code --starter-only` and re-run with `--resolved-entity "<entity>"`.
 
 ### CLI Follow-Through for Entity Grounding
 
@@ -846,7 +843,6 @@ When a `salt-ds create --json` call returns a compact `PublicContract`, read the
 If the first compact result is still broad on a mixed-surface prompt and the next exact entity is not obvious, inspect:
 
 ```sh
-salt-ds discover_salt "<original prompt>" --json
 salt-ds info --json --catalog-query "<original prompt>"
 ```
 
@@ -855,7 +851,7 @@ Use the returned owner and supporting candidates to choose the next exact follow
 When `required_follow_through` lists named entities that still need grounding before their regions can be implemented, run a targeted follow-up call for each entity:
 
 ```
-salt-ds get_salt_entity "<entity name>" --json --include examples,accessibility
+salt-ds create "<entity name>" --json --include-starter-code --starter-only
 salt-ds create "<original prompt>" --json --resolved-entity "<entity name>"
 ```
 
