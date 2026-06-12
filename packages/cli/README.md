@@ -53,10 +53,7 @@ Primary workflow commands:
   - supports `--timeout <ms>`
   - supports `--mode <auto|browser|fetched-html>`
   - supports `--full`
-  - supports `--hook` (PostToolUse/PreToolUse agent hook over stdin; see `docs/agent-customization/hooks`)
-  - supports `--emit-attestation` (with `--hook`): on a clean PostToolUse review, emits a `SaltAttestationV1` payload (salt-ds.dev/schemas/attestation/v1) as one NDJSON line on stdout. Salt owns the payload; consumers pipe stdout to whatever audit store they already operate. See [`docs/ci-integration.md`](./docs/ci-integration.md) for composition patterns.
-  - supports `--verify-attestations [<path>]`: reads `SaltAttestationV1` NDJSON from stdin (or the provided path), re-hashes the recorded files against the current on-disk state, and exits non-zero on drift. Standalone-usable in CI or from a Stop hook.
-  - surfaces `require_human_review_for` policy matches from `.salt/team.json` as ordinary blocking findings with rule id `policy.require_human_review_for.<kind>`; the command exits non-zero on the violation. See [`docs/ci-integration.md`](./docs/ci-integration.md) for composing `git diff | xargs salt-ds review` into a CI required check and for the bypass story (labels, CODEOWNERS, branch protection, etc. all live in your CI config — the CLI has no opinion).
+  - surfaces `require_human_review_for` policy matches from `.salt/team.json` as ordinary blocking findings with rule id `policy.require_human_review_for.<kind>`; the command exits non-zero on the violation.
   - runs source-first Salt review for existing Salt code and can attach runtime evidence in the same pass when `--url` is provided
   - returns structured `confidence`, `raiseConfidence`, and `fixCandidates` in JSON output so the agent can judge whether to edit, inspect further, or ask follow-up questions without the CLI mutating files directly
   - can load a saved create report to check whether the implementation drifted away from the previously chosen canonical Salt direction
@@ -85,31 +82,16 @@ Primary workflow commands:
   - supports `--registry-dir <path>`
   - supports `--full`
   - compares Salt versions and turns the result into upgrade-oriented workflow output
-- `salt-ds get_salt_entity <name>`
-  - supports `--json`
-  - supports `--output <path>`
-  - supports `--registry-dir <path>`
-  - supports `--entity-type <type>`
-  - supports `--include <section[,section]>`
-  - supports `--include-starter-code`
-  - resolves a known or near-known Salt entity when a workflow action returns `retrieve_entity`
-- `salt-ds get_salt_examples <target>`
-  - supports `--json`
-  - supports `--output <path>`
-  - supports `--registry-dir <path>`
-  - supports `--target-type <component|pattern>`
-  - supports `--query <scenario>`
-  - supports `--include-code`
-  - supports `--include-starter-code`
-  - returns canonical examples when a workflow action returns `retrieve_examples`
-- `salt-ds discover_salt [query]`
-  - supports `--json`
-  - supports `--output <path>`
-  - supports `--registry-dir <path>`
-  - supports `--area <area>`
-  - supports `--package <name>`
-  - supports `--status <stable|beta|lab|deprecated>`
-  - routes broad or exploratory Salt questions without changing the primary workflow commands
+
+Agent-hook commands (drive agent guardrails over stdin/stdout — designed to be wired by `init --add-agent-hooks`):
+
+- `salt-ds hook`
+  - PostToolUse / PreToolUse review over stdin; emits findings as one NDJSON line on stdout
+  - supports `--emit-attestation`: on a clean PostToolUse review, emits a `SaltAttestationV1` payload (salt-ds.dev/schemas/attestation/v1) as one NDJSON line on stdout. Salt owns the payload; consumers pipe stdout to whatever audit store they already operate
+- `salt-ds verify [<path>]`
+  - reads `SaltAttestationV1` NDJSON from stdin (or the provided path), re-hashes the recorded files against the current on-disk state, and exits non-zero on drift. Standalone-usable in CI or from a Stop hook
+
+`salt-ds review --hook` and `salt-ds review --verify-attestations` remain as backward-compatible aliases for these top-level commands.
 
 Support commands:
 
@@ -160,9 +142,6 @@ salt-ds create "Link to another page from a toolbar action" --json
 salt-ds review src --json
 salt-ds migrate "Translate this external UI toolbar into Salt" --json
 salt-ds upgrade --package @salt-ds/core --from-version 1.1.0 --json
-salt-ds get_salt_entity Avatar --json --include examples,accessibility
-salt-ds get_salt_examples Avatar --json --target-type component
-salt-ds discover_salt "profile avatar tabs" --json
 ```
 
 Support-only examples:

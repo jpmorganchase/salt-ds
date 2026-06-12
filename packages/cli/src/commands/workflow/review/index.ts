@@ -74,6 +74,10 @@ export async function runReviewCommand(
   flags: Record<string, string>,
   io: RequiredCliIo,
 ): Promise<number> {
+  // Backwards-compatibility aliases. Phase 6 lifted these to top-level
+  // commands (`salt-ds hook`, `salt-ds verify`) so `review` does one job.
+  // Existing hook manifests and CI scripts that already invoke
+  // `salt-ds review --hook` or `--verify-attestations` keep working.
   if (flags["verify-attestations"] != null) {
     return runVerifyAttestationsCommand(flags, { io });
   }
