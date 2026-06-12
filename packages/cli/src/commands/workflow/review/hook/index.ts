@@ -387,7 +387,7 @@ export async function runReviewHookPostToolUse(
     return emitHookBlock(formatReviewHookBlockingReason(blocking), io);
   } catch (error) {
     io.writeStderr(
-      `salt-ds review --hook: ${error instanceof Error ? error.message : String(error)}\n`,
+      `salt-ds hook: ${error instanceof Error ? error.message : String(error)}\n`,
     );
     return 1;
   }
@@ -457,7 +457,7 @@ export async function runReviewHookCommand(
     hookInput = await readHookInput({ stream: io.stdin });
   } catch (error) {
     if (error instanceof HookInputError) {
-      io.writeStderr(`salt-ds review --hook: ${error.message}\n`);
+      io.writeStderr(`salt-ds hook: ${error.message}\n`);
       return 1;
     }
     throw error;
@@ -465,7 +465,7 @@ export async function runReviewHookCommand(
 
   if (!hookInput) {
     io.writeStderr(
-      "salt-ds review --hook requires hook JSON on stdin. See https://code.visualstudio.com/docs/agent-customization/hooks\n",
+      "salt-ds hook requires hook JSON on stdin. See https://code.visualstudio.com/docs/agent-customization/hooks\n",
     );
     return 1;
   }

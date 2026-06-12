@@ -204,7 +204,12 @@ export async function runPublicCliWorkflowCoverage(
 ) {
   console.log("Checking the public CLI workflow contract...");
   const installedCliBin = getInstalledCliBin(installRoot);
-  const registryDir = path.join(repoRoot, "packages", "mcp", "generated");
+  const registryDir = path.join(
+    repoRoot,
+    "packages",
+    "semantic-core",
+    "generated",
+  );
   assert(
     await pathExists(installedCliBin),
     `Expected installed Salt CLI bin at ${installedCliBin}.`,
