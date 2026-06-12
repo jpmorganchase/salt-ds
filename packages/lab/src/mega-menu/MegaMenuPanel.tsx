@@ -83,7 +83,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       }
     }, [focusFirstItemOnOpen, isPositioned, floatingEl]);
 
-    const floatingProps = getFloatingProps();
+    const floatingProps = getFloatingProps(rest);
 
     return (
       <FloatingComponent
@@ -107,7 +107,6 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
           role="region"
           ref={ref}
           {...floatingProps}
-          {...rest}
         >
           {children}
         </div>
