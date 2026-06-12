@@ -9,7 +9,7 @@
   box-sizing: border-box;
   gap: var(--salt-spacing-100);
   position: relative;
-  border-radius: var(--salt-palette-corner-weak);
+  border-radius: var(--salt-palette-corner-weak, 0);
   text-decoration: none;
   border: none;
   font: inherit;
