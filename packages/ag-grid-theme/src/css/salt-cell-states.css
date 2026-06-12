@@ -1,0 +1,162 @@
+/* Phase 1 port of `css/parts/ag-body.css` + `ag-row.css` state classes into
+ * the saltCellStates part. The 4-way `.ag-theme-salt-{light,dark,compact-light,compact-dark}`
+ * scoping from the 2.x line is stripped — AG Grid v3 auto-wraps this CSS in
+ * `:where(.ag-theme-part-N)`, so the rules only apply when the part is loaded
+ * into a theme. Consumer code that adds `.editable-cell` / `.numeric-cell` /
+ * `.error-*` / `.warning-*` / `.success-*` (via `cellClass`, `cellClassRules`,
+ * `getRowClass`) keeps working unchanged.
+ *
+ * Scope of THIS file (Phase 1 — narrow on what the Coloration + CellValidation
+ * stories exercise):
+ *   - Cell padding (the only generic-`.ag-cell` rule that 2.x carried)
+ *   - .numeric-cell text-align right
+ *   - .editable-cell / .editable-numeric-cell outline
+ *   - .error-cell / .warning-cell / .success-cell (bg + adornment SVG +
+ *     numeric variants + the --salt-editable-borderColor cascade)
+ *   - .error-row / .warning-row / .success-row (custom-property scope)
+ *
+ * NOT YET ported (Phase 2+):
+ *   - .ag-cell-focus / .ag-cell-range-* focus rings           → saltFocusRing
+ *   - Range-selection ::after cross-cell outlines             → saltRangeSelectionAdjustments
+ *   - Cell-editor styling (.ag-cell-inline-editing, picker)   → saltInputStyle compose-over-default
+ *   - .ag-row-selected / .ag-row-selected::before bars        → saltRangeSelectionAdjustments
+ *   - Pinned cell first/last divider colours                  → saltRangeSelectionAdjustments
+ *
+ * The Phase 1 cut leaves Coloration + CellValidation visually equivalent to
+ * 2.x. The deferred bits show up in Range Selection / focus-ring stories
+ * which we'll port alongside Phase 2.
+ */
+
+/* --- Generic cell padding (only :ag-cell rule from 2.x that's truly generic) --- */
+/* 2.x originally also wrote `border: none; line-height: calc(var(--ag-line-height) - 1px);` */
+/* but we let AG v3's defaults stand for those — line-height -1px would force a 1px shift */
+/* that no longer matches v33 layout. Padding alone keeps consumer text aligned with legacy. */
+.ag-ltr .ag-cell {
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+}
+
+/* --- Numeric cell --- */
+.ag-cell.numeric-cell,
+.editable-numeric-cell {
+  text-align: right;
+}
+.ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
+  text-align: right;
+}
+
+/* --- Editable cell outline (used by Coloration + CellValidation) --- */
+.editable-cell,
+.editable-numeric-cell {
+  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
+  outline-offset: -1px;
+}
+
+/* --- Error / warning / success state — token cascade --- */
+/* The CSS-variable overrides re-route the editable border, focus ring and  */
+/* hover border to the status colour family. The Salt design system has     */
+/* matching tokens for each status, so the cell styling stays consistent.   */
+.editable-cell.error-cell {
+  --salt-editable-borderColor: var(--salt-status-error-borderColor);
+  --salt-focused-outlineColor: var(--salt-status-error-borderColor);
+  --salt-editable-borderColor-hover: var(--salt-status-error-borderColor);
+}
+.editable-cell.warning-cell {
+  --salt-editable-borderColor: var(--salt-status-warning-borderColor);
+  --salt-focused-outlineColor: var(--salt-status-warning-borderColor);
+  --salt-editable-borderColor-hover: var(--salt-status-warning-borderColor);
+}
+.editable-cell.success-cell {
+  --salt-editable-borderColor: var(--salt-status-success-borderColor);
+  --salt-focused-outlineColor: var(--salt-status-success-borderColor);
+  --salt-editable-borderColor-hover: var(--salt-status-success-borderColor);
+}
+
+/* --- Status cell background + side-padding to make room for adornment --- */
+.editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-error-background);
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+.editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-error-background);
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+.editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-warning-background);
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+.editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-warning-background);
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+.editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-success-background);
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+.editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-success-background);
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+/* --- Status cell adornment glyph (::after with SVG mask) --- */
+.editable-cell.error-cell:not(.ag-cell-inline-editing)::after,
+.editable-cell.warning-cell:not(.ag-cell-inline-editing)::after,
+.editable-cell.success-cell:not(.ag-cell-inline-editing)::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--salt-size-adornment);
+  height: var(--salt-size-adornment);
+  content: "";
+}
+
+.editable-cell.error-cell:not(.ag-cell-inline-editing)::after {
+  background-color: var(--salt-status-error-foreground-decorative);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 6C4.65685 6 6 4.65685 6 3C6 1.34315 4.65685 0 3 0C1.34315 0 0 1.34315 0 3C0 4.65685 1.34315 6 3 6Z' /%3E%3C/svg%3E") no-repeat 50% 50%;
+}
+.editable-cell.warning-cell:not(.ag-cell-inline-editing)::after {
+  background-color: var(--salt-status-warning-foreground-decorative);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath d='M0 6L3 0L6 6H0Z' /%3E%3C/svg%3E") no-repeat 50% 50%;
+}
+.editable-cell.success-cell:not(.ag-cell-inline-editing)::after {
+  background-color: var(--salt-status-success-foreground-decorative);
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.51878 8.36782L10.7368 1.1499L11.9742 2.38735L3.51877 10.8427L0.0299988 7.35389L1.26744 6.11646L3.51878 8.36782Z' /%3E%3C/svg%3E%0A") no-repeat 50% 50%;
+}
+
+/* Adornment placement: right side for normal cells, left for numeric (mirrors text-align). */
+.editable-cell.error-cell:not(.numeric-cell)::after,
+.editable-cell.warning-cell:not(.numeric-cell)::after,
+.editable-cell.success-cell:not(.numeric-cell)::after {
+  right: var(--salt-spacing-100);
+}
+.editable-cell.error-cell.numeric-cell::after,
+.editable-cell.warning-cell.numeric-cell::after,
+.editable-cell.success-cell.numeric-cell::after {
+  left: var(--salt-spacing-100);
+}
+
+/* --- Row-level status classes — custom-property scope --- */
+/* Setting `--ag-background-color` (and friends) on the row element makes the */
+/* status background propagate through to every child cell automatically.    */
+.error-row {
+  --ag-background-color: var(--salt-status-error-background);
+  --ag-selected-row-background-color: var(--salt-status-error-background-selected);
+  --ag-selected-row-border-color: var(--salt-status-error-borderColor);
+  --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-row-hover-color: var(--salt-overlayable-background-hover);
+}
+.warning-row {
+  --ag-background-color: var(--salt-status-warning-background);
+  --ag-selected-row-background-color: var(--salt-status-warning-background-selected);
+  --ag-selected-row-border-color: var(--salt-status-warning-borderColor);
+  --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-row-hover-color: var(--salt-overlayable-background-hover);
+}
+.success-row {
+  --ag-background-color: var(--salt-status-success-background);
+  --ag-selected-row-background-color: var(--salt-status-success-background-selected);
+  --ag-selected-row-border-color: var(--salt-status-success-borderColor);
+  --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-row-hover-color: var(--salt-overlayable-background-hover);
+}
+
