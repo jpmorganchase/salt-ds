@@ -66,7 +66,10 @@ export const saltTheme = createTheme()
     rowHeight: "calc(var(--salt-size-base) + var(--salt-spacing-100))",
     headerHeight: "calc(var(--salt-size-base) + var(--salt-spacing-100))",
     listItemHeight: "calc(var(--salt-size-base) + var(--salt-spacing-100))",
-    // iconSize is owned by saltIconSet — do NOT redeclare here
+    // iconSize ported from `ag-root-var.css:30` (`--ag-icon-size: max(...)`). Lives
+    // in the theme rather than in `saltIconSet` because `iconOverrides` doesn't
+    // accept it and `rowGroupIndentSize` below references it via `{ calc: "iconSize + spacing" }`.
+    iconSize: "max(var(--salt-size-icon), 12px)",
     cellHorizontalPadding: "var(--salt-spacing-100)",
     widgetContainerHorizontalPadding: "var(--salt-spacing-100)",
     rowGroupIndentSize: { calc: "iconSize + spacing" },
@@ -74,7 +77,6 @@ export const saltTheme = createTheme()
     // typography
     fontFamily: "var(--salt-text-fontFamily)",
     fontSize: "var(--salt-text-fontSize)",
-    headerFontSize: "var(--salt-text-label-fontSize)",
     headerFontWeight: "var(--salt-text-label-fontWeight-strong)",
 
     // colours — key
@@ -105,7 +107,7 @@ export const saltTheme = createTheme()
     rowBorder: { width: 1, color: "var(--salt-separable-tertiary-borderColor)" },
     columnBorder: false,
     wrapperBorder: false, // matches `ag-root-var.css` lines 78–83 today
-    headerColumnBorder: { width: 1, color: "var(--salt-separable-tertiary-borderColor)" },
+    headerColumnBorder: { width: "var(--salt-size-fixed-100)", color: "var(--salt-separable-tertiary-borderColor)" },
     headerColumnBorderHeight: "calc(var(--salt-size-base) / 2 - 2px)",
     borderRadius: "var(--salt-palette-corner)",
 

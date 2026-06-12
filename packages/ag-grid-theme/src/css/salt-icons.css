@@ -1,0 +1,16 @@
+/**
+ * Salt icon font @font-face declaration.
+ *
+ * Ported from `packages/ag-grid-theme/css/salt-icons.css` (2.x line). Only
+ * the @font-face declaration is carried over — the `--ag-icon-font-code-*`
+ * mappings live in `src/parts/saltIconSet.ts` via AG Grid v3's
+ * `iconOverrides({ type: 'font', family, icons })` factory.
+ *
+ * Imported as a side-effect from `saltIconSet.ts` so Vite/webpack resolve
+ * the woff URL relative to this CSS file at build time.
+ */
+@font-face {
+  font-family: "salt-icons";
+  src: url(../../fonts/salt-icons.woff) format("woff");
+}
+
