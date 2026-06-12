@@ -1914,7 +1914,7 @@ describe("createSaltMcpServer", () => {
           ) {
             // Task 0.8 annotation audit: persist_* tools may overwrite
             // caller-supplied paths inside root_dir, so destructiveHint is
-            // true. See packages/mcp/docs/public-api-matrix.md.
+            // true.
             expect(registeredTools[toolName]?.annotations).toEqual(
               expect.objectContaining({
                 readOnlyHint: false,
