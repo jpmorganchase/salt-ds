@@ -197,42 +197,53 @@ describe("registry coverage audit (roadmap task 0.6)", () => {
     ).toEqual([]);
   });
 
-  it("SaltProviderNext is present as a first-class registry entity (roadmap F1)", () => {
-    const matches = [
-      ...registry.components.filter(
-        (component) =>
-          component.name === "SaltProviderNext" ||
-          component.aliases?.includes("SaltProviderNext") ||
-          component.source?.export_name === "SaltProviderNext",
-      ),
-      ...registry.patterns.filter(
-        (pattern) =>
-          pattern.name === "SaltProviderNext" ||
-          pattern.aliases?.includes("SaltProviderNext"),
-      ),
-    ];
-    const { byTargetName } = collectExampleIndex();
-    const hasExample = byTargetName.has("saltprovidernext");
-    const gaps: CoverageGap[] = [];
-    if (matches.length === 0) {
-      gaps.push({
-        kind: "provider",
-        entity: "SaltProviderNext",
-        reason:
-          "no component or pattern record exists for SaltProviderNext — get_salt_entity cannot resolve it, forcing the model to inspect node_modules (roadmap F1 / M9)",
-      });
-    }
-    if (!hasExample) {
-      gaps.push({
-        kind: "provider",
-        entity: "SaltProviderNext",
-        reason:
-          "no canonical example in examples.json references SaltProviderNext (no JPM Brand recipe, no brand-prop defaults)",
-      });
-    }
+  it("get_salt_entity('SaltProviderNext') resolves and the resolved record exposes the brand-prop set (roadmap F1)", () => {
+    // Reframed from the original "first-class entity" assertion, which
+    // encoded a parallel-components-forever design. The convergence
+    // story is: SaltProviderNext is a transitional sibling of
+    // SaltProvider that exposes brand-aware accent/font/corner overrides
+    // until those props land on SaltProvider itself. Once that lands,
+    // SaltProviderNext becomes a deprecation alias and the hidden
+    // `salt-provider-next` MDX page is removed; this assertion then
+    // either retargets the converged SaltProvider record or is dropped.
+    //
+    // What we actually need today:
+    //   1. `get_salt_entity('SaltProviderNext')` resolves — i.e. some
+    //      component record exposes `SaltProviderNext` by name or alias
+    //      so the registry can ground a model that imports it without
+    //      forcing the model to inspect node_modules.
+    //   2. The resolved record's `props` array carries the full brand-
+    //      prop set: accent, actionFont, corner, density, headingFont,
+    //      mode. Where those props live (a dedicated SaltProviderNext
+    //      record vs. merged onto SaltProvider with provenance) is an
+    //      implementation detail of the build pipeline and should not
+    //      be encoded by this assertion.
+    const resolved = registry.components.find(
+      (component) =>
+        component.name === "SaltProviderNext" ||
+        component.aliases?.includes("SaltProviderNext"),
+    );
     expect(
-      gaps,
-      `SaltProviderNext first-class entity coverage (gap count: ${gaps.length}):\n${formatGapList(gaps)}`,
+      resolved,
+      "expected some component record to expose 'SaltProviderNext' by name or alias so get_salt_entity('SaltProviderNext') resolves (roadmap F1 / M9)",
+    ).toBeDefined();
+    if (!resolved) {
+      return;
+    }
+
+    const propNames = new Set(resolved.props.map((prop) => prop.name));
+    const brandProps = [
+      "accent",
+      "actionFont",
+      "corner",
+      "density",
+      "headingFont",
+      "mode",
+    ] as const;
+    const missingBrandProps = brandProps.filter((name) => !propNames.has(name));
+    expect(
+      missingBrandProps,
+      `${resolved.name} resolves for SaltProviderNext but is missing brand props that callers need to ground accent/font/corner overrides (missing: ${missingBrandProps.join(", ")})`,
     ).toEqual([]);
   });
 });

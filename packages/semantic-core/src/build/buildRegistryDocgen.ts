@@ -388,6 +388,13 @@ export function selectDocgenComponent(
       const sourcePathBonus = sourcePathMatchKeys.has(normalizedDisplayName)
         ? 4
         : 0;
+      // Deprecation aliases (the `UNSTABLE_*` exports) carry the same
+      // props as their primary export and otherwise tie on every
+      // signal. They should never be the preferred docgen pick when a
+      // non-deprecated equivalent is also a candidate. A small penalty
+      // is enough to break the tie without disrupting any case where
+      // an UNSTABLE_ entry is the only candidate available.
+      const unstablePenalty = displayName.startsWith("UNSTABLE_") ? -1 : 0;
       const propCount =
         candidate.props && typeof candidate.props === "object"
           ? Object.keys(candidate.props as Record<string, unknown>).length
@@ -395,7 +402,11 @@ export function selectDocgenComponent(
 
       return {
         candidate,
-        score: sourcePathBonus + exactMatch + Math.min(propCount, 30) / 100,
+        score:
+          sourcePathBonus +
+          exactMatch +
+          unstablePenalty +
+          Math.min(propCount, 30) / 100,
       };
     })
     .sort((left, right) => right.score - left.score);
