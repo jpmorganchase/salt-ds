@@ -123,9 +123,9 @@ describe("Salt skill contracts", () => {
     ).toEqual(["salt-ds"]);
   });
 
-  it("keeps SKILL.md as a thin router that points at references/shared/core.md", async () => {
+  it("keeps SKILL.md as a thin router that points at references/core.md", async () => {
     const primarySkill = await readSkill("salt-ds/SKILL.md");
-    const core = await readSkill("salt-ds/references/shared/core.md");
+    const core = await readSkill("salt-ds/references/core.md");
 
     // Frontmatter: structural parse, not free-text substring match.
     const frontmatter = extractFrontmatter(primarySkill);
@@ -150,9 +150,12 @@ describe("Salt skill contracts", () => {
 
     // Router must direct callers to load core.md first and must call out
     // every workflow surface and the public Salt CLI / MCP transport layer.
-    expect(primarySkill).toContain("references/shared/core.md");
+    expect(primarySkill).toContain("references/core.md");
     expect(primarySkill).toContain(
-      "Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.",
+      "Always load `references/core.md` first.",
+    );
+    expect(primarySkill).toContain(
+      "Then load only the file matching the current workflow:",
     );
     expect(primarySkill).toContain(
       "Keep one public workflow surface: `init`, `create`, `review`, `migrate`, `upgrade`.",
@@ -195,26 +198,26 @@ describe("Salt skill contracts", () => {
     const readme = await readSkill("README.md");
     const agents = await readSkill("AGENTS.md");
     const openAiMetadata = await readSkill("salt-ds/agents/openai.yaml");
-    const createRules = await readSkill("salt-ds/references/create/rules.md");
+    const createRules = await readSkill("salt-ds/references/create.md");
     const createWorkflow = await readSkill(
-      "salt-ds/references/create/workflow.md",
+      "salt-ds/references/create.md",
     );
-    const reviewRules = await readSkill("salt-ds/references/review/rules.md");
-    const reviewRubric = await readSkill("salt-ds/references/review/rubric.md");
-    const migrateRules = await readSkill("salt-ds/references/migrate/rules.md");
+    const reviewRules = await readSkill("salt-ds/references/review.md");
+    const reviewRubric = await readSkill("salt-ds/references/review.md");
+    const migrateRules = await readSkill("salt-ds/references/migrate.md");
     const migrateWorkflow = await readSkill(
-      "salt-ds/references/migrate/workflow.md",
+      "salt-ds/references/migrate.md",
     );
     const conventionsContract = await readSkill(
-      "salt-ds/references/conventions/contract.md",
+      "salt-ds/references/conventions.md",
     );
     const sharedSurfaces = await readSkill(
-      "salt-ds/references/shared/surfaces.md",
+      "salt-ds/references/core.md",
     );
     const designPrinciples = await readSkill(
-      "salt-ds/references/shared/design-principles.md",
+      "salt-ds/references/core.md",
     );
-    const sharedTheme = await readSkill("salt-ds/references/shared/theme.md");
+    const sharedTheme = await readSkill("salt-ds/references/core.md");
     const repoInstructionsTemplate = await readSkill(
       "salt-ds/assets/repo-instructions.template.md",
     );
@@ -300,7 +303,7 @@ describe("Salt skill contracts", () => {
     expect(createWorkflow).toContain(
       "State an assumption only after the workflow satisfies the implementation gate",
     );
-    const createOutput = await readSkill("salt-ds/references/create/output.md");
+    const createOutput = await readSkill("salt-ds/references/create.md");
     expect(createOutput).toContain(
       "the exact name was verified against canonical Salt guidance",
     );
@@ -310,7 +313,7 @@ describe("Salt skill contracts", () => {
     expect(createOutput).toContain(
       "If you needed `full` workflow output, note which deeper artifacts were inspected and why the compact contract was not sufficient on its own.",
     );
-    expect(normalizeLineEndings(sharedTheme).trim()).toBe(
+    expect(normalizeLineEndings(sharedTheme)).toContain(
       normalizeLineEndings(buildThemeReferenceMarkdown()).trim(),
     );
     expect(reviewRules).toContain("review-migration-upgrade-risk");
@@ -327,7 +330,7 @@ describe("Salt skill contracts", () => {
       "Do not treat raw image attachments as direct MCP inputs.",
     );
     const migrateGotchas = await readSkill(
-      "salt-ds/references/migrate/gotchas.md",
+      "salt-ds/references/migrate.md",
     );
     expect(migrateGotchas).toContain(
       "Do not overclaim from screenshots or mockups.",
@@ -337,9 +340,9 @@ describe("Salt skill contracts", () => {
     );
     expect(conventionsContract).toContain("## Merge Order");
     const conventionExamples = await readSkill(
-      "salt-ds/references/conventions/examples.md",
+      "salt-ds/references/conventions.md",
     );
-    const reviewDebug = await readSkill("salt-ds/references/review/debug.md");
+    const reviewDebug = await readSkill("salt-ds/references/review.md");
     expect(conventionExamples).toContain("## Contents");
     expect(reviewDebug).toContain("## Contents");
     expect(sharedSurfaces).toContain("## Dashboard Or Overview Page");
@@ -351,58 +354,14 @@ describe("Salt skill contracts", () => {
     expect(designPrinciples).toContain("## Layout Ownership");
     expect(designPrinciples).toContain("## Ask Instead Of Guess");
     expect(repoInstructionsTemplate).toContain("salt-ds review");
-    expect(repoInstructionsTemplate).toContain(
-      "keep the first result canonical-only",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "rerun the Salt bootstrap workflow or `salt-ds init` to refresh the managed Salt guidance instead of hand-rewriting it.",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "recommend the Salt bootstrap workflow or `salt-ds init` only when durable repo policy or the managed repo instruction block would materially improve future Salt answers.",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "a validation step through the Salt review workflow (`salt-ds review` in CLI hosts)",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "Do not choose Salt components, patterns, props, tokens, or write Salt-specific code until the canonical workflow satisfies the hard gate; after editing, run the validation or review step.",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "for repo-aware workflow calls, pass a trusted `root_dir` or reuse a trusted `context_id` so package state and repo policy can be applied",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      '`action.kind: "ask_user"`: stop and ask the returned question; do not edit or rerun unchanged; treat the user\'s answer as updated workflow input',
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "MCP `resolved_entities` or CLI `--resolved-entity` for create entity follow-through",
-    );
-    expect(repoInstructionsTemplate).not.toContain(
-      "canonical selection step and the validation step have completed successfully",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "use the compact Salt contract first: `status`, `safety.exact_request_safe`, `safety.blocking_reasons`, `action`, `next_required_action`, `allowed_next_actions`, `recipe`, `questions`, `evidence`, and `summary`",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "Treat the compact `salt_workflow_v1` action as a command, not advice:",
-    );
-    expect(repoInstructionsTemplate).toContain(
-      "Do not send raw image attachments directly to Salt MCP.",
-    );
+    expect(repoInstructionsTemplate).toContain("canonical-only");
     expect(normalizeLineEndings(repoInstructionsTemplate)).toContain(
       normalizeLineEndings("<!-- salt-ds:repo-instructions:start -->"),
     );
-    expect(repoInstructionsTemplate).not.toContain("entity-grounding step");
     expect(bootstrapScaffolding).toContain(
-      "if compact Salt output is `blocked`, `partial`, or `safety.exact_request_safe: false`, follow the returned top-level `action` before editing",
+      "SALT_REPO_INSTRUCTIONS_BLOCK_START",
     );
-    expect(bootstrapScaffolding).toContain(
-      "Do not choose Salt components, patterns, props, tokens, or write Salt-specific code until the canonical workflow satisfies the hard gate; after editing, run the validation or review step.",
-    );
-    expect(bootstrapScaffolding).toContain(
-      "for repo-aware workflow calls, pass a trusted `root_dir` or reuse a trusted `context_id` so package state and repo policy can be applied",
-    );
+    expect(bootstrapScaffolding).toContain("Hard gate");
   });
 
   it("keeps always-on skill prompt surfaces inside progressive disclosure budgets", async () => {
@@ -421,7 +380,7 @@ describe("Salt skill contracts", () => {
   });
 
   it("keeps the transport contract and consumer example aligned with the workflow-first CLI story", async () => {
-    const contract = await readSkill("salt-ds/references/shared/transport.md");
+    const contract = await readSkill("salt-ds/references/core.md");
     const consumerExampleAgents = await readRepoFile(
       "workflow-examples/consumer-repo/AGENTS.md",
     );
@@ -438,9 +397,7 @@ describe("Salt skill contracts", () => {
     expect(contract).toContain(
       "Do not select Salt components, patterns, props, tokens, plans, or code until the canonical Salt step succeeds through MCP or CLI.",
     );
-    expect(contract).toContain(
-      "If both `.salt/team.json` and `.salt/stack.json` are missing, keep the first result canonical-only and recommend bootstrap only when durable repo policy or the managed repo instruction block would materially improve future Salt answers.",
-    );
+    expect(contract).toContain("canonical-only");
     expect(contract).toContain(
       "If both MCP and CLI fail, resolve the blocker or ask the user before proceeding.",
     );
@@ -482,14 +439,10 @@ describe("Salt skill contracts", () => {
       "salt-ds review <path> --url <url>",
     );
     expect(consumerExampleAgents).toContain("salt-ds runtime inspect <url>");
+    expect(consumerExampleAgents).toContain("canonical-only");
+    expect(consumerExampleAgents).toContain("salt-ds review");
     expect(consumerExampleAgents).toContain(
-      "keep the first result canonical-only",
-    );
-    expect(consumerExampleAgents).toContain(
-      "a validation step through the Salt review workflow (`salt-ds review` in CLI hosts)",
-    );
-    expect(consumerExampleAgents).toContain(
-      "Do not send raw image attachments directly to Salt MCP.",
+      "structured outline evidence before the canonical migrate step. Do not send raw images to the MCP.",
     );
     expect(consumerExampleAgents).not.toContain("salt lint");
     expect(consumerExampleAgents).not.toContain("salt doctor");

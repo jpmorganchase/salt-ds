@@ -11,11 +11,8 @@ Do not make the user choose between separate builder, reviewer, migration, acces
 
 ## Always-Load First
 
-Before any other Salt-specific reasoning, load `references/shared/core.md`. It carries the always-on behavior bullets every Salt workflow shares: the No Salt Invention Rule, the Theme Evidence Rule, the Hard Gate, the Action Loop, Project Context First, the Shared Workflow Contract, the Stable-First Rule, and the Output Posture.
-This file (SKILL.md) is a thin router; the binding behavior contract lives in `references/shared/core.md`.
-For VS Code or IntelliJ Copilot-specific host behavior, load `references/shared/copilot-hosts.md`.
-For degraded MCP or CLI handling, load `references/shared/degraded-tooling.md`.
-Use `references/shared/transport.md` for the full action map, degraded-tooling, completion, and CLI follow-through rules.
+Before any other Salt-specific reasoning, load `references/core.md`. It carries the always-on behavior bullets every Salt workflow shares: the No Salt Invention Rule, the Theme Evidence Rule, the Hard Gate, the Action Loop, Project Context First, the Shared Workflow Contract, the Stable-First Rule, and the Output Posture. It also folds in the host-specific guidance, degraded-tooling rules, design principles, modes, project memory, surface resolution, surfaces, theme bootstrap, and the canonical workflow/transport contract.
+This file (SKILL.md) is a thin router; the binding behavior contract lives in `references/core.md`.
 
 ## Example Triggers
 
@@ -57,26 +54,4 @@ For `create`, prefer this sequencing by default: compact workflow result; retrie
 
 ## Reference Routing
 
-Load `references/shared/core.md` first. Then load only the minimum shared and workflow references needed for the chosen mode and current step. Load `references/shared/modes.md` before acting when the user intent is not obvious.
-
-Shared references (load on demand):
-
-- `references/shared/transport.md` for the workflow and transport contract.
-- `references/shared/degraded-tooling.md` when MCP or CLI output is noisy, partial, truncated, misrouted, or unavailable.
-- `references/shared/modes.md` for quick-vs-deep behavior, option exploration, and blocker questions.
-- `references/shared/project-memory.md` when repo-local decisions or accepted deviations may change the final answer.
-- `references/shared/surfaces.md` for dashboards, table-and-filters views, forms, dialogs, navigation shells, and supporting states.
-- `references/shared/surface-resolution.md` for preserving page-, region-, and concrete-surface nouns without over-collapsing the task.
-- `references/shared/design-principles.md` for hierarchy, layout ownership, density, stable-first choices, and bounded customization.
-- `references/shared/theme.md` when create or migrate work touches provider/theme bootstrap.
-- `references/shared/copilot-hosts.md` for VS Code / IntelliJ Copilot host behavior and repo-scoping rules.
-- `references/shared/anti-patterns.md` for behaviors that commonly derail otherwise-correct Salt answers.
-
-Workflow-specific references:
-
-- `create`: `references/create/rules.md`, `references/create/workflow.md`, `references/create/gotchas.md`, `references/create/output.md`, `references/create/questions.md`
-- `create` + `explore-options`: also load `references/create/explore-options.md`
-- `review`: `references/review/rules.md`, `references/review/rubric.md`, `references/review/debug.md`, `references/review/gotchas.md`, `references/review/output.md`
-- `migrate`: `references/migrate/rules.md`, `references/migrate/workflow.md`, `references/migrate/gotchas.md`, `references/migrate/output.md`
-- `upgrade`: `references/upgrade/rules.md`, `references/upgrade/workflow.md`, `references/upgrade/gotchas.md`, `references/upgrade/output.md`
-- `init` / conventions-sensitive work: `references/conventions/rules.md`, `references/conventions/contract.md`, `references/conventions/examples.md`, `references/conventions/review-checklist.md`
+Always load `references/core.md` first. Then load only the file matching the current workflow: `create.md`, `review.md`, `migrate.md`, `upgrade.md`, or `conventions.md`.
