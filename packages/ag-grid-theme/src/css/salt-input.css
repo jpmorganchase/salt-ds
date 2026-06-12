@@ -1,0 +1,105 @@
+/* Phase 2 port of bespoke filter / column-select / large-text editor CSS
+ * from `css/parts/ag-input.css` into the saltInputStyle overlay.
+ *
+ * The 4-way `.ag-theme-salt-{light,dark,compact-light,compact-dark}` selector
+ * scoping is stripped — AG v3 auto-wraps in `:where(.ag-theme-part-N)`.
+ *
+ * Source mapping:
+ *   - ag-input.css   1-30    .ag-filter input + .ag-column-select input
+ *                            (the Salt "underlined" filter input look:
+ *                             transparent bg + 1px border-bottom + Salt height/padding)
+ *   - ag-input.css  32-50    Placeholder colour
+ *   - ag-input.css  52-72    :focus outline (Salt focused-outline tokens)
+ *   - ag-input.css  74-113   Large-text popup-editor + autocomplete-list-popup
+ *                            container + textarea styling
+ *
+ * Pairs with `inputStyleUnderlined` (the AG built-in that saltTheme composes
+ * in immediately before saltInputStyle). That part provides base input
+ * rendering (border, padding, focus); we overlay the filter-specific
+ * tweaks here.
+ */
+
+/* --- Baseline reset: kill the browser default `<input>` border/outline ---
+ *
+ * 2.x ag-input.css implicitly relied on AG v32 shipping a global no-border
+ * reset on its inputs. AG v3 only ships those resets via the built-in
+ * `inputStyle*` parts, which we deliberately do NOT compose (see the
+ * JSDoc in `saltInputStyle.ts` for why). Without this rule, every ag-input
+ * — floating filters, cell editors, etc. — gets the browser-default `2px
+ * inset` border, which differs visibly from the 2.x rendering.
+ */
+.ag-input-field-input {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+/* --- Filter input + column-select input: Salt underlined look --- */
+.ag-filter input[class^="ag-"][type="text"],
+.ag-filter input[class^="ag-"][type="number"],
+.ag-filter input[class^="ag-"][type="date"],
+.ag-column-select input[class^="ag-"][type="text"],
+.ag-column-select input[class^="ag-"][type="number"],
+.ag-column-select input[class^="ag-"][type="date"] {
+  border: none;
+  background: transparent;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding: 0 var(--salt-spacing-100);
+}
+
+/* --- Placeholder --- */
+.ag-filter input[type="text"]::placeholder,
+.ag-filter input[type="number"]::placeholder,
+.ag-column-select input[type="text"]::placeholder,
+.ag-column-select input[type="number"]::placeholder {
+  color: var(--salt-content-secondary-foreground);
+  opacity: 1;
+}
+
+/* --- Baseline reset: kill the browser default `<input>` border/outline ---
+ *
+ * 2.x ag-input.css implicitly relied on AG v32 shipping a global no-border
+ * reset on its inputs. AG v3 only ships those resets via the built-in
+ * `inputStyle*` parts, which we deliberately do NOT compose (see the
+ * JSDoc in `saltInputStyle.ts` for why). Without this rule, every ag-input
+ * — floating filters, cell editors, etc. — gets the browser-default `2px
+ * inset` border, which differs visibly from the 2.x rendering.
+ */
+.ag-input-field-input {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+/* --- Filter input :focus outline --- */
+.ag-filter input[class^="ag-"][type="text"]:focus,
+.ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-filter input[class^="ag-"][type="date"]:focus,
+.ag-column-select input[class^="ag-"][type="text"]:focus,
+.ag-column-select input[class^="ag-"][type="number"]:focus,
+.ag-column-select input[class^="ag-"][type="date"]:focus {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+}
+
+/* --- Large-text cell-editor popup: match Salt multiline-input styling --- */
+.ag-popup-editor .ag-large-text textarea[class^="ag-"] {
+  border-radius: var(--salt-palette-corner-weak, 0);
+  padding: var(--salt-spacing-100) var(--salt-spacing-100);
+  /* When textarea is not focused, simulate Salt OptionList border colour. */
+  border-color: var(--salt-selectable-borderColor-selected);
+}
+
+/* Container shouldn't draw its own border — the textarea above owns it
+ * (matters for focus-ring positioning).
+ */
+.ag-popup-editor .ag-large-text,
+.ag-autocomplete-list-popup {
+  border: none;
+}
+
+.ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
