@@ -21,4 +21,9 @@ export { saltRangeSelectionAdjustments } from "./parts/saltRangeSelectionAdjustm
 // Header parts — mutually exclusive within the saltHeaderBackground / saltHeaderDivider feature groups
 export { saltHeaderPrimary } from "./parts/header/saltHeaderPrimary";
 export { saltHeaderDividerPrimary } from "./parts/header/saltHeaderDividerPrimary";
+export { saltHeaderSecondary } from "./parts/header/saltHeaderSecondary";
+export { saltHeaderTertiary } from "./parts/header/saltHeaderTertiary";
+export { saltHeaderDividerSecondary } from "./parts/header/saltHeaderDividerSecondary";
+export { saltHeaderDividerTertiary } from "./parts/header/saltHeaderDividerTertiary";
+export { saltHeaderDividerNone } from "./parts/header/saltHeaderDividerNone";
 
