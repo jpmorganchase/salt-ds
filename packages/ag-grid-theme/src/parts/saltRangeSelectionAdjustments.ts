@@ -1,12 +1,14 @@
 /**
- * Phase 0 skeleton for Salt range-selection adjustments (proposal §4.4).
+ * Salt range-selection adjustments — ports the bespoke CSS for selected
+ * rows, pinned-column dividers, and cross-cell range outlines.
  *
- * Owns the cross-cell outline, fill-handle, selected-row border cleanup and
- * a few other rules that don't have a direct AG Grid theming parameter
- * (see §5 mapping rows tagged "**Removed** — handled in
- * `saltRangeSelectionAdjustments` CSS"). The CSS moves here in Phase 1+.
+ * Phase 2 step S. Source mapping documented in `src/css/salt-range-selection.css`.
+ *
+ * No params, no `feature` — pure additive CSS overlay. Consumers can opt
+ * out with `withoutPart(saltRangeSelectionAdjustments)`.
  */
 import { createPart } from "ag-grid-community";
+import css from "../css/salt-range-selection.css?inline";
 
-export const saltRangeSelectionAdjustments = createPart({});
+export const saltRangeSelectionAdjustments = createPart({ css });
 

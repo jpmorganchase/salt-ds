@@ -1,0 +1,96 @@
+/* Phase 2 port of cross-cell range outlines, row-selected bar and pinned
+ * column dividers from the 2.x line. The 4-way
+ * `.ag-theme-salt-{light,dark,compact-light,compact-dark}` selector
+ * scoping is stripped — AG v3 auto-wraps in `:where(.ag-theme-part-N)`.
+ *
+ * Source mapping:
+ *   - css/parts/ag-body.css lines 10-30
+ *       .ag-row-selected background + ::before bar (the thin coloured
+ *       line at the top of a selected row + the row-fill colour)
+ *   - css/parts/ag-body.css lines 34-46
+ *       .ag-cell-last-left-pinned + .ag-cell-first-right-pinned dividers
+ *       (the vertical lines between pinned and scrolling columns)
+ *   - css/parts/ag-body.css lines 476-526
+ *       .ag-cell-range-{top,right,bottom,left}::after cross-cell outlines
+ *       (the "fake" range outline drawn as a per-side border on each cell
+ *        on the outer edges of a multi-cell selection)
+ *
+ * Sibling parts (cleanly separated per proposal §4.4):
+ *   - .ag-cell-focus / .editable-cell.ag-cell-focus corner pip → saltFocusRing
+ *   - .editable-cell / .error-cell / .warning-cell / status      → saltCellStates
+ */
+
+/* --- Selected row background + top bar --- */
+.ag-root-wrapper {
+  /* No direct AG v3 typed param for the row-selection bar colour. Set the
+   * variable here so both `.ag-row-selected` (border-color) and the ::before
+   * bar below inherit the right Salt token. */
+  --ag-selected-row-border-color: var(--salt-selectable-borderColor-selected);
+}
+
+.ag-row-selected {
+  background-color: var(--ag-selected-row-background-color);
+  border-color: var(--ag-selected-row-border-color);
+}
+
+/* The ::before is a 1px solid bar drawn at the top of a selected row.
+ * `top: -1px` makes it overlay the previous row's border-bottom so the
+ * visual is one continuous bar between rows. */
+.ag-row-selected::before,
+.ag-row-hover.ag-row-selected::before {
+  background-color: var(--ag-selected-row-border-color);
+  background-image: none;
+  height: var(--salt-size-fixed-100);
+  top: -1px;
+}
+
+/* --- Pinned-column dividers ---
+ *
+ * The last cell of the left-pinned column and the first cell of the
+ * right-pinned column draw a coloured border on the side facing the
+ * scrolling area. Excluded when the cell is part of an active range
+ * selection (would conflict with the range outlines below).
+ */
+.ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+  border-right-color: var(--salt-separable-secondary-borderColor);
+}
+.ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell) {
+  border-left-color: var(--salt-separable-secondary-borderColor);
+}
+
+/* --- Cross-cell range outlines ---
+ *
+ * When a multi-cell range is selected, the outer edges get a Salt-coloured
+ * outline. We can't use `outline` on each cell because that would draw
+ * boxes around every individual cell. Instead, AG adds `.ag-cell-range-top`
+ * / `.ag-cell-range-right` / `.ag-cell-range-bottom` / `.ag-cell-range-left`
+ * classes to the cells on each outer edge of the range, and we paint the
+ * matching side as a single coloured line via a positioned ::after.
+ *
+ * Common ::after positioning (all four classes share the same box) — kept
+ * in one rule for brevity; each class then adds its own border side.
+ */
+.ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
+.ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
+.ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
+.ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+.ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
+  border-top: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+.ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after {
+  border-right: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+.ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after {
+  border-bottom: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+.ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
+  border-left: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
