@@ -103,7 +103,7 @@ export const saltTheme = createTheme()
     // borders (composite values, see Borders docs)
     borderColor: "var(--salt-separable-secondary-borderColor)",
     rowBorder: { width: 1, color: "var(--salt-separable-tertiary-borderColor)" },
-    columnBorder: { width: 0 },
+    columnBorder: false,
     wrapperBorder: false, // matches `ag-root-var.css` lines 78–83 today
     headerColumnBorder: { width: 1, color: "var(--salt-separable-tertiary-borderColor)" },
     headerColumnBorderHeight: "calc(var(--salt-size-base) / 2 - 2px)",
