@@ -160,18 +160,48 @@ describe("PR 16 (task 2.10) — theme-aware create_salt_ui", () => {
     expect(question?.kind).toBe("theme-provider-choice");
     expect(question?.topic).toBe("theme-provider");
     expect(question?.ask_before_proceeding).toBe(true);
+
+    // Transitional framing: SaltProviderNext is the recommended default
+    // for brand-aware prompts today, so it leads both the rich `options`
+    // array and the flat `choices` array that flat hosts surface.
     expect(question?.options.map((option) => option.id)).toEqual([
-      "salt-provider",
       "salt-provider-next",
+      "salt-provider",
     ]);
+    expect(question?.choices[0]).toMatch(/SaltProviderNext/);
+    expect(question?.choices[0]).toMatch(/recommended/i);
+
+    // The recommended marker must live on the SaltProviderNext option
+    // (and only on that one) so hosts can pre-select or visually
+    // emphasize it without inferring from prose.
+    const recommended = question?.options.filter(
+      (option) => option.recommended === true,
+    );
+    expect(recommended).toHaveLength(1);
+    expect(recommended?.[0]?.id).toBe("salt-provider-next");
+
+    // The convergence_note must be present and call the question
+    // transitional so hosts don't encode the split as a permanent fork.
+    expect(question?.convergence_note).toMatch(/transitional/i);
+    expect(question?.convergence_note).toMatch(/SaltProviderNext/);
+    expect(question?.convergence_note).toMatch(/SaltProvider/);
+
+    // The reason should also surface the transitional framing — this is
+    // what older consumers that don't read convergence_note will see.
+    expect(question?.reason).toMatch(/transitional|deprecation alias/i);
 
     // Both options expose the registry-backed component name so the host can
     // route the user's pick back to a get_salt_entity follow-up.
-    expect(question?.options[0]?.component).toBe("SaltProvider");
-    expect(question?.options[1]?.component).toBe("SaltProviderNext");
+    const optionsByComponent = new Map(
+      (question?.options ?? []).map((option) => [option.component, option]),
+    );
+    expect(optionsByComponent.has("SaltProvider")).toBe(true);
+    expect(optionsByComponent.has("SaltProviderNext")).toBe(true);
 
-    // Brand prop defaults come from the synthetic registry, not invented.
-    const brandDefaults = question?.options[1]?.brand_prop_defaults ?? [];
+    // Brand prop defaults come from the synthetic registry, not invented,
+    // and live on the SaltProviderNext option regardless of order.
+    const brandDefaults =
+      optionsByComponent.get("SaltProviderNext")?.brand_prop_defaults ?? [];
     expect(brandDefaults.map((entry) => entry.name)).toEqual([
       "accent",
       "actionFont",

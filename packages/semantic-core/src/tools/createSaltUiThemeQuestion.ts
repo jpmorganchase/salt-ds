@@ -67,6 +67,15 @@ export interface ThemeProviderChoiceOption {
   label: string;
   /** One-line reason summarizing the trade-off. */
   why: string;
+  /**
+   * Marker that this is the recommended default for brand-aware prompts
+   * today. Present on at most one option per question. Hosts that render
+   * the choice as a list should pre-select or visually emphasize the
+   * recommended option; CLI surfaces can fall back to picking it when
+   * the user does not respond. The recommendation is a transitional
+   * signal — see `convergence_note` on the question for context.
+   */
+  recommended?: true;
   /** Brand-aware prop defaults pulled from the SaltProviderNext entity. */
   brand_prop_defaults?: BrandPropEvidence[];
 }
@@ -74,6 +83,15 @@ export interface ThemeProviderChoiceOption {
 export interface CreateThemeProviderQuestion extends WorkflowOpenQuestion {
   kind: "theme-provider-choice";
   options: ThemeProviderChoiceOption[];
+  /**
+   * Transitional context for the question. SaltProviderNext is a sibling
+   * of SaltProvider that exposes brand-aware accent/font/corner overrides
+   * until those props land on SaltProvider itself; once that convergence
+   * lands, SaltProviderNext becomes a deprecation alias and this question
+   * will be removed. Hosts SHOULD surface this note (verbatim or
+   * paraphrased) so users do not encode the choice as a permanent fork.
+   */
+  convergence_note: string;
 }
 
 function normalize(value: string | null | undefined): string {
@@ -202,28 +220,31 @@ export function evaluateCreateThemeProviderQuestion(
     kind: "theme-provider-choice",
     topic: "theme-provider",
     prompt:
-      "Which theme provider should this Salt UI wrap with: the stable SaltProvider (base theme) or SaltProviderNext (JPM Brand)?",
+      "For brand-aware accent, font, or corner overrides today, wrap this Salt UI with SaltProviderNext. Confirm SaltProviderNext, or pick the stable SaltProvider if no brand overrides are needed.",
     choices: [
-      "SaltProvider (stable, base theme)",
-      "SaltProviderNext (JPM Brand, exposes brand props such as accent, density, mode)",
+      "SaltProviderNext — use today for brand-aware accent, font, corner, density, and mode props (recommended)",
+      "SaltProvider — stable base theme, no brand-only props",
     ],
     reason:
-      "Create prompt mentions theme, brand, or provider terms and the host did not signal a declared theme provider. Choosing between SaltProvider and SaltProviderNext changes which props are available and which theme stylesheet must be imported.",
+      "Create prompt mentions theme, brand, or provider terms and the host did not signal a declared theme provider. Today SaltProviderNext is the only provider that exposes brand-aware accent/font/corner props; SaltProvider stays the right pick when the consumer does not need them. This choice is transitional — once SaltProvider absorbs the brand props, SaltProviderNext becomes a deprecation alias and this question is removed.",
     ask_before_proceeding: true,
     source_urls: sourceUrls,
+    convergence_note:
+      "Transitional: SaltProviderNext is a sibling of SaltProvider that surfaces brand-aware props (accent, actionFont, corner, headingFont) on top of the shared density/mode/theme set. When those props land on SaltProvider itself, SaltProviderNext becomes a deprecation alias and this question disappears. Do not encode the SaltProvider vs SaltProviderNext split as a permanent fork in consumer code or docs.",
     options: [
-      {
-        id: "salt-provider",
-        component: "SaltProvider",
-        label: "SaltProvider (stable, base theme)",
-        why: "Default Salt theming. Use when the consumer does not need brand-aware accent, font, or corner overrides.",
-      },
       {
         id: "salt-provider-next",
         component: "SaltProviderNext",
-        label: "SaltProviderNext (JPM Brand)",
-        why: "Brand-aware theming with accent, font, corner, density, and mode props surfaced directly on the provider.",
+        label: "SaltProviderNext (recommended for brand-aware overrides)",
+        why: "Use today when the consumer needs brand-aware accent, font, corner, density, or mode overrides. Surfaces those props directly on the provider. Will become a deprecation alias once SaltProvider absorbs the brand props.",
+        recommended: true,
         brand_prop_defaults: brandPropDefaults,
+      },
+      {
+        id: "salt-provider",
+        component: "SaltProvider",
+        label: "SaltProvider (stable base theme)",
+        why: "Pick when no brand-aware accent, font, or corner overrides are needed. Exposes density, mode, and theme; brand-only props are not on this export today.",
       },
     ],
   };
