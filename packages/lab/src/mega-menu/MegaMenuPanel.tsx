@@ -3,6 +3,7 @@ import {
   makePrefixer,
   useFloatingComponent,
   useFloatingUI,
+  useForkRef,
   useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -84,6 +85,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
     }, [focusFirstItemOnOpen, isPositioned, floatingEl]);
 
     const floatingProps = getFloatingProps(rest);
+    const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
     return (
       <FloatingComponent
@@ -99,17 +101,13 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
           closeOnFocusOut: false,
           guards: false,
         }}
-        ref={setFloating}
+        className={clsx(withBaseName(), className)}
+        id={id}
+        role="region"
+        {...floatingProps}
+        ref={handleRef}
       >
-        <div
-          className={clsx(withBaseName(), className)}
-          id={id}
-          role="region"
-          ref={ref}
-          {...floatingProps}
-        >
-          {children}
-        </div>
+        {children}
       </FloatingComponent>
     );
   },

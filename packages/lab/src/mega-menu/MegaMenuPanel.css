@@ -7,7 +7,7 @@
   align-items: stretch;
   inline-size: var(--saltMegaMenuPanel-inlineSize, fit-content);
   max-inline-size: var(--saltMegaMenuPanel-maxInlineSize, var(--saltMegaMenuPanel-availableWidth));
-  max-height: 90%;
+  max-height: 90dvh;
   overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
