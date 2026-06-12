@@ -3,8 +3,8 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type AnchorHTMLAttributes,
   Children,
+  type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEvent,
   type ReactNode,
@@ -14,8 +14,12 @@ import { useMegaMenu } from "./useMegaMenu";
 
 const withBaseName = makePrefixer("saltMegaMenuItem");
 
-export interface MegaMenuItemProps
-  extends AnchorHTMLAttributes<HTMLAnchorElement> {
+// biome-ignore lint/suspicious/noExplicitAny: We don't know the exact type here
+function MegaMenuItemAction(props: ComponentPropsWithoutRef<any>) {
+  return renderProps("a", props);
+}
+
+export interface MegaMenuItemProps extends ComponentPropsWithoutRef<"a"> {
   /**
    * The content of the mega menu item.
    */
@@ -40,27 +44,30 @@ export const MegaMenuItem = forwardRef<HTMLAnchorElement, MegaMenuItemProps>(
       window: targetWindow,
     });
 
-    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const handleClick = (event: MouseEvent<never>) => {
       onClick?.(event);
       megaMenu.setOpen(false);
     };
 
     const isLink = href != null;
 
-    return renderProps("a", {
-      className: clsx(withBaseName(), className),
-      ref,
-      href,
-      onClick: handleClick,
-      render: render ?? (isLink ? undefined : <button type="button" />),
-      ...rest,
-      children: Children.map(children, (child) =>
-        typeof child === "string" || typeof child === "number" ? (
-          <span className={withBaseName("content")}>{child}</span>
-        ) : (
-          child
-        ),
-      ),
-    });
+    return (
+      <MegaMenuItemAction
+        className={clsx(withBaseName(), className)}
+        ref={ref}
+        href={href}
+        onClick={handleClick}
+        render={render ?? (isLink ? undefined : <button type="button" />)}
+        {...rest}
+      >
+        {Children.map(children, (child) =>
+          typeof child === "string" || typeof child === "number" ? (
+            <span className={withBaseName("content")}>{child}</span>
+          ) : (
+            child
+          ),
+        )}
+      </MegaMenuItemAction>
+    );
   },
 );
