@@ -48,7 +48,7 @@ export const MegaMenuGroupHeading = forwardRef<
       {...rest}
       id={id}
     >
-      <div className={clsx(withBaseName("content"))}>{children}</div>
+      <div className={withBaseName("content")}>{children}</div>
     </div>
   );
 });
