@@ -35,7 +35,7 @@
  * AG Grid's own `data-ag-theme-mode` switch can opt in with
  * `saltTheme.withPart(colorSchemeVariable)` (proposal §4.8).
  */
-import { createTheme } from "ag-grid-community";
+import { checkboxStyleDefault, createTheme } from "ag-grid-community";
 import { saltCellStates } from "./parts/saltCellStates";
 import { saltCheckboxStyle } from "./parts/saltCheckboxStyle";
 import { saltColumnDropStyle } from "./parts/saltColumnDropStyle";
@@ -50,6 +50,7 @@ import { saltTabStyle } from "./parts/saltTabStyle";
 export const saltTheme = createTheme()
   // ---------- parts ----------
   .withPart(saltIconSet)
+  .withPart(checkboxStyleDefault) // base checkbox rendering CSS; saltCheckboxStyle overlays Salt colours + sizing
   .withPart(saltCheckboxStyle)
   .withPart(saltInputStyle)
   .withPart(saltColumnDropStyle)
