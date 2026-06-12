@@ -29,7 +29,17 @@ const REPO_ROOT = path.resolve(
   "..",
   "..",
 );
-const GENERATED_DIR = path.join(REPO_ROOT, "packages", "cli", "generated");
+// Generated bundle lives in semantic-core after the Phase 2 dedup
+// (`refactor(semantic-core,mcp,cli): collapse 28MB+24MB duplicate
+// generated bundles to one source`). The CLI and MCP copy this same
+// directory into their dist tarballs at pack time; the source of truth
+// is semantic-core.
+const GENERATED_DIR = path.join(
+  REPO_ROOT,
+  "packages",
+  "semantic-core",
+  "generated",
+);
 
 const ARTIFACT_FILES = [
   "metadata.json",
