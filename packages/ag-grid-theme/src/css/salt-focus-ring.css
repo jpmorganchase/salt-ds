@@ -1,0 +1,96 @@
+/* Phase 2 port of unified Salt focus-ring rules.
+ *
+ * Bundles every place 2.x drew a Salt focus ring under a single part so
+ * consumers get a consistent keyboard-nav appearance across the grid. The
+ * 4-way `.ag-theme-salt-{light,dark,compact-light,compact-dark}` selector
+ * scoping is stripped — AG Grid v3 auto-wraps this CSS in
+ * `:where(.ag-theme-part-N)`.
+ *
+ * Source mapping:
+ *   - css/parts/ag-body.css lines 309-332
+ *       cell focus + range single-cell outline
+ *   - css/parts/ag-body.css lines 334-358
+ *       .editable-cell.ag-cell-focus corner adornment (small ▲ chevron in
+ *       the top-left when an editable cell is keyboard-focused)
+ *   - css/parts/ag-header.css lines 29-44
+ *       header-cell:focus-visible outline + remove ag-grid default ::after border
+ *   - css/parts/ag-header.css lines 67-76
+ *       sub-header-row cell :focus border (for multi-row headers)
+ *   - css/parts/ag-header.css lines 165-170
+ *       floating-filter body :focus-within outline
+ *
+ * NOT in this part (intentionally left for sibling Phase 2 parts):
+ *   - .ag-cell-range-{top,right,bottom,left}::after cross-cell outlines
+ *                                                 → saltRangeSelectionAdjustments
+ *   - .ag-row-selected background + ::before bar  → saltRangeSelectionAdjustments
+ *   - Filter / column-select INPUT focus shadows  → saltInputStyle compose
+ */
+
+/* --- Cell focus + range single cell --- */
+/* Single source of truth: outline (no border-color shenanigans). The legacy */
+/* `border-color: transparent` was there to override AG v32's default cell    */
+/* border, but v33 doesn't draw one anyway. */
+.ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-ltr .ag-cell-range-single-cell,
+.ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+}
+
+/* --- Editable cell focus corner adornment ---
+ *
+ * Draws a small triangle in the top-left corner of an .editable-cell when it
+ * gains keyboard focus. Colour follows --salt-editable-borderColor-hover, which
+ * the .error/.warning/.success-cell rules in saltCellStates re-route to the
+ * matching status borderColor — so the adornment automatically picks up the
+ * status colour for invalid cells.
+ */
+.ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.editable-cell.ag-cell-inline-editing::before {
+  border-bottom: calc(var(--salt-size-adornment) + 4px) solid transparent;
+  border-left: calc(var(--salt-size-adornment) + 4px) solid var(--salt-editable-borderColor-hover);
+  border-top: 0 solid transparent;
+  content: "";
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+}
+
+/* --- Header cell focus --- */
+.ag-header-cell:focus-visible {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+  border-width: 0;
+}
+
+/* Remove ag-grid's default ::after rectangle (we draw the outline ourselves above). */
+.ag-header-cell:focus-visible::after {
+  border: none;
+}
+
+/* --- Sub-row header cells (multi-row headers) :focus border ---
+ *
+ * The top-level header-cell uses outline; sub-rows can't (their borders
+ * collide with column dividers), so they paint a border instead.
+ */
+.ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+.ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus {
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+/* --- Floating filter focus ---
+ *
+ * In AG v31+ the floating-filter body has an "active" button next to the
+ * input. The focus ring should hug the input container, not the whole header
+ * cell.
+ */
+.ag-floating-filter .ag-floating-filter-body:focus-within {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+}
+
