@@ -34,7 +34,7 @@ export async function runVerifyAttestationsCommand(
       raw = await fs.readFile(verifyFlag, "utf8");
     } catch (error) {
       io.writeStderr(
-        `salt-ds review --verify-attestations: failed to read ${verifyFlag}: ${
+        `salt-ds verify: failed to read ${verifyFlag}: ${
           error instanceof Error ? error.message : String(error)
         }\n`,
       );
@@ -46,7 +46,7 @@ export async function runVerifyAttestationsCommand(
 
   if (raw.trim().length === 0) {
     io.writeStderr(
-      "salt-ds review --verify-attestations: no attestation payloads on stdin (or empty file).\n",
+      "salt-ds verify: no attestation payloads on stdin (or empty file).\n",
     );
     return 1;
   }
@@ -54,7 +54,7 @@ export async function runVerifyAttestationsCommand(
   const parsed = parseSaltAttestationNdjson(raw);
   if (!parsed.ok) {
     io.writeStderr(
-      `salt-ds review --verify-attestations: invalid attestation on line ${parsed.lineNumber}:\n${parsed.errors
+      `salt-ds verify: invalid attestation on line ${parsed.lineNumber}:\n${parsed.errors
         .map((message) => `  - ${message}`)
         .join("\n")}\n`,
     );
@@ -111,7 +111,7 @@ export async function runVerifyAttestationsCommand(
     );
   } else {
     io.writeStderr(
-      `salt-ds review --verify-attestations: ${allDrift.length} drift finding${
+      `salt-ds verify: ${allDrift.length} drift finding${
         allDrift.length === 1 ? "" : "s"
       }:\n${allDrift
         .map(
