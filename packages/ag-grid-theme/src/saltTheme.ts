@@ -77,6 +77,7 @@ export const saltTheme = createTheme()
     // typography
     fontFamily: "var(--salt-text-fontFamily)",
     fontSize: "var(--salt-text-fontSize)",
+    headerFontSize: "var(--salt-text-label-fontSize)",
     headerFontWeight: "var(--salt-text-label-fontWeight-strong)",
 
     // colours — key
@@ -104,7 +105,7 @@ export const saltTheme = createTheme()
 
     // borders (composite values, see Borders docs)
     borderColor: "var(--salt-separable-secondary-borderColor)",
-    rowBorder: { width: 1, color: "var(--salt-separable-tertiary-borderColor)" },
+    rowBorder: { width: "var(--salt-size-fixed-100)", color: "var(--salt-separable-tertiary-borderColor)" },
     columnBorder: false,
     wrapperBorder: false, // matches `ag-root-var.css` lines 78–83 today
     headerColumnBorder: { width: "var(--salt-size-fixed-100)", color: "var(--salt-separable-tertiary-borderColor)" },
