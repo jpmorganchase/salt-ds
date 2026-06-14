@@ -404,6 +404,40 @@ button.ag-side-button-button {
   margin-bottom: var(--salt-spacing-100);
 }
 
+/* === Side button hover + selected state ===============================
+ *
+ * AG v3 ships ZERO CSS for `.ag-side-button-button` — only the
+ * structural Phase 8.3 rules (padding, min-width, icon-wrapper margin)
+ * apply. The legacy 2.x line didn't carry this either, but the broader
+ * AG v32 base CSS that 2.x implicitly relied on shipped a baseline
+ * hover/active treatment. AG v3 dropped that baseline as part of the
+ * part-composition refactor.
+ *
+ * Add the two missing states explicitly so the tool-panel sidebar
+ * tabs (Columns / Filters / etc.) show visual feedback. AG marks the
+ * active tab via the `ag-selected` class on the `.ag-side-button`
+ * wrapper (not on the inner button), so both selectors are scoped to
+ * the wrapper. (Phase 8.6 port 2026-06-14.)
+ */
+
+/* Hover — Salt actionable-subtle hover background */
+.ag-side-button-button:hover {
+  background-color: var(--salt-actionable-subtle-background-hover);
+  color: var(--salt-actionable-subtle-foreground-hover);
+}
+
+/* Selected (active tab) — Salt actionable-subtle active background +
+ * an accent indicator on the leading edge so the active tab is
+ * unambiguous even when the panel content shifts. */
+.ag-side-button.ag-selected .ag-side-button-button,
+.ag-side-button-button[aria-pressed="true"] {
+  background-color: var(--salt-actionable-subtle-background-selected);
+  color: var(--salt-actionable-subtle-foreground-selected);
+  /* Inline-start accent indicator (logical — works in RTL too) */
+  box-shadow: inset var(--salt-size-indicator) 0 0
+    var(--salt-navigable-accent-indicator-active);
+}
+
 /* === Toggle button positioning =========================================
  *
  * Port of `packages/ag-grid-theme/css/parts/ag-toggle-button.css` (2.x line).

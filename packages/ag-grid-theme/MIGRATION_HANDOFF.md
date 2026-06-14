@@ -500,6 +500,57 @@ When a phase prompt refers to "§X.Y of the proposal", here's the index:
     - Stories: 33 / 33 legacy `src/examples/*.tsx` examples
     - Parts: 14 wired + 14 exported (was 12 / 11)
     - HD compact tier: ported as `saltCompact` part
+- **2026-06-14 (Phase 8.6 — tool-panel side-button + column-menu tab states)**
+  — Fixed the missing visual states for two AG v3 tab/sidebar
+  surfaces that lost their styling in the v3 refactor:
+
+  - **Column-menu tabs** (`.ag-tab` inside `.ag-menu`, e.g. the
+    General / Filter / Columns tabs that appear when clicking the
+    hamburger on a header cell):
+    AG v3's CSS reads ~15 `--ag-tab-*` CSS variables for backgrounds,
+    hover, selected, border, padding, etc. `saltTabStyle` only sets the
+    two underline-related typed params; the rest defaulted to empty
+    because saltTabStyle uses `feature: "tabStyle"` which blocks the
+    built-in `tabStyleQuartz` part from filling in the variable
+    defaults. Tabs rendered with transparent backgrounds and no hover
+    indication.
+
+    Fix: `src/css/salt-tab.css` now sets the full variable surface on
+    `.ag-root-wrapper` against Salt tokens:
+      • Tab bar background = Salt container primary
+      • Tab bar border = 1px Salt separable tertiary
+      • Default tab = transparent (inherits Salt secondary fg)
+      • Hover = `--salt-actionable-subtle-background-hover` +
+        `--salt-actionable-subtle-foreground-hover`
+      • Selected = `--salt-actionable-subtle-background-selected` +
+        primary fg
+      • Underline = the existing two typed params (unchanged)
+      • Transition duration = 0s (deterministic for screenshot tests)
+
+  - **Tool-panel side buttons** (`.ag-side-button-button`, the
+    vertical Columns / Filters tabs on the right side of the grid):
+    AG v3 ships ZERO CSS for `.ag-side-button*`. The legacy 2.x
+    `ag-tool-panel.css` only had the structural rules (padding,
+    min-width, icon-wrapper margin) which were already ported in
+    Phase 8.3 — visual state styling implicitly came from AG v32's
+    baseline CSS that the v3 part-composition refactor dropped.
+
+    Fix: appended a "Side button hover + selected state" section to
+    `src/css/salt-cell-states.css` right before the "Toggle button
+    positioning" block (so it groups with the other tool-panel layout
+    rules):
+      • `.ag-side-button-button:hover` — actionable-subtle hover bg + fg
+      • `.ag-side-button.ag-selected .ag-side-button-button` +
+        `[aria-pressed="true"]` — actionable-subtle selected bg + fg
+        plus a logical `box-shadow: inset` accent indicator on the
+        leading edge so the active tab is unambiguous when the side
+        panel content slides in/out (both selectors handle the active
+        state because AG marks it via different attributes depending on
+        the side-bar implementation).
+
+  Pairs with the live 2.x reference at
+  https://storybook.saltdesignsystem.com/?path=/story/ag-grid-ag-grid-theme--tool-panel
+
 ## When something changes
 
 Update this hand-off (`MIGRATION_HANDOFF.md`) whenever:
