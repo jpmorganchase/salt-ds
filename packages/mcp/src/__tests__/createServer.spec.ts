@@ -2472,8 +2472,9 @@ describe("createSaltMcpServer", () => {
                   notes: 0,
                 }),
                 runtime_capture: expect.objectContaining({
-                  supported_via_cli: true,
-                  command: "salt-ds migrate --url <url>",
+                  supported_via_mcp_url: true,
+                  command:
+                    "call the migrate_to_salt MCP tool with the `url` argument set to the running app URL",
                 }),
               }),
             }),
@@ -3809,7 +3810,9 @@ describe("createSaltMcpServer", () => {
         const packageJson = JSON.parse(
           await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
         ) as { scripts?: Record<string, string> };
-        expect(packageJson.scripts?.["ui:verify"]).toBe("salt-ds review src");
+        expect(packageJson.scripts?.["ui:verify"]).toMatch(
+          /^echo 'Replace this script with a wrapper around the review_salt_ui MCP tool over (src|\.)\.'$/,
+        );
       },
     );
   }, 30000);

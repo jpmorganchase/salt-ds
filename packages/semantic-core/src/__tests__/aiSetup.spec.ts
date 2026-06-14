@@ -40,7 +40,7 @@ describe("Salt AI setup summary", () => {
       policy_mode: "team",
       repo_instructions_path: "AGENTS.md",
       host_adapters: ["vscode"],
-      ui_verify_command: "salt-ds review src",
+      ui_verify_command: "npm run ui:verify",
       generated_context: buildFixtureGeneratedContext(),
       include_release_gate: true,
     });
@@ -50,7 +50,8 @@ describe("Salt AI setup summary", () => {
       expect.objectContaining({
         contract: "salt_ai_setup_v1",
         status: "ready",
-        next_command: 'salt-ds create "describe the Salt UI task" --json',
+        next_command:
+          'create_salt_ui via the @salt-ds/mcp server (args: { query: "describe the Salt UI task" })',
         compatibility: expect.objectContaining({
           status: "compatible",
           checks: expect.arrayContaining([
@@ -87,7 +88,7 @@ describe("Salt AI setup summary", () => {
       policy_mode: "team",
       repo_instructions_path: "AGENTS.md",
       host_adapters: ["vscode"],
-      ui_verify_command: "salt-ds review src",
+      ui_verify_command: "npm run ui:verify",
       generated_context: buildFixtureGeneratedContext({
         status: "unsupported",
         coverageGaps: [

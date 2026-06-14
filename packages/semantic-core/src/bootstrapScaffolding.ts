@@ -19,7 +19,7 @@ const SALT_REPO_INSTRUCTIONS_LINES = [
   "",
   "Preprocess screenshots and mockups into structured outline evidence before the canonical migrate step. Do not send raw images to the MCP.",
   "",
-  "Before considering Salt UI work complete, run the repo `ui:verify` script when it exists, or `salt-ds review` directly.",
+  "Before considering Salt UI work complete, run the repo `ui:verify` script when it exists, or run the `review_salt_ui` MCP tool directly.",
   "",
   "Repo policy lives in `.salt/team.json` (and optionally `.salt/stack.json`). If both are missing, keep the first answer canonical-only and recommend `bootstrap_salt_repo` / `salt-ds init` only when durable policy would change future answers.",
 ];
@@ -28,8 +28,9 @@ const SALT_RUNTIME_SUPPORT_LINES = [
   "If source-level guidance is still not enough and the Salt CLI is available, use:",
   "",
   "- `salt-ds doctor` for local environment and runtime-target checks",
-  "- `salt-ds review <path> --url <url>` when source validation and runtime evidence should stay in the same workflow pass",
   "- `salt-ds runtime inspect <url>` only for explicit runtime debugging or support work",
+  "",
+  "For runtime-evidence-attached review and migrate, pass the `--url` parameter to the `review_salt_ui` / `migrate_to_salt` MCP tools instead of a CLI command.",
   "",
   "Keep that CLI evidence separate from canonical Salt guidance, and keep fetched-HTML fallback claims narrower than browser-session evidence.",
 ];

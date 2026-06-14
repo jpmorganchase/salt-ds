@@ -105,8 +105,8 @@ function buildReviewResume(input: {
       input.report?.unsupported_claims.map((claim) => claim.id) ?? [],
     next_command:
       input.status === "current"
-        ? "salt-ds review <target> --report <path>"
-        : `salt-ds review --validate ${input.report_path} --json`,
+        ? `review_salt_ui via the @salt-ds/mcp server (args: { report_path: "${input.report_path}" })`
+        : `read the salt://review/validation/${encodeURIComponent(input.report_path)} MCP resource to inspect the validation result`,
     missing: input.missing,
   };
 }

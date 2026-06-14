@@ -250,7 +250,7 @@ export function buildSaltAiSetupSummary(
     root_dir: input.root_dir,
     next_command:
       firstAction?.command ??
-      'salt-ds create "describe the Salt UI task" --json',
+      'create_salt_ui via the @salt-ds/mcp server (args: { query: "describe the Salt UI task" })',
     compatibility,
     steps,
   };

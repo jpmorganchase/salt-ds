@@ -3,11 +3,11 @@ import { z } from "zod";
 /**
  * Salt agent provenance attestation payload (v1).
  *
- * Emitted by `salt-ds review --hook --emit-attestation` after a clean
- * PostToolUse review and consumed by `salt-ds review --verify-attestations`.
- * The payload is the Salt-owned data contract; Salt does NOT pick the disk
- * layout, the hashing algorithm, the retention policy, or the GC story for
- * the consumer's audit store. Per-payload `hash_alg` lets consumers upgrade
+ * Emitted by `salt-ds hook --emit-attestation` after a clean PostToolUse
+ * review and consumed by `salt-ds verify` (file path or stdin). The payload
+ * is the Salt-owned data contract; Salt does NOT pick the disk layout, the
+ * hashing algorithm, the retention policy, or the GC story for the
+ * consumer's audit store. Per-payload `hash_alg` lets consumers upgrade
  * hashing independently. Consumers pipe stdout to whatever audit store they
  * already operate (git notes, signed commits, GitHub check API, SIEM,
  * internal audit log, plain file).

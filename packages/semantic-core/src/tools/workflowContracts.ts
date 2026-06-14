@@ -209,8 +209,8 @@ export interface WorkflowVisualEvidenceContract {
   visual_input_kinds: Array<NormalizedVisualEvidenceInput["kind"]>;
   visual_input_sources: Array<NormalizedVisualEvidenceInput["source_type"]>;
   runtime_capture: {
-    supported_via_cli: true;
-    command: "salt-ds migrate --url <url>";
+    supported_via_mcp_url: true;
+    command: "call the migrate_to_salt MCP tool with the `url` argument set to the running app URL";
     purpose: string;
   };
   confidence_impact: {
@@ -1343,7 +1343,7 @@ function buildReviewConfidence(
   }
 
   raiseConfidence.push(
-    "Use local runtime evidence through salt-ds review --url if rendered behavior still matters.",
+    "Use local runtime evidence through the review_salt_ui MCP tool with the url parameter if rendered behavior still matters.",
   );
 
   return {
@@ -1410,7 +1410,7 @@ function buildCreateIdeSummary(input: {
     ),
     verify: takeFirstUnique(
       [
-        "Run salt-ds review on the changed files after the first implementation pass.",
+        "Run the review_salt_ui MCP tool on the changed files after the first implementation pass.",
         implementationGate.status === "follow_through_required"
           ? "Treat the composition contract as a required checklist and do not mark the scaffold complete until each named pattern or component has been grounded."
           : null,
@@ -1483,7 +1483,7 @@ function buildReviewIdeSummary(input: {
       null,
     verify: takeFirstUnique(
       [
-        "Rerun salt-ds review on the changed files.",
+        "Rerun the review_salt_ui MCP tool on the changed files.",
         fixCandidates.manual_review_count > 0
           ? "Confirm the manual review candidates against the affected interaction before merging."
           : null,
@@ -1680,7 +1680,7 @@ function buildMigrateConfidence(
   }
 
   raiseConfidence.push(
-    "Use local runtime evidence through salt-ds migrate --url or salt-ds review --url when current landmarks, action hierarchy, or visible states must stay familiar.",
+    "Use local runtime evidence through the migrate_to_salt MCP tool with the url parameter or the review_salt_ui MCP tool with the url parameter when current landmarks, action hierarchy, or visible states must stay familiar.",
   );
   raiseConfidence.push(
     "If you name a specific Salt token, prop, or API, verify the exact name against canonical Salt guidance before editing.",
@@ -1833,7 +1833,7 @@ function buildUpgradeIdeSummary(
         requiredChanges.length > 0
           ? "Apply the required changes first."
           : "Review the version delta before editing.",
-        "Run salt-ds review on the affected files after the first upgrade pass.",
+        "Run the review_salt_ui MCP tool on the affected files after the first upgrade pass.",
         optionalCleanup.length > 0
           ? "Apply optional cleanup after the required changes are stable."
           : null,
@@ -1842,7 +1842,7 @@ function buildUpgradeIdeSummary(
     ),
     verify: takeFirstUnique(
       [
-        "Run salt-ds review on the changed files after the upgrade pass.",
+        "Run the review_salt_ui MCP tool on the changed files after the upgrade pass.",
         requiredChanges.length > 0
           ? "Confirm the required API replacements and removals compile cleanly in the affected feature."
           : "Confirm the affected feature still renders and behaves correctly after the version change.",
@@ -1864,16 +1864,17 @@ function buildPostMigrationVerification(
 ): WorkflowPostMigrationVerification {
   return {
     source_checks: [
-      "Run salt-ds review on the migrated files after the first implementation pass.",
+      "Run the review_salt_ui MCP tool on the migrated files after the first implementation pass.",
       "Confirm the migrated code is using canonical Salt primitives, patterns, and tokens.",
     ],
     runtime_checks: [
-      "Use local runtime evidence through salt-ds review --url after implementation when landmarks, visible states, or runtime behavior still need verification.",
+      "Use local runtime evidence through the review_salt_ui MCP tool with the url parameter after implementation when landmarks, visible states, or runtime behavior still need verification.",
     ],
     preserve_checks: result.familiarity_contract.preserve,
     confirmation_checks: result.familiarity_contract.requires_confirmation,
     suggested_workflow: "review_salt_ui",
-    suggested_command: "salt-ds review <changed-path>",
+    suggested_command:
+      'review_salt_ui via the @salt-ds/mcp server (args: { code: "<file contents>" })',
   };
 }
 
@@ -1955,8 +1956,9 @@ function buildTranslateVisualEvidenceContract(
     visual_input_kinds: visualInputKinds,
     visual_input_sources: visualInputSources,
     runtime_capture: {
-      supported_via_cli: true,
-      command: "salt-ds migrate --url <url>",
+      supported_via_mcp_url: true,
+      command:
+        "call the migrate_to_salt MCP tool with the `url` argument set to the running app URL",
       purpose:
         "Capture current landmarks, action hierarchy, visible states, and layout signals outside MCP when migration scoping needs live UI evidence.",
     },
@@ -2088,8 +2090,8 @@ export function buildRepoAwareReviewNextStep(input: {
   if (input.migration_verification) {
     if (input.needs_attention) {
       return input.fix_candidate_count > 0
-        ? "Review the returned fixCandidates, confirm the migration verification items, apply the safest changes through the agent workflow, then rerun salt-ds review."
-        : "Fix the remaining source or runtime issues, confirm the migration verification items, then rerun salt-ds review.";
+        ? "Review the returned fixCandidates, confirm the migration verification items, apply the safest changes through the agent workflow, then rerun the review_salt_ui MCP tool."
+        : "Fix the remaining source or runtime issues, confirm the migration verification items, then rerun the review_salt_ui MCP tool.";
     }
 
     return input.migration_verification.next_step;
@@ -2097,8 +2099,8 @@ export function buildRepoAwareReviewNextStep(input: {
 
   if (input.needs_attention) {
     return input.fix_candidate_count > 0
-      ? "Review the returned fixCandidates, apply the safest changes through the agent workflow, then rerun salt-ds review."
-      : "Fix the remaining source or runtime issues, then rerun salt-ds review.";
+      ? "Review the returned fixCandidates, apply the safest changes through the agent workflow, then rerun the review_salt_ui MCP tool."
+      : "Fix the remaining source or runtime issues, then rerun the review_salt_ui MCP tool.";
   }
 
   return input.runtime_requested

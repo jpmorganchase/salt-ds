@@ -10,11 +10,11 @@ export type EvalAudience =
   | "new-project-team";
 
 export type EvalWorkflow = "create" | "review" | "migrate" | "upgrade";
-export type EvalTransport = "mcp" | "cli";
-
-export interface WorkflowEvalCliArgs {
-  argv: string[];
-}
+// After Phase A (14-Jun) the CLI no longer runs salt-ds workflow commands;
+// every eval scenario reaches the MCP via stdio only. EvalTransport stays as
+// a single-member literal so older `transport_used` callsites in trace
+// payloads keep a structural label.
+export type EvalTransport = "mcp";
 
 export interface WorkflowEvalScenario {
   id: string;
@@ -31,19 +31,15 @@ export interface WorkflowEvalScenario {
   };
   capabilities: {
     mcp?: boolean;
-    cli?: boolean;
     project_conventions?: boolean;
     runtime_url?: boolean;
     screenshot_input?: boolean;
   };
   args: {
     mcp?: Record<string, unknown>;
-    cli?: WorkflowEvalCliArgs;
   };
   expected: {
     transport?: {
-      preferred?: EvalTransport;
-      fallback?: EvalTransport;
       stop_if_all_fail?: true;
     };
     workflow?: {
@@ -232,15 +228,6 @@ export interface WorkflowEvalReport {
   entries: WorkflowEvalReportEntry[];
 }
 
-const CLI_BIN_PATH = path.join("packages", "cli", "bin", "salt-ds.js");
-const CLI_DIST_ENTRY = path.join(
-  "dist",
-  "salt-ds-cli",
-  "dist-cjs",
-  "cli",
-  "src",
-  "index.js",
-);
 const MCP_BIN_PATH = path.join("packages", "mcp", "bin", "salt-mcp.js");
 const MCP_DIST_ENTRY = path.join(
   "dist",
@@ -1062,7 +1049,7 @@ async function ensureBuiltEntrypoint(
 async function bundleEvalEntrypoint(
   repoRoot: string,
   options: {
-    id: "cli" | "mcp";
+    id: "mcp";
     source_entry: string;
   },
 ): Promise<string> {
@@ -1121,7 +1108,6 @@ async function bundleEvalEntrypoint(
 }
 
 async function resolveExecutableScript(
-  kind: "cli" | "mcp",
   repoRoot: string,
 ): Promise<{
   script_path: string;
@@ -1129,18 +1115,6 @@ async function resolveExecutableScript(
   build_error?: string;
 }> {
   try {
-    if (kind === "cli") {
-      await ensureBuiltEntrypoint(repoRoot, CLI_DIST_ENTRY, [
-        "workspace",
-        "@salt-ds/cli",
-        "build",
-      ]);
-      return {
-        script_path: path.join(repoRoot, CLI_BIN_PATH),
-        source: "dist",
-      };
-    }
-
     await ensureBuiltEntrypoint(repoRoot, MCP_DIST_ENTRY, [
       "workspace",
       "@salt-ds/mcp",
@@ -1152,14 +1126,8 @@ async function resolveExecutableScript(
     };
   } catch (error) {
     const scriptPath = await bundleEvalEntrypoint(repoRoot, {
-      id: kind,
-      source_entry: path.join(
-        repoRoot,
-        "packages",
-        kind === "cli" ? "cli" : "mcp",
-        "src",
-        "index.ts",
-      ),
+      id: "mcp",
+      source_entry: path.join(repoRoot, "packages", "mcp", "src", "index.ts"),
     });
     return {
       script_path: scriptPath,
@@ -1243,369 +1211,6 @@ async function runProcess(
   });
 }
 
-function safeJsonParse(value: string): unknown | null {
-  try {
-    return JSON.parse(value);
-  } catch {
-    return null;
-  }
-}
-
-async function loadSourceOutlineFromScenario(
-  scenario: WorkflowEvalScenario,
-): Promise<Record<string, unknown> | null> {
-  if (isRecord(scenario.args.mcp?.source_outline)) {
-    return scenario.args.mcp?.source_outline as Record<string, unknown>;
-  }
-
-  const cliArgs = scenario.args.cli?.argv ?? [];
-  const outlineFlagIndex = cliArgs.indexOf("--source-outline");
-  if (outlineFlagIndex === -1) {
-    return null;
-  }
-
-  const outlinePath = cliArgs[outlineFlagIndex + 1];
-  if (!outlinePath) {
-    return null;
-  }
-
-  const parsed = safeJsonParse(await fs.readFile(outlinePath, "utf8"));
-  return isRecord(parsed) ? parsed : null;
-}
-
-function normalizeReadiness(
-  rawWorkflow: Record<string, unknown>,
-): Record<string, unknown> | null {
-  if (!isRecord(rawWorkflow.readiness)) {
-    return null;
-  }
-
-  return {
-    status: rawWorkflow.readiness.status,
-    implementation_ready: rawWorkflow.readiness.implementationReady,
-    reason: rawWorkflow.readiness.reason,
-  };
-}
-
-function normalizeWorkflowMetadata(
-  raw: Record<string, unknown>,
-  workflowId: string,
-): Record<string, unknown> {
-  const rawWorkflow = isRecord(raw.workflow) ? raw.workflow : {};
-
-  return {
-    id: workflowId,
-    transport_used: "cli",
-    confidence: isRecord(rawWorkflow.confidence)
-      ? rawWorkflow.confidence
-      : null,
-    readiness: normalizeReadiness(rawWorkflow),
-    context_requirement: isRecord(rawWorkflow.contextRequirement)
-      ? {
-          status: rawWorkflow.contextRequirement.status,
-          repo_specific_edits_ready:
-            rawWorkflow.contextRequirement.repoSpecificEditsReady,
-          reason: rawWorkflow.contextRequirement.reason,
-          satisfied_by: rawWorkflow.contextRequirement.satisfiedBy ?? null,
-        }
-      : null,
-    project_conventions_check: isRecord(rawWorkflow.projectConventionsCheck)
-      ? {
-          supported: rawWorkflow.projectConventionsCheck.supported,
-          contract: rawWorkflow.projectConventionsCheck.contract,
-          check_recommended:
-            rawWorkflow.projectConventionsCheck.check_recommended,
-          topics: rawWorkflow.projectConventionsCheck.topics,
-          reason: rawWorkflow.projectConventionsCheck.reason,
-          canonical_only: rawWorkflow.projectConventionsCheck.canonical_only,
-          declared_policy_status:
-            rawWorkflow.projectConventionsCheck.declared_policy_status,
-          next_step: rawWorkflow.projectConventionsCheck.next_step,
-        }
-      : null,
-    provenance: rawWorkflow.provenance ?? null,
-  };
-}
-
-function pickIssueSummary(record: Record<string, unknown>): string | null {
-  return (
-    readString(record, "summary") ??
-    readString(record, "message") ??
-    readString(record, "title") ??
-    readString(record, "id")
-  );
-}
-
-function readNestedStringArray(
-  parent: Record<string, unknown>,
-  key: string,
-): string[] {
-  if (!Array.isArray(parent[key])) {
-    return [];
-  }
-
-  return parent[key]
-    .flatMap((entry) => (isRecord(entry) ? [pickIssueSummary(entry)] : []))
-    .filter((entry): entry is string => Boolean(entry));
-}
-
-function buildReviewCliIdeSummary(
-  raw: Record<string, unknown>,
-): Record<string, unknown> {
-  const result = isRecord(raw.result) ? raw.result : {};
-  const summary = isRecord(result.summary) ? result.summary : {};
-  const artifacts = isRecord(raw.artifacts) ? raw.artifacts : {};
-  const sourceValidation = isRecord(result.sourceValidation)
-    ? result.sourceValidation
-    : {};
-  const topFindings = uniqueStrings([
-    ...readNestedStringArray(artifacts, "issueClasses"),
-    ...(Array.isArray(sourceValidation.files) ? sourceValidation.files : [])
-      .flatMap((file) =>
-        isRecord(file) ? readNestedStringArray(file, "issues") : [],
-      )
-      .slice(0, 3),
-  ]).slice(0, 3);
-  const status = readString(summary, "status");
-
-  return {
-    verdict: {
-      level:
-        status === "clean"
-          ? "clean"
-          : Number(summary.filesNeedingAttention ?? 0) > 1 ||
-              Number(summary.runtimeIssues ?? 0) > 0
-            ? "high_risk"
-            : "medium_risk",
-      summary:
-        readString(summary, "nextStep") ??
-        (status === "clean"
-          ? "The current file is close to Salt expectations."
-          : "The current file needs attention before the next edit."),
-    },
-    top_findings:
-      topFindings.length > 0
-        ? topFindings
-        : [
-            "Review the scoped file for primitive, layout, and deprecation drift.",
-          ],
-    safest_next_fix:
-      readString(summary, "nextStep") ??
-      "Apply the smallest deterministic fix first, then rerun review.",
-    verify: [
-      "Rerun salt-ds review on the touched file or feature scope.",
-      "Check keyboard order and toolbar wrap behavior after the fix.",
-    ],
-  };
-}
-
-function buildUpgradeCliIdeSummary(
-  raw: Record<string, unknown>,
-): Record<string, unknown> {
-  const result = isRecord(raw.result) ? raw.result : {};
-  const summary = isRecord(result.summary) ? result.summary : {};
-  const comparison = isRecord(result.comparison) ? result.comparison : {};
-  const requiredChanges = uniqueStrings([
-    ...readNestedStringArray(comparison, "breaking"),
-    ...readNestedStringArray(comparison, "important"),
-  ]).slice(0, 5);
-  const optionalCleanup = uniqueStrings(
-    readNestedStringArray(comparison, "nice_to_know"),
-  ).slice(0, 3);
-
-  return {
-    target: readString(summary, "target"),
-    from_version: readString(summary, "fromVersion"),
-    to_version: readString(summary, "toVersion"),
-    required_changes:
-      requiredChanges.length > 0
-        ? requiredChanges
-        : ["Apply the required upgrade changes before optional cleanup."],
-    optional_cleanup:
-      optionalCleanup.length > 0
-        ? optionalCleanup
-        : [
-            "Collapse compatibility shims only after the required changes land.",
-          ],
-    suggested_order: [
-      "Apply required compile or runtime-sensitive changes first.",
-      "Rerun salt-ds review on the touched scope.",
-      "Apply optional cleanup once the upgrade is stable.",
-    ],
-    verify: [
-      "Check keyboard flow and responsive layout after the upgrade.",
-      "Confirm empty states and primary actions still render correctly.",
-    ],
-  };
-}
-
-function buildCreateCliIdeSummary(
-  raw: Record<string, unknown>,
-): Record<string, unknown> {
-  const result = isRecord(raw.result) ? raw.result : {};
-  const summary = isRecord(result.summary) ? result.summary : {};
-  const intent = isRecord(result.intent) ? result.intent : {};
-  const recommendation = isRecord(result.recommendation)
-    ? result.recommendation
-    : {};
-  const openQuestion =
-    Array.isArray(recommendation.open_questions) &&
-    recommendation.open_questions.length > 0 &&
-    isRecord(recommendation.open_questions[0])
-      ? readString(recommendation.open_questions[0], "prompt")
-      : null;
-
-  return {
-    recommended_direction:
-      readString(intent, "compositionDirection") ??
-      readString(summary, "nextStep") ??
-      "Start from the canonical Salt pattern or composition direction first.",
-    bounded_scope: uniqueStrings([
-      readString(summary, "decisionName"),
-      readString(summary, "solutionType"),
-      readString(intent, "userTask"),
-    ]).slice(0, 4),
-    open_question: openQuestion,
-    starter_plan: [
-      "Choose the canonical Salt pattern or composition first.",
-      "Generate the first scaffold before applying repo-local wrappers.",
-      "Rerun review on the generated area after the scaffold lands.",
-    ],
-    verify: [
-      "Check spacing ownership and composition boundaries after scaffolding.",
-      "Rerun salt-ds review on the generated files.",
-    ],
-  };
-}
-
-async function buildMigrateCliIdeSummary(
-  raw: Record<string, unknown>,
-  scenario: WorkflowEvalScenario,
-): Promise<Record<string, unknown>> {
-  const outline = await loadSourceOutlineFromScenario(scenario);
-  const result = isRecord(raw.result) ? raw.result : {};
-  const translation = isRecord(result.translation) ? result.translation : {};
-  const scope = isRecord(result.migrationScope) ? result.migrationScope : {};
-  const screenMap = uniqueStrings([
-    ...readStringArray(outline ?? {}, "regions"),
-    ...readNestedStringArray(translation, "translations"),
-  ]).slice(0, 6);
-  const preserve = uniqueStrings([
-    ...readStringArray(outline ?? {}, "notes"),
-    ...readStringArray(scope, "preserveFocus"),
-  ]).slice(0, 4);
-
-  return {
-    screen_map:
-      screenMap.length > 0
-        ? screenMap
-        : ["header", "toolbar", "content", "empty-state"],
-    preserve:
-      preserve.length > 0
-        ? preserve
-        : ["Preserve action order and familiar empty-state behavior."],
-    needs_confirmation: readStringArray(scope, "questions").slice(0, 3),
-    recommended_direction: [
-      "Map the current regions to canonical Salt layout ownership.",
-      "Keep screenshot or source-outline evidence as supporting input only.",
-      "Generate the first scaffold before repo-local refinement.",
-    ],
-    first_scaffold: [
-      "Create the primary shell and landmarks first.",
-      "Add the toolbar, filters, or navigation group next.",
-      "Keep state handling explicit before visual polish.",
-    ],
-    verify: [
-      "Check landmarks, action hierarchy, and empty-state behavior after the first scaffold.",
-      "Run salt-ds review on the migrated files once the scaffold is in place.",
-    ],
-  };
-}
-
-async function normalizeCliWorkflowResult(
-  scenario: WorkflowEvalScenario,
-  raw: unknown,
-): Promise<Record<string, unknown>> {
-  if (!isRecord(raw)) {
-    throw new Error("CLI did not return a JSON object.");
-  }
-
-  if (typeof raw.workflow === "string") {
-    const transport =
-      typeof raw.transport === "string"
-        ? raw.transport
-        : typeof raw.transport_used === "string"
-          ? raw.transport_used
-          : "cli";
-    return {
-      ...raw,
-      transport,
-      transport_used: transport,
-    };
-  }
-
-  const workflowId = toPublicWorkflowId(
-    isRecord(raw.workflow) ? readString(raw.workflow, "id") : null,
-  );
-  if (!workflowId) {
-    throw new Error("CLI output did not include a workflow id.");
-  }
-
-  const result = isRecord(raw.result) ? raw.result : {};
-  const artifacts = isRecord(raw.artifacts) ? raw.artifacts : {};
-  let ideSummary: Record<string, unknown>;
-
-  switch (scenario.task.workflow) {
-    case "review":
-      ideSummary = buildReviewCliIdeSummary(raw);
-      break;
-    case "upgrade":
-      ideSummary = buildUpgradeCliIdeSummary(raw);
-      break;
-    case "create":
-      ideSummary = buildCreateCliIdeSummary(raw);
-      break;
-    case "migrate":
-      ideSummary = await buildMigrateCliIdeSummary(raw, scenario);
-      break;
-  }
-
-  const canonicalChoice =
-    isRecord(result.recommendation) && isRecord(result.recommendation.decision)
-      ? {
-          name: readString(result.recommendation.decision, "name"),
-        }
-      : isRecord(result.comparison) && isRecord(result.comparison.decision)
-        ? {
-            target: readString(result.comparison.decision, "target"),
-          }
-        : null;
-  const finalChoice =
-    isRecord(artifacts.projectConventions) &&
-    isRecord(artifacts.projectConventions.finalChoice)
-      ? {
-          name: readString(artifacts.projectConventions.finalChoice, "name"),
-          source: readString(
-            artifacts.projectConventions.finalChoice,
-            "source",
-          ),
-        }
-      : canonicalChoice;
-
-  return {
-    workflow: normalizeWorkflowMetadata(raw, workflowId),
-    result: {
-      ...result,
-      ide_summary: ideSummary,
-      ...(canonicalChoice ? { decision: canonicalChoice } : {}),
-      ...(finalChoice ? { final_decision: finalChoice } : {}),
-    },
-    artifacts: {
-      raw_cli_result: raw,
-      cli_notes: readStringArray(artifacts, "notes"),
-    },
-  };
-}
 
 function extractStructuredToolContent(value: unknown): Record<string, unknown> {
   if (!isRecord(value) || !isRecord(value.structuredContent)) {
@@ -1668,16 +1273,6 @@ export function judgeWorkflowEvalScenario(
               `Runner ${trace.runner_id} stopped cleanly when all transports were unavailable for ${scenario.id}.`,
             ],
     };
-  }
-
-  if (
-    scenario.expected.transport?.preferred &&
-    successfulTransport !== scenario.expected.transport.preferred &&
-    successfulTransport !== scenario.expected.transport.fallback
-  ) {
-    failures.push(
-      `Runner ${trace.runner_id} used ${successfulTransport ?? "no transport"} instead of ${scenario.expected.transport.preferred}.`,
-    );
   }
 
   if (
@@ -2054,10 +1649,7 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
       let transport: StdioClientTransport | null = null;
 
       try {
-        const executable = await resolveExecutableScript(
-          "mcp",
-          context.repo_root,
-        );
+        const executable = await resolveExecutableScript(context.repo_root);
 
         transport = new StdioClientTransport({
           command: process.execPath,
@@ -2256,18 +1848,12 @@ export const WORKFLOW_LOCAL_EVAL_RUNNERS: WorkflowEvalRunner[] = [
 ];
 
 function orderScenarioTransports(
-  scenario: WorkflowEvalScenario,
+  _scenario: WorkflowEvalScenario,
 ): EvalTransport[] {
-  return [
-    ...new Set(
-      [
-        scenario.expected.transport?.preferred,
-        scenario.expected.transport?.fallback,
-        "mcp",
-        "cli",
-      ].filter((entry): entry is EvalTransport => Boolean(entry)),
-    ),
-  ];
+  // After Phase A the eval harness exercises MCP-stdio only. Kept as a
+  // function so the upstream scenario-runner loop in runWorkflowEvalScenarios
+  // does not need to special-case the single-transport world.
+  return ["mcp"];
 }
 
 function findRunnerByTransport(

@@ -1,16 +1,8 @@
 import path from "node:path";
-import type {
-  EvalTransport,
-  WorkflowEvalCliArgs,
-  WorkflowEvalScenario,
-} from "./workflowEvalHarness.js";
+import type { WorkflowEvalScenario } from "./workflowEvalHarness.js";
 
 export interface WorkflowEvalFixtureRoots {
   fixture_base_dir: string;
-}
-
-function buildCliArgs(argv: string[]): WorkflowEvalCliArgs {
-  return { argv };
 }
 
 function repoFixture(
@@ -25,10 +17,12 @@ function repoFixture(
   };
 }
 
-function preferMcpWithCliFallback() {
+// After Phase A (14-Jun) the CLI no longer runs salt-ds workflow commands;
+// every scenario reaches the MCP via stdio only. We keep `stop_if_all_fail`
+// so the harness fails cleanly when the (single) MCP transport is
+// unavailable rather than silently skipping.
+function stopIfTransportUnavailable() {
   return {
-    preferred: "mcp" as EvalTransport,
-    fallback: "cli" as EvalTransport,
     stop_if_all_fail: true as const,
   };
 }
@@ -139,7 +133,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
       },
       args: {
         mcp: {
@@ -158,10 +151,9 @@ export function buildDefaultWorkflowEvalScenarios(
           framework: "react",
           package_version: "2.0.0",
         },
-        cli: buildCliArgs(["review", toolbarPath]),
       },
       expected: withWorkflowMetricBudgets("review", {
-        transport: preferMcpWithCliFallback(),
+        transport: stopIfTransportUnavailable(),
         workflow: {
           id: "review_salt_ui",
         },
@@ -188,7 +180,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
       },
       args: {
         mcp: {
@@ -196,17 +187,9 @@ export function buildDefaultWorkflowEvalScenarios(
           from_version: "1.1.0",
           include_deprecations: true,
         },
-        cli: buildCliArgs([
-          "upgrade",
-          "--package",
-          "@salt-ds/core",
-          "--from-version",
-          "1.1.0",
-          "--include-deprecations",
-        ]),
       },
       expected: withWorkflowMetricBudgets("upgrade", {
-        transport: preferMcpWithCliFallback(),
+        transport: stopIfTransportUnavailable(),
         workflow: {
           id: "upgrade_salt_ui",
         },
@@ -234,7 +217,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
         screenshot_input: true,
       },
       args: {
@@ -258,16 +240,9 @@ export function buildDefaultWorkflowEvalScenarios(
             ],
           },
         },
-        cli: buildCliArgs([
-          "migrate",
-          "Build an orders screen with a header, filters, summary strip, results table, and empty state.",
-          "--source-outline",
-          orderOutlinePath,
-          "--include-starter-code",
-        ]),
       },
       expected: withWorkflowMetricBudgets("migrate", {
-        transport: preferMcpWithCliFallback(),
+        transport: stopIfTransportUnavailable(),
         workflow: {
           id: "migrate_to_salt",
         },
@@ -294,7 +269,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
       },
       args: {
         mcp: {
@@ -302,14 +276,9 @@ export function buildDefaultWorkflowEvalScenarios(
             "create a finance metric dashboard with KPI cards, sparklines, and a data grid table",
           include_starter_code: true,
         },
-        cli: buildCliArgs([
-          "create",
-          "create a finance metric dashboard with KPI cards, sparklines, and a data grid table",
-          "--include-starter-code",
-        ]),
       },
       expected: withWorkflowMetricBudgets("create", {
-        transport: preferMcpWithCliFallback(),
+        transport: stopIfTransportUnavailable(),
         workflow: {
           id: "create_salt_ui",
         },
@@ -346,7 +315,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
         project_conventions: true,
       },
       args: {
@@ -355,14 +323,9 @@ export function buildDefaultWorkflowEvalScenarios(
             "add an analytical dashboard shell for a market monitor screen with metrics, filters, and a results grid",
           include_starter_code: true,
         },
-        cli: buildCliArgs([
-          "create",
-          "add an analytical dashboard shell for a market monitor screen with metrics, filters, and a results grid",
-          "--include-starter-code",
-        ]),
       },
       expected: withWorkflowMetricBudgets("create", {
-        transport: preferMcpWithCliFallback(),
+        transport: stopIfTransportUnavailable(),
         workflow: {
           id: "create_salt_ui",
         },
@@ -400,7 +363,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
         screenshot_input: true,
       },
       args: {
@@ -418,16 +380,9 @@ export function buildDefaultWorkflowEvalScenarios(
             ],
           },
         },
-        cli: buildCliArgs([
-          "migrate",
-          "Build a shell with sidebar navigation, a header toolbar, content, and an empty state. The source outline was derived from a screenshot adapter and is supporting evidence only.",
-          "--source-outline",
-          screenshotOutlinePath,
-          "--include-starter-code",
-        ]),
       },
       expected: withWorkflowMetricBudgets("migrate", {
-        transport: preferMcpWithCliFallback(),
+        transport: stopIfTransportUnavailable(),
         workflow: {
           id: "migrate_to_salt",
         },
@@ -454,7 +409,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
       },
       args: {
         mcp: {
@@ -473,12 +427,11 @@ export function buildDefaultWorkflowEvalScenarios(
           framework: "react",
           package_version: "2.0.0",
         },
-        cli: buildCliArgs(["review", toolbarPath]),
       },
       expected: withWorkflowMetricBudgets(
         "review",
         {
-          transport: preferMcpWithCliFallback(),
+          transport: stopIfTransportUnavailable(),
           workflow: {
             id: "review_salt_ui",
           },
@@ -510,7 +463,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
       },
       args: {
         mcp: {
@@ -529,10 +481,9 @@ export function buildDefaultWorkflowEvalScenarios(
           framework: "react",
           package_version: "2.0.0",
         },
-        cli: buildCliArgs(["review", toolbarPath]),
       },
       expected: {
-        transport: preferMcpWithCliFallback(),
+        transport: stopIfTransportUnavailable(),
         summary_first: true,
         require_verify: true,
       },
@@ -549,7 +500,6 @@ export function buildDefaultWorkflowEvalScenarios(
       },
       capabilities: {
         mcp: true,
-        cli: true,
         runtime_url: true,
       },
       args: {
@@ -570,15 +520,9 @@ export function buildDefaultWorkflowEvalScenarios(
           package_version: "2.0.0",
           url: "http://localhost:6006/iframe.html?id=patterns-app-header--app-header",
         },
-        cli: buildCliArgs([
-          "review",
-          toolbarPath,
-          "--url",
-          "http://localhost:6006/iframe.html?id=patterns-app-header--app-header",
-        ]),
       },
       expected: {
-        transport: preferMcpWithCliFallback(),
+        transport: stopIfTransportUnavailable(),
         workflow: {
           id: "review_salt_ui",
         },

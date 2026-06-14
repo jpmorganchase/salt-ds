@@ -549,7 +549,7 @@ function buildMigrateWorkflowContract(
       preserve_checks: [],
       confirmation_checks: [],
       suggested_workflow: "review_salt_ui",
-      suggested_command: "salt-ds review <changed-path>",
+      suggested_command: "review_salt_ui via the @salt-ds/mcp server (args: { code: \"<file contents>\" })",
     },
     visual_evidence_contract: {
       role: "supporting-evidence",
@@ -577,8 +577,9 @@ function buildMigrateWorkflowContract(
       visual_input_kinds: [],
       visual_input_sources: [],
       runtime_capture: {
-        supported_via_cli: true,
-        command: "salt-ds migrate --url <url>",
+        supported_via_mcp_url: true,
+        command:
+          "call the migrate_to_salt MCP tool with the `url` argument set to the running app URL",
         purpose: "Capture supporting runtime evidence when needed.",
       },
       confidence_impact: {
@@ -1875,7 +1876,7 @@ describe("publicContract workflow adapters", () => {
         preserve_checks: [],
         confirmation_checks: [],
         suggested_workflow: "review_salt_ui",
-        suggested_command: "salt-ds review <changed-path>",
+        suggested_command: "review_salt_ui via the @salt-ds/mcp server (args: { code: \"<file contents>\" })",
       },
     });
 

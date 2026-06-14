@@ -95,7 +95,7 @@ function buildFixtureReviewReportValidation(
       report_path: reportPath,
       reusable_evidence_ref_ids: current ? ["fixture-review.evidence"] : [],
       unsupported_claim_ids: [],
-      next_command: `salt-ds review --validate ${reportPath} --json`,
+      next_command: `read the salt://review/validation/${encodeURIComponent(reportPath)} MCP resource to inspect the validation result`,
       missing: overrides.missing ?? [],
     },
   };

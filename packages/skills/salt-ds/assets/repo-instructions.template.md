@@ -46,7 +46,7 @@ If both `.salt/team.json` and `.salt/stack.json` are missing, keep the first res
 
 If Salt MCP is unavailable and the Salt CLI is available, keep the same workflow and let the environment use the CLI fallback for canonical Salt guidance.
 
-Before considering Salt UI work complete, run the repo `ui:verify` script when it exists, or run `salt-ds review` directly.
+Before considering Salt UI work complete, run the repo `ui:verify` script when it exists, or run the `review_salt_ui` MCP tool directly.
 
 If this Salt-managed block or the generated host adapter files look stale, rerun the Salt bootstrap workflow or `salt-ds init` to refresh the managed Salt guidance instead of hand-rewriting it.
 
