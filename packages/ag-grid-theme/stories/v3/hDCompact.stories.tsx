@@ -36,6 +36,7 @@ import {
 } from "@salt-ds/core";
 import {
   saltAgGridDefaults,
+  saltCompact,
   saltRowVariantSecondary,
   saltTheme,
   saltZebra,
@@ -81,14 +82,17 @@ export const HDCompact = () => {
   // Rebuild the theme when the variant toggle changes. The variant parts use
   // distinct `feature` keys (`saltRowVariant`, `saltZebra`) so AG Grid's part
   // merging slots them in additively without colliding.
+  // Always apply saltCompact — this is the HD COMPACT story, that's the
+  // point. Variant parts layer on top via their own `feature` keys.
   const themed = useMemo(() => {
+    const base = saltTheme.withPart(saltCompact);
     switch (selected) {
       case "secondary":
-        return saltTheme.withPart(saltRowVariantSecondary);
+        return base.withPart(saltRowVariantSecondary);
       case "zebra":
-        return saltTheme.withPart(saltZebra);
+        return base.withPart(saltZebra);
       default:
-        return saltTheme;
+        return base;
     }
   }, [selected]);
 

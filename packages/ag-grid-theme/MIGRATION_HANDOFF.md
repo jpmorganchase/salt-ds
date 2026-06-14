@@ -459,6 +459,47 @@ When a phase prompt refers to "§X.Y of the proposal", here's the index:
   Branch `feat/ag-grid-theme-v3-phase-0` is now feature-complete and ready
   for the final visual-diff sweep + PR review.
 
+- **2026-06-14 (Phase 8.5 — reinstate HD compact tier; fix missed exports)**
+  — Reverses 9 Decision 2 ("drop the compact tier"). The legacy
+  `useAgGridHelpers({ compact: true, density: "high" })` rhythm (21px
+  rows / 20px headers at high density) was used by enough consumer
+  products that the documented workaround — "wrap your grid in
+  `<SaltProvider density='high'>` AND call
+  `.withParams({ rowHeight: 21, headerHeight: 20 })`" — was too much
+  boilerplate. A composable part is cleaner.
+  Files touched:
+  - **NEW** `src/parts/saltCompact.ts` — part overriding `rowHeight`
+    (`calc(--salt-size-base + 1px)`), `headerHeight` and `listItemHeight`
+    (`var(--salt-size-base)`) so the `--salt-spacing-100` row padding
+    drops out. Token-based: at high density gives 21/20; at medium
+    29/28; at low 37/36; at touch 45/44. Compose via
+    `saltTheme.withPart(saltCompact)` typically alongside
+    `<SaltProvider density="high">` for the legacy HD compact look. No
+    `feature` key — composes additively; `params` override saltTheme's
+    via AG's last-part-wins resolution.
+  - `src/index.ts` — exported the new `saltCompact`, plus two
+    previously-missed exports:
+      • `saltButtonStyle` (from Phase 8.2)
+      • `saltHeaderLayout` (from Phase 8)
+    Both were composed into `saltTheme` but not re-exported, so
+    consumers couldn't reference them when building custom themes
+    (e.g. via `createTheme().withPart(saltButtonStyle)`).
+  - `stories/v3/hDCompact.stories.tsx` — actually uses `saltCompact`
+    now. The story previously only set `<SaltProvider density="high">`,
+    giving 25/24 rows (regular high density, not compact). With
+    `saltTheme.withPart(saltCompact)` it now renders at the legacy
+    21/20 rhythm.
+  **Status update on 9 Decision 2:** REVERSED. The compact tier is back
+  as a first-class composable part. PHASE_4_DENSITY_VALIDATION.md's
+  "dropped compact tier" prose should be updated to point at
+  `saltTheme.withPart(saltCompact)` instead of the
+  `.withParams({ rowHeight: 21, headerHeight: 20 })` workaround
+  (followup work).
+  Updated migration scoreboard:
+    - CSS: 12 / 12 legacy `css/parts/*.css` files ported
+    - Stories: 33 / 33 legacy `src/examples/*.tsx` examples
+    - Parts: 14 wired + 14 exported (was 12 / 11)
+    - HD compact tier: ported as `saltCompact` part
 ## When something changes
 
 Update this hand-off (`MIGRATION_HANDOFF.md`) whenever:

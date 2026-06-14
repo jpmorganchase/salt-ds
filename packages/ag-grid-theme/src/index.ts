@@ -13,6 +13,8 @@ export { saltIconSet } from "./parts/saltIconSet";
 export { saltCheckboxStyle } from "./parts/saltCheckboxStyle";
 export { saltInputStyle } from "./parts/saltInputStyle";
 export { saltColumnDropStyle } from "./parts/saltColumnDropStyle";
+export { saltButtonStyle } from "./parts/saltButtonStyle";
+export { saltCompact } from "./parts/saltCompact";
 export { saltTabStyle } from "./parts/saltTabStyle";
 export { saltCellStates } from "./parts/saltCellStates";
 export { saltFocusRing } from "./parts/saltFocusRing";
@@ -21,6 +23,7 @@ export { saltRangeSelectionAdjustments } from "./parts/saltRangeSelectionAdjustm
 // Header parts — mutually exclusive within the saltHeaderBackground / saltHeaderDivider feature groups
 export { saltHeaderPrimary } from "./parts/header/saltHeaderPrimary";
 export { saltHeaderDividerPrimary } from "./parts/header/saltHeaderDividerPrimary";
+export { saltHeaderLayout } from "./parts/header/saltHeaderLayout";
 export { saltHeaderSecondary } from "./parts/header/saltHeaderSecondary";
 export { saltHeaderTertiary } from "./parts/header/saltHeaderTertiary";
 export { saltHeaderDividerSecondary } from "./parts/header/saltHeaderDividerSecondary";
