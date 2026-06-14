@@ -450,6 +450,25 @@ Treat the proposal as the *plan*, this doc as the *current state*. They should n
     wasn't updated to drop them. Salt's selector-level CSS in
     `salt-input.css` handles editor border / focus look directly.
 
+  - **Menu spacing — full 2.x ag-menus.css port**
+    (`src/css/salt-cell-states.css`) — v3 menus were rendering with
+    cramped 24px option rows, no outer container padding, missing
+    menu-header divider, and a misaligned tool-panel column-select
+    header. Root cause: the 2.x `css/parts/ag-menus.css` file had 11
+    bespoke rules covering `.ag-menu` / `.ag-tabs` / `.ag-menu-header` /
+    `.ag-menu-body` / `.ag-menu-list` / `.ag-menu-separator` /
+    `.ag-menu-option` / `.ag-menu-option-icon` / `.ag-column-select-header`
+    (plus `.ag-popup-child` shadow and `.ag-tab` height/flex) that were
+    never ported to v3. Ported 9 of the 11 — the popup shadow is
+    already covered by the typed `popupShadow` param in saltTheme, and
+    the tab height/flex lives in `salt-tab.css` (saltTabStyle part).
+    The missing `.ag-menu-option { height: var(--ag-list-item-height) }`
+    was the one driving the cramped row look. Narrowed the previous
+    `.ag-menu-option-part, .ag-compact-menu-option-part` padding
+    workaround down to compact-only — the new explicit outer height
+    on `.ag-menu-option` makes the inner-part padding hack redundant
+    for regular menus.
+
   **Methodology / process notes**
 
   - Several attempts had to be reverted because IDE `replace_string_in_file`

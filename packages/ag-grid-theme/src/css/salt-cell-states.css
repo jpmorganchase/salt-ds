@@ -188,17 +188,21 @@
 .ag-full-width-row .ag-cell-wrapper.ag-row-group {
   border-width: 0;
 }
-/* --- Menu item height (column menu, context menu, popups) ---
+/* --- Compact-menu item height (compact context menus etc.) ---
  *
- * AG v3's default `.ag-menu-option-part` / `.ag-compact-menu-option-part` rule:
+ * AG v3's default `.ag-compact-menu-option-part` rule:
  *   { line-height: var(--ag-icon-size); padding: calc(var(--ag-spacing) + 2px) 0; }
- * yields 12 + 2*(4+2) = 24px in medium density. 2.x menu items rendered at the
- * `--ag-list-item-height` row rhythm (= 36px @ medium) because AG v32 sized them
- * differently. We re-derive padding from `--ag-list-item-height` so menu items
- * pick up the same density rhythm as grid rows — matches 2.x and stays
- * density-responsive without extra branching. (Phase 7 finding 2026-06-13.)
+ * yields 12 + 2*(4+2) = 24px in medium density. 2.x rendered compact menu
+ * items at the `--ag-list-item-height` row rhythm (= 36px @ medium). Re-derive
+ * padding from `--ag-list-item-height` so the density still flows through
+ * (matches 2.x without extra branching).
+ *
+ * NOTE: the regular `.ag-menu-option-part` is no longer in this selector —
+ * the 2.x `.ag-menu-option { height: var(--ag-list-item-height) }` rule
+ * (ported below in the Menu/tabs/column-select-header block) sets the OUTER
+ * row height directly, so the inner part doesn't need padding tricks.
+ * (Phase 7 finding 2026-06-13, narrowed 2026-06-14.)
  */
-.ag-menu-option-part,
 .ag-compact-menu-option-part {
   padding: calc((var(--ag-list-item-height) - var(--ag-icon-size)) / 2) 0;
 }
@@ -316,4 +320,75 @@
   .ag-header-label-icon {
   margin-left: auto;
   padding-right: var(--salt-spacing-100);
+}
+
+/* === Menu / tabs / column-select-header layout =========================
+ *
+ * Port of `packages/ag-grid-theme/css/parts/ag-menus.css` (2.x line).
+ * Without these the AG v3 default menus render with cramped rows
+ * (24px instead of 36px), no outer container padding, missing menu-header
+ * divider, etc.
+ *
+ * Skipped from the port:
+ *   - `.ag-popup-child { box-shadow: var(--salt-overlayable-shadow-popout) }`
+ *     — covered by `popupShadow: var(--salt-overlayable-shadow-modal)`
+ *     typed param in saltTheme.
+ *   - `.ag-tab { height + flex }` — lives in `salt-tab.css` (saltTabStyle part).
+ *
+ * Stripped the 4-way `.ag-theme-salt-{light,dark,compact-light,compact-dark}`
+ * scoping since AG v3 auto-wraps in `:where(.ag-theme-part-N)`. (Phase 7
+ * finding 2026-06-14.)
+ */
+
+/* Outer menu container: 8px padding + 1px Salt selectable border.
+ * Matches the 2.x `.ag-menu` rule. */
+.ag-menu {
+  padding: var(--salt-spacing-100);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-selectable-borderColor-selected);
+}
+
+/* Tabs container inside menus (e.g., column menu's General/Filter/Columns tabs). */
+.ag-tabs {
+  padding: var(--salt-spacing-100);
+}
+
+/* Menu header (the section above the tabs / option list) */
+.ag-menu-header {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-container-primary-borderColor);
+  background-color: var(--salt-container-primary-background);
+}
+
+/* Menu body + list have no padding (.ag-menu provides the outer 8px frame). */
+.ag-menu-body {
+  padding: 0;
+}
+.ag-menu-list {
+  padding: 0;
+}
+
+/* Menu separator (the thin horizontal divider between option groups). */
+.ag-menu-separator {
+  height: var(--salt-size-fixed-100);
+}
+
+/* Each menu option row — height drives the visual rhythm.
+ * This is the rule that was missing in v3, causing the cramped 24px rows. */
+.ag-menu-option {
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+/* Menu option icon (the small glyph on the left side of each option).
+ * Uses logical `padding-inline-start` so it works in RTL too. */
+.ag-menu-option-icon,
+.ag-compact-menu-option-icon {
+  padding-inline-start: var(--salt-spacing-100);
+}
+
+/* Tool-panel column-select header (the search box / select-all row).
+ * Aligns its height with the menu/row rhythm and strips AG's default border. */
+.ag-column-select-header {
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  border: 0;
 }
