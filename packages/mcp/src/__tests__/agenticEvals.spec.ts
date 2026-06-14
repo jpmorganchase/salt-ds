@@ -1447,19 +1447,19 @@ const TOOL_SELECTION_CORPUS: readonly ToolSelectionFixture[] = [
   // entity-lookup (3) — resolve a specific named Salt entity.
   {
     prompt: "Look up the Salt FormField component details and props.",
-    expected: "get_salt_entity",
+    expected: "get_salt_entities",
     intent: "entity-lookup",
   },
   {
     prompt:
       "Resolve the Salt Avatar component: I already know the exact entity name I need.",
-    expected: "get_salt_entity",
+    expected: "get_salt_entities",
     intent: "entity-lookup",
   },
   {
     prompt:
       "Get the canonical Salt SaltProviderNext entity record including its prop schema.",
-    expected: "get_salt_entity",
+    expected: "get_salt_entities",
     intent: "entity-lookup",
   },
 

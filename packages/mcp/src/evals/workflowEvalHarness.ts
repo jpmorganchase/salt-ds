@@ -865,9 +865,25 @@ function readStepArg(
   step: Record<string, unknown>,
   key: string,
 ): string | null {
-  return isRecord(step.args) && typeof step.args[key] === "string"
-    ? step.args[key]
-    : null;
+  if (!isRecord(step.args)) {
+    return null;
+  }
+  // After the 14-Jun tool-surface trim, get_salt_entity was merged into
+  // get_salt_entities and single-name lookups travel as `args.names: [X]`
+  // instead of `args.name: X`. The intent-fixture comparator still reads
+  // expectedStep.name verbatim because it stays one human-readable line;
+  // we transparently fall through to `args.names[0]` when the new
+  // batch shape is in play.
+  if (typeof step.args[key] === "string") {
+    return step.args[key];
+  }
+  if (key === "name") {
+    const names = step.args.names;
+    if (Array.isArray(names) && typeof names[0] === "string") {
+      return names[0];
+    }
+  }
+  return null;
 }
 
 function getRecipeSteps(recipe: unknown): Array<Record<string, unknown>> {

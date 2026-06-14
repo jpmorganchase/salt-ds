@@ -48,7 +48,10 @@ import {
   SALT_MCP_CONTEXT_PACK_URI,
   SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI,
   SALT_MCP_CONTEXT_RELEASE_GATE_URI,
+  SALT_MCP_REVIEW_STATE_TEMPLATE_URI,
+  SALT_MCP_REVIEW_VALIDATION_TEMPLATE_URI,
 } from "./serverMetadata.js";
+import { validateReviewReportFromPath } from "./toolDefinitions.js";
 
 export function registerSaltResources(
   server: McpServer,
@@ -604,6 +607,73 @@ export function registerSaltResources(
             uri: uri.toString(),
             mimeType: "application/json",
             text: JSON.stringify(context, null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  // Review-report resources (replaced the validate_salt_review_report and
+  // resume_salt_review tools as part of the 14-Jun tool-surface trim down
+  // to ~10 public MCP tools). report_path is URL-encoded relative-to-cwd
+  // path to a salt_review_report_v1 JSON file; root_dir always defaults to
+  // process.cwd(), matching the prior tool defaults.
+  server.registerResource(
+    "salt_review_validation",
+    new ResourceTemplate(SALT_MCP_REVIEW_VALIDATION_TEMPLATE_URI, {
+      list: undefined,
+    }),
+    {
+      title: "Salt Review Report Validation",
+      description:
+        "Validate a durable salt_review_report_v1 JSON file against the current semantic-core registry. Recomputes evidence, mirror, and release-gate state before reporting current, stale, unsupported, or invalid.",
+      mimeType: "application/json",
+    },
+    async (uri, variables) => {
+      const rawPath =
+        typeof variables.report_path === "string" ? variables.report_path : "";
+      const reportPath = decodeURIComponent(rawPath);
+      const validation = await validateReviewReportFromPath({
+        registry,
+        report_path: reportPath,
+      });
+      return {
+        contents: [
+          {
+            uri: uri.toString(),
+            mimeType: "application/json",
+            text: JSON.stringify(validation, null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.registerResource(
+    "salt_review_state",
+    new ResourceTemplate(SALT_MCP_REVIEW_STATE_TEMPLATE_URI, {
+      list: undefined,
+    }),
+    {
+      title: "Salt Review Resume State",
+      description:
+        "Return the conservative resume state for a durable Salt review report. Only current source-backed reports expose reusable EvidenceRef ids; stale, unsupported, and invalid reports return missing data instead.",
+      mimeType: "application/json",
+    },
+    async (uri, variables) => {
+      const rawPath =
+        typeof variables.report_path === "string" ? variables.report_path : "";
+      const reportPath = decodeURIComponent(rawPath);
+      const validation = await validateReviewReportFromPath({
+        registry,
+        report_path: reportPath,
+      });
+      return {
+        contents: [
+          {
+            uri: uri.toString(),
+            mimeType: "application/json",
+            text: JSON.stringify(validation.resume, null, 2),
           },
         ],
       };

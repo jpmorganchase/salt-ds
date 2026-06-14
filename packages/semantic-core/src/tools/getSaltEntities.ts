@@ -12,20 +12,36 @@ import {
 /**
  * Batch lookup options shared across every entity in the request.
  *
- * Each name is resolved independently with `entity_type: "auto"`. Per-name
- * ambiguity ("multiple_matches" / "not_found") never blocks other names —
- * callers receive a structured row for every requested name in the original
- * order so that downstream skill prose can grade each entity on its own.
+ * Each name is resolved independently with `entity_type: "auto"` by default.
+ * Per-name ambiguity ("multiple_matches" / "not_found") never blocks other
+ * names — callers receive a structured row for every requested name in the
+ * original order so that downstream skill prose can grade each entity on its
+ * own.
+ *
+ * Power-user filters (`entity_type`, `status`, `max_results`,
+ * `include_deprecated`) are applied to every name in the batch. They exist
+ * here so single-name workflow follow-ups can route through `get_salt_entities`
+ * without losing the targeted filters previously exposed on the standalone
+ * `get_salt_entity` tool (which was retired in favour of MCP-only delivery
+ * through this batch tool).
  */
 export interface GetSaltEntitiesInput {
   /** Ordered list of Salt entity names to look up. Duplicates are preserved. */
   names: string[];
+  /** Optional entity-family hint applied to every name in the batch. */
+  entity_type?: GetSaltEntityInput["entity_type"];
   /** Optional package filter applied to every name. */
   package?: string;
+  /** Optional release-status filter applied to every name. */
+  status?: GetSaltEntityInput["status"];
   /** Optional include sections applied to every name. */
   include?: GetSaltEntityInput["include"];
   include_related?: boolean;
   include_starter_code?: boolean;
+  /** Optional cap on nearby matches per name when a lookup is not exact. */
+  max_results?: number;
+  /** Optional toggle for including deprecated token matches per name. */
+  include_deprecated?: boolean;
   /** Optional `compact` / `full` view passed through to each lookup. */
   view?: GetSaltEntityInput["view"];
 }
@@ -88,7 +104,7 @@ export function getSaltEntities(
   input: GetSaltEntitiesInput,
 ): GetSaltEntitiesResult {
   const guidanceBoundary = buildGuidanceBoundary({
-    workflow: "get_salt_entity",
+    workflow: "get_salt_entities",
   });
 
   if (!input.names || input.names.length === 0) {
@@ -115,11 +131,14 @@ export function getSaltEntities(
   const requestNames = trimmedNames.slice(0, MAX_BATCH_SIZE);
 
   const perNameInput: GetSaltEntityInput = {
-    entity_type: "auto",
+    entity_type: input.entity_type ?? "auto",
     package: input.package,
+    status: input.status,
     include: input.include,
     include_related: input.include_related,
     include_starter_code: input.include_starter_code,
+    max_results: input.max_results,
+    include_deprecated: input.include_deprecated,
     view: input.view,
   };
 

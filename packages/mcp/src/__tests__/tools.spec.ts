@@ -2510,7 +2510,7 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          workflow: "get_salt_entity",
+          workflow: "get_salt_entities",
         }),
       ]),
     );
@@ -2601,7 +2601,7 @@ describe("consumer tools", () => {
           follow_up_mode: "exact_name",
         }),
         expect.objectContaining({
-          workflow: "get_salt_entity",
+          workflow: "get_salt_entities",
           follow_up_mode: "exact_name",
         }),
       ]),
@@ -3290,7 +3290,7 @@ describe("consumer tools", () => {
           workflow: "get_salt_examples",
         }),
         expect.objectContaining({
-          workflow: "get_salt_entity",
+          workflow: "get_salt_entities",
         }),
       ]),
     );
@@ -4044,7 +4044,7 @@ describe("consumer tools", () => {
       },
     });
     expect(result.best_start).toMatchObject({
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
     });
     expect(result.options?.foundations[0]).toMatchObject({
       title: "Typography",
@@ -4055,7 +4055,7 @@ describe("consumer tools", () => {
     expect(result.suggested_follow_ups).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          workflow: "get_salt_entity",
+          workflow: "get_salt_entities",
         }),
       ]),
     );

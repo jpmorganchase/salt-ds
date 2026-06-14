@@ -96,7 +96,7 @@ describe("install_dependencies auto-invalidates cached project context", () => {
           (definition) => definition.name === "get_salt_project_context",
         );
         const entityTool = TOOL_DEFINITIONS.find(
-          (definition) => definition.name === "get_salt_entity",
+          (definition) => definition.name === "get_salt_entities",
         );
         expect(createTool).toBeDefined();
         expect(contextTool).toBeDefined();
@@ -182,19 +182,33 @@ describe("install_dependencies auto-invalidates cached project context", () => {
         );
         expect(runtime.staleProjectContextIds.has(contextId)).toBe(false);
 
-        // 4. A follow-up get_salt_entity call (the lightweight lookup the host
-        //    would naturally make next) must continue to work without any
+        // 4. A follow-up get_salt_entities call (the lightweight lookup the
+        //    host would naturally make next) must continue to work without any
         //    manual rerun of get_salt_project_context between the install and
-        //    the rerun. get_salt_entity does not depend on the cached context,
-        //    so it has to succeed independently of the stale-cache fix.
+        //    the rerun. get_salt_entities does not depend on the cached
+        //    context, so it has to succeed independently of the stale-cache
+        //    fix.
         const entityResult = (await entityTool!.execute(
           registry,
-          { name: "Button" },
+          { names: ["Button"] },
           runtime,
-        )) as { decision?: { status?: string }; entity?: { name?: string } | null };
+        )) as {
+          decision?: { status?: string };
+          found_count?: number;
+          results?: Array<{
+            name: string;
+            result: {
+              decision?: { status?: string };
+              entity?: { name?: string } | null;
+            };
+          }>;
+        };
         expect(entityResult).toBeDefined();
-        expect(entityResult.decision?.status).toBe("found");
-        expect(entityResult.entity?.name).toBe("Button");
+        expect(entityResult.decision?.status).toBe("results");
+        expect(entityResult.found_count).toBe(1);
+        const buttonRow = entityResult.results?.[0];
+        expect(buttonRow?.result.decision?.status).toBe("found");
+        expect(buttonRow?.result.entity?.name).toBe("Button");
 
         // 5. Defensive assertion: confirm the host never had to call
         //    get_salt_project_context between turns. We re-invoke the rerun

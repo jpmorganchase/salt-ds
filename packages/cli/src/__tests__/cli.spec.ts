@@ -345,12 +345,9 @@ describe("salt cli", () => {
           default_exposed: true,
           tool_ids: expect.arrayContaining([
             "discover_salt",
-            "get_salt_entity",
+            "get_salt_entities",
             "get_salt_examples",
-            "validate_salt_review_report",
-            "resume_salt_review",
-            "persist_salt_context_pack",
-            "persist_salt_generated_artifact",
+            "persist_salt_artifact",
           ]),
         }),
         support_surface: expect.objectContaining({

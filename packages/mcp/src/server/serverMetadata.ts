@@ -33,6 +33,15 @@ export const SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI =
   "salt://context/pattern/{name}";
 export const SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI =
   "salt://context/foundation/tokens/{category}";
+// Review-report resources (replaced the validate_salt_review_report and
+// resume_salt_review tools as part of the 14-Jun tool-surface trim). The
+// `{report_path}` variable is a URL-encoded relative-to-cwd path to a
+// salt_review_report_v1 JSON file; the read handler defaults root_dir to
+// process.cwd(), matching the prior tool defaults.
+export const SALT_MCP_REVIEW_VALIDATION_TEMPLATE_URI =
+  "salt://review/validation/{report_path}";
+export const SALT_MCP_REVIEW_STATE_TEMPLATE_URI =
+  "salt://review/state/{report_path}";
 
 interface SaltMcpPackageManifest {
   name: string;
@@ -110,12 +119,10 @@ export function getSaltMcpRuntimeMetadata(
         "review_salt_ui",
         "migrate_to_salt",
         "upgrade_salt_ui",
-        "get_salt_entity",
         "get_salt_entities",
         "get_salt_examples",
         "discover_salt",
-        "validate_salt_review_report",
-        "resume_salt_review",
+        "persist_salt_artifact",
       ],
       advanced_output_ids: ["view:full"],
     },

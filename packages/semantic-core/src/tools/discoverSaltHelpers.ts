@@ -116,7 +116,7 @@ function toDecisionFromSearchResult(
   switch (result.type) {
     case "component":
       return {
-        workflow: "get_salt_entity",
+        workflow: "get_salt_entities",
         why: "The closest match looks like a specific Salt component.",
         args: {
           entity_type: "component",
@@ -131,7 +131,7 @@ function toDecisionFromSearchResult(
       };
     case "pattern":
       return {
-        workflow: "get_salt_entity",
+        workflow: "get_salt_entities",
         why: "The closest match looks like a specific Salt pattern.",
         args: {
           entity_type: "pattern",
@@ -149,7 +149,7 @@ function toDecisionFromSearchResult(
     case "icon":
     case "country_symbol":
       return {
-        workflow: "get_salt_entity",
+        workflow: "get_salt_entities",
         why: "The closest match looks like a specific Salt entity.",
         args: {
           entity_type:
@@ -310,7 +310,7 @@ export function chooseRouteDecision(input: {
     foundationScore > 0
   ) {
     return {
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       why: "The query looks foundation-oriented, so start from the closest foundation guidance.",
       args: {
         entity_type: "foundation",
@@ -358,7 +358,7 @@ export function chooseRouteDecision(input: {
 
   if (apiSurface.length > 0) {
     return {
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       why: "The query looks like a prop or API lookup, so start from the component that exposes the closest prop match.",
       args: {
         entity_type: "component",
@@ -512,7 +512,7 @@ export function getCatalogDecision(
   }
 
   return {
-    workflow: "get_salt_entity",
+    workflow: "get_salt_entities",
     why: "The current browse view already has a likely Salt entity to inspect next.",
     args: {
       entity_type:
@@ -534,7 +534,7 @@ export function getRelatedDecision(
   const firstComponent = related.related.components[0];
   if (firstComponent) {
     return {
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       why: "The related component is the closest next lookup.",
       args: {
         entity_type: "component",
@@ -551,7 +551,7 @@ export function getRelatedDecision(
   const firstPattern = related.related.patterns[0];
   if (firstPattern) {
     return {
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       why: "The related pattern is the closest next lookup.",
       args: {
         entity_type: "pattern",
@@ -564,7 +564,7 @@ export function getRelatedDecision(
   const firstToken = related.related.tokens[0];
   if (firstToken) {
     return {
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       why: "The related token is the closest next lookup.",
       args: {
         entity_type: "token",
