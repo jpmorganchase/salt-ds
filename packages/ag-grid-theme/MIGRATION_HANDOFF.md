@@ -218,6 +218,91 @@ When a phase prompt refers to "§X.Y of the proposal", here's the index:
 
 ---
 
+- **2026-06-14 (Phase 8 — ag-header.css port)** — Closes the
+  largest outstanding CSS gap. Legacy `css/parts/ag-header.css` (378
+  lines) had only ~80 lines ported to v3 (focus rules + sort positioning
+  + label-icon margin); the remaining ~300 lines covered floating-filter
+  chrome, header button/icon hover halos, column-menu-open state,
+  pinned-header dividers, multi-row sub-row top borders, list-item hover,
+  label alignment, and the filter-active filled-icon swap.
+
+  Architecture: created a new dedicated `salt-header.css` + new always-on
+  part `saltHeaderLayout` (under `src/parts/header/`) rather than adding
+  to `saltCellStates`. Reasoning:
+    - `saltCellStates` was already at ~400 lines after the menu port;
+      adding 200 more would push it past 600 and reduce maintainability.
+    - Header layout rules are variant-INDEPENDENT (apply equally to
+      `saltHeaderPrimary` / `saltHeaderSecondary` / `saltHeaderTertiary`
+      which are mutually exclusive via `feature: "saltHeaderBackground"`).
+      A dedicated always-on part is the right home.
+    - Pattern mirrors `saltFocusRing` / `saltRangeSelectionAdjustments`
+      — always-on, no `feature`, composes additively.
+
+  Files touched:
+
+  - **NEW** `src/css/salt-header.css` (207 lines) — 12 rule groups:
+    1. Pinned left/right header column dividers
+    2. Multi-row header sub-row top border
+    3. Floating filter container (border, padding, `::before` half-height fix)
+    4. Floating filter `::after` underline removal
+    5. Floating filter button container + focus
+    6. **Header button/icon hover halo** (the 16-selector
+       `.ag-header-cell-menu-button:hover, ...` rule) — 4px Salt-subtle
+       pill spread + bg + 3-variant icon-font-color override. Most of
+       these selectors aren't AG v3 "icon-buttons" so `iconButtonHoverColor`
+       doesn't reach them; the explicit rule is the only path.
+    7. Header label-icon + menu-icon inter-spacing
+    8. `.ag-filter-active` filled-icon swap (via
+       `--ag-icon-font-code-filter: var(--ag-icon-font-code-filter-filled)`
+       — works because saltIconSet ships both codepoints)
+    9. `.ag-column-menu-visible` open-state background + foreground +
+       icon colour (cell pops with Salt actionable-subtle ACTIVE tone
+       while menu is open)
+    10. `.ag-cell-label-container` padding
+    11. `.ag-list-item` / `.ag-virtual-list-item` hover (generic, used
+        across tool panel / dropdowns / virtual lists)
+    12. `.ag-label-align-right` margin
+
+  - **NEW** `src/parts/header/saltHeaderLayout.ts` (25 lines) —
+    `createPart({ css })` wrapper. No `feature` key (composes additively).
+
+  - `src/saltTheme.ts`:
+    - Imported + composed `saltHeaderLayout` between
+      `saltHeaderDividerPrimary` and `saltCellStates`
+    - Added typed `headerRowBorder: { width, color }` param (ports
+      `ag-header.css` lines 10-19 — same
+      `--salt-separable-primary-borderColor` token)
+
+  - `src/css/salt-input.css`: appended the floating-filter input sizing
+    block (lines 286-319 from legacy `ag-header.css` — lives in
+    `salt-input.css` rather than `salt-header.css` because it styles
+    inputs). Specifically: `height: calc(var(--salt-size-base) +
+    var(--salt-spacing-100) - 6px)` so the focus outline doesn't clip,
+    `margin-inline + padding` for Salt-Input rhythm, and `border: none`
+    on the inputs since the `.ag-floating-filter` container provides
+    the visible 1px Salt-tertiary frame.
+
+  Rules NOT in this port (verified covered elsewhere or intentionally
+  skipped):
+    - Header icon colour cascade (ag-header.css L1-8) — handled by
+      `iconColor` typed param (from the 2026-06-14 follow-up commit).
+    - Header row font-size + font-weight (L21-27) — handled by
+      `headerFontSize` + `headerFontWeight` typed params.
+    - Header / sub-header / floating-filter focus rings (L29-44, 67-76,
+      161-171) — already in `salt-focus-ring.css`.
+    - Sort indicator + label icon margin (L78-128) — already in
+      `salt-cell-states.css` (just landed in `b7580ec41`).
+
+  Remaining migration work after Phase 8 (see also "What's left to
+  migrate" answer above the change log):
+    - `ag-buttons.css` (178 lines) — `.ag-standard-button` + filter
+      apply/reset/cancel button styling. Affects filter popups visibly.
+    - `ag-column-drop-list.css` hover/active/expanded cascade (≈10 lines)
+    - `ag-tool-panel.css` (35 lines)
+    - `ag-toggle-button.css` (13 lines)
+    - `contextMenu.stories.tsx` (0-byte stub — needs authoring)
+    - `icons` story (missing in v3)
+
 ## When something changes
 
 Update this hand-off (`MIGRATION_HANDOFF.md`) whenever:

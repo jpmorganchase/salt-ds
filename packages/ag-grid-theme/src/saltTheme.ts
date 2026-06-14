@@ -41,6 +41,7 @@ import { saltCheckboxStyle } from "./parts/saltCheckboxStyle";
 import { saltColumnDropStyle } from "./parts/saltColumnDropStyle";
 import { saltFocusRing } from "./parts/saltFocusRing";
 import { saltHeaderDividerPrimary } from "./parts/header/saltHeaderDividerPrimary";
+import { saltHeaderLayout } from "./parts/header/saltHeaderLayout";
 import { saltHeaderPrimary } from "./parts/header/saltHeaderPrimary";
 import { saltIconSet } from "./parts/saltIconSet";
 import { saltInputStyle } from "./parts/saltInputStyle";
@@ -57,6 +58,7 @@ export const saltTheme = createTheme()
   .withPart(saltTabStyle) // owns tabSelectedUnderline{Color,Width} + bespoke tab CSS — see §4.6.3
   .withPart(saltHeaderPrimary) // default; swappable via saltHeader{Secondary,Tertiary}
   .withPart(saltHeaderDividerPrimary) // default; swappable via saltHeaderDivider{Secondary,Tertiary,None}
+  .withPart(saltHeaderLayout) // always-on header layout rules — variant-independent (Phase 8)
   .withPart(saltCellStates) // app-level state classes (.error-cell, ...)
   .withPart(saltFocusRing) // unified focus rings
   .withPart(saltRangeSelectionAdjustments) // cross-cell outline, fill handle, etc.
@@ -140,6 +142,13 @@ export const saltTheme = createTheme()
     wrapperBorder: false, // matches `ag-root-var.css` lines 78–83 today
     headerColumnBorder: { width: "var(--salt-size-fixed-100)", color: "var(--salt-separable-tertiary-borderColor)" },
     headerColumnBorderHeight: "calc(var(--salt-size-base) / 2 - 2px)",
+    // Header bottom border — ports `ag-header.css` lines 10-19. AG v3
+    // exposes this as a typed param (used to be plain CSS in 2.x).
+    // Same `--salt-separable-primary-borderColor` token as the 2.x line.
+    headerRowBorder: {
+      width: "var(--salt-size-fixed-100)",
+      color: "var(--salt-separable-primary-borderColor)",
+    },
     // Hide AG v3's resize-handle bar — it overlaps the `headerColumnBorder`
     // `::after` line, producing a visible double-divider between header cells.
     // (Phase 7 finding 2026-06-13.)

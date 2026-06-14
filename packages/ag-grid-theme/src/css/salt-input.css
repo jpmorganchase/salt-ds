@@ -213,3 +213,35 @@
 .ag-virtual-list-viewport.ag-rich-select-list {
   box-shadow: var(--salt-overlayable-shadow-popout);
 }
+
+/* === Floating filter input sizing (port of ag-header.css lines 286-319) ===
+ *
+ * The legacy 2.x line wrapped floating-filter `<input>`s with explicit
+ * height + margin-inline + padding so the focus outline never gets clipped
+ * by the floating-filter container. AG v3 doesn't ship these specifics —
+ * the input ends up too tall, the focus ring clips on the row borders, and
+ * the inner padding doesn't match the Salt Input rhythm.
+ *
+ * Border is removed separately so the `.ag-floating-filter` container's
+ * 1px Salt-tertiary border (set in salt-header.css) is the only visible
+ * frame around the input. (Phase 8 port 2026-06-14.)
+ */
+.ag-floating-filter input[class^="ag-"][type="text"],
+.ag-floating-filter input[class^="ag-"][type="number"],
+.ag-floating-filter input[class^="ag-"][type="date"] {
+  /* -6px so the focus outline (drawn outside the input) doesn't clip on the
+   * floating-filter container border */
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 6px);
+  /* Symmetric inline margin gives the outline 4px of breathing room */
+  margin-inline: var(--salt-spacing-50);
+  /* Combined with the margin, matches Salt Input's 8px inner padding */
+  padding: 0 var(--salt-spacing-50);
+}
+
+/* Remove the inputs' own border — the .ag-floating-filter container
+ * draws the visible 1px Salt-tertiary frame instead. */
+.ag-floating-filter-input input[class^="ag-"][type="text"],
+.ag-floating-filter-input input[class^="ag-"][type="number"],
+.ag-floating-filter-input input[class^="ag-"][type="date"] {
+  border: none;
+}

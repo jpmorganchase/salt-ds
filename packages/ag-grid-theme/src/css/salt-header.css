@@ -1,0 +1,207 @@
+/* Phase 8 port of bespoke header layout / state CSS from
+ * `packages/ag-grid-theme/css/parts/ag-header.css` (2.x line).
+ *
+ * The 4-way `.ag-theme-salt-{light,dark,compact-light,compact-dark}` selector
+ * scoping is stripped — AG v3 auto-wraps in `:where(.ag-theme-part-N)`.
+ *
+ * Rules NOT in this file (already covered elsewhere):
+ *   - ag-header.css lines 1-8    — header icon colour cascade
+ *                                  (handled by `iconColor: var(--salt-content-secondary-foreground)`
+ *                                  typed param in saltTheme.ts)
+ *   - ag-header.css lines 10-19  — header bottom border
+ *                                  (handled by `headerRowBorder` typed param in saltTheme.ts)
+ *   - ag-header.css lines 21-27  — header row font-size + font-weight
+ *                                  (handled by `headerFontSize` + `headerFontWeight`
+ *                                  typed params in saltTheme.ts)
+ *   - ag-header.css lines 29-44, 67-76, 161-171  — header focus rules
+ *                                  (in salt-focus-ring.css)
+ *   - ag-header.css lines 78-128 — sort indicator + label icon margin
+ *                                  (in salt-cell-states.css)
+ *   - ag-header.css lines 286-319 — floating filter input sizing
+ *                                  (in salt-input.css)
+ *
+ * What IS here:
+ *   - Pinned left/right header column dividers
+ *   - Multi-row header sub-row top border
+ *   - Floating filter container (border, padding, ::before half-height fix)
+ *   - Floating filter button container + focus
+ *   - Header button/icon HOVER state (the big one — 16 selectors getting
+ *     a Salt-actionable pill on hover)
+ *   - Header label-icon + menu-icon inter-spacing (margin-left)
+ *   - `.ag-filter-active` filter-icon filled-variant swap
+ *   - `.ag-column-menu-visible` open-state background + foreground
+ *   - `.ag-cell-label-container` padding
+ *   - `.ag-list-item` / `.ag-virtual-list-item` hover
+ *   - `.ag-label-align-right` margin
+ *
+ * (Phase 8 port 2026-06-14.)
+ */
+
+/* ===== Pinned column dividers in header ============================== */
+/* Mirrors `.ag-cell.ag-cell-last-left-pinned` / `.ag-cell-first-right-pinned`
+ * in salt-cell-states.css — same divider colour for header pinned cells. */
+.ag-pinned-left-header {
+  border-right-color: var(--salt-separable-secondary-borderColor);
+}
+.ag-pinned-right-header {
+  border-left-color: var(--salt-separable-secondary-borderColor);
+}
+
+/* ===== Multi-row header sub-row top border ========================== */
+/* Lighter divider above each sub-row (e.g. nested column-group headers). */
+.ag-header-row:not(:first-child)
+  .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
+  border-top-color: var(--salt-container-primary-borderColor);
+}
+
+/* ===== Floating filter container ===================================== */
+/* The floating-filter row sits beneath the main header row. */
+
+/* Kill the half-height column-divider `::before` that AG paints on regular
+ * header cells when they're rendered as floating filters — we draw our
+ * own outer border via the rule below. */
+.ag-header-cell.ag-floating-filter::before {
+  background-color: transparent;
+}
+
+/* Outer 1px tertiary-border around the floating filter row. */
+.ag-floating-filter {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-separable-tertiary-borderColor);
+}
+
+/* Zero out the left padding AG v3 adds on floating-filter header cells
+ * (the .ag-floating-filter container above provides the visual frame). */
+.ag-header-cell.ag-floating-filter {
+  padding-left: 0;
+}
+
+/* Remove AG v3's `::after` underline indicator on floating filters. */
+.ag-floating-filter::after {
+  width: 0;
+}
+
+/* ===== Floating filter button (active state next to input) =========== */
+/* Spacing between filter input and active-state button. */
+.ag-ltr .ag-floating-filter-button {
+  margin-left: var(--salt-spacing-100);
+}
+
+/* Focus ring around the active-state button, not the whole header cell. */
+.ag-ltr .ag-floating-filter-button .ag-button:focus {
+  border: none;
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+    var(--salt-focused-outlineColor);
+  outline-offset: 2px;
+}
+
+/* ===== Header button / icon hover state =============================
+ *
+ * Big 16-selector hover rule from `ag-header.css` lines 173-243. AG v3
+ * has typed `iconButtonHoverColor` + `iconButtonHoverBackgroundColor`
+ * params, but most of these specific selectors (`.ag-header-cell-menu-button`,
+ * `.ag-header-cell-filter-button`, `.ag-floating-filter-button-button`,
+ * `.ag-set-filter-group-icons`, `.ag-group-{expanded,contracted} .ag-icon`,
+ * etc.) aren't classified as icon-buttons by AG's typed-param machinery —
+ * so the hover effect has to be applied explicitly here.
+ *
+ * Effect: 4px Salt-subtle pill spread (via `box-shadow: 0 0 0 4px <bg>`)
+ * + background fill + icon colour shift to the Salt actionable hover tone.
+ * The three `--ag-icon-font-color*` overrides cover the regular icon, the
+ * filter glyph swap, and the menu-alt glyph swap (the latter two only
+ * matter when a font-based icon set with those code-* variants is loaded —
+ * harmless when they aren't).
+ *
+ * Mirrors AG Quartz's hover halo pattern that 2.x copied from. */
+.ag-header-cell-menu-button:hover,
+.ag-header-cell-filter-button:hover,
+.ag-panel-title-bar-button:hover,
+.ag-header-expand-icon:hover,
+.ag-column-group-icons:hover,
+.ag-set-filter-group-icons:hover,
+.ag-group-expanded .ag-icon:hover,
+.ag-group-contracted .ag-icon:hover,
+.ag-chart-settings-prev:hover,
+.ag-chart-settings-next:hover,
+.ag-group-title-bar-icon:hover,
+.ag-column-select-header-icon:hover,
+.ag-floating-filter-button-button:hover,
+.ag-filter-toolpanel-expand:hover,
+.ag-panel-title-bar-button-icon:hover,
+.ag-chart-menu-icon:hover {
+  box-shadow: 0 0 0 var(--salt-spacing-50)
+    var(--salt-actionable-subtle-background-hover);
+  background-color: var(--salt-actionable-subtle-background-hover);
+  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
+  --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
+  --ag-icon-font-color-menu-alt: var(--salt-actionable-subtle-foreground-hover);
+}
+
+/* ===== Header label-icon + menu-icon inter-spacing =================== */
+/* Adds 8px gap between the menu / filter icons in the right-edge cluster
+ * so the hover halos above don't visually touch each other. */
+.ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
+.ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon {
+  margin-left: var(--salt-spacing-100);
+}
+
+/* ===== Filter-active filled-icon swap ===============================
+ *
+ * When a filter is active on a column, swap the outline filter glyph for
+ * the filled variant. Works for font-based icon sets where the saltIconSet
+ * defines both `--ag-icon-font-code-filter` and `--ag-icon-font-code-filter-filled`
+ * codepoints (it does — see saltIconSet.ts). On mask-image icon sets
+ * (AG default Quartz) the variable swap is a no-op since the mask-image rule
+ * doesn't read `--ag-icon-font-code-*`. */
+.ag-filter-active {
+  --ag-icon-font-code-filter: var(--ag-icon-font-code-filter-filled);
+}
+
+/* ===== Column-menu-visible (open) state =============================
+ *
+ * When the column menu is open, the corresponding header cell pops with
+ * the Salt actionable-subtle ACTIVE background + foreground (matches the
+ * pressed-button state in Salt). Suppresses the hover background by aliasing
+ * the hover token to the active token, so the cell doesn't flicker between
+ * shades depending on whether the cursor is also over it. */
+.ag-header-cell:not(.ag-column-resizing)
+  + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+.ag-header-cell.ag-column-menu-visible {
+  background: var(--salt-actionable-subtle-background-active);
+  color: var(--salt-actionable-subtle-foreground-active);
+  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-active);
+  --salt-actionable-subtle-background-hover: var(--salt-actionable-subtle-background-active);
+}
+
+/* Icons inside the open-menu header cell pick up the active foreground.
+ * Separate rule because `.ag-icon` v3 reads `color`, not the legacy
+ * `--ag-icon-font-color` variable. */
+.ag-header-cell.ag-column-menu-visible .ag-icon {
+  color: var(--salt-actionable-subtle-foreground-active);
+}
+
+/* ===== Cell label container padding ================================== */
+/* The wrapper inside `.ag-header-cell` that holds the label + sort + menu.
+ * 4px vertical padding lifts the icons off the cell top/bottom edges. */
+.ag-cell-label-container {
+  padding: var(--salt-spacing-50) 0;
+}
+
+/* ===== List item hover (tool panel, dropdown menus, virtual lists) === */
+/* Salt selectable hover background + pointer cursor for ALL list-like
+ * hover targets across the grid: tool-panel option rows, dropdown menu
+ * items, virtual-list rows in rich-select popups, etc. */
+.ag-list-item:hover,
+.ag-virtual-list-item:hover {
+  background-color: var(--salt-selectable-background-hover);
+  cursor: var(--salt-cursor-hover);
+}
+
+/* ===== Label alignment (right-aligned form labels) =================== */
+/* AG components with `.ag-label-align-right` (e.g. floating-filter
+ * "active" toggle) need swapped logical margins. */
+.ag-label-align-right .ag-label {
+  margin-inline-start: var(--salt-spacing-100);
+  margin-inline-end: 0;
+}
