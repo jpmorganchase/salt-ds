@@ -51,7 +51,7 @@ interface ReviewHookPolicyRule {
   scope?: string;
 }
 
-export async function readReviewHookPolicyRules(
+async function readReviewHookPolicyRules(
   rootDir: string,
 ): Promise<ReviewHookPolicyRule[]> {
   const teamConfigPath = path.join(rootDir, ".salt", "team.json");
@@ -150,7 +150,7 @@ function describeMatchedRule(
  * aggregate summary fields are recomputed so the existing review pipeline maps
  * the result to a blocked contract status without any other branching logic.
  */
-export function applyRequireHumanReviewPolicyFindings(
+function applyRequireHumanReviewPolicyFindings(
   sourceValidation: LintCommandResult,
   rules: ReviewHookPolicyRule[],
 ): void {
