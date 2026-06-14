@@ -1,9 +1,11 @@
 # Salt-DS AI Foundation — Branch Review (`mcp`)
 
-> Review date: 13 June 2026 · Revised: 14 June 2026 (LOC estimates recalibrated, security fixes verified)
+> Review date: 13 June 2026 · Revised: 14 June 2026 (LOC estimates recalibrated, security fixes verified) · Revised: 15 June 2026 (post-Phase-A/B + Tier 1+2+3 cleanup)
 > Branch: `mcp` (vs `main`)
-> Scope: 673 files, +172k / −1k lines, 50+ commits
+> Scope: 648 files, +159k / −1k lines, 60+ commits
 > Reviewer perspective: code-level audit (READMEs and roadmap docs deliberately ignored)
+
+> **15 June revision note** — Three large refactors landed since the 14 June pass: (Phase A) CLI demoted to support-only — workflow commands `create` / `review` / `migrate` / `upgrade` removed from the CLI, MCP is now sole transport for those; kept on the CLI: `doctor`, `info`, `init`, `export-context`, `hook`, `verify`, `runtime inspect`. (Phase B) MCP tool surface narrowed from 14 → 10 with no backward compatibility — `get_salt_entity` merged into `get_salt_entities`, `persist_salt_context_pack` + `persist_salt_generated_artifact` merged into `persist_salt_artifact`, `validate_salt_review_report` + `resume_salt_review` demoted to resource templates (`salt://review/validation/{path}` and `salt://review/state/{path}`). (Tier 1+2) Eval-harness CLI plumbing deleted (~365 LOC); every emitted next-step prose / structured `next_command` / `suggested_command` previously pointing at the removed CLI commands rewritten to MCP-tool references; `runtime_capture.supported_via_cli` renamed to `supported_via_mcp_url`; net diff −446 LOC. (Tier 3) All published schemas now declare an absolute `$id` at `https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/<file>.json` (was: 31 fictional `saltdesignsystem.com` + 1 relative + 2 missing); dead `salt_workflow_v3` literal removed from `hostTraceEval.ts`; `z.unknown()` leaks in `toolDefinitions.ts` carry JSDoc pointing at the underlying contract (`details` legitimately varies per tool+view; `release_gate` / `persistence_check` reference the TS interface + JSON Schema mirror). Two new audit / behaviour tests added: `publishedSchemaShapeAudit.spec.ts` (semantic-core) catches the Tier-3-(a) class of bug — missing / relative / inconsistent-host `$id` — without external dependencies; `hardGateEnforcement.spec.ts` (mcp) closes the gap between the Skills *prose* linter and the runtime contract by exercising `create_salt_ui` / `review_salt_ui` / `migrate_to_salt` against ambiguous or under-grounded inputs and asserting both `getPublicContractValidationErrors` returns clean and `action.kind !== "implement"`. Final test state across the AI packages: **856 passed / 1 baseline failure (the same theme-data drift) / 10 skipped**.
 
 > **14 June revision note** — The original 13 June draft claimed 6,000–8,000 LOC could be deleted or consolidated. Hands-on investigation showed that figure conflated three different operations (delete vs. split vs. cross-package extract) and rested on two specific wrong premises: (a) 34 hand-written JSON Schemas were said to duplicate Zod sources — only 1 of 34 actually has a Zod twin; (b) skills markdown was said to repeat "Hard Gate / Action Loop / No Salt Invention" 4–6× across files — phrase counts show those live almost entirely in `core.md` (the always-loaded file), with single mentions in the router and host-default prompt (progressive disclosure, not duplication). Only true deletion shrinks the repo; splitting `toolDefinitions.ts` or extracting `saltInstallation.ts` redistributes LOC without removing it. Verified figures are now used throughout. Security ship-critical items #1 (SSRF), #2 (NDJSON cap), #3 (conventions-pack code-execution disclosure), and #4 (path-traversal guard on `verifyAttestation`) are now fixed in-tree. Ship-critical #5 is now 4 of 5 closed in-tree: (a) `contextCoverageProduction` snapshot updated to acknowledge the new `SaltProviderNext` registry entity; (b) MCP `upgrade_salt_ui` defaults `include_deprecations: false` to match the CLI; (c) `developing.mdx` opted into the `salt_ai_guide: true` registry indexing convention so the getting-started guide is discoverable; (d) the structured-MDX test's positive anchor loosened from `"Amplitude font"` to `"Amplitude"` to match the actual prose (`"Amplitude web font"`) while preserving the real invariants (no raw fenced code blocks, no `src: local(...)` CSS). 1 remaining failure (theme-data drift in `packages/theme/css/deprecated/token-replacements.json`, owned by the theme team) is documented out-of-scope for the AI-packages branch.
 
@@ -21,11 +23,13 @@
 
 | Package | LOC | Purpose | Test pass rate |
 |---|---|---|---|
-| `@salt-ds/mcp` | ~24k TS (incl. 14k tests) | MCP server, 14 tools, 17 resources | 454/467 pass, 4 fail, 9 skip |
-| `@salt-ds/cli` | ~17k TS (incl. 10k tests) | Workflow CLI mirror + hooks + attestation | 100% of CLI half of joint suite (157/159, 2 skip) |
-| `@salt-ds/semantic-core` | ~22k TS + 24 MB JSON | Retrieval, validation, registry build, policy engine | 292/293 pass, 1 fail |
+| `@salt-ds/mcp` | ~22k TS (incl. 14k tests) | MCP server, 10 tools, 9 resource templates | 441/449 pass, 0 fail, 8 skip |
+| `@salt-ds/cli` | ~12k TS (incl. 8k tests) | Support tooling: doctor, info, init, export-context, hook, verify, runtime inspect, attestation | 100% of CLI half of joint suite |
+| `@salt-ds/semantic-core` | ~22k TS + 24 MB JSON | Retrieval, validation, registry build, policy engine | 1 baseline failure (theme-data drift, out-of-scope) |
 | `@salt-ds/runtime-inspector-core` | ~5k TS | Playwright + fetched-HTML inspection, doctor, install diagnostics | included in CLI/runtime joint run |
 | `@salt-ds/skills` | ~2.2k MD + 568 TS tests | Agent skill (markdown rules) | 27/28 pass, 1 skip |
+
+**14 June** figures were `@salt-ds/mcp` ~24k LOC / 14 tools / 17 resources / 454 pass and `@salt-ds/cli` ~17k LOC / 11 commands. The 15 Jun cleanup pulled the CLI workflow commands out of the CLI half (Phase A) and merged 4 of the 14 MCP tools into 10 (Phase B) — both no-backward-compat removals.
 
 **Test failures observed**:
 
@@ -42,7 +46,7 @@
 
 | Area | Where | Why it's good |
 |---|---|---|
-| **MCP protocol usage** | `packages/mcp/src/server/createServer.ts`, `registerTools.ts` | Thin (25 / 50 LOC). Correct annotations (`readOnlyHint`, `destructiveHint`, `idempotentHint`). All 14 tools declare output schemas. |
+| **MCP protocol usage** | `packages/mcp/src/server/createServer.ts`, `registerTools.ts` | Thin (25 / 50 LOC). Correct annotations (`readOnlyHint`, `destructiveHint`, `idempotentHint`). All 10 tools declare output schemas. |
 | **Publish boundary enforcement** | `packagePublishBoundary.spec.ts` | Tests assert `files: ["bin"]`, that eval fixtures + tests are excluded, that Playwright is NOT a transitive dep. This is the kind of foundation gate "gold standard" actually means. |
 | **Path traversal hardening (MCP)** | `packages/mcp/src/server/toolDefinitions.ts:1144` `resolveWritablePathInsideRoot` | Explicit `isInsideDirectory` guard before every artifact write. All 5 write paths route through it. Clean OWASP A01/A03 posture for MCP-side. |
 | **Lexical retrieval scoring** | `packages/semantic-core/src/tools/createRetrieval.ts:1628` | BM25-variant with owner / supporting / caution roles, weighted source evidence (canonical_name=34, alias=22, when_to_use=16…). Deterministic, debuggable, no LLM dependency. |
@@ -57,9 +61,9 @@
 
 | Area | Where | The issue | Suggested fix |
 |---|---|---|---|
-| **`toolDefinitions.ts` god-file** | `packages/mcp/src/server/toolDefinitions.ts` (2,227 LOC) | 40+ Zod schemas + 14 tool implementations + project-context caching + file I/O all in one module. Painful to evolve a single tool. **Note:** splitting is structural — it redistributes LOC without deleting it. The file does have ~30 over-exports (schemas reused only internally) which were demoted from `export` to module-private 14 Jun; 0 LOC change but reduced public API surface. | Split: `schemas/`, `tools/<one-per-file>.ts`, `projectContextRuntime.ts`, `persistence.ts`. Target ~200 LOC orchestrator. |
+| **`toolDefinitions.ts` god-file** | `packages/mcp/src/server/toolDefinitions.ts` (2,146 LOC) | 40+ Zod schemas + 10 tool implementations + project-context caching + file I/O all in one module. Painful to evolve a single tool. **Note:** splitting is structural — it redistributes LOC without deleting it. The file does have ~30 over-exports (schemas reused only internally) which were demoted from `export` to module-private 14 Jun; 0 LOC change but reduced public API surface. | Split: `schemas/`, `tools/<one-per-file>.ts`, `projectContextRuntime.ts`, `persistence.ts`. Target ~200 LOC orchestrator. |
 | **`context*` file splintering** | 13 files in `packages/semantic-core/src/`: `contextArtifacts.ts`, `contextPatterns.ts`, `contextFoundations.ts`, `contextChecks.ts`, `contextCoverageAudit.ts`, `contextCoverageGapCatalog.ts`, `contextManifest.ts`, `contextMarkdown.ts`, `contextPackBundle.ts`, `contextPackPaths.ts`, `contextPackReleaseGate.ts`, `contextPackSelection.ts`, `contextUnsupportedSurfaces.ts` | The 3 builders (`contextArtifacts` / `contextFoundations` / `contextPatterns` = 2,295 LOC) share boilerplate but **36% of LOC is genuinely per-domain** (Component has `props`/`imports`, Foundation has `tokens`/`policy`, Pattern has `composition`/`accessibility signals`). Verified by structural diff 14 Jun. | **Option A (low risk):** extract shared boilerplate to `contextBuilderShared.ts` → ~100 LOC saved, public API preserved. **Option B (high risk):** full discriminated-union merge → ~1,200 LOC saved but adds runtime branching and complex test matrix. Original "~2,000 LOC deletion" estimate was wrong. |
-| **`projectConventionsWorkflow.ts`** | `packages/cli/src/lib/projectConventionsWorkflow.ts` (was 849 LOC, now 782 LOC) | Imports `composeProjectConventionLayers` / `buildWorkflowProjectPolicyArtifact` from semantic-core, then rewraps. Most wrappers are actually used. 14 Jun audit found exactly one dead adapter (`toWorkflowProjectPolicySummary`, 67 LOC) which has been deleted; remainder is genuine CLI shaping. Further trimming requires inlining direct semantic-core calls at each callsite. | Net achievable further deletion: ~50–150 LOC. Original "delete most of it" claim was wrong — callsites depend on the wrappers. |
+| **`projectConventionsWorkflow.ts`** | ~~`packages/cli/src/lib/projectConventionsWorkflow.ts`~~ | **DELETED 15 Jun (Phase A).** File no longer exists; the CLI workflow commands that depended on its wrappers have been removed. Logic that survived the demotion (used by `hook`, `verify`, `init`) was inlined or moved to direct semantic-core calls. |
 | **`saltInstallation.ts`** | `packages/runtime-inspector-core/src/saltInstallation.ts` (1,330 LOC) | Reimplements: workspace detection, package-manager detection, monorepo BFS, npm/yarn/pnpm/bun shellouts, dedupe suggestions. This is `npm-check`-the-package, in-tree. **Note:** extraction to a sibling package does *not* shrink the repo — the LOC just lives in another `packages/*`. Real LOC savings only come from replacing with `@npmcli/arborist`. | Extract to `@salt-ds/install-doctor` package (zero LOC win, only maintenance separation), or replace 70% by depending on `npm-packlist`/`@npmcli/arborist` (real ~900 LOC delete). |
 | **`publicContract.ts` + `workflowContracts.ts`** | 2,475 + 2,334 LOC respectively | Mostly types and discriminated unions with extensive prose comments documenting semver bumps. | Move historical commentary to a `CHANGELOG.md`. Generate routine type variants table-driven. Realistic shrink: 4,800 → 3,800–4,200 LOC (the prose is ~500–1,000 LOC; the types themselves are needed). |
 | **CLI args parser ad hoc** | `packages/cli/src/lib/args.ts` (221 LOC) | Fine for now, but the flag matrix is getting big (`--full` / `--starter-only` / `--include-starter-code` / `--mode` interactions are implicit). | Don't migrate to citty/yargs unless you add another 3+ commands. But add a `--help` schema test that enumerates every flag's behavior. |
@@ -127,8 +131,8 @@ The phrases live almost entirely in `core.md` (the always-loaded file) plus a si
 
 | Capability | salt-ds | shadcn | v0 | MUI | Chakra | Mantine | Penpot MCP |
 |---|---|---|---|---|---|---|---|
-| MCP server | YES — 14 tools | minimal | NO | unknown skills/ | unknown skills/ | only `.claude` | YES — ~15-20 tools |
-| CLI | YES — 11 commands | YES — `add` only | NO | NO | NO | NO | NO |
+| MCP server | YES — 10 tools | minimal | NO | unknown skills/ | unknown skills/ | only `.claude` | YES — ~15-20 tools |
+| CLI | YES — 7 commands (support-only) | YES — `add` only | NO | NO | NO | NO | NO |
 | Create / generation | YES — adoption-style | copy-paste | YES — prompt-to-code | NO | NO | NO | NO |
 | Review | YES — AST + runtime | NO | NO | NO | NO | NO | NO |
 | Migrate | YES — + visual evidence | NO | NO | NO | NO | NO | NO |
@@ -174,9 +178,9 @@ You asked whether this can be a "foundation AI platform" for teams that lets the
 ### High-ROI simplification (verified deletion budget ~1–1.5k LOC; structural decisions on schemas and god-file splits would unlock additional savings but the 13 Jun "~3–5k LOC" extension was wrong on its premise)
 
 6. **Collapse the 13 `context*.ts` files** in semantic-core. Original "~2,000 LOC deletion" estimate was wrong — 36% of the 3 builders is genuinely per-domain (props vs tokens vs composition). Realistic options: extract shared boilerplate to `contextBuilderShared.ts` (~100 LOC saved, low risk) **or** full discriminated-union merge (~1,200 LOC saved, but adds runtime branching and complex test matrix). Pick one, don't promise the larger number until the merge has actually been prototyped against the test suite.
-7. **Split `packages/mcp/src/server/toolDefinitions.ts`** (2,227 LOC) into per-tool modules + schemas dir + runtime helpers. Enables per-tool tests instead of one monster spec. **Note:** this is *redistribution*, not deletion — don't count it toward LOC reduction. Real reduction here would come from auto-generating the 50+ Zod schemas from a single table, plausibly 200–400 LOC.
-8. **Audit and delete `packages/cli/src/lib/projectConventionsWorkflow.ts`** (now 782 LOC after 14 Jun cleanup). The 67-LOC dead `toWorkflowProjectPolicySummary` has been removed; remaining wrappers are genuinely used. Further trim requires inlining `composeProjectConventionLayers` / `buildWorkflowProjectPolicyArtifact` at each callsite. Realistic further savings: ~50–150 LOC, not the originally implied ~600 LOC.
-9. **Decide on schemas/**: original 13 Jun framing as a "Zod ↔ JSON" duplication was wrong (only 1 of 34 schemas has a Zod twin; the rest are backed by TS interfaces). Realistic options: **(a)** add a parity test using `ts-json-schema-generator` against the interfaces (~50 LOC test, catches drift, no deletes); **(b)** generate JSON from TS interfaces via a build step (~5.5k LOC delete + ~100 LOC script + baseline-snapshot work to preserve published `$id` URLs); **(c)** leave alone. The largest potential LOC win is (b), but it requires a build-toolchain investment and `$id`-stability work; the 13 Jun "~3–5k" number assumed Zod sources existed when they don't.
+7. **Split `packages/mcp/src/server/toolDefinitions.ts`** (2,146 LOC) into per-tool modules + schemas dir + runtime helpers. Enables per-tool tests instead of one monster spec. **Note:** this is *redistribution*, not deletion — don't count it toward LOC reduction. Real reduction here would come from auto-generating the 50+ Zod schemas from a single table, plausibly 200–400 LOC.
+8. ~~**Audit and delete `packages/cli/src/lib/projectConventionsWorkflow.ts`**~~ **✅ DONE 15 Jun (Phase A).** File deleted entirely along with the CLI workflow commands that depended on it.
+9. ~~**Decide on schemas/**~~ **⚠️ PARTIAL 15 Jun.** The schema *header shape* problem (Tier 3 (a)) is closed — every schema now declares an absolute, basename-matching `$id` under a single host, and `publishedSchemaShapeAudit.spec.ts` (~50 LOC, no new deps) catches the regression class. The drift-between-TS-interface-and-JSON-Schema problem is still open. Realistic options unchanged: **(a)** add a `ts-json-schema-generator` parity test against the interfaces (~50 LOC + new devDep); **(b)** generate JSON from TS interfaces via a build step (~5.5k LOC delete + ~100 LOC script + baseline-snapshot work); **(c)** leave alone. The largest LOC win is still (b), but it requires a build-toolchain investment.
 10. **Extract `packages/runtime-inspector-core/src/saltInstallation.ts`** (1,330 LOC). Extraction to a sibling package is ~0 net LOC change; the real win is replacing 70% by depending on `npm-packlist` / `@npmcli/arborist` (~900 LOC delete).
 
 **Verified completed in 14 Jun cleanup pass (~155 net LOC deleted across 8 files, plus 30+ over-exports demoted to module-private):** dead duplicates (`workflowOutputs.ts` Tool types, `projectConventionsWorkflow.ts` dead summary, `args.ts` `parsePositiveInteger`, `common.ts` record helpers, `hookIO.ts` dead exit-code type, duplicate `WorkflowExitCode`, dead `RuntimeInspectOptions` re-export, dead `DEFAULT_CONTEXT_PACK_*` re-export, dead `SaltValidationRuleMatchKind`). All 5 baseline test failures preserved — zero regressions.
@@ -199,7 +203,7 @@ You asked whether this can be a "foundation AI platform" for teams that lets the
 
 ## 8. Bottom line
 
-This is **not a bad foundation** and shipping it would not cause reputational damage on the dimensions that usually do (broken tests, leaky publish boundary, naive injection sinks, hallucinating outputs). It would cause reputational damage if marketed as "AI foundation for teams" against v0/shadcn — because the create-from-prompt experience is structurally slower than competitors. All four code-level ship-critical security items (#1 SSRF, #2 NDJSON cap, #3 conventions-pack disclosure, #4 attestation path traversal, plus the sibling `validateReviewReportFromPath` and `entryPath` fixes) are done; 4 of 5 quarantined tests are closed in-tree (#5 contextCoverageProduction snapshot, parity upgrade-confidence drift, getting-started guide indexing, structured-MDX test loosening). Remaining work is the 1 theme-data quarantined test (owned by the theme team) and the schemas-decision question. Hand the theme-data failure to its owning team, decide on schemas (parity test today, generation later), and you have something worth putting your name on.
+This is **not a bad foundation** and shipping it would not cause reputational damage on the dimensions that usually do (broken tests, leaky publish boundary, naive injection sinks, hallucinating outputs). It would cause reputational damage if marketed as "AI foundation for teams" against v0/shadcn — because the create-from-prompt experience is structurally slower than competitors. **15 June state:** all four code-level ship-critical security items (#1 SSRF, #2 NDJSON cap, #3 conventions-pack disclosure, #4 attestation path traversal, plus the sibling `validateReviewReportFromPath` and `entryPath` fixes) are done; 4 of 5 quarantined tests are closed in-tree; CLI demoted to support-only with MCP as the sole workflow transport (Phase A); MCP tool surface narrowed from 14 → 10 with no backward compatibility (Phase B); all stale CLI-command emissions across the registry rewritten to MCP-tool references (Tier 1+2); schema `$id` consistency fixed and audited (Tier 3); behaviour-level Hard Gate enforcement test added. Remaining work is the 1 theme-data quarantined test (owned by the theme team) and the schemas-to-TS-interface drift question (parity test today, generation later). Hand the theme-data failure to its owning team, decide on schemas, and you have something worth putting your name on.
 
 Specific files I'd touch first if I were on the team Monday:
 
@@ -213,12 +217,12 @@ Specific files I'd touch first if I were on the team Monday:
 
 ## Appendix A: Method
 
-- **Branch diff scope**: `git diff --stat main...HEAD` → 673 files, +172,061 / −1,006 lines.
+- **Branch diff scope**: `git diff --stat main...HEAD` → 648 files, +159,285 / −1,006 lines (15 Jun, post Phase A + Phase B + Tier 1+2+3).
 - **Tests executed**: `yarn vitest run --reporter=dot` against each AI-tooling package separately.
   - `packages/skills` → 27 passed / 1 skipped (1.87 s)
   - `packages/runtime-inspector-core + packages/cli` → 157 passed / 2 skipped (30.17 s)
   - `packages/semantic-core` → 292 passed / 1 failed (1.37 s + setup)
-  - `packages/mcp` → 454 passed / 4 failed / 9 skipped (140.87 s)
+  - `packages/mcp` → 441 passed / 0 failed / 8 skipped (~100 s) [15 Jun, post Phase B + Tier 1+2+3 + new hardGateEnforcement]
 - **Static surveys**: `grep_search` for `eval(`, `Function(`, `spawn(...{shell:true})`, `fetch(`, `page.goto`, `path.resolve` near user input, `..` traversal, `localhost`/loopback/RFC1918, schema duplication, `describe.skip` / `it.skip`.
 - **File reads**: top 20 largest TS files in each new package, plus targeted reads of architecture-critical modules (`createServer`, `registerTools`, `toolDefinitions`, `inspect`, `attestation`, `hookIO`, `policy/detection`, `policy/layerDiagnostics`, `createRetrieval`, `validateSaltUsage*`).
 - **Competitive research**: live web fetches against shadcn, v0, MUI, Chakra, Mantine, Park UI, Penpot MCP, modelcontextprotocol/servers reference set.
@@ -236,13 +240,13 @@ Specific files I'd touch first if I were on the team Monday:
 packages/cli/src/__tests__/cli.spec.ts                     7,141
 packages/mcp/src/__tests__/tools.spec.ts                   4,903
 packages/mcp/src/__tests__/createServer.spec.ts            3,862
-packages/mcp/src/evals/workflowEvalHarness.ts              2,529
+packages/mcp/src/evals/workflowEvalHarness.ts              1,983
 packages/semantic-core/src/build/buildRegistryTokenPolicy  2,483
 packages/semantic-core/src/tools/publicContract.ts         2,475
 packages/semantic-core/src/tools/workflowContracts.ts      2,334
 packages/semantic-core/src/tools/createRetrieval.ts        2,274
 packages/cli/src/__tests__/exportContext.spec.ts           2,250
-packages/mcp/src/server/toolDefinitions.ts                 2,227
+packages/mcp/src/server/toolDefinitions.ts                 2,146
 packages/semantic-core/src/tools/validation/...Helpers     2,223
 packages/mcp/src/__tests__/registry.integration.spec.ts    1,683
 packages/semantic-core/src/build/buildRegistryPatterns.ts  1,600
@@ -254,4 +258,4 @@ packages/runtime-inspector-core/src/saltInstallation.ts    1,330
 packages/semantic-core/src/tools/validateSaltUsage.ts      1,231
 ```
 
-Total across all new AI-tooling source + test code: **~150,206 lines**.
+Total across all new AI-tooling source + test code: **~137,000 lines** (15 Jun, post Phase A + Phase B + Tier 1+2+3 cleanups; was ~150,206 on 13 Jun).
