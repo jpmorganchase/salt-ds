@@ -141,7 +141,7 @@ const STOP_WORDS = new Set<string>([
  * non-alphanumeric boundaries, so `salt_workflow_v1`, `SaltProviderNext`, and
  * `bootstrap-salt-repo` all decompose into their constituent terms.
  */
-export function tokenize(input: string): string[] {
+function tokenize(input: string): string[] {
   if (!input) {
     return [];
   }
@@ -226,7 +226,7 @@ function detectsWriteIntent(promptTokens: Iterable<string>): boolean {
   return false;
 }
 
-export interface ToolRankingEntry {
+interface ToolRankingEntry {
   /** Registered tool name (e.g. `create_salt_ui`). */
   tool: string;
   /** Composite score; higher is better. Useful for debugging weak matches. */
@@ -239,7 +239,7 @@ export interface ToolRankingEntry {
   };
 }
 
-export interface ToolSelectionRanker {
+interface ToolSelectionRanker {
   rank(prompt: string): ToolRankingEntry[];
 }
 

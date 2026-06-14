@@ -20,25 +20,6 @@ import type {
   SourceUiOutlineInput,
 } from "@salt-ds/semantic-core/tools/translation/sourceUiTypes";
 import type { UpgradeSaltUiResult } from "@salt-ds/semantic-core/tools/upgradeSaltUi";
-import type {
-  WorkflowConfidence,
-  WorkflowContextRequirement,
-  WorkflowCreateIdeSummary,
-  WorkflowCreateImplementationGate,
-  WorkflowFixCandidate,
-  WorkflowFixCandidates,
-  WorkflowIntent,
-  WorkflowIssueClass,
-  WorkflowMigrateIdeSummary,
-  WorkflowPostMigrationVerification,
-  WorkflowProjectConventionsCheck,
-  WorkflowProvenance,
-  WorkflowReadiness,
-  WorkflowReviewIdeSummary,
-  WorkflowStarterValidation,
-  WorkflowUpgradeIdeSummary,
-  WorkflowVisualEvidenceContract,
-} from "@salt-ds/semantic-core/tools/workflowContracts";
 import {
   buildCreateSaltUiWorkflowContract,
   buildMigrateToSaltWorkflowContract,
@@ -48,24 +29,6 @@ import {
 import type { WorkflowProjectPolicyArtifact } from "@salt-ds/semantic-core/tools/workflowProjectPolicy";
 import { applyProjectPolicyToStarterCodeSnippets } from "@salt-ds/semantic-core/tools/workflowProjectPolicyApplication";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
-
-export type ToolWorkflowConfidence = WorkflowConfidence;
-export type ToolWorkflowReadiness = WorkflowReadiness;
-export type ToolWorkflowContextRequirement = WorkflowContextRequirement;
-export type ToolFixCandidate = WorkflowFixCandidate;
-export type ToolFixCandidates = WorkflowFixCandidates;
-export type ToolPostMigrationVerification = WorkflowPostMigrationVerification;
-export type ToolVisualEvidenceContract = WorkflowVisualEvidenceContract;
-export type ToolWorkflowIntent = WorkflowIntent;
-export type ToolStarterValidation = WorkflowStarterValidation;
-export type ToolIssueClass = WorkflowIssueClass;
-export type ToolProjectConventionsCheck = WorkflowProjectConventionsCheck;
-export type ToolWorkflowProvenance = WorkflowProvenance;
-export type ToolCreateIdeSummary = WorkflowCreateIdeSummary;
-export type ToolCreateImplementationGate = WorkflowCreateImplementationGate;
-export type ToolMigrateIdeSummary = WorkflowMigrateIdeSummary;
-export type ToolReviewIdeSummary = WorkflowReviewIdeSummary;
-export type ToolUpgradeIdeSummary = WorkflowUpgradeIdeSummary;
 
 const PUBLIC_MCP_WORKFLOWS = new Set([
   "get_salt_project_context",

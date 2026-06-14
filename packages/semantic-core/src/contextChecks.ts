@@ -84,7 +84,7 @@ export interface SaltGeneratedContextHealth {
     | "repair-context-manifest";
 }
 
-export interface BuildGeneratedContextManifestHealthInput {
+interface BuildGeneratedContextManifestHealthInput {
   manifest_path: string;
   manifest: SaltContextPackManifest | null;
   registry: SaltGeneratedArtifactRegistry | null;

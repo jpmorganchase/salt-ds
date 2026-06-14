@@ -247,7 +247,7 @@ function createDetectedTargets(
   });
 }
 
-export interface CollectSaltInfoOptions {
+interface CollectSaltInfoOptions {
   policyDetail?: ProjectPolicyDetailLevel;
   catalogQuery?: string;
   entityName?: string;

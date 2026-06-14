@@ -28,7 +28,7 @@ export function formatProjectPolicyLayers(
   return layers.map((layer) => formatProjectPolicyLayer(layer)).join(", ");
 }
 
-export function formatProjectConventionsTopics(
+function formatProjectConventionsTopics(
   topics: string[],
 ): string | null {
   if (topics.length === 0) {

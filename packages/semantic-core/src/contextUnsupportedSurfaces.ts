@@ -18,7 +18,7 @@ export const SALT_CONTEXT_UNSUPPORTED_SURFACE_CONTRACT =
 
 export type SaltUnsupportedGeneratedSurfaceKind = "prompt" | "instruction";
 
-export interface UnsupportedGeneratedContextSurfaceDescriptor {
+interface UnsupportedGeneratedContextSurfaceDescriptor {
   kind: SaltUnsupportedGeneratedSurfaceKind;
   id: string;
   name: string;

@@ -25,33 +25,3 @@ export async function pathExists(targetPath: string): Promise<boolean> {
     return false;
   }
 }
-
-export function getStringRecordField(
-  record: Record<string, unknown> | null | undefined,
-  field: string,
-): string | null {
-  if (!record) {
-    return null;
-  }
-
-  const value = record[field];
-  return typeof value === "string" && value.trim().length > 0 ? value : null;
-}
-
-export function getNestedStringRecordField(
-  record: Record<string, unknown> | null | undefined,
-  first: string,
-  second: string,
-): string | null {
-  if (!record) {
-    return null;
-  }
-
-  const nested = record[first];
-  if (!nested || typeof nested !== "object" || Array.isArray(nested)) {
-    return null;
-  }
-
-  const value = (nested as Record<string, unknown>)[second];
-  return typeof value === "string" && value.trim().length > 0 ? value : null;
-}

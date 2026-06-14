@@ -17,7 +17,7 @@ export function normalizeVersion(
   return match?.[0] ?? null;
 }
 
-export function workflowStatusToExitCode(
+function workflowStatusToExitCode(
   workflowStatus: PublicWorkflowStatus,
 ): WorkflowExitCode {
   switch (workflowStatus) {

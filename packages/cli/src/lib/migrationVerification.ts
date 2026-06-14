@@ -3,7 +3,7 @@ import path from "node:path";
 import type { RuntimeInspectResult } from "@salt-ds/runtime-inspector-core";
 import type { LintCommandResult } from "../types.js";
 
-export interface MigrationVerificationContract {
+interface MigrationVerificationContract {
   sourceChecks: string[];
   runtimeChecks: string[];
   preserveChecks: string[];
@@ -12,7 +12,7 @@ export interface MigrationVerificationContract {
   suggestedCommand: string;
 }
 
-export interface LoadedMigrationVerificationContract {
+interface LoadedMigrationVerificationContract {
   reportPath: string;
   contract: MigrationVerificationContract;
 }

@@ -16,7 +16,7 @@ import {
   toSaltProjectContextResult,
 } from "./projectContext.js";
 
-export interface BootstrapSaltRepoResult {
+interface BootstrapSaltRepoResult {
   workflow: {
     id: "bootstrap_salt_repo";
   };
