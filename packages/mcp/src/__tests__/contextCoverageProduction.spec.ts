@@ -93,18 +93,26 @@ describe("production context coverage audit", () => {
         audit.docs_registry_gaps.length === 0 ? "validated" : "unsupported",
       );
       expect(catalog.counts).toEqual({
-        total: 3,
-        component: 0,
+        total: 4,
+        component: 1,
         pattern: 0,
         foundation: 3,
       });
       expect(catalog.gaps.map((gap) => gap.id)).toEqual([
+        "component.saltprovidernext",
         "tokens.measured",
         "tokens.opacity",
         "tokens.track",
       ]);
-      for (const gap of catalog.gaps) {
-        expect(gap.kind).toBe("foundation");
+      const foundationGaps = catalog.gaps.filter(
+        (gap) => gap.kind === "foundation",
+      );
+      expect(foundationGaps.map((gap) => gap.id)).toEqual([
+        "tokens.measured",
+        "tokens.opacity",
+        "tokens.track",
+      ]);
+      for (const gap of foundationGaps) {
         expect(gap.resolution).toBe(
           "keep_unsupported_until_source_evidence_exists",
         );
@@ -120,6 +128,21 @@ describe("production context coverage audit", () => {
             expect.arrayContaining(["token policy"]),
           );
         }
+      }
+      // SaltProviderNext is a registered transitional component that has not
+      // yet been backed by source-derived evidence (lookup-only entity for
+      // theme-question grounding). Track it explicitly so we notice if either
+      // (a) coverage is added, in which case the gap should disappear and this
+      // assertion should be removed, or (b) a different component slips in
+      // without source evidence, in which case this assertion will catch it.
+      const componentGaps = catalog.gaps.filter(
+        (gap) => gap.kind === "component",
+      );
+      expect(componentGaps.map((gap) => gap.id)).toEqual([
+        "component.saltprovidernext",
+      ]);
+      for (const gap of componentGaps) {
+        expect(gap.cause_codes).toEqual(["missing_optional_evidence"]);
       }
 
       for (const gap of audit.docs_registry_gaps) {
