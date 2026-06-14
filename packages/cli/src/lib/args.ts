@@ -196,17 +196,6 @@ export function printHelp(
   return 0;
 }
 
-export function parsePositiveInteger(
-  rawValue: string | undefined,
-): number | undefined {
-  if (!rawValue) {
-    return undefined;
-  }
-
-  const value = Number(rawValue);
-  return Number.isInteger(value) && value > 0 ? value : undefined;
-}
-
 export function readRepeatableFlagValues(
   rawValue: string | undefined,
 ): string[] {

@@ -17,7 +17,7 @@ import {
 } from "../../../../lib/registry.js";
 import type { LintCommandResult, RequiredCliIo } from "../../../../types.js";
 
-export const HOOK_LINTABLE_EXTENSIONS = new Set([
+const HOOK_LINTABLE_EXTENSIONS = new Set([
   ".js",
   ".jsx",
   ".ts",
@@ -28,13 +28,13 @@ export const HOOK_LINTABLE_EXTENSIONS = new Set([
   ".cts",
 ]);
 
-export const SALT_PACKAGE_IMPORT_NEEDLE = "@salt-ds/";
+const SALT_PACKAGE_IMPORT_NEEDLE = "@salt-ds/";
 
-export function isLikelyLintableExtension(filePath: string): boolean {
+function isLikelyLintableExtension(filePath: string): boolean {
   return HOOK_LINTABLE_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
 
-export async function fileContainsSaltImport(
+async function fileContainsSaltImport(
   filePath: string,
 ): Promise<boolean> {
   try {
@@ -45,7 +45,7 @@ export async function fileContainsSaltImport(
   }
 }
 
-export interface ReviewHookPolicyRule {
+interface ReviewHookPolicyRule {
   kind?: string;
   reason?: string;
   scope?: string;
@@ -99,7 +99,7 @@ export async function readReviewHookPolicyRules(
   return rules;
 }
 
-export function matchesReviewHookRule(
+function matchesReviewHookRule(
   rule: ReviewHookPolicyRule,
   paths: string[],
   toolName: string | null,
@@ -120,7 +120,7 @@ export function matchesReviewHookRule(
   return paths.some((candidate) => candidate.includes(rule.scope as string));
 }
 
-export function describeMatchedRule(
+function describeMatchedRule(
   rule: ReviewHookPolicyRule,
   matchedPaths: string[],
 ): string {
@@ -243,14 +243,14 @@ export function applyRequireHumanReviewPolicyFindings(
   };
 }
 
-export interface ReviewHookBlockingFinding {
+interface ReviewHookBlockingFinding {
   path: string;
   message: string;
   severity: ValidationSeverity;
   ruleId?: string;
 }
 
-export function summarizeReviewHookBlockingFindings(
+function summarizeReviewHookBlockingFindings(
   sourceValidation: LintCommandResult,
 ): ReviewHookBlockingFinding[] {
   const findings: ReviewHookBlockingFinding[] = [];
@@ -282,7 +282,7 @@ export function summarizeReviewHookBlockingFindings(
   return findings;
 }
 
-export function formatReviewHookBlockingReason(
+function formatReviewHookBlockingReason(
   findings: ReviewHookBlockingFinding[],
 ): string {
   const header =
@@ -302,7 +302,7 @@ export function formatReviewHookBlockingReason(
   return [header, ...body, ...trailer].join("\n");
 }
 
-export async function resolveReviewHookFilePaths(
+async function resolveReviewHookFilePaths(
   hookInput: HookInput,
   io: RequiredCliIo,
 ): Promise<string[]> {
@@ -323,7 +323,7 @@ export async function resolveReviewHookFilePaths(
   return resolved;
 }
 
-export async function runReviewHookPostToolUse(
+async function runReviewHookPostToolUse(
   hookInput: HookInput,
   flags: Record<string, string>,
   io: RequiredCliIo,
@@ -393,7 +393,7 @@ export async function runReviewHookPostToolUse(
   }
 }
 
-export async function runReviewHookPreToolUse(
+async function runReviewHookPreToolUse(
   hookInput: HookInput,
   io: RequiredCliIo,
 ): Promise<number> {

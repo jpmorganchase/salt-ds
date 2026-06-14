@@ -1,6 +1,6 @@
 import type { PublicSuggestedFollowUp } from "./types.js";
 
-export const PUBLIC_CLI_FOLLOW_UP_WORKFLOWS = new Set([
+const PUBLIC_CLI_FOLLOW_UP_WORKFLOWS = new Set([
   "info",
   "create",
   "review",
@@ -8,7 +8,7 @@ export const PUBLIC_CLI_FOLLOW_UP_WORKFLOWS = new Set([
   "upgrade",
 ]);
 
-export function toPublicCliWorkflowId(workflow: string): string | null {
+function toPublicCliWorkflowId(workflow: string): string | null {
   switch (workflow) {
     case "get_salt_project_context":
       return "info";

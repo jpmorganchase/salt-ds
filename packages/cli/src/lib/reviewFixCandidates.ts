@@ -3,7 +3,7 @@ import { buildProjectPolicyReviewGuidanceCandidates } from "@salt-ds/semantic-co
 import { deriveReviewRuleId } from "@salt-ds/semantic-core/tools/workflowRuleIds";
 import type { LintCommandResult } from "../types.js";
 
-export interface ReviewFixCandidate {
+interface ReviewFixCandidate {
   candidateType: "migration" | "guided_fix";
   safety: "deterministic" | "manual_review";
   kind: string | null;

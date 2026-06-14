@@ -3,7 +3,7 @@ import path from "node:path";
 import { pathExists } from "../../lib/common.js";
 import { toPosix } from "./utils.js";
 
-export interface EnsureUiVerifyResult {
+interface EnsureUiVerifyResult {
   action:
     | "created"
     | "unchanged"

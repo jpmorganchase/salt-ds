@@ -329,5 +329,3 @@ export interface UpgradeWorkflowResult {
     notes: string[];
   };
 }
-
-export type WorkflowExitCode = 0 | 10 | 20 | 30;

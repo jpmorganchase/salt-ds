@@ -44,7 +44,7 @@ function getSaltCliPackageManifest(): SaltCliPackageManifest {
   return cachedPackageManifest;
 }
 
-export interface SaltCliRuntimeMetadata {
+interface SaltCliRuntimeMetadata {
   package_name: string;
   cli_version: string;
 }

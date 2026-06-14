@@ -13,15 +13,13 @@ import type { SaltRegistry } from "./types.js";
 export const SALT_VALIDATION_RULE_PACK_CONTRACT =
   "salt_validation_rule_pack_v1" as const;
 
-export type SaltValidationRuleMatchKind = "component_jsx_attribute";
-
-export interface SaltValidationRuleComponentJsxAttributeMatch {
+interface SaltValidationRuleComponentJsxAttributeMatch {
   kind: "component_jsx_attribute";
   component_id: string;
   attribute_names: string[];
 }
 
-export type SaltValidationRuleMatch =
+type SaltValidationRuleMatch =
   SaltValidationRuleComponentJsxAttributeMatch;
 
 export interface SaltValidationRuleRecord {
@@ -59,7 +57,7 @@ export interface SaltValidationRulePack {
   rules: SaltValidationRuleRecord[];
 }
 
-export type SaltValidationRulePackIssueCode =
+type SaltValidationRulePackIssueCode =
   | "invalid_rule_pack_contract"
   | "missing_rule_evidence"
   | "invalid_rule_evidence_ref"
@@ -68,13 +66,13 @@ export type SaltValidationRulePackIssueCode =
   | "unknown_component_match_attribute"
   | "unknown_component_match_target";
 
-export interface SaltValidationRulePackIssue {
+interface SaltValidationRulePackIssue {
   code: SaltValidationRulePackIssueCode;
   message: string;
   path: string;
 }
 
-export interface BuildValidationIssueFromRuleInput {
+interface BuildValidationIssueFromRuleInput {
   rule: SaltValidationRuleRecord;
   matches: number;
   evidence: string[];

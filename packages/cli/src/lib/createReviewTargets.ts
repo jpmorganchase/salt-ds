@@ -8,7 +8,7 @@ import type {
 import type { ReviewExpectedTargets } from "@salt-ds/semantic-core/tools/reviewSaltUi";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 
-export interface LoadedCreateReviewTargets {
+interface LoadedCreateReviewTargets {
   reportPath: string;
   expectedTargets: ReviewExpectedTargets;
 }

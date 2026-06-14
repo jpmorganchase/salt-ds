@@ -62,7 +62,7 @@ export interface SaltContextPatternResource {
   evidence_ref_ids: string[];
 }
 
-export interface SaltContextPatternAccessibilitySignal {
+interface SaltContextPatternAccessibilitySignal {
   kind: NonNullable<
     PatternRecord["accessibility"]["implementation_signals"]
   >[number]["kind"];

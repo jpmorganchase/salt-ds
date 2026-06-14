@@ -249,8 +249,6 @@ export function formatHookOutput(output: HookOutput): string {
   return `${JSON.stringify(output)}\n`;
 }
 
-export type HookExitCode = 0 | 1 | 2;
-
 /**
  * Blocking response: write `reason` to stderr (with trailing newline if missing)
  * and return exit code 2. The hook host surfaces stderr to the agent in-loop.

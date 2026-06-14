@@ -7,7 +7,7 @@ export type SaltAiSetupStepStatus =
   | "current"
   | "action_required"
   | "unsupported";
-export type SaltAiSetupCompatibilityStatus =
+type SaltAiSetupCompatibilityStatus =
   | "compatible"
   | "degraded"
   | "unsupported";
@@ -32,7 +32,7 @@ export interface SaltAiSetupStep {
   missing: string[];
 }
 
-export interface SaltAiSetupCompatibilityCheck {
+interface SaltAiSetupCompatibilityCheck {
   id: SaltAiSetupStep["id"];
   status: SaltAiSetupCompatibilityStatus;
   evidence_source: SaltAiSetupStep["evidence_source"];

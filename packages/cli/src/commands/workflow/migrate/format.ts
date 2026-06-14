@@ -89,7 +89,7 @@ export function formatMigrateReport(
   return `${lines.join("\n")}\n`;
 }
 
-export function summarizeRoleSummary(entry: {
+function summarizeRoleSummary(entry: {
   role: string;
   name: string;
   count?: number;

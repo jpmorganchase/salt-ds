@@ -10,7 +10,7 @@ import type {
 } from "@salt-ds/semantic-core/tools/translation/sourceUiTypes";
 
 export const MIGRATE_VISUAL_ADAPTER_ENV_VAR = "SALT_DS_MIGRATE_VISUAL_ADAPTER";
-export const MIGRATE_VISUAL_ADAPTER_CONTRACT = "migrate_visual_evidence_v1";
+const MIGRATE_VISUAL_ADAPTER_CONTRACT = "migrate_visual_evidence_v1";
 
 interface VisualEvidenceAdapterConfig {
   command: string;
@@ -545,7 +545,7 @@ function toLoadedVisualEvidenceInput(
   };
 }
 
-export function mergeSourceOutlineInputs(
+function mergeSourceOutlineInputs(
   outlines: Array<SourceUiOutlineInput | null | undefined>,
 ): ResolvedSourceOutline | null {
   const mergedOutline: SourceUiOutlineInput = {
@@ -566,7 +566,7 @@ export function mergeSourceOutlineInputs(
   };
 }
 
-export async function loadSourceOutlineFile(
+async function loadSourceOutlineFile(
   rootDir: string,
   sourceOutlinePath: string,
 ): Promise<LoadedSourceOutline> {

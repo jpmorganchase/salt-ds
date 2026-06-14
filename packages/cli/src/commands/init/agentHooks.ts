@@ -7,7 +7,7 @@ import {
 import { pathExists } from "../../lib/common.js";
 import { toPosix } from "./utils.js";
 
-export interface EnsureSaltAgentHooksResult {
+interface EnsureSaltAgentHooksResult {
   action: "created" | "updated" | "unchanged";
   path: string;
 }

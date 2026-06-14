@@ -16,8 +16,6 @@ import type {
   RuntimeInspectResult,
 } from "./schemas.js";
 
-export type { RuntimeInspectOptions } from "./inspectShared.js";
-
 const PLAYWRIGHT_INSTALL_HINT =
   "Browser-session inspection requires the optional `playwright` peer dependency. Install it with `npm install playwright` (or `yarn add playwright`) and rerun, or use `--mode fetched-html`.";
 

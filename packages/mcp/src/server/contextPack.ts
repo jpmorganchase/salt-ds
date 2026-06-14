@@ -403,5 +403,3 @@ export function buildMcpFileContextPack(input: {
     },
   });
 }
-
-export { DEFAULT_CONTEXT_PACK_MANIFEST_PATH, DEFAULT_CONTEXT_PACK_OUTPUT_DIR };
