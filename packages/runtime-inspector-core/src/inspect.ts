@@ -4,6 +4,7 @@ import {
   createUnavailableLayoutEvidence,
   getErrorMessage,
   type RuntimeInspectOptions,
+  safeFetchWithTimeout,
   summarizeHtmlDocument,
 } from "./inspectShared.js";
 import type {
@@ -14,26 +15,12 @@ import type {
 
 export type { RuntimeInspectOptions } from "./inspectShared.js";
 
-async function fetchWithTimeout(
-  url: string,
-  timeoutMs: number,
-): Promise<Response> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    return await fetch(url, { signal: controller.signal });
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
 async function inspectFetchedHtml(
   url: string,
   options: RuntimeInspectOptions,
   notes: string[] = [],
 ): Promise<RuntimeInspectResult> {
-  const response = await fetchWithTimeout(url, options.timeoutMs ?? 10_000);
+  const response = await safeFetchWithTimeout(url, options.timeoutMs ?? 10_000);
   const html = await response.text();
   const summarized = summarizeHtmlDocument(html);
   const errors: RuntimeErrorRecord[] = [];

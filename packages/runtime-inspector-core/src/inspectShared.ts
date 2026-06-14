@@ -32,7 +32,7 @@ export interface BrowserLayoutPage {
   evaluate<T>(pageFunction: () => T): Promise<T>;
 }
 
-export const LANDMARK_ROLES: ReadonlySet<string> = new Set([
+const LANDMARK_ROLES: ReadonlySet<string> = new Set([
   "banner",
   "complementary",
   "contentinfo",
@@ -51,11 +51,11 @@ export const DEFAULT_VIEWPORT = {
 export const FETCHED_HTML_LAYOUT_HINT =
   "Computed layout evidence is unavailable in fetched-html mode. Use browser-session inspection for bounding boxes, computed styles, and flex/grid ancestry.";
 
-export function normalizeText(value: string | null | undefined): string {
+function normalizeText(value: string | null | undefined): string {
   return value?.replace(/\s+/g, " ").trim() ?? "";
 }
 
-export function inferImplicitRole(element: Element): string | null {
+function inferImplicitRole(element: Element): string | null {
   const tagName = element.tagName.toLowerCase();
 
   switch (tagName) {
@@ -106,7 +106,7 @@ export function inferImplicitRole(element: Element): string | null {
   }
 }
 
-export function getElementRole(element: Element): string | null {
+function getElementRole(element: Element): string | null {
   const explicitRole = normalizeText(element.getAttribute("role"));
   if (explicitRole) {
     return explicitRole.split(/\s+/)[0] ?? null;
@@ -115,7 +115,7 @@ export function getElementRole(element: Element): string | null {
   return inferImplicitRole(element);
 }
 
-export function getElementName(element: Element): string {
+function getElementName(element: Element): string {
   try {
     return normalizeText(computeAccessibleName(element));
   } catch {
@@ -123,7 +123,7 @@ export function getElementName(element: Element): string {
   }
 }
 
-export function summarizeRoles(elements: Element[]): {
+function summarizeRoles(elements: Element[]): {
   roles: RoleSummary[];
   landmarks: RoleSummary[];
 } {
@@ -169,11 +169,11 @@ export function summarizeRoles(elements: Element[]): {
   };
 }
 
-export function formatStructureToken(element: Element): string {
+function formatStructureToken(element: Element): string {
   return getElementRole(element) ?? element.tagName.toLowerCase();
 }
 
-export function summarizeStructure(document: Document): string[] {
+function summarizeStructure(document: Document): string[] {
   const interestingSelectors = [
     "main",
     "nav",
@@ -214,7 +214,7 @@ export function summarizeStructure(document: Document): string[] {
   return [...summaries];
 }
 
-export interface SummarizedDocument {
+interface SummarizedDocument {
   title: string;
   roles: RoleSummary[];
   landmarks: RoleSummary[];
@@ -260,6 +260,116 @@ export function getErrorMessage(error: unknown): string {
   }
 
   return typeof error === "string" ? error : "Unknown runtime inspection error";
+}
+
+/**
+ * Options for {@link assertFetchableUrl} and {@link safeFetchWithTimeout}.
+ */
+export interface FetchableUrlOptions {
+  /**
+   * When `true`, block http(s) URLs targeting loopback or RFC 1918 / RFC 4193
+   * private ranges. Defaults to `false` because `runtime-inspector-core` is a
+   * dev-tool library where inspecting `http://localhost:3000` is the common
+   * case. Hosts embedding this library behind an untrusted boundary (e.g. a
+   * service that accepts URLs from anonymous users) should pass `true` to
+   * harden against SSRF.
+   */
+  blockLoopback?: boolean;
+}
+
+/**
+ * Validates a URL is safe for outbound fetching against an SSRF threat model.
+ *
+ * Always blocked (no legitimate dev-tool use case):
+ * - Non-http(s) schemes (`file:`, `gopher:`, `ftp:`, ...) — protocol confusion
+ *   and arbitrary local-file reads.
+ * - Cloud metadata endpoints (`169.254.169.254`, `metadata.google.internal`,
+ *   `metadata.goog`) — credential exfiltration via IMDS.
+ *
+ * Optionally blocked when `blockLoopback: true`:
+ * - Loopback (`localhost`, `127.0.0.0/8`, `::1`).
+ * - RFC 1918 / RFC 4193 / IPv6 link-local ranges.
+ *
+ * Throws a descriptive `Error` when the URL is unsafe so callers can surface
+ * the failure to the agent/user instead of silently issuing the request.
+ */
+export function assertFetchableUrl(
+  rawUrl: string,
+  options: FetchableUrlOptions = {},
+): URL {
+  const parsed = new URL(rawUrl);
+
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new Error(
+      `Only http: and https: URLs are allowed; received ${parsed.protocol}`,
+    );
+  }
+
+  const hostname = parsed.hostname.toLowerCase();
+
+  // Always block cloud instance metadata endpoints — no dev-tool needs these
+  // and they are a common SSRF exfiltration target.
+  if (
+    /^169\.254\./.test(hostname) ||
+    hostname === "metadata.google.internal" ||
+    hostname === "metadata.goog"
+  ) {
+    throw new Error(
+      `URL hostname '${hostname}' targets a cloud metadata endpoint and is blocked`,
+    );
+  }
+
+  if (options.blockLoopback) {
+    if (
+      hostname === "localhost" ||
+      hostname.endsWith(".localhost") ||
+      /^127\./.test(hostname) ||
+      /^0\./.test(hostname) ||
+      /^10\./.test(hostname) ||
+      /^192\.168\./.test(hostname) ||
+      /^172\.(1[6-9]|2\d|3[01])\./.test(hostname) ||
+      hostname === "[::1]" ||
+      hostname === "::1" ||
+      hostname === "[::]" ||
+      hostname === "::" ||
+      /^\[?fe80:/i.test(hostname) ||
+      /^\[?fc00:/i.test(hostname) ||
+      /^\[?fd[0-9a-f]{2}:/i.test(hostname)
+    ) {
+      throw new Error(
+        `URL hostname '${hostname}' resolves to a loopback or private IP range`,
+      );
+    }
+  }
+
+  return parsed;
+}
+
+/**
+ * Fetches a URL with a timeout and SSRF guard. Use this instead of `fetch()`
+ * whenever the URL is influenced by user/agent input.
+ *
+ * `redirect: "manual"` prevents the upstream service from re-targeting the
+ * request at a blocked host after the initial validation succeeds.
+ */
+export async function safeFetchWithTimeout(
+  url: string,
+  timeoutMs: number,
+  options: FetchableUrlOptions = {},
+): Promise<Response> {
+  assertFetchableUrl(url, options);
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      signal: controller.signal,
+      redirect: "manual",
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 export function sanitizeArtifactStem(url: string): string {

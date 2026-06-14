@@ -15,7 +15,7 @@ const REGISTRY_HASH_ALG = "sha256-of-version-and-generated-at";
  * Compute a stable SHA-256 hash of a file's contents. Returned as the lowercase
  * hex digest. Caller passes an absolute path.
  */
-export async function hashFileContents(absolutePath: string): Promise<string> {
+async function hashFileContents(absolutePath: string): Promise<string> {
   const buffer = await fs.readFile(absolutePath);
   return createHash("sha256").update(buffer).digest("hex");
 }
@@ -27,7 +27,7 @@ export async function hashFileContents(absolutePath: string): Promise<string> {
  * `hash_alg` field tells the verifier what algorithm was used so consumers
  * can upgrade independently.
  */
-export function hashRegistryIdentity(input: {
+function hashRegistryIdentity(input: {
   version: string;
   generatedAt: string;
 }): string {
@@ -41,11 +41,11 @@ export function hashRegistryIdentity(input: {
  * consumers that already have a trace id (e.g. from their host editor) can
  * pass it through their own pipeline.
  */
-export function generateTraceId(): string {
+function generateTraceId(): string {
   return `trace_${randomBytes(8).toString("hex")}`;
 }
 
-export interface BuildAttestationInput {
+interface BuildAttestationInput {
   /** Repository root used to compute file paths relative to. */
   cwd: string;
   /** Registry version (`SaltRegistry.version`). */
@@ -103,7 +103,7 @@ export async function buildAttestation(
   };
 }
 
-export interface VerifyAttestationInput {
+interface VerifyAttestationInput {
   cwd: string;
   attestation: SaltAttestationV1;
 }
@@ -112,10 +112,10 @@ export interface VerifyAttestationDrift {
   path: string;
   expectedHash: string;
   actualHash: string | null;
-  reason: "modified" | "missing" | "unsupported-alg";
+  reason: "modified" | "missing" | "unsupported-alg" | "path-escape";
 }
 
-export interface VerifyAttestationResult {
+interface VerifyAttestationResult {
   ok: boolean;
   drift: VerifyAttestationDrift[];
 }
@@ -131,6 +131,7 @@ export async function verifyAttestation(
   input: VerifyAttestationInput,
 ): Promise<VerifyAttestationResult> {
   const drift: VerifyAttestationDrift[] = [];
+  const cwdResolved = path.resolve(input.cwd);
   for (const entry of input.attestation.files_touched) {
     if (entry.hash_alg !== FILE_HASH_ALG) {
       drift.push({
@@ -141,7 +142,25 @@ export async function verifyAttestation(
       });
       continue;
     }
-    const absolutePath = path.resolve(input.cwd, entry.path);
+    const absolutePath = path.resolve(cwdResolved, entry.path);
+    // Defence-in-depth: an attestation NDJSON line is attacker-influenceable
+    // (it can come from a git note, a piped audit log, or any file path the
+    // verifier was pointed at). If an entry path escapes the verifier's cwd,
+    // surface it as drift so the verifier never reads or reports on files
+    // outside the workspace.
+    const relativeToCwd = path.relative(cwdResolved, absolutePath);
+    if (
+      relativeToCwd.length > 0 &&
+      (relativeToCwd.startsWith("..") || path.isAbsolute(relativeToCwd))
+    ) {
+      drift.push({
+        path: entry.path,
+        expectedHash: entry.hash,
+        actualHash: null,
+        reason: "path-escape",
+      });
+      continue;
+    }
     let actualHash: string;
     try {
       actualHash = await hashFileContents(absolutePath);
