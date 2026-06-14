@@ -4,6 +4,7 @@ import path from "node:path";
 import { detectProjectPolicy } from "@salt-ds/semantic-core/policy/detection";
 import { deriveComparableSaltVersion } from "@salt-ds/semantic-core/policy/layerDiagnostics";
 import { detectLocalRuntimeTargets } from "./runtimeTargets.js";
+import { safeFetchWithTimeout } from "./inspectShared.js";
 import {
   collectSaltInstallationDiagnostics as collectSaltInstallationDiagnosticsFromHelper,
   collectSaltPackages as collectSaltPackagesFromHelper,
@@ -67,23 +68,6 @@ async function pathExists(targetPath: string): Promise<boolean> {
     return true;
   } catch {
     return false;
-  }
-}
-
-async function fetchWithTimeout(
-  url: string,
-  timeoutMs: number,
-): Promise<Response> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    return await fetch(url, {
-      signal: controller.signal,
-      redirect: "follow",
-    });
-  } finally {
-    clearTimeout(timeout);
   }
 }
 
@@ -231,7 +215,7 @@ async function checkRuntimeTarget(
   timeoutMs: number,
 ): Promise<DoctorRuntimeTarget> {
   try {
-    const response = await fetchWithTimeout(target.url, timeoutMs);
+    const response = await safeFetchWithTimeout(target.url, timeoutMs);
     return {
       ...target,
       reachable: response.ok,

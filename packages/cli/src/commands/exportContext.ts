@@ -95,8 +95,20 @@ function resolveContextComponent(
     : null;
 }
 
-async function readJsonFile(filePath: string): Promise<unknown> {
-  return JSON.parse(await fs.readFile(filePath, "utf8")) as unknown;
+async function readJsonFile(
+  filePath: string,
+  maxBytes = 10_000_000,
+): Promise<unknown> {
+  // Hard-cap JSON payload size so a path-traversal exploit or a corrupted
+  // upstream artifact can't trigger an unbounded read / parse.
+  const stats = await fs.stat(filePath);
+  if (stats.size > maxBytes) {
+    throw new Error(
+      `JSON file '${filePath}' is ${stats.size} bytes; exceeds limit of ${maxBytes}.`,
+    );
+  }
+  const text = await fs.readFile(filePath, "utf8");
+  return JSON.parse(text) as unknown;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -160,9 +172,24 @@ function releaseGateCoverageGap(input: {
 }
 
 function entryPath(input: { rootDir: string; outputPath: string }): string {
-  return path.isAbsolute(input.outputPath)
+  const resolved = path.isAbsolute(input.outputPath)
     ? input.outputPath
     : path.resolve(input.rootDir, input.outputPath);
+
+  // Reject manifest entries that escape rootDir via absolute paths or `..`
+  // segments. Without this guard a hostile manifest could coerce the CLI into
+  // reading or writing arbitrary files on disk.
+  const relative = path.relative(input.rootDir, resolved);
+  if (
+    relative.length > 0 &&
+    (relative.startsWith("..") || path.isAbsolute(relative))
+  ) {
+    throw new Error(
+      `Manifest output_path '${input.outputPath}' resolves outside rootDir '${input.rootDir}'.`,
+    );
+  }
+
+  return resolved;
 }
 
 async function validateComponentMarkdownEntry(input: {

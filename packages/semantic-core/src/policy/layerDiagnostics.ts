@@ -327,6 +327,39 @@ export async function resolveProjectConventionsPackageLayer(input: {
   currentSaltVersion: string | null;
   optional?: boolean;
 }): Promise<ProjectConventionsLayerResolution> {
+  /**
+   * SECURITY MODEL — dynamic code execution by design.
+   *
+   * Resolving a shared-conventions package layer means importing a JS module
+   * that the project owner listed in `.salt/stack.json`. We use Node's
+   * `require.resolve` against `input.rootDir` and then `await import(...)`
+   * / `require(...)` the resolved entry point so the host project can ship
+   * conventions as code (with computed allowlists, dynamic policy
+   * composition, etc.).
+   *
+   * This means **any conventions pack listed in `.salt/stack.json` runs
+   * arbitrary code in the developer's process** at policy-resolution time.
+   * The trust boundary is the same as the project's `package.json`
+   * dependencies: if the developer trusts the package enough to install
+   * it from npm, they are trusting it enough to execute its conventions
+   * entry point. There is no sandbox.
+   *
+   * Mitigations:
+   * - We only resolve packages that the host project has already declared
+   *   in its dependency graph (`require.resolve(..., { paths: [rootDir] })`
+   *   never reaches outside the project root's node_modules chain).
+   * - Pack consumers who cannot accept this trade-off should ship a
+   *   JSON-only conventions pack (parse a `.json` payload from the package
+   *   via `resolveProjectConventionsFileLayer` instead of the package
+   *   layer).
+   * - Hosts that want defence in depth can pin shared-conventions packs to
+   *   exact versions and use a private registry with provenance attestations.
+   *
+   * Salt does not — and will not — execute conventions packs from sources
+   * outside the host project's installed dependency graph (e.g. arbitrary
+   * filesystem paths supplied by the MCP agent). If that ever changes, this
+   * function and its callers must add an explicit per-source allowlist.
+   */
   const descriptor = input.exportName
     ? `${input.specifier}#${input.exportName}`
     : input.specifier;

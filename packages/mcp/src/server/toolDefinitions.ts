@@ -39,7 +39,7 @@ import {
   withTranslateWorkflowGuidance,
 } from "./workflowOutputs.js";
 
-export const SEARCH_AREAS = [
+const SEARCH_AREAS = [
   "all",
   "packages",
   "components",
@@ -53,16 +53,16 @@ export const SEARCH_AREAS = [
   "examples",
   "changes",
 ] as const;
-export const STATUSES = ["stable", "beta", "lab", "deprecated"] as const;
-export const VIEWS = ["compact", "full"] as const;
-export const CHANGE_KINDS = [
+const STATUSES = ["stable", "beta", "lab", "deprecated"] as const;
+const VIEWS = ["compact", "full"] as const;
+const CHANGE_KINDS = [
   "added",
   "changed",
   "fixed",
   "deprecated",
   "removed",
 ] as const;
-export const INCLUDE_SECTIONS = [
+const INCLUDE_SECTIONS = [
   "examples",
   "props",
   "tokens",
@@ -70,7 +70,7 @@ export const INCLUDE_SECTIONS = [
   "deprecations",
   "changes",
 ] as const;
-export const PUBLIC_WORKFLOW_TOOL_IDS = [
+const PUBLIC_WORKFLOW_TOOL_IDS = [
   "get_salt_project_context",
   "bootstrap_salt_repo",
   "create_salt_ui",
@@ -78,22 +78,22 @@ export const PUBLIC_WORKFLOW_TOOL_IDS = [
   "migrate_to_salt",
   "upgrade_salt_ui",
 ] as const;
-export const CONTEXT_NEXT_TOOL_IDS = [
+const CONTEXT_NEXT_TOOL_IDS = [
   "create_salt_ui",
   "review_salt_ui",
   "migrate_to_salt",
   "upgrade_salt_ui",
 ] as const;
-export const UNKNOWN_RECORD_SCHEMA = z.record(z.string(), z.unknown());
-export const UNKNOWN_RECORD_ARRAY_SCHEMA = z.array(UNKNOWN_RECORD_SCHEMA);
-export const READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS = {
+const UNKNOWN_RECORD_SCHEMA = z.record(z.string(), z.unknown());
+const UNKNOWN_RECORD_ARRAY_SCHEMA = z.array(UNKNOWN_RECORD_SCHEMA);
+const READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS = {
   readOnlyHint: true,
   destructiveHint: false,
   idempotentHint: true,
   openWorldHint: false,
 } as const;
 
-export const WORKFLOW_COMPOSITION_CONTRACT_SCHEMA = z.object({
+const WORKFLOW_COMPOSITION_CONTRACT_SCHEMA = z.object({
   primary_target: z.object({
     solution_type: z.enum(["component", "pattern", "foundation", "token"]),
     name: z.string().nullable(),
@@ -121,7 +121,7 @@ export const WORKFLOW_COMPOSITION_CONTRACT_SCHEMA = z.object({
   source_urls: z.array(z.string()),
 });
 
-export const REVIEW_EXPECTED_TARGETS_SCHEMA = z.object({
+const REVIEW_EXPECTED_TARGETS_SCHEMA = z.object({
   components: z.array(z.string()).optional(),
   patterns: z.array(z.string()).optional(),
   composition_contract:
@@ -129,13 +129,13 @@ export const REVIEW_EXPECTED_TARGETS_SCHEMA = z.object({
   source: z.enum(["create_report", "workflow_context"]).optional(),
 });
 
-export const TOOL_SOURCE_SCHEMA = z.object({
+const TOOL_SOURCE_SCHEMA = z.object({
   original: z.string(),
   resolved: z.string(),
   kind: z.enum(["site", "external", "repo"]),
 });
 
-export const CONTEXT_SALT_INSTALLATION_SCHEMA = z.object({
+const CONTEXT_SALT_INSTALLATION_SCHEMA = z.object({
   node_modules_roots: z.array(z.string()),
   resolved_packages: z.array(
     z.object({
@@ -226,7 +226,7 @@ export const CONTEXT_SALT_INSTALLATION_SCHEMA = z.object({
   }),
 });
 
-export const CONTEXT_POLICY_COMPATIBILITY_SCHEMA = z.object({
+const CONTEXT_POLICY_COMPATIBILITY_SCHEMA = z.object({
   status: z.enum([
     "compatible",
     "unsupported",
@@ -239,7 +239,7 @@ export const CONTEXT_POLICY_COMPATIBILITY_SCHEMA = z.object({
   reason: z.string(),
 });
 
-export const CONTEXT_RESULT_SCHEMA = z.object({
+const CONTEXT_RESULT_SCHEMA = z.object({
   context_id: z.string().nullable(),
   root_dir: z.string(),
   resolution: z.object({
@@ -371,7 +371,7 @@ export const CONTEXT_RESULT_SCHEMA = z.object({
   }),
 });
 
-export const CONTEXT_WORKFLOW_ENVELOPE_SCHEMA = z.object({
+const CONTEXT_WORKFLOW_ENVELOPE_SCHEMA = z.object({
   workflow: z.object({
     id: z.literal("get_salt_project_context"),
   }),
@@ -415,7 +415,7 @@ export const CONTEXT_WORKFLOW_ENVELOPE_SCHEMA = z.object({
   sources: z.array(TOOL_SOURCE_SCHEMA),
 });
 
-export const BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA = z.object({
+const BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA = z.object({
   workflow: z.object({
     id: z.literal("bootstrap_salt_repo"),
   }),
@@ -458,7 +458,7 @@ export const BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA = z.object({
   sources: z.array(TOOL_SOURCE_SCHEMA),
 });
 
-export const REVIEW_RESUME_OUTPUT_SCHEMA = z
+const REVIEW_RESUME_OUTPUT_SCHEMA = z
   .object({
     contract: z.literal("salt_review_resume_v1"),
     status: z.enum(["ready", "stale", "unsupported", "invalid"]),
@@ -470,7 +470,7 @@ export const REVIEW_RESUME_OUTPUT_SCHEMA = z
   })
   .strict();
 
-export const REVIEW_REPORT_VALIDATION_OUTPUT_SCHEMA = z
+const REVIEW_REPORT_VALIDATION_OUTPUT_SCHEMA = z
   .object({
     contract: z.literal("salt_review_report_validation_v1"),
     status: z.enum(["current", "stale", "unsupported", "invalid"]),
@@ -503,10 +503,10 @@ export const REVIEW_REPORT_VALIDATION_OUTPUT_SCHEMA = z
   })
   .strict();
 
-export const CONTEXT_OUTPUT_SCHEMA = CONTEXT_WORKFLOW_ENVELOPE_SCHEMA;
-export const BOOTSTRAP_OUTPUT_SCHEMA = BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA;
+const CONTEXT_OUTPUT_SCHEMA = CONTEXT_WORKFLOW_ENVELOPE_SCHEMA;
+const BOOTSTRAP_OUTPUT_SCHEMA = BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA;
 
-export const PUBLIC_ACTION_KINDS = [
+const PUBLIC_ACTION_KINDS = [
   "tool_call",
   "retrieve_entity",
   "retrieve_examples",
@@ -519,27 +519,27 @@ export const PUBLIC_ACTION_KINDS = [
   "rerun_workflow",
   "fix_context",
 ] as const;
-export const PUBLIC_WORKFLOW_IDS = [
+const PUBLIC_WORKFLOW_IDS = [
   "init",
   "create",
   "review",
   "migrate",
   "upgrade",
 ] as const;
-export const PUBLIC_WORKFLOW_STATUSES = [
+const PUBLIC_WORKFLOW_STATUSES = [
   "success",
   "partial",
   "blocked",
   "failed",
 ] as const;
-export const PUBLIC_MATCH_STATUSES = [
+const PUBLIC_MATCH_STATUSES = [
   "exact",
   "alias",
   "broadened",
   "misrouted",
   "no_match",
 ] as const;
-export const PUBLIC_EVIDENCE_KINDS = [
+const PUBLIC_EVIDENCE_KINDS = [
   "docs",
   "examples",
   "registry",
@@ -547,16 +547,16 @@ export const PUBLIC_EVIDENCE_KINDS = [
   "heuristic_fallback",
 ] as const;
 
-export const PUBLIC_ARGS_SCHEMA = z.record(z.string(), z.unknown());
-export const PUBLIC_MCP_HINT_SCHEMA = z.object({
+const PUBLIC_ARGS_SCHEMA = z.record(z.string(), z.unknown());
+const PUBLIC_MCP_HINT_SCHEMA = z.object({
   tool: z.string().min(1),
   args: PUBLIC_ARGS_SCHEMA,
 });
-export const PUBLIC_ACTION_HINTS_SHAPE = {
+const PUBLIC_ACTION_HINTS_SHAPE = {
   cli: z.string().min(1).optional(),
   mcp: PUBLIC_MCP_HINT_SCHEMA.optional(),
 };
-export const PUBLIC_TOOL_CALL_STEP_SCHEMA = z
+const PUBLIC_TOOL_CALL_STEP_SCHEMA = z
   .object({
     kind: z.literal("tool_call"),
     tool: z.enum([
@@ -575,60 +575,60 @@ export const PUBLIC_TOOL_CALL_STEP_SCHEMA = z
     args: PUBLIC_ARGS_SCHEMA,
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_RETRIEVE_ENTITY_STEP_SCHEMA = z
+const PUBLIC_RETRIEVE_ENTITY_STEP_SCHEMA = z
   .object({
     kind: z.literal("retrieve_entity"),
     tool: z.enum(["get_salt_entity", "create_salt_ui"]),
     args: PUBLIC_ARGS_SCHEMA,
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA = z
+const PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA = z
   .object({
     kind: z.literal("retrieve_examples"),
     tool: z.enum(["get_salt_examples", "create_salt_ui"]),
     args: PUBLIC_ARGS_SCHEMA,
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_ASK_USER_STEP_SCHEMA = z
+const PUBLIC_ASK_USER_STEP_SCHEMA = z
   .object({
     kind: z.literal("ask_user"),
     question: z.string().min(1),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_INSTALL_DEPENDENCIES_STEP_SCHEMA = z
+const PUBLIC_INSTALL_DEPENDENCIES_STEP_SCHEMA = z
   .object({
     kind: z.literal("install_dependencies"),
     package_manager: z.string().min(1),
     packages: z.array(z.string().min(1)).min(1),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_BOOTSTRAP_REPO_STEP_SCHEMA = z
+const PUBLIC_BOOTSTRAP_REPO_STEP_SCHEMA = z
   .object({
     kind: z.literal("bootstrap_repo"),
     tool: z.enum(["bootstrap_salt_repo", "salt-ds init"]),
     args: PUBLIC_ARGS_SCHEMA.optional(),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_IMPLEMENT_STEP_SCHEMA = z
+const PUBLIC_IMPLEMENT_STEP_SCHEMA = z
   .object({
     kind: z.literal("implement"),
     scope: z.literal("exact_request"),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_COMPLETE_STEP_SCHEMA = z
+const PUBLIC_COMPLETE_STEP_SCHEMA = z
   .object({
     kind: z.literal("complete"),
     outcome: z.literal("no_changes_required"),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_REVIEW_STEP_SCHEMA = z
+const PUBLIC_REVIEW_STEP_SCHEMA = z
   .object({
     kind: z.literal("review"),
     tool: z.literal("review_salt_ui"),
     args: PUBLIC_ARGS_SCHEMA.optional(),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA = z
+const PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA = z
   .object({
     kind: z.literal("rerun_workflow"),
     tool: z.enum([
@@ -640,7 +640,7 @@ export const PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA = z
     args: PUBLIC_ARGS_SCHEMA,
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_FIX_CONTEXT_STEP_SCHEMA = z
+const PUBLIC_FIX_CONTEXT_STEP_SCHEMA = z
   .object({
     kind: z.literal("fix_context"),
     tool: z.enum(["get_salt_project_context", "salt-ds info"]),
@@ -648,7 +648,7 @@ export const PUBLIC_FIX_CONTEXT_STEP_SCHEMA = z
     args: PUBLIC_ARGS_SCHEMA.optional(),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_NEXT_STEP_SCHEMAS = [
+const PUBLIC_NEXT_STEP_SCHEMAS = [
   PUBLIC_TOOL_CALL_STEP_SCHEMA,
   PUBLIC_RETRIEVE_ENTITY_STEP_SCHEMA,
   PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA,
@@ -661,21 +661,21 @@ export const PUBLIC_NEXT_STEP_SCHEMAS = [
   PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA,
   PUBLIC_FIX_CONTEXT_STEP_SCHEMA,
 ] as const;
-export const PUBLIC_NEXT_STEP_SCHEMA = z.discriminatedUnion("kind", [
+const PUBLIC_NEXT_STEP_SCHEMA = z.discriminatedUnion("kind", [
   ...PUBLIC_NEXT_STEP_SCHEMAS,
 ]);
-export const PUBLIC_POST_ACTION_SCHEMA = z
+const PUBLIC_POST_ACTION_SCHEMA = z
   .object({
     kind: z.literal("review"),
     tool: z.literal("review_salt_ui"),
     args: PUBLIC_ARGS_SCHEMA.optional(),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
-export const PUBLIC_ACTION_METADATA_SHAPE = {
+const PUBLIC_ACTION_METADATA_SHAPE = {
   rule_ids: z.array(z.string()),
   post_action: PUBLIC_POST_ACTION_SCHEMA.nullable(),
 };
-export const PUBLIC_ACTION_SCHEMA = z.discriminatedUnion("kind", [
+const PUBLIC_ACTION_SCHEMA = z.discriminatedUnion("kind", [
   PUBLIC_TOOL_CALL_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_RETRIEVE_ENTITY_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
@@ -688,7 +688,7 @@ export const PUBLIC_ACTION_SCHEMA = z.discriminatedUnion("kind", [
   PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_FIX_CONTEXT_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
 ]);
-export const PUBLIC_EVIDENCE_ITEM_SCHEMA = z.object({
+const PUBLIC_EVIDENCE_ITEM_SCHEMA = z.object({
   kind: z.enum(PUBLIC_EVIDENCE_KINDS),
   source: z.enum(["canonical_salt", "project_policy", "heuristic_fallback"]),
   entity: z.string().optional(),
@@ -696,7 +696,7 @@ export const PUBLIC_EVIDENCE_ITEM_SCHEMA = z.object({
   source_urls: z.array(z.string()),
   summary: z.string().optional(),
 });
-export const PUBLIC_EVIDENCE_SCHEMA = z.object({
+const PUBLIC_EVIDENCE_SCHEMA = z.object({
   status: z.enum(["complete", "partial", "missing"]),
   items: z.array(PUBLIC_EVIDENCE_ITEM_SCHEMA),
   source_urls: z.array(z.string()),
@@ -728,13 +728,13 @@ export const PUBLIC_EVIDENCE_SCHEMA = z.object({
     })
     .optional(),
 });
-export const SUPPORT_SOURCES_SHAPE = {
+const SUPPORT_SOURCES_SHAPE = {
   sources: z.array(TOOL_SOURCE_SCHEMA).optional(),
 };
-export const GUIDANCE_BOUNDARY_SCHEMA = UNKNOWN_RECORD_SCHEMA.optional();
-export const SUPPORT_FOLLOW_UPS_SCHEMA = UNKNOWN_RECORD_ARRAY_SCHEMA.optional();
-export const SUPPORT_RAW_SCHEMA = UNKNOWN_RECORD_SCHEMA.optional();
-export const DISCOVER_SALT_OUTPUT_SCHEMA = z
+const GUIDANCE_BOUNDARY_SCHEMA = UNKNOWN_RECORD_SCHEMA.optional();
+const SUPPORT_FOLLOW_UPS_SCHEMA = UNKNOWN_RECORD_ARRAY_SCHEMA.optional();
+const SUPPORT_RAW_SCHEMA = UNKNOWN_RECORD_SCHEMA.optional();
+const DISCOVER_SALT_OUTPUT_SCHEMA = z
   .object({
     mode: z.enum(["route", "browse", "related"]),
     guidance_boundary: GUIDANCE_BOUNDARY_SCHEMA,
@@ -757,7 +757,7 @@ export const DISCOVER_SALT_OUTPUT_SCHEMA = z
     ...SUPPORT_SOURCES_SHAPE,
   })
   .passthrough();
-export const GET_SALT_ENTITY_OUTPUT_SCHEMA = z
+const GET_SALT_ENTITY_OUTPUT_SCHEMA = z
   .object({
     guidance_boundary: GUIDANCE_BOUNDARY_SCHEMA,
     entity_type: z
@@ -789,7 +789,7 @@ export const GET_SALT_ENTITY_OUTPUT_SCHEMA = z
     ...SUPPORT_SOURCES_SHAPE,
   })
   .passthrough();
-export const GET_SALT_ENTITIES_OUTPUT_SCHEMA = z
+const GET_SALT_ENTITIES_OUTPUT_SCHEMA = z
   .object({
     guidance_boundary: GUIDANCE_BOUNDARY_SCHEMA,
     decision: z.object({
@@ -814,7 +814,7 @@ export const GET_SALT_ENTITIES_OUTPUT_SCHEMA = z
     next_step: z.string().optional(),
   })
   .passthrough();
-export const GET_SALT_EXAMPLES_OUTPUT_SCHEMA = z
+const GET_SALT_EXAMPLES_OUTPUT_SCHEMA = z
   .object({
     guidance_boundary: UNKNOWN_RECORD_SCHEMA,
     decision: z.object({
@@ -835,7 +835,7 @@ export const GET_SALT_EXAMPLES_OUTPUT_SCHEMA = z
     ...SUPPORT_SOURCES_SHAPE,
   })
   .passthrough();
-export const PUBLIC_RECIPE_SCHEMA = z.object({
+const PUBLIC_RECIPE_SCHEMA = z.object({
   steps: z
     .array(
       z.object({
@@ -848,7 +848,7 @@ export const PUBLIC_RECIPE_SCHEMA = z.object({
     )
     .min(1),
 });
-export const MCP_WORKFLOW_OUTPUT_SCHEMA = z
+const MCP_WORKFLOW_OUTPUT_SCHEMA = z
   .object({
     contract: z.literal("salt_workflow_v1"),
     workflow: z.enum(PUBLIC_WORKFLOW_IDS),
@@ -888,11 +888,11 @@ export const MCP_WORKFLOW_OUTPUT_SCHEMA = z
     details: z.unknown().optional(),
   })
   .strict();
-export const CHOOSE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
-export const ANALYZE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
-export const TRANSLATE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
-export const COMPARE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
-export const CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA = z
+const CHOOSE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
+const ANALYZE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
+const TRANSLATE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
+const COMPARE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
+const CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA = z
   .object({
     contract: z.literal("salt_context_pack_persistence_write_v1"),
     status: z.enum([
@@ -911,7 +911,7 @@ export const CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA = z
     persistence_check: z.unknown(),
   })
   .strict();
-export const GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA = z
+const GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA = z
   .object({
     contract: z.literal("salt_generated_artifact_persistence_v1"),
     status: z.enum(["written", "blocked", "invalid"]),
@@ -1002,7 +1002,7 @@ function cacheProjectContext(
  * refetches before serving the cached value (see
  * {@link resolveOrCollectProjectContext}).
  */
-export function isProjectContextStale(
+function isProjectContextStale(
   runtime: ToolExecutionRuntime | undefined,
   contextId: string,
 ): boolean {
@@ -1015,7 +1015,7 @@ export function isProjectContextStale(
  * workflow result that requests `install_dependencies`; consumers do not
  * normally need to call this directly.
  */
-export function markProjectContextStale(
+function markProjectContextStale(
   runtime: ToolExecutionRuntime | undefined,
   rootDir: string,
 ): void {
@@ -1123,7 +1123,11 @@ async function validateReviewReportFromPath(input: {
   report_path: string;
 }) {
   const rootDir = path.resolve(process.cwd(), input.root_dir ?? ".");
-  const reportPath = path.resolve(rootDir, input.report_path);
+  const reportPath = resolveWritablePathInsideRoot({
+    rootDir,
+    targetPath: input.report_path,
+    label: "report_path",
+  });
   const report = JSON.parse(await fs.readFile(reportPath, "utf8")) as unknown;
 
   return validateSaltReviewReport({
@@ -2152,6 +2156,17 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         const semanticView = normalizeWorkflowView(workflowArgs.view);
         return withCompareWorkflowGuidance(
           upgradeSaltUi(registry, {
+            // Default to opt-in deprecations so the MCP `upgrade_salt_ui`
+            // tool stays semantically aligned with the CLI's `salt-ds upgrade`
+            // command (which only includes deprecations under
+            // `--include-deprecations`). Without this default the underlying
+            // `compareVersions` helper would silently flip to
+            // `include_deprecations: true`, causing the upgrade confidence
+            // builder to downgrade to `medium` even when the caller never
+            // asked for deprecation analysis. See the
+            // `keeps upgrade full semantics aligned where CLI and MCP overlap`
+            // parity spec.
+            include_deprecations: false,
             ...workflowArgs,
             view: semanticView,
           }),

@@ -6,6 +6,15 @@ import {
 } from "../../../../lib/attestation.js";
 import type { RequiredCliIo } from "../../../../types.js";
 
+/**
+ * Hard ceiling on attestation NDJSON payloads (file or stdin). Mirrors the
+ * 1 MiB stdin cap in `hookIO.ts`. Attestation lines are small (a few KB each
+ * for typical reviews) so a 1 MiB envelope already accommodates ~hundreds of
+ * touched files across many trace ids; anything larger is almost certainly
+ * a hostile or runaway payload trying to OOM the verifier.
+ */
+const MAX_VERIFY_ATTESTATION_BYTES = 1024 * 1024;
+
 interface VerifyOptions {
   io: RequiredCliIo;
 }
@@ -31,6 +40,13 @@ export async function runVerifyAttestationsCommand(
   let raw: string;
   if (verifyFlag && verifyFlag !== "true") {
     try {
+      const stats = await fs.stat(verifyFlag);
+      if (stats.size > MAX_VERIFY_ATTESTATION_BYTES) {
+        io.writeStderr(
+          `salt-ds verify: ${verifyFlag} is ${stats.size} bytes; exceeds limit of ${MAX_VERIFY_ATTESTATION_BYTES}.\n`,
+        );
+        return 1;
+      }
       raw = await fs.readFile(verifyFlag, "utf8");
     } catch (error) {
       io.writeStderr(
@@ -41,7 +57,16 @@ export async function runVerifyAttestationsCommand(
       return 1;
     }
   } else {
-    raw = await readAllStdin(io);
+    try {
+      raw = await readAllStdin(io, MAX_VERIFY_ATTESTATION_BYTES);
+    } catch (error) {
+      io.writeStderr(
+        `salt-ds verify: ${
+          error instanceof Error ? error.message : String(error)
+        }\n`,
+      );
+      return 1;
+    }
   }
 
   if (raw.trim().length === 0) {
@@ -132,19 +157,32 @@ function describeDrift(drift: VerifyAttestationDrift): string {
       return `file no longer exists on disk (expected ${drift.expectedHash})`;
     case "unsupported-alg":
       return `attestation used an unsupported hash algorithm (expected ${drift.expectedHash})`;
+    case "path-escape":
+      return `attestation path resolves outside the verifier's cwd and was refused (expected ${drift.expectedHash})`;
     default:
       return `unknown drift reason: ${(drift as { reason: string }).reason}`;
   }
 }
 
-async function readAllStdin(io: RequiredCliIo): Promise<string> {
+async function readAllStdin(
+  io: RequiredCliIo,
+  maxBytes: number,
+): Promise<string> {
   const stream = io.stdin;
   if (!stream) {
     return "";
   }
   const chunks: Buffer[] = [];
+  let total = 0;
   for await (const chunk of stream) {
-    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+    const buf = typeof chunk === "string" ? Buffer.from(chunk) : chunk;
+    total += buf.length;
+    if (total > maxBytes) {
+      throw new Error(
+        `attestation payload on stdin exceeds limit of ${maxBytes} bytes`,
+      );
+    }
+    chunks.push(buf);
   }
   return Buffer.concat(chunks).toString("utf8");
 }
