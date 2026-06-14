@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-pack-persistence-check.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-pack-persistence-check.schema.json",
   "title": "Salt Context Pack Persistence Check",
   "description": "Host-side persistence check for exact Salt context pack bundle file text.",
   "type": "object",

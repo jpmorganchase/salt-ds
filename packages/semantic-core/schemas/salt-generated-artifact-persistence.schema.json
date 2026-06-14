@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-generated-artifact-persistence.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-generated-artifact-persistence.schema.json",
   "title": "Salt Generated Artifact Persistence Result",
   "description": "Result for a host writing one release-gated generated Salt artifact to durable storage.",
   "type": "object",

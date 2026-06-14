@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-review-report.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-review-report.schema.json",
   "title": "Salt Review Report",
   "description": "Durable evidence-aware report for Salt review workflow results.",
   "type": "object",

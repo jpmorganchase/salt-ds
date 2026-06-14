@@ -134,7 +134,7 @@ describe("salt-attestation.schema.json — JSON Schema mirror", () => {
     const raw = readFileSync(filePath, "utf8");
     const parsed = JSON.parse(raw);
     expect(parsed.$id).toBe(
-      "https://saltdesignsystem.com/schemas/salt-attestation.schema.json",
+      "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-attestation.schema.json",
     );
     expect(parsed.properties.$schema.const).toBe(
       SALT_ATTESTATION_V1_SCHEMA_URL,

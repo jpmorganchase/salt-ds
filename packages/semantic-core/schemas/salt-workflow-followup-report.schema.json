@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-workflow-followup-report.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-workflow-followup-report.schema.json",
   "title": "Salt Workflow Follow-up Report",
   "description": "Durable evidence-aware report for Salt migration and upgrade follow-up surfaces.",
   "type": "object",

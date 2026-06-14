@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-foundation.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-foundation.schema.json",
   "title": "Salt Foundation Context",
   "description": "Evidence-aware static context for one Salt foundation token category.",
   "type": "object",

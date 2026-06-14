@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-ai-evidence-closure-report.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-ai-evidence-closure-report.schema.json",
   "title": "Salt AI Evidence Closure Report",
   "description": "Machine-readable final-pass closure report for Salt AI evidence, gap, and unsupported-surface slices.",
   "type": "object",

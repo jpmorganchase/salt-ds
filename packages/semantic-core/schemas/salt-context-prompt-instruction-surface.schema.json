@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-prompt-instruction-surface.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-prompt-instruction-surface.schema.json",
   "title": "Salt Context Prompt/Instruction Surface",
   "description": "Source-backed prompt or host-instruction surface with generated claims resolved through EvidenceRefs.",
   "type": "object",

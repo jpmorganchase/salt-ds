@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-token-policy-structural-role-rule-pack.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-token-policy-structural-role-rule-pack.schema.json",
   "title": "Salt Token Policy Structural Role Rule Pack",
   "description": "Source-backed rule pack for deriving generated token structural roles and pairings.",
   "type": "object",
