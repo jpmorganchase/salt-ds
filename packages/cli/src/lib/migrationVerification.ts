@@ -17,7 +17,7 @@ interface LoadedMigrationVerificationContract {
   contract: MigrationVerificationContract;
 }
 
-export interface MigrationVerificationCheck {
+interface MigrationVerificationCheck {
   check: string;
   status: "verified" | "manual_review" | "not_checked";
   evidence: string[];
