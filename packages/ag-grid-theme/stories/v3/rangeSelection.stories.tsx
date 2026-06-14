@@ -28,6 +28,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useRef } from "react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -53,7 +54,7 @@ export const RangeSelection = () => {
   };
 
   return (
-    <div style={{ height: 400, width: 800 }}>
+    <div style={V3_STORY_CONTAINER}>
       <AgGridReact
         theme={saltTheme}
         {...saltAgGridDefaults}
@@ -73,4 +74,3 @@ export const RangeSelection = () => {
     </div>
   );
 };
-

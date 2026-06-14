@@ -30,6 +30,7 @@ import {
 import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -59,12 +60,13 @@ export default {
 
 export const WrappedCell = () => (
   <StackLayout gap={4}>
-    <div style={{ height: 500, width: 800 }}>
+    <div style={V3_STORY_CONTAINER}>
       <AgGridReact
         theme={saltTheme}
         {...saltAgGridDefaults}
         columnDefs={columnDefs}
         rowData={longNamesData}
+        onGridReady={fitColumnsOnReady}
       />
     </div>
   </StackLayout>

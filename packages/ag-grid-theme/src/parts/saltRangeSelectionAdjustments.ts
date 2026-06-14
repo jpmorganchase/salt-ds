@@ -11,4 +11,3 @@ import { createPart } from "ag-grid-community";
 import css from "../css/salt-range-selection.css?inline";
 
 export const saltRangeSelectionAdjustments = createPart({ css });
-

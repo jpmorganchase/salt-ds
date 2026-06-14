@@ -64,7 +64,14 @@ export const saltTheme = createTheme()
   .withParams({
     // sizing
     spacing: "var(--salt-spacing-50)",
-    rowHeight: "calc(var(--salt-size-base) + var(--salt-spacing-100))",
+    // Bumped by 1px so the row-border (`var(--ag-row-border)` = 1px) fits
+    // *inside* the rowHeight box-sizing: border-box footprint without eating
+    // into the cell content area. Result: row renders at 37px and cell content
+    // at 36px, pixel-matching the 2.x `Ag Grid → Ag Grid Theme → CellValidation`
+    // baseline. Without this bump, AG v3's `box-sizing: border-box` global
+    // makes the 1px border eat into the 36px row, leaving cells at 35px and
+    // text vertically cramped against the row dividers. (Phase 7 finding 2026-06-14.)
+    rowHeight: "calc(var(--salt-size-base) + var(--salt-spacing-100) + 1px)",
     headerHeight: "calc(var(--salt-size-base) + var(--salt-spacing-100))",
     listItemHeight: "calc(var(--salt-size-base) + var(--salt-spacing-100))",
     // iconSize ported from `ag-root-var.css:30` (`--ag-icon-size: max(...)`). Lives
@@ -74,6 +81,28 @@ export const saltTheme = createTheme()
     cellHorizontalPadding: "var(--salt-spacing-100)",
     widgetContainerHorizontalPadding: "var(--salt-spacing-100)",
     rowGroupIndentSize: { calc: "iconSize + spacing" },
+
+    // ---------- icon colour (Phase 7 finding 2026-06-14) ----------
+    //
+    // AG v3 defaults `iconColor` to `"inherit"`, which makes `.ag-icon`
+    // take its parent's `color`. That works fine in headers
+    // (`--ag-header-text-color` = `--salt-content-secondary-foreground` =
+    // mid-grey — verified rgb(76,81,87)) but in body cells
+    // `--ag-cell-text-color` = `--salt-content-primary-foreground` = pure
+    // black (rgb(0,0,0)), so row-group expand/collapse arrows, column-menu
+    // icons inside cells, etc. render as harsh black — doesn't match the
+    // 2.x line which kept body icons in the lighter secondary tier via a
+    // separate `--ag-icon-font-color` cascade.
+    //
+    // Pin `iconColor` to the secondary-grey Salt token so every passive
+    // `.ag-icon` renders at the same mid-grey regardless of context. Header
+    // icons look identical (they were that colour by inheritance anyway);
+    // body / row-group / column-menu icons brighten from black to mid-grey.
+    //
+    // `iconButtonColor` defaults to `{ ref: "iconColor" }`, so interactive
+    // icon-buttons (column-menu trigger, row-group expand) follow this
+    // automatically. No need to set it explicitly.
+    iconColor: "var(--salt-content-secondary-foreground)",
 
     // typography
     fontFamily: "var(--salt-text-fontFamily)",
@@ -111,12 +140,29 @@ export const saltTheme = createTheme()
     wrapperBorder: false, // matches `ag-root-var.css` lines 78–83 today
     headerColumnBorder: { width: "var(--salt-size-fixed-100)", color: "var(--salt-separable-tertiary-borderColor)" },
     headerColumnBorderHeight: "calc(var(--salt-size-base) / 2 - 2px)",
+    // Hide AG v3's resize-handle bar — it overlaps the `headerColumnBorder`
+    // `::after` line, producing a visible double-divider between header cells.
+    // (Phase 7 finding 2026-06-13.)
+    headerColumnResizeHandleColor: "transparent",
+    // No menu border — AG v3 ships a 1px border by default that 2.x didn't have;
+    // Salt menus rely on the Salt shadow + bg for separation. (Phase 7 finding 2026-06-13.)
+    menuBorder: false,
+    // No editor border — AG v3 paints `border: 1px solid var(--ag-accent-color)`
+    // on `.ag-cell-inline-editing` (with `!important`) but 2.x had no editor
+    // border at all. Setting `cellEditingBorder: false` resolves
+    // `--ag-cell-editing-border: 0` so the override stops painting.
+    // (Phase 7 finding 2026-06-13.)
+    cellEditingBorder: false,
+    cellEditingShadow: "none",
     borderRadius: "var(--salt-palette-corner)",
 
-    // inputs
-    inputBorder: { color: "var(--salt-editable-borderColor)" },
-    inputFocusBorder: { color: "var(--salt-editable-borderColor-hover)" },
-    inputFocusShadow: "none",
+    // inputs — `inputBorder` / `inputFocusBorder` / `inputFocusShadow` live
+    // on the full `InputStyleParams` interface (only exposed when one of AG's
+    // `inputStyle*` parts is composed). Since `saltInputStyle` narrows its
+    // generic to `SaltInputStyleParams` (just the `pickerList*` keys), the
+    // theme's `.withParams()` no longer accepts the input-border / focus-shadow
+    // keys. Salt's own selector-level CSS in `salt-input.css` handles the
+    // editor border / focus look directly. (Phase 7 finding.)
 
     // tabs — see saltTabStyle part (§4.6.3) for tabSelectedUnderline{Color,Width}
 

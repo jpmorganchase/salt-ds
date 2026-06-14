@@ -23,6 +23,7 @@ import {
   validationRowExampleColumns,
 } from "../../src/dependencies/validationExampleColumns";
 import { validationExampleData } from "../../src/dependencies/validationExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -35,7 +36,7 @@ export default {
 };
 
 export const RowValidation = () => (
-  <div style={{ height: 500, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
@@ -43,7 +44,7 @@ export const RowValidation = () => (
       columnDefs={validationRowExampleColumns}
       rowClassRules={validationRowClassRules}
       rowSelection="multiple"
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

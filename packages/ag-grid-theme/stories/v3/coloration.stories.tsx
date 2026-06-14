@@ -18,6 +18,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleColumnsColoration from "../../src/dependencies/dataGridExampleColumnsColoration";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -30,13 +31,13 @@ export default {
 };
 
 export const Coloration = () => (
-  <div style={{ height: 400, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
       columnDefs={dataGridExampleColumnsColoration}
       rowData={dataGridExampleData}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

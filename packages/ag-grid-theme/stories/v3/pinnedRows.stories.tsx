@@ -24,6 +24,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -78,7 +79,7 @@ const PinnedRowsExample = ({
   const pinnedTopRowData = showHeader ? headerRow : undefined;
 
   return (
-    <div style={{ height: 500, width: 800 }}>
+    <div style={V3_STORY_CONTAINER}>
       <AgGridReact
         theme={saltTheme}
         {...saltAgGridDefaults}
@@ -88,6 +89,7 @@ const PinnedRowsExample = ({
         rowData={rowData}
         pinnedBottomRowData={pinnedBottomRowData}
         pinnedTopRowData={pinnedTopRowData}
+        onGridReady={fitColumnsOnReady}
       />
     </div>
   );
@@ -104,4 +106,3 @@ export default {
 export const PinnedRows = (props: PinnedRowsExampleProps) => (
   <PinnedRowsExample {...props} />
 );
-

@@ -26,10 +26,21 @@
  *   - Filter / column-select INPUT focus shadows  → saltInputStyle compose
  */
 
-/* --- Cell focus + range single cell --- */
-/* Single source of truth: outline (no border-color shenanigans). The legacy */
-/* `border-color: transparent` was there to override AG v32's default cell    */
-/* border, but v33 doesn't draw one anyway. */
+/* --- Cell focus + range single cell ---
+ *
+ * Single source of truth: outline (no border-color shenanigans). The legacy
+ * `border-color: transparent` was there to override AG v32's default cell
+ * border, but v33 doesn't draw one anyway.
+ *
+ * The outline applies in BOTH the initial-click focus state (`.ag-cell-focus`
+ * only) and the inline-editing state (`.ag-cell-focus.ag-cell-inline-editing`)
+ * — matches 2.x where `:focus-within` paints the Salt focus ring throughout
+ * the cell's life cycle. The companion fix that suppresses the inner
+ * `.ag-picker-field-wrapper` border for select-style editors during inline
+ * editing lives in `salt-input.css` (search for "double focus ring") — that
+ * removes the concentric inner ring without dropping the outer one.
+ * (Phase 7 finding 2026-06-14.)
+ */
 .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
 .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
 .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
@@ -37,6 +48,37 @@
 .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
+}
+
+/* --- Suppress Salt's global :focus-visible outline inside an editing cell ---
+ *
+ * `packages/theme/css/global.css` ships a SaltProvider-wide rule:
+ *
+ *   :where(.salt-theme) :focus-visible {
+ *     outline: var(--salt-focused-outline);
+ *   }
+ *
+ * That rule (specificity 0,1,0 — `:where()` contributes 0) paints a Salt
+ * focus outline on EVERY focused descendant of `.salt-theme`. When an
+ * AG-Grid cell enters inline-editing mode the inner element actually
+ * receiving focus is:
+ *   - `<input class="ag-input-field-input">`        for agText / agNumber /
+ *                                                   agDateString editors
+ *   - `<div class="ag-picker-field-wrapper" tabindex="…">`  for agSelect /
+ *                                                           date-picker editors
+ *   - `<textarea>`                                  for agLargeText (popup)
+ *
+ * Either way the global Salt rule lands a second concentric ring **inside**
+ * the cell-level outline above — that's the inner focus ring users see.
+ *
+ * Strip the descendant outline here at higher specificity (0,2,0) so the
+ * outer cell-focus outline is the SOLE indicator while editing. The global
+ * Salt rule keeps working everywhere else (buttons, links, Salt form
+ * controls, etc.). (Phase 7 finding 2026-06-14.)
+ */
+.ag-cell-inline-editing :focus,
+.ag-cell-inline-editing :focus-visible {
+  outline: none;
 }
 
 /* --- Editable cell focus corner adornment ---
@@ -93,4 +135,3 @@
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
-

@@ -39,4 +39,3 @@ export const saltColumnDropStyle = createPart({
     columnDropCellBorderRadius: 0,
   },
 });
-

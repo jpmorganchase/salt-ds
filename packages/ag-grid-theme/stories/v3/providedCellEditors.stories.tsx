@@ -24,6 +24,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import agProvidedCellEditorsExampleColumns from "../../src/dependencies/agProvidedCellEditorsExampleColumns";
 import { dataGridExampleDataCellEditors } from "../../src/dependencies/dataGridExampleDataCellEditors";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -70,14 +71,14 @@ export default {
 };
 
 export const ProvidedCellEditors = () => (
-  <div style={{ height: 500, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
       columnDefs={agProvidedCellEditorsExampleColumns}
       rowData={[...dataGridExampleDataCellEditors]}
       dataTypeDefinitions={{ dateString }}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

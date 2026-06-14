@@ -113,6 +113,18 @@ const SALT_ICONS: Record<string, string> = {
 export const saltIconSet = iconOverrides({
   type: "font",
   family: "salt-icons",
+  // Pin to regular weight (400). `.ag-icon::before` would otherwise inherit
+  // `font-weight` from its container — e.g. headers carry
+  // `font-weight: var(--salt-text-label-fontWeight-strong)` (600), causing
+  // the browser to apply synthetic-bold to the salt-icons font glyphs.
+  // The font isn't designed for heavy weights, so the result is visibly
+  // thickened / "layered" icon strokes (verified via DevTools:
+  // computed `font-weight: 600` on `.ag-header-cell .ag-icon::before`).
+  // Setting `weight: 400` here makes `iconOverrides` emit
+  // `font-weight: 400` on every `.ag-icon-XXX::before` rule, breaking the
+  // inheritance and rendering glyphs at their designed regular weight.
+  // (Phase 7 finding 2026-06-14.)
+  weight: 400,
   icons: SALT_ICONS,
 });
 

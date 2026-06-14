@@ -26,6 +26,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../../src/dependencies/dataGridInfiniteScrollExampleColumns";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -73,7 +74,7 @@ export const InfiniteScroll = () => {
   };
 
   return (
-    <div style={{ height: 500, width: 800 }}>
+    <div style={V3_STORY_CONTAINER}>
       <AgGridReact
         theme={saltTheme}
         {...saltAgGridDefaults}
@@ -86,4 +87,3 @@ export const InfiniteScroll = () => {
     </div>
   );
 };
-

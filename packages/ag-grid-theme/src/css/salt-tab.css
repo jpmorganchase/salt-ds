@@ -5,11 +5,10 @@
    prefix dance. */
 
 .ag-tabs {
-    padding: var(--salt-spacing-100);
+  padding: var(--salt-spacing-100);
 }
 
 .ag-tab {
-    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-    flex: 1 1 auto;
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  flex: 1 1 auto;
 }
-

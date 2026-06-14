@@ -31,4 +31,3 @@ import { createPart } from "ag-grid-community";
 import css from "../css/salt-cell-states.css?inline";
 
 export const saltCellStates = createPart({ css });
-

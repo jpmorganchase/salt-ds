@@ -19,6 +19,22 @@
  * tweaks here.
  */
 
+/* --- Floating filter search-icon colour ---
+ *
+ * AG v3 paints `.ag-floating-filter-search-icon`'s glyph by setting
+ * `background-color: currentcolor` on a `::before` pseudo whose `color` is
+ * `var(--ag-input-icon-color)`. AG defaults that variable to empty so the
+ * mask renders un-coloured. `inputIconColor` is on the full
+ * `InputStyleParams` interface — `saltInputStyle` narrows its generic so
+ * `theme.withParams` can't set it. Bind the variable directly here.
+ * Uses `:where(*)` so specificity stays at 0 and consumers can still
+ * override per-element. (Phase 7 finding 2026-06-14.)
+ */
+:where(*) {
+  --ag-input-icon-color: var(--salt-content-secondary-foreground);
+}
+
+
 /* --- Baseline reset: kill the browser default `<input>` border/outline ---
  *
  * 2.x ag-input.css implicitly relied on AG v32 shipping a global no-border
@@ -27,11 +43,22 @@
  * JSDoc in `saltInputStyle.ts` for why). Without this rule, every ag-input
  * — floating filters, cell editors, etc. — gets the browser-default `2px
  * inset` border, which differs visibly from the 2.x rendering.
+ *
+ * Background defaults to AG's body bg (matches 2.x where AG v32 baked
+ * `background: var(--ag-background-color)` into the default input rule).
+ * The `.ag-filter input` rule below overrides to transparent for inputs
+ * *inside* filter popups — same cascade as 2.x. (Phase 7 finding 2026-06-13.)
  */
 .ag-input-field-input {
+  background: var(--ag-background-color);
   border: none;
   outline: none;
-  background: transparent;
+  /* `font: inherit` + small symmetric padding match AG v32's baseline (which
+   * 2.x relied on for header floating filters / popup inputs). Without
+   * these, inputs render with browser-default Times-ish 13.33px font and
+   * `1px 2px` padding. (Phase 7 finding 2026-06-13.) */
+  font: inherit;
+  padding: 0 var(--salt-spacing-50);
 }
 
 /* --- Filter input + column-select input: Salt underlined look --- */
@@ -55,21 +82,6 @@
 .ag-column-select input[type="number"]::placeholder {
   color: var(--salt-content-secondary-foreground);
   opacity: 1;
-}
-
-/* --- Baseline reset: kill the browser default `<input>` border/outline ---
- *
- * 2.x ag-input.css implicitly relied on AG v32 shipping a global no-border
- * reset on its inputs. AG v3 only ships those resets via the built-in
- * `inputStyle*` parts, which we deliberately do NOT compose (see the
- * JSDoc in `saltInputStyle.ts` for why). Without this rule, every ag-input
- * — floating filters, cell editors, etc. — gets the browser-default `2px
- * inset` border, which differs visibly from the 2.x rendering.
- */
-.ag-input-field-input {
-  border: none;
-  outline: none;
-  background: transparent;
 }
 
 /* --- Filter input :focus outline --- */
@@ -103,3 +115,101 @@
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
+/* --- Floating filter input height ---
+ *
+ * AG v32 sized `.ag-input-field-input` to `height: 100%` so floating-filter
+ * inputs filled the header row. AG v3 leaves them at intrinsic content
+ * height (~15px for an 11px-font input). Re-apply `height: 100%` scoped
+ * to the floating-filter context — other input contexts (inline editors,
+ * popup filters) already get their height from their wrapping cell /
+ * editor and don't need this. (Phase 7 finding 2026-06-13.)
+ */
+.ag-floating-filter .ag-input-field-input,
+.ag-floating-filter-input .ag-labeled,
+.ag-floating-filter-input .ag-wrapper {
+  height: 100%;
+}
+
+/* === Inline cell editors (agTextCellEditor, agDateStringCellEditor,
+ *     agSelectCellEditor, agNumberCellEditor) ===
+ *
+ * AG v3 paints a 1px-solid-accent border + 8px horizontal padding on
+ * `.ag-cell-inline-editing` that 2.x didn't have, and leaves the editor
+ * inputs at browser-default `padding: 1px 2px; font-size: 13.33px`. The
+ * baseline `.ag-input-field-input` rule above paints inputs with the AG
+ * body bg so floating filters render correctly — but inside an inline
+ * editor, the cell itself must carry the bg and the input must be
+ * transparent so it can sit *inside* the cell's surface (legacy parity).
+ *
+ * Net effect of the rules below: text/date/number inputs render as
+ * `padding: 0 8px; font: inherit`; the picker wrapper is transparent
+ * (the outer Salt cell-focus outline from `salt-focus-ring.css` is the
+ * sole visual ring during editing — see "double focus ring" note below);
+ * the surrounding cell carries the `--ag-background-color` surface with
+ * no decorative border or extra padding. (Phase 7 finding 2026-06-13.)
+ *
+ * NOTE on the "inner focus ring" the user originally reported: the real
+ * source turned out to be Salt's global
+ * `:where(.salt-theme) :focus-visible { outline: ... }` rule in
+ * `packages/theme/css/global.css`, which paints an outline on every
+ * focused descendant of `.salt-theme` — including the `<input>` /
+ * `<div tabindex>` inside an editing cell. The fix lives in
+ * `salt-focus-ring.css` (look for the "Suppress Salt's global
+ * :focus-visible outline" comment), NOT here. `--ag-input-border` /
+ * `--ag-input-focus-border` were investigated as a possible culprit but
+ * are inert in practice when `saltInputStyle` claims `feature: "inputStyle"`.
+ */
+.ag-cell-inline-editing {
+  background: var(--ag-background-color);
+  border: 0;
+  padding: 0;
+}
+
+.ag-cell-inline-editing .ag-input-field-input {
+  background: transparent;
+  padding: 0 var(--salt-spacing-100);
+  font: inherit;
+}
+
+/* Picker wrapper padding — applies to BOTH `agSelectCellEditor` and
+ * `agRichSelectCellEditor`. Legacy 2.x rendered every editor wrapper with
+ * `padding: 0 8px` regardless of the editor variant. */
+.ag-cell-inline-editing .ag-picker-field-wrapper {
+  padding: 0 var(--salt-spacing-100);
+}
+
+/* No inner picker-wrapper border — avoids "double focus ring" on editable
+ * cells.
+ *
+ * AG v3 paints a 1px wrapper border on `agSelectCellEditor` / date-picker
+ * inline editors. Combined with the Salt cell-level focus outline from
+ * `salt-focus-ring.css` (`.ag-cell-focus:focus-within { outline: 2px ... }`)
+ * that produced two concentric rings — the outer Salt focus outline plus
+ * the inner wrapper border. Keep the outer focus ring as the only visual
+ * indicator (matches 2.x: select-editor wrappers were transparent inside
+ * the focused cell) by stripping the wrapper's border + background. The
+ * cell itself carries the salt-editable border via `.editable-cell` in
+ * `salt-cell-states.css`, which the outer focus outline supersedes while
+ * focused. (Phase 7 finding 2026-06-14.)
+ */
+.ag-cell-inline-editing .ag-picker-field-wrapper {
+  border: none;
+  background: transparent;
+}
+
+/* === Rich-select popup (`agRichSelectCellEditor` dropdown) box-shadow ===
+ *
+ * Background + border for the popup are handled by saltInputStyle's typed
+ * `pickerListBackgroundColor` + `pickerListBorder` params (which AG v3 reads
+ * via `--ag-picker-list-{background-color,border}` in
+ * `.ag-virtual-list-viewport.ag-rich-select-list`).
+ *
+ * No typed param exists for the popup's box-shadow, and the AG default rule
+ * applies its own shadow via `--ag-picker-list-box-shadow`. We override that
+ * here, targeting AG's compound selector exactly (`.ag-virtual-list-viewport
+ * .ag-rich-select-list`, specificity 0,2,0) so we win against the AG default.
+ * Maps the legacy 2.x heavier `popupShadow` (~ 6/10 spread). (Phase 7.)
+ */
+.ag-virtual-list-viewport.ag-rich-select-list {
+  box-shadow: var(--salt-overlayable-shadow-popout);
+}

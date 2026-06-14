@@ -56,7 +56,8 @@ export const saltCheckboxStyle = createPart({
   `,
   params: {
     checkboxBorderRadius: 0,
-    checkboxCheckedBackgroundColor: "var(--salt-selectable-foreground-selected)",
+    checkboxCheckedBackgroundColor:
+      "var(--salt-selectable-foreground-selected)",
     checkboxCheckedBorderColor: "var(--salt-selectable-foreground-selected)",
     checkboxCheckedShapeColor: "var(--salt-container-primary-background)",
     checkboxIndeterminateBackgroundColor: "var(--salt-selectable-foreground)",
@@ -65,4 +66,3 @@ export const saltCheckboxStyle = createPart({
     checkboxUncheckedBorderColor: "var(--salt-selectable-borderColor)",
   },
 });
-

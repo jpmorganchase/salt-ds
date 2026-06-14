@@ -20,6 +20,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import { validationCellExampleColumns } from "../../src/dependencies/validationExampleColumns";
 import { validationExampleData } from "../../src/dependencies/validationExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -32,13 +33,13 @@ export default {
 };
 
 export const CellValidation = () => (
-  <div style={{ height: 400, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
       columnDefs={validationCellExampleColumns}
       rowData={validationExampleData}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

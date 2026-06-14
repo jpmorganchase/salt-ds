@@ -27,11 +27,21 @@
  * which we'll port alongside Phase 2.
  */
 
-/* --- Generic cell padding (only :ag-cell rule from 2.x that's truly generic) --- */
-/* 2.x originally also wrote `border: none; line-height: calc(var(--ag-line-height) - 1px);` */
-/* but we let AG v3's defaults stand for those — line-height -1px would force a 1px shift */
-/* that no longer matches v33 layout. Padding alone keeps consumer text aligned with legacy. */
+/* --- Generic cell padding + line-height ---
+ *
+ * 2.x set `line-height: calc(var(--ag-line-height) - 1px)` on `.ag-cell`,
+ * which resolved to 35px at medium density. The same calc against AG v3's
+ * `--ag-row-height` (which we bump to 37px in `saltTheme.ts` to compensate
+ * for the row-border eating into `box-sizing: border-box`) gives a cell
+ * content line-height of 36px — matching the live 2.x `cellLineH: 36px`
+ * verified in DevTools.
+ *
+ * AG v3's auto-computed `--ag-internal-content-line-height` would resolve
+ * to `min(37, 1000) - 1 - 2 = 34px` here, leaving 2px of vertical empty
+ * space. Override with the 2.x formula. (Phase 7 finding 2026-06-14.)
+ */
 .ag-ltr .ag-cell {
+  line-height: calc(var(--ag-row-height) - 1px);
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
 }
@@ -112,7 +122,8 @@
 
 .editable-cell.error-cell:not(.ag-cell-inline-editing)::after {
   background-color: var(--salt-status-error-foreground-decorative);
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 6C4.65685 6 6 4.65685 6 3C6 1.34315 4.65685 0 3 0C1.34315 0 0 1.34315 0 3C0 4.65685 1.34315 6 3 6Z' /%3E%3C/svg%3E") no-repeat 50% 50%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 6C4.65685 6 6 4.65685 6 3C6 1.34315 4.65685 0 3 0C1.34315 0 0 1.34315 0 3C0 4.65685 1.34315 6 3 6Z' /%3E%3C/svg%3E")
+    no-repeat 50% 50%;
 }
 .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after {
   background-color: var(--salt-status-warning-foreground-decorative);
@@ -120,7 +131,8 @@
 }
 .editable-cell.success-cell:not(.ag-cell-inline-editing)::after {
   background-color: var(--salt-status-success-foreground-decorative);
-  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.51878 8.36782L10.7368 1.1499L11.9742 2.38735L3.51877 10.8427L0.0299988 7.35389L1.26744 6.11646L3.51878 8.36782Z' /%3E%3C/svg%3E%0A") no-repeat 50% 50%;
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.51878 8.36782L10.7368 1.1499L11.9742 2.38735L3.51877 10.8427L0.0299988 7.35389L1.26744 6.11646L3.51878 8.36782Z' /%3E%3C/svg%3E%0A")
+    no-repeat 50% 50%;
 }
 
 /* Adornment placement: right side for normal cells, left for numeric (mirrors text-align). */
@@ -160,3 +172,148 @@
   --ag-row-hover-color: var(--salt-overlayable-background-hover);
 }
 
+/* --- Kill AG v3's default 1px-solid-transparent cell border ---
+ *
+ * AG v3 bakes `.ag-cell, .ag-full-width-row .ag-cell-wrapper.ag-row-group {
+ *   border: 1px solid transparent }` into its base CSS (didn't exist in v32).
+ * That border-box reservation shifts cell content 1px right + 1px down and
+ * shrinks content area 2px in each axis. 2.x had no such border. We zero
+ * the top / bottom / left sides only — right is intentionally left alone
+ * because AG's `:where(.ag-ltr) .ag-cell { border-right: var(--ag-column-border) }`
+ * paints the column separator there (legacy parity). Focus styling in
+ * saltFocusRing.css uses `outline`, not `border`, so this is safe.
+ * (Phase 7 finding 2026-06-13.)
+ */
+.ag-cell,
+.ag-full-width-row .ag-cell-wrapper.ag-row-group {
+  border-width: 0;
+}
+/* --- Menu item height (column menu, context menu, popups) ---
+ *
+ * AG v3's default `.ag-menu-option-part` / `.ag-compact-menu-option-part` rule:
+ *   { line-height: var(--ag-icon-size); padding: calc(var(--ag-spacing) + 2px) 0; }
+ * yields 12 + 2*(4+2) = 24px in medium density. 2.x menu items rendered at the
+ * `--ag-list-item-height` row rhythm (= 36px @ medium) because AG v32 sized them
+ * differently. We re-derive padding from `--ag-list-item-height` so menu items
+ * pick up the same density rhythm as grid rows — matches 2.x and stays
+ * density-responsive without extra branching. (Phase 7 finding 2026-06-13.)
+ */
+.ag-menu-option-part,
+.ag-compact-menu-option-part {
+  padding: calc((var(--ag-list-item-height) - var(--ag-icon-size)) / 2) 0;
+}
+
+/* --- Inline-editing cell: reset padding ---
+ *
+ * `.ag-ltr .ag-cell { padding-left/right: var(--salt-spacing-100) }` (above)
+ * applies to inline-editing cells too because they still carry `.ag-cell`.
+ * AG v3's own rule has `padding: 0px` but at lower specificity than our
+ * `.ag-ltr .ag-cell` selector, so the editor input gets pushed inward by
+ * 8px — visually misaligned with the cell it's replacing. Zero the padding
+ * back out for inline-editing so the editor input fills the cell content
+ * box exactly. The input itself carries its own `padding: 0 8px`
+ * (set in salt-input.css, `.ag-cell-inline-editing .ag-input-field-input`).
+ * (Phase 7 finding 2026-06-13.)
+ */
+.ag-ltr .ag-cell.ag-cell-inline-editing {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* --- Status bar height + horizontal padding ---
+ *
+ * AG v3 sets `.ag-status-bar { line-height: 1.5; padding: 0 calc(var(--ag-spacing)*4) }`
+ * and the panel inside picks up `padding: calc((var(--ag-list-item-height) -
+ * var(--ag-icon-size))/2) 0` from the menu-item rule (above), producing a
+ * 31px rendered height with 16px horizontal padding.
+ *
+ * Legacy 2.x renders at 28px (matches medium density `--salt-size-base`) with
+ * 8px horizontal padding. Re-derive both from Salt tokens so density still
+ * flows through.
+ *
+ * The panel reset undoes the menu-item-padding rule we set earlier — that
+ * rule applies to `.ag-menu-option-part`/.ag-compact-menu-option-part`, but
+ * `.ag-status-panel` also receives the calc()-padding via AG's selector
+ * cascade. Explicit `padding: 0` keeps it aligned with the line-height-driven
+ * status-bar height. (Phase 7 finding 2026-06-13.)
+ */
+.ag-status-bar {
+  line-height: var(--salt-size-base);
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+}
+
+.ag-status-bar .ag-status-panel {
+  padding: 0;
+}
+
+/* === Header sort-indicator + label-icon layout =========================
+ *
+ * Port of `packages/ag-grid-theme/css/parts/ag-header.css` lines 78-128
+ * (2.x line). AG v3's default just renders `.ag-sort-indicator-container`
+ * with `display: flex; gap: var(--ag-spacing)` right after the header
+ * cell text — so the sort arrow sits adjacent to the column label.
+ *
+ * 2.x pushed the sort-indicator container to the FAR RIGHT of the cell
+ * via `margin-left: auto` (LTR) so it lines up next to the menu hamburger
+ * icon, and applied `margin-right: auto` for right-aligned columns. The
+ * `+` adjacent-sibling selector lets the rule trigger whether the previous
+ * sibling is the `.ag-header-cell-text` (typical case) or a hidden
+ * `.ag-header-label-icon` (e.g., column-group cells where the label is
+ * `<empty/>`).
+ *
+ * The companion `.ag-sort-indicator-icon` padding restores the ~8px gap
+ * between the sort glyph and the cell edge. `.ag-header-label-icon` is
+ * also pushed right (and given trailing padding) so any icon AG v3 adds
+ * to the label slot sits next to the sort glyph instead of next to the
+ * text. (Phase 7 finding 2026-06-14.)
+ */
+
+/* Sort-indicator container alignment (vertical center within header cell) */
+.ag-sort-indicator-container {
+  align-items: center;
+}
+
+/* LTR, not right-aligned — push sort indicator to the right edge */
+.ag-ltr
+  .ag-header-cell:not(.ag-right-aligned-header)
+  .ag-header-label-icon.ag-hidden
+  + .ag-sort-indicator-container,
+.ag-ltr
+  .ag-header-cell:not(.ag-right-aligned-header)
+  .ag-header-cell-text
+  + .ag-sort-indicator-container {
+  margin-left: auto;
+}
+
+/* LTR, right-aligned — push sort indicator to the left edge */
+.ag-ltr
+  .ag-header-cell.ag-right-aligned-header
+  .ag-header-label-icon.ag-hidden
+  + .ag-sort-indicator-container,
+.ag-ltr
+  .ag-header-cell.ag-right-aligned-header
+  .ag-header-cell-text
+  + .ag-sort-indicator-container {
+  margin-right: auto;
+}
+
+/* Sort icon padding — 8px gap between glyph and cell edge */
+.ag-ltr
+  .ag-header-cell:not(.ag-right-aligned-header)
+  .ag-sort-indicator-icon {
+  padding-right: var(--salt-spacing-100);
+}
+.ag-ltr
+  .ag-header-cell.ag-right-aligned-header
+  .ag-sort-indicator-icon {
+  padding-left: var(--salt-spacing-100);
+}
+
+/* Header label icon — push right + trailing padding (LTR, not right-aligned) */
+.ag-ltr
+  .ag-header-cell:not(.ag-right-aligned-header)
+  .ag-header-label-icon {
+  margin-left: auto;
+  padding-right: var(--salt-spacing-100);
+}

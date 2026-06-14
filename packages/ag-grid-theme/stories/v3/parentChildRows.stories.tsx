@@ -19,6 +19,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import parentChildExampleColumns from "../../src/dependencies/parentChildExampleColumns";
 import parentChildExampleData from "../../src/dependencies/parentChildExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -31,7 +32,7 @@ export default {
 };
 
 export const ParentChildRows = () => (
-  <div style={{ height: 500, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
@@ -41,7 +42,7 @@ export const ParentChildRows = () => (
       getDataPath={(data) => data.orgHierarchy}
       groupDefaultExpanded={-1}
       rowData={parentChildExampleData}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

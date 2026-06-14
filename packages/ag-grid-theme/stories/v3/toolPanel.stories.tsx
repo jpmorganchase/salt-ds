@@ -23,6 +23,7 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -93,7 +94,7 @@ export default {
 };
 
 export const ToolPanel = () => (
-  <div style={{ height: 500, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
@@ -102,7 +103,7 @@ export const ToolPanel = () => (
       rowSelection="single"
       cellSelection={true}
       sideBar={sideBar}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

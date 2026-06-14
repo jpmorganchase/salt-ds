@@ -17,6 +17,7 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -45,7 +46,7 @@ export default {
 };
 
 export const SuppressMenuHide = (props: AgGridReactProps) => (
-  <div style={{ height: 500, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
@@ -56,7 +57,7 @@ export const SuppressMenuHide = (props: AgGridReactProps) => (
       cellSelection={true}
       // Default value changed in v32
       suppressMenuHide={false}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

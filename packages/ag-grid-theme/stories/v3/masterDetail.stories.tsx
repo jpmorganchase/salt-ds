@@ -6,7 +6,9 @@ import "./_setupV3";
  *   - the expander chevron in the leading column uses the `saltIconSet`
  *     "chevronDown"/"chevronRight" glyphs
  *   - the detail grid (rendered via `detailCellRenderer`) is also themed
- *     with `saltTheme` — the nested `<AgGridReact>` inherits the
+ *     with `saltTheme` — the nested `<AgGridReact
+        onGridReady={fitColumnsOnReady}
+      >` inherits the
  *     `--salt-*` tokens from the outer SaltProvider so its rows pick up
  *     the same Salt look without any extra wiring.
  *   - the first row is auto-expanded `onFirstDataRendered` so the detail
@@ -22,6 +24,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useCallback, useRef } from "react";
 import rowData from "../../src/dependencies/dataGridExampleData";
 import columnDefs from "../../src/dependencies/masterDetailExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -55,7 +58,7 @@ export const MasterDetail = () => {
   );
 
   return (
-    <div style={{ height: 500, width: 800 }}>
+    <div style={V3_STORY_CONTAINER}>
       <AgGridReact
         theme={saltTheme}
         {...saltAgGridDefaults}
@@ -76,4 +79,3 @@ export const MasterDetail = () => {
     </div>
   );
 };
-

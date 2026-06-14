@@ -20,6 +20,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 // AG Grid v33+ requires explicit module registration. Idempotent.
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
@@ -33,7 +34,7 @@ export default {
 };
 
 export const CheckboxSelection = () => (
-  <div style={{ height: 400, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
@@ -49,7 +50,7 @@ export const CheckboxSelection = () => (
           }
         });
       }}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

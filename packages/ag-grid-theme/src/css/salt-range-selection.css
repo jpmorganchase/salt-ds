@@ -93,4 +93,3 @@
 .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
   border-left: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
-

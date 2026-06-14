@@ -23,6 +23,7 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -57,14 +58,14 @@ export default {
 };
 
 export const NoDataOverlay = () => (
-  <div style={{ height: 800, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
       columnDefs={dataGridExampleColumns}
       rowData={[]}
       noRowsOverlayComponent={CustomDialog}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

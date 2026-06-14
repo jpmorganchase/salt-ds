@@ -29,6 +29,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useRef, useState } from "react";
 import customFilterExampleColumns from "../../src/dependencies/customFilterExampleColumns";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -110,7 +111,7 @@ export const CustomFilter = () => {
         </Button>
       </FlowLayout>
 
-      <div style={{ height: 400, width: 800 }}>
+      <div style={V3_STORY_CONTAINER}>
         <AgGridReact
           theme={saltTheme}
           {...saltAgGridDefaults}
@@ -127,4 +128,3 @@ export const CustomFilter = () => {
     </StackLayout>
   );
 };
-

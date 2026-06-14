@@ -42,4 +42,3 @@ if (typeof document !== "undefined") {
 }
 
 export {};
-

@@ -40,11 +40,39 @@
  * scopes inherit AG v3's default no-`inputStyle` rendering (browser
  * default plus minimal AG layout) — same as 2.x.
  */
-import { createPart, type InputStyleParams } from "ag-grid-community";
+import { createPart } from "ag-grid-community";
 import css from "../css/salt-input.css?inline";
+import type { BorderValue, ColorValue } from "./_paramTypes";
 
-export const saltInputStyle = createPart<InputStyleParams>({
+/**
+ * Subset of `InputStyleParams` that Salt opinionates on.
+ *
+ * Same pattern as `SaltTabStyleParams` in `saltTabStyle.ts`: passing the
+ * full `InputStyleParams` to `createPart`'s generic forces a value for all
+ * 27 input-style keys (inputBackgroundColor, inputBorder, … 23 more). Phase
+ * 7 only customises the rich-select popup surface; the rest stays at AG v3
+ * defaults (which Salt's bespoke CSS in salt-input.css overrides at the
+ * selector level anyway).
+ */
+export interface SaltInputStyleParams {
+  pickerListBackgroundColor: ColorValue;
+  pickerListBorder: BorderValue;
+}
+
+export const saltInputStyle = createPart<SaltInputStyleParams>({
   feature: "inputStyle",
   css,
+  // `pickerListBackgroundColor` + `pickerListBorder` feed AG v3's built-in
+  // `.ag-virtual-list-viewport.ag-rich-select-list` rule; without them the
+  // popup renders as a transparent ghost (legacy 2.x had bg + accent
+  // border + Salt overlay shadow). Box-shadow override lives in
+  // salt-input.css since AG ships no typed param for it. (Phase 7 finding.)
+  params: {
+    pickerListBackgroundColor: "var(--ag-background-color)",
+    pickerListBorder: {
+      width: "var(--salt-size-fixed-100)",
+      style: "solid",
+      color: "var(--ag-accent-color)",
+    },
+  },
 });
-

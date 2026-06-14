@@ -47,6 +47,7 @@ import { type SyntheticEvent, useMemo, useState } from "react";
 import { DropdownEditor } from "../../src/dependencies/cell-editors/DropdownEditor";
 import dataGridExampleColumnsHdCompact from "../../src/dependencies/dataGridExampleColumnsHdCompact";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -99,7 +100,7 @@ export const HDCompact = () => {
           <ToggleButton value="secondary">Secondary</ToggleButton>
           <ToggleButton value="zebra">Zebra</ToggleButton>
         </ToggleButtonGroup>
-        <div style={{ height: 500, width: 800 }}>
+        <div style={V3_STORY_CONTAINER}>
           <AgGridReact
             theme={themed}
             {...saltAgGridDefaults}
@@ -116,10 +117,10 @@ export const HDCompact = () => {
               });
             }}
             components={{ DropdownEditor }}
+            onGridReady={fitColumnsOnReady}
           />
         </div>
       </StackLayout>
     </Provider>
   );
 };
-

@@ -21,6 +21,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -82,8 +83,8 @@ export const StatusBar = () => (
             }
           });
         }}
+        onGridReady={fitColumnsOnReady}
       />
     </div>
   </StackLayout>
 );
-

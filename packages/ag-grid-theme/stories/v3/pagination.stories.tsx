@@ -20,6 +20,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -44,7 +45,7 @@ export default {
 };
 
 export const Pagination = () => (
-  <div style={{ height: 500, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={saltTheme}
       {...saltAgGridDefaults}
@@ -52,7 +53,7 @@ export const Pagination = () => (
       pagination
       paginationPageSize={100}
       rowData={generateData(dataGridExampleData)}
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-

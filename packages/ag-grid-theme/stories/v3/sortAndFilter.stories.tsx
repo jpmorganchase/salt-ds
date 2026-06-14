@@ -32,6 +32,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import { useRef } from "react";
 import rowData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -85,7 +86,7 @@ export const SortAndFilter = () => {
   };
 
   return (
-    <div style={{ height: 500, width: 800 }}>
+    <div style={V3_STORY_CONTAINER}>
       <AgGridReact
         theme={saltTheme}
         {...saltAgGridDefaults}
@@ -96,4 +97,3 @@ export const SortAndFilter = () => {
     </div>
   );
 };
-

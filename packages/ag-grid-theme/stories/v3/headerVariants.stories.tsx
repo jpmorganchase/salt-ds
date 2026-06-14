@@ -48,6 +48,7 @@ import { AgGridReact } from "ag-grid-react";
 import { type SyntheticEvent, useMemo, useState } from "react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -116,15 +117,15 @@ export const HeaderVariants = () => {
           </ToggleButtonGroup>
         </StackLayout>
       </FlexLayout>
-      <div style={{ height: 400, width: 800 }}>
+      <div style={V3_STORY_CONTAINER}>
         <AgGridReact
           theme={themedForVariant}
           {...saltAgGridDefaults}
           columnDefs={dataGridExampleColumns}
           rowData={dataGridExampleData}
+          onGridReady={fitColumnsOnReady}
         />
       </div>
     </StackLayout>
   );
 };
-

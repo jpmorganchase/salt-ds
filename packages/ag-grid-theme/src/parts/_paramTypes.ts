@@ -17,4 +17,3 @@ export type {
   ScaleValue,
   ShadowValue,
 } from "ag-grid-community";
-

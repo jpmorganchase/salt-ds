@@ -17,6 +17,7 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -42,16 +43,16 @@ export default {
 export const LoadingOverlay = () => (
   <StackLayout gap={4}>
     <div style={{ position: "relative" }}>
-      <div style={{ height: 500, width: 800 }} tabIndex={-1}>
+      <div style={V3_STORY_CONTAINER} tabIndex={-1}>
         <AgGridReact
           theme={saltTheme}
           {...saltAgGridDefaults}
           columnDefs={dataGridExampleColumns}
           loadingOverlayComponent={CustomOverlay}
           rowData={undefined}
+          onGridReady={fitColumnsOnReady}
         />
       </div>
     </div>
   </StackLayout>
 );
-

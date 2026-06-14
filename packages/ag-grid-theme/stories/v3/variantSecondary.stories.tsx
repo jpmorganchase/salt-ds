@@ -18,6 +18,7 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import dataGridExampleColumns from "../../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../../src/dependencies/dataGridExampleData";
+import { V3_STORY_CONTAINER, fitColumnsOnReady } from "./_storyDefaults";
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -32,14 +33,14 @@ export default {
 };
 
 export const VariantSecondary = () => (
-  <div style={{ height: 400, width: 800 }}>
+  <div style={V3_STORY_CONTAINER}>
     <AgGridReact
       theme={themedSecondary}
       {...saltAgGridDefaults}
       columnDefs={dataGridExampleColumns}
       rowData={dataGridExampleData}
       rowSelection="multiple"
+      onGridReady={fitColumnsOnReady}
     />
   </div>
 );
-
