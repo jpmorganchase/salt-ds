@@ -68,7 +68,7 @@
     },
     "require_human_review_for": {
       "type": "array",
-      "description": "Optional policy rules that escalate matching changes to human review. Matches surface as blocking findings on `salt-ds review` with rule id `policy.require_human_review_for.<kind>`, and the PreToolUse agent hook emits `permissionDecision: ask` for the same matches. See `packages/cli/docs/ci-integration.md` for composing the CLI exit code with your existing CI bypass conventions.",
+      "description": "Optional policy rules that escalate matching changes to human review. Matches surface as blocking findings on the `review_salt_ui` MCP tool with rule id `policy.require_human_review_for.<kind>`, and the PreToolUse agent hook (`salt-ds hook`) emits `permissionDecision: ask` for the same matches. See `packages/cli/docs/ci-integration.md` for composing the CLI exit code with your existing CI bypass conventions.",
       "items": {
         "$ref": "#/$defs/humanReviewRule"
       }
@@ -335,7 +335,7 @@
     "humanReviewRule": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Single rule consulted by `salt-ds review` (file scan) and `salt-ds review --hook` (PreToolUse). A match escalates the change to human review and emits a blocking `policy.require_human_review_for.<kind>` finding. See `packages/cli/docs/ci-integration.md` for composing the CLI exit code with your existing CI bypass conventions.",
+      "description": "Single rule consulted by the `review_salt_ui` MCP tool (file scan) and `salt-ds hook` (PreToolUse). A match escalates the change to human review and emits a blocking `policy.require_human_review_for.<kind>` finding. See `packages/cli/docs/ci-integration.md` for composing the CLI exit code with your existing CI bypass conventions.",
       "properties": {
         "kind": {
           "type": "string",

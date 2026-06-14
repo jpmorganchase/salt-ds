@@ -287,8 +287,8 @@ function formatReviewHookBlockingReason(
 ): string {
   const header =
     findings.length === 1
-      ? "salt-ds review blocked 1 finding before commit:"
-      : `salt-ds review blocked ${findings.length} findings before commit:`;
+      ? "salt-ds hook blocked 1 finding before commit:"
+      : `salt-ds hook blocked ${findings.length} findings before commit:`;
   const body = findings.slice(0, 20).map((finding) => {
     const ruleSuffix = finding.ruleId ? ` [${finding.ruleId}]` : "";
     return `- ${finding.path}: ${finding.message}${ruleSuffix}`;

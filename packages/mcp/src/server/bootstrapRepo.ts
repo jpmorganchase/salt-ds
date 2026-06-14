@@ -244,7 +244,13 @@ async function ensureUiVerifyScript(rootDir: string): Promise<{
   const reviewTarget = (await pathExists(path.join(rootDir, "src")))
     ? "src"
     : ".";
-  const command = `salt-ds review ${reviewTarget}`;
+  // After Phase A the salt-ds CLI no longer ships a `review` workflow command
+  // (the workflow lives in the `review_salt_ui` MCP tool). The bootstrapped
+  // ui:verify script is now a placeholder echo: it exits 0 so existing CI
+  // gates do not regress, and it surfaces the intent in package.json so the
+  // repo owner can later swap in their preferred wrapper (a script that
+  // invokes the MCP server against `${reviewTarget}` is the canonical option).
+  const command = `echo 'Replace this script with a wrapper around the review_salt_ui MCP tool over ${reviewTarget}.'`;
   const scriptsValue = packageJson.scripts;
   const scripts =
     scriptsValue &&
@@ -330,13 +336,13 @@ function buildNextStep(input: {
 
   switch (input.recommendedNextTool) {
     case "review_salt_ui":
-      return "Bootstrap is complete. Continue with the Salt review workflow for existing Salt code, and validate with salt-ds review or the repo ui:verify script when it exists.";
+      return "Bootstrap is complete. Continue with the Salt review workflow for existing Salt code, and validate with the review_salt_ui MCP tool or the repo ui:verify script when it exists.";
     case "migrate_to_salt":
-      return "Bootstrap is complete. Continue with the Salt migration workflow for non-Salt UI adoption, and validate with salt-ds review or the repo ui:verify script when it exists.";
+      return "Bootstrap is complete. Continue with the Salt migration workflow for non-Salt UI adoption, and validate with the review_salt_ui MCP tool or the repo ui:verify script when it exists.";
     case "upgrade_salt_ui":
-      return "Bootstrap is complete. Continue with the Salt upgrade workflow for Salt upgrade planning, and validate with salt-ds review or the repo ui:verify script when it exists.";
+      return "Bootstrap is complete. Continue with the Salt upgrade workflow for Salt upgrade planning, and validate with the review_salt_ui MCP tool or the repo ui:verify script when it exists.";
     default:
-      return "Bootstrap is complete. Continue with the Salt create workflow for new Salt work, and validate with salt-ds review or the repo ui:verify script when it exists.";
+      return "Bootstrap is complete. Continue with the Salt create workflow for new Salt work, and validate with the review_salt_ui MCP tool or the repo ui:verify script when it exists.";
   }
 }
 

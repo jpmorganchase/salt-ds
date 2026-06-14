@@ -895,7 +895,7 @@ describe("salt cli", () => {
 
     const agents = await fs.readFile(path.join(rootDir, "AGENTS.md"), "utf8");
     expect(agents).toContain(".salt/team.json");
-    expect(agents).toContain("salt-ds review");
+    expect(agents).toContain("review_salt_ui");
     expect(agents).toContain("Do not invent Salt APIs");
     expect(agents).toContain("run the repo `ui:verify` script");
     expect(agents).toContain("canonical-only");
@@ -1141,7 +1141,9 @@ describe("salt cli", () => {
     const packageJson = JSON.parse(
       await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
     ) as { scripts?: Record<string, string> };
-    expect(packageJson.scripts?.["ui:verify"]).toBe("salt-ds review src");
+    expect(packageJson.scripts?.["ui:verify"]).toMatch(
+      /^echo 'Replace this script with a wrapper around the review_salt_ui MCP tool over (src|\.)\.'$/,
+    );
   });
 
   it("bootstraps the fact-free Salt AI setup path through init --ai", async () => {
@@ -1214,7 +1216,9 @@ describe("salt cli", () => {
     const packageJson = JSON.parse(
       await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
     ) as { scripts?: Record<string, string> };
-    expect(packageJson.scripts?.["ui:verify"]).toBe("salt-ds review src");
+    expect(packageJson.scripts?.["ui:verify"]).toMatch(
+      /^echo 'Replace this script with a wrapper around the review_salt_ui MCP tool over (src|\.)\.'$/,
+    );
   });
 
   it("upgrades a legacy unmarked AGENTS bootstrap snippet into the managed Salt block", async () => {
@@ -2235,7 +2239,7 @@ describe("salt cli", () => {
 
     expect(code).toBe(2);
     expect(stdout).toBe("");
-    expect(stderr).toMatch(/salt-ds review blocked/);
+    expect(stderr).toMatch(/salt-ds hook blocked/);
     expect(stderr).toMatch(/App\.tsx/);
   });
 
@@ -2832,7 +2836,7 @@ describe("salt cli", () => {
 
     expect(code).toBe(2);
     expect(stdout).toBe("");
-    expect(stderr).toMatch(/salt-ds review blocked/);
+    expect(stderr).toMatch(/salt-ds hook blocked/);
   });
 
   it("verify exits 0 when attestations match on-disk file hashes", async () => {

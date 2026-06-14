@@ -198,8 +198,8 @@ function uniqueEvidenceRefs(refs: SaltEvidenceRef[]): SaltEvidenceRef[] {
 
 function nextAction(workflow: SaltWorkflowFollowupReportWorkflow): string {
   return workflow === "migration"
-    ? "Run salt-ds review on the migrated files and attach a source-backed migration verification contract when available."
-    : "Run salt-ds review on the upgraded files and attach source-backed upgrade validation evidence when available.";
+    ? "Run the review_salt_ui MCP tool on the migrated files and attach a source-backed migration verification contract when available."
+    : "Run the review_salt_ui MCP tool on the upgraded files and attach source-backed upgrade validation evidence when available.";
 }
 
 function buildWorkflowInputEvidenceRef(input: {

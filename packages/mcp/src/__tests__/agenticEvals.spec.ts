@@ -233,7 +233,7 @@ describe("deterministic agentic evals", () => {
         bounded_scope: expect.arrayContaining([expect.any(String)]),
         starter_plan: expect.arrayContaining([expect.any(String)]),
         verify: expect.arrayContaining([
-          "Run salt-ds review on the changed files after the first implementation pass.",
+          "Run the review_salt_ui MCP tool on the changed files after the first implementation pass.",
         ]),
       },
     });
@@ -734,7 +734,7 @@ describe("deterministic agentic evals", () => {
       top_findings: expect.arrayContaining([expect.any(String)]),
       safest_next_fix: expect.any(String),
       verify: expect.arrayContaining([
-        "Rerun salt-ds review on the changed files.",
+        "Rerun the review_salt_ui MCP tool on the changed files.",
       ]),
     });
     expect(result.result.issues).toEqual(

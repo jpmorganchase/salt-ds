@@ -1372,7 +1372,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .boolean()
         .optional()
         .describe(
-          "Add a repo-local ui:verify script wrapper around salt-ds review. Omit to leave package.json unchanged by default.",
+          "Add a repo-local ui:verify placeholder script that points repo owners at the review_salt_ui MCP tool. Omit to leave package.json unchanged by default.",
         ),
     },
     outputSchema: BOOTSTRAP_OUTPUT_SCHEMA,
@@ -1579,7 +1579,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "migrate_to_salt",
     description:
-      "Primary fit for the salt-ds migrate workflow. Use this to convert non-Salt UI code, external UI (Material UI, Chakra UI, Ant Design, in-house React), a mockup or screen outline, or a rough interface description that needs to be translated into Salt primitives, patterns, and migration steps. It returns canonical Salt migration guidance plus repo-policy artifacts from the resolved project context when declared policy exists. If context_id is omitted, the MCP collects repo context automatically before continuing.",
+      "Primary fit for the Salt migrate workflow. Use this to convert non-Salt UI code, external UI (Material UI, Chakra UI, Ant Design, in-house React), a mockup or screen outline, or a rough interface description that needs to be translated into Salt primitives, patterns, and migration steps. It returns canonical Salt migration guidance plus repo-policy artifacts from the resolved project context when declared policy exists. If context_id is omitted, the MCP collects repo context automatically before continuing.",
     inputSchema: {
       code: z
         .string()
@@ -1918,7 +1918,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "review_salt_ui",
     description:
-      "Primary fit for the salt-ds review workflow, and also used inside upgrade flows. Analyze existing React and Salt code. Validate usage, detect deprecated APIs and patterns, suggest fixes, and surface migration guidance. If context_id is omitted, the MCP collects repo context automatically before continuing.",
+      "Primary fit for the Salt review workflow, and also used inside upgrade flows. Analyze existing React and Salt code. Validate usage, detect deprecated APIs and patterns, suggest fixes, and surface migration guidance. If context_id is omitted, the MCP collects repo context automatically before continuing.",
     inputSchema: {
       code: z.string().describe("Source code to analyze."),
       framework: z.string().optional(),
@@ -1998,7 +1998,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "upgrade_salt_ui",
     description:
-      "Primary fit for the salt-ds upgrade workflow after project context is known. Explain Salt upgrade impact between versions, highlight breaking changes, and suggest the next migration actions.",
+      "Primary fit for the Salt upgrade workflow after project context is known. Explain Salt upgrade impact between versions, highlight breaking changes, and suggest the next migration actions.",
     inputSchema: {
       package: z.string().optional(),
       component_name: z.string().optional(),
