@@ -1,0 +1,211 @@
+/* Phase 8 port of `packages/ag-grid-theme/css/parts/ag-buttons.css` (2.x line).
+ *
+ * The 4-way `.ag-theme-salt-{light,dark,compact-light,compact-dark}` selector
+ * scoping is stripped — AG v3 auto-wraps in `:where(.ag-theme-part-N)`.
+ *
+ * Despite the legacy filename, this file covers six concerns:
+ *   1. `.ag-standard-button` base + hover + accent "Apply Filter" variant
+ *   2. `button[class^="ag-"]:focus` outline (button focus ring)
+ *   3. Filter menu layout (.ag-menu .ag-filter-body-wrapper, .ag-mini-filter,
+ *      .ag-set-filter-item, .ag-simple-filter-body-wrapper)
+ *   4. Status bar (border-top, color, font, height, padding) +
+ *      status-name-value spacing
+ *   5. Paging panel + floating-bottom borders
+ *   6. Column drop horizontal (border-bottom, height) +
+ *      .ag-column-drop-cell border-radius
+ *
+ * Skipped from the port:
+ *   - `.ag-keyboard-focus .ag-header-cell:focus::after { border: 0 }`
+ *     (ag-buttons.css lines 55-60) — covered by `.ag-header-cell:focus-visible::after`
+ *     in `salt-focus-ring.css` (v3 uses `:focus-visible` instead of the older
+ *     `.ag-keyboard-focus` ancestor class).
+ *
+ * (Phase 8 port 2026-06-14.)
+ */
+
+/* ===== 1. .ag-standard-button =======================================
+ *
+ * AG v3's `buttonStyleQuartz` (auto-composed by `createTheme()`) provides
+ * a baseline `.ag-standard-button` rendering; this override replaces it
+ * with the Salt actionable-subtle look (used in filter Cancel / Reset).
+ * The Apply button gets the Salt accented-bold (primary CTA) treatment
+ * via the `[ref|data-ref="applyFilterButton"]` selector below.
+ */
+.ag-standard-button {
+  background: var(--salt-actionable-subtle-background);
+  border: 0;
+  color: var(--salt-actionable-subtle-foreground);
+  font-size: var(--salt-text-fontSize);
+  font-weight: 600;
+  height: var(--salt-size-base);
+  padding: 0 var(--salt-spacing-100);
+  text-transform: uppercase;
+}
+
+.ag-standard-button:hover {
+  background-color: var(--salt-actionable-subtle-background-hover);
+  color: var(--salt-actionable-subtle-foreground-hover);
+}
+
+/* Gap between buttons in the filter apply panel. */
+.ag-ltr .ag-filter-apply-panel-button {
+  margin-left: var(--salt-spacing-100);
+}
+
+/* Apply Filter button — accented (primary CTA) variant.
+ *
+ * AG Grid migrated from `ref="..."` to `data-ref="..."` in a recent v3
+ * release. Both attribute forms are matched so the rule survives the
+ * transition. */
+.ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+.ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
+  background: var(--salt-actionable-accented-bold-background);
+  color: var(--salt-actionable-accented-bold-foreground);
+}
+
+.ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+.ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
+  background: var(--salt-actionable-accented-bold-background-hover);
+  color: var(--salt-actionable-accented-bold-foreground-hover);
+}
+
+/* ===== 2. Button focus ring =========================================
+ *
+ * AG buttons / button-typed inputs get a `box-shadow` focus ring from
+ * `buttonStyleQuartz`. Replace it with the Salt outline so the focus
+ * indicator matches the rest of the grid (cells, header cells, etc.).
+ *
+ * Uses `:focus` rather than `:focus-visible` because some AG button
+ * interactions are click-driven and `:focus-visible` filters those out;
+ * a Salt-styled grid that suppressed the focus ring on click would be
+ * harder to navigate for screen-reader users alternating between mouse
+ * and keyboard. (Matches the 2.x line.)
+ */
+button[class^="ag-"]:focus,
+input[class^="ag-"][type="button"]:focus {
+  box-shadow: none;
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+
+/* ===== 3. Filter menu layout =========================================
+ *
+ * `.ag-filter-body-wrapper` is the form area inside a column filter menu.
+ * Re-flow it as a vertical flex column with consistent 8px gaps between
+ * fields (the AG default uses inline-block + line-breaks, which left
+ * inconsistent vertical rhythm vs. Salt forms).
+ */
+.ag-menu .ag-filter-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  margin-top: var(--salt-spacing-100);
+}
+
+.ag-menu .ag-menu-column-select-wrapper {
+  margin-top: var(--salt-spacing-100);
+}
+
+/* Each direct child of `.ag-simple-filter-body-wrapper` gets 8px of
+ * trailing margin so the form fields stack with consistent spacing. */
+.ag-simple-filter-body-wrapper > * {
+  margin-bottom: var(--salt-spacing-100);
+}
+
+/* Mini-filter (search box at the top of set-filter and column-select).
+ * Reset margin + add Salt 4px inline padding so the input aligns with
+ * the option rows below. */
+.ag-mini-filter {
+  margin: 0;
+  padding-left: var(--salt-spacing-50);
+  padding-right: var(--salt-spacing-50);
+}
+
+/* Set-filter rows (checkbox + label list inside a set filter). */
+.ag-set-filter-item {
+  margin: 0;
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+}
+
+/* ===== 4. Status bar ================================================
+ *
+ * The footer strip below the grid body. AG v3's default renders it
+ * 31px tall with 16px horizontal padding (`line-height: 1.5; padding: 0
+ * calc(var(--ag-spacing)*4)`); 2.x rendered at the Salt base size with
+ * 8px horizontal padding. Reset both, plus the border-top divider, font,
+ * and content colour.
+ *
+ * NOTE: this rule replaces the narrower `.ag-status-bar { line-height +
+ * padding-left + padding-right }` that previously lived in
+ * `salt-cell-states.css`. The complete ruleset is here so it ships as
+ * one cohesive block matching the legacy `ag-buttons.css` lines 120-149.
+ */
+.ag-status-bar {
+  border: none;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-container-primary-borderColor);
+  color: var(--salt-content-secondary-foreground);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-label-fontWeight);
+  /* Center text vertically by matching line-height to height */
+  line-height: var(--salt-size-base);
+  height: var(--salt-size-base);
+  padding: 0 var(--salt-spacing-100);
+}
+
+/* The status panels (Total Rows, Selected Rows, etc.) sit inside
+ * `.ag-status-bar`. Strip the default padding so the parent's 8px
+ * horizontal padding controls the rhythm. (Kept from a previous Phase 7
+ * fix; redundant here only if the menu-item padding rule still applies.) */
+.ag-status-bar .ag-status-panel {
+  padding: 0;
+}
+
+/* Status name+value pair (e.g. "Total Rows: 1,234"). Margin replaces
+ * the AG default's 8px padding so adjacent panels touch at the
+ * inter-panel gap, not the panel edges. */
+.ag-status-name-value {
+  padding: 0;
+  margin: 0 var(--salt-spacing-100);
+}
+
+/* The numeric/text value inside a status panel — bold + primary
+ * foreground (contrasts with the secondary-grey panel label). */
+.ag-status-name-value-value {
+  font-weight: var(--salt-text-fontWeight-strong);
+  color: var(--salt-content-primary-foreground);
+}
+
+/* ===== 5. Paging panel + floating-bottom borders ==================== */
+.ag-paging-panel {
+  border-color: var(--salt-separable-secondary-borderColor);
+}
+
+.ag-floating-bottom {
+  border-color: var(--salt-container-primary-borderColor);
+}
+
+/* ===== 6. Column drop horizontal (Row Group Panel container) ========
+ *
+ * The horizontal drop zone above the grid for Row Group Panel and
+ * Pivot Panel. Gets a Salt-tertiary border-bottom and the Salt base
+ * height so its rhythm matches the header row.
+ *
+ * NOTE: `.ag-column-drop-cell { border-radius: 0 }` is also already
+ * applied by `saltColumnDropStyle` (which composes via
+ * `feature: "columnDropStyle"`); having it here too is idempotent and
+ * keeps the rule co-located with its sibling container rule.
+ */
+.ag-column-drop-horizontal {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-container-primary-borderColor);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+.ag-column-drop-cell {
+  border-radius: 0;
+}

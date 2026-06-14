@@ -303,6 +303,68 @@ When a phase prompt refers to "§X.Y of the proposal", here's the index:
     - `contextMenu.stories.tsx` (0-byte stub — needs authoring)
     - `icons` story (missing in v3)
 
+- **2026-06-14 (Phase 8.2 — ag-buttons.css port)** — Despite the
+  legacy filename, `ag-buttons.css` covered six concerns (buttons +
+  button focus + filter menu layout + status bar + paging/floating-bottom
+  borders + column-drop-horizontal container). All 179 lines ported as a
+  single coherent unit since they shipped together in 2.x.
+
+  Files touched:
+
+  - **NEW** `src/css/salt-buttons.css` (211 lines) — six rule groups:
+    1. `.ag-standard-button` Salt-actionable-subtle base + hover + accent
+       "Apply Filter" variant (matches both `[ref=...]` and `[data-ref=...]`
+       attribute forms — AG migrated between them in a recent v3 release).
+    2. `button[class^="ag-"]:focus` outline overrides `buttonStyleQuartz`'s
+       box-shadow focus ring with the Salt outline. Uses `:focus` (not
+       `:focus-visible`) to match 2.x — keeps the focus indicator visible
+       even after a click for users alternating mouse + keyboard.
+    3. Filter menu layout: `.ag-filter-body-wrapper` flex column,
+       `.ag-menu-column-select-wrapper` top margin,
+       `.ag-simple-filter-body-wrapper > *` 8px trailing margin,
+       `.ag-mini-filter` + `.ag-set-filter-item` reset margin + Salt padding.
+    4. Status bar: border-top, color, font-size, font-weight, line-height,
+       height, padding (full rule replaces the narrower "line-height +
+       horizontal padding" rule previously in salt-cell-states.css — see
+       below) plus `.ag-status-name-value` margin and
+       `.ag-status-name-value-value` bold+primary-fg.
+    5. `.ag-paging-panel` + `.ag-floating-bottom` border-color tokens.
+    6. `.ag-column-drop-horizontal` border-bottom + height (the Row Group /
+       Pivot Panel container above the grid) + `.ag-column-drop-cell`
+       border-radius: 0 (idempotent with `saltColumnDropStyle`'s rule).
+
+  - **NEW** `src/parts/saltButtonStyle.ts` (34 lines) — always-on part
+    wrapping `salt-buttons.css`. No `feature` key, composes additively over
+    AG v3's auto-loaded `buttonStyleQuartz` (same pattern as
+    `saltCheckboxStyle` over `checkboxStyleDefault`). AG's base button
+    rendering still ships for layout / sizing primitives; the Salt colour /
+    border / focus rules win via cascading order. Consumers can opt out
+    with `saltTheme.withoutPart(saltButtonStyle)`.
+
+  - `src/saltTheme.ts`: imported + composed `saltButtonStyle` right after
+    `saltCellStates` (menus / cell state / button style cluster).
+
+  - `src/css/salt-cell-states.css`: **REMOVED** the partial Phase 7
+    `.ag-status-bar { line-height + padding-left + padding-right }` block.
+    The complete status-bar ruleset now lives in `salt-buttons.css`
+    alongside its sibling `.ag-status-name-value*` rules and the related
+    paging / floating-bottom border rules — ships as the cohesive block
+    the legacy `ag-buttons.css` lines 120-149 intended.
+
+  Skipped from the port:
+    - `.ag-keyboard-focus .ag-header-cell:focus::after { border: 0 }`
+      (ag-buttons.css lines 55-60) — already covered by
+      `.ag-header-cell:focus-visible::after { border: none }` in
+      `salt-focus-ring.css` (v3 uses `:focus-visible` instead of the older
+      `.ag-keyboard-focus` ancestor class).
+
+  Remaining migration work after Phase 8.2:
+    - `ag-column-drop-list.css` hover/active/expanded cascade (≈10 lines)
+    - `ag-tool-panel.css` (35 lines)
+    - `ag-toggle-button.css` (13 lines)
+    - `contextMenu.stories.tsx` (0-byte stub)
+    - `icons` story (missing in v3)
+
 ## When something changes
 
 Update this hand-off (`MIGRATION_HANDOFF.md`) whenever:

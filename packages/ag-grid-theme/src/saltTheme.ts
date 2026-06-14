@@ -36,6 +36,7 @@
  * `saltTheme.withPart(colorSchemeVariable)` (proposal §4.8).
  */
 import { checkboxStyleDefault, createTheme } from "ag-grid-community";
+import { saltButtonStyle } from "./parts/saltButtonStyle";
 import { saltCellStates } from "./parts/saltCellStates";
 import { saltCheckboxStyle } from "./parts/saltCheckboxStyle";
 import { saltColumnDropStyle } from "./parts/saltColumnDropStyle";
@@ -60,6 +61,7 @@ export const saltTheme = createTheme()
   .withPart(saltHeaderDividerPrimary) // default; swappable via saltHeaderDivider{Secondary,Tertiary,None}
   .withPart(saltHeaderLayout) // always-on header layout rules — variant-independent (Phase 8)
   .withPart(saltCellStates) // app-level state classes (.error-cell, ...)
+  .withPart(saltButtonStyle) // .ag-standard-button + filter menu + status bar + paging + column-drop layout (Phase 8)
   .withPart(saltFocusRing) // unified focus rings
   .withPart(saltRangeSelectionAdjustments) // cross-cell outline, fill handle, etc.
   // ---------- parameters (the salt-tokens bridge) ----------

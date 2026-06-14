@@ -224,33 +224,6 @@
   padding-right: 0;
 }
 
-/* --- Status bar height + horizontal padding ---
- *
- * AG v3 sets `.ag-status-bar { line-height: 1.5; padding: 0 calc(var(--ag-spacing)*4) }`
- * and the panel inside picks up `padding: calc((var(--ag-list-item-height) -
- * var(--ag-icon-size))/2) 0` from the menu-item rule (above), producing a
- * 31px rendered height with 16px horizontal padding.
- *
- * Legacy 2.x renders at 28px (matches medium density `--salt-size-base`) with
- * 8px horizontal padding. Re-derive both from Salt tokens so density still
- * flows through.
- *
- * The panel reset undoes the menu-item-padding rule we set earlier — that
- * rule applies to `.ag-menu-option-part`/.ag-compact-menu-option-part`, but
- * `.ag-status-panel` also receives the calc()-padding via AG's selector
- * cascade. Explicit `padding: 0` keeps it aligned with the line-height-driven
- * status-bar height. (Phase 7 finding 2026-06-13.)
- */
-.ag-status-bar {
-  line-height: var(--salt-size-base);
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
-}
-
-.ag-status-bar .ag-status-panel {
-  padding: 0;
-}
-
 /* === Header sort-indicator + label-icon layout =========================
  *
  * Port of `packages/ag-grid-theme/css/parts/ag-header.css` lines 78-128
