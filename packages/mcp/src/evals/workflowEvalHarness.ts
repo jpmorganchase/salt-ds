@@ -2021,153 +2021,6 @@ export function judgeWorkflowEvalScenario(
   };
 }
 
-export const CLI_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
-  id: "cli-local",
-  transport: "cli",
-  supports: (scenario) => scenario.capabilities.cli === true,
-  run: async (scenario, context) => {
-    const startedAt = Date.now();
-    try {
-      const executable = await resolveExecutableScript(
-        "cli",
-        context.repo_root,
-      );
-
-      const cliArgs = [...(scenario.args.cli?.argv ?? [])];
-      if (!cliArgs.includes("--json")) {
-        cliArgs.push("--json");
-      }
-      if (!cliArgs.includes("--registry-dir")) {
-        cliArgs.push("--registry-dir", context.registry_dir);
-      }
-
-      const result = await runProcess(
-        process.execPath,
-        [executable.script_path, ...cliArgs],
-        {
-          cwd: scenario.fixture.root_dir,
-          timeout_ms: context.timeout_ms ?? 120_000,
-        },
-      );
-
-      const acceptedWorkflowExitCodes = new Set([0, 10, 20, 30]);
-      const raw = safeJsonParse(result.stdout);
-
-      if (!acceptedWorkflowExitCodes.has(result.exit_code ?? -1)) {
-        return attachWorkflowEvalMetrics(
-          {
-            scenario_id: scenario.id,
-            runner_id: "cli-local",
-            status: "failed",
-            transport_trace: [
-              {
-                transport: "cli",
-                status: "failed",
-                detail: `CLI exited with code ${String(result.exit_code)}.`,
-              },
-            ],
-            workflow_result: null,
-            transcript: [scenario.task.prompt, "CLI process failed."],
-            artifacts: {
-              files: [scenario.fixture.root_dir],
-              logs: [result.stderr.trim(), result.stdout.trim()].filter(
-                Boolean,
-              ),
-            },
-          },
-          startedAt,
-        );
-      }
-
-      if (!raw) {
-        return attachWorkflowEvalMetrics(
-          {
-            scenario_id: scenario.id,
-            runner_id: "cli-local",
-            status: "failed",
-            transport_trace: [
-              {
-                transport: "cli",
-                status: "failed",
-                detail: `CLI exited with code ${String(result.exit_code)} but did not emit parseable JSON.`,
-              },
-            ],
-            workflow_result: null,
-            transcript: [
-              scenario.task.prompt,
-              "CLI JSON output was not parseable.",
-            ],
-            artifacts: {
-              files: [scenario.fixture.root_dir],
-              logs: [result.stderr.trim(), result.stdout.trim()].filter(
-                Boolean,
-              ),
-            },
-          },
-          startedAt,
-        );
-      }
-
-      const workflowResult = await normalizeCliWorkflowResult(scenario, raw);
-      return attachWorkflowEvalMetrics(
-        {
-          scenario_id: scenario.id,
-          runner_id: "cli-local",
-          status: "passed",
-          transport_trace: [
-            {
-              transport: "cli",
-              status: "succeeded",
-              detail: `Executed ${scenario.task.workflow} through the real salt-ds CLI process (${executable.source}).`,
-            },
-          ],
-          workflow_result: workflowResult,
-          transcript: [
-            scenario.task.prompt,
-            `Used the real CLI runner for ${scenario.task.workflow}.`,
-          ],
-          artifacts: {
-            files: [scenario.fixture.root_dir],
-            logs: compactStrings([
-              executable.build_error?.trim(),
-              result.stderr.trim(),
-            ]),
-          },
-        },
-        startedAt,
-      );
-    } catch (error) {
-      return attachWorkflowEvalMetrics(
-        {
-          scenario_id: scenario.id,
-          runner_id: "cli-local",
-          status: "failed",
-          transport_trace: [
-            {
-              transport: "cli",
-              status: "failed",
-              detail:
-                error instanceof Error
-                  ? error.message
-                  : "CLI runner failed unexpectedly.",
-            },
-          ],
-          workflow_result: null,
-          transcript: [scenario.task.prompt, "CLI runner failed."],
-          artifacts: {
-            files: [scenario.fixture.root_dir],
-            logs: [
-              error instanceof Error
-                ? (error.stack ?? error.message)
-                : String(error),
-            ],
-          },
-        },
-        startedAt,
-      );
-    }
-  },
-};
 
 export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
   id: "mcp-local",
@@ -2384,7 +2237,6 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
 
 export const WORKFLOW_LOCAL_EVAL_RUNNERS: WorkflowEvalRunner[] = [
   MCP_LOCAL_EVAL_RUNNER,
-  CLI_LOCAL_EVAL_RUNNER,
 ];
 
 function orderScenarioTransports(
@@ -2420,7 +2272,7 @@ export async function runWorkflowEvalScenario(
   const startedAt = Date.now();
   const runners = options.runners ?? WORKFLOW_LOCAL_EVAL_RUNNERS;
   const enabledTransports = new Set(
-    options.enabled_transports ?? ["mcp", "cli"],
+    options.enabled_transports ?? ["mcp"],
   );
   const orderedTransports = orderScenarioTransports(scenario);
   const combinedTrace: Omit<WorkflowEvalTrace, "metrics"> = {

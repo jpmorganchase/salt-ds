@@ -86,17 +86,17 @@ function parseArgs(argv: string[]): ParsedArgs {
 }
 
 function toEnabledTransports(runnerIds: string[]): EvalTransport[] {
+  // CLI workflow commands were removed in favour of MCP-only delivery. The
+  // eval harness now exercises only the MCP runner; CLI runner ids passed
+  // via --runner are silently ignored.
   const transports = new Set<EvalTransport>();
   for (const runnerId of runnerIds) {
     if (runnerId.startsWith("mcp")) {
       transports.add("mcp");
     }
-    if (runnerId.startsWith("cli")) {
-      transports.add("cli");
-    }
   }
 
-  return transports.size > 0 ? [...transports] : ["mcp", "cli"];
+  return transports.size > 0 ? [...transports] : ["mcp"];
 }
 
 export async function runCli(

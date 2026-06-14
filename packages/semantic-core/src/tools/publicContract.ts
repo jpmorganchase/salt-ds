@@ -427,112 +427,49 @@ function buildPackageInstallCommand(
 }
 
 function buildToolCallCliHint(step: PublicToolCallStep): string | null {
-  const query =
-    readStringValue(step.args.query) ?? readStringValue(step.args.target);
-
+  // The Salt workflow CLI commands (create / review / migrate / upgrade) were
+  // removed in favour of MCP-only delivery. Only support-tier tools still have
+  // a CLI mirror — `get_salt_project_context` maps to `salt-ds info --json`.
+  // All other branches return null so action hints surface the `mcp` shape only.
   switch (step.tool) {
     case "get_salt_project_context":
       return "salt-ds info --json";
     case "create_salt_ui":
-      return query ? `salt-ds create ${quoteCliArgument(query)} --json` : null;
     case "review_salt_ui":
-      return "salt-ds review <changed-path> --json";
     case "migrate_to_salt":
-      return query ? `salt-ds migrate ${quoteCliArgument(query)} --json` : null;
-    case "upgrade_salt_ui": {
-      const packageName = readStringValue(step.args.package);
-      const component = readStringValue(step.args.component);
-      const fromVersion = readStringValue(step.args.from_version);
-      const target = packageName
-        ? ` --package ${quoteCliArgument(packageName)}`
-        : component
-          ? ` --component ${quoteCliArgument(component)}`
-          : "";
-      const from = fromVersion
-        ? ` --from-version ${quoteCliArgument(fromVersion)}`
-        : "";
-      return `salt-ds upgrade${target}${from} --json`;
-    }
+    case "upgrade_salt_ui":
+      return null;
   }
 }
 
 function buildRetrieveEntityCliHint(
-  step: PublicRetrieveEntityStep,
+  _step: PublicRetrieveEntityStep,
 ): string | null {
-  const name =
-    readStringValue(step.args.name) ??
-    readStringValue(step.args.query) ??
-    readStringValue(step.args.target);
-  if (!name) {
-    return null;
-  }
-
-  // `get_salt_entity` is an MCP-only tool; the CLI surface was removed.
-  // Fall back to `salt-ds create` for the create-tool branch only.
-  if (step.tool === "get_salt_entity") {
-    return null;
-  }
-  return `salt-ds create ${quoteCliArgument(name)} --json`;
+  // `get_salt_entity` and the upstream `create_salt_ui` fall-back are both
+  // MCP-only after the workflow CLI removal; no CLI hint is emitted.
+  return null;
 }
 
 function buildRetrieveExamplesCliHint(
-  step: PublicRetrieveExamplesStep,
+  _step: PublicRetrieveExamplesStep,
 ): string | null {
-  const target =
-    readStringValue(step.args.target) ??
-    readStringValue(step.args.target_name) ??
-    readStringValue(step.args.name);
-  if (!target) {
-    return null;
-  }
-
-  // `get_salt_examples` is an MCP-only tool; the CLI surface was removed.
-  // Fall back to `salt-ds create` for the create-tool branch only.
-  if (step.tool === "get_salt_examples") {
-    return null;
-  }
-  return `salt-ds create ${quoteCliArgument(target)} --json`;
+  // `get_salt_examples` and the upstream `create_salt_ui` fall-back are both
+  // MCP-only after the workflow CLI removal; no CLI hint is emitted.
+  return null;
 }
 
-function buildReviewCliHint(step: PublicReviewStep): string {
-  const suggested = readStringValue(step.args?.suggested_command);
-  return suggested
-    ? appendJsonFlag(suggested)
-    : "salt-ds review <changed-path> --json";
+function buildReviewCliHint(_step: PublicReviewStep): string | null {
+  // `salt-ds review` was removed; review-after-implementation guidance now
+  // flows through the `review_salt_ui` MCP tool surfaced in action.mcp.
+  return null;
 }
 
 function buildRerunWorkflowCliHint(
-  step: PublicRerunWorkflowStep,
+  _step: PublicRerunWorkflowStep,
 ): string | null {
-  const query = readStringValue(step.args.query);
-  const resolvedEntities = Array.isArray(step.args.resolved_entities)
-    ? step.args.resolved_entities.filter(
-        (value): value is string => typeof value === "string",
-      )
-    : [];
-
-  switch (step.tool) {
-    case "create_salt_ui": {
-      if (!query) {
-        return null;
-      }
-
-      const resolvedFlags = resolvedEntities
-        .map((entity) => ` --resolved-entity ${quoteCliArgument(entity)}`)
-        .join("");
-      return `salt-ds create ${quoteCliArgument(query)} --json${resolvedFlags}`;
-    }
-    case "review_salt_ui":
-      return "salt-ds review <changed-path> --json";
-    case "migrate_to_salt":
-      return query
-        ? `salt-ds migrate ${quoteCliArgument(query)} --json`
-        : "salt-ds migrate --json";
-    case "upgrade_salt_ui":
-      return query
-        ? `salt-ds upgrade ${quoteCliArgument(query)} --json`
-        : "salt-ds upgrade --json";
-  }
+  // The four workflow CLI commands were removed; reruns are always MCP-side
+  // and surfaced through action.mcp on the returned PublicNextStep.
+  return null;
 }
 
 function buildPublicActionHints(step: PublicNextStep): PublicActionHints {
@@ -583,14 +520,16 @@ function buildPublicActionHints(step: PublicNextStep): PublicActionHints {
             }
           : {}),
       };
-    case "review":
+    case "review": {
+      const cli = buildReviewCliHint(step);
       return {
-        cli: buildReviewCliHint(step),
+        ...(cli ? { cli } : {}),
         mcp: {
           tool: "review_salt_ui",
           args: step.args ?? {},
         },
       };
+    }
     case "rerun_workflow": {
       const cli = buildRerunWorkflowCliHint(step);
       return {

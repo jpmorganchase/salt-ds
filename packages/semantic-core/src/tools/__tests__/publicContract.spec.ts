@@ -705,7 +705,6 @@ describe("publicContract", () => {
     );
     expect(contract.next_required_action).toEqual(
       expect.objectContaining({
-        cli: "salt-ds create Metric --json",
         mcp: {
           tool: "create_salt_ui",
           args: {
@@ -714,9 +713,9 @@ describe("publicContract", () => {
         },
       }),
     );
+    expect(contract.next_required_action).not.toHaveProperty("cli");
     expect(contract.recipe.steps[0]?.action).toEqual(
       expect.objectContaining({
-        cli: "salt-ds create Metric --json",
         mcp: {
           tool: "create_salt_ui",
           args: {
@@ -725,6 +724,7 @@ describe("publicContract", () => {
         },
       }),
     );
+    expect(contract.recipe.steps[0]?.action).not.toHaveProperty("cli");
   });
 
   it("blocks an exact request when the resolver is misrouted", () => {
@@ -986,7 +986,7 @@ describe("publicContract", () => {
     ).toThrow(/Invalid PublicContract/);
   });
 
-  it("sets required_post_step to the shared review workflow for CLI transport", () => {
+  it("sets required_post_step to the shared review workflow regardless of transport", () => {
     const contract = buildPublicContract(
       buildInput({
         transport_used: "cli",
@@ -996,12 +996,12 @@ describe("publicContract", () => {
     expect(contract.action.post_action).toEqual({
       kind: "review",
       tool: "review_salt_ui",
-      cli: "salt-ds review <changed-path> --json",
       mcp: {
         tool: "review_salt_ui",
         args: {},
       },
     });
+    expect(contract.action.post_action).not.toHaveProperty("cli");
   });
 
   it("does not set required_post_step when workflow is review", () => {
@@ -1819,7 +1819,6 @@ describe("publicContract workflow adapters", () => {
           id: "rerun-originating-create-workflow",
           action: expect.objectContaining({
             kind: "rerun_workflow",
-            cli: 'salt-ds create "file manager with breadcrumbs and table" --json --resolved-entity Breadcrumbs',
             mcp: {
               tool: "create_salt_ui",
               args: {

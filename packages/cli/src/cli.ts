@@ -3,12 +3,8 @@ import { runExportContextCommand } from "./commands/exportContext.js";
 import { runInfoCommand } from "./commands/info.js";
 import { runInitCommand } from "./commands/init.js";
 import { runRuntimeInspectCommand } from "./commands/runtimeInspect.js";
-import { runCreateCommand } from "./commands/workflow/create/index.js";
-import { runMigrateCommand } from "./commands/workflow/migrate/index.js";
-import { runReviewCommand } from "./commands/workflow/review/index.js";
 import { runReviewHookCommand } from "./commands/workflow/review/hook/index.js";
 import { runVerifyAttestationsCommand } from "./commands/workflow/review/verify/index.js";
-import { runUpgradeCommand } from "./commands/workflow/upgrade/index.js";
 import { parseArgs, printHelp } from "./lib/args.js";
 import type { CliIo, RequiredCliIo } from "./types.js";
 
@@ -50,22 +46,6 @@ export async function runCli(
     return runInitCommand(positionals, flags, normalizedIo);
   }
 
-  if (command === "create") {
-    return runCreateCommand(positionals, flags, normalizedIo);
-  }
-
-  if (command === "review") {
-    return runReviewCommand(positionals, flags, normalizedIo);
-  }
-
-  if (command === "migrate") {
-    return runMigrateCommand(positionals, flags, normalizedIo);
-  }
-
-  if (command === "upgrade") {
-    return runUpgradeCommand(positionals, flags, normalizedIo);
-  }
-
   if (command === "export-context") {
     return runExportContextCommand(positionals, flags, normalizedIo);
   }
@@ -84,7 +64,27 @@ export async function runCli(
 
   if (command === "lint") {
     normalizedIo.writeStderr(
-      "salt-ds lint has been removed. Use `salt-ds review [target ...]` for source validation and structured fix guidance.\n",
+      "salt-ds lint has been removed. Use the `review_salt_ui` MCP tool for source validation and structured fix guidance.\n",
+    );
+    return 1;
+  }
+
+  if (
+    command === "create" ||
+    command === "review" ||
+    command === "migrate" ||
+    command === "upgrade"
+  ) {
+    normalizedIo.writeStderr(
+      `salt-ds ${command} has been removed. The Salt workflow commands now live exclusively in the @salt-ds/mcp server (tool: ${
+        command === "create"
+          ? "create_salt_ui"
+          : command === "review"
+            ? "review_salt_ui"
+            : command === "migrate"
+              ? "migrate_to_salt"
+              : "upgrade_salt_ui"
+      }). The CLI keeps doctor / info / init / export-context / hook / verify / runtime inspect for support-tier use.\n`,
     );
     return 1;
   }
