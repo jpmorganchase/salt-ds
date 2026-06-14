@@ -74,16 +74,13 @@ const EXPECTED_TOOL_NAMES = [
   "migrate_to_salt",
   "review_salt_ui",
   "upgrade_salt_ui",
-  // Read-only support tools (4)
+  // Read-only support tools (3)
   "discover_salt",
   "get_salt_entities",
-  "get_salt_entity",
   "get_salt_examples",
-  // Advanced support tools (4)
-  "persist_salt_context_pack",        // readOnlyHint: false, destructiveHint: true (idempotent persistence; may overwrite caller-supplied paths inside root_dir)
-  "persist_salt_generated_artifact",  // readOnlyHint: false, destructiveHint: true (idempotent persistence; may overwrite caller-supplied paths inside root_dir)
-  "resume_salt_review",               // read-only
-  "validate_salt_review_report",      // read-only
+  // Advanced support tools (1, persist_salt_artifact is the merged
+  // context-pack + generated-artifact writer)
+  "persist_salt_artifact",        // readOnlyHint: false, destructiveHint: true (idempotent persistence; may overwrite caller-supplied paths inside root_dir)
 ].sort();
 
 const EXPECTED_DEFAULT_TOOL_ORDER = [
@@ -478,7 +475,7 @@ describe("createSaltMcpServer", () => {
       (definition) => definition.name === "create_salt_ui",
     );
     const entityTool = TOOL_DEFINITIONS.find(
-      (definition) => definition.name === "get_salt_entity",
+      (definition) => definition.name === "get_salt_entities",
     );
     const examplesTool = TOOL_DEFINITIONS.find(
       (definition) => definition.name === "get_salt_examples",
@@ -489,7 +486,7 @@ describe("createSaltMcpServer", () => {
     const chooseSchema = chooseTool?.outputSchema as z.ZodType;
 
     expect(toolNames).toEqual(
-      expect.arrayContaining(["get_salt_entity", "get_salt_examples"]),
+      expect.arrayContaining(["get_salt_entities", "get_salt_examples"]),
     );
     expect(
       chooseSchema.safeParse({
@@ -509,15 +506,15 @@ describe("createSaltMcpServer", () => {
         },
         action: {
           kind: "retrieve_entity",
-          tool: "get_salt_entity",
-          args: { name: "Avatar" },
+          tool: "get_salt_entities",
+          args: { names: ["Avatar"] },
           rule_ids: ["create-follow-through-required"],
           post_action: null,
         },
         next_required_action: {
           kind: "retrieve_entity",
-          tool: "get_salt_entity",
-          args: { name: "Avatar" },
+          tool: "get_salt_entities",
+          args: { names: ["Avatar"] },
         },
         allowed_next_actions: ["retrieve_entity"],
         recipe: {
@@ -526,8 +523,8 @@ describe("createSaltMcpServer", () => {
               id: "retrieve-avatar",
               action: {
                 kind: "retrieve_entity",
-                tool: "get_salt_entity",
-                args: { name: "Avatar" },
+                tool: "get_salt_entities",
+                args: { names: ["Avatar"] },
               },
               status: "required",
             },
@@ -550,14 +547,31 @@ describe("createSaltMcpServer", () => {
     ).toBe(true);
     expect(
       (entityTool?.outputSchema as z.ZodType).safeParse({
-        entity_type: "component",
+        guidance_boundary: {},
         decision: {
-          status: "found",
+          status: "results",
           why: "Resolved Avatar as a Salt component.",
         },
-        entity: { name: "Avatar" },
-        guidance_boundary: {},
-        sources: [],
+        requested_count: 1,
+        found_count: 1,
+        not_found_count: 0,
+        ambiguous_count: 0,
+        results: [
+          {
+            name: "Avatar",
+            result: {
+              entity_type: "component",
+              decision: {
+                status: "found",
+                why: "Resolved Avatar as a Salt component.",
+              },
+              entity: { name: "Avatar" },
+              guidance_boundary: {},
+              sources: [],
+            },
+          },
+        ],
+        unresolved_names: [],
       }).success,
     ).toBe(true);
     expect(
@@ -585,64 +599,96 @@ describe("createSaltMcpServer", () => {
     ).toBe(true);
   });
 
-  it("validates and resumes durable review reports through shared MCP support tools", async () => {
+  it("validates and resumes durable review reports through MCP resources (salt://review/validation/{path}, salt://review/state/{path})", async () => {
     await withRegistryDir(
       async (registryDir) => {
         await writeBaseArtifacts(registryDir);
       },
       async (registryDir) => {
-        const registry = await loadRegistry({ registryDir });
+        const server = await createSaltMcpServer({ registryDir });
         const rootDir = await createTempDir("salt-mcp-review-resume");
         const reportPath = path.join(rootDir, "invalid-review-report.json");
         await fs.writeFile(reportPath, JSON.stringify({}, null, 2), "utf8");
 
-        const validateTool = TOOL_DEFINITIONS.find(
-          (definition) => definition.name === "validate_salt_review_report",
-        );
-        const resumeTool = TOOL_DEFINITIONS.find(
-          (definition) => definition.name === "resume_salt_review",
-        );
-        const validation = await validateTool?.execute(registry, {
-          root_dir: rootDir,
-          report_path: "invalid-review-report.json",
-        });
-        const resume = await resumeTool?.execute(registry, {
-          root_dir: rootDir,
-          report_path: "invalid-review-report.json",
-        });
+        // Switch the MCP server's cwd to the temp project so the
+        // validateReviewReportFromPath helper (which resolves report_path
+        // against process.cwd()) finds the fixture report.
+        const originalCwd = process.cwd();
+        process.chdir(rootDir);
+        try {
+          const registeredResources = (
+            server as unknown as {
+              _registeredResourceTemplates: Record<
+                string,
+                {
+                  readCallback: (
+                    uri: URL,
+                    variables: Record<string, string>,
+                  ) => Promise<{
+                    contents: Array<{ uri: string; text: string }>;
+                  }>;
+                }
+              >;
+            }
+          )._registeredResourceTemplates;
+          const validationResource =
+            registeredResources?.salt_review_validation;
+          const stateResource = registeredResources?.salt_review_state;
 
-        expect(
-          (validateTool?.outputSchema as z.ZodType).safeParse(validation)
-            .success,
-        ).toBe(true);
-        expect(
-          (resumeTool?.outputSchema as z.ZodType).safeParse(resume).success,
-        ).toBe(true);
-        expect(validation).toEqual(
-          expect.objectContaining({
-            contract: "salt_review_report_validation_v1",
-            status: "invalid",
-            current: false,
-            supported: false,
-            resume: expect.objectContaining({
+          expect(validationResource).toBeTruthy();
+          expect(stateResource).toBeTruthy();
+          if (!validationResource || !stateResource) {
+            throw new Error(
+              "Expected salt_review_validation and salt_review_state resources to be registered.",
+            );
+          }
+
+          const encodedPath = encodeURIComponent("invalid-review-report.json");
+          const validationUri = new URL(
+            `salt://review/validation/${encodedPath}`,
+          );
+          const validationResult = await validationResource.readCallback(
+            validationUri,
+            { report_path: encodedPath },
+          );
+          const validation = JSON.parse(
+            validationResult.contents[0]?.text ?? "{}",
+          );
+
+          const stateUri = new URL(`salt://review/state/${encodedPath}`);
+          const stateResult = await stateResource.readCallback(stateUri, {
+            report_path: encodedPath,
+          });
+          const resume = JSON.parse(stateResult.contents[0]?.text ?? "{}");
+
+          expect(validation).toEqual(
+            expect.objectContaining({
+              contract: "salt_review_report_validation_v1",
+              status: "invalid",
+              current: false,
+              supported: false,
+              resume: expect.objectContaining({
+                contract: "salt_review_resume_v1",
+                status: "invalid",
+                reusable_evidence_ref_ids: [],
+              }),
+            }),
+          );
+          expect(resume).toEqual(
+            expect.objectContaining({
               contract: "salt_review_resume_v1",
               status: "invalid",
               reusable_evidence_ref_ids: [],
             }),
-          }),
-        );
-        expect(resume).toEqual(
-          expect.objectContaining({
-            contract: "salt_review_resume_v1",
-            status: "invalid",
-            reusable_evidence_ref_ids: [],
-          }),
-        );
+          );
+        } finally {
+          process.chdir(originalCwd);
+        }
       },
     );
   });
 
-  it("persists release-gated context packs and generated report artifacts through MCP tools", async () => {
+  it("persists release-gated context packs and generated report artifacts through the merged persist_salt_artifact MCP tool", async () => {
     await withRegistryDir(
       async (registryDir) => {
         await buildRegistry({
@@ -654,19 +700,17 @@ describe("createSaltMcpServer", () => {
       async (registryDir) => {
         const registry = await loadRegistry({ registryDir });
         const rootDir = await createTempDir("salt-mcp-artifact-persistence");
-        const persistContextTool = TOOL_DEFINITIONS.find(
-          (definition) => definition.name === "persist_salt_context_pack",
-        );
-        const persistArtifactTool = TOOL_DEFINITIONS.find(
-          (definition) => definition.name === "persist_salt_generated_artifact",
+        const persistTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "persist_salt_artifact",
         );
 
-        const persistedContext = (await persistContextTool?.execute(registry, {
+        const persistedContext = (await persistTool?.execute(registry, {
+          kind: "context_pack",
           root_dir: rootDir,
         })) as Record<string, unknown>;
 
         expect(
-          (persistContextTool?.outputSchema as z.ZodType).safeParse(
+          (persistTool?.outputSchema as z.ZodType).safeParse(
             persistedContext,
           ).success,
         ).toBe(true);
@@ -737,7 +781,8 @@ describe("createSaltMcpServer", () => {
             unsupported_claims: [],
           },
         };
-        const persistedReport = (await persistArtifactTool?.execute(registry, {
+        const persistedReport = (await persistTool?.execute(registry, {
+          kind: "generated_artifact",
           root_dir: rootDir,
           artifact_path: ".salt/reports/fixture-review-report.json",
           artifact: reportPayload,
@@ -747,7 +792,7 @@ describe("createSaltMcpServer", () => {
           validateSaltGeneratedArtifactPersistenceSchema(persistedReport),
         ).toEqual([]);
         expect(
-          (persistArtifactTool?.outputSchema as z.ZodType).safeParse(
+          (persistTool?.outputSchema as z.ZodType).safeParse(
             persistedReport,
           ).success,
         ).toBe(true);
@@ -790,7 +835,8 @@ describe("createSaltMcpServer", () => {
             ],
           },
         };
-        const blockedReport = (await persistArtifactTool?.execute(registry, {
+        const blockedReport = (await persistTool?.execute(registry, {
+          kind: "generated_artifact",
           root_dir: rootDir,
           artifact_path: ".salt/reports/blocked-review-report.json",
           artifact: blockedPayload,
@@ -1051,6 +1097,8 @@ describe("createSaltMcpServer", () => {
           "salt_context_component_markdown",
           "salt_context_foundation",
           "salt_context_pattern",
+          "salt_review_state",
+          "salt_review_validation",
         ]);
         expect(
           registeredResources[SALT_MCP_CAPABILITY_MANIFEST_URI]?.metadata,
@@ -1155,7 +1203,7 @@ describe("createSaltMcpServer", () => {
         );
         expect(capabilityManifest.public_surface?.default_surface_ids).toEqual(
           expect.arrayContaining([
-            "get_salt_entity",
+            "get_salt_entities",
             "get_salt_examples",
             "discover_salt",
           ]),
@@ -1165,11 +1213,10 @@ describe("createSaltMcpServer", () => {
             policy: "optional_advanced_host_surface",
             default_exposed: true,
             tool_ids: expect.arrayContaining([
-              "get_salt_entity",
+              "get_salt_entities",
               "get_salt_examples",
               "discover_salt",
-              "persist_salt_context_pack",
-              "persist_salt_generated_artifact",
+              "persist_salt_artifact",
             ]),
           }),
         );
@@ -1908,11 +1955,9 @@ describe("createSaltMcpServer", () => {
                 openWorldHint: false,
               }),
             );
-          } else if (
-            toolName === "persist_salt_context_pack" ||
-            toolName === "persist_salt_generated_artifact"
-          ) {
-            // Task 0.8 annotation audit: persist_* tools may overwrite
+          } else if (toolName === "persist_salt_artifact") {
+            // Task 0.8 annotation audit: persist_salt_artifact (merged
+            // context-pack + generated-artifact writer) may overwrite
             // caller-supplied paths inside root_dir, so destructiveHint is
             // true.
             expect(registeredTools[toolName]?.annotations).toEqual(

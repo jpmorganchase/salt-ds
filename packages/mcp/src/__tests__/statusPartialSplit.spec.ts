@@ -55,8 +55,8 @@ function implementStep(): PublicNextStep {
 function retrieveStep(): PublicNextStep {
   return {
     kind: "retrieve_entity",
-    tool: "get_salt_entity",
-    args: { name: "Avatar" },
+    tool: "get_salt_entities",
+    args: { names: ["Avatar"] },
   };
 }
 

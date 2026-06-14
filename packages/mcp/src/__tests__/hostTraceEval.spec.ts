@@ -181,15 +181,15 @@ describe("host trace eval", () => {
           },
           action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Avatar" },
+            tool: "get_salt_entities",
+            args: { names: ["Avatar"] },
             rule_ids: ["create-follow-through-required"],
             post_action: null,
           },
           next_required_action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Avatar" },
+            tool: "get_salt_entities",
+            args: { names: ["Avatar"] },
           },
           allowed_next_actions: ["retrieve_entity"],
           recipe: {
@@ -198,8 +198,8 @@ describe("host trace eval", () => {
                 id: "retrieve-avatar",
                 action: {
                   kind: "retrieve_entity",
-                  tool: "get_salt_entity",
-                  args: { name: "Avatar" },
+                  tool: "get_salt_entities",
+                  args: { names: ["Avatar"] },
                 },
                 status: "required",
               },
@@ -232,8 +232,8 @@ describe("host trace eval", () => {
         }),
         '{"query":"profile page with tabs and avatar"}',
       ),
-      toolCall("get_salt_entity", {
-        workflow: "get_salt_entity",
+      toolCall("get_salt_entities", {
+        workflow: "get_salt_entities",
         entity: { name: "Avatar" },
       }),
     ]);
@@ -367,15 +367,15 @@ describe("host trace eval", () => {
           },
           action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Tabs" },
+            tool: "get_salt_entities",
+            args: { names: ["Tabs"] },
             rule_ids: ["create-follow-through-required"],
             post_action: null,
           },
           next_required_action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Tabs" },
+            tool: "get_salt_entities",
+            args: { names: ["Tabs"] },
           },
           allowed_next_actions: ["retrieve_entity"],
           evidence: {
@@ -463,15 +463,15 @@ describe("host trace eval", () => {
           },
           action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Tabs" },
+            tool: "get_salt_entities",
+            args: { names: ["Tabs"] },
             rule_ids: ["create-follow-through-required"],
             post_action: null,
           },
           next_required_action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Tabs" },
+            tool: "get_salt_entities",
+            args: { names: ["Tabs"] },
           },
           allowed_next_actions: ["retrieve_entity"],
           evidence: {
@@ -660,15 +660,15 @@ describe("host trace eval", () => {
           },
           action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Avatar" },
+            tool: "get_salt_entities",
+            args: { names: ["Avatar"] },
             rule_ids: ["create-follow-through-required"],
             post_action: null,
           },
           next_required_action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Avatar" },
+            tool: "get_salt_entities",
+            args: { names: ["Avatar"] },
           },
           allowed_next_actions: ["retrieve_entity"],
           evidence: {
@@ -688,8 +688,8 @@ describe("host trace eval", () => {
           },
         }),
       ),
-      toolCall("get_salt_entity", {
-        workflow: "get_salt_entity",
+      toolCall("get_salt_entities", {
+        workflow: "get_salt_entities",
         entity: { name: "Avatar" },
       }),
       toolCall("copilot_replaceString", {}, "write profile avatar and tabs"),
@@ -768,15 +768,15 @@ describe("host trace eval", () => {
             },
             action: {
               kind: "retrieve_entity",
-              tool: "get_salt_entity",
-              args: { name: "Avatar" },
+              tool: "get_salt_entities",
+              args: { names: ["Avatar"] },
               rule_ids: ["create-follow-through-required"],
               post_action: null,
             },
             next_required_action: {
               kind: "retrieve_entity",
-              tool: "get_salt_entity",
-              args: { name: "Avatar" },
+              tool: "get_salt_entities",
+              args: { names: ["Avatar"] },
             },
             allowed_next_actions: ["retrieve_entity"],
             evidence: {
@@ -850,15 +850,15 @@ describe("host trace eval", () => {
           },
           action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Avatar" },
+            tool: "get_salt_entities",
+            args: { names: ["Avatar"] },
             rule_ids: ["create-follow-through-required"],
             post_action: null,
           },
           next_required_action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
-            args: { name: "Avatar" },
+            tool: "get_salt_entities",
+            args: { names: ["Avatar"] },
           },
           allowed_next_actions: ["retrieve_entity"],
           evidence: {
@@ -878,8 +878,8 @@ describe("host trace eval", () => {
           },
         }),
       ),
-      toolCall("get_salt_entity", {
-        workflow: "get_salt_entity",
+      toolCall("get_salt_entities", {
+        workflow: "get_salt_entities",
         entity: { name: "Avatar" },
       }),
       toolCall(
@@ -898,8 +898,8 @@ describe("host trace eval", () => {
                 id: "resolved-avatar",
                 action: {
                   kind: "retrieve_entity",
-                  tool: "get_salt_entity",
-                  args: { name: "Avatar" },
+                  tool: "get_salt_entities",
+                  args: { names: ["Avatar"] },
                 },
                 status: "complete",
                 reason:

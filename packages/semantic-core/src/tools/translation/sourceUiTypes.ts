@@ -384,7 +384,7 @@ export interface MigrateToSaltResult {
     reason: string;
     suggested_workflow:
       | "create_salt_ui"
-      | "get_salt_entity"
+      | "get_salt_entities"
       | "get_salt_examples";
   }>;
   redesign_hotspots?: string[];

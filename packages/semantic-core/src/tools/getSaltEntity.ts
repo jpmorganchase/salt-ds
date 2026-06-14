@@ -79,7 +79,7 @@ export function getSaltEntity(
     result: GetSaltEntityResult,
   ): GetSaltEntityResult => {
     const guidanceBoundary = buildGuidanceBoundary({
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       entity_type:
         result.entity_type ??
         ((input.entity_type ?? "auto") === "auto"

@@ -75,7 +75,7 @@ export type PublicToolCallStep = PublicActionHints & {
 
 export type PublicRetrieveEntityStep = PublicActionHints & {
   kind: "retrieve_entity";
-  tool: "get_salt_entity" | "create_salt_ui";
+  tool: "get_salt_entities" | "create_salt_ui";
   args: Record<string, unknown>;
 };
 
@@ -1212,9 +1212,9 @@ function buildCreateNextStep(
   if (requiredFollowThrough.length > 0) {
     return {
       kind: "retrieve_entity",
-      tool: "get_salt_entity",
+      tool: "get_salt_entities",
       args: {
-        name: requiredFollowThrough[0].entity,
+        names: [requiredFollowThrough[0].entity],
       },
     };
   }
@@ -1226,9 +1226,9 @@ function buildCreateNextStep(
   ) {
     return {
       kind: "retrieve_entity",
-      tool: "get_salt_entity",
+      tool: "get_salt_entities",
       args: {
-        name: reference.requested_target.name,
+        names: [reference.requested_target.name],
       },
     };
   }
@@ -1237,9 +1237,9 @@ function buildCreateNextStep(
     if (exactRequest?.resolved_entity) {
       return {
         kind: "retrieve_entity",
-        tool: "get_salt_entity",
+        tool: "get_salt_entities",
         args: {
-          name: exactRequest.resolved_entity,
+          names: [exactRequest.resolved_entity],
         },
       };
     }
@@ -2069,9 +2069,9 @@ function buildCreateRecipe(input: {
       `retrieve-${followThrough.entity.toLowerCase().replace(/\s+/g, "-")}`,
       {
         kind: "retrieve_entity",
-        tool: "get_salt_entity",
+        tool: "get_salt_entities",
         args: {
-          name: followThrough.entity,
+          names: [followThrough.entity],
         },
       },
       `Ground ${followThrough.entity} before implementing the ${followThrough.region} region. ${resolvedEntityRerun}`,
@@ -2083,9 +2083,9 @@ function buildCreateRecipe(input: {
       `resolved-${followThrough.entity.toLowerCase().replace(/\s+/g, "-")}`,
       {
         kind: "retrieve_entity",
-        tool: "get_salt_entity",
+        tool: "get_salt_entities",
         args: {
-          name: followThrough.entity,
+          names: [followThrough.entity],
         },
       },
       `Canonical evidence for ${followThrough.entity} has been supplied for the ${followThrough.region} region.`,

@@ -32,12 +32,9 @@ export const SALT_COMPACT_WORKFLOW_IDS = [
 
 export const SALT_SUPPORT_TOOL_IDS = [
   "discover_salt",
-  "get_salt_entity",
+  "get_salt_entities",
   "get_salt_examples",
-  "validate_salt_review_report",
-  "resume_salt_review",
-  "persist_salt_context_pack",
-  "persist_salt_generated_artifact",
+  "persist_salt_artifact",
 ] as const;
 
 export const SALT_PUBLIC_ACTION_KINDS = [

@@ -379,7 +379,7 @@ export function buildDefaultWorkflowEvalScenarios(
           // rerun create with that grounding.
           next_step: {
             kind: "retrieve_entity",
-            tool: "get_salt_entity",
+            tool: "get_salt_entities",
             name: "Metric",
           },
           summary_includes: ["broader Salt entity Analytical dashboard"],

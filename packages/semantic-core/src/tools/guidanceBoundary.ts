@@ -48,7 +48,7 @@ interface GuidanceBoundaryOptions {
     | "create_salt_ui"
     | "migrate_to_salt"
     | "discover_salt"
-    | "get_salt_entity"
+    | "get_salt_entities"
     | "get_salt_examples"
     | "review_salt_ui"
     | "upgrade_salt_ui";
@@ -68,7 +68,7 @@ interface GuidanceBoundaryOptions {
     | "discover_salt"
     | "migrate_to_salt"
     | "create_salt_ui"
-    | "get_salt_entity"
+    | "get_salt_entities"
     | "get_salt_examples"
     | "upgrade_salt_ui";
   has_translation_input?: boolean;
@@ -444,7 +444,7 @@ export function buildGuidanceBoundary(
       ? getCreateSaltUiConventionsHint(options.solution_type)
       : options.workflow === "migrate_to_salt"
         ? getMigrateToSaltConventionsHint(options)
-        : options.workflow === "get_salt_entity"
+        : options.workflow === "get_salt_entities"
           ? getSaltEntityConventionsHint(options)
           : options.workflow === "get_salt_examples"
             ? getSaltExamplesConventionsHint(options)

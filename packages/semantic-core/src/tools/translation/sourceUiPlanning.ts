@@ -735,7 +735,7 @@ export function buildDecisionGates(
         translation.confidence_detail.reasons[0] ?? translation.salt_target.why,
       suggested_workflow:
         translation.source_scope === "control"
-          ? ("get_salt_entity" as const)
+          ? ("get_salt_entities" as const)
           : ("create_salt_ui" as const),
     }));
 
@@ -860,7 +860,7 @@ export function buildSuggestedFollowUps(
       follow_up_mode: "exact_name",
     });
     followUps.push({
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       reason: `Inspect ${targetName} in full detail before finalizing the translation.${projectConventionSuffix}`,
       args: {
         entity_type: solutionType,

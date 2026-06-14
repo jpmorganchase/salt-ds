@@ -256,10 +256,10 @@ export function getDiscoverySuggestedFollowUps(
     ];
   }
 
-  if (decision.workflow === "get_salt_entity") {
+  if (decision.workflow === "get_salt_entities") {
     return [
       {
-        workflow: "get_salt_entity",
+        workflow: "get_salt_entities",
         reason: `Inspect the closest resolved Salt entity in full detail.${projectConventionSuffix}`,
         args: {
           ...(decision.args ?? {}),
@@ -293,7 +293,7 @@ export function resolveDiscoverStarterCode(input: {
   const { decision } = input;
 
   if (
-    decision?.workflow === "get_salt_entity" &&
+    decision?.workflow === "get_salt_entities" &&
     decision.args?.entity_type === "foundation"
   ) {
     return input.foundationStarterCode;
@@ -327,7 +327,7 @@ export function resolveDiscoverNextStep(input: {
   const { decision } = input;
 
   if (
-    decision?.workflow === "get_salt_entity" &&
+    decision?.workflow === "get_salt_entities" &&
     decision.args?.entity_type === "foundation"
   ) {
     return (

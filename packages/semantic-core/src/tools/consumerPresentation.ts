@@ -229,7 +229,7 @@ export function getComponentSuggestedFollowUps(
 
   if (includeLookup) {
     followUps.push({
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       reason: `Review ${component.name} guidance, alternatives, and docs links.`,
       args: {
         entity_type: "component",
@@ -276,7 +276,7 @@ export function getPatternSuggestedFollowUps(
 
   if (includeLookup) {
     followUps.push({
-      workflow: "get_salt_entity",
+      workflow: "get_salt_entities",
       reason: `Review the full ${pattern.name} pattern guidance.`,
       args: {
         entity_type: "pattern",

@@ -1167,9 +1167,9 @@ describe("publicContract workflow adapters", () => {
           "Salt interpreted dashboard summary area as the broader Salt entity Analytical dashboard.",
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entity",
+          tool: "get_salt_entities",
           args: {
-            name: "Analytical dashboard",
+            names: ["Analytical dashboard"],
           },
         },
       }),
@@ -1307,9 +1307,9 @@ describe("publicContract workflow adapters", () => {
         blocking_reasons: [],
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entity",
+          tool: "get_salt_entities",
           args: {
-            name: "Chart",
+            names: ["Chart"],
           },
         },
       }),
@@ -1457,9 +1457,9 @@ describe("publicContract workflow adapters", () => {
         ]),
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entity",
+          tool: "get_salt_entities",
           args: {
-            name: "App header",
+            names: ["App header"],
           },
         },
       }),
@@ -1792,9 +1792,9 @@ describe("publicContract workflow adapters", () => {
         ]),
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entity",
+          tool: "get_salt_entities",
           args: {
-            name: "Breadcrumbs",
+            names: ["Breadcrumbs"],
           },
         },
       }),
@@ -1802,9 +1802,9 @@ describe("publicContract workflow adapters", () => {
     expect(compact.next_required_action).toEqual(
       expect.objectContaining({
         mcp: {
-          tool: "get_salt_entity",
+          tool: "get_salt_entities",
           args: {
-            name: "Breadcrumbs",
+            names: ["Breadcrumbs"],
           },
         },
       }),

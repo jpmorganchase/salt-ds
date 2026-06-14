@@ -74,7 +74,7 @@ export interface DiscoverSaltDecision {
     | "discover_salt"
     | "migrate_to_salt"
     | "create_salt_ui"
-    | "get_salt_entity"
+    | "get_salt_entities"
     | "get_salt_examples"
     | "upgrade_salt_ui";
   why: string;
@@ -151,7 +151,7 @@ export function discoverSalt(
       did_you_mean: related.did_you_mean,
       ambiguity: related.ambiguity as Record<string, unknown> | undefined,
       next_step: appendProjectConventionsNextStep(
-        decision?.workflow === "get_salt_entity"
+        decision?.workflow === "get_salt_entities"
           ? "Inspect the closest related entity next."
           : "Broaden the related-entity exploration with a more specific starting entity.",
         guidanceBoundary,
