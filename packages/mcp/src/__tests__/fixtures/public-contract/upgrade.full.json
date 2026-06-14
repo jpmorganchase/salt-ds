@@ -1,8 +1,10 @@
 {
   "workflow_id": "upgrade",
-  "confidence_level": "medium",
+  "confidence_level": "high",
   "target": "@salt-ds/core",
   "from_version": "1.1.0",
-  "to_version": "1.59.0",
-  "rule_ids": ["upgrade-review-version-risks"]
+  "to_version": "1.64.0",
+  "rule_ids": [
+    "upgrade-review-version-risks"
+  ]
 }
