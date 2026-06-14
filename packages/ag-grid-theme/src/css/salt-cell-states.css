@@ -1,3 +1,4 @@
+/* The CSS-variable overrides re-route the editable border, focus ring and  */
 /* Phase 1 port of `css/parts/ag-body.css` + `ag-row.css` state classes into
  * the saltCellStates part. The 4-way `.ag-theme-salt-{light,dark,compact-light,compact-dark}`
  * scoping from the 2.x line is stripped — AG Grid v3 auto-wraps this CSS in
@@ -387,9 +388,14 @@
   min-width: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-/* Each side button (Columns / Filters / etc.) — 8px vertical, 4px
- * horizontal padding (matches the side-bar rhythm). */
+/* Each side button (Columns / Filters / etc. — the tool-panel tabs)
+ * — 8px vertical, 4px horizontal padding (matches the side-bar
+ * rhythm) + zero out the browser-default `<button>` border + background
+ * so the tabs render clean (AG v3 ships no `.ag-side-button-button` CSS,
+ * so the native chrome leaks through without this reset). */
 button.ag-side-button-button {
+  border: 0;
+  background: transparent;
   padding: var(--salt-spacing-100) var(--salt-spacing-50);
 }
 
