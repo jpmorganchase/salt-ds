@@ -48,7 +48,7 @@ export const DEFAULT_VIEWPORT = {
   height: 900,
 } as const;
 
-export const FETCHED_HTML_LAYOUT_HINT =
+const FETCHED_HTML_LAYOUT_HINT =
   "Computed layout evidence is unavailable in fetched-html mode. Use browser-session inspection for bounding boxes, computed styles, and flex/grid ancestry.";
 
 function normalizeText(value: string | null | undefined): string {

@@ -112,16 +112,3 @@ export function printHelp(
   writeStdout((help ?? ROOT_HELP).join("\n"));
   return 0;
 }
-
-export function readRepeatableFlagValues(
-  rawValue: string | undefined,
-): string[] {
-  if (!rawValue) {
-    return [];
-  }
-
-  return rawValue
-    .split("\n")
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.length > 0 && entry !== "true");
-}
