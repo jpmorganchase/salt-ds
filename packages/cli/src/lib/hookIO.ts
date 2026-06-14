@@ -17,7 +17,7 @@
  *   stderr surfaces to the agent in-loop; other non-zero = non-blocking error.
  */
 
-export type HookEventName =
+type HookEventName =
   | "PreToolUse"
   | "PostToolUse"
   | "SessionStart"
@@ -229,14 +229,14 @@ export async function readHookInput(options?: {
   return new HookInputImpl(parsed as Record<string, unknown>);
 }
 
-export interface HookSpecificOutput {
+interface HookSpecificOutput {
   hookEventName?: HookEventName | string;
   additionalContext?: string;
   permissionDecision?: "allow" | "deny" | "ask";
   permissionDecisionReason?: string;
 }
 
-export interface HookOutput {
+interface HookOutput {
   continue?: boolean;
   decision?: "approve" | "block";
   reason?: string;

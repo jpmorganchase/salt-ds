@@ -67,7 +67,7 @@ export type PublicCreateRecommendation = Omit<
   suggested_follow_ups?: PublicSuggestedFollowUp[];
 };
 
-export type PublicTranslateDecisionGate = Omit<
+type PublicTranslateDecisionGate = Omit<
   NonNullable<MigrateToSaltResult["decision_gates"]>[number],
   "suggested_workflow"
 > & {

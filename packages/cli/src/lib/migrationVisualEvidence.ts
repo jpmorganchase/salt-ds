@@ -29,11 +29,11 @@ export interface ResolvedSourceOutline {
   counts: OutlineSignalCounts;
 }
 
-export interface LoadedSourceOutline extends ResolvedSourceOutline {
+interface LoadedSourceOutline extends ResolvedSourceOutline {
   path: string;
 }
 
-export interface LoadedVisualEvidenceInput {
+interface LoadedVisualEvidenceInput {
   kind: VisualEvidenceKind;
   sourceType: VisualEvidenceSourceType;
   source: string;

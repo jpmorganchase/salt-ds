@@ -18,7 +18,7 @@ interface ReviewFixCandidate {
   sourceUrls: string[];
 }
 
-export interface ReviewFixCandidateFileResult {
+interface ReviewFixCandidateFileResult {
   path: string;
   relativePath: string;
   candidates: ReviewFixCandidate[];

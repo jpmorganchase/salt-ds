@@ -4,7 +4,7 @@ import type {
 } from "@salt-ds/semantic-core/tools/publicContract";
 import type { RequiredCliIo } from "../../../types.js";
 
-export type WorkflowExitCode = 0 | 10 | 20 | 30;
+type WorkflowExitCode = 0 | 10 | 20 | 30;
 
 export function normalizeVersion(
   rawVersion: string | null | undefined,
