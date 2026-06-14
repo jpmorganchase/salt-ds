@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-pattern-validation-rule-pack.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-pattern-validation-rule-pack.schema.json",
   "title": "Salt Pattern Validation Rule Pack",
   "description": "Source-backed rule pack for validating expected Salt pattern implementation evidence.",
   "type": "object",

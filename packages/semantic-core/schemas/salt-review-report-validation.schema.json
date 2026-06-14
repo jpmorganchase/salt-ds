@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-review-report-validation.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-review-report-validation.schema.json",
   "title": "Salt Review Report Validation",
   "description": "Validation result for durable Salt review report artifacts.",
   "type": "object",

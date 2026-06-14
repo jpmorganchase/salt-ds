@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-coverage-gap-catalog.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-coverage-gap-catalog.schema.json",
   "title": "Salt Context Coverage Gap Catalog",
   "description": "Cause-coded gap catalog derived from the source-backed Salt context coverage audit.",
   "type": "object",

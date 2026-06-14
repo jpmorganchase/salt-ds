@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-generated-artifact.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-generated-artifact.schema.json",
   "title": "Salt Generated Artifact",
   "description": "Evidence-aware envelope for generated Salt context, prompts, reports, and validation artifacts.",
   "type": "object",

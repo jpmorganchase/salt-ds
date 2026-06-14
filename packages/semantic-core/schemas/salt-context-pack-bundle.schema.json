@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-pack-bundle.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-pack-bundle.schema.json",
   "title": "Salt Context Pack Bundle",
   "description": "Portable bundle of generated Salt context pack files and manifest content.",
   "type": "object",

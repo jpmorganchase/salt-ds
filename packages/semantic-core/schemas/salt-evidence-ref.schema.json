@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-evidence-ref.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-evidence-ref.schema.json",
   "title": "Salt Evidence Reference",
   "description": "Source locator for a Salt-specific generated claim. Salt facts should resolve to one or more evidence references instead of living only in prompt or template text.",
   "type": "object",

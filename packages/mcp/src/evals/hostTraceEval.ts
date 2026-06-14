@@ -191,7 +191,7 @@ function collectWorkflowContractsFromValue(
 ): HostTraceWorkflowContract[] {
   const contracts: HostTraceWorkflowContract[] = [];
   const isWorkflowContractId = (contract: unknown) =>
-    contract === "salt_workflow_v1" || contract === "salt_workflow_v3";
+    contract === "salt_workflow_v1";
 
   const visit = (entry: unknown) => {
     if (Array.isArray(entry)) {

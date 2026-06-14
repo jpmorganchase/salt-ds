@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/migrate-visual-evidence-request.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/migrate-visual-evidence-request.schema.json",
   "title": "Migrate Visual Evidence Request",
   "description": "Normalized request envelope sent from the Salt CLI to an external visual-evidence adapter before migrate planning begins.",
   "type": "object",

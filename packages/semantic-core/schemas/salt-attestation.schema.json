@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-attestation.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-attestation.schema.json",
   "title": "Salt Agent Provenance Attestation (v1)",
   "description": "Payload emitted by `salt-ds hook --emit-attestation` after a clean PostToolUse review. Consumers pipe the payload to whatever audit store they already operate. Salt does not pick the disk layout, the hashing algorithm, the retention policy, or the GC story. The Zod source-of-truth lives at packages/semantic-core/src/tools/attestation.ts.",
   "type": "object",

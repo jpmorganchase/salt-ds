@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-pattern.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-pattern.schema.json",
   "title": "Salt Pattern Context",
   "description": "Evidence-aware static context for one Salt pattern.",
   "type": "object",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-unsupported-surface.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-unsupported-surface.schema.json",
   "title": "Salt Unsupported Generated Context Surface",
   "description": "Explicit unsupported state for generated context surfaces that cannot emit EvidenceRef-backed Salt claims yet.",
   "type": "object",

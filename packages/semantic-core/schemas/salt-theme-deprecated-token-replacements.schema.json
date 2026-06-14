@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-theme-deprecated-token-replacements.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-theme-deprecated-token-replacements.schema.json",
   "title": "Salt Theme Deprecated Token Replacements",
   "description": "Source-backed theme metadata for deprecated token replacement evidence and explicit unsupported replacement states.",
   "type": "object",

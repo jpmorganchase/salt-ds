@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-generated-context-health.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-generated-context-health.schema.json",
   "title": "Salt Generated Context Health",
   "description": "Health summary for generated Salt static context manifest outputs.",
   "type": "object",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-component-check.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-component-check.schema.json",
   "title": "Salt Component Context Check",
   "description": "Staleness check result for one generated Salt component context artifact.",
   "type": "object",

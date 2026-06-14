@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://saltdesignsystem.com/schemas/salt-context-coverage-audit.schema.json",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-coverage-audit.schema.json",
   "title": "Salt Context Coverage Audit",
   "description": "Coverage audit for source-backed Salt generated component, pattern, and foundation contexts.",
   "type": "object",

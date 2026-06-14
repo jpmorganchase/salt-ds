@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/project-conventions.schema.json",
   "title": "Project Conventions",
   "description": "Optional project-specific conventions that refine canonical Salt guidance without changing the core Salt MCP registry.",
   "type": "object",

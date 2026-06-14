@@ -884,6 +884,10 @@ const MCP_WORKFLOW_OUTPUT_SCHEMA = z
     truncated: z.boolean().optional(),
     available_expansions: z.array(z.string()).optional(),
     full_output_bytes: z.number().optional(),
+    // Per-workflow free-form expansion payload. Shape varies by tool and view
+    // (create / review / migrate / upgrade); each tool's `view: "full"`
+    // response defines its own concrete schema in semantic-core. Hosts
+    // discriminate on `contract` + `available_expansions` before reading.
     details: z.unknown().optional(),
   })
   .strict();
@@ -906,7 +910,15 @@ const CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA = z
     root_dir: z.string(),
     output_dir: z.string(),
     manifest_path: z.string(),
+    // Conforms to `salt_generated_artifact_release_gate_batch_v1`. Concrete
+    // shape lives in `packages/semantic-core/src/generatedArtifactReleaseGate.ts`
+    // (TS interface + JSON Schema mirror at
+    // `schemas/salt-generated-artifact-release-gate-batch.schema.json`).
     release_gate: z.unknown(),
+    // Conforms to `salt_context_pack_persistence_check_v1`. Concrete shape
+    // lives in `packages/semantic-core/src/contextPackBundle.ts` (TS
+    // interface + JSON Schema mirror at
+    // `schemas/salt-context-pack-persistence-check.schema.json`).
     persistence_check: z.unknown(),
   })
   .strict();
@@ -916,6 +928,10 @@ const GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA = z
     status: z.enum(["written", "blocked", "invalid"]),
     written: z.boolean(),
     artifact_path: z.string(),
+    // Conforms to `salt_generated_artifact_release_gate_v1`. Concrete shape
+    // lives in `packages/semantic-core/src/generatedArtifactReleaseGate.ts`
+    // (TS interface + JSON Schema mirror at
+    // `schemas/salt-generated-artifact-release-gate.schema.json`).
     release_gate: z.unknown(),
     missing: z.array(z.string()),
   })
