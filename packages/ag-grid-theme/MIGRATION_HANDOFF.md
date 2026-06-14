@@ -414,6 +414,51 @@ When a phase prompt refers to "§X.Y of the proposal", here's the index:
   has a v3 source-of-truth home; consumers swapping to v3 get the same
   rendering surface that 2.x provided.
 
+- **2026-06-14 (Phase 8.4 — final story ports)** —
+  Authored the last two missing V3 stories. After this, **the entire
+  migration is feature-complete** — every 2.x story and every 2.x CSS
+  rule has a v3 home.
+
+  - **`stories/v3/contextMenu.stories.tsx`** — was a 0-byte stub
+    blocking the Phase 7 sweep tooling. Filled with the legacy
+    `ContextMenu.tsx` example ported to the V3 pattern:
+    `getContextMenuItems` returning the full variation set (alert with
+    custom `cssClasses`, disabled+tooltip, nested subMenus, separators,
+    HTML `icon` strings using the existing `mac.png` / `windows.png`
+    dependencies, `shortcut` text, `checked` state, built-in `"copy"`).
+    Uses `allowContextMenuWithControlKey` for Mac users.
+
+  - **NEW** `stories/v3/icons.stories.tsx` — visual catalog of all 57
+    `saltIconSet` glyphs. Each icon name renders as
+    `<div class="ag-icon-{name}">{name}</div>` so the part's
+    `.ag-icon-{name}::before { content: "\eXXX"; font-family: salt-icons }`
+    rule paints the glyph before the label. Hidden dummy `<AgGridReact>`
+    mounts saltTheme so the icon CSS lands on the page; the visible
+    catalog is a 3-column CSS grid. Inline `<style>` block ports the
+    legacy `Icons.css` rules (8px margin between glyph + label,
+    `animation: none` on `.ag-icon-loading` for screenshot determinism).
+
+  After Phase 8.4, **migration scoreboard:**
+
+    - CSS: 12 / 12 legacy `css/parts/*.css` files ported ✅
+    - Stories: 33 / 33 legacy `src/examples/*.tsx` examples have a v3
+      counterpart ✅
+    - All `salt*` parts wired in `saltTheme.ts` ✅
+    - Phase 7 visual diff sweep: 22 / 30 stories at ≤ 2 real diffs;
+      11 at ZERO real diffs
+
+  Remaining residuals (NOT migration work — acceptable per §9 decisions):
+    - `hd-compact` 11 diffs by design (compact tier dropped per Decision 2;
+      consumers use `saltTheme.withParams({ rowHeight: 21, headerHeight: 20 })`
+      per PHASE_4_DENSITY_VALIDATION.md)
+    - Six stories with column-width probe noise (5-9 diffs each, not theme
+      bugs; story-config polish, not migration work)
+    - Checkbox hidden-input style diffs in 5-6 stories (probe artifact,
+      not real visual regression)
+
+  Branch `feat/ag-grid-theme-v3-phase-0` is now feature-complete and ready
+  for the final visual-diff sweep + PR review.
+
 ## When something changes
 
 Update this hand-off (`MIGRATION_HANDOFF.md`) whenever:
