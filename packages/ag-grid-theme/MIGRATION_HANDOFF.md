@@ -365,6 +365,55 @@ When a phase prompt refers to "§X.Y of the proposal", here's the index:
     - `contextMenu.stories.tsx` (0-byte stub)
     - `icons` story (missing in v3)
 
+- **2026-06-14 (Phase 8.3 — rollup of remaining small CSS files)** —
+  Closes the last three legacy CSS files in one commit. After this,
+  every `packages/ag-grid-theme/css/parts/*.css` file from the 2.x line
+  has a v3 home.
+
+  - **`ag-column-drop-list.css` (32 lines)** —
+    **NEW** `src/css/salt-column-drop.css` (84 lines including JSDoc).
+    `saltColumnDropStyle.ts` now imports it via `?inline` (was a one-line
+    inline CSS string). Covers the cell-internal layout (drag handle
+    reset, height/padding, button min-width) + the
+    `:hover` / `:active` / `[aria-expanded="true"]` colour cascade.
+    The 2.x line drove the cascade by cycling legacy AG v32 variables
+    (`--ag-chip-background-color`, `--ag-secondary-foreground-color`,
+    `--ag-icon-font-color`) which AG v3 doesn't consume — ported by
+    setting `background` + `color` directly on the pill. Icons inside
+    inherit via `iconColor: "inherit"` so the whole pill shifts colour
+    on each state.
+
+    Closes the "Phase 1+ TODO" note that's been in
+    `saltColumnDropStyle.ts` since 2026-06-12.
+
+  - **`ag-tool-panel.css` (35 lines)** — appended to
+    `src/css/salt-cell-states.css` under a new "Tool panel layout"
+    section. 5 rules: react-tool-panel wrapper width, side-buttons
+    min-width, button.ag-side-button-button padding,
+    `.ag-column-drop-vertical-empty-message` padding,
+    `.ag-side-button-icon-wrapper` margin-bottom.
+
+  - **`ag-toggle-button.css` (13 lines)** — appended to
+    `src/css/salt-cell-states.css` under a new "Toggle button
+    positioning" section. 2 rules: switch knob inset (top/left/height/width
+    derived from `--ag-toggle-button-border-width`) and the checked-state
+    knob position + Salt-selectable border colour.
+
+  Both tool-panel + toggle-button land in `salt-cell-states.css` rather
+  than a dedicated part because each is small (< 35 lines combined for
+  toggle) and pure layout. If `salt-cell-states.css` grows past ~600
+  lines we should split out a `saltLayoutMisc` part — currently 461
+  lines, still manageable.
+
+  After Phase 8.3, the only remaining migration work is:
+    - `contextMenu.stories.tsx` (0-byte stub — needs authoring against
+      legacy `ContextMenu.tsx` example)
+    - `icons` story (missing in v3 — the Salt icon-gallery doc story)
+
+  **CSS migration: COMPLETE.** Every legacy `css/parts/*.css` file now
+  has a v3 source-of-truth home; consumers swapping to v3 get the same
+  rendering surface that 2.x provided.
+
 ## When something changes
 
 Update this hand-off (`MIGRATION_HANDOFF.md`) whenever:

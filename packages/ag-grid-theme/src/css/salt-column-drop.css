@@ -1,0 +1,73 @@
+/* Phase 8.3 port of `packages/ag-grid-theme/css/parts/ag-column-drop-list.css`
+ * (2.x line).
+ *
+ * The 4-way `.ag-theme-salt-{light,dark,compact-light,compact-dark}` selector
+ * scoping is stripped — AG v3 auto-wraps in `:where(.ag-theme-part-N)`.
+ *
+ * What's in this file:
+ *   1. Cell-internal layout (drag handle reset, height/padding, button
+ *      min-width)
+ *   2. Hover / active / `[aria-expanded="true"]` colour cascade —
+ *      cycles `background` + `color` between Salt actionable-bold
+ *      base / hover / active tokens
+ *
+ * The 2.x line drove the hover/active cascade by cycling three legacy
+ * variables (`--ag-chip-background-color`, `--ag-secondary-foreground-color`,
+ * `--ag-icon-font-color`). AG v3 doesn't consume those variables — the
+ * typed `columnDropCellBackgroundColor` / `columnDropCellTextColor` params
+ * cover the default state, but they're SET ONCE at theme creation and can't
+ * express hover/active deltas. Port the cascade directly with `background` +
+ * `color` on the pill: text follows `color` natively; icons follow it via
+ * `--ag-icon-color: inherit` (set as `iconColor: "var(--salt-content-secondary-foreground)"`
+ * in `saltTheme.ts` then inherited by nested `.ag-icon` elements via the
+ * cell's `color`).
+ *
+ * Default state intentionally NOT overridden — see the JSDoc on
+ * `saltColumnDropStyle.ts`: 2.x leaves the default text colour inheriting
+ * from `--ag-foreground-color` (= body primary). Setting it explicitly to
+ * `--salt-actionable-bold-foreground` (white) renders white-on-grey pills
+ * which is defensible per Salt's Pill tokens but breaks 2.x parity.
+ *
+ * (Phase 8.3 port 2026-06-14 — closes the TODO from saltColumnDropStyle.ts.)
+ */
+
+/* ===== 1. Cell-internal layout ====================================== */
+
+/* AG v3 default leaves a small left margin on the drag handle; remove
+ * it so the handle sits flush with the cell edge. */
+.ag-column-drop-cell-drag-handle {
+  margin-left: 0;
+}
+
+/* Pill sizing + border-radius. Border-radius re-reads the typed
+ * `columnDropCellBorderRadius: 0` param because AG v3 hardcodes
+ * `border-radius: 500px` in its module-level `.ag-column-drop-cell`
+ * rule and DOESN'T consume `--ag-column-drop-cell-border-radius`
+ * (Phase 1 finding — see saltColumnDropStyle.ts JSDoc). */
+.ag-column-drop-cell {
+  border-radius: var(--ag-column-drop-cell-border-radius, 0);
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  padding: 0 var(--salt-spacing-50);
+}
+
+/* AG v3 default reserves `min-width` on the cancel button; reset so
+ * the button hugs its icon for a tight pill layout. */
+.ag-column-drop-cell-button {
+  min-width: unset;
+}
+
+/* ===== 2. Hover / active / expanded colour cascade =================
+ *
+ * Each state cycles the pill background + text colour. Icons inside
+ * follow the cell's `color` via `--ag-icon-color: inherit` (set
+ * globally via `iconColor` typed param). */
+.ag-column-drop-cell:hover {
+  background: var(--salt-actionable-bold-background-hover);
+  color: var(--salt-actionable-bold-foreground-hover);
+}
+
+.ag-column-drop-cell:active,
+.ag-column-drop-cell[aria-expanded="true"] {
+  background: var(--salt-actionable-bold-background-active);
+  color: var(--salt-actionable-bold-foreground-active);
+}
