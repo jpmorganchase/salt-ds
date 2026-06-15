@@ -1,10 +1,11 @@
 .highcharts-container {
   /*
-    Salt's bold hover background can include a linear gradient, which is not a
-    valid SVG fill. Use the closest solid value for the SVG reset zoom button.
-    This simulates `--salt-actionable-bold-background-hover`.
+    Salt's bold hover background can include a linear gradient and the hover
+    border can use an alpha overlay. SVG fill/stroke do not paint those like a
+    CSS button, so use the closest solid values for the reset zoom button.
   */
   --saltHighcharts-reset-zoom-button-background-hover: #606569;
+  --saltHighcharts-reset-zoom-button-borderColor-hover: #43484a;
 }
 
 .highcharts-legend-item-hidden .highcharts-point {
@@ -20,10 +21,10 @@
   stroke-linecap: square;
 }
 
-/* We rely on the zoom proxy being placed before the svg in the keyboard order via accessibility.keyboardNavigaion.order */
+/* We rely on the zoom proxy being placed before the svg in the keyboard order via accessibility.keyboardNavigation.order */
 .highcharts-a11y-proxy-container-before:focus-within + svg .highcharts-reset-zoom > rect:not(.highcharts-focus-border) {
   fill: var(--saltHighcharts-reset-zoom-button-background-hover) !important;
-  stroke: var(--salt-actionable-bold-borderColor-hover) !important;
+  stroke: var(--saltHighcharts-reset-zoom-button-borderColor-hover) !important;
   stroke-width: var(--salt-size-fixed-100) !important;
 }
 
