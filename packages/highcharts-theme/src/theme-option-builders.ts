@@ -56,19 +56,21 @@ const cssVariable = (tokenName: keyof SaltChartTokenMap) => `var(${tokenName})`;
   The reset zoom button mimics the Salt Button solid neutral variant
   (`.saltButton-neutral.saltButton-solid` and is always in medium density.
 
-  Since SVGs don't support CSS background gradients as fills, the hover fill
-  uses a package-level CSS variable with a solid fallback value.
+  Since SVGs don't support CSS background gradients as fills or CSS borders,
+  the hover fill and stroke use package-level CSS variables with solid fallback
+  values.
 */
 const RESET_BUTTON_MEDIUM_PADDING = 7;
 const RESET_BUTTON_MEDIUM_FONT_SIZE = "12px";
+const RESET_BUTTON_STROKE_WIDTH = 1;
 const RESET_BUTTON_HOVER_FILL =
   "var(--saltHighcharts-reset-zoom-button-background-hover)";
+const RESET_BUTTON_HOVER_STROKE =
+  "var(--saltHighcharts-reset-zoom-button-borderColor-hover)";
 
 export const buildZoomingOptions = (
   tokens: SaltChartTokenMap,
 ): NonNullable<HighchartsOptionsCompat["chart"]>["zooming"] => {
-  const strokeWidth = cssVariable("--salt-size-fixed-100");
-  const hoverStroke = cssVariable("--salt-actionable-bold-borderColor-hover");
   const hoverForeground = cssVariable(
     "--salt-actionable-bold-foreground-hover",
   );
@@ -78,7 +80,7 @@ export const buildZoomingOptions = (
       theme: {
         fill: cssVariable("--salt-actionable-bold-background"),
         stroke: cssVariable("--salt-actionable-bold-borderColor"),
-        "stroke-width": strokeWidth,
+        "stroke-width": RESET_BUTTON_STROKE_WIDTH,
         r: tokens["--salt-palette-corner-weak"],
         padding: RESET_BUTTON_MEDIUM_PADDING,
         style: {
@@ -94,16 +96,16 @@ export const buildZoomingOptions = (
         states: {
           hover: {
             fill: RESET_BUTTON_HOVER_FILL,
-            stroke: hoverStroke,
-            "stroke-width": strokeWidth,
+            stroke: RESET_BUTTON_HOVER_STROKE,
+            "stroke-width": RESET_BUTTON_STROKE_WIDTH,
             style: {
               color: hoverForeground,
             },
           },
           select: {
             fill: RESET_BUTTON_HOVER_FILL,
-            stroke: hoverStroke,
-            "stroke-width": strokeWidth,
+            stroke: RESET_BUTTON_HOVER_STROKE,
+            "stroke-width": RESET_BUTTON_STROKE_WIDTH,
             style: {
               color: hoverForeground,
             },
