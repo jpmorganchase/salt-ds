@@ -41,6 +41,8 @@
     "lint:style:ag-theme": "yarn stylelint -f verbose \"packages/ag-grid-theme/css/**/*.css\"",
     "lint:style:highcharts-theme": "yarn stylelint -f verbose \"packages/highcharts-theme/src/**/*.css\"",
     "lint:style:theme": "yarn stylelint -f verbose \"packages/theme/css/**/*.css\"",
+    "spellcheck": "yarn workspace @salt-ds/site spellcheck",
+    "preflight": "sh scripts/preflight.sh",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "tsgo --noEmit",
