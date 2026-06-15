@@ -1,4 +1,39 @@
+.highcharts-container {
+  /*
+    Salt's bold hover background can include a linear gradient, which is not a
+    valid SVG fill. Use the closest solid value for the SVG reset zoom button.
+    This simulates `--salt-actionable-bold-background-hover`.
+  */
+  --saltHighcharts-resetZoomButton-background-hover: #606569;
+}
+
 .highcharts-legend-item-hidden .highcharts-point {
   /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline marker fill for hidden legend series. */
   fill: var(--salt-content-secondary-foreground-disabled) !important;
+}
+
+.highcharts-reset-zoom .highcharts-focus-border {
+  fill: none;
+  /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline focus-border stroke attributes. */
+  stroke: var(--salt-focused-outlineColor) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline focus-border stroke attributes. */
+  stroke-width: var(--salt-focused-outlineWidth) !important;
+  /* approximates the button's border focus styling */
+  stroke-dasharray: 0, 4;
+  stroke-linecap: square;
+}
+
+/* We rely on the zoom proxy being placed before the svg in the keyboard order via accessibility.keyboardNavigaion.order */
+.highcharts-a11y-proxy-container-before:focus-within + svg .highcharts-reset-zoom > rect:not(.highcharts-focus-border) {
+  /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline reset button fill on keyboard focus. */
+  fill: var(--saltHighcharts-resetZoomButton-background-hover) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline reset button stroke on keyboard focus. */
+  stroke: var(--salt-actionable-bold-borderColor-hover) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline reset button stroke width on keyboard focus. */
+  stroke-width: var(--salt-size-fixed-100) !important;
+}
+
+.highcharts-a11y-proxy-container-before:focus-within + svg .highcharts-reset-zoom text {
+  /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline reset button text color on keyboard focus. */
+  fill: var(--salt-actionable-bold-foreground-hover) !important;
 }
