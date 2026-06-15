@@ -108,7 +108,7 @@
     "@changesets/assemble-release-plan@npm:^6.0.9": "patch:@changesets/assemble-release-plan@npm%3A6.0.9#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.9-e01af97ef4.patch",
     "next": "^16.0.0",
     "cookie": "^1.0.0",
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.28.0",
     "ag-grid-community": "32.2.1",
     "ag-grid-enterprise": "32.2.1",
     "ag-grid-react": "32.2.1",
