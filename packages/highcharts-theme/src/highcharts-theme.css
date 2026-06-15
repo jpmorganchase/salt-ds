@@ -13,6 +13,7 @@
 }
 
 .highcharts-reset-zoom .highcharts-focus-border {
+  display: none;
   fill: none;
   stroke: var(--salt-focused-outlineColor) !important;
   stroke-width: var(--salt-focused-outlineWidth) !important;
@@ -22,6 +23,10 @@
 }
 
 /* We rely on the zoom proxy being placed before the svg in the keyboard order via accessibility.keyboardNavigation.order */
+.highcharts-a11y-proxy-container-before:focus-within + svg .highcharts-reset-zoom .highcharts-focus-border {
+  display: block;
+}
+
 .highcharts-a11y-proxy-container-before:focus-within + svg .highcharts-reset-zoom > rect:not(.highcharts-focus-border) {
   fill: var(--saltHighcharts-reset-zoom-button-background-hover) !important;
   stroke: var(--saltHighcharts-reset-zoom-button-borderColor-hover) !important;
