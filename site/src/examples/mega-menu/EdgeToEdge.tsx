@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -56,7 +56,7 @@ export const EdgeToEdge = (): ReactElement => {
                         <MegaMenuGroupHeading>
                           Financial services
                         </MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/digital-banking" />}
                             onClick={() =>
@@ -79,11 +79,11 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Risk management
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/patient-management" />}
                             onClick={() =>
@@ -117,11 +117,11 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Compliance solutions
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/e-commerce-platforms" />}
                             onClick={() =>
@@ -133,13 +133,13 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             E-commerce platforms
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>
                           Manufacturing
                         </MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/supply-chain-optimization" />}
                             onClick={() =>
@@ -173,11 +173,11 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Production planning
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/learning-management-systems" />}
                             onClick={() =>
@@ -200,11 +200,11 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Virtual classrooms
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/document-management" />}
                             onClick={() =>
@@ -238,11 +238,11 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Public safety solutions
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/cloud-solutions" />}
                             onClick={() =>
@@ -265,11 +265,11 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Cybersecurity
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>Energy</MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/smart-grid-management" />}
                             onClick={() =>
@@ -292,7 +292,7 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Renewable Integration
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                     </MegaMenuGroups>
                   </MegaMenuBody>
@@ -317,7 +317,7 @@ export const EdgeToEdge = (): ReactElement => {
                     <MegaMenuGroups>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/strategy" />}
                             onClick={() =>
@@ -337,13 +337,13 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Operations
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>
                           Implementation
                         </MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/onboarding" />}
                             onClick={() =>
@@ -363,11 +363,11 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Migration
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/workshops" />}
                             onClick={() =>
@@ -387,7 +387,7 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Certifications
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                     </MegaMenuGroups>
                   </MegaMenuBody>
@@ -414,7 +414,7 @@ export const EdgeToEdge = (): ReactElement => {
                         <MegaMenuGroupHeading>
                           Documentation
                         </MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/user-guides" />}
                             onClick={() =>
@@ -437,13 +437,13 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             API reference
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                       <MegaMenuGroup>
                         <MegaMenuGroupHeading>
                           Support &amp; help
                         </MegaMenuGroupHeading>
-                        <MegaMenuItemList>
+                        <MegaMenuList>
                           <MegaMenuItem
                             render={<Link to="/contact-support" />}
                             onClick={() =>
@@ -466,7 +466,7 @@ export const EdgeToEdge = (): ReactElement => {
                           >
                             Community forum
                           </MegaMenuItem>
-                        </MegaMenuItemList>
+                        </MegaMenuList>
                       </MegaMenuGroup>
                     </MegaMenuGroups>
                   </MegaMenuBody>

@@ -46,7 +46,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuSupportingActions,
   MegaMenuSupportingContent,
@@ -112,7 +112,7 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuGroupHeading>
                       Financial services
                     </MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/digital-banking" />}
                         onClick={() =>
@@ -137,11 +137,11 @@ export const WithIcons: StoryFn = () => {
                         <DatasetManagerIcon aria-hidden />
                         Risk management
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/patient-management" />}
                         onClick={() =>
@@ -175,11 +175,11 @@ export const WithIcons: StoryFn = () => {
                         <PasteIcon aria-hidden />
                         Compliance solutions
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/e-commerce-platforms" />}
                         onClick={() =>
@@ -192,11 +192,11 @@ export const WithIcons: StoryFn = () => {
                         <CartIcon aria-hidden />
                         E-commerce platforms
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/supply-chain-optimization" />}
                         onClick={() =>
@@ -233,11 +233,11 @@ export const WithIcons: StoryFn = () => {
                         <NotificationIcon aria-hidden />
                         Production planning
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={
                           <RouterLink to="/learning-management-systems" />
@@ -264,11 +264,11 @@ export const WithIcons: StoryFn = () => {
                         <LaptopIcon aria-hidden />
                         Virtual classrooms
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/document-management" />}
                         onClick={() =>
@@ -305,7 +305,7 @@ export const WithIcons: StoryFn = () => {
                         <UserGroupIcon aria-hidden />
                         Public safety solutions
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -328,7 +328,7 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/strategy" />}
                         onClick={() =>
@@ -374,11 +374,11 @@ export const WithIcons: StoryFn = () => {
                         <SettingsIcon aria-hidden />
                         Operations
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/onboarding" />}
                         onClick={() =>
@@ -442,11 +442,11 @@ export const WithIcons: StoryFn = () => {
                         <SaveIcon aria-hidden />
                         Rollout
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/online" />}
                         onClick={() =>
@@ -504,7 +504,7 @@ export const WithIcons: StoryFn = () => {
                         <GuideOpenIcon aria-hidden />
                         Guides
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -526,7 +526,7 @@ export const WithIcons: StoryFn = () => {
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/user-guides" />}
                         onClick={() =>
@@ -563,11 +563,11 @@ export const WithIcons: StoryFn = () => {
                         <HelpCircleIcon aria-hidden />
                         FAQs
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/contact-support" />}
                         onClick={() =>
@@ -604,7 +604,7 @@ export const WithIcons: StoryFn = () => {
                         <AnnouncementIcon aria-hidden />
                         Troubleshooting
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -647,7 +647,7 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuGroupHeading>
                       Financial services
                     </MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/digital-banking" />}
                         onClick={() =>
@@ -670,11 +670,11 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Risk management
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/patient-management" />}
                         onClick={() =>
@@ -710,11 +710,11 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Compliance solutions
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/e-commerce-platforms" />}
                         onClick={() =>
@@ -726,11 +726,11 @@ export const WithAdornment: StoryFn = () => {
                       >
                         E-commerce platforms
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/supply-chain-optimization" />}
                         onClick={() =>
@@ -769,11 +769,11 @@ export const WithAdornment: StoryFn = () => {
                           </Tag>
                         </div>
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={
                           <RouterLink to="/learning-management-systems" />
@@ -798,11 +798,11 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Virtual classrooms
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/document-management" />}
                         onClick={() =>
@@ -836,7 +836,7 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Public safety solutions
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -859,7 +859,7 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/strategy" />}
                         onClick={() =>
@@ -900,11 +900,11 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Operations
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/onboarding" />}
                         onClick={() =>
@@ -964,11 +964,11 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Rollout
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/online" />}
                         onClick={() =>
@@ -1023,7 +1023,7 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Guides
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -1045,7 +1045,7 @@ export const WithAdornment: StoryFn = () => {
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/user-guides" />}
                         onClick={() =>
@@ -1081,11 +1081,11 @@ export const WithAdornment: StoryFn = () => {
                       >
                         FAQs
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/contact-support" />}
                         onClick={() =>
@@ -1124,7 +1124,7 @@ export const WithAdornment: StoryFn = () => {
                       >
                         Troubleshooting
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -1155,7 +1155,7 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-1" />}
                       onClick={() =>
@@ -1189,11 +1189,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 3
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-4" />}
                       onClick={() =>
@@ -1227,11 +1227,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 6
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-7" />}
                       onClick={() =>
@@ -1265,11 +1265,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 9
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-10" />}
                       onClick={() =>
@@ -1303,7 +1303,7 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 12
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -1324,7 +1324,7 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-1" />}
                       onClick={() =>
@@ -1358,11 +1358,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 3
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-4" />}
                       onClick={() =>
@@ -1396,11 +1396,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 6
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-7" />}
                       onClick={() =>
@@ -1434,11 +1434,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 9
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-10" />}
                       onClick={() =>
@@ -1472,7 +1472,7 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 12
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -1493,7 +1493,7 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-1" />}
                       onClick={() =>
@@ -1527,11 +1527,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 3
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-4" />}
                       onClick={() =>
@@ -1565,11 +1565,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 6
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-7" />}
                       onClick={() =>
@@ -1603,11 +1603,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 9
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-10" />}
                       onClick={() =>
@@ -1641,7 +1641,7 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 12
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -1662,7 +1662,7 @@ export const TriggerPosition: StoryFn = () => {
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-1" />}
                       onClick={() =>
@@ -1696,11 +1696,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 3
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-4" />}
                       onClick={() =>
@@ -1734,11 +1734,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 6
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-7" />}
                       onClick={() =>
@@ -1772,11 +1772,11 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 9
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/mega-menu-item-10" />}
                       onClick={() =>
@@ -1810,7 +1810,7 @@ export const TriggerPosition: StoryFn = () => {
                     >
                       Mega menu item 12
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -1857,7 +1857,7 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuGroupHeading>
                         Financial services
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/digital-banking" />}
                           onClick={() =>
@@ -1880,11 +1880,11 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Risk management
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/patient-management" />}
                           onClick={() =>
@@ -1918,11 +1918,11 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Compliance solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/e-commerce-platforms" />}
                           onClick={() =>
@@ -1934,11 +1934,11 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           E-commerce platforms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={
                             <RouterLink to="/supply-chain-optimization" />
@@ -1974,11 +1974,11 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Production planning
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={
                             <RouterLink to="/learning-management-systems" />
@@ -2003,11 +2003,11 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Virtual classrooms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/document-management" />}
                           onClick={() =>
@@ -2041,11 +2041,11 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Public safety solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/cloud-solutions" />}
                           onClick={() =>
@@ -2068,11 +2068,11 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Cybersecurity
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Energy</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/smart-grid-management" />}
                           onClick={() =>
@@ -2095,7 +2095,7 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Renewable Integration
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -2121,7 +2121,7 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/strategy" />}
                           onClick={() =>
@@ -2162,13 +2162,13 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Operations
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Implementation
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/onboarding" />}
                           onClick={() =>
@@ -2228,11 +2228,11 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Rollout
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/online" />}
                           onClick={() =>
@@ -2284,7 +2284,7 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Guides
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -2309,7 +2309,7 @@ export const FullWidthContainer: StoryFn = () => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/user-guides" />}
                           onClick={() =>
@@ -2348,13 +2348,13 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           FAQs
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Support &amp; help
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/contact-support" />}
                           onClick={() =>
@@ -2388,7 +2388,7 @@ export const FullWidthContainer: StoryFn = () => {
                         >
                           Troubleshooting
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -2441,7 +2441,7 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuGroupHeading>
                         Financial services
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/digital-banking" />}
                           onClick={() =>
@@ -2464,11 +2464,11 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Risk management
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/patient-management" />}
                           onClick={() =>
@@ -2502,11 +2502,11 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Compliance solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/e-commerce-platforms" />}
                           onClick={() =>
@@ -2518,11 +2518,11 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           E-commerce platforms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={
                             <RouterLink to="/supply-chain-optimization" />
@@ -2558,11 +2558,11 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Production planning
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={
                             <RouterLink to="/learning-management-systems" />
@@ -2587,11 +2587,11 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Virtual classrooms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/document-management" />}
                           onClick={() =>
@@ -2625,11 +2625,11 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Public safety solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/cloud-solutions" />}
                           onClick={() =>
@@ -2652,11 +2652,11 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Cybersecurity
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Energy</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/smart-grid-management" />}
                           onClick={() =>
@@ -2679,7 +2679,7 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Renewable Integration
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -2705,7 +2705,7 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/strategy" />}
                           onClick={() =>
@@ -2746,13 +2746,13 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Operations
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Implementation
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/onboarding" />}
                           onClick={() =>
@@ -2812,11 +2812,11 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Rollout
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/online" />}
                           onClick={() =>
@@ -2868,7 +2868,7 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Guides
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -2893,7 +2893,7 @@ export const EdgeToEdge: StoryFn = () => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/user-guides" />}
                           onClick={() =>
@@ -2932,13 +2932,13 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           FAQs
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Support &amp; help
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/contact-support" />}
                           onClick={() =>
@@ -2972,7 +2972,7 @@ export const EdgeToEdge: StoryFn = () => {
                         >
                           Troubleshooting
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -3009,7 +3009,7 @@ export const WithContent: StoryFn = () => {
             <MegaMenuGroups className="custom-region-side-section">
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     render={<RouterLink to="/digital-banking" />}
                     onClick={() =>
@@ -3026,11 +3026,11 @@ export const WithContent: StoryFn = () => {
                   >
                     Risk management
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     render={<RouterLink to="/patient-management" />}
                     onClick={() =>
@@ -3061,11 +3061,11 @@ export const WithContent: StoryFn = () => {
                   >
                     Compliance solutions
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     render={<RouterLink to="/e-commerce-platforms" />}
                     onClick={() =>
@@ -3077,11 +3077,11 @@ export const WithContent: StoryFn = () => {
                   >
                     E-commerce platforms
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     render={<RouterLink to="/supply-chain-optimization" />}
                     onClick={() =>
@@ -3112,7 +3112,7 @@ export const WithContent: StoryFn = () => {
                   >
                     Production planning
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
             </MegaMenuGroups>
             <MegaMenuSupportingActions>
@@ -3202,7 +3202,7 @@ export const WithContent: StoryFn = () => {
             <MegaMenuGroups className="custom-region-side-section">
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     render={<RouterLink to="/digital-banking" />}
                     onClick={() =>
@@ -3219,11 +3219,11 @@ export const WithContent: StoryFn = () => {
                   >
                     Risk management
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     render={<RouterLink to="/patient-management" />}
                     onClick={() =>
@@ -3254,11 +3254,11 @@ export const WithContent: StoryFn = () => {
                   >
                     Compliance solutions
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     render={<RouterLink to="/e-commerce-platforms" />}
                     onClick={() =>
@@ -3270,11 +3270,11 @@ export const WithContent: StoryFn = () => {
                   >
                     E-commerce platforms
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     render={<RouterLink to="/supply-chain-optimization" />}
                     onClick={() =>
@@ -3305,7 +3305,7 @@ export const WithContent: StoryFn = () => {
                   >
                     Production planning
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
             </MegaMenuGroups>
             <MegaMenuSupportingActions>
@@ -3357,7 +3357,7 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuGroupHeading>
                       Financial services
                     </MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/digital-banking" />}
                         onClick={() =>
@@ -3380,11 +3380,11 @@ export const WithLink: StoryFn = () => {
                       >
                         Risk management
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/patient-management" />}
                         onClick={() =>
@@ -3415,11 +3415,11 @@ export const WithLink: StoryFn = () => {
                       >
                         Compliance solutions
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/e-commerce-platforms" />}
                         onClick={() =>
@@ -3431,11 +3431,11 @@ export const WithLink: StoryFn = () => {
                       >
                         E-commerce platforms
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/supply-chain-optimization" />}
                         onClick={() =>
@@ -3469,11 +3469,11 @@ export const WithLink: StoryFn = () => {
                       >
                         Production planning
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={
                           <RouterLink to="/learning-management-systems" />
@@ -3498,11 +3498,11 @@ export const WithLink: StoryFn = () => {
                       >
                         Virtual classrooms
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/document-management" />}
                         onClick={() =>
@@ -3536,7 +3536,7 @@ export const WithLink: StoryFn = () => {
                       >
                         Public safety solutions
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
                 <MegaMenuSupportingActions>
@@ -3569,7 +3569,7 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/strategy" />}
                         onClick={() =>
@@ -3610,11 +3610,11 @@ export const WithLink: StoryFn = () => {
                       >
                         Operations
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/onboarding" />}
                         onClick={() =>
@@ -3671,11 +3671,11 @@ export const WithLink: StoryFn = () => {
                       >
                         Rollout
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/online" />}
                         onClick={() =>
@@ -3727,7 +3727,7 @@ export const WithLink: StoryFn = () => {
                       >
                         Guides
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
                 <MegaMenuSupportingActions>
@@ -3754,7 +3754,7 @@ export const WithLink: StoryFn = () => {
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/user-guides" />}
                         onClick={() =>
@@ -3787,11 +3787,11 @@ export const WithLink: StoryFn = () => {
                       >
                         FAQs
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/contact-support" />}
                         onClick={() =>
@@ -3825,7 +3825,7 @@ export const WithLink: StoryFn = () => {
                       >
                         Troubleshooting
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
                 <MegaMenuSupportingActions>
@@ -3877,7 +3877,7 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuGroupHeading>
                         Financial services
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/digital-banking" />}
                           onClick={() =>
@@ -3900,11 +3900,11 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Risk management
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/patient-management" />}
                           onClick={() =>
@@ -3938,11 +3938,11 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Compliance solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/e-commerce-platforms" />}
                           onClick={() =>
@@ -3954,11 +3954,11 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           E-commerce platforms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={
                             <RouterLink to="/supply-chain-optimization" />
@@ -3994,11 +3994,11 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Production planning
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={
                             <RouterLink to="/learning-management-systems" />
@@ -4023,11 +4023,11 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Virtual classrooms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/document-management" />}
                           onClick={() =>
@@ -4061,7 +4061,7 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Public safety solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -4086,7 +4086,7 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/strategy" />}
                           onClick={() =>
@@ -4127,13 +4127,13 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Operations
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Implementation
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/onboarding" />}
                           onClick={() =>
@@ -4177,11 +4177,11 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Support
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/online" />}
                           onClick={() =>
@@ -4217,7 +4217,7 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Certifications
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -4242,7 +4242,7 @@ export const InSmallViewport: StoryFn = () => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/user-guides" />}
                           onClick={() =>
@@ -4281,11 +4281,11 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           FAQs
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Support</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/contact-support" />}
                           onClick={() =>
@@ -4319,11 +4319,11 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Troubleshooting
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Learn</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<RouterLink to="/tutorials" />}
                           onClick={() =>
@@ -4351,7 +4351,7 @@ export const InSmallViewport: StoryFn = () => {
                         >
                           Best practices
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -4381,7 +4381,7 @@ export const DefaultOpen: StoryFn = () => {
                     <MegaMenuGroupHeading>
                       Financial services
                     </MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/digital-banking" />}
                         onClick={() =>
@@ -4404,11 +4404,11 @@ export const DefaultOpen: StoryFn = () => {
                       >
                         Risk management
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/patient-management" />}
                         onClick={() =>
@@ -4439,11 +4439,11 @@ export const DefaultOpen: StoryFn = () => {
                       >
                         Compliance solutions
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         render={<RouterLink to="/e-commerce-platforms" />}
                         onClick={() =>
@@ -4455,7 +4455,7 @@ export const DefaultOpen: StoryFn = () => {
                       >
                         E-commerce platforms
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -4501,7 +4501,7 @@ export const Placement: StoryFn = () => {
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Group A</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/item-1" />}
                       onClick={() =>
@@ -4526,11 +4526,11 @@ export const Placement: StoryFn = () => {
                     >
                       Item 3
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Group B</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={<RouterLink to="/item-4" />}
                       onClick={() =>
@@ -4547,7 +4547,7 @@ export const Placement: StoryFn = () => {
                     >
                       Item 5
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>

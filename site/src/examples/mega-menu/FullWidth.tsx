@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -50,7 +50,7 @@ export const FullWidth = (): ReactElement => {
                       <MegaMenuGroupHeading>
                         Financial services
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/digital-banking" />}
                           onClick={() =>
@@ -73,11 +73,11 @@ export const FullWidth = (): ReactElement => {
                         >
                           Risk management
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/patient-management" />}
                           onClick={() =>
@@ -111,11 +111,11 @@ export const FullWidth = (): ReactElement => {
                         >
                           Compliance solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/e-commerce-platforms" />}
                           onClick={() =>
@@ -127,11 +127,11 @@ export const FullWidth = (): ReactElement => {
                         >
                           E-commerce platforms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/supply-chain-optimization" />}
                           onClick={() =>
@@ -154,11 +154,11 @@ export const FullWidth = (): ReactElement => {
                         >
                           Quality control
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/learning-management-systems" />}
                           onClick={() =>
@@ -181,11 +181,11 @@ export const FullWidth = (): ReactElement => {
                         >
                           Virtual classrooms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/document-management" />}
                           onClick={() =>
@@ -208,11 +208,11 @@ export const FullWidth = (): ReactElement => {
                         >
                           Citizen services
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/cloud-solutions" />}
                           onClick={() =>
@@ -235,7 +235,7 @@ export const FullWidth = (): ReactElement => {
                         >
                           Cybersecurity
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -260,7 +260,7 @@ export const FullWidth = (): ReactElement => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/strategy" />}
                           onClick={() =>
@@ -277,13 +277,13 @@ export const FullWidth = (): ReactElement => {
                         >
                           Operations
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Implementation
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/onboarding" />}
                           onClick={() =>
@@ -300,11 +300,11 @@ export const FullWidth = (): ReactElement => {
                         >
                           Migration
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/workshops" />}
                           onClick={() =>
@@ -324,7 +324,7 @@ export const FullWidth = (): ReactElement => {
                         >
                           Certifications
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -349,7 +349,7 @@ export const FullWidth = (): ReactElement => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/user-guides" />}
                           onClick={() =>
@@ -369,13 +369,13 @@ export const FullWidth = (): ReactElement => {
                         >
                           API reference
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Support &amp; help
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/contact-support" />}
                           onClick={() =>
@@ -398,7 +398,7 @@ export const FullWidth = (): ReactElement => {
                         >
                           Community forum
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>

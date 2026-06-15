@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -47,7 +47,7 @@ export const WithAdornment = (): ReactElement => {
                       <MegaMenuGroupHeading>
                         Financial services
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/digital-banking" />}
                           onClick={() =>
@@ -70,11 +70,11 @@ export const WithAdornment = (): ReactElement => {
                         >
                           Risk management
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/patient-management" />}
                           onClick={() =>
@@ -114,11 +114,11 @@ export const WithAdornment = (): ReactElement => {
                         >
                           Compliance solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/e-commerce-platforms" />}
                           onClick={() =>
@@ -130,11 +130,11 @@ export const WithAdornment = (): ReactElement => {
                         >
                           E-commerce platforms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/supply-chain-optimization" />}
                           onClick={() =>
@@ -174,11 +174,11 @@ export const WithAdornment = (): ReactElement => {
                             </Tag>
                           </div>
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/learning-management-systems" />}
                           onClick={() =>
@@ -201,11 +201,11 @@ export const WithAdornment = (): ReactElement => {
                         >
                           Virtual classrooms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/document-management" />}
                           onClick={() =>
@@ -239,7 +239,7 @@ export const WithAdornment = (): ReactElement => {
                         >
                           Public safety solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -261,7 +261,7 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/strategy" />}
                           onClick={() =>
@@ -302,13 +302,13 @@ export const WithAdornment = (): ReactElement => {
                         >
                           Operations
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Implementation
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/onboarding" />}
                           onClick={() =>
@@ -375,11 +375,11 @@ export const WithAdornment = (): ReactElement => {
                         >
                           Rollout
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/online" />}
                           onClick={() =>
@@ -438,7 +438,7 @@ export const WithAdornment = (): ReactElement => {
                         >
                           Guides
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -460,7 +460,7 @@ export const WithAdornment = (): ReactElement => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/user-guides" />}
                           onClick={() =>
@@ -503,13 +503,13 @@ export const WithAdornment = (): ReactElement => {
                         >
                           FAQs
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Support & help
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/contact-support" />}
                           onClick={() =>
@@ -549,7 +549,7 @@ export const WithAdornment = (): ReactElement => {
                         >
                           Troubleshooting
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>

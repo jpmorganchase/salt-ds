@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -50,7 +50,7 @@ export const InSmallViewport = (): ReactElement => {
                       <MegaMenuGroupHeading>
                         Financial services
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/digital-banking" />}
                           onClick={() =>
@@ -73,11 +73,11 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Risk management
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/patient-management" />}
                           onClick={() =>
@@ -111,11 +111,11 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Compliance solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/e-commerce-platforms" />}
                           onClick={() =>
@@ -127,11 +127,11 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           E-commerce platforms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/supply-chain-optimization" />}
                           onClick={() =>
@@ -165,11 +165,11 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Production planning
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/learning-management-systems" />}
                           onClick={() =>
@@ -192,11 +192,11 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Virtual classrooms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/document-management" />}
                           onClick={() =>
@@ -230,7 +230,7 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Public safety solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -255,7 +255,7 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/strategy" />}
                           onClick={() =>
@@ -296,13 +296,13 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Operations
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Implementation
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/onboarding" />}
                           onClick={() =>
@@ -346,11 +346,11 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Support
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/online" />}
                           onClick={() =>
@@ -386,7 +386,7 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Certifications
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -411,7 +411,7 @@ export const InSmallViewport = (): ReactElement => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/user-guides" />}
                           onClick={() =>
@@ -450,11 +450,11 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           FAQs
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Support</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/contact-support" />}
                           onClick={() =>
@@ -488,11 +488,11 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Troubleshooting
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Learn</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/tutorials" />}
                           onClick={() =>
@@ -520,7 +520,7 @@ export const InSmallViewport = (): ReactElement => {
                         >
                           Best practices
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>

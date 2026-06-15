@@ -16,9 +16,9 @@ placement props.
   its content. Column width is set with the `--saltMegaMenuGroups-columnWidth`
   custom property (default `12rem`).
 - **`MegaMenuGroup`** — one category column, composed of a `MegaMenuGroupHeading`
-  and a `MegaMenuItemList`.
+  and a `MegaMenuList`.
 - **`MegaMenuGroupHeading`** — the group's label.
-- **`MegaMenuItemList`** — a `<ul>` that wraps each `MegaMenuItem` in its own
+- **`MegaMenuList`** — a `<ul>` that wraps each `MegaMenuItem` in its own
   `<li>`.
 - **`MegaMenuItem`** — the focusable item. It renders an `<a>` when given an
   `href` or a `render` element (such as `react-router`'s `Link`), and a
@@ -57,11 +57,11 @@ behaviour and do not activate on Space.
     <MegaMenuGroups>
       <MegaMenuGroup>
         <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-        <MegaMenuItemList>
+        <MegaMenuList>
           <MegaMenuItem render={<Link to="/digital-banking" />}>
             Digital banking
           </MegaMenuItem>
-        </MegaMenuItemList>
+        </MegaMenuList>
       </MegaMenuGroup>
     </MegaMenuGroups>
     <MegaMenuSupportingActions>
@@ -77,7 +77,7 @@ behaviour and do not activate on Space.
 - `MegaMenuHeader` has been removed. Use `MegaMenuGroupHeading` for a group's
   label instead.
 - `MegaMenuItem` can no longer be placed directly inside a `MegaMenuGroup`. Wrap
-  the items in a `MegaMenuItemList`, which renders the `<ul>`/`<li>` structure.
+  the items in a `MegaMenuList`, which renders the `<ul>`/`<li>` structure.
 - `MegaMenuItem` is no longer the list item — it now renders an `<a>` or
-  `<button>` (the surrounding `<li>` comes from `MegaMenuItemList`). Update any
+  `<button>` (the surrounding `<li>` comes from `MegaMenuList`). Update any
   refs or styles that assumed an `<li>` element.

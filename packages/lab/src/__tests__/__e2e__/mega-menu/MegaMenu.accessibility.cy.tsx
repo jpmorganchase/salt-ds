@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuSupportingActions,
   MegaMenuSupportingContent,
@@ -32,7 +32,7 @@ const AccessibleMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
@@ -45,18 +45,18 @@ const AccessibleMegaMenu = () => (
                     >
                       Risk Management
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/patient-management"
                       onClick={(e) => e.preventDefault()}
                     >
                       Patient Management
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -74,14 +74,14 @@ const AccessibleMegaMenu = () => (
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/strategy"
                       onClick={(e) => e.preventDefault()}
                     >
                       Strategy
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -115,14 +115,14 @@ const LayoutMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
                     >
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
               <MegaMenuSupportingActions>
@@ -258,11 +258,11 @@ describe("Given a MegaMenu", () => {
                   <MegaMenuGroupHeading id="custom-heading-id">
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem href="/digital-banking">
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -293,11 +293,11 @@ describe("Given a MegaMenu", () => {
             <MegaMenuBody>
               <MegaMenuGroups>
                 <MegaMenuGroup>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem href="/digital-banking">
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -324,11 +324,11 @@ describe("Given a MegaMenu", () => {
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList aria-labelledby="extra-label">
+                  <MegaMenuList aria-labelledby="extra-label">
                     <MegaMenuItem href="/digital-banking">
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>

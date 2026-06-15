@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuSupportingActions,
   MegaMenuSupportingContent,
@@ -67,7 +67,7 @@ const main = (
     <MegaMenuGroups className={styles.customRegionSideSection}>
       <MegaMenuGroup>
         <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-        <MegaMenuItemList>
+        <MegaMenuList>
           <MegaMenuItem
             render={<RouterLink to="/digital-banking" />}
             onClick={() =>
@@ -84,11 +84,11 @@ const main = (
           >
             Risk management
           </MegaMenuItem>
-        </MegaMenuItemList>
+        </MegaMenuList>
       </MegaMenuGroup>
       <MegaMenuGroup>
         <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-        <MegaMenuItemList>
+        <MegaMenuList>
           <MegaMenuItem
             render={<RouterLink to="/patient-management" />}
             onClick={() =>
@@ -113,11 +113,11 @@ const main = (
           >
             Compliance solutions
           </MegaMenuItem>
-        </MegaMenuItemList>
+        </MegaMenuList>
       </MegaMenuGroup>
       <MegaMenuGroup>
         <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-        <MegaMenuItemList>
+        <MegaMenuList>
           <MegaMenuItem
             render={<RouterLink to="/e-commerce-platforms" />}
             onClick={() =>
@@ -126,11 +126,11 @@ const main = (
           >
             E-commerce platforms
           </MegaMenuItem>
-        </MegaMenuItemList>
+        </MegaMenuList>
       </MegaMenuGroup>
       <MegaMenuGroup>
         <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-        <MegaMenuItemList>
+        <MegaMenuList>
           <MegaMenuItem
             render={<RouterLink to="/supply-chain-optimization" />}
             onClick={() =>
@@ -155,7 +155,7 @@ const main = (
           >
             Production planning
           </MegaMenuItem>
-        </MegaMenuItemList>
+        </MegaMenuList>
       </MegaMenuGroup>
     </MegaMenuGroups>
     <MegaMenuSupportingActions>{supportingLinks}</MegaMenuSupportingActions>

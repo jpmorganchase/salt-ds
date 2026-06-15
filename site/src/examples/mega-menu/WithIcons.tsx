@@ -37,7 +37,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -78,7 +78,7 @@ export const WithIcons = (): ReactElement => {
                       <MegaMenuGroupHeading>
                         Financial services
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/digital-banking" />}
                           onClick={() =>
@@ -103,11 +103,11 @@ export const WithIcons = (): ReactElement => {
                           <DatasetManagerIcon aria-hidden />
                           Risk management
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/patient-management" />}
                           onClick={() =>
@@ -144,11 +144,11 @@ export const WithIcons = (): ReactElement => {
                           <PasteIcon aria-hidden />
                           Compliance solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/e-commerce-platforms" />}
                           onClick={() =>
@@ -161,11 +161,11 @@ export const WithIcons = (): ReactElement => {
                           <CartIcon aria-hidden />
                           E-commerce platforms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/supply-chain-optimization" />}
                           onClick={() =>
@@ -202,11 +202,11 @@ export const WithIcons = (): ReactElement => {
                           <NotificationIcon aria-hidden />
                           Production planning
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/learning-management-systems" />}
                           onClick={() =>
@@ -231,11 +231,11 @@ export const WithIcons = (): ReactElement => {
                           <LaptopIcon aria-hidden />
                           Virtual classrooms
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/document-management" />}
                           onClick={() =>
@@ -272,7 +272,7 @@ export const WithIcons = (): ReactElement => {
                           <UserGroupIcon aria-hidden />
                           Public safety solutions
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -294,7 +294,7 @@ export const WithIcons = (): ReactElement => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/strategy" />}
                           onClick={() =>
@@ -340,13 +340,13 @@ export const WithIcons = (): ReactElement => {
                           <SettingsIcon aria-hidden />
                           Operations
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Implementation
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/onboarding" />}
                           onClick={() =>
@@ -413,11 +413,11 @@ export const WithIcons = (): ReactElement => {
                           <SaveIcon aria-hidden />
                           Rollout
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/online" />}
                           onClick={() =>
@@ -475,7 +475,7 @@ export const WithIcons = (): ReactElement => {
                           <GuideOpenIcon aria-hidden />
                           Guides
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>
@@ -497,7 +497,7 @@ export const WithIcons = (): ReactElement => {
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/user-guides" />}
                           onClick={() =>
@@ -540,13 +540,13 @@ export const WithIcons = (): ReactElement => {
                           <HelpIcon aria-hidden />
                           FAQs
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
                         Support & help
                       </MegaMenuGroupHeading>
-                      <MegaMenuItemList>
+                      <MegaMenuList>
                         <MegaMenuItem
                           render={<Link to="/contact-support" />}
                           onClick={() =>
@@ -583,7 +583,7 @@ export const WithIcons = (): ReactElement => {
                           <AnnouncementIcon aria-hidden />
                           Troubleshooting
                         </MegaMenuItem>
-                      </MegaMenuItemList>
+                      </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
                 </MegaMenuBody>

@@ -4,7 +4,7 @@ export * from "./MegaMenuGroup";
 export * from "./MegaMenuGroupHeading";
 export * from "./MegaMenuGroups";
 export * from "./MegaMenuItem";
-export * from "./MegaMenuItemList";
+export * from "./MegaMenuList";
 export * from "./MegaMenuPanel";
 export * from "./MegaMenuSupportingActions";
 export * from "./MegaMenuSupportingContent";

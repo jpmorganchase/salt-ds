@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -37,7 +37,7 @@ const InteractiveMegaMenu = () => {
                     <MegaMenuGroupHeading>
                       Financial Services
                     </MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         href="/digital-banking"
                         onClick={(e) => e.preventDefault()}
@@ -50,7 +50,7 @@ const InteractiveMegaMenu = () => {
                       >
                         Risk Management
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -71,14 +71,14 @@ const InteractiveMegaMenu = () => {
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem
                         href="/strategy"
                         onClick={(e) => e.preventDefault()}
                       >
                         Strategy
                       </MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -153,14 +153,14 @@ describe("Given a MegaMenu", () => {
             <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuItemList>
+                <MegaMenuList>
                   <MegaMenuItem
                     href="/digital-banking"
                     onClick={(e) => e.preventDefault()}
                   >
                     Digital Banking
                   </MegaMenuItem>
-                </MegaMenuItemList>
+                </MegaMenuList>
               </MegaMenuGroup>
             </MegaMenuGroups>
           </MegaMenuBody>

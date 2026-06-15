@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -37,9 +37,9 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem href="#">Item</MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -56,9 +56,9 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem href="#">Item</MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>
@@ -75,9 +75,9 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                    <MegaMenuItemList>
+                    <MegaMenuList>
                       <MegaMenuItem href="#">Item</MegaMenuItem>
-                    </MegaMenuItemList>
+                    </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
               </MegaMenuBody>

@@ -6,7 +6,7 @@ import {
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuItem,
-  MegaMenuItemList,
+  MegaMenuList,
   MegaMenuPanel,
   MegaMenuSupportingActions,
   MegaMenuSupportingContent,
@@ -28,7 +28,7 @@ const KeyboardMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
@@ -41,11 +41,11 @@ const KeyboardMegaMenu = () => (
                     >
                       Risk Management
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/patient-management"
                       onClick={(e) => e.preventDefault()}
@@ -58,7 +58,7 @@ const KeyboardMegaMenu = () => (
                     >
                       Telemedicine
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -76,7 +76,7 @@ const KeyboardMegaMenu = () => (
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/strategy"
                       onClick={(e) => e.preventDefault()}
@@ -89,7 +89,7 @@ const KeyboardMegaMenu = () => (
                     >
                       Operations
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -120,7 +120,7 @@ const SideRegionMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
@@ -133,7 +133,7 @@ const SideRegionMegaMenu = () => (
                     >
                       Risk Management
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -170,7 +170,7 @@ const LeadingRegionMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
@@ -183,7 +183,7 @@ const LeadingRegionMegaMenu = () => (
                     >
                       Risk Management
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -212,7 +212,7 @@ const BottomBandMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
@@ -225,7 +225,7 @@ const BottomBandMegaMenu = () => (
                     >
                       Risk Management
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
               <MegaMenuSupportingActions>
@@ -257,14 +257,14 @@ const BottomBandWithNextMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
                     >
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
               <MegaMenuSupportingActions>
@@ -285,14 +285,14 @@ const BottomBandWithNextMegaMenu = () => (
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/strategy"
                       onClick={(e) => e.preventDefault()}
                     >
                       Strategy
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -320,14 +320,14 @@ const RoleAwareMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
                     >
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -358,14 +358,14 @@ const RoleAwareTabMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
                     >
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -397,7 +397,7 @@ const StaticContentMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       href="/digital-banking"
                       onClick={(e) => e.preventDefault()}
@@ -410,7 +410,7 @@ const StaticContentMegaMenu = () => (
                     >
                       Risk Management
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
               <MegaMenuSupportingActions>
@@ -447,7 +447,7 @@ const ActionItemMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     {/* No href and no render — renders as a focusable button. */}
                     <MegaMenuItem onClick={(e) => e.preventDefault()}>
                       Telemedicine
@@ -458,7 +458,7 @@ const ActionItemMegaMenu = () => (
                     >
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
@@ -488,7 +488,7 @@ const RenderPropMegaMenu = () => (
                   <MegaMenuGroupHeading>
                     Financial Services
                   </MegaMenuGroupHeading>
-                  <MegaMenuItemList>
+                  <MegaMenuList>
                     <MegaMenuItem
                       render={
                         <a href="/digital-banking" data-custom-link="">
@@ -499,7 +499,7 @@ const RenderPropMegaMenu = () => (
                     >
                       Digital Banking
                     </MegaMenuItem>
-                  </MegaMenuItemList>
+                  </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
             </MegaMenuBody>
