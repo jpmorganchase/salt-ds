@@ -112,6 +112,31 @@ export const LineChart = {
   },
 };
 
+/*
+  Drag-select within the plot area to zoom and reveal the reset button,
+  which uses bounded medium-density Salt Button presentation. This story is
+  a visual smoke test for hover, pressed, and Highcharts' default focus state.
+*/
+const zoomableLineOptions: Options = {
+  ...lineOptions,
+  chart: {
+    ...lineOptions.chart,
+    zooming: {
+      type: "x",
+    },
+  },
+};
+
+export const ZoomableLineChart = {
+  render: (args: ChartStoryArgs) => (
+    <LineChartComponent {...getChromaticStableArgs(args)} />
+  ),
+  args: {
+    fillPatterns: false,
+    options: zoomableLineOptions,
+  },
+};
+
 export const DualAxisChart = {
   render: (args: ChartStoryArgs) => (
     <DualAxisChartComponent {...getChromaticStableArgs(args)} />
