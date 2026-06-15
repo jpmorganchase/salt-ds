@@ -62,7 +62,7 @@ const cssVariable = (tokenName: keyof SaltChartTokenMap) => `var(${tokenName})`;
 const RESET_BUTTON_MEDIUM_PADDING = 7;
 const RESET_BUTTON_MEDIUM_FONT_SIZE = "12px";
 const RESET_BUTTON_HOVER_FILL =
-  "var(--saltHighcharts-resetZoomButton-background-hover)";
+  "var(--saltHighcharts-reset-zoom-button-background-hover)";
 
 export const buildZoomingOptions = (
   tokens: SaltChartTokenMap,
