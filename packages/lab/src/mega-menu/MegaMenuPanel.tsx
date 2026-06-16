@@ -57,10 +57,9 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       return () => setPanelId(undefined);
     }, [id, setPanelId]);
 
-    const referenceEl = floatingRootContext.elements.domReference as
-      | HTMLElement
-      | null
-      | undefined;
+    const { domReference } = floatingRootContext.elements;
+    const referenceEl =
+      domReference instanceof HTMLElement ? domReference : null;
     const pageMargin = usePageMargin(referenceEl);
 
     const floatingUIResult = useFloatingUI({
@@ -75,8 +74,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
     });
 
     // Focus the first item on ArrowDown open, after floating-ui has positioned the panel
-    const floatingEl = floatingRootContext.elements
-      .floating as HTMLElement | null;
+    const floatingEl = floatingRootContext.elements.floating;
     const { isPositioned } = floatingUIResult;
     useEffect(() => {
       if (focusFirstItemOnOpen && isPositioned && floatingEl) {

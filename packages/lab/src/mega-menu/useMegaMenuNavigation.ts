@@ -164,16 +164,15 @@ function handleArrow(
       case "ArrowRight": {
         if (colIndex < columns.length - 1) {
           firstFocusable(columns[colIndex + 1])?.focus();
-        } else if (
-          rowIndex === cells.length - 1 &&
-          focusNextTriggerAndClose(context)
-        ) {
-          // Last item of the last column with a next trigger: exit + close.
-        } else {
-          // Right border column otherwise: wrap to the current trigger and keep
-          // the menu open, mirroring Left in the first column.
-          focusTrigger(context);
+          return true;
         }
+        // Right border column: exit to the next trigger and close if available
+        if (rowIndex === cells.length - 1 && focusNextTriggerAndClose(context)) {
+          return true;
+        }
+        // Wrap to the current trigger and keep the menu open,
+        // mirroring Left in the first column.
+        focusTrigger(context);
         return true;
       }
       case "ArrowLeft": {
