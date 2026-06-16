@@ -6,9 +6,3 @@
   gap: var(--salt-spacing-fixed-100);
   flex-direction: column;
 }
-
-.saltMegaMenuList-item {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-}

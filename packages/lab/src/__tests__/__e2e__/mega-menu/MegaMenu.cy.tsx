@@ -5,8 +5,8 @@ import {
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
-  MegaMenuItem,
   MegaMenuList,
+  MegaMenuListItem,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -38,18 +38,18 @@ const InteractiveMegaMenu = () => {
                       Financial Services
                     </MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuItem
+                      <MegaMenuListItem
                         href="/digital-banking"
                         onClick={(e) => e.preventDefault()}
                       >
                         Digital Banking
-                      </MegaMenuItem>
-                      <MegaMenuItem
+                      </MegaMenuListItem>
+                      <MegaMenuListItem
                         href="/risk-management"
                         onClick={(e) => e.preventDefault()}
                       >
                         Risk Management
-                      </MegaMenuItem>
+                      </MegaMenuListItem>
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
@@ -72,12 +72,12 @@ const InteractiveMegaMenu = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuItem
+                      <MegaMenuListItem
                         href="/strategy"
                         onClick={(e) => e.preventDefault()}
                       >
                         Strategy
-                      </MegaMenuItem>
+                      </MegaMenuListItem>
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
@@ -154,12 +154,12 @@ describe("Given a MegaMenu", () => {
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
                 <MegaMenuList>
-                  <MegaMenuItem
+                  <MegaMenuListItem
                     href="/digital-banking"
                     onClick={(e) => e.preventDefault()}
                   >
                     Digital Banking
-                  </MegaMenuItem>
+                  </MegaMenuListItem>
                 </MegaMenuList>
               </MegaMenuGroup>
             </MegaMenuGroups>

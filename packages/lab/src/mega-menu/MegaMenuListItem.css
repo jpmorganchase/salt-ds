@@ -1,4 +1,10 @@
-.saltMegaMenuItem {
+.saltMegaMenuListItem {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.saltMegaMenuListItem-wrapper {
   display: flex;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
   align-items: flex-start;
@@ -16,13 +22,13 @@
   text-align: start;
 }
 
-.saltMegaMenuItem > .saltIcon {
+.saltMegaMenuListItem-wrapper > .saltIcon {
   display: flex;
   height: var(--salt-size-base);
   align-items: center;
 }
 
-.saltMegaMenuItem-content {
+.saltMegaMenuListItem-content {
   flex: 1 0;
   margin: var(--salt-spacing-75) 0;
   font-family: var(--salt-text-fontFamily);
@@ -31,21 +37,21 @@
   line-height: var(--salt-text-lineHeight);
 }
 
-.saltMegaMenuItem:focus-visible {
+.saltMegaMenuListItem-wrapper:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltMegaMenuItem:hover:not(:focus-visible) {
+.saltMegaMenuListItem-wrapper:hover:not(:focus-visible) {
   outline: none;
   background: var(--salt-overlayable-background-hover);
 }
 
-.saltMegaMenuItem:active {
+.saltMegaMenuListItem-wrapper:active {
   background: var(--salt-navigable-accent-background-active);
 }
 
-.saltMegaMenuItem:active::before {
+.saltMegaMenuListItem-wrapper:active::before {
   content: "";
   position: absolute;
   inset: 0;

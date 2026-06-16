@@ -18,11 +18,11 @@ placement props.
 - **`MegaMenuGroup`** — one category column, composed of a `MegaMenuGroupHeading`
   and a `MegaMenuList`.
 - **`MegaMenuGroupHeading`** — the group's label.
-- **`MegaMenuList`** — a `<ul>` that wraps each `MegaMenuItem` in its own
-  `<li>`.
-- **`MegaMenuItem`** — the focusable item. It renders an `<a>` when given an
-  `href` or a `render` element (such as `react-router`'s `Link`), and a
-  `<button>` otherwise; it closes the menu on activation.
+- **`MegaMenuList`** — the `<ul>` that lists a group's `MegaMenuListItem`s.
+- **`MegaMenuListItem`** — a list item (`<li>`) wrapping the focusable action. The
+  action renders an `<a>` when given an `href` or a `render` element (such as
+  `react-router`'s `Link`), and a `<button>` otherwise; it closes the menu on
+  activation.
 - **`MegaMenuSupportingContent`** — side content beside `MegaMenuBody`, placed to
   the left or right by source order.
 - **`MegaMenuSupportingActions`** — a row of supporting actions inside
@@ -47,7 +47,7 @@ back to the current trigger, when there is no next trigger). Tab and Shift+Tab
 walk every item in layout order, Escape closes the menu, and navigation degrades
 to a linear walk when the columns are stacked.
 
-A `MegaMenuItem` activates on Enter and closes the menu. An item rendered as a
+A `MegaMenuListItem` activates on Enter and closes the menu. An item rendered as a
 `<button>` (no `href`) also activates on Space; link items follow native `<a>`
 behaviour and do not activate on Space.
 
@@ -58,9 +58,9 @@ behaviour and do not activate on Space.
       <MegaMenuGroup>
         <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
         <MegaMenuList>
-          <MegaMenuItem render={<Link to="/digital-banking" />}>
+          <MegaMenuListItem render={<Link to="/digital-banking" />}>
             Digital banking
-          </MegaMenuItem>
+          </MegaMenuListItem>
         </MegaMenuList>
       </MegaMenuGroup>
     </MegaMenuGroups>
@@ -76,8 +76,9 @@ behaviour and do not activate on Space.
 
 - `MegaMenuHeader` has been removed. Use `MegaMenuGroupHeading` for a group's
   label instead.
-- `MegaMenuItem` can no longer be placed directly inside a `MegaMenuGroup`. Wrap
-  the items in a `MegaMenuList`, which renders the `<ul>`/`<li>` structure.
-- `MegaMenuItem` is no longer the list item — it now renders an `<a>` or
-  `<button>` (the surrounding `<li>` comes from `MegaMenuList`). Update any
-  refs or styles that assumed an `<li>` element.
+- `MegaMenuListItem` can no longer be placed directly inside a `MegaMenuGroup`. Wrap
+  the items in a `MegaMenuList` (the `<ul>`); each `MegaMenuListItem` renders its own
+  `<li>`.
+- `MegaMenuListItem` renders an `<li>` wrapping its `<a>`/`<button>` action. Its `ref`
+  and DOM props target the `<li>`; the interactive element is the inner action
+  (`.saltMegaMenuListItem-wrapper`).

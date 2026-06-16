@@ -5,8 +5,8 @@ import {
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
-  MegaMenuItem,
   MegaMenuList,
+  MegaMenuListItem,
   MegaMenuPanel,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
@@ -48,45 +48,45 @@ export const WithAdornment = (): ReactElement => {
                         Financial services
                       </MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/digital-banking" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/digital-banking",
                             )
                           }
                         >
                           Digital banking
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/risk-management" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/risk-management",
                             )
                           }
                         >
                           Risk management
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/patient-management" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/patient-management",
                             )
                           }
                         >
                           Patient management
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           className={styles.menuItemFullWidth}
                           onClick={(event) => {
                             event.preventDefault();
@@ -102,62 +102,62 @@ export const WithAdornment = (): ReactElement => {
                               Premium
                             </Tag>
                           </div>
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/compliance-solutions" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/compliance-solutions",
                             )
                           }
                         >
                           Compliance solutions
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/e-commerce-platforms" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/e-commerce-platforms",
                             )
                           }
                         >
                           E-commerce platforms
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/supply-chain-optimization" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/supply-chain-optimization",
                             )
                           }
                         >
                           Supply chain optimization
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/quality-control" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/quality-control",
                             )
                           }
                         >
                           Quality control
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           className={styles.menuItemFullWidth}
                           onClick={(event) => {
                             event.preventDefault();
@@ -173,72 +173,72 @@ export const WithAdornment = (): ReactElement => {
                               New
                             </Tag>
                           </div>
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/learning-management-systems" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/learning-management-systems",
                             )
                           }
                         >
                           Learning management systems
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/virtual-classrooms" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/virtual-classrooms",
                             )
                           }
                         >
                           Virtual classrooms
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/document-management" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/document-management",
                             )
                           }
                         >
                           Document management
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/citizen-services" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/citizen-services",
                             )
                           }
                         >
                           Citizen services
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/public-safety-solutions" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/public-safety-solutions",
                             )
                           }
                         >
                           Public safety solutions
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
@@ -262,46 +262,46 @@ export const WithAdornment = (): ReactElement => {
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/strategy" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/strategy")
+                            console.log("MegaMenuListItem clicked:", "/strategy")
                           }
                         >
                           Strategy
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/it" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/it")
+                            console.log("MegaMenuListItem clicked:", "/it")
                           }
                         >
                           IT
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/hr" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/hr")
+                            console.log("MegaMenuListItem clicked:", "/hr")
                           }
                         >
                           HR
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/marketing" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/marketing")
+                            console.log("MegaMenuListItem clicked:", "/marketing")
                           }
                         >
                           Marketing
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/operations" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/operations")
+                            console.log("MegaMenuListItem clicked:", "/operations")
                           }
                         >
                           Operations
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
@@ -309,34 +309,34 @@ export const WithAdornment = (): ReactElement => {
                         Implementation
                       </MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/onboarding" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/onboarding")
+                            console.log("MegaMenuListItem clicked:", "/onboarding")
                           }
                         >
                           Onboarding
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/migration" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/migration")
+                            console.log("MegaMenuListItem clicked:", "/migration")
                           }
                         >
                           Migration
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/customization" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/customization",
                             )
                           }
                         >
                           Customization
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           className={styles.menuItemFullWidth}
                           onClick={(event) => {
                             event.preventDefault();
@@ -350,45 +350,45 @@ export const WithAdornment = (): ReactElement => {
                           <div className={styles.menuItemAdornment}>
                             <Badge value="1" />
                           </div>
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/support" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/support")
+                            console.log("MegaMenuListItem clicked:", "/support")
                           }
                         >
                           Support
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/testing" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/testing")
+                            console.log("MegaMenuListItem clicked:", "/testing")
                           }
                         >
                           Testing
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/rollout" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/rollout")
+                            console.log("MegaMenuListItem clicked:", "/rollout")
                           }
                         >
                           Rollout
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/online" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/online")
+                            console.log("MegaMenuListItem clicked:", "/online")
                           }
                         >
                           Online
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           className={styles.menuItemFullWidth}
                           onClick={(event) => {
                             event.preventDefault();
@@ -402,42 +402,42 @@ export const WithAdornment = (): ReactElement => {
                           <div className={styles.menuItemAdornment}>
                             <Badge value="3" />
                           </div>
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/workshops" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/workshops")
+                            console.log("MegaMenuListItem clicked:", "/workshops")
                           }
                         >
                           Workshops
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/certifications" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/certifications",
                             )
                           }
                         >
                           Certifications
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/tutorials" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/tutorials")
+                            console.log("MegaMenuListItem clicked:", "/tutorials")
                           }
                         >
                           Tutorials
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/guides" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/guides")
+                            console.log("MegaMenuListItem clicked:", "/guides")
                           }
                         >
                           Guides
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
@@ -461,26 +461,26 @@ export const WithAdornment = (): ReactElement => {
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/user-guides" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/user-guides")
+                            console.log("MegaMenuListItem clicked:", "/user-guides")
                           }
                         >
                           User guides
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/api-reference" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/api-reference",
                             )
                           }
                         >
                           API reference
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           className={styles.menuItemFullWidth}
                           onClick={(event) => {
                             event.preventDefault();
@@ -494,15 +494,15 @@ export const WithAdornment = (): ReactElement => {
                           <div className={styles.menuItemAdornment}>
                             <Badge />
                           </div>
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/faqs" />}
                           onClick={() =>
-                            console.log("MegaMenuItem clicked:", "/faqs")
+                            console.log("MegaMenuListItem clicked:", "/faqs")
                           }
                         >
                           FAQs
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                     <MegaMenuGroup>
@@ -510,18 +510,18 @@ export const WithAdornment = (): ReactElement => {
                         Support & help
                       </MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuItem
+                        <MegaMenuListItem
                           render={<Link to="/contact-support" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/contact-support",
                             )
                           }
                         >
                           Contact support
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           className={styles.menuItemFullWidth}
                           onClick={(event) => {
                             event.preventDefault();
@@ -537,18 +537,18 @@ export const WithAdornment = (): ReactElement => {
                               New
                             </Tag>
                           </div>
-                        </MegaMenuItem>
-                        <MegaMenuItem
+                        </MegaMenuListItem>
+                        <MegaMenuListItem
                           render={<Link to="/troubleshooting" />}
                           onClick={() =>
                             console.log(
-                              "MegaMenuItem clicked:",
+                              "MegaMenuListItem clicked:",
                               "/troubleshooting",
                             )
                           }
                         >
                           Troubleshooting
-                        </MegaMenuItem>
+                        </MegaMenuListItem>
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>

@@ -17,7 +17,7 @@ const withBaseName = makePrefixer("saltMegaMenuGroup");
 export interface MegaMenuGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The content of the mega menu group: a `MegaMenuGroupHeading` and a
-   * `MegaMenuList` of `MegaMenuItem`s.
+   * `MegaMenuList` of `MegaMenuListItem`s.
    */
   children?: ReactNode;
 }

@@ -2,12 +2,7 @@ import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  Children,
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-} from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { useMegaMenuGroup } from "./MegaMenuGroupContext";
 import megaMenuListCss from "./MegaMenuList.css";
 
@@ -15,8 +10,8 @@ const withBaseName = makePrefixer("saltMegaMenuList");
 
 export interface MegaMenuListProps extends HTMLAttributes<HTMLUListElement> {
   /**
-   * The items of the group, typically `MegaMenuItem` components. Each child is
-   * wrapped in its own `<li>`.
+   * The items of the group, typically `MegaMenuListItem` components. Each
+   * `MegaMenuListItem` renders its own `<li>`.
    */
   children?: ReactNode;
   /**
@@ -45,12 +40,7 @@ export const MegaMenuList = forwardRef<HTMLUListElement, MegaMenuListProps>(
       ref,
       render,
       ...rest,
-      children: Children.map(children, (item, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: children have no stable identity
-        <li key={index} className={withBaseName("item")}>
-          {item}
-        </li>
-      )),
+      children,
     });
   },
 );
