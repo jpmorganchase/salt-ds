@@ -1,6 +1,7 @@
-import type { FloatingRootContext, Placement } from "@floating-ui/react";
+import type { FloatingRootContext } from "@floating-ui/react";
 import { createContext } from "@salt-ds/core";
 import type { Dispatch, HTMLProps, SetStateAction } from "react";
+import type { MegaMenuPlacement } from "./MegaMenu";
 
 export interface MegaMenuContextValue {
   /** Whether the mega menu is currently open. */
@@ -10,7 +11,7 @@ export interface MegaMenuContextValue {
   /** The floating-ui root context for coordinating interactions. */
   floatingRootContext: FloatingRootContext;
   /** The placement of the mega menu panel relative to the trigger. */
-  placement: Placement;
+  placement: MegaMenuPlacement;
   /** Props getter for the trigger (reference) element. Merges floating-ui interaction props with user props. */
   getReferenceProps: (
     userProps?: HTMLProps<Element> | undefined,

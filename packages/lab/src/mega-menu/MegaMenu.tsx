@@ -1,5 +1,4 @@
 import {
-  type Placement,
   useClick,
   useDismiss,
   useFloatingRootContext,
@@ -9,6 +8,11 @@ import { useControlled } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
 import { useMegaMenuNavigation } from "./useMegaMenuNavigation";
+
+/**
+ * Supported placements for the mega menu panel.
+ */
+export type MegaMenuPlacement = "bottom" | "bottom-start" | "bottom-end";
 
 export interface MegaMenuProps {
   /**
@@ -32,7 +36,7 @@ export interface MegaMenuProps {
    * The placement of the mega menu panel relative to the trigger.
    * @default "bottom"
    */
-  placement?: Placement;
+  placement?: MegaMenuPlacement;
 }
 
 export function MegaMenu({

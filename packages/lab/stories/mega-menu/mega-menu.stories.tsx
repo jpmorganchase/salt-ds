@@ -4650,16 +4650,7 @@ export const Placement: StoryFn = () => {
       gap={2}
       style={{ justifyContent: "center", paddingTop: 200 }}
     >
-      {(
-        [
-          "bottom",
-          "bottom-start",
-          "bottom-end",
-          "top",
-          "top-start",
-          "top-end",
-        ] as const
-      ).map((placement) => (
+      {(["bottom", "bottom-start", "bottom-end"] as const).map((placement) => (
         <MegaMenu
           key={placement}
           open={openMenu === placement}
