@@ -15,6 +15,10 @@ type ChartWithFocusElement = Chart & {
   setFocusToElement?: (svgElement: unknown, focusElement?: unknown) => unknown;
 };
 
+type ChartWithSetFocusToElement = ChartWithFocusElement & {
+  setFocusToElement: NonNullable<ChartWithFocusElement["setFocusToElement"]>;
+};
+
 // ensures we don't double wrap after every render and weakset avoids having to manually clean up of charts
 const enhancedCharts = new WeakSet<ChartWithFocusElement>();
 
@@ -25,6 +29,19 @@ const focusElementsWithBlurReset = new WeakSet<EventTarget>();
 // type guarding - focusElement isn't documenented in Highcharts so is unknown (but we want to check its an EventTarget before adding a listener)
 const canListenForBlur = (value: unknown): value is EventTarget =>
   typeof (value as EventTarget | undefined)?.addEventListener === "function";
+
+// type guarding - Highcharts only installs setFocusToElement when the accessibility module is loaded
+const hasSetFocusToElement = (
+  chart: Chart | undefined,
+): chart is ChartWithSetFocusToElement => {
+  if (!chart) {
+    return false;
+  }
+
+  return (
+    typeof (chart as ChartWithFocusElement).setFocusToElement === "function"
+  );
+};
 
 // ensures we only call setState on blur if the button still exists - reset button is destroyed when
 // zoom is cleared or chart redraws and blur could fire after that so this guards against a stale ref
@@ -38,19 +55,14 @@ const resetZoomButtonState = (
 };
 
 export const enhanceResetZoomFocus = (chart: Chart | undefined) => {
-  const chartWithFocusElement = chart as ChartWithFocusElement | undefined;
-  const setFocusToElement = chartWithFocusElement?.setFocusToElement;
-
-  if (
-    !chartWithFocusElement ||
-    enhancedCharts.has(chartWithFocusElement) ||
-    typeof setFocusToElement !== "function"
-  ) {
+  if (!hasSetFocusToElement(chart) || enhancedCharts.has(chart)) {
     return;
   }
 
+  const setFocusToElement = chart.setFocusToElement;
+
   //  replace setFocusToElement on this chart instance only (not Chart.prototype) which preserves the original in closure as setFocusToElement
-  chartWithFocusElement.setFocusToElement = function (
+  chart.setFocusToElement = function (
     this: ChartWithFocusElement,
     svgElement,
     focusElement,
@@ -79,5 +91,5 @@ export const enhanceResetZoomFocus = (chart: Chart | undefined) => {
 
     return result;
   };
-  enhancedCharts.add(chartWithFocusElement);
+  enhancedCharts.add(chart);
 };
