@@ -4,7 +4,7 @@ import {
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
-  useId,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -45,17 +45,16 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       placement,
       getFloatingProps,
       setFloating,
-      focusFirstItemOnOpen,
+      focusFirstItemOnOpenRef,
+      panelId,
       setPanelId,
     } = useMegaMenu();
 
-    const id = useId(idProp);
-
-    // Expose panel id for trigger.
-    useEffect(() => {
-      setPanelId(id);
-      return () => setPanelId(undefined);
-    }, [id, setPanelId]);
+    // The default id is generated in MegaMenu. Only propagate a
+    // consumer-supplied id so the trigger stays in sync.
+    useIsomorphicLayoutEffect(() => {
+      if (idProp) setPanelId(idProp);
+    }, [idProp, setPanelId]);
 
     const { domReference } = floatingRootContext.elements;
     const referenceEl =
@@ -77,10 +76,11 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
     const floatingEl = floatingRootContext.elements.floating;
     const { isPositioned } = floatingUIResult;
     useEffect(() => {
-      if (focusFirstItemOnOpen && isPositioned && floatingEl) {
+      if (focusFirstItemOnOpenRef.current && isPositioned && floatingEl) {
         focusFirstItem(floatingEl);
+        focusFirstItemOnOpenRef.current = false;
       }
-    }, [focusFirstItemOnOpen, isPositioned, floatingEl]);
+    }, [focusFirstItemOnOpenRef, isPositioned, floatingEl]);
 
     const floatingProps = getFloatingProps(rest);
     const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
@@ -100,7 +100,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
           guards: false,
         }}
         className={clsx(withBaseName(), className)}
-        id={id}
+        id={panelId}
         role="region"
         {...floatingProps}
         ref={handleRef}

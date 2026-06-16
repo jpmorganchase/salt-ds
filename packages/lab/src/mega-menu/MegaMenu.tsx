@@ -4,8 +4,8 @@ import {
   useFloatingRootContext,
   useInteractions,
 } from "@floating-ui/react";
-import { useControlled } from "@salt-ds/core";
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+import { useControlled, useIdMemo } from "@salt-ds/core";
+import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
 import { useMegaMenuNavigation } from "./useMegaMenuNavigation";
 
@@ -55,13 +55,14 @@ export function MegaMenu({
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
-  const [focusFirstItemOnOpen, setFocusFirstItemOnOpen] = useState(false);
-  const [panelId, setPanelId] = useState<string | undefined>(undefined);
+  const focusFirstItemOnOpenRef = useRef(false);
+  const generatedId = useIdMemo();
+  const [panelId, setPanelId] = useState(generatedId);
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
       if (!newOpen) {
-        setFocusFirstItemOnOpen(false);
+        focusFirstItemOnOpenRef.current = false;
       }
       setOpenState(newOpen);
       onOpenChange?.(newOpen);
@@ -93,8 +94,7 @@ export function MegaMenu({
       setFloating,
       setReference,
       setOpen,
-      focusFirstItemOnOpen,
-      setFocusFirstItemOnOpen,
+      focusFirstItemOnOpenRef,
       panelId,
       setPanelId,
     }),
@@ -105,7 +105,6 @@ export function MegaMenu({
       getFloatingProps,
       getReferenceProps,
       setOpen,
-      focusFirstItemOnOpen,
       panelId,
     ],
   );

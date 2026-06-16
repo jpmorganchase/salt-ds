@@ -45,7 +45,7 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
       setReference,
       setOpen,
       openState,
-      setFocusFirstItemOnOpen,
+      focusFirstItemOnOpenRef,
       floatingRootContext,
       panelId,
     } = megaMenu;
@@ -61,7 +61,7 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
           const adjacent = getAdjacentTrigger(event.currentTarget, direction);
           if (adjacent) {
             if (openState) setOpen(false);
-            setFocusFirstItemOnOpen(false);
+            focusFirstItemOnOpenRef.current = false;
             adjacent.focus();
           }
           return;
@@ -81,7 +81,7 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
 
         // When menu is open: Shift+Tab mirrors arrow left
         if (openState && key === "Tab" && shiftKey) {
-          setFocusFirstItemOnOpen(false);
+          focusFirstItemOnOpenRef.current = false;
           setOpen(false);
           return;
         }
@@ -89,17 +89,12 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
         // When menu is closed: ArrowDown opens and focuses first item
         if (!openState && key === "ArrowDown") {
           event.preventDefault();
-          setFocusFirstItemOnOpen(true);
+          focusFirstItemOnOpenRef.current = true;
           setOpen(true);
           return;
         }
       },
-      [
-        openState,
-        setOpen,
-        setFocusFirstItemOnOpen,
-        floatingRootContext.elements.floating,
-      ],
+      [openState, setOpen, floatingRootContext.elements.floating],
     );
 
     const handleFloatingRef = useForkRef(
@@ -124,7 +119,7 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
           ...(shouldSyncExpanded
             ? { expanded: openState }
             : { "aria-expanded": openState }),
-          ...(panelId && openState ? { "aria-controls": panelId } : null),
+          ...(openState ? { "aria-controls": panelId } : null),
           onKeyDown: handleKeyDown,
           ...rest,
         }),

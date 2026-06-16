@@ -167,7 +167,10 @@ function handleArrow(
           return true;
         }
         // Right border column: exit to the next trigger and close if available
-        if (rowIndex === cells.length - 1 && focusNextTriggerAndClose(context)) {
+        if (
+          rowIndex === cells.length - 1 &&
+          focusNextTriggerAndClose(context)
+        ) {
           return true;
         }
         // Wrap to the current trigger and keep the menu open,
