@@ -60,3 +60,15 @@
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-navigable-accent-borderColor-active);
   pointer-events: none;
 }
+
+/* Active (current route) indicator: leading-edge accent line. */
+/*TODO: confirm that visual change with design*/
+.saltMegaMenuListItem-active::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: var(--salt-size-indicator);
+  background: var(--salt-navigable-accent-indicator-active);
+  pointer-events: none;
+}

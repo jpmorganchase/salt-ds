@@ -26,6 +26,11 @@ export interface MegaMenuListItemProps
    */
   children?: ReactNode;
   /**
+   * Whether the item represents the active route. Sets `aria-current="page"`
+   * on link items.
+   */
+  active?: boolean;
+  /**
    * Href passed to the action element. When set the action renders an `<a>`,
    * otherwise a `<button>`.
    */
@@ -44,7 +49,7 @@ export const MegaMenuListItem = forwardRef<
   HTMLLIElement,
   MegaMenuListItemProps
 >(function MegaMenuListItem(
-  { children, className, onClick, render, href, ...rest },
+  { children, className, onClick, render, href, active, ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -68,9 +73,12 @@ export const MegaMenuListItem = forwardRef<
   return (
     <li ref={ref} className={clsx(withBaseName(), className)} {...rest}>
       <MegaMenuListItemAction
-        className={withBaseName("wrapper")}
+        className={clsx(withBaseName("wrapper"), {
+          [withBaseName("active")]: active,
+        })}
         href={href}
         onClick={handleClick}
+        aria-current={isLink && active ? "page" : undefined}
         render={render ?? (isLink ? undefined : <button type="button" />)}
       >
         {Children.map(children, (child) =>
