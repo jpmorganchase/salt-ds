@@ -48,7 +48,7 @@
   height: var(--salt-size-base);
 }
 
-.menuItemFullWidth > a {
+.menuItemFullWidth > :global(.saltMegaMenuListItem-wrapper) {
   inline-size: 100%;
 }
 
