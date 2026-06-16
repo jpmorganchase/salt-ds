@@ -397,17 +397,6 @@
       }
     },
     {
-      // Highcharts applies inline SVG styles that must be overridden with !important.
-      "includes": ["**/packages/highcharts-theme/src/highcharts-theme.css"],
-      "linter": {
-        "rules": {
-          "complexity": {
-            "noImportantStyles": "off"
-          }
-        }
-      }
-    },
-    {
       "includes": [
         "**/packages/highcharts-theme/src/**",
         "!**/packages/highcharts-theme/src/__tests__/**",

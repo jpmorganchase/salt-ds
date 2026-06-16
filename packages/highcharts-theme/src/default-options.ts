@@ -22,7 +22,7 @@ export const getDefaultOptions = (
   const axisOptions = buildAxisOptions(tokens, chartOptions);
 
   const defaultOptions: HighchartsOptionsCompat = {
-    accessibility: buildAccessibilityOptions().accessibility,
+    accessibility: buildAccessibilityOptions(tokens).accessibility,
     chart: buildChartOptions(tokens),
     colors: fillPatterns
       ? getFillPatternColors(tokens)
