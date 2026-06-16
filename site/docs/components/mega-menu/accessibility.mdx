@@ -14,7 +14,6 @@ data:
 
 - Any button that triggers a Mega menu container.
 - It should be wrapped in a `<nav>` element to establish a navigation landmark.
-- Structure the group of buttons as a list, with each button in its own `<li>`. Use a `<ul>`, since the triggers have no inherent order. Reserve `<ol>` for cases where the sequence is meaningful and must be announced to assistive technology.
 - `MegaMenuTrigger` automatically applies **aria-expanded** to reflect the expanded or collapsed state, and **aria-controls** to reference the associated mega menu panel.
 
 ### Mega menu panel
@@ -27,7 +26,7 @@ data:
 
 ### Accessibility semantics
 
-- Mega menu groups should use **Link lists**, structured as `<ul>` elements containing `<li>` items. Use a `<ul>`, since the links have no inherent order. Reserve `<ol>` for cases where the sequence is meaningful and must be announced to assistive technology.
+- Triggers and group links are unordered lists: use a `<ul>` with each item in its own `<li>`. Reserve `<ol>` for when the sequence is meaningful and must be announced to assistive technology.
 
 ## Keyboard interactions
 
@@ -55,8 +54,9 @@ data:
 
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focus is in the mega menu, Shift+Tab sets focus to the previous focusable component in the tab order.
-- If the first element in the mega menu has focus, Shift+Tab moves focus to the previous focusable element outside of the mega menu.
+- If focus is on a mega menu item, Shift+Tab moves focus to the previous item.
+- On the first item, Shift+Tab returns focus to the trigger and keeps the menu open.
+- On the trigger while the menu is open, Shift+Tab closes the menu and moves focus to the previous focusable element.
 
 </KeyboardControl>
 
