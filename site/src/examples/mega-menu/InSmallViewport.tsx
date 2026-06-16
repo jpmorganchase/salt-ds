@@ -259,7 +259,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/strategy" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/strategy")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/strategy",
+                            )
                           }
                         >
                           Strategy
@@ -283,7 +286,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/marketing" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/marketing")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/marketing",
+                            )
                           }
                         >
                           Marketing
@@ -291,7 +297,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/operations" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/operations")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/operations",
+                            )
                           }
                         >
                           Operations
@@ -306,7 +315,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/onboarding" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/onboarding")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/onboarding",
+                            )
                           }
                         >
                           Onboarding
@@ -314,7 +326,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/migration" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/migration")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/migration",
+                            )
                           }
                         >
                           Migration
@@ -333,7 +348,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/training" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/training")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/training",
+                            )
                           }
                         >
                           Training
@@ -362,7 +380,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/in-person" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/in-person")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/in-person",
+                            )
                           }
                         >
                           In-person
@@ -370,7 +391,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/workshops" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/workshops")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/workshops",
+                            )
                           }
                         >
                           Workshops
@@ -415,7 +439,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/user-guides" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/user-guides")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/user-guides",
+                            )
                           }
                         >
                           User guides
@@ -496,7 +523,10 @@ export const InSmallViewport = (): ReactElement => {
                         <MegaMenuListItem
                           render={<Link to="/tutorials" />}
                           onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/tutorials")
+                            console.log(
+                              "MegaMenuListItem clicked:",
+                              "/tutorials",
+                            )
                           }
                         >
                           Tutorials

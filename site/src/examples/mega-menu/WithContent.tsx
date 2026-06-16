@@ -134,7 +134,10 @@ const main = (
           <MegaMenuListItem
             render={<RouterLink to="/supply-chain-optimization" />}
             onClick={() =>
-              console.log("MegaMenuListItem clicked:", "/supply-chain-optimization")
+              console.log(
+                "MegaMenuListItem clicked:",
+                "/supply-chain-optimization",
+              )
             }
           >
             Supply chain optimization

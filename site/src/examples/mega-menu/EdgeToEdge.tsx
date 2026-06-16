@@ -321,7 +321,10 @@ export const EdgeToEdge = (): ReactElement => {
                           <MegaMenuListItem
                             render={<Link to="/strategy" />}
                             onClick={() =>
-                              console.log("MegaMenuListItem clicked:", "/strategy")
+                              console.log(
+                                "MegaMenuListItem clicked:",
+                                "/strategy",
+                              )
                             }
                           >
                             Strategy
@@ -358,7 +361,10 @@ export const EdgeToEdge = (): ReactElement => {
                           <MegaMenuListItem
                             render={<Link to="/migration" />}
                             onClick={() =>
-                              console.log("MegaMenuListItem clicked:", "/migration")
+                              console.log(
+                                "MegaMenuListItem clicked:",
+                                "/migration",
+                              )
                             }
                           >
                             Migration
@@ -371,7 +377,10 @@ export const EdgeToEdge = (): ReactElement => {
                           <MegaMenuListItem
                             render={<Link to="/workshops" />}
                             onClick={() =>
-                              console.log("MegaMenuListItem clicked:", "/workshops")
+                              console.log(
+                                "MegaMenuListItem clicked:",
+                                "/workshops",
+                              )
                             }
                           >
                             Workshops

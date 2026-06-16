@@ -56,9 +56,9 @@ export const MegaMenuListItem = forwardRef<
     window: targetWindow,
   });
 
-  const handleClick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement> = (
-    event,
-  ) => {
+  const handleClick: MouseEventHandler<
+    HTMLAnchorElement | HTMLButtonElement
+  > = (event) => {
     onClick?.(event);
     megaMenu.setOpen(false);
   };
