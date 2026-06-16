@@ -13,18 +13,23 @@ import megaMenuGroupHeadingCss from "./MegaMenuGroupHeading.css";
 const withBaseName = makePrefixer("saltMegaMenuGroupHeading");
 
 export interface MegaMenuGroupHeadingProps
-  extends ComponentPropsWithoutRef<"div"> {
+  extends ComponentPropsWithoutRef<"h2"> {
   /**
    * The content of the mega menu group heading.
    */
   children?: ReactNode;
+  /**
+   * Heading level — renders the matching `<h1>`–`<h6>` element.
+   * @default 3
+   */
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 export const MegaMenuGroupHeading = forwardRef<
-  HTMLDivElement,
+  HTMLHeadingElement,
   MegaMenuGroupHeadingProps
 >(function MegaMenuGroupHeading(
-  { children, className, id: idProp, ...rest },
+  { children, className, id: idProp, level = 3, ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -41,14 +46,16 @@ export const MegaMenuGroupHeading = forwardRef<
     return () => setHeadingId(undefined);
   }, [id, setHeadingId]);
 
+  const HeadingTag = `h${level}` as const;
+
   return (
-    <div
+    <HeadingTag
       className={clsx(withBaseName(), className)}
       ref={ref}
       {...rest}
       id={id}
     >
-      <div className={withBaseName("content")}>{children}</div>
-    </div>
+      {children}
+    </HeadingTag>
   );
 });
