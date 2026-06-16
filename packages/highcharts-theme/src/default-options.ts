@@ -2,6 +2,7 @@ import type { Options } from "highcharts";
 import type { SaltChartTokenMap } from "./density-token-map";
 import { getFillPatternColors } from "./patterns";
 import {
+  buildAccessibilityOptions,
   buildAxisOptions,
   buildChartOptions,
   buildLegendOptions,
@@ -21,6 +22,7 @@ export const getDefaultOptions = (
   const axisOptions = buildAxisOptions(tokens, chartOptions);
 
   const defaultOptions: HighchartsOptionsCompat = {
+    accessibility: buildAccessibilityOptions(tokens).accessibility,
     chart: buildChartOptions(tokens),
     colors: fillPatterns
       ? getFillPatternColors(tokens)

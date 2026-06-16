@@ -35,15 +35,36 @@ export const CATEGORY_DATAVIZ_TOKENS = [
   "--salt-category-20-dataviz",
 ] as const;
 
+export const ACTIONABLE_BOLD_TOKENS = [
+  "--salt-actionable-bold-background",
+  "--salt-actionable-bold-background-hover",
+  "--salt-actionable-bold-background-active",
+  "--salt-actionable-bold-foreground",
+  "--salt-actionable-bold-foreground-hover",
+  "--salt-actionable-bold-foreground-active",
+  "--salt-actionable-bold-borderColor",
+  "--salt-actionable-bold-borderColor-hover",
+  "--salt-actionable-bold-borderColor-active",
+] as const;
+
 export type SaltChartTokenMap = {
+  "--salt-spacing-100": number;
   "--salt-spacing-150": number;
   "--salt-spacing-200": number;
   "--salt-spacing-300": number;
   "--salt-size-icon": number;
   "--salt-size-fixed-100": number;
   "--salt-size-fixed-200": number;
+  "--salt-palette-corner-weak": number;
   "--salt-palette-corner-weaker": number;
+  "--salt-cursor-hover": string;
+  "--salt-cursor-active": string;
   "--salt-text-fontFamily": string;
+  "--salt-text-fontSize": string;
+  "--salt-text-action-fontFamily": string;
+  "--salt-text-action-fontWeight": string;
+  "--salt-text-action-letterSpacing": string;
+  "--salt-text-action-textTransform": string;
   "--salt-text-h4-fontSize": string;
   "--salt-text-h4-fontWeight": string;
   "--salt-text-h4-lineHeight": string;
@@ -67,11 +88,17 @@ export type SaltChartTokenMap = {
   "--salt-color-black": string;
 } & {
   [K in (typeof CATEGORY_DATAVIZ_TOKENS)[number]]: string;
+} & {
+  [K in (typeof ACTIONABLE_BOLD_TOKENS)[number]]: string;
 };
 
 const DEFAULTS_BY_DENSITY: Record<
   Density | "default",
-  { spacing100: number; sizeIcon: number; cornerWeaker: number }
+  {
+    spacing100: number;
+    sizeIcon: number;
+    cornerWeaker: number;
+  }
 > = {
   high: { spacing100: 4, sizeIcon: 10, cornerWeaker: 3 },
   medium: { spacing100: 8, sizeIcon: 12, cornerWeaker: 4 },
@@ -97,11 +124,22 @@ const SIZE_TOKENS = {
 };
 
 const CORNER_TOKENS = {
+  cornerWeak: "--salt-palette-corner-weak" as const,
   cornerWeaker: "--salt-palette-corner-weaker" as const,
+} as const;
+
+const CURSOR_TOKENS = {
+  cursorHover: "--salt-cursor-hover" as const,
+  cursorActive: "--salt-cursor-active" as const,
 } as const;
 
 const TYPOGRAPHY_TOKENS = {
   chartFontFamily: "--salt-text-fontFamily",
+  textFontSize: "--salt-text-fontSize",
+  actionFontFamily: "--salt-text-action-fontFamily",
+  actionFontWeight: "--salt-text-action-fontWeight",
+  actionLetterSpacing: "--salt-text-action-letterSpacing",
+  actionTextTransform: "--salt-text-action-textTransform",
   titleFontSize: "--salt-text-h4-fontSize",
   titleFontWeight: "--salt-text-h4-fontWeight",
   titleLineHeight: "--salt-text-h4-lineHeight",
@@ -149,8 +187,21 @@ export const getDensityTokenMap = (
   let iconSize = sizeIconFallback;
   let sizeFixed100 = 1;
   let sizeFixed200 = 2;
+  // Matches Button.css `var(--salt-palette-corner-weak, 0)` fallback
+  let cornerWeak = 0;
   let cornerWeaker = cornerWeakerFallback;
+  let cursorHover = "pointer";
+  let cursorActive = "pointer";
   let chartFontFamily = getTokenFallback(TYPOGRAPHY_TOKENS.chartFontFamily);
+  let textFontSize = getTokenFallback(TYPOGRAPHY_TOKENS.textFontSize);
+  let actionFontFamily = getTokenFallback(TYPOGRAPHY_TOKENS.actionFontFamily);
+  let actionFontWeight = getTokenFallback(TYPOGRAPHY_TOKENS.actionFontWeight);
+  let actionLetterSpacing = getTokenFallback(
+    TYPOGRAPHY_TOKENS.actionLetterSpacing,
+  );
+  let actionTextTransform = getTokenFallback(
+    TYPOGRAPHY_TOKENS.actionTextTransform,
+  );
   let titleFontSize = getTokenFallback(TYPOGRAPHY_TOKENS.titleFontSize);
   let titleFontWeight = getTokenFallback(TYPOGRAPHY_TOKENS.titleFontWeight);
   let titleLineHeight = getTokenFallback(TYPOGRAPHY_TOKENS.titleLineHeight);
@@ -201,6 +252,15 @@ export const getDensityTokenMap = (
     },
     {} as Record<(typeof CATEGORY_DATAVIZ_TOKENS)[number], string>,
   );
+  const actionableBoldColors = ACTIONABLE_BOLD_TOKENS.reduce<
+    Record<(typeof ACTIONABLE_BOLD_TOKENS)[number], string>
+  >(
+    (accumulator, tokenName) => {
+      accumulator[tokenName] = getTokenFallback(tokenName);
+      return accumulator;
+    },
+    {} as Record<(typeof ACTIONABLE_BOLD_TOKENS)[number], string>,
+  );
 
   if (hostElement) {
     const requestedTokens = [
@@ -208,10 +268,13 @@ export const getDensityTokenMap = (
       SIZE_TOKENS.sizeIcon,
       SIZE_TOKENS.sizeFixed100,
       SIZE_TOKENS.sizeFixed200,
+      CORNER_TOKENS.cornerWeak,
       CORNER_TOKENS.cornerWeaker,
+      ...Object.values(CURSOR_TOKENS),
       ...Object.values(TYPOGRAPHY_TOKENS),
       ...Object.values(COLOR_TOKENS),
       ...CATEGORY_DATAVIZ_TOKENS,
+      ...ACTIONABLE_BOLD_TOKENS,
     ] as const;
 
     const tokenValues = getCSSTokensFromElement(hostElement, requestedTokens);
@@ -224,12 +287,36 @@ export const getDensityTokenMap = (
       getNumericCSSToken(tokenValues, SIZE_TOKENS.sizeFixed100) ?? sizeFixed100;
     sizeFixed200 =
       getNumericCSSToken(tokenValues, SIZE_TOKENS.sizeFixed200) ?? sizeFixed200;
+    cornerWeak =
+      getNumericCSSToken(tokenValues, CORNER_TOKENS.cornerWeak) ?? cornerWeak;
     cornerWeaker =
       getNumericCSSToken(tokenValues, CORNER_TOKENS.cornerWeaker) ??
       cornerWeaker;
+    cursorHover = tokenValues[CURSOR_TOKENS.cursorHover] ?? cursorHover;
+    cursorActive = tokenValues[CURSOR_TOKENS.cursorActive] ?? cursorActive;
     chartFontFamily = getResolvedStringToken(
       tokenValues,
       TYPOGRAPHY_TOKENS.chartFontFamily,
+    );
+    textFontSize = getResolvedStringToken(
+      tokenValues,
+      TYPOGRAPHY_TOKENS.textFontSize,
+    );
+    actionFontFamily = getResolvedStringToken(
+      tokenValues,
+      TYPOGRAPHY_TOKENS.actionFontFamily,
+    );
+    actionFontWeight = getResolvedStringToken(
+      tokenValues,
+      TYPOGRAPHY_TOKENS.actionFontWeight,
+    );
+    actionLetterSpacing = getResolvedStringToken(
+      tokenValues,
+      TYPOGRAPHY_TOKENS.actionLetterSpacing,
+    );
+    actionTextTransform = getResolvedStringToken(
+      tokenValues,
+      TYPOGRAPHY_TOKENS.actionTextTransform,
     );
     titleFontSize = getResolvedStringToken(
       tokenValues,
@@ -316,17 +403,30 @@ export const getDensityTokenMap = (
       categoryDatavizColors[tokenName] =
         tokenValues[tokenName] ?? getTokenFallback(tokenName);
     }
+    for (const tokenName of ACTIONABLE_BOLD_TOKENS) {
+      actionableBoldColors[tokenName] =
+        tokenValues[tokenName] ?? getTokenFallback(tokenName);
+    }
   }
 
   return {
+    [SPACING_TOKENS.spacing100]: baseSpacing,
     [SPACING_TOKENS.spacing150]: baseSpacing * SPACING_RAMP[150],
     [SPACING_TOKENS.spacing200]: baseSpacing * SPACING_RAMP[200],
     [SPACING_TOKENS.spacing300]: baseSpacing * SPACING_RAMP[300],
     [SIZE_TOKENS.sizeIcon]: iconSize,
     [SIZE_TOKENS.sizeFixed100]: sizeFixed100,
     [SIZE_TOKENS.sizeFixed200]: sizeFixed200,
+    [CORNER_TOKENS.cornerWeak]: cornerWeak,
     [CORNER_TOKENS.cornerWeaker]: cornerWeaker,
+    [CURSOR_TOKENS.cursorHover]: cursorHover,
+    [CURSOR_TOKENS.cursorActive]: cursorActive,
     "--salt-text-fontFamily": chartFontFamily,
+    "--salt-text-fontSize": textFontSize,
+    "--salt-text-action-fontFamily": actionFontFamily,
+    "--salt-text-action-fontWeight": actionFontWeight,
+    "--salt-text-action-letterSpacing": actionLetterSpacing,
+    "--salt-text-action-textTransform": actionTextTransform,
     "--salt-text-h4-fontSize": titleFontSize,
     "--salt-text-h4-fontWeight": titleFontWeight,
     "--salt-text-h4-lineHeight": titleLineHeight,
@@ -349,5 +449,6 @@ export const getDensityTokenMap = (
     "--salt-sentiment-neutral-dataviz": sentimentNeutralDataviz,
     "--salt-color-black": colorBlack,
     ...categoryDatavizColors,
+    ...actionableBoldColors,
   };
 };
