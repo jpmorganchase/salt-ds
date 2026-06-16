@@ -75,7 +75,7 @@ export const useChart = (
     void mode;
     void theme;
 
-    const chart = chartRef.current?.chart as Highcharts.Chart | null;
+    const chart = chartRef.current?.chart;
     const container = chart?.container ?? null;
 
     const elementUsed = container ?? targetWindow?.document?.documentElement;
@@ -84,9 +84,7 @@ export const useChart = (
   }, [chartRef, getMergedOptions, mode, targetWindow, theme]);
 
   useEffect(() => {
-    const chart = chartRef.current?.chart as Highcharts.Chart | undefined;
-
-    enhanceResetZoomFocus(chart);
+    enhanceResetZoomFocus(chartRef.current?.chart);
   });
 
   useEffect(() => {
@@ -103,7 +101,7 @@ export const useChart = (
     let cancelled = false;
 
     void fontFaceSet.ready.then(() => {
-      const chart = chartRef.current?.chart as Highcharts.Chart | undefined;
+      const chart = chartRef.current?.chart;
       const renderer = chart?.renderer as unknown as
         | { cache?: Record<string, unknown>; cacheKeys?: string[] }
         | undefined;
