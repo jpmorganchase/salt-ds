@@ -1,29 +1,53 @@
-import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
+import {
+  makePrefixer,
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import {
+  type ElementType,
+  type ForwardedRef,
+  type FunctionComponent,
+  forwardRef,
+  type ReactNode,
+} from "react";
 import { useMegaMenuGroup } from "./MegaMenuGroupContext";
 import megaMenuListCss from "./MegaMenuList.css";
 
 const withBaseName = makePrefixer("saltMegaMenuList");
 
-export interface MegaMenuListProps extends HTMLAttributes<HTMLUListElement> {
-  /**
-   * The items of the group, typically `MegaMenuListItem` components. Each
-   * `MegaMenuListItem` renders its own `<li>`.
-   */
-  children?: ReactNode;
-  /**
-   * Render prop to customize the underlying list element. Defaults to a `<ul>`;
-   */
-  render?: RenderPropsType["render"];
-}
+export type MegaMenuListProps<T extends ElementType = "ul"> =
+  PolymorphicComponentPropWithRef<
+    T,
+    {
+      /**
+       * The items of the group, typically `MegaMenuListItem` components. Each
+       * `MegaMenuListItem` renders its own `<li>`.
+       */
+      children?: ReactNode;
+    }
+  >;
 
-export const MegaMenuList = forwardRef<HTMLUListElement, MegaMenuListProps>(
-  function MegaMenuList(
-    { children, className, "aria-labelledby": ariaLabelledBy, render, ...rest },
-    ref,
+type MegaMenuListComponent = <T extends ElementType = "ul">(
+  props: MegaMenuListProps<T>,
+) => ReturnType<FunctionComponent>;
+
+/**
+ * The list of a group's `MegaMenuListItem`s. Renders a `<ul>` by default; pass
+ * `as="ol"` for an ordered list.
+ */
+export const MegaMenuList: MegaMenuListComponent = forwardRef(
+  function MegaMenuList<T extends ElementType = "ul">(
+    {
+      as,
+      children,
+      className,
+      "aria-labelledby": ariaLabelledBy,
+      ...rest
+    }: MegaMenuListProps<T>,
+    ref?: ForwardedRef<unknown>,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -34,13 +58,17 @@ export const MegaMenuList = forwardRef<HTMLUListElement, MegaMenuListProps>(
 
     const { headingId } = useMegaMenuGroup();
 
-    return renderProps("ul", {
-      className: clsx(withBaseName(), className),
-      "aria-labelledby": clsx(headingId, ariaLabelledBy) || undefined,
-      ref,
-      render,
-      ...rest,
-      children,
-    });
+    const Component = as || "ul";
+
+    return (
+      <Component
+        ref={ref as PolymorphicRef<T>}
+        className={clsx(withBaseName(), className)}
+        aria-labelledby={clsx(headingId, ariaLabelledBy) || undefined}
+        {...rest}
+      >
+        {children}
+      </Component>
+    );
   },
 );
