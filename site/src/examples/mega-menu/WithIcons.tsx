@@ -59,8 +59,8 @@ export const WithIcons = (): ReactElement => {
 
   return (
     <MockHistory>
-      <nav>
-        <StackLayout as="ol" direction="row" gap={1} className={styles.navList}>
+      <nav aria-label="with icons">
+        <StackLayout as="ul" direction="row" gap={1} className={styles.navList}>
           <li>
             <MegaMenu
               open={openMenu === "solutions"}

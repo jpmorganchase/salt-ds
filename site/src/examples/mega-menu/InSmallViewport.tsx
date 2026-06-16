@@ -28,8 +28,8 @@ export const InSmallViewport = (): ReactElement => {
 
   return (
     <MockHistory>
-      <nav>
-        <StackLayout as="ol" direction="row" gap={1} className={styles.navList}>
+      <nav aria-label="in small viewport">
+        <StackLayout as="ul" direction="row" gap={1} className={styles.navList}>
           <li>
             <MegaMenu
               open={openMenu === "solutions"}

@@ -29,9 +29,9 @@ export const EdgeToEdge = (): ReactElement => {
   return (
     <MockHistory>
       <div className={styles.edgeToEdgeWrapper}>
-        <nav>
+        <nav aria-label="edge to edge">
           <StackLayout
-            as="ol"
+            as="ul"
             direction="row"
             gap={1}
             className={styles.navList}

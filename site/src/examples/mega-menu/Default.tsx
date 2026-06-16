@@ -28,8 +28,8 @@ export const Default = (): ReactElement => {
 
   return (
     <MockHistory>
-      <nav>
-        <StackLayout as="ol" direction="row" gap={1} className={styles.navList}>
+      <nav aria-label="default">
+        <StackLayout as="ul" direction="row" gap={1} className={styles.navList}>
           <li>
             <MegaMenu
               open={openMenu === "solutions"}
