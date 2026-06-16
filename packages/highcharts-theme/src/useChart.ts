@@ -4,6 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import type { Options } from "highcharts";
 import type HighchartsReact from "highcharts-react-official";
 import { type RefObject, useCallback, useEffect, useState } from "react";
+import { enhanceResetZoomFocus } from "./accessibility-enhancements";
 import { resolveSaltColorAxis, type SaltColorAxis } from "./color-axis";
 import { getDefaultOptions } from "./default-options";
 import {
@@ -81,6 +82,12 @@ export const useChart = (
 
     setMergedOptions(getMergedOptions(elementUsed));
   }, [chartRef, getMergedOptions, mode, targetWindow, theme]);
+
+  useEffect(() => {
+    const chart = chartRef.current?.chart as Highcharts.Chart | undefined;
+
+    enhanceResetZoomFocus(chart);
+  });
 
   useEffect(() => {
     const fontFaceSet = targetWindow?.document?.fonts;

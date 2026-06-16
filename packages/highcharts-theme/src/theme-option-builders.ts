@@ -67,6 +67,7 @@ const RESET_BUTTON_HOVER_FILL =
   "var(--saltHighcharts-reset-zoom-button-background-hover)";
 const RESET_BUTTON_HOVER_STROKE =
   "var(--saltHighcharts-reset-zoom-button-borderColor-hover)";
+const RESET_BUTTON_FOCUS_BORDER_COLOR = "var(--salt-focused-outlineColor)";
 
 export const buildZoomingOptions = (
   tokens: SaltChartTokenMap,
@@ -116,14 +117,20 @@ export const buildZoomingOptions = (
   };
 };
 
-export const buildAccessibilityOptions = (): Pick<
-  HighchartsOptionsCompat,
-  "accessibility"
-> => ({
+export const buildAccessibilityOptions = (
+  tokens: SaltChartTokenMap,
+): Pick<HighchartsOptionsCompat, "accessibility"> => ({
   accessibility: {
     keyboardNavigation: {
-      // Place the zoom proxy before the SVG so CSS can style the reset zoom button when keyboard focus is inside that proxy group.
-      order: ["zoom", "series", "rangeSelector", "legend", "chartMenu"],
+      focusBorder: {
+        enabled: true,
+        margin: tokens["--salt-size-fixed-100"],
+        style: {
+          borderRadius: tokens["--salt-palette-corner-weak"],
+          color: RESET_BUTTON_FOCUS_BORDER_COLOR,
+          lineWidth: tokens["--salt-size-fixed-200"],
+        },
+      },
     },
   },
 });
