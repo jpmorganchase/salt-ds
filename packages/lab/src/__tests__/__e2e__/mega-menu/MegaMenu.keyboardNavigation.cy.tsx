@@ -448,8 +448,11 @@ const ActionItemMegaMenu = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    {/* No href and no render — renders as a focusable button. */}
-                    <MegaMenuListItem onClick={(e) => e.preventDefault()}>
+                    {/* An action item (not navigation): render as a <button> via the render prop. */}
+                    <MegaMenuListItem
+                      render={<button type="button" />}
+                      onClick={(e) => e.preventDefault()}
+                    >
                       Telemedicine
                     </MegaMenuListItem>
                     <MegaMenuListItem
@@ -911,7 +914,7 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
     });
 
-    it("renders an action item (no href/render) as a focusable button", () => {
+    it("renders an action item (render={<button/>}) as a focusable button", () => {
       cy.mount(<ActionItemMegaMenu />);
       cy.findByRole("button", { name: "Solutions" }).focus();
       cy.realPress("Enter");
