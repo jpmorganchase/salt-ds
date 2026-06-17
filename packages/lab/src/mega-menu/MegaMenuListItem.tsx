@@ -31,6 +31,10 @@ export interface MegaMenuListItemProps
    */
   active?: boolean;
   /**
+   * If `true`, the item is disabled.
+   */
+  disabled?: boolean;
+  /**
    * Href passed to the link action element.
    */
   href?: string;
@@ -48,7 +52,7 @@ export const MegaMenuListItem = forwardRef<
   HTMLLIElement,
   MegaMenuListItemProps
 >(function MegaMenuListItem(
-  { children, className, onClick, render, href, active, ...rest },
+  { children, className, onClick, render, href, active, disabled, ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -61,6 +65,10 @@ export const MegaMenuListItem = forwardRef<
   });
 
   const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
     onClick?.(event);
     megaMenu.setOpen(false);
   };
@@ -70,10 +78,12 @@ export const MegaMenuListItem = forwardRef<
       <MegaMenuListItemAction
         className={clsx(withBaseName("wrapper"), {
           [withBaseName("active")]: active,
+          [withBaseName("disabled")]: disabled,
         })}
         href={href}
         onClick={handleClick}
         aria-current={active ? "page" : undefined}
+        aria-disabled={disabled || undefined}
         render={render}
       >
         {Children.map(children, (child) =>
