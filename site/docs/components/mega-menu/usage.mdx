@@ -40,6 +40,12 @@ data:
 - Give each `MegaMenuGroup` a single `MegaMenuGroupHeading`.
 - Keep groups concise, splitting larger sets into additional groups so the menu stays scannable.
 
+### Structure
+
+- Wrap each mega menu in its own `<li>` within the trigger `<ul>` — arrow-key navigation between triggers relies on it.
+- Place `MegaMenuSupportingActions` inside `MegaMenuBody`, after `MegaMenuGroups`.
+- `MegaMenuSupportingContent` position follows source order: before `MegaMenuBody` it renders to the left, after it renders to the right.
+
 ## Import
 
 To import `MegaMenu` and related components from the lab package, use:

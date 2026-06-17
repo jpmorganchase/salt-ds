@@ -19,6 +19,7 @@ import { FOCUSABLE_SELECTOR, focusFirstItem } from "./useMegaMenuNavigation";
 export interface MegaMenuTriggerProps {
   /**
    * The trigger element for the mega menu, typically a `NavigationItem` or `Button`.
+   * Wrap each mega menu in its own `<li>` — arrow-key navigation between triggers depends on it.
    */
   children?: ReactNode;
 }

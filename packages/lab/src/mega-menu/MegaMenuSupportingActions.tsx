@@ -14,8 +14,9 @@ const withBaseName = makePrefixer("saltMegaMenuSupportingActions");
 export interface MegaMenuSupportingActionsProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of the supporting actions. Renders beneath the groups, at the
-   * bottom of `MegaMenuBody`, spanning the width of the groups.
+   * The content of the supporting actions. Place `MegaMenuSupportingActions`
+   * inside `MegaMenuBody`, after `MegaMenuGroups`; it renders as a band beneath
+   * the groups, spanning their width.
    */
   children?: ReactNode;
 }
