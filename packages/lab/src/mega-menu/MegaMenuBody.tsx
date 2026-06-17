@@ -2,7 +2,11 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef, type ReactNode } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type ReactNode,
+} from "react";
 import megaMenuBodyCss from "./MegaMenuBody.css";
 
 const withBaseName = makePrefixer("saltMegaMenuBody");
