@@ -18,20 +18,50 @@ As the content grows wider — or the viewport shrinks — the container expands
 
 ## Full width
 
-In certain circumstances, you may want to always display the mega menu at its default max-width. To do this, use the following CSS: `--saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth)`.
+To display the mega menu at its full available width, set the panel to the available width and widen the group columns so they fill it:
+
+```css
+.fullWidthPanel {
+  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
+}
+
+/* Widen and stretch the columns so they fill the wider panel */
+.fullWidthPanel .saltMegaMenuGroups {
+  --saltMegaMenuGroups-columnWidth: 16rem;
+  align-self: stretch;
+}
+```
 
 <LivePreview componentName="mega-menu" exampleName="FullWidth" />
 
 ## Edge to edge
 
-If you want the mega menu to be edge-to-edge with no inset, you can use the following CSS:
+To render the mega menu edge-to-edge, span the panel across the viewport and remove the page-margin gutter, then constrain and center the inner content so it keeps balanced margins on large displays:
 
 ```css
---saltMegaMenuPanel-inlineSize: 100vw;
---saltMegaMenuPanel-maxInlineSize: 100vw;
-```
+/* Remove the page-margin gutter (set on the trigger's container) */
+.edgeToEdgeWrapper {
+  --saltMegaMenuPanel-pageMargin: 0;
+}
 
-In this example, the content is center-aligned and constrained to a maximum width, creating balanced left and right margins on larger displays. This approach works with mega menus of any width.
+/* Span the full viewport width */
+.edgeToEdgePanel {
+  --saltMegaMenuPanel-inlineSize: 100vw;
+  --saltMegaMenuPanel-maxInlineSize: 100vw;
+}
+
+/* Constrain and center the content within the full-width panel */
+.edgeToEdgePanel .saltMegaMenuContent {
+  max-inline-size: 100%;
+}
+
+.edgeToEdgePanel .saltMegaMenuGroups {
+  --saltMegaMenuGroups-columnWidth: 212px;
+  max-inline-size: 920px;
+  inline-size: 100%;
+  margin-inline: auto;
+}
+```
 
 <LivePreview componentName="mega-menu" exampleName="EdgeToEdge" />
 
@@ -41,7 +71,7 @@ When the mega menu is triggered in a small viewport, or the screen size changes 
 
 ### Best practices
 
-- Although the mega menu stacks into a single column on small screens, it’s more suitable for desktop. In small viewports it can become hard to scan, scroll-heavy, and more error-prone on touch.
+- Although the mega menu stacks into a single column on small screens, it’s more suitable for desktop. In small viewports it can become hard to scan, scroll-heavy, and more error-prone on touch.
 
 - If content is large or frequently used on mobile, use an alternative navigation component better suited to small screens, such as vertical navigation.
 
@@ -72,6 +102,6 @@ You can add a link to give users a quick way to access a broader section or view
 
 ## With side content
 
-Use `MegaMenuAside` for side content (it renders to the left of `MegaMenuContent` when placed before it, and to the right when placed after) and `MegaMenuActions` for links beneath the menu groups. Inside `MegaMenuContent`, wrap the `MegaMenuGroup`s in `MegaMenuGroups` and place `MegaMenuActions` after it. Side content position is driven by source order. In small viewports, it reflows into the stacked mega menu in its original order, appearing at the top or bottom of the stack.
+Use `MegaMenuAside` for side content (it renders to the left of `MegaMenuContent` when placed before it, and to the right when placed after) and `MegaMenuActions` for links beneath the menu groups. Inside `MegaMenuContent`, wrap the `MegaMenuGroup`s in `MegaMenuGroups` and place `MegaMenuActions` after it. Side content position is driven by source order. In small viewports, it reflows into the stacked mega menu in its original order, appearing at the top or bottom of the stack.
 
 <LivePreview componentName="mega-menu" exampleName="WithContent" />
