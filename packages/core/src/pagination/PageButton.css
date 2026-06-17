@@ -27,6 +27,8 @@
 
 .saltPageButton:focus-visible {
   outline: var(--salt-focused-outline);
+  position: relative;
+  z-index: var(--salt-zIndex-default);
 }
 
 .saltPageButton:disabled {
