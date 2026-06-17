@@ -27,18 +27,17 @@ export interface MegaMenuListItemProps
   children?: ReactNode;
   /**
    * Whether the item represents the active route. Sets `aria-current="page"`
-   * on link items.
+   * when the item is active.
    */
   active?: boolean;
   /**
-   * Href passed to the action element. When set the action renders an `<a>`,
-   * otherwise a `<button>`.
+   * Href passed to the link action element.
    */
   href?: string;
   /**
    * Called when the item's action is activated, before the menu closes.
    */
-  onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
   /**
    * Render prop to enable customization of the underlying action element (e.g. a router `Link`).
    */
@@ -61,14 +60,10 @@ export const MegaMenuListItem = forwardRef<
     window: targetWindow,
   });
 
-  const handleClick: MouseEventHandler<
-    HTMLAnchorElement | HTMLButtonElement
-  > = (event) => {
+  const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
     onClick?.(event);
     megaMenu.setOpen(false);
   };
-
-  const isLink = href != null;
 
   return (
     <li ref={ref} className={clsx(withBaseName(), className)} {...rest}>
@@ -78,8 +73,8 @@ export const MegaMenuListItem = forwardRef<
         })}
         href={href}
         onClick={handleClick}
-        aria-current={isLink && active ? "page" : undefined}
-        render={render ?? (isLink ? undefined : <button type="button" />)}
+        aria-current={active ? "page" : undefined}
+        render={render}
       >
         {Children.map(children, (child) =>
           typeof child === "string" || typeof child === "number" ? (
