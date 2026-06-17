@@ -72,19 +72,3 @@
   background: var(--salt-navigable-accent-indicator-active);
   pointer-events: none;
 }
-
-/* Disabled item: stays focusable (aria-disabled) but inert. */
-/*TODO: confirm that visual change with design*/
-.saltMegaMenuListItem-wrapper.saltMegaMenuListItem-disabled {
-  color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-cursor-disabled);
-}
-
-.saltMegaMenuListItem-wrapper.saltMegaMenuListItem-disabled:hover,
-.saltMegaMenuListItem-wrapper.saltMegaMenuListItem-disabled:active {
-  background: var(--salt-selectable-background);
-}
-
-.saltMegaMenuListItem-wrapper.saltMegaMenuListItem-disabled:active::before {
-  content: none;
-}
