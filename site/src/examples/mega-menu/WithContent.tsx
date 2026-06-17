@@ -1,6 +1,8 @@
 import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import {
   MegaMenu,
+  MegaMenuActions,
+  MegaMenuAside,
   MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
@@ -8,8 +10,6 @@ import {
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuActions,
-  MegaMenuAside,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import Image from "next/image";
@@ -187,9 +187,7 @@ export const WithContent = (): ReactElement => {
                 className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
               >
                 {main}
-                <MegaMenuAside
-                  className={styles.customRegionSideContent}
-                >
+                <MegaMenuAside className={styles.customRegionSideContent}>
                   {featuredResource}
                 </MegaMenuAside>
               </MegaMenuPanel>
@@ -210,9 +208,7 @@ export const WithContent = (): ReactElement => {
                 aria-label="Content on left menu"
                 className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
               >
-                <MegaMenuAside
-                  className={styles.customRegionSideContent}
-                >
+                <MegaMenuAside className={styles.customRegionSideContent}>
                   {featuredResource}
                 </MegaMenuAside>
                 {main}

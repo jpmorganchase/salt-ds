@@ -41,6 +41,8 @@ import {
 } from "@salt-ds/icons";
 import {
   MegaMenu,
+  MegaMenuActions,
+  MegaMenuAside,
   MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
@@ -48,8 +50,6 @@ import {
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuActions,
-  MegaMenuAside,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";

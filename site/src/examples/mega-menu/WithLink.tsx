@@ -1,6 +1,7 @@
 import { FlexLayout, Link, NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
+  MegaMenuActions,
   MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
@@ -8,7 +9,6 @@ import {
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuActions,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";

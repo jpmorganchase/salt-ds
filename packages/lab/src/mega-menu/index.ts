@@ -1,4 +1,6 @@
 export * from "./MegaMenu";
+export * from "./MegaMenuActions";
+export * from "./MegaMenuAside";
 export * from "./MegaMenuContent";
 export * from "./MegaMenuGroup";
 export * from "./MegaMenuGroupHeading";
@@ -6,6 +8,4 @@ export * from "./MegaMenuGroups";
 export * from "./MegaMenuList";
 export * from "./MegaMenuListItem";
 export * from "./MegaMenuPanel";
-export * from "./MegaMenuActions";
-export * from "./MegaMenuAside";
 export * from "./MegaMenuTrigger";

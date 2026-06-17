@@ -1,6 +1,8 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
+  MegaMenuActions,
+  MegaMenuAside,
   MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
@@ -8,8 +10,6 @@ import {
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuActions,
-  MegaMenuAside,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -448,10 +448,7 @@ describe("Given a MegaMenu", () => {
         });
 
       // The content region before the body carries the left content; the one after, the right.
-      cy.contains(
-        ".saltMegaMenuPanel > .saltMegaMenuAside",
-        "Left region link",
-      )
+      cy.contains(".saltMegaMenuPanel > .saltMegaMenuAside", "Left region link")
         .next()
         .should("have.class", "saltMegaMenuContent");
       cy.contains(

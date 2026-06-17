@@ -131,9 +131,7 @@ function handleArrow(
   }
 
   const column = cell.closest<HTMLElement>(COLUMN_SELECTOR);
-  const actionsEl = cell.closest<HTMLElement>(
-    ACTIONS_SELECTOR,
-  );
+  const actionsEl = cell.closest<HTMLElement>(ACTIONS_SELECTOR);
 
   if (column) {
     const colIndex = columns.indexOf(column);

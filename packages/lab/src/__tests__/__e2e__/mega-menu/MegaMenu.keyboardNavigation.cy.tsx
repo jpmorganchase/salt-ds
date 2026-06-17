@@ -1,6 +1,8 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
+  MegaMenuActions,
+  MegaMenuAside,
   MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
@@ -8,8 +10,6 @@ import {
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuActions,
-  MegaMenuAside,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -979,10 +979,7 @@ describe("Given a MegaMenu", () => {
       cy.mount(<SideRegionMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuAside").should(
-        "not.have.attr",
-        "tabindex",
-      );
+      cy.get(".saltMegaMenuAside").should("not.have.attr", "tabindex");
     });
 
     it("crosses into the region column with ArrowRight and within it with ArrowDown", () => {
@@ -1192,10 +1189,7 @@ describe("Given a MegaMenu", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuActions").should(
-        "not.have.attr",
-        "tabindex",
-      );
+      cy.get(".saltMegaMenuActions").should("not.have.attr", "tabindex");
     });
   });
 
