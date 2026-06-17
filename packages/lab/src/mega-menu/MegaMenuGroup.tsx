@@ -3,8 +3,8 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type ComponentPropsWithoutRef,
   forwardRef,
-  type HTMLAttributes,
   type ReactNode,
   useMemo,
   useState,
@@ -14,7 +14,7 @@ import { MegaMenuGroupContext } from "./MegaMenuGroupContext";
 
 const withBaseName = makePrefixer("saltMegaMenuGroup");
 
-export interface MegaMenuGroupProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuGroupProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of the mega menu group: a `MegaMenuGroupHeading` and a
    * `MegaMenuList` of `MegaMenuListItem`s.

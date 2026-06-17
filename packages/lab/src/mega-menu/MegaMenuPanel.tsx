@@ -10,8 +10,8 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type ComponentPropsWithoutRef,
   forwardRef,
-  type HTMLAttributes,
   type ReactNode,
   useEffect,
 } from "react";
@@ -22,7 +22,7 @@ import { usePageMargin } from "./usePageMargin";
 
 const withBaseName = makePrefixer("saltMegaMenuPanel");
 
-export interface MegaMenuPanelProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of the mega menu panel.
    */

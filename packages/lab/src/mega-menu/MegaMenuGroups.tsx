@@ -2,12 +2,12 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import { type ComponentPropsWithoutRef, forwardRef, type ReactNode } from "react";
 import megaMenuGroupsCss from "./MegaMenuGroups.css";
 
 const withBaseName = makePrefixer("saltMegaMenuGroups");
 
-export interface MegaMenuGroupsProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuGroupsProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The `MegaMenuGroup` columns of the mega menu.
    */
