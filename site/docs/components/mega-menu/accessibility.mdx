@@ -65,6 +65,7 @@ data:
 - Moves focus to the previous item within a column.
 - On the first item of a column, moves focus to the trigger and keeps the menu open.
 - In the supporting actions row, returns focus to the last column.
+- In a stacked layout (small viewport), moves to the previous item across the whole panel; on the first item, moves to the trigger.
 
 </KeyboardControl>
 
@@ -79,7 +80,8 @@ data:
 
 <KeyboardControl keyOrCombos="Left arrow">
 
-- Moves focus to the first item of the previous column.
+- On a trigger, moves focus to the previous trigger, closing the menu if open.
+- Within the panel, moves focus to the first item of the previous column.
 - On the first column, moves focus to the trigger and keeps the menu open.
 - In the supporting actions row, moves focus to the previous action.
 
@@ -87,7 +89,8 @@ data:
 
 <KeyboardControl keyOrCombos="Right arrow">
 
-- Moves focus to the first item of the next column.
+- On a trigger, moves focus to the next trigger, closing the menu if open.
+- Within the panel, moves focus to the first item of the next column.
 - On the last column, moves focus to the trigger and keeps the menu open — except on the last item, where it moves focus to the next trigger and closes the menu when one exists.
 - In the supporting actions row, moves focus to the next action; on the last action it behaves like the last item of the last column.
 
@@ -96,7 +99,10 @@ data:
 <KeyboardControl keyOrCombos="Home / End">
 
 - Home moves focus to the first item in the current group, and End to the last.
+- In a stacked layout (small viewport), Home and End move to the first and last item of the whole panel.
 - In the supporting actions row, they move to the first and last action.
 
 </KeyboardControl>
 </KeyboardControls>
+
+Interactive controls that manage their own arrow keys — inputs, comboboxes, listboxes, sliders, and similar — keep those keys when focused; the mega menu does not override them. Only focusable elements are reachable by keyboard, so non-interactive content within a custom region is skipped.

@@ -39,6 +39,12 @@ export interface MegaMenuProps {
   placement?: MegaMenuPlacement;
 }
 
+/**
+ * Root of a mega menu, coordinating its trigger and panel.
+ *
+ * Not intended to be nested inside another floating overlay (e.g. a dialog or
+ * popover): the mega menu does not participate in floating-ui's `FloatingTree`
+ */
 export function MegaMenu({
   children,
   open,
