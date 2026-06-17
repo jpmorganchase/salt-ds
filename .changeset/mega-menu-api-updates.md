@@ -2,83 +2,30 @@
 "@salt-ds/lab": minor
 ---
 
-Updated `MegaMenu` with a revised component structure and API.
+Updated `MegaMenu` with a revised structure and API:
 
-`MegaMenuPanel` lays its children out as a single horizontal row. `MegaMenuBody`
-is the center navigation area; an optional `MegaMenuSupportingContent` renders
-alongside it — to the left when placed before `MegaMenuBody`, to the right when
-placed after. Position is derived from source order alone — there are no
-placement props.
+- **Renamed `MegaMenuHeader` to `MegaMenuGroupHeading`.** It now renders a semantic heading (`<h3>` by default, configurable with `level`) instead of a `<div>`.
+- **Renamed `MegaMenuItem` to `MegaMenuListItem`.** It renders its own `<li>` wrapping the focusable action — an `<a>` by default, overridable with a `render` element (such as `react-router`'s `Link`). Its `ref` and DOM props target the `<li>`.
+- **Added `MegaMenuList`.** Wrap a group's items in it (the `<ul>`); `MegaMenuListItem` can no longer be placed directly inside `MegaMenuGroup`.
+- **Added `MegaMenuBody`.** It is the center navigation region, stacking `MegaMenuGroups` and an optional `MegaMenuSupportingActions` band beneath them. `MegaMenuSupportingContent` sits beside it, positioned by source order.
 
-- **`MegaMenuBody`** — the center navigation area. It stacks a `MegaMenuGroups`
-  and an optional `MegaMenuSupportingActions` band beneath it.
-- **`MegaMenuGroups`** — arranges the `MegaMenuGroup` columns in a grid that hugs
-  its content. Column width is set with the `--saltMegaMenuGroups-columnWidth`
-  custom property (default `12rem`).
-- **`MegaMenuGroup`** — one category column, composed of a `MegaMenuGroupHeading`
-  and a `MegaMenuList`.
-- **`MegaMenuGroupHeading`** — the group's label.
-- **`MegaMenuList`** — the `<ul>` that lists a group's `MegaMenuListItem`s.
-- **`MegaMenuListItem`** — a list item (`<li>`) wrapping the focusable action. The
-  action renders an `<a>` when given an `href` or a `render` element (such as
-  `react-router`'s `Link`), and a `<button>` otherwise; it closes the menu on
-  activation.
-- **`MegaMenuSupportingContent`** — side content beside `MegaMenuBody`, placed to
-  the left or right by source order.
-- **`MegaMenuSupportingActions`** — a row of supporting actions inside
-  `MegaMenuBody`, beneath the groups and spanning their width.
-
-Responsive behaviour is left to consumers. `MegaMenuGroups` lays its columns out
-with grid `auto-fit` and `minmax(0, …)`, so they shrink and wrap to the
-available width rather than overflowing; there is no built-in viewport
-breakpoint. To stack the panel on small screens, set `flex-direction: column` on
-`MegaMenuPanel` at your own breakpoint.
-
-The panel width is controlled with the `--saltMegaMenuPanel-inlineSize` (default
-`fit-content`) and `--saltMegaMenuPanel-maxInlineSize` (default
-`--saltMegaMenuPanel-availableWidth`) custom properties.
-
-Keyboard navigation follows the panel layout. Up and Down move within a column,
-with Down continuing at the top of the next column; Left and Right move between
-columns and, on the outer columns, return focus to the trigger while keeping the
-menu open. At the end of the last column — or the supporting actions row — Down
-and Right move to the next trigger and close the panel (and do nothing, or wrap
-back to the current trigger, when there is no next trigger). Tab and Shift+Tab
-walk every item in layout order, Escape closes the menu, and navigation degrades
-to a linear walk when the columns are stacked.
-
-A `MegaMenuListItem` activates on Enter and closes the menu. An item rendered as a
-`<button>` (no `href`) also activates on Space; link items follow native `<a>`
-behaviour and do not activate on Space.
-
-```tsx
-<MegaMenuPanel aria-label="Solutions menu">
-  <MegaMenuBody>
-    <MegaMenuGroups>
-      <MegaMenuGroup>
-        <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-        <MegaMenuList>
-          <MegaMenuListItem render={<Link to="/digital-banking" />}>
-            Digital banking
-          </MegaMenuListItem>
-        </MegaMenuList>
-      </MegaMenuGroup>
-    </MegaMenuGroups>
-    <MegaMenuSupportingActions>
-      <Link href="#demo">Book a demo</Link>
-    </MegaMenuSupportingActions>
-  </MegaMenuBody>
-  <MegaMenuSupportingContent>...</MegaMenuSupportingContent>
-</MegaMenuPanel>
+```diff
+  <MegaMenuPanel aria-label="Solutions menu">
++   <MegaMenuBody>
+      <MegaMenuGroups>
+        <MegaMenuGroup>
+-         <MegaMenuHeader>Financial services</MegaMenuHeader>
+-         <MegaMenuItem render={<Link to="/digital-banking" />}>Digital banking</MegaMenuItem>
++         <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
++         <MegaMenuList>
++           <MegaMenuListItem render={<Link to="/digital-banking" />}>Digital banking</MegaMenuListItem>
++         </MegaMenuList>
+        </MegaMenuGroup>
+      </MegaMenuGroups>
+      <MegaMenuSupportingActions>
+        <Link href="#demo">Book a demo</Link>
+      </MegaMenuSupportingActions>
++   </MegaMenuBody>
+    <MegaMenuSupportingContent>...</MegaMenuSupportingContent>
+  </MegaMenuPanel>
 ```
-
-**Breaking changes**
-
-- `MegaMenuHeader` has been removed. Use `MegaMenuGroupHeading` for a group's
-  label instead.
-- `MegaMenuListItem` can no longer be placed directly inside a `MegaMenuGroup`. Wrap
-  the items in a `MegaMenuList` (the `<ul>`); each `MegaMenuListItem` renders its own
-  `<li>`.
-- `MegaMenuListItem` renders an `<li>` wrapping its `<a>`/`<button>` action. Its `ref`
-  and DOM props target the `<li>`; the interactive element is the inner action
-  (`.saltMegaMenuListItem-wrapper`).
