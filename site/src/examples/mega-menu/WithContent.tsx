@@ -171,51 +171,55 @@ export const WithContent = (): ReactElement => {
   return (
     <MockHistory>
       <nav aria-label="with supporting content">
-        <FlexLayout gap={2}>
-          <MegaMenu
-            open={openMenu === "right"}
-            onOpenChange={(open) => setOpenMenu(open ? "right" : null)}
-          >
-            <MegaMenuTrigger>
-              <Button>Content on right</Button>
-            </MegaMenuTrigger>
-            {/* Aside placed after Main renders to the right. The footer lives
-              inside Main, along the bottom of the columns. */}
-            <MegaMenuPanel
-              aria-label="Content on right menu"
-              className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
+        <StackLayout as="ul" direction="row" gap={1} className={styles.navList}>
+          <li>
+            <MegaMenu
+              open={openMenu === "right"}
+              onOpenChange={(open) => setOpenMenu(open ? "right" : null)}
             >
-              {main}
-              <MegaMenuSupportingContent
-                className={styles.customRegionSideContent}
+              <MegaMenuTrigger>
+                <Button>Content on right</Button>
+              </MegaMenuTrigger>
+              {/* Aside placed after Main renders to the right. The footer lives
+                inside Main, along the bottom of the columns. */}
+              <MegaMenuPanel
+                aria-label="Content on right menu"
+                className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
               >
-                {featuredResource}
-              </MegaMenuSupportingContent>
-            </MegaMenuPanel>
-          </MegaMenu>
+                {main}
+                <MegaMenuSupportingContent
+                  className={styles.customRegionSideContent}
+                >
+                  {featuredResource}
+                </MegaMenuSupportingContent>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
 
-          <MegaMenu
-            open={openMenu === "left"}
-            onOpenChange={(open) => setOpenMenu(open ? "left" : null)}
-          >
-            <MegaMenuTrigger>
-              <Button>Content on left</Button>
-            </MegaMenuTrigger>
-            {/* Aside placed before Main renders to the left. The footer lives
-              inside Main, along the bottom of the columns. */}
-            <MegaMenuPanel
-              aria-label="Content on left menu"
-              className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
+          <li>
+            <MegaMenu
+              open={openMenu === "left"}
+              onOpenChange={(open) => setOpenMenu(open ? "left" : null)}
             >
-              <MegaMenuSupportingContent
-                className={styles.customRegionSideContent}
+              <MegaMenuTrigger>
+                <Button>Content on left</Button>
+              </MegaMenuTrigger>
+              {/* Aside placed before Main renders to the left. The footer lives
+                inside Main, along the bottom of the columns. */}
+              <MegaMenuPanel
+                aria-label="Content on left menu"
+                className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
               >
-                {featuredResource}
-              </MegaMenuSupportingContent>
-              {main}
-            </MegaMenuPanel>
-          </MegaMenu>
-        </FlexLayout>
+                <MegaMenuSupportingContent
+                  className={styles.customRegionSideContent}
+                >
+                  {featuredResource}
+                </MegaMenuSupportingContent>
+                {main}
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+        </StackLayout>
       </nav>
     </MockHistory>
   );
