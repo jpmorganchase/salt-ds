@@ -5,11 +5,14 @@
 Updated `MegaMenu` with a revised structure and API:
 
 - **Renamed `MegaMenuHeader` to `MegaMenuGroupHeading`.** It now renders a semantic heading (`<h3>` by default, configurable with `level`) instead of a `<div>`.
-- **Renamed `MegaMenuItem` to `MegaMenuListItem`.** It renders its own `<li>` wrapping the focusable action — an `<a>` by default, overridable with a `render` element (such as `react-router`'s `Link`). Its `ref` and DOM props target the `<li>`.
+- **Renamed `MegaMenuItem` to `MegaMenuListItem`.** It renders its own `<li>` wrapping the focusable action — an `<a>` by default, overridable with a `render` element (such as `react-router`'s `Link`). Its `ref` and DOM props target the `<li>`. It also adds an `active` prop that sets `aria-current="page"` for the current route.
 - **Renamed `MegaMenuSupportingContent` to `MegaMenuAside`.** It now renders a real `<aside>`.
 - **Renamed `MegaMenuSupportingActions` to `MegaMenuActions`.**
 - **Added `MegaMenuList`.** Wrap a group's items in it (the `<ul>`); `MegaMenuListItem` can no longer be placed directly inside `MegaMenuGroup`.
 - **Added `MegaMenuContent`.** It is the center navigation region, stacking `MegaMenuGroups` and an optional `MegaMenuActions` band beneath them. `MegaMenuAside` sits beside it, positioned by source order.
+- **Narrowed `MegaMenu`'s `placement` prop** to the new exported `MegaMenuPlacement` type (`"bottom" | "bottom-start" | "bottom-end"`); other floating-ui placements are no longer accepted.
+- **`MegaMenuGroups` columns now shrink to fit.** The grid uses `minmax(0, …)`, so columns shrink and wrap to the available width instead of overflowing.
+- **Adjusted the panel shadow** to `--salt-overlayable-shadow-modal` (was `--salt-overlayable-shadow-popout`).
 - **Reworked keyboard navigation.** The panel's navigation engine was rewritten, with these changes from the previous behaviour:
   - `ArrowUp` at the top of a column now returns focus to the trigger, instead of wrapping to the previous column.
   - `ArrowRight` on the rightmost column now exits to the next trigger (closing the menu) only from the last item, and otherwise returns focus to the trigger with the menu kept open.
