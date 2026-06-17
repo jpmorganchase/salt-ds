@@ -1,15 +1,15 @@
 import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBody,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuSupportingActions,
-  MegaMenuSupportingContent,
+  MegaMenuActions,
+  MegaMenuAside,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import Image from "next/image";
@@ -51,7 +51,7 @@ const featuredResource = (
   </>
 );
 
-const supportingLinks = (
+const actionLinks = (
   <FlexLayout gap={3}>
     <Link color="primary" underline="default" href="#link">
       Book a demo
@@ -63,7 +63,7 @@ const supportingLinks = (
 );
 
 const main = (
-  <MegaMenuBody>
+  <MegaMenuContent>
     <MegaMenuGroups className={styles.customRegionSideSection}>
       <MegaMenuGroup>
         <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
@@ -161,8 +161,8 @@ const main = (
         </MegaMenuList>
       </MegaMenuGroup>
     </MegaMenuGroups>
-    <MegaMenuSupportingActions>{supportingLinks}</MegaMenuSupportingActions>
-  </MegaMenuBody>
+    <MegaMenuActions>{actionLinks}</MegaMenuActions>
+  </MegaMenuContent>
 );
 
 export const WithContent = (): ReactElement => {
@@ -170,7 +170,7 @@ export const WithContent = (): ReactElement => {
 
   return (
     <MockHistory>
-      <nav aria-label="with supporting content">
+      <nav aria-label="with side content">
         <StackLayout as="ul" direction="row" gap={1} className={styles.navList}>
           <li>
             <MegaMenu
@@ -187,11 +187,11 @@ export const WithContent = (): ReactElement => {
                 className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
               >
                 {main}
-                <MegaMenuSupportingContent
+                <MegaMenuAside
                   className={styles.customRegionSideContent}
                 >
                   {featuredResource}
-                </MegaMenuSupportingContent>
+                </MegaMenuAside>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -210,11 +210,11 @@ export const WithContent = (): ReactElement => {
                 aria-label="Content on left menu"
                 className={`${styles.customRegionNoContainerPadding} ${styles.customRegionSide}`}
               >
-                <MegaMenuSupportingContent
+                <MegaMenuAside
                   className={styles.customRegionSideContent}
                 >
                   {featuredResource}
-                </MegaMenuSupportingContent>
+                </MegaMenuAside>
                 {main}
               </MegaMenuPanel>
             </MegaMenu>

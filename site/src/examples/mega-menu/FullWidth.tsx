@@ -1,7 +1,7 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBody,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
@@ -44,7 +44,7 @@ export const FullWidth = (): ReactElement => {
                 aria-label="Solutions menu"
                 className={styles.fullWidthPanel}
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
@@ -238,7 +238,7 @@ export const FullWidth = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -256,7 +256,7 @@ export const FullWidth = (): ReactElement => {
                 aria-label="Services menu"
                 className={styles.fullWidthPanel}
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -342,7 +342,7 @@ export const FullWidth = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -360,7 +360,7 @@ export const FullWidth = (): ReactElement => {
                 aria-label="Resources menu"
                 className={styles.fullWidthPanel}
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -419,7 +419,7 @@ export const FullWidth = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>

@@ -7,24 +7,24 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
-import megaMenuBodyCss from "./MegaMenuBody.css";
+import megaMenuContentCss from "./MegaMenuContent.css";
 
-const withBaseName = makePrefixer("saltMegaMenuBody");
+const withBaseName = makePrefixer("saltMegaMenuContent");
 
-export interface MegaMenuBodyProps extends ComponentPropsWithoutRef<"div"> {
+export interface MegaMenuContentProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of the mega menu navigation area, typically a `MegaMenuGroups`
-   * and an optional `MegaMenuSupportingActions`.
+   * and an optional `MegaMenuActions`.
    */
   children?: ReactNode;
 }
 
-export const MegaMenuBody = forwardRef<HTMLDivElement, MegaMenuBodyProps>(
-  function MegaMenuBody({ children, className, ...rest }, ref) {
+export const MegaMenuContent = forwardRef<HTMLDivElement, MegaMenuContentProps>(
+  function MegaMenuContent({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-mega-menu-body",
-      css: megaMenuBodyCss,
+      testId: "salt-mega-menu-content",
+      css: megaMenuContentCss,
       window: targetWindow,
     });
 

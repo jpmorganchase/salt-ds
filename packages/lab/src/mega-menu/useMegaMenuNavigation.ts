@@ -2,7 +2,7 @@ import type { ElementProps, FloatingRootContext } from "@floating-ui/react";
 import { useMemo } from "react";
 
 const COLUMN_SELECTOR = "[data-mega-menu-column]";
-const SUPPORTING_ACTIONS_SELECTOR = "[data-mega-menu-supporting-actions]";
+const ACTIONS_SELECTOR = "[data-mega-menu-actions]";
 
 export const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -29,8 +29,8 @@ function firstFocusable(root: HTMLElement | null): HTMLElement | null {
 interface NavModel {
   /** Columns (`data-mega-menu-column`) in DOM order, each with ≥1 cell. */
   columns: HTMLElement[];
-  /** Full-width supporting actions; the bottom of the center area. */
-  supportingActions: HTMLElement[];
+  /** Full-width actions row; the bottom of the center area. */
+  actions: HTMLElement[];
 }
 
 /** Build the navigation model from the panel DOM at keypress time. */
@@ -39,11 +39,11 @@ function buildModel(panel: HTMLElement): NavModel {
     panel.querySelectorAll<HTMLElement>(COLUMN_SELECTOR),
   ).filter((el) => queryFocusables(el).length > 0);
 
-  const supportingActions = Array.from(
-    panel.querySelectorAll<HTMLElement>(SUPPORTING_ACTIONS_SELECTOR),
+  const actions = Array.from(
+    panel.querySelectorAll<HTMLElement>(ACTIONS_SELECTOR),
   ).filter((el) => queryFocusables(el).length > 0);
 
-  return { columns, supportingActions };
+  return { columns, actions };
 }
 
 function focusTrigger(context: FloatingRootContext) {
@@ -124,15 +124,15 @@ function handleArrow(
   panel: HTMLElement,
   context: FloatingRootContext,
 ): boolean {
-  const { columns, supportingActions } = buildModel(panel);
+  const { columns, actions } = buildModel(panel);
 
   if (columnsStacked(columns)) {
     return handleLinear(key, cell, panel, context);
   }
 
   const column = cell.closest<HTMLElement>(COLUMN_SELECTOR);
-  const supportingActionsEl = cell.closest<HTMLElement>(
-    SUPPORTING_ACTIONS_SELECTOR,
+  const actionsEl = cell.closest<HTMLElement>(
+    ACTIONS_SELECTOR,
   );
 
   if (column) {
@@ -146,8 +146,8 @@ function handleArrow(
           cells[rowIndex + 1].focus();
         } else if (colIndex < columns.length - 1) {
           firstFocusable(columns[colIndex + 1])?.focus();
-        } else if (supportingActions.length > 0) {
-          firstFocusable(supportingActions[0])?.focus();
+        } else if (actions.length > 0) {
+          firstFocusable(actions[0])?.focus();
         } else {
           focusNextTriggerAndClose(context);
         }
@@ -199,8 +199,8 @@ function handleArrow(
     }
   }
 
-  if (supportingActionsEl) {
-    const cells = queryFocusables(supportingActionsEl);
+  if (actionsEl) {
+    const cells = queryFocusables(actionsEl);
     const index = cells.indexOf(cell);
 
     switch (key) {

@@ -1,4 +1,4 @@
-.saltMegaMenuBody {
+.saltMegaMenuContent {
   display: flex;
   flex-direction: column;
   gap: var(--salt-spacing-300);

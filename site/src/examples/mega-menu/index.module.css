@@ -30,7 +30,7 @@
   box-sizing: border-box;
 }
 
-.edgeToEdgePanel :global(.saltMegaMenuBody) {
+.edgeToEdgePanel :global(.saltMegaMenuContent) {
   max-inline-size: 100%;
 }
 
@@ -57,7 +57,7 @@
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
-.smallViewportContainer :global(.saltMegaMenuBody) {
+.smallViewportContainer :global(.saltMegaMenuContent) {
   max-inline-size: 100%;
   width: 100%;
   box-sizing: border-box;

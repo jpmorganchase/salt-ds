@@ -1,14 +1,14 @@
 import { FlexLayout, Link, NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBody,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuSupportingActions,
+  MegaMenuActions,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -42,7 +42,7 @@ export const WithLink = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Solutions menu">
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
@@ -235,7 +235,7 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                  <MegaMenuSupportingActions>
+                  <MegaMenuActions>
                     <FlexLayout wrap gap={3}>
                       <Link color="primary" underline="default" href="#link">
                         Book a demo
@@ -244,8 +244,8 @@ export const WithLink = (): ReactElement => {
                         Support center
                       </Link>
                     </FlexLayout>
-                  </MegaMenuSupportingActions>
-                </MegaMenuBody>
+                  </MegaMenuActions>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -260,7 +260,7 @@ export const WithLink = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Services menu">
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -457,12 +457,12 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                  <MegaMenuSupportingActions>
+                  <MegaMenuActions>
                     <Link color="primary" underline="default" href="#link">
                       Service status
                     </Link>
-                  </MegaMenuSupportingActions>
-                </MegaMenuBody>
+                  </MegaMenuActions>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -477,7 +477,7 @@ export const WithLink = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Resources menu">
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -566,12 +566,12 @@ export const WithLink = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                  <MegaMenuSupportingActions>
+                  <MegaMenuActions>
                     <Link color="primary" underline="default" href="#link">
                       Browse documentation
                     </Link>
-                  </MegaMenuSupportingActions>
-                </MegaMenuBody>
+                  </MegaMenuActions>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>

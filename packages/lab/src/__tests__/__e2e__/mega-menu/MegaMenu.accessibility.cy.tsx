@@ -1,15 +1,15 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBody,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuSupportingActions,
-  MegaMenuSupportingContent,
+  MegaMenuActions,
+  MegaMenuAside,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -26,7 +26,7 @@ const AccessibleMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -59,7 +59,7 @@ const AccessibleMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -70,7 +70,7 @@ const AccessibleMegaMenu = () => (
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Services menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -84,7 +84,7 @@ const AccessibleMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -94,8 +94,8 @@ const AccessibleMegaMenu = () => (
 
 // Content regions flanking the center and an action bar inside it, to verify the
 // panel derives position purely from component type and source order (no placement
-// props): a `MegaMenuSupportingContent` before `MegaMenuBody` is the left column, one after
-// is the right column, and the action bar sits inside `MegaMenuBody` beneath the
+// props): a `MegaMenuAside` before `MegaMenuContent` is the left column, one after
+// is the right column, and the action bar sits inside `MegaMenuContent` beneath the
 // groups.
 const LayoutMegaMenu = () => (
   <nav aria-label="Main">
@@ -106,10 +106,10 @@ const LayoutMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuSupportingContent>
+            <MegaMenuAside>
               <a href="/left">Left region link</a>
-            </MegaMenuSupportingContent>
-            <MegaMenuBody>
+            </MegaMenuAside>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -125,13 +125,13 @@ const LayoutMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-              <MegaMenuSupportingActions>
+              <MegaMenuActions>
                 <a href="/bottom">Bottom band link</a>
-              </MegaMenuSupportingActions>
-            </MegaMenuBody>
-            <MegaMenuSupportingContent>
+              </MegaMenuActions>
+            </MegaMenuContent>
+            <MegaMenuAside>
               <a href="/right">Right region link</a>
-            </MegaMenuSupportingContent>
+            </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -252,7 +252,7 @@ describe("Given a MegaMenu", () => {
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading id="custom-heading-id">
@@ -265,7 +265,7 @@ describe("Given a MegaMenu", () => {
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>,
       );
@@ -290,7 +290,7 @@ describe("Given a MegaMenu", () => {
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuList>
@@ -300,7 +300,7 @@ describe("Given a MegaMenu", () => {
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>,
       );
@@ -318,7 +318,7 @@ describe("Given a MegaMenu", () => {
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
             <span id="extra-label">Recommended</span>
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -331,7 +331,7 @@ describe("Given a MegaMenu", () => {
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>,
       );
@@ -441,30 +441,30 @@ describe("Given a MegaMenu", () => {
         .then(($children) => {
           const classes = [...$children].map((el) => el.classList[0]);
           expect(classes).to.deep.equal([
-            "saltMegaMenuSupportingContent",
-            "saltMegaMenuBody",
-            "saltMegaMenuSupportingContent",
+            "saltMegaMenuAside",
+            "saltMegaMenuContent",
+            "saltMegaMenuAside",
           ]);
         });
 
       // The content region before the body carries the left content; the one after, the right.
       cy.contains(
-        ".saltMegaMenuPanel > .saltMegaMenuSupportingContent",
+        ".saltMegaMenuPanel > .saltMegaMenuAside",
         "Left region link",
       )
         .next()
-        .should("have.class", "saltMegaMenuBody");
+        .should("have.class", "saltMegaMenuContent");
       cy.contains(
-        ".saltMegaMenuPanel > .saltMegaMenuSupportingContent",
+        ".saltMegaMenuPanel > .saltMegaMenuAside",
         "Right region link",
       )
         .prev()
-        .should("have.class", "saltMegaMenuBody");
+        .should("have.class", "saltMegaMenuContent");
 
       // The action bar lives inside the body, beneath the groups (never beside the
       // content regions, which are outside the body).
-      cy.contains(".saltMegaMenuBody", "Digital Banking")
-        .find(".saltMegaMenuSupportingActions")
+      cy.contains(".saltMegaMenuContent", "Digital Banking")
+        .find(".saltMegaMenuActions")
         .should("contain.text", "Bottom band link");
     });
   });

@@ -41,15 +41,15 @@ import {
 } from "@salt-ds/icons";
 import {
   MegaMenu,
-  MegaMenuBody,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuSupportingActions,
-  MegaMenuSupportingContent,
+  MegaMenuActions,
+  MegaMenuAside,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
@@ -106,7 +106,7 @@ export const WithIcons: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>
@@ -311,7 +311,7 @@ export const WithIcons: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -327,7 +327,7 @@ export const WithIcons: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -519,7 +519,7 @@ export const WithIcons: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -534,7 +534,7 @@ export const WithIcons: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -628,7 +628,7 @@ export const WithIcons: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -662,7 +662,7 @@ export const WithAdornment: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>
@@ -863,7 +863,7 @@ export const WithAdornment: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -879,7 +879,7 @@ export const WithAdornment: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -1059,7 +1059,7 @@ export const WithAdornment: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1074,7 +1074,7 @@ export const WithAdornment: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -1169,7 +1169,7 @@ export const WithAdornment: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -1193,7 +1193,7 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="Near Left Edge menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
@@ -1348,7 +1348,7 @@ export const TriggerPosition: StoryFn = () => {
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1362,7 +1362,7 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="On Center menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
@@ -1517,7 +1517,7 @@ export const TriggerPosition: StoryFn = () => {
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1531,7 +1531,7 @@ export const TriggerPosition: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label="Slightly Offset menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
@@ -1686,7 +1686,7 @@ export const TriggerPosition: StoryFn = () => {
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1700,7 +1700,7 @@ export const TriggerPosition: StoryFn = () => {
             <Button>Near The Edge</Button>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Near The Edge menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
@@ -1855,7 +1855,7 @@ export const TriggerPosition: StoryFn = () => {
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </div>
@@ -1893,7 +1893,7 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Solutions menu"
                 className="full-width-panel"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
@@ -2140,7 +2140,7 @@ export const FullWidthContainer: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2159,7 +2159,7 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Services menu"
                 className="full-width-panel"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -2356,7 +2356,7 @@ export const FullWidthContainer: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2374,7 +2374,7 @@ export const FullWidthContainer: StoryFn = () => {
                 aria-label="Resources menu"
                 className="full-width-panel"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -2463,7 +2463,7 @@ export const FullWidthContainer: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2507,7 +2507,7 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Solutions menu"
                 className="edge-to-edge-panel"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
@@ -2754,7 +2754,7 @@ export const EdgeToEdge: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2773,7 +2773,7 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Services menu"
                 className="edge-to-edge-panel"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -2970,7 +2970,7 @@ export const EdgeToEdge: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -2988,7 +2988,7 @@ export const EdgeToEdge: StoryFn = () => {
                 aria-label="Resources menu"
                 className="edge-to-edge-panel"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -3077,7 +3077,7 @@ export const EdgeToEdge: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -3107,7 +3107,7 @@ export const WithContent: StoryFn = () => {
           aria-label="Content on right menu"
           className="custom-region-no-container-padding custom-region-side"
         >
-          <MegaMenuBody>
+          <MegaMenuContent>
             <MegaMenuGroups className="custom-region-side-section">
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
@@ -3226,7 +3226,7 @@ export const WithContent: StoryFn = () => {
                 </MegaMenuList>
               </MegaMenuGroup>
             </MegaMenuGroups>
-            <MegaMenuSupportingActions>
+            <MegaMenuActions>
               <FlexLayout gap={3}>
                 <Link color="primary" underline="default" href="#link">
                   Book a demo
@@ -3235,9 +3235,9 @@ export const WithContent: StoryFn = () => {
                   Support center
                 </Link>
               </FlexLayout>
-            </MegaMenuSupportingActions>
-          </MegaMenuBody>
-          <MegaMenuSupportingContent className="custom-region-side-content">
+            </MegaMenuActions>
+          </MegaMenuContent>
+          <MegaMenuAside className="custom-region-side-content">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
                 alt="example"
@@ -3265,7 +3265,7 @@ export const WithContent: StoryFn = () => {
                 </Link>
               </StackLayout>
             </FlexLayout>
-          </MegaMenuSupportingContent>
+          </MegaMenuAside>
         </MegaMenuPanel>
       </MegaMenu>
 
@@ -3280,7 +3280,7 @@ export const WithContent: StoryFn = () => {
           aria-label="Content on left menu"
           className="custom-region-no-container-padding custom-region-side"
         >
-          <MegaMenuSupportingContent className="custom-region-side-content">
+          <MegaMenuAside className="custom-region-side-content">
             <FlexLayout direction={"column"} wrap gap={2}>
               <img
                 alt="example"
@@ -3308,8 +3308,8 @@ export const WithContent: StoryFn = () => {
                 </Link>
               </StackLayout>
             </FlexLayout>
-          </MegaMenuSupportingContent>
-          <MegaMenuBody>
+          </MegaMenuAside>
+          <MegaMenuContent>
             <MegaMenuGroups className="custom-region-side-section">
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
@@ -3428,7 +3428,7 @@ export const WithContent: StoryFn = () => {
                 </MegaMenuList>
               </MegaMenuGroup>
             </MegaMenuGroups>
-            <MegaMenuSupportingActions>
+            <MegaMenuActions>
               <FlexLayout gap={3}>
                 <Link color="primary" underline="default" href="#link">
                   Book a demo
@@ -3437,8 +3437,8 @@ export const WithContent: StoryFn = () => {
                   Support center
                 </Link>
               </FlexLayout>
-            </MegaMenuSupportingActions>
-          </MegaMenuBody>
+            </MegaMenuActions>
+          </MegaMenuContent>
         </MegaMenuPanel>
       </MegaMenu>
     </FlexLayout>
@@ -3471,7 +3471,7 @@ export const WithLink: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel>
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>
@@ -3662,7 +3662,7 @@ export const WithLink: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-                <MegaMenuSupportingActions>
+                <MegaMenuActions>
                   <FlexLayout wrap gap={3}>
                     <Link color="primary" underline="default" href="#link">
                       Book a demo
@@ -3671,8 +3671,8 @@ export const WithLink: StoryFn = () => {
                       Support center
                     </Link>
                   </FlexLayout>
-                </MegaMenuSupportingActions>
-              </MegaMenuBody>
+                </MegaMenuActions>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3688,7 +3688,7 @@ export const WithLink: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel>
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -3862,12 +3862,12 @@ export const WithLink: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-                <MegaMenuSupportingActions>
+                <MegaMenuActions>
                   <Link color="primary" underline="default" href="#link">
                     Service status
                   </Link>
-                </MegaMenuSupportingActions>
-              </MegaMenuBody>
+                </MegaMenuActions>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -3882,7 +3882,7 @@ export const WithLink: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -3969,12 +3969,12 @@ export const WithLink: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-                <MegaMenuSupportingActions>
+                <MegaMenuActions>
                   <Link color="primary" underline="default" href="#link">
                     Browse documentation
                   </Link>
-                </MegaMenuSupportingActions>
-              </MegaMenuBody>
+                </MegaMenuActions>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -4012,7 +4012,7 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Solutions menu"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
@@ -4205,7 +4205,7 @@ export const InSmallViewport: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -4223,7 +4223,7 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Services menu"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -4385,7 +4385,7 @@ export const InSmallViewport: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -4403,7 +4403,7 @@ export const InSmallViewport: StoryFn = () => {
                 className="small-viewport-container"
                 aria-label="Resources menu"
               >
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -4525,7 +4525,7 @@ export const InSmallViewport: StoryFn = () => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -4546,7 +4546,7 @@ export const DefaultOpen: StoryFn = () => {
             </MegaMenuTrigger>
 
             <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>
@@ -4632,7 +4632,7 @@ export const DefaultOpen: StoryFn = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -4662,7 +4662,7 @@ export const Placement: StoryFn = () => {
           </MegaMenuTrigger>
 
           <MegaMenuPanel aria-label={`${placement} menu`}>
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Group A</MegaMenuGroupHeading>
@@ -4715,7 +4715,7 @@ export const Placement: StoryFn = () => {
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       ))}

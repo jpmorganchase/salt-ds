@@ -1,7 +1,7 @@
 import { Badge, NavigationItem, StackLayout, Tag } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBody,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
@@ -41,7 +41,7 @@ export const WithAdornment = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Solutions menu">
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>
@@ -242,7 +242,7 @@ export const WithAdornment = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -257,7 +257,7 @@ export const WithAdornment = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Services menu">
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -462,7 +462,7 @@ export const WithAdornment = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>
@@ -477,7 +477,7 @@ export const WithAdornment = (): ReactElement => {
                 </NavigationItem>
               </MegaMenuTrigger>
               <MegaMenuPanel aria-label="Resources menu">
-                <MegaMenuBody>
+                <MegaMenuContent>
                   <MegaMenuGroups>
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
@@ -576,7 +576,7 @@ export const WithAdornment = (): ReactElement => {
                       </MegaMenuList>
                     </MegaMenuGroup>
                   </MegaMenuGroups>
-                </MegaMenuBody>
+                </MegaMenuContent>
               </MegaMenuPanel>
             </MegaMenu>
           </li>

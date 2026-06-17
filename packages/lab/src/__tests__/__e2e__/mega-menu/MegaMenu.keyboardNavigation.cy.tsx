@@ -1,15 +1,15 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBody,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
-  MegaMenuSupportingActions,
-  MegaMenuSupportingContent,
+  MegaMenuActions,
+  MegaMenuAside,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 
@@ -22,7 +22,7 @@ const KeyboardMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -61,7 +61,7 @@ const KeyboardMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -72,7 +72,7 @@ const KeyboardMegaMenu = () => (
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -92,7 +92,7 @@ const KeyboardMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -102,7 +102,7 @@ const KeyboardMegaMenu = () => (
   </nav>
 );
 
-// `MegaMenuBody` followed by a trailing `MegaMenuSupportingContent`. Source order places
+// `MegaMenuContent` followed by a trailing `MegaMenuAside`. Source order places
 // the content region to the right of the body; its interactive children become a
 // navigable column carrying `data-mega-menu-column`.
 const SideRegionMegaMenu = () => (
@@ -114,7 +114,7 @@ const SideRegionMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -136,11 +136,11 @@ const SideRegionMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
-            <MegaMenuSupportingContent>
+            </MegaMenuContent>
+            <MegaMenuAside>
               <a href="/see-all">See all solutions</a>
               <button type="button">Contact sales</button>
-            </MegaMenuSupportingContent>
+            </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -150,7 +150,7 @@ const SideRegionMegaMenu = () => (
   </nav>
 );
 
-// A leading `MegaMenuSupportingContent` placed before `MegaMenuBody` renders to the left,
+// A leading `MegaMenuAside` placed before `MegaMenuContent` renders to the left,
 // so it becomes the first navigable column.
 const LeadingRegionMegaMenu = () => (
   <nav>
@@ -161,10 +161,10 @@ const LeadingRegionMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuSupportingContent>
+            <MegaMenuAside>
               <a href="/featured">Featured</a>
-            </MegaMenuSupportingContent>
-            <MegaMenuBody>
+            </MegaMenuAside>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -186,7 +186,7 @@ const LeadingRegionMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -194,9 +194,9 @@ const LeadingRegionMegaMenu = () => (
   </nav>
 );
 
-// Groups followed by a full-width `MegaMenuSupportingActions`, both inside `MegaMenuBody`.
+// Groups followed by a full-width `MegaMenuActions`, both inside `MegaMenuContent`.
 // The action bar is always the bottom of the center area; it carries
-// `data-mega-menu-supporting-actions` and its children move horizontally.
+// `data-mega-menu-actions` and its children move horizontally.
 const BottomBandMegaMenu = () => (
   <nav>
     <StackLayout as="ol" direction="row" gap={1}>
@@ -206,7 +206,7 @@ const BottomBandMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -228,11 +228,11 @@ const BottomBandMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-              <MegaMenuSupportingActions>
+              <MegaMenuActions>
                 <a href="/book-a-demo">Book a demo</a>
                 <button type="button">Support center</button>
-              </MegaMenuSupportingActions>
-            </MegaMenuBody>
+              </MegaMenuActions>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -251,7 +251,7 @@ const BottomBandWithNextMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -267,11 +267,11 @@ const BottomBandWithNextMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-              <MegaMenuSupportingActions>
+              <MegaMenuActions>
                 <a href="/book-a-demo">Book a demo</a>
                 <button type="button">Support center</button>
-              </MegaMenuSupportingActions>
-            </MegaMenuBody>
+              </MegaMenuActions>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -281,7 +281,7 @@ const BottomBandWithNextMegaMenu = () => (
             <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Services menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -295,7 +295,7 @@ const BottomBandWithNextMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -303,7 +303,7 @@ const BottomBandWithNextMegaMenu = () => (
   </nav>
 );
 
-// A `MegaMenuSupportingContent` containing a self-consuming control (a text input). The
+// A `MegaMenuAside` containing a self-consuming control (a text input). The
 // engine must not hijack arrow keys while focus is inside it.
 const RoleAwareMegaMenu = () => (
   <nav>
@@ -314,7 +314,7 @@ const RoleAwareMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -330,10 +330,10 @@ const RoleAwareMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
-            <MegaMenuSupportingContent>
+            </MegaMenuContent>
+            <MegaMenuAside>
               <input aria-label="Search" defaultValue="hello" />
-            </MegaMenuSupportingContent>
+            </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -352,7 +352,7 @@ const RoleAwareTabMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -368,11 +368,11 @@ const RoleAwareTabMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
-            <MegaMenuSupportingContent>
+            </MegaMenuContent>
+            <MegaMenuAside>
               <input aria-label="Search" defaultValue="hello" />
               <a href="/go">Go</a>
-            </MegaMenuSupportingContent>
+            </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -391,7 +391,7 @@ const StaticContentMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -413,13 +413,13 @@ const StaticContentMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-              <MegaMenuSupportingActions>
+              <MegaMenuActions>
                 <span>Footer note, nothing focusable.</span>
-              </MegaMenuSupportingActions>
-            </MegaMenuBody>
-            <MegaMenuSupportingContent>
+              </MegaMenuActions>
+            </MegaMenuContent>
+            <MegaMenuAside>
               <p>Static promotional text with no links.</p>
-            </MegaMenuSupportingContent>
+            </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -441,7 +441,7 @@ const ActionItemMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -461,7 +461,7 @@ const ActionItemMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -482,7 +482,7 @@ const RenderPropMegaMenu = () => (
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
           <MegaMenuPanel>
-            <MegaMenuBody>
+            <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>
@@ -502,7 +502,7 @@ const RenderPropMegaMenu = () => (
                   </MegaMenuList>
                 </MegaMenuGroup>
               </MegaMenuGroups>
-            </MegaMenuBody>
+            </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
       </li>
@@ -979,7 +979,7 @@ describe("Given a MegaMenu", () => {
       cy.mount(<SideRegionMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuSupportingContent").should(
+      cy.get(".saltMegaMenuAside").should(
         "not.have.attr",
         "tabindex",
       );
@@ -1192,7 +1192,7 @@ describe("Given a MegaMenu", () => {
       cy.mount(<BottomBandMegaMenu />);
       openSolutions();
 
-      cy.get(".saltMegaMenuSupportingActions").should(
+      cy.get(".saltMegaMenuActions").should(
         "not.have.attr",
         "tabindex",
       );

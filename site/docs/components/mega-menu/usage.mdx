@@ -43,8 +43,8 @@ data:
 ### Structure
 
 - Wrap each mega menu in its own `<li>` within the trigger `<ul>` — arrow-key navigation between triggers relies on it.
-- Place `MegaMenuSupportingActions` inside `MegaMenuBody`, after `MegaMenuGroups`.
-- `MegaMenuSupportingContent` position follows source order: before `MegaMenuBody` it renders to the left, after it renders to the right.
+- Place `MegaMenuActions` inside `MegaMenuContent`, after `MegaMenuGroups`.
+- `MegaMenuAside` position follows source order: before `MegaMenuContent` it renders to the left, after it renders to the right.
 
 ## Import
 
@@ -55,14 +55,14 @@ import {
   MegaMenu,
   MegaMenuTrigger,
   MegaMenuPanel,
-  MegaMenuSupportingContent,
-  MegaMenuBody,
+  MegaMenuAside,
+  MegaMenuContent,
   MegaMenuGroups,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuList,
   MegaMenuListItem,
-  MegaMenuSupportingActions,
+  MegaMenuActions,
 } from "@salt-ds/lab";
 ```
 
@@ -80,13 +80,13 @@ import {
 
 <PropsTable packageName="lab" componentName="MegaMenuPanel" />
 
-### `MegaMenuSupportingContent`
+### `MegaMenuAside`
 
-<PropsTable packageName="lab" componentName="MegaMenuSupportingContent" />
+<PropsTable packageName="lab" componentName="MegaMenuAside" />
 
-### `MegaMenuBody`
+### `MegaMenuContent`
 
-<PropsTable packageName="lab" componentName="MegaMenuBody" />
+<PropsTable packageName="lab" componentName="MegaMenuContent" />
 
 ### `MegaMenuGroups`
 
@@ -108,6 +108,6 @@ import {
 
 <PropsTable packageName="lab" componentName="MegaMenuListItem" />
 
-### `MegaMenuSupportingActions`
+### `MegaMenuActions`
 
-<PropsTable packageName="lab" componentName="MegaMenuSupportingActions" />
+<PropsTable packageName="lab" componentName="MegaMenuActions" />

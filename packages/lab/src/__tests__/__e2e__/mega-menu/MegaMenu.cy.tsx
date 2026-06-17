@@ -1,7 +1,7 @@
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
-  MegaMenuBody,
+  MegaMenuContent,
   MegaMenuGroup,
   MegaMenuGroupHeading,
   MegaMenuGroups,
@@ -31,7 +31,7 @@ const InteractiveMegaMenu = () => {
               <NavigationItem>Solutions</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>
@@ -53,7 +53,7 @@ const InteractiveMegaMenu = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -67,7 +67,7 @@ const InteractiveMegaMenu = () => {
               <NavigationItem>Services</NavigationItem>
             </MegaMenuTrigger>
             <MegaMenuPanel>
-              <MegaMenuBody>
+              <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
@@ -81,7 +81,7 @@ const InteractiveMegaMenu = () => {
                     </MegaMenuList>
                   </MegaMenuGroup>
                 </MegaMenuGroups>
-              </MegaMenuBody>
+              </MegaMenuContent>
             </MegaMenuPanel>
           </MegaMenu>
         </li>
@@ -149,7 +149,7 @@ describe("Given a MegaMenu", () => {
           <NavigationItem>Solutions</NavigationItem>
         </MegaMenuTrigger>
         <MegaMenuPanel>
-          <MegaMenuBody>
+          <MegaMenuContent>
             <MegaMenuGroups>
               <MegaMenuGroup>
                 <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
@@ -163,7 +163,7 @@ describe("Given a MegaMenu", () => {
                 </MegaMenuList>
               </MegaMenuGroup>
             </MegaMenuGroups>
-          </MegaMenuBody>
+          </MegaMenuContent>
         </MegaMenuPanel>
       </MegaMenu>,
     );

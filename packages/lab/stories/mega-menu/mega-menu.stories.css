@@ -59,7 +59,7 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.edge-to-edge-panel .saltMegaMenuBody {
+.edge-to-edge-panel .saltMegaMenuContent {
   max-inline-size: 100%;
 }
 
@@ -148,7 +148,7 @@ nav > ol {
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
-.small-viewport-container .saltMegaMenuBody {
+.small-viewport-container .saltMegaMenuContent {
   max-inline-size: 100%;
   width: 100%;
   box-sizing: border-box;

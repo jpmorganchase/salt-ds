@@ -66,12 +66,12 @@ You can display adornments such as tags, badges, or icons. This allows you to in
 
 ## With link
 
-You can add a link to give users a quick way to access a broader section or view all related items. Place a `MegaMenuSupportingActions` inside `MegaMenuBody`, after the `MegaMenuGroups`, to render one or more supporting links as a band beneath the menu groups.
+You can add a link to give users a quick way to access a broader section or view all related items. Place a `MegaMenuActions` inside `MegaMenuContent`, after the `MegaMenuGroups`, to render one or more links as a band beneath the menu groups.
 
 <LivePreview componentName="mega-menu" exampleName="WithLink" />
 
-## With supporting content
+## With side content
 
-Use `MegaMenuSupportingContent` for side content (it renders to the left of `MegaMenuBody` when placed before it, and to the right when placed after) and `MegaMenuSupportingActions` for supporting links beneath the menu groups. Inside `MegaMenuBody`, wrap the `MegaMenuGroup`s in `MegaMenuGroups` and place `MegaMenuSupportingActions` after it. Side content position is driven by source order. In small viewports, it reflows into the stacked mega menu in its original order, appearing at the top or bottom of the stack.
+Use `MegaMenuAside` for side content (it renders to the left of `MegaMenuContent` when placed before it, and to the right when placed after) and `MegaMenuActions` for links beneath the menu groups. Inside `MegaMenuContent`, wrap the `MegaMenuGroup`s in `MegaMenuGroups` and place `MegaMenuActions` after it. Side content position is driven by source order. In small viewports, it reflows into the stacked mega menu in its original order, appearing at the top or bottom of the stack.
 
 <LivePreview componentName="mega-menu" exampleName="WithContent" />
