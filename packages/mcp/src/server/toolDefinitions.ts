@@ -1,28 +1,12 @@
-import fs from "node:fs/promises";
-import path from "node:path";
-import {
-  buildContextPackBundleReleaseGate,
-  buildGeneratedArtifactPersistenceResult,
-  checkContextPackBundlePersistence,
-  DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
-  DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
-  toContextPackOutputPathForManifest,
-  validateGeneratedArtifactReleaseGate,
-  validateSaltReviewReport,
-} from "@salt-ds/semantic-core";
 import {
   createSaltUi,
-  discoverSalt,
-  getSaltEntities,
-  getSaltExamples,
   migrateToSalt,
   reviewSaltUi,
-  upgradeSaltUi,
 } from "@salt-ds/semantic-core/tools/index";
+import { getSaltEntities } from "@salt-ds/semantic-core/tools/getSaltEntities";
+import { getSaltExamples } from "@salt-ds/semantic-core/tools/getSaltExamples";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import * as z from "zod/v4";
-import { bootstrapSaltRepo } from "./bootstrapRepo.js";
-import { buildMcpFileContextPack } from "./contextPack.js";
 import {
   buildSaltProjectContextId,
   collectSaltProjectContextData,
@@ -34,54 +18,28 @@ import { loadWorkflowProjectPolicyArtifactForContext } from "./projectPolicy.js"
 import {
   withAnalyzeWorkflowGuidance,
   withChooseWorkflowGuidance,
-  withCompareWorkflowGuidance,
   withTranslateWorkflowGuidance,
 } from "./workflowOutputs.js";
 
-const SEARCH_AREAS = [
-  "all",
-  "packages",
-  "components",
-  "icons",
-  "country_symbols",
-  "pages",
-  "foundations",
-  "patterns",
-  "guides",
-  "tokens",
-  "examples",
-  "changes",
-] as const;
 const STATUSES = ["stable", "beta", "lab", "deprecated"] as const;
 const VIEWS = ["compact", "full"] as const;
-const CHANGE_KINDS = [
-  "added",
-  "changed",
-  "fixed",
-  "deprecated",
-  "removed",
-] as const;
 const INCLUDE_SECTIONS = [
   "examples",
   "props",
   "tokens",
   "accessibility",
   "deprecations",
-  "changes",
 ] as const;
 const PUBLIC_WORKFLOW_TOOL_IDS = [
   "get_salt_project_context",
-  "bootstrap_salt_repo",
-  "create_salt_ui",
   "review_salt_ui",
+  "create_salt_ui",
   "migrate_to_salt",
-  "upgrade_salt_ui",
 ] as const;
 const CONTEXT_NEXT_TOOL_IDS = [
   "create_salt_ui",
   "review_salt_ui",
   "migrate_to_salt",
-  "upgrade_salt_ui",
 ] as const;
 const UNKNOWN_RECORD_SCHEMA = z.record(z.string(), z.unknown());
 const UNKNOWN_RECORD_ARRAY_SCHEMA = z.array(UNKNOWN_RECORD_SCHEMA);
@@ -220,7 +178,7 @@ const CONTEXT_SALT_INSTALLATION_SCHEMA = z.object({
       "dedupe-salt-install",
       "reinstall-dependencies",
     ]),
-    blocking_workflows: z.array(z.enum(["review", "migrate", "upgrade"])),
+    blocking_workflows: z.array(z.enum(["review", "migrate"])),
     reasons: z.array(z.string()),
   }),
 });
@@ -365,7 +323,6 @@ const CONTEXT_RESULT_SCHEMA = z.object({
     create: z.boolean(),
     review: z.boolean(),
     migrate: z.boolean(),
-    upgrade: z.boolean(),
     runtime_evidence: z.boolean(),
   }),
 });
@@ -378,19 +335,10 @@ const CONTEXT_WORKFLOW_ENVELOPE_SCHEMA = z.object({
   artifacts: z.object({
     summary: z.object({
       recommended_next_tool: z.enum(CONTEXT_NEXT_TOOL_IDS).nullable(),
-      bootstrap_requirement: z.object({
-        status: z.enum(["recommended", "not_required"]),
-        tool: z.literal("bootstrap_salt_repo"),
-        cli_command: z.literal("salt-ds init"),
+      policy_note: z.object({
+        status: z.enum(["declared", "not_declared", "not_applicable"]),
         reason: z.string().nullable(),
-        next_tool_after_bootstrap: z
-          .enum([
-            "create_salt_ui",
-            "review_salt_ui",
-            "migrate_to_salt",
-            "upgrade_salt_ui",
-          ])
-          .nullable(),
+        next_tool_after_policy: z.enum(CONTEXT_NEXT_TOOL_IDS).nullable(),
       }),
       reasons: z.array(z.string()),
       context_health: z.object({
@@ -409,49 +357,6 @@ const CONTEXT_WORKFLOW_ENVELOPE_SCHEMA = z.object({
         context_id: z.string().nullable(),
       }),
     }),
-    notes: z.array(z.string()),
-  }),
-  sources: z.array(TOOL_SOURCE_SCHEMA),
-});
-
-const BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA = z.object({
-  workflow: z.object({
-    id: z.literal("bootstrap_salt_repo"),
-  }),
-  result: z.object({
-    context_id: z.string(),
-    root_dir: z.string(),
-    project_name: z.string(),
-    policy: z.object({
-      path: z.string().nullable(),
-      action: z.enum(["created", "unchanged", "skipped-layered"]),
-      mode: z.enum(["none", "team", "stack"]),
-    }),
-    stack: z.object({
-      path: z.string().nullable(),
-      action: z.enum(["created", "unchanged", "not_requested"]),
-      conventions_pack_source: z.string().nullable(),
-    }),
-    repo_instructions: z.object({
-      path: z.string(),
-      filename: z.enum(["AGENTS.md", "CLAUDE.md"]).nullable(),
-      action: z.enum(["created", "updated", "unchanged"]),
-    }),
-    summary: z.object({
-      ready_for_repo_aware_workflows: z.boolean(),
-      recommended_next_tool: z
-        .enum([
-          "create_salt_ui",
-          "review_salt_ui",
-          "migrate_to_salt",
-          "upgrade_salt_ui",
-        ])
-        .nullable(),
-      next_step: z.string(),
-    }),
-  }),
-  artifacts: z.object({
-    project_context: CONTEXT_WORKFLOW_ENVELOPE_SCHEMA,
     notes: z.array(z.string()),
   }),
   sources: z.array(TOOL_SOURCE_SCHEMA),
@@ -503,7 +408,6 @@ const REVIEW_REPORT_VALIDATION_OUTPUT_SCHEMA = z
   .strict();
 
 const CONTEXT_OUTPUT_SCHEMA = CONTEXT_WORKFLOW_ENVELOPE_SCHEMA;
-const BOOTSTRAP_OUTPUT_SCHEMA = BOOTSTRAP_WORKFLOW_ENVELOPE_SCHEMA;
 
 const PUBLIC_ACTION_KINDS = [
   "tool_call",
@@ -511,7 +415,6 @@ const PUBLIC_ACTION_KINDS = [
   "retrieve_examples",
   "ask_user",
   "install_dependencies",
-  "bootstrap_repo",
   "implement",
   "complete",
   "review",
@@ -519,11 +422,9 @@ const PUBLIC_ACTION_KINDS = [
   "fix_context",
 ] as const;
 const PUBLIC_WORKFLOW_IDS = [
-  "init",
   "create",
   "review",
   "migrate",
-  "upgrade",
 ] as const;
 const PUBLIC_WORKFLOW_STATUSES = [
   "success",
@@ -560,10 +461,10 @@ const PUBLIC_TOOL_CALL_STEP_SCHEMA = z
     kind: z.literal("tool_call"),
     tool: z.enum([
       "get_salt_project_context",
+      "get_salt_reference",
       "create_salt_ui",
       "review_salt_ui",
       "migrate_to_salt",
-      "upgrade_salt_ui",
     ]),
     mode: z.enum([
       "exact_name",
@@ -577,14 +478,14 @@ const PUBLIC_TOOL_CALL_STEP_SCHEMA = z
 const PUBLIC_RETRIEVE_ENTITY_STEP_SCHEMA = z
   .object({
     kind: z.literal("retrieve_entity"),
-    tool: z.enum(["get_salt_entities", "create_salt_ui"]),
+    tool: z.enum(["get_salt_reference", "create_salt_ui"]),
     args: PUBLIC_ARGS_SCHEMA,
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
 const PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA = z
   .object({
     kind: z.literal("retrieve_examples"),
-    tool: z.enum(["get_salt_examples", "create_salt_ui"]),
+    tool: z.enum(["get_salt_reference", "create_salt_ui"]),
     args: PUBLIC_ARGS_SCHEMA,
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
@@ -599,13 +500,6 @@ const PUBLIC_INSTALL_DEPENDENCIES_STEP_SCHEMA = z
     kind: z.literal("install_dependencies"),
     package_manager: z.string().min(1),
     packages: z.array(z.string().min(1)).min(1),
-  })
-  .extend(PUBLIC_ACTION_HINTS_SHAPE);
-const PUBLIC_BOOTSTRAP_REPO_STEP_SCHEMA = z
-  .object({
-    kind: z.literal("bootstrap_repo"),
-    tool: z.enum(["bootstrap_salt_repo", "salt-ds init"]),
-    args: PUBLIC_ARGS_SCHEMA.optional(),
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
 const PUBLIC_IMPLEMENT_STEP_SCHEMA = z
@@ -630,12 +524,7 @@ const PUBLIC_REVIEW_STEP_SCHEMA = z
 const PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA = z
   .object({
     kind: z.literal("rerun_workflow"),
-    tool: z.enum([
-      "create_salt_ui",
-      "review_salt_ui",
-      "migrate_to_salt",
-      "upgrade_salt_ui",
-    ]),
+    tool: z.enum(["create_salt_ui", "review_salt_ui", "migrate_to_salt"]),
     args: PUBLIC_ARGS_SCHEMA,
   })
   .extend(PUBLIC_ACTION_HINTS_SHAPE);
@@ -653,7 +542,6 @@ const PUBLIC_NEXT_STEP_SCHEMAS = [
   PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA,
   PUBLIC_ASK_USER_STEP_SCHEMA,
   PUBLIC_INSTALL_DEPENDENCIES_STEP_SCHEMA,
-  PUBLIC_BOOTSTRAP_REPO_STEP_SCHEMA,
   PUBLIC_IMPLEMENT_STEP_SCHEMA,
   PUBLIC_COMPLETE_STEP_SCHEMA,
   PUBLIC_REVIEW_STEP_SCHEMA,
@@ -680,82 +568,63 @@ const PUBLIC_ACTION_SCHEMA = z.discriminatedUnion("kind", [
   PUBLIC_RETRIEVE_EXAMPLES_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_ASK_USER_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_INSTALL_DEPENDENCIES_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
-  PUBLIC_BOOTSTRAP_REPO_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_IMPLEMENT_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_COMPLETE_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_REVIEW_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
   PUBLIC_FIX_CONTEXT_STEP_SCHEMA.extend(PUBLIC_ACTION_METADATA_SHAPE),
 ]);
-const PUBLIC_EVIDENCE_ITEM_SCHEMA = z.object({
-  kind: z.enum(PUBLIC_EVIDENCE_KINDS),
-  source: z.enum(["canonical_salt", "project_policy", "heuristic_fallback"]),
-  entity: z.string().optional(),
-  field: z.string().optional(),
-  source_urls: z.array(z.string()),
-  summary: z.string().optional(),
-});
-const PUBLIC_EVIDENCE_SCHEMA = z.object({
-  status: z.enum(["complete", "partial", "missing"]),
-  items: z.array(PUBLIC_EVIDENCE_ITEM_SCHEMA),
-  source_urls: z.array(z.string()),
-  missing: z.array(z.string()),
-  heuristic_fallback: z.boolean(),
-  input_context: z
-    .object({
-      source_outline_provided: z.boolean().optional(),
-      source_outline_signal_counts: z
-        .object({
-          regions: z.number(),
-          actions: z.number(),
-          states: z.number(),
-          notes: z.number(),
-        })
-        .optional(),
-      derived_outline_available: z.boolean().optional(),
-      derived_outline_signal_counts: z
-        .object({
-          regions: z.number(),
-          actions: z.number(),
-          states: z.number(),
-          notes: z.number(),
-        })
-        .optional(),
-      visual_input_count: z.number().optional(),
-      visual_input_kinds: z.array(z.string()).optional(),
-      source_outline_summary: z.string().optional(),
-    })
-    .optional(),
-});
+const PUBLIC_EVIDENCE_ITEM_SCHEMA = z
+  .object({
+    kind: z.enum(PUBLIC_EVIDENCE_KINDS),
+    source: z.enum(["canonical_salt", "project_policy", "heuristic_fallback"]),
+    entity: z.string().optional(),
+    field: z.string().optional(),
+    source_urls: z.array(z.string()),
+    summary: z.string().optional(),
+  })
+  .passthrough();
+const PUBLIC_EVIDENCE_SCHEMA = z
+  .object({
+    status: z.enum(["complete", "partial", "missing"]),
+    items: z.array(PUBLIC_EVIDENCE_ITEM_SCHEMA),
+    source_urls: z.array(z.string()),
+    missing: z.array(z.string()),
+    heuristic_fallback: z.boolean(),
+    input_context: z
+      .object({
+        source_outline_provided: z.boolean().optional(),
+        source_outline_signal_counts: z
+          .object({
+            regions: z.number(),
+            actions: z.number(),
+            states: z.number(),
+            notes: z.number(),
+          })
+          .optional(),
+        derived_outline_available: z.boolean().optional(),
+        derived_outline_signal_counts: z
+          .object({
+            regions: z.number(),
+            actions: z.number(),
+            states: z.number(),
+            notes: z.number(),
+          })
+          .optional(),
+        visual_input_count: z.number().optional(),
+        visual_input_kinds: z.array(z.string()).optional(),
+        source_outline_summary: z.string().optional(),
+      })
+      .passthrough()
+      .optional(),
+  })
+  .passthrough();
 const SUPPORT_SOURCES_SHAPE = {
   sources: z.array(TOOL_SOURCE_SCHEMA).optional(),
 };
 const GUIDANCE_BOUNDARY_SCHEMA = UNKNOWN_RECORD_SCHEMA.optional();
 const SUPPORT_FOLLOW_UPS_SCHEMA = UNKNOWN_RECORD_ARRAY_SCHEMA.optional();
 const SUPPORT_RAW_SCHEMA = UNKNOWN_RECORD_SCHEMA.optional();
-const DISCOVER_SALT_OUTPUT_SCHEMA = z
-  .object({
-    mode: z.enum(["route", "browse", "related"]),
-    guidance_boundary: GUIDANCE_BOUNDARY_SCHEMA,
-    guidance_sources: z.array(z.string()).optional(),
-    query: z.string().optional(),
-    decision: UNKNOWN_RECORD_SCHEMA.nullable(),
-    best_start: UNKNOWN_RECORD_SCHEMA.nullable().optional(),
-    options: UNKNOWN_RECORD_SCHEMA.optional(),
-    catalog: UNKNOWN_RECORD_SCHEMA.optional(),
-    related: UNKNOWN_RECORD_SCHEMA.optional(),
-    clarifying_questions: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
-    starter_code: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
-    related_guides: UNKNOWN_RECORD_ARRAY_SCHEMA.optional(),
-    suggested_follow_ups: SUPPORT_FOLLOW_UPS_SCHEMA,
-    next_step: z.string().optional(),
-    signals: UNKNOWN_RECORD_SCHEMA.optional(),
-    raw: SUPPORT_RAW_SCHEMA,
-    did_you_mean: z.array(z.string()).optional(),
-    ambiguity: UNKNOWN_RECORD_SCHEMA.optional(),
-    ...SUPPORT_SOURCES_SHAPE,
-  })
-  .passthrough();
 const GET_SALT_ENTITY_OUTPUT_SCHEMA = z
   .object({
     guidance_boundary: GUIDANCE_BOUNDARY_SCHEMA,
@@ -834,6 +703,14 @@ const GET_SALT_EXAMPLES_OUTPUT_SCHEMA = z
     ...SUPPORT_SOURCES_SHAPE,
   })
   .passthrough();
+const GET_SALT_REFERENCE_OUTPUT_SCHEMA = z
+  .object({
+    guidance_boundary: UNKNOWN_RECORD_SCHEMA.optional(),
+    decision: UNKNOWN_RECORD_SCHEMA,
+    suggested_follow_ups: SUPPORT_FOLLOW_UPS_SCHEMA.optional(),
+    next_step: z.string().optional(),
+  })
+  .passthrough();
 const PUBLIC_RECIPE_SCHEMA = z.object({
   steps: z
     .array(
@@ -885,7 +762,7 @@ const MCP_WORKFLOW_OUTPUT_SCHEMA = z
     available_expansions: z.array(z.string()).optional(),
     full_output_bytes: z.number().optional(),
     // Per-workflow free-form expansion payload. Shape varies by tool and view
-    // (create / review / migrate / upgrade); each tool's `view: "full"`
+    // (create / review / migrate); each tool's `view: "full"`
     // response defines its own concrete schema in semantic-core. Hosts
     // discriminate on `contract` + `available_expansions` before reading.
     details: z.unknown().optional(),
@@ -894,48 +771,6 @@ const MCP_WORKFLOW_OUTPUT_SCHEMA = z
 const CHOOSE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const ANALYZE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
 const TRANSLATE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
-const COMPARE_OUTPUT_SCHEMA = MCP_WORKFLOW_OUTPUT_SCHEMA;
-const CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA = z
-  .object({
-    contract: z.literal("salt_context_pack_persistence_write_v1"),
-    status: z.enum([
-      "written",
-      "passed",
-      "blocked",
-      "invalid",
-      "missing",
-      "stale",
-    ]),
-    written: z.boolean(),
-    root_dir: z.string(),
-    output_dir: z.string(),
-    manifest_path: z.string(),
-    // Conforms to `salt_generated_artifact_release_gate_batch_v1`. Concrete
-    // shape lives in `packages/semantic-core/src/generatedArtifactReleaseGate.ts`
-    // (TS interface + JSON Schema mirror at
-    // `schemas/salt-generated-artifact-release-gate-batch.schema.json`).
-    release_gate: z.unknown(),
-    // Conforms to `salt_context_pack_persistence_check_v1`. Concrete shape
-    // lives in `packages/semantic-core/src/contextPackBundle.ts` (TS
-    // interface + JSON Schema mirror at
-    // `schemas/salt-context-pack-persistence-check.schema.json`).
-    persistence_check: z.unknown(),
-  })
-  .strict();
-const GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA = z
-  .object({
-    contract: z.literal("salt_generated_artifact_persistence_v1"),
-    status: z.enum(["written", "blocked", "invalid"]),
-    written: z.boolean(),
-    artifact_path: z.string(),
-    // Conforms to `salt_generated_artifact_release_gate_v1`. Concrete shape
-    // lives in `packages/semantic-core/src/generatedArtifactReleaseGate.ts`
-    // (TS interface + JSON Schema mirror at
-    // `schemas/salt-generated-artifact-release-gate.schema.json`).
-    release_gate: z.unknown(),
-    missing: z.array(z.string()),
-  })
-  .strict();
 
 function normalizeWorkflowView(
   view: (typeof VIEWS)[number] | undefined,
@@ -1132,161 +967,6 @@ async function resolveOrCollectProjectContext(
   return context;
 }
 
-export async function validateReviewReportFromPath(input: {
-  registry: SaltRegistry;
-  root_dir?: string;
-  report_path: string;
-}) {
-  const rootDir = path.resolve(process.cwd(), input.root_dir ?? ".");
-  const reportPath = resolveWritablePathInsideRoot({
-    rootDir,
-    targetPath: input.report_path,
-    label: "report_path",
-  });
-  const report = JSON.parse(await fs.readFile(reportPath, "utf8")) as unknown;
-
-  return validateSaltReviewReport({
-    report,
-    registry: input.registry,
-    report_path: reportPath,
-  });
-}
-
-function isInsideDirectory(parentDir: string, targetPath: string): boolean {
-  const relativePath = path.relative(parentDir, targetPath);
-  return (
-    relativePath.length === 0 ||
-    (!relativePath.startsWith("..") && !path.isAbsolute(relativePath))
-  );
-}
-
-function resolveWritablePathInsideRoot(input: {
-  rootDir: string;
-  targetPath: string;
-  label: string;
-}): string {
-  const resolvedPath = path.resolve(input.rootDir, input.targetPath);
-  if (!isInsideDirectory(input.rootDir, resolvedPath)) {
-    throw new Error(
-      `${input.label} must resolve inside root_dir for MCP artifact persistence.`,
-    );
-  }
-
-  return resolvedPath;
-}
-
-async function writeExactText(filePath: string, text: string): Promise<void> {
-  await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, text, "utf8");
-}
-
-async function readTextIfPresent(filePath: string): Promise<string | null> {
-  try {
-    return await fs.readFile(filePath, "utf8");
-  } catch (error) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      error.code === "ENOENT"
-    ) {
-      return null;
-    }
-    throw error;
-  }
-}
-
-async function persistContextPack(input: {
-  registry: SaltRegistry;
-  rootDir: string;
-  outputDir: string;
-  manifestPath: string;
-}) {
-  const outputDirForManifest = toContextPackOutputPathForManifest(
-    input.rootDir,
-    input.outputDir,
-  );
-  const manifestPathForCheck = toContextPackOutputPathForManifest(
-    input.rootDir,
-    input.manifestPath,
-  );
-  const { bundle } = buildMcpFileContextPack({
-    registry: input.registry,
-    rootDir: input.rootDir,
-    outputDir: input.outputDir,
-    outputDirForManifest,
-  });
-  const releaseGate = buildContextPackBundleReleaseGate({
-    bundle,
-    registry: input.registry,
-    artifact_path: manifestPathForCheck,
-  });
-
-  if (!releaseGate.releasable) {
-    return {
-      contract: "salt_context_pack_persistence_write_v1" as const,
-      status: releaseGate.status,
-      written: false,
-      root_dir: input.rootDir,
-      output_dir: outputDirForManifest,
-      manifest_path: manifestPathForCheck,
-      release_gate: releaseGate,
-      persistence_check: checkContextPackBundlePersistence({
-        bundle,
-        manifest_path: manifestPathForCheck,
-        persisted_text_by_path: {},
-        output_dir: outputDirForManifest,
-      }),
-    };
-  }
-
-  for (const file of bundle.files) {
-    const filePath = resolveWritablePathInsideRoot({
-      rootDir: input.rootDir,
-      targetPath: file.output_path,
-      label: `context pack output ${file.output_path}`,
-    });
-    await writeExactText(filePath, file.text);
-  }
-  await writeExactText(
-    input.manifestPath,
-    JSON.stringify(bundle.manifest, null, 2),
-  );
-
-  const persistedTextByPath: Record<string, string | null> = {
-    [manifestPathForCheck]: await readTextIfPresent(input.manifestPath),
-  };
-  for (const file of bundle.files) {
-    const filePath = resolveWritablePathInsideRoot({
-      rootDir: input.rootDir,
-      targetPath: file.output_path,
-      label: `context pack output ${file.output_path}`,
-    });
-    persistedTextByPath[file.output_path] = await readTextIfPresent(filePath);
-  }
-
-  const persistenceCheck = checkContextPackBundlePersistence({
-    bundle,
-    manifest_path: manifestPathForCheck,
-    persisted_text_by_path: persistedTextByPath,
-    output_dir: outputDirForManifest,
-  });
-
-  return {
-    contract: "salt_context_pack_persistence_write_v1" as const,
-    status:
-      persistenceCheck.status === "current"
-        ? "written"
-        : persistenceCheck.status,
-    written: persistenceCheck.current,
-    root_dir: input.rootDir,
-    output_dir: outputDirForManifest,
-    manifest_path: manifestPathForCheck,
-    release_gate: releaseGate,
-    persistence_check: persistenceCheck,
-  };
-}
-
 function defineTool<Args extends object>(
   definition: Omit<ToolDefinition, "execute"> & {
     execute: (
@@ -1299,20 +979,37 @@ function defineTool<Args extends object>(
   return definition as ToolDefinition;
 }
 
-const SUPPORT_TOOL_ORDER = [
-  "get_salt_entities",
-  "get_salt_examples",
-  "discover_salt",
-  "persist_salt_artifact",
-] as const;
-const PERSISTENCE_TOOL_ORDER = [
-  "persist_salt_context_pack",
-  "persist_salt_generated_artifact",
-] as const;
+function toPublicReferenceSurface(value: unknown): unknown {
+  if (typeof value === "string") {
+    return value
+      .replaceAll("get_salt_entities", "get_salt_reference")
+      .replaceAll("get_salt_examples", "get_salt_reference")
+      .replaceAll("discover_salt", "get_salt_reference");
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(toPublicReferenceSurface);
+  }
+
+  if (typeof value === "object" && value !== null) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, entryValue]) => [
+        key,
+        toPublicReferenceSurface(entryValue),
+      ]),
+    );
+  }
+
+  return value;
+}
+
+const SUPPORT_TOOL_ORDER = ["get_salt_reference"] as const;
 const DEFAULT_TOOL_ORDER = [
-  ...PUBLIC_WORKFLOW_TOOL_IDS,
-  ...SUPPORT_TOOL_ORDER,
-  ...PERSISTENCE_TOOL_ORDER,
+  "get_salt_project_context",
+  "get_salt_reference",
+  "review_salt_ui",
+  "create_salt_ui",
+  "migrate_to_salt",
 ] as const;
 
 const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
@@ -1343,249 +1040,118 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     },
   }),
   defineTool<{
-    root_dir?: string;
-    project_name?: string;
-    create_stack?: boolean;
-    conventions_pack_source?: string;
-    host_adapters?: Array<"vscode">;
-    add_ui_verify?: boolean;
+    kind: "entity" | "examples";
+    name?: string;
+    names?: string[];
+    entity_type?:
+      | "auto"
+      | "component"
+      | "pattern"
+      | "foundation"
+      | "token"
+      | "guide"
+      | "page"
+      | "package"
+      | "icon"
+      | "country_symbol";
+    target_type?: "component" | "pattern";
+    target_name?: string;
+    package?: string;
+    status?: (typeof STATUSES)[number];
+    include?: Array<(typeof INCLUDE_SECTIONS)[number]>;
+    include_related?: boolean;
+    include_starter_code?: boolean;
+    include_code?: boolean;
+    query?: string;
+    complexity?: "basic" | "intermediate" | "advanced";
+    max_results?: number;
+    include_deprecated?: boolean;
   }>({
-    name: "bootstrap_salt_repo",
+    name: "get_salt_reference",
     description:
-      "Bootstrap durable Salt repo state for this repo. Creates or updates .salt policy files and the managed root repo instruction block so future workflow runs can apply repo-specific overlays safely. This is optional for first-run canonical Salt value.",
-    inputSchema: {
-      root_dir: z
-        .string()
-        .optional()
-        .describe(
-          "Optional repo root to bootstrap. Defaults to the current MCP working directory.",
-        ),
-      project_name: z
-        .string()
-        .optional()
-        .describe(
-          "Optional explicit project name to write into the generated project-conventions files.",
-        ),
-      create_stack: z
-        .boolean()
-        .optional()
-        .describe(
-          "Create a layered .salt/stack.json in addition to .salt/team.json. Use this when shared upstream conventions are real.",
-        ),
-      conventions_pack_source: z
-        .string()
-        .optional()
-        .describe(
-          "Optional shared conventions pack source in package[#export] form. Implies create_stack = true.",
-        ),
-      host_adapters: z
-        .array(z.enum(["vscode"]))
-        .optional()
-        .describe(
-          "Optional host adapter files to scaffold. Omit to keep bootstrap host-neutral by default.",
-        ),
-      add_ui_verify: z
-        .boolean()
-        .optional()
-        .describe(
-          "Add a repo-local ui:verify placeholder script that points repo owners at the review_salt_ui MCP tool. Omit to leave package.json unchanged by default.",
-        ),
-    },
-    outputSchema: BOOTSTRAP_OUTPUT_SCHEMA,
-    annotations: {
-      readOnlyHint: false,
-      destructiveHint: false,
-      idempotentHint: true,
-      openWorldHint: false,
-    },
-    execute: async (registry, args, runtime) => {
-      const bootstrapped = await bootstrapSaltRepo(registry, args);
-      if (runtime) {
-        runtime.projectContexts.set(
-          bootstrapped.context_id,
-          bootstrapped.context_data,
-        );
-      }
-      return bootstrapped.result;
-    },
-  }),
-  defineTool<{
-    kind: "context_pack" | "generated_artifact";
-    root_dir?: string;
-    output_dir?: string;
-    manifest_path?: string;
-    artifact_path?: string;
-    artifact?: Record<string, unknown>;
-  }>({
-    name: "persist_salt_artifact",
-    description:
-      "Write Salt generated artifacts to durable project files inside root_dir, overwriting any file at the resolved paths. Two kinds are supported. `context_pack` writes the default release-gated Salt generated context pack (manifest + per-component pack files) to .salt/context/ by default. `generated_artifact` writes a single caller-supplied salt_generated_artifact_v1 JSON payload to artifact_path, but only after the shared semantic-core release gate validates its EvidenceRefs. Returns the shared semantic-core persistence check or release-gate result depending on the kind.",
+      "Read-only Salt reference lookup. Use kind=entity to resolve known Salt names, or kind=examples to fetch canonical component or pattern examples. This is the single public reference support tool for create, review, and migrate follow-ups.",
     inputSchema: {
       kind: z
-        .enum(["context_pack", "generated_artifact"])
+        .enum(["entity", "examples"])
         .describe(
-          "Discriminator for the persistence shape. `context_pack` writes the default release-gated context pack (optional output_dir / manifest_path overrides). `generated_artifact` writes a single artifact JSON payload (requires artifact_path + artifact).",
+          "Select entity for exact Salt name resolution, or examples for canonical implementation examples.",
         ),
-      root_dir: z
+      name: z
         .string()
         .optional()
         .describe(
-          "Project root to write within. Defaults to the MCP current working directory.",
+          "Single Salt entity or example target name. Use names for entity batches.",
         ),
-      output_dir: z
-        .string()
-        .optional()
-        .describe(
-          "context_pack only. Directory inside root_dir for generated context files. Defaults to .salt/context/components. Any existing files at the resolved paths are overwritten.",
-        ),
-      manifest_path: z
-        .string()
-        .optional()
-        .describe(
-          "context_pack only. Manifest path inside root_dir. Defaults to .salt/context/manifest.json. Any existing file at the resolved path is overwritten.",
-        ),
-      artifact_path: z
-        .string()
+      names: z
+        .array(z.string().min(1))
         .min(1)
+        .max(25)
         .optional()
         .describe(
-          "generated_artifact only. Output JSON path inside root_dir for the generated artifact. Required when kind is generated_artifact. Any existing file at this path is overwritten when the release gate passes.",
+          "Entity mode only. Ordered Salt entity names to resolve in one read-only lookup.",
         ),
-      artifact: UNKNOWN_RECORD_SCHEMA.optional().describe(
-        "generated_artifact only. Generated Salt artifact payload to persist. Required when kind is generated_artifact. It must be a salt_generated_artifact_v1 object or contain generated_artifact.",
-      ),
+      entity_type: z
+        .enum([
+          "auto",
+          "component",
+          "pattern",
+          "foundation",
+          "token",
+          "guide",
+          "page",
+          "package",
+          "icon",
+          "country_symbol",
+        ])
+        .optional(),
+      target_type: z.enum(["component", "pattern"]).optional(),
+      target_name: z.string().optional(),
+      package: z.string().optional(),
+      status: z.enum(STATUSES).optional(),
+      include: z.array(z.enum(INCLUDE_SECTIONS)).optional(),
+      include_related: z.boolean().optional(),
+      include_starter_code: z.boolean().optional(),
+      include_code: z.boolean().optional(),
+      query: z.string().optional(),
+      complexity: z.enum(["basic", "intermediate", "advanced"]).optional(),
+      max_results: z.number().int().min(1).max(50).optional(),
+      include_deprecated: z.boolean().optional(),
     },
-    outputSchema: z.union([
-      CONTEXT_PACK_PERSISTENCE_OUTPUT_SCHEMA,
-      GENERATED_ARTIFACT_PERSISTENCE_OUTPUT_SCHEMA,
-    ]),
-    annotations: {
-      readOnlyHint: false,
-      // destructiveHint reflects that caller-supplied output_dir / manifest_path /
-      // artifact_path overrides may point at any path inside root_dir, and the
-      // tool will overwrite whatever exists there.
-      destructiveHint: true,
-      idempotentHint: true,
-      openWorldHint: false,
-    },
-    execute: async (registry, args) => {
-      const rootDir = path.resolve(process.cwd(), args.root_dir ?? ".");
-
-      if (args.kind === "context_pack") {
-        const outputDir = resolveWritablePathInsideRoot({
-          rootDir,
-          targetPath: args.output_dir ?? DEFAULT_CONTEXT_PACK_OUTPUT_DIR,
-          label: "output_dir",
-        });
-        const manifestPath = resolveWritablePathInsideRoot({
-          rootDir,
-          targetPath: args.manifest_path ?? DEFAULT_CONTEXT_PACK_MANIFEST_PATH,
-          label: "manifest_path",
-        });
-
-        return persistContextPack({
-          registry,
-          rootDir,
-          outputDir,
-          manifestPath,
-        });
-      }
-
-      // kind === "generated_artifact"
-      if (!args.artifact_path) {
-        throw new Error(
-          "persist_salt_artifact: artifact_path is required when kind is generated_artifact",
-        );
-      }
-      if (!args.artifact) {
-        throw new Error(
-          "persist_salt_artifact: artifact is required when kind is generated_artifact",
-        );
-      }
-      const artifactPath = resolveWritablePathInsideRoot({
-        rootDir,
-        targetPath: args.artifact_path,
-        label: "artifact_path",
-      });
-      const artifactPathForResult = toContextPackOutputPathForManifest(
-        rootDir,
-        artifactPath,
-      );
-      const releaseGate = validateGeneratedArtifactReleaseGate({
-        artifact: args.artifact,
-        registry,
-        artifact_path: artifactPathForResult,
-      });
-
-      if (releaseGate.releasable) {
-        await writeExactText(
-          artifactPath,
-          JSON.stringify(args.artifact, null, 2),
-        );
-      }
-
-      return buildGeneratedArtifactPersistenceResult({
-        artifact_path: artifactPathForResult,
-        release_gate: releaseGate,
-        written: releaseGate.releasable,
-      });
-    },
-  }),
-  defineTool<Parameters<typeof discoverSalt>[1]>({
-    name: "discover_salt",
-    description:
-      "Use this for broad, ambiguous, or exploratory Salt requests when the caller is not yet sure which Salt entity or workflow they need. It searches, clarifies intent, and routes to the best next Salt workflow. Treat this as support routing, not the default front door for repo-aware workflows.",
-    inputSchema: {
-      query: z
-        .string()
-        .optional()
-        .describe(
-          "Broad Salt question or exploratory UI request. Use this when the user is still figuring out the right Salt entity or workflow.",
-        ),
-      area: z
-        .enum(SEARCH_AREAS)
-        .optional()
-        .describe(
-          "Optional high-level Salt area to browse or search within, such as components, foundations, patterns, or tokens.",
-        ),
-      package: z
-        .string()
-        .optional()
-        .describe(
-          "Optional package filter when discovery should stay within one Salt package, such as @salt-ds/core or @salt-ds/lab.",
-        ),
-      status: z
-        .enum(STATUSES)
-        .optional()
-        .describe(
-          "Optional release-status filter. Use stable when discovery should avoid beta, lab, or deprecated results.",
-        ),
-      related_to: z
-        .object({
-          entity_type: z.enum([
-            "component",
-            "pattern",
-            "token",
-            "guide",
-            "page",
-          ]),
-          name: z.string(),
-          package: z.string().optional(),
-        })
-        .optional()
-        .describe(
-          "Start from a known Salt entity and explore nearby related entities instead of resolving one exact item.",
-        ),
-      view: z
-        .enum(VIEWS)
-        .optional()
-        .describe(
-          "Use full to include routing evidence and raw search payloads.",
-        ),
-    },
-    outputSchema: DISCOVER_SALT_OUTPUT_SCHEMA,
+    outputSchema: GET_SALT_REFERENCE_OUTPUT_SCHEMA,
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: discoverSalt,
+    execute: (registry, args) => {
+      if (args.kind === "examples") {
+        return toPublicReferenceSurface(getSaltExamples(registry, {
+          target_type: args.target_type,
+          target_name: args.target_name ?? args.name,
+          package: args.package,
+          query: args.query,
+          complexity: args.complexity,
+          include_code: args.include_code,
+          include_starter_code: args.include_starter_code,
+          max_results: args.max_results,
+        }));
+      }
+
+      const names = args.names ?? (args.name ? [args.name] : []);
+      if (names.length === 0) {
+        throw new Error(
+          "get_salt_reference: provide name or names when kind is entity",
+        );
+      }
+
+      return toPublicReferenceSurface(getSaltEntities(registry, {
+        names,
+        entity_type: args.entity_type,
+        package: args.package,
+        status: args.status,
+        include: args.include,
+        include_related: args.include_related,
+        include_starter_code: args.include_starter_code,
+        max_results: args.max_results,
+        include_deprecated: args.include_deprecated,
+      }));
+    },
   }),
   defineTool<
     Parameters<typeof migrateToSalt>[1] & {
@@ -1628,18 +1194,11 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         ),
       prefer_stable: z.boolean().optional(),
       a11y_required: z.boolean().optional(),
-      form_field_support: z.boolean().optional(),
       include_starter_code: z
         .boolean()
         .optional()
         .describe(
           "Defaults to true. Set false only when you explicitly want planning guidance without starter code.",
-        ),
-      view: z
-        .enum(VIEWS)
-        .optional()
-        .describe(
-          "Use full to include the raw detection signals and recommendation payloads.",
         ),
       context_id: z
         .string()
@@ -1699,19 +1258,13 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "create_salt_ui",
     description:
-      "Primary Salt create workflow for building new Salt UI: scaffold, generate, or implement a Salt component, form, page, dashboard, screen, or layout from a feature description. Resolve the nearest canonical Salt owner and current workflow state from query, or compare exact names side by side with names. Use retrieval catalog resources for richer candidate inspection instead of forcing full-mode create to act like broad search.",
+      "Primary Salt create workflow for new Salt UI. Resolve the nearest canonical Salt component or pattern from a feature description and return evidence-backed starter guidance. Use get_salt_reference or catalog resources for follow-up lookup instead of broad comparison modes.",
     inputSchema: {
       query: z
         .string()
-        .optional()
+        .min(1)
         .describe(
-          "Recommendation mode only. Describe the user need, task, flow, styling need, or capability requirement when you want Salt to suggest the best fit.",
-        ),
-      names: z
-        .array(z.string())
-        .optional()
-        .describe(
-          "Comparison mode. Provide 2 or more exact Salt names to compare side by side. If present, this tool compares those names instead of recommending from query.",
+          "Describe the user need, task, flow, or capability requirement when you want Salt to suggest the best fit.",
         ),
       solution_type: z
         .enum(["auto", "component", "pattern", "foundation", "token"])
@@ -1731,11 +1284,8 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .describe(
           "Restrict candidates by release status. Use stable when the request must avoid beta, lab, or deprecated options.",
         ),
-      top_k: z.number().int().min(1).max(25).optional(),
-      production_ready: z.boolean().optional(),
       prefer_stable: z.boolean().optional(),
       a11y_required: z.boolean().optional(),
-      form_field_support: z.boolean().optional(),
       include_starter_code: z
         .boolean()
         .optional()
@@ -1747,18 +1297,6 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         .optional()
         .describe(
           "Names of follow-through entities already resolved through canonical support tools. Use when rerunning create after retrieve_entity or retrieve_examples.",
-        ),
-      repo_has_theme_provider: z
-        .boolean()
-        .optional()
-        .describe(
-          "Set true when the host has detected a declared theme provider (SaltProvider or SaltProviderNext) in the repo. When false or omitted, theme- or brand-ambiguous prompts trigger a one-time ask_user question that recommends SaltProviderNext for brand-aware accent/font/corner overrides today and lets the consumer downgrade to the stable SaltProvider if no brand overrides are needed. The question is transitional — once SaltProvider absorbs the brand props, SaltProviderNext becomes a deprecation alias and the question disappears.",
-        ),
-      view: z
-        .enum(VIEWS)
-        .optional()
-        .describe(
-          "Use full only after compact output has grounded the owner or when you explicitly need additive details such as starter code, composition artifacts, or richer provenance.",
         ),
       context_id: z
         .string()
@@ -1816,116 +1354,6 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       });
     },
   }),
-  defineTool<Parameters<typeof getSaltEntities>[1]>({
-    name: "get_salt_entities",
-    description:
-      "Support tool to look up or resolve one or more known Salt component, pattern, foundation, token, guide, page, package, icon, or country symbol names and return their details, props, and metadata. Use this when a create, migrate, or review workflow already has at least one specific Salt entity name to ground. Each name is resolved independently with entity_type auto by default and returned in the original order, so per-name ambiguity never blocks the rest of the batch. Pass `names: [singleName]` for one-off lookups; larger batches return in the same call. Do not use this for broad discovery or recommendation/comparison.",
-    inputSchema: {
-      names: z
-        .array(z.string().min(1))
-        .min(1)
-        .max(25)
-        .describe(
-          "Ordered list of Salt entity names to resolve. Each is looked up with the optional entity_type filter (auto by default). Duplicates are preserved. Cap is 25 names per call; longer batches must be split.",
-        ),
-      entity_type: z
-        .enum([
-          "auto",
-          "component",
-          "pattern",
-          "foundation",
-          "token",
-          "guide",
-          "page",
-          "package",
-          "icon",
-          "country_symbol",
-        ])
-        .optional()
-        .describe(
-          "Optional entity-family hint applied to every name in the batch. Leave as auto when the names could match different entity types.",
-        ),
-      package: z
-        .string()
-        .optional()
-        .describe(
-          "Optional package filter applied to every name in the batch, such as @salt-ds/core or @salt-ds/lab.",
-        ),
-      status: z
-        .enum(STATUSES)
-        .optional()
-        .describe(
-          "Optional release-status filter applied to every name. Use stable when the batch should avoid beta, lab, or deprecated matches.",
-        ),
-      include: z
-        .array(z.enum(INCLUDE_SECTIONS))
-        .optional()
-        .describe(
-          "Optional extra sections to include on every resolved entity (examples, props, tokens, accessibility, deprecations, changes).",
-        ),
-      include_related: z
-        .boolean()
-        .optional()
-        .describe(
-          "Include nearby related Salt entities for each resolved match.",
-        ),
-      include_starter_code: z
-        .boolean()
-        .optional()
-        .describe(
-          "Include a lightweight starter snippet for each resolved entity that has one.",
-        ),
-      max_results: z
-        .number()
-        .int()
-        .min(1)
-        .max(50)
-        .optional()
-        .describe(
-          "Optional cap on nearby matches per name when a lookup is not exact.",
-        ),
-      include_deprecated: z
-        .boolean()
-        .optional()
-        .describe(
-          "Include deprecated token matches when looking up tokens in the batch.",
-        ),
-      view: z
-        .enum(VIEWS)
-        .optional()
-        .describe(
-          "Use full to include raw lookup and fallback search payloads on every per-name result.",
-        ),
-    },
-    outputSchema: GET_SALT_ENTITIES_OUTPUT_SCHEMA,
-    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: getSaltEntities,
-  }),
-  defineTool<Parameters<typeof getSaltExamples>[1]>({
-    name: "get_salt_examples",
-    description:
-      "Support lookup that returns canonical Salt example code and sample snippets for a known component or pattern. Use this as a grounding step after create or migrate when the agent already has a likely Salt target and needs stronger implementation evidence or a canonical code example before writing code.",
-    inputSchema: {
-      target_type: z.enum(["component", "pattern"]).optional(),
-      target_name: z.string().optional(),
-      package: z.string().optional(),
-      query: z
-        .string()
-        .optional()
-        .describe("Scenario or intent query used to rank examples."),
-      complexity: z.enum(["basic", "intermediate", "advanced"]).optional(),
-      include_code: z.boolean().optional(),
-      include_starter_code: z.boolean().optional(),
-      max_results: z.number().int().min(1).max(50).optional(),
-      view: z
-        .enum(VIEWS)
-        .optional()
-        .describe("Use full to include the ranked example list."),
-    },
-    outputSchema: GET_SALT_EXAMPLES_OUTPUT_SCHEMA,
-    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: getSaltExamples,
-  }),
   defineTool<
     Parameters<typeof reviewSaltUi>[1] & {
       context_id?: string;
@@ -1934,7 +1362,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "review_salt_ui",
     description:
-      "Primary fit for the Salt review workflow, and also used inside upgrade flows. Analyze existing React and Salt code. Validate usage, detect deprecated APIs and patterns, suggest fixes, and surface migration guidance. If context_id is omitted, the MCP collects repo context automatically before continuing.",
+      "Primary fit for the Salt review workflow. Analyze existing React and Salt code, validate usage, detect deprecated APIs and patterns, and suggest fixes. If context_id is omitted, the MCP collects repo context automatically before continuing.",
     inputSchema: {
       code: z.string().describe("Source code to analyze."),
       framework: z.string().optional(),
@@ -1955,12 +1383,6 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           "Optional target version boundary for migration suggestions.",
         ),
       max_issues: z.number().int().min(1).max(50).optional(),
-      view: z
-        .enum(VIEWS)
-        .optional()
-        .describe(
-          "Use full to include raw validation, fix, and migration payloads.",
-        ),
       expected_targets: REVIEW_EXPECTED_TARGETS_SCHEMA.optional().describe(
         "Optional source-backed or workflow-input targets from a previous Salt workflow. Missing evidence is returned as unsupported review data.",
       ),
@@ -2006,83 +1428,6 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       });
     },
   }),
-  defineTool<
-    Parameters<typeof upgradeSaltUi>[1] & {
-      context_id?: string;
-      root_dir?: string;
-    }
-  >({
-    name: "upgrade_salt_ui",
-    description:
-      "Primary fit for the Salt upgrade workflow after project context is known. Explain Salt upgrade impact between versions, highlight breaking changes, and suggest the next migration actions.",
-    inputSchema: {
-      package: z.string().optional(),
-      component_name: z.string().optional(),
-      from_version: z.string().describe("Lower version boundary."),
-      to_version: z
-        .string()
-        .optional()
-        .describe(
-          "Upper version boundary. Defaults to the latest known boundary.",
-        ),
-      include_deprecations: z.boolean().optional(),
-      kinds: z.array(z.enum(CHANGE_KINDS)).optional(),
-      max_results: z.number().int().min(1).max(100).optional(),
-      view: z
-        .enum(VIEWS)
-        .optional()
-        .describe(
-          "Use full to include the filtered change and deprecation records.",
-        ),
-      context_id: z
-        .string()
-        .optional()
-        .describe(
-          "Optional repo context id returned by get_salt_project_context. If omitted, the MCP can collect repo context automatically for the current working directory.",
-        ),
-      root_dir: z
-        .string()
-        .optional()
-        .describe(
-          "Optional repo root to inspect when context_id is not available. Prefer context_id for repeated workflow calls in the same repo.",
-        ),
-    },
-    outputSchema: COMPARE_OUTPUT_SCHEMA,
-    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: async (registry, args, runtime) => {
-      const { context_id, root_dir, ...workflowArgs } = args;
-      const projectContext = await resolveOrCollectProjectContext(
-        registry,
-        runtime,
-        { contextId: context_id, rootDir: root_dir },
-      );
-      return runRepoAwareWorkflow(runtime, projectContext, async () => {
-        const semanticView = normalizeWorkflowView(workflowArgs.view);
-        return withCompareWorkflowGuidance(
-          upgradeSaltUi(registry, {
-            // Default to opt-in deprecations so the MCP `upgrade_salt_ui`
-            // tool stays semantically aligned with the CLI's `salt-ds upgrade`
-            // command (which only includes deprecations under
-            // `--include-deprecations`). Without this default the underlying
-            // `compareVersions` helper would silently flip to
-            // `include_deprecations: true`, causing the upgrade confidence
-            // builder to downgrade to `medium` even when the caller never
-            // asked for deprecation analysis. See the
-            // `keeps upgrade full semantics aligned where CLI and MCP overlap`
-            // parity spec.
-            include_deprecations: false,
-            ...workflowArgs,
-            view: semanticView,
-          }),
-          {
-            project_policy:
-              await loadWorkflowProjectPolicyArtifactForContext(projectContext),
-            view: workflowArgs.view,
-          },
-        );
-      });
-    },
-  }),
 ];
 
 const WORKFLOW_TOOL_DEFINITIONS: readonly ToolDefinition[] =
@@ -2098,31 +1443,13 @@ const INTERNAL_SUPPORT_TOOL_DEFINITIONS: readonly ToolDefinition[] =
       definition.name as (typeof SUPPORT_TOOL_ORDER)[number],
     ),
   );
-const INTERNAL_PERSISTENCE_TOOL_DEFINITIONS: readonly ToolDefinition[] =
-  ALL_TOOL_DEFINITIONS.filter((definition) =>
-    PERSISTENCE_TOOL_ORDER.includes(
-      definition.name as (typeof PERSISTENCE_TOOL_ORDER)[number],
-    ),
-  );
-
 const toolPriorityByName = new Map<string, number>([
-  ...PUBLIC_WORKFLOW_TOOL_IDS.map((name, index) => [name, index] as const),
-  ...SUPPORT_TOOL_ORDER.map(
-    (name, index) => [name, PUBLIC_WORKFLOW_TOOL_IDS.length + index] as const,
-  ),
-  ...PERSISTENCE_TOOL_ORDER.map(
-    (name, index) =>
-      [
-        name,
-        PUBLIC_WORKFLOW_TOOL_IDS.length + SUPPORT_TOOL_ORDER.length + index,
-      ] as const,
-  ),
+  ...DEFAULT_TOOL_ORDER.map((name, index) => [name, index] as const),
 ]);
 
 const ORDERED_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   ...WORKFLOW_TOOL_DEFINITIONS,
   ...INTERNAL_SUPPORT_TOOL_DEFINITIONS,
-  ...INTERNAL_PERSISTENCE_TOOL_DEFINITIONS,
 ]
   .map((definition, index) => ({
     definition,

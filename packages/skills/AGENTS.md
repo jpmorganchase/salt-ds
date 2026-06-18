@@ -6,4 +6,4 @@ Prefer Salt primitives, patterns, foundations, and tokens over ad hoc UI composi
 
 Available skills:
 
-- `salt-ds`: the primary public Salt workflow skill for build, review, migrate, upgrade, and conventions work in consumer repos.
+- `salt-ds`: the primary public Salt workflow skill for review, create, and migrate work in consumer repos.

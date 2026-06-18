@@ -32,7 +32,7 @@ describe("verifyAttestation security guards", () => {
       reviewedAbsolutePaths: [file],
       evidenceRefs: [],
       postActionRan: true,
-      reviewStatus: "clean",
+      reviewStatus: "ready",
       now: () => new Date("2026-06-14T00:00:00Z"),
       traceId: "trace_test",
     });
@@ -69,7 +69,7 @@ describe("verifyAttestation security guards", () => {
       reviewedAbsolutePaths: [file],
       evidenceRefs: [],
       postActionRan: true,
-      reviewStatus: "clean",
+      reviewStatus: "ready",
       now: () => new Date("2026-06-14T00:00:00Z"),
       traceId: "trace_test_abs",
     });
@@ -107,7 +107,7 @@ describe("verifyAttestation security guards", () => {
       reviewedAbsolutePaths: [file],
       evidenceRefs: [],
       postActionRan: true,
-      reviewStatus: "clean",
+      reviewStatus: "ready",
       now: () => new Date("2026-06-14T00:00:00Z"),
       traceId: "trace_test_ok",
     });

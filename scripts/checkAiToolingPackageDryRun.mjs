@@ -16,6 +16,7 @@ const forbiddenPublishPathSegments = [
   "archive",
   "baselines",
   "docs",
+  "evals",
   "eval-fixtures",
   "fixtures",
   "host-results",
@@ -32,7 +33,6 @@ const packages = [
       "README.md",
       "bin/salt-mcp.js",
       "generated",
-      "schemas",
       "dist-cjs",
       "dist-es",
       "dist-types",
@@ -40,33 +40,13 @@ const packages = [
     expectedFilesField: [
       "bin",
       "generated",
-      "schemas",
       "dist-cjs",
       "dist-es",
       "dist-types",
       "CHANGELOG.md",
     ],
-  },
-  {
-    name: "@salt-ds/cli",
-    dir: "dist/salt-ds-cli",
-    requiredPaths: [
-      "package.json",
-      "README.md",
-      "bin/salt-ds.js",
-      "generated",
-      "schemas",
-      "dist-cjs",
-      "dist-es",
-    ],
-    expectedFilesField: [
-      "bin",
-      "generated",
-      "schemas",
-      "dist-cjs",
-      "dist-es",
-      "CHANGELOG.md",
-    ],
+    maxUnpackedBytes: 34_000_000,
+    maxGeneratedBytes: 26_000_000,
   },
 ];
 
@@ -173,6 +153,26 @@ for (const packageConfig of packages) {
   const paths = (packed.files ?? []).map((file) => normalizePath(file.path));
   if (paths.length === 0) {
     fail(`${packageConfig.name} dry-run returned no packed files`);
+  }
+
+  if (
+    typeof packageConfig.maxUnpackedBytes === "number" &&
+    packed.unpackedSize > packageConfig.maxUnpackedBytes
+  ) {
+    fail(
+      `${packageConfig.name} unpacked size ${packed.unpackedSize} exceeds budget ${packageConfig.maxUnpackedBytes}`,
+    );
+  }
+
+  if (typeof packageConfig.maxGeneratedBytes === "number") {
+    const generatedBytes = (packed.files ?? [])
+      .filter((file) => normalizePath(file.path).startsWith("generated/"))
+      .reduce((total, file) => total + (file.size ?? 0), 0);
+    if (generatedBytes > packageConfig.maxGeneratedBytes) {
+      fail(
+        `${packageConfig.name} generated payload ${generatedBytes} exceeds budget ${packageConfig.maxGeneratedBytes}`,
+      );
+    }
   }
 
   for (const requiredPath of packageConfig.requiredPaths) {

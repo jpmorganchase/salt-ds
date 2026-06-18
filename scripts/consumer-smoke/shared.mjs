@@ -9,23 +9,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const repoRoot = path.resolve(__dirname, "..", "..");
 export const distMcpDir = path.join(repoRoot, "dist", "salt-ds-mcp");
-export const distCliDir = path.join(repoRoot, "dist", "salt-ds-cli");
-export const distCliBin = path.join(distCliDir, "bin", "salt-ds.js");
 export const defaultSkillsSource = path.join(repoRoot, "packages", "skills");
 
 export function getExecutable(name) {
   return process.platform === "win32" ? `${name}.cmd` : name;
-}
-
-export function getInstalledCliBin(rootDir) {
-  return path.join(
-    rootDir,
-    "node_modules",
-    "@salt-ds",
-    "cli",
-    "bin",
-    "salt-ds.js",
-  );
 }
 
 export function getInstalledMcpBin(rootDir) {

@@ -19,9 +19,9 @@ import {
   type PublicContract,
   type PublicContractInput,
   type PublicEvidenceSummary,
-  type PublicInternalLimitations,
   type PublicNextStep,
 } from "@salt-ds/semantic-core";
+import type { PublicInternalLimitations } from "@salt-ds/semantic-core/tools/index";
 import { describe, expect, it } from "vitest";
 
 function evidence(
@@ -55,8 +55,8 @@ function implementStep(): PublicNextStep {
 function retrieveStep(): PublicNextStep {
   return {
     kind: "retrieve_entity",
-    tool: "get_salt_entities",
-    args: { names: ["Avatar"] },
+    tool: "get_salt_reference",
+    args: { kind: "entity", names: ["Avatar"] },
   };
 }
 

@@ -356,7 +356,6 @@ async function runReviewHookPostToolUse(
       saltBearing,
       io.cwd,
       flags["registry-dir"],
-      readRegistryLoadOptionsFromFlags(flags),
     );
     applyRequireHumanReviewPolicyFindings(
       sourceValidation,

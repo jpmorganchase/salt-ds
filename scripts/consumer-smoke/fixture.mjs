@@ -2,7 +2,6 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import {
   assert,
-  distCliDir,
   distMcpDir,
   getExecutable,
   pathExists,
@@ -11,7 +10,7 @@ import {
 
 export async function ensureBuildArtifacts(skipBuild) {
   if (!skipBuild) {
-    console.log("Building local MCP and CLI distributions...");
+    console.log("Building local MCP distribution...");
     await runCommand(
       getExecutable("yarn"),
       ["workspace", "@salt-ds/mcp", "build"],
@@ -19,22 +18,11 @@ export async function ensureBuildArtifacts(skipBuild) {
         label: "yarn workspace @salt-ds/mcp build",
       },
     );
-    await runCommand(
-      getExecutable("yarn"),
-      ["workspace", "@salt-ds/cli", "build"],
-      {
-        label: "yarn workspace @salt-ds/cli build",
-      },
-    );
   }
 
   assert(
     await pathExists(distMcpDir),
     `Missing built MCP package at ${distMcpDir}. Run with --skip-build only after building it.`,
-  );
-  assert(
-    await pathExists(distCliDir),
-    `Missing built CLI package at ${distCliDir}. Run with --skip-build only after building it.`,
   );
 }
 
@@ -217,15 +205,13 @@ export async function installLocalPackages(rootDir) {
     );
   }
 
-  console.log(
-    "Installing built MCP and CLI packages into the temp smoke tools directory...",
-  );
+  console.log("Installing built MCP package into the temp smoke tools directory...");
   await runCommand(
     getExecutable("npm"),
-    ["install", "--no-package-lock", "--no-save", distMcpDir, distCliDir],
+    ["install", "--no-package-lock", "--no-save", distMcpDir],
     {
       cwd: rootDir,
-      label: "npm install local Salt MCP and CLI packages",
+      label: "npm install local Salt MCP package",
     },
   );
 }

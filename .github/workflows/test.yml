@@ -60,6 +60,8 @@ jobs:
         run: yarn
       - name: Build
         run: yarn build
+      - name: Check AI tooling package dry runs
+        run: yarn check:ai-tooling:pack
       - name: Check build core package.json dependencies
         run: |
           if grep -q "@salt-ds\/\(core\|lab\)\":" dist/salt-ds-core/package.json; then

@@ -439,21 +439,6 @@ export {
   type SaltSolutionType,
 } from "./tools/createSaltUi.js";
 export {
-  type ClarifyingQuestion,
-  type DiscoverSaltDecision,
-  type DiscoverSaltInput,
-  type DiscoverSaltResult,
-  discoverSalt,
-} from "./tools/discoverSalt.js";
-export {
-  type DiscoveryPreferences,
-  FOUNDATION_DISCOVERY_KEYWORDS,
-  inferDiscoveryPreferences,
-  RECIPE_DISCOVERY_KEYWORDS,
-  scoreDiscoveryKeywordIntent,
-  TOKEN_DISCOVERY_KEYWORDS,
-} from "./tools/discoverSaltSignals.js";
-export {
   type GetChangesInput,
   type GetChangesResult,
   getChanges,
@@ -530,22 +515,11 @@ export {
   type SaltEntityType,
 } from "./tools/getSaltEntity.js";
 export {
-  getSaltEntities,
-  type GetSaltEntitiesInput,
-  type GetSaltEntitiesResult,
-  type GetSaltEntitiesRow,
-} from "./tools/getSaltEntities.js";
-export {
   createGetSaltEntityContext,
   type GetSaltEntityContext,
   resolveAutoSaltEntity,
   resolveKnownSaltEntity,
 } from "./tools/getSaltEntityResolvers.js";
-export {
-  type GetSaltExamplesInput,
-  type GetSaltExamplesResult,
-  getSaltExamples,
-} from "./tools/getSaltExamples.js";
 export {
   type GetTokenInput,
   type GetTokenResult,
@@ -637,14 +611,12 @@ export {
   buildMigratePublicContract,
   buildPublicContract,
   buildReviewPublicContract,
-  buildUpgradePublicContract,
   derivePublicCanonicalComplete,
   derivePublicSafeToImplementExactRequest,
   derivePublicWorkflowStatus,
   getPublicContractValidationErrors,
   type PublicActionKind,
   type PublicAskUserStep,
-  type PublicBootstrapRepoStep,
   type PublicContract,
   type PublicContractBuildOptions,
   type PublicContractExactRequest,
@@ -829,11 +801,6 @@ export type {
   UiArchetype,
 } from "./tools/translation/sourceUiTypes.js";
 export {
-  type UpgradeSaltUiInput,
-  type UpgradeSaltUiResult,
-  upgradeSaltUi,
-} from "./tools/upgradeSaltUi.js";
-export {
   type ValidateSaltUsageInput,
   type ValidateSaltUsageResult,
   type ValidationIssue,
@@ -859,7 +826,6 @@ export {
   buildRepoAwareReviewWorkflowMetadata,
   buildReviewSaltUiWorkflowContract,
   buildSatisfiedWorkflowContextRequirement,
-  buildUpgradeSaltUiWorkflowContract,
   buildWorkflowContextRequirement,
   type CreateSaltUiWorkflowContract,
   type FollowThroughItem,
@@ -869,7 +835,6 @@ export {
   type RepoAwareReviewWorkflowMetadata,
   type ReviewSaltUiWorkflowContract,
   toWorkflowStarterValidation,
-  type UpgradeSaltUiWorkflowContract,
   type WorkflowConfidence,
   type WorkflowContextRequirement,
   type WorkflowFixCandidate,

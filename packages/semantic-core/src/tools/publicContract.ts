@@ -15,24 +15,17 @@ import type { CreateSaltUiResult } from "./createSaltUi.js";
 import { appendProjectConventionsCheckNextStep } from "./guidanceBoundary.js";
 import type { MigrateToSaltResult } from "./migrateToSalt.js";
 import type { ReviewSaltUiResult } from "./reviewSaltUi.js";
-import type { UpgradeSaltUiResult } from "./upgradeSaltUi.js";
 import type { ValidationIssue } from "./validation/shared.js";
 import type {
   CreateSaltUiWorkflowContract,
   FollowThroughItem,
   MigrateToSaltWorkflowContract,
   ReviewSaltUiWorkflowContract,
-  UpgradeSaltUiWorkflowContract,
   WorkflowFixCandidate,
   WorkflowStarterValidation,
 } from "./workflowContracts.js";
 
-export type PublicWorkflowId =
-  | "init"
-  | "create"
-  | "review"
-  | "migrate"
-  | "upgrade";
+export type PublicWorkflowId = "create" | "review" | "migrate";
 
 export type PublicTransportUsed = "cli" | "mcp";
 
@@ -67,21 +60,20 @@ export type PublicToolCallStep = PublicActionHints & {
     | "get_salt_project_context"
     | "create_salt_ui"
     | "review_salt_ui"
-    | "migrate_to_salt"
-    | "upgrade_salt_ui";
+    | "migrate_to_salt";
   mode: PublicNextStepMode;
   args: Record<string, unknown>;
 };
 
 export type PublicRetrieveEntityStep = PublicActionHints & {
   kind: "retrieve_entity";
-  tool: "get_salt_entities" | "create_salt_ui";
+  tool: "get_salt_reference" | "create_salt_ui";
   args: Record<string, unknown>;
 };
 
 export type PublicRetrieveExamplesStep = PublicActionHints & {
   kind: "retrieve_examples";
-  tool: "get_salt_examples" | "create_salt_ui";
+  tool: "get_salt_reference" | "create_salt_ui";
   args: Record<string, unknown>;
 };
 
@@ -94,12 +86,6 @@ export type PublicInstallDependenciesStep = PublicActionHints & {
   kind: "install_dependencies";
   package_manager: string;
   packages: string[];
-};
-
-export type PublicBootstrapRepoStep = PublicActionHints & {
-  kind: "bootstrap_repo";
-  tool: "bootstrap_salt_repo" | "salt-ds init";
-  args?: Record<string, unknown>;
 };
 
 export type PublicImplementStep = PublicActionHints & {
@@ -120,11 +106,7 @@ export type PublicReviewStep = PublicActionHints & {
 
 export type PublicRerunWorkflowStep = PublicActionHints & {
   kind: "rerun_workflow";
-  tool:
-    | "create_salt_ui"
-    | "review_salt_ui"
-    | "migrate_to_salt"
-    | "upgrade_salt_ui";
+  tool: "create_salt_ui" | "review_salt_ui" | "migrate_to_salt";
   args: Record<string, unknown>;
 };
 
@@ -141,7 +123,6 @@ export type PublicNextStep =
   | PublicRetrieveExamplesStep
   | PublicAskUserStep
   | PublicInstallDependenciesStep
-  | PublicBootstrapRepoStep
   | PublicImplementStep
   | PublicCompleteStep
   | PublicReviewStep
@@ -174,7 +155,7 @@ export type PublicActionKind = PublicNextStep["kind"];
  * - unsupported_rule_kinds - unique, sorted list of SaltEvidenceClaimKind
  *   values that contributed to the unsupported claim count.
  *
- * These come from the review evidence gate only. Create / migrate / upgrade
+ * These come from the review evidence gate only. Create and migrate
  * leave both fields at the default empty values.
  */
 export interface PublicInternalLimitations {
@@ -427,7 +408,7 @@ function buildPackageInstallCommand(
 }
 
 function buildToolCallCliHint(step: PublicToolCallStep): string | null {
-  // The Salt workflow CLI commands (create / review / migrate / upgrade) were
+  // The Salt workflow CLI commands (create / review / migrate) were
   // removed in favour of MCP-only delivery. Only support-tier tools still have
   // a CLI mirror — `get_salt_project_context` maps to `salt-ds info --json`.
   // All other branches return null so action hints surface the `mcp` shape only.
@@ -437,7 +418,6 @@ function buildToolCallCliHint(step: PublicToolCallStep): string | null {
     case "create_salt_ui":
     case "review_salt_ui":
     case "migrate_to_salt":
-    case "upgrade_salt_ui":
       return null;
   }
 }
@@ -445,7 +425,7 @@ function buildToolCallCliHint(step: PublicToolCallStep): string | null {
 function buildRetrieveEntityCliHint(
   _step: PublicRetrieveEntityStep,
 ): string | null {
-  // `get_salt_entity` and the upstream `create_salt_ui` fall-back are both
+  // Reference lookup and the upstream `create_salt_ui` fall-back are both
   // MCP-only after the workflow CLI removal; no CLI hint is emitted.
   return null;
 }
@@ -453,7 +433,7 @@ function buildRetrieveEntityCliHint(
 function buildRetrieveExamplesCliHint(
   _step: PublicRetrieveExamplesStep,
 ): string | null {
-  // `get_salt_examples` and the upstream `create_salt_ui` fall-back are both
+  // Reference examples and the upstream `create_salt_ui` fall-back are both
   // MCP-only after the workflow CLI removal; no CLI hint is emitted.
   return null;
 }
@@ -467,7 +447,7 @@ function buildReviewCliHint(_step: PublicReviewStep): string | null {
 function buildRerunWorkflowCliHint(
   _step: PublicRerunWorkflowStep,
 ): string | null {
-  // The four workflow CLI commands were removed; reruns are always MCP-side
+  // The workflow CLI commands were removed; reruns are always MCP-side
   // and surfaced through action.mcp on the returned PublicNextStep.
   return null;
 }
@@ -507,18 +487,6 @@ function buildPublicActionHints(step: PublicNextStep): PublicActionHints {
     case "install_dependencies":
       return {
         cli: buildPackageInstallCommand(step.package_manager, step.packages),
-      };
-    case "bootstrap_repo":
-      return {
-        cli: "salt-ds init --json",
-        ...(step.tool === "bootstrap_salt_repo"
-          ? {
-              mcp: {
-                tool: "bootstrap_salt_repo",
-                args: step.args ?? {},
-              },
-            }
-          : {}),
       };
     case "review": {
       const cli = buildReviewCliHint(step);
@@ -1212,8 +1180,9 @@ function buildCreateNextStep(
   if (requiredFollowThrough.length > 0) {
     return {
       kind: "retrieve_entity",
-      tool: "get_salt_entities",
+      tool: "get_salt_reference",
       args: {
+        kind: "entity",
         names: [requiredFollowThrough[0].entity],
       },
     };
@@ -1226,8 +1195,9 @@ function buildCreateNextStep(
   ) {
     return {
       kind: "retrieve_entity",
-      tool: "get_salt_entities",
+      tool: "get_salt_reference",
       args: {
+        kind: "entity",
         names: [reference.requested_target.name],
       },
     };
@@ -1237,8 +1207,9 @@ function buildCreateNextStep(
     if (exactRequest?.resolved_entity) {
       return {
         kind: "retrieve_entity",
-        tool: "get_salt_entities",
+        tool: "get_salt_reference",
         args: {
+          kind: "entity",
           names: [exactRequest.resolved_entity],
         },
       };
@@ -1246,8 +1217,8 @@ function buildCreateNextStep(
 
     return {
       kind: "retrieve_examples",
-      tool: "get_salt_examples",
-      args: {},
+      tool: "get_salt_reference",
+      args: { kind: "examples" },
     };
   }
 
@@ -1337,22 +1308,6 @@ function buildMigrateNextStep(
     kind: "tool_call",
     tool: "migrate_to_salt",
     mode: "broad_query",
-    args: {},
-  };
-}
-
-function buildUpgradeNextStep(result: UpgradeSaltUiResult): PublicNextStep {
-  if (result.ambiguity || (result.did_you_mean?.length ?? 0) > 0) {
-    return {
-      kind: "ask_user",
-      question:
-        "Clarify the exact package or component target before applying upgrade guidance.",
-    };
-  }
-
-  return {
-    kind: "review",
-    tool: "review_salt_ui",
     args: {},
   };
 }
@@ -1477,16 +1432,6 @@ function filterMigrateBlockingQuestions(
   return entries.filter(
     (question) => !isProjectConventionClarifyingQuestion(question),
   );
-}
-
-function buildUpgradeBlockingReasons(result: UpgradeSaltUiResult): string[] {
-  return uniqueNonEmptyStrings([
-    result.ambiguity ? result.decision.why : null,
-    result.did_you_mean?.length ? "upgrade target still has ambiguity" : null,
-    result.breaking?.[0] ?? null,
-    result.important?.[0] ?? null,
-    result.nice_to_know?.[0] ?? null,
-  ]);
 }
 
 function countProjectPolicyFixCandidates(
@@ -2069,8 +2014,9 @@ function buildCreateRecipe(input: {
       `retrieve-${followThrough.entity.toLowerCase().replace(/\s+/g, "-")}`,
       {
         kind: "retrieve_entity",
-        tool: "get_salt_entities",
+        tool: "get_salt_reference",
         args: {
+          kind: "entity",
           names: [followThrough.entity],
         },
       },
@@ -2083,8 +2029,9 @@ function buildCreateRecipe(input: {
       `resolved-${followThrough.entity.toLowerCase().replace(/\s+/g, "-")}`,
       {
         kind: "retrieve_entity",
-        tool: "get_salt_entities",
+        tool: "get_salt_reference",
         args: {
+          kind: "entity",
           names: [followThrough.entity],
         },
       },
@@ -2115,7 +2062,6 @@ function buildCreateRecipe(input: {
     input.next_step.kind === "retrieve_entity" ||
     input.next_step.kind === "retrieve_examples" ||
     input.next_step.kind === "fix_context" ||
-    input.next_step.kind === "bootstrap_repo" ||
     input.next_step.kind === "tool_call"
   ) {
     pushStep(
@@ -2365,50 +2311,3 @@ export function buildMigratePublicContract(
   });
 }
 
-export function buildUpgradePublicContract(
-  result: UpgradeSaltUiResult,
-  contract: UpgradeSaltUiWorkflowContract,
-  options: PublicContractBuildOptions,
-): PublicContract {
-  const hasBlockingAmbiguity = Boolean(
-    result.ambiguity || result.did_you_mean?.length,
-  );
-  const hasActionableChanges =
-    (result.breaking?.length ?? 0) +
-      (result.important?.length ?? 0) +
-      (result.nice_to_know?.length ?? 0) >
-    0;
-  const evidence = buildWorkflowEvidenceFromProvenance({
-    provenance: contract.provenance,
-    entity: result.decision.target,
-  });
-  const nextStep = options.next_step ?? buildUpgradeNextStep(result);
-
-  return buildPublicContract({
-    workflow: "upgrade",
-    transport_used: options.transport_used,
-    exact_request: options.exact_request,
-    state: {
-      implementation_ready: !hasBlockingAmbiguity && !hasActionableChanges,
-      required_follow_through: [],
-      blocking_questions: [],
-      starter_blockers: [],
-      project_policy_blockers: [],
-      hard_blocked: hasBlockingAmbiguity || hasActionableChanges,
-      context_ready: true,
-      usable_guidance_present: Boolean(
-        result.decision.target || contract.ide_summary.target,
-      ),
-      transport_failed: false,
-    },
-    summary:
-      result.decision.target != null
-        ? `Salt produced upgrade guidance for ${result.decision.target}.`
-        : "Salt produced upgrade guidance for the requested target.",
-    next_step: nextStep,
-    evidence,
-    rule_ids: contract.rule_ids,
-    blocking_reasons:
-      options.blocking_reasons ?? buildUpgradeBlockingReasons(result),
-  });
-}

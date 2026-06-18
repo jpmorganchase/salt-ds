@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "start": "yarn storybook",
-    "build": "yarn workspace @salt-ds/mcp build && yarn workspaces foreach --exclude @salt-ds/site --exclude @salt-ds/mcp -Apt run build && yarn bundle:css",
+    "build": "yarn workspace @salt-ds/mcp build && yarn workspaces foreach --exclude @salt-ds/site --exclude @salt-ds/mcp --exclude @salt-ds/cli -Apt run build && yarn bundle:css",
     "release": "yarn build && yarn changeset publish",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspace @salt-ds/highcharts-theme build",

@@ -28,26 +28,21 @@
     "./package.json": "./package.json"
   },
   "typescriptInclude": [
-    "src"
+    "src/index.ts"
   ],
   "typescriptRootDir": "src",
   "publishBundledWorkspaceDependencies": [
     "@salt-ds/runtime-inspector-core",
     "@salt-ds/semantic-core"
   ],
-  "publishAdditionalEntryPaths": [
-    "src/evals/runWorkflowEval.ts",
-    "src/evals/runWorkflowEvalReplay.ts",
-    "src/evals/runHostTraceEval.ts"
+  "publishScriptExcludes": [
+    "build",
+    "prepack"
   ],
   "publishExtraCopyPaths": [
     {
       "from": "../semantic-core/generated",
       "to": "generated"
-    },
-    {
-      "from": "../semantic-core/schemas",
-      "to": "schemas"
     }
   ],
   "bin": {

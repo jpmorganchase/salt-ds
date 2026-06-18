@@ -27,9 +27,9 @@ export function parseArgs(argv: string[]): ParsedArgs {
 }
 
 const ROOT_HELP = [
-  "Salt DS CLI",
+  "Salt DS CLI (private support package)",
   "",
-  "Setup commands:",
+  "Private setup/support commands:",
   "  salt-ds init [rootDir] [--ai] [--json] [--output <path>] [--registry-dir <path>] [--project <name>] [--create-stack] [--conventions-pack [<package[#export]>]] [--host-adapters <vscode>] [--add-ui-verify] [--add-agent-hooks]",
   "  salt-ds info [rootDir] [--json] [--output <path>] [--registry-dir <path>] [--catalog-query <prompt>] [--entity <name>] [--family <category>] [--hook]",
   "",
@@ -42,11 +42,11 @@ const ROOT_HELP = [
   "  salt-ds doctor [rootDir] [--ai] [--json] [--output <path>] [--registry-dir <path>] [--bundle|--bundle-dir <path>] [--storybook-url <url>] [--app-url <url>] [--check-detected-targets] [--timeout <ms>] [--check-install]",
   "  salt-ds runtime inspect <url> [--json] [--output <path>] [--output-dir <path>] [--timeout <ms>] [--mode <auto|browser|fetched-html>] [--no-screenshot]",
   "",
-  "Workflow commands moved to the @salt-ds/mcp server:",
-  "  create_salt_ui, review_salt_ui, migrate_to_salt, upgrade_salt_ui    (use the MCP tools; the CLI subcommands were removed in favour of MCP-only delivery)",
+  "Public v1 workflow commands live in the @salt-ds/mcp server:",
+  "  get_salt_project_context, get_salt_reference, create_salt_ui, review_salt_ui, migrate_to_salt",
   "",
   "Notes:",
-  "  For one-off canonical entity / example / discovery lookups, use the Salt MCP `get_salt_entity`, `get_salt_entities`, `get_salt_examples`, and `discover_salt` tools \u2014 they are not exposed as CLI subcommands.",
+  "  Consumers should configure @salt-ds/mcp rather than installing this package.",
   "  All commands accept --prefetch to eagerly load every registry artifact (~24 MB). Default is lazy: only metadata loads at boot and each artifact loads on first touch.",
 ];
 
