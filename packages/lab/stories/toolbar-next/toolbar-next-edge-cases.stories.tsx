@@ -1,4 +1,4 @@
-import { Button, Dropdown, Input, Option, Text } from "@salt-ds/core";
+import { Button, Divider, Dropdown, Input, Option, Text } from "@salt-ds/core";
 import { DateInputSingle } from "@salt-ds/date-components";
 import {
   AddIcon,
@@ -10,7 +10,7 @@ import {
 } from "@salt-ds/icons";
 import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 export default {
   title: "Lab/Toolbar Next/Edge Cases",
@@ -19,6 +19,8 @@ export default {
     "DynamicElements",
     "HiddenOverflowRemeasurement",
     "OverflowMenuInClippingContainer",
+    "SubpixelWidthRounding",
+    "SubpixelWidthRoundingWithGapsAndDividers",
   ],
   parameters: {
     layout: "padded",
@@ -109,6 +111,67 @@ const clippingValidationToolbarDockStyle = {
 
 const clippingValidationNoteStyle = {
   marginTop: "var(--salt-spacing-200)",
+};
+
+const subpixelItemWidth = 20.2;
+const subpixelItemLabels = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+];
+const subpixelToolbarWidth = subpixelItemWidth * subpixelItemLabels.length;
+const subpixelSliderFitWidth = Math.floor(subpixelToolbarWidth);
+const subpixelSliderOverflowWidth = subpixelSliderFitWidth - 1;
+
+const subpixelRoundingShellStyle = {
+  display: "flex" as const,
+  flexDirection: "column" as const,
+  gap: "var(--salt-spacing-150)",
+  maxWidth: 560,
+};
+
+const subpixelRoundingFrameStyle = {
+  outline:
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+  width: "100%",
+};
+
+const subpixelRoundingContentStyle = {
+  gap: 0,
+};
+
+const subpixelRoundingItemStyle = {
+  alignItems: "center",
+  background: "var(--salt-container-secondary-background)",
+  border:
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+  boxSizing: "border-box" as const,
+  display: "flex" as const,
+  fontSize: 10,
+  height: "var(--salt-size-base)",
+  justifyContent: "center",
+  width: subpixelItemWidth,
+};
+
+const subpixelDecoratedItemWidth = 32.2;
+const subpixelDecoratedItemLabels = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+const subpixelDecoratedItemStyle = {
+  ...subpixelRoundingItemStyle,
+  width: subpixelDecoratedItemWidth,
+};
+
+const subpixelDividerStyle = {
+  height: "var(--salt-size-base)",
 };
 
 /**
@@ -202,6 +265,107 @@ export const DynamicElements: StoryFn<typeof ToolbarNext> = () => {
   );
 };
 DynamicElements.globals = {
+  responsive: "wrap",
+};
+
+/**
+ * Subpixel width rounding validation.
+ *
+ * Intended behavior:
+ * - Twelve items at `20.2px` each exactly fit in a `242.4px` toolbar.
+ * - The toolbar content gap is set to zero so this isolates the item-width
+ *   arithmetic.
+ * - The Storybook width slider uses whole pixels. Set it to `242px` to validate
+ *   the epsilon tolerance for the fractional rendered width, then set it to
+ *   `241px` to verify narrower widths still intentionally collapse items.
+ */
+export const SubpixelWidthRounding: StoryFn<typeof ToolbarNext> = () => (
+  <div style={subpixelRoundingShellStyle}>
+    <Text>
+      <strong>Expected:</strong> all {subpixelItemLabels.length} labelled items
+      fit when the integer Storybook width slider is set to{" "}
+      {subpixelSliderFitWidth}px. Each item is {subpixelItemWidth}px wide, so
+      the rendered total is fractional.
+    </Text>
+    <Text>
+      <strong>Bug indicator:</strong> if {subpixelSliderFitWidth}px shows only
+      the overflow trigger, fractional widths are still being rounded into a
+      false overflow. At {subpixelSliderOverflowWidth}px, items should overflow.
+    </Text>
+    <div style={subpixelRoundingFrameStyle}>
+      <ToolbarNext
+        appearance="transparent"
+        aria-label="Subpixel width rounding toolbar"
+      >
+        <ToolbarContentNext
+          position="start"
+          style={subpixelRoundingContentStyle}
+        >
+          {subpixelItemLabels.map((label, index) => (
+            <TooltrayNext key={label} overflowPriority={index}>
+              <span style={subpixelRoundingItemStyle}>{label}</span>
+            </TooltrayNext>
+          ))}
+        </ToolbarContentNext>
+      </ToolbarNext>
+    </div>
+  </div>
+);
+SubpixelWidthRounding.globals = {
+  responsive: "wrap",
+};
+
+/**
+ * Subpixel width rounding with normal gaps and dividers.
+ *
+ * Intended behavior:
+ * - Items still use fractional widths, but this variant keeps the toolbar's
+ *   normal content gaps instead of forcing `gap: 0`.
+ * - Vertical dividers are included as toolbar decorations, so the measurement
+ *   log should show decorated item widths and non-zero `contentGaps`.
+ * - Use the Storybook width slider around the logged `initialWidth` value:
+ *   exact-or-wider widths should fit, while narrower widths should overflow.
+ */
+export const SubpixelWidthRoundingWithGapsAndDividers: StoryFn<
+  typeof ToolbarNext
+> = () => (
+  <div style={subpixelRoundingShellStyle}>
+    <Text>
+      <strong>Expected:</strong> this version keeps the default toolbar spacing
+      and includes vertical dividers. The debug log should show a non-zero
+      content gap and item widths that include adjacent divider decorations.
+    </Text>
+    <Text>
+      <strong>Bug indicator:</strong> if the slider width is at or above the
+      logged initial width but items still overflow, the measurement is not
+      accounting for gaps or divider decorations correctly.
+    </Text>
+    <div style={subpixelRoundingFrameStyle}>
+      <ToolbarNext
+        appearance="transparent"
+        aria-label="Subpixel gaps and dividers toolbar"
+      >
+        <ToolbarContentNext position="start">
+          {subpixelDecoratedItemLabels.map((label, index) => (
+            <Fragment key={label}>
+              {index === 3 || index === 6 ? (
+                <Divider
+                  orientation="vertical"
+                  style={subpixelDividerStyle}
+                  variant="secondary"
+                />
+              ) : null}
+              <TooltrayNext overflowPriority={index}>
+                <span style={subpixelDecoratedItemStyle}>{label}</span>
+              </TooltrayNext>
+            </Fragment>
+          ))}
+        </ToolbarContentNext>
+      </ToolbarNext>
+    </div>
+  </div>
+);
+SubpixelWidthRoundingWithGapsAndDividers.globals = {
   responsive: "wrap",
 };
 
