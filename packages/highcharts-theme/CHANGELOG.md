@@ -1,5 +1,16 @@
 # @salt-ds/highcharts-theme
 
+## 1.0.2
+
+### Patch Changes
+
+- 8762118: Styled the reset zoom button to (imperfectly) match Salt Button solid neutral appearance, including hover and focus states.
+
+  Salt defaults now set `chart.zooming.resetButton.theme` and `accessibility.keyboardNavigation.focusBorder`. When Highcharts accessibility is loaded, `useChart` also applies the reset button hover state while its accessibility proxy has keyboard focus.
+
+- Updated dependencies [1a48c1a]
+  - @salt-ds/core@1.64.1
+
 ## 1.0.1
 
 ### Patch Changes
