@@ -37,6 +37,7 @@ import {
   type GuidanceBoundary,
 } from "./guidanceBoundary.js";
 import type { GuideReference } from "./guideAwareness.js";
+import { appendGroundedIconStarterSnippet } from "./iconGrounding.js";
 import { listFoundations } from "./listFoundations.js";
 import { recommendComponent } from "./recommendComponent.js";
 import { recommendTokens } from "./recommendTokens.js";
@@ -795,7 +796,37 @@ export function createSaltUi(
           resolution,
         );
 
-  return applyThemeProviderQuestion(registry, input, baseResult);
+  return applyGroundedIconStarterSnippet(
+    registry,
+    input,
+    applyThemeProviderQuestion(registry, input, baseResult),
+  );
+}
+
+function applyGroundedIconStarterSnippet(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  result: CreateSaltUiResult,
+): CreateSaltUiResult {
+  if (input.include_starter_code === false) {
+    return result;
+  }
+
+  const text = [input.query, ...(input.names ?? [])]
+    .filter((value): value is string => Boolean(value?.trim()))
+    .join(" ");
+  if (!text) {
+    return result;
+  }
+
+  const starterCode = appendGroundedIconStarterSnippet(
+    registry,
+    result.starter_code,
+    text,
+  );
+  return starterCode === result.starter_code
+    ? result
+    : { ...result, starter_code: starterCode };
 }
 
 function applyThemeProviderQuestion(

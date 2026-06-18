@@ -32,6 +32,8 @@ export interface GetSaltEntityContext {
   view: "compact" | "full";
   maxResults: number;
   lookupValue: string;
+  allowedEntityTypes: readonly KnownSaltEntityType[] | null;
+  allowSearchFallback: boolean;
 }
 
 type EntityResolver = (context: GetSaltEntityContext) => GetSaltEntityResult;
@@ -258,6 +260,16 @@ function buildSearchNearMatchResult(
     status?: GetSaltEntityInput["status"];
   } = {},
 ): GetSaltEntityResult {
+  if (!context.allowSearchFallback) {
+    return buildNearMatchResult(
+      entityType,
+      [],
+      context.view === "full"
+        ? { search_disabled: "Broad search-index fallback is not exposed." }
+        : undefined,
+    );
+  }
+
   const search = searchSaltDocs(context.registry, {
     query: context.lookupValue,
     area: searchAreaForEntityType(entityType),
@@ -276,7 +288,7 @@ function buildSearchNearMatchResult(
 function resolveComponentEntity(
   context: GetSaltEntityContext,
 ): GetSaltEntityResult {
-  const { registry, input, view, maxResults, lookupValue } = context;
+  const { registry, input, view } = context;
   const result = input.name
     ? getComponent(registry, {
         name: input.name,
@@ -342,19 +354,10 @@ function resolveComponentEntity(
     });
   }
 
-  const search = searchSaltDocs(registry, {
-    query: lookupValue,
-    area: searchAreaForEntityType("component"),
+  return buildSearchNearMatchResult(context, "component", {
     package: input.package,
     status: input.status,
-    top_k: maxResults,
   });
-
-  return buildNearMatchResult(
-    "component",
-    toSearchMatches(search.results),
-    view === "full" ? { search } : undefined,
-  );
 }
 
 function resolvePatternEntity(
@@ -484,6 +487,31 @@ function resolveTokenEntity(
     });
   }
 
+  if (tokenResult && tokenResult.tokens.length > 1) {
+    return {
+      entity_type: "token",
+      decision: {
+        status: "results",
+        why: "Multiple Salt tokens match the provided lookup.",
+      },
+      entity: null,
+      matches: tokenResult.tokens,
+      next_step:
+        "Choose the closest token name and retry with an exact token lookup.",
+      raw: view === "full" ? { token_result: tokenResult } : undefined,
+    };
+  }
+
+  if (!context.allowSearchFallback) {
+    return buildNearMatchResult(
+      "token",
+      [],
+      view === "full"
+        ? { search_disabled: "Broad search-index fallback is not exposed." }
+        : undefined,
+    );
+  }
+
   const search = searchSaltDocs(registry, {
     query: lookupValue,
     area: searchAreaForEntityType("token"),
@@ -524,21 +552,6 @@ function resolveTokenEntity(
             : undefined,
       });
     }
-  }
-
-  if (tokenResult && tokenResult.tokens.length > 1) {
-    return {
-      entity_type: "token",
-      decision: {
-        status: "results",
-        why: "Multiple Salt tokens match the provided lookup.",
-      },
-      entity: null,
-      matches: tokenResult.tokens,
-      next_step:
-        "Choose the closest token name and retry with an exact token lookup.",
-      raw: view === "full" ? { token_result: tokenResult } : undefined,
-    };
   }
 
   return buildNearMatchResult(
@@ -772,7 +785,22 @@ export function createGetSaltEntityContext(
     view: input.view ?? "compact",
     maxResults: clampMaxResults(input.max_results, 5, 50),
     lookupValue: input.name?.trim() || input.query?.trim() || "",
+    allowedEntityTypes:
+      input.allowed_entity_types && input.allowed_entity_types.length > 0
+        ? input.allowed_entity_types
+        : null,
+    allowSearchFallback: input.allow_search_fallback ?? true,
   };
+}
+
+function isEntityTypeAllowed(
+  context: GetSaltEntityContext,
+  entityType: KnownSaltEntityType,
+): boolean {
+  return (
+    context.allowedEntityTypes === null ||
+    context.allowedEntityTypes.includes(entityType)
+  );
 }
 
 function resolveExactAutoSaltEntity(
@@ -785,6 +813,10 @@ function resolveExactAutoSaltEntity(
   }
 
   for (const entityType of AUTO_EXACT_ENTITY_PRIORITY) {
+    if (!isEntityTypeAllowed(context, entityType)) {
+      continue;
+    }
+
     const resolved = resolveKnownSaltEntity(
       createGetSaltEntityContext(registry, {
         ...input,
@@ -826,14 +858,33 @@ export function resolveAutoSaltEntity(
     return exactEntity;
   }
 
+  if (!context.allowSearchFallback) {
+    return {
+      entity_type: null,
+      decision: {
+        status: "not_found",
+        why: "No exact Salt entity match was found in the public v1 catalog surface.",
+      },
+      entity: null,
+      next_step:
+        "Retry with an exact component, pattern, foundation, token, guide, page, or package name.",
+    };
+  }
+
   const search = searchSaltDocs(registry, {
     query: lookupValue,
     package: input.package,
     status: input.status,
     top_k: maxResults,
   });
-  const resolvedType = search.results[0]?.type
-    ? mapSearchTypeToEntityType(search.results[0].type)
+  const allowedResults = context.allowedEntityTypes
+    ? search.results.filter((result) => {
+        const entityType = mapSearchTypeToEntityType(result.type);
+        return entityType ? isEntityTypeAllowed(context, entityType) : false;
+      })
+    : search.results;
+  const resolvedType = allowedResults[0]?.type
+    ? mapSearchTypeToEntityType(allowedResults[0].type)
     : null;
 
   if (resolvedType) {
@@ -841,11 +892,11 @@ export function resolveAutoSaltEntity(
       createGetSaltEntityContext(registry, {
         ...input,
         entity_type: resolvedType,
-        name: search.results[0]?.name ?? lookupValue,
+        name: allowedResults[0]?.name ?? lookupValue,
         query: undefined,
         package:
           resolvedType === "component"
-            ? (search.results[0]?.package ?? input.package)
+            ? (allowedResults[0]?.package ?? input.package)
             : input.package,
       }),
       resolvedType,
@@ -866,15 +917,15 @@ export function resolveAutoSaltEntity(
   return {
     entity_type: null,
     decision: {
-      status: search.results.length > 0 ? "results" : "not_found",
+      status: allowedResults.length > 0 ? "results" : "not_found",
       why:
-        search.results.length > 0
+        allowedResults.length > 0
           ? "The query matched Salt content, but not a canonical lookup entity."
           : "No matching Salt entity was found.",
     },
     entity: null,
     matches:
-      search.results.length > 0 ? toSearchMatches(search.results) : undefined,
+      allowedResults.length > 0 ? toSearchMatches(allowedResults) : undefined,
     next_step:
       search.results.length > 0
         ? "Use discover_salt for broader routing, or retry with a more exact entity name."
@@ -887,5 +938,18 @@ export function resolveKnownSaltEntity(
   context: GetSaltEntityContext,
   entityType: KnownSaltEntityType,
 ): GetSaltEntityResult {
+  if (!isEntityTypeAllowed(context, entityType)) {
+    return {
+      entity_type: null,
+      decision: {
+        status: "not_found",
+        why: `${entityType} is not exposed on this Salt entity lookup surface.`,
+      },
+      entity: null,
+      next_step:
+        "Retry with an entity type exposed by this lookup surface.",
+    };
+  }
+
   return ENTITY_RESOLVERS[entityType](context);
 }

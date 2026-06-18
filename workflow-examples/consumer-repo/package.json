@@ -2,7 +2,7 @@
   "name": "salt-consumer-example",
   "private": true,
   "scripts": {
-    "ui:verify": "salt-ds review ."
+    "ui:verify": "echo \"Run repo-owned checks, then use review_salt_ui through Salt MCP.\""
   },
   "dependencies": {
     "@salt-ds/core": "workspace:^",

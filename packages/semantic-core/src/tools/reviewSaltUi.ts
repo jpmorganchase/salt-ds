@@ -22,6 +22,7 @@ import {
   type GuidanceBoundary,
   type ProjectConventionsTopic,
 } from "./guidanceBoundary.js";
+import { buildSaltIconImportIssues } from "./iconGrounding.js";
 import { recommendFixRecipes } from "./recommendFixRecipes.js";
 import { suggestMigration } from "./suggestMigration.js";
 import {
@@ -1036,16 +1037,24 @@ export function reviewSaltUi(
     analysis,
     code: input.code,
   });
+  const iconValidation = buildSaltIconImportIssues(registry, analysis);
+  const supplementalIssues = [
+    ...contextualValidation.issues,
+    ...iconValidation.issues,
+  ];
+  const supplementalMissingData = unique([
+    ...contextualValidation.missing_data,
+    ...iconValidation.missing_data,
+  ]);
   const validation =
-    contextualValidation.issues.length === 0 &&
-    contextualValidation.missing_data.length === 0
+    supplementalIssues.length === 0 && supplementalMissingData.length === 0
       ? rawValidation
       : (() => {
           const { issueMap, addIssue } = createIssueCollector();
           for (const issue of rawValidation.issues) {
             addIssue(issue);
           }
-          for (const issue of contextualValidation.issues) {
+          for (const issue of supplementalIssues) {
             addIssue(issue);
           }
           const finalized = finalizeValidationIssues(issueMap, maxIssues);
@@ -1055,7 +1064,7 @@ export function reviewSaltUi(
             ...finalized,
             missing_data: unique([
               ...rawValidation.missing_data,
-              ...contextualValidation.missing_data,
+              ...supplementalMissingData,
             ]),
             generated_at: rawValidation.generated_artifact.generated_at,
             generator: rawValidation.generated_artifact.generator,

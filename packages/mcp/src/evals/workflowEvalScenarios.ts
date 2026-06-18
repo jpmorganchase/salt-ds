@@ -48,13 +48,6 @@ function buildWorkflowMetricBudgets(
         max_payload_bytes: 3200,
         max_duration_ms: 120000,
       };
-    case "upgrade":
-      return {
-        max_transcript_bytes: 1400,
-        max_workflow_result_bytes: 2800,
-        max_payload_bytes: 3000,
-        max_duration_ms: 120000,
-      };
     case "review":
     default:
       return {
@@ -169,39 +162,45 @@ export function buildDefaultWorkflowEvalScenarios(
       }),
     },
     {
-      id: "existing-salt-upgrade-core",
+      id: "existing-salt-review-version-risks",
       audience: "existing-salt-team",
-      tags: ["default", "upgrade"],
+      tags: ["default", "review", "version-risk"],
       fixture: existingSalt,
       task: {
-        workflow: "upgrade",
+        workflow: "review",
         prompt:
-          "Use salt-ds to upgrade this feature from Salt 1.x to 2.x. Separate required changes from optional cleanup and keep the scope to this feature.",
+          "Use salt-ds to review this feature for Salt 1.x to 2.x version risks. Separate required changes from optional cleanup and keep the scope to this feature.",
       },
       capabilities: {
         mcp: true,
       },
       args: {
         mcp: {
-          package: "@salt-ds/core",
+          code: [
+            'import { Button } from "@salt-ds/core";',
+            "",
+            "export function LegacyAction() {",
+            '  return <Button variant="cta">Submit</Button>;',
+            "}",
+          ].join("\n"),
+          framework: "react",
           from_version: "1.1.0",
-          include_deprecations: true,
+          package_version: "2.0.0",
         },
       },
-      expected: withWorkflowMetricBudgets("upgrade", {
+      expected: withWorkflowMetricBudgets("review", {
         transport: stopIfTransportUnavailable(),
         workflow: {
-          id: "upgrade_salt_ui",
+          id: "review_salt_ui",
         },
         public_contract: {
           workflow_status: "blocked",
           canonical_complete: true,
           safe_to_implement_exact_request: false,
           next_step: {
-            kind: "review",
-            tool: "review_salt_ui",
+            kind: "ask_user",
           },
-          summary_includes: ["upgrade guidance"],
+          summary_includes: ["still need attention"],
         },
       }),
     },
@@ -293,7 +292,7 @@ export function buildDefaultWorkflowEvalScenarios(
           // hardened this — the previous expectation of jumping straight to
           // a retrieve_entity tool_call presumed Salt was already installed).
           // Hosts complete the install, then rerun, then receive the Data
-          // grid retrieve_entity step.
+          // grid retrieve_entity step through get_salt_reference.
           next_step: {
             kind: "install_dependencies",
           },
@@ -338,11 +337,11 @@ export function buildDefaultWorkflowEvalScenarios(
           // The retrieve_entity action kind replaced the old self-referential
           // "tool_call create_salt_ui exact_name" pattern when a create
           // workflow needs to ground a follow-through entity. Hosts call
-          // get_salt_entity to fetch the canonical Metric details, then
+          // get_salt_reference to fetch the canonical Metric details, then
           // rerun create with that grounding.
           next_step: {
             kind: "retrieve_entity",
-            tool: "get_salt_entities",
+            tool: "get_salt_reference",
             name: "Metric",
           },
           summary_includes: ["broader Salt entity Analytical dashboard"],
@@ -396,140 +395,6 @@ export function buildDefaultWorkflowEvalScenarios(
           summary_includes: ["migration direction"],
         },
       }),
-    },
-    {
-      id: "existing-salt-review-mcp-blocked-cli-fallback",
-      audience: "existing-salt-team",
-      tags: ["transport", "review"],
-      fixture: existingSalt,
-      task: {
-        workflow: "review",
-        prompt:
-          "Use salt-ds to review this toolbar file. If MCP is unavailable in the host, fall back to the CLI path and keep the same summary-first answer.",
-      },
-      capabilities: {
-        mcp: true,
-      },
-      args: {
-        mcp: {
-          code: [
-            'import { Button, FlexLayout } from "@salt-ds/core";',
-            "",
-            "export function ToolbarAction() {",
-            "  return (",
-            '    <FlexLayout align="center" gap={1}>',
-            '      <Button href="/orders">Orders</Button>',
-            '      <Button appearance="secondary">Refresh</Button>',
-            "    </FlexLayout>",
-            "  );",
-            "}",
-          ].join("\n"),
-          framework: "react",
-          package_version: "2.0.0",
-        },
-      },
-      expected: withWorkflowMetricBudgets(
-        "review",
-        {
-          transport: stopIfTransportUnavailable(),
-          workflow: {
-            id: "review_salt_ui",
-          },
-          public_contract: {
-            workflow_status: "blocked",
-            canonical_complete: true,
-            safe_to_implement_exact_request: false,
-            next_step: {
-              kind: "ask_user",
-            },
-            summary_includes: ["still need attention"],
-          },
-        },
-        {
-          max_transcript_bytes: 2200,
-          max_payload_bytes: 3000,
-        },
-      ),
-    },
-    {
-      id: "existing-salt-review-all-transports-blocked",
-      audience: "existing-salt-team",
-      tags: ["transport", "review", "blocked"],
-      fixture: existingSalt,
-      task: {
-        workflow: "review",
-        prompt:
-          "Use salt-ds to review this toolbar file. Stop cleanly if neither MCP nor CLI transport is available.",
-      },
-      capabilities: {
-        mcp: true,
-      },
-      args: {
-        mcp: {
-          code: [
-            'import { Button, FlexLayout } from "@salt-ds/core";',
-            "",
-            "export function ToolbarAction() {",
-            "  return (",
-            '    <FlexLayout align="center" gap={1}>',
-            '      <Button href="/orders">Orders</Button>',
-            '      <Button appearance="secondary">Refresh</Button>',
-            "    </FlexLayout>",
-            "  );",
-            "}",
-          ].join("\n"),
-          framework: "react",
-          package_version: "2.0.0",
-        },
-      },
-      expected: {
-        transport: stopIfTransportUnavailable(),
-        summary_first: true,
-        require_verify: true,
-      },
-    },
-    {
-      id: "existing-salt-review-runtime-evidence-escalation",
-      audience: "existing-salt-team",
-      tags: ["planned", "review", "runtime"],
-      fixture: existingSalt,
-      task: {
-        workflow: "review",
-        prompt:
-          "Use salt-ds to review this toolbar file and include runtime evidence from the active URL before finalizing the fix order.",
-      },
-      capabilities: {
-        mcp: true,
-        runtime_url: true,
-      },
-      args: {
-        mcp: {
-          code: [
-            'import { Button, FlexLayout } from "@salt-ds/core";',
-            "",
-            "export function ToolbarAction() {",
-            "  return (",
-            '    <FlexLayout align="center" gap={1}>',
-            '      <Button href="/orders">Orders</Button>',
-            '      <Button appearance="secondary">Refresh</Button>',
-            "    </FlexLayout>",
-            "  );",
-            "}",
-          ].join("\n"),
-          framework: "react",
-          package_version: "2.0.0",
-          url: "http://localhost:6006/iframe.html?id=patterns-app-header--app-header",
-        },
-      },
-      expected: {
-        transport: stopIfTransportUnavailable(),
-        workflow: {
-          id: "review_salt_ui",
-        },
-        summary_first: true,
-        require_verify: true,
-        max_blocking_questions: 0,
-      },
     },
   ];
 }

@@ -2,7 +2,6 @@ import {
   compareOptions,
   compareVersions,
   createSaltUi,
-  discoverSalt,
   getChanges,
   getComponent,
   getCompositionRecipe,
@@ -18,7 +17,6 @@ import {
   getPattern,
   getRelatedEntities,
   getSaltEntity,
-  getSaltExamples,
   getToken,
   listFoundations,
   listSaltCatalog,
@@ -28,7 +26,6 @@ import {
   searchApiSurface,
   searchComponentCapabilities,
   searchSaltDocs,
-  upgradeSaltUi,
 } from "@salt-ds/semantic-core";
 import { mergeCanonicalAndProjectConventionLayers } from "@salt-ds/semantic-core/policy";
 import {
@@ -3753,60 +3750,6 @@ describe("consumer tools", () => {
     expect(result.next_step).toContain("project conventions");
   });
 
-  it("routes adoption-style discovery queries to migrate_to_salt", () => {
-    const result = discoverSalt(REGISTRY, {
-      query: "convert a material ui screen to salt",
-    });
-
-    expect(result.guidance_boundary).toMatchObject({
-      guidance_source: "canonical_salt",
-      project_conventions: {
-        contract: "project_conventions_v1",
-        check_recommended: true,
-        topics: expect.arrayContaining(["wrappers", "page-patterns"]),
-      },
-    });
-    expect(result.decision).toMatchObject({
-      workflow: "migrate_to_salt",
-      args: {
-        query: "convert a material ui screen to salt",
-        include_starter_code: true,
-        view: "full",
-      },
-    });
-    expect(result.next_step).toContain(
-      "Translate the source UI into Salt targets first",
-    );
-    expect(result.next_step).toContain("project conventions");
-    expect(result.suggested_follow_ups).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          workflow: "migrate_to_salt",
-        }),
-      ]),
-    );
-    expect(
-      result.suggested_follow_ups?.some((followUp) =>
-        followUp.reason.includes("project conventions"),
-      ),
-    ).toBe(true);
-  });
-
-  it("routes page-level mockup questions to migrate_to_salt with richer defaults", () => {
-    const result = discoverSalt(REGISTRY, {
-      query:
-        "Design a dashboard page with a sidebar, header, toolbar, loading state, and dialog footer",
-    });
-
-    expect(result.decision).toMatchObject({
-      workflow: "migrate_to_salt",
-      args: expect.objectContaining({
-        include_starter_code: true,
-        view: "full",
-      }),
-    });
-  });
-
   it("finds component capabilities from consumer terminology", () => {
     const capabilityRegistry: SaltRegistry = {
       ...REGISTRY,
@@ -4029,258 +3972,6 @@ describe("consumer tools", () => {
     expect(result.next_step).toBe(
       "Do not apply --salt-palette-accent-border directly in component code; choose a semantic characteristic token instead.",
     );
-  });
-
-  it("routes broad queries to the best consumer starting point", () => {
-    const result = discoverSalt(REGISTRY, {
-      query: "how should I handle typography hierarchy",
-    });
-
-    expect(result.guidance_boundary).toMatchObject({
-      guidance_source: "canonical_salt",
-      project_conventions: {
-        check_recommended: false,
-        topics: [],
-      },
-    });
-    expect(result.best_start).toMatchObject({
-      workflow: "get_salt_entities",
-    });
-    expect(result.options?.foundations[0]).toMatchObject({
-      title: "Typography",
-    });
-    expect(result.next_step).toBe(
-      "Apply the typography guidance to the current layout or component.",
-    );
-    expect(result.suggested_follow_ups).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          workflow: "get_salt_entities",
-        }),
-      ]),
-    );
-  });
-
-  it("surfaces top-level guidance_sources in discovery routing", () => {
-    const registry: SaltRegistry = {
-      ...REGISTRY,
-      components: REGISTRY.components.map((component) =>
-        component.name === "Link"
-          ? {
-              ...component,
-              semantics: {
-                category: ["navigation"],
-                preferred_for: ["Navigate to another route."],
-                not_for: ["Use Button for actions."],
-                derived_from: [
-                  "component-category-map",
-                  "usage-docs",
-                  "usage-callouts",
-                ],
-              },
-            }
-          : component,
-      ),
-    };
-
-    const result = discoverSalt(registry, {
-      query: "navigate to another route",
-    });
-
-    expect(result.guidance_sources).toEqual([
-      "component-category-map",
-      "usage-docs",
-      "usage-callouts",
-    ]);
-  });
-
-  it("returns clarifying questions for broad consumer intent", () => {
-    const result = discoverSalt(REGISTRY, {
-      query: "select an option",
-    });
-
-    expect(result.clarifying_questions).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          id: "selection-mode",
-        }),
-      ]),
-    );
-  });
-
-  it("can infer starter-code intent through discover_salt", () => {
-    const result = discoverSalt(REGISTRY, {
-      query: "starter code for navigate to another route",
-    });
-
-    expect(result.best_start).toMatchObject({
-      workflow: "create_salt_ui",
-    });
-    expect(result.related_guides).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          name: "Choosing the right primitive",
-          overview: "/salt/getting-started/choosing-the-right-primitive",
-        }),
-      ]),
-    );
-    expect(result.starter_code?.[0]?.code).toContain(
-      'import { Link } from "@salt-ds/core";',
-    );
-  });
-
-  it("routes structured navigation shell queries to pattern-first discovery", () => {
-    const registry: SaltRegistry = {
-      ...REGISTRY,
-      patterns: [
-        ...REGISTRY.patterns,
-        {
-          id: "pattern.vertical-navigation",
-          name: "Vertical navigation",
-          aliases: [
-            "vertical-navigation",
-            "sidebar navigation",
-            "navigation pane",
-            "left-hand navigation",
-            "nested navigation",
-          ],
-          summary:
-            "Vertical navigation provides users with a structured and intuitive way to navigate pages, sections, and application hierarchy from a dedicated pane.",
-          status: "stable",
-          category: ["layout-and-shells", "navigation-and-wayfinding"],
-          when_to_use: [
-            "Use for app-level vertical navigation or structured sidebar navigation.",
-            "Use when nested sections or grouped navigation need to remain visible inside a dedicated pane.",
-          ],
-          when_not_to_use: ["Use Link for a single destination."],
-          composed_of: [{ component: "Navigation item", role: null }],
-          related_patterns: ["Navigation"],
-          how_to_build: [],
-          how_it_works: [],
-          accessibility: { summary: [] },
-          resources: [],
-          examples: [],
-          starter_scaffold: {
-            semantics: {
-              regions: [
-                "navigation-pane",
-                "nested-navigation",
-                "content-context",
-              ],
-              build_around: [
-                "Fixed or responsive navigation pane",
-                "Stacked navigation item hierarchy inside the pane",
-                "Main content area that stays distinct from the navigation tree",
-              ],
-              preserve_constraints: [
-                "Keep navigation items grouped inside a dedicated pane rather than scattering links through the page body.",
-              ],
-            },
-            template: {
-              kind: "fallback-template",
-              imports: [
-                { name: "BorderLayout", package: "@salt-ds/core" },
-                { name: "NavigationItem", package: "@salt-ds/core" },
-                { name: "StackLayout", package: "@salt-ds/core" },
-              ],
-              jsx_lines: [
-                "<BorderLayout>",
-                "  <aside>{/* Navigation pane: fixed or responsive depending on the app shell */}",
-                '    <nav aria-label="Primary">',
-                "      <StackLayout>",
-                '        <NavigationItem href="/overview">Overview</NavigationItem>',
-                "        <NavigationItem>{/* Parent section that reveals nested items */}</NavigationItem>",
-                "      </StackLayout>",
-                "    </nav>",
-                "  </aside>",
-                "  <main>",
-                "    <StackLayout>{/* Main content area stays distinct from the navigation tree */}</StackLayout>",
-                "  </main>",
-                "</BorderLayout>",
-              ],
-              notes: [
-                "Start from the pane and navigation hierarchy rather than reducing the pattern to loose links or an unrelated page list.",
-              ],
-            },
-          },
-          related_docs: { overview: "/salt/patterns/vertical-navigation" },
-          last_verified_at: TIMESTAMP,
-        },
-      ],
-    };
-    const result = discoverSalt(registry, {
-      query: "sidebar navigation with nested sections",
-    });
-
-    expect(result.best_start).toMatchObject({
-      workflow: "create_salt_ui",
-      args: {
-        solution_type: "pattern",
-        query: "sidebar navigation with nested sections",
-      },
-      result: expect.objectContaining({
-        name: "Vertical navigation",
-      }),
-    });
-    expect(result.options?.patterns[0]).toMatchObject({
-      name: "Vertical navigation",
-    });
-  });
-
-  it("returns full-fidelity foundation data in discover_salt raw output", () => {
-    const result = discoverSalt(REGISTRY, {
-      query: "Typography",
-      view: "full",
-    });
-
-    expect(result.raw).toMatchObject({
-      foundation_lookup: {
-        foundation: {
-          title: "Typography",
-          route: "/salt/foundations/typography",
-          page_kind: "foundation",
-        },
-      },
-    });
-    expect(result.options?.foundations[0]).toMatchObject({
-      title: "Typography",
-      docs: ["/salt/foundations/typography"],
-    });
-    expect(result.options?.foundations[0]).not.toHaveProperty("route");
-  });
-
-  it("includes routing provenance in full discover_salt output", () => {
-    const registry: SaltRegistry = {
-      ...REGISTRY,
-      components: REGISTRY.components.map((component) =>
-        component.name === "Link"
-          ? {
-              ...component,
-              semantics: {
-                category: ["navigation"],
-                preferred_for: ["Navigate to another route."],
-                not_for: ["Use Button for actions."],
-                derived_from: ["component-category-map", "usage-docs"],
-              },
-            }
-          : component,
-      ),
-    };
-
-    const result = discoverSalt(registry, {
-      query: "navigate to another route",
-      view: "full",
-    });
-
-    expect(result.raw).toMatchObject({
-      routing_debug: {
-        chosen_workflow: "create_salt_ui",
-        top_component_guidance_sources: [
-          "component-category-map",
-          "usage-docs",
-        ],
-      },
-    });
   });
 
   it("returns related entities for a component", () => {
@@ -4853,51 +4544,4 @@ describe("curated public tools", () => {
     });
   });
 
-  it("returns curated Salt examples with optional starter code", () => {
-    const result = getSaltExamples(REGISTRY, {
-      target_type: "component",
-      target_name: "Button",
-      include_starter_code: true,
-    });
-
-    expect(result.guidance_boundary).toMatchObject({
-      guidance_source: "canonical_salt",
-      project_conventions: {
-        check_recommended: true,
-        topics: expect.arrayContaining(["wrappers"]),
-      },
-    });
-    expect(result.decision).toMatchObject({
-      target_name: "Button",
-      target_type: "component",
-    });
-    expect(result.best_example).toMatchObject({
-      title: "Primary form submit",
-    });
-    expect(result.starter_code?.[0]).toMatchObject({
-      label: "Button starter",
-    });
-  });
-
-  it("supports history-style version analysis through upgrade_salt_ui", () => {
-    const result = upgradeSaltUi(REGISTRY, {
-      package: "@salt-ds/core",
-      from_version: "1.1.0",
-      include_deprecations: true,
-    });
-
-    expect(result.guidance_boundary).toMatchObject({
-      guidance_source: "canonical_salt",
-      project_conventions: {
-        check_recommended: true,
-        topics: expect.arrayContaining(["migration-shims"]),
-      },
-    });
-    expect(result.mode).toBe("history");
-    expect(result.decision).toMatchObject({
-      target: "@salt-ds/core",
-      to_version: "2.0.0",
-    });
-    expect(result.notes?.[0]).toContain("to_version was not provided");
-  });
 });

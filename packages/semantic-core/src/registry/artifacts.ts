@@ -2,7 +2,11 @@ import fs from "node:fs/promises";
 import type { SaltPatternValidationRulePack } from "../patternValidationRulePacks.js";
 import type { SerializedPageSearchIndex } from "../search/pageSearchIndex.js";
 import type { SaltTokenPolicyStructuralRoleRulePack } from "../tokenPolicyStructuralRoleRules.js";
-import type { RegistryBuildInfo, SaltRegistry } from "../types.js";
+import type {
+  IconLiteRecord,
+  RegistryBuildInfo,
+  SaltRegistry,
+} from "../types.js";
 
 export const REGISTRY_ARRAY_ARTIFACTS = [
   { file_name: "packages.json", key: "packages" },
@@ -57,6 +61,14 @@ export const REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT = {
   file_name: "create-retrieval-index.jsonl",
 } as const;
 
+export const REGISTRY_ICON_LITE_ARTIFACT = {
+  file_name: "icons-lite.json",
+  key: "icons_lite",
+} as const satisfies {
+  file_name: "icons-lite.json";
+  key: "icons_lite";
+};
+
 export const REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT = {
   file_name: "token-policy-structural-role-rules.json",
   key: "token_policy_structural_role_rule_pack",
@@ -83,6 +95,12 @@ export interface PageSearchIndexArtifact {
   generated_at: string;
   version: string;
   [REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT.key]?: SerializedPageSearchIndex | null;
+}
+
+export interface IconLiteArtifact {
+  generated_at: string;
+  version: string;
+  [REGISTRY_ICON_LITE_ARTIFACT.key]?: IconLiteRecord[] | null;
 }
 
 export interface TokenPolicyStructuralRoleRulePackArtifact {

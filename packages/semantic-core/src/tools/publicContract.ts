@@ -112,7 +112,7 @@ export type PublicRerunWorkflowStep = PublicActionHints & {
 
 export type PublicFixContextStep = PublicActionHints & {
   kind: "fix_context";
-  tool: "get_salt_project_context" | "salt-ds info";
+  tool: "get_salt_project_context";
   mode: "stop_and_fix_context";
   args?: Record<string, unknown>;
 };
@@ -408,13 +408,9 @@ function buildPackageInstallCommand(
 }
 
 function buildToolCallCliHint(step: PublicToolCallStep): string | null {
-  // The Salt workflow CLI commands (create / review / migrate) were
-  // removed in favour of MCP-only delivery. Only support-tier tools still have
-  // a CLI mirror — `get_salt_project_context` maps to `salt-ds info --json`.
-  // All other branches return null so action hints surface the `mcp` shape only.
+  // Salt public v1 is MCP-first. Action hints surface the `mcp` shape only.
   switch (step.tool) {
     case "get_salt_project_context":
-      return "salt-ds info --json";
     case "create_salt_ui":
     case "review_salt_ui":
     case "migrate_to_salt":
@@ -439,8 +435,8 @@ function buildRetrieveExamplesCliHint(
 }
 
 function buildReviewCliHint(_step: PublicReviewStep): string | null {
-  // `salt-ds review` was removed; review-after-implementation guidance now
-  // flows through the `review_salt_ui` MCP tool surfaced in action.mcp.
+  // Review-after-implementation guidance flows through the
+  // `review_salt_ui` MCP tool surfaced in action.mcp.
   return null;
 }
 
@@ -510,15 +506,10 @@ function buildPublicActionHints(step: PublicNextStep): PublicActionHints {
     }
     case "fix_context":
       return {
-        cli: "salt-ds info --json",
-        ...(step.tool === "get_salt_project_context"
-          ? {
-              mcp: {
-                tool: "get_salt_project_context",
-                args: step.args ?? {},
-              },
-            }
-          : {}),
+        mcp: {
+          tool: "get_salt_project_context",
+          args: step.args ?? {},
+        },
       };
     case "ask_user":
     case "implement":

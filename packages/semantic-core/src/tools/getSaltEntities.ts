@@ -30,6 +30,11 @@ export interface GetSaltEntitiesInput {
   names: string[];
   /** Optional entity-family hint applied to every name in the batch. */
   entity_type?: GetSaltEntityInput["entity_type"];
+  /** Optional resolver allow-list for public surfaces that intentionally
+   * expose only a subset of the internal registry entity families. */
+  allowed_entity_types?: GetSaltEntityInput["allowed_entity_types"];
+  /** Optional toggle for broad search-index fallback when exact lookup fails. */
+  allow_search_fallback?: GetSaltEntityInput["allow_search_fallback"];
   /** Optional package filter applied to every name. */
   package?: string;
   /** Optional release-status filter applied to every name. */
@@ -132,6 +137,8 @@ export function getSaltEntities(
 
   const perNameInput: GetSaltEntityInput = {
     entity_type: input.entity_type ?? "auto",
+    allowed_entity_types: input.allowed_entity_types,
+    allow_search_fallback: input.allow_search_fallback,
     package: input.package,
     status: input.status,
     include: input.include,

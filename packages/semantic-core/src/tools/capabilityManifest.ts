@@ -69,7 +69,7 @@ export interface SaltCapabilityManifest {
     server_name: string | null;
     command_name: string | null;
   };
-  registry: {
+  offline_catalog: {
     available: boolean;
     version: string | null;
     generated_at: string | null;
@@ -207,7 +207,7 @@ export interface SaltCapabilityManifest {
 export interface BuildSaltCapabilityManifestOptions {
   transport: SaltCapabilityManifest["transport"];
   runtime: SaltCapabilityManifest["runtime"];
-  registry: SaltCapabilityManifest["registry"];
+  registry: SaltCapabilityManifest["offline_catalog"];
   contracts: {
     setup_contract_ids: string[];
   };
@@ -235,7 +235,7 @@ export function buildSaltCapabilityManifest(
     manifest_version: SALT_CAPABILITY_MANIFEST_VERSION,
     transport: options.transport,
     runtime: options.runtime,
-    registry: options.registry,
+    offline_catalog: options.registry,
     contracts: {
       compact_workflow_contract_version: SALT_COMPACT_WORKFLOW_CONTRACT_VERSION,
       compact_workflow_ids: [...SALT_COMPACT_WORKFLOW_IDS],
@@ -263,11 +263,9 @@ export function buildSaltCapabilityManifest(
           "action.kind",
           "action.post_action",
           "next_required_action",
-          "next_required_action.cli",
           "next_required_action.mcp",
           "allowed_next_actions",
           "recipe.steps",
-          "recipe.steps.action.cli",
           "recipe.steps.action.mcp",
           "questions",
           "evidence.status",

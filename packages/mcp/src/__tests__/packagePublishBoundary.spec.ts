@@ -16,7 +16,9 @@ type PackageManifest = {
     directory?: string;
   };
   publishExports?: Record<string, unknown>;
-  publishExtraCopyPaths?: Array<string | { from: string; to: string }>;
+  publishExtraCopyPaths?: Array<
+    string | { from: string; to: string; files?: string[] }
+  >;
   publishScriptExcludes?: string[];
   typescriptInclude?: string[];
 };
@@ -186,6 +188,22 @@ describe("package publish boundaries", () => {
       {
         from: "../semantic-core/generated",
         to: "generated",
+        files: [
+          "metadata.json",
+          "packages.json",
+          "components.json",
+          "patterns.json",
+          "pages.json",
+          "guides.json",
+          "icons-lite.json",
+          "tokens.json",
+          "deprecations.json",
+          "examples.json",
+          "create-retrieval-index.jsonl",
+          "page-search-index.json",
+          "pattern-validation-rules.json",
+          "token-policy-structural-role-rules.json",
+        ],
       },
     ]);
   });

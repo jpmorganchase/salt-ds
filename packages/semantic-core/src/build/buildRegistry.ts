@@ -4,6 +4,7 @@ import { buildPatternValidationRulePack } from "../patternValidationRulePacks.js
 import {
   REGISTRY_ARRAY_ARTIFACTS,
   REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
+  REGISTRY_ICON_LITE_ARTIFACT,
   REGISTRY_METADATA_ARTIFACT,
   REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT,
   REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT,
@@ -17,7 +18,12 @@ import { findSaltRepoRoot, getPackageRoot } from "../registry/paths.js";
 import { buildSerializedPageSearchIndex } from "../search/pageSearchIndex.js";
 import { buildTokenPolicyStructuralRoleRulePack } from "../tokenPolicyStructuralRoleRules.js";
 import { buildCreateRetrievalIndex } from "../tools/createRetrieval.js";
-import type { BuildRegistryOptions, SaltRegistry } from "../types.js";
+import type {
+  BuildRegistryOptions,
+  IconLiteRecord,
+  IconRecord,
+  SaltRegistry,
+} from "../types.js";
 import { extractCountrySymbols, extractIcons } from "./buildRegistryAssets.js";
 import { buildRegistryBuildInfo } from "./buildRegistryBuildInfo.js";
 import { extractChanges } from "./buildRegistryChanges.js";
@@ -53,6 +59,21 @@ const EXCLUDED_REGISTRY_PACKAGES = new Set([
   "@salt-ds/mcp",
   "@salt-ds/data-grid",
 ]);
+
+function buildIconLiteRecords(icons: IconRecord[]): IconLiteRecord[] {
+  return icons
+    .map((icon) => ({
+      name: icon.name,
+      export_name: icon.source.export_name ?? icon.name,
+      package: icon.package.name,
+      status: icon.status,
+      category: icon.category,
+      variant: icon.variant,
+      aliases: icon.aliases,
+      synonyms: icon.synonyms,
+    }))
+    .sort((left, right) => left.name.localeCompare(right.name));
+}
 
 export async function buildRegistry(
   options: BuildRegistryOptions = {},
@@ -214,6 +235,7 @@ export async function buildRegistry(
 
   const search_index = buildSearchIndex(baseRegistry);
   const create_retrieval_index = buildCreateRetrievalIndex(baseRegistry);
+  const icons_lite = buildIconLiteRecords(icons);
   const page_search_index = buildSerializedPageSearchIndex(pages);
   const token_policy_structural_role_rule_pack =
     buildTokenPolicyStructuralRoleRulePack({
@@ -264,6 +286,15 @@ export async function buildRegistry(
         version,
         [REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT.key]: page_search_index,
       },
+    ),
+    fs.writeFile(
+      path.join(outputDir, REGISTRY_ICON_LITE_ARTIFACT.file_name),
+      JSON.stringify({
+        generated_at: generatedAt,
+        version,
+        [REGISTRY_ICON_LITE_ARTIFACT.key]: icons_lite,
+      }),
+      "utf8",
     ),
     writeJsonFile(
       path.join(

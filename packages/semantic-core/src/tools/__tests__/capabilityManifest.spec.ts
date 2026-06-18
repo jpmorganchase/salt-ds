@@ -58,17 +58,20 @@ describe("Salt capability manifest", () => {
     const manifest = buildTestManifest();
     const actionContract = manifest.contracts.workflow_action_contract;
 
+    expect(manifest.offline_catalog).toEqual({
+      available: true,
+      version: "0.1.0",
+      generated_at: "2026-04-20T00:00:00Z",
+    });
     expect(actionContract.authoritative_fields).toEqual(
       expect.arrayContaining([
         "status",
         "safety.exact_request_safe",
         "action.kind",
         "next_required_action",
-        "next_required_action.cli",
         "next_required_action.mcp",
         "allowed_next_actions",
         "recipe.steps",
-        "recipe.steps.action.cli",
         "recipe.steps.action.mcp",
         "questions",
         "evidence.status",

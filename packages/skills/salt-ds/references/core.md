@@ -6,6 +6,7 @@ Load this file once at the start of a Salt workflow turn.
 
 Use the Salt MCP server as the only public transport.
 The MCP server is read-only.
+Canonical Salt facts come from the offline Salt catalog bundled with the MCP server.
 
 Public tools:
 

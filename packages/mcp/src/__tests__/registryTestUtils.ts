@@ -17,6 +17,28 @@ export const REPO_ROOT = path.resolve(
   "..",
   "..",
 );
+export const V1_CATALOG_ARTIFACT_FILES = [
+  "metadata.json",
+  "packages.json",
+  "components.json",
+  "patterns.json",
+  "pages.json",
+  "guides.json",
+  "icons-lite.json",
+  "tokens.json",
+  "deprecations.json",
+  "examples.json",
+  "create-retrieval-index.jsonl",
+  "page-search-index.json",
+  "pattern-validation-rules.json",
+  "token-policy-structural-role-rules.json",
+] as const;
+export const V1_EXCLUDED_CATALOG_ARTIFACT_FILES = [
+  "search-index.jsonl",
+  "changes.json",
+  "icons.json",
+  "country-symbols.json",
+] as const;
 
 export async function withRegistryDir(
   buildArtifacts: (registryDir: string) => Promise<void>,
@@ -50,4 +72,18 @@ export async function writeBaseArtifacts(
     "",
     "utf8",
   );
+}
+
+export async function copyV1CatalogArtifactsFromGenerated(
+  registryDir: string,
+): Promise<void> {
+  const generatedDir = path.join(REPO_ROOT, "packages", "semantic-core", "generated");
+  await fs.mkdir(registryDir, { recursive: true });
+
+  for (const fileName of V1_CATALOG_ARTIFACT_FILES) {
+    await fs.copyFile(
+      path.join(generatedDir, fileName),
+      path.join(registryDir, fileName),
+    );
+  }
 }

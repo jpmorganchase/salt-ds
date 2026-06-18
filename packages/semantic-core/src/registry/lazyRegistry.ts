@@ -5,16 +5,19 @@ import type { SerializedPageSearchIndex } from "../search/pageSearchIndex.js";
 import type { SaltTokenPolicyStructuralRoleRulePack } from "../tokenPolicyStructuralRoleRules.js";
 import type {
   CreateRetrievalDocument,
+  IconLiteRecord,
   RegistryBuildInfo,
   SaltRegistry,
   SearchIndexEntry,
 } from "../types.js";
 import {
   type MetadataArtifact,
+  type IconLiteArtifact,
   type PageSearchIndexArtifact,
   type PatternValidationRulePackArtifact,
   REGISTRY_ARRAY_ARTIFACTS,
   REGISTRY_CREATE_RETRIEVAL_INDEX_ARTIFACT,
+  REGISTRY_ICON_LITE_ARTIFACT,
   REGISTRY_METADATA_ARTIFACT,
   REGISTRY_PAGE_SEARCH_INDEX_ARTIFACT,
   REGISTRY_PATTERN_VALIDATION_RULE_PACK_ARTIFACT,
@@ -24,7 +27,10 @@ import {
   type TokenPolicyStructuralRoleRulePackArtifact,
 } from "./artifacts.js";
 import { getCachedArtifact, setCachedArtifact } from "./artifactCache.js";
-import { registerSerializedPageSearchIndexLoader } from "./runtimeCache.js";
+import {
+  registerIconLiteRecordsLoader,
+  registerSerializedPageSearchIndexLoader,
+} from "./runtimeCache.js";
 
 /**
  * Lazy registry implementation for Phase 0 task 0.2.
@@ -363,6 +369,59 @@ function readPageSearchIndexSync(
   return artifact;
 }
 
+function readIconLiteRecordsSync(
+  registryDir: string,
+): CachedSingleValueArtifact<IconLiteRecord[]> | null {
+  const absolutePath = path.join(
+    registryDir,
+    REGISTRY_ICON_LITE_ARTIFACT.file_name,
+  );
+  let mtimeMs: number;
+  try {
+    mtimeMs = statSync(absolutePath).mtimeMs;
+  } catch (error) {
+    if (isMissingFileError(error)) {
+      return null;
+    }
+    throw error;
+  }
+  const cached = getCachedArtifact<
+    CachedSingleValueArtifact<IconLiteRecord[]> | null
+  >(absolutePath, mtimeMs);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  let raw: IconLiteArtifact;
+  try {
+    raw = readJsonFileSync<IconLiteArtifact>(absolutePath);
+  } catch (error) {
+    if (isMissingFileError(error)) {
+      setCachedArtifact<CachedSingleValueArtifact<IconLiteRecord[]> | null>(
+        absolutePath,
+        null,
+        mtimeMs,
+      );
+      return null;
+    }
+    throw error;
+  }
+
+  const header = assertArtifactHeader(REGISTRY_ICON_LITE_ARTIFACT.file_name, raw);
+  const value = raw[REGISTRY_ICON_LITE_ARTIFACT.key];
+  if (!Array.isArray(value)) {
+    throw new Error("icons-lite.json is missing a valid icons_lite array.");
+  }
+  const artifact: CachedSingleValueArtifact<IconLiteRecord[]> = {
+    file_name: REGISTRY_ICON_LITE_ARTIFACT.file_name,
+    generated_at: header.generated_at,
+    version: header.version,
+    value,
+  };
+  setCachedArtifact(absolutePath, artifact, mtimeMs);
+  return artifact;
+}
+
 function readPatternValidationRulePackSync(
   registryDir: string,
 ): CachedSingleValueArtifact<SaltPatternValidationRulePack> | null {
@@ -580,6 +639,17 @@ function loadPageSearchIndexValue(
   return artifact.value;
 }
 
+function loadIconLiteRecords(
+  state: LazyRegistryState,
+): IconLiteRecord[] | null {
+  const artifact = readIconLiteRecordsSync(state.registryDir);
+  if (!artifact) {
+    return null;
+  }
+  assertHeaderMatchesMetadata(artifact.file_name, artifact, state.metadata);
+  return artifact.value;
+}
+
 const PROPERTY_LOADERS = {
   generated_at: (state: LazyRegistryState) => state.metadata.generated_at,
   version: (state: LazyRegistryState) => state.metadata.version,
@@ -722,6 +792,7 @@ export function createLazyRegistry(options: CreateLazyRegistryOptions): {
   registerSerializedPageSearchIndexLoader(proxy, () =>
     loadPageSearchIndexValue(state),
   );
+  registerIconLiteRecordsLoader(proxy, () => loadIconLiteRecords(state));
 
   if (options.prefetch) {
     // Touch every loader so the cache fills synchronously up front.

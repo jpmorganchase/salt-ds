@@ -26,6 +26,8 @@ export type SaltEntityType =
 
 export interface GetSaltEntityInput {
   entity_type?: SaltEntityType;
+  allowed_entity_types?: Array<Exclude<SaltEntityType, "auto">>;
+  allow_search_fallback?: boolean;
   name?: string;
   query?: string;
   package?: string;

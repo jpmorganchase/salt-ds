@@ -248,6 +248,17 @@ export interface IconRecord {
   last_verified_at: string;
 }
 
+export interface IconLiteRecord {
+  name: string;
+  export_name: string;
+  package: string;
+  status: SaltStatus;
+  category: string;
+  variant: "outline" | "solid";
+  aliases: string[];
+  synonyms: string[];
+}
+
 export interface CountrySymbolRecord {
   id: string;
   code: string;

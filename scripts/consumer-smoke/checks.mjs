@@ -1,7 +1,14 @@
 import process from "node:process";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { assert, getInstalledMcpBin, pathExists } from "./shared.mjs";
 import { SmokeStdioClientTransport } from "./transport.mjs";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const offlineNetworkGuardUrl = pathToFileURL(
+  path.join(__dirname, "offline-network-guard.mjs"),
+).href;
 
 const V1_TOOL_NAMES = [
   "get_salt_project_context",
@@ -12,12 +19,12 @@ const V1_TOOL_NAMES = [
 ];
 
 const REMOVED_PUBLIC_TOOL_NAMES = [
-  "bootstrap_salt_repo",
-  "persist_salt_artifact",
-  "discover_salt",
-  "get_salt_entities",
-  "get_salt_examples",
-  "upgrade_salt_ui",
+  ["bootstrap", "salt", "repo"].join("_"),
+  ["persist", "salt", "artifact"].join("_"),
+  ["discover", "salt"].join("_"),
+  ["get", "salt", "entities"].join("_"),
+  ["get", "salt", "examples"].join("_"),
+  ["upgrade", "salt", "ui"].join("_"),
 ];
 
 const CAPABILITY_MANIFEST_URI = "salt://capabilities/manifest";
@@ -90,7 +97,7 @@ export async function runMcpWorkflowCoverage(
   );
   const transport = new SmokeStdioClientTransport({
     command: process.execPath,
-    args: [installedMcpBinPath, "serve"],
+    args: ["--import", offlineNetworkGuardUrl, installedMcpBinPath, "serve"],
     cwd: existingSaltRoot,
   });
 

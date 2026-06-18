@@ -5,6 +5,7 @@ import {
   type ProjectConventionsTopic,
 } from "./guidanceBoundary.js";
 import { getRelevantGuidesForRecords } from "./guideAwareness.js";
+import { appendGroundedIconStarterSnippet } from "./iconGrounding.js";
 import {
   createEmptySourceAnalysis,
   detectFromCode,
@@ -122,6 +123,26 @@ function getTranslationProjectConventionTopics(
   return [...topics];
 }
 
+function buildIconGroundingText(input: MigrateToSaltInput): string {
+  return [
+    input.query,
+    input.code,
+    ...(input.source_outline?.regions ?? []),
+    ...(input.source_outline?.actions ?? []),
+    ...(input.source_outline?.states ?? []),
+    ...(input.source_outline?.notes ?? []),
+    ...(input.visual_evidence ?? []).flatMap((entry) => [
+      entry.label,
+      ...(entry.derived_outline.regions ?? []),
+      ...(entry.derived_outline.actions ?? []),
+      ...(entry.derived_outline.states ?? []),
+      ...(entry.derived_outline.notes ?? []),
+    ]),
+  ]
+    .filter((value): value is string => Boolean(value?.trim()))
+    .join(" ");
+}
+
 export function migrateToSalt(
   registry: SaltRegistry,
   input: MigrateToSaltInput,
@@ -220,7 +241,14 @@ export function migrateToSalt(
   const redesignHotspots = implementationPlan.manual_reviews.map(
     (translation) => `${translation.source_label}: ${translation.reason}`,
   );
-  const starterCode = buildStarterCodeOutput(translations);
+  const starterCode =
+    normalizedInput.include_starter_code === false
+      ? undefined
+      : appendGroundedIconStarterSnippet(
+          registry,
+          buildStarterCodeOutput(translations),
+          buildIconGroundingText(normalizedInput),
+        );
   const combinedScaffold = buildCombinedScaffoldOutput(
     translations,
     sourceUiModel,

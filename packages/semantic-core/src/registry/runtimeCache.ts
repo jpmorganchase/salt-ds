@@ -9,6 +9,7 @@ import type {
   DeprecationRecord,
   ExampleRecord,
   GuideRecord,
+  IconLiteRecord,
   PackageRecord,
   PageRecord,
   SaltRegistry,
@@ -39,6 +40,10 @@ const SERIALIZED_PAGE_SEARCH_INDEX_CACHE = new WeakMap<
 const PAGE_SEARCH_INDEX_CACHE = new WeakMap<
   SaltRegistry,
   MiniSearch<PageSearchDocument>
+>();
+const ICON_LITE_RECORDS_CACHE = new WeakMap<
+  SaltRegistry,
+  IconLiteRecord[] | null
 >();
 
 export function normalizeRegistryLookupKey(value: string): string {
@@ -97,21 +102,42 @@ function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
     }
   }
 
-  const changesByPackage = new Map<string, ChangeRecord[]>();
-  const changesByComponentKey = new Map<string, ChangeRecord[]>();
-  for (const change of registry.changes) {
-    appendIndexedValue(
-      changesByPackage,
-      normalizeRegistryLookupKey(change.package),
-      change,
-    );
-    if (change.target_type === "component") {
+  let changeIndexes:
+    | Pick<
+        RegistryIndexes,
+        "changeById" | "changesByPackage" | "changesByComponentKey"
+      >
+    | null = null;
+  let searchEntryById: Map<string, SearchIndexEntry> | null = null;
+
+  function getChangeIndexes() {
+    if (changeIndexes) {
+      return changeIndexes;
+    }
+
+    const changesByPackage = new Map<string, ChangeRecord[]>();
+    const changesByComponentKey = new Map<string, ChangeRecord[]>();
+    for (const change of registry.changes) {
       appendIndexedValue(
-        changesByComponentKey,
-        createComponentPackageKey(change.package, change.target_name),
+        changesByPackage,
+        normalizeRegistryLookupKey(change.package),
         change,
       );
+      if (change.target_type === "component") {
+        appendIndexedValue(
+          changesByComponentKey,
+          createComponentPackageKey(change.package, change.target_name),
+          change,
+        );
+      }
     }
+
+    changeIndexes = {
+      changeById: new Map(registry.changes.map((change) => [change.id, change])),
+      changesByPackage,
+      changesByComponentKey,
+    };
+    return changeIndexes;
   }
 
   return {
@@ -135,12 +161,23 @@ function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
     ),
     guideById: new Map(registry.guides.map((guide) => [guide.id, guide])),
     pageById: new Map(registry.pages.map((page) => [page.id, page])),
-    changeById: new Map(registry.changes.map((change) => [change.id, change])),
-    changesByPackage,
-    changesByComponentKey,
-    searchEntryById: new Map(
-      registry.search_index.map((entry) => [entry.id, entry]),
-    ),
+    get changeById() {
+      return getChangeIndexes().changeById;
+    },
+    get changesByPackage() {
+      return getChangeIndexes().changesByPackage;
+    },
+    get changesByComponentKey() {
+      return getChangeIndexes().changesByComponentKey;
+    },
+    get searchEntryById() {
+      if (!searchEntryById) {
+        searchEntryById = new Map(
+          registry.search_index.map((entry) => [entry.id, entry]),
+        );
+      }
+      return searchEntryById;
+    },
   };
 }
 
@@ -177,12 +214,23 @@ const PAGE_SEARCH_INDEX_LAZY_LOADERS = new WeakMap<
   SaltRegistry,
   () => SerializedPageSearchIndex | null
 >();
+const ICON_LITE_RECORDS_LAZY_LOADERS = new WeakMap<
+  SaltRegistry,
+  () => IconLiteRecord[] | null
+>();
 
 export function registerSerializedPageSearchIndexLoader(
   registry: SaltRegistry,
   loader: () => SerializedPageSearchIndex | null,
 ): void {
   PAGE_SEARCH_INDEX_LAZY_LOADERS.set(registry, loader);
+}
+
+export function registerIconLiteRecordsLoader(
+  registry: SaltRegistry,
+  loader: () => IconLiteRecord[] | null,
+): void {
+  ICON_LITE_RECORDS_LAZY_LOADERS.set(registry, loader);
 }
 
 export function getSerializedPageSearchIndex(
@@ -201,6 +249,22 @@ export function getSerializedPageSearchIndex(
   // The loader has fired; drop it so we don't keep reading on subsequent
   // calls if the consumer explicitly cleared the WeakMap.
   PAGE_SEARCH_INDEX_LAZY_LOADERS.delete(registry);
+  return value;
+}
+
+export function getIconLiteRecords(
+  registry: SaltRegistry,
+): IconLiteRecord[] | null | undefined {
+  if (ICON_LITE_RECORDS_CACHE.has(registry)) {
+    return ICON_LITE_RECORDS_CACHE.get(registry) ?? null;
+  }
+  const loader = ICON_LITE_RECORDS_LAZY_LOADERS.get(registry);
+  if (!loader) {
+    return undefined;
+  }
+  const value = loader();
+  ICON_LITE_RECORDS_CACHE.set(registry, value);
+  ICON_LITE_RECORDS_LAZY_LOADERS.delete(registry);
   return value;
 }
 

@@ -31,6 +31,8 @@ const {
   publishAdditionalDependencies = {},
   publishAdditionalEntryPaths = [],
   publishExtraCopyPaths = [],
+  publishSourceMaps = true,
+  publishIncludeChangelog = true,
   generateTypings = true,
   publishEntryPath,
   dependencies: _dependencies,
@@ -39,9 +41,11 @@ const {
   ...packageJsonForPublish
 } = packageJson;
 
-const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"].concat(
-  packageJson.files ?? [],
-);
+const FILES_TO_COPY = [
+  "README.md",
+  "LICENSE",
+  ...(publishIncludeChangelog ? ["CHANGELOG.md"] : []),
+].concat(packageJson.files ?? []);
 
 const packageName = packageJson.name;
 const outputDir = path.join(packageJson.publishConfig.directory);
@@ -186,7 +190,7 @@ const bundle = await rollup({
     esbuild({
       target: browserslistToEsbuild(),
       minify: false,
-      sourceMap: true,
+      sourceMap: publishSourceMaps,
     }),
     postcss({ extract: false, inject: false }),
     json(),
@@ -208,22 +212,26 @@ const transformSourceMap = (relativeSourcePath, sourceMapPath) => {
 
 await bundle.write({
   freeze: false,
-  sourcemap: true,
+  sourcemap: publishSourceMaps,
   preserveModules: true,
   dir: path.join(outputDir, "dist-cjs"),
   format: "cjs",
   exports: "auto",
-  sourcemapPathTransform: transformSourceMap,
+  ...(publishSourceMaps
+    ? { sourcemapPathTransform: transformSourceMap }
+    : {}),
 });
 
 await bundle.write({
   freeze: false,
-  sourcemap: true,
+  sourcemap: publishSourceMaps,
   preserveModules: true,
   dir: path.join(outputDir, "dist-es"),
   format: "es",
   exports: "auto",
-  sourcemapPathTransform: transformSourceMap,
+  ...(publishSourceMaps
+    ? { sourcemapPathTransform: transformSourceMap }
+    : {}),
 });
 
 await bundle.close();
@@ -284,7 +292,7 @@ await fs.writeJSON(
       "dist-cjs",
       "dist-es",
       ...(generateTypings ? ["dist-types"] : []),
-      "CHANGELOG.md",
+      ...(publishIncludeChangelog ? ["CHANGELOG.md"] : []),
     ]),
   },
   { spaces: 2 },
@@ -314,7 +322,22 @@ for (const copyConfig of publishExtraCopyPaths) {
       ? path.join(outputDir, copyConfig)
       : path.join(outputDir, copyConfig.to);
 
-  await fs.copy(fromPath, toPath);
+  if (
+    typeof copyConfig === "object" &&
+    Array.isArray(copyConfig.files) &&
+    copyConfig.files.length > 0
+  ) {
+    await Promise.all(
+      copyConfig.files.map(async (relativeFilePath) => {
+        await fs.copy(
+          path.join(fromPath, relativeFilePath),
+          path.join(toPath, relativeFilePath),
+        );
+      }),
+    );
+  } else {
+    await fs.copy(fromPath, toPath);
+  }
 }
 
 for (const [relativeBinPath, entrypoint] of Object.entries(
