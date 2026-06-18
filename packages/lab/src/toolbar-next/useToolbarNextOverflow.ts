@@ -71,6 +71,11 @@ const emptyOverflowState: OverflowState = {
 };
 
 const bandPositions: ToolbarContentNextPosition[] = ["start", "center", "end"];
+// Tolerance for comparing measured content against the available width.
+// `getBoundingClientRect` reports fractional pixels, so summed item, gap, and
+// container measurements can differ by sub-pixel amounts that never visibly
+// overflow. Treating differences below half a CSS pixel as "fits" prevents
+// false overflow. Matches the epsilon used by core Tabs for consistency.
 const WIDTH_EPSILON = 0.5;
 
 function measureWidth(element: HTMLElement | null) {
