@@ -53,7 +53,10 @@ export async function loadRegistry(
   const bundledRegistryDir = packageRoot
     ? path.join(packageRoot, "generated")
     : null;
-  if (bundledRegistryDir && (await pathExists(bundledRegistryDir))) {
+  if (
+    bundledRegistryDir &&
+    (await pathExists(path.join(bundledRegistryDir, "metadata.json")))
+  ) {
     return loadSemanticRegistry({ ...options, registryDir: bundledRegistryDir });
   }
 

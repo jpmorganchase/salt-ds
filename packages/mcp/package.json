@@ -9,6 +9,9 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
+  "engines": {
+    "node": ">=20"
+  },
   "sideEffects": false,
   "files": [
     "bin"
@@ -42,9 +45,27 @@
   "publishExtraCopyPaths": [
     {
       "from": "../semantic-core/generated",
-      "to": "generated"
+      "to": "generated",
+      "files": [
+        "metadata.json",
+        "packages.json",
+        "components.json",
+        "patterns.json",
+        "pages.json",
+        "guides.json",
+        "icons-lite.json",
+        "tokens.json",
+        "deprecations.json",
+        "examples.json",
+        "create-retrieval-index.jsonl",
+        "page-search-index.json",
+        "pattern-validation-rules.json",
+        "token-policy-structural-role-rules.json"
+      ]
     }
   ],
+  "publishSourceMaps": false,
+  "publishIncludeChangelog": false,
   "bin": {
     "salt-mcp": "bin/salt-mcp.js"
   },

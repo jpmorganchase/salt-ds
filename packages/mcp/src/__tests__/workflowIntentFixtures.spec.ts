@@ -36,7 +36,7 @@ function buildScenario(): WorkflowEvalScenario {
         match_status: "broadened",
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entities",
+          tool: "get_salt_reference",
           name: "Avatar",
         },
         allowed_next_actions: ["retrieve_entity", "rerun_workflow"],
@@ -100,15 +100,15 @@ function buildCompositeContract() {
     },
     action: {
       kind: "retrieve_entity",
-      tool: "get_salt_entities",
-      args: { names: ["Avatar"] },
+      tool: "get_salt_reference",
+      args: { kind: "entity", names: ["Avatar"] },
       rule_ids: ["create-follow-through-required"],
       post_action: null,
     },
     next_required_action: {
       kind: "retrieve_entity",
-      tool: "get_salt_entities",
-      args: { names: ["Avatar"] },
+      tool: "get_salt_reference",
+      args: { kind: "entity", names: ["Avatar"] },
     },
     allowed_next_actions: ["retrieve_entity", "rerun_workflow"],
     recipe: {
@@ -117,8 +117,8 @@ function buildCompositeContract() {
           id: "retrieve-avatar",
           action: {
             kind: "retrieve_entity",
-            tool: "get_salt_entities",
-            args: { names: ["Avatar"] },
+            tool: "get_salt_reference",
+            args: { kind: "entity", names: ["Avatar"] },
           },
           status: "required",
         },

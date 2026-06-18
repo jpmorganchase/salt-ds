@@ -51,7 +51,7 @@ Published package contents are intentionally limited to:
 
 - the `salt-mcp` bin
 - compiled runtime code
-- minimized generated registry data needed by the public v1 tools
+- minimized offline Salt catalog data needed by the public v1 tools
 - schemas required by the bundled runtime
 
 Internal eval runners, generated context packs, setup reports, review-state resources, and CLI workflow surfaces are not part of the public package contract.

@@ -9,7 +9,7 @@ export type EvalAudience =
   | "non-salt-team"
   | "new-project-team";
 
-export type EvalWorkflow = "create" | "review" | "migrate" | "upgrade";
+export type EvalWorkflow = "create" | "review" | "migrate";
 // After Phase A (14-Jun) the CLI no longer runs salt-ds workflow commands;
 // every eval scenario reaches the MCP via stdio only. EvalTransport stays as
 // a single-member literal so older `transport_used` callsites in trace
@@ -555,8 +555,6 @@ function toWorkflowToolId(workflow: EvalWorkflow): string {
       return "review_salt_ui";
     case "migrate":
       return "migrate_to_salt";
-    case "upgrade":
-      return "upgrade_salt_ui";
   }
 }
 
@@ -568,8 +566,6 @@ function toPublicWorkflowId(rawId: string | null): string | null {
       return "review_salt_ui";
     case "migrate":
       return "migrate_to_salt";
-    case "upgrade":
-      return "upgrade_salt_ui";
     default:
       return rawId;
   }
@@ -855,12 +851,10 @@ function readStepArg(
   if (!isRecord(step.args)) {
     return null;
   }
-  // After the 14-Jun tool-surface trim, get_salt_entity was merged into
-  // get_salt_entities and single-name lookups travel as `args.names: [X]`
-  // instead of `args.name: X`. The intent-fixture comparator still reads
-  // expectedStep.name verbatim because it stays one human-readable line;
-  // we transparently fall through to `args.names[0]` when the new
-  // batch shape is in play.
+  // Public reference follow-ups use get_salt_reference with
+  // `args.kind = "entity"` and `args.names`. The intent-fixture comparator
+  // still reads expectedStep.name verbatim because it stays one
+  // human-readable line.
   if (typeof step.args[key] === "string") {
     return step.args[key];
   }
@@ -1689,40 +1683,38 @@ export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
           ...(scenario.args.mcp ?? {}),
         };
 
-        if (scenario.task.workflow !== "upgrade") {
-          const contextCall = await client.callTool(
-            {
-              name: "get_salt_project_context",
-              arguments: {
-                root_dir: scenario.fixture.root_dir,
-              },
+        const contextCall = await client.callTool(
+          {
+            name: "get_salt_project_context",
+            arguments: {
+              root_dir: scenario.fixture.root_dir,
             },
-            undefined,
-            {
-              timeout: context.timeout_ms ?? 120_000,
-            },
-          );
-          const contextPayload = extractStructuredToolContent(contextCall);
-          const contextResult = isRecord(contextPayload.result)
-            ? contextPayload.result
-            : {};
-          const contextId = readString(contextResult, "context_id");
+          },
+          undefined,
+          {
+            timeout: context.timeout_ms ?? 120_000,
+          },
+        );
+        const contextPayload = extractStructuredToolContent(contextCall);
+        const contextResult = isRecord(contextPayload.result)
+          ? contextPayload.result
+          : {};
+        const contextId = readString(contextResult, "context_id");
 
-          if (contextId) {
-            Object.assign(toolArgs, {
-              context_id: contextId,
-            });
-          }
-
-          attemptTrace.push({
-            transport: "mcp",
-            status: "succeeded",
-            detail:
-              contextId !== null
-                ? `Collected project context ${contextId} before ${scenario.task.workflow}.`
-                : `Collected project context before ${scenario.task.workflow}.`,
+        if (contextId) {
+          Object.assign(toolArgs, {
+            context_id: contextId,
           });
         }
+
+        attemptTrace.push({
+          transport: "mcp",
+          status: "succeeded",
+          detail:
+            contextId !== null
+              ? `Collected project context ${contextId} before ${scenario.task.workflow}.`
+              : `Collected project context before ${scenario.task.workflow}.`,
+        });
 
         const workflowCall = await client.callTool(
           {

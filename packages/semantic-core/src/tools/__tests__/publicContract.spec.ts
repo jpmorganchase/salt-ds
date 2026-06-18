@@ -368,7 +368,7 @@ function buildCreateWorkflowContract(
       status: "context_checked",
       repo_specific_edits_ready: true,
       reason: "Context is ready.",
-      satisfied_by: "salt-ds info",
+      satisfied_by: "get_salt_project_context",
       resolution_status: "resolved",
       retry_with: {
         root_dir: "/repo",
@@ -406,7 +406,6 @@ function buildCreateWorkflowContract(
       declared_policy_status: "none-declared",
       policy_paths: [".salt/team.json", ".salt/stack.json"],
       suggested_follow_up_tool: "get_salt_project_context",
-      suggested_follow_up_cli: "salt-ds info --json",
       next_step: "Continue with canonical Salt guidance.",
     },
     provenance: {
@@ -454,7 +453,6 @@ function buildReviewWorkflowContract(
       declared_policy_status: "none-declared",
       policy_paths: [".salt/team.json", ".salt/stack.json"],
       suggested_follow_up_tool: "get_salt_project_context",
-      suggested_follow_up_cli: "salt-ds info --json",
       next_step: "Continue with canonical Salt guidance.",
     },
     rule_ids: [],
@@ -490,7 +488,7 @@ function buildMigrateWorkflowContract(
       status: "context_checked",
       repo_specific_edits_ready: true,
       reason: "Context is ready.",
-      satisfied_by: "salt-ds info",
+      satisfied_by: "get_salt_project_context",
       resolution_status: "resolved",
       retry_with: {
         root_dir: "/repo",
@@ -519,7 +517,6 @@ function buildMigrateWorkflowContract(
       declared_policy_status: "none-declared",
       policy_paths: [".salt/team.json", ".salt/stack.json"],
       suggested_follow_up_tool: "get_salt_project_context",
-      suggested_follow_up_cli: "salt-ds info --json",
       next_step: "Continue with canonical Salt guidance.",
     },
     rule_ids: [],
@@ -1799,7 +1796,6 @@ describe("publicContract workflow adapters", () => {
         repo_specific_edits_ready: false,
         reason: "Repo context still needs to be loaded.",
         suggested_follow_up_tool: "get_salt_project_context",
-        suggested_follow_up_cli: "salt-ds info --json",
         resolution_status: "needs_explicit_root",
         retry_with: {
           root_dir: "/repo",

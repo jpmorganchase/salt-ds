@@ -1345,9 +1345,7 @@ interface ToolSelectionFixture {
     | "create"
     | "review"
     | "migrate"
-    | "upgrade"
     | "info"
-    | "bootstrap"
     | "entity-lookup"
     | "pattern-lookup";
 }
@@ -1374,8 +1372,8 @@ const TOOL_SELECTION_CORPUS: readonly ToolSelectionFixture[] = [
   },
   {
     prompt: "Compare Salt Button and SplitButton side by side for a toolbar.",
-    expected: "create_salt_ui",
-    intent: "create",
+    expected: "get_salt_reference",
+    intent: "entity-lookup",
   },
 
   // review (3) — analyse existing code for Salt conformance.
@@ -1416,26 +1414,26 @@ const TOOL_SELECTION_CORPUS: readonly ToolSelectionFixture[] = [
     intent: "migrate",
   },
 
-  // upgrade (2) — version-to-version Salt change explanations.
+  // version-risk review (2) — version-to-version Salt checks use review_salt_ui in v1.
   {
     prompt:
-      "What changed in @salt-ds/core between version 1.20 and 1.30? Highlight breaking changes.",
-    expected: "upgrade_salt_ui",
-    intent: "upgrade",
+      "Review this existing Salt toolbar feature for breaking-change risk between version 1.20 and 1.30.",
+    expected: "review_salt_ui",
+    intent: "review",
   },
   {
     prompt:
-      "Show me the Salt upgrade impact from 1.40 to the latest release, including deprecations.",
-    expected: "upgrade_salt_ui",
-    intent: "upgrade",
+      "Review this Salt feature for version-risk and deprecation concerns between 1.40 and the current target version.",
+    expected: "review_salt_ui",
+    intent: "review",
   },
 
-  // info / bootstrap (2) — repo-level setup and inspection.
+  // info (2) — repo-level setup and inspection.
   {
     prompt:
-      "Bootstrap a Salt repo for this project: write team policy and repo instructions.",
-    expected: "bootstrap_salt_repo",
-    intent: "bootstrap",
+      "Inspect whether this project has Salt policy and repo instructions before setup work.",
+    expected: "get_salt_project_context",
+    intent: "info",
   },
   {
     prompt:
@@ -1447,19 +1445,19 @@ const TOOL_SELECTION_CORPUS: readonly ToolSelectionFixture[] = [
   // entity-lookup (3) — resolve a specific named Salt entity.
   {
     prompt: "Look up the Salt FormField component details and props.",
-    expected: "get_salt_entities",
+    expected: "get_salt_reference",
     intent: "entity-lookup",
   },
   {
     prompt:
       "Resolve the Salt Avatar component: I already know the exact entity name I need.",
-    expected: "get_salt_entities",
+    expected: "get_salt_reference",
     intent: "entity-lookup",
   },
   {
     prompt:
       "Get the canonical Salt SaltProviderNext entity record including its prop schema.",
-    expected: "get_salt_entities",
+    expected: "get_salt_reference",
     intent: "entity-lookup",
   },
 
@@ -1467,19 +1465,19 @@ const TOOL_SELECTION_CORPUS: readonly ToolSelectionFixture[] = [
   {
     prompt:
       "Show me canonical Salt code examples for the Card component before I implement it.",
-    expected: "get_salt_examples",
+    expected: "get_salt_reference",
     intent: "pattern-lookup",
   },
   {
     prompt:
       "Fetch sample implementation code for the Salt Analytical dashboard pattern.",
-    expected: "get_salt_examples",
+    expected: "get_salt_reference",
     intent: "pattern-lookup",
   },
   {
     prompt:
       "Give me canonical example snippets for the Salt Metric pattern so I can ground the starter code.",
-    expected: "get_salt_examples",
+    expected: "get_salt_reference",
     intent: "pattern-lookup",
   },
 ];
@@ -1494,9 +1492,7 @@ describe("tool-selection benchmark (Phase 0 task 0.10 / F8)", () => {
       "create",
       "review",
       "migrate",
-      "upgrade",
       "info",
-      "bootstrap",
       "entity-lookup",
       "pattern-lookup",
     ]);
@@ -1551,32 +1547,34 @@ describe("tool-selection benchmark (Phase 0 task 0.10 / F8)", () => {
     }
   });
 
-  it("never lets a write/persist tool win on a pure read-intent prompt", () => {
+  it("keeps every public tool read-only for v1 prompts", () => {
     const readOnlyPrompts = TOOL_SELECTION_CORPUS.filter(
       (fixture) =>
         fixture.intent === "info" ||
         fixture.intent === "entity-lookup" ||
         fixture.intent === "pattern-lookup" ||
-        fixture.intent === "review" ||
-        fixture.intent === "upgrade",
+        fixture.intent === "review",
     );
     expect(readOnlyPrompts.length).toBeGreaterThan(0);
 
-    const writeTools = new Set(
-      TOOL_DEFINITIONS.filter(
-        (definition) => definition.annotations?.readOnlyHint === false,
-      ).map((definition) => definition.name),
-    );
-    // Sanity check: persistence and bootstrap tools must exist for this test
-    // to be meaningful.
-    expect(writeTools.size).toBeGreaterThan(0);
+    for (const definition of TOOL_DEFINITIONS) {
+      expect(definition.annotations).toEqual(
+        expect.objectContaining({
+          readOnlyHint: true,
+          destructiveHint: false,
+        }),
+      );
+    }
 
     for (const fixture of readOnlyPrompts) {
       const ranking = ranker.rank(fixture.prompt);
       const top = ranking[0];
       expect(top).toBeDefined();
       if (!top) continue;
-      expect(writeTools.has(top.tool)).toBe(false);
+      const topDefinition = TOOL_DEFINITIONS.find(
+        (definition) => definition.name === top.tool,
+      );
+      expect(topDefinition?.annotations?.readOnlyHint).toBe(true);
     }
   });
 });

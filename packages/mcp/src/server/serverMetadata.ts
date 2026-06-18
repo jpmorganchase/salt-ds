@@ -152,14 +152,14 @@ export function buildSaltMcpInstructions(registry: SaltRegistry): string {
 
   return [
     `Salt MCP runtime: ${metadata.package_name} v${metadata.mcp_version}.`,
-    `Serving Salt registry v${metadata.registry_version}.`,
-    `Registry generated at ${metadata.registry_generated_at}.`,
+    `Serving offline Salt catalog v${metadata.registry_version}.`,
+    `Offline Salt catalog generated at ${metadata.registry_generated_at}.`,
     `Machine-readable capability manifest resource: ${metadata.capability_manifest_uri}.`,
     `Machine-readable retrieval catalog resources: ${SALT_MCP_CATALOG_MANIFEST_URI}, ${SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI}.`,
     "When asked for the MCP version, use the runtime version.",
-    "When asked about the Salt content version, use the registry version.",
+    "When asked about the Salt content version, use the offline Salt catalog version.",
     "This MCP only provides canonical Salt guidance from official Salt sources.",
-    "Repo-local wrappers, approved custom patterns, and team-specific conventions stay in declared project policy, not in the core Salt registry.",
+    "Repo-local wrappers, approved custom patterns, and team-specific conventions stay in declared project policy, not in the offline Salt catalog bundled with the MCP server.",
     "When a repo-aware workflow says project conventions matter, make sure the repo has declared policy through .salt/team.json or .salt/stack.json and let the workflow artifacts carry the resulting refinement and provenance.",
     "Workflow follow-ups use stable public tool IDs. retrieve_entity and retrieve_examples actions name registered read-only support tools.",
     "For repo-aware work, start with get_salt_project_context by default before choosing the main workflow tool, and pass an explicit root_dir whenever the host already knows the active workspace path.",

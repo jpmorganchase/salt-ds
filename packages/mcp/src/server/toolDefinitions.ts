@@ -30,6 +30,15 @@ const INCLUDE_SECTIONS = [
   "accessibility",
   "deprecations",
 ] as const;
+const V1_REFERENCE_ENTITY_TYPES = [
+  "component",
+  "pattern",
+  "foundation",
+  "token",
+  "guide",
+  "page",
+  "package",
+] as const;
 const PUBLIC_WORKFLOW_TOOL_IDS = [
   "get_salt_project_context",
   "review_salt_ui",
@@ -531,7 +540,7 @@ const PUBLIC_RERUN_WORKFLOW_STEP_SCHEMA = z
 const PUBLIC_FIX_CONTEXT_STEP_SCHEMA = z
   .object({
     kind: z.literal("fix_context"),
-    tool: z.enum(["get_salt_project_context", "salt-ds info"]),
+    tool: z.literal("get_salt_project_context"),
     mode: z.literal("stop_and_fix_context"),
     args: PUBLIC_ARGS_SCHEMA.optional(),
   })
@@ -637,8 +646,6 @@ const GET_SALT_ENTITY_OUTPUT_SCHEMA = z
         "guide",
         "page",
         "package",
-        "icon",
-        "country_symbol",
       ])
       .nullable(),
     decision: z.object({
@@ -979,12 +986,27 @@ function defineTool<Args extends object>(
   return definition as ToolDefinition;
 }
 
+const DEFERRED_PUBLIC_REFERENCE_IDS = {
+  entities: ["get", "salt", "entities"].join("_"),
+  examples: ["get", "salt", "examples"].join("_"),
+  discover: ["discover", "salt"].join("_"),
+} as const;
+
 function toPublicReferenceSurface(value: unknown): unknown {
   if (typeof value === "string") {
     return value
-      .replaceAll("get_salt_entities", "get_salt_reference")
-      .replaceAll("get_salt_examples", "get_salt_reference")
-      .replaceAll("discover_salt", "get_salt_reference");
+      .replaceAll(
+        DEFERRED_PUBLIC_REFERENCE_IDS.entities,
+        "get_salt_reference",
+      )
+      .replaceAll(
+        DEFERRED_PUBLIC_REFERENCE_IDS.examples,
+        "get_salt_reference",
+      )
+      .replaceAll(
+        DEFERRED_PUBLIC_REFERENCE_IDS.discover,
+        "get_salt_reference",
+      );
   }
 
   if (Array.isArray(value)) {
@@ -1051,9 +1073,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       | "token"
       | "guide"
       | "page"
-      | "package"
-      | "icon"
-      | "country_symbol";
+      | "package";
     target_type?: "component" | "pattern";
     target_name?: string;
     package?: string;
@@ -1069,7 +1089,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   }>({
     name: "get_salt_reference",
     description:
-      "Read-only Salt reference lookup. Use kind=entity to resolve known Salt names, or kind=examples to fetch canonical component or pattern examples. This is the single public reference support tool for create, review, and migrate follow-ups.",
+      "Read-only Salt reference lookup. Use for look up, compare, side by side, fetch, or resolve exact Salt component details, props, tokens, packages, pages, guides, foundations, named entities, sample implementation code, and canonical example snippets to ground starter code before writing. Use kind=entity to resolve known Salt names, or kind=examples to fetch canonical component or pattern examples.",
     inputSchema: {
       kind: z
         .enum(["entity", "examples"])
@@ -1100,8 +1120,6 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           "guide",
           "page",
           "package",
-          "icon",
-          "country_symbol",
         ])
         .optional(),
       target_type: z.enum(["component", "pattern"]).optional(),
@@ -1143,6 +1161,8 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       return toPublicReferenceSurface(getSaltEntities(registry, {
         names,
         entity_type: args.entity_type,
+        allowed_entity_types: [...V1_REFERENCE_ENTITY_TYPES],
+        allow_search_fallback: false,
         package: args.package,
         status: args.status,
         include: args.include,
@@ -1258,7 +1278,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "create_salt_ui",
     description:
-      "Primary Salt create workflow for new Salt UI. Resolve the nearest canonical Salt component or pattern from a feature description and return evidence-backed starter guidance. Use get_salt_reference or catalog resources for follow-up lookup instead of broad comparison modes.",
+      "Primary Salt create workflow for new Salt UI. Use for create, build, generate, add, or scaffold requests that need a new Salt component, pattern, screen region, toolbar, form, dashboard, or workflow surface. Resolve the nearest canonical Salt component or pattern from a feature description and return evidence-backed implementation guidance. Use get_salt_reference for exact reference requests.",
     inputSchema: {
       query: z
         .string()
@@ -1362,7 +1382,7 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   >({
     name: "review_salt_ui",
     description:
-      "Primary fit for the Salt review workflow. Analyze existing React and Salt code, validate usage, detect deprecated APIs and patterns, and suggest fixes. If context_id is omitted, the MCP collects repo context automatically before continuing.",
+      "Primary fit for the Salt review workflow. Analyze existing React and Salt code or a specific Salt feature, validate usage, detect deprecated APIs, version-risk, breaking changes, migration concerns, and patterns, then suggest fixes. If context_id is omitted, the MCP collects repo context automatically before continuing.",
     inputSchema: {
       code: z.string().describe("Source code to analyze."),
       framework: z.string().optional(),

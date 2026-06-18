@@ -367,7 +367,6 @@ function buildFixtureReviewContract(
       declared_policy_status: "none-declared",
       policy_paths: [".salt/team.json", ".salt/stack.json"],
       suggested_follow_up_tool: "get_salt_project_context",
-      suggested_follow_up_cli: "salt-ds info --json",
       next_step: "Continue with fixture review validation.",
     },
     rule_ids: [],

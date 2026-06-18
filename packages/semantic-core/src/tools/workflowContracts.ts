@@ -77,7 +77,6 @@ export type WorkflowContextRequirement =
       repo_specific_edits_ready: false;
       reason: string;
       suggested_follow_up_tool: "get_salt_project_context";
-      suggested_follow_up_cli: "salt-ds info --json";
       resolution_status: Exclude<WorkflowContextResolutionStatus, "resolved">;
       retry_with: {
         root_dir: string | null;
@@ -88,7 +87,7 @@ export type WorkflowContextRequirement =
       status: "context_checked";
       repo_specific_edits_ready: true;
       reason: string;
-      satisfied_by: "salt-ds info";
+      satisfied_by: "get_salt_project_context";
       resolution_status: "resolved";
       retry_with: {
         root_dir: string | null;
@@ -164,7 +163,6 @@ export interface WorkflowProjectConventionsCheck {
     | "stack-declared";
   policy_paths: [".salt/team.json", ".salt/stack.json"];
   suggested_follow_up_tool: "get_salt_project_context";
-  suggested_follow_up_cli: "salt-ds info --json";
   next_step: string;
 }
 
@@ -866,7 +864,6 @@ export function buildWorkflowContextRequirement(
     reason:
       "This workflow result is canonical Salt guidance only. Repo context was not checked before it was returned, so repo-specific refinement may still be incomplete even though the canonical Salt answer is usable.",
     suggested_follow_up_tool: "get_salt_project_context",
-    suggested_follow_up_cli: "salt-ds info --json",
     resolution_status: input.resolution_status ?? "needs_explicit_root",
     retry_with: {
       root_dir: input.retry_with_root_dir ?? null,
@@ -886,7 +883,7 @@ export function buildSatisfiedWorkflowContextRequirement(
     repo_specific_edits_ready: true,
     reason:
       "Local Salt project context was collected before this workflow result was returned, so repo-specific edits can proceed with framework, package, runtime, and policy context in scope.",
-    satisfied_by: "salt-ds info",
+    satisfied_by: "get_salt_project_context",
     resolution_status: "resolved",
     retry_with: {
       root_dir: input.retry_with_root_dir ?? null,
@@ -937,7 +934,7 @@ export function buildProjectConventionsCheck(
         : "No separate project-conventions check is usually required unless the repo already layers local abstractions on top of canonical Salt."
       : declaredPolicyStatus === "none-declared"
         ? checkRecommended
-          ? "No repo policy is declared yet. Proceed with the canonical Salt answer, and run init/bootstrap only if wrappers, shells, bans, or other durable repo rules would change the final project answer."
+          ? "No repo policy is declared yet. Proceed with the canonical Salt answer; durable repo policy setup is deferred from public v1."
           : "No repo policy is declared. Proceed with the canonical Salt answer unless the repo needs durable wrappers, bans, or other local Salt rules."
         : checkRecommended
           ? "Repo policy is declared. Apply it only after the canonical Salt answer is clear."
@@ -952,7 +949,6 @@ export function buildProjectConventionsCheck(
     declared_policy_status: declaredPolicyStatus,
     policy_paths: [".salt/team.json", ".salt/stack.json"],
     suggested_follow_up_tool: "get_salt_project_context",
-    suggested_follow_up_cli: "salt-ds info --json",
     next_step: nextStep,
   };
 }
