@@ -1,14 +1,18 @@
 import {
-  type Placement,
   useClick,
   useDismiss,
   useFloatingRootContext,
   useInteractions,
 } from "@floating-ui/react";
 import { useControlled } from "@salt-ds/core";
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
-import { useMegaMenuKeyboard } from "./useMegaMenuKeyboard";
+import { useMegaMenuNavigation } from "./useMegaMenuNavigation";
+
+/**
+ * Supported placements for the mega menu panel.
+ */
+export type MegaMenuPlacement = "bottom" | "bottom-start" | "bottom-end";
 
 export interface MegaMenuProps {
   /**
@@ -32,9 +36,15 @@ export interface MegaMenuProps {
    * The placement of the mega menu panel relative to the trigger.
    * @default "bottom"
    */
-  placement?: Placement;
+  placement?: MegaMenuPlacement;
 }
 
+/**
+ * Root of a mega menu, coordinating its trigger and panel.
+ *
+ * Not intended to be nested inside another floating overlay (e.g. a dialog or
+ * popover): the mega menu does not participate in floating-ui's `FloatingTree`
+ */
 export function MegaMenu({
   children,
   open,
@@ -51,13 +61,13 @@ export function MegaMenu({
 
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
-  const [focusFirstItemOnOpen, setFocusFirstItemOnOpen] = useState(false);
-  const [panelId, setPanelId] = useState<string | undefined>(undefined);
+  const focusFirstItemOnOpenRef = useRef(false);
+  const [panelId, setPanelId] = useState<string>();
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
       if (!newOpen) {
-        setFocusFirstItemOnOpen(false);
+        focusFirstItemOnOpenRef.current = false;
       }
       setOpenState(newOpen);
       onOpenChange?.(newOpen);
@@ -71,12 +81,12 @@ export function MegaMenu({
     elements: { reference, floating },
   });
 
-  const megaMenuKeyboard = useMegaMenuKeyboard(floatingRootContext);
+  const megaMenuNavigation = useMegaMenuNavigation(floatingRootContext);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useClick(floatingRootContext),
     useDismiss(floatingRootContext),
-    megaMenuKeyboard,
+    megaMenuNavigation,
   ]);
 
   const contextValue = useMemo(
@@ -89,8 +99,7 @@ export function MegaMenu({
       setFloating,
       setReference,
       setOpen,
-      focusFirstItemOnOpen,
-      setFocusFirstItemOnOpen,
+      focusFirstItemOnOpenRef,
       panelId,
       setPanelId,
     }),
@@ -100,13 +109,8 @@ export function MegaMenu({
       placement,
       getFloatingProps,
       getReferenceProps,
-      setFloating,
-      setReference,
       setOpen,
-      focusFirstItemOnOpen,
-      setFocusFirstItemOnOpen,
       panelId,
-      setPanelId,
     ],
   );
 

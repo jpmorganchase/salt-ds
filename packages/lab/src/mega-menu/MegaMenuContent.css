@@ -1,0 +1,10 @@
+.saltMegaMenuContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-300);
+  padding: var(--salt-spacing-300);
+  min-width: 0;
+  flex: 0 1 auto;
+  max-inline-size: var(--saltMegaMenuPanel-availableWidth);
+  box-sizing: border-box;
+}

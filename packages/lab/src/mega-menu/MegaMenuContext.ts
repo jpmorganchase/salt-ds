@@ -1,6 +1,12 @@
-import type { FloatingRootContext, Placement } from "@floating-ui/react";
+import type { FloatingRootContext } from "@floating-ui/react";
 import { createContext } from "@salt-ds/core";
-import type { Dispatch, HTMLProps, SetStateAction } from "react";
+import type {
+  Dispatch,
+  HTMLProps,
+  MutableRefObject,
+  SetStateAction,
+} from "react";
+import type { MegaMenuPlacement } from "./MegaMenu";
 
 export interface MegaMenuContextValue {
   /** Whether the mega menu is currently open. */
@@ -10,7 +16,7 @@ export interface MegaMenuContextValue {
   /** The floating-ui root context for coordinating interactions. */
   floatingRootContext: FloatingRootContext;
   /** The placement of the mega menu panel relative to the trigger. */
-  placement: Placement;
+  placement: MegaMenuPlacement;
   /** Props getter for the trigger (reference) element. Merges floating-ui interaction props with user props. */
   getReferenceProps: (
     userProps?: HTMLProps<Element> | undefined,
@@ -24,12 +30,10 @@ export interface MegaMenuContextValue {
   /** Ref setter for the trigger (reference) element. */
   setReference: Dispatch<SetStateAction<HTMLElement | null>>;
   /** Whether the first item should receive focus when the panel opens. */
-  focusFirstItemOnOpen: boolean;
-  /** Toggle the focus-first-item-on-open flag. */
-  setFocusFirstItemOnOpen: Dispatch<SetStateAction<boolean>>;
+  focusFirstItemOnOpenRef: MutableRefObject<boolean>;
   /** The id of the mega menu panel, used for aria-controls on the trigger. */
   panelId: string | undefined;
-  /** Set the panel id when the panel mounts. */
+  /** Registers the panel's id so the trigger's aria-controls stays in sync. */
   setPanelId: Dispatch<SetStateAction<string | undefined>>;
 }
 
