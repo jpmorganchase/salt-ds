@@ -32,9 +32,9 @@ export interface MegaMenuContextValue {
   /** Whether the first item should receive focus when the panel opens. */
   focusFirstItemOnOpenRef: MutableRefObject<boolean>;
   /** The id of the mega menu panel, used for aria-controls on the trigger. */
-  panelId: string;
-  /** Override the panel id when a consumer passes an explicit `id` to `MegaMenuPanel`. */
-  setPanelId: Dispatch<SetStateAction<string>>;
+  panelId: string | undefined;
+  /** Registers the panel's id so the trigger's aria-controls stays in sync. */
+  setPanelId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const MegaMenuContext = createContext<MegaMenuContextValue | undefined>(

@@ -4,6 +4,7 @@ import {
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
+  useId,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -46,15 +47,15 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       getFloatingProps,
       setFloating,
       focusFirstItemOnOpenRef,
-      panelId,
       setPanelId,
     } = useMegaMenu();
 
-    // The default id is generated in MegaMenu. Only propagate a
-    // consumer-supplied id so the trigger stays in sync.
+    const id = useId(idProp);
+
+    // Register the panel's id so the trigger's aria-controls stays in sync.
     useIsomorphicLayoutEffect(() => {
-      if (idProp) setPanelId(idProp);
-    }, [idProp, setPanelId]);
+      if (id) setPanelId(id);
+    }, [id, setPanelId]);
 
     const { domReference } = floatingRootContext.elements;
     const referenceEl =
@@ -100,7 +101,7 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
           guards: false,
         }}
         className={clsx(withBaseName(), className)}
-        id={panelId}
+        id={id}
         role="region"
         {...floatingProps}
         ref={handleRef}

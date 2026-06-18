@@ -4,7 +4,7 @@ import {
   useFloatingRootContext,
   useInteractions,
 } from "@floating-ui/react";
-import { useControlled, useIdMemo } from "@salt-ds/core";
+import { useControlled } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { MegaMenuContext } from "./MegaMenuContext";
 import { useMegaMenuNavigation } from "./useMegaMenuNavigation";
@@ -62,8 +62,7 @@ export function MegaMenu({
   const [reference, setReference] = useState<HTMLElement | null>(null);
   const [floating, setFloating] = useState<HTMLElement | null>(null);
   const focusFirstItemOnOpenRef = useRef(false);
-  const generatedId = useIdMemo();
-  const [panelId, setPanelId] = useState(generatedId);
+  const [panelId, setPanelId] = useState<string>();
 
   const setOpen = useCallback(
     (newOpen: boolean) => {
