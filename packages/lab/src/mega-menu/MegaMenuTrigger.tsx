@@ -38,7 +38,7 @@ function getAdjacentTrigger(
 
 export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
   function MegaMenuTrigger(props, ref) {
-    const { children, ...rest } = props;
+    const { children } = props;
     const megaMenu = useMegaMenu();
 
     const {
@@ -122,7 +122,6 @@ export const MegaMenuTrigger = forwardRef<HTMLElement, MegaMenuTriggerProps>(
             : { "aria-expanded": openState }),
           ...(openState ? { "aria-controls": panelId } : null),
           onKeyDown: handleKeyDown,
-          ...rest,
         }),
         children.props,
       ),
