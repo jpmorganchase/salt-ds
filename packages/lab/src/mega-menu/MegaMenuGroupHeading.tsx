@@ -19,17 +19,17 @@ export interface MegaMenuGroupHeadingProps
    */
   children?: ReactNode;
   /**
-   * Heading level — renders the matching `<h1>`–`<h6>` element.
-   * @default 3
+   * The heading element to render.
+   * @default "h3"
    */
-  level?: 1 | 2 | 3 | 4 | 5 | 6;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
 export const MegaMenuGroupHeading = forwardRef<
   HTMLHeadingElement,
   MegaMenuGroupHeadingProps
 >(function MegaMenuGroupHeading(
-  { children, className, id: idProp, level = 3, ...rest },
+  { children, className, id: idProp, as: Heading = "h3", ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -46,16 +46,14 @@ export const MegaMenuGroupHeading = forwardRef<
     return () => setHeadingId(undefined);
   }, [id, setHeadingId]);
 
-  const HeadingTag = `h${level}` as const;
-
   return (
-    <HeadingTag
+    <Heading
       className={clsx(withBaseName(), className)}
       ref={ref}
       {...rest}
       id={id}
     >
       {children}
-    </HeadingTag>
+    </Heading>
   );
 });
