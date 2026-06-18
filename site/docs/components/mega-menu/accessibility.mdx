@@ -10,21 +10,15 @@ data:
 
 ## Best practices
 
-### Triggering mega menu
+### Navigation landmark
 
-- Any button that triggers a Mega menu container.
-- It should be wrapped in a `<nav>` element to establish a navigation landmark.
-- `MegaMenuTrigger` automatically applies **aria-expanded** to reflect the expanded or collapsed state, and **aria-controls** to reference the associated mega menu panel.
+- Wrap the mega menu in a `<nav>` element to expose it as a navigation landmark.
 
-### Mega menu panel
+### Accessible name
 
-- `MegaMenuPanel` renders a `<div>` with `role="region"`. Always provide an `aria-label` on `MegaMenuPanel` that describes the menu content, for example `aria-label="Solutions menu"`. This ensures assistive technology users can distinguish the panel from other landmarks on the page.
+- `MegaMenuPanel` renders a `<div>` with `role="region"`. Always provide an `aria-label` that describes the menu content (for example, `aria-label="Solutions menu"`) so assistive-technology users can distinguish it from other landmarks on the page.
 
-### Custom region
-
-- A custom region can include a locally customized component; however, it must comply with ADA standards. For example, opening another modal through an action in a custom region may violate ADA compliance and should be avoided.
-
-### Accessibility semantics
+### List semantics
 
 - Triggers and group links are unordered lists: use a `<ul>` with each item in its own `<li>`. Reserve `<ol>` for when the sequence is meaningful and must be announced to assistive technology.
 

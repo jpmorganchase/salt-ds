@@ -18,50 +18,13 @@ As the content grows wider — or the viewport shrinks — the container expands
 
 ## Full width
 
-To display the mega menu at its full available width, set the panel to the available width and widen the group columns so they fill it:
-
-```css
-.fullWidthPanel {
-  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
-}
-
-/* Widen and stretch the columns so they fill the wider panel */
-.fullWidthPanel .saltMegaMenuGroups {
-  --saltMegaMenuGroups-columnWidth: 16rem;
-  align-self: stretch;
-}
-```
+To display the mega menu at its full available width, set `--saltMegaMenuPanel-inlineSize` to `--saltMegaMenuPanel-availableWidth` and widen the group columns with `--saltMegaMenuGroups-columnWidth` so they fill it.
 
 <LivePreview componentName="mega-menu" exampleName="FullWidth" />
 
 ## Edge to edge
 
-To render the mega menu edge-to-edge, span the panel across the viewport and remove the page-margin gutter, then constrain and center the inner content so it keeps balanced margins on large displays:
-
-```css
-/* Remove the page-margin gutter (set on the trigger's container) */
-.edgeToEdgeWrapper {
-  --saltMegaMenuPanel-pageMargin: 0;
-}
-
-/* Span the full viewport width */
-.edgeToEdgePanel {
-  --saltMegaMenuPanel-inlineSize: 100vw;
-  --saltMegaMenuPanel-maxInlineSize: 100vw;
-}
-
-/* Constrain and center the content within the full-width panel */
-.edgeToEdgePanel .saltMegaMenuContent {
-  max-inline-size: 100%;
-}
-
-.edgeToEdgePanel .saltMegaMenuGroups {
-  --saltMegaMenuGroups-columnWidth: 212px;
-  max-inline-size: 920px;
-  inline-size: 100%;
-  margin-inline: auto;
-}
-```
+To render the mega menu edge-to-edge, set `--saltMegaMenuPanel-inlineSize` and `--saltMegaMenuPanel-maxInlineSize` to span the viewport and `--saltMegaMenuPanel-pageMargin` to `0` to remove the gutter, then constrain and center the inner content so it keeps balanced margins on large displays.
 
 <LivePreview componentName="mega-menu" exampleName="EdgeToEdge" />
 
