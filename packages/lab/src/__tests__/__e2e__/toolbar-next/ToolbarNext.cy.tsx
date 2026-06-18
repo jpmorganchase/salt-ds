@@ -861,8 +861,61 @@ function MixedTrayCompressionTestCase() {
   );
 }
 
+const subpixelItemLabels = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+];
+
+function SubpixelWidthRoundingTestCase() {
+  return (
+    <div className="Flexbox" style={{ height: 220, width: 760 }}>
+      <ToolbarNext
+        appearance="transparent"
+        aria-label="Subpixel width rounding toolbar"
+      >
+        <ToolbarContentNext position="start" style={{ gap: 0 }}>
+          {subpixelItemLabels.map((label, index) => (
+            <TooltrayNext key={label} overflowPriority={index}>
+              <span
+                style={{
+                  boxSizing: "border-box",
+                  display: "inline-flex",
+                  width: 20.2,
+                }}
+              >
+                {label}
+              </span>
+            </TooltrayNext>
+          ))}
+        </ToolbarContentNext>
+      </ToolbarNext>
+    </div>
+  );
+}
+
 function setFixtureWidth(width: number) {
   cy.get(".Flexbox").invoke("css", "width", `${width}px`);
+}
+
+function getVisibleToolbarSlotWidth(toolbarName: string) {
+  return cy.findByRole("toolbar", { name: toolbarName }).then(($toolbar) => {
+    const toolbar = $toolbar[0];
+    const visibleSlotRects = getVisibleElementRects(
+      toolbar.querySelectorAll<HTMLElement>(".saltToolbarNextOverflow-slot"),
+    );
+
+    return visibleSlotRects.reduce((total, rect) => total + rect.width, 0);
+  });
 }
 
 function parsePixelValue(value: string) {
@@ -1060,6 +1113,36 @@ describe("Given ToolbarNext overflow measurements", () => {
         win as ToolbarNextGuardedResizeWindow
       ).__toolbarNextGuardedResizeTest?.restore();
     });
+  });
+
+  it("does not falsely overflow fractional widths that fit within epsilon", () => {
+    cy.mount(<SubpixelWidthRoundingTestCase />);
+
+    cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
+    for (const label of subpixelItemLabels) {
+      cy.findByText(label).should("be.visible");
+    }
+    expectToolbarFits("Subpixel width rounding toolbar");
+
+    getVisibleToolbarSlotWidth("Subpixel width rounding toolbar").then(
+      (contentWidth) => {
+        setFixtureWidth(contentWidth - 0.4);
+        cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
+        for (const label of subpixelItemLabels) {
+          cy.findByText(label).should("be.visible");
+        }
+        expectToolbarFits("Subpixel width rounding toolbar");
+
+        setFixtureWidth(contentWidth - 1);
+        cy.findByRole("button", { name: /Overflow\./i }).should("be.visible");
+        cy.findByRole("toolbar", {
+          name: "Subpixel width rounding toolbar",
+        }).within(() => {
+          cy.findByText("12").should("not.be.visible");
+        });
+        expectToolbarFits("Subpixel width rounding toolbar");
+      },
+    );
   });
 
   it("collapses the first shared tray as soon as measured content exceeds the container", () => {
