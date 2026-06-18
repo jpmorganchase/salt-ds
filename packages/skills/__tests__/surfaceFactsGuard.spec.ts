@@ -93,18 +93,13 @@ describe("Salt skill and prompt surface fact guard", () => {
   });
 
   it("keeps theme bootstrap on unsupported/evidence-required wording until evidence exists", async () => {
-    // SKILL.md is a thin router after PR 11.5; the Theme Evidence Rule prose
-    // lives in references/core.md (always loaded alongside SKILL.md).
     const surfaces = await Promise.all(
-      [
-        "packages/skills/salt-ds/references/core.md",
-        "packages/skills/salt-ds/agents/openai.yaml",
-        "packages/skills/salt-ds/references/core.md",
-        "packages/semantic-core/src/bootstrapScaffolding.ts",
-      ].map(async (relativePath) => ({
-        relativePath,
-        content: await readRepoFile(relativePath),
-      })),
+      ["packages/semantic-core/src/bootstrapScaffolding.ts"].map(
+        async (relativePath) => ({
+          relativePath,
+          content: await readRepoFile(relativePath),
+        }),
+      ),
     );
 
     for (const { content, relativePath } of surfaces) {

@@ -172,7 +172,6 @@ const MobileAppHeader: FC<{
         >
           {!drawerOpen && (
             <Button
-              aria-label="Open navigation"
               onClick={() => setDrawerOpen(true)}
               style={{ alignSelf: "center" }}
               appearance="transparent"
@@ -183,7 +182,6 @@ const MobileAppHeader: FC<{
           )}
           {drawerOpen && (
             <Button
-              aria-label="Close navigation"
               onClick={() => setDrawerOpen(false)}
               style={{ alignSelf: "center" }}
               appearance="transparent"

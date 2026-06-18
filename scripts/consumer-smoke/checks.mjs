@@ -1,45 +1,49 @@
-import fs from "node:fs/promises";
-import path from "node:path";
 import process from "node:process";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
-import {
-  assert,
-  distCliBin,
-  getInstalledCliBin,
-  getInstalledMcpBin,
-  pathExists,
-  repoRoot,
-  runCommand,
-} from "./shared.mjs";
+import { assert, getInstalledMcpBin, pathExists } from "./shared.mjs";
 import { SmokeStdioClientTransport } from "./transport.mjs";
 
-async function runSaltJson(rootDir, args, options = {}) {
-  const cliBin = options.cliBin ?? distCliBin;
-  assert(await pathExists(cliBin), `Expected Salt CLI bin at ${cliBin}.`);
-  const result = await runCommand(
-    process.execPath,
-    [
-      cliBin,
-      ...args,
-      ...(options.registryDir ? ["--registry-dir", options.registryDir] : []),
-      "--json",
-    ],
-    {
-      cwd: rootDir,
-      label: `node ${path.basename(cliBin)} ${args.join(" ")}`,
-      acceptableExitCodes: options.acceptableExitCodes ?? [0],
-    },
-  );
+const V1_TOOL_NAMES = [
+  "get_salt_project_context",
+  "get_salt_reference",
+  "review_salt_ui",
+  "create_salt_ui",
+  "migrate_to_salt",
+];
 
-  return {
-    ...result,
-    payload: JSON.parse(result.stdout),
-  };
+const REMOVED_PUBLIC_TOOL_NAMES = [
+  "bootstrap_salt_repo",
+  "persist_salt_artifact",
+  "discover_salt",
+  "get_salt_entities",
+  "get_salt_examples",
+  "upgrade_salt_ui",
+];
+
+const CAPABILITY_MANIFEST_URI = "salt://capabilities/manifest";
+const CATALOG_MANIFEST_URI = "salt://catalog/manifest";
+const CATALOG_ENTITY_TEMPLATE_URI = "salt://catalog/entity/{name}";
+
+function parseResourceText(result, label) {
+  const text = result?.contents?.[0]?.text;
+  assert(typeof text === "string" && text.length > 0, `${label} was empty.`);
+  return JSON.parse(text);
+}
+
+function getToolPayload(result, label) {
+  assert(result?.isError !== true, `${label} returned an MCP error.`);
+  if (result?.structuredContent) {
+    return result.structuredContent;
+  }
+
+  const text = result?.content?.find((part) => part.type === "text")?.text;
+  assert(typeof text === "string" && text.length > 0, `${label} was empty.`);
+  return JSON.parse(text);
 }
 
 function assertCompactMcpWorkflowPayload(payload, workflow, message) {
   assert(
-    payload?.contract === "salt_workflow_v3" &&
+    payload?.contract === "salt_workflow_v1" &&
       payload?.workflow === workflow &&
       payload?.transport === "mcp" &&
       typeof payload?.status === "string" &&
@@ -53,387 +57,27 @@ function assertCompactMcpWorkflowPayload(payload, workflow, message) {
       Array.isArray(payload?.safety?.blocking_reasons) &&
       payload?.action &&
       typeof payload.action === "object" &&
-      typeof payload?.action?.kind === "string" &&
+      payload?.next_required_action &&
+      typeof payload.next_required_action === "object" &&
+      Array.isArray(payload?.allowed_next_actions) &&
+      Array.isArray(payload?.recipe?.steps) &&
+      Array.isArray(payload?.questions) &&
+      payload?.evidence &&
+      typeof payload.evidence === "object" &&
+      payload?.internal_limitations &&
+      typeof payload.internal_limitations === "object" &&
       typeof payload?.summary === "string" &&
       payload.summary.length > 0,
     message,
   );
 }
 
-const WORKFLOW_EXIT_CODES = {
-  success: 0,
-  partial: 10,
-  blocked: 20,
-  failed: 30,
-};
-
-function assertCompactCliWorkflowPayload(payload, workflow, exitCode, message) {
-  assert(
-    payload?.contract === "salt_workflow_v3" &&
-      payload?.workflow === workflow &&
-      payload?.transport === "cli" &&
-      typeof payload?.status === "string" &&
-      Object.hasOwn(WORKFLOW_EXIT_CODES, payload.status) &&
-      payload?.request &&
-      typeof payload.request === "object" &&
-      payload?.safety &&
-      typeof payload.safety === "object" &&
-      typeof payload?.safety?.canonical_complete === "boolean" &&
-      typeof payload?.safety?.exact_request_safe === "boolean" &&
-      Array.isArray(payload?.safety?.blocking_reasons) &&
-      payload?.action &&
-      typeof payload.action === "object" &&
-      typeof payload?.action?.kind === "string" &&
-      typeof payload?.summary === "string" &&
-      payload.summary.length > 0,
-    message,
-  );
-  assert(
-    exitCode === WORKFLOW_EXIT_CODES[payload.status],
-    `${message} Exit code ${exitCode} did not match status ${payload.status}.`,
-  );
-}
-
-export async function runDoctor(installRoot, repoRoot, runtimeUrl) {
-  console.log("Running salt-ds doctor in the temp consumer repo...");
-  const bundleDir = path.join(repoRoot, ".salt-support", "doctor-bundle");
-  const installedCliBin = getInstalledCliBin(installRoot);
-  assert(
-    await pathExists(installedCliBin),
-    `Expected installed Salt CLI bin at ${installedCliBin}.`,
-  );
-  const result = await runCommand(
-    process.execPath,
-    [
-      installedCliBin,
-      "doctor",
-      ".",
-      "--json",
-      "--storybook-url",
-      runtimeUrl,
-      "--bundle-dir",
-      bundleDir,
-    ],
-    {
-      cwd: repoRoot,
-      label: "installed salt-ds doctor",
-    },
-  );
-
-  const payload = JSON.parse(result.stdout);
-  assert(
-    payload.repoSignals.storybookDetected === true,
-    "salt-ds doctor did not detect Storybook in the consumer repo.",
-  );
-  assert(
-    payload.repoSignals.saltTeamConfigFound === true,
-    "salt-ds doctor did not detect .salt/team.json in the consumer repo.",
-  );
-  assert(
-    payload.runtimeTargets.some((target) => target.reachable === true),
-    "salt-ds doctor did not report a reachable runtime target.",
-  );
-  assert(
-    await pathExists(path.join(bundleDir, "doctor-report.json")),
-    "salt-ds doctor did not write the expected support bundle report.",
-  );
-  assert(
-    await pathExists(path.join(bundleDir, "policy-layer-summary.json")),
-    "salt-ds doctor did not write the expected policy-layer summary bundle artifact.",
-  );
-}
-
-export async function runRuntimeInspect(installRoot, repoRoot, runtimeUrl) {
-  console.log("Running salt-ds runtime inspect in the temp consumer repo...");
-  const installedCliBin = getInstalledCliBin(installRoot);
-  assert(
-    await pathExists(installedCliBin),
-    `Expected installed Salt CLI bin at ${installedCliBin}.`,
-  );
-  const result = await runCommand(
-    process.execPath,
-    [
-      installedCliBin,
-      "runtime",
-      "inspect",
-      runtimeUrl,
-      "--json",
-      "--mode",
-      "fetched-html",
-    ],
-    {
-      cwd: repoRoot,
-      label: "installed salt-ds runtime inspect",
-    },
-  );
-  const payload = JSON.parse(result.stdout);
-  assert(
-    payload.inspectionMode === "fetched-html",
-    "salt-ds runtime inspect did not return fetched-html mode in the smoke test.",
-  );
-  assert(
-    payload.page.title === "Salt Smoke Runtime",
-    "salt-ds runtime inspect did not read the expected page title.",
-  );
-  assert(
-    payload.accessibility.landmarks.some((entry) => entry.role === "main"),
-    "salt-ds runtime inspect did not report a main landmark.",
-  );
-  assert(
-    payload.layout?.available === false,
-    "salt-ds runtime inspect did not report layout evidence as unavailable in fetched-html mode.",
-  );
-}
-
-export async function runInfo(rootDir, options = {}) {
-  console.log("Running salt-ds info in the temp consumer repo...");
-  const { exitCode, payload } = await runSaltJson(rootDir, ["info", "."], {
-    cliBin: options.cliBin,
-    registryDir: options.registryDir,
-  });
-  assert(exitCode === 0, "salt-ds info did not succeed.");
-  return payload;
-}
-
-export async function runPublicCliWorkflowCoverage(
+export async function runMcpWorkflowCoverage(
   installRoot,
   existingSaltRoot,
   nonSaltRoot,
-  newProjectRoot,
-  runtimeUrl,
 ) {
-  console.log("Checking the public CLI workflow contract...");
-  const installedCliBin = getInstalledCliBin(installRoot);
-  const registryDir = path.join(
-    repoRoot,
-    "packages",
-    "semantic-core",
-    "generated",
-  );
-  assert(
-    await pathExists(installedCliBin),
-    `Expected installed Salt CLI bin at ${installedCliBin}.`,
-  );
-  assert(
-    await pathExists(registryDir),
-    `Expected built Salt registry at ${registryDir}.`,
-  );
-
-  const newProjectInit = (
-    await runSaltJson(newProjectRoot, ["init", "."], {
-      cliBin: installedCliBin,
-      registryDir,
-    })
-  ).payload;
-  assert(
-    newProjectInit.workflow === "init" &&
-      newProjectInit.policy?.action === "created" &&
-      newProjectInit.policy?.mode === "team",
-    "salt-ds init did not create the expected default Salt policy for the new-project repo.",
-  );
-  assert(
-    newProjectInit.repoInstructions?.filename === "AGENTS.md" &&
-      newProjectInit.repoInstructions?.action === "created",
-    "salt-ds init did not create the expected AGENTS.md bootstrap instructions for the new-project repo.",
-  );
-  assert(
-    await pathExists(path.join(newProjectRoot, ".salt", "team.json")),
-    "salt-ds init did not write .salt/team.json in the new-project repo.",
-  );
-  assert(
-    await pathExists(path.join(newProjectRoot, "AGENTS.md")),
-    "salt-ds init did not write AGENTS.md in the new-project repo.",
-  );
-  assert(
-    !(await pathExists(
-      path.join(newProjectRoot, ".github", "copilot-instructions.md"),
-    )),
-    "salt-ds init should not write .github/copilot-instructions.md in the new-project repo unless host adapters are explicitly requested.",
-  );
-  assert(
-    !(await pathExists(
-      path.join(newProjectRoot, ".github", "agents", "salt-ui.agent.md"),
-    )),
-    "salt-ds init should not write .github/agents/salt-ui.agent.md in the new-project repo unless host adapters are explicitly requested.",
-  );
-
-  const newProjectPackageManifest = JSON.parse(
-    await fs.readFile(path.join(newProjectRoot, "package.json"), "utf8"),
-  );
-  assert(
-    newProjectPackageManifest.scripts?.["ui:verify"] == null,
-    "salt-ds init should not scaffold ui:verify in package.json unless explicitly requested.",
-  );
-
-  const newProjectInfo = await runInfo(newProjectRoot, {
-    cliBin: installedCliBin,
-    registryDir,
-  });
-  assert(
-    typeof newProjectInfo.policy?.teamConfigPath === "string" &&
-      newProjectInfo.policy.teamConfigPath.endsWith("/.salt/team.json"),
-    "salt-ds info did not report the bootstrapped .salt/team.json for the new-project repo.",
-  );
-  assert(
-    newProjectInfo.policy?.mode === "team",
-    "salt-ds info did not report the expected team policy mode for the new-project repo after init.",
-  );
-  assert(
-    newProjectInfo.repoInstructions?.filename === "AGENTS.md",
-    "salt-ds info did not report the bootstrapped AGENTS.md for the new-project repo.",
-  );
-  assert(
-    newProjectInfo.workflows?.create === true,
-    "salt-ds info did not report create capability for the new-project repo.",
-  );
-
-  const createPayload = await runSaltJson(
-    newProjectRoot,
-    [
-      "create",
-      "link to another page from a toolbar action",
-      "--include-starter-code",
-    ],
-    {
-      acceptableExitCodes: [0, 10, 20, 30],
-      cliBin: installedCliBin,
-      registryDir,
-    },
-  );
-  assertCompactCliWorkflowPayload(
-    createPayload.payload,
-    "create",
-    createPayload.exitCode,
-    "salt-ds create did not return the shipped compact workflow contract.",
-  );
-
-  const reviewResult = await runSaltJson(
-    existingSaltRoot,
-    ["review", "src/App.tsx"],
-    {
-      acceptableExitCodes: [0, 10, 20, 30],
-      cliBin: installedCliBin,
-      registryDir,
-    },
-  );
-  const reviewPayload = reviewResult.payload;
-  assertCompactCliWorkflowPayload(
-    reviewPayload,
-    "review",
-    reviewResult.exitCode,
-    "salt-ds review did not return the shipped compact workflow contract.",
-  );
-
-  const newProjectPackageJsonPath = path.join(newProjectRoot, "package.json");
-  const newProjectPackageJson = JSON.parse(
-    await fs.readFile(newProjectPackageJsonPath, "utf8"),
-  );
-  await fs.writeFile(
-    newProjectPackageJsonPath,
-    `${JSON.stringify(
-      {
-        ...newProjectPackageJson,
-        dependencies: {
-          ...newProjectPackageJson.dependencies,
-          "@salt-ds/core": "^2.0.0",
-        },
-      },
-      null,
-      2,
-    )}\n`,
-    "utf8",
-  );
-  await fs.writeFile(
-    path.join(newProjectRoot, "src", "Deprecated.tsx"),
-    [
-      'import { Button } from "@salt-ds/core";',
-      "",
-      "export function Deprecated() {",
-      '  return <Button variant="cta">Go</Button>;',
-      "}",
-      "",
-    ].join("\n"),
-    "utf8",
-  );
-
-  const reviewFixResult = await runSaltJson(
-    newProjectRoot,
-    ["review", "src/Deprecated.tsx"],
-    {
-      acceptableExitCodes: [0, 10, 20, 30],
-      cliBin: installedCliBin,
-      registryDir,
-    },
-  );
-  assertCompactCliWorkflowPayload(
-    reviewFixResult.payload,
-    "review",
-    reviewFixResult.exitCode,
-    "salt-ds review did not return the shipped compact workflow contract for a deterministic-fix case.",
-  );
-  const unchangedDeprecatedSource = await fs.readFile(
-    path.join(newProjectRoot, "src", "Deprecated.tsx"),
-    "utf8",
-  );
-  assert(
-    unchangedDeprecatedSource.includes('variant="cta"'),
-    "salt-ds review should return fix candidates without mutating the source file directly.",
-  );
-
-  const translatePayload = await runSaltJson(
-    nonSaltRoot,
-    [
-      "migrate",
-      "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
-    ],
-    {
-      acceptableExitCodes: [0, 10, 20, 30],
-      cliBin: installedCliBin,
-      registryDir,
-    },
-  );
-  assertCompactCliWorkflowPayload(
-    translatePayload.payload,
-    "migrate",
-    translatePayload.exitCode,
-    "salt-ds migrate did not return the shipped compact workflow contract.",
-  );
-
-  const comparePayload = await runSaltJson(
-    existingSaltRoot,
-    ["upgrade", "--include-deprecations"],
-    {
-      acceptableExitCodes: [0, 10, 20, 30],
-      cliBin: installedCliBin,
-      registryDir,
-    },
-  );
-  assertCompactCliWorkflowPayload(
-    comparePayload.payload,
-    "upgrade",
-    comparePayload.exitCode,
-    "salt-ds upgrade did not return the shipped compact workflow contract.",
-  );
-
-  const verifyResult = await runSaltJson(
-    existingSaltRoot,
-    ["review", "src", "--url", runtimeUrl, "--mode", "fetched-html"],
-    {
-      acceptableExitCodes: [0, 10, 20, 30],
-      cliBin: installedCliBin,
-      registryDir,
-    },
-  );
-  assertCompactCliWorkflowPayload(
-    verifyResult.payload,
-    "review",
-    verifyResult.exitCode,
-    "salt-ds review --url did not return the shipped compact workflow contract.",
-  );
-}
-
-export async function runMcpWorkflowCoverage(installRoot, rootDir) {
-  console.log("Checking workflow coverage through the installed MCP server...");
+  console.log("Checking v1 workflow coverage through the installed MCP server...");
   const installedMcpBinPath = getInstalledMcpBin(installRoot);
   assert(
     await pathExists(installedMcpBinPath),
@@ -447,27 +91,78 @@ export async function runMcpWorkflowCoverage(installRoot, rootDir) {
   const transport = new SmokeStdioClientTransport({
     command: process.execPath,
     args: [installedMcpBinPath, "serve"],
-    cwd: rootDir,
+    cwd: existingSaltRoot,
   });
 
   try {
     await client.connect(transport);
-    const tools = await client.listTools();
 
-    const toolNames = tools.tools.map((tool) => tool.name).sort();
-    for (const name of [
-      "get_salt_project_context",
-      "bootstrap_salt_repo",
-      "create_salt_ui",
-      "review_salt_ui",
-      "migrate_to_salt",
-      "upgrade_salt_ui",
-    ]) {
+    const tools = await client.listTools();
+    const toolNames = tools.tools.map((tool) => tool.name);
+    assert(
+      JSON.stringify(toolNames) === JSON.stringify(V1_TOOL_NAMES),
+      `Installed MCP server advertised ${toolNames.join(", ")} instead of the v1 tool contract.`,
+    );
+    for (const removedName of REMOVED_PUBLIC_TOOL_NAMES) {
       assert(
-        toolNames.includes(name),
-        `Installed MCP server did not advertise ${name}.`,
+        !toolNames.includes(removedName),
+        `Installed MCP server still advertises removed public tool ${removedName}.`,
       );
     }
+
+    const resources = await client.listResources();
+    const resourceUris = resources.resources.map((resource) => resource.uri);
+    assert(
+      JSON.stringify(resourceUris.sort()) ===
+        JSON.stringify([CAPABILITY_MANIFEST_URI, CATALOG_MANIFEST_URI].sort()),
+      `Installed MCP server advertised unexpected resource URIs: ${resourceUris.join(", ")}.`,
+    );
+
+    const resourceTemplates = await client.listResourceTemplates();
+    const templateUris = resourceTemplates.resourceTemplates.map(
+      (resourceTemplate) => resourceTemplate.uriTemplate,
+    );
+    assert(
+      JSON.stringify(templateUris.sort()) ===
+        JSON.stringify([CATALOG_ENTITY_TEMPLATE_URI].sort()),
+      `Installed MCP server advertised unexpected resource templates: ${templateUris.join(", ")}.`,
+    );
+
+    const capabilityManifest = parseResourceText(
+      await client.readResource({ uri: CAPABILITY_MANIFEST_URI }),
+      CAPABILITY_MANIFEST_URI,
+    );
+    assert(
+      JSON.stringify(
+        capabilityManifest?.public_surface?.default_surface_ids,
+      ) === JSON.stringify(V1_TOOL_NAMES),
+      "Capability manifest did not freeze the v1 public tool order.",
+    );
+    assert(
+      capabilityManifest?.support_tools?.default_exposed === true &&
+        JSON.stringify(capabilityManifest?.support_tools?.tool_ids) ===
+          JSON.stringify(["get_salt_reference"]) &&
+        capabilityManifest?.capabilities?.repo_bootstrap === false,
+      "Capability manifest did not describe the read-only v1 support and governance story.",
+    );
+
+    const catalogManifest = parseResourceText(
+      await client.readResource({ uri: CATALOG_MANIFEST_URI }),
+      CATALOG_MANIFEST_URI,
+    );
+    assert(
+      catalogManifest?.contract_version === "salt_create_catalog_v1",
+      "Catalog manifest did not return the v1 create catalog contract.",
+    );
+
+    const entityResource = parseResourceText(
+      await client.readResource({ uri: "salt://catalog/entity/Button" }),
+      "salt://catalog/entity/Button",
+    );
+    assert(
+      JSON.stringify(entityResource).includes("Button"),
+      "Catalog entity resource did not resolve Button.",
+    );
 
     const contextResult = await client.callTool({
       name: "get_salt_project_context",
@@ -475,49 +170,73 @@ export async function runMcpWorkflowCoverage(installRoot, rootDir) {
         root_dir: ".",
       },
     });
-    const contextPayload = contextResult.structuredContent;
+    const contextPayload = getToolPayload(
+      contextResult,
+      "get_salt_project_context",
+    );
     assert(
       contextPayload?.workflow?.id === "get_salt_project_context" &&
         contextPayload?.result?.transport?.canonical_transport === "mcp" &&
-        contextPayload?.result?.repo_signals?.salt_team_config_found === true,
-      "Installed MCP server did not return the expected project-context payload through get_salt_project_context.",
-    );
-    assert(
-      typeof contextPayload?.result?.context_id === "string" &&
-        typeof contextPayload?.artifacts?.summary?.bootstrap_requirement
-          ?.status === "string",
-      "Installed MCP server did not return the expected context_id and bootstrap summary through get_salt_project_context.",
+        contextPayload?.result?.repo_signals?.salt_team_config_found === true &&
+        typeof contextPayload?.result?.context_id === "string" &&
+        contextPayload?.artifacts?.summary?.policy_note &&
+        !contextPayload?.artifacts?.summary?.bootstrap_requirement,
+      "Installed MCP server did not return the v1 project-context payload.",
     );
 
-    const chooseResult = await client.callTool({
+    const entityReferenceResult = await client.callTool({
+      name: "get_salt_reference",
+      arguments: {
+        kind: "entity",
+        name: "Button",
+      },
+    });
+    const entityReferencePayload = getToolPayload(
+      entityReferenceResult,
+      "get_salt_reference entity",
+    );
+    assert(
+      entityReferencePayload?.decision?.status === "results" &&
+        entityReferencePayload?.found_count >= 1,
+      "Installed MCP server did not resolve an entity through get_salt_reference.",
+    );
+
+    const examplesReferenceResult = await client.callTool({
+      name: "get_salt_reference",
+      arguments: {
+        kind: "examples",
+        target_name: "Button",
+        target_type: "component",
+        include_code: true,
+        max_results: 1,
+      },
+    });
+    const examplesReferencePayload = getToolPayload(
+      examplesReferenceResult,
+      "get_salt_reference examples",
+    );
+    assert(
+      examplesReferencePayload?.decision?.target_name != null &&
+        (examplesReferencePayload?.best_example ||
+          examplesReferencePayload?.starter_code?.length > 0 ||
+          examplesReferencePayload?.examples?.length > 0),
+      "Installed MCP server did not resolve examples through get_salt_reference.",
+    );
+
+    const createResult = await client.callTool({
       name: "create_salt_ui",
       arguments: {
-        query: "link to another page",
+        query: "link to another page from a toolbar action",
         include_starter_code: true,
       },
     });
-    const choosePayload = chooseResult.structuredContent;
     assertCompactMcpWorkflowPayload(
-      choosePayload,
+      getToolPayload(createResult, "create_salt_ui"),
       "create",
-      "Installed MCP server did not return a stable compact workflow payload through create_salt_ui.",
+      "Installed MCP server did not return a stable create_salt_ui payload.",
     );
 
-    const translateResult = await client.callTool({
-      name: "migrate_to_salt",
-      arguments: {
-        query:
-          "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
-      },
-    });
-    const translatePayload = translateResult.structuredContent;
-    assertCompactMcpWorkflowPayload(
-      translatePayload,
-      "migrate",
-      "Installed MCP server did not return a stable compact workflow payload through migrate_to_salt.",
-    );
-
-    const analyzeResult = await client.callTool({
+    const reviewResult = await client.callTool({
       name: "review_salt_ui",
       arguments: {
         code: [
@@ -531,26 +250,24 @@ export async function runMcpWorkflowCoverage(installRoot, rootDir) {
         package_version: "2.0.0",
       },
     });
-    const analyzePayload = analyzeResult.structuredContent;
     assertCompactMcpWorkflowPayload(
-      analyzePayload,
+      getToolPayload(reviewResult, "review_salt_ui"),
       "review",
-      "Installed MCP server did not return a stable compact workflow payload through review_salt_ui.",
+      "Installed MCP server did not return a stable review_salt_ui payload.",
     );
 
-    const compareResult = await client.callTool({
-      name: "upgrade_salt_ui",
+    const migrateResult = await client.callTool({
+      name: "migrate_to_salt",
       arguments: {
-        package: "@salt-ds/core",
-        from_version: "1.1.0",
-        include_deprecations: true,
+        root_dir: nonSaltRoot,
+        query:
+          "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
       },
     });
-    const comparePayload = compareResult.structuredContent;
     assertCompactMcpWorkflowPayload(
-      comparePayload,
-      "upgrade",
-      "Installed MCP server did not return a stable compact workflow payload through upgrade_salt_ui.",
+      getToolPayload(migrateResult, "migrate_to_salt"),
+      "migrate",
+      "Installed MCP server did not return a stable migrate_to_salt payload.",
     );
   } catch (error) {
     const stderrOutput = transport.stderr.trim();

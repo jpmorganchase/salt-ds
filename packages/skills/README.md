@@ -4,7 +4,7 @@
 
 This README is the skill authoring reference. Keep the consumer setup path in the main AI page.
 
-Keep canonical Salt decisions in Salt MCP or the workflow CLI itself. Keep repo-specific wrappers, shells, and banned choices in `.salt/team.json`.
+Keep canonical Salt decisions in Salt MCP. Keep repo-specific wrappers, shells, and banned choices in declared repo policy when it already exists.
 
 ## Consumer Docs
 
@@ -16,7 +16,7 @@ This README stays intentionally thin so the workflow story only needs to be main
 
 - `salt-ds`
   - the single public workflow skill for external consumers
-  - routes build, review, migrate, upgrade, and conventions work through the same product surface
+  - routes Salt review, create, and migrate work through the v1 MCP surface
 
 ## Install Source
 

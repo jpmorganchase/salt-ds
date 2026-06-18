@@ -1,3 +1,4 @@
+import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -128,9 +129,12 @@ async function walkDirForFiles(
 
   async function walk(currentDir: string, depth: number): Promise<void> {
     if (depth > maxDepth) return;
-    let entries: Awaited<ReturnType<typeof fs.readdir>>;
+    let entries: Dirent<string>[];
     try {
-      entries = await fs.readdir(currentDir, { withFileTypes: true });
+      entries = await fs.readdir(currentDir, {
+        withFileTypes: true,
+        encoding: "utf8",
+      });
     } catch {
       return;
     }

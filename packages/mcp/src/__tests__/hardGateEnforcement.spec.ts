@@ -37,11 +37,9 @@ import { REPO_ROOT } from "./registryTestUtils.js";
 // `evidence.status: complete`, this test fails — even if the prose still
 // claims the Hard Gate is in force.
 //
-// `upgrade_salt_ui` is intentionally not covered here. Its envelope builder
-// dereferences `guidanceBoundary.project_conventions.check_recommended`
-// without a null guard when the requested package has no registry entry —
-// any ambiguous-input probe crashes the test instead of asserting an
-// invariant. Fix the upgrade envelope first; then add the upgrade case.
+// Upgrade is intentionally not covered here because it is deferred out of the
+// v1 public MCP surface. Reintroducing it must add a behavior-level hard-gate
+// case before the tool becomes public again.
 
 const BUILT_AT = "2026-03-10T00:00:00Z";
 

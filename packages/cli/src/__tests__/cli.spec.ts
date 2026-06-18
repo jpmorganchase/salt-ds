@@ -175,16 +175,19 @@ describe("salt cli", () => {
       }),
     ).toBe(0);
 
-    expect(rootHelp).toContain("Setup commands:");
+    expect(rootHelp).toContain("Salt DS CLI (private support package)");
+    expect(rootHelp).toContain("Private setup/support commands:");
     expect(rootHelp).toContain("Agent-hook commands:");
     expect(rootHelp).toContain("Support commands:");
     expect(rootHelp).toContain(
-      "Workflow commands moved to the @salt-ds/mcp server:",
+      "Public v1 workflow commands live in the @salt-ds/mcp server:",
     );
+    expect(rootHelp).toContain("get_salt_project_context");
+    expect(rootHelp).toContain("get_salt_reference");
     expect(rootHelp).toContain("create_salt_ui");
     expect(rootHelp).toContain("review_salt_ui");
     expect(rootHelp).toContain("migrate_to_salt");
-    expect(rootHelp).toContain("upgrade_salt_ui");
+    expect(rootHelp).not.toContain("upgrade_salt_ui");
     // No CLI subcommand line should still advertise the removed workflow verbs.
     expect(rootHelp).not.toMatch(/^\s+salt-ds (create|review|migrate|upgrade) /m);
     expect(hookHelp).toContain("Salt DS CLI - hook");

@@ -52,6 +52,8 @@ type ProjectContextHealthSummary = {
   repo_specific_workflows_ready: boolean;
   reason: string | null;
 };
+type PublicRepoAwareWorkflow = "review" | "migrate";
+type RuntimeRepoAwareWorkflow = PublicRepoAwareWorkflow | "upgrade";
 
 interface SaltProjectContextSource {
   original: string;
@@ -161,7 +163,7 @@ export interface SaltProjectContextData {
           | "inspect-dependency-drift"
           | "dedupe-salt-install"
           | "reinstall-dependencies";
-        blocking_workflows: Array<"review" | "migrate" | "upgrade">;
+        blocking_workflows: PublicRepoAwareWorkflow[];
         reasons: string[];
       };
     };
@@ -267,7 +269,6 @@ export interface SaltProjectContextData {
     create: boolean;
     review: boolean;
     migrate: boolean;
-    upgrade: boolean;
     runtime_evidence: boolean;
   };
   summary: {
@@ -275,18 +276,14 @@ export interface SaltProjectContextData {
       | "create_salt_ui"
       | "review_salt_ui"
       | "migrate_to_salt"
-      | "upgrade_salt_ui"
       | null;
-    bootstrap_requirement: {
-      status: "recommended" | "not_required";
-      tool: "bootstrap_salt_repo";
-      cli_command: "salt-ds init";
+    policy_note: {
+      status: "declared" | "not_declared" | "not_applicable";
       reason: string | null;
-      next_tool_after_bootstrap:
+      next_tool_after_policy:
         | "create_salt_ui"
         | "review_salt_ui"
         | "migrate_to_salt"
-        | "upgrade_salt_ui"
         | null;
     };
     reasons: string[];
@@ -313,6 +310,15 @@ export interface SaltProjectContextResult {
 
 function toPosix(inputPath: string | null): string | null {
   return inputPath ? inputPath.split(path.sep).join("/") : null;
+}
+
+function toPublicBlockingWorkflows(
+  workflows: readonly RuntimeRepoAwareWorkflow[],
+): PublicRepoAwareWorkflow[] {
+  return workflows.filter(
+    (workflow): workflow is PublicRepoAwareWorkflow =>
+      workflow === "review" || workflow === "migrate",
+  );
 }
 
 function toPosixDirname(inputPath: string | null, levels = 1): string | null {
@@ -582,7 +588,9 @@ async function collectSaltInstallationDiagnostics(
     health_summary: {
       health: installation.healthSummary.health,
       recommended_action: installation.healthSummary.recommendedAction,
-      blocking_workflows: installation.healthSummary.blockingWorkflows,
+      blocking_workflows: toPublicBlockingWorkflows(
+        installation.healthSummary.blockingWorkflows,
+      ),
       reasons: installation.healthSummary.reasons,
     },
   };
@@ -896,7 +904,7 @@ function createDetectedTargets(
 function buildSummary(input: {
   saltPackages: Array<{ name: string; version: string }>;
   hasSaltVersionIssues: boolean;
-  blockingWorkflows: Array<"review" | "migrate" | "upgrade">;
+  blockingWorkflows: PublicRepoAwareWorkflow[];
   policyMode: "none" | "team" | "stack";
   repoInstructionPath: string | null;
   runtimeTargets: Array<{ label: "storybook" | "app-runtime"; url: string }>;
@@ -921,12 +929,10 @@ function buildSummary(input: {
   ) {
     return {
       recommended_next_tool: null,
-      bootstrap_requirement: {
-        status: "not_required",
-        tool: "bootstrap_salt_repo",
-        cli_command: "salt-ds init",
+      policy_note: {
+        status: "not_applicable",
         reason: null,
-        next_tool_after_bootstrap: null,
+        next_tool_after_policy: null,
       },
       reasons: [
         input.resolution.reason ??
@@ -940,13 +946,13 @@ function buildSummary(input: {
   const workflowAvailability = buildRepoAwareSaltWorkflowAvailability(
     input.blockingWorkflows,
   );
-  const bootstrapReason =
+  const policyReason =
     input.policyMode === "none" && !input.repoInstructionPath
-      ? "Bootstrap is optional for first results. Run bootstrap_salt_repo (or salt-ds init when MCP bootstrap is unavailable) when you want durable repo policy and the managed root instruction block for future repo-aware refinement."
+      ? "No durable Salt team policy or managed repo instruction file was detected. The v1 MCP stays canonical-only until the repo declares policy outside the public MCP surface."
       : input.policyMode === "none"
-        ? "Bootstrap is optional for first results. Run bootstrap_salt_repo (or salt-ds init when MCP bootstrap is unavailable) when wrappers, bans, shells, or other durable repo policy should refine future Salt answers."
+        ? "No durable Salt team policy was detected. The v1 MCP will not infer repo-specific wrappers, bans, shells, or conventions without declared policy."
         : !input.repoInstructionPath
-          ? "Bootstrap is optional for first results. Run bootstrap_salt_repo (or salt-ds init when MCP bootstrap is unavailable) to add the managed root instruction block so hosts consistently use Salt transport instead of memory."
+          ? "Salt team policy is declared, but no managed repo instruction file was detected. The v1 MCP still uses the declared policy it can inspect."
           : null;
   const blockedWorkflowReason =
     input.blockingWorkflows.length > 0
@@ -964,29 +970,26 @@ function buildSummary(input: {
         : workflowAvailability.create
           ? ("create_salt_ui" as const)
           : null;
-  const buildBootstrapRequirement = (
-    nextToolAfterBootstrap:
+  const buildPolicyNote = (
+    nextToolAfterPolicy:
       | "create_salt_ui"
       | "review_salt_ui"
       | "migrate_to_salt"
-      | "upgrade_salt_ui"
       | null,
   ) => ({
-    status: bootstrapReason
-      ? ("recommended" as const)
-      : ("not_required" as const),
-    tool: "bootstrap_salt_repo" as const,
-    cli_command: "salt-ds init" as const,
-    reason: bootstrapReason,
-    next_tool_after_bootstrap: bootstrapReason ? nextToolAfterBootstrap : null,
+    status: policyReason
+      ? ("not_declared" as const)
+      : ("declared" as const),
+    reason: policyReason,
+    next_tool_after_policy: policyReason ? nextToolAfterPolicy : null,
   });
 
   if (input.saltPackages.length > 0) {
     return {
       recommended_next_tool: preferredNextTool,
-      bootstrap_requirement: buildBootstrapRequirement(preferredNextTool),
+      policy_note: buildPolicyNote(preferredNextTool),
       reasons: [
-        ...(bootstrapReason ? [bootstrapReason] : []),
+        ...(policyReason ? [policyReason] : []),
         ...(blockedWorkflowReason ? [blockedWorkflowReason] : []),
         preferredNextTool === "review_salt_ui"
           ? input.hasSaltVersionIssues
@@ -1002,9 +1005,9 @@ function buildSummary(input: {
   if (input.runtimeTargets.length > 0) {
     return {
       recommended_next_tool: preferredNextTool,
-      bootstrap_requirement: buildBootstrapRequirement(preferredNextTool),
+      policy_note: buildPolicyNote(preferredNextTool),
       reasons: [
-        ...(bootstrapReason ? [bootstrapReason] : []),
+        ...(policyReason ? [policyReason] : []),
         ...(blockedWorkflowReason ? [blockedWorkflowReason] : []),
         preferredNextTool === "migrate_to_salt"
           ? "The repo looks like an existing app without Salt packages, so migrate is the most likely first workflow."
@@ -1017,9 +1020,9 @@ function buildSummary(input: {
 
   return {
     recommended_next_tool: preferredNextTool,
-    bootstrap_requirement: buildBootstrapRequirement(preferredNextTool),
+    policy_note: buildPolicyNote(preferredNextTool),
     reasons: [
-      ...(bootstrapReason ? [bootstrapReason] : []),
+      ...(policyReason ? [policyReason] : []),
       ...(blockedWorkflowReason ? [blockedWorkflowReason] : []),
       "No existing Salt usage was detected, and the repo context looks ready for new Salt UI creation.",
     ],
@@ -1197,8 +1200,10 @@ export async function collectSaltProjectContextData(
   const runtimeTargets = createDetectedTargets(packageJson, repoSignals);
   const runtimeMetadata = getSaltMcpRuntimeMetadata(registry);
   const notes = [...policyNotes];
+  const publicBlockingWorkflows =
+    saltInstallation.health_summary.blocking_workflows;
   const workflowAvailability = buildRepoAwareSaltWorkflowAvailability(
-    saltInstallation.health_summary.blocking_workflows,
+    publicBlockingWorkflows,
   );
   const normalizedRootDir = toPosix(rootDir) ?? rootDir;
   const normalizedPackageJsonPath = toPosix(packageJsonPath);
@@ -1261,9 +1266,9 @@ export async function collectSaltProjectContextData(
       `Salt install issue scope: ${saltInstallation.workspace.issue_source_hint} (workspace root ${saltInstallation.workspace.workspace_root}).`,
     );
   }
-  if (saltInstallation.health_summary.blocking_workflows.length > 0) {
+  if (publicBlockingWorkflows.length > 0) {
     notes.push(
-      `Salt install health blocks workflows: ${saltInstallation.health_summary.blocking_workflows.join(", ")}.`,
+      `Salt install health blocks workflows: ${publicBlockingWorkflows.join(", ")}.`,
     );
   }
   if (saltInstallation.duplicate_packages.length > 0) {
@@ -1315,13 +1320,12 @@ export async function collectSaltProjectContextData(
       create: workflowAvailability.create,
       review: workflowAvailability.review,
       migrate: workflowAvailability.migrate,
-      upgrade: workflowAvailability.upgrade,
       runtime_evidence: runtimeTargets.length > 0,
     },
     summary: buildSummary({
       saltPackages,
       hasSaltVersionIssues: saltInstallation.version_health.issues.length > 0,
-      blockingWorkflows: saltInstallation.health_summary.blocking_workflows,
+      blockingWorkflows: publicBlockingWorkflows,
       policyMode: policy.mode,
       repoInstructionPath: repoInstructions.path,
       runtimeTargets,

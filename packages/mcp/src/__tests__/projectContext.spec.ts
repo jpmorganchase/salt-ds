@@ -48,9 +48,9 @@ describe("getSaltProjectContext", () => {
         trusted: false,
         repo_specific_workflows_ready: false,
       },
-      bootstrap_requirement: {
-        status: "not_required",
-        next_tool_after_bootstrap: null,
+      policy_note: {
+        status: "not_applicable",
+        next_tool_after_policy: null,
       },
       retry_with: {
         root_dir: null,
@@ -380,17 +380,15 @@ describe("getSaltProjectContext", () => {
       ]),
     );
     expect(summary.recommended_next_tool).toBeNull();
-    expect(summary.bootstrap_requirement).toEqual(
+    expect(summary.policy_note).toEqual(
       expect.objectContaining({
-        status: "recommended",
-        tool: "bootstrap_salt_repo",
-        cli_command: "salt-ds init",
-        next_tool_after_bootstrap: null,
+        status: "not_declared",
+        next_tool_after_policy: null,
       }),
     );
     expect(summary.reasons).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("Bootstrap is optional for first results"),
+        expect.stringContaining("No durable Salt team policy"),
       ]),
     );
   });

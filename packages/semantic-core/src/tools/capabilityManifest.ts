@@ -15,27 +15,18 @@ export const SALT_CAPABILITY_MANIFEST_VERSION =
 export const SALT_COMPACT_WORKFLOW_CONTRACT_VERSION = "v1" as const;
 
 export const SALT_PUBLIC_WORKFLOW_VOCABULARY = [
-  { id: "init", label: "init" },
   { id: "create", label: "create" },
   { id: "review", label: "review" },
   { id: "migrate", label: "migrate" },
-  { id: "upgrade", label: "upgrade" },
-  { id: "review_url", label: "review --url" },
 ] as const;
 
 export const SALT_COMPACT_WORKFLOW_IDS = [
   "create",
   "review",
   "migrate",
-  "upgrade",
-] as const satisfies readonly Exclude<PublicWorkflowId, "init">[];
+] as const satisfies readonly PublicWorkflowId[];
 
-export const SALT_SUPPORT_TOOL_IDS = [
-  "discover_salt",
-  "get_salt_entities",
-  "get_salt_examples",
-  "persist_salt_artifact",
-] as const;
+export const SALT_SUPPORT_TOOL_IDS = ["get_salt_reference"] as const;
 
 export const SALT_PUBLIC_ACTION_KINDS = [
   "tool_call",
@@ -43,7 +34,6 @@ export const SALT_PUBLIC_ACTION_KINDS = [
   "retrieve_examples",
   "ask_user",
   "install_dependencies",
-  "bootstrap_repo",
   "implement",
   "complete",
   "review",
@@ -122,7 +112,6 @@ export interface SaltCapabilityManifest {
           | "retrieve_example_evidence"
           | "ask_user_and_stop"
           | "install_packages_then_rerun"
-          | "bootstrap_repo_first"
           | "implement_exact_request"
           | "finish_without_changes"
           | "run_review"
@@ -336,13 +325,6 @@ export function buildSaltCapabilityManifest(
           {
             kind: "install_dependencies",
             host_obligation: "install_packages_then_rerun",
-            implementation_allowed: false,
-            blocks_implementation_until_complete: true,
-            follow_up_required: "rerun_originating_workflow",
-          },
-          {
-            kind: "bootstrap_repo",
-            host_obligation: "bootstrap_repo_first",
             implementation_allowed: false,
             blocks_implementation_until_complete: true,
             follow_up_required: "rerun_originating_workflow",

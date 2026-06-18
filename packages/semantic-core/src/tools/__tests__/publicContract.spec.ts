@@ -11,7 +11,6 @@ import {
   buildMigratePublicContract,
   buildPublicContract,
   buildReviewPublicContract,
-  buildUpgradePublicContract,
   getPublicContractValidationErrors,
   PUBLIC_WORKFLOW_CONTRACT_VERSION,
   type PublicContract,
@@ -20,17 +19,14 @@ import {
 } from "../publicContract.js";
 import type { ReviewSaltUiResult } from "../reviewSaltUi.js";
 import type { MigrateToSaltResult } from "../translation/sourceUiTypes.js";
-import type { UpgradeSaltUiResult } from "../upgradeSaltUi.js";
 import type {
   CreateSaltUiWorkflowContract,
   MigrateToSaltWorkflowContract,
   ReviewSaltUiWorkflowContract,
-  UpgradeSaltUiWorkflowContract,
   WorkflowCreateIdeSummary,
   WorkflowCreateImplementationGate,
   WorkflowMigrateIdeSummary,
   WorkflowReviewIdeSummary,
-  WorkflowUpgradeIdeSummary,
 } from "../workflowContracts.js";
 
 const exactNameStep: PublicNextStep = {
@@ -250,22 +246,6 @@ function buildMigrateIdeSummary(
     needs_confirmation: [],
     recommended_direction: [],
     first_scaffold: [],
-    verify: [],
-    top_source_urls: [],
-    ...overrides,
-  };
-}
-
-function buildUpgradeIdeSummary(
-  overrides: Partial<WorkflowUpgradeIdeSummary> = {},
-): WorkflowUpgradeIdeSummary {
-  return {
-    target: null,
-    from_version: null,
-    to_version: null,
-    required_changes: [],
-    optional_cleanup: [],
-    suggested_order: [],
     verify: [],
     top_source_urls: [],
     ...overrides,
@@ -587,43 +567,6 @@ function buildMigrateWorkflowContract(
         reasons: [],
       },
     },
-    provenance: {
-      canonical_source_urls: [],
-      related_guide_urls: [],
-      starter_source_urls: [],
-      source_urls: [],
-      guidance_signals: [],
-      project_conventions_contract: "project_conventions_v1",
-    },
-    ...overrides,
-  };
-}
-
-function buildUpgradeWorkflowContract(
-  overrides: Partial<UpgradeSaltUiWorkflowContract> = {},
-): UpgradeSaltUiWorkflowContract {
-  return {
-    confidence: {
-      level: "high",
-      reasons: ["Fixture confidence is sufficient for upgrade contract tests."],
-      ask_before_proceeding: false,
-      raise_confidence: [],
-    },
-    ide_summary: buildUpgradeIdeSummary(),
-    project_conventions_check: {
-      supported: true,
-      contract: "project_conventions_v1",
-      check_recommended: false,
-      topics: [],
-      reason: "Project conventions are not required for this fixture.",
-      canonical_only: true,
-      declared_policy_status: "none-declared",
-      policy_paths: [".salt/team.json", ".salt/stack.json"],
-      suggested_follow_up_tool: "get_salt_project_context",
-      suggested_follow_up_cli: "salt-ds info --json",
-      next_step: "Continue with canonical Salt guidance.",
-    },
-    rule_ids: [],
     provenance: {
       canonical_source_urls: [],
       related_guide_urls: [],
@@ -1168,8 +1111,9 @@ describe("publicContract workflow adapters", () => {
           "Salt interpreted dashboard summary area as the broader Salt entity Analytical dashboard.",
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entities",
+          tool: "get_salt_reference",
           args: {
+            kind: "entity",
             names: ["Analytical dashboard"],
           },
         },
@@ -1308,8 +1252,9 @@ describe("publicContract workflow adapters", () => {
         blocking_reasons: [],
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entities",
+          tool: "get_salt_reference",
           args: {
+            kind: "entity",
             names: ["Chart"],
           },
         },
@@ -1458,8 +1403,9 @@ describe("publicContract workflow adapters", () => {
         ]),
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entities",
+          tool: "get_salt_reference",
           args: {
+            kind: "entity",
             names: ["App header"],
           },
         },
@@ -1793,8 +1739,9 @@ describe("publicContract workflow adapters", () => {
         ]),
         next_step: {
           kind: "retrieve_entity",
-          tool: "get_salt_entities",
+          tool: "get_salt_reference",
           args: {
+            kind: "entity",
             names: ["Breadcrumbs"],
           },
         },
@@ -1803,8 +1750,9 @@ describe("publicContract workflow adapters", () => {
     expect(compact.next_required_action).toEqual(
       expect.objectContaining({
         mcp: {
-          tool: "get_salt_entities",
+          tool: "get_salt_reference",
           args: {
+            kind: "entity",
             names: ["Breadcrumbs"],
           },
         },
@@ -1980,85 +1928,5 @@ describe("publicContract workflow adapters", () => {
       "Which approved repo wrapper or shell should this use?",
     );
     expect(compact.next_required_action.kind).not.toBe("ask_user");
-  });
-
-  it("derives upgrade contract output from the shared upgrade workflow contract", () => {
-    const result = {
-      decision: {
-        target: "@salt-ds/core",
-        from_version: "1.0.0",
-        to_version: "2.0.0",
-        why: "The upgrade target is still ambiguous.",
-      },
-      ambiguity: {
-        target: "core",
-      },
-      did_you_mean: ["@salt-ds/core", "@salt-ds/lab"],
-      breaking: ["Replace deprecated API usage."],
-    } as unknown as UpgradeSaltUiResult;
-    const contract = buildUpgradeWorkflowContract({
-      ide_summary: buildUpgradeIdeSummary({
-        target: "@salt-ds/core",
-        from_version: "1.0.0",
-        to_version: "2.0.0",
-      }),
-    });
-
-    const compact = buildUpgradePublicContract(
-      result as unknown as never,
-      contract,
-      {
-        transport_used: "mcp",
-      },
-    );
-
-    expect(toComparablePublicContract(compact)).toEqual(
-      expect.objectContaining({
-        workflow: "upgrade",
-        workflow_status: "blocked",
-        safe_to_implement_exact_request: false,
-        blocking_reasons: expect.arrayContaining([
-          "The upgrade target is still ambiguous.",
-        ]),
-      }),
-    );
-  });
-
-  it("keeps upgrade contracts blocked with a reason when non-breaking upgrade guidance remains", () => {
-    const result = {
-      decision: {
-        target: "@salt-ds/core",
-        from_version: "1.0.0",
-        to_version: "2.0.0",
-        why: "Fixture upgrade guidance is available.",
-      },
-      important: ["Review fixture upgrade guidance before editing."],
-    } as unknown as UpgradeSaltUiResult;
-    const contract = buildUpgradeWorkflowContract({
-      ide_summary: buildUpgradeIdeSummary({
-        target: "@salt-ds/core",
-        from_version: "1.0.0",
-        to_version: "2.0.0",
-      }),
-    });
-
-    const compact = buildUpgradePublicContract(
-      result as unknown as never,
-      contract,
-      {
-        transport_used: "mcp",
-      },
-    );
-
-    expect(toComparablePublicContract(compact)).toEqual(
-      expect.objectContaining({
-        workflow: "upgrade",
-        workflow_status: "blocked",
-        safe_to_implement_exact_request: false,
-        blocking_reasons: expect.arrayContaining([
-          "Review fixture upgrade guidance before editing.",
-        ]),
-      }),
-    );
   });
 });

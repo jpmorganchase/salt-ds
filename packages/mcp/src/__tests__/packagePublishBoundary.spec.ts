@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 type PackageManifest = {
   name?: string;
+  private?: boolean;
   files?: string[];
   dependencies?: Record<string, string>;
   peerDependencies?: Record<string, string>;
@@ -16,6 +17,8 @@ type PackageManifest = {
   };
   publishExports?: Record<string, unknown>;
   publishExtraCopyPaths?: Array<string | { from: string; to: string }>;
+  publishScriptExcludes?: string[];
+  typescriptInclude?: string[];
 };
 
 function readJson<T>(relativePath: string): T {
@@ -145,18 +148,6 @@ const FORBIDDEN_RUNTIME_FILE_ENTRIES = [
   "archive",
 ];
 
-const FORBIDDEN_EVAL_PAYLOAD_REFERENCES = [
-  "docs",
-  "__tests__",
-  "eval-fixtures",
-  "fixtures",
-  "host-results",
-  "workflow-examples",
-  "baselines",
-  "archive",
-  "replay-traces",
-];
-
 const SHARED_WORKFLOW_DEPENDENCIES = [
   "@salt-ds/runtime-inspector-core",
   "@salt-ds/semantic-core",
@@ -181,10 +172,12 @@ describe("package publish boundaries", () => {
 
     expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-mcp");
     expect(manifest.files).toEqual(["bin"]);
+    expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
     expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
     expect(manifest.publishBundledWorkspaceDependencies).toEqual(
       SHARED_WORKFLOW_DEPENDENCIES,
     );
+    expect(manifest.publishScriptExcludes).toEqual(["build", "prepack"]);
     expect(Object.keys(manifest.publishExports ?? {})).toEqual([
       ".",
       "./package.json",
@@ -194,57 +187,19 @@ describe("package publish boundaries", () => {
         from: "../semantic-core/generated",
         to: "generated",
       },
-      {
-        from: "../semantic-core/schemas",
-        to: "schemas",
-      },
     ]);
   });
 
-  it("keeps CLI published file roots limited to fallback runtime payload", () => {
+  it("keeps CLI out of the public v1 package path", () => {
     const manifest = readJson<PackageManifest>("../../../cli/package.json");
 
-    expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-cli");
-    expect(manifest.files).toEqual(["bin"]);
-    expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
-    expect(manifest.publishBundledWorkspaceDependencies).toEqual(
-      SHARED_WORKFLOW_DEPENDENCIES,
-    );
-    expect(manifest.publishExtraCopyPaths).toEqual([
-      {
-        from: "../semantic-core/generated",
-        to: "generated",
-      },
-      {
-        from: "../semantic-core/schemas",
-        to: "schemas",
-      },
-    ]);
+    expect(manifest.private).toBe(true);
   });
 
-  it("allows only explicit MCP eval runner entrypoints, not fixture payloads", () => {
+  it("does not publish MCP eval runner entrypoints or fixture payloads", () => {
     const manifest = readJson<PackageManifest>("../../package.json");
 
-    expect(manifest.publishAdditionalEntryPaths).toEqual([
-      "src/evals/runWorkflowEval.ts",
-      "src/evals/runWorkflowEvalReplay.ts",
-      "src/evals/runHostTraceEval.ts",
-    ]);
-    for (const entryPath of manifest.publishAdditionalEntryPaths ?? []) {
-      expect(entryPath).toMatch(/^src\/evals\/run[A-Z].+\.ts$/);
-      expect(entryPath).not.toMatch(/fixture|replay-trace|host-results/i);
-    }
-    expectEntriesToExclude(
-      manifest.publishAdditionalEntryPaths,
-      FORBIDDEN_EVAL_PAYLOAD_REFERENCES,
-    );
-  });
-
-  it("does not bundle playwright into the published @salt-ds/cli transitive dependency tree (Phase 0 task 0.1)", () => {
-    assertNoPlaywrightInTransitiveDeps(
-      "@salt-ds/cli",
-      SHARED_WORKFLOW_DEPENDENCIES,
-    );
+    expect(manifest.publishAdditionalEntryPaths).toBeUndefined();
   });
 
   it("does not bundle playwright into the published @salt-ds/mcp transitive dependency tree (Phase 0 task 0.1)", () => {

@@ -36,11 +36,6 @@ export {
   type ThemeProviderChoiceOption,
 } from "./createSaltUiThemeQuestion.js";
 export {
-  type DiscoverSaltInput,
-  type DiscoverSaltResult,
-  discoverSalt,
-} from "./discoverSalt.js";
-export {
   type GetChangesInput,
   type GetChangesResult,
   getChanges,
@@ -117,17 +112,6 @@ export {
   type SaltEntityType,
 } from "./getSaltEntity.js";
 export {
-  getSaltEntities,
-  type GetSaltEntitiesInput,
-  type GetSaltEntitiesResult,
-  type GetSaltEntitiesRow,
-} from "./getSaltEntities.js";
-export {
-  type GetSaltExamplesInput,
-  type GetSaltExamplesResult,
-  getSaltExamples,
-} from "./getSaltExamples.js";
-export {
   type GetTokenInput,
   type GetTokenResult,
   getToken,
@@ -153,7 +137,6 @@ export {
   buildMigratePublicContract,
   buildPublicContract,
   buildReviewPublicContract,
-  buildUpgradePublicContract,
   derivePublicCanonicalComplete,
   derivePublicSafeToImplementExactRequest,
   derivePublicWorkflowStatus,
@@ -162,7 +145,6 @@ export {
   PUBLIC_WORKFLOW_CONTRACT_VERSION,
   type PublicActionKind,
   type PublicAskUserStep,
-  type PublicBootstrapRepoStep,
   type PublicContract,
   type PublicContractBuildOptions,
   type PublicContractExactRequest,
@@ -234,11 +216,6 @@ export {
   suggestMigration,
 } from "./suggestMigration.js";
 export {
-  type UpgradeSaltUiInput,
-  type UpgradeSaltUiResult,
-  upgradeSaltUi,
-} from "./upgradeSaltUi.js";
-export {
   buildValidateSaltUsageResult,
   type ValidateSaltUsageEvidenceValidation,
   type ValidateSaltUsageInput,
@@ -254,7 +231,6 @@ export {
   buildRepoAwareReviewWorkflowMetadata,
   buildReviewSaltUiWorkflowContract,
   buildSatisfiedWorkflowContextRequirement,
-  buildUpgradeSaltUiWorkflowContract,
   buildWorkflowContextRequirement,
   type CreateSaltUiWorkflowContract,
   type MigrateToSaltWorkflowContract,
@@ -263,7 +239,6 @@ export {
   type RepoAwareReviewWorkflowMetadata,
   type ReviewSaltUiWorkflowContract,
   toWorkflowStarterValidation,
-  type UpgradeSaltUiWorkflowContract,
   type WorkflowConfidence,
   type WorkflowContextRequirement,
   type WorkflowFixCandidate,

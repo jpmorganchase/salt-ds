@@ -9,7 +9,6 @@ import {
   buildCreatePublicContract,
   buildMigratePublicContract,
   buildReviewPublicContract,
-  buildUpgradePublicContract,
 } from "@salt-ds/semantic-core/tools/publicContract";
 import type {
   ReviewExpectedTargets,
@@ -19,12 +18,10 @@ import type {
   NormalizedVisualEvidenceInput,
   SourceUiOutlineInput,
 } from "@salt-ds/semantic-core/tools/translation/sourceUiTypes";
-import type { UpgradeSaltUiResult } from "@salt-ds/semantic-core/tools/upgradeSaltUi";
 import {
   buildCreateSaltUiWorkflowContract,
   buildMigrateToSaltWorkflowContract,
   buildReviewSaltUiWorkflowContract,
-  buildUpgradeSaltUiWorkflowContract,
 } from "@salt-ds/semantic-core/tools/workflowContracts";
 import type { WorkflowProjectPolicyArtifact } from "@salt-ds/semantic-core/tools/workflowProjectPolicy";
 import { applyProjectPolicyToStarterCodeSnippets } from "@salt-ds/semantic-core/tools/workflowProjectPolicyApplication";
@@ -32,11 +29,9 @@ import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 
 const PUBLIC_MCP_WORKFLOWS = new Set([
   "get_salt_project_context",
-  "bootstrap_salt_repo",
   "create_salt_ui",
   "review_salt_ui",
   "migrate_to_salt",
-  "upgrade_salt_ui",
 ]);
 
 function isFullView(view?: "compact" | "full"): boolean {
@@ -342,40 +337,6 @@ function buildMigrateWorkflowEnvelope(
   });
 }
 
-function buildUpgradeWorkflowEnvelope(
-  result: UpgradeSaltUiResult,
-  input: {
-    project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full";
-  } = {},
-) {
-  const contract = buildUpgradeSaltUiWorkflowContract(result, input);
-  const { ide_summary, rule_ids, ...workflow } = contract;
-  const { raw, ...domainResult } = result;
-  const compactContract = buildUpgradePublicContract(result, contract, {
-    transport_used: "mcp",
-  });
-  if (!isFullView(input.view)) {
-    return compactContract;
-  }
-
-  return attachPublicContractDetails(compactContract, {
-    workflow: {
-      id: "upgrade_salt_ui" as const,
-      transport_used: "mcp" as const,
-      ...workflow,
-    },
-    result: {
-      ...domainResult,
-      ide_summary,
-    },
-    artifacts: {
-      rule_ids,
-      raw,
-    },
-  });
-}
-
 export function withChooseWorkflowGuidance(
   registry: SaltRegistry,
   result: CreateSaltUiResult,
@@ -436,12 +397,3 @@ export function withTranslateWorkflowGuidance(
   return buildMigrateWorkflowEnvelope(registry, result, input);
 }
 
-export function withCompareWorkflowGuidance(
-  result: UpgradeSaltUiResult,
-  input: {
-    project_policy?: WorkflowProjectPolicyArtifact | null;
-    view?: "compact" | "full";
-  } = {},
-) {
-  return buildUpgradeWorkflowEnvelope(result, input);
-}
