@@ -306,10 +306,7 @@ export const SubpixelWidthRounding: StoryFn<typeof Toolbar> = () => (
         appearance="transparent"
         aria-label="Subpixel width rounding toolbar"
       >
-        <ToolbarContent
-          position="start"
-          style={subpixelRoundingContentStyle}
-        >
+        <ToolbarContent position="start" style={subpixelRoundingContentStyle}>
           {subpixelItemLabels.map((label, index) => (
             <Tooltray key={label} overflowPriority={index}>
               <span style={subpixelRoundingItemStyle}>{label}</span>
