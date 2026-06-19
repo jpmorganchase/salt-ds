@@ -1,3 +1,20 @@
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+}
+
+.controlField {
+  flex: 1;
+  min-width: 0;
+}
+
+.modeToggle {
+  flex: 0;
+}
+
 .filterInput {
   max-width: 24rem;
 }
@@ -84,4 +101,30 @@
 
 .loading {
   margin: var(--salt-spacing-300) auto;
+}
+
+@media not screen and (min-width: 960px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controlField {
+    flex: none;
+    width: 100%;
+  }
+
+  .controlDropdown {
+    width: 100%;
+  }
+
+  .modeToggle {
+    order: -1;
+    align-self: flex-start;
+  }
+
+  .filterInput {
+    width: 100%;
+    max-width: none;
+  }
 }

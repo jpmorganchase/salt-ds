@@ -3,7 +3,6 @@ import {
   capitalize,
   Dropdown,
   type DropdownProps,
-  FlexLayout,
   FormField,
   FormFieldLabel,
   H2,
@@ -197,11 +196,12 @@ export function AllTokens() {
 
   return (
     <StackLayout gap={2}>
-      <FlexLayout direction="row" align="end" gap={1}>
-        <FormField style={{ flex: 1 }}>
+      <div className={styles.controls}>
+        <FormField className={styles.controlField}>
           <FormFieldLabel>Theme</FormFieldLabel>
           <Dropdown
             bordered
+            className={styles.controlDropdown}
             selected={[theme]}
             onSelectionChange={handleThemeSelectionChange}
             valueToString={getThemeDisplayName}
@@ -211,10 +211,11 @@ export function AllTokens() {
             ))}
           </Dropdown>
         </FormField>
-        <FormField style={{ flex: 1 }}>
+        <FormField className={styles.controlField}>
           <FormFieldLabel>Density</FormFieldLabel>
           <Dropdown
             bordered
+            className={styles.controlDropdown}
             selected={[density]}
             onSelectionChange={handleDensitySelectionChange}
             valueToString={(value) => capitalize(value)}
@@ -225,7 +226,7 @@ export function AllTokens() {
           </Dropdown>
         </FormField>
         <ToggleButtonGroup
-          style={{ flex: 0 }}
+          className={styles.modeToggle}
           aria-label="Mode"
           value={mode}
           onChange={(event) => setMode(event.currentTarget.value as Mode)}
@@ -233,7 +234,7 @@ export function AllTokens() {
           <ToggleButton value="light">Light</ToggleButton>
           <ToggleButton value="dark">Dark</ToggleButton>
         </ToggleButtonGroup>
-      </FlexLayout>
+      </div>
       <FormField>
         <FormFieldLabel>Search tokens</FormFieldLabel>
         <Input
