@@ -1,4 +1,21 @@
+.highcharts-container {
+  /*
+    Salt's bold hover background can include a linear gradient and the hover
+    border can use an alpha overlay. SVG fill/stroke do not paint those like a
+    CSS button, so use the closest solid values for the reset zoom button.
+  */
+  --saltHighcharts-reset-zoom-button-background-hover: #606569;
+  --saltHighcharts-reset-zoom-button-borderColor-hover: #43484a;
+}
+
 .highcharts-legend-item-hidden .highcharts-point {
   /* biome-ignore lint/complexity/noImportantStyles: Override Highcharts inline marker fill for hidden legend series. */
   fill: var(--salt-content-secondary-foreground-disabled) !important;
+}
+
+.highcharts-reset-zoom .highcharts-focus-border {
+  fill: none;
+  /* Match the Salt Button dotted focus indicator on Highcharts' SVG focus ring. */
+  stroke-dasharray: 0, 4;
+  stroke-linecap: round;
 }

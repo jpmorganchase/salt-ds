@@ -5,7 +5,16 @@ import { Head, Html, Main, NextScript } from "next/document";
  */
 export default function Document() {
   return (
-    <Html lang="en" className="salt-theme salt-theme-next salt-editorial">
+    <Html
+      lang="en"
+      className="salt-theme salt-theme-next salt-editorial"
+      // Opt in to Next.js's smooth-scroll handling: while `base.css` enables
+      // CSS `scroll-behavior: smooth` for in-page anchors, this attribute
+      // tells Next to flip it to `auto` during route transitions so the new
+      // page jumps to top instead of animating from the old scroll position.
+      // https://nextjs.org/docs/messages/missing-data-scroll-behavior
+      data-scroll-behavior="smooth"
+    >
       <Head>
         <script
           // biome-ignore lint/security/noDangerouslySetInnerHtml: Needed to set the initial theme based on localStorage and avoid a flash of unstyled content (FOUC).

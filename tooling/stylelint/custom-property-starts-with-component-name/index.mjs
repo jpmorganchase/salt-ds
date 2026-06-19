@@ -7,7 +7,7 @@ import { declarationValueIndex, isVarFunction } from "../utils.mjs";
 // Define an allowlist of component names, that do not need to match the directory name
 // This can be used where the CSS is shared between multiple implementation of the component
 // e.g DateInput.css is used by DateInputSingle and DateInputRange
-const allowlist = ["DateInput"];
+const allowlist = ["DateInput", "Highcharts"];
 
 const {
   createPlugin,

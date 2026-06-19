@@ -1,4 +1,4 @@
-import type { Options } from "highcharts";
+import type { CursorValue, Options } from "highcharts";
 import { TRANSLUCENT_FILL_OPACITY } from "./constants";
 import {
   CATEGORY_DATAVIZ_TOKENS,
@@ -50,6 +50,91 @@ const isHeatmapChart = (chartOptions: Options): boolean => {
   );
 };
 
+const cssVariable = (tokenName: keyof SaltChartTokenMap) => `var(${tokenName})`;
+
+/*
+  The reset zoom button mimics the Salt Button solid neutral variant
+  (`.saltButton-neutral.saltButton-solid` and is always in medium density.
+
+  Since SVGs don't support CSS background gradients as fills or CSS borders,
+  the hover fill and stroke use package-level CSS variables with solid fallback
+  values.
+*/
+const RESET_BUTTON_MEDIUM_PADDING = 7;
+const RESET_BUTTON_MEDIUM_FONT_SIZE = "12px";
+const RESET_BUTTON_STROKE_WIDTH = 1;
+const RESET_BUTTON_HOVER_FILL =
+  "var(--saltHighcharts-reset-zoom-button-background-hover)";
+const RESET_BUTTON_HOVER_STROKE =
+  "var(--saltHighcharts-reset-zoom-button-borderColor-hover)";
+const RESET_BUTTON_FOCUS_BORDER_COLOR = "var(--salt-focused-outlineColor)";
+
+export const buildZoomingOptions = (
+  tokens: SaltChartTokenMap,
+): NonNullable<HighchartsOptionsCompat["chart"]>["zooming"] => {
+  const hoverForeground = cssVariable(
+    "--salt-actionable-bold-foreground-hover",
+  );
+
+  return {
+    resetButton: {
+      theme: {
+        fill: cssVariable("--salt-actionable-bold-background"),
+        stroke: cssVariable("--salt-actionable-bold-borderColor"),
+        "stroke-width": RESET_BUTTON_STROKE_WIDTH,
+        r: tokens["--salt-palette-corner-weak"],
+        padding: RESET_BUTTON_MEDIUM_PADDING,
+        style: {
+          color: cssVariable("--salt-actionable-bold-foreground"),
+          // CSSObject types cursor as a closed union so the cast is required
+          cursor: cssVariable("--salt-cursor-hover") as CursorValue,
+          fontFamily: cssVariable("--salt-text-action-fontFamily"),
+          fontSize: RESET_BUTTON_MEDIUM_FONT_SIZE,
+          fontWeight: cssVariable("--salt-text-action-fontWeight"),
+          letterSpacing: cssVariable("--salt-text-action-letterSpacing"),
+          textTransform: cssVariable("--salt-text-action-textTransform"),
+        },
+        states: {
+          hover: {
+            fill: RESET_BUTTON_HOVER_FILL,
+            stroke: RESET_BUTTON_HOVER_STROKE,
+            "stroke-width": RESET_BUTTON_STROKE_WIDTH,
+            style: {
+              color: hoverForeground,
+            },
+          },
+          select: {
+            fill: RESET_BUTTON_HOVER_FILL,
+            stroke: RESET_BUTTON_HOVER_STROKE,
+            "stroke-width": RESET_BUTTON_STROKE_WIDTH,
+            style: {
+              color: hoverForeground,
+            },
+          },
+        },
+      },
+    },
+  };
+};
+
+export const buildAccessibilityOptions = (
+  tokens: SaltChartTokenMap,
+): Pick<HighchartsOptionsCompat, "accessibility"> => ({
+  accessibility: {
+    keyboardNavigation: {
+      focusBorder: {
+        enabled: true,
+        margin: tokens["--salt-size-fixed-100"],
+        style: {
+          borderRadius: tokens["--salt-palette-corner-weak"],
+          color: RESET_BUTTON_FOCUS_BORDER_COLOR,
+          lineWidth: tokens["--salt-size-fixed-200"],
+        },
+      },
+    },
+  },
+});
+
 export const buildChartOptions = (
   tokens: SaltChartTokenMap,
 ): NonNullable<HighchartsOptionsCompat["chart"]> => ({
@@ -58,6 +143,7 @@ export const buildChartOptions = (
   style: {
     fontFamily: tokens["--salt-text-fontFamily"],
   },
+  zooming: buildZoomingOptions(tokens),
 });
 
 export const buildTextOptions = (

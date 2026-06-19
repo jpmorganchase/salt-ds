@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/core": minor
 ---
 
 Added `Toolbar`, `ToolbarContent`, and `Tooltray` for composing horizontal toolbars with responsive overflow, grouped controls, and keyboard navigation.
