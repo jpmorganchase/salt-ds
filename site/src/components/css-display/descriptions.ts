@@ -15,6 +15,8 @@ const characteristic: Record<string, string> = {
     "Editable defines the styles for input components that allow users to enter or modify data, such as text fields and input controls.",
   focused:
     "Focused defines the styles for components that can receive focus via mouse or keyboard interaction.",
+  layout:
+    "Layout defines the page margins and gaps used to position and space elements, adapting automatically to each density and screen size so responsive layouts stay consistent.",
   navigable:
     "Navigable defines the styles for components that enable users to move between sections, pages, or data sets, such as tabs and navigation menus.",
   overlayable:
@@ -33,15 +35,23 @@ const characteristic: Record<string, string> = {
 };
 
 const foundation: Record<string, string> = {
+  animation:
+    "Animation provides reusable motion presets, such as fade and slide transitions, along with their opacity, scale, transform, duration, and timing values, to apply consistent movement across components.",
+  borderstyle:
+    "Border style provides a standardized set of border styles—solid, dashed, and dotted—ensuring consistent borders across all components and patterns.",
   cursor:
     "The cursor foundation controls how the cursor appears when positioned over or interacting with a component.",
+  curve:
+    "Curve defines the corner radius values used to round the edges of components, scaling with density to keep curvature consistent across the system.",
   duration:
     "Duration represents the time between a user performing an action and the system giving feedback.",
-  zindex:
-    "Salt provides z-index tokens that determine an item’s position in the layering order.",
   size: "Size defines the height and width of components within the design system, ensuring consistent and harmonious design across applications.",
   spacing:
     "Spacing is a key tool for positioning elements in relation to each other, highlighting some while downplaying others.",
+  typography:
+    "Typography defines the font families, font weights, and text decoration styles used to present written content with consistent readability, hierarchy, and tone.",
+  zindex:
+    "Salt provides z-index tokens that determine an item’s position in the layering order.",
 };
 
 const descriptions: Record<TokenTier, Record<string, string>> = {
