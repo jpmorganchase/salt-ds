@@ -2,6 +2,7 @@ import {
   Button,
   capitalize,
   Dropdown,
+  type DropdownProps,
   FlexLayout,
   FormField,
   FormFieldLabel,
@@ -48,6 +49,7 @@ type TokenTableData = {
   characteristicDensity: DensityOverrides | null;
   foundationDensity: DensityOverrides | null;
 };
+type ThemeTokenTables = Record<ThemeType, TokenTableData>;
 
 function getSectionHeadingId(tier: TokenTier) {
   return `${tier}-tokens`;
@@ -56,9 +58,15 @@ function getSectionHeadingId(tier: TokenTier) {
 function getGroupHeadingId(tier: TokenTier, group: string) {
   return `${tier}-${group}`.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
 }
-type ThemeTokenTables = Record<ThemeType, TokenTableData>;
 
-const themes = [
+const emptyTables: TokenTableData = {
+  characteristics: null,
+  foundations: null,
+  characteristicDensity: null,
+  foundationDensity: null,
+};
+
+const themes: Array<{ displayName: string; value: ThemeType }> = [
   {
     displayName: "JPM Brand",
     value: "next",
@@ -68,6 +76,12 @@ const themes = [
     value: "legacy",
   },
 ];
+
+const densities: Density[] = ["high", "medium", "low", "touch", "mobile"];
+
+function getThemeDisplayName(value: ThemeType) {
+  return themes.find((theme) => theme.value === value)?.displayName ?? value;
+}
 
 export function AllTokens() {
   const [theme, setTheme] = useState<ThemeType>("next");
@@ -140,41 +154,57 @@ export function AllTokens() {
     };
   }, []);
 
-  const tables = themeTables?.[theme] ?? {
-    characteristics: null,
-    foundations: null,
-    characteristicDensity: null,
-    foundationDensity: null,
-  };
+  const tables = themeTables?.[theme] ?? emptyTables;
+
+  const filteredCharacteristics =
+    tables.characteristics === null
+      ? null
+      : filterTokenGroups(tables.characteristics, filterText);
+  const filteredFoundations =
+    tables.foundations === null
+      ? null
+      : filterTokenGroups(tables.foundations, filterText);
 
   const hasCharacteristicResults =
-    tables.characteristics !== null &&
-    Object.keys(filterTokenGroups(tables.characteristics, filterText)).length >
-      0;
+    filteredCharacteristics !== null &&
+    Object.keys(filteredCharacteristics).length > 0;
   const hasFoundationResults =
-    tables.foundations !== null &&
-    Object.keys(filterTokenGroups(tables.foundations, filterText)).length > 0;
+    filteredFoundations !== null && Object.keys(filteredFoundations).length > 0;
   const showEmptyState =
     filterText.trim() !== "" &&
-    tables.characteristics !== null &&
-    tables.foundations !== null &&
+    filteredCharacteristics !== null &&
+    filteredFoundations !== null &&
     !hasCharacteristicResults &&
     !hasFoundationResults;
 
+  const handleThemeSelectionChange: DropdownProps<ThemeType>["onSelectionChange"] =
+    (_event, value) => {
+      const [selectedTheme] = value;
+
+      if (selectedTheme) {
+        setTheme(selectedTheme);
+      }
+    };
+
+  const handleDensitySelectionChange: DropdownProps<Density>["onSelectionChange"] =
+    (_event, value) => {
+      const [selectedDensity] = value;
+
+      if (selectedDensity) {
+        setDensity(selectedDensity);
+      }
+    };
+
   return (
-    <StackLayout gap={2} className={styles.container}>
+    <StackLayout gap={2}>
       <FlexLayout direction="row" align="end" gap={1}>
         <FormField style={{ flex: 1 }}>
           <FormFieldLabel>Theme</FormFieldLabel>
           <Dropdown
             bordered
             selected={[theme]}
-            onSelectionChange={(_event, value) => {
-              setTheme(value[0] as ThemeType);
-            }}
-            valueToString={(value) =>
-              themes.find((t) => t.value === value)?.displayName || value
-            }
+            onSelectionChange={handleThemeSelectionChange}
+            valueToString={getThemeDisplayName}
           >
             {themes.map(({ value }) => (
               <Option key={value} value={value} />
@@ -186,16 +216,12 @@ export function AllTokens() {
           <Dropdown
             bordered
             selected={[density]}
-            onSelectionChange={(_event, value) => {
-              setDensity(value[0] as Density);
-            }}
+            onSelectionChange={handleDensitySelectionChange}
             valueToString={(value) => capitalize(value)}
           >
-            <Option value="high" />
-            <Option value="medium" />
-            <Option value="low" />
-            <Option value="touch" />
-            <Option value="mobile" />
+            {densities.map((value) => (
+              <Option key={value} value={value} />
+            ))}
           </Dropdown>
         </FormField>
         <ToggleButtonGroup
@@ -241,9 +267,8 @@ export function AllTokens() {
       <TokenTable
         title="Characteristic tokens"
         tier="characteristic"
-        groupedRows={tables.characteristics}
+        groupedRows={filteredCharacteristics}
         densityOverrides={tables.characteristicDensity}
-        filterText={filterText}
         loadingLabel="Loading characteristic tokens"
         density={density}
         mode={mode}
@@ -252,9 +277,8 @@ export function AllTokens() {
       <TokenTable
         title="Foundation tokens"
         tier="foundation"
-        groupedRows={tables.foundations}
+        groupedRows={filteredFoundations}
         densityOverrides={tables.foundationDensity}
-        filterText={filterText}
         loadingLabel="Loading foundation tokens"
         density={density}
         mode={mode}
@@ -269,7 +293,6 @@ function TokenTable({
   tier,
   groupedRows,
   densityOverrides,
-  filterText,
   loadingLabel,
   density,
   mode,
@@ -279,7 +302,6 @@ function TokenTable({
   tier: TokenTier;
   groupedRows: TokenGroups | null;
   densityOverrides: DensityOverrides | null;
-  filterText: string;
   loadingLabel: string;
   density: Density;
   mode: Mode;
@@ -296,9 +318,8 @@ function TokenTable({
     );
   }
 
-  const filteredRows = filterTokenGroups(groupedRows, filterText);
   const themeKey = `${tier}-${theme}-${mode}`;
-  const visibleGroups = Object.entries(filteredRows);
+  const visibleGroups = Object.entries(groupedRows);
 
   if (visibleGroups.length === 0) {
     return null;
