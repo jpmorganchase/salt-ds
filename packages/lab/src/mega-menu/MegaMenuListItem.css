@@ -1,8 +1,10 @@
-.saltMegaMenuItem {
+.saltMegaMenuListItem {
   list-style: none;
+  display: flex;
+  flex-direction: column;
 }
 
-.saltMegaMenuItem > a {
+.saltMegaMenuListItem-wrapper {
   display: flex;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
   align-items: flex-start;
@@ -13,17 +15,20 @@
   box-sizing: border-box;
   gap: var(--salt-spacing-100);
   position: relative;
-  border-radius: var(--salt-palette-corner-weak);
+  border-radius: var(--salt-palette-corner-weak, 0);
   text-decoration: none;
+  border: none;
+  font: inherit;
+  text-align: start;
 }
 
-.saltMegaMenuItem > a > .saltIcon {
+.saltMegaMenuListItem-wrapper > .saltIcon {
   display: flex;
   height: var(--salt-size-base);
   align-items: center;
 }
 
-.saltMegaMenuItem-content {
+.saltMegaMenuListItem-content {
   flex: 1 0;
   margin: var(--salt-spacing-75) 0;
   font-family: var(--salt-text-fontFamily);
@@ -32,21 +37,21 @@
   line-height: var(--salt-text-lineHeight);
 }
 
-.saltMegaMenuItem > a:focus-visible {
+.saltMegaMenuListItem-wrapper:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltMegaMenuItem > a:hover {
+.saltMegaMenuListItem-wrapper:hover:not(:focus-visible) {
   outline: none;
-  background: var(--salt-navigable-background-hover);
+  background: var(--salt-overlayable-background-hover);
 }
 
-.saltMegaMenuItem > a:active {
+.saltMegaMenuListItem-wrapper:active {
   background: var(--salt-navigable-accent-background-active);
 }
 
-.saltMegaMenuItem > a:active::before {
+.saltMegaMenuListItem-wrapper:active::before {
   content: "";
   position: absolute;
   inset: 0;

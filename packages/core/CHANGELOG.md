@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.64.1
+
+### Patch Changes
+
+- 1a48c1a: Fixed Pagination page button focus outline being covered by a sibling button's hover state.
+
 ## 1.64.0
 
 ### Minor Changes

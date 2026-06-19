@@ -1,26 +1,29 @@
-import { flip, limitShift, offset, shift, size } from "@floating-ui/react";
+import { flip, limitShift, offset, shift } from "@floating-ui/react";
 import {
   makePrefixer,
   useFloatingComponent,
   useFloatingUI,
+  useForkRef,
   useId,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type ComponentPropsWithoutRef,
   forwardRef,
-  type HTMLAttributes,
   type ReactNode,
   useEffect,
-  useState,
 } from "react";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
 import { useMegaMenu } from "./useMegaMenu";
+import { focusFirstItem } from "./useMegaMenuNavigation";
+import { usePageMargin } from "./usePageMargin";
 
 const withBaseName = makePrefixer("saltMegaMenuPanel");
 
-export interface MegaMenuPanelProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of the mega menu panel.
    */
@@ -43,62 +46,45 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
       placement,
       getFloatingProps,
       setFloating,
-      focusFirstItemOnOpen,
+      focusFirstItemOnOpenRef,
       setPanelId,
     } = useMegaMenu();
 
     const id = useId(idProp);
 
-    // Register the panel id in context so the trigger can reference it via aria-controls.
-    useEffect(() => {
-      setPanelId(id);
-      return () => setPanelId(undefined);
+    // Register the panel's id so the trigger's aria-controls stays in sync.
+    useIsomorphicLayoutEffect(() => {
+      if (id) setPanelId(id);
     }, [id, setPanelId]);
 
-    // Resolve the panel's page-margin to a pixel value to override the margin as required.
-    const [pageMargin, setPageMargin] = useState(0);
-    useEffect(() => {
-      if (!targetWindow) return;
-      const referenceEl = floatingRootContext.elements.domReference as
-        | HTMLElement
-        | null
-        | undefined;
-      const host = referenceEl ?? targetWindow.document.body;
-      const doc = targetWindow.document;
-      const measure = () => {
-        const probe = doc.createElement("div");
-        probe.style.cssText =
-          "position:absolute;visibility:hidden;pointer-events:none;width:var(--saltMegaMenuPanel-pageMargin, var(--salt-layout-page-margin));";
-        host.appendChild(probe);
-        const width = probe.getBoundingClientRect().width;
-        probe.remove();
-        setPageMargin((prev) => (prev === width ? prev : width));
-      };
-      measure();
-      targetWindow.addEventListener("resize", measure);
-      return () => targetWindow.removeEventListener("resize", measure);
-    }, [targetWindow, floatingRootContext]);
+    const { domReference } = floatingRootContext.elements;
+    const referenceEl =
+      domReference instanceof HTMLElement ? domReference : null;
+    const pageMargin = usePageMargin(referenceEl);
 
     const floatingUIResult = useFloatingUI({
       rootContext: floatingRootContext,
+      open: isOpen,
       placement,
       middleware: [
         offset(1),
         flip({ padding: pageMargin }),
         shift({ padding: pageMargin, limiter: limitShift() }),
-        size({
-          padding: pageMargin,
-          apply({ availableWidth, elements }) {
-            elements.floating.style.setProperty(
-              "--saltMegaMenuPanel-availableWidth",
-              `${availableWidth}px`,
-            );
-          },
-        }),
       ],
     });
 
-    const floatingProps = getFloatingProps();
+    // Focus the first item on ArrowDown open, after floating-ui has positioned the panel
+    const floatingEl = floatingRootContext.elements.floating;
+    const { isPositioned } = floatingUIResult;
+    useEffect(() => {
+      if (focusFirstItemOnOpenRef.current && isPositioned && floatingEl) {
+        focusFirstItem(floatingEl);
+        focusFirstItemOnOpenRef.current = false;
+      }
+    }, [focusFirstItemOnOpenRef, isPositioned, floatingEl]);
+
+    const floatingProps = getFloatingProps(rest);
+    const handleRef = useForkRef<HTMLDivElement>(setFloating, ref);
 
     return (
       <FloatingComponent
@@ -109,23 +95,18 @@ export const MegaMenuPanel = forwardRef<HTMLDivElement, MegaMenuPanelProps>(
         focusManagerProps={{
           context: floatingUIResult.context,
           modal: false,
-          initialFocus: focusFirstItemOnOpen ? 0 : -1,
+          initialFocus: -1,
           returnFocus: true,
           closeOnFocusOut: false,
           guards: false,
         }}
-        ref={setFloating}
+        className={clsx(withBaseName(), className)}
+        id={id}
+        role="region"
+        {...floatingProps}
+        ref={handleRef}
       >
-        <div
-          className={clsx(withBaseName(), className)}
-          id={id}
-          role="region"
-          ref={ref}
-          {...floatingProps}
-          {...rest}
-        >
-          {children}
-        </div>
+        {children}
       </FloatingComponent>
     );
   },

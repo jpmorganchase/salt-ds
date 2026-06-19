@@ -1,23 +1,23 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  Children,
-  cloneElement,
+  type ComponentPropsWithoutRef,
   forwardRef,
-  type HTMLAttributes,
-  isValidElement,
   type ReactNode,
+  useMemo,
+  useState,
 } from "react";
 import megaMenuGroupCss from "./MegaMenuGroup.css";
-import { MegaMenuHeader } from "./MegaMenuHeader";
+import { MegaMenuGroupContext } from "./MegaMenuGroupContext";
 
 const withBaseName = makePrefixer("saltMegaMenuGroup");
 
-export interface MegaMenuGroupProps extends HTMLAttributes<HTMLDivElement> {
+export interface MegaMenuGroupProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of the mega menu group, typically MegaMenuHeader and MegaMenuItem components.
+   * The content of the mega menu group: a `MegaMenuGroupHeading` and a
+   * `MegaMenuList` of `MegaMenuListItem`s.
    */
   children?: ReactNode;
 }
@@ -31,33 +31,25 @@ export const MegaMenuGroup = forwardRef<HTMLDivElement, MegaMenuGroupProps>(
       window: targetWindow,
     });
 
-    const headerId = useId();
-    let header: ReactNode = null;
-    const items: ReactNode[] = [];
-
-    Children.forEach(children, (child) => {
-      if (isValidElement(child) && child.type === MegaMenuHeader && !header) {
-        header = cloneElement(child, { id: headerId });
-      } else {
-        items.push(child);
-      }
-    });
+    // The heading registers its id so the list can label itself; `undefined`
+    // with no heading. The group is also a navigation column.
+    const [headingId, setHeadingId] = useState<string | undefined>(undefined);
+    const contextValue = useMemo(
+      () => ({ headingId, setHeadingId }),
+      [headingId],
+    );
 
     return (
-      <div
-        className={clsx(withBaseName(), className)}
-        data-mega-menu-column=""
-        ref={ref}
-        {...rest}
-      >
-        {header}
-        <ol
-          className={withBaseName("list")}
-          aria-labelledby={header ? headerId : undefined}
+      <MegaMenuGroupContext.Provider value={contextValue}>
+        <div
+          data-mega-menu-column=""
+          className={clsx(withBaseName(), className)}
+          ref={ref}
+          {...rest}
         >
-          {items}
-        </ol>
-      </div>
+          {children}
+        </div>
+      </MegaMenuGroupContext.Provider>
     );
   },
 );

@@ -44,7 +44,8 @@ nav > ol {
 }
 
 .full-width-panel .saltMegaMenuGroups {
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
+  --saltMegaMenuGroups-columnWidth: 16rem;
+  align-self: stretch;
 }
 
 .edge-to-edge-wrapper {
@@ -52,61 +53,33 @@ nav > ol {
   box-sizing: border-box;
 }
 
-.max-width-content-panel {
+.edge-to-edge-panel {
   --saltMegaMenuPanel-inlineSize: 100vw;
   --saltMegaMenuPanel-maxInlineSize: 100vw;
   box-sizing: border-box;
 }
 
-.max-width-content-panel .saltMegaMenuGroups {
+.edge-to-edge-panel .saltMegaMenuContent {
+  max-inline-size: 100%;
+}
+
+.edge-to-edge-panel .saltMegaMenuGroups {
   max-inline-size: 920px;
   inline-size: 100%;
   margin-inline: auto;
   --saltMegaMenuGroups-columnWidth: 212px;
-  grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 16rem)));
-}
-
-.custom-region-content {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  min-inline-size: 0;
 }
 
 .custom-region-no-container-padding {
   padding: 0;
 }
 
-.custom-region-no-container-padding .custom-region {
-  flex: 0 0 auto;
-}
-
-.supporting-actions-first-link {
-  padding-left: var(--salt-spacing-300);
-}
-
-.custom-region {
+.custom-region-side-content {
   background: var(--salt-container-secondary-background);
 }
 
 .custom-region-right-description {
   max-inline-size: 240px;
-}
-
-.withLink-menu-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.withLink-menu-container .saltMegaMenuGroups,
-.custom-region-content .saltMegaMenuGroups {
-  flex: 1 1 auto;
-}
-
-.withLink-menu-container > .saltMegaMenuGroup,
-.custom-region-content > .saltMegaMenuGroup {
-  margin-top: auto;
-  align-self: flex-start;
 }
 
 .custom-region-image {
@@ -115,38 +88,42 @@ nav > ol {
   display: block;
 }
 
-.custom-region-side .custom-region {
-  flex: 0 0 258px;
-  inline-size: 258px;
+/* Stacked by default: a narrow, single-column menu. The aside sits above or
+   below the groups by source order. */
+.custom-region-side {
+  --saltMegaMenuPanel-inlineSize: 24rem;
+  flex-direction: column;
+}
+
+.custom-region-side .custom-region-side-content {
+  inline-size: 100%;
   box-sizing: border-box;
 }
 
 .custom-region-side .custom-region-image {
-  width: 100%;
   height: 200px;
   object-fit: cover;
-  display: block;
 }
 
-/* When the side region wraps below the menu, pin the panel to 320px */
-@media (max-width: 1200px) {
+.custom-region-side-section {
+  grid-template-columns: 1fr;
+}
+
+/* Side-by-side once there's room for the aside beside the columns (Salt `lg`). */
+@media (min-width: 1280px) {
   .custom-region-side {
-    --saltMegaMenuPanel-inlineSize: 320px;
-    --saltMegaMenuPanel-maxInlineSize: 320px;
+    --saltMegaMenuPanel-inlineSize: initial;
+    flex-direction: row;
   }
 
-  .custom-region-side .custom-region {
-    flex: 0 0 auto;
-    inline-size: 100%;
-    padding-inline: var(--salt-spacing-300);
+  .custom-region-side .custom-region-side-content {
+    flex: 0 0 258px;
+    inline-size: 258px;
+    align-self: flex-start;
   }
 
-  .custom-region-side .saltMegaMenuGroups {
-    grid-template-columns: 1fr;
-  }
-
-  .custom-region-side .saltMegaMenuItem {
-    inline-size: 100%;
+  .custom-region-side-section {
+    grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 12rem)));
   }
 }
 
@@ -157,7 +134,7 @@ nav > ol {
   height: var(--salt-size-base);
 }
 
-.saltMegaMenuItem > a {
+.saltMegaMenuListItem-wrapper {
   inline-size: 100%;
 }
 
@@ -171,11 +148,16 @@ nav > ol {
   --saltMegaMenuPanel-maxInlineSize: 320px;
 }
 
+.small-viewport-container .saltMegaMenuContent {
+  max-inline-size: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .small-viewport-container .saltMegaMenuGroups {
   grid-template-columns: 1fr;
   max-inline-size: 100%;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .saltMegaMenuPanel {

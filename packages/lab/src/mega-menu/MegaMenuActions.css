@@ -1,0 +1,5 @@
+.saltMegaMenuActions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-block-start: auto;
+}

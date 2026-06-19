@@ -71,6 +71,12 @@ const emptyOverflowState: OverflowState = {
 };
 
 const bandPositions: ToolbarContentPosition[] = ["start", "center", "end"];
+// Tolerance for comparing measured content against the available width.
+// `getBoundingClientRect` reports fractional pixels, so summed item, gap, and
+// container measurements can differ by sub-pixel amounts that never visibly
+// overflow. Treating differences below half a CSS pixel as "fits" prevents
+// false overflow. Matches the epsilon used by core Tabs for consistency.
+const WIDTH_EPSILON = 0.5;
 
 function measureWidth(element: HTMLElement | null) {
   if (!element) {
@@ -78,7 +84,7 @@ function measureWidth(element: HTMLElement | null) {
   }
 
   const { width } = element.getBoundingClientRect();
-  return Math.ceil(width);
+  return width;
 }
 
 function isVisibleMeasurementElement(element: Element): element is HTMLElement {
@@ -116,7 +122,11 @@ function measureOverflowItemWidth(element: HTMLElement | null) {
     right = Math.max(right, descendantRect.right);
   }
 
-  return Math.ceil(Math.max(rect.width, right - left));
+  return Math.max(rect.width, right - left);
+}
+
+function exceedsAvailableWidth(measuredWidth: number, availableWidth: number) {
+  return measuredWidth - availableWidth > WIDTH_EPSILON;
 }
 
 function readGap(gapValue: string) {
@@ -410,7 +420,7 @@ function computeToolbarOverflowState({
     return emptyOverflowState;
   }
 
-  if (initialWidth > containerWidth) {
+  if (exceedsAvailableWidth(initialWidth, containerWidth)) {
     for (const unit of collapseUnits) {
       for (const itemId of unit.itemIds) {
         overflowedIds.add(itemId);
@@ -424,7 +434,7 @@ function computeToolbarOverflowState({
         return emptyOverflowState;
       }
 
-      if (nextWidth <= containerWidth) {
+      if (!exceedsAvailableWidth(nextWidth, containerWidth)) {
         break;
       }
     }
@@ -544,13 +554,12 @@ export function useToolbarOverflow({ content }: UseToolbarOverflowProps) {
       Number.parseFloat(containerStyles.borderLeftWidth || "0") || 0;
     const borderRight =
       Number.parseFloat(containerStyles.borderRightWidth || "0") || 0;
-    const containerWidth = Math.floor(
+    const containerWidth =
       container.getBoundingClientRect().width -
-        paddingLeft -
-        paddingRight -
-        borderLeft -
-        borderRight,
-    );
+      paddingLeft -
+      paddingRight -
+      borderLeft -
+      borderRight;
 
     if (containerWidth <= 0) {
       return emptyOverflowState;
