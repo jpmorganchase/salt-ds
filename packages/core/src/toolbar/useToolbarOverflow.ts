@@ -1,12 +1,14 @@
-import { ownerWindow, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ToolbarContentNextPosition } from "./ToolbarContentNext";
+import { ownerWindow, useIsomorphicLayoutEffect } from "../utils";
+import type { ToolbarContentProps } from "./ToolbarContent";
 import {
   buildContentOverflowRenderSlots,
-  type ToolbarNextContentModel,
-  type ToolbarNextOverflowItem,
-} from "./toolbarNextUtils";
+  type ToolbarContentModel,
+  type ToolbarOverflowItem,
+} from "./toolbarUtils";
+
+type ToolbarContentPosition = ToolbarContentProps["position"];
 
 interface OverflowGroupDefinition {
   id: string;
@@ -25,9 +27,9 @@ interface CollapseUnit {
   priority: number;
 }
 
-export interface ToolbarNextOverflowGroup {
+export interface ToolbarOverflowGroup {
   id: string;
-  items: ToolbarNextOverflowItem[];
+  items: ToolbarOverflowItem[];
   key: string;
   label: string;
   named: boolean;
@@ -36,12 +38,12 @@ export interface ToolbarNextOverflowGroup {
 }
 
 interface OverflowState {
-  overflowGroups: ToolbarNextOverflowGroup[];
+  overflowGroups: ToolbarOverflowGroup[];
   overflowedIds: Set<string>;
 }
 
-interface UseToolbarNextOverflowProps {
-  content: ToolbarNextContentModel[];
+interface UseToolbarOverflowProps {
+  content: ToolbarContentModel[];
 }
 
 type ObservedWidthTarget =
@@ -70,7 +72,7 @@ const emptyOverflowState: OverflowState = {
   overflowedIds: new Set<string>(),
 };
 
-const bandPositions: ToolbarContentNextPosition[] = ["start", "center", "end"];
+const bandPositions: ToolbarContentPosition[] = ["start", "center", "end"];
 // Tolerance for comparing measured content against the available width.
 // `getBoundingClientRect` reports fractional pixels, so summed item, gap, and
 // container measurements can differ by sub-pixel amounts that never visibly
@@ -144,7 +146,7 @@ function sumFlexWidths(widths: number[], gap: number) {
   );
 }
 
-function buildGroupDefinitions(items: ToolbarNextOverflowItem[]) {
+function buildGroupDefinitions(items: ToolbarOverflowItem[]) {
   const groupMap = new Map<string, OverflowGroupDefinition>();
 
   for (const [sequence, item] of items.entries()) {
@@ -185,7 +187,7 @@ function buildGroupDefinitions(items: ToolbarNextOverflowItem[]) {
   );
 }
 
-function buildCollapseUnits(items: ToolbarNextOverflowItem[]) {
+function buildCollapseUnits(items: ToolbarOverflowItem[]) {
   const groupedUnits = new Map<string, CollapseUnit>();
   const units: CollapseUnit[] = [];
 
@@ -266,21 +268,21 @@ function areOverflowStatesEqual(previous: OverflowState, next: OverflowState) {
   });
 }
 
-interface ComputeToolbarNextOverflowStateArgs {
+interface ComputeToolbarOverflowStateArgs {
   collapseUnits: CollapseUnit[];
   containerWidth: number;
   groupDefinitions: OverflowGroupDefinition[];
   itemWidths: Map<string, number>;
-  items: ToolbarNextOverflowItem[];
+  items: ToolbarOverflowItem[];
   namedTriggerWidths: Map<string, number>;
-  content: ToolbarNextContentModel[];
+  content: ToolbarContentModel[];
   contentGaps: Map<string, number>;
   rootGap: number;
   triggerWidths: Map<string, number>;
-  bandGaps: Map<ToolbarContentNextPosition, number>;
+  bandGaps: Map<ToolbarContentPosition, number>;
 }
 
-function computeToolbarNextOverflowState({
+function computeToolbarOverflowState({
   bandGaps,
   collapseUnits,
   containerWidth,
@@ -292,12 +294,12 @@ function computeToolbarNextOverflowState({
   contentGaps,
   rootGap,
   triggerWidths,
-}: ComputeToolbarNextOverflowStateArgs): OverflowState {
+}: ComputeToolbarOverflowStateArgs): OverflowState {
   const hasCenteredLayout = content.some(
     (contentArea) => contentArea.position === "center",
   );
   const contentByPosition = bandPositions.reduce<
-    Record<ToolbarContentNextPosition, ToolbarNextContentModel[]>
+    Record<ToolbarContentPosition, ToolbarContentModel[]>
   >(
     (bands, position) => {
       bands[position] = content.filter(
@@ -314,7 +316,7 @@ function computeToolbarNextOverflowState({
   const overflowedIds = new Set<string>();
   const activeGroups = new Set<string>();
 
-  const getContentWidth = (contentArea: ToolbarNextContentModel) => {
+  const getContentWidth = (contentArea: ToolbarContentModel) => {
     const renderSlots = buildContentOverflowRenderSlots(
       contentArea.items,
       overflowedIds,
@@ -348,7 +350,7 @@ function computeToolbarNextOverflowState({
     return sumFlexWidths(slotWidths, contentGaps.get(contentArea.key) ?? 0);
   };
 
-  const getBandWidth = (position: ToolbarContentNextPosition) => {
+  const getBandWidth = (position: ToolbarContentPosition) => {
     const bandChildWidths: number[] = [];
 
     for (const contentArea of contentByPosition[position]) {
@@ -440,7 +442,7 @@ function computeToolbarNextOverflowState({
     }
   }
 
-  const overflowGroups = groupDefinitions.reduce<ToolbarNextOverflowGroup[]>(
+  const overflowGroups = groupDefinitions.reduce<ToolbarOverflowGroup[]>(
     (groups, group) => {
       const hiddenItems = items.filter(
         (item) =>
@@ -470,9 +472,7 @@ function computeToolbarNextOverflowState({
   };
 }
 
-export function useToolbarNextOverflow({
-  content,
-}: UseToolbarNextOverflowProps) {
+export function useToolbarOverflow({ content }: UseToolbarOverflowProps) {
   const targetWindow = useWindow();
   const items = useMemo(
     () => content.flatMap((contentArea) => contentArea.items),
@@ -481,17 +481,14 @@ export function useToolbarNextOverflow({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const bandRefs = useRef<
-    Record<ToolbarContentNextPosition, HTMLDivElement | null>
+    Record<ToolbarContentPosition, HTMLDivElement | null>
   >({
     start: null,
     center: null,
     end: null,
   });
   const bandRefCallbacks = useRef(
-    new Map<
-      ToolbarContentNextPosition,
-      (node: HTMLDivElement | null) => void
-    >(),
+    new Map<ToolbarContentPosition, (node: HTMLDivElement | null) => void>(),
   );
   const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const contentRefCallbacks = useRef(
@@ -573,7 +570,7 @@ export function useToolbarNextOverflow({
     const rootGap = readGap(
       containerStyles.columnGap || containerStyles.gap || "0",
     );
-    const bandGaps = new Map<ToolbarContentNextPosition, number>();
+    const bandGaps = new Map<ToolbarContentPosition, number>();
     const contentGaps = new Map<string, number>();
     const itemWidths = new Map<string, number>();
     const namedTriggerWidths = new Map<string, number>();
@@ -678,7 +675,7 @@ export function useToolbarNextOverflow({
       cachedSharedTriggerWidths.current[group.key] = width;
     }
 
-    const nextOverflowState = computeToolbarNextOverflowState({
+    const nextOverflowState = computeToolbarOverflowState({
       bandGaps,
       collapseUnits,
       containerWidth,
@@ -996,7 +993,7 @@ export function useToolbarNextOverflow({
     contentRefCallbacks.current.set(contentKey, callback);
     return callback;
   }, []);
-  const getBandRef = useCallback((position: ToolbarContentNextPosition) => {
+  const getBandRef = useCallback((position: ToolbarContentPosition) => {
     const existing = bandRefCallbacks.current.get(position);
 
     if (existing) {

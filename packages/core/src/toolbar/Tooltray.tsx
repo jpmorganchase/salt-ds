@@ -1,31 +1,29 @@
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { makePrefixer } from "../utils";
 
-import tooltrayCss from "./TooltrayNext.css";
+import tooltrayCss from "./Tooltray.css";
 
-export type TooltrayNextOverflowMode = "none" | "independent" | "grouped";
-
-export interface TooltrayNextProps
+export interface TooltrayProps
   extends Omit<ComponentPropsWithoutRef<"div">, "align"> {
   /**
    * Alignment of the tooltray.
-   * - When a `TooltrayNext` is used directly inside `ToolbarNext`, this acts as
+   * - When a `Tooltray` is used directly inside `Toolbar`, this acts as
    *   shorthand for which toolbar band the tray belongs to.
-   * - When a `TooltrayNext` is used inside `ToolbarContentNext`, this alignment is
+   * - When a `Tooltray` is used inside `ToolbarContent`, this alignment is
    *   local to that content area.
    *
    * Defaults to `"start"`.
    */
   align?: "start" | "end" | "center";
   /**
-   * Controls how this tray participates in `ToolbarNext` overflow.
+   * Controls how this tray participates in `Toolbar` overflow.
    *
    * Defaults to `"independent"`.
    */
-  overflowMode?: TooltrayNextOverflowMode;
+  overflowMode?: "none" | "independent" | "grouped";
   /**
    * Higher numbers overflow before lower numbers.
    *
@@ -44,10 +42,10 @@ export interface TooltrayNextProps
   overflowLabel?: string;
 }
 
-const withBaseName = makePrefixer("saltTooltrayNext");
+const withBaseName = makePrefixer("saltTooltray");
 
-export const TooltrayNext = forwardRef<HTMLDivElement, TooltrayNextProps>(
-  function TooltrayNext(
+export const Tooltray = forwardRef<HTMLDivElement, TooltrayProps>(
+  function Tooltray(
     {
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledby,
@@ -65,7 +63,7 @@ export const TooltrayNext = forwardRef<HTMLDivElement, TooltrayNextProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-tooltray-next",
+      testId: "salt-tooltray",
       css: tooltrayCss,
       window: targetWindow,
     });

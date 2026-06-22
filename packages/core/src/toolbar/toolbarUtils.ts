@@ -1,4 +1,3 @@
-import { Divider, getRefFromChildren } from "@salt-ds/core";
 import {
   Children,
   Fragment,
@@ -7,61 +6,57 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import { Divider } from "../divider";
+import { getRefFromChildren } from "../utils";
 
-import {
-  ToolbarContentNext,
-  type ToolbarContentNextPosition,
-  type ToolbarContentNextProps,
-} from "./ToolbarContentNext";
-import {
-  TooltrayNext,
-  type TooltrayNextOverflowMode,
-  type TooltrayNextProps,
-} from "./TooltrayNext";
+import { ToolbarContent, type ToolbarContentProps } from "./ToolbarContent";
+import { Tooltray, type TooltrayProps } from "./Tooltray";
 
-export type ToolbarNextMode = "explicit" | "flat" | "invalid";
+export type ToolbarMode = "explicit" | "flat" | "invalid";
 
-type ToolbarNextChild = Exclude<ReactNode, boolean | null | undefined>;
+type ToolbarChild = Exclude<ReactNode, boolean | null | undefined>;
+type ToolbarContentPosition = ToolbarContentProps["position"];
+type TooltrayOverflowMode = NonNullable<TooltrayProps["overflowMode"]>;
 
-export interface ToolbarNextOverflowItem {
-  align: NonNullable<TooltrayNextProps["align"]>;
-  element: ReactElement<TooltrayNextProps>;
+export interface ToolbarOverflowItem {
+  align: NonNullable<TooltrayProps["align"]>;
+  element: ReactElement<TooltrayProps>;
   id: string;
   leadingDecorations: ReactElement[];
   order: number;
   overflowGroup: string;
   overflowGroupKey: string;
   overflowLabel?: string;
-  overflowMode: TooltrayNextOverflowMode;
+  overflowMode: TooltrayOverflowMode;
   overflowPriority: number;
   contentKey: string;
   trailingDecorations: ReactElement[];
 }
 
-export interface ToolbarNextOverflowRenderSlot {
-  item: ToolbarNextOverflowItem;
+export interface ToolbarOverflowRenderSlot {
+  item: ToolbarOverflowItem;
   overflowed: boolean;
   showLeadingDecorations: boolean;
   showTrailingDecorations: boolean;
   triggerGroupKey?: string;
 }
 
-export interface ToolbarNextContentModel {
+export interface ToolbarContentModel {
   implicit: boolean;
-  items: ToolbarNextOverflowItem[];
+  items: ToolbarOverflowItem[];
   key: string;
-  position: ToolbarContentNextPosition;
-  props: Omit<ToolbarContentNextProps, "children" | "position">;
+  position: ToolbarContentPosition;
+  props: Omit<ToolbarContentProps, "children" | "position">;
   ref: Ref<HTMLDivElement> | null;
 }
 
-export interface ToolbarNextModel {
-  mode: ToolbarNextMode;
-  content: ToolbarNextContentModel[];
+export interface ToolbarModel {
+  mode: ToolbarMode;
+  content: ToolbarContentModel[];
 }
 
 export function buildContentOverflowRenderSlots(
-  items: ToolbarNextOverflowItem[],
+  items: ToolbarOverflowItem[],
   overflowedIds: Set<string>,
   activeNamedGroupKeys: Set<string>,
 ) {
@@ -77,7 +72,7 @@ export function buildContentOverflowRenderSlots(
     }
   }
 
-  const slots: ToolbarNextOverflowRenderSlot[] = [];
+  const slots: ToolbarOverflowRenderSlot[] = [];
   let hasSurvivingPredecessor = false;
 
   for (const item of items) {
@@ -109,10 +104,8 @@ export function buildContentOverflowRenderSlots(
   return slots;
 }
 
-export function flattenToolbarChildren(
-  children: ReactNode,
-): ToolbarNextChild[] {
-  const flattened: ToolbarNextChild[] = [];
+export function flattenToolbarChildren(children: ReactNode): ToolbarChild[] {
+  const flattened: ToolbarChild[] = [];
 
   Children.forEach(children, (child) => {
     if (child == null || typeof child === "boolean") {
@@ -130,25 +123,25 @@ export function flattenToolbarChildren(
   return flattened;
 }
 
-function isToolbarContentNextElement(
-  child: ToolbarNextChild,
-): child is ReactElement<ToolbarContentNextProps> {
-  return isValidElement(child) && child.type === ToolbarContentNext;
+function isToolbarContentElement(
+  child: ToolbarChild,
+): child is ReactElement<ToolbarContentProps> {
+  return isValidElement(child) && child.type === ToolbarContent;
 }
 
 function isTooltrayElement(
-  child: ToolbarNextChild,
-): child is ReactElement<TooltrayNextProps> {
-  return isValidElement(child) && child.type === TooltrayNext;
+  child: ToolbarChild,
+): child is ReactElement<TooltrayProps> {
+  return isValidElement(child) && child.type === Tooltray;
 }
 
-function isDividerElement(child: ToolbarNextChild): child is ReactElement {
+function isDividerElement(child: ToolbarChild): child is ReactElement {
   return isValidElement(child) && child.type === Divider;
 }
 
 function buildItemId(
   contentKey: string,
-  element: ReactElement<TooltrayNextProps>,
+  element: ReactElement<TooltrayProps>,
   order: number,
 ) {
   const elementKey =
@@ -165,9 +158,9 @@ function buildOverflowGroupKey(contentKey: string, overflowGroup: string) {
 function normalizeContentItems(
   children: ReactNode,
   contentKey: string,
-): ToolbarNextOverflowItem[] | null {
+): ToolbarOverflowItem[] | null {
   const flattenedChildren = flattenToolbarChildren(children);
-  const items: ToolbarNextOverflowItem[] = [];
+  const items: ToolbarOverflowItem[] = [];
   let pendingLeadingDecorations: ReactElement[] = [];
 
   for (const child of flattenedChildren) {
@@ -217,12 +210,12 @@ function normalizeContentItems(
 }
 
 function normalizeExplicitContent(
-  children: ToolbarNextChild[],
-): ToolbarNextContentModel[] | null {
-  const content: ToolbarNextContentModel[] = [];
+  children: ToolbarChild[],
+): ToolbarContentModel[] | null {
+  const content: ToolbarContentModel[] = [];
 
   for (const [index, child] of children.entries()) {
-    if (!isToolbarContentNextElement(child)) {
+    if (!isToolbarContentElement(child)) {
       continue;
     }
 
@@ -252,13 +245,13 @@ function normalizeExplicitContent(
   return content;
 }
 
-function normalizeFlatChildren(children: ToolbarNextChild[]) {
-  const buckets: Record<ToolbarContentNextPosition, ToolbarNextChild[]> = {
+function normalizeFlatChildren(children: ToolbarChild[]) {
+  const buckets: Record<ToolbarContentPosition, ToolbarChild[]> = {
     start: [],
     center: [],
     end: [],
   };
-  let currentPosition: ToolbarContentNextPosition = "start";
+  let currentPosition: ToolbarContentPosition = "start";
 
   for (const child of children) {
     if (isTooltrayElement(child)) {
@@ -275,8 +268,8 @@ function normalizeFlatChildren(children: ToolbarNextChild[]) {
     return null;
   }
 
-  return (Object.keys(buckets) as ToolbarContentNextPosition[]).reduce<
-    ToolbarNextContentModel[]
+  return (Object.keys(buckets) as ToolbarContentPosition[]).reduce<
+    ToolbarContentModel[]
   >((content, position) => {
     const contentKey = `${position}-implicit`;
     const contentItems = normalizeContentItems(buckets[position], contentKey);
@@ -298,15 +291,11 @@ function normalizeFlatChildren(children: ToolbarNextChild[]) {
   }, []);
 }
 
-export function normalizeToolbarChildren(
-  children: ReactNode,
-): ToolbarNextModel {
+export function normalizeToolbarChildren(children: ReactNode): ToolbarModel {
   const flattenedChildren = flattenToolbarChildren(children);
-  const hasContentChildren = flattenedChildren.some(
-    isToolbarContentNextElement,
-  );
+  const hasContentChildren = flattenedChildren.some(isToolbarContentElement);
   const hasOnlyContent =
-    hasContentChildren && flattenedChildren.every(isToolbarContentNextElement);
+    hasContentChildren && flattenedChildren.every(isToolbarContentElement);
   const hasOnlyFlatChildren = flattenedChildren.every(
     (child) => isTooltrayElement(child) || isDividerElement(child),
   );

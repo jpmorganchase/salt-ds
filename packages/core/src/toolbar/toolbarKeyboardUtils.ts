@@ -1,13 +1,12 @@
-import type { ToolbarNextOverflowItem } from "./toolbarNextUtils";
+import type { ToolbarOverflowItem } from "./toolbarUtils";
 
-export const TOOLBAR_NEXT_SCOPE_ROOT_ATTR = "data-salt-toolbar-next-scope-root";
-export const TOOLBAR_NEXT_ITEM_ATTR = "data-salt-toolbar-next-item-id";
-export const TOOLBAR_NEXT_GROUP_KEY_ATTR =
-  "data-salt-toolbar-next-overflow-group-key";
-export const TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR =
-  "data-salt-toolbar-next-overflow-trigger";
+export const TOOLBAR_SCOPE_ROOT_ATTR = "data-salt-toolbar-scope-root";
+export const TOOLBAR_ITEM_ATTR = "data-salt-toolbar-item-id";
+export const TOOLBAR_GROUP_KEY_ATTR = "data-salt-toolbar-overflow-group-key";
+export const TOOLBAR_OVERFLOW_TRIGGER_ATTR =
+  "data-salt-toolbar-overflow-trigger";
 
-export const toolbarNextFocusableSelector = [
+export const toolbarFocusableSelector = [
   "button",
   "[href]",
   "input",
@@ -32,7 +31,7 @@ const textEntryInputTypes = new Set([
   "week",
 ]);
 
-export type ToolbarNextFocusMemory =
+export type ToolbarFocusMemory =
   | {
       controlIndex: number;
       itemId: string;
@@ -49,32 +48,32 @@ export type ToolbarNextFocusMemory =
       type: "scope";
     };
 
-export interface ToolbarNextFocusableOptions {
+export interface ToolbarFocusableOptions {
   includeTabIndexMinusOne?: boolean;
 }
 
-interface ToolbarNextKeyboardPolicy {
+interface ToolbarKeyboardPolicy {
   preserveHorizontalArrows: boolean;
   preserveNativeTab: boolean;
 }
 
-export function getClosestToolbarNextScopeRoot(target: EventTarget | null) {
+export function getClosestToolbarScopeRoot(target: EventTarget | null) {
   if (!(target instanceof Element)) {
     return null;
   }
 
-  return target.closest<HTMLElement>(`[${TOOLBAR_NEXT_SCOPE_ROOT_ATTR}]`);
+  return target.closest<HTMLElement>(`[${TOOLBAR_SCOPE_ROOT_ATTR}]`);
 }
 
-export function getToolbarNextItemId(target: Element | null) {
+export function getToolbarItemId(target: Element | null) {
   return (
     target
-      ?.closest<HTMLElement>(`[${TOOLBAR_NEXT_ITEM_ATTR}]`)
-      ?.getAttribute(TOOLBAR_NEXT_ITEM_ATTR) ?? null
+      ?.closest<HTMLElement>(`[${TOOLBAR_ITEM_ATTR}]`)
+      ?.getAttribute(TOOLBAR_ITEM_ATTR) ?? null
   );
 }
 
-export function isToolbarNextFocusFromPointerTarget(
+export function isToolbarFocusFromPointerTarget(
   focusTarget: HTMLElement,
   pointerTarget: EventTarget | null,
 ) {
@@ -90,45 +89,42 @@ export function isToolbarNextFocusFromPointerTarget(
     return false;
   }
 
-  const focusItemId = getToolbarNextItemId(focusTarget);
-  const pointerItemId = getToolbarNextItemId(pointerTarget);
+  const focusItemId = getToolbarItemId(focusTarget);
+  const pointerItemId = getToolbarItemId(pointerTarget);
 
   return focusItemId != null && focusItemId === pointerItemId;
 }
 
-export function getToolbarNextScopeFocusableElements(
+export function getToolbarScopeFocusableElements(
   scopeRoot: HTMLElement,
-  options: ToolbarNextFocusableOptions = {},
+  options: ToolbarFocusableOptions = {},
 ) {
   return Array.from(
-    scopeRoot.querySelectorAll<HTMLElement>(toolbarNextFocusableSelector),
+    scopeRoot.querySelectorAll<HTMLElement>(toolbarFocusableSelector),
   ).filter((element) => {
     return (
-      getClosestToolbarNextScopeRoot(element) === scopeRoot &&
-      (isToolbarNextFocusable(element, options) ||
-        isToolbarNextToggleGroupButton(element))
+      getClosestToolbarScopeRoot(element) === scopeRoot &&
+      (isToolbarFocusable(element, options) ||
+        isToolbarToggleGroupButton(element))
     );
   });
 }
 
-export function getToolbarNextFocusMemory(
+export function getToolbarFocusMemory(
   scopeRoot: HTMLElement,
   target: HTMLElement,
-  options: ToolbarNextFocusableOptions = {},
-): ToolbarNextFocusMemory | null {
-  const scopeElements = getToolbarNextScopeFocusableElements(
-    scopeRoot,
-    options,
-  );
+  options: ToolbarFocusableOptions = {},
+): ToolbarFocusMemory | null {
+  const scopeElements = getToolbarScopeFocusableElements(scopeRoot, options);
   const scopeIndex = scopeElements.indexOf(target);
   if (scopeIndex === -1) {
     return null;
   }
 
   const groupTrigger = target.closest<HTMLElement>(
-    `[${TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR}]`,
+    `[${TOOLBAR_OVERFLOW_TRIGGER_ATTR}]`,
   );
-  const groupKey = groupTrigger?.getAttribute(TOOLBAR_NEXT_GROUP_KEY_ATTR);
+  const groupKey = groupTrigger?.getAttribute(TOOLBAR_GROUP_KEY_ATTR);
 
   if (groupKey) {
     return {
@@ -138,11 +134,11 @@ export function getToolbarNextFocusMemory(
     };
   }
 
-  const itemRoot = target.closest<HTMLElement>(`[${TOOLBAR_NEXT_ITEM_ATTR}]`);
-  const itemId = itemRoot?.getAttribute(TOOLBAR_NEXT_ITEM_ATTR);
+  const itemRoot = target.closest<HTMLElement>(`[${TOOLBAR_ITEM_ATTR}]`);
+  const itemId = itemRoot?.getAttribute(TOOLBAR_ITEM_ATTR);
 
   if (itemRoot && itemId) {
-    const itemElements = getToolbarNextItemFocusableElements(
+    const itemElements = getToolbarItemFocusableElements(
       itemRoot,
       scopeRoot,
       options,
@@ -163,15 +159,15 @@ export function getToolbarNextFocusMemory(
   };
 }
 
-export function resolveToolbarNextFocusTarget(
+export function resolveToolbarFocusTarget(
   scopeRoot: HTMLElement,
-  focusMemory: ToolbarNextFocusMemory | null,
+  focusMemory: ToolbarFocusMemory | null,
   {
     includeTabIndexMinusOne,
     items = [],
     overflowedIds,
   }: {
-    items?: ToolbarNextOverflowItem[];
+    items?: ToolbarOverflowItem[];
     includeTabIndexMinusOne?: boolean;
     overflowedIds?: Set<string>;
   } = {},
@@ -182,19 +178,18 @@ export function resolveToolbarNextFocusTarget(
 
   if (!focusMemory) {
     return (
-      getToolbarNextScopeFocusableElements(scopeRoot, focusableOptions)[0] ??
-      null
+      getToolbarScopeFocusableElements(scopeRoot, focusableOptions)[0] ?? null
     );
   }
 
-  const fallback = getToolbarNextFocusFallback(
+  const fallback = getToolbarFocusFallback(
     scopeRoot,
     focusMemory.scopeIndex,
     focusableOptions,
   );
 
   if (focusMemory.type === "overflow-trigger") {
-    const trigger = getToolbarNextOverflowTriggerElement(
+    const trigger = getToolbarOverflowTriggerElement(
       scopeRoot,
       focusMemory.groupKey,
     );
@@ -209,7 +204,7 @@ export function resolveToolbarNextFocusTarget(
 
     if (firstVisibleItem) {
       return (
-        getToolbarNextFocusableElementForItem(
+        getToolbarFocusableElementForItem(
           scopeRoot,
           firstVisibleItem.id,
           0,
@@ -222,7 +217,7 @@ export function resolveToolbarNextFocusTarget(
   }
 
   if (focusMemory.type === "item") {
-    const visibleItemTarget = getToolbarNextFocusableElementForItem(
+    const visibleItemTarget = getToolbarFocusableElementForItem(
       scopeRoot,
       focusMemory.itemId,
       focusMemory.controlIndex,
@@ -237,10 +232,8 @@ export function resolveToolbarNextFocusTarget(
 
     if (item && overflowedIds?.has(item.id)) {
       return (
-        getToolbarNextOverflowTriggerElement(
-          scopeRoot,
-          item.overflowGroupKey,
-        ) ?? fallback
+        getToolbarOverflowTriggerElement(scopeRoot, item.overflowGroupKey) ??
+        fallback
       );
     }
 
@@ -250,17 +243,17 @@ export function resolveToolbarNextFocusTarget(
   return fallback;
 }
 
-export function getToolbarNextDirectionalMoveTarget(
+export function getToolbarDirectionalMoveTarget(
   scopeRoot: HTMLElement,
   target: HTMLElement,
   key: string,
-  options: ToolbarNextFocusableOptions = {},
+  options: ToolbarFocusableOptions = {},
 ) {
   if (key !== "ArrowLeft" && key !== "ArrowRight") {
     return null;
   }
 
-  if (getToolbarNextKeyboardPolicy(target).preserveHorizontalArrows) {
+  if (getToolbarKeyboardPolicy(target).preserveHorizontalArrows) {
     return null;
   }
 
@@ -282,10 +275,7 @@ export function getToolbarNextDirectionalMoveTarget(
     }
   }
 
-  const scopeElements = getToolbarNextScopeFocusableElements(
-    scopeRoot,
-    options,
-  );
+  const scopeElements = getToolbarScopeFocusableElements(scopeRoot, options);
   const currentIndex = scopeElements.indexOf(target);
 
   if (currentIndex === -1 || scopeElements.length <= 1) {
@@ -299,7 +289,7 @@ export function getToolbarNextDirectionalMoveTarget(
   return scopeElements[nextIndex] ?? null;
 }
 
-export function getToolbarNextTabMoveTarget(
+export function getToolbarTabMoveTarget(
   scopeRoot: HTMLElement,
   shiftKey: boolean,
 ) {
@@ -339,41 +329,41 @@ export function getToolbarNextTabMoveTarget(
   );
 }
 
-export function shouldToolbarNextPreserveNativeTab(target: HTMLElement) {
-  return getToolbarNextKeyboardPolicy(target).preserveNativeTab;
+export function shouldToolbarPreserveNativeTab(target: HTMLElement) {
+  return getToolbarKeyboardPolicy(target).preserveNativeTab;
 }
 
-function getToolbarNextItemFocusableElements(
+function getToolbarItemFocusableElements(
   itemRoot: HTMLElement,
   scopeRoot: HTMLElement,
-  options: ToolbarNextFocusableOptions = {},
+  options: ToolbarFocusableOptions = {},
 ) {
   return Array.from(
-    itemRoot.querySelectorAll<HTMLElement>(toolbarNextFocusableSelector),
+    itemRoot.querySelectorAll<HTMLElement>(toolbarFocusableSelector),
   ).filter((element) => {
     return (
-      getClosestToolbarNextScopeRoot(element) === scopeRoot &&
-      (isToolbarNextFocusable(element, options) ||
-        isToolbarNextToggleGroupButton(element))
+      getClosestToolbarScopeRoot(element) === scopeRoot &&
+      (isToolbarFocusable(element, options) ||
+        isToolbarToggleGroupButton(element))
     );
   });
 }
 
-function getToolbarNextFocusableElementForItem(
+function getToolbarFocusableElementForItem(
   scopeRoot: HTMLElement,
   itemId: string,
   controlIndex: number,
-  options: ToolbarNextFocusableOptions = {},
+  options: ToolbarFocusableOptions = {},
 ) {
   const itemRoot = scopeRoot.querySelector<HTMLElement>(
-    `[${TOOLBAR_NEXT_ITEM_ATTR}="${itemId}"]`,
+    `[${TOOLBAR_ITEM_ATTR}="${itemId}"]`,
   );
 
   if (!itemRoot) {
     return null;
   }
 
-  const itemElements = getToolbarNextItemFocusableElements(
+  const itemElements = getToolbarItemFocusableElements(
     itemRoot,
     scopeRoot,
     options,
@@ -386,21 +376,21 @@ function getToolbarNextFocusableElementForItem(
   );
 }
 
-function getToolbarNextOverflowTriggerElement(
+function getToolbarOverflowTriggerElement(
   scopeRoot: HTMLElement,
   groupKey: string,
 ) {
   return scopeRoot.querySelector<HTMLElement>(
-    `[${TOOLBAR_NEXT_OVERFLOW_TRIGGER_ATTR}][${TOOLBAR_NEXT_GROUP_KEY_ATTR}="${groupKey}"]`,
+    `[${TOOLBAR_OVERFLOW_TRIGGER_ATTR}][${TOOLBAR_GROUP_KEY_ATTR}="${groupKey}"]`,
   );
 }
 
-function getToolbarNextFocusFallback(
+function getToolbarFocusFallback(
   scopeRoot: HTMLElement,
   rememberedIndex: number,
-  options: ToolbarNextFocusableOptions = {},
+  options: ToolbarFocusableOptions = {},
 ) {
-  const focusableElements = getToolbarNextScopeFocusableElements(
+  const focusableElements = getToolbarScopeFocusableElements(
     scopeRoot,
     options,
   );
@@ -447,22 +437,19 @@ function getToggleGroupButtons(target: HTMLElement) {
   }
 
   return Array.from(toggleGroup.querySelectorAll<HTMLElement>("button")).filter(
-    (button) =>
-      isToolbarNextFocusable(button, { includeTabIndexMinusOne: true }),
+    (button) => isToolbarFocusable(button, { includeTabIndexMinusOne: true }),
   );
 }
 
-function isToolbarNextToggleGroupButton(target: HTMLElement) {
+function isToolbarToggleGroupButton(target: HTMLElement) {
   return (
     target.tagName === "BUTTON" &&
     target.closest(".saltToggleButtonGroup") != null &&
-    isToolbarNextFocusable(target, { includeTabIndexMinusOne: true })
+    isToolbarFocusable(target, { includeTabIndexMinusOne: true })
   );
 }
 
-function getToolbarNextKeyboardPolicy(
-  target: HTMLElement,
-): ToolbarNextKeyboardPolicy {
+function getToolbarKeyboardPolicy(target: HTMLElement): ToolbarKeyboardPolicy {
   if (
     target.isContentEditable ||
     isPlainTextInput(target) ||
@@ -545,9 +532,9 @@ function isNativeDisabledFormControl(target: HTMLElement) {
   );
 }
 
-export function isToolbarNextFocusable(
+export function isToolbarFocusable(
   target: HTMLElement,
-  { includeTabIndexMinusOne = false }: ToolbarNextFocusableOptions = {},
+  { includeTabIndexMinusOne = false }: ToolbarFocusableOptions = {},
 ) {
   if (isNativeDisabledFormControl(target)) {
     return false;
@@ -584,28 +571,26 @@ export function isToolbarNextFocusable(
 // on) differs from the inner element that handles keyboard interaction.
 // Restoring focus to the root would leave ArrowDown/Enter/Space targeting a
 // non-interactive wrapper, so we redirect to the interactive element
-const toolbarNextFocusEntryOverrides = [
+const toolbarFocusEntryOverrides = [
   { root: ".saltComboBox", interactive: 'input[role="combobox"]' },
 ] as const;
 
-export function focusToolbarNextElement(
-  target: HTMLElement | null | undefined,
-) {
-  const focusTarget = resolveToolbarNextFocusEntryTarget(target);
+export function focusToolbarElement(target: HTMLElement | null | undefined) {
+  const focusTarget = resolveToolbarFocusEntryTarget(target);
 
   if (focusTarget?.isConnected) {
     focusTarget.focus({ preventScroll: true });
   }
 }
 
-function resolveToolbarNextFocusEntryTarget(
+function resolveToolbarFocusEntryTarget(
   target: HTMLElement | null | undefined,
 ) {
   if (!target) {
     return target;
   }
 
-  for (const { root, interactive } of toolbarNextFocusEntryOverrides) {
+  for (const { root, interactive } of toolbarFocusEntryOverrides) {
     if (target.matches(root)) {
       return target.querySelector<HTMLElement>(interactive) ?? target;
     }
@@ -614,7 +599,7 @@ function resolveToolbarNextFocusEntryTarget(
   return target;
 }
 
-export function scheduleToolbarNextFocus(
+export function scheduleToolbarFocus(
   target: HTMLElement | null | undefined,
   targetWindow = target?.ownerDocument.defaultView,
 ) {
@@ -624,7 +609,7 @@ export function scheduleToolbarNextFocus(
 
   if (targetWindow?.requestAnimationFrame) {
     const frame = targetWindow.requestAnimationFrame(() => {
-      focusToolbarNextElement(target);
+      focusToolbarElement(target);
     });
 
     return () => {
@@ -633,7 +618,7 @@ export function scheduleToolbarNextFocus(
   }
 
   queueMicrotask(() => {
-    focusToolbarNextElement(target);
+    focusToolbarElement(target);
   });
 
   return () => undefined;
@@ -641,6 +626,6 @@ export function scheduleToolbarNextFocus(
 
 export function getDocumentFocusableElements(ownerDocument: Document) {
   return Array.from(
-    ownerDocument.querySelectorAll<HTMLElement>(toolbarNextFocusableSelector),
-  ).filter((element) => isToolbarNextFocusable(element));
+    ownerDocument.querySelectorAll<HTMLElement>(toolbarFocusableSelector),
+  ).filter((element) => isToolbarFocusable(element));
 }

@@ -26,29 +26,29 @@ data:
 ## Content
 
 - Follow the respective content guidance for all components used inside a toolbar.
-- Always place controls inside `TooltrayNext`. Both composition models require it.
-- For simple toolbars, place `TooltrayNext` directly inside `ToolbarNext`. Use the `align` prop to position each tray at the `start`, `center`, or `end`.
-- When a position needs multiple `TooltrayNext` components, dividers, custom spacing, or content-level props, wrap them in `ToolbarContentNext` and set the `position` prop.
+- Always place controls inside `Tooltray`. Both composition models require it.
+- For simple toolbars, place `Tooltray` directly inside `Toolbar`. Use the `align` prop to position each tray at the `start`, `center`, or `end`.
+- When a position needs multiple `Tooltray` components, dividers, custom spacing, or content-level props, wrap them in `ToolbarContent` and set the `position` prop.
 - Use one composition model per toolbar.
 
 ## Import
 
-To import `Toolbar` from the lab Salt package, use:
+To import `Toolbar` and related components from the core Salt package, use:
 
 ```js
-import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import { ToolbarContent, Toolbar, Tooltray } from "@salt-ds/core";
 ```
 
 ## Props
 
 ### Toolbar
 
-<PropsTable packageName="lab" componentName="ToolbarNext" />
+<PropsTable packageName="core" componentName="Toolbar" />
 
 ### Toolbar content
 
-<PropsTable packageName="lab" componentName="ToolbarContentNext" />
+<PropsTable packageName="core" componentName="ToolbarContent" />
 
-### TooltrayNext
+### Tooltray
 
-<PropsTable packageName="lab" componentName="TooltrayNext" />
+<PropsTable packageName="core" componentName="Tooltray" />

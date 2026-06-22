@@ -5,6 +5,9 @@ import {
   Input,
   Option,
   Switch,
+  Toolbar,
+  ToolbarContent,
+  Tooltray,
 } from "@salt-ds/core";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import {
@@ -14,10 +17,9 @@ import {
   DatePickerSingleInput,
   DatePickerTrigger,
 } from "@salt-ds/date-components";
-import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+import * as toolbarStories from "@stories/toolbar/toolbar.cypress.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type FocusEventHandler, useState } from "react";
-import * as toolbarNextStories from "../../../../stories/toolbar-next/toolbar-next.cypress.stories";
 
 const {
   DefaultSharedOverflowFixture,
@@ -34,7 +36,7 @@ const {
   NamedOverflowWithDividersFixture,
   OverflowDividersFixture,
   SpacingOverflowFixture,
-} = composeStories(toolbarNextStories);
+} = composeStories(toolbarStories);
 const adapterDayjs = new AdapterDayjs();
 const toolbarHarnessStyle = { height: 220, width: 760 };
 const statusOptions = ["All", "New", "Working", "Fully Filled", "Cancelled"];
@@ -44,30 +46,30 @@ function openOverflowWithKeyboard(name: string | RegExp) {
   cy.realPress("Space");
 }
 
-type ToolbarNextQueuedAnimationFrame = {
+type ToolbarQueuedAnimationFrame = {
   callback: FrameRequestCallback;
   cancelled: boolean;
   id: number;
 };
 
-interface ToolbarNextGuardedResizeTestControls {
+interface ToolbarGuardedResizeTestControls {
   deliverResize: (target: Element) => void;
   flushNextFrame: () => void;
   restore: () => void;
 }
 
-type ToolbarNextGuardedResizeWindow = Cypress.AUTWindow & {
-  __toolbarNextGuardedResizeTest?: ToolbarNextGuardedResizeTestControls;
+type ToolbarGuardedResizeWindow = Cypress.AUTWindow & {
+  __toolbarGuardedResizeTest?: ToolbarGuardedResizeTestControls;
 };
 
-function installToolbarNextGuardedResizeTestControls(win: Cypress.AUTWindow) {
-  const testWindow = win as ToolbarNextGuardedResizeWindow;
-  testWindow.__toolbarNextGuardedResizeTest?.restore();
+function installToolbarGuardedResizeTestControls(win: Cypress.AUTWindow) {
+  const testWindow = win as ToolbarGuardedResizeWindow;
+  testWindow.__toolbarGuardedResizeTest?.restore();
 
   const originalRequestAnimationFrame = win.requestAnimationFrame.bind(win);
   const originalCancelAnimationFrame = win.cancelAnimationFrame.bind(win);
   const originalResizeObserver = win.ResizeObserver;
-  const frameQueue: ToolbarNextQueuedAnimationFrame[] = [];
+  const frameQueue: ToolbarQueuedAnimationFrame[] = [];
   const observers: ControlledResizeObserver[] = [];
   let nextFrameId = 1;
 
@@ -125,7 +127,7 @@ function installToolbarNextGuardedResizeTestControls(win: Cypress.AUTWindow) {
 
   win.ResizeObserver = ControlledResizeObserver;
 
-  testWindow.__toolbarNextGuardedResizeTest = {
+  testWindow.__toolbarGuardedResizeTest = {
     deliverResize(target) {
       const delivered = observers.some((observer) => observer.deliver(target));
 
@@ -148,7 +150,7 @@ function installToolbarNextGuardedResizeTestControls(win: Cypress.AUTWindow) {
       win.requestAnimationFrame = originalRequestAnimationFrame;
       win.cancelAnimationFrame = originalCancelAnimationFrame;
       win.ResizeObserver = originalResizeObserver;
-      delete testWindow.__toolbarNextGuardedResizeTest;
+      delete testWindow.__toolbarGuardedResizeTest;
     },
   };
 }
@@ -186,8 +188,8 @@ function WidthChangingButton({
 function SharedIntrinsicWidthTestCase() {
   return (
     <div className="IntrinsicWidthHarness" style={{ height: 220, width: 500 }}>
-      <ToolbarNext aria-label="Toolbar with shared intrinsic width changes">
-        <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Toolbar with shared intrinsic width changes">
+        <Tooltray overflowMode="none">
           <WidthChangingButton
             ariaLabel="Toggle shared width"
             collapsedLabel="Search"
@@ -195,18 +197,18 @@ function SharedIntrinsicWidthTestCase() {
             expandedLabel="Search with advanced filters"
             expandedWidth={300}
           />
-        </TooltrayNext>
-        <TooltrayNext overflowMode="independent" overflowPriority={5}>
+        </Tooltray>
+        <Tooltray overflowMode="independent" overflowPriority={5}>
           <Button appearance="transparent" style={{ width: 150 }}>
             Columns
           </Button>
-        </TooltrayNext>
-        <TooltrayNext overflowMode="none">
+        </Tooltray>
+        <Tooltray overflowMode="none">
           <Button appearance="solid" style={{ width: 100 }}>
             Run
           </Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
     </div>
   );
 }
@@ -214,8 +216,8 @@ function SharedIntrinsicWidthTestCase() {
 function GuardedResizeDuringComputeTestCase() {
   return (
     <div className="GuardedResizeHarness" style={{ height: 220, width: 500 }}>
-      <ToolbarNext aria-label="Toolbar with guarded resize work">
-        <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Toolbar with guarded resize work">
+        <Tooltray overflowMode="none">
           <Button
             appearance="transparent"
             aria-label="Resize guarded tray"
@@ -223,38 +225,38 @@ function GuardedResizeDuringComputeTestCase() {
           >
             Search
           </Button>
-        </TooltrayNext>
-        <TooltrayNext overflowMode="independent" overflowPriority={5}>
+        </Tooltray>
+        <Tooltray overflowMode="independent" overflowPriority={5}>
           <Button appearance="transparent" style={{ width: 150 }}>
             Columns
           </Button>
-        </TooltrayNext>
-        <TooltrayNext overflowMode="none">
+        </Tooltray>
+        <Tooltray overflowMode="none">
           <Button appearance="solid" style={{ width: 100 }}>
             Run
           </Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
     </div>
   );
 }
 
 function OverflowPrioritiesKeyboardTestCase() {
   return (
-    <ToolbarNext aria-label="Toolbar with overflow priorities">
-      <TooltrayNext overflowMode="independent" overflowPriority={1}>
+    <Toolbar aria-label="Toolbar with overflow priorities">
+      <Tooltray overflowMode="independent" overflowPriority={1}>
         <Button appearance="transparent">Pinned</Button>
-      </TooltrayNext>
-      <TooltrayNext overflowMode="independent" overflowPriority={1}>
+      </Tooltray>
+      <Tooltray overflowMode="independent" overflowPriority={1}>
         <Button appearance="transparent">Views</Button>
-      </TooltrayNext>
-      <TooltrayNext overflowMode="independent" overflowPriority={3}>
+      </Tooltray>
+      <Tooltray overflowMode="independent" overflowPriority={3}>
         <Button appearance="transparent">Status</Button>
-      </TooltrayNext>
-      <TooltrayNext align="end" overflowMode="independent" overflowPriority={5}>
+      </Tooltray>
+      <Tooltray align="end" overflowMode="independent" overflowPriority={5}>
         <Button appearance="transparent">Export</Button>
-      </TooltrayNext>
-    </ToolbarNext>
+      </Tooltray>
+    </Toolbar>
   );
 }
 
@@ -265,12 +267,12 @@ function NamedGroupCollapseTestCase({
 }) {
   return (
     <div className="Flexbox" style={toolbarHarnessStyle}>
-      <ToolbarNext aria-label={`${overflowMode} named filters toolbar`}>
-        <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none">
+      <Toolbar aria-label={`${overflowMode} named filters toolbar`}>
+        <ToolbarContent position="start">
+          <Tooltray overflowMode="none">
             <Button style={{ width: 140 }}>Search</Button>
-          </TooltrayNext>
-          <TooltrayNext
+          </Tooltray>
+          <Tooltray
             overflowGroup="Filters"
             overflowLabel="Filters"
             overflowMode={overflowMode}
@@ -279,8 +281,8 @@ function NamedGroupCollapseTestCase({
             <Button appearance="transparent" style={{ width: 110 }}>
               Filter A
             </Button>
-          </TooltrayNext>
-          <TooltrayNext
+          </Tooltray>
+          <Tooltray
             overflowGroup="Filters"
             overflowLabel="Filters"
             overflowMode={overflowMode}
@@ -289,8 +291,8 @@ function NamedGroupCollapseTestCase({
             <Button appearance="transparent" style={{ width: 110 }}>
               Status
             </Button>
-          </TooltrayNext>
-          <TooltrayNext
+          </Tooltray>
+          <Tooltray
             overflowGroup="Filters"
             overflowLabel="Filters"
             overflowMode={overflowMode}
@@ -299,19 +301,19 @@ function NamedGroupCollapseTestCase({
             <Button appearance="transparent" style={{ width: 110 }}>
               Columns
             </Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext overflowMode="none">
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray overflowMode="none">
             <Button appearance="transparent" style={{ width: 100 }}>
               Refresh
             </Button>
             <Button appearance="solid" style={{ width: 100 }}>
               Run
             </Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
     </div>
   );
 }
@@ -331,21 +333,21 @@ function CenteredToolbarTestCase({
 }) {
   return (
     <div className="Flexbox" style={{ height: 220, width: 760 }}>
-      <ToolbarNext aria-label={ariaLabel}>
+      <Toolbar aria-label={ariaLabel}>
         {includeStart ? (
-          <ToolbarContentNext position="start">
-            <TooltrayNext overflowMode="none">
+          <ToolbarContent position="start">
+            <Tooltray overflowMode="none">
               <Button style={{ width: startWidth }}>Start</Button>
-            </TooltrayNext>
-          </ToolbarContentNext>
+            </Tooltray>
+          </ToolbarContent>
         ) : null}
-        <ToolbarContentNext position="center">
-          <TooltrayNext overflowMode="none">
+        <ToolbarContent position="center">
+          <Tooltray overflowMode="none">
             <Button style={{ width: 140 }}>Center action</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray
             overflowGroup="Actions"
             overflowLabel="Actions"
             overflowMode={includeOverflow ? "grouped" : "none"}
@@ -359,9 +361,9 @@ function CenteredToolbarTestCase({
                 End secondary
               </Button>
             ) : null}
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
     </div>
   );
 }
@@ -369,8 +371,8 @@ function CenteredToolbarTestCase({
 function NamedIntrinsicWidthTestCase() {
   return (
     <div className="IntrinsicWidthHarness" style={{ height: 220, width: 480 }}>
-      <ToolbarNext aria-label="Toolbar with named intrinsic width changes">
-        <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Toolbar with named intrinsic width changes">
+        <Tooltray overflowMode="none">
           <WidthChangingButton
             ariaLabel="Toggle named width"
             collapsedLabel="Search"
@@ -378,8 +380,8 @@ function NamedIntrinsicWidthTestCase() {
             expandedLabel="Search with advanced filters"
             expandedWidth={360}
           />
-        </TooltrayNext>
-        <TooltrayNext
+        </Tooltray>
+        <Tooltray
           align="end"
           overflowGroup="Actions"
           overflowLabel="Actions"
@@ -388,8 +390,8 @@ function NamedIntrinsicWidthTestCase() {
         >
           <Button appearance="transparent">Export</Button>
           <Button appearance="solid">Apply</Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
     </div>
   );
 }
@@ -412,23 +414,23 @@ function HiddenOverflowWidthChangeTestCase({
         {nextWide ? "Use long hidden label" : "Use short hidden label"}
       </Button>
       <div className="Flexbox" style={{ height: 220, width: 260 }}>
-        <ToolbarNext aria-label="Toolbar with hidden intrinsic width changes">
-          <TooltrayNext overflowMode="none">
+        <Toolbar aria-label="Toolbar with hidden intrinsic width changes">
+          <Tooltray overflowMode="none">
             <Button appearance="transparent" style={{ width: 120 }}>
               Pinned
             </Button>
-          </TooltrayNext>
-          <TooltrayNext overflowMode="independent" overflowPriority={5}>
+          </Tooltray>
+          <Tooltray overflowMode="independent" overflowPriority={5}>
             <Button appearance="transparent" style={{ width: wide ? 320 : 80 }}>
               {wide ? "Hidden action with a long label" : "Short"}
             </Button>
-          </TooltrayNext>
-          <TooltrayNext align="end" overflowMode="none">
+          </Tooltray>
+          <Tooltray align="end" overflowMode="none">
             <Button appearance="solid" style={{ width: 100 }}>
               Run
             </Button>
-          </TooltrayNext>
-        </ToolbarNext>
+          </Tooltray>
+        </Toolbar>
       </div>
     </>
   );
@@ -441,12 +443,12 @@ function NamedOverflowFocusReentryTestCase() {
       style={{ height: 240, width: 320, flexDirection: "column" }}
     >
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Named overflow focus toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Named overflow focus toolbar">
+        <ToolbarContent position="start">
+          <Tooltray overflowMode="none">
             <Input bordered placeholder="Search" />
-          </TooltrayNext>
-          <TooltrayNext
+          </Tooltray>
+          <Tooltray
             overflowGroup="Filters"
             overflowLabel="Filters"
             overflowMode="grouped"
@@ -457,10 +459,10 @@ function NamedOverflowFocusReentryTestCase() {
               <Option value="Option B" />
             </Dropdown>
             <Button appearance="transparent">Filters</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray
             overflowGroup="Actions"
             overflowLabel="Actions"
             overflowMode="grouped"
@@ -468,9 +470,9 @@ function NamedOverflowFocusReentryTestCase() {
           >
             <Button appearance="transparent">Export</Button>
             <Button appearance="transparent">Settings</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -483,9 +485,9 @@ function NamedOverflowInputFocusReentryTestCase() {
       style={{ height: 240, width: 320, flexDirection: "column" }}
     >
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Named overflow input focus toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext
+      <Toolbar aria-label="Named overflow input focus toolbar">
+        <ToolbarContent position="start">
+          <Tooltray
             overflowGroup="Filters"
             overflowLabel="Filters"
             overflowMode="grouped"
@@ -501,10 +503,10 @@ function NamedOverflowInputFocusReentryTestCase() {
               <Option value="Option B" />
             </Dropdown>
             <Button appearance="transparent">Filters</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray
             overflowGroup="Actions"
             overflowLabel="Actions"
             overflowMode="grouped"
@@ -513,9 +515,9 @@ function NamedOverflowInputFocusReentryTestCase() {
             <Button appearance="transparent">Export</Button>
             <Button appearance="transparent">Settings</Button>
             <Input bordered placeholder="Search" style={{ width: 180 }} />
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -528,9 +530,9 @@ function SharedOverflowDateInputFocusReentryTestCase() {
       style={{ height: 240, width: 260, flexDirection: "column" }}
     >
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Shared overflow date input focus toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext overflowPriority={6}>
+      <Toolbar aria-label="Shared overflow date input focus toolbar">
+        <ToolbarContent position="start">
+          <Tooltray overflowPriority={6}>
             <Dropdown
               aria-label="Criteria option"
               bordered
@@ -551,15 +553,15 @@ function SharedOverflowDateInputFocusReentryTestCase() {
                 <DatePickerSingleGridPanel />
               </DatePickerOverlay>
             </DatePicker>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext>
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray>
             <Button appearance="transparent">Pinned</Button>
             <Button appearance="solid">Run</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -572,9 +574,9 @@ function SharedOverflowFocusReentryTestCase() {
       style={{ height: 240, width: 320, flexDirection: "column" }}
     >
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Shared overflow focus toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext>
+      <Toolbar aria-label="Shared overflow focus toolbar">
+        <ToolbarContent position="start">
+          <Tooltray>
             <Input bordered placeholder="Search" style={{ width: 130 }} />
             <Dropdown
               bordered
@@ -584,15 +586,15 @@ function SharedOverflowFocusReentryTestCase() {
               <Option value="Option A" />
               <Option value="Option B" />
             </Dropdown>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext>
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray>
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -601,22 +603,22 @@ function SharedOverflowFocusReentryTestCase() {
 function PointerEntryControlsTestCase() {
   return (
     <div className="Flexbox" style={{ height: 220, width: 640 }}>
-      <ToolbarNext aria-label="Pointer entry controls toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Pointer entry controls toolbar">
+        <ToolbarContent position="start">
+          <Tooltray overflowMode="none">
             <Input bordered placeholder="Search" />
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
               <Option value="Option B" />
             </Dropdown>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext overflowMode="none">
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray overflowMode="none">
             <Switch label="Pinned" />
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
     </div>
   );
 }
@@ -628,25 +630,25 @@ function OverflowPointerEntryControlsTestCase() {
       style={{ height: 260, width: 220, flexDirection: "column" }}
     >
       <button data-testid="overflow-pointer-before">Before toolbar</button>
-      <ToolbarNext aria-label="Overflow pointer entry controls toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Overflow pointer entry controls toolbar">
+        <ToolbarContent position="start">
+          <Tooltray overflowMode="none">
             <Button appearance="transparent" style={{ width: 170 }}>
               Pinned
             </Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext overflowPriority={5}>
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray overflowPriority={5}>
             <Input bordered placeholder="Overflow search" />
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
               <Option value="Option B" />
             </Dropdown>
             <Switch label="Overflow pinned" />
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
     </div>
   );
 }
@@ -658,24 +660,24 @@ function SharedOverflowComboBoxFocusReentryTestCase() {
       style={{ height: 240, width: 320, flexDirection: "column" }}
     >
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Shared overflow combo box toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext>
+      <Toolbar aria-label="Shared overflow combo box toolbar">
+        <ToolbarContent position="start">
+          <Tooltray>
             <Input bordered placeholder="Search" />
             <ComboBox bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
               <Option value="Option B" />
               <Option value="Option C" />
             </ComboBox>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext>
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray>
             <Button appearance="transparent">Export</Button>
             <Button appearance="solid">Run</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -689,9 +691,9 @@ function MultiselectComboBoxKeyboardTestCase({
   return (
     <div className="Flexbox" style={{ height: 240, width: 680 }}>
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Multiselect combo box keyboard toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Multiselect combo box keyboard toolbar">
+        <ToolbarContent position="start">
+          <Tooltray overflowMode="none">
             <ComboBox
               aria-label="Status filter"
               bordered
@@ -705,14 +707,14 @@ function MultiselectComboBoxKeyboardTestCase({
                 <Option key={option} value={option} />
               ))}
             </ComboBox>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext overflowMode="none">
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray overflowMode="none">
             <Button appearance="transparent">Export</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -725,23 +727,23 @@ function SharedOverflowDropdownPopupTestCase() {
       style={{ height: 240, width: 220, flexDirection: "column" }}
     >
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Shared overflow dropdown toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Shared overflow dropdown toolbar">
+        <ToolbarContent position="start">
+          <Tooltray overflowMode="none">
             <Button appearance="transparent" style={{ width: 170 }}>
               Pinned
             </Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext overflowPriority={5}>
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray overflowPriority={5}>
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
               <Option value="Option B" />
             </Dropdown>
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -754,23 +756,23 @@ function MixedControlsWidthChangeTestCase() {
       style={{ height: 240, width: 520, flexDirection: "column" }}
     >
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Mixed controls width change toolbar">
-        <ToolbarContentNext position="start">
-          <TooltrayNext>
+      <Toolbar aria-label="Mixed controls width change toolbar">
+        <ToolbarContent position="start">
+          <Tooltray>
             <Input bordered placeholder="Search" style={{ width: 150 }} />
             <Dropdown bordered defaultSelected={["Option A"]}>
               <Option value="Option A" />
               <Option value="Option B" />
             </Dropdown>
-          </TooltrayNext>
-        </ToolbarContentNext>
-        <ToolbarContentNext position="end">
-          <TooltrayNext>
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray>
             <Button appearance="transparent">Toggle</Button>
             <Button appearance="solid">Run</Button>
-          </TooltrayNext>
-        </ToolbarContentNext>
-      </ToolbarNext>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -783,8 +785,8 @@ function OverflowTextInputKeyboardTestCase() {
       style={{ height: 240, width: 180, flexDirection: "column" }}
     >
       <button data-testid="toolbar-before">Before toolbar</button>
-      <ToolbarNext aria-label="Overflow text input toolbar">
-        <TooltrayNext
+      <Toolbar aria-label="Overflow text input toolbar">
+        <Tooltray
           overflowGroup="Filters"
           overflowLabel="Filters"
           overflowMode="grouped"
@@ -793,8 +795,8 @@ function OverflowTextInputKeyboardTestCase() {
           <Button appearance="transparent">Reset</Button>
           <Input bordered placeholder="Overflow search" />
           <Button appearance="transparent">Apply</Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
       <button data-testid="toolbar-after">After toolbar</button>
     </div>
   );
@@ -806,28 +808,28 @@ function SharedBoundaryCollapseTestCase() {
       className="Flexbox"
       style={{ height: 220, width: 760, flexDirection: "column" }}
     >
-      <ToolbarNext aria-label="Shared boundary toolbar">
-        <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Shared boundary toolbar">
+        <Tooltray overflowMode="none">
           <Button appearance="transparent" style={{ width: 120 }}>
             Pinned
           </Button>
-        </TooltrayNext>
-        <TooltrayNext overflowPriority={1}>
+        </Tooltray>
+        <Tooltray overflowPriority={1}>
           <Button appearance="transparent" style={{ width: 110 }}>
             Low priority
           </Button>
-        </TooltrayNext>
-        <TooltrayNext overflowPriority={5}>
+        </Tooltray>
+        <Tooltray overflowPriority={5}>
           <Button appearance="transparent" style={{ width: 130 }}>
             High priority
           </Button>
-        </TooltrayNext>
-        <TooltrayNext overflowPriority={0}>
+        </Tooltray>
+        <Tooltray overflowPriority={0}>
           <Button appearance="solid" style={{ width: 100 }}>
             Run
           </Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
     </div>
   );
 }
@@ -838,13 +840,13 @@ function MixedTrayCompressionTestCase() {
       className="Flexbox"
       style={{ height: 220, width: 760, flexDirection: "column" }}
     >
-      <ToolbarNext aria-label="Mixed tray compression toolbar">
-        <TooltrayNext overflowMode="none">
+      <Toolbar aria-label="Mixed tray compression toolbar">
+        <Tooltray overflowMode="none">
           <Button appearance="transparent" style={{ width: 120 }}>
             Pinned
           </Button>
-        </TooltrayNext>
-        <TooltrayNext overflowPriority={5}>
+        </Tooltray>
+        <Tooltray overflowPriority={5}>
           <Switch label="Show total" />
           <Dropdown
             bordered
@@ -855,8 +857,8 @@ function MixedTrayCompressionTestCase() {
             <Option value="Sort by lowest balance" />
           </Dropdown>
           <Button appearance="bordered">Add view</Button>
-        </TooltrayNext>
-      </ToolbarNext>
+        </Tooltray>
+      </Toolbar>
     </div>
   );
 }
@@ -879,13 +881,13 @@ const subpixelItemLabels = [
 function SubpixelWidthRoundingTestCase() {
   return (
     <div className="Flexbox" style={{ height: 220, width: 760 }}>
-      <ToolbarNext
+      <Toolbar
         appearance="transparent"
         aria-label="Subpixel width rounding toolbar"
       >
-        <ToolbarContentNext position="start" style={{ gap: 0 }}>
+        <ToolbarContent position="start" style={{ gap: 0 }}>
           {subpixelItemLabels.map((label, index) => (
-            <TooltrayNext key={label} overflowPriority={index}>
+            <Tooltray key={label} overflowPriority={index}>
               <span
                 style={{
                   boxSizing: "border-box",
@@ -895,10 +897,10 @@ function SubpixelWidthRoundingTestCase() {
               >
                 {label}
               </span>
-            </TooltrayNext>
+            </Tooltray>
           ))}
-        </ToolbarContentNext>
-      </ToolbarNext>
+        </ToolbarContent>
+      </Toolbar>
     </div>
   );
 }
@@ -911,7 +913,7 @@ function getVisibleToolbarSlotWidth(toolbarName: string) {
   return cy.findByRole("toolbar", { name: toolbarName }).then(($toolbar) => {
     const toolbar = $toolbar[0];
     const visibleSlotRects = getVisibleElementRects(
-      toolbar.querySelectorAll<HTMLElement>(".saltToolbarNextOverflow-slot"),
+      toolbar.querySelectorAll<HTMLElement>(".saltToolbarOverflow-slot"),
     );
 
     return visibleSlotRects.reduce((total, rect) => total + rect.width, 0);
@@ -945,7 +947,7 @@ function shrinkFixtureBelowVisibleToolbarContent(toolbarName: string) {
     const toolbar = $toolbar[0];
     const styles = toolbar.ownerDocument.defaultView?.getComputedStyle(toolbar);
     const visibleSlotRects = getVisibleElementRects(
-      toolbar.querySelectorAll<HTMLElement>(".saltToolbarNextOverflow-slot"),
+      toolbar.querySelectorAll<HTMLElement>(".saltToolbarOverflow-slot"),
     );
     const left = Math.min(...visibleSlotRects.map((rect) => rect.left));
     const right = Math.max(...visibleSlotRects.map((rect) => rect.right));
@@ -971,7 +973,7 @@ function expectToolbarSlotsDoNotIntersect(name: string) {
   cy.findByRole("toolbar", { name }).should(($toolbar) => {
     const toolbar = $toolbar[0];
     const slotRects = getVisibleElementRects(
-      toolbar.querySelectorAll<HTMLElement>(".saltToolbarNextOverflow-slot"),
+      toolbar.querySelectorAll<HTMLElement>(".saltToolbarOverflow-slot"),
     );
 
     for (const [index, rect] of slotRects.entries()) {
@@ -1051,67 +1053,65 @@ function recordToolbarVisibleTextSnapshots(toolbarName: string, alias: string) {
   });
 }
 
-describe("Given ToolbarNext variants and appearances", () => {
+describe("Given Toolbar variants and appearances", () => {
   it("applies primary and bordered classes by default", () => {
     cy.mount(
-      <ToolbarNext aria-label="Default toolbar">
-        <TooltrayNext>
+      <Toolbar aria-label="Default toolbar">
+        <Tooltray>
           <Button>Action</Button>
-        </TooltrayNext>
-      </ToolbarNext>,
+        </Tooltray>
+      </Toolbar>,
     );
 
     cy.findByRole("toolbar", { name: "Default toolbar" })
-      .should("have.class", "saltToolbarNext-primary")
-      .and("have.class", "saltToolbarNext-bordered");
+      .should("have.class", "saltToolbar-primary")
+      .and("have.class", "saltToolbar-bordered");
   });
 
   it("applies secondary and tertiary variant classes", () => {
     cy.mount(
       <>
-        <ToolbarNext variant="secondary" aria-label="Secondary toolbar">
-          <TooltrayNext>
+        <Toolbar variant="secondary" aria-label="Secondary toolbar">
+          <Tooltray>
             <Button>Secondary action</Button>
-          </TooltrayNext>
-        </ToolbarNext>
-        <ToolbarNext variant="tertiary" aria-label="Tertiary toolbar">
-          <TooltrayNext>
+          </Tooltray>
+        </Toolbar>
+        <Toolbar variant="tertiary" aria-label="Tertiary toolbar">
+          <Tooltray>
             <Button>Tertiary action</Button>
-          </TooltrayNext>
-        </ToolbarNext>
+          </Tooltray>
+        </Toolbar>
       </>,
     );
 
     cy.findByRole("toolbar", { name: "Secondary toolbar" })
-      .should("have.class", "saltToolbarNext-secondary")
-      .and("have.class", "saltToolbarNext-bordered");
+      .should("have.class", "saltToolbar-secondary")
+      .and("have.class", "saltToolbar-bordered");
     cy.findByRole("toolbar", { name: "Tertiary toolbar" })
-      .should("have.class", "saltToolbarNext-tertiary")
-      .and("have.class", "saltToolbarNext-bordered");
+      .should("have.class", "saltToolbar-tertiary")
+      .and("have.class", "saltToolbar-bordered");
   });
 
   it("applies transparent appearance without bordered chrome", () => {
     cy.mount(
-      <ToolbarNext appearance="transparent" aria-label="Transparent toolbar">
-        <TooltrayNext>
+      <Toolbar appearance="transparent" aria-label="Transparent toolbar">
+        <Tooltray>
           <Button>Action</Button>
-        </TooltrayNext>
-      </ToolbarNext>,
+        </Tooltray>
+      </Toolbar>,
     );
 
     cy.findByRole("toolbar", { name: "Transparent toolbar" })
-      .should("have.class", "saltToolbarNext-primary")
-      .and("have.class", "saltToolbarNext-transparent")
-      .and("not.have.class", "saltToolbarNext-bordered");
+      .should("have.class", "saltToolbar-primary")
+      .and("have.class", "saltToolbar-transparent")
+      .and("not.have.class", "saltToolbar-bordered");
   });
 });
 
-describe("Given ToolbarNext overflow measurements", () => {
+describe("Given Toolbar overflow measurements", () => {
   afterEach(() => {
     cy.window({ log: false }).then((win) => {
-      (
-        win as ToolbarNextGuardedResizeWindow
-      ).__toolbarNextGuardedResizeTest?.restore();
+      (win as ToolbarGuardedResizeWindow).__toolbarGuardedResizeTest?.restore();
     });
   });
 
@@ -1280,15 +1280,15 @@ describe("Given ToolbarNext overflow measurements", () => {
 
   it("queues resize work requested while overflow computation is guarded", () => {
     cy.window().then((win) => {
-      installToolbarNextGuardedResizeTestControls(win);
+      installToolbarGuardedResizeTestControls(win);
     });
     cy.mount(<GuardedResizeDuringComputeTestCase />);
 
     cy.findByRole("button", { name: /Overflow\./i }).should("not.exist");
     cy.findByRole("button", { name: "Columns" }).should("be.visible");
     cy.window().then((win) => {
-      const controls = (win as ToolbarNextGuardedResizeWindow)
-        .__toolbarNextGuardedResizeTest;
+      const controls = (win as ToolbarGuardedResizeWindow)
+        .__toolbarGuardedResizeTest;
       expect(controls, "guarded resize test controls").to.not.equal(undefined);
       controls?.flushNextFrame();
     });
@@ -1296,15 +1296,15 @@ describe("Given ToolbarNext overflow measurements", () => {
     cy.findByRole("button", { name: "Resize guarded tray" }).then(($button) => {
       const button = $button[0];
       const harness = button.closest<HTMLElement>(".GuardedResizeHarness");
-      const slot = button.closest<HTMLElement>(".saltToolbarNextOverflow-slot");
+      const slot = button.closest<HTMLElement>(".saltToolbarOverflow-slot");
 
       expect(harness, "resize harness").to.not.equal(null);
       expect(slot, "observed toolbar slot").to.not.equal(null);
       harness?.style.setProperty("--guarded-resize-width", "320px");
 
       cy.window().then((win) => {
-        const controls = (win as ToolbarNextGuardedResizeWindow)
-          .__toolbarNextGuardedResizeTest;
+        const controls = (win as ToolbarGuardedResizeWindow)
+          .__toolbarGuardedResizeTest;
         expect(controls, "guarded resize test controls").to.not.equal(
           undefined,
         );
@@ -1496,7 +1496,7 @@ describe("Given ToolbarNext overflow measurements", () => {
   });
 });
 
-describe("Given ToolbarNext keyboard navigation", () => {
+describe("Given Toolbar keyboard navigation", () => {
   it("restores the last focused control when tabbing back into the toolbar", () => {
     cy.mount(<KeyboardButtonsFixture />);
 

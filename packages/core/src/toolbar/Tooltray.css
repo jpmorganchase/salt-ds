@@ -1,4 +1,4 @@
-.saltTooltrayNext {
+.saltTooltray {
   display: flex;
   align-items: center;
   flex: 0 0 auto;
@@ -6,15 +6,15 @@
   min-width: 0;
 }
 
-.saltTooltrayNext > * {
+.saltTooltray > * {
   flex-shrink: 0;
 }
 
-.saltTooltrayNext[data-align="end"] {
+.saltTooltray[data-align="end"] {
   margin-inline-start: auto;
 }
 
-.saltTooltrayNext[data-align="center"] {
+.saltTooltray[data-align="center"] {
   margin-inline-start: auto;
   margin-inline-end: auto;
 }
