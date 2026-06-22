@@ -2,11 +2,10 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  Input,
+  NumberInput,
   Slider,
 } from "@salt-ds/core";
 import {
-  type ChangeEvent,
   type ReactElement,
   type SyntheticEvent,
   useEffect,
@@ -19,8 +18,9 @@ const validateSingle = (value: number, bounds: [number, number]) => {
   return true;
 };
 
+const bounds: [number, number] = [-50, 50];
+
 export const SingleWithInput = () => {
-  const bounds: [number, number] = [-50, 50];
   const [value, setValue] = useState<number>(20);
   const [inputValue, setInputValue] = useState<string>(value.toString());
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
@@ -35,10 +35,12 @@ export const SingleWithInput = () => {
     }
   }, [value]);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setInputValue(inputValue);
-    setValue(Number.parseFloat(inputValue));
+  const handleInputChange = (
+    _event: SyntheticEvent | null,
+    newInputValue: string,
+  ) => {
+    setInputValue(newInputValue);
+    setValue(Number.parseFloat(newInputValue));
   };
 
   const handleSliderChange = (
@@ -53,11 +55,13 @@ export const SingleWithInput = () => {
     <FormField style={{ width: "80%" }}>
       <FormFieldLabel>Slider with Input</FormFieldLabel>
       <FlexLayout gap={3} align="center">
-        <Input
+        <NumberInput
           placeholder={inputValue}
           value={inputValue}
           style={{ width: "15%" }}
-          inputProps={{ style: { textAlign: "center" } }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           onChange={handleInputChange}
           validationStatus={validationStatus}
         />

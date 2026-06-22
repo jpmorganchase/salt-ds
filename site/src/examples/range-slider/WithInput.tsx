@@ -2,12 +2,11 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  Input,
+  NumberInput,
   RangeSlider,
   useId,
 } from "@salt-ds/core";
 import {
-  type ChangeEvent,
   type ReactElement,
   type SyntheticEvent,
   useEffect,
@@ -42,9 +41,9 @@ const validateRange = (values: [number, number], bounds: [number, number]) => {
   return true;
 };
 
-const RangeWithInput = () => {
-  const bounds: [number, number] = [-50, 50];
+const bounds: [number, number] = [-50, 50];
 
+const RangeWithInput = () => {
   const [value, setValue] = useState<[number, number]>([-10, 20]);
   const [minInputValue, setMinInputValue] = useState<string>("10");
   const [maxInputValue, setMaxInputValue] = useState<string>("20");
@@ -62,19 +61,23 @@ const RangeWithInput = () => {
     }
   }, [value]);
 
-  const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setMinInputValue(inputValue);
+  const handleMinInputChange = (
+    _event: SyntheticEvent | null,
+    newInputValue: string,
+  ) => {
+    setMinInputValue(newInputValue);
     const newSliderValue = [...value];
-    newSliderValue[0] = Number.parseFloat(inputValue);
+    newSliderValue[0] = Number.parseFloat(newInputValue);
     setValue(newSliderValue as [number, number]);
   };
 
-  const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setMaxInputValue(inputValue);
+  const handleMaxInputChange = (
+    _event: SyntheticEvent | null,
+    newInputValue: string,
+  ) => {
+    setMaxInputValue(newInputValue);
     const newSliderValue = [...value];
-    newSliderValue[1] = Number.parseFloat(inputValue);
+    newSliderValue[1] = Number.parseFloat(newInputValue);
     setValue(newSliderValue as [number, number]);
   };
 
@@ -94,12 +97,14 @@ const RangeWithInput = () => {
         <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
           Minimum
         </span>
-        <Input
+        <NumberInput
           placeholder={minInputValue}
           value={minInputValue}
           style={{ flex: 1 }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           inputProps={{
-            style: { textAlign: "center" },
             "aria-labelledby": minimumInputLabel,
           }}
           onChange={handleMinInputChange}
@@ -117,12 +122,14 @@ const RangeWithInput = () => {
         <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
           Maximum
         </span>
-        <Input
+        <NumberInput
           placeholder={`${maxInputValue}`}
           value={maxInputValue}
           style={{ flex: 1 }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           inputProps={{
-            style: { textAlign: "center" },
             "aria-labelledby": maximumInputLabel,
           }}
           onChange={handleMaxInputChange}
