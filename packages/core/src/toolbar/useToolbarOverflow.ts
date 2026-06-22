@@ -1,12 +1,14 @@
 import { useWindow } from "@salt-ds/window";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ownerWindow, useIsomorphicLayoutEffect } from "../utils";
-import type { ToolbarContentPosition } from "./ToolbarContent";
+import type { ToolbarContentProps } from "./ToolbarContent";
 import {
   buildContentOverflowRenderSlots,
   type ToolbarContentModel,
   type ToolbarOverflowItem,
 } from "./toolbarUtils";
+
+type ToolbarContentPosition = ToolbarContentProps["position"];
 
 interface OverflowGroupDefinition {
   id: string;

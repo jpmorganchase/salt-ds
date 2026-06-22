@@ -9,20 +9,14 @@ import {
 import { Divider } from "../divider";
 import { getRefFromChildren } from "../utils";
 
-import {
-  ToolbarContent,
-  type ToolbarContentPosition,
-  type ToolbarContentProps,
-} from "./ToolbarContent";
-import {
-  Tooltray,
-  type TooltrayOverflowMode,
-  type TooltrayProps,
-} from "./Tooltray";
+import { ToolbarContent, type ToolbarContentProps } from "./ToolbarContent";
+import { Tooltray, type TooltrayProps } from "./Tooltray";
 
 export type ToolbarMode = "explicit" | "flat" | "invalid";
 
 type ToolbarChild = Exclude<ReactNode, boolean | null | undefined>;
+type ToolbarContentPosition = ToolbarContentProps["position"];
+type TooltrayOverflowMode = NonNullable<TooltrayProps["overflowMode"]>;
 
 export interface ToolbarOverflowItem {
   align: NonNullable<TooltrayProps["align"]>;

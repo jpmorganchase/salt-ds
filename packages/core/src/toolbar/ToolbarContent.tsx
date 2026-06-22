@@ -6,15 +6,13 @@ import { makePrefixer } from "../utils";
 
 import toolbarContentCss from "./ToolbarContent.css";
 
-export type ToolbarContentPosition = "start" | "center" | "end";
-
 export interface ToolbarContentProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Controls where the content is placed across the full toolbar.
    * If any content uses `"center"`, `Toolbar` reserves symmetric side space
    * so the center band stays on the toolbar midpoint.
    */
-  position: ToolbarContentPosition;
+  position: "start" | "center" | "end";
 }
 
 const withBaseName = makePrefixer("saltToolbarContent");

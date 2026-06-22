@@ -14,7 +14,7 @@ import {
 import { Button } from "../button";
 import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
 import toolbarCss from "./Toolbar.css";
-import type { ToolbarContentPosition } from "./ToolbarContent";
+import type { ToolbarContentProps } from "./ToolbarContent";
 import {
   type ToolbarItemHostKind,
   ToolbarOverflowContent,
@@ -41,6 +41,8 @@ export interface ToolbarProps extends ComponentPropsWithoutRef<"div"> {
    */
   variant?: "primary" | "secondary" | "tertiary";
 }
+
+type ToolbarContentPosition = ToolbarContentProps["position"];
 
 const withBaseName = makePrefixer("saltToolbar");
 const withOverflowBaseName = makePrefixer("saltToolbarOverflow");

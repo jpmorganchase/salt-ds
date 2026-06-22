@@ -6,8 +6,6 @@ import { makePrefixer } from "../utils";
 
 import tooltrayCss from "./Tooltray.css";
 
-export type TooltrayOverflowMode = "none" | "independent" | "grouped";
-
 export interface TooltrayProps
   extends Omit<ComponentPropsWithoutRef<"div">, "align"> {
   /**
@@ -25,7 +23,7 @@ export interface TooltrayProps
    *
    * Defaults to `"independent"`.
    */
-  overflowMode?: TooltrayOverflowMode;
+  overflowMode?: "none" | "independent" | "grouped";
   /**
    * Higher numbers overflow before lower numbers.
    *
