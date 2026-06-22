@@ -1,100 +1,11 @@
-import { NavigationItem, StackLayout } from "@salt-ds/core";
-import {
-  MegaMenu,
-  MegaMenuContent,
-  MegaMenuGroup,
-  MegaMenuGroupHeading,
-  MegaMenuGroups,
-  MegaMenuList,
-  MegaMenuListItem,
-  MegaMenuPanel,
-  MegaMenuTrigger,
-} from "@salt-ds/lab";
-import { useState } from "react";
+import * as megaMenuStories from "@stories/mega-menu/mega-menu.cypress.stories";
+import { composeStories } from "@storybook/react-vite";
 
-const InteractiveMegaMenu = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-  };
-
-  return (
-    <nav>
-      <StackLayout as="ol" direction="row" gap={1}>
-        <li>
-          <MegaMenu
-            open={openMenu === "solutions"}
-            onOpenChange={handleOpenChange("solutions")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem>Solutions</NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel>
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>
-                      Financial Services
-                    </MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        href="/digital-banking"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        Digital Banking
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        href="/risk-management"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        Risk Management
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-
-        <li>
-          <MegaMenu
-            open={openMenu === "services"}
-            onOpenChange={handleOpenChange("services")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem>Services</NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel>
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        href="/strategy"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        Strategy
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-      </StackLayout>
-
-      <button type="button">Outside</button>
-    </nav>
-  );
-};
+const { Interactive, DefaultOpen } = composeStories(megaMenuStories);
 
 describe("Given a MegaMenu", () => {
   it("renders triggers and keeps menu closed initially", () => {
-    cy.mount(<InteractiveMegaMenu />);
+    cy.mount(<Interactive />);
 
     cy.findByRole("button", { name: "Solutions" }).should("exist");
     cy.findByRole("button", { name: "Services" }).should("exist");
@@ -102,7 +13,7 @@ describe("Given a MegaMenu", () => {
   });
 
   it("opens and closes a menu on trigger click", () => {
-    cy.mount(<InteractiveMegaMenu />);
+    cy.mount(<Interactive />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.get(".saltMegaMenuPanel").should("exist");
@@ -112,7 +23,7 @@ describe("Given a MegaMenu", () => {
   });
 
   it("switches open state between top-level triggers", () => {
-    cy.mount(<InteractiveMegaMenu />);
+    cy.mount(<Interactive />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.get(".saltMegaMenuPanel").should("exist");
@@ -124,7 +35,7 @@ describe("Given a MegaMenu", () => {
   });
 
   it("selects an item and closes the menu", () => {
-    cy.mount(<InteractiveMegaMenu />);
+    cy.mount(<Interactive />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.findByRole("link", { name: "Digital Banking" }).click();
@@ -133,7 +44,7 @@ describe("Given a MegaMenu", () => {
   });
 
   it("closes on outside click", () => {
-    cy.mount(<InteractiveMegaMenu />);
+    cy.mount(<Interactive />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.get(".saltMegaMenuPanel").should("exist");
@@ -143,37 +54,14 @@ describe("Given a MegaMenu", () => {
   });
 
   it("opens initially when defaultOpen is true", () => {
-    cy.mount(
-      <MegaMenu defaultOpen>
-        <MegaMenuTrigger>
-          <NavigationItem>Solutions</NavigationItem>
-        </MegaMenuTrigger>
-        <MegaMenuPanel>
-          <MegaMenuContent>
-            <MegaMenuGroups>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    href="/digital-banking"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Digital Banking
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-            </MegaMenuGroups>
-          </MegaMenuContent>
-        </MegaMenuPanel>
-      </MegaMenu>,
-    );
+    cy.mount(<DefaultOpen />);
 
     cy.get(".saltMegaMenuPanel").should("exist");
     cy.findByRole("link", { name: "Digital Banking" }).should("exist");
   });
 
   it("does not persist item active state after selection", () => {
-    cy.mount(<InteractiveMegaMenu />);
+    cy.mount(<Interactive />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.findByRole("link", { name: "Digital Banking" }).click();
