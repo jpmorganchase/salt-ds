@@ -29,6 +29,10 @@
   inline-size: 100%;
 }
 
+.mega-menu-aside {
+  max-inline-size: 240px;
+}
+
 .mega-menu-group-badge {
   align-self: start;
   margin-block-end: var(--salt-spacing-100);

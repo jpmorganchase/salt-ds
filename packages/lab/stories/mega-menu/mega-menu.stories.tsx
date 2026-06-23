@@ -124,7 +124,7 @@ export const Showcase: StoryFn = () => (
               </MegaMenuActions>
             </MegaMenuContent>
             <MegaMenuAside>
-              <StackLayout gap={1} style={{ maxWidth: 240 }}>
+              <StackLayout gap={1} align="start" className="mega-menu-aside">
                 <Text styleAs="h4" as="h2">
                   Featured resource
                 </Text>
@@ -135,7 +135,6 @@ export const Showcase: StoryFn = () => (
                 <Link
                   href="/guidelines"
                   color="primary"
-                  style={{ width: "fit-content" }}
                 >
                   View guidelines
                 </Link>
@@ -204,7 +203,7 @@ export const Showcase: StoryFn = () => (
               </MegaMenuGroups>
             </MegaMenuContent>
             <MegaMenuAside>
-              <StackLayout gap={1} style={{ maxWidth: 240 }}>
+              <StackLayout gap={1} align="start" className="mega-menu-aside">
                 <Text styleAs="h4" as="h2">
                   Release notes
                 </Text>
@@ -214,7 +213,6 @@ export const Showcase: StoryFn = () => (
                 <Link
                   href="/whats-new"
                   color="primary"
-                  style={{ width: "fit-content" }}
                 >
                   What's new
                 </Link>
@@ -225,7 +223,7 @@ export const Showcase: StoryFn = () => (
       </li>
     </StackLayout>
 
-    <button type="button">After Nav</button>
+    <Button variant="primary">After Nav</Button>
   </nav>
 );
 
@@ -306,7 +304,7 @@ export const Baseline: StoryFn = () => (
       </li>
     </StackLayout>
 
-    <button type="button">After Nav</button>
+    <Button variant="primary">After Nav</Button>
   </nav>
 );
 
@@ -396,7 +394,7 @@ export const WithAside: StoryFn = () => (
       </li>
     </StackLayout>
 
-    <button type="button">After Nav</button>
+    <Button variant="primary">After Nav</Button>
   </nav>
 );
 
@@ -729,7 +727,7 @@ export const StaticContent: StoryFn = () => (
       </li>
     </StackLayout>
 
-    <button type="button">After Nav</button>
+    <Button variant="primary">After Nav</Button>
   </nav>
 );
 
