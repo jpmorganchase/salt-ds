@@ -167,6 +167,7 @@ export function TokenTable({
                         <TokenPreview
                           name={name}
                           value={resolvedValue}
+                          density={density}
                           mode={previewMode}
                           themeKey={`${themeKey}-${previewMode}`}
                           theme={theme}

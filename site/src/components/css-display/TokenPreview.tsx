@@ -4,17 +4,20 @@ import { useEffect, useRef, useState } from "react";
 import { Code } from "../mdx/code";
 import styles from "./AllTokens.module.css";
 import { formatTokenValue } from "./formatTokenValue";
+import type { Density } from "./TokenTable";
 import { getPreviewType, getSwatchStyle } from "./tokenPreviewUtils";
 
 export function TokenPreview({
   name,
   value,
+  density,
   mode,
   themeKey,
   theme,
 }: {
   name: string;
   value: string;
+  density: Density;
   mode: "light" | "dark";
   themeKey: string;
   theme: "next" | "legacy";
@@ -23,7 +26,7 @@ export function TokenPreview({
   const [isTransparent, setIsTransparent] = useState(false);
   const swatchRef = useRef<HTMLDivElement | null>(null);
   const ThemeProvider = theme === "next" ? SaltProviderNext : SaltProvider;
-  const swatchVersion = `${themeKey}:${value}`;
+  const swatchVersion = `${themeKey}:${density}:${value}`;
 
   useEffect(() => {
     if (type !== "color") {
@@ -40,16 +43,9 @@ export function TokenPreview({
       return;
     }
 
-    const normalized = window
-      .getComputedStyle(node)
-      .backgroundColor.replaceAll(" ", "")
-      .toLowerCase();
+    const backgroundColor = window.getComputedStyle(node).backgroundColor;
 
-    setIsTransparent(
-      normalized === "transparent" ||
-        normalized.includes("rgba(0,0,0,0)") ||
-        normalized.endsWith(",0)"),
-    );
+    setIsTransparent(isTransparentColor(backgroundColor));
   }, [swatchVersion, type]);
 
   if (type === "raw") {
@@ -62,7 +58,12 @@ export function TokenPreview({
 
   return (
     <div className={styles.swatch}>
-      <ThemeProvider theme="" mode={mode} applyClassesTo="child">
+      <ThemeProvider
+        theme=""
+        density={density}
+        mode={mode}
+        applyClassesTo="child"
+      >
         <div
           ref={swatchRef}
           data-swatch-version={swatchVersion}
@@ -73,6 +74,16 @@ export function TokenPreview({
         />
       </ThemeProvider>
     </div>
+  );
+}
+
+function isTransparentColor(normalizedColor: string) {
+  const color = normalizedColor.trim().toLowerCase();
+
+  return (
+    color === "transparent" ||
+    /^rgba\([^,]+,[^,]+,[^,]+,\s*0(?:\.0+)?\)$/.test(color) ||
+    /^rgb\([^/]+\/\s*0(?:\.0+)?\)$/.test(color)
   );
 }
 
