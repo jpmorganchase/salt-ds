@@ -1,5 +1,21 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.97
+
+### Minor Changes
+
+- 2516755: Removed `ToolbarNext`, `ToolbarContentNext`, and `TooltrayNext` from lab and promoted to core. As part of the promotion the components were renamed e.g., `ToolbarNext` is now `Toolbar`.
+
+  The legacy `Toolbar` and `Tooltray` exports in lab are unchanged.
+
+### Patch Changes
+
+- Updated dependencies [906c94e]
+- Updated dependencies [2516755]
+- Updated dependencies [027f8c4]
+- Updated dependencies [027f8c4]
+  - @salt-ds/core@1.65.0
+
 ## 1.0.0-alpha.96
 
 ### Minor Changes
