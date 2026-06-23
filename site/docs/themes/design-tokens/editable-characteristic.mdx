@@ -19,8 +19,9 @@ Editable tokens are used to style interactive components such as text fields, dr
   border
 />
 
-`--salt-editable-borderColor` \
-`--salt-editable-primary-background`
+<TokenTableWithControls
+  tokens={["--salt-editable-borderColor", "--salt-editable-primary-background"]}
+/>
 
 ## State changes
 
@@ -33,8 +34,12 @@ Editable borders change when a component is hovered over or active, such as when
   background="secondary"
 />
 
-`--salt-editable-borderColor-active` \
-`--salt-editable-borderColor-hover`
+<TokenTableWithControls
+  tokens={[
+    "--salt-editable-borderColor-active",
+    "--salt-editable-borderColor-hover",
+  ]}
+/>
 
 ## Secondary inputs
 
@@ -48,8 +53,12 @@ Secondary background can be applied to editable components, allowing inputs to s
   border
 />
 
-`--salt-editable-borderColor` \
-`--salt-editable-secondary-background`
+<TokenTableWithControls
+  tokens={[
+    "--salt-editable-borderColor",
+    "--salt-editable-secondary-background",
+  ]}
+/>
 
 ## Tertiary inputs
 
@@ -63,5 +72,9 @@ Tertiary background can be applied to editable components as an alternate option
   border
 />
 
-`--salt-editable-borderColor` \
-`--salt-editable-tertiary-background`
+<TokenTableWithControls
+  tokens={[
+    "--salt-editable-borderColor",
+    "--salt-editable-tertiary-background",
+  ]}
+/>

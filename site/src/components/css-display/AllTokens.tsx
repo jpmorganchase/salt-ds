@@ -5,29 +5,26 @@ import {
   type DropdownProps,
   FormField,
   FormFieldLabel,
-  H2,
-  H3,
   Input,
   Option,
-  Spinner,
   StackLayout,
-  Table,
-  TBody,
-  TD,
-  Text,
-  TH,
-  THead,
   ToggleButton,
   ToggleButtonGroup,
-  TR,
 } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { useEffect, useState } from "react";
 import { Callout } from "../callout";
-import { CopyToClipboard } from "../copy-to-clipboard";
 import styles from "./AllTokens.module.css";
-import { getTokenGroupDescription } from "./descriptions";
-import { TokenPreview } from "./TokenPreview";
+import {
+  type Density,
+  type DensityOverrides,
+  densities,
+  getThemeDisplayName,
+  type Mode,
+  type ThemeType,
+  TokenTable,
+  themes,
+} from "./TokenTable";
 import {
   filterFoundationTokens,
   groupTokens,
@@ -35,13 +32,6 @@ import {
 } from "./tokenData";
 
 type CssVariableData = Record<string, string>;
-type Density = "high" | "medium" | "low" | "touch" | "mobile";
-type DensityOverrides = Partial<
-  Record<string, Partial<Record<Density, string>>>
->;
-type ThemeType = "next" | "legacy";
-type Mode = "light" | "dark";
-type TokenTier = "characteristic" | "foundation";
 type TokenTableData = {
   characteristics: TokenGroups | null;
   foundations: TokenGroups | null;
@@ -50,37 +40,12 @@ type TokenTableData = {
 };
 type ThemeTokenTables = Record<ThemeType, TokenTableData>;
 
-function getSectionHeadingId(tier: TokenTier) {
-  return `${tier}-tokens`;
-}
-
-function getGroupHeadingId(tier: TokenTier, group: string) {
-  return `${tier}-${group}`.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
-}
-
 const emptyTables: TokenTableData = {
   characteristics: null,
   foundations: null,
   characteristicDensity: null,
   foundationDensity: null,
 };
-
-const themes: Array<{ displayName: string; value: ThemeType }> = [
-  {
-    displayName: "JPM Brand",
-    value: "next",
-  },
-  {
-    displayName: "Legacy",
-    value: "legacy",
-  },
-];
-
-const densities: Density[] = ["high", "medium", "low", "touch", "mobile"];
-
-function getThemeDisplayName(value: ThemeType) {
-  return themes.find((theme) => theme.value === value)?.displayName ?? value;
-}
 
 export function AllTokens() {
   const [theme, setTheme] = useState<ThemeType>("next");
@@ -285,95 +250,6 @@ export function AllTokens() {
         mode={mode}
         theme={theme}
       />
-    </StackLayout>
-  );
-}
-
-function TokenTable({
-  title,
-  tier,
-  groupedRows,
-  densityOverrides,
-  loadingLabel,
-  density,
-  mode,
-  theme,
-}: {
-  title: string;
-  tier: TokenTier;
-  groupedRows: TokenGroups | null;
-  densityOverrides: DensityOverrides | null;
-  loadingLabel: string;
-  density: Density;
-  mode: Mode;
-  theme: ThemeType;
-}) {
-  if (groupedRows === null) {
-    return (
-      <Spinner
-        className={styles.loading}
-        role="status"
-        aria-label={loadingLabel}
-        size="large"
-      />
-    );
-  }
-
-  const themeKey = `${tier}-${theme}-${mode}`;
-  const visibleGroups = Object.entries(groupedRows);
-
-  if (visibleGroups.length === 0) {
-    return null;
-  }
-
-  return (
-    <StackLayout gap={1}>
-      <H2 id={getSectionHeadingId(tier)} data-mdx="heading2">
-        {capitalize(title)}
-      </H2>
-      {visibleGroups.map(([group, rows]) => (
-        <StackLayout key={group} gap={0.5}>
-          <H3 id={getGroupHeadingId(tier, group)} data-mdx="heading3">
-            {capitalize(group)}
-          </H3>
-          <Text>{getTokenGroupDescription(tier, group)}</Text>
-          <div className={styles.tableWrap}>
-            <Table zebra divider="none">
-              <THead>
-                <TR>
-                  <TH>Value</TH>
-                  <TH>Token</TH>
-                </TR>
-              </THead>
-              <TBody>
-                {rows.map(([name, value]) => {
-                  const resolvedValue =
-                    densityOverrides?.[name]?.[density] ?? value;
-
-                  return (
-                    <TR key={name}>
-                      <TD>
-                        <TokenPreview
-                          name={name}
-                          value={resolvedValue}
-                          mode={mode}
-                          themeKey={themeKey}
-                          theme={theme}
-                        />
-                      </TD>
-                      <TD className={styles.tokenCell}>
-                        <div className={styles.tokenRow}>
-                          <CopyToClipboard value={name} />
-                        </div>
-                      </TD>
-                    </TR>
-                  );
-                })}
-              </TBody>
-            </Table>
-          </div>
-        </StackLayout>
-      ))}
     </StackLayout>
   );
 }

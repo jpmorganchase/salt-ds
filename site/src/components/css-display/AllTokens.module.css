@@ -19,6 +19,50 @@
   max-width: 24rem;
 }
 
+.valueHeaderCell,
+.tokenHeaderCell {
+  vertical-align: middle;
+}
+
+.valueHeaderRow,
+.tokenHeaderRow {
+  display: flex;
+  align-items: center;
+  min-height: var(--salt-size-base);
+}
+
+.valueHeaderRow {
+  justify-content: flex-start;
+}
+
+.tokenHeaderRow {
+  justify-content: space-between;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+}
+
+.tokenHeaderCell {
+  min-width: 24rem;
+}
+
+.compactControlsOverlay {
+  max-width: 100vw;
+}
+
+.compactControlsOverlayContent > div {
+  overflow: auto;
+  display: flex;
+}
+
+.compactToggleGroup.compactToggleGroup {
+  width: 100%;
+}
+
+.compactToggleGroup.compactToggleGroup button {
+  width: unset;
+  flex: 1;
+}
+
 .tableWrap {
   max-width: 100%;
   overflow-x: auto;

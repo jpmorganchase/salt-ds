@@ -18,9 +18,13 @@ When styling selectable lists, use selectable tokens to define the default, hove
   background="secondary"
 />
 
-`--salt-content-primary-foreground` \
-`--salt-selectable-background` \
-`--salt-selectable-borderColor-selected`
+<TokenTableWithControls
+  tokens={[
+    "--salt-content-primary-foreground",
+    "--salt-selectable-background",
+    "--salt-selectable-borderColor-selected",
+  ]}
+/>
 
 On hover, the background changes to provide subtle visual feedback, signaling interactivity. When an item is selected, the background and borders update to highlight the choice, making it easy for users to identify which option(s) is currently selected. Consistently applying these states helps users interact with lists confidently and efficiently.
 
@@ -31,9 +35,13 @@ On hover, the background changes to provide subtle visual feedback, signaling in
   background="secondary"
 />
 
-`--salt-selectable-background-hover` \
-`--salt-selectable-background-selected` \
-`--salt-selectable-borderColor-selected`
+<TokenTableWithControls
+  tokens={[
+    "--salt-selectable-background-hover",
+    "--salt-selectable-background-selected",
+    "--salt-selectable-borderColor-selected",
+  ]}
+/>
 
 ## Selectable controls
 
@@ -46,8 +54,9 @@ Selectable controls, such as Radio Button, Checkbox, and Switch, use tokens cons
   background="secondary"
 />
 
-`--salt-selectable-borderColor` \
-`--salt-selectable-foreground`
+<TokenTableWithControls
+  tokens={["--salt-selectable-borderColor", "--salt-selectable-foreground"]}
+/>
 
 On hover, selectable controls update their border and foreground tokens to the hover equivalents of the default values, providing clear feedback as users interact with the components.
 
@@ -58,8 +67,12 @@ On hover, selectable controls update their border and foreground tokens to the h
   background="secondary"
 />
 
-`--salt-selectable-borderColor-hover` \
-`--salt-selectable-foreground-hover`
+<TokenTableWithControls
+  tokens={[
+    "--salt-selectable-borderColor-hover",
+    "--salt-selectable-foreground-hover",
+  ]}
+/>
 
 When selected, the border and foreground tokens update to indicate the state change, making the chosen option easy to identify.
 
@@ -70,5 +83,9 @@ When selected, the border and foreground tokens update to indicate the state cha
   background="secondary"
 />
 
-`--salt-selectable-borderColor-selected` \
-`--salt-selectable-foreground-selected`
+<TokenTableWithControls
+  tokens={[
+    "--salt-selectable-borderColor-selected",
+    "--salt-selectable-foreground-selected",
+  ]}
+/>
