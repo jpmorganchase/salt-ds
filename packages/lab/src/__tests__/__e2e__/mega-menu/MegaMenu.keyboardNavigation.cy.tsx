@@ -423,7 +423,7 @@ describe("Given a MegaMenu", () => {
 
       // ArrowDown lands on the action item, rendered as a focusable button.
       cy.realPress("ArrowDown");
-      cy.findByRole("button", { name: "Telemedicine" }).should("be.focused");
+      cy.findByRole("button", { name: "Action button" }).should("be.focused");
 
       // ...and continues to the link beneath it.
       cy.realPress("ArrowDown");

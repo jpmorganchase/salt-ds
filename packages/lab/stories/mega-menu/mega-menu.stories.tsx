@@ -4,6 +4,7 @@ import {
   Link,
   NavigationItem,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import {
   MegaMenu,
@@ -33,16 +34,12 @@ export default {
   ],
 };
 
-// Items link to `#` and swallow their default action so activating one inside a
-// component test does not navigate the runner away from the mounted fixture.
+// Prevent default navigation so activating an item in a test doesn't change the page.
 const preventNav = (event: { preventDefault: () => void }) =>
   event.preventDefault();
 
-// Canonical fixture: two triggers in a `<nav aria-label>` landmark, each grouped
-// in an `<li>`. Solutions has two columns (Financial Services, Healthcare) of two
-// items each; Services has a single column. A trailing focusable sits after the
-// nav so tab-exit can be observed. Drives the default behaviour, keyboard
-// navigation, and a11y landmark/region/group-semantics tests.
+// Two triggers, each in a list item inside a labelled nav. Solutions has two
+// columns; Services has one.
 export const Default: StoryFn = () => (
   <nav aria-label="Main">
     <StackLayout as="ul" direction="row" gap={1}>
@@ -116,8 +113,7 @@ export const Default: StoryFn = () => (
   </nav>
 );
 
-// Single menu rendered open from the start (`defaultOpen`). Verifies the panel is
-// present without interaction and is accessible while open.
+// A single menu open on mount via defaultOpen.
 export const DefaultOpen: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -151,9 +147,7 @@ export const DefaultOpen: StoryFn = () => (
   </nav>
 );
 
-// `MegaMenuContent` followed by a trailing `MegaMenuAside`. Source order places
-// the aside to the right of the body; its interactive children become a navigable
-// column. A trailing focusable follows the nav to observe tab-exit.
+// A MegaMenuAside after MegaMenuContent renders as a right-hand column.
 export const WithAside: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -197,8 +191,7 @@ export const WithAside: StoryFn = () => (
   </nav>
 );
 
-// A leading `MegaMenuAside` placed before `MegaMenuContent` renders to the left, so
-// it becomes the first navigable column.
+// A MegaMenuAside before MegaMenuContent renders as a left-hand column.
 export const WithLeadingAside: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -237,9 +230,7 @@ export const WithLeadingAside: StoryFn = () => (
   </nav>
 );
 
-// Groups followed by a full-width `MegaMenuActions`, both inside `MegaMenuContent`.
-// The action bar is always the bottom of the center area and its children move
-// horizontally.
+// A MegaMenuActions bar below the groups, inside MegaMenuContent.
 export const WithActions: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -281,8 +272,7 @@ export const WithActions: StoryFn = () => (
   </nav>
 );
 
-// Like `WithActions` but with a following trigger, so the action bar's last action
-// can exit to the next trigger on ArrowRight/ArrowDown.
+// WithActions plus a second trigger after it.
 export const WithActionsAndNextTrigger: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -342,10 +332,8 @@ export const WithActionsAndNextTrigger: StoryFn = () => (
   </nav>
 );
 
-// Content regions flanking the center and an action bar inside it, rendered open.
-// Verifies the panel derives position purely from component type and source order:
-// a `MegaMenuAside` before `MegaMenuContent` is the left column, one after is the
-// right column, and the action bar sits inside `MegaMenuContent` beneath the groups.
+// Asides before and after MegaMenuContent become left and right columns;
+// MegaMenuActions sits below the groups.
 export const WithRegionsLayout: StoryFn = () => (
   <nav aria-label="Main">
     <StackLayout as="ul" direction="row" gap={1}>
@@ -391,8 +379,7 @@ export const WithRegionsLayout: StoryFn = () => (
   </nav>
 );
 
-// A `MegaMenuAside` containing a self-consuming control (a text input). The engine
-// must not hijack arrow keys while focus is inside it.
+// A text input inside a MegaMenuAside.
 export const WithSelfConsumingControl: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -426,8 +413,7 @@ export const WithSelfConsumingControl: StoryFn = () => (
   </nav>
 );
 
-// A region (input + following link) used to verify Tab/Shift+Tab still traverse
-// across a self-consuming control — only arrows/Home/End are yielded to it.
+// A text input followed by a link inside a MegaMenuAside.
 export const WithSelfConsumingControlAndLink: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -466,8 +452,7 @@ export const WithSelfConsumingControlAndLink: StoryFn = () => (
   </nav>
 );
 
-// Static-only content (no interactive descendants). The region and action bar must
-// contribute no navigable cells and stay out of tab + arrow navigation.
+// A region and action bar with no interactive content.
 export const StaticContent: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -509,9 +494,7 @@ export const StaticContent: StoryFn = () => (
   </nav>
 );
 
-// An action item rendered as a `<button>` via the `render` prop (not navigation),
-// followed by a link. Verifies the engine treats the button as a focusable cell and
-// continues to the link beneath it.
+// An item rendered as a <button> via render, followed by a link item.
 export const WithActionItem: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -532,7 +515,7 @@ export const WithActionItem: StoryFn = () => (
                       render={<button type="button" />}
                       onClick={preventNav}
                     >
-                      Telemedicine
+                      Action button
                     </MegaMenuListItem>
                     <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
                       Digital Banking
@@ -548,9 +531,7 @@ export const WithActionItem: StoryFn = () => (
   </nav>
 );
 
-// Exercises the `render` prop: a custom anchor substituted for the default `<a>`.
-// Verifies `render` replaces the host element rather than wrapping it (a single
-// `<a>`, not nested links).
+// An item with a custom anchor supplied through render.
 export const WithRenderProp: StoryFn = () => (
   <nav>
     <StackLayout as="ul" direction="row" gap={1}>
@@ -588,8 +569,7 @@ export const WithRenderProp: StoryFn = () => (
   </nav>
 );
 
-// Group heading carrying a consumer-provided id; the list must be labelled by
-// exactly that id rather than an internally generated one.
+// A group heading with a consumer-supplied id.
 export const WithCustomHeadingId: StoryFn = () => (
   <MegaMenu defaultOpen>
     <MegaMenuTrigger>
@@ -614,8 +594,7 @@ export const WithCustomHeadingId: StoryFn = () => (
   </MegaMenu>
 );
 
-// Group with no heading: the list must omit `aria-labelledby` entirely rather than
-// point at a non-existent id.
+// A group with no heading.
 export const WithoutGroupHeading: StoryFn = () => (
   <MegaMenu defaultOpen>
     <MegaMenuTrigger>
@@ -637,19 +616,23 @@ export const WithoutGroupHeading: StoryFn = () => (
   </MegaMenu>
 );
 
-// Group heading combined with a consumer-provided `aria-labelledby`: the list's
-// accessible name concatenates the heading and the consumer's element, heading
-// first.
+// A list labelled by both its group heading and a consumer-supplied aria-labelledby.
 export const WithExtraGroupLabel: StoryFn = () => (
   <MegaMenu defaultOpen>
     <MegaMenuTrigger>
       <NavigationItem>Solutions</NavigationItem>
     </MegaMenuTrigger>
     <MegaMenuPanel aria-label="Solutions menu">
-      <span id="extra-label">Recommended</span>
       <MegaMenuContent>
         <MegaMenuGroups>
           <MegaMenuGroup>
+            <Text
+              id="extra-label"
+              styleAs="label"
+              className="mega-menu-group-badge"
+            >
+              Recommended
+            </Text>
             <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
             <MegaMenuList aria-labelledby="extra-label">
               <MegaMenuListItem href="/digital-banking">

@@ -29,6 +29,15 @@
   inline-size: 100%;
 }
 
+.mega-menu-group-badge {
+  align-self: start;
+  margin-block-end: var(--salt-spacing-100);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  border-radius: var(--salt-palette-corner, 4px);
+  background: var(--salt-status-info-background);
+  color: var(--salt-content-secondary-foreground);
+}
+
 .saltMegaMenuPanel {
   max-block-size: calc(100vh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
   max-block-size: calc(100dvh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
