@@ -40,7 +40,7 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
   <QAContainer vertical itemPadding={180}>
     <nav>
       <StackLayout
-        as="ol"
+        as="ul"
         direction="row"
         gap={1}
         style={{ listStyle: "none", padding: 0 }}

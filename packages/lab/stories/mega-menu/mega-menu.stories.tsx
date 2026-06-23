@@ -93,7 +93,7 @@ export const Default: StoryFn = () => {
 
   return (
     <nav>
-      <StackLayout as="ol" direction="row" gap={1}>
+      <StackLayout as="ul" direction="row" gap={1}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -609,7 +609,7 @@ export const WithIcons: StoryFn = () => {
 
   return (
     <nav>
-      <StackLayout as="ol" direction="row" gap={1}>
+      <StackLayout as="ul" direction="row" gap={1}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -1166,7 +1166,7 @@ export const WithAdornment: StoryFn = () => {
 
   return (
     <nav>
-      <StackLayout as="ol" direction="row" gap={1}>
+      <StackLayout as="ul" direction="row" gap={1}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -2393,7 +2393,7 @@ export const FullWidthContainer: StoryFn = () => {
   return (
     <div className="full-width-wrapper">
       <nav>
-        <StackLayout as="ol" direction="row" gap={1}>
+        <StackLayout as="ul" direction="row" gap={1}>
           <li>
             <MegaMenu
               open={openMenu === "solutions"}
@@ -3007,7 +3007,7 @@ export const EdgeToEdge: StoryFn = () => {
   return (
     <div className="edge-to-edge-wrapper">
       <nav>
-        <StackLayout as="ol" direction="row" gap={1}>
+        <StackLayout as="ul" direction="row" gap={1}>
           <li>
             <MegaMenu
               open={openMenu === "solutions"}
@@ -3974,7 +3974,7 @@ export const WithLink: StoryFn = () => {
 
   return (
     <nav>
-      <StackLayout as="ol" direction="row" gap={1}>
+      <StackLayout as="ul" direction="row" gap={1}>
         <li>
           <MegaMenu
             open={openMenu === "solutions"}
@@ -3986,7 +3986,7 @@ export const WithLink: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuPanel>
+            <MegaMenuPanel aria-label="Solutions menu">
               <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
@@ -4203,7 +4203,7 @@ export const WithLink: StoryFn = () => {
               </NavigationItem>
             </MegaMenuTrigger>
 
-            <MegaMenuPanel>
+            <MegaMenuPanel aria-label="Services menu">
               <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
@@ -4397,7 +4397,7 @@ export const WithLink: StoryFn = () => {
                 Resources
               </NavigationItem>
             </MegaMenuTrigger>
-            <MegaMenuPanel>
+            <MegaMenuPanel aria-label="Resources menu">
               <MegaMenuContent>
                 <MegaMenuGroups>
                   <MegaMenuGroup>
@@ -4513,7 +4513,7 @@ export const InSmallViewport: StoryFn = () => {
   return (
     <div className="small-viewport-wrapper">
       <nav>
-        <StackLayout as="ol" direction="row" gap={1}>
+        <StackLayout as="ul" direction="row" gap={1}>
           <li>
             <MegaMenu
               open={openMenu === "solutions"}
@@ -5054,7 +5054,7 @@ export const InSmallViewport: StoryFn = () => {
 export const DefaultOpen: StoryFn = () => {
   return (
     <nav>
-      <StackLayout as="ol" direction="row" gap={1}>
+      <StackLayout as="ul" direction="row" gap={1}>
         <li>
           <MegaMenu defaultOpen>
             <MegaMenuTrigger>
