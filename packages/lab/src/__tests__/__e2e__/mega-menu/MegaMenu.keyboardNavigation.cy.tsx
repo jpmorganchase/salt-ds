@@ -2,7 +2,7 @@ import * as megaMenuStories from "@stories/mega-menu/mega-menu.stories";
 import { composeStories } from "@storybook/react-vite";
 
 const {
-  Default,
+  Baseline,
   WithAside,
   WithLeadingAside,
   WithActions,
@@ -28,7 +28,7 @@ describe("Given a MegaMenu", () => {
   describe("when focus is on the trigger and menu is closed", () => {
     (["Enter", " ", "ArrowDown"] as const).forEach((key) => {
       it(`opens on ${key}`, () => {
-        cy.mount(<Default />);
+        cy.mount(<Baseline />);
         focusSolutionsTrigger();
         cy.realPress(key);
         cy.get(".saltMegaMenuPanel").should("exist");
@@ -36,14 +36,14 @@ describe("Given a MegaMenu", () => {
     });
 
     it("does not open on Tab", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       focusSolutionsTrigger();
       cy.realPress("Tab");
       cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
     it("moves focus to next trigger on ArrowRight", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       focusSolutionsTrigger();
 
       cy.realPress("ArrowRight");
@@ -52,7 +52,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("moves focus to previous trigger on ArrowLeft", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Services" })
         .focus()
         .should("be.focused");
@@ -65,7 +65,7 @@ describe("Given a MegaMenu", () => {
 
   describe("when menu is open", () => {
     it("moves focus to first item on Tab from trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -73,7 +73,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("moves focus to first item on ArrowDown from trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("ArrowDown");
@@ -81,7 +81,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowRight on an open trigger closes the panel and moves to the next trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       // Focus stays on the trigger after opening with Enter.
       openSolutionsWithEnter();
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
@@ -93,7 +93,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowLeft on an open trigger closes the panel and moves to the previous trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Services" }).focus();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
@@ -105,7 +105,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("Shift+Tab on an open trigger closes the panel and moves to the previous trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Services" }).focus();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
@@ -117,7 +117,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("re-enters items on ArrowDown after ArrowUp returns to trigger (opened via ArrowDown)", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       focusSolutionsTrigger();
 
       // Open with ArrowDown — focuses the first item.
@@ -135,7 +135,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports ArrowDown and ArrowUp between items and trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -152,7 +152,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("moves to the next column on ArrowDown from the last item of a non-last column", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -171,7 +171,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("crosses columns with ArrowRight and ArrowLeft", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -187,7 +187,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowUp on the first item returns focus to the trigger and keeps the menu open", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -199,7 +199,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowLeft on the first column returns focus to the trigger and keeps the menu open", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -211,7 +211,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowDown from the bottom of the last column is a no-op when there is no next trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       // Open the last menu (Services), which has no trigger after it.
       cy.findByRole("button", { name: "Services" }).focus();
       cy.realPress("Enter");
@@ -228,7 +228,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowRight from the bottom of the last column returns to the current trigger when there is no next trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       // Open the last menu (Services), which has no trigger after it.
       cy.findByRole("button", { name: "Services" }).focus();
       cy.realPress("Enter");
@@ -245,7 +245,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowRight from a non-bottom item of the last column returns to the current trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -262,7 +262,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowRight from the bottom of the last column closes menu and moves to next trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -276,7 +276,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowDown from the bottom of the last column closes menu and moves to next trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -290,7 +290,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports Tab and Shift+Tab inside menu", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -304,7 +304,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("returns focus to trigger on Shift+Tab from first item and Tab re-enters first item", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -318,7 +318,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("closes on Escape", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -329,7 +329,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("activates item on Enter and closes menu", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -340,7 +340,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("does not activate an item on Space (links activate on Enter only)", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -354,7 +354,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("tabs from the last item to the next trigger and closes the panel", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -369,7 +369,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("closes on Escape when focus is still on the trigger", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       focusSolutionsTrigger();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
@@ -381,7 +381,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports Home to jump to first item in column", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -393,7 +393,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports End to jump to last item in column", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -404,7 +404,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("returns focus to trigger on Escape", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");

@@ -231,7 +231,7 @@ export const Showcase: StoryFn = () => (
 
 // Two triggers, each in a list item inside a labelled nav. Solutions has two
 // columns; Services has one.
-export const Default: StoryFn = () => (
+export const Baseline: StoryFn = () => (
   <nav aria-label="Main">
     <StackLayout as="ul" direction="row" gap={1}>
       <li>

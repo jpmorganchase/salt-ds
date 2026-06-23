@@ -1,11 +1,11 @@
 import * as megaMenuStories from "@stories/mega-menu/mega-menu.stories";
 import { composeStories } from "@storybook/react-vite";
 
-const { Default, DefaultOpen } = composeStories(megaMenuStories);
+const { Baseline, DefaultOpen } = composeStories(megaMenuStories);
 
-describe("Given the Default MegaMenu example", () => {
+describe("Given the Baseline MegaMenu example", () => {
   it("renders triggers and keeps menus closed initially", () => {
-    cy.mount(<Default />);
+    cy.mount(<Baseline />);
 
     cy.findByRole("button", { name: "Solutions" }).should("exist");
     cy.findByRole("button", { name: "Services" }).should("exist");
@@ -13,7 +13,7 @@ describe("Given the Default MegaMenu example", () => {
   });
 
   it("opens and closes a menu on trigger click", () => {
-    cy.mount(<Default />);
+    cy.mount(<Baseline />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.get(".saltMegaMenuPanel").should("exist");
@@ -23,7 +23,7 @@ describe("Given the Default MegaMenu example", () => {
   });
 
   it("switches open state between top-level triggers", () => {
-    cy.mount(<Default />);
+    cy.mount(<Baseline />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.findByRole("link", { name: "Digital Banking" }).should("exist");
@@ -34,7 +34,7 @@ describe("Given the Default MegaMenu example", () => {
   });
 
   it("selects an item and closes the menu", () => {
-    cy.mount(<Default />);
+    cy.mount(<Baseline />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.findByRole("link", { name: "Digital Banking" }).click();
@@ -43,7 +43,7 @@ describe("Given the Default MegaMenu example", () => {
   });
 
   it("closes on outside click", () => {
-    cy.mount(<Default />);
+    cy.mount(<Baseline />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.get(".saltMegaMenuPanel").should("exist");
@@ -53,7 +53,7 @@ describe("Given the Default MegaMenu example", () => {
   });
 
   it("does not persist item active state after selection", () => {
-    cy.mount(<Default />);
+    cy.mount(<Baseline />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.findByRole("link", { name: "Digital Banking" }).click();

@@ -2,7 +2,7 @@ import * as megaMenuStories from "@stories/mega-menu/mega-menu.stories";
 import { composeStories } from "@storybook/react-vite";
 
 const {
-  Default,
+  Baseline,
   WithRegionsLayout,
   WithCustomHeadingId,
   WithoutGroupHeading,
@@ -12,7 +12,7 @@ const {
 describe("Given a MegaMenu", () => {
   describe("navigation landmark and trigger structure", () => {
     it("exposes the triggers within a navigation landmark and a list", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
 
       // The triggers are reachable through the `<nav>` landmark...
       cy.findByRole("navigation", { name: "Main" })
@@ -29,7 +29,7 @@ describe("Given a MegaMenu", () => {
 
   describe("trigger aria attributes", () => {
     it("reflects the collapsed state with aria-expanded=false and no aria-controls", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" })
         .should("have.attr", "aria-expanded", "false")
@@ -37,7 +37,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("sets aria-expanded=true and aria-controls referencing the panel when open", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" }).click();
 
@@ -62,7 +62,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("clears aria-expanded back to false after closing", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" }).click();
       cy.findByRole("button", { name: "Solutions" }).should(
@@ -80,7 +80,7 @@ describe("Given a MegaMenu", () => {
 
   describe("panel region semantics", () => {
     it("renders the panel as a region with the provided aria-label", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" }).click();
 
@@ -90,7 +90,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("gives each panel a distinct accessible name", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Services" }).click();
       cy.findByRole("region", { name: "Services menu" }).should("exist");
@@ -100,7 +100,7 @@ describe("Given a MegaMenu", () => {
 
   describe("group list semantics", () => {
     it("exposes each group as a list named after its header", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" }).click();
 
@@ -158,7 +158,7 @@ describe("Given a MegaMenu", () => {
     };
 
     it("collapses the menu and moves focus out when Tab passes the last item", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -174,7 +174,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("returns focus to the trigger when Shift+Tab passes the first item, keeping the menu open", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking (first focusable)
@@ -186,7 +186,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("closes and returns focus to the trigger on Escape", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab");
@@ -199,7 +199,7 @@ describe("Given a MegaMenu", () => {
 
     it("degrades arrows to a linear walk when the grid is stacked at a small viewport", () => {
       cy.viewport(375, 667);
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab");
@@ -223,7 +223,7 @@ describe("Given a MegaMenu", () => {
 
     it("returns focus to the trigger on ArrowUp from the first item when stacked", () => {
       cy.viewport(375, 667);
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab");
@@ -273,12 +273,12 @@ describe("Given a MegaMenu", () => {
 
   describe("axe checks", () => {
     it("has no detectable a11y violations when closed", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       cy.checkAxeComponent();
     });
 
     it("has no detectable a11y violations when open", () => {
-      cy.mount(<Default />);
+      cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Solutions" }).click();
       cy.findByRole("region", { name: "Solutions menu" }).should("exist");
       cy.checkAxeComponent();
