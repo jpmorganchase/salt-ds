@@ -230,7 +230,13 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
   };
 
   const listHandlers: ListHandlers = listHandlersProp || {
-    onClick: selectionHook.listHandlers.onClick,
+    // Don't expose a click handler when the list is disabled. Previously,
+    // selection on disabled lists was prevented only as a side-effect of
+    // `handleMouseMove` gating on `disabled` (which kept `highlightedIdx` at
+    // -1, so `useSelection.handleClick` no-op'd). Now that `handleClick`
+    // resolves the clicked item directly from the event target, we must
+    // explicitly suppress the handler here.
+    onClick: disabled ? undefined : selectionHook.listHandlers.onClick,
     // MouseEnter would be much better for this. There is a bug in Cypress
     // wheby it emits spurious MouseEnter (and MouseOver) events around
     // keypress events, which break many tests.
