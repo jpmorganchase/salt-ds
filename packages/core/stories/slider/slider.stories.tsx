@@ -2,14 +2,14 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  Input,
+  NumberInput,
   Slider,
   type SliderProps,
   StackLayout,
   useResponsiveProp,
 } from "@salt-ds/core";
 import type { StoryFn } from "@storybook/react-vite";
-import { type ChangeEvent, useEffect, useState } from "react";
+import { type SyntheticEvent, useEffect, useState } from "react";
 
 const marks = [
   {
@@ -336,11 +336,13 @@ export const WithInput: StoryFn<SliderProps> = () => {
   );
   const bounds: [number, number] = [-50, 50];
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setInputValue(inputValue);
-    if (Number.isNaN(Number(inputValue))) return;
-    setValue(Number.parseFloat(inputValue));
+  const handleInputChange = (
+    _event: SyntheticEvent | null,
+    newInputValue: string,
+  ) => {
+    setInputValue(newInputValue);
+    if (Number.isNaN(Number(newInputValue))) return;
+    setValue(Number.parseFloat(newInputValue));
   };
 
   const validateSingle = (value: string | number, bounds: [number, number]) => {
@@ -356,13 +358,15 @@ export const WithInput: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ maxWidth: "400px", width: "90vw" }}>
+    <FormField style={{ maxWidth: "450px", width: "90vw" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
-        <Input
+        <NumberInput
           value={inputValue}
-          style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          style={{ flex: "1 1 15ch" }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           onChange={handleInputChange}
           validationStatus={validationStatus}
         />
@@ -389,11 +393,13 @@ export const WithInputAndInlineLabels: StoryFn<SliderProps> = () => {
   );
   const bounds: [number, number] = [-50, 50];
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setInputValue(inputValue);
-    if (Number.isNaN(Number(inputValue))) return;
-    setValue(Number.parseFloat(inputValue));
+  const handleInputChange = (
+    _event: SyntheticEvent | null,
+    newInputValue: string,
+  ) => {
+    setInputValue(newInputValue);
+    if (Number.isNaN(Number(newInputValue))) return;
+    setValue(Number.parseFloat(newInputValue));
   };
 
   const validateSingle = (value: string | number, bounds: [number, number]) => {
@@ -409,13 +415,15 @@ export const WithInputAndInlineLabels: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ maxWidth: "400px", width: "90vw" }}>
+    <FormField style={{ maxWidth: "450px", width: "90vw" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
-        <Input
+        <NumberInput
           value={inputValue}
-          style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          style={{ flex: "1 1 15ch" }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           onChange={handleInputChange}
           validationStatus={validationStatus}
         />
@@ -445,11 +453,13 @@ export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
   );
   const bounds: [number, number] = [-50, 50];
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setInputValue(inputValue);
-    if (Number.isNaN(Number(inputValue))) return;
-    setValue(Number.parseFloat(inputValue));
+  const handleInputChange = (
+    _event: SyntheticEvent | null,
+    newInputValue: string,
+  ) => {
+    setInputValue(newInputValue);
+    if (Number.isNaN(Number(newInputValue))) return;
+    setValue(Number.parseFloat(newInputValue));
   };
 
   const validateSingle = (value: string | number, bounds: [number, number]) => {
@@ -465,13 +475,15 @@ export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ maxWidth: "400px", width: "90vw" }}>
+    <FormField style={{ maxWidth: "450px", width: "90vw" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
-        <Input
+        <NumberInput
           value={inputValue}
-          style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          style={{ flex: "1 1 15ch" }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           onChange={handleInputChange}
           validationStatus={validationStatus}
         />
