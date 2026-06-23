@@ -1,11 +1,14 @@
 import {
+  Badge,
   Button,
   FlexLayout,
   Link,
   NavigationItem,
   StackLayout,
+  Tag,
   Text,
 } from "@salt-ds/core";
+import { DatasetManagerIcon, DevicesIcon } from "@salt-ds/icons";
 import {
   MegaMenu,
   MegaMenuActions,
@@ -38,6 +41,194 @@ export default {
 const preventNav = (event: { preventDefault: () => void }) =>
   event.preventDefault();
 
+// Realistic menu combining multi-column groups, an action bar, and a featured side region.
+export const Showcase: StoryFn = () => (
+  <nav aria-label="Main">
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
+                      <DevicesIcon aria-hidden />
+                      Digital Banking
+                    </MegaMenuListItem>
+                    <MegaMenuListItem
+                      href="/risk-management"
+                      onClick={preventNav}
+                    >
+                      <DatasetManagerIcon aria-hidden />
+                      Risk Management
+                    </MegaMenuListItem>
+                    <MegaMenuListItem
+                      href="/wealth-advisory"
+                      onClick={preventNav}
+                    >
+                      Wealth Advisory
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem
+                      href="/patient-management"
+                      onClick={preventNav}
+                    >
+                      Patient Management
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/telemedicine" onClick={preventNav}>
+                      Telemedicine
+                      <div className="menu-item-adornment">
+                        <Tag category={1} variant="primary">
+                          Premium
+                        </Tag>
+                      </div>
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/compliance" onClick={preventNav}>
+                      Compliance Solutions
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/e-commerce" onClick={preventNav}>
+                      E-commerce Platforms
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/payments" onClick={preventNav}>
+                      Payments
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+              <MegaMenuActions>
+                <FlexLayout gap={3} align="center">
+                  <Link href="/book-a-demo" color="primary">
+                    Book a demo
+                  </Link>
+                  <Button variant="secondary">Support center</Button>
+                </FlexLayout>
+              </MegaMenuActions>
+            </MegaMenuContent>
+            <MegaMenuAside>
+              <StackLayout gap={1} style={{ maxWidth: 240 }}>
+                <Text styleAs="h4" as="h2">
+                  Featured resource
+                </Text>
+                <Text color="secondary">
+                  Explore our latest accessibility guidelines to keep your
+                  products inclusive and compliant.
+                </Text>
+                <Link
+                  href="/guidelines"
+                  color="primary"
+                  style={{ width: "fit-content" }}
+                >
+                  View guidelines
+                </Link>
+              </StackLayout>
+            </MegaMenuAside>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Services</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Services menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/strategy" onClick={preventNav}>
+                      Strategy
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/operations" onClick={preventNav}>
+                      Operations
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/cloud" onClick={preventNav}>
+                      Cloud Migration
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/data" onClick={preventNav}>
+                      Data Platforms
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Resources</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Resources menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Learn</MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/guides" onClick={preventNav}>
+                      Guides
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/webinars" onClick={preventNav}>
+                      Webinars
+                      <div className="menu-item-adornment">
+                        <Badge value="3" />
+                      </div>
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+            <MegaMenuAside>
+              <StackLayout gap={1} style={{ maxWidth: 240 }}>
+                <Text styleAs="h4" as="h2">
+                  Release notes
+                </Text>
+                <Text color="secondary">
+                  See what shipped in the latest version.
+                </Text>
+                <Link
+                  href="/whats-new"
+                  color="primary"
+                  style={{ width: "fit-content" }}
+                >
+                  What's new
+                </Link>
+              </StackLayout>
+            </MegaMenuAside>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+
+    <button type="button">After Nav</button>
+  </nav>
+);
+
 // Two triggers, each in a list item inside a labelled nav. Solutions has two
 // columns; Services has one.
 export const Default: StoryFn = () => (
@@ -56,10 +247,16 @@ export const Default: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
-                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/risk-management"
+                      onClick={preventNav}
+                    >
                       Risk Management
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -130,10 +327,16 @@ export const DefaultOpen: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
-                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/risk-management"
+                      onClick={preventNav}
+                    >
                       Risk Management
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -164,10 +367,16 @@ export const WithAside: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
-                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/risk-management"
+                      onClick={preventNav}
+                    >
                       Risk Management
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -213,10 +422,16 @@ export const WithLeadingAside: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
-                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/risk-management"
+                      onClick={preventNav}
+                    >
                       Risk Management
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -247,10 +462,16 @@ export const WithActions: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
-                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/risk-management"
+                      onClick={preventNav}
+                    >
                       Risk Management
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -289,7 +510,10 @@ export const WithActionsAndNextTrigger: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -355,7 +579,10 @@ export const WithRegionsLayout: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -396,7 +623,10 @@ export const WithSelfConsumingControl: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -430,7 +660,10 @@ export const WithSelfConsumingControlAndLink: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -469,10 +702,16 @@ export const StaticContent: StoryFn = () => (
                     Financial Services
                   </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
-                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/risk-management"
+                      onClick={preventNav}
+                    >
                       Risk Management
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -517,7 +756,10 @@ export const WithActionItem: StoryFn = () => (
                     >
                       Action button
                     </MegaMenuListItem>
-                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
                       Digital Banking
                     </MegaMenuListItem>
                   </MegaMenuList>
