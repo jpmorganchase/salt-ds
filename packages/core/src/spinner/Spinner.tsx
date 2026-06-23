@@ -3,7 +3,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes, useEffect } from "react";
 import { useAriaAnnouncer } from "../aria-announcer";
-import { useDensity } from "../salt-provider";
 import { makePrefixer, useId } from "../utils";
 import spinnerCss from "./Spinner.css";
 import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
@@ -75,7 +74,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       completionAnnouncement = `finished ${ariaLabel}`,
       disableAnnouncer,
       className,
-      size = "medium",
+      size: sizeProp = "medium",
       id: idProp,
       ...rest
     },
@@ -91,8 +90,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
 
     const { announce } = useAriaAnnouncer();
 
-    const density = useDensity();
-    size = handleSize(size);
+    const size = handleSize(sizeProp);
 
     useEffect(() => {
       if (disableAnnouncer) return;
@@ -140,7 +138,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         role="img"
         {...rest}
       >
-        <SpinnerSVG size={size} density={density} id={id} />
+        <SpinnerSVG id={id} />
       </div>
     );
   },
