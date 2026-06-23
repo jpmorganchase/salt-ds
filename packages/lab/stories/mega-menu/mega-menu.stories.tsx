@@ -1,44 +1,10 @@
 import {
-  Badge,
   Button,
   FlexLayout,
   Link,
   NavigationItem,
   StackLayout,
-  Tag,
-  Text,
 } from "@salt-ds/core";
-import {
-  AnnouncementIcon,
-  ApiIcon,
-  CallIcon,
-  CartIcon,
-  ChartBubbleIcon,
-  ChatGroupIcon,
-  DatasetManagerIcon,
-  DevicesIcon,
-  DisplayIcon,
-  DocumentEditIcon,
-  DocumentIcon,
-  GuideClosedIcon,
-  GuideOpenIcon,
-  HelpCircleIcon,
-  InfoIcon,
-  KeyIcon,
-  LaptopIcon,
-  LinkedIcon,
-  MaintenanceIcon,
-  MarkerIcon,
-  NotificationIcon,
-  PasteIcon,
-  PinIcon,
-  SaveIcon,
-  SettingsIcon,
-  SwapIcon,
-  UserGroupIcon,
-  UserIcon,
-  UserSearchIcon,
-} from "@salt-ds/icons";
 import {
   MegaMenu,
   MegaMenuActions,
@@ -53,1084 +19,65 @@ import {
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
-import exampleImage from "../assets/image-skeleton.png";
 import "./mega-menu.stories.css";
-import { MemoryRouter, Link as RouterLink } from "react-router";
 
 export default {
   title: "Lab/Mega Menu",
-  parameters: {
-    layout: "fullscreen",
-  },
+  component: MegaMenu,
   decorators: [
     (Story: StoryFn) => (
-      <div
-        style={{
-          padding: "var(--salt-layout-page-margin)",
-          boxSizing: "border-box",
-        }}
-      >
-        <MemoryRouter>
-          <Story />
-        </MemoryRouter>
+      <div className="mega-menu-story">
+        <Story />
       </div>
     ),
   ],
-  component: MegaMenu,
 };
 
-export const Default: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+// Items link to `#` and swallow their default action so activating one inside a
+// component test does not navigate the runner away from the mounted fixture.
+const preventNav = (event: { preventDefault: () => void }) =>
+  event.preventDefault();
 
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-    if (open) {
-      setActiveMenu(menu);
-    }
-  };
-
-  return (
-    <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
-        <li>
-          <MegaMenu
-            open={openMenu === "solutions"}
-            onOpenChange={handleOpenChange("solutions")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "solutions"}>
-                Solutions
-              </NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>
-                      Financial services
-                    </MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/digital-banking" />}
-                      >
-                        Digital banking
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/risk-management" />}
-                      >
-                        Risk management
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/patient-management" />}
-                      >
-                        Patient management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/telemedicine" />}
-                      >
-                        Telemedicine
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/compliance-solutions" />}
-                      >
-                        Compliance solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/e-commerce-platforms" />}
-                      >
-                        E-commerce platforms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/supply-chain-optimization" />}
-                      >
-                        Supply chain optimization
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/quality-control" />}
-                      >
-                        Quality control
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/production-planning" />}
-                      >
-                        Production planning
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={
-                          <RouterLink to="/learning-management-systems" />
-                        }
-                      >
-                        Learning management systems
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/virtual-classrooms" />}
-                      >
-                        Virtual classrooms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/document-management" />}
-                      >
-                        Document management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/citizen-services" />}
-                      >
-                        Citizen services
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/public-safety-solutions" />}
-                      >
-                        Public safety solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "services"}
-            onOpenChange={handleOpenChange("services")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "services"}>
-                Services
-              </NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem render={<RouterLink to="/strategy" />}>
-                        Strategy
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/it" />}>
-                        IT
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/hr" />}>
-                        HR
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/marketing" />}>
-                        Marketing
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/operations" />}
-                      >
-                        Operations
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/onboarding" />}
-                      >
-                        Onboarding
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/migration" />}>
-                        Migration
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/customization" />}
-                      >
-                        Customization
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/training" />}>
-                        Training
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/support" />}>
-                        Support
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/testing" />}>
-                        Testing
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/rollout" />}>
-                        Rollout
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem render={<RouterLink to="/online" />}>
-                        Online
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/in-person" />}>
-                        In-person
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/workshops" />}>
-                        Workshops
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/certifications" />}
-                      >
-                        Certifications
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/tutorials" />}>
-                        Tutorials
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/guides" />}>
-                        Guides
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "resources"}
-            onOpenChange={handleOpenChange("resources")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "resources"}>
-                Resources
-              </NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/user-guides" />}
-                      >
-                        User guides
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/api-reference" />}
-                      >
-                        API reference
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/release-notes" />}
-                      >
-                        Release notes
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/faqs" />}>
-                        FAQs
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/contact-support" />}
-                      >
-                        Contact support
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/community-forum" />}
-                      >
-                        Community forum
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/troubleshooting" />}
-                      >
-                        Troubleshooting
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-      </StackLayout>
-    </nav>
-  );
-};
-
-export const WithIcons: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-    if (open) {
-      setActiveMenu(menu);
-    }
-  };
-
-  return (
-    <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
-        <li>
-          <MegaMenu
-            open={openMenu === "solutions"}
-            onOpenChange={handleOpenChange("solutions")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "solutions"}>
-                Solutions
-              </NavigationItem>
-            </MegaMenuTrigger>
-
-            <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>
-                      Financial services
-                    </MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/digital-banking" />}
-                      >
-                        <DevicesIcon aria-hidden />
-                        Digital banking
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/risk-management" />}
-                      >
-                        <DatasetManagerIcon aria-hidden />
-                        Risk management
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/patient-management" />}
-                      >
-                        <UserSearchIcon aria-hidden />
-                        Patient management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/telemedicine" />}
-                      >
-                        <CallIcon aria-hidden />
-                        Telemedicine
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/compliance-solutions" />}
-                      >
-                        <PasteIcon aria-hidden />
-                        Compliance solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/e-commerce-platforms" />}
-                      >
-                        <CartIcon aria-hidden />
-                        E-commerce platforms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/supply-chain-optimization" />}
-                      >
-                        <LinkedIcon aria-hidden />
-                        Supply chain optimization
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/quality-control" />}
-                      >
-                        <SettingsIcon aria-hidden />
-                        Quality control
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/production-planning" />}
-                      >
-                        <NotificationIcon aria-hidden />
-                        Production planning
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={
-                          <RouterLink to="/learning-management-systems" />
-                        }
-                      >
-                        <GuideOpenIcon aria-hidden />
-                        Learning management systems
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/virtual-classrooms" />}
-                      >
-                        <LaptopIcon aria-hidden />
-                        Virtual classrooms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/document-management" />}
-                      >
-                        <DocumentIcon aria-hidden />
-                        Document management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/citizen-services" />}
-                      >
-                        <PinIcon aria-hidden />
-                        Citizen services
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/public-safety-solutions" />}
-                      >
-                        <UserGroupIcon aria-hidden />
-                        Public safety solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "services"}
-            onOpenChange={handleOpenChange("services")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "services"}>
-                Services
-              </NavigationItem>
-            </MegaMenuTrigger>
-
-            <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem render={<RouterLink to="/strategy" />}>
-                        <ChartBubbleIcon aria-hidden />
-                        Strategy
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/it" />}>
-                        <LaptopIcon aria-hidden />
-                        IT
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/hr" />}>
-                        <UserGroupIcon aria-hidden />
-                        HR
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/marketing" />}>
-                        <MarkerIcon aria-hidden />
-                        Marketing
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/operations" />}
-                      >
-                        <SettingsIcon aria-hidden />
-                        Operations
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/onboarding" />}
-                      >
-                        <PasteIcon aria-hidden />
-                        Onboarding
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/migration" />}>
-                        <SwapIcon aria-hidden />
-                        Migration
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/customization" />}
-                      >
-                        <PinIcon aria-hidden />
-                        Customization
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/training" />}>
-                        <GuideClosedIcon aria-hidden />
-                        Training
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/support" />}>
-                        <InfoIcon aria-hidden />
-                        Support
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/testing" />}>
-                        <MaintenanceIcon aria-hidden />
-                        Testing
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/rollout" />}>
-                        <SaveIcon aria-hidden />
-                        Rollout
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem render={<RouterLink to="/online" />}>
-                        <DisplayIcon aria-hidden />
-                        Online
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/in-person" />}>
-                        <UserIcon aria-hidden />
-                        In-person
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/workshops" />}>
-                        <KeyIcon aria-hidden />
-                        Workshops
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/certifications" />}
-                      >
-                        <DocumentIcon aria-hidden />
-                        Certifications
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/tutorials" />}>
-                        <DocumentEditIcon aria-hidden />
-                        Tutorials
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/guides" />}>
-                        <GuideOpenIcon aria-hidden />
-                        Guides
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "resources"}
-            onOpenChange={handleOpenChange("resources")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "resources"}>
-                Resources
-              </NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/user-guides" />}
-                      >
-                        <GuideClosedIcon aria-hidden />
-                        User guides
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/api-reference" />}
-                      >
-                        <ApiIcon aria-hidden />
-                        API reference
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/release-notes" />}
-                      >
-                        <NotificationIcon aria-hidden />
-                        Release notes
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/faqs" />}>
-                        <HelpCircleIcon aria-hidden />
-                        FAQs
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/contact-support" />}
-                      >
-                        <InfoIcon aria-hidden />
-                        Contact support
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/community-forum" />}
-                      >
-                        <ChatGroupIcon aria-hidden />
-                        Community forum
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/troubleshooting" />}
-                      >
-                        <AnnouncementIcon aria-hidden />
-                        Troubleshooting
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-      </StackLayout>
-    </nav>
-  );
-};
-
-export const WithAdornment: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-    if (open) {
-      setActiveMenu(menu);
-    }
-  };
-
-  return (
-    <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
-        <li>
-          <MegaMenu
-            open={openMenu === "solutions"}
-            onOpenChange={handleOpenChange("solutions")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "solutions"}>
-                Solutions
-              </NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>
-                      Financial services
-                    </MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/digital-banking" />}
-                      >
-                        Digital banking
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/risk-management" />}
-                      >
-                        Risk management
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/patient-management" />}
-                      >
-                        Patient management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/telemedicine" />}
-                      >
-                        Telemedicine
-                        <div className="menu-item-adornment">
-                          <Tag category={1} variant="primary">
-                            Premium
-                          </Tag>
-                        </div>
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/compliance-solutions" />}
-                      >
-                        Compliance solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/e-commerce-platforms" />}
-                      >
-                        E-commerce platforms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/supply-chain-optimization" />}
-                      >
-                        Supply chain optimization
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/quality-control" />}
-                      >
-                        Quality control
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/production-planning" />}
-                      >
-                        Production planning
-                        <div className="menu-item-adornment">
-                          <Tag category={2} variant="primary">
-                            New
-                          </Tag>
-                        </div>
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={
-                          <RouterLink to="/learning-management-systems" />
-                        }
-                      >
-                        Learning management systems
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/virtual-classrooms" />}
-                      >
-                        Virtual classrooms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/document-management" />}
-                      >
-                        Document management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/citizen-services" />}
-                      >
-                        Citizen services
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/public-safety-solutions" />}
-                      >
-                        Public safety solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "services"}
-            onOpenChange={handleOpenChange("services")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "services"}>
-                Services
-              </NavigationItem>
-            </MegaMenuTrigger>
-
-            <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem render={<RouterLink to="/strategy" />}>
-                        Strategy
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/it" />}>
-                        IT
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/hr" />}>
-                        HR
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/marketing" />}>
-                        Marketing
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/operations" />}
-                      >
-                        Operations
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/onboarding" />}
-                      >
-                        Onboarding
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/migration" />}>
-                        Migration
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/customization" />}
-                      >
-                        Customization
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/training" />}>
-                        Training
-                        <div className="menu-item-adornment">
-                          <Badge value="1" />
-                        </div>
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/support" />}>
-                        Support
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/testing" />}>
-                        Testing
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/rollout" />}>
-                        Rollout
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem render={<RouterLink to="/online" />}>
-                        Online
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/in-person" />}>
-                        In-person
-                        <div className="menu-item-adornment">
-                          <Badge />
-                        </div>
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/workshops" />}>
-                        Workshops
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/certifications" />}
-                      >
-                        Certifications
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/tutorials" />}>
-                        Tutorials
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/guides" />}>
-                        Guides
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "resources"}
-            onOpenChange={handleOpenChange("resources")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "resources"}>
-                Resources
-              </NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/user-guides" />}
-                      >
-                        User guides
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/api-reference" />}
-                      >
-                        API reference
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/release-notes" />}
-                      >
-                        Release notes
-                        <div className="menu-item-adornment">
-                          <Badge />
-                        </div>
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/faqs" />}>
-                        FAQs
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/contact-support" />}
-                      >
-                        Contact support
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/community-forum" />}
-                      >
-                        Community forum
-                        <div className="menu-item-adornment">
-                          <Tag category={2} variant="primary">
-                            New
-                          </Tag>
-                        </div>
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/troubleshooting" />}
-                      >
-                        Troubleshooting
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-      </StackLayout>
-    </nav>
-  );
-};
-
-export const TriggerPosition: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-
-  return (
-    <div className="trigger-position-grid">
-      <div className="trigger-position-left">
-        <MegaMenu
-          open={openMenu === "left"}
-          onOpenChange={(open) => setOpenMenu(open ? "left" : null)}
-        >
+// Canonical fixture: two triggers in a `<nav aria-label>` landmark, each grouped
+// in an `<li>`. Solutions has two columns (Financial Services, Healthcare) of two
+// items each; Services has a single column. A trailing focusable sits after the
+// nav so tab-exit can be observed. Drives the default behaviour, keyboard
+// navigation, and a11y landmark/region/group-semantics tests.
+export const Default: StoryFn = () => (
+  <nav aria-label="Main">
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
           <MegaMenuTrigger>
-            <Button>Near Left Edge</Button>
+            <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
-
-          <MegaMenuPanel aria-label="Near Left Edge menu">
+          <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-1" />}
-                    >
-                      Mega menu item 1
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
                     </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-2" />}
-                    >
-                      Mega menu item 2
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-3" />}
-                    >
-                      Mega menu item 3
+                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                      Risk Management
                     </MegaMenuListItem>
                   </MegaMenuList>
                 </MegaMenuGroup>
                 <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
+                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
                   <MegaMenuList>
                     <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-4" />}
+                      href="/patient-management"
+                      onClick={preventNav}
                     >
-                      Mega menu item 4
+                      Patient Management
                     </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-5" />}
-                    >
-                      Mega menu item 5
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-6" />}
-                    >
-                      Mega menu item 6
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-7" />}
-                    >
-                      Mega menu item 7
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-8" />}
-                    >
-                      Mega menu item 8
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-9" />}
-                    >
-                      Mega menu item 9
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-10" />}
-                    >
-                      Mega menu item 10
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-11" />}
-                    >
-                      Mega menu item 11
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-12" />}
-                    >
-                      Mega menu item 12
+                    <MegaMenuListItem href="/telemedicine" onClick={preventNav}>
+                      Telemedicine
                     </MegaMenuListItem>
                   </MegaMenuList>
                 </MegaMenuGroup>
@@ -1138,96 +85,23 @@ export const TriggerPosition: StoryFn = () => {
             </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
-      </div>
-      <div className="trigger-position-center">
-        <MegaMenu
-          open={openMenu === "center"}
-          onOpenChange={(open) => setOpenMenu(open ? "center" : null)}
-        >
+      </li>
+      <li>
+        <MegaMenu>
           <MegaMenuTrigger>
-            <Button>On Center</Button>
+            <NavigationItem>Services</NavigationItem>
           </MegaMenuTrigger>
-
-          <MegaMenuPanel aria-label="On Center menu">
+          <MegaMenuPanel aria-label="Services menu">
             <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
+                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-1" />}
-                    >
-                      Mega menu item 1
+                    <MegaMenuListItem href="/strategy" onClick={preventNav}>
+                      Strategy
                     </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-2" />}
-                    >
-                      Mega menu item 2
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-3" />}
-                    >
-                      Mega menu item 3
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-4" />}
-                    >
-                      Mega menu item 4
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-5" />}
-                    >
-                      Mega menu item 5
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-6" />}
-                    >
-                      Mega menu item 6
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-7" />}
-                    >
-                      Mega menu item 7
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-8" />}
-                    >
-                      Mega menu item 8
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-9" />}
-                    >
-                      Mega menu item 9
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-10" />}
-                    >
-                      Mega menu item 10
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-11" />}
-                    >
-                      Mega menu item 11
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-12" />}
-                    >
-                      Mega menu item 12
+                    <MegaMenuListItem href="/operations" onClick={preventNav}>
+                      Operations
                     </MegaMenuListItem>
                   </MegaMenuList>
                 </MegaMenuGroup>
@@ -1235,1953 +109,556 @@ export const TriggerPosition: StoryFn = () => {
             </MegaMenuContent>
           </MegaMenuPanel>
         </MegaMenu>
-      </div>
-      <div className="trigger-position-offset">
-        <MegaMenu
-          open={openMenu === "offset"}
-          onOpenChange={(open) => setOpenMenu(open ? "offset" : null)}
-        >
-          <MegaMenuTrigger>
-            <Button>Slightly Offset</Button>
-          </MegaMenuTrigger>
-
-          <MegaMenuPanel aria-label="Slightly Offset menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-1" />}
-                    >
-                      Mega menu item 1
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-2" />}
-                    >
-                      Mega menu item 2
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-3" />}
-                    >
-                      Mega menu item 3
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-4" />}
-                    >
-                      Mega menu item 4
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-5" />}
-                    >
-                      Mega menu item 5
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-6" />}
-                    >
-                      Mega menu item 6
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-7" />}
-                    >
-                      Mega menu item 7
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-8" />}
-                    >
-                      Mega menu item 8
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-9" />}
-                    >
-                      Mega menu item 9
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-10" />}
-                    >
-                      Mega menu item 10
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-11" />}
-                    >
-                      Mega menu item 11
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-12" />}
-                    >
-                      Mega menu item 12
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </div>
-
-      <div className="trigger-position-right">
-        <MegaMenu
-          open={openMenu === "right"}
-          onOpenChange={(open) => setOpenMenu(open ? "right" : null)}
-        >
-          <MegaMenuTrigger>
-            <Button>Near The Edge</Button>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Near The Edge menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 1</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-1" />}
-                    >
-                      Mega menu item 1
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-2" />}
-                    >
-                      Mega menu item 2
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-3" />}
-                    >
-                      Mega menu item 3
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 2</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-4" />}
-                    >
-                      Mega menu item 4
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-5" />}
-                    >
-                      Mega menu item 5
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-6" />}
-                    >
-                      Mega menu item 6
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 3</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-7" />}
-                    >
-                      Mega menu item 7
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-8" />}
-                    >
-                      Mega menu item 8
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-9" />}
-                    >
-                      Mega menu item 9
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Menu Header 4</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-10" />}
-                    >
-                      Mega menu item 10
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-11" />}
-                    >
-                      Mega menu item 11
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/mega-menu-item-12" />}
-                    >
-                      Mega menu item 12
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </div>
-    </div>
-  );
-};
-
-export const FullWidthContainer: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-    if (open) {
-      setActiveMenu(menu);
-    }
-  };
-
-  return (
-    <div className="full-width-wrapper">
-      <nav>
-        <StackLayout as="ul" direction="row" gap={1}>
-          <li>
-            <MegaMenu
-              open={openMenu === "solutions"}
-              onOpenChange={handleOpenChange("solutions")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "solutions"}>
-                  Solutions
-                </NavigationItem>
-              </MegaMenuTrigger>
-
-              <MegaMenuPanel
-                aria-label="Solutions menu"
-                className="full-width-panel"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>
-                        Financial services
-                      </MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/digital-banking" />}
-                        >
-                          Digital banking
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/risk-management" />}
-                        >
-                          Risk management
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/patient-management" />}
-                        >
-                          Patient management
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/telemedicine" />}
-                        >
-                          Telemedicine
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/compliance-solutions" />}
-                        >
-                          Compliance solutions
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/e-commerce-platforms" />}
-                        >
-                          E-commerce platforms
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={
-                            <RouterLink to="/supply-chain-optimization" />
-                          }
-                        >
-                          Supply chain optimization
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/quality-control" />}
-                        >
-                          Quality control
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/production-planning" />}
-                        >
-                          Production planning
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={
-                            <RouterLink to="/learning-management-systems" />
-                          }
-                        >
-                          Learning management systems
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/virtual-classrooms" />}
-                        >
-                          Virtual classrooms
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/document-management" />}
-                        >
-                          Document management
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/citizen-services" />}
-                        >
-                          Citizen services
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/public-safety-solutions" />}
-                        >
-                          Public safety solutions
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/cloud-solutions" />}
-                        >
-                          Cloud solutions
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/cybersecurity" />}
-                        >
-                          Cybersecurity
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Energy</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/smart-grid-management" />}
-                        >
-                          Smart Grid Management
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/renewable-integration" />}
-                        >
-                          Renewable Integration
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-          <li>
-            <MegaMenu
-              open={openMenu === "services"}
-              onOpenChange={handleOpenChange("services")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "services"}>
-                  Services
-                </NavigationItem>
-              </MegaMenuTrigger>
-
-              <MegaMenuPanel
-                aria-label="Services menu"
-                className="full-width-panel"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/strategy" />}
-                        >
-                          Strategy
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/it" />}>
-                          IT
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/hr" />}>
-                          HR
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/marketing" />}
-                        >
-                          Marketing
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/operations" />}
-                        >
-                          Operations
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>
-                        Implementation
-                      </MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/onboarding" />}
-                        >
-                          Onboarding
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/migration" />}
-                        >
-                          Migration
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/customization" />}
-                        >
-                          Customization
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/training" />}
-                        >
-                          Training
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/support" />}>
-                          Support
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/testing" />}>
-                          Testing
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/rollout" />}>
-                          Rollout
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem render={<RouterLink to="/online" />}>
-                          Online
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/in-person" />}
-                        >
-                          In-person
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/workshops" />}
-                        >
-                          Workshops
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/certifications" />}
-                        >
-                          Certifications
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/tutorials" />}
-                        >
-                          Tutorials
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/guides" />}>
-                          Guides
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-          <li>
-            <MegaMenu
-              open={openMenu === "resources"}
-              onOpenChange={handleOpenChange("resources")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "resources"}>
-                  Resources
-                </NavigationItem>
-              </MegaMenuTrigger>
-              <MegaMenuPanel
-                aria-label="Resources menu"
-                className="full-width-panel"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/user-guides" />}
-                        >
-                          User guides
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/api-reference" />}
-                        >
-                          API reference
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/release-notes" />}
-                        >
-                          Release notes
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/faqs" />}>
-                          FAQs
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>
-                        Support &amp; help
-                      </MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/contact-support" />}
-                        >
-                          Contact support
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/community-forum" />}
-                        >
-                          Community forum
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/troubleshooting" />}
-                        >
-                          Troubleshooting
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-        </StackLayout>
-      </nav>
-    </div>
-  );
-};
-
-FullWidthContainer.parameters = {
-  layout: "fullscreen",
-};
-
-export const EdgeToEdge: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-    if (open) {
-      setActiveMenu(menu);
-    }
-  };
-
-  return (
-    <div className="edge-to-edge-wrapper">
-      <nav>
-        <StackLayout as="ul" direction="row" gap={1}>
-          <li>
-            <MegaMenu
-              open={openMenu === "solutions"}
-              onOpenChange={handleOpenChange("solutions")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "solutions"}>
-                  Solutions
-                </NavigationItem>
-              </MegaMenuTrigger>
-
-              <MegaMenuPanel
-                aria-label="Solutions menu"
-                className="edge-to-edge-panel"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>
-                        Financial services
-                      </MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/digital-banking" />}
-                        >
-                          Digital banking
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/risk-management" />}
-                        >
-                          Risk management
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/patient-management" />}
-                        >
-                          Patient management
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/telemedicine" />}
-                        >
-                          Telemedicine
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/compliance-solutions" />}
-                        >
-                          Compliance solutions
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/e-commerce-platforms" />}
-                        >
-                          E-commerce platforms
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={
-                            <RouterLink to="/supply-chain-optimization" />
-                          }
-                        >
-                          Supply chain optimization
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/quality-control" />}
-                        >
-                          Quality control
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/production-planning" />}
-                        >
-                          Production planning
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={
-                            <RouterLink to="/learning-management-systems" />
-                          }
-                        >
-                          Learning management systems
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/virtual-classrooms" />}
-                        >
-                          Virtual classrooms
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/document-management" />}
-                        >
-                          Document management
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/citizen-services" />}
-                        >
-                          Citizen services
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/public-safety-solutions" />}
-                        >
-                          Public safety solutions
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Technology</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/cloud-solutions" />}
-                        >
-                          Cloud solutions
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/cybersecurity" />}
-                        >
-                          Cybersecurity
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Energy</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/smart-grid-management" />}
-                        >
-                          Smart Grid Management
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/renewable-integration" />}
-                        >
-                          Renewable Integration
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-          <li>
-            <MegaMenu
-              open={openMenu === "services"}
-              onOpenChange={handleOpenChange("services")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "services"}>
-                  Services
-                </NavigationItem>
-              </MegaMenuTrigger>
-
-              <MegaMenuPanel
-                aria-label="Services menu"
-                className="edge-to-edge-panel"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/strategy" />}
-                        >
-                          Strategy
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/it" />}>
-                          IT
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/hr" />}>
-                          HR
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/marketing" />}
-                        >
-                          Marketing
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/operations" />}
-                        >
-                          Operations
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>
-                        Implementation
-                      </MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/onboarding" />}
-                        >
-                          Onboarding
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/migration" />}
-                        >
-                          Migration
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/customization" />}
-                        >
-                          Customization
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/training" />}
-                        >
-                          Training
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/support" />}>
-                          Support
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/testing" />}>
-                          Testing
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/rollout" />}>
-                          Rollout
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem render={<RouterLink to="/online" />}>
-                          Online
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/in-person" />}
-                        >
-                          In-person
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/workshops" />}
-                        >
-                          Workshops
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/certifications" />}
-                        >
-                          Certifications
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/tutorials" />}
-                        >
-                          Tutorials
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/guides" />}>
-                          Guides
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-          <li>
-            <MegaMenu
-              open={openMenu === "resources"}
-              onOpenChange={handleOpenChange("resources")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "resources"}>
-                  Resources
-                </NavigationItem>
-              </MegaMenuTrigger>
-              <MegaMenuPanel
-                aria-label="Resources menu"
-                className="edge-to-edge-panel"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/user-guides" />}
-                        >
-                          User guides
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/api-reference" />}
-                        >
-                          API reference
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/release-notes" />}
-                        >
-                          Release notes
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/faqs" />}>
-                          FAQs
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>
-                        Support &amp; help
-                      </MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/contact-support" />}
-                        >
-                          Contact support
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/community-forum" />}
-                        >
-                          Community forum
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/troubleshooting" />}
-                        >
-                          Troubleshooting
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-        </StackLayout>
-      </nav>
-    </div>
-  );
-};
-
-EdgeToEdge.parameters = {
-  layout: "fullscreen",
-};
-
-export const WithContent: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-
-  return (
-    <FlexLayout gap={2}>
-      <MegaMenu
-        open={openMenu === "right"}
-        onOpenChange={(open) => setOpenMenu(open ? "right" : null)}
-      >
-        <MegaMenuTrigger>
-          <Button>Content on right</Button>
-        </MegaMenuTrigger>
-        <MegaMenuPanel
-          aria-label="Content on right menu"
-          className="custom-region-no-container-padding custom-region-side"
-        >
-          <MegaMenuContent>
-            <MegaMenuGroups className="custom-region-side-section">
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/digital-banking" />}
-                  >
-                    Digital banking
-                  </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/risk-management" />}
-                  >
-                    Risk management
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/patient-management" />}
-                  >
-                    Patient management
-                  </MegaMenuListItem>
-                  <MegaMenuListItem render={<RouterLink to="/telemedicine" />}>
-                    Telemedicine
-                  </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/compliance-solutions" />}
-                  >
-                    Compliance solutions
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/e-commerce-platforms" />}
-                  >
-                    E-commerce platforms
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/supply-chain-optimization" />}
-                  >
-                    Supply chain optimization
-                  </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/quality-control" />}
-                  >
-                    Quality control
-                  </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/production-planning" />}
-                  >
-                    Production planning
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-            </MegaMenuGroups>
-            <MegaMenuActions>
-              <FlexLayout gap={3}>
-                <Link color="primary" underline="default" href="#link">
-                  Book a demo
-                </Link>
-                <Link color="primary" underline="default" href="#link">
-                  Support center
-                </Link>
-              </FlexLayout>
-            </MegaMenuActions>
-          </MegaMenuContent>
-          <MegaMenuAside className="custom-region-side-content">
-            <FlexLayout direction={"column"} wrap gap={2}>
-              <img
-                alt="example"
-                src={exampleImage}
-                className="custom-region-image"
-              />
-              <StackLayout gap={1}>
-                <StackLayout gap={0}>
-                  <Text styleAs="h2" as="h2">
-                    Featured resource
-                  </Text>
-                  <Text className="custom-region-right-description">
-                    Explore our latest accessibility guidelines to ensure your
-                    components meet ADA standards and provide an inclusive user
-                    experience.
-                  </Text>
-                </StackLayout>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  style={{ width: "fit-content" }}
-                >
-                  View guidelines
-                </Link>
-              </StackLayout>
-            </FlexLayout>
-          </MegaMenuAside>
-        </MegaMenuPanel>
-      </MegaMenu>
-
-      <MegaMenu
-        open={openMenu === "left"}
-        onOpenChange={(open) => setOpenMenu(open ? "left" : null)}
-      >
-        <MegaMenuTrigger>
-          <Button>Content on left</Button>
-        </MegaMenuTrigger>
-        <MegaMenuPanel
-          aria-label="Content on left menu"
-          className="custom-region-no-container-padding custom-region-side"
-        >
-          <MegaMenuAside className="custom-region-side-content">
-            <FlexLayout direction={"column"} wrap gap={2}>
-              <img
-                alt="example"
-                src={exampleImage}
-                className="custom-region-image"
-              />
-              <StackLayout gap={1}>
-                <StackLayout gap={0}>
-                  <Text styleAs="h2" as="h2">
-                    Featured resource
-                  </Text>
-                  <Text className="custom-region-right-description">
-                    Explore our latest accessibility guidelines to ensure your
-                    components meet ADA standards and provide an inclusive user
-                    experience.
-                  </Text>
-                </StackLayout>
-                <Link
-                  color="primary"
-                  underline="default"
-                  href="#link"
-                  style={{ width: "fit-content" }}
-                >
-                  View guidelines
-                </Link>
-              </StackLayout>
-            </FlexLayout>
-          </MegaMenuAside>
-          <MegaMenuContent>
-            <MegaMenuGroups className="custom-region-side-section">
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/digital-banking" />}
-                  >
-                    Digital banking
-                  </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/risk-management" />}
-                  >
-                    Risk management
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/patient-management" />}
-                  >
-                    Patient management
-                  </MegaMenuListItem>
-                  <MegaMenuListItem render={<RouterLink to="/telemedicine" />}>
-                    Telemedicine
-                  </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/compliance-solutions" />}
-                  >
-                    Compliance solutions
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/e-commerce-platforms" />}
-                  >
-                    E-commerce platforms
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-              <MegaMenuGroup>
-                <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                <MegaMenuList>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/supply-chain-optimization" />}
-                  >
-                    Supply chain optimization
-                  </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/quality-control" />}
-                  >
-                    Quality control
-                  </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/production-planning" />}
-                  >
-                    Production planning
-                  </MegaMenuListItem>
-                </MegaMenuList>
-              </MegaMenuGroup>
-            </MegaMenuGroups>
-            <MegaMenuActions>
-              <FlexLayout gap={3}>
-                <Link color="primary" underline="default" href="#link">
-                  Book a demo
-                </Link>
-                <Link color="primary" underline="default" href="#link">
-                  Support center
-                </Link>
-              </FlexLayout>
-            </MegaMenuActions>
-          </MegaMenuContent>
-        </MegaMenuPanel>
-      </MegaMenu>
-    </FlexLayout>
-  );
-};
-
-export const WithLink: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-    if (open) {
-      setActiveMenu(menu);
-    }
-  };
-
-  return (
-    <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
-        <li>
-          <MegaMenu
-            open={openMenu === "solutions"}
-            onOpenChange={handleOpenChange("solutions")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "solutions"}>
-                Solutions
-              </NavigationItem>
-            </MegaMenuTrigger>
-
-            <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>
-                      Financial services
-                    </MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/digital-banking" />}
-                      >
-                        Digital banking
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/risk-management" />}
-                      >
-                        Risk management
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/patient-management" />}
-                      >
-                        Patient management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/telemedicine" />}
-                      >
-                        Telemedicine
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/compliance-solutions" />}
-                      >
-                        Compliance solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/e-commerce-platforms" />}
-                      >
-                        E-commerce platforms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/supply-chain-optimization" />}
-                      >
-                        Supply chain optimization
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/quality-control" />}
-                      >
-                        Quality control
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/production-planning" />}
-                      >
-                        Production planning
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={
-                          <RouterLink to="/learning-management-systems" />
-                        }
-                      >
-                        Learning management systems
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/virtual-classrooms" />}
-                      >
-                        Virtual classrooms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/document-management" />}
-                      >
-                        Document management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/citizen-services" />}
-                      >
-                        Citizen services
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/public-safety-solutions" />}
-                      >
-                        Public safety solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-                <MegaMenuActions>
-                  <FlexLayout wrap gap={3}>
-                    <Link color="primary" underline="default" href="#link">
-                      Book a demo
-                    </Link>
-                    <Link color="primary" underline="default" href="#link">
-                      Support center
-                    </Link>
-                  </FlexLayout>
-                </MegaMenuActions>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "services"}
-            onOpenChange={handleOpenChange("services")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "services"}>
-                Services
-              </NavigationItem>
-            </MegaMenuTrigger>
-
-            <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem render={<RouterLink to="/strategy" />}>
-                        Strategy
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/it" />}>
-                        IT
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/hr" />}>
-                        HR
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/marketing" />}>
-                        Marketing
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/operations" />}
-                      >
-                        Operations
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Implementation</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/onboarding" />}
-                      >
-                        Onboarding
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/migration" />}>
-                        Migration
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/customization" />}
-                      >
-                        Customization
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/training" />}>
-                        Training
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/support" />}>
-                        Support
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/testing" />}>
-                        Testing
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/rollout" />}>
-                        Rollout
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem render={<RouterLink to="/online" />}>
-                        Online
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/in-person" />}>
-                        In-person
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/workshops" />}>
-                        Workshops
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/certifications" />}
-                      >
-                        Certifications
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/tutorials" />}>
-                        Tutorials
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/guides" />}>
-                        Guides
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-                <MegaMenuActions>
-                  <Link color="primary" underline="default" href="#link">
-                    Service status
-                  </Link>
-                </MegaMenuActions>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu
-            open={openMenu === "resources"}
-            onOpenChange={handleOpenChange("resources")}
-          >
-            <MegaMenuTrigger>
-              <NavigationItem active={activeMenu === "resources"}>
-                Resources
-              </NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/user-guides" />}
-                      >
-                        User guides
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/api-reference" />}
-                      >
-                        API reference
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/release-notes" />}
-                      >
-                        Release notes
-                      </MegaMenuListItem>
-                      <MegaMenuListItem render={<RouterLink to="/faqs" />}>
-                        FAQs
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Support & help</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/contact-support" />}
-                      >
-                        Contact support
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/community-forum" />}
-                      >
-                        Community forum
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/troubleshooting" />}
-                      >
-                        Troubleshooting
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-                <MegaMenuActions>
-                  <Link color="primary" underline="default" href="#link">
-                    Browse documentation
-                  </Link>
-                </MegaMenuActions>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-      </StackLayout>
-    </nav>
-  );
-};
-
-export const InSmallViewport: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
-  const handleOpenChange = (menu: string) => (open: boolean) => {
-    setOpenMenu(open ? menu : null);
-    if (open) {
-      setActiveMenu(menu);
-    }
-  };
-
-  return (
-    <div className="small-viewport-wrapper">
-      <nav>
-        <StackLayout as="ul" direction="row" gap={1}>
-          <li>
-            <MegaMenu
-              open={openMenu === "solutions"}
-              onOpenChange={handleOpenChange("solutions")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "solutions"}>
-                  Solutions
-                </NavigationItem>
-              </MegaMenuTrigger>
-              <MegaMenuPanel
-                className="small-viewport-container"
-                aria-label="Solutions menu"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>
-                        Financial services
-                      </MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/digital-banking" />}
-                        >
-                          Digital banking
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/risk-management" />}
-                        >
-                          Risk management
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/patient-management" />}
-                        >
-                          Patient management
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/telemedicine" />}
-                        >
-                          Telemedicine
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/compliance-solutions" />}
-                        >
-                          Compliance solutions
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/e-commerce-platforms" />}
-                        >
-                          E-commerce platforms
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Manufacturing</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={
-                            <RouterLink to="/supply-chain-optimization" />
-                          }
-                        >
-                          Supply chain optimization
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/quality-control" />}
-                        >
-                          Quality control
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/production-planning" />}
-                        >
-                          Production planning
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Education</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={
-                            <RouterLink to="/learning-management-systems" />
-                          }
-                        >
-                          Learning management systems
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/virtual-classrooms" />}
-                        >
-                          Virtual classrooms
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Government</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/document-management" />}
-                        >
-                          Document management
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/citizen-services" />}
-                        >
-                          Citizen services
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/public-safety-solutions" />}
-                        >
-                          Public safety solutions
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-          <li>
-            <MegaMenu
-              open={openMenu === "services"}
-              onOpenChange={handleOpenChange("services")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "services"}>
-                  Services
-                </NavigationItem>
-              </MegaMenuTrigger>
-              <MegaMenuPanel
-                className="small-viewport-container"
-                aria-label="Services menu"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/strategy" />}
-                        >
-                          Strategy
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/it" />}>
-                          IT
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/hr" />}>
-                          HR
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/marketing" />}
-                        >
-                          Marketing
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/operations" />}
-                        >
-                          Operations
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>
-                        Implementation
-                      </MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/onboarding" />}
-                        >
-                          Onboarding
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/migration" />}
-                        >
-                          Migration
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/customization" />}
-                        >
-                          Customization
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/training" />}
-                        >
-                          Training
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/support" />}>
-                          Support
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem render={<RouterLink to="/online" />}>
-                          Online
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/in-person" />}
-                        >
-                          In-person
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/workshops" />}
-                        >
-                          Workshops
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/certifications" />}
-                        >
-                          Certifications
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-          <li>
-            <MegaMenu
-              open={openMenu === "resources"}
-              onOpenChange={handleOpenChange("resources")}
-            >
-              <MegaMenuTrigger>
-                <NavigationItem active={activeMenu === "resources"}>
-                  Resources
-                </NavigationItem>
-              </MegaMenuTrigger>
-              <MegaMenuPanel
-                className="small-viewport-container"
-                aria-label="Resources menu"
-              >
-                <MegaMenuContent>
-                  <MegaMenuGroups>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Documentation</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/user-guides" />}
-                        >
-                          User guides
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/api-reference" />}
-                        >
-                          API reference
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/release-notes" />}
-                        >
-                          Release notes
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/faqs" />}>
-                          FAQs
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Support</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/contact-support" />}
-                        >
-                          Contact support
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/community-forum" />}
-                        >
-                          Community forum
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/troubleshooting" />}
-                        >
-                          Troubleshooting
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                    <MegaMenuGroup>
-                      <MegaMenuGroupHeading>Learn</MegaMenuGroupHeading>
-                      <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/tutorials" />}
-                        >
-                          Tutorials
-                        </MegaMenuListItem>
-                        <MegaMenuListItem render={<RouterLink to="/guides" />}>
-                          Guides
-                        </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/best-practices" />}
-                        >
-                          Best practices
-                        </MegaMenuListItem>
-                      </MegaMenuList>
-                    </MegaMenuGroup>
-                  </MegaMenuGroups>
-                </MegaMenuContent>
-              </MegaMenuPanel>
-            </MegaMenu>
-          </li>
-        </StackLayout>
-      </nav>
-    </div>
-  );
-};
-
-export const DefaultOpen: StoryFn = () => {
-  return (
-    <nav>
-      <StackLayout as="ul" direction="row" gap={1}>
-        <li>
-          <MegaMenu defaultOpen>
-            <MegaMenuTrigger>
-              <NavigationItem>Solutions</NavigationItem>
-            </MegaMenuTrigger>
-
-            <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>
-                      Financial services
-                    </MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/digital-banking" />}
-                      >
-                        Digital banking
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/risk-management" />}
-                      >
-                        Risk management
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/patient-management" />}
-                      >
-                        Patient management
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/telemedicine" />}
-                      >
-                        Telemedicine
-                      </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/compliance-solutions" />}
-                      >
-                        Compliance solutions
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Retail</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/e-commerce-platforms" />}
-                      >
-                        E-commerce platforms
-                      </MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-      </StackLayout>
-    </nav>
-  );
-};
-
-export const Placement: StoryFn = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-
-  return (
-    <StackLayout
-      direction="row"
-      gap={2}
-      style={{ justifyContent: "center", paddingTop: 200 }}
-    >
-      {(["bottom", "bottom-start", "bottom-end"] as const).map((placement) => (
-        <MegaMenu
-          key={placement}
-          open={openMenu === placement}
-          onOpenChange={(open) => setOpenMenu(open ? placement : null)}
-          placement={placement}
-        >
-          <MegaMenuTrigger>
-            <Button>{placement}</Button>
-          </MegaMenuTrigger>
-
-          <MegaMenuPanel aria-label={`${placement} menu`}>
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Group A</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem render={<RouterLink to="/item-1" />}>
-                      Item 1
-                    </MegaMenuListItem>
-                    <MegaMenuListItem render={<RouterLink to="/item-2" />}>
-                      Item 2
-                    </MegaMenuListItem>
-                    <MegaMenuListItem render={<RouterLink to="/item-3" />}>
-                      Item 3
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Group B</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem render={<RouterLink to="/item-4" />}>
-                      Item 4
-                    </MegaMenuListItem>
-                    <MegaMenuListItem render={<RouterLink to="/item-5" />}>
-                      Item 5
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      ))}
+      </li>
     </StackLayout>
-  );
-};
+
+    <button type="button">After Nav</button>
+  </nav>
+);
+
+// Single menu rendered open from the start (`defaultOpen`). Verifies the panel is
+// present without interaction and is accessible while open.
+export const DefaultOpen: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu defaultOpen>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                      Risk Management
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// `MegaMenuContent` followed by a trailing `MegaMenuAside`. Source order places
+// the aside to the right of the body; its interactive children become a navigable
+// column. A trailing focusable follows the nav to observe tab-exit.
+export const WithAside: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                      Risk Management
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+            <MegaMenuAside>
+              <StackLayout gap={2} align="start">
+                <Link href="/see-all" color="primary">
+                  See all solutions
+                </Link>
+                <Button variant="secondary">Contact sales</Button>
+              </StackLayout>
+            </MegaMenuAside>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+
+    <button type="button">After Nav</button>
+  </nav>
+);
+
+// A leading `MegaMenuAside` placed before `MegaMenuContent` renders to the left, so
+// it becomes the first navigable column.
+export const WithLeadingAside: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuAside>
+              <Link href="/featured" color="primary">
+                Featured
+              </Link>
+            </MegaMenuAside>
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                      Risk Management
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Groups followed by a full-width `MegaMenuActions`, both inside `MegaMenuContent`.
+// The action bar is always the bottom of the center area and its children move
+// horizontally.
+export const WithActions: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                      Risk Management
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+              <MegaMenuActions>
+                <FlexLayout gap={3} align="center">
+                  <Link href="/book-a-demo" color="primary">
+                    Book a demo
+                  </Link>
+                  <Button variant="secondary">Support center</Button>
+                </FlexLayout>
+              </MegaMenuActions>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Like `WithActions` but with a following trigger, so the action bar's last action
+// can exit to the next trigger on ArrowRight/ArrowDown.
+export const WithActionsAndNextTrigger: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+              <MegaMenuActions>
+                <FlexLayout gap={3} align="center">
+                  <Link href="/book-a-demo" color="primary">
+                    Book a demo
+                  </Link>
+                  <Button variant="secondary">Support center</Button>
+                </FlexLayout>
+              </MegaMenuActions>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Services</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Services menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/strategy" onClick={preventNav}>
+                      Strategy
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Content regions flanking the center and an action bar inside it, rendered open.
+// Verifies the panel derives position purely from component type and source order:
+// a `MegaMenuAside` before `MegaMenuContent` is the left column, one after is the
+// right column, and the action bar sits inside `MegaMenuContent` beneath the groups.
+export const WithRegionsLayout: StoryFn = () => (
+  <nav aria-label="Main">
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu defaultOpen>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuAside>
+              <Link href="/left" color="primary">
+                Left region link
+              </Link>
+            </MegaMenuAside>
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+              <MegaMenuActions>
+                <Link href="/bottom" color="primary">
+                  Bottom band link
+                </Link>
+              </MegaMenuActions>
+            </MegaMenuContent>
+            <MegaMenuAside>
+              <Link href="/right" color="primary">
+                Right region link
+              </Link>
+            </MegaMenuAside>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// A `MegaMenuAside` containing a self-consuming control (a text input). The engine
+// must not hijack arrow keys while focus is inside it.
+export const WithSelfConsumingControl: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+            <MegaMenuAside>
+              <input aria-label="Search" defaultValue="hello" />
+            </MegaMenuAside>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// A region (input + following link) used to verify Tab/Shift+Tab still traverse
+// across a self-consuming control — only arrows/Home/End are yielded to it.
+export const WithSelfConsumingControlAndLink: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+            <MegaMenuAside>
+              <StackLayout gap={2} align="start">
+                <input aria-label="Search" defaultValue="hello" />
+                <Link href="/go" color="primary">
+                  Go
+                </Link>
+              </StackLayout>
+            </MegaMenuAside>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Static-only content (no interactive descendants). The region and action bar must
+// contribute no navigable cells and stay out of tab + arrow navigation.
+export const StaticContent: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                      Risk Management
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+              <MegaMenuActions>
+                <span>Footer note, nothing focusable.</span>
+              </MegaMenuActions>
+            </MegaMenuContent>
+            <MegaMenuAside>
+              <p>Static promotional text with no links.</p>
+            </MegaMenuAside>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+
+    <button type="button">After Nav</button>
+  </nav>
+);
+
+// An action item rendered as a `<button>` via the `render` prop (not navigation),
+// followed by a link. Verifies the engine treats the button as a focusable cell and
+// continues to the link beneath it.
+export const WithActionItem: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel>
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem
+                      render={<button type="button" />}
+                      onClick={preventNav}
+                    >
+                      Telemedicine
+                    </MegaMenuListItem>
+                    <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
+                      Digital Banking
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Exercises the `render` prop: a custom anchor substituted for the default `<a>`.
+// Verifies `render` replaces the host element rather than wrapping it (a single
+// `<a>`, not nested links).
+export const WithRenderProp: StoryFn = () => (
+  <nav>
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel>
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem
+                      render={
+                        <a href="/digital-banking" data-custom-link="">
+                          Digital Banking
+                        </a>
+                      }
+                      onClick={preventNav}
+                    >
+                      Digital Banking
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+// Group heading carrying a consumer-provided id; the list must be labelled by
+// exactly that id rather than an internally generated one.
+export const WithCustomHeadingId: StoryFn = () => (
+  <MegaMenu defaultOpen>
+    <MegaMenuTrigger>
+      <NavigationItem>Solutions</NavigationItem>
+    </MegaMenuTrigger>
+    <MegaMenuPanel aria-label="Solutions menu">
+      <MegaMenuContent>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+            <MegaMenuGroupHeading id="custom-heading-id">
+              Financial Services
+            </MegaMenuGroupHeading>
+            <MegaMenuList>
+              <MegaMenuListItem href="/digital-banking">
+                Digital Banking
+              </MegaMenuListItem>
+            </MegaMenuList>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+      </MegaMenuContent>
+    </MegaMenuPanel>
+  </MegaMenu>
+);
+
+// Group with no heading: the list must omit `aria-labelledby` entirely rather than
+// point at a non-existent id.
+export const WithoutGroupHeading: StoryFn = () => (
+  <MegaMenu defaultOpen>
+    <MegaMenuTrigger>
+      <NavigationItem>Solutions</NavigationItem>
+    </MegaMenuTrigger>
+    <MegaMenuPanel aria-label="Solutions menu">
+      <MegaMenuContent>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+            <MegaMenuList>
+              <MegaMenuListItem href="/digital-banking">
+                Digital Banking
+              </MegaMenuListItem>
+            </MegaMenuList>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+      </MegaMenuContent>
+    </MegaMenuPanel>
+  </MegaMenu>
+);
+
+// Group heading combined with a consumer-provided `aria-labelledby`: the list's
+// accessible name concatenates the heading and the consumer's element, heading
+// first.
+export const WithExtraGroupLabel: StoryFn = () => (
+  <MegaMenu defaultOpen>
+    <MegaMenuTrigger>
+      <NavigationItem>Solutions</NavigationItem>
+    </MegaMenuTrigger>
+    <MegaMenuPanel aria-label="Solutions menu">
+      <span id="extra-label">Recommended</span>
+      <MegaMenuContent>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+            <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+            <MegaMenuList aria-labelledby="extra-label">
+              <MegaMenuListItem href="/digital-banking">
+                Digital Banking
+              </MegaMenuListItem>
+            </MegaMenuList>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+      </MegaMenuContent>
+    </MegaMenuPanel>
+  </MegaMenu>
+);

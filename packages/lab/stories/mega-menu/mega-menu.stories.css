@@ -1,130 +1,21 @@
-nav > ol {
+/* Page framing for the stories so the trigger bar isn't glued to the canvas
+   corner. Scoped to the story decorator wrapper so it never affects QA snapshots. */
+.mega-menu-story {
+  padding: var(--salt-layout-page-margin);
+  box-sizing: border-box;
+}
+
+/* Top-level trigger bar only — mirrors the docs `.navList`. Does not touch the
+   group lists inside the panel (those are nested, not a direct child of nav). */
+.mega-menu-story nav > ul {
   list-style: none;
+  margin: 0;
   padding: 0;
+  justify-content: center;
 }
 
 .saltMegaMenuGroups {
   --saltMegaMenuGroups-columnWidth: 16rem;
-}
-
-.trigger-position-grid {
-  width: 100%;
-  display: grid;
-  gap: 1rem;
-}
-
-.trigger-position-left {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.trigger-position-center {
-  display: flex;
-  justify-content: center;
-}
-
-.trigger-position-offset {
-  display: flex;
-  justify-content: center;
-  padding-left: 180px;
-}
-
-.trigger-position-right {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.full-width-wrapper {
-  box-sizing: border-box;
-}
-
-.full-width-panel {
-  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
-  box-sizing: border-box;
-}
-
-.full-width-panel .saltMegaMenuGroups {
-  --saltMegaMenuGroups-columnWidth: 16rem;
-  align-self: stretch;
-}
-
-.edge-to-edge-wrapper {
-  --saltMegaMenuPanel-pageMargin: 0;
-  box-sizing: border-box;
-}
-
-.edge-to-edge-panel {
-  --saltMegaMenuPanel-inlineSize: 100vw;
-  --saltMegaMenuPanel-maxInlineSize: 100vw;
-  box-sizing: border-box;
-}
-
-.edge-to-edge-panel .saltMegaMenuContent {
-  max-inline-size: 100%;
-}
-
-.edge-to-edge-panel .saltMegaMenuGroups {
-  max-inline-size: 920px;
-  inline-size: 100%;
-  margin-inline: auto;
-  --saltMegaMenuGroups-columnWidth: 212px;
-}
-
-.custom-region-no-container-padding {
-  padding: 0;
-}
-
-.custom-region-side-content {
-  background: var(--salt-container-secondary-background);
-}
-
-.custom-region-right-description {
-  max-inline-size: 240px;
-}
-
-.custom-region-image {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Stacked by default: a narrow, single-column menu. The aside sits above or
-   below the groups by source order. */
-.custom-region-side {
-  --saltMegaMenuPanel-inlineSize: 24rem;
-  flex-direction: column;
-}
-
-.custom-region-side .custom-region-side-content {
-  inline-size: 100%;
-  box-sizing: border-box;
-}
-
-.custom-region-side .custom-region-image {
-  height: 200px;
-  object-fit: cover;
-}
-
-.custom-region-side-section {
-  grid-template-columns: 1fr;
-}
-
-/* Side-by-side once there's room for the aside beside the columns (Salt `lg`). */
-@media (min-width: 1280px) {
-  .custom-region-side {
-    --saltMegaMenuPanel-inlineSize: initial;
-    flex-direction: row;
-  }
-
-  .custom-region-side .custom-region-side-content {
-    flex: 0 0 258px;
-    inline-size: 258px;
-    align-self: flex-start;
-  }
-
-  .custom-region-side-section {
-    grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 12rem)));
-  }
 }
 
 .menu-item-adornment {
@@ -136,28 +27,6 @@ nav > ol {
 
 .saltMegaMenuListItem-wrapper {
   inline-size: 100%;
-}
-
-.small-viewport-wrapper {
-  inline-size: 320px;
-  max-inline-size: 100%;
-}
-
-.small-viewport-container {
-  --saltMegaMenuPanel-inlineSize: 320px;
-  --saltMegaMenuPanel-maxInlineSize: 320px;
-}
-
-.small-viewport-container .saltMegaMenuContent {
-  max-inline-size: 100%;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.small-viewport-container .saltMegaMenuGroups {
-  grid-template-columns: 1fr;
-  max-inline-size: 100%;
-  width: 100%;
 }
 
 .saltMegaMenuPanel {
