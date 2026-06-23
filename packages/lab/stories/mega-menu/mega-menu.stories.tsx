@@ -114,23 +114,11 @@ export const Default: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/digital-banking" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/digital-banking",
-                          )
-                        }
                       >
                         Digital banking
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/risk-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/risk-management",
-                          )
-                        }
                       >
                         Risk management
                       </MegaMenuListItem>
@@ -141,34 +129,16 @@ export const Default: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/patient-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/patient-management",
-                          )
-                        }
                       >
                         Patient management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/telemedicine" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/telemedicine",
-                          )
-                        }
                       >
                         Telemedicine
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/compliance-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/compliance-solutions",
-                          )
-                        }
                       >
                         Compliance solutions
                       </MegaMenuListItem>
@@ -179,12 +149,6 @@ export const Default: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/e-commerce-platforms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/e-commerce-platforms",
-                          )
-                        }
                       >
                         E-commerce platforms
                       </MegaMenuListItem>
@@ -195,34 +159,16 @@ export const Default: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/supply-chain-optimization" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/supply-chain-optimization",
-                          )
-                        }
                       >
                         Supply chain optimization
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/quality-control" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/quality-control",
-                          )
-                        }
                       >
                         Quality control
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/production-planning" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/production-planning",
-                          )
-                        }
                       >
                         Production planning
                       </MegaMenuListItem>
@@ -235,23 +181,11 @@ export const Default: StoryFn = () => {
                         render={
                           <RouterLink to="/learning-management-systems" />
                         }
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/learning-management-systems",
-                          )
-                        }
                       >
                         Learning management systems
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/virtual-classrooms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/virtual-classrooms",
-                          )
-                        }
                       >
                         Virtual classrooms
                       </MegaMenuListItem>
@@ -262,34 +196,16 @@ export const Default: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/document-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/document-management",
-                          )
-                        }
                       >
                         Document management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/citizen-services" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/citizen-services",
-                          )
-                        }
                       >
                         Citizen services
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/public-safety-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/public-safety-solutions",
-                          )
-                        }
                       >
                         Public safety solutions
                       </MegaMenuListItem>
@@ -316,46 +232,20 @@ export const Default: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/strategy" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/strategy")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/strategy" />}>
                         Strategy
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/it" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/it")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/it" />}>
                         IT
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/hr" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/hr")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/hr" />}>
                         HR
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/marketing" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/marketing")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/marketing" />}>
                         Marketing
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/operations" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/operations",
-                          )
-                        }
                       >
                         Operations
                       </MegaMenuListItem>
@@ -366,64 +256,27 @@ export const Default: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/onboarding" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/onboarding",
-                          )
-                        }
                       >
                         Onboarding
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/migration" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/migration")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/migration" />}>
                         Migration
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/customization" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/customization",
-                          )
-                        }
                       >
                         Customization
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/training" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/training")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/training" />}>
                         Training
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/support" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/support")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/support" />}>
                         Support
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/testing" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/testing")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/testing" />}>
                         Testing
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/rollout" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/rollout")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/rollout" />}>
                         Rollout
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -431,55 +284,24 @@ export const Default: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/online" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/online")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/online" />}>
                         Online
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/in-person" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/in-person")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/in-person" />}>
                         In-person
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/workshops" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/workshops")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/workshops" />}>
                         Workshops
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/certifications" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/certifications",
-                          )
-                        }
                       >
                         Certifications
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/tutorials" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/tutorials")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/tutorials" />}>
                         Tutorials
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/guides" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/guides")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/guides" />}>
                         Guides
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -507,43 +329,20 @@ export const Default: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/user-guides" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/user-guides",
-                          )
-                        }
                       >
                         User guides
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/api-reference" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/api-reference",
-                          )
-                        }
                       >
                         API reference
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/release-notes" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/release-notes",
-                          )
-                        }
                       >
                         Release notes
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/faqs" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/faqs")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/faqs" />}>
                         FAQs
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -553,34 +352,16 @@ export const Default: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/contact-support" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/contact-support",
-                          )
-                        }
                       >
                         Contact support
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/community-forum" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/community-forum",
-                          )
-                        }
                       >
                         Community forum
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/troubleshooting" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/troubleshooting",
-                          )
-                        }
                       >
                         Troubleshooting
                       </MegaMenuListItem>
@@ -631,24 +412,12 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/digital-banking" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/digital-banking",
-                          )
-                        }
                       >
                         <DevicesIcon aria-hidden />
                         Digital banking
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/risk-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/risk-management",
-                          )
-                        }
                       >
                         <DatasetManagerIcon aria-hidden />
                         Risk management
@@ -660,36 +429,18 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/patient-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/patient-management",
-                          )
-                        }
                       >
                         <UserSearchIcon aria-hidden />
                         Patient management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/telemedicine" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/telemedicine",
-                          )
-                        }
                       >
                         <CallIcon aria-hidden />
                         Telemedicine
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/compliance-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/compliance-solutions",
-                          )
-                        }
                       >
                         <PasteIcon aria-hidden />
                         Compliance solutions
@@ -701,12 +452,6 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/e-commerce-platforms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/e-commerce-platforms",
-                          )
-                        }
                       >
                         <CartIcon aria-hidden />
                         E-commerce platforms
@@ -718,36 +463,18 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/supply-chain-optimization" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/supply-chain-optimization",
-                          )
-                        }
                       >
                         <LinkedIcon aria-hidden />
                         Supply chain optimization
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/quality-control" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/quality-control",
-                          )
-                        }
                       >
                         <SettingsIcon aria-hidden />
                         Quality control
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/production-planning" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/production-planning",
-                          )
-                        }
                       >
                         <NotificationIcon aria-hidden />
                         Production planning
@@ -761,24 +488,12 @@ export const WithIcons: StoryFn = () => {
                         render={
                           <RouterLink to="/learning-management-systems" />
                         }
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/learning-management-systems",
-                          )
-                        }
                       >
                         <GuideOpenIcon aria-hidden />
                         Learning management systems
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/virtual-classrooms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/virtual-classrooms",
-                          )
-                        }
                       >
                         <LaptopIcon aria-hidden />
                         Virtual classrooms
@@ -790,36 +505,18 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/document-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/document-management",
-                          )
-                        }
                       >
                         <DocumentIcon aria-hidden />
                         Document management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/citizen-services" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/citizen-services",
-                          )
-                        }
                       >
                         <PinIcon aria-hidden />
                         Citizen services
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/public-safety-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/public-safety-solutions",
-                          )
-                        }
                       >
                         <UserGroupIcon aria-hidden />
                         Public safety solutions
@@ -848,50 +545,24 @@ export const WithIcons: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/strategy" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/strategy")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/strategy" />}>
                         <ChartBubbleIcon aria-hidden />
                         Strategy
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/it" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/it")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/it" />}>
                         <LaptopIcon aria-hidden />
                         IT
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/hr" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/hr")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/hr" />}>
                         <UserGroupIcon aria-hidden />
                         HR
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/marketing" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/marketing")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/marketing" />}>
                         <MarkerIcon aria-hidden />
                         Marketing
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/operations" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/operations",
-                          )
-                        }
                       >
                         <SettingsIcon aria-hidden />
                         Operations
@@ -903,70 +574,33 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/onboarding" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/onboarding",
-                          )
-                        }
                       >
                         <PasteIcon aria-hidden />
                         Onboarding
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/migration" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/migration")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/migration" />}>
                         <SwapIcon aria-hidden />
                         Migration
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/customization" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/customization",
-                          )
-                        }
                       >
                         <PinIcon aria-hidden />
                         Customization
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/training" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/training")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/training" />}>
                         <GuideClosedIcon aria-hidden />
                         Training
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/support" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/support")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/support" />}>
                         <InfoIcon aria-hidden />
                         Support
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/testing" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/testing")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/testing" />}>
                         <MaintenanceIcon aria-hidden />
                         Testing
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/rollout" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/rollout")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/rollout" />}>
                         <SaveIcon aria-hidden />
                         Rollout
                       </MegaMenuListItem>
@@ -975,60 +609,29 @@ export const WithIcons: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/online" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/online")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/online" />}>
                         <DisplayIcon aria-hidden />
                         Online
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/in-person" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/in-person")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/in-person" />}>
                         <UserIcon aria-hidden />
                         In-person
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/workshops" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/workshops")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/workshops" />}>
                         <KeyIcon aria-hidden />
                         Workshops
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/certifications" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/certifications",
-                          )
-                        }
                       >
                         <DocumentIcon aria-hidden />
                         Certifications
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/tutorials" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/tutorials")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/tutorials" />}>
                         <DocumentEditIcon aria-hidden />
                         Tutorials
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/guides" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/guides")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/guides" />}>
                         <GuideOpenIcon aria-hidden />
                         Guides
                       </MegaMenuListItem>
@@ -1057,46 +660,23 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/user-guides" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/user-guides",
-                          )
-                        }
                       >
                         <GuideClosedIcon aria-hidden />
                         User guides
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/api-reference" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/api-reference",
-                          )
-                        }
                       >
                         <ApiIcon aria-hidden />
                         API reference
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/release-notes" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/release-notes",
-                          )
-                        }
                       >
                         <NotificationIcon aria-hidden />
                         Release notes
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/faqs" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/faqs")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/faqs" />}>
                         <HelpCircleIcon aria-hidden />
                         FAQs
                       </MegaMenuListItem>
@@ -1107,36 +687,18 @@ export const WithIcons: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/contact-support" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/contact-support",
-                          )
-                        }
                       >
                         <InfoIcon aria-hidden />
                         Contact support
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/community-forum" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/community-forum",
-                          )
-                        }
                       >
                         <ChatGroupIcon aria-hidden />
                         Community forum
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/troubleshooting" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/troubleshooting",
-                          )
-                        }
                       >
                         <AnnouncementIcon aria-hidden />
                         Troubleshooting
@@ -1187,23 +749,11 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/digital-banking" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/digital-banking",
-                          )
-                        }
                       >
                         Digital banking
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/risk-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/risk-management",
-                          )
-                        }
                       >
                         Risk management
                       </MegaMenuListItem>
@@ -1214,23 +764,11 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/patient-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/patient-management",
-                          )
-                        }
                       >
                         Patient management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/telemedicine" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/telemedicine",
-                          )
-                        }
                       >
                         Telemedicine
                         <div className="menu-item-adornment">
@@ -1241,12 +779,6 @@ export const WithAdornment: StoryFn = () => {
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/compliance-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/compliance-solutions",
-                          )
-                        }
                       >
                         Compliance solutions
                       </MegaMenuListItem>
@@ -1257,12 +789,6 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/e-commerce-platforms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/e-commerce-platforms",
-                          )
-                        }
                       >
                         E-commerce platforms
                       </MegaMenuListItem>
@@ -1273,34 +799,16 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/supply-chain-optimization" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/supply-chain-optimization",
-                          )
-                        }
                       >
                         Supply chain optimization
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/quality-control" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/quality-control",
-                          )
-                        }
                       >
                         Quality control
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/production-planning" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/production-planning",
-                          )
-                        }
                       >
                         Production planning
                         <div className="menu-item-adornment">
@@ -1318,23 +826,11 @@ export const WithAdornment: StoryFn = () => {
                         render={
                           <RouterLink to="/learning-management-systems" />
                         }
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/learning-management-systems",
-                          )
-                        }
                       >
                         Learning management systems
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/virtual-classrooms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/virtual-classrooms",
-                          )
-                        }
                       >
                         Virtual classrooms
                       </MegaMenuListItem>
@@ -1345,34 +841,16 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/document-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/document-management",
-                          )
-                        }
                       >
                         Document management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/citizen-services" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/citizen-services",
-                          )
-                        }
                       >
                         Citizen services
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/public-safety-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/public-safety-solutions",
-                          )
-                        }
                       >
                         Public safety solutions
                       </MegaMenuListItem>
@@ -1400,46 +878,20 @@ export const WithAdornment: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/strategy" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/strategy")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/strategy" />}>
                         Strategy
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/it" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/it")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/it" />}>
                         IT
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/hr" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/hr")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/hr" />}>
                         HR
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/marketing" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/marketing")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/marketing" />}>
                         Marketing
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/operations" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/operations",
-                          )
-                        }
                       >
                         Operations
                       </MegaMenuListItem>
@@ -1450,67 +902,30 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/onboarding" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/onboarding",
-                          )
-                        }
                       >
                         Onboarding
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/migration" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/migration")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/migration" />}>
                         Migration
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/customization" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/customization",
-                          )
-                        }
                       >
                         Customization
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/training" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/training")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/training" />}>
                         Training
                         <div className="menu-item-adornment">
                           <Badge value="1" />
                         </div>
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/support" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/support")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/support" />}>
                         Support
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/testing" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/testing")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/testing" />}>
                         Testing
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/rollout" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/rollout")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/rollout" />}>
                         Rollout
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -1518,58 +933,27 @@ export const WithAdornment: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/online" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/online")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/online" />}>
                         Online
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/in-person" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/in-person")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/in-person" />}>
                         In-person
                         <div className="menu-item-adornment">
                           <Badge />
                         </div>
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/workshops" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/workshops")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/workshops" />}>
                         Workshops
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/certifications" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/certifications",
-                          )
-                        }
                       >
                         Certifications
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/tutorials" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/tutorials")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/tutorials" />}>
                         Tutorials
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/guides" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/guides")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/guides" />}>
                         Guides
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -1597,46 +981,23 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/user-guides" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/user-guides",
-                          )
-                        }
                       >
                         User guides
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/api-reference" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/api-reference",
-                          )
-                        }
                       >
                         API reference
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/release-notes" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/release-notes",
-                          )
-                        }
                       >
                         Release notes
                         <div className="menu-item-adornment">
                           <Badge />
                         </div>
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/faqs" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/faqs")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/faqs" />}>
                         FAQs
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -1646,23 +1007,11 @@ export const WithAdornment: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/contact-support" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/contact-support",
-                          )
-                        }
                       >
                         Contact support
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/community-forum" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/community-forum",
-                          )
-                        }
                       >
                         Community forum
                         <div className="menu-item-adornment">
@@ -1673,12 +1022,6 @@ export const WithAdornment: StoryFn = () => {
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/troubleshooting" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/troubleshooting",
-                          )
-                        }
                       >
                         Troubleshooting
                       </MegaMenuListItem>
@@ -1716,34 +1059,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-1" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-1",
-                        )
-                      }
                     >
                       Mega menu item 1
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-2" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-2",
-                        )
-                      }
                     >
                       Mega menu item 2
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-3" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-3",
-                        )
-                      }
                     >
                       Mega menu item 3
                     </MegaMenuListItem>
@@ -1754,34 +1079,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-4" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-4",
-                        )
-                      }
                     >
                       Mega menu item 4
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-5" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-5",
-                        )
-                      }
                     >
                       Mega menu item 5
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-6" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-6",
-                        )
-                      }
                     >
                       Mega menu item 6
                     </MegaMenuListItem>
@@ -1792,34 +1099,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-7" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-7",
-                        )
-                      }
                     >
                       Mega menu item 7
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-8" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-8",
-                        )
-                      }
                     >
                       Mega menu item 8
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-9" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-9",
-                        )
-                      }
                     >
                       Mega menu item 9
                     </MegaMenuListItem>
@@ -1830,34 +1119,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-10" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-10",
-                        )
-                      }
                     >
                       Mega menu item 10
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-11" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-11",
-                        )
-                      }
                     >
                       Mega menu item 11
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-12" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-12",
-                        )
-                      }
                     >
                       Mega menu item 12
                     </MegaMenuListItem>
@@ -1885,34 +1156,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-1" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-1",
-                        )
-                      }
                     >
                       Mega menu item 1
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-2" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-2",
-                        )
-                      }
                     >
                       Mega menu item 2
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-3" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-3",
-                        )
-                      }
                     >
                       Mega menu item 3
                     </MegaMenuListItem>
@@ -1923,34 +1176,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-4" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-4",
-                        )
-                      }
                     >
                       Mega menu item 4
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-5" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-5",
-                        )
-                      }
                     >
                       Mega menu item 5
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-6" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-6",
-                        )
-                      }
                     >
                       Mega menu item 6
                     </MegaMenuListItem>
@@ -1961,34 +1196,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-7" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-7",
-                        )
-                      }
                     >
                       Mega menu item 7
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-8" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-8",
-                        )
-                      }
                     >
                       Mega menu item 8
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-9" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-9",
-                        )
-                      }
                     >
                       Mega menu item 9
                     </MegaMenuListItem>
@@ -1999,34 +1216,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-10" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-10",
-                        )
-                      }
                     >
                       Mega menu item 10
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-11" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-11",
-                        )
-                      }
                     >
                       Mega menu item 11
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-12" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-12",
-                        )
-                      }
                     >
                       Mega menu item 12
                     </MegaMenuListItem>
@@ -2054,34 +1253,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-1" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-1",
-                        )
-                      }
                     >
                       Mega menu item 1
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-2" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-2",
-                        )
-                      }
                     >
                       Mega menu item 2
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-3" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-3",
-                        )
-                      }
                     >
                       Mega menu item 3
                     </MegaMenuListItem>
@@ -2092,34 +1273,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-4" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-4",
-                        )
-                      }
                     >
                       Mega menu item 4
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-5" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-5",
-                        )
-                      }
                     >
                       Mega menu item 5
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-6" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-6",
-                        )
-                      }
                     >
                       Mega menu item 6
                     </MegaMenuListItem>
@@ -2130,34 +1293,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-7" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-7",
-                        )
-                      }
                     >
                       Mega menu item 7
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-8" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-8",
-                        )
-                      }
                     >
                       Mega menu item 8
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-9" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-9",
-                        )
-                      }
                     >
                       Mega menu item 9
                     </MegaMenuListItem>
@@ -2168,34 +1313,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-10" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-10",
-                        )
-                      }
                     >
                       Mega menu item 10
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-11" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-11",
-                        )
-                      }
                     >
                       Mega menu item 11
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-12" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-12",
-                        )
-                      }
                     >
                       Mega menu item 12
                     </MegaMenuListItem>
@@ -2223,34 +1350,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-1" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-1",
-                        )
-                      }
                     >
                       Mega menu item 1
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-2" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-2",
-                        )
-                      }
                     >
                       Mega menu item 2
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-3" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-3",
-                        )
-                      }
                     >
                       Mega menu item 3
                     </MegaMenuListItem>
@@ -2261,34 +1370,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-4" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-4",
-                        )
-                      }
                     >
                       Mega menu item 4
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-5" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-5",
-                        )
-                      }
                     >
                       Mega menu item 5
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-6" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-6",
-                        )
-                      }
                     >
                       Mega menu item 6
                     </MegaMenuListItem>
@@ -2299,34 +1390,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-7" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-7",
-                        )
-                      }
                     >
                       Mega menu item 7
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-8" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-8",
-                        )
-                      }
                     >
                       Mega menu item 8
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-9" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-9",
-                        )
-                      }
                     >
                       Mega menu item 9
                     </MegaMenuListItem>
@@ -2337,34 +1410,16 @@ export const TriggerPosition: StoryFn = () => {
                   <MegaMenuList>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-10" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-10",
-                        )
-                      }
                     >
                       Mega menu item 10
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-11" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-11",
-                        )
-                      }
                     >
                       Mega menu item 11
                     </MegaMenuListItem>
                     <MegaMenuListItem
                       render={<RouterLink to="/mega-menu-item-12" />}
-                      onClick={() =>
-                        console.log(
-                          "MegaMenuListItem clicked:",
-                          "/mega-menu-item-12",
-                        )
-                      }
                     >
                       Mega menu item 12
                     </MegaMenuListItem>
@@ -2418,23 +1473,11 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/digital-banking" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/digital-banking",
-                            )
-                          }
                         >
                           Digital banking
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/risk-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/risk-management",
-                            )
-                          }
                         >
                           Risk management
                         </MegaMenuListItem>
@@ -2445,34 +1488,16 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/patient-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/patient-management",
-                            )
-                          }
                         >
                           Patient management
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/telemedicine" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/telemedicine",
-                            )
-                          }
                         >
                           Telemedicine
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/compliance-solutions" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/compliance-solutions",
-                            )
-                          }
                         >
                           Compliance solutions
                         </MegaMenuListItem>
@@ -2483,12 +1508,6 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/e-commerce-platforms" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/e-commerce-platforms",
-                            )
-                          }
                         >
                           E-commerce platforms
                         </MegaMenuListItem>
@@ -2501,34 +1520,16 @@ export const FullWidthContainer: StoryFn = () => {
                           render={
                             <RouterLink to="/supply-chain-optimization" />
                           }
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/supply-chain-optimization",
-                            )
-                          }
                         >
                           Supply chain optimization
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/quality-control" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/quality-control",
-                            )
-                          }
                         >
                           Quality control
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/production-planning" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/production-planning",
-                            )
-                          }
                         >
                           Production planning
                         </MegaMenuListItem>
@@ -2541,23 +1542,11 @@ export const FullWidthContainer: StoryFn = () => {
                           render={
                             <RouterLink to="/learning-management-systems" />
                           }
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/learning-management-systems",
-                            )
-                          }
                         >
                           Learning management systems
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/virtual-classrooms" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/virtual-classrooms",
-                            )
-                          }
                         >
                           Virtual classrooms
                         </MegaMenuListItem>
@@ -2568,34 +1557,16 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/document-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/document-management",
-                            )
-                          }
                         >
                           Document management
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/citizen-services" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/citizen-services",
-                            )
-                          }
                         >
                           Citizen services
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/public-safety-solutions" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/public-safety-solutions",
-                            )
-                          }
                         >
                           Public safety solutions
                         </MegaMenuListItem>
@@ -2606,23 +1577,11 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/cloud-solutions" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/cloud-solutions",
-                            )
-                          }
                         >
                           Cloud solutions
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/cybersecurity" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/cybersecurity",
-                            )
-                          }
                         >
                           Cybersecurity
                         </MegaMenuListItem>
@@ -2633,23 +1592,11 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/smart-grid-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/smart-grid-management",
-                            )
-                          }
                         >
                           Smart Grid Management
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/renewable-integration" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/renewable-integration",
-                            )
-                          }
                         >
                           Renewable Integration
                         </MegaMenuListItem>
@@ -2682,50 +1629,22 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/strategy" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/strategy",
-                            )
-                          }
                         >
                           Strategy
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/it" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/it")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/it" />}>
                           IT
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/hr" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/hr")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/hr" />}>
                           HR
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/marketing" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/marketing",
-                            )
-                          }
                         >
                           Marketing
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/operations" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/operations",
-                            )
-                          }
                         >
                           Operations
                         </MegaMenuListItem>
@@ -2738,70 +1657,31 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/onboarding" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/onboarding",
-                            )
-                          }
                         >
                           Onboarding
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/migration" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/migration",
-                            )
-                          }
                         >
                           Migration
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/customization" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/customization",
-                            )
-                          }
                         >
                           Customization
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/training" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/training",
-                            )
-                          }
                         >
                           Training
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/support" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/support")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/support" />}>
                           Support
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/testing" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/testing")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/testing" />}>
                           Testing
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/rollout" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/rollout")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/rollout" />}>
                           Rollout
                         </MegaMenuListItem>
                       </MegaMenuList>
@@ -2809,64 +1689,30 @@ export const FullWidthContainer: StoryFn = () => {
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/online" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/online")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/online" />}>
                           Online
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/in-person" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/in-person",
-                            )
-                          }
                         >
                           In-person
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/workshops" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/workshops",
-                            )
-                          }
                         >
                           Workshops
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/certifications" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/certifications",
-                            )
-                          }
                         >
                           Certifications
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/tutorials" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/tutorials",
-                            )
-                          }
                         >
                           Tutorials
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/guides" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/guides")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/guides" />}>
                           Guides
                         </MegaMenuListItem>
                       </MegaMenuList>
@@ -2897,43 +1743,20 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/user-guides" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/user-guides",
-                            )
-                          }
                         >
                           User guides
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/api-reference" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/api-reference",
-                            )
-                          }
                         >
                           API reference
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/release-notes" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/release-notes",
-                            )
-                          }
                         >
                           Release notes
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/faqs" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/faqs")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/faqs" />}>
                           FAQs
                         </MegaMenuListItem>
                       </MegaMenuList>
@@ -2945,34 +1768,16 @@ export const FullWidthContainer: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/contact-support" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/contact-support",
-                            )
-                          }
                         >
                           Contact support
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/community-forum" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/community-forum",
-                            )
-                          }
                         >
                           Community forum
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/troubleshooting" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/troubleshooting",
-                            )
-                          }
                         >
                           Troubleshooting
                         </MegaMenuListItem>
@@ -3032,23 +1837,11 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/digital-banking" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/digital-banking",
-                            )
-                          }
                         >
                           Digital banking
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/risk-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/risk-management",
-                            )
-                          }
                         >
                           Risk management
                         </MegaMenuListItem>
@@ -3059,34 +1852,16 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/patient-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/patient-management",
-                            )
-                          }
                         >
                           Patient management
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/telemedicine" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/telemedicine",
-                            )
-                          }
                         >
                           Telemedicine
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/compliance-solutions" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/compliance-solutions",
-                            )
-                          }
                         >
                           Compliance solutions
                         </MegaMenuListItem>
@@ -3097,12 +1872,6 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/e-commerce-platforms" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/e-commerce-platforms",
-                            )
-                          }
                         >
                           E-commerce platforms
                         </MegaMenuListItem>
@@ -3115,34 +1884,16 @@ export const EdgeToEdge: StoryFn = () => {
                           render={
                             <RouterLink to="/supply-chain-optimization" />
                           }
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/supply-chain-optimization",
-                            )
-                          }
                         >
                           Supply chain optimization
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/quality-control" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/quality-control",
-                            )
-                          }
                         >
                           Quality control
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/production-planning" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/production-planning",
-                            )
-                          }
                         >
                           Production planning
                         </MegaMenuListItem>
@@ -3155,23 +1906,11 @@ export const EdgeToEdge: StoryFn = () => {
                           render={
                             <RouterLink to="/learning-management-systems" />
                           }
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/learning-management-systems",
-                            )
-                          }
                         >
                           Learning management systems
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/virtual-classrooms" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/virtual-classrooms",
-                            )
-                          }
                         >
                           Virtual classrooms
                         </MegaMenuListItem>
@@ -3182,34 +1921,16 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/document-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/document-management",
-                            )
-                          }
                         >
                           Document management
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/citizen-services" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/citizen-services",
-                            )
-                          }
                         >
                           Citizen services
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/public-safety-solutions" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/public-safety-solutions",
-                            )
-                          }
                         >
                           Public safety solutions
                         </MegaMenuListItem>
@@ -3220,23 +1941,11 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/cloud-solutions" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/cloud-solutions",
-                            )
-                          }
                         >
                           Cloud solutions
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/cybersecurity" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/cybersecurity",
-                            )
-                          }
                         >
                           Cybersecurity
                         </MegaMenuListItem>
@@ -3247,23 +1956,11 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/smart-grid-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/smart-grid-management",
-                            )
-                          }
                         >
                           Smart Grid Management
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/renewable-integration" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/renewable-integration",
-                            )
-                          }
                         >
                           Renewable Integration
                         </MegaMenuListItem>
@@ -3296,50 +1993,22 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/strategy" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/strategy",
-                            )
-                          }
                         >
                           Strategy
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/it" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/it")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/it" />}>
                           IT
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/hr" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/hr")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/hr" />}>
                           HR
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/marketing" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/marketing",
-                            )
-                          }
                         >
                           Marketing
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/operations" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/operations",
-                            )
-                          }
                         >
                           Operations
                         </MegaMenuListItem>
@@ -3352,70 +2021,31 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/onboarding" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/onboarding",
-                            )
-                          }
                         >
                           Onboarding
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/migration" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/migration",
-                            )
-                          }
                         >
                           Migration
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/customization" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/customization",
-                            )
-                          }
                         >
                           Customization
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/training" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/training",
-                            )
-                          }
                         >
                           Training
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/support" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/support")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/support" />}>
                           Support
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/testing" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/testing")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/testing" />}>
                           Testing
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/rollout" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/rollout")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/rollout" />}>
                           Rollout
                         </MegaMenuListItem>
                       </MegaMenuList>
@@ -3423,64 +2053,30 @@ export const EdgeToEdge: StoryFn = () => {
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/online" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/online")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/online" />}>
                           Online
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/in-person" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/in-person",
-                            )
-                          }
                         >
                           In-person
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/workshops" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/workshops",
-                            )
-                          }
                         >
                           Workshops
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/certifications" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/certifications",
-                            )
-                          }
                         >
                           Certifications
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/tutorials" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/tutorials",
-                            )
-                          }
                         >
                           Tutorials
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/guides" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/guides")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/guides" />}>
                           Guides
                         </MegaMenuListItem>
                       </MegaMenuList>
@@ -3511,43 +2107,20 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/user-guides" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/user-guides",
-                            )
-                          }
                         >
                           User guides
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/api-reference" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/api-reference",
-                            )
-                          }
                         >
                           API reference
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/release-notes" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/release-notes",
-                            )
-                          }
                         >
                           Release notes
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/faqs" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/faqs")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/faqs" />}>
                           FAQs
                         </MegaMenuListItem>
                       </MegaMenuList>
@@ -3559,34 +2132,16 @@ export const EdgeToEdge: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/contact-support" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/contact-support",
-                            )
-                          }
                         >
                           Contact support
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/community-forum" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/community-forum",
-                            )
-                          }
                         >
                           Community forum
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/troubleshooting" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/troubleshooting",
-                            )
-                          }
                         >
                           Troubleshooting
                         </MegaMenuListItem>
@@ -3630,23 +2185,11 @@ export const WithContent: StoryFn = () => {
                 <MegaMenuList>
                   <MegaMenuListItem
                     render={<RouterLink to="/digital-banking" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/digital-banking",
-                      )
-                    }
                   >
                     Digital banking
                   </MegaMenuListItem>
                   <MegaMenuListItem
                     render={<RouterLink to="/risk-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/risk-management",
-                      )
-                    }
                   >
                     Risk management
                   </MegaMenuListItem>
@@ -3657,31 +2200,14 @@ export const WithContent: StoryFn = () => {
                 <MegaMenuList>
                   <MegaMenuListItem
                     render={<RouterLink to="/patient-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/patient-management",
-                      )
-                    }
                   >
                     Patient management
                   </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/telemedicine" />}
-                    onClick={() =>
-                      console.log("MegaMenuListItem clicked:", "/telemedicine")
-                    }
-                  >
+                  <MegaMenuListItem render={<RouterLink to="/telemedicine" />}>
                     Telemedicine
                   </MegaMenuListItem>
                   <MegaMenuListItem
                     render={<RouterLink to="/compliance-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/compliance-solutions",
-                      )
-                    }
                   >
                     Compliance solutions
                   </MegaMenuListItem>
@@ -3692,12 +2218,6 @@ export const WithContent: StoryFn = () => {
                 <MegaMenuList>
                   <MegaMenuListItem
                     render={<RouterLink to="/e-commerce-platforms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/e-commerce-platforms",
-                      )
-                    }
                   >
                     E-commerce platforms
                   </MegaMenuListItem>
@@ -3708,34 +2228,16 @@ export const WithContent: StoryFn = () => {
                 <MegaMenuList>
                   <MegaMenuListItem
                     render={<RouterLink to="/supply-chain-optimization" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/supply-chain-optimization",
-                      )
-                    }
                   >
                     Supply chain optimization
                   </MegaMenuListItem>
                   <MegaMenuListItem
                     render={<RouterLink to="/quality-control" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/quality-control",
-                      )
-                    }
                   >
                     Quality control
                   </MegaMenuListItem>
                   <MegaMenuListItem
                     render={<RouterLink to="/production-planning" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/production-planning",
-                      )
-                    }
                   >
                     Production planning
                   </MegaMenuListItem>
@@ -3832,23 +2334,11 @@ export const WithContent: StoryFn = () => {
                 <MegaMenuList>
                   <MegaMenuListItem
                     render={<RouterLink to="/digital-banking" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/digital-banking",
-                      )
-                    }
                   >
                     Digital banking
                   </MegaMenuListItem>
                   <MegaMenuListItem
                     render={<RouterLink to="/risk-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/risk-management",
-                      )
-                    }
                   >
                     Risk management
                   </MegaMenuListItem>
@@ -3859,31 +2349,14 @@ export const WithContent: StoryFn = () => {
                 <MegaMenuList>
                   <MegaMenuListItem
                     render={<RouterLink to="/patient-management" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/patient-management",
-                      )
-                    }
                   >
                     Patient management
                   </MegaMenuListItem>
-                  <MegaMenuListItem
-                    render={<RouterLink to="/telemedicine" />}
-                    onClick={() =>
-                      console.log("MegaMenuListItem clicked:", "/telemedicine")
-                    }
-                  >
+                  <MegaMenuListItem render={<RouterLink to="/telemedicine" />}>
                     Telemedicine
                   </MegaMenuListItem>
                   <MegaMenuListItem
                     render={<RouterLink to="/compliance-solutions" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/compliance-solutions",
-                      )
-                    }
                   >
                     Compliance solutions
                   </MegaMenuListItem>
@@ -3894,12 +2367,6 @@ export const WithContent: StoryFn = () => {
                 <MegaMenuList>
                   <MegaMenuListItem
                     render={<RouterLink to="/e-commerce-platforms" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/e-commerce-platforms",
-                      )
-                    }
                   >
                     E-commerce platforms
                   </MegaMenuListItem>
@@ -3910,34 +2377,16 @@ export const WithContent: StoryFn = () => {
                 <MegaMenuList>
                   <MegaMenuListItem
                     render={<RouterLink to="/supply-chain-optimization" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/supply-chain-optimization",
-                      )
-                    }
                   >
                     Supply chain optimization
                   </MegaMenuListItem>
                   <MegaMenuListItem
                     render={<RouterLink to="/quality-control" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/quality-control",
-                      )
-                    }
                   >
                     Quality control
                   </MegaMenuListItem>
                   <MegaMenuListItem
                     render={<RouterLink to="/production-planning" />}
-                    onClick={() =>
-                      console.log(
-                        "MegaMenuListItem clicked:",
-                        "/production-planning",
-                      )
-                    }
                   >
                     Production planning
                   </MegaMenuListItem>
@@ -3996,23 +2445,11 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/digital-banking" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/digital-banking",
-                          )
-                        }
                       >
                         Digital banking
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/risk-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/risk-management",
-                          )
-                        }
                       >
                         Risk management
                       </MegaMenuListItem>
@@ -4023,34 +2460,16 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/patient-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/patient-management",
-                          )
-                        }
                       >
                         Patient management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/telemedicine" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/telemedicine",
-                          )
-                        }
                       >
                         Telemedicine
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/compliance-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/compliance-solutions",
-                          )
-                        }
                       >
                         Compliance solutions
                       </MegaMenuListItem>
@@ -4061,12 +2480,6 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/e-commerce-platforms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/e-commerce-platforms",
-                          )
-                        }
                       >
                         E-commerce platforms
                       </MegaMenuListItem>
@@ -4077,34 +2490,16 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/supply-chain-optimization" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/supply-chain-optimization",
-                          )
-                        }
                       >
                         Supply chain optimization
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/quality-control" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/quality-control",
-                          )
-                        }
                       >
                         Quality control
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/production-planning" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/production-planning",
-                          )
-                        }
                       >
                         Production planning
                       </MegaMenuListItem>
@@ -4117,23 +2512,11 @@ export const WithLink: StoryFn = () => {
                         render={
                           <RouterLink to="/learning-management-systems" />
                         }
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/learning-management-systems",
-                          )
-                        }
                       >
                         Learning management systems
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/virtual-classrooms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/virtual-classrooms",
-                          )
-                        }
                       >
                         Virtual classrooms
                       </MegaMenuListItem>
@@ -4144,34 +2527,16 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/document-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/document-management",
-                          )
-                        }
                       >
                         Document management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/citizen-services" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/citizen-services",
-                          )
-                        }
                       >
                         Citizen services
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/public-safety-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/public-safety-solutions",
-                          )
-                        }
                       >
                         Public safety solutions
                       </MegaMenuListItem>
@@ -4209,46 +2574,20 @@ export const WithLink: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/strategy" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/strategy")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/strategy" />}>
                         Strategy
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/it" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/it")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/it" />}>
                         IT
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/hr" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/hr")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/hr" />}>
                         HR
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/marketing" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/marketing")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/marketing" />}>
                         Marketing
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/operations" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/operations",
-                          )
-                        }
                       >
                         Operations
                       </MegaMenuListItem>
@@ -4259,64 +2598,27 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/onboarding" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/onboarding",
-                          )
-                        }
                       >
                         Onboarding
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/migration" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/migration")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/migration" />}>
                         Migration
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/customization" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/customization",
-                          )
-                        }
                       >
                         Customization
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/training" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/training")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/training" />}>
                         Training
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/support" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/support")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/support" />}>
                         Support
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/testing" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/testing")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/testing" />}>
                         Testing
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/rollout" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/rollout")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/rollout" />}>
                         Rollout
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -4324,55 +2626,24 @@ export const WithLink: StoryFn = () => {
                   <MegaMenuGroup>
                     <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
                     <MegaMenuList>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/online" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/online")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/online" />}>
                         Online
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/in-person" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/in-person")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/in-person" />}>
                         In-person
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/workshops" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/workshops")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/workshops" />}>
                         Workshops
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/certifications" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/certifications",
-                          )
-                        }
                       >
                         Certifications
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/tutorials" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/tutorials")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/tutorials" />}>
                         Tutorials
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/guides" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/guides")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/guides" />}>
                         Guides
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -4405,43 +2676,20 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/user-guides" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/user-guides",
-                          )
-                        }
                       >
                         User guides
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/api-reference" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/api-reference",
-                          )
-                        }
                       >
                         API reference
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/release-notes" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/release-notes",
-                          )
-                        }
                       >
                         Release notes
                       </MegaMenuListItem>
-                      <MegaMenuListItem
-                        render={<RouterLink to="/faqs" />}
-                        onClick={() =>
-                          console.log("MegaMenuListItem clicked:", "/faqs")
-                        }
-                      >
+                      <MegaMenuListItem render={<RouterLink to="/faqs" />}>
                         FAQs
                       </MegaMenuListItem>
                     </MegaMenuList>
@@ -4451,34 +2699,16 @@ export const WithLink: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/contact-support" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/contact-support",
-                          )
-                        }
                       >
                         Contact support
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/community-forum" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/community-forum",
-                          )
-                        }
                       >
                         Community forum
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/troubleshooting" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/troubleshooting",
-                          )
-                        }
                       >
                         Troubleshooting
                       </MegaMenuListItem>
@@ -4537,23 +2767,11 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/digital-banking" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/digital-banking",
-                            )
-                          }
                         >
                           Digital banking
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/risk-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/risk-management",
-                            )
-                          }
                         >
                           Risk management
                         </MegaMenuListItem>
@@ -4564,34 +2782,16 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/patient-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/patient-management",
-                            )
-                          }
                         >
                           Patient management
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/telemedicine" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/telemedicine",
-                            )
-                          }
                         >
                           Telemedicine
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/compliance-solutions" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/compliance-solutions",
-                            )
-                          }
                         >
                           Compliance solutions
                         </MegaMenuListItem>
@@ -4602,12 +2802,6 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/e-commerce-platforms" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/e-commerce-platforms",
-                            )
-                          }
                         >
                           E-commerce platforms
                         </MegaMenuListItem>
@@ -4620,34 +2814,16 @@ export const InSmallViewport: StoryFn = () => {
                           render={
                             <RouterLink to="/supply-chain-optimization" />
                           }
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/supply-chain-optimization",
-                            )
-                          }
                         >
                           Supply chain optimization
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/quality-control" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/quality-control",
-                            )
-                          }
                         >
                           Quality control
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/production-planning" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/production-planning",
-                            )
-                          }
                         >
                           Production planning
                         </MegaMenuListItem>
@@ -4660,23 +2836,11 @@ export const InSmallViewport: StoryFn = () => {
                           render={
                             <RouterLink to="/learning-management-systems" />
                           }
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/learning-management-systems",
-                            )
-                          }
                         >
                           Learning management systems
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/virtual-classrooms" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/virtual-classrooms",
-                            )
-                          }
                         >
                           Virtual classrooms
                         </MegaMenuListItem>
@@ -4687,34 +2851,16 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/document-management" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/document-management",
-                            )
-                          }
                         >
                           Document management
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/citizen-services" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/citizen-services",
-                            )
-                          }
                         >
                           Citizen services
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/public-safety-solutions" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/public-safety-solutions",
-                            )
-                          }
                         >
                           Public safety solutions
                         </MegaMenuListItem>
@@ -4746,50 +2892,22 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/strategy" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/strategy",
-                            )
-                          }
                         >
                           Strategy
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/it" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/it")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/it" />}>
                           IT
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/hr" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/hr")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/hr" />}>
                           HR
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/marketing" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/marketing",
-                            )
-                          }
                         >
                           Marketing
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/operations" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/operations",
-                            )
-                          }
                         >
                           Operations
                         </MegaMenuListItem>
@@ -4802,54 +2920,25 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/onboarding" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/onboarding",
-                            )
-                          }
                         >
                           Onboarding
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/migration" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/migration",
-                            )
-                          }
                         >
                           Migration
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/customization" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/customization",
-                            )
-                          }
                         >
                           Customization
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/training" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/training",
-                            )
-                          }
                         >
                           Training
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/support" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/support")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/support" />}>
                           Support
                         </MegaMenuListItem>
                       </MegaMenuList>
@@ -4857,44 +2946,21 @@ export const InSmallViewport: StoryFn = () => {
                     <MegaMenuGroup>
                       <MegaMenuGroupHeading>Training</MegaMenuGroupHeading>
                       <MegaMenuList>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/online" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/online")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/online" />}>
                           Online
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/in-person" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/in-person",
-                            )
-                          }
                         >
                           In-person
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/workshops" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/workshops",
-                            )
-                          }
                         >
                           Workshops
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/certifications" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/certifications",
-                            )
-                          }
                         >
                           Certifications
                         </MegaMenuListItem>
@@ -4926,43 +2992,20 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/user-guides" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/user-guides",
-                            )
-                          }
                         >
                           User guides
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/api-reference" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/api-reference",
-                            )
-                          }
                         >
                           API reference
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/release-notes" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/release-notes",
-                            )
-                          }
                         >
                           Release notes
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/faqs" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/faqs")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/faqs" />}>
                           FAQs
                         </MegaMenuListItem>
                       </MegaMenuList>
@@ -4972,34 +3015,16 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/contact-support" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/contact-support",
-                            )
-                          }
                         >
                           Contact support
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/community-forum" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/community-forum",
-                            )
-                          }
                         >
                           Community forum
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/troubleshooting" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/troubleshooting",
-                            )
-                          }
                         >
                           Troubleshooting
                         </MegaMenuListItem>
@@ -5010,31 +3035,14 @@ export const InSmallViewport: StoryFn = () => {
                       <MegaMenuList>
                         <MegaMenuListItem
                           render={<RouterLink to="/tutorials" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/tutorials",
-                            )
-                          }
                         >
                           Tutorials
                         </MegaMenuListItem>
-                        <MegaMenuListItem
-                          render={<RouterLink to="/guides" />}
-                          onClick={() =>
-                            console.log("MegaMenuListItem clicked:", "/guides")
-                          }
-                        >
+                        <MegaMenuListItem render={<RouterLink to="/guides" />}>
                           Guides
                         </MegaMenuListItem>
                         <MegaMenuListItem
                           render={<RouterLink to="/best-practices" />}
-                          onClick={() =>
-                            console.log(
-                              "MegaMenuListItem clicked:",
-                              "/best-practices",
-                            )
-                          }
                         >
                           Best practices
                         </MegaMenuListItem>
@@ -5071,23 +3079,11 @@ export const DefaultOpen: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/digital-banking" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/digital-banking",
-                          )
-                        }
                       >
                         Digital banking
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/risk-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/risk-management",
-                          )
-                        }
                       >
                         Risk management
                       </MegaMenuListItem>
@@ -5098,34 +3094,16 @@ export const DefaultOpen: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/patient-management" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/patient-management",
-                          )
-                        }
                       >
                         Patient management
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/telemedicine" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/telemedicine",
-                          )
-                        }
                       >
                         Telemedicine
                       </MegaMenuListItem>
                       <MegaMenuListItem
                         render={<RouterLink to="/compliance-solutions" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/compliance-solutions",
-                          )
-                        }
                       >
                         Compliance solutions
                       </MegaMenuListItem>
@@ -5136,12 +3114,6 @@ export const DefaultOpen: StoryFn = () => {
                     <MegaMenuList>
                       <MegaMenuListItem
                         render={<RouterLink to="/e-commerce-platforms" />}
-                        onClick={() =>
-                          console.log(
-                            "MegaMenuListItem clicked:",
-                            "/e-commerce-platforms",
-                          )
-                        }
                       >
                         E-commerce platforms
                       </MegaMenuListItem>
@@ -5183,28 +3155,13 @@ export const Placement: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Group A</MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/item-1" />}
-                      onClick={() =>
-                        console.log("MegaMenuListItem clicked:", "/item-1")
-                      }
-                    >
+                    <MegaMenuListItem render={<RouterLink to="/item-1" />}>
                       Item 1
                     </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/item-2" />}
-                      onClick={() =>
-                        console.log("MegaMenuListItem clicked:", "/item-2")
-                      }
-                    >
+                    <MegaMenuListItem render={<RouterLink to="/item-2" />}>
                       Item 2
                     </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/item-3" />}
-                      onClick={() =>
-                        console.log("MegaMenuListItem clicked:", "/item-3")
-                      }
-                    >
+                    <MegaMenuListItem render={<RouterLink to="/item-3" />}>
                       Item 3
                     </MegaMenuListItem>
                   </MegaMenuList>
@@ -5212,20 +3169,10 @@ export const Placement: StoryFn = () => {
                 <MegaMenuGroup>
                   <MegaMenuGroupHeading>Group B</MegaMenuGroupHeading>
                   <MegaMenuList>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/item-4" />}
-                      onClick={() =>
-                        console.log("MegaMenuListItem clicked:", "/item-4")
-                      }
-                    >
+                    <MegaMenuListItem render={<RouterLink to="/item-4" />}>
                       Item 4
                     </MegaMenuListItem>
-                    <MegaMenuListItem
-                      render={<RouterLink to="/item-5" />}
-                      onClick={() =>
-                        console.log("MegaMenuListItem clicked:", "/item-5")
-                      }
-                    >
+                    <MegaMenuListItem render={<RouterLink to="/item-5" />}>
                       Item 5
                     </MegaMenuListItem>
                   </MegaMenuList>
