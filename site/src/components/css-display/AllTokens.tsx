@@ -35,16 +35,14 @@ type CssVariableData = Record<string, string>;
 type TokenTableData = {
   characteristics: TokenGroups | null;
   foundations: TokenGroups | null;
-  characteristicDensity: DensityOverrides | null;
-  foundationDensity: DensityOverrides | null;
+  characteristicDensity?: DensityOverrides;
+  foundationDensity?: DensityOverrides;
 };
 type ThemeTokenTables = Record<ThemeType, TokenTableData>;
 
 const emptyTables: TokenTableData = {
   characteristics: null,
   foundations: null,
-  characteristicDensity: null,
-  foundationDensity: null,
 };
 
 export function AllTokens() {

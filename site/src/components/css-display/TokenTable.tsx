@@ -60,9 +60,23 @@ export function getThemeDisplayName(value: ThemeType) {
 }
 
 type TokenTableControls = {
-  onDensityChange: (density: Density) => void;
+  onDensityChange?: (density: Density) => void;
   onModeChange: (mode: Mode) => void;
   onThemeChange: (theme: ThemeType) => void;
+};
+
+type TokenTableProps = {
+  title?: string;
+  tier: TokenTier;
+  groupedRows: TokenGroups | null;
+  loadingLabel: string;
+  density?: Density;
+  densityOverrides?: DensityOverrides;
+  mode: Mode;
+  theme: ThemeType;
+  controls?: TokenTableControls;
+  showGroupDescriptions?: boolean;
+  showGroupHeadings?: boolean;
 };
 
 export function TokenTable({
@@ -71,25 +85,13 @@ export function TokenTable({
   groupedRows,
   densityOverrides,
   loadingLabel,
-  density,
+  density = "medium",
   mode,
   theme,
   controls,
   showGroupDescriptions = true,
   showGroupHeadings = true,
-}: {
-  title?: string;
-  tier: TokenTier;
-  groupedRows: TokenGroups | null;
-  densityOverrides: DensityOverrides | null;
-  loadingLabel: string;
-  density: Density;
-  mode: Mode;
-  theme: ThemeType;
-  controls?: TokenTableControls;
-  showGroupDescriptions?: boolean;
-  showGroupHeadings?: boolean;
-}) {
+}: TokenTableProps) {
   const siteMode = useColorMode();
 
   if (groupedRows === null) {
@@ -215,25 +217,29 @@ function TokenTableSettings({
       <OverlayPanel className={styles.compactControlsOverlay}>
         <OverlayPanelContent className={styles.compactControlsOverlayContent}>
           <StackLayout gap={1} padding={{ md: 1 }}>
-            <StackLayout gap={0.75} align="baseline" padding={0}>
-              <Text styleAs="label" color="secondary">
-                <strong>Density</strong>
-              </Text>
-              <ToggleButtonGroup
-                className={styles.compactToggleGroup}
-                aria-label="Select density"
-                value={density}
-                onChange={(event) =>
-                  controls.onDensityChange(event.currentTarget.value as Density)
-                }
-              >
-                {densities.map((value) => (
-                  <ToggleButton key={value} value={value}>
-                    {capitalize(value)}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
-            </StackLayout>
+            {controls.onDensityChange ? (
+              <StackLayout gap={0.75} align="baseline" padding={0}>
+                <Text styleAs="label" color="secondary">
+                  <strong>Density</strong>
+                </Text>
+                <ToggleButtonGroup
+                  className={styles.compactToggleGroup}
+                  aria-label="Select density"
+                  value={density}
+                  onChange={(event) =>
+                    controls.onDensityChange?.(
+                      event.currentTarget.value as Density,
+                    )
+                  }
+                >
+                  {densities.map((value) => (
+                    <ToggleButton key={value} value={value}>
+                      {capitalize(value)}
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
+              </StackLayout>
+            ) : null}
             <StackLayout gap={0.75} align="baseline" padding={0}>
               <Text styleAs="label" color="secondary">
                 <strong>Mode</strong>

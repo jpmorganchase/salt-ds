@@ -1,19 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  type Density,
-  type DensityOverrides,
-  type Mode,
-  type ThemeType,
-  TokenTable,
-} from "./TokenTable";
+import { type Mode, type ThemeType, TokenTable } from "./TokenTable";
 import type { TokenGroups } from "./tokenData";
 
 type CssVariableData = Record<string, string>;
 type ThemeTokenData = {
   characteristics: CssVariableData;
   foundations: CssVariableData;
-  characteristicDensity: DensityOverrides;
-  foundationDensity: DensityOverrides;
 };
 type ThemeTokenTables = Record<ThemeType, ThemeTokenData>;
 
@@ -25,34 +17,20 @@ function loadThemeTokenTables() {
     import("./cssFoundations-legacy.json"),
     import("./cssCharacteristics-next.json"),
     import("./cssCharacteristics-legacy.json"),
-    import("./cssFoundationsDensity-next.json"),
-    import("./cssFoundationsDensity-legacy.json"),
-    import("./cssCharacteristicsDensity-next.json"),
-    import("./cssCharacteristicsDensity-legacy.json"),
   ]).then(
     ([
       nextFoundations,
       legacyFoundations,
       nextCharacteristics,
       legacyCharacteristics,
-      nextFoundationDensity,
-      legacyFoundationDensity,
-      nextCharacteristicDensity,
-      legacyCharacteristicDensity,
     ]) => ({
       next: {
         characteristics: nextCharacteristics.default as CssVariableData,
         foundations: nextFoundations.default as CssVariableData,
-        characteristicDensity:
-          nextCharacteristicDensity.default as DensityOverrides,
-        foundationDensity: nextFoundationDensity.default as DensityOverrides,
       },
       legacy: {
         characteristics: legacyCharacteristics.default as CssVariableData,
         foundations: legacyFoundations.default as CssVariableData,
-        characteristicDensity:
-          legacyCharacteristicDensity.default as DensityOverrides,
-        foundationDensity: legacyFoundationDensity.default as DensityOverrides,
       },
     }),
   );
@@ -62,7 +40,6 @@ function loadThemeTokenTables() {
 
 export const TokenTableWithControls = ({ tokens }: { tokens: string[] }) => {
   const [theme, setTheme] = useState<ThemeType>("next");
-  const [density, setDensity] = useState<Density>("medium");
   const [mode, setMode] = useState<Mode>("system");
   const [themeTables, setThemeTables] = useState<ThemeTokenTables | null>(null);
 
@@ -104,28 +81,14 @@ export const TokenTableWithControls = ({ tokens }: { tokens: string[] }) => {
     };
   }, [selectedTable, tokens]);
 
-  const densityOverrides = useMemo<DensityOverrides | null>(() => {
-    if (!selectedTable) {
-      return null;
-    }
-
-    return {
-      ...selectedTable.foundationDensity,
-      ...selectedTable.characteristicDensity,
-    };
-  }, [selectedTable]);
-
   return (
     <TokenTable
       tier="characteristic"
       groupedRows={groupedRows}
-      densityOverrides={densityOverrides}
       loadingLabel="Loading tokens"
-      density={density}
       mode={mode}
       theme={theme}
       controls={{
-        onDensityChange: setDensity,
         onModeChange: setMode,
         onThemeChange: setTheme,
       }}
