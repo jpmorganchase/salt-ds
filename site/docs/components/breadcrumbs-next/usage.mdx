@@ -1,0 +1,43 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+Use `BreadcrumbsNext` with `BreadcrumbNext` children to show a trail of navigation levels. Compose each level as a `BreadcrumbNext` item inside the parent `BreadcrumbsNext` container.
+
+For broader guidance on when and how to use breadcrumbs in product layouts, see the [Breadcrumbs pattern](/salt/patterns/breadcrumbs).
+
+### When to use
+
+- When users navigate through related pages or drill down into nested content.
+- When you need to show the current location within a hierarchy alongside the main navigation.
+
+### When not to use
+
+- When there is only one level in a hierarchy.
+- As a replacement for the application's primary navigation.
+
+## Import
+
+To import `BreadcrumbsNext` and `BreadcrumbNext` from the lab Salt package, use:
+
+```js
+import { BreadcrumbNext, BreadcrumbsNext } from "@salt-ds/lab";
+```
+
+## Props
+
+### `BreadcrumbsNext`
+
+<PropsTable packageName="lab" componentName="BreadcrumbsNext" />
+
+### `BreadcrumbNext`
+
+<PropsTable packageName="lab" componentName="BreadcrumbNext" />
