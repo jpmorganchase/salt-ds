@@ -4301,6 +4301,7 @@ __metadata:
     "@salt-ds/window": "workspace:*"
     "@types/react-window": "npm:^1.8.2"
     clsx: "npm:^2.0.0"
+    compute-scroll-into-view: "npm:^3.0.0"
     dom-accessibility-api: "npm:^0.7.1"
     react-window: "npm:^1.8.6"
     tabbable: "npm:^6.0.0"
