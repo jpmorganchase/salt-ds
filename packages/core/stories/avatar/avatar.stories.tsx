@@ -39,6 +39,21 @@ export const Sizes: StoryFn<typeof Avatar> = (args) => {
   );
 };
 
+const shapes = ["round", "square"] as const;
+
+export const Shape: StoryFn<typeof Avatar> = (args) => {
+  return (
+    <FlowLayout gap={7} align="end">
+      {shapes.map((shape) => (
+        <StackLayout key={shape} align="center">
+          <Avatar {...args} shape={shape} name="Alex Brailescu" />
+          <Label>shape: {shape}</Label>
+        </StackLayout>
+      ))}
+    </FlowLayout>
+  );
+};
+
 export const Fallback: StoryFn<typeof Avatar> = ({ size }) => {
   return (
     <FlowLayout>

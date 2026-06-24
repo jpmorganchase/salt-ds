@@ -40,6 +40,10 @@
   --avatar-background: var(--salt-sentiment-accent-background);
 }
 
+.saltAvatar-square {
+  border-radius: var(--saltAvatar-borderRadius, var(--salt-palette-corner-weak, 0));
+}
+
 .saltAvatar-category-1 {
   --avatar-background: var(--salt-category-1-bold-background);
 }
