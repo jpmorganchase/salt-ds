@@ -740,7 +740,7 @@ export const WithActionItem: StoryFn = () => (
           <MegaMenuTrigger>
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
-          <MegaMenuPanel>
+          <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
@@ -780,7 +780,7 @@ export const WithRenderProp: StoryFn = () => (
           <MegaMenuTrigger>
             <NavigationItem>Solutions</NavigationItem>
           </MegaMenuTrigger>
-          <MegaMenuPanel>
+          <MegaMenuPanel aria-label="Solutions menu">
             <MegaMenuContent>
               <MegaMenuGroups>
                 <MegaMenuGroup>
@@ -823,7 +823,7 @@ export const WithCustomHeadingId: StoryFn = () => (
               Financial Services
             </MegaMenuGroupHeading>
             <MegaMenuList>
-              <MegaMenuListItem href="/digital-banking">
+              <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
                 Digital Banking
               </MegaMenuListItem>
             </MegaMenuList>
@@ -845,7 +845,7 @@ export const WithoutGroupHeading: StoryFn = () => (
         <MegaMenuGroups>
           <MegaMenuGroup>
             <MegaMenuList>
-              <MegaMenuListItem href="/digital-banking">
+              <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
                 Digital Banking
               </MegaMenuListItem>
             </MegaMenuList>
@@ -875,7 +875,7 @@ export const WithExtraGroupLabel: StoryFn = () => (
             </Text>
             <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
             <MegaMenuList aria-labelledby="extra-label">
-              <MegaMenuListItem href="/digital-banking">
+              <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
                 Digital Banking
               </MegaMenuListItem>
             </MegaMenuList>
