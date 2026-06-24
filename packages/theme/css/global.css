@@ -1,5 +1,7 @@
 /**
- * Have some global styles to simulate more realistic app. Currently only for Storybook.
+ * Theme-level resets and utilities. Bundled into @salt-ds/theme via index.css
+ * (`@import url(css/global.css);`) and applied wherever <SaltProvider /> renders
+ * its `.salt-theme` class — i.e. all real consumers, not just Storybook.
  */
 
 .salt-theme {
@@ -8,6 +10,8 @@
   font-size: var(--salt-text-fontSize);
   letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-lineHeight);
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .salt-theme[data-mode="light"] {

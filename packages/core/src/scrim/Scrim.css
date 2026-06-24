@@ -12,7 +12,6 @@
   align-items: center;
   justify-content: center;
   background: var(--saltScrim-background, var(--salt-overlayable-background));
-  -webkit-tap-highlight-color: transparent;
 }
 
 .saltScrim:focus {

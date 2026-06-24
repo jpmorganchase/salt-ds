@@ -27,7 +27,6 @@
   transition: none;
   width: var(--saltButton-width, auto);
   -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
   /* Styles applied to align children*/
   font-weight: var(--saltButton-fontWeight, var(--salt-text-action-fontWeight));
 }

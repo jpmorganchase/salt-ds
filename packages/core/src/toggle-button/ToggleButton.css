@@ -30,7 +30,6 @@
   transition: none;
   width: auto;
   -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .saltToggleButton:focus-visible {
