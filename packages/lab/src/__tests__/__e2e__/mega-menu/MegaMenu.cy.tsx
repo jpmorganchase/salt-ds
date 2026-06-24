@@ -51,7 +51,6 @@ describe("Given the Baseline MegaMenu example", () => {
     cy.get("body").click(0, 0);
     cy.get(".saltMegaMenuPanel").should("not.exist");
   });
-
 });
 
 describe("Given a controlled MegaMenu", () => {
