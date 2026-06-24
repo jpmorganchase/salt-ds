@@ -8,6 +8,14 @@ data:
   $ref: ./#/data
 ---
 
-`BreadcrumbsNext` renders a `<nav>` element with `aria-label="Breadcrumb"` and an ordered list of `BreadcrumbNext` items. Ensure each breadcrumb level has meaningful text content and that the current level is clearly distinguishable from preceding levels once interactive behavior is implemented.
+`BreadcrumbsNext` renders a `<nav>` landmark and an ordered list of `BreadcrumbNext` items. Name the landmark with native `aria-label` or `aria-labelledby` props so the accessible name matches your product context.
+
+Each breadcrumb level is represented by one list item. Previous hierarchy levels render as links through `BreadcrumbNextTrigger`, while the current level renders as text with `aria-current="page"`. If no item has `current`, the final breadcrumb is treated as the current page.
+
+When composing tooltips or custom label content, wrap `BreadcrumbNextTrigger` so the tooltip attaches to the real link or current text element. Use `BreadcrumbNextLabel` for the visible label when you need to measure truncation, and provide `label` on `BreadcrumbNext` so collapsed menus have a stable accessible label.
+
+Separators are visual only and use `aria-hidden`. When breadcrumbs collapse, the menu or inline expansion trigger is keyboard reachable and has an accessible name. Menu focus behavior comes from Salt `Menu`; inline expansion uses Salt `Button`.
+
+When using `wrap`, ensure the surrounding layout leaves enough space for breadcrumb labels to remain understandable. Product code should usually hide single-level trails rather than rendering a breadcrumb for the current page alone.
 
 For broader accessibility guidance, refer to the [Breadcrumbs pattern](/salt/patterns/breadcrumbs).
