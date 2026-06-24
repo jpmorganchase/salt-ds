@@ -6,7 +6,12 @@ data:
   package:
     name: "@salt-ds/lab"
   alsoKnownAs: ["Breadcrumb trail", "Secondary navigation"]
-  relatedComponents: [{ name: "Link", relationship: "contains" }]
+  relatedComponents:
+    [
+      { name: "Link", relationship: "contains" },
+      { name: "Menu", relationship: "contains" },
+      { name: "Button", relationship: "contains" },
+    ]
 keywords:
   $ref: "#/data/alsoKnownAs"
 layout: DetailComponent

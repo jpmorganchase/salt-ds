@@ -10,7 +10,7 @@ data:
 
 ## Using the component
 
-Use `BreadcrumbsNext` with `BreadcrumbNext` children to show a trail of navigation levels. Compose each level as a `BreadcrumbNext` item inside the parent `BreadcrumbsNext` container.
+Use `BreadcrumbsNext` with `BreadcrumbNext` items to show a trail of navigation levels. The parent renders the navigation landmark, ordered list, separators, collapse controls, and default current-item behavior.
 
 For broader guidance on when and how to use breadcrumbs in product layouts, see the [Breadcrumbs pattern](/salt/patterns/breadcrumbs).
 
@@ -29,8 +29,60 @@ For broader guidance on when and how to use breadcrumbs in product layouts, see 
 To import `BreadcrumbsNext` and `BreadcrumbNext` from the lab Salt package, use:
 
 ```js
-import { BreadcrumbNext, BreadcrumbsNext } from "@salt-ds/lab";
+import {
+  BreadcrumbNext,
+  BreadcrumbNextLabel,
+  BreadcrumbNextTrigger,
+  BreadcrumbsNext,
+} from "@salt-ds/lab";
 ```
+
+## Breadcrumb items
+
+Use `label` for the common case. Previous hierarchy levels should provide `href` and render as Salt `Link` elements. The current level renders as text with `aria-current="page"` and is not linked by default.
+
+```tsx
+<BreadcrumbsNext aria-label="Breadcrumb">
+  <BreadcrumbNext href="/accounts" label="Accounts" />
+  <BreadcrumbNext href="/accounts/asset-management" label="Asset management" />
+  <BreadcrumbNext label="Portfolio" />
+</BreadcrumbsNext>
+```
+
+If no child explicitly sets `current`, `BreadcrumbsNext` treats the final `BreadcrumbNext` child as the current page. Set `current` on a child when the current level needs to be declared explicitly.
+
+For advanced composition, such as adding a tooltip or an icon inside the trigger, compose `BreadcrumbNextTrigger` and `BreadcrumbNextLabel` as children. Provide `label` as the canonical item label so collapsed menus can render the breadcrumb without inspecting custom child content:
+
+```tsx
+<BreadcrumbNext href="/accounts/asset-management" label="Asset management">
+  <Tooltip
+    content="Asset management · Mandate: Discretionary · Region: EMEA"
+    placement="top"
+  >
+    <BreadcrumbNextTrigger>
+      <BreadcrumbNextLabel>Asset management</BreadcrumbNextLabel>
+    </BreadcrumbNextTrigger>
+  </Tooltip>
+</BreadcrumbNext>
+```
+
+## Routing
+
+Use the `render` prop on `BreadcrumbNext` to integrate with a router. The prop follows the same render-prop pattern as Salt `Link`, so product code can provide a Next.js, React Router, or internal routing component while `BreadcrumbsNext` still owns the breadcrumb semantics.
+
+`BreadcrumbsNext` does not infer route data from `window.location`. Product code should map its route model to `BreadcrumbNext` children.
+
+## Collapse and wrapping
+
+By default, breadcrumbs render on a single line and do not collapse unless `maxItems` is set. Use `wrap` when the trail can flow onto multiple lines.
+
+When the number of breadcrumbs exceeds `maxItems`, `collapseMode="menu"` hides the middle range behind a menu trigger. Use `collapseMode="expand"` to reveal hidden breadcrumbs inline with a controlled or uncontrolled expansion state.
+
+Single-level trails are usually hidden by product code rather than suppressed by the component. Render one breadcrumb only when that is intentional for the page.
+
+## Migration notes
+
+`BreadcrumbsNext` is a Labs component intended to replace hand-composed breadcrumb patterns before a deliberate core promotion. It differs from the older Lab `Breadcrumbs` API: the current item is derived from `current` or the final child, separators are component-owned, collapse uses Salt `Menu` primitives, and `maxItems` has no default threshold.
 
 ## Props
 
@@ -41,3 +93,11 @@ import { BreadcrumbNext, BreadcrumbsNext } from "@salt-ds/lab";
 ### `BreadcrumbNext`
 
 <PropsTable packageName="lab" componentName="BreadcrumbNext" />
+
+### `BreadcrumbNextTrigger`
+
+<PropsTable packageName="lab" componentName="BreadcrumbNextTrigger" />
+
+### `BreadcrumbNextLabel`
+
+<PropsTable packageName="lab" componentName="BreadcrumbNextLabel" />
