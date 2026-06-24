@@ -62,7 +62,12 @@ export const ExplicitCurrent: StoryFn<typeof BreadcrumbsNext> = (props) => (
 
 export const WithIcon: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props}>
-    <BreadcrumbNext href="#" icon={HomeIcon} label="Accounts" />
+    <BreadcrumbNext href="#" label="Accounts">
+      <BreadcrumbNextTrigger>
+        <HomeIcon aria-hidden />
+        <BreadcrumbNextLabel>Accounts</BreadcrumbNextLabel>
+      </BreadcrumbNextTrigger>
+    </BreadcrumbNext>
     <BreadcrumbNext href="#" label="Asset management" />
     <BreadcrumbNext label="Portfolio" />
   </BreadcrumbsNext>

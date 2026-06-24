@@ -1,12 +1,9 @@
-import { type LinkProps, makePrefixer } from "@salt-ds/core";
-import type { IconProps } from "@salt-ds/icons";
-import { ChevronRightIcon } from "@salt-ds/icons";
+import { type LinkProps, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ComponentType,
   forwardRef,
   type ReactNode,
 } from "react";
@@ -32,10 +29,6 @@ export interface BreadcrumbNextProps
    */
   current?: boolean;
   /**
-   * Optional icon displayed before the label in the default trigger.
-   */
-  icon?: ComponentType<IconProps>;
-  /**
    * Breadcrumb label. Used as the canonical item label for generated content
    * and collapsed menu items.
    */
@@ -57,7 +50,6 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
       className,
       current: currentProp,
       href,
-      icon: Icon,
       label,
       render,
       ...rest
@@ -73,16 +65,12 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
     const current = parentContext?.current ?? Boolean(currentProp);
     const showSeparator = parentContext?.showSeparator ?? false;
     const triggerRef = parentContext?.triggerRef;
+    const { BreadcrumbSeparatorIcon } = useIcon();
     const primitiveChildren = isPrimitiveLabel(children) ? children : undefined;
     const defaultLabel = label ?? primitiveChildren;
     const content =
       children === undefined || primitiveChildren !== undefined ? (
         <BreadcrumbNextTrigger>
-          {Icon ? (
-            <span className={withBaseName("icon")}>
-              <Icon aria-hidden />
-            </span>
-          ) : null}
           <BreadcrumbNextLabel>{defaultLabel}</BreadcrumbNextLabel>
         </BreadcrumbNextTrigger>
       ) : (
@@ -102,7 +90,7 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
         <BreadcrumbNextContext.Provider value={context}>
           {content}
           {showSeparator ? (
-            <ChevronRightIcon
+            <BreadcrumbSeparatorIcon
               aria-hidden
               className={withBaseName("separator")}
             />

@@ -37,6 +37,7 @@ import { WarningAdornmentIcon } from "../status-adornment/WarningAdornment";
 
 export interface SemanticIconMap {
   ActiveIcon: ElementType;
+  BreadcrumbSeparatorIcon: ElementType;
   CalendarIcon: ElementType;
   CloseIcon: ElementType;
   CollapseGroupIcon: ElementType;
@@ -83,6 +84,7 @@ export interface SemanticIconProviderProps {
 
 const defaultIconMap: SemanticIconMap = {
   ActiveIcon: StepActiveIcon,
+  BreadcrumbSeparatorIcon: ChevronRightIcon,
   CalendarIcon: CalendarIcon,
   CloseIcon: CloseIcon,
   CollapseGroupIcon: ChevronDownIcon,
