@@ -29,6 +29,7 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import type { CSSProperties } from "react";
 import "./mega-menu.stories.css";
 
 export default {
@@ -36,33 +37,42 @@ export default {
   component: MegaMenu,
 } as Meta;
 
+const frame = (inlineSize: number, blockSize: number): CSSProperties => ({
+  inlineSize,
+  blockSize,
+});
+
 export const Default: StoryFn<QAContainerProps> = () => (
-  <QAContainer vertical itemPadding={180}>
-    <MegaMenu defaultOpen>
-      <MegaMenuTrigger>
-        <NavigationItem>Solutions</NavigationItem>
-      </MegaMenuTrigger>
-      <MegaMenuPanel aria-label="Solutions menu">
-        <MegaMenuContent>
-          <MegaMenuGroups>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
-                <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Patient management</MegaMenuListItem>
-                <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-          </MegaMenuGroups>
-        </MegaMenuContent>
-      </MegaMenuPanel>
-    </MegaMenu>
+  <QAContainer itemWidthAuto vertical transposeDensity height="auto">
+    <div className="mega-menu-qa-frame" style={frame(600, 480)}>
+      <MegaMenu defaultOpen>
+        <MegaMenuTrigger>
+          <NavigationItem>Solutions</NavigationItem>
+        </MegaMenuTrigger>
+        <MegaMenuPanel aria-label="Solutions menu">
+          <MegaMenuContent>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
+                  <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">
+                    Patient management
+                  </MegaMenuListItem>
+                  <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+          </MegaMenuContent>
+        </MegaMenuPanel>
+      </MegaMenu>
+    </div>
   </QAContainer>
 );
 Default.parameters = {
@@ -70,73 +80,75 @@ Default.parameters = {
 };
 
 export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
-  <QAContainer vertical itemPadding={180}>
-    <nav>
-      <StackLayout
-        as="ul"
-        direction="row"
-        gap={1}
-        style={{ listStyle: "none", padding: 0 }}
-      >
-        <li>
-          <MegaMenu>
-            <MegaMenuTrigger>
-              <NavigationItem>Solutions</NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Solutions menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem href="#">Item</MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu defaultOpen>
-            <MegaMenuTrigger>
-              <NavigationItem>Services</NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Services menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem href="#">Item</MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-        <li>
-          <MegaMenu>
-            <MegaMenuTrigger>
-              <NavigationItem>Resources</NavigationItem>
-            </MegaMenuTrigger>
-            <MegaMenuPanel aria-label="Resources menu">
-              <MegaMenuContent>
-                <MegaMenuGroups>
-                  <MegaMenuGroup>
-                    <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
-                    <MegaMenuList>
-                      <MegaMenuListItem href="#">Item</MegaMenuListItem>
-                    </MegaMenuList>
-                  </MegaMenuGroup>
-                </MegaMenuGroups>
-              </MegaMenuContent>
-            </MegaMenuPanel>
-          </MegaMenu>
-        </li>
-      </StackLayout>
-    </nav>
+  <QAContainer itemWidthAuto vertical transposeDensity height="auto">
+    <div className="mega-menu-qa-frame" style={frame(480, 420)}>
+      <nav>
+        <StackLayout
+          as="ul"
+          direction="row"
+          gap={1}
+          style={{ listStyle: "none", padding: 0 }}
+        >
+          <li>
+            <MegaMenu>
+              <MegaMenuTrigger>
+                <NavigationItem>Solutions</NavigationItem>
+              </MegaMenuTrigger>
+              <MegaMenuPanel aria-label="Solutions menu">
+                <MegaMenuContent>
+                  <MegaMenuGroups>
+                    <MegaMenuGroup>
+                      <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
+                      <MegaMenuList>
+                        <MegaMenuListItem href="#">Item</MegaMenuListItem>
+                      </MegaMenuList>
+                    </MegaMenuGroup>
+                  </MegaMenuGroups>
+                </MegaMenuContent>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+          <li>
+            <MegaMenu defaultOpen>
+              <MegaMenuTrigger>
+                <NavigationItem>Services</NavigationItem>
+              </MegaMenuTrigger>
+              <MegaMenuPanel aria-label="Services menu">
+                <MegaMenuContent>
+                  <MegaMenuGroups>
+                    <MegaMenuGroup>
+                      <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
+                      <MegaMenuList>
+                        <MegaMenuListItem href="#">Item</MegaMenuListItem>
+                      </MegaMenuList>
+                    </MegaMenuGroup>
+                  </MegaMenuGroups>
+                </MegaMenuContent>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+          <li>
+            <MegaMenu>
+              <MegaMenuTrigger>
+                <NavigationItem>Resources</NavigationItem>
+              </MegaMenuTrigger>
+              <MegaMenuPanel aria-label="Resources menu">
+                <MegaMenuContent>
+                  <MegaMenuGroups>
+                    <MegaMenuGroup>
+                      <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
+                      <MegaMenuList>
+                        <MegaMenuListItem href="#">Item</MegaMenuListItem>
+                      </MegaMenuList>
+                    </MegaMenuGroup>
+                  </MegaMenuGroups>
+                </MegaMenuContent>
+              </MegaMenuPanel>
+            </MegaMenu>
+          </li>
+        </StackLayout>
+      </nav>
+    </div>
   </QAContainer>
 );
 MultipleTriggers.parameters = {
@@ -144,48 +156,50 @@ MultipleTriggers.parameters = {
 };
 
 export const WithIcons: StoryFn<QAContainerProps> = () => (
-  <QAContainer vertical itemPadding={180}>
-    <MegaMenu defaultOpen>
-      <MegaMenuTrigger>
-        <NavigationItem>Solutions</NavigationItem>
-      </MegaMenuTrigger>
-      <MegaMenuPanel aria-label="Solutions menu">
-        <MegaMenuContent>
-          <MegaMenuGroups>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">
-                  <DevicesIcon aria-hidden />
-                  Digital banking
-                </MegaMenuListItem>
-                <MegaMenuListItem href="#">
-                  <DatasetManagerIcon aria-hidden />
-                  Risk management
-                </MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">
-                  <UserSearchIcon aria-hidden />
-                  Patient management
-                </MegaMenuListItem>
-                <MegaMenuListItem href="#">
-                  <CallIcon aria-hidden />
-                  Telemedicine
-                </MegaMenuListItem>
-                <MegaMenuListItem href="#">
-                  <PasteIcon aria-hidden />
-                  Compliance solutions
-                </MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-          </MegaMenuGroups>
-        </MegaMenuContent>
-      </MegaMenuPanel>
-    </MegaMenu>
+  <QAContainer itemWidthAuto vertical transposeDensity height="auto">
+    <div className="mega-menu-qa-frame" style={frame(600, 560)}>
+      <MegaMenu defaultOpen>
+        <MegaMenuTrigger>
+          <NavigationItem>Solutions</NavigationItem>
+        </MegaMenuTrigger>
+        <MegaMenuPanel aria-label="Solutions menu">
+          <MegaMenuContent>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">
+                    <DevicesIcon aria-hidden />
+                    Digital banking
+                  </MegaMenuListItem>
+                  <MegaMenuListItem href="#">
+                    <DatasetManagerIcon aria-hidden />
+                    Risk management
+                  </MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">
+                    <UserSearchIcon aria-hidden />
+                    Patient management
+                  </MegaMenuListItem>
+                  <MegaMenuListItem href="#">
+                    <CallIcon aria-hidden />
+                    Telemedicine
+                  </MegaMenuListItem>
+                  <MegaMenuListItem href="#">
+                    <PasteIcon aria-hidden />
+                    Compliance solutions
+                  </MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+          </MegaMenuContent>
+        </MegaMenuPanel>
+      </MegaMenu>
+    </div>
   </QAContainer>
 );
 WithIcons.parameters = {
@@ -193,44 +207,48 @@ WithIcons.parameters = {
 };
 
 export const WithAdornment: StoryFn<QAContainerProps> = () => (
-  <QAContainer vertical itemPadding={180}>
-    <MegaMenu defaultOpen>
-      <MegaMenuTrigger>
-        <NavigationItem>Solutions</NavigationItem>
-      </MegaMenuTrigger>
-      <MegaMenuPanel aria-label="Solutions menu">
-        <MegaMenuContent>
-          <MegaMenuGroups>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Patient management</MegaMenuListItem>
-                <MegaMenuListItem href="#">
-                  Telemedicine
-                  <div className="menu-item-adornment">
-                    <Tag category={1} variant="primary">
-                      Premium
-                    </Tag>
-                  </div>
-                </MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Resources</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">
-                  Release notes
-                  <div className="menu-item-adornment">
-                    <Badge />
-                  </div>
-                </MegaMenuListItem>
-                <MegaMenuListItem href="#">FAQs</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-          </MegaMenuGroups>
-        </MegaMenuContent>
-      </MegaMenuPanel>
-    </MegaMenu>
+  <QAContainer itemWidthAuto vertical transposeDensity height="auto">
+    <div className="mega-menu-qa-frame" style={frame(600, 480)}>
+      <MegaMenu defaultOpen>
+        <MegaMenuTrigger>
+          <NavigationItem>Solutions</NavigationItem>
+        </MegaMenuTrigger>
+        <MegaMenuPanel aria-label="Solutions menu">
+          <MegaMenuContent>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">
+                    Patient management
+                  </MegaMenuListItem>
+                  <MegaMenuListItem href="#">
+                    Telemedicine
+                    <div className="menu-item-adornment">
+                      <Tag category={1} variant="primary">
+                        Premium
+                      </Tag>
+                    </div>
+                  </MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Resources</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">
+                    Release notes
+                    <div className="menu-item-adornment">
+                      <Badge />
+                    </div>
+                  </MegaMenuListItem>
+                  <MegaMenuListItem href="#">FAQs</MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+          </MegaMenuContent>
+        </MegaMenuPanel>
+      </MegaMenu>
+    </div>
   </QAContainer>
 );
 WithAdornment.parameters = {
@@ -238,61 +256,68 @@ WithAdornment.parameters = {
 };
 
 export const WithContent: StoryFn<QAContainerProps> = () => (
-  <QAContainer vertical itemPadding={180}>
-    <MegaMenu defaultOpen>
-      <MegaMenuTrigger>
-        <NavigationItem>Solutions</NavigationItem>
-      </MegaMenuTrigger>
-      <MegaMenuPanel aria-label="Solutions menu">
-        <MegaMenuContent>
-          <MegaMenuGroups>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
-                <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Patient management</MegaMenuListItem>
-                <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-          </MegaMenuGroups>
-          <MegaMenuActions>
-            <FlexLayout gap={3}>
-              <Link color="primary" underline="default" href="#">
-                Book a demo
+  <QAContainer itemWidthAuto vertical transposeDensity height="auto">
+    <div
+      className="mega-menu-qa-frame mega-menu-qa-stacked-themes"
+      style={frame(1040, 500)}
+    >
+      <MegaMenu defaultOpen>
+        <MegaMenuTrigger>
+          <NavigationItem>Solutions</NavigationItem>
+        </MegaMenuTrigger>
+        <MegaMenuPanel aria-label="Solutions menu">
+          <MegaMenuContent>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
+                  <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">
+                    Patient management
+                  </MegaMenuListItem>
+                  <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+            <MegaMenuActions>
+              <FlexLayout gap={3}>
+                <Link color="primary" underline="default" href="#">
+                  Book a demo
+                </Link>
+                <Link color="primary" underline="default" href="#">
+                  Support center
+                </Link>
+              </FlexLayout>
+            </MegaMenuActions>
+          </MegaMenuContent>
+          <MegaMenuAside>
+            <StackLayout gap={1} style={{ maxWidth: 240 }}>
+              <Text styleAs="h2" as="h2">
+                Featured resource
+              </Text>
+              <Text>
+                Explore our latest accessibility guidelines to ensure your
+                components meet ADA standards.
+              </Text>
+              <Link
+                color="primary"
+                underline="default"
+                href="#"
+                style={{ width: "fit-content" }}
+              >
+                View guidelines
               </Link>
-              <Link color="primary" underline="default" href="#">
-                Support center
-              </Link>
-            </FlexLayout>
-          </MegaMenuActions>
-        </MegaMenuContent>
-        <MegaMenuAside>
-          <StackLayout gap={1} style={{ maxWidth: 240 }}>
-            <Text styleAs="h2" as="h2">
-              Featured resource
-            </Text>
-            <Text>
-              Explore our latest accessibility guidelines to ensure your
-              components meet ADA standards.
-            </Text>
-            <Link
-              color="primary"
-              underline="default"
-              href="#"
-              style={{ width: "fit-content" }}
-            >
-              View guidelines
-            </Link>
-          </StackLayout>
-        </MegaMenuAside>
-      </MegaMenuPanel>
-    </MegaMenu>
+            </StackLayout>
+          </MegaMenuAside>
+        </MegaMenuPanel>
+      </MegaMenu>
+    </div>
   </QAContainer>
 );
 WithContent.parameters = {
@@ -360,8 +385,13 @@ const flankedRegions = (panelClassName?: string) => (
 );
 
 export const RegionsLayoutLTR: StoryFn<QAContainerProps> = () => (
-  <QAContainer cols={1} itemPadding={180}>
-    {flankedRegions()}
+  <QAContainer itemWidthAuto vertical transposeDensity height="auto">
+    <div
+      className="mega-menu-qa-frame mega-menu-qa-stacked-themes"
+      style={frame(1040, 500)}
+    >
+      {flankedRegions()}
+    </div>
   </QAContainer>
 );
 RegionsLayoutLTR.parameters = {
@@ -369,8 +399,14 @@ RegionsLayoutLTR.parameters = {
 };
 
 export const RegionsLayoutRTL: StoryFn<QAContainerProps> = () => (
-  <QAContainer cols={1} itemPadding={180}>
-    <div dir="rtl">{flankedRegions()}</div>
+  <QAContainer itemWidthAuto vertical transposeDensity height="auto">
+    <div
+      className="mega-menu-qa-frame mega-menu-qa-stacked-themes"
+      style={frame(1040, 500)}
+      dir="rtl"
+    >
+      {flankedRegions()}
+    </div>
   </QAContainer>
 );
 RegionsLayoutRTL.parameters = {
@@ -378,8 +414,16 @@ RegionsLayoutRTL.parameters = {
 };
 
 export const RegionsLayoutSmallViewport: StoryFn<QAContainerProps> = () => (
-  <QAContainer cols={1} densities={["medium"]} itemPadding={40}>
-    {flankedRegions("mega-menu-regions-stacked")}
+  <QAContainer
+    itemWidthAuto
+    vertical
+    transposeDensity
+    densities={["medium"]}
+    height="auto"
+  >
+    <div className="mega-menu-qa-frame" style={frame(360, 800)}>
+      {flankedRegions("mega-menu-regions-stacked")}
+    </div>
   </QAContainer>
 );
 RegionsLayoutSmallViewport.parameters = {
@@ -387,28 +431,30 @@ RegionsLayoutSmallViewport.parameters = {
 };
 
 export const Overflow: StoryFn<QAContainerProps> = () => (
-  <QAContainer cols={1} itemPadding={40}>
-    <MegaMenu defaultOpen>
-      <MegaMenuTrigger>
-        <NavigationItem>Solutions</NavigationItem>
-      </MegaMenuTrigger>
-      <MegaMenuPanel aria-label="Solutions menu" className="mega-menu-capped">
-        <MegaMenuContent>
-          <MegaMenuGroups>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>All solutions</MegaMenuGroupHeading>
-              <MegaMenuList>
-                {Array.from({ length: 24 }, (_, index) => (
-                  <MegaMenuListItem key={index} href="#">
-                    Solution {index + 1}
-                  </MegaMenuListItem>
-                ))}
-              </MegaMenuList>
-            </MegaMenuGroup>
-          </MegaMenuGroups>
-        </MegaMenuContent>
-      </MegaMenuPanel>
-    </MegaMenu>
+  <QAContainer itemWidthAuto vertical transposeDensity height="auto">
+    <div className="mega-menu-qa-frame" style={frame(360, 440)}>
+      <MegaMenu defaultOpen>
+        <MegaMenuTrigger>
+          <NavigationItem>Solutions</NavigationItem>
+        </MegaMenuTrigger>
+        <MegaMenuPanel aria-label="Solutions menu" className="mega-menu-capped">
+          <MegaMenuContent>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>All solutions</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  {Array.from({ length: 24 }, (_, index) => (
+                    <MegaMenuListItem key={index} href="#">
+                      Solution {index + 1}
+                    </MegaMenuListItem>
+                  ))}
+                </MegaMenuList>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+          </MegaMenuContent>
+        </MegaMenuPanel>
+      </MegaMenu>
+    </div>
   </QAContainer>
 );
 Overflow.parameters = {
@@ -416,35 +462,45 @@ Overflow.parameters = {
 };
 
 export const SmallViewport: StoryFn<QAContainerProps> = () => (
-  <QAContainer cols={1} densities={["medium"]} itemPadding={40}>
-    <MegaMenu defaultOpen>
-      <MegaMenuTrigger>
-        <NavigationItem>Solutions</NavigationItem>
-      </MegaMenuTrigger>
-      <MegaMenuPanel
-        aria-label="Solutions menu"
-        className="mega-menu-small-viewport"
-      >
-        <MegaMenuContent>
-          <MegaMenuGroups>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
-                <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Patient management</MegaMenuListItem>
-                <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-          </MegaMenuGroups>
-        </MegaMenuContent>
-      </MegaMenuPanel>
-    </MegaMenu>
+  <QAContainer
+    itemWidthAuto
+    vertical
+    transposeDensity
+    densities={["medium"]}
+    height="auto"
+  >
+    <div className="mega-menu-qa-frame" style={frame(360, 360)}>
+      <MegaMenu defaultOpen>
+        <MegaMenuTrigger>
+          <NavigationItem>Solutions</NavigationItem>
+        </MegaMenuTrigger>
+        <MegaMenuPanel
+          aria-label="Solutions menu"
+          className="mega-menu-small-viewport"
+        >
+          <MegaMenuContent>
+            <MegaMenuGroups>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
+                  <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+              <MegaMenuGroup>
+                <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+                <MegaMenuList>
+                  <MegaMenuListItem href="#">
+                    Patient management
+                  </MegaMenuListItem>
+                  <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
+                </MegaMenuList>
+              </MegaMenuGroup>
+            </MegaMenuGroups>
+          </MegaMenuContent>
+        </MegaMenuPanel>
+      </MegaMenu>
+    </div>
   </QAContainer>
 );
 SmallViewport.parameters = {

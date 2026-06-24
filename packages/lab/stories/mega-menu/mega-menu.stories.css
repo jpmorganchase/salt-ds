@@ -18,6 +18,40 @@
   --saltMegaMenuGroups-columnWidth: 16rem;
 }
 
+/* Fixed-size frame for QA snapshots: reserves the open panel's footprint and
+   pins the trigger to the top, centred horizontally. Replaces ad-hoc cell padding. */
+.mega-menu-qa-frame {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* With transposeDensity the snapshots group by theme (all light, then all dark).
+   Stack the densities vertically within each theme group instead of side by side,
+   since mega menu panels are too wide to sit in a row. Scoped to mega menu blocks. */
+.background-block:has(.mega-menu-qa-frame) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+}
+
+/* Render the two theme groups (light, dark) side by side, each keeping its
+   vertical density stack. Container shrink-wraps to the frames — width auto-fits
+   the panels (the width prop can't be "auto"; it feeds the QAContainer calc chain). */
+.saltQAContainer:has(.mega-menu-qa-frame) {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--salt-spacing-300, 24px);
+  width: fit-content;
+}
+
+/* Opt-out for wide panels (with-content, regions): stack the theme groups
+   under each other instead of side by side. */
+.saltQAContainer:has(.mega-menu-qa-stacked-themes) {
+  flex-direction: column;
+}
+
 .menu-item-adornment {
   margin-inline-start: auto;
   display: flex;
