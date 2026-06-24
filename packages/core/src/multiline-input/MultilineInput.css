@@ -28,8 +28,10 @@
 }
 
 /* Style applied on hover */
-.saltMultilineInput:hover {
-  cursor: var(--salt-cursor-text);
+@media (any-hover: hover) {
+  .saltMultilineInput:hover {
+    cursor: var(--salt-cursor-text);
+  }
 }
 
 /* Style applied if `bordered={true}` */
@@ -37,29 +39,49 @@
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--multilineInput-borderColor);
 }
 
-.saltMultilineInput-bordered.saltMultilineInput:hover {
-  border-style: var(--salt-borderStyle-solid);
-  border-color: var(--multilineInput-borderColor-hover);
+@media (any-hover: hover) {
+  .saltMultilineInput-bordered.saltMultilineInput:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--multilineInput-borderColor-hover);
+  }
 }
 
 /* Style applied if focused or active when `bordered={true}` */
-.saltMultilineInput-bordered.saltMultilineInput-focused,
-.saltMultilineInput-bordered.saltMultilineInput-focused:hover {
+.saltMultilineInput-bordered.saltMultilineInput-focused {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--multilineInput-borderColor-active);
 }
 
+@media (any-hover: hover) {
+  .saltMultilineInput-bordered.saltMultilineInput-focused:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--multilineInput-borderColor-active);
+  }
+}
+
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
-.saltMultilineInput-bordered.saltMultilineInput-readOnly,
-.saltMultilineInput-bordered.saltMultilineInput-readOnly:hover {
+.saltMultilineInput-bordered.saltMultilineInput-readOnly {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-readonly);
 }
 
-.saltMultilineInput-bordered.saltMultilineInput-disabled,
-.saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
+@media (any-hover: hover) {
+  .saltMultilineInput-bordered.saltMultilineInput-readOnly:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--salt-editable-borderColor-readonly);
+  }
+}
+
+.saltMultilineInput-bordered.saltMultilineInput-disabled {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-disabled);
+}
+
+@media (any-hover: hover) {
+  .saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--salt-editable-borderColor-disabled);
+  }
 }
 
 /* Style for activation indicator */
@@ -71,32 +93,56 @@
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--multilineInput-borderColor);
 }
 
-.saltMultilineInput:hover .saltMultilineInput-activationIndicator {
-  border-bottom-style: var(--salt-borderStyle-solid);
-  border-bottom-color: var(--multilineInput-borderColor-hover);
+@media (any-hover: hover) {
+  .saltMultilineInput:hover .saltMultilineInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--multilineInput-borderColor-hover);
+  }
 }
 
-.saltMultilineInput-focused .saltMultilineInput-activationIndicator,
-.saltMultilineInput-focused:hover .saltMultilineInput-activationIndicator {
+.saltMultilineInput-focused .saltMultilineInput-activationIndicator {
   border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--multilineInput-borderColor-active);
 }
 
-.saltMultilineInput-readOnly .saltMultilineInput-activationIndicator,
-.saltMultilineInput-readOnly:hover .saltMultilineInput-activationIndicator {
+@media (any-hover: hover) {
+  .saltMultilineInput-focused:hover .saltMultilineInput-activationIndicator {
+    border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--multilineInput-borderColor-active);
+  }
+}
+
+.saltMultilineInput-readOnly .saltMultilineInput-activationIndicator {
   border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
-.saltMultilineInput-disabled .saltMultilineInput-activationIndicator,
-.saltMultilineInput-disabled:hover .saltMultilineInput-activationIndicator {
+@media (any-hover: hover) {
+  .saltMultilineInput-readOnly:hover .saltMultilineInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--salt-editable-borderColor-readonly);
+  }
+}
+
+.saltMultilineInput-disabled .saltMultilineInput-activationIndicator {
   border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
+@media (any-hover: hover) {
+  .saltMultilineInput-disabled:hover .saltMultilineInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--salt-editable-borderColor-disabled);
+  }
+}
+
 .saltMultilineInput-bordered .saltMultilineInput-activationIndicator,
-.saltMultilineInput-bordered.saltMultilineInput-readOnly .saltMultilineInput-activationIndicator,
-.saltMultilineInput-bordered.saltMultilineInput-disabled:hover .saltMultilineInput-activationIndicator {
+.saltMultilineInput-bordered.saltMultilineInput-readOnly .saltMultilineInput-activationIndicator {
   border-bottom-width: 0;
+}
+
+@media (any-hover: hover) {
+  .saltMultilineInput-bordered.saltMultilineInput-disabled:hover .saltMultilineInput-activationIndicator {
+    border-bottom-width: 0;
+  }
 }
 
 .saltMultilineInput-bordered.saltMultilineInput-focused .saltMultilineInput-activationIndicator {
@@ -168,10 +214,16 @@
 }
 
 /* Styling when focused */
-.saltMultilineInput-focused,
-.saltMultilineInput-focused:hover {
+.saltMultilineInput-focused {
   cursor: var(--salt-cursor-text);
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
+}
+
+@media (any-hover: hover) {
+  .saltMultilineInput-focused:hover {
+    cursor: var(--salt-cursor-text);
+    outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
+  }
 }
 
 /* Style applied if `readOnly={true}` */
@@ -181,11 +233,18 @@
 }
 
 /* Style applied to input if `disabled={true}` */
-.saltMultilineInput.saltMultilineInput-disabled,
-.saltMultilineInput.saltMultilineInput-disabled:hover {
+.saltMultilineInput.saltMultilineInput-disabled {
   background: var(--input-background-disabled);
   cursor: var(--salt-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
+}
+
+@media (any-hover: hover) {
+  .saltMultilineInput.saltMultilineInput-disabled:hover {
+    background: var(--input-background-disabled);
+    cursor: var(--salt-cursor-disabled);
+    color: var(--salt-content-primary-foreground-disabled);
+  }
 }
 
 .saltMultilineInput-disabled .saltMultilineInput-textarea {

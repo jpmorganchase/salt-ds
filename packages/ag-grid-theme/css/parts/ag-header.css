@@ -171,76 +171,78 @@
   outline-offset: -2px;
 }
 
-.ag-theme-salt-light .ag-header-cell-menu-button:hover,
-.ag-theme-salt-dark .ag-header-cell-menu-button:hover,
-.ag-theme-salt-compact-light .ag-header-cell-menu-button:hover,
-.ag-theme-salt-compact-dark .ag-header-cell-menu-button:hover,
-.ag-theme-salt-light .ag-header-cell-filter-button:hover,
-.ag-theme-salt-dark .ag-header-cell-filter-button:hover,
-.ag-theme-salt-compact-light .ag-header-cell-filter-button:hover,
-.ag-theme-salt-compact-dark .ag-header-cell-filter-button:hover,
-.ag-theme-salt-light .ag-panel-title-bar-button:hover,
-.ag-theme-salt-dark .ag-panel-title-bar-button:hover,
-.ag-theme-salt-compact-light .ag-panel-title-bar-button:hover,
-.ag-theme-salt-compact-dark .ag-panel-title-bar-button:hover,
-.ag-theme-salt-light .ag-header-expand-icon:hover,
-.ag-theme-salt-dark .ag-header-expand-icon:hover,
-.ag-theme-salt-compact-light .ag-header-expand-icon:hover,
-.ag-theme-salt-compact-dark .ag-header-expand-icon:hover,
-.ag-theme-salt-light .ag-column-group-icons:hover,
-.ag-theme-salt-dark .ag-column-group-icons:hover,
-.ag-theme-salt-compact-light .ag-column-group-icons:hover,
-.ag-theme-salt-compact-dark .ag-column-group-icons:hover,
-.ag-theme-salt-light .ag-set-filter-group-icons:hover,
-.ag-theme-salt-dark .ag-set-filter-group-icons:hover,
-.ag-theme-salt-compact-light .ag-set-filter-group-icons:hover,
-.ag-theme-salt-compact-dark .ag-set-filter-group-icons:hover,
-.ag-theme-salt-light .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-dark .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-compact-light .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-compact-dark .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-light .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-dark .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-compact-light .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-compact-dark .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-light .ag-chart-settings-prev:hover,
-.ag-theme-salt-dark .ag-chart-settings-prev:hover,
-.ag-theme-salt-compact-light .ag-chart-settings-prev:hover,
-.ag-theme-salt-compact-dark .ag-chart-settings-prev:hover,
-.ag-theme-salt-light .ag-chart-settings-next:hover,
-.ag-theme-salt-dark .ag-chart-settings-next:hover,
-.ag-theme-salt-compact-light .ag-chart-settings-next:hover,
-.ag-theme-salt-compact-dark .ag-chart-settings-next:hover,
-.ag-theme-salt-light .ag-group-title-bar-icon:hover,
-.ag-theme-salt-dark .ag-group-title-bar-icon:hover,
-.ag-theme-salt-compact-light .ag-group-title-bar-icon:hover,
-.ag-theme-salt-compact-dark .ag-group-title-bar-icon:hover,
-.ag-theme-salt-light .ag-column-select-header-icon:hover,
-.ag-theme-salt-dark .ag-column-select-header-icon:hover,
-.ag-theme-salt-compact-light .ag-column-select-header-icon:hover,
-.ag-theme-salt-compact-dark .ag-column-select-header-icon:hover,
-.ag-theme-salt-light .ag-floating-filter-button-button:hover,
-.ag-theme-salt-dark .ag-floating-filter-button-button:hover,
-.ag-theme-salt-compact-light .ag-floating-filter-button-button:hover,
-.ag-theme-salt-compact-dark .ag-floating-filter-button-button:hover,
-.ag-theme-salt-light .ag-filter-toolpanel-expand:hover,
-.ag-theme-salt-dark .ag-filter-toolpanel-expand:hover,
-.ag-theme-salt-compact-light .ag-filter-toolpanel-expand:hover,
-.ag-theme-salt-compact-dark .ag-filter-toolpanel-expand:hover,
-.ag-theme-salt-light .ag-panel-title-bar-button-icon:hover,
-.ag-theme-salt-dark .ag-panel-title-bar-button-icon:hover,
-.ag-theme-salt-compact-light .ag-panel-title-bar-button-icon:hover,
-.ag-theme-salt-compact-dark .ag-panel-title-bar-button-icon:hover,
-.ag-theme-salt-light .ag-chart-menu-icon:hover,
-.ag-theme-salt-dark .ag-chart-menu-icon:hover,
-.ag-theme-salt-compact-light .ag-chart-menu-icon:hover,
-.ag-theme-salt-compact-dark .ag-chart-menu-icon:hover {
-  /* Button is the same size of icon, we're copying what ag quartz theme is doing */
-  box-shadow: 0 0 0 var(--salt-spacing-50) var(--salt-actionable-subtle-background-hover);
-  background-color: var(--salt-actionable-subtle-background-hover);
-  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
-  --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
-  --ag-icon-font-color-menu-alt: var(--salt-actionable-subtle-foreground-hover);
+@media (any-hover: hover) {
+  .ag-theme-salt-light .ag-header-cell-menu-button:hover,
+  .ag-theme-salt-dark .ag-header-cell-menu-button:hover,
+  .ag-theme-salt-compact-light .ag-header-cell-menu-button:hover,
+  .ag-theme-salt-compact-dark .ag-header-cell-menu-button:hover,
+  .ag-theme-salt-light .ag-header-cell-filter-button:hover,
+  .ag-theme-salt-dark .ag-header-cell-filter-button:hover,
+  .ag-theme-salt-compact-light .ag-header-cell-filter-button:hover,
+  .ag-theme-salt-compact-dark .ag-header-cell-filter-button:hover,
+  .ag-theme-salt-light .ag-panel-title-bar-button:hover,
+  .ag-theme-salt-dark .ag-panel-title-bar-button:hover,
+  .ag-theme-salt-compact-light .ag-panel-title-bar-button:hover,
+  .ag-theme-salt-compact-dark .ag-panel-title-bar-button:hover,
+  .ag-theme-salt-light .ag-header-expand-icon:hover,
+  .ag-theme-salt-dark .ag-header-expand-icon:hover,
+  .ag-theme-salt-compact-light .ag-header-expand-icon:hover,
+  .ag-theme-salt-compact-dark .ag-header-expand-icon:hover,
+  .ag-theme-salt-light .ag-column-group-icons:hover,
+  .ag-theme-salt-dark .ag-column-group-icons:hover,
+  .ag-theme-salt-compact-light .ag-column-group-icons:hover,
+  .ag-theme-salt-compact-dark .ag-column-group-icons:hover,
+  .ag-theme-salt-light .ag-set-filter-group-icons:hover,
+  .ag-theme-salt-dark .ag-set-filter-group-icons:hover,
+  .ag-theme-salt-compact-light .ag-set-filter-group-icons:hover,
+  .ag-theme-salt-compact-dark .ag-set-filter-group-icons:hover,
+  .ag-theme-salt-light .ag-group-expanded .ag-icon:hover,
+  .ag-theme-salt-dark .ag-group-expanded .ag-icon:hover,
+  .ag-theme-salt-compact-light .ag-group-expanded .ag-icon:hover,
+  .ag-theme-salt-compact-dark .ag-group-expanded .ag-icon:hover,
+  .ag-theme-salt-light .ag-group-contracted .ag-icon:hover,
+  .ag-theme-salt-dark .ag-group-contracted .ag-icon:hover,
+  .ag-theme-salt-compact-light .ag-group-contracted .ag-icon:hover,
+  .ag-theme-salt-compact-dark .ag-group-contracted .ag-icon:hover,
+  .ag-theme-salt-light .ag-chart-settings-prev:hover,
+  .ag-theme-salt-dark .ag-chart-settings-prev:hover,
+  .ag-theme-salt-compact-light .ag-chart-settings-prev:hover,
+  .ag-theme-salt-compact-dark .ag-chart-settings-prev:hover,
+  .ag-theme-salt-light .ag-chart-settings-next:hover,
+  .ag-theme-salt-dark .ag-chart-settings-next:hover,
+  .ag-theme-salt-compact-light .ag-chart-settings-next:hover,
+  .ag-theme-salt-compact-dark .ag-chart-settings-next:hover,
+  .ag-theme-salt-light .ag-group-title-bar-icon:hover,
+  .ag-theme-salt-dark .ag-group-title-bar-icon:hover,
+  .ag-theme-salt-compact-light .ag-group-title-bar-icon:hover,
+  .ag-theme-salt-compact-dark .ag-group-title-bar-icon:hover,
+  .ag-theme-salt-light .ag-column-select-header-icon:hover,
+  .ag-theme-salt-dark .ag-column-select-header-icon:hover,
+  .ag-theme-salt-compact-light .ag-column-select-header-icon:hover,
+  .ag-theme-salt-compact-dark .ag-column-select-header-icon:hover,
+  .ag-theme-salt-light .ag-floating-filter-button-button:hover,
+  .ag-theme-salt-dark .ag-floating-filter-button-button:hover,
+  .ag-theme-salt-compact-light .ag-floating-filter-button-button:hover,
+  .ag-theme-salt-compact-dark .ag-floating-filter-button-button:hover,
+  .ag-theme-salt-light .ag-filter-toolpanel-expand:hover,
+  .ag-theme-salt-dark .ag-filter-toolpanel-expand:hover,
+  .ag-theme-salt-compact-light .ag-filter-toolpanel-expand:hover,
+  .ag-theme-salt-compact-dark .ag-filter-toolpanel-expand:hover,
+  .ag-theme-salt-light .ag-panel-title-bar-button-icon:hover,
+  .ag-theme-salt-dark .ag-panel-title-bar-button-icon:hover,
+  .ag-theme-salt-compact-light .ag-panel-title-bar-button-icon:hover,
+  .ag-theme-salt-compact-dark .ag-panel-title-bar-button-icon:hover,
+  .ag-theme-salt-light .ag-chart-menu-icon:hover,
+  .ag-theme-salt-dark .ag-chart-menu-icon:hover,
+  .ag-theme-salt-compact-light .ag-chart-menu-icon:hover,
+  .ag-theme-salt-compact-dark .ag-chart-menu-icon:hover {
+    /* Button is the same size of icon, we're copying what ag quartz theme is doing */
+    box-shadow: 0 0 0 var(--salt-spacing-50) var(--salt-actionable-subtle-background-hover);
+    background-color: var(--salt-actionable-subtle-background-hover);
+    --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
+    --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
+    --ag-icon-font-color-menu-alt: var(--salt-actionable-subtle-foreground-hover);
+  }
 }
 
 /* Make filter and menu icon apart, to accomodate hover effects above */
@@ -319,14 +321,6 @@
   border: none;
 }
 
-.ag-theme-salt-light .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
-.ag-theme-salt-dark .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
-.ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
-.ag-theme-salt-compact-dark .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
-.ag-theme-salt-light .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
-.ag-theme-salt-dark .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
-.ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
-.ag-theme-salt-compact-dark .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
 .ag-theme-salt-light .ag-header-cell.ag-column-menu-visible,
 .ag-theme-salt-dark .ag-header-cell.ag-column-menu-visible,
 .ag-theme-salt-compact-light .ag-header-cell.ag-column-menu-visible,
@@ -344,6 +338,29 @@
   --salt-actionable-subtle-background-hover: var(--salt-actionable-subtle-background-active);
 }
 
+@media (any-hover: hover) {
+  .ag-theme-salt-light .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+  .ag-theme-salt-dark .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+  .ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+  .ag-theme-salt-compact-dark .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+  .ag-theme-salt-light .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+  .ag-theme-salt-dark .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+  .ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+  .ag-theme-salt-compact-dark .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover {
+    /*
+      When menu is visible, change bg and fg.
+      From ag grid v32, a new `.ag-has-popup-positioned-under` can be potentially used, however `.ag-column-menu-visible` will still be applied
+      when open filter menu from floating filter.
+    */
+    background: var(--salt-actionable-secondary-background-active);
+    color: var(--salt-actionable-secondary-foreground-active);
+    /* Color for menu / filter icons */
+    --ag-icon-font-color: var(--salt-actionable-secondary-foreground-active);
+    /** don't show hover style, don't want to flip between light / dark */
+    --salt-actionable-subtle-background-hover: var(--salt-actionable-subtle-background-active);
+  }
+}
+
 .ag-theme-salt-light .ag-header-cell.ag-column-menu-visible .ag-icon,
 .ag-theme-salt-dark .ag-header-cell.ag-column-menu-visible .ag-icon,
 .ag-theme-salt-compact-light .ag-header-cell.ag-column-menu-visible .ag-icon,
@@ -358,16 +375,18 @@
   padding: var(--salt-spacing-50) 0;
 }
 
-.ag-theme-salt-light .ag-list-item:hover,
-.ag-theme-salt-dark .ag-list-item:hover,
-.ag-theme-salt-compact-light .ag-list-item:hover,
-.ag-theme-salt-compact-dark .ag-list-item:hover,
-.ag-theme-salt-light .ag-virtual-list-item:hover,
-.ag-theme-salt-dark .ag-virtual-list-item:hover,
-.ag-theme-salt-compact-light .ag-virtual-list-item:hover,
-.ag-theme-salt-compact-dark .ag-virtual-list-item:hover {
-  background-color: var(--salt-selectable-background-hover);
-  cursor: var(--salt-cursor-hover);
+@media (any-hover: hover) {
+  .ag-theme-salt-light .ag-list-item:hover,
+  .ag-theme-salt-dark .ag-list-item:hover,
+  .ag-theme-salt-compact-light .ag-list-item:hover,
+  .ag-theme-salt-compact-dark .ag-list-item:hover,
+  .ag-theme-salt-light .ag-virtual-list-item:hover,
+  .ag-theme-salt-dark .ag-virtual-list-item:hover,
+  .ag-theme-salt-compact-light .ag-virtual-list-item:hover,
+  .ag-theme-salt-compact-dark .ag-virtual-list-item:hover {
+    background-color: var(--salt-selectable-background-hover);
+    cursor: var(--salt-cursor-hover);
+  }
 }
 
 .ag-theme-salt-light .ag-label-align-right .ag-label,

@@ -20,8 +20,10 @@
   width: 100%;
 }
 
-.saltDateInput:hover {
-  cursor: var(--salt-cursor-text);
+@media (any-hover: hover) {
+  .saltDateInput:hover {
+    cursor: var(--salt-cursor-text);
+  }
 }
 
 /* Style applied if `bordered={true}` */
@@ -29,27 +31,47 @@
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--input-borderColor);
 }
 
-.saltDateInput-bordered.saltDateInput:hover {
-  border-style: var(--salt-borderStyle-solid);
-  border-color: var(--input-borderColor-hover);
+@media (any-hover: hover) {
+  .saltDateInput-bordered.saltDateInput:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--input-borderColor-hover);
+  }
 }
 
-.saltDateInput-bordered.saltDateInput-focused,
-.saltDateInput-bordered.saltDateInput-focused:hover {
+.saltDateInput-bordered.saltDateInput-focused {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--input-borderColor-active);
 }
 
-.saltDateInput-bordered.saltDateInput-readOnly,
-.saltDateInput-bordered.saltDateInput-readOnly:hover {
+@media (any-hover: hover) {
+  .saltDateInput-bordered.saltDateInput-focused:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--input-borderColor-active);
+  }
+}
+
+.saltDateInput-bordered.saltDateInput-readOnly {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-readonly);
 }
 
-.saltDateInput-bordered.saltDateInput-disabled,
-.saltDateInput-bordered.saltDateInput-disabled:hover {
+@media (any-hover: hover) {
+  .saltDateInput-bordered.saltDateInput-readOnly:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--salt-editable-borderColor-readonly);
+  }
+}
+
+.saltDateInput-bordered.saltDateInput-disabled {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-disabled);
+}
+
+@media (any-hover: hover) {
+  .saltDateInput-bordered.saltDateInput-disabled:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--salt-editable-borderColor-disabled);
+  }
 }
 
 .saltDateInput-activationIndicator {
@@ -60,32 +82,56 @@
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--input-borderColor);
 }
 
-.saltDateInput:hover .saltDateInput-activationIndicator {
-  border-bottom-style: var(--salt-borderStyle-solid);
-  border-bottom-color: var(--input-borderColor-hover);
+@media (any-hover: hover) {
+  .saltDateInput:hover .saltDateInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--input-borderColor-hover);
+  }
 }
 
-.saltDateInput-focused .saltDateInput-activationIndicator,
-.saltDateInput-focused:hover .saltDateInput-activationIndicator {
+.saltDateInput-focused .saltDateInput-activationIndicator {
   border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--input-borderColor-active);
 }
 
-.saltDateInput-readOnly .saltDateInput-activationIndicator,
-.saltDateInput-readOnly:hover .saltDateInput-activationIndicator {
+@media (any-hover: hover) {
+  .saltDateInput-focused:hover .saltDateInput-activationIndicator {
+    border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--input-borderColor-active);
+  }
+}
+
+.saltDateInput-readOnly .saltDateInput-activationIndicator {
   border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
-.saltDateInput-disabled .saltDateInput-activationIndicator,
-.saltDateInput-disabled:hover .saltDateInput-activationIndicator {
+@media (any-hover: hover) {
+  .saltDateInput-readOnly:hover .saltDateInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--salt-editable-borderColor-readonly);
+  }
+}
+
+.saltDateInput-disabled .saltDateInput-activationIndicator {
   border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
+@media (any-hover: hover) {
+  .saltDateInput-disabled:hover .saltDateInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--salt-editable-borderColor-disabled);
+  }
+}
+
 .saltDateInput-bordered .saltDateInput-activationIndicator,
-.saltDateInput-bordered.saltDateInput-readOnly .saltDateInput-activationIndicator,
-.saltDateInput-bordered.saltDateInput-disabled:hover .saltDateInput-activationIndicator {
+.saltDateInput-bordered.saltDateInput-readOnly .saltDateInput-activationIndicator {
   border-bottom-width: 0;
+}
+
+@media (any-hover: hover) {
+  .saltDateInput-bordered.saltDateInput-disabled:hover .saltDateInput-activationIndicator {
+    border-bottom-width: 0;
+  }
 }
 
 .saltDateInput-bordered.saltDateInput-focused .saltDateInput-activationIndicator {
@@ -156,10 +202,16 @@
 }
 
 /* Styling when focused */
-.saltDateInput-focused,
-.saltDateInput-focused:hover {
+.saltDateInput-focused {
   cursor: var(--salt-cursor-text);
   outline: var(--saltDateInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
+}
+
+@media (any-hover: hover) {
+  .saltDateInput-focused:hover {
+    cursor: var(--salt-cursor-text);
+    outline: var(--saltDateInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
+  }
 }
 
 /* Style applied if `readOnly={true}` */
@@ -169,11 +221,18 @@
 }
 
 /* Styling when focused if `disabled={true}` */
-.saltDateInput-disabled,
-.saltDateInput-disabled:hover {
+.saltDateInput-disabled {
   background: var(--input-background-disabled);
   cursor: var(--salt-cursor-disabled);
   color: var(--saltDateInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+}
+
+@media (any-hover: hover) {
+  .saltDateInput-disabled:hover {
+    background: var(--input-background-disabled);
+    cursor: var(--salt-cursor-disabled);
+    color: var(--saltDateInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+  }
 }
 
 /* Style applied to start adornments */

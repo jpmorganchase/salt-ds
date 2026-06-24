@@ -84,16 +84,24 @@
 }
 
 /* **Deprecated:** Styles applied on hover if `interactable={true}` */
-a:focus .saltCard-interactable,
-.saltCard-interactable:hover {
+a:focus .saltCard-interactable {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
   cursor: var(--saltCard-cursor-hover, var(--salt-cursor-hover));
   border-color: var(--salt-actionable-accented-borderColor-hover);
   position: relative;
 }
 
+@media (any-hover: hover) {
+  .saltCard-interactable:hover {
+    box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
+    cursor: var(--saltCard-cursor-hover, var(--salt-cursor-hover));
+    border-color: var(--salt-actionable-accented-borderColor-hover);
+    position: relative;
+  }
+}
+
 /* Styles applied if `hoverable` is set */
-@media (hover: hover) {
+@media (any-hover: hover) {
   .saltCard-hoverable:hover {
     box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
     border-color: var(--salt-actionable-accented-borderColor-hover);
@@ -110,9 +118,14 @@ a:focus .saltCard-interactable,
 
 /* **Deprecated:** Styles applied on hover if `interactable={true}` and `disabled={true}` */
 a:focus .saltCard-interactable.saltCard-disabled,
-.saltCard-interactable.saltCard-disabled:hover,
 .saltCard-interactable.saltCard-disabled:active {
   box-shadow: var(--saltCard-boxShadow-disabled, var(--salt-overlayable-shadow));
+}
+
+@media (any-hover: hover) {
+  .saltCard-interactable.saltCard-disabled:hover {
+    box-shadow: var(--saltCard-boxShadow-disabled, var(--salt-overlayable-shadow));
+  }
 }
 
 /* **Deprecated:** Styles applied if `disabled={true}` */

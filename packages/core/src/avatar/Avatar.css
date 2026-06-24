@@ -149,7 +149,7 @@ a.saltAvatar::after {
   background: var(--salt-overlayable-background-hover);
 }
 
-@media (hover: hover) {
+@media (any-hover: hover) {
   button.saltAvatar:hover::after,
   a.saltAvatar:hover::after {
     background: var(--salt-overlayable-background-hover);

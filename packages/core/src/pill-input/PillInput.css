@@ -27,8 +27,10 @@
   flex-wrap: nowrap;
 }
 
-.saltPillInput:hover {
-  cursor: var(--salt-cursor-text);
+@media (any-hover: hover) {
+  .saltPillInput:hover {
+    cursor: var(--salt-cursor-text);
+  }
 }
 
 /* Style applied if `bordered={true}` */
@@ -37,28 +39,48 @@
   border: var(--pillInput-borderWidth) var(--salt-borderStyle-solid) var(--pillInput-borderColor);
 }
 
-.saltPillInput-bordered.saltPillInput:hover {
-  border-style: var(--salt-borderStyle-solid);
-  border-color: var(--pillInput-borderColor-hover);
+@media (any-hover: hover) {
+  .saltPillInput-bordered.saltPillInput:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--pillInput-borderColor-hover);
+  }
 }
 
 /* Style applied if focused or active when `bordered={true}` */
-.saltPillInput-bordered.saltPillInput-focused,
-.saltPillInput-bordered.saltPillInput-focused:hover {
+.saltPillInput-bordered.saltPillInput-focused {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--pillInput-borderColor-active);
 }
 
-.saltPillInput-bordered.saltPillInput-readOnly,
-.saltPillInput-bordered.saltPillInput-readOnly:hover {
+@media (any-hover: hover) {
+  .saltPillInput-bordered.saltPillInput-focused:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--pillInput-borderColor-active);
+  }
+}
+
+.saltPillInput-bordered.saltPillInput-readOnly {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-readonly);
 }
 
-.saltPillInput-bordered.saltPillInput-disabled,
-.saltPillInput-bordered.saltPillInput-disabled:hover {
+@media (any-hover: hover) {
+  .saltPillInput-bordered.saltPillInput-readOnly:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--salt-editable-borderColor-readonly);
+  }
+}
+
+.saltPillInput-bordered.saltPillInput-disabled {
   border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-disabled);
+}
+
+@media (any-hover: hover) {
+  .saltPillInput-bordered.saltPillInput-disabled:hover {
+    border-style: var(--salt-borderStyle-solid);
+    border-color: var(--salt-editable-borderColor-disabled);
+  }
 }
 
 .saltPillInput-activationIndicator {
@@ -69,32 +91,56 @@
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--pillInput-borderColor);
 }
 
-.saltPillInput:hover .saltPillInput-activationIndicator {
-  border-bottom-style: var(--salt-borderStyle-solid);
-  border-bottom-color: var(--pillInput-borderColor-hover);
+@media (any-hover: hover) {
+  .saltPillInput:hover .saltPillInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--pillInput-borderColor-hover);
+  }
 }
 
-.saltPillInput-focused .saltPillInput-activationIndicator,
-.saltPillInput-focused:hover .saltPillInput-activationIndicator {
+.saltPillInput-focused .saltPillInput-activationIndicator {
   border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--pillInput-borderColor-active);
 }
 
-.saltPillInput-readOnly .saltPillInput-activationIndicator,
-.saltPillInput-readOnly:hover .saltPillInput-activationIndicator {
+@media (any-hover: hover) {
+  .saltPillInput-focused:hover .saltPillInput-activationIndicator {
+    border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--pillInput-borderColor-active);
+  }
+}
+
+.saltPillInput-readOnly .saltPillInput-activationIndicator {
   border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
-.saltPillInput-disabled .saltPillInput-activationIndicator,
-.saltPillInput-disabled:hover .saltPillInput-activationIndicator {
+@media (any-hover: hover) {
+  .saltPillInput-readOnly:hover .saltPillInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--salt-editable-borderColor-readonly);
+  }
+}
+
+.saltPillInput-disabled .saltPillInput-activationIndicator {
   border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
+@media (any-hover: hover) {
+  .saltPillInput-disabled:hover .saltPillInput-activationIndicator {
+    border-bottom-style: var(--salt-borderStyle-solid);
+    border-bottom-color: var(--salt-editable-borderColor-disabled);
+  }
+}
+
 .saltPillInput-bordered .saltPillInput-activationIndicator,
-.saltPillInput-bordered.saltPillInput-readOnly .saltPillInput-activationIndicator,
-.saltPillInput-bordered.saltPillInput-disabled:hover .saltPillInput-activationIndicator {
+.saltPillInput-bordered.saltPillInput-readOnly .saltPillInput-activationIndicator {
   border-bottom-width: 0;
+}
+
+@media (any-hover: hover) {
+  .saltPillInput-bordered.saltPillInput-disabled:hover .saltPillInput-activationIndicator {
+    border-bottom-width: 0;
+  }
 }
 
 .saltPillInput-bordered.saltPillInput-focused .saltPillInput-activationIndicator {
@@ -164,10 +210,16 @@
 }
 
 /* Styling when focused */
-.saltPillInput-focused,
-.saltPillInput-focused:hover {
+.saltPillInput-focused {
   cursor: var(--salt-cursor-text);
   outline: var(--saltPillInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--pillInput-outlineColor));
+}
+
+@media (any-hover: hover) {
+  .saltPillInput-focused:hover {
+    cursor: var(--salt-cursor-text);
+    outline: var(--saltPillInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--pillInput-outlineColor));
+  }
 }
 
 /* Style applied if `readOnly={true}` */
@@ -177,11 +229,18 @@
 }
 
 /* Styling when focused if `disabled={true}` */
-.saltPillInput-disabled,
-.saltPillInput-disabled:hover {
+.saltPillInput-disabled {
   background: var(--pillInput-background-disabled);
   cursor: var(--salt-cursor-disabled);
   color: var(--saltPillInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+}
+
+@media (any-hover: hover) {
+  .saltPillInput-disabled:hover {
+    background: var(--pillInput-background-disabled);
+    cursor: var(--salt-cursor-disabled);
+    color: var(--saltPillInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+  }
 }
 
 /* Style applied to start adornments */

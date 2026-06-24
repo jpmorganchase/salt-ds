@@ -75,9 +75,11 @@
 }
 
 /* Set color for hovered link */
-.saltLink:hover {
-  color: var(--saltLink-color-hover, var(--link-color-hover));
-  text-decoration: var(--link-textDecoration-hover);
+@media (any-hover: hover) {
+  .saltLink:hover {
+    color: var(--saltLink-color-hover, var(--link-color-hover));
+    text-decoration: var(--link-textDecoration-hover);
+  }
 }
 
 /* Set color for active link */

@@ -15,8 +15,10 @@
   display: none;
 }
 
-.saltInputPill.saltInputPill:hover {
-  background: var(--salt-selectable-background-hover);
+@media (any-hover: hover) {
+  .saltInputPill.saltInputPill:hover {
+    background: var(--salt-selectable-background-hover);
+  }
 }
 
 .saltInputPill.saltInputPill-pillHighlighted {

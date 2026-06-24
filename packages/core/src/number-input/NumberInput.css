@@ -29,11 +29,13 @@
   width: 100%;
 }
 
-.saltNumberInput:hover {
-  --numberInput-borderStyle: var(--salt-borderStyle-solid);
-  --numberInput-borderColor: var(--salt-editable-borderColor-hover);
+@media (any-hover: hover) {
+  .saltNumberInput:hover {
+    --numberInput-borderStyle: var(--salt-borderStyle-solid);
+    --numberInput-borderColor: var(--salt-editable-borderColor-hover);
 
-  cursor: var(--salt-cursor-text);
+    cursor: var(--salt-cursor-text);
+  }
 }
 
 .saltNumberInput:active {
@@ -66,30 +68,54 @@
 }
 
 /* Style applied to input if `validationState="error"` */
-.saltNumberInput-error,
-.saltNumberInput-error:hover {
+.saltNumberInput-error {
   --numberInput-background: var(--salt-status-error-background);
   --numberInput-borderColor: var(--salt-status-error-borderColor);
   --numberInput-outlineColor: var(--salt-status-error-borderColor);
   --numberInput-background-readonly: var(--salt-status-error-background);
 }
 
+@media (any-hover: hover) {
+  .saltNumberInput-error:hover {
+    --numberInput-background: var(--salt-status-error-background);
+    --numberInput-borderColor: var(--salt-status-error-borderColor);
+    --numberInput-outlineColor: var(--salt-status-error-borderColor);
+    --numberInput-background-readonly: var(--salt-status-error-background);
+  }
+}
+
 /* Style applied to input if `validationState="warning"` */
-.saltNumberInput-warning,
-.saltNumberInput-warning:hover {
+.saltNumberInput-warning {
   --numberInput-background: var(--salt-status-warning-background);
   --numberInput-borderColor: var(--salt-status-warning-borderColor);
   --numberInput-outlineColor: var(--salt-status-warning-borderColor);
   --numberInput-background-readonly: var(--salt-status-warning-background);
 }
 
+@media (any-hover: hover) {
+  .saltNumberInput-warning:hover {
+    --numberInput-background: var(--salt-status-warning-background);
+    --numberInput-borderColor: var(--salt-status-warning-borderColor);
+    --numberInput-outlineColor: var(--salt-status-warning-borderColor);
+    --numberInput-background-readonly: var(--salt-status-warning-background);
+  }
+}
+
 /* Style applied to input if `validationState="success"` */
-.saltNumberInput-success,
-.saltNumberInput-success:hover {
+.saltNumberInput-success {
   --numberInput-background: var(--salt-status-success-background);
   --numberInput-borderColor: var(--salt-status-success-borderColor);
   --numberInput-outlineColor: var(--salt-status-success-borderColor);
   --numberInput-background-readonly: var(--salt-status-success-background);
+}
+
+@media (any-hover: hover) {
+  .saltNumberInput-success:hover {
+    --numberInput-background: var(--salt-status-success-background);
+    --numberInput-borderColor: var(--salt-status-success-borderColor);
+    --numberInput-outlineColor: var(--salt-status-success-borderColor);
+    --numberInput-background-readonly: var(--salt-status-success-background);
+  }
 }
 
 /* Style applied to inner input component */
@@ -144,14 +170,21 @@
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
-.saltNumberInput-bordered.saltNumberInput-readOnly,
-.saltNumberInput-bordered.saltNumberInput-disabled:hover {
+.saltNumberInput-bordered.saltNumberInput-readOnly {
   --numberInput-borderWidth: 0;
 }
 
+@media (any-hover: hover) {
+  .saltNumberInput-bordered.saltNumberInput-disabled:hover {
+    --numberInput-borderWidth: 0;
+  }
+}
+
 /* Styling when focused and hovered when `bordered={true}` */
-.saltNumberInput-bordered.saltNumberInput-focused:hover {
-  --numberInput-borderColor: var(--salt-editable-borderColor-active);
+@media (any-hover: hover) {
+  .saltNumberInput-bordered.saltNumberInput-focused:hover {
+    --numberInput-borderColor: var(--salt-editable-borderColor-active);
+  }
 }
 
 /* Style applied if `readOnly={true}` */
@@ -176,8 +209,10 @@
   --numberInput-borderWidth: var(--salt-size-fixed-100);
 }
 
-.saltNumberInput:hover.saltNumberInput-readOnly {
-  --numberInput-borderColor: var(--salt-editable-borderColor-readonly);
+@media (any-hover: hover) {
+  .saltNumberInput:hover.saltNumberInput-readOnly {
+    --numberInput-borderColor: var(--salt-editable-borderColor-readonly);
+  }
 }
 
 /* Style applied to selected input if `disabled={true}` */
@@ -187,7 +222,6 @@
 
 /* Style applied to input if `disabled={true}` */
 .saltNumberInput-disabled,
-.saltNumberInput-disabled:hover,
 .saltNumberInput-disabled:active {
   --numberInput-borderColor: var(--salt-editable-borderColor-disabled);
   --numberInput-borderStyle: var(--salt-borderStyle-solid);
@@ -196,6 +230,18 @@
   background: var(--numberInput-background-disabled);
   cursor: var(--salt-cursor-disabled);
   color: var(--saltNumberInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+}
+
+@media (any-hover: hover) {
+  .saltNumberInput-disabled:hover {
+    --numberInput-borderColor: var(--salt-editable-borderColor-disabled);
+    --numberInput-borderStyle: var(--salt-borderStyle-solid);
+    --numberInput-borderWidth: var(--salt-size-fixed-100);
+
+    background: var(--numberInput-background-disabled);
+    cursor: var(--salt-cursor-disabled);
+    color: var(--saltNumberInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+  }
 }
 
 /* Style applied to start adornments */
