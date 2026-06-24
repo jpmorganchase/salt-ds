@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-generated-context-health.schema.json",
+  "title": "Salt Generated Context Health",
+  "description": "Health summary for generated Salt static context manifest outputs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "manifestPath",
+    "present",
+    "status",
+    "registry",
+    "entryCount",
+    "unsupportedEntries",
+    "unsupportedCoverageGaps",
+    "staleEntries",
+    "missingOutputs",
+    "entries",
+    "coverageGaps",
+    "recommendedAction"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_generated_context_health_v1"
+    },
+    "manifestPath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "present": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": ["missing", "current", "stale", "unsupported", "invalid"]
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "hash",
+        "generated_at",
+        "current_version",
+        "current_hash",
+        "current_generated_at"
+      ],
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        },
+        "current_version": {
+          "type": ["string", "null"]
+        },
+        "current_hash": {
+          "type": ["string", "null"]
+        },
+        "current_generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "entryCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unsupportedEntries": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unsupportedCoverageGaps": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "staleEntries": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "missingOutputs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    },
+    "coverageGaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/coverageGap"
+      }
+    },
+    "recommendedAction": {
+      "enum": [
+        "none",
+        "export-context",
+        "export-context-check",
+        "repair-context-manifest"
+      ]
+    }
+  },
+  "$defs": {
+    "coverageGap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "status",
+        "reason",
+        "missing",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "pattern",
+            "foundation",
+            "prompt",
+            "instruction",
+            "markdown_bridge"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "unsupported"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "missing": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidence_ref_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "name",
+        "outputPath",
+        "outputExists",
+        "outputStatus",
+        "outputContract",
+        "status",
+        "evidenceRefIds",
+        "evidenceRefCount",
+        "unsupportedClaimCount",
+        "mismatches",
+        "missing"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "component",
+            "component_markdown",
+            "pattern",
+            "foundation",
+            "prompt",
+            "instruction"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outputPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outputExists": {
+          "type": "boolean"
+        },
+        "outputStatus": {
+          "enum": ["current", "missing", "stale", "unsupported", "invalid"]
+        },
+        "outputContract": {
+          "type": ["string", "null"]
+        },
+        "status": {
+          "enum": ["validated", "unsupported"]
+        },
+        "evidenceRefIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidenceRefCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unsupportedClaimCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mismatches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

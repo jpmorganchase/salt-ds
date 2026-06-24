@@ -7,9 +7,35 @@ import { getTypescriptConfig } from "./utils.mjs";
 
 const typescriptConfigFilename = "tsconfig.json";
 const cwd = process.cwd();
+const SUPPRESSED_DIAGNOSTIC_CODES = new Set([6059]);
+
+function normalizeTypingSources(sourceConfig) {
+  if (typeof sourceConfig === "string") {
+    return {
+      include: [sourceConfig],
+      rootDir: sourceConfig,
+      tsConfigLookupDir: sourceConfig,
+    };
+  }
+
+  const include = sourceConfig?.include?.length
+    ? sourceConfig.include
+    : [path.join(cwd, "src")];
+  const rootDir = sourceConfig?.rootDir ?? include[0];
+
+  return {
+    include,
+    rootDir,
+    tsConfigLookupDir: include[0],
+  };
+}
 
 export function reportTSDiagnostics(diagnostics) {
   for (const diagnostic of diagnostics) {
+    if (SUPPRESSED_DIAGNOSTIC_CODES.has(diagnostic.code)) {
+      continue;
+    }
+
     let message = "Error";
     if (diagnostic.file) {
       const where = diagnostic.file.getLineAndCharacterOfPosition(
@@ -24,8 +50,15 @@ export function reportTSDiagnostics(diagnostics) {
   }
 }
 
-export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
-  const typescriptConfig = await getTypescriptConfig(cwd, srcDir);
+export async function makeTypings(
+  outDir,
+  sourceConfig = path.join(cwd, "src"),
+) {
+  const normalizedSources = normalizeTypingSources(sourceConfig);
+  const typescriptConfig = await getTypescriptConfig(
+    cwd,
+    normalizedSources.tsConfigLookupDir,
+  );
 
   console.log("generating .d.ts files");
 
@@ -40,14 +73,14 @@ export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
   // then add our custom stuff
   // Only include src files from the package to prevent already built
   // files from interferring with the compile
-  tsconfig.include = [path.join(cwd, "src")];
+  tsconfig.include = normalizedSources.include;
   tsconfig.compilerOptions = {
     ...tsconfig.compilerOptions,
     noEmit: false,
     declaration: true,
     emitDeclarationOnly: true,
     declarationDir: path.join(outDir, "dist-types"),
-    rootDir: path.join(cwd, "src"),
+    rootDir: normalizedSources.rootDir,
     diagnostics: !isCI,
   };
 
@@ -84,7 +117,8 @@ export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
   }
   const diagnostics = ts
     .getPreEmitDiagnostics(program)
-    .concat(emitResult.diagnostics);
+    .concat(emitResult.diagnostics)
+    .filter((diagnostic) => !SUPPRESSED_DIAGNOSTIC_CODES.has(diagnostic.code));
   if (diagnostics.length > 0) {
     reportTSDiagnostics(diagnostics);
     throw new Error("Could not generate .d.ts files");

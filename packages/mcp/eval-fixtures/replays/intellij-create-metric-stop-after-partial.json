@@ -1,0 +1,97 @@
+{
+  "scenario": {
+    "id": "intellij-create-metric-stop-after-partial",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "intellij", "host-orchestration"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/intellij-create-metric",
+      "description": "Saved IntelliJ replay fixture where the host stopped after starter-file creation even though the Metric workflow remained partial and unsafe to complete."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Create a Metric in Salt."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": false
+    },
+    "args": {
+      "mcp": {
+        "query": "Metric",
+        "include_starter_code": true
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "canonical_choice": "Metric",
+      "final_choice": "Metric",
+      "public_contract": {
+        "workflow_status": "partial",
+        "canonical_complete": false,
+        "safe_to_implement_exact_request": false,
+        "requested_entity": "Metric",
+        "resolved_entity": "Metric",
+        "match_status": "exact",
+        "next_step": {
+          "kind": "tool_call",
+          "tool": "create_salt_ui",
+          "mode": "exact_name",
+          "query": "Link"
+        },
+        "summary_includes": ["required follow-through remains"]
+      },
+      "banned_fragments": ["\"host_outcome\":\"stopped_after_partial\""]
+    }
+  },
+  "trace": {
+    "scenario_id": "intellij-create-metric-stop-after-partial",
+    "runner_id": "replay-fixture",
+    "status": "failed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved IntelliJ MCP transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "partial",
+      "canonical_complete": false,
+      "safe_to_implement_exact_request": false,
+      "requested_entity": "Metric",
+      "resolved_entity": "Metric",
+      "match_status": "exact",
+      "host_outcome": "stopped_after_partial",
+      "blocking_reasons": [
+        "required follow-through remains: Link, Stack layout, Text"
+      ],
+      "next_step": {
+        "kind": "tool_call",
+        "tool": "create_salt_ui",
+        "mode": "exact_name",
+        "args": {
+          "query": "Link"
+        }
+      },
+      "summary": "Salt grounded the exact requested entity Metric, but required follow-through remains: Link, Stack layout, Text."
+    },
+    "transcript": [
+      "Create a Metric in Salt.",
+      "The host stopped after creating Metric.tsx even though the workflow was still partial and required exact follow-through."
+    ],
+    "artifacts": {
+      "files": ["packages/mcp/eval-fixtures/replays/intellij-create-metric"],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

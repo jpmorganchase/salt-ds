@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-prompt-instruction-surface.schema.json",
+  "title": "Salt Context Prompt/Instruction Surface",
+  "description": "Source-backed prompt or host-instruction surface with generated claims resolved through EvidenceRefs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "generated_at",
+    "generator",
+    "registry",
+    "status",
+    "surface",
+    "source_files",
+    "evidence_refs",
+    "unsupported_claims",
+    "surface_gate",
+    "generated_artifact"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_context_prompt_instruction_surface_v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "status": {
+      "enum": ["validated", "unsupported"]
+    },
+    "surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "name", "status", "evidence_ref_ids"],
+      "properties": {
+        "kind": {
+          "enum": ["prompt", "instruction"]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": ["validated", "unsupported"]
+        },
+        "evidence_ref_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "source_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/sourceFile"
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "salt-evidence-ref.schema.json"
+      }
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-generated-artifact.schema.json#/$defs/unsupportedClaim"
+      }
+    },
+    "surface_gate": {
+      "$ref": "#/$defs/surfaceGate"
+    },
+    "generated_artifact": {
+      "$ref": "salt-generated-artifact.schema.json"
+    }
+  },
+  "$defs": {
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "source_path",
+        "source_section",
+        "generated_path",
+        "text",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_section": {
+          "type": ["string", "null"]
+        },
+        "generated_path": {
+          "type": ["string", "null"]
+        },
+        "text": {
+          "type": ["string", "null"]
+        },
+        "evidence_ref_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "surfaceGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "validation_issues",
+        "missing",
+        "unsupported_claim_count",
+        "artifact_id",
+        "artifact_kind"
+      ],
+      "properties": {
+        "status": {
+          "enum": ["validated", "unsupported"]
+        },
+        "validation_issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceValidationIssue"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unsupported_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_kind": {
+          "enum": ["prompt", "instruction"]
+        }
+      }
+    },
+    "evidenceValidationIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "path"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

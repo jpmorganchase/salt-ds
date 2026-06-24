@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-pack-persistence-check.schema.json",
+  "title": "Salt Context Pack Persistence Check",
+  "description": "Host-side persistence check for exact Salt context pack bundle file text.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "bundle_contract",
+    "status",
+    "current",
+    "host_action_required",
+    "content_status",
+    "unsupported_surface_count",
+    "output_dir",
+    "manifest_path",
+    "files",
+    "missing_outputs",
+    "stale_outputs"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_context_pack_persistence_check_v1"
+    },
+    "bundle_contract": {
+      "const": "salt_context_pack_bundle_v1"
+    },
+    "status": {
+      "enum": ["current", "missing", "stale"]
+    },
+    "current": {
+      "type": "boolean"
+    },
+    "host_action_required": {
+      "type": "boolean"
+    },
+    "content_status": {
+      "enum": ["validated", "unsupported"]
+    },
+    "unsupported_surface_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "output_dir": {
+      "type": ["string", "null"]
+    },
+    "manifest_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file"
+      }
+    },
+    "missing_outputs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "stale_outputs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "output_path",
+        "mime_type",
+        "contract",
+        "status",
+        "mismatches"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "manifest",
+            "component",
+            "component_markdown",
+            "pattern",
+            "foundation",
+            "prompt",
+            "instruction"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mime_type": {
+          "enum": ["application/json", "text/markdown"]
+        },
+        "contract": {
+          "enum": [
+            "salt_context_pack_manifest_v1",
+            "salt_context_component_v1",
+            "salt_context_component_markdown_v1",
+            "salt_context_pattern_v1",
+            "salt_context_foundation_v1",
+            "salt_context_prompt_instruction_surface_v1"
+          ]
+        },
+        "status": {
+          "enum": ["current", "missing", "stale"]
+        },
+        "mismatches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

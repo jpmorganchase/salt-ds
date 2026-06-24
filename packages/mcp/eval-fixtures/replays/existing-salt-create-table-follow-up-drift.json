@@ -1,0 +1,119 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-table-follow-up-drift",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "table"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-table",
+      "description": "Saved replay fixture for a table follow-up transcript that drifted away from the canonical Table target."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a table with custom cell rendering and column definitions."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "table component with custom cell rendering and column definitions",
+        "include_starter_code": true
+      },
+      "cli": {
+        "argv": [
+          "create",
+          "table component with custom cell rendering and column definitions",
+          "--include-starter-code"
+        ]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "summary_first": true,
+      "require_verify": true,
+      "canonical_choice": "Table",
+      "final_choice": "Table"
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-table-follow-up-drift",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": {
+        "id": "create_salt_ui",
+        "transport_used": "mcp",
+        "confidence": {
+          "level": "medium",
+          "reasons": ["Loaded from transcript replay."]
+        },
+        "readiness": {
+          "status": "starter_needs_attention",
+          "implementation_ready": false,
+          "reason": "Saved replay fixture."
+        },
+        "contextRequirement": {
+          "status": "context_checked",
+          "repoSpecificEditsReady": true,
+          "reason": "Saved replay fixture.",
+          "satisfiedBy": "salt-ds info"
+        },
+        "projectConventionsCheck": null,
+        "provenance": {
+          "canonical_source_urls": ["/salt/components/table/usage"],
+          "related_guide_urls": [],
+          "project_conventions_contract": "project_conventions_v1"
+        }
+      },
+      "result": {
+        "mode": "recommend",
+        "solution_type": "component",
+        "decision": {
+          "name": "Grid layout"
+        },
+        "final_decision": {
+          "name": "Grid layout"
+        },
+        "ide_summary": {
+          "recommended_direction": "Use Grid layout as the base scaffold.",
+          "bounded_scope": [
+            "Keep the prompt on layout primitives instead of a direct Table target."
+          ],
+          "starter_plan": [
+            "Start with a layout scaffold and defer the table-specific decision."
+          ],
+          "verify": [
+            "Run salt-ds review on the changed files after the first implementation pass."
+          ]
+        }
+      }
+    },
+    "transcript": [
+      "Use salt-ds to add a table with custom cell rendering and column definitions.",
+      "The host re-ran create_salt_ui with a broad follow-up instead of locking onto Table."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-table"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

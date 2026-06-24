@@ -1,0 +1,3910 @@
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { normalizeObjectSchema } from "@modelcontextprotocol/sdk/server/zod-compat.js";
+import { toJsonSchemaCompat } from "@modelcontextprotocol/sdk/server/zod-json-schema-compat.js";
+import type { JsonSchemaType } from "@modelcontextprotocol/sdk/validation";
+import { AjvJsonSchemaValidator } from "@modelcontextprotocol/sdk/validation/ajv";
+import {
+  selectDefaultContextPackFoundationTokenGroups,
+  selectDefaultContextPackPatterns,
+} from "@salt-ds/semantic-core";
+import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
+import { describe, expect, it } from "vitest";
+import * as z from "zod/v4";
+import { validateSaltAiEvidenceClosureReportSchema } from "../../../semantic-core/src/__tests__/aiEvidenceClosureReportSchemaTestUtils.js";
+import { validateSaltAiSetupSchema } from "../../../semantic-core/src/__tests__/aiSetupSchemaTestUtils.js";
+import { validateSaltGeneratedArtifactPersistenceSchema } from "../../../semantic-core/src/__tests__/artifactPersistenceSchemaTestUtils.js";
+import { validateSaltGeneratedContextHealthSchema } from "../../../semantic-core/src/__tests__/contextCheckSchemaTestUtils.js";
+import { validateSaltContextComponentSchema } from "../../../semantic-core/src/__tests__/contextComponentSchemaTestUtils.js";
+import { validateSaltContextCoverageAuditSchema } from "../../../semantic-core/src/__tests__/contextCoverageAuditSchemaTestUtils.js";
+import { validateSaltContextCoverageGapCatalogSchema } from "../../../semantic-core/src/__tests__/contextCoverageGapCatalogSchemaTestUtils.js";
+import { validateSaltContextFoundationSchema } from "../../../semantic-core/src/__tests__/contextFoundationSchemaTestUtils.js";
+import { validateSaltContextPackManifestSchema } from "../../../semantic-core/src/__tests__/contextManifestSchemaTestUtils.js";
+import {
+  validateSaltContextPackBundleSchema,
+  validateSaltContextPackPersistenceCheckSchema,
+} from "../../../semantic-core/src/__tests__/contextPackBundleSchemaTestUtils.js";
+import { validateSaltContextPatternSchema } from "../../../semantic-core/src/__tests__/contextPatternSchemaTestUtils.js";
+import { validateSaltGeneratedArtifactReleaseGateBatchSchema } from "../../../semantic-core/src/__tests__/generatedArtifactReleaseGateSchemaTestUtils.js";
+import { validateSaltContextPromptHostInstructionSurfaceSchema } from "../../../semantic-core/src/__tests__/promptHostInstructionSurfaceSchemaTestUtils.js";
+import { loadRegistry } from "../registry/loadRegistry.js";
+import { createSaltMcpServer } from "../server/createServer.js";
+import {
+  buildSaltMcpInstructions,
+  buildSaltMcpServerInfo,
+  getSaltMcpRuntimeMetadata,
+  SALT_MCP_AI_EVIDENCE_CLOSURE_URI,
+  SALT_MCP_AI_SETUP_URI,
+  SALT_MCP_CAPABILITY_MANIFEST_URI,
+  SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
+  SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
+  SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
+  SALT_MCP_CATALOG_MANIFEST_URI,
+  SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_COVERAGE_URI,
+  SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_GAP_CATALOG_URI,
+  SALT_MCP_CONTEXT_HEALTH_URI,
+  SALT_MCP_CONTEXT_MANIFEST_URI,
+  SALT_MCP_CONTEXT_PACK_URI,
+  SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI,
+  SALT_MCP_CONTEXT_RELEASE_GATE_URI,
+} from "../server/serverMetadata.js";
+import { buildStructuredToolContent } from "../server/sourceAttribution.js";
+import {
+  createToolExecutionRuntime,
+  TOOL_DEFINITIONS,
+} from "../server/toolDefinitions.js";
+import {
+  GENERATED_AT,
+  REPO_ROOT,
+  VERSION,
+  withRegistryDir,
+  writeBaseArtifacts,
+} from "./registryTestUtils.js";
+
+// Default public MCP surface: 6 workflow tools + 4 read-only support tools + 4 advanced support tools = 14 total
+const EXPECTED_TOOL_NAMES = [
+  // Primary workflow tools (6)
+  "bootstrap_salt_repo",
+  "create_salt_ui",
+  "get_salt_project_context",
+  "migrate_to_salt",
+  "review_salt_ui",
+  "upgrade_salt_ui",
+  // Read-only support tools (3)
+  "discover_salt",
+  "get_salt_entities",
+  "get_salt_examples",
+  // Advanced support tools (1, persist_salt_artifact is the merged
+  // context-pack + generated-artifact writer)
+  "persist_salt_artifact",        // readOnlyHint: false, destructiveHint: true (idempotent persistence; may overwrite caller-supplied paths inside root_dir)
+].sort();
+
+const EXPECTED_DEFAULT_TOOL_ORDER = [
+  "get_salt_project_context",
+  "bootstrap_salt_repo",
+  "create_salt_ui",
+  "review_salt_ui",
+  "migrate_to_salt",
+  "upgrade_salt_ui",
+];
+
+const PUBLIC_MCP_TOOL_DESCRIPTION_MAX_CHARS = 650;
+const PUBLIC_MCP_TOOL_DESCRIPTION_TOTAL_MAX_CHARS = 5_000;
+
+async function createTempDir(name: string): Promise<string> {
+  return fs.mkdtemp(path.join(os.tmpdir(), `${name}-`));
+}
+
+function readFullWorkflowDetails(value: unknown): Record<string, unknown> & {
+  workflow: Record<string, unknown>;
+  result: Record<string, unknown>;
+  artifacts: Record<string, unknown>;
+} {
+  expect(value).toEqual(
+    expect.objectContaining({
+      contract: "salt_workflow_v1",
+      workflow: expect.any(String),
+      transport: expect.any(String),
+      status: expect.any(String),
+      safety: expect.any(Object),
+      action: expect.any(Object),
+      summary: expect.any(String),
+      details: expect.any(Object),
+    }),
+  );
+
+  const details = (value as { details: unknown }).details as Record<
+    string,
+    unknown
+  >;
+  return {
+    ...(value as Record<string, unknown>),
+    workflow: details.workflow as Record<string, unknown>,
+    result: details.result as Record<string, unknown>,
+    artifacts: details.artifacts as Record<string, unknown>,
+  };
+}
+
+describe("createSaltMcpServer", () => {
+  it("keeps the default consumer workflow tools first in metadata order", () => {
+    expect(
+      TOOL_DEFINITIONS.slice(0, EXPECTED_DEFAULT_TOOL_ORDER.length).map(
+        (definition) => definition.name,
+      ),
+    ).toEqual(EXPECTED_DEFAULT_TOOL_ORDER);
+  });
+
+  it("keeps the default workflow schemas intentionally small", () => {
+    const contextTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "get_salt_project_context",
+    );
+    const chooseTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "create_salt_ui",
+    );
+    const translateTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "migrate_to_salt",
+    );
+
+    expect(Object.keys(contextTool?.inputSchema ?? {})).toEqual([
+      "root_dir",
+      "include_policy_diagnostics",
+    ]);
+    expect(Object.keys(chooseTool?.inputSchema ?? {})).toEqual([
+      "query",
+      "names",
+      "solution_type",
+      "package",
+      "status",
+      "top_k",
+      "production_ready",
+      "prefer_stable",
+      "a11y_required",
+      "form_field_support",
+      "include_starter_code",
+      "resolved_entities",
+      "repo_has_theme_provider",
+      "view",
+      "context_id",
+      "root_dir",
+    ]);
+    expect(Object.keys(translateTool?.inputSchema ?? {})).toEqual([
+      "code",
+      "query",
+      "source_outline",
+      "package",
+      "prefer_stable",
+      "a11y_required",
+      "form_field_support",
+      "include_starter_code",
+      "view",
+      "context_id",
+      "root_dir",
+    ]);
+    expect(Object.keys(translateTool?.inputSchema ?? {})).not.toContain(
+      "mockup",
+    );
+    expect(Object.keys(translateTool?.inputSchema ?? {})).not.toContain(
+      "screenshot",
+    );
+    expect(Object.keys(translateTool?.inputSchema ?? {})).not.toContain(
+      "visual_evidence",
+    );
+    expect(contextTool?.description).toContain(
+      "Inspect and cache repo context for repo-aware Salt workflows",
+    );
+    expect(chooseTool?.description).toContain(
+      "compare exact names side by side with names",
+    );
+    expect(chooseTool?.description).toContain(
+      "Use retrieval catalog resources for richer candidate inspection",
+    );
+    expect(translateTool?.description).toContain(
+      "translated into Salt primitives, patterns, and migration steps",
+    );
+    expect(translateTool?.description).toContain(
+      "canonical Salt migration guidance plus repo-policy artifacts",
+    );
+    expect(translateTool?.description).not.toContain("raw screenshot");
+  });
+
+  it("keeps public MCP tool descriptions compact", () => {
+    const descriptionLengths = TOOL_DEFINITIONS.map(
+      (definition) => definition.description.length,
+    );
+
+    // Budgets protect progressive disclosure: tool metadata should route work,
+    // while richer guidance stays in compact/full workflow output and resources.
+    expect(Math.max(...descriptionLengths)).toBeLessThan(
+      PUBLIC_MCP_TOOL_DESCRIPTION_MAX_CHARS,
+    );
+    expect(
+      descriptionLengths.reduce((total, length) => total + length, 0),
+    ).toBeLessThan(PUBLIC_MCP_TOOL_DESCRIPTION_TOTAL_MAX_CHARS);
+  });
+
+  it("allows repo-aware workflow execution without an explicit context_id", () => {
+    const chooseTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "create_salt_ui",
+    );
+    const reviewTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "review_salt_ui",
+    );
+    const migrateTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "migrate_to_salt",
+    );
+    const upgradeTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "upgrade_salt_ui",
+    );
+
+    const chooseSchema = z.object(
+      chooseTool?.inputSchema as Record<string, z.ZodType>,
+    );
+    const reviewSchema = z.object(
+      reviewTool?.inputSchema as Record<string, z.ZodType>,
+    );
+    const migrateSchema = z.object(
+      migrateTool?.inputSchema as Record<string, z.ZodType>,
+    );
+    const upgradeSchema = z.object(
+      upgradeTool?.inputSchema as Record<string, z.ZodType>,
+    );
+
+    expect(
+      chooseSchema.safeParse({
+        query: "navigate to another route",
+      }).success,
+    ).toBe(true);
+    expect(
+      chooseSchema.safeParse({
+        query: "navigate to another route",
+        view: "compact",
+      }).success,
+    ).toBe(true);
+    expect(
+      reviewSchema.safeParse({
+        code: "export const Demo = () => null;",
+      }).success,
+    ).toBe(true);
+    expect(
+      migrateSchema.safeParse({
+        query: "toolbar layout",
+      }).success,
+    ).toBe(true);
+    expect(
+      upgradeSchema.safeParse({
+        from_version: "1.0.0",
+        root_dir: "/repo",
+      }).success,
+    ).toBe(true);
+    expect(
+      upgradeSchema.safeParse({
+        from_version: "1.0.0",
+        root_dir: "/repo",
+        view: "compact",
+      }).success,
+    ).toBe(true);
+  });
+
+  it("publishes an explicit context output contract for get_salt_project_context", () => {
+    const contextTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "get_salt_project_context",
+    );
+    const contextSchema = contextTool?.outputSchema as z.ZodType;
+
+    expect(
+      contextSchema.safeParse({
+        workflow: {
+          id: "get_salt_project_context",
+        },
+        result: {
+          context_id: "repo:example",
+          root_dir: "/repo",
+          resolution: {
+            status: "resolved",
+            root_source: "explicit_input",
+            quality: "ready",
+            reason: null,
+          },
+          package_json_path: "/repo/package.json",
+          environment: {
+            os: "win32",
+            node_version: "v22.0.0",
+            package_manager: "pnpm",
+          },
+          framework: {
+            name: "react",
+            evidence: ["react dependency found"],
+          },
+          workspace: {
+            kind: "single-package",
+            workspace_root: null,
+          },
+          salt: {
+            packages: [{ name: "@salt-ds/core", version: "2.0.0" }],
+            package_version: "2.0.0",
+            installation: {
+              node_modules_roots: [],
+              resolved_packages: [],
+              installed_packages: [],
+              version_health: {
+                declared_versions: [],
+                resolved_versions: [],
+                installed_versions: [],
+                multiple_declared_versions: false,
+                multiple_resolved_versions: false,
+                multiple_installed_versions: false,
+                mismatched_packages: [],
+                issues: [],
+              },
+              inspection: {
+                package_manager: "pnpm",
+                strategy: "node-modules-scan",
+                status: "succeeded",
+                list_command: null,
+                discovered_versions: [],
+                error: null,
+                package_layout: "node-modules",
+                limitations: [],
+                manifest_override_fields: [],
+              },
+              remediation: {
+                explain_command: null,
+                dedupe_command: null,
+                reinstall_command: null,
+              },
+              workspace: {
+                kind: "single-package",
+                package_root: "/repo",
+                workspace_root: null,
+                issue_source_hint: "none",
+                workspace_salt_packages: [],
+                workspace_issues: [],
+              },
+              duplicate_packages: [],
+              health_summary: {
+                health: "pass",
+                recommended_action: "none",
+                blocking_workflows: [],
+                reasons: [],
+              },
+            },
+          },
+          repo_signals: {
+            storybook_detected: false,
+            app_runtime_detected: true,
+            salt_team_config_found: false,
+            salt_stack_config_found: false,
+          },
+          repo_instructions: {
+            path: null,
+            filename: null,
+          },
+          policy: {
+            team_config_path: null,
+            stack_config_path: null,
+            mode: "none",
+            approved_wrappers: [],
+            stack_layers: [],
+            shared_conventions: {
+              enabled: false,
+              pack_count: 0,
+              packs: [],
+              pack_details: [],
+            },
+          },
+          imports: {
+            tsconfig_path: null,
+            aliases: [],
+          },
+          runtime: {
+            detected_targets: [],
+          },
+          transport: {
+            canonical_transport: "mcp",
+            registry_version: "test",
+            registry_generated_at: "2026-04-01T00:00:00Z",
+          },
+          workflows: {
+            create: true,
+            review: true,
+            migrate: true,
+            upgrade: true,
+            runtime_evidence: false,
+          },
+        },
+        artifacts: {
+          summary: {
+            recommended_next_tool: "create_salt_ui",
+            bootstrap_requirement: {
+              status: "recommended",
+              tool: "bootstrap_salt_repo",
+              cli_command: "salt-ds init",
+              reason:
+                "Bootstrap is optional for first results. Run bootstrap_salt_repo (or salt-ds init when MCP bootstrap is unavailable) when you want durable repo policy and the managed root instruction block for future repo-aware refinement.",
+              next_tool_after_bootstrap: "create_salt_ui",
+            },
+            reasons: [
+              "Bootstrap is optional for first results. Run bootstrap_salt_repo (or salt-ds init when MCP bootstrap is unavailable) when you want durable repo policy and the managed root instruction block for future repo-aware refinement.",
+              "No existing Salt usage was detected, and the repo context looks ready for new Salt UI creation.",
+            ],
+            context_health: {
+              resolution_status: "resolved",
+              trusted: true,
+              repo_specific_workflows_ready: true,
+              reason: null,
+            },
+            retry_with: {
+              root_dir: "/repo",
+              context_id: "repo:example",
+            },
+          },
+          notes: [],
+        },
+        sources: [],
+      }).success,
+    ).toBe(true);
+  });
+
+  it("registers the workflow-first beta tool surface by default", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await writeBaseArtifacts(registryDir);
+      },
+      async (registryDir) => {
+        const server = await createSaltMcpServer({ registryDir });
+        const registeredTools = Object.keys(
+          (
+            server as unknown as {
+              _registeredTools: Record<string, { description?: string }>;
+            }
+          )._registeredTools,
+        ).sort();
+
+        expect(registeredTools).toEqual(EXPECTED_TOOL_NAMES);
+      },
+    );
+  });
+
+  it("registers the support tools named by v1 retrieve actions", () => {
+    const toolNames = TOOL_DEFINITIONS.map((definition) => definition.name);
+    const chooseTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "create_salt_ui",
+    );
+    const entityTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "get_salt_entities",
+    );
+    const examplesTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "get_salt_examples",
+    );
+    const discoverTool = TOOL_DEFINITIONS.find(
+      (definition) => definition.name === "discover_salt",
+    );
+    const chooseSchema = chooseTool?.outputSchema as z.ZodType;
+
+    expect(toolNames).toEqual(
+      expect.arrayContaining(["get_salt_entities", "get_salt_examples"]),
+    );
+    expect(
+      chooseSchema.safeParse({
+        contract: "salt_workflow_v1",
+        workflow: "create",
+        transport: "mcp",
+        status: "partial",
+        request: {
+          entity: "profile page with tabs and avatar",
+          resolved_entity: "Tabs",
+          match_status: "broadened",
+        },
+        safety: {
+          canonical_complete: false,
+          exact_request_safe: false,
+          blocking_reasons: ["required follow-through remains: Avatar"],
+        },
+        action: {
+          kind: "retrieve_entity",
+          tool: "get_salt_entities",
+          args: { names: ["Avatar"] },
+          rule_ids: ["create-follow-through-required"],
+          post_action: null,
+        },
+        next_required_action: {
+          kind: "retrieve_entity",
+          tool: "get_salt_entities",
+          args: { names: ["Avatar"] },
+        },
+        allowed_next_actions: ["retrieve_entity"],
+        recipe: {
+          steps: [
+            {
+              id: "retrieve-avatar",
+              action: {
+                kind: "retrieve_entity",
+                tool: "get_salt_entities",
+                args: { names: ["Avatar"] },
+              },
+              status: "required",
+            },
+          ],
+        },
+        questions: [],
+        evidence: {
+          status: "partial",
+          items: [],
+          source_urls: [],
+          missing: ["follow-through evidence for Avatar"],
+          heuristic_fallback: false,
+        },
+        internal_limitations: {
+          unsupported_claim_count: 0,
+          unsupported_rule_kinds: [],
+        },
+        summary: "Ground Avatar before implementing.",
+      }).success,
+    ).toBe(true);
+    expect(
+      (entityTool?.outputSchema as z.ZodType).safeParse({
+        guidance_boundary: {},
+        decision: {
+          status: "results",
+          why: "Resolved Avatar as a Salt component.",
+        },
+        requested_count: 1,
+        found_count: 1,
+        not_found_count: 0,
+        ambiguous_count: 0,
+        results: [
+          {
+            name: "Avatar",
+            result: {
+              entity_type: "component",
+              decision: {
+                status: "found",
+                why: "Resolved Avatar as a Salt component.",
+              },
+              entity: { name: "Avatar" },
+              guidance_boundary: {},
+              sources: [],
+            },
+          },
+        ],
+        unresolved_names: [],
+      }).success,
+    ).toBe(true);
+    expect(
+      (examplesTool?.outputSchema as z.ZodType).safeParse({
+        guidance_boundary: {},
+        decision: {
+          target_name: "Avatar",
+          target_type: "component",
+          why: "Best example from the current Salt registry.",
+        },
+        best_example: { title: "Image" },
+        sources: [],
+      }).success,
+    ).toBe(true);
+    expect(
+      (discoverTool?.outputSchema as z.ZodType).safeParse({
+        mode: "route",
+        guidance_boundary: {},
+        decision: {
+          workflow: "create_salt_ui",
+          why: "Start from the strongest component fit.",
+        },
+        sources: [],
+      }).success,
+    ).toBe(true);
+  });
+
+  it("validates and resumes durable review reports through MCP resources (salt://review/validation/{path}, salt://review/state/{path})", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await writeBaseArtifacts(registryDir);
+      },
+      async (registryDir) => {
+        const server = await createSaltMcpServer({ registryDir });
+        const rootDir = await createTempDir("salt-mcp-review-resume");
+        const reportPath = path.join(rootDir, "invalid-review-report.json");
+        await fs.writeFile(reportPath, JSON.stringify({}, null, 2), "utf8");
+
+        // Switch the MCP server's cwd to the temp project so the
+        // validateReviewReportFromPath helper (which resolves report_path
+        // against process.cwd()) finds the fixture report.
+        const originalCwd = process.cwd();
+        process.chdir(rootDir);
+        try {
+          const registeredResources = (
+            server as unknown as {
+              _registeredResourceTemplates: Record<
+                string,
+                {
+                  readCallback: (
+                    uri: URL,
+                    variables: Record<string, string>,
+                  ) => Promise<{
+                    contents: Array<{ uri: string; text: string }>;
+                  }>;
+                }
+              >;
+            }
+          )._registeredResourceTemplates;
+          const validationResource =
+            registeredResources?.salt_review_validation;
+          const stateResource = registeredResources?.salt_review_state;
+
+          expect(validationResource).toBeTruthy();
+          expect(stateResource).toBeTruthy();
+          if (!validationResource || !stateResource) {
+            throw new Error(
+              "Expected salt_review_validation and salt_review_state resources to be registered.",
+            );
+          }
+
+          const encodedPath = encodeURIComponent("invalid-review-report.json");
+          const validationUri = new URL(
+            `salt://review/validation/${encodedPath}`,
+          );
+          const validationResult = await validationResource.readCallback(
+            validationUri,
+            { report_path: encodedPath },
+          );
+          const validation = JSON.parse(
+            validationResult.contents[0]?.text ?? "{}",
+          );
+
+          const stateUri = new URL(`salt://review/state/${encodedPath}`);
+          const stateResult = await stateResource.readCallback(stateUri, {
+            report_path: encodedPath,
+          });
+          const resume = JSON.parse(stateResult.contents[0]?.text ?? "{}");
+
+          expect(validation).toEqual(
+            expect.objectContaining({
+              contract: "salt_review_report_validation_v1",
+              status: "invalid",
+              current: false,
+              supported: false,
+              resume: expect.objectContaining({
+                contract: "salt_review_resume_v1",
+                status: "invalid",
+                reusable_evidence_ref_ids: [],
+              }),
+            }),
+          );
+          expect(resume).toEqual(
+            expect.objectContaining({
+              contract: "salt_review_resume_v1",
+              status: "invalid",
+              reusable_evidence_ref_ids: [],
+            }),
+          );
+        } finally {
+          process.chdir(originalCwd);
+        }
+      },
+    );
+  });
+
+  it("persists release-gated context packs and generated report artifacts through the merged persist_salt_artifact MCP tool", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const rootDir = await createTempDir("salt-mcp-artifact-persistence");
+        const persistTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "persist_salt_artifact",
+        );
+
+        const persistedContext = (await persistTool?.execute(registry, {
+          kind: "context_pack",
+          root_dir: rootDir,
+        })) as Record<string, unknown>;
+
+        expect(
+          (persistTool?.outputSchema as z.ZodType).safeParse(
+            persistedContext,
+          ).success,
+        ).toBe(true);
+        expect(persistedContext).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pack_persistence_write_v1",
+            status: "written",
+            written: true,
+            output_dir: ".salt/context/components",
+            manifest_path: ".salt/context/manifest.json",
+            release_gate: expect.objectContaining({
+              contract: "salt_generated_artifact_release_gate_batch_v1",
+              status: "passed",
+              releasable: true,
+            }),
+          }),
+        );
+        expect(
+          validateSaltContextPackPersistenceCheckSchema(
+            persistedContext.persistence_check,
+          ),
+        ).toEqual([]);
+        expect(persistedContext.persistence_check).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pack_persistence_check_v1",
+            status: "current",
+            current: true,
+            host_action_required: false,
+            missing_outputs: [],
+            stale_outputs: [],
+          }),
+        );
+
+        const manifestPath = path.join(
+          rootDir,
+          ".salt",
+          "context",
+          "manifest.json",
+        );
+        const manifest = JSON.parse(
+          await fs.readFile(manifestPath, "utf8"),
+        ) as Record<string, unknown>;
+        expect(validateSaltContextPackManifestSchema(manifest)).toEqual([]);
+        for (const entry of manifest.entries as Array<{
+          output_path?: string;
+        }>) {
+          expect(entry.output_path).toEqual(expect.any(String));
+          await expect(
+            fs.readFile(path.resolve(rootDir, entry.output_path ?? ""), "utf8"),
+          ).resolves.toEqual(expect.any(String));
+        }
+
+        // Fixture-only generated report payload: no production Salt facts.
+        const reportPayload = {
+          contract: "salt_review_report_v1",
+          generated_artifact: {
+            contract: "salt_generated_artifact_v1",
+            artifact_kind: "review-report",
+            id: "fixture-review-report",
+            generated_at: GENERATED_AT,
+            generator: { name: "fixture MCP persistence test" },
+            registry: {
+              version: registry.version,
+              generated_at: registry.generated_at,
+            },
+            claims: [],
+            evidence_refs: [],
+            unsupported_claims: [],
+          },
+        };
+        const persistedReport = (await persistTool?.execute(registry, {
+          kind: "generated_artifact",
+          root_dir: rootDir,
+          artifact_path: ".salt/reports/fixture-review-report.json",
+          artifact: reportPayload,
+        })) as Record<string, unknown>;
+
+        expect(
+          validateSaltGeneratedArtifactPersistenceSchema(persistedReport),
+        ).toEqual([]);
+        expect(
+          (persistTool?.outputSchema as z.ZodType).safeParse(
+            persistedReport,
+          ).success,
+        ).toBe(true);
+        expect(persistedReport).toEqual(
+          expect.objectContaining({
+            contract: "salt_generated_artifact_persistence_v1",
+            status: "written",
+            written: true,
+            artifact_path: ".salt/reports/fixture-review-report.json",
+            release_gate: expect.objectContaining({
+              status: "passed",
+              artifact_kind: "review-report",
+            }),
+          }),
+        );
+        await expect(
+          fs.readFile(
+            path.join(
+              rootDir,
+              ".salt",
+              "reports",
+              "fixture-review-report.json",
+            ),
+            "utf8",
+          ),
+        ).resolves.toBe(JSON.stringify(reportPayload, null, 2));
+
+        // Fixture-only unsupported claim used to prove blocked reports are not written.
+        const blockedPayload = {
+          generated_artifact: {
+            ...reportPayload.generated_artifact,
+            id: "fixture-blocked-review-report",
+            unsupported_claims: [
+              {
+                id: "fixture.unsupported",
+                kind: "prop",
+                text: "Fixture unsupported prop claim.",
+                reason: "Fixture unsupported claims must not be persisted.",
+              },
+            ],
+          },
+        };
+        const blockedReport = (await persistTool?.execute(registry, {
+          kind: "generated_artifact",
+          root_dir: rootDir,
+          artifact_path: ".salt/reports/blocked-review-report.json",
+          artifact: blockedPayload,
+        })) as Record<string, unknown>;
+
+        expect(
+          validateSaltGeneratedArtifactPersistenceSchema(blockedReport),
+        ).toEqual([]);
+        expect(blockedReport).toEqual(
+          expect.objectContaining({
+            status: "blocked",
+            written: false,
+            release_gate: expect.objectContaining({
+              status: "blocked",
+              artifact_kind: "review-report",
+              unsupported_claim_count: 1,
+            }),
+          }),
+        );
+        await expect(
+          fs.readFile(
+            path.join(
+              rootDir,
+              ".salt",
+              "reports",
+              "blocked-review-report.json",
+            ),
+            "utf8",
+          ),
+        ).rejects.toMatchObject({ code: "ENOENT" });
+      },
+    );
+  }, 120_000);
+
+  it("publishes an MCP output schema that accepts install dependency actions", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await writeBaseArtifacts(registryDir);
+      },
+      async (registryDir) => {
+        const server = await createSaltMcpServer({ registryDir });
+        const registeredTools = (
+          server as unknown as {
+            _registeredTools: Record<
+              string,
+              {
+                outputSchema?: unknown;
+              }
+            >;
+          }
+        )._registeredTools;
+        const outputObjectSchema = normalizeObjectSchema(
+          registeredTools.create_salt_ui?.outputSchema as z.ZodType,
+        );
+
+        expect(outputObjectSchema).toBeTruthy();
+        if (!outputObjectSchema) {
+          throw new Error("Expected create_salt_ui output schema.");
+        }
+
+        const outputJsonSchema = toJsonSchemaCompat(outputObjectSchema, {
+          strictUnions: true,
+          pipeStrategy: "output",
+        });
+        const validator = new AjvJsonSchemaValidator().getValidator(
+          outputJsonSchema as JsonSchemaType,
+        );
+
+        const result = validator({
+          contract: "salt_workflow_v1",
+          workflow: "create",
+          transport: "mcp",
+          status: "blocked",
+          request: {
+            entity: "profile page with tabs and avatar",
+            resolved_entity: "Tabs",
+            match_status: "broadened",
+            exact_match_required: false,
+          },
+          safety: {
+            canonical_complete: false,
+            exact_request_safe: false,
+            blocking_reasons: [
+              "Salt packages are not installed; install @salt-ds/core, @salt-ds/theme before implementing Salt UI.",
+            ],
+          },
+          action: {
+            kind: "install_dependencies",
+            package_manager: "yarn",
+            packages: ["@salt-ds/core", "@salt-ds/theme"],
+            rule_ids: ["create-follow-through-required"],
+            post_action: null,
+          },
+          next_required_action: {
+            kind: "install_dependencies",
+            package_manager: "yarn",
+            packages: ["@salt-ds/core", "@salt-ds/theme"],
+          },
+          allowed_next_actions: [
+            "install_dependencies",
+            "retrieve_entity",
+            "rerun_workflow",
+          ],
+          recipe: {
+            steps: [
+              {
+                id: "install-salt-dependencies",
+                action: {
+                  kind: "install_dependencies",
+                  package_manager: "yarn",
+                  packages: ["@salt-ds/core", "@salt-ds/theme"],
+                },
+                status: "required",
+              },
+              {
+                id: "rerun-originating-create-workflow",
+                action: {
+                  kind: "rerun_workflow",
+                  tool: "create_salt_ui",
+                  args: {
+                    query: "profile page with tabs and avatar",
+                    resolved_entities: ["Avatar"],
+                  },
+                },
+                status: "required",
+              },
+            ],
+          },
+          questions: [],
+          evidence: {
+            status: "partial",
+            items: [],
+            source_urls: [],
+            missing: ["follow-through evidence for Avatar"],
+            heuristic_fallback: false,
+          },
+          internal_limitations: {
+            unsupported_claim_count: 0,
+            unsupported_rule_kinds: [],
+          },
+          summary: "Install Salt dependencies before implementing.",
+        });
+
+        expect(result).toEqual(
+          expect.objectContaining({
+            valid: true,
+          }),
+        );
+      },
+    );
+  });
+
+  it("registers machine-readable capability and catalog resources", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-04-22T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const server = await createSaltMcpServer({ registryDir });
+        const registry = await loadRegistry({ registryDir });
+        const contextComponentRecord = registry.components[0];
+        if (!contextComponentRecord) {
+          throw new Error("Expected at least one source-backed component.");
+        }
+        const contextPatternRecord =
+          selectDefaultContextPackPatterns(registry)[0];
+        if (!contextPatternRecord) {
+          throw new Error("Expected at least one source-backed pattern.");
+        }
+        const contextFoundationGroup =
+          selectDefaultContextPackFoundationTokenGroups(registry)[0];
+        if (!contextFoundationGroup) {
+          throw new Error(
+            "Expected at least one source-backed foundation token group.",
+          );
+        }
+        const contextComponentUri = `salt://context/component/${encodeURIComponent(
+          contextComponentRecord.name,
+        )}`;
+        const contextComponentMarkdownUri = `${contextComponentUri}.context.md`;
+        const contextPatternUri = `salt://context/pattern/${encodeURIComponent(
+          contextPatternRecord.name,
+        )}`;
+        const contextFoundationUri = `salt://context/foundation/tokens/${encodeURIComponent(
+          contextFoundationGroup.category,
+        )}`;
+        const contextComponentNameEvidenceRef = `${contextComponentRecord.id}.name.ref`;
+        const contextPatternNameEvidenceRef = `${contextPatternRecord.id}.name.ref`;
+        const contextFoundationCategoryCount = new Set(
+          registry.tokens.map((token) => token.category),
+        ).size;
+        const runtimeMetadata = getSaltMcpRuntimeMetadata(registry);
+        const transportRegistrations = server as unknown as {
+          _registeredResources: Record<
+            string,
+            {
+              metadata?: Record<string, unknown>;
+              readCallback: (
+                uri: URL,
+                extra: unknown,
+              ) => Promise<{
+                contents: Array<{
+                  uri: string;
+                  mimeType?: string;
+                  text?: string;
+                }>;
+              }>;
+            }
+          >;
+          _registeredResourceTemplates: Record<
+            string,
+            {
+              metadata?: Record<string, unknown>;
+              resourceTemplate: {
+                uriTemplate: {
+                  toString(): string;
+                };
+              };
+              readCallback: (
+                uri: URL,
+                variables: Record<string, string>,
+                extra: unknown,
+              ) => Promise<{
+                contents: Array<{
+                  uri: string;
+                  mimeType?: string;
+                  text?: string;
+                }>;
+              }>;
+            }
+          >;
+        };
+        const registeredResources = transportRegistrations._registeredResources;
+        const registeredResourceTemplates =
+          transportRegistrations._registeredResourceTemplates;
+
+        expect(Object.keys(registeredResources)).toEqual([
+          SALT_MCP_CAPABILITY_MANIFEST_URI,
+          SALT_MCP_CATALOG_MANIFEST_URI,
+          SALT_MCP_CONTEXT_MANIFEST_URI,
+          SALT_MCP_CONTEXT_HEALTH_URI,
+          SALT_MCP_CONTEXT_COVERAGE_URI,
+          SALT_MCP_CONTEXT_GAP_CATALOG_URI,
+          SALT_MCP_CONTEXT_PACK_URI,
+          SALT_MCP_CONTEXT_RELEASE_GATE_URI,
+          SALT_MCP_AI_SETUP_URI,
+          SALT_MCP_AI_EVIDENCE_CLOSURE_URI,
+        ]);
+        expect(Object.keys(registeredResourceTemplates).sort()).toEqual([
+          "salt_catalog_candidates",
+          "salt_catalog_entity",
+          "salt_catalog_family",
+          "salt_context_component",
+          "salt_context_component_markdown",
+          "salt_context_foundation",
+          "salt_context_pattern",
+          "salt_review_state",
+          "salt_review_validation",
+        ]);
+        expect(
+          registeredResources[SALT_MCP_CAPABILITY_MANIFEST_URI]?.metadata,
+        ).toEqual(
+          expect.objectContaining({
+            mimeType: "application/json",
+          }),
+        );
+
+        const resourceResult = await registeredResources[
+          SALT_MCP_CAPABILITY_MANIFEST_URI
+        ].readCallback(new URL(SALT_MCP_CAPABILITY_MANIFEST_URI), {});
+
+        expect(resourceResult.contents).toEqual([
+          expect.objectContaining({
+            uri: SALT_MCP_CAPABILITY_MANIFEST_URI,
+            mimeType: "application/json",
+            text: JSON.stringify(runtimeMetadata.capability_manifest, null, 2),
+          }),
+        ]);
+        const capabilityManifest = JSON.parse(
+          resourceResult.contents[0]?.text ?? "null",
+        ) as {
+          public_surface?: {
+            default_surface_ids?: string[];
+          };
+          support_tools?: {
+            policy?: string;
+            default_exposed?: boolean;
+            tool_ids?: string[];
+          };
+          contracts?: {
+            workflow_action_contract?: {
+              action_semantics?: Array<{
+                kind?: string;
+                implementation_allowed?: boolean;
+                host_obligation?: string;
+                follow_up_required?: string;
+              }>;
+              implementation_gate?: {
+                required?: Record<string, unknown>;
+              };
+            };
+          };
+          resources?: {
+            context_manifest_uri?: string | null;
+            context_health_uri?: string | null;
+            context_coverage_uri?: string | null;
+            context_gap_catalog_uri?: string | null;
+            context_pack_uri?: string | null;
+            context_release_gate_uri?: string | null;
+            ai_setup_uri?: string | null;
+            ai_evidence_closure_uri?: string | null;
+            context_component_template_uri?: string | null;
+            context_component_markdown_template_uri?: string | null;
+            context_pattern_template_uri?: string | null;
+            context_foundation_template_uri?: string | null;
+          };
+        };
+        const actionContract =
+          capabilityManifest.contracts?.workflow_action_contract;
+        const actionSemantics = new Map(
+          actionContract?.action_semantics?.map((entry) => [
+            entry.kind,
+            entry,
+          ]) ?? [],
+        );
+
+        expect(actionContract?.implementation_gate?.required).toEqual(
+          expect.objectContaining({
+            status: "success",
+            "safety.exact_request_safe": true,
+            "action.kind": "implement",
+            "evidence.status": "complete",
+            "action.post_action.kind": "review",
+          }),
+        );
+        expect(actionSemantics.get("implement")).toEqual(
+          expect.objectContaining({
+            implementation_allowed: true,
+            host_obligation: "implement_exact_request",
+          }),
+        );
+        expect(actionSemantics.get("ask_user")).toEqual(
+          expect.objectContaining({
+            implementation_allowed: false,
+            host_obligation: "ask_user_and_stop",
+            follow_up_required: "updated_user_input",
+          }),
+        );
+        expect(actionSemantics.get("install_dependencies")).toEqual(
+          expect.objectContaining({
+            implementation_allowed: false,
+            host_obligation: "install_packages_then_rerun",
+          }),
+        );
+        expect(actionSemantics.get("rerun_workflow")).toEqual(
+          expect.objectContaining({
+            implementation_allowed: false,
+            host_obligation: "rerun_originating_workflow",
+          }),
+        );
+        expect(capabilityManifest.public_surface?.default_surface_ids).toEqual(
+          expect.arrayContaining([
+            "get_salt_entities",
+            "get_salt_examples",
+            "discover_salt",
+          ]),
+        );
+        expect(capabilityManifest.support_tools).toEqual(
+          expect.objectContaining({
+            policy: "optional_advanced_host_surface",
+            default_exposed: true,
+            tool_ids: expect.arrayContaining([
+              "get_salt_entities",
+              "get_salt_examples",
+              "discover_salt",
+              "persist_salt_artifact",
+            ]),
+          }),
+        );
+        expect(capabilityManifest.resources).toEqual(
+          expect.objectContaining({
+            context_manifest_uri: SALT_MCP_CONTEXT_MANIFEST_URI,
+            context_health_uri: SALT_MCP_CONTEXT_HEALTH_URI,
+            context_coverage_uri: SALT_MCP_CONTEXT_COVERAGE_URI,
+            context_gap_catalog_uri: SALT_MCP_CONTEXT_GAP_CATALOG_URI,
+            context_pack_uri: SALT_MCP_CONTEXT_PACK_URI,
+            context_release_gate_uri: SALT_MCP_CONTEXT_RELEASE_GATE_URI,
+            ai_setup_uri: SALT_MCP_AI_SETUP_URI,
+            ai_evidence_closure_uri: SALT_MCP_AI_EVIDENCE_CLOSURE_URI,
+            context_component_template_uri:
+              SALT_MCP_CONTEXT_COMPONENT_TEMPLATE_URI,
+            context_component_markdown_template_uri:
+              SALT_MCP_CONTEXT_COMPONENT_MARKDOWN_TEMPLATE_URI,
+            context_pattern_template_uri: SALT_MCP_CONTEXT_PATTERN_TEMPLATE_URI,
+            context_foundation_template_uri:
+              SALT_MCP_CONTEXT_FOUNDATION_TEMPLATE_URI,
+          }),
+        );
+
+        const catalogManifestResult = await registeredResources[
+          SALT_MCP_CATALOG_MANIFEST_URI
+        ].readCallback(new URL(SALT_MCP_CATALOG_MANIFEST_URI), {});
+        const catalogManifest = JSON.parse(
+          catalogManifestResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(catalogManifest).toEqual(
+          expect.objectContaining({
+            contract_version: "salt_create_catalog_v1",
+            resources: {
+              manifest_uri: SALT_MCP_CATALOG_MANIFEST_URI,
+              entity_template_uri: SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
+              candidates_template_uri: SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI,
+              family_template_uri: SALT_MCP_CATALOG_FAMILY_TEMPLATE_URI,
+            },
+          }),
+        );
+
+        const contextManifestResult = await registeredResources[
+          SALT_MCP_CONTEXT_MANIFEST_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_MANIFEST_URI), {});
+        const contextManifest = JSON.parse(
+          contextManifestResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextPackManifestSchema(contextManifest)).toEqual(
+          [],
+        );
+        expect(contextManifest).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pack_manifest_v1",
+            status: "validated",
+            registry: expect.objectContaining({
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            coverage_gaps: [],
+            entries: expect.arrayContaining([
+              expect.objectContaining({
+                kind: "component",
+                name: contextComponentRecord.name,
+                output_path: contextComponentUri,
+                evidence_ref_ids: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "component_markdown",
+                name: contextComponentRecord.name,
+                output_path: contextComponentMarkdownUri,
+                contract: "salt_context_component_markdown_v1",
+                generated_artifact_kind: "component-markdown-bridge",
+                evidence_ref_ids: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "pattern",
+                name: contextPatternRecord.name,
+                output_path: contextPatternUri,
+                contract: "salt_context_pattern_v1",
+                generated_artifact_kind: "pattern-context",
+                evidence_ref_ids: expect.arrayContaining([
+                  contextPatternNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "foundation",
+                name: contextFoundationGroup.category,
+                output_path: contextFoundationUri,
+                contract: "salt_context_foundation_v1",
+                generated_artifact_kind: "foundation-context",
+                evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+              }),
+              expect.objectContaining({
+                kind: "prompt",
+                id: "workflow-prompts",
+                contract: "salt_context_prompt_instruction_surface_v1",
+                generated_artifact_kind: "prompt",
+                evidence_ref_ids: expect.arrayContaining([
+                  "prompt.workflow-prompts.salt-ds-skill-first-load.ref",
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "instruction",
+                id: "host-instructions",
+                contract: "salt_context_prompt_instruction_surface_v1",
+                generated_artifact_kind: "instruction",
+                evidence_ref_ids: expect.arrayContaining([
+                  "instruction.host-instructions.salt-repo-instructions-template.ref",
+                ]),
+              }),
+            ]),
+          }),
+        );
+        expect(
+          (contextManifest.coverage_gaps as Array<{ kind?: string }>).some(
+            (gap) => ["pattern", "foundation"].includes(gap.kind ?? ""),
+          ),
+        ).toBe(false);
+
+        const contextHealthResult = await registeredResources[
+          SALT_MCP_CONTEXT_HEALTH_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_HEALTH_URI), {});
+        const contextHealth = JSON.parse(
+          contextHealthResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltGeneratedContextHealthSchema(contextHealth)).toEqual(
+          [],
+        );
+        expect(contextHealth).toEqual(
+          expect.objectContaining({
+            contract: "salt_generated_context_health_v1",
+            manifestPath: SALT_MCP_CONTEXT_MANIFEST_URI,
+            present: true,
+            status: "current",
+            registry: expect.objectContaining({
+              version: registry.version,
+              hash: expect.stringMatching(/^sha256:/),
+              current_version: registry.version,
+              current_hash: expect.stringMatching(/^sha256:/),
+            }),
+            unsupportedCoverageGaps: 0,
+            coverageGaps: [],
+            missingOutputs: [],
+            entries: expect.arrayContaining([
+              expect.objectContaining({
+                kind: "component",
+                name: contextComponentRecord.name,
+                outputPath: contextComponentUri,
+                outputExists: true,
+                outputStatus: "current",
+                outputContract: "salt_context_component_v1",
+                mismatches: [],
+                evidenceRefIds: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "component_markdown",
+                name: contextComponentRecord.name,
+                outputPath: contextComponentMarkdownUri,
+                outputExists: true,
+                outputStatus: "current",
+                outputContract: "salt_context_component_markdown_v1",
+                mismatches: [],
+                evidenceRefIds: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "pattern",
+                name: contextPatternRecord.name,
+                outputPath: contextPatternUri,
+                outputExists: true,
+                outputStatus: "current",
+                outputContract: "salt_context_pattern_v1",
+                mismatches: [],
+                evidenceRefIds: expect.arrayContaining([
+                  contextPatternNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "foundation",
+                name: contextFoundationGroup.category,
+                outputPath: contextFoundationUri,
+                outputExists: true,
+                outputStatus: "current",
+                outputContract: "salt_context_foundation_v1",
+                mismatches: [],
+                evidenceRefIds: expect.arrayContaining([expect.any(String)]),
+              }),
+            ]),
+          }),
+        );
+
+        const contextCoverageResult = await registeredResources[
+          SALT_MCP_CONTEXT_COVERAGE_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_COVERAGE_URI), {});
+        const contextCoverage = JSON.parse(
+          contextCoverageResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextCoverageAuditSchema(contextCoverage)).toEqual(
+          [],
+        );
+        expect(contextCoverage).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_coverage_audit_v1",
+            status: expect.stringMatching(/^(validated|unsupported)$/),
+            registry: expect.objectContaining({
+              version: registry.version,
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            component_contexts: expect.objectContaining({
+              total_records: registry.components.length,
+              selected_records: expect.any(Number),
+              validated_contexts: expect.any(Number),
+              unsupported_contexts: expect.any(Number),
+              source_gap_count: expect.any(Number),
+              unsupported_records: expect.any(Array),
+            }),
+            pattern_contexts: expect.objectContaining({
+              total_records: registry.patterns.length,
+              selected_records: expect.any(Number),
+              validated_contexts: expect.any(Number),
+              unsupported_contexts: expect.any(Number),
+              source_gap_count: expect.any(Number),
+              unsupported_records: expect.any(Array),
+            }),
+            foundation_contexts: expect.objectContaining({
+              total_records: contextFoundationCategoryCount,
+              selected_records: expect.any(Number),
+              validated_contexts: expect.any(Number),
+              unsupported_contexts: expect.any(Number),
+              source_gap_count: expect.any(Number),
+              unsupported_records: expect.any(Array),
+            }),
+            docs_registry_gaps: expect.any(Array),
+          }),
+        );
+        for (const gap of contextCoverage.docs_registry_gaps as Array<{
+          kind?: string;
+          status?: string;
+          evidence_ref_ids?: unknown;
+          records?: unknown;
+        }>) {
+          expect(["component", "pattern", "foundation"]).toContain(gap.kind);
+          expect(gap.status).toBe("unsupported");
+          expect(gap.evidence_ref_ids).toEqual(expect.any(Array));
+          expect(gap.records).toEqual(expect.any(Array));
+        }
+
+        const contextGapCatalogResult = await registeredResources[
+          SALT_MCP_CONTEXT_GAP_CATALOG_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_GAP_CATALOG_URI), {});
+        const contextGapCatalog = JSON.parse(
+          contextGapCatalogResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(
+          validateSaltContextCoverageGapCatalogSchema(contextGapCatalog),
+        ).toEqual([]);
+        expect(contextGapCatalog).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_coverage_gap_catalog_v1",
+            audit_contract: "salt_context_coverage_audit_v1",
+            audit_status: contextCoverage.status,
+            counts: expect.objectContaining({
+              total: (contextCoverage.docs_registry_gaps as unknown[]).length,
+            }),
+            gaps: expect.any(Array),
+          }),
+        );
+        for (const gap of contextGapCatalog.gaps as Array<{
+          cause?: string;
+          cause_codes?: unknown[];
+          evidence_ref_ids?: unknown[];
+          records?: unknown[];
+        }>) {
+          expect(gap.cause).toEqual(expect.any(String));
+          expect(gap.cause_codes?.length).toBeGreaterThan(0);
+          expect(gap.evidence_ref_ids).toEqual(expect.any(Array));
+          expect(gap.records).toEqual(expect.any(Array));
+        }
+
+        const contextBundleResult = await registeredResources[
+          SALT_MCP_CONTEXT_PACK_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_PACK_URI), {});
+        const contextBundle = JSON.parse(
+          contextBundleResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextPackBundleSchema(contextBundle)).toEqual([]);
+        expect(contextBundle).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pack_bundle_v1",
+            manifest: expect.objectContaining({
+              contract: "salt_context_pack_manifest_v1",
+            }),
+            persistence: expect.objectContaining({
+              status: "host_action_required",
+              output_dir: null,
+            }),
+            unsupported_surfaces: [],
+            files: expect.arrayContaining([
+              expect.objectContaining({
+                kind: "pattern",
+                output_path: contextPatternUri,
+                mime_type: "application/json",
+                evidence_ref_ids: expect.arrayContaining([
+                  contextPatternNameEvidenceRef,
+                ]),
+              }),
+              expect.objectContaining({
+                kind: "foundation",
+                output_path: contextFoundationUri,
+                mime_type: "application/json",
+                evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+              }),
+              expect.objectContaining({
+                kind: "prompt",
+                id: "workflow-prompts",
+                mime_type: "application/json",
+                generated_artifact_kind: "prompt",
+              }),
+              expect.objectContaining({
+                kind: "instruction",
+                id: "host-instructions",
+                mime_type: "application/json",
+                generated_artifact_kind: "instruction",
+              }),
+            ]),
+          }),
+        );
+        const contextBundleUnsupportedSurfaces =
+          contextBundle.unsupported_surfaces as Array<Record<string, unknown>>;
+        expect(contextBundleUnsupportedSurfaces).toHaveLength(0);
+
+        const contextBundleFiles = contextBundle.files as Array<{
+          kind?: string;
+          output_path?: string;
+          mime_type?: string;
+          contract?: string;
+          generated_artifact_kind?: string;
+          evidence_ref_ids?: string[];
+          text?: string;
+        }>;
+        const contextBundleEntries = ((
+          contextBundle.manifest as { entries?: unknown[] }
+        ).entries ?? []) as Array<{
+          kind?: string;
+          output_path?: string;
+          contract?: string;
+          generated_artifact_kind?: string;
+          evidence_ref_ids?: string[];
+        }>;
+
+        expect(contextBundleFiles).toHaveLength(contextBundleEntries.length);
+        for (const entry of contextBundleEntries) {
+          const matchingFile = contextBundleFiles.find(
+            (file) => file.output_path === entry.output_path,
+          );
+
+          expect(matchingFile).toEqual(
+            expect.objectContaining({
+              kind: entry.kind,
+              output_path: entry.output_path,
+              contract: entry.contract,
+              generated_artifact_kind: entry.generated_artifact_kind,
+            }),
+          );
+          expect(matchingFile?.evidence_ref_ids).toEqual(
+            entry.evidence_ref_ids,
+          );
+
+          if (!matchingFile?.text) {
+            throw new Error(
+              `Missing bundled context text for ${String(entry.output_path)}`,
+            );
+          }
+
+          if (entry.contract === "salt_context_component_markdown_v1") {
+            expect(matchingFile.mime_type).toBe("text/markdown");
+            expect(matchingFile.text).toContain(
+              "<!-- Contract: salt_context_component_markdown_v1 -->",
+            );
+            continue;
+          }
+
+          expect(matchingFile.mime_type).toBe("application/json");
+          const bundledPayload = JSON.parse(matchingFile.text) as Record<
+            string,
+            unknown
+          >;
+          if (entry.contract === "salt_context_component_v1") {
+            expect(validateSaltContextComponentSchema(bundledPayload)).toEqual(
+              [],
+            );
+          } else if (entry.contract === "salt_context_pattern_v1") {
+            expect(validateSaltContextPatternSchema(bundledPayload)).toEqual(
+              [],
+            );
+          } else if (entry.contract === "salt_context_foundation_v1") {
+            expect(validateSaltContextFoundationSchema(bundledPayload)).toEqual(
+              [],
+            );
+          } else if (
+            entry.contract === "salt_context_prompt_instruction_surface_v1"
+          ) {
+            expect(
+              validateSaltContextPromptHostInstructionSurfaceSchema(
+                bundledPayload,
+              ),
+            ).toEqual([]);
+          } else {
+            throw new Error(
+              `Unsupported bundled context contract ${String(entry.contract)}`,
+            );
+          }
+        }
+
+        const contextReleaseGateResult = await registeredResources[
+          SALT_MCP_CONTEXT_RELEASE_GATE_URI
+        ].readCallback(new URL(SALT_MCP_CONTEXT_RELEASE_GATE_URI), {});
+        const contextReleaseGate = JSON.parse(
+          contextReleaseGateResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(
+          validateSaltGeneratedArtifactReleaseGateBatchSchema(
+            contextReleaseGate,
+          ),
+        ).toEqual([]);
+        expect(contextReleaseGate).toEqual(
+          expect.objectContaining({
+            contract: "salt_generated_artifact_release_gate_batch_v1",
+            status: "passed",
+            releasable: true,
+            artifact_path: SALT_MCP_CONTEXT_PACK_URI,
+            target_count: expect.any(Number),
+            gates: expect.arrayContaining([
+              expect.objectContaining({
+                artifact_kind: "prompt",
+                status: "passed",
+              }),
+              expect.objectContaining({
+                artifact_kind: "instruction",
+                status: "passed",
+              }),
+            ]),
+          }),
+        );
+        expect(
+          (
+            (contextReleaseGate.coverage_gaps ?? []) as Array<{
+              kind?: string;
+            }>
+          ).filter(
+            (gap) => gap.kind === "prompt" || gap.kind === "instruction",
+          ),
+        ).toEqual([]);
+
+        const aiSetupResult = await registeredResources[
+          SALT_MCP_AI_SETUP_URI
+        ].readCallback(new URL(SALT_MCP_AI_SETUP_URI), {});
+        const aiSetup = JSON.parse(
+          aiSetupResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltAiSetupSchema(aiSetup)).toEqual([]);
+        expect(aiSetup).toEqual(
+          expect.objectContaining({
+            contract: "salt_ai_setup_v1",
+            status: "degraded",
+            steps: expect.arrayContaining([
+              expect.objectContaining({
+                id: "generated-context",
+                evidence_source: "generated_context",
+              }),
+              expect.objectContaining({
+                id: "release-gate",
+                status: "current",
+              }),
+            ]),
+          }),
+        );
+
+        const aiEvidenceClosureResult = await registeredResources[
+          SALT_MCP_AI_EVIDENCE_CLOSURE_URI
+        ].readCallback(new URL(SALT_MCP_AI_EVIDENCE_CLOSURE_URI), {});
+        const aiEvidenceClosure = JSON.parse(
+          aiEvidenceClosureResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(
+          validateSaltAiEvidenceClosureReportSchema(aiEvidenceClosure),
+        ).toEqual([]);
+        expect(aiEvidenceClosure).toEqual(
+          expect.objectContaining({
+            contract: "salt_ai_evidence_closure_report_v1",
+            status: "degraded",
+            evidence_refs: [],
+            release_gate: expect.objectContaining({
+              status: "blocked",
+              releasable: false,
+            }),
+            slices: expect.arrayContaining([
+              expect.objectContaining({
+                id: "prompt-host-instruction-closure",
+                status: "ready",
+              }),
+              expect.objectContaining({
+                id: "context-coverage-closure",
+              }),
+            ]),
+          }),
+        );
+
+        const entityTemplateResult =
+          await registeredResourceTemplates.salt_catalog_entity.readCallback(
+            new URL("salt://catalog/entity/Tabs"),
+            { name: "Tabs" },
+            {},
+          );
+        const entityPayload = JSON.parse(
+          entityTemplateResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+        expect(entityPayload).toEqual(
+          expect.objectContaining({
+            query: "Tabs",
+            status: "resolved",
+            matches: [
+              expect.objectContaining({
+                name: "Tabs",
+                aliases: expect.arrayContaining(["Tab"]),
+              }),
+            ],
+          }),
+        );
+
+        const candidatesTemplateResult =
+          await registeredResourceTemplates.salt_catalog_candidates.readCallback(
+            new URL(
+              "salt://catalog/candidates/Create%20a%20metric%20component%20to%20display%20a%20key%20value",
+            ),
+            {
+              query:
+                "Create%20a%20metric%20component%20to%20display%20a%20key%20value",
+            },
+            {},
+          );
+        const candidatesPayload = JSON.parse(
+          candidatesTemplateResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+        expect(candidatesPayload).toEqual(
+          expect.objectContaining({
+            query: "Create a metric component to display a key value",
+            owner: expect.objectContaining({
+              entity: expect.objectContaining({
+                name: "Metric",
+              }),
+            }),
+          }),
+        );
+
+        const familyTemplateResult =
+          await registeredResourceTemplates.salt_catalog_family.readCallback(
+            new URL("salt://catalog/family/selection-controls"),
+            { family: "selection-controls" },
+            {},
+          );
+        const familyPayload = JSON.parse(
+          familyTemplateResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+        expect(familyPayload).toEqual(
+          expect.objectContaining({
+            query: "selection-controls",
+            status: "resolved",
+            matches: [
+              expect.objectContaining({
+                family: "selection-controls",
+                entities: expect.arrayContaining([
+                  expect.objectContaining({ name: "Tabs" }),
+                ]),
+              }),
+            ],
+          }),
+        );
+
+        const contextComponentResult =
+          await registeredResourceTemplates.salt_context_component.readCallback(
+            new URL(contextComponentUri),
+            { name: encodeURIComponent(contextComponentRecord.name) },
+            {},
+          );
+        const contextComponent = JSON.parse(
+          contextComponentResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextComponentSchema(contextComponent)).toEqual(
+          [],
+        );
+        expect(contextComponent).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_component_v1",
+            registry: expect.objectContaining({
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            component: expect.objectContaining({
+              id: contextComponentRecord.id,
+              name: expect.objectContaining({
+                value: contextComponentRecord.name,
+                evidence_ref_ids: expect.arrayContaining([
+                  contextComponentNameEvidenceRef,
+                ]),
+              }),
+            }),
+          }),
+        );
+
+        const contextComponentMarkdownResult =
+          await registeredResourceTemplates.salt_context_component_markdown.readCallback(
+            new URL(contextComponentMarkdownUri),
+            { name: encodeURIComponent(contextComponentRecord.name) },
+            {},
+          );
+        const contextComponentMarkdown =
+          contextComponentMarkdownResult.contents[0]?.text ?? "";
+
+        expect(contextComponentMarkdownResult.contents).toEqual([
+          expect.objectContaining({
+            uri: contextComponentMarkdownUri,
+            mimeType: "text/markdown",
+          }),
+        ]);
+        expect(contextComponentMarkdown).toContain(
+          "<!-- Contract: salt_context_component_markdown_v1 -->",
+        );
+        expect(contextComponentMarkdown).toContain(
+          `${contextComponentRecord.name} [EvidenceRef: ${contextComponentNameEvidenceRef}]`,
+        );
+
+        const contextPatternResult =
+          await registeredResourceTemplates.salt_context_pattern.readCallback(
+            new URL(contextPatternUri),
+            { name: encodeURIComponent(contextPatternRecord.name) },
+            {},
+          );
+        const contextPattern = JSON.parse(
+          contextPatternResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextPatternSchema(contextPattern)).toEqual([]);
+        expect(contextPattern).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_pattern_v1",
+            registry: expect.objectContaining({
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            pattern: expect.objectContaining({
+              id: contextPatternRecord.id,
+              name: expect.objectContaining({
+                value: contextPatternRecord.name,
+                evidence_ref_ids: expect.arrayContaining([
+                  contextPatternNameEvidenceRef,
+                ]),
+              }),
+            }),
+          }),
+        );
+
+        const contextFoundationResult =
+          await registeredResourceTemplates.salt_context_foundation.readCallback(
+            new URL(contextFoundationUri),
+            { category: encodeURIComponent(contextFoundationGroup.category) },
+            {},
+          );
+        const contextFoundation = JSON.parse(
+          contextFoundationResult.contents[0]?.text ?? "null",
+        ) as Record<string, unknown>;
+
+        expect(validateSaltContextFoundationSchema(contextFoundation)).toEqual(
+          [],
+        );
+        expect(contextFoundation).toEqual(
+          expect.objectContaining({
+            contract: "salt_context_foundation_v1",
+            registry: expect.objectContaining({
+              hash: expect.stringMatching(/^sha256:/),
+            }),
+            foundation: expect.objectContaining({
+              id: contextFoundationGroup.id,
+              category: expect.objectContaining({
+                value: contextFoundationGroup.category,
+                evidence_ref_ids: expect.arrayContaining([expect.any(String)]),
+              }),
+            }),
+          }),
+        );
+      },
+    );
+  }, 180_000);
+
+  it("registers output schemas and workflow annotations for the default workflow tools", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await writeBaseArtifacts(registryDir);
+      },
+      async (registryDir) => {
+        const server = await createSaltMcpServer({ registryDir });
+        const registeredTools = (
+          server as unknown as {
+            _registeredTools: Record<
+              string,
+              {
+                annotations?: Record<string, unknown>;
+                outputSchema?: unknown;
+              }
+            >;
+          }
+        )._registeredTools;
+
+        for (const toolName of EXPECTED_TOOL_NAMES) {
+          expect(registeredTools[toolName]).toBeTruthy();
+          if (toolName === "bootstrap_salt_repo") {
+            expect(registeredTools[toolName]?.annotations).toEqual(
+              expect.objectContaining({
+                readOnlyHint: false,
+                destructiveHint: false,
+                idempotentHint: true,
+                openWorldHint: false,
+              }),
+            );
+          } else if (toolName === "persist_salt_artifact") {
+            // Task 0.8 annotation audit: persist_salt_artifact (merged
+            // context-pack + generated-artifact writer) may overwrite
+            // caller-supplied paths inside root_dir, so destructiveHint is
+            // true.
+            expect(registeredTools[toolName]?.annotations).toEqual(
+              expect.objectContaining({
+                readOnlyHint: false,
+                destructiveHint: true,
+                idempotentHint: true,
+                openWorldHint: false,
+              }),
+            );
+          } else {
+            expect(registeredTools[toolName]?.annotations).toEqual(
+              expect.objectContaining({
+                readOnlyHint: true,
+                destructiveHint: false,
+                idempotentHint: true,
+                openWorldHint: false,
+              }),
+            );
+          }
+        }
+
+        for (const toolName of EXPECTED_DEFAULT_TOOL_ORDER) {
+          expect(registeredTools[toolName]?.outputSchema).toBeTruthy();
+        }
+      },
+    );
+  }, 60_000);
+
+  it("advertises the MCP runtime version separately from the registry version", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await writeBaseArtifacts(registryDir);
+      },
+      async (registryDir) => {
+        const server = await createSaltMcpServer({ registryDir });
+        const runtimeInfo = buildSaltMcpServerInfo({
+          generated_at: GENERATED_AT,
+          version: VERSION,
+          build_info: null,
+          packages: [],
+          components: [],
+          icons: [],
+          country_symbols: [],
+          pages: [],
+          patterns: [],
+          guides: [],
+          tokens: [],
+          deprecations: [],
+          examples: [],
+          changes: [],
+          search_index: [],
+        });
+        const instructions = buildSaltMcpInstructions({
+          generated_at: GENERATED_AT,
+          version: VERSION,
+          build_info: null,
+          packages: [],
+          components: [],
+          icons: [],
+          country_symbols: [],
+          pages: [],
+          patterns: [],
+          guides: [],
+          tokens: [],
+          deprecations: [],
+          examples: [],
+          changes: [],
+          search_index: [],
+        });
+        const internalServer = (
+          server as unknown as {
+            server: {
+              _serverInfo: {
+                name: string;
+                version: string;
+                description?: string;
+              };
+              _instructions?: string;
+            };
+          }
+        ).server;
+
+        expect(internalServer._serverInfo).toEqual(runtimeInfo);
+        expect(internalServer._serverInfo.version).not.toBe(VERSION);
+        expect(internalServer._instructions).toBe(instructions);
+        expect(internalServer._instructions).toContain(
+          `Machine-readable capability manifest resource: ${SALT_MCP_CAPABILITY_MANIFEST_URI}.`,
+        );
+        expect(internalServer._instructions).toContain(
+          `Machine-readable retrieval catalog resources: ${SALT_MCP_CATALOG_MANIFEST_URI}, ${SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI}, ${SALT_MCP_CATALOG_CANDIDATES_TEMPLATE_URI}.`,
+        );
+        expect(internalServer._instructions).toContain(
+          "When asked for the MCP version, use the runtime version.",
+        );
+        expect(internalServer._instructions).toContain(
+          `Serving Salt registry v${VERSION}.`,
+        );
+        expect(internalServer._instructions).toContain(
+          "This MCP only provides canonical Salt guidance from official Salt sources.",
+        );
+        expect(internalServer._instructions).toContain(
+          "Repo-local wrappers, approved custom patterns, and team-specific conventions stay in declared project policy",
+        );
+        expect(internalServer._instructions).toContain(
+          "Keep the product workflows stable across transports",
+        );
+        expect(internalServer._instructions).toContain(
+          "The default beta MCP surface exposes repo-aware workflow tools, Salt support tools",
+        );
+        expect(internalServer._instructions).toContain(
+          "Use persist_salt_context_pack or persist_salt_generated_artifact only when the host needs durable files",
+        );
+        expect(internalServer._instructions).toContain(
+          "Only call tools that are actually present in the current session tool list.",
+        );
+        expect(internalServer._serverInfo.description).toContain(
+          SALT_MCP_CAPABILITY_MANIFEST_URI,
+        );
+      },
+    );
+  });
+
+  it("adds workflow-level confidence and remediation guidance to the primary MCP tools", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const contextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "get_salt_project_context",
+        );
+        const analyzeTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "review_salt_ui",
+        );
+        const translateTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "migrate_to_salt",
+        );
+        const compareTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "upgrade_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const contextResult = (await contextTool?.execute(
+          registry,
+          {
+            root_dir: REPO_ROOT,
+          },
+          runtime,
+        )) as {
+          result: {
+            context_id: string;
+          };
+          sources: Array<{
+            kind: string;
+            original: string;
+          }>;
+        };
+        expect(contextResult).toEqual(
+          expect.objectContaining({
+            workflow: {
+              id: "get_salt_project_context",
+            },
+            result: expect.objectContaining({
+              context_id: expect.any(String),
+              transport: expect.objectContaining({
+                canonical_transport: "mcp",
+              }),
+              workflows: expect.objectContaining({
+                create: true,
+                review: true,
+                migrate: true,
+                upgrade: true,
+              }),
+            }),
+            artifacts: expect.objectContaining({
+              summary: expect.objectContaining({
+                recommended_next_tool: expect.any(String),
+                context_health: expect.objectContaining({
+                  resolution_status: "resolved",
+                  trusted: true,
+                  repo_specific_workflows_ready: true,
+                }),
+                retry_with: expect.objectContaining({
+                  root_dir: expect.any(String),
+                  context_id: expect.any(String),
+                }),
+                bootstrap_requirement: expect.objectContaining({
+                  status: "recommended",
+                  tool: "bootstrap_salt_repo",
+                  cli_command: "salt-ds init",
+                  next_tool_after_bootstrap: expect.any(String),
+                }),
+              }),
+            }),
+          }),
+        );
+        expect(
+          (contextTool?.outputSchema as z.ZodType).safeParse(contextResult)
+            .success,
+        ).toBe(true);
+        const contextStructuredContent =
+          buildStructuredToolContent(contextResult);
+        expect(
+          (contextTool?.outputSchema as z.ZodType).safeParse(
+            contextStructuredContent,
+          ).success,
+        ).toBe(true);
+        expect(contextResult).toEqual(
+          expect.objectContaining({
+            sources: expect.arrayContaining([
+              expect.objectContaining({
+                kind: "repo",
+                original: expect.stringContaining("/package.json"),
+              }),
+            ]),
+          }),
+        );
+
+        const chooseResultWithoutContext = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "link to another route from a toolbar action",
+              include_starter_code: true,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+        expect(chooseResultWithoutContext).toEqual(
+          expect.objectContaining({
+            workflow: expect.objectContaining({
+              id: "create_salt_ui",
+              transport_used: "mcp",
+              context_requirement: expect.objectContaining({
+                status: "context_checked",
+              }),
+            }),
+          }),
+        );
+
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "link to another page from a toolbar action",
+              include_starter_code: true,
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+        expect(chooseResult).toEqual(
+          expect.objectContaining({
+            workflow: expect.objectContaining({
+              id: "create_salt_ui",
+              transport_used: "mcp",
+              implementation_gate: expect.objectContaining({
+                status: expect.stringMatching(
+                  /^(clear|follow_through_required)$/,
+                ),
+                required_follow_through: expect.any(Array),
+              }),
+              readiness: expect.objectContaining({
+                status: expect.stringMatching(
+                  /^(starter_validated|starter_needs_attention)$/,
+                ),
+                implementation_ready: expect.any(Boolean),
+              }),
+              confidence: expect.objectContaining({
+                level: expect.any(String),
+                reasons: expect.arrayContaining([expect.any(String)]),
+                raise_confidence: expect.arrayContaining([
+                  expect.stringContaining(
+                    "verify the exact name against canonical Salt guidance",
+                  ),
+                ]),
+              }),
+              intent: expect.objectContaining({
+                user_task: expect.any(String),
+                rule_ids: expect.arrayContaining([
+                  "create-task-first",
+                  "create-canonical-before-custom",
+                ]),
+              }),
+              context_requirement: expect.objectContaining({
+                status: "context_checked",
+                resolution_status: "resolved",
+                repo_specific_edits_ready: true,
+                satisfied_by: "salt-ds info",
+                retry_with: expect.objectContaining({
+                  root_dir: expect.any(String),
+                  context_id: expect.any(String),
+                }),
+              }),
+            }),
+            result: expect.objectContaining({
+              mode: "recommend",
+              ide_summary: expect.objectContaining({
+                recommended_direction: expect.any(String),
+                bounded_scope: expect.any(Array),
+                starter_plan: expect.arrayContaining([expect.any(String)]),
+                verify: expect.arrayContaining([expect.any(String)]),
+              }),
+              final_decision: expect.objectContaining({
+                name: "Link",
+                source: "canonical_salt",
+              }),
+            }),
+            artifacts: expect.objectContaining({
+              starter_validation: expect.objectContaining({
+                status: expect.stringMatching(/^(clean|needs_attention)$/),
+                snippets_checked: expect.any(Number),
+                source_urls: expect.any(Array),
+              }),
+              suggested_follow_ups: expect.any(Array),
+            }),
+          }),
+        );
+        const publicFollowUps = (
+          chooseResult as unknown as {
+            artifacts: { suggested_follow_ups: Array<{ workflow: string }> };
+          }
+        ).artifacts.suggested_follow_ups;
+        expect(
+          publicFollowUps.every((followUp) =>
+            [
+              "get_salt_project_context",
+              "create_salt_ui",
+              "review_salt_ui",
+              "migrate_to_salt",
+              "upgrade_salt_ui",
+            ].includes(followUp.workflow),
+          ),
+        ).toBe(true);
+
+        const guidanceOnlyChooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "link to another page from a toolbar action",
+              include_starter_code: false,
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+        expect(guidanceOnlyChooseResult).toEqual(
+          expect.objectContaining({
+            workflow: expect.objectContaining({
+              readiness: expect.objectContaining({
+                status: "guidance_only",
+                implementation_ready: false,
+              }),
+              context_requirement: expect.objectContaining({
+                status: "context_checked",
+                repo_specific_edits_ready: true,
+              }),
+            }),
+            artifacts: expect.objectContaining({
+              starter_validation: null,
+            }),
+          }),
+        );
+
+        const analyzeResult = readFullWorkflowDetails(
+          await analyzeTool?.execute(
+            registry,
+            {
+              code: [
+                'import { Button } from "@salt-ds/core";',
+                "",
+                "export function Demo() {",
+                '  return <Button href="/next">Go</Button>;',
+                "}",
+              ].join("\n"),
+              framework: "react",
+              package_version: "2.0.0",
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+        expect(analyzeResult).toEqual(
+          expect.objectContaining({
+            workflow: expect.objectContaining({
+              id: "review_salt_ui",
+              confidence: expect.objectContaining({
+                level: expect.any(String),
+              }),
+              project_conventions_check: expect.objectContaining({
+                contract: "project_conventions_v1",
+                suggested_follow_up_tool: "get_salt_project_context",
+                suggested_follow_up_cli: "salt-ds info --json",
+                declared_policy_status: "unknown-until-project-context",
+              }),
+            }),
+            result: expect.objectContaining({
+              ide_summary: expect.objectContaining({
+                verdict: expect.objectContaining({
+                  level: expect.stringMatching(
+                    /^(clean|medium_risk|high_risk)$/,
+                  ),
+                  summary: expect.any(String),
+                }),
+                top_findings: expect.arrayContaining([expect.any(String)]),
+                verify: expect.arrayContaining([expect.any(String)]),
+              }),
+            }),
+            artifacts: expect.objectContaining({
+              issue_classes: expect.arrayContaining([
+                expect.objectContaining({
+                  rule_id: expect.any(String),
+                  count: expect.any(Number),
+                }),
+              ]),
+              rule_ids: expect.arrayContaining([expect.any(String)]),
+              fix_candidates: expect.objectContaining({
+                total_count: expect.any(Number),
+                candidates: expect.any(Array),
+              }),
+            }),
+          }),
+        );
+
+        const translateResult = readFullWorkflowDetails(
+          await translateTool?.execute(
+            registry,
+            {
+              query:
+                "Build a sidebar with vertical navigation, a main content area, a toolbar, and a modal dialog for confirmation with loading and error states.",
+              include_starter_code: true,
+              source_outline: {
+                regions: ["header", "sidebar"],
+                actions: ["primary action"],
+                states: ["loading"],
+              },
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+        expect(translateResult).toEqual(
+          expect.objectContaining({
+            workflow: expect.objectContaining({
+              id: "migrate_to_salt",
+              confidence: expect.objectContaining({
+                level: expect.any(String),
+              }),
+              context_requirement: expect.objectContaining({
+                status: "context_checked",
+                repo_specific_edits_ready: true,
+                satisfied_by: "salt-ds info",
+              }),
+              project_conventions_check: expect.objectContaining({
+                contract: "project_conventions_v1",
+                suggested_follow_up_tool: "get_salt_project_context",
+                suggested_follow_up_cli: "salt-ds info --json",
+              }),
+            }),
+            result: expect.objectContaining({
+              ide_summary: expect.objectContaining({
+                screen_map: expect.any(Array),
+                preserve: expect.any(Array),
+                needs_confirmation: expect.any(Array),
+                recommended_direction: expect.any(Array),
+                first_scaffold: expect.arrayContaining([expect.any(String)]),
+                verify: expect.arrayContaining([expect.any(String)]),
+              }),
+            }),
+            artifacts: expect.objectContaining({
+              starter_validation: expect.objectContaining({
+                status: expect.stringMatching(/^(clean|needs_attention)$/),
+                snippets_checked: expect.any(Number),
+                source_urls: expect.any(Array),
+              }),
+              rule_ids: expect.arrayContaining(["migrate-preserve-task-flow"]),
+              post_migration_verification: expect.objectContaining({
+                source_checks: expect.arrayContaining([expect.any(String)]),
+                preserve_checks: expect.arrayContaining([expect.any(String)]),
+              }),
+              visual_evidence_contract: expect.objectContaining({
+                role: "supporting-evidence",
+                interpretation_owner: "agent-or-adapter",
+                normalization_required: true,
+                normalization_contract: "migrate_visual_evidence_v1",
+                source_outline_provided: true,
+                source_outline_signal_counts: expect.objectContaining({
+                  regions: 2,
+                  actions: 1,
+                  states: 1,
+                  notes: 0,
+                }),
+                derived_outline_available: true,
+                derived_outline_signal_counts: expect.objectContaining({
+                  regions: 2,
+                  actions: 1,
+                  states: 1,
+                  notes: 0,
+                }),
+                runtime_capture: expect.objectContaining({
+                  supported_via_mcp_url: true,
+                  command:
+                    "call the migrate_to_salt MCP tool with the `url` argument set to the running app URL",
+                }),
+              }),
+            }),
+          }),
+        );
+
+        const compareResult = readFullWorkflowDetails(
+          await compareTool?.execute(
+            registry,
+            {
+              package: "@salt-ds/core",
+              from_version: "1.1.0",
+              include_deprecations: true,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+        expect(compareResult).toEqual(
+          expect.objectContaining({
+            workflow: expect.objectContaining({
+              id: "upgrade_salt_ui",
+              confidence: expect.objectContaining({
+                level: expect.any(String),
+                reasons: expect.arrayContaining([expect.any(String)]),
+              }),
+              project_conventions_check: expect.objectContaining({
+                contract: "project_conventions_v1",
+                suggested_follow_up_tool: "get_salt_project_context",
+                suggested_follow_up_cli: "salt-ds info --json",
+              }),
+            }),
+            result: expect.objectContaining({
+              ide_summary: expect.objectContaining({
+                target: expect.any(String),
+                required_changes: expect.any(Array),
+                optional_cleanup: expect.any(Array),
+                suggested_order: expect.arrayContaining([expect.any(String)]),
+                verify: expect.arrayContaining([expect.any(String)]),
+              }),
+            }),
+            artifacts: expect.objectContaining({
+              rule_ids: ["upgrade-review-version-risks"],
+            }),
+          }),
+        );
+      },
+    );
+  }, 40000);
+
+  it("surfaces cached repo policy overlays on workflow artifacts after project context is loaded", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir("salt-mcp-create-policy-artifact");
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "salt-mcp-policy-fixture",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(rootDir, ".salt", "team.json"),
+          JSON.stringify(
+            {
+              contract: "project_conventions_v1",
+              approved_wrappers: [
+                {
+                  name: "AppLink",
+                  wraps: "Link",
+                  reason: "Route links must use analytics and router helpers.",
+                  import: {
+                    from: "@/navigation/AppLink",
+                    name: "AppLink",
+                  },
+                },
+              ],
+              theme_defaults: {
+                provider: "SaltProviderNext",
+                imports: [
+                  "@salt-ds/theme/index.css",
+                  "@salt-ds/theme/css/theme-next.css",
+                ],
+                props: [{ name: "accent", value: "teal" }],
+                reason: "Repo defaults to the JPM Brand bootstrap.",
+                docs: ["./docs/theme-policy.md"],
+              },
+              token_aliases: [
+                {
+                  salt_name: "--salt-content-primary-foreground",
+                  prefer: "--brand-text-primary",
+                  reason: "Use the brand text alias in app surfaces.",
+                  docs: ["./docs/token-policy.md"],
+                },
+              ],
+              token_family_policies: [
+                {
+                  family: "content",
+                  mode: "prefer-local-aliases",
+                  reason: "Local aliases should win for content tokens.",
+                  docs: ["./docs/token-policy.md"],
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+
+        const registry = await loadRegistry({ registryDir });
+        const contextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "get_salt_project_context",
+        );
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const contextResult = (await contextTool?.execute(
+          registry,
+          {
+            root_dir: rootDir,
+          },
+          runtime,
+        )) as { result: { context_id: string } };
+
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              include_starter_code: true,
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+
+        expect(chooseResult).toEqual(
+          expect.objectContaining({
+            artifacts: expect.objectContaining({
+              starter_code: expect.arrayContaining([
+                expect.objectContaining({
+                  code: expect.stringContaining("AppLink"),
+                }),
+              ]),
+              project_policy: expect.objectContaining({
+                policyMode: "team",
+                declared: true,
+                approvedWrappers: ["AppLink"],
+                themeDefaults: expect.objectContaining({
+                  provider: "SaltProviderNext",
+                  sourceUrls: ["./docs/theme-policy.md"],
+                }),
+                tokenAliases: expect.arrayContaining([
+                  expect.objectContaining({
+                    saltName: "--salt-content-primary-foreground",
+                    prefer: "--brand-text-primary",
+                    sourceUrls: ["./docs/token-policy.md"],
+                  }),
+                ]),
+                tokenFamilyPolicies: expect.arrayContaining([
+                  expect.objectContaining({
+                    family: "content",
+                    mode: "prefer-local-aliases",
+                    sourceUrls: ["./docs/token-policy.md"],
+                  }),
+                ]),
+                sourceUrls: expect.arrayContaining([
+                  "./team.json",
+                  "./docs/theme-policy.md",
+                  "./docs/token-policy.md",
+                ]),
+              }),
+              repo_refinement: expect.objectContaining({
+                status: "refined_by_project_policy",
+                canonical_name: "Link",
+                final_name: "AppLink",
+                source: "project_policy",
+              }),
+            }),
+            result: expect.objectContaining({
+              final_decision: expect.objectContaining({
+                name: "AppLink",
+                source: "project_policy",
+              }),
+            }),
+          }),
+        );
+      },
+    );
+  }, 30000);
+
+  it("accepts explicit root_dir on create_salt_ui without a separate context lookup", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir("salt-mcp-create-root-dir");
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "root-dir-create",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(rootDir, ".salt", "team.json"),
+          JSON.stringify(
+            {
+              contract: "project_conventions_v1",
+              approved_wrappers: [
+                {
+                  name: "AppLink",
+                  wraps: "Link",
+                  reason: "Use AppLink in this repo.",
+                  import: {
+                    from: "@/AppLink",
+                    name: "AppLink",
+                  },
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              root_dir: rootDir,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+
+        expect(chooseResult).toEqual(
+          expect.objectContaining({
+            workflow: expect.objectContaining({
+              context_requirement: expect.objectContaining({
+                status: "context_checked",
+              }),
+            }),
+            result: expect.objectContaining({
+              final_decision: expect.objectContaining({
+                name: "AppLink",
+                source: "project_policy",
+              }),
+            }),
+          }),
+        );
+        expect(runtime.lastProjectContextId).toBeTruthy();
+      },
+    );
+  }, 20000);
+
+  it("returns a slimmer compact view for create_salt_ui", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir("salt-mcp-create-agent-view");
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "compact-view",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = (await chooseTool?.execute(
+          registry,
+          {
+            query: "create a dashboard",
+            root_dir: rootDir,
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(chooseResult).toMatchObject({
+          contract: "salt_workflow_v1",
+          workflow: "create",
+          transport: "mcp",
+          status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
+          safety: {
+            canonical_complete: expect.any(Boolean),
+            exact_request_safe: expect.any(Boolean),
+            blocking_reasons: expect.any(Array),
+          },
+          action: expect.objectContaining({
+            kind: expect.any(String),
+          }),
+          summary: expect.any(String),
+        });
+        expect(chooseResult).not.toHaveProperty("result");
+        expect(chooseResult).not.toHaveProperty("artifacts");
+
+        const chooseSchema = chooseTool?.outputSchema as z.ZodType;
+        expect(chooseSchema.safeParse(chooseResult).success).toBe(true);
+        const structuredChooseResult = buildStructuredToolContent(chooseResult);
+        expect(structuredChooseResult).not.toHaveProperty("sources");
+        expect(chooseSchema.safeParse(structuredChooseResult).success).toBe(
+          true,
+        );
+      },
+    );
+  }, 20000);
+
+  it("surfaces semantic-match metadata for an exact named create query in compact view", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir(
+          "salt-mcp-create-exact-compact-view",
+        );
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "exact-compact-view",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = (await chooseTool?.execute(
+          registry,
+          {
+            query: "Metric",
+            root_dir: rootDir,
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(chooseResult).toMatchObject({
+          workflow: "create",
+          request: {
+            entity: "Metric",
+            resolved_entity: "Metric",
+            match_status: "exact",
+          },
+        });
+      },
+    );
+  }, 20000);
+
+  it("surfaces broadened semantic-match metadata for a descriptive create query in compact view", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir(
+          "salt-mcp-create-broadened-compact-view",
+        );
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "broadened-compact-view",
+              private: true,
+              packageManager: "npm@10.0.0",
+              dependencies: {
+                react: "^18.3.1",
+                vite: "^7.1.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = (await chooseTool?.execute(
+          registry,
+          {
+            query: "analytical dashboard body",
+            root_dir: rootDir,
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(chooseResult).toMatchObject({
+          workflow: "create",
+          request: {
+            entity: "analytical dashboard body",
+            resolved_entity: "Analytical dashboard",
+            match_status: "broadened",
+          },
+          action: {
+            kind: "install_dependencies",
+            package_manager: "npm",
+            packages: expect.arrayContaining([
+              "@salt-ds/core",
+              "@salt-ds/theme",
+            ]),
+          },
+        });
+      },
+    );
+  }, 20000);
+
+  it("accepts resolved follow-through evidence on create rerun", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir(
+          "salt-mcp-create-resolved-follow-through",
+        );
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "resolved-follow-through",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+                "@salt-ds/theme": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const chooseResult = (await chooseTool?.execute(
+          registry,
+          {
+            query: "profile page with tabs and avatar",
+            root_dir: rootDir,
+            resolved_entities: ["Avatar"],
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(chooseResult).toMatchObject({
+          status: "success",
+          request: {
+            match_status: "broadened",
+            full_request_evidence_complete: true,
+          },
+          safety: {
+            exact_request_safe: true,
+          },
+          action: {
+            kind: "implement",
+          },
+          evidence: {
+            status: "complete",
+            missing: [],
+            items: expect.arrayContaining([
+              expect.objectContaining({
+                entity: "Avatar",
+                field: "resolved_follow_through",
+              }),
+            ]),
+          },
+        });
+      },
+    );
+  }, 20000);
+
+  it("returns compact views for review, migrate, and upgrade workflows", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const rootDir = await createTempDir("salt-mcp-other-agent-views");
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "other-agent-views",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+
+        const registry = await loadRegistry({ registryDir });
+        const reviewTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "review_salt_ui",
+        );
+        const migrateTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "migrate_to_salt",
+        );
+        const upgradeTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "upgrade_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const reviewResult = (await reviewTool?.execute(
+          registry,
+          {
+            code: [
+              'import { Button } from "@salt-ds/core";',
+              "",
+              "export function Demo() {",
+              '  return <Button href="/next">Go</Button>;',
+              "}",
+            ].join("\n"),
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(reviewResult).toMatchObject({
+          contract: "salt_workflow_v1",
+          workflow: "review",
+          transport: "mcp",
+          status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
+          safety: {
+            canonical_complete: expect.any(Boolean),
+            exact_request_safe: expect.any(Boolean),
+            blocking_reasons: expect.any(Array),
+          },
+          action: expect.objectContaining({
+            kind: expect.any(String),
+          }),
+          summary: expect.any(String),
+        });
+        expect(reviewResult).not.toHaveProperty("result");
+        expect(reviewResult).not.toHaveProperty("artifacts");
+        const reviewSchema = reviewTool?.outputSchema as z.ZodType;
+        expect(reviewSchema.safeParse(reviewResult).success).toBe(true);
+
+        const migrateResult = (await migrateTool?.execute(
+          registry,
+          {
+            query:
+              "Build a sidebar with vertical navigation and a main content area.",
+            root_dir: rootDir,
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(migrateResult).toMatchObject({
+          contract: "salt_workflow_v1",
+          workflow: "migrate",
+          transport: "mcp",
+          status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
+          safety: {
+            canonical_complete: expect.any(Boolean),
+            exact_request_safe: expect.any(Boolean),
+            blocking_reasons: expect.any(Array),
+          },
+          action: expect.objectContaining({
+            kind: expect.any(String),
+          }),
+          summary: expect.any(String),
+        });
+        expect(migrateResult).not.toHaveProperty("result");
+        expect(migrateResult).not.toHaveProperty("artifacts");
+        const migrateSchema = migrateTool?.outputSchema as z.ZodType;
+        expect(migrateSchema.safeParse(migrateResult).success).toBe(true);
+
+        const upgradeResult = (await upgradeTool?.execute(
+          registry,
+          {
+            package: "@salt-ds/core",
+            from_version: "1.1.0",
+            view: "compact",
+          },
+          runtime,
+        )) as Record<string, unknown>;
+
+        expect(upgradeResult).toMatchObject({
+          contract: "salt_workflow_v1",
+          workflow: "upgrade",
+          transport: "mcp",
+          status: expect.stringMatching(/^(success|partial|blocked|failed)$/),
+          safety: {
+            canonical_complete: expect.any(Boolean),
+            exact_request_safe: expect.any(Boolean),
+            blocking_reasons: expect.any(Array),
+          },
+          action: expect.objectContaining({
+            kind: expect.any(String),
+          }),
+          summary: expect.any(String),
+        });
+        expect(upgradeResult).not.toHaveProperty("result");
+        expect(upgradeResult).not.toHaveProperty("artifacts");
+        const upgradeSchema = upgradeTool?.outputSchema as z.ZodType;
+        expect(upgradeSchema.safeParse(upgradeResult).success).toBe(true);
+      },
+    );
+  }, 30000);
+
+  it("keeps repo context isolated by explicit context_id across multiple repos", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const contextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "get_salt_project_context",
+        );
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+
+        const repoOne = await createTempDir("salt-mcp-context-one");
+        const repoTwo = await createTempDir("salt-mcp-context-two");
+
+        for (const [rootDir, wrapperName] of [
+          [repoOne, "RepoOneLink"],
+          [repoTwo, "RepoTwoLink"],
+        ] as const) {
+          await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+          await fs.writeFile(
+            path.join(rootDir, "package.json"),
+            JSON.stringify(
+              {
+                name: path.basename(rootDir),
+                private: true,
+                dependencies: {
+                  "@salt-ds/core": "^2.0.0",
+                },
+              },
+              null,
+              2,
+            ),
+          );
+          await fs.writeFile(
+            path.join(rootDir, ".salt", "team.json"),
+            JSON.stringify(
+              {
+                contract: "project_conventions_v1",
+                approved_wrappers: [
+                  {
+                    name: wrapperName,
+                    wraps: "Link",
+                    reason: `${wrapperName} is required in this repo.`,
+                    import: {
+                      from: `@/${wrapperName}`,
+                      name: wrapperName,
+                    },
+                  },
+                ],
+              },
+              null,
+              2,
+            ),
+          );
+        }
+
+        const contextOne = (await contextTool?.execute(
+          registry,
+          { root_dir: repoOne },
+          runtime,
+        )) as { result: { context_id: string } };
+        const contextTwo = (await contextTool?.execute(
+          registry,
+          { root_dir: repoTwo },
+          runtime,
+        )) as { result: { context_id: string } };
+
+        const resultOne = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              context_id: contextOne.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+        const resultTwo = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              context_id: contextTwo.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+
+        expect(resultOne).toEqual(
+          expect.objectContaining({
+            result: expect.objectContaining({
+              final_decision: expect.objectContaining({
+                name: "RepoOneLink",
+              }),
+            }),
+          }),
+        );
+        expect(resultTwo).toEqual(
+          expect.objectContaining({
+            result: expect.objectContaining({
+              final_decision: expect.objectContaining({
+                name: "RepoTwoLink",
+              }),
+            }),
+          }),
+        );
+      },
+    );
+  }, 30000);
+
+  it("reuses the last explicit project context when context_id is omitted on a follow-up create call", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const contextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "get_salt_project_context",
+        );
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+        const rootDir = await createTempDir("salt-mcp-cached-context");
+
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "cached-context",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(rootDir, ".salt", "team.json"),
+          JSON.stringify(
+            {
+              contract: "project_conventions_v1",
+              approved_wrappers: [
+                {
+                  name: "CachedLink",
+                  wraps: "Link",
+                  reason: "Use CachedLink in this repo.",
+                  import: {
+                    from: "@/CachedLink",
+                    name: "CachedLink",
+                  },
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+
+        await contextTool?.execute(registry, { root_dir: rootDir }, runtime);
+
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+
+        expect(chooseResult).toEqual(
+          expect.objectContaining({
+            result: expect.objectContaining({
+              final_decision: expect.objectContaining({
+                name: "CachedLink",
+                source: "project_policy",
+              }),
+            }),
+          }),
+        );
+      },
+    );
+  }, 20000);
+
+  it("does not reuse a prior explicit context after a wrong explicit root_dir", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const contextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "get_salt_project_context",
+        );
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+        const goodRoot = await createTempDir("salt-mcp-good-context");
+        const wrongRoot = await createTempDir("salt-mcp-wrong-context");
+        const previousCwd = process.cwd();
+
+        await fs.mkdir(path.join(goodRoot, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(goodRoot, "package.json"),
+          JSON.stringify(
+            {
+              name: "good-context",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(goodRoot, ".salt", "team.json"),
+          JSON.stringify(
+            {
+              contract: "project_conventions_v1",
+              approved_wrappers: [
+                {
+                  name: "GoodLink",
+                  wraps: "Link",
+                  reason: "Use GoodLink in this repo.",
+                  import: {
+                    from: "@/GoodLink",
+                    name: "GoodLink",
+                  },
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+
+        await contextTool?.execute(registry, { root_dir: goodRoot }, runtime);
+
+        process.chdir(wrongRoot);
+        try {
+          const wrongContext = await contextTool?.execute(
+            registry,
+            { root_dir: wrongRoot },
+            runtime,
+          );
+
+          expect(runtime.lastProjectContextId).toBeNull();
+          expect(wrongContext).toEqual(
+            expect.objectContaining({
+              result: expect.objectContaining({
+                context_id: null,
+                resolution: expect.objectContaining({
+                  status: "mismatch",
+                }),
+              }),
+              artifacts: expect.objectContaining({
+                summary: expect.objectContaining({
+                  retry_with: {
+                    root_dir: null,
+                    context_id: null,
+                  },
+                }),
+              }),
+            }),
+          );
+
+          const chooseResult = readFullWorkflowDetails(
+            await chooseTool?.execute(
+              registry,
+              {
+                query: "navigate to another route",
+                view: "full",
+              },
+              runtime,
+            ),
+          );
+
+          expect(chooseResult).toEqual(
+            expect.objectContaining({
+              workflow: expect.objectContaining({
+                context_requirement: expect.objectContaining({
+                  status: "context_required",
+                  retry_with: expect.objectContaining({
+                    context_id: null,
+                  }),
+                }),
+              }),
+            }),
+          );
+          expect(chooseResult).not.toEqual(
+            expect.objectContaining({
+              result: expect.objectContaining({
+                final_decision: expect.objectContaining({
+                  name: "GoodLink",
+                }),
+              }),
+            }),
+          );
+        } finally {
+          process.chdir(previousCwd);
+        }
+      },
+    );
+  }, 20000);
+
+  it("marks auto-collected create context as unresolved when cwd is not a repo", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+        const tempRoot = await createTempDir("salt-mcp-unresolved-create");
+        const previousCwd = process.cwd();
+
+        process.chdir(tempRoot);
+        try {
+          const chooseResult = readFullWorkflowDetails(
+            await chooseTool?.execute(
+              registry,
+              {
+                query: "create a simple dashboard",
+                view: "full",
+              },
+              runtime,
+            ),
+          );
+
+          expect(chooseResult).toEqual(
+            expect.objectContaining({
+              workflow: expect.objectContaining({
+                context_requirement: expect.objectContaining({
+                  status: "context_required",
+                  suggested_follow_up_tool: "get_salt_project_context",
+                }),
+              }),
+            }),
+          );
+        } finally {
+          process.chdir(previousCwd);
+        }
+      },
+    );
+  }, 20000);
+
+  it("keeps the final decision canonical when repo wrapper policy is not actionable", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const contextTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "get_salt_project_context",
+        );
+        const chooseTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "create_salt_ui",
+        );
+        const runtime = createToolExecutionRuntime();
+        const rootDir = await createTempDir("salt-mcp-non-actionable-wrapper");
+
+        await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "non-actionable-wrapper",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(rootDir, ".salt", "team.json"),
+          JSON.stringify(
+            {
+              contract: "project_conventions_v1",
+              approved_wrappers: [
+                {
+                  name: "AppLink",
+                  wraps: "Link",
+                  reason: "Route links should use the repo wrapper.",
+                  docs: ["./docs/router-policy.md"],
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+
+        const contextResult = (await contextTool?.execute(
+          registry,
+          { root_dir: rootDir },
+          runtime,
+        )) as { result: { context_id: string } };
+        const chooseResult = readFullWorkflowDetails(
+          await chooseTool?.execute(
+            registry,
+            {
+              query: "navigate to another route",
+              include_starter_code: true,
+              context_id: contextResult.result.context_id,
+              view: "full",
+            },
+            runtime,
+          ),
+        );
+
+        expect(chooseResult).toEqual(
+          expect.objectContaining({
+            result: expect.objectContaining({
+              final_decision: expect.objectContaining({
+                name: "Link",
+                source: "canonical_salt",
+              }),
+            }),
+            artifacts: expect.objectContaining({
+              starter_code: expect.arrayContaining([
+                expect.objectContaining({
+                  code: expect.not.stringContaining("AppLink"),
+                }),
+              ]),
+              repo_refinement: expect.objectContaining({
+                status: "canonical_only",
+                canonical_name: "Link",
+                final_name: "Link",
+                source: "canonical_salt",
+                reason: expect.stringContaining("no import metadata"),
+              }),
+            }),
+          }),
+        );
+      },
+    );
+  }, 30000);
+
+  it("bootstraps repo instructions and team policy by default through bootstrap_salt_repo", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const bootstrapTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "bootstrap_salt_repo",
+        );
+        const runtime = createToolExecutionRuntime();
+        const rootDir = await createTempDir("salt-mcp-bootstrap-repo");
+
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "salt-mcp-bootstrap-repo",
+              private: true,
+              dependencies: {
+                react: "^18.3.1",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+
+        const bootstrapResult = await bootstrapTool?.execute(
+          registry,
+          { root_dir: rootDir },
+          runtime,
+        );
+
+        expect(bootstrapResult).toEqual(
+          expect.objectContaining({
+            workflow: {
+              id: "bootstrap_salt_repo",
+            },
+            result: expect.objectContaining({
+              repo_instructions: expect.objectContaining({
+                action: "created",
+                filename: "AGENTS.md",
+              }),
+            }),
+          }),
+        );
+        const bootstrapStructuredContent =
+          buildStructuredToolContent(bootstrapResult);
+        expect(
+          (bootstrapTool?.outputSchema as z.ZodType).safeParse(
+            bootstrapStructuredContent,
+          ).success,
+        ).toBe(true);
+
+        const agents = await fs.readFile(
+          path.join(rootDir, "AGENTS.md"),
+          "utf8",
+        );
+        expect(agents).toContain(
+          "Use the Salt MCP (or the `salt-ds` CLI fallback) for any Salt UI task.",
+        );
+        expect(agents).toContain("run the repo `ui:verify` script");
+        expect(agents).toContain("keep the first answer canonical-only");
+
+        await expect(
+          fs.access(path.join(rootDir, ".github", "copilot-instructions.md")),
+        ).rejects.toBeTruthy();
+        await expect(
+          fs.access(
+            path.join(rootDir, ".github", "agents", "salt-ui.agent.md"),
+          ),
+        ).rejects.toBeTruthy();
+
+        const packageJson = JSON.parse(
+          await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
+        ) as { scripts?: Record<string, string> };
+        expect(packageJson.scripts?.["ui:verify"]).toBeUndefined();
+      },
+    );
+  }, 30000);
+
+  it("scaffolds IDE files and ui:verify through bootstrap_salt_repo only when explicitly requested", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const bootstrapTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "bootstrap_salt_repo",
+        );
+        const runtime = createToolExecutionRuntime();
+        const rootDir = await createTempDir("salt-mcp-bootstrap-existing-salt");
+
+        await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "salt-mcp-bootstrap-existing-salt",
+              private: true,
+              dependencies: {
+                "@salt-ds/core": "^2.0.0",
+                "@salt-ds/theme": "^2.0.0",
+                react: "^18.3.1",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+
+        const bootstrapResult = await bootstrapTool?.execute(
+          registry,
+          {
+            root_dir: rootDir,
+            host_adapters: ["vscode"],
+            add_ui_verify: true,
+          },
+          runtime,
+        );
+
+        expect(bootstrapResult).toEqual(
+          expect.objectContaining({
+            result: expect.objectContaining({
+              repo_instructions: expect.objectContaining({
+                action: "created",
+                filename: "AGENTS.md",
+              }),
+            }),
+          }),
+        );
+
+        await expect(
+          fs.access(path.join(rootDir, "AGENTS.md")),
+        ).resolves.toBeUndefined();
+        await expect(
+          fs.access(path.join(rootDir, ".github", "copilot-instructions.md")),
+        ).resolves.toBeUndefined();
+        await expect(
+          fs.access(
+            path.join(rootDir, ".github", "agents", "salt-ui.agent.md"),
+          ),
+        ).rejects.toBeTruthy();
+
+        const packageJson = JSON.parse(
+          await fs.readFile(path.join(rootDir, "package.json"), "utf8"),
+        ) as { scripts?: Record<string, string> };
+        expect(packageJson.scripts?.["ui:verify"]).toMatch(
+          /^echo 'Replace this script with a wrapper around the review_salt_ui MCP tool over (src|\.)\.'$/,
+        );
+      },
+    );
+  }, 30000);
+
+  it("upgrades a legacy unmarked AGENTS bootstrap snippet through bootstrap_salt_repo", async () => {
+    await withRegistryDir(
+      async (registryDir) => {
+        await buildRegistry({
+          sourceRoot: REPO_ROOT,
+          outputDir: registryDir,
+          timestamp: "2026-03-28T00:00:00Z",
+        });
+      },
+      async (registryDir) => {
+        const registry = await loadRegistry({ registryDir });
+        const bootstrapTool = TOOL_DEFINITIONS.find(
+          (definition) => definition.name === "bootstrap_salt_repo",
+        );
+        const runtime = createToolExecutionRuntime();
+        const rootDir = await createTempDir("salt-mcp-bootstrap-legacy-agents");
+
+        await fs.writeFile(
+          path.join(rootDir, "package.json"),
+          JSON.stringify(
+            {
+              name: "salt-mcp-bootstrap-legacy-agents",
+              private: true,
+              dependencies: {
+                react: "^18.3.1",
+              },
+            },
+            null,
+            2,
+          ),
+        );
+        await fs.writeFile(
+          path.join(rootDir, "AGENTS.md"),
+          [
+            "Team-specific notes stay here.",
+            "",
+            "Use the Salt MCP for canonical Salt guidance.",
+            "",
+            "Treat requests to build, refine, restyle, or structurally fix UI in this repo as Salt UI tasks by default when they touch dashboards, metrics, navigation, forms, dialogs, tables, layouts, or alignment/composition fixes on existing Salt UI.",
+            "",
+            "Do not complete Salt UI tasks with generic React/CSS output if a canonical Salt option exists.",
+            "",
+            "For Salt UI tasks, complete:",
+            "",
+            "- a selection step through Salt MCP or the Salt CLI fallback",
+            "- a validation step through the Salt review workflow (`salt-ds review` in CLI hosts)",
+            "- if the workflow output says stronger grounding is needed, follow the returned canonical Salt follow-up before editing",
+            "",
+            "If Salt MCP is unavailable and the Salt CLI is available, keep the same workflow and let the environment use the CLI fallback for canonical Salt guidance.",
+            "",
+            "If a Salt workflow result says project conventions matter:",
+            "",
+            "- keep repo-local policy in `.salt/team.json` when it exists",
+            "- use `.salt/stack.json` only when the repo already declares layered upstream policy",
+            "- use repo-aware Salt workflows so Salt applies the declared project conventions",
+            "- keep the canonical Salt choice visible as provenance",
+            "",
+            "Default to `.salt/team.json` for simple repos. Add `.salt/stack.json` only when shared upstream layers or explicit merge ordering are real.",
+            "",
+          ].join("\n"),
+          "utf8",
+        );
+
+        const bootstrapResult = await bootstrapTool?.execute(
+          registry,
+          { root_dir: rootDir },
+          runtime,
+        );
+
+        expect(bootstrapResult).toEqual(
+          expect.objectContaining({
+            result: expect.objectContaining({
+              repo_instructions: expect.objectContaining({
+                action: "updated",
+                filename: "AGENTS.md",
+              }),
+            }),
+          }),
+        );
+
+        const agents = await fs.readFile(
+          path.join(rootDir, "AGENTS.md"),
+          "utf8",
+        );
+        expect(agents).toContain("Team-specific notes stay here.");
+        expect(agents).toContain("<!-- salt-ds:repo-instructions:start -->");
+        expect(agents).toContain("keep the first answer canonical-only");
+      },
+    );
+  }, 30000);
+});

@@ -1,0 +1,254 @@
+# @salt-ds/mcp
+
+`@salt-ds/mcp` is the canonical Salt Design System MCP server for consumer application repos.
+
+It serves the Salt registry through a single MCP server with a compact, workflow-oriented public interface. Registry generation and loading semantics live in [`../semantic-core`](../semantic-core); `@salt-ds/mcp` packages the default generated snapshot and exposes the MCP transport over that shared canonical model. Use it when you want the nearest correct Salt answer for recommendation, translation, validation, and migration work.
+
+## Role In The Consumer Stack
+
+- `salt-ds`
+  - the installable workflow skill that shapes the consumer workflow
+- Salt MCP
+  - canonical Salt guidance and the preferred transport when available
+- Salt CLI
+  - fallback transport when MCP is blocked
+- project conventions
+  - repo-specific wrappers, shells, and local patterns declared in `.salt` files and applied by repo-aware workflows
+
+The MCP stays intentionally Salt-only. Repo-specific behavior belongs in declared project policy, not in the core Salt registry.
+
+## Public Tool Surface
+
+The visible MCP front door should stay small.
+
+Primary repo-aware workflow tools:
+
+- `get_salt_project_context`
+  - inspect repo shape for diagnostics: framework, Salt package usage, repo instructions, declared policy, and likely runtime targets
+  - returns a reusable `context_id` only when `resolution.status` is `resolved`
+  - weak contexts instead expose `artifacts.summary.context_health` plus `artifacts.summary.retry_with` so hosts can retry with the right `root_dir` instead of guessing
+  - returns `artifacts.summary.recommended_next_tool` and `artifacts.summary.bootstrap_requirement` so hosts can tell whether bootstrap would improve future repo-aware refinement
+  - keeps policy diagnostics compact by default; request `include_policy_diagnostics: true` only when full layer resolution details are needed
+- `bootstrap_salt_repo`
+  - bootstrap `.salt` policy files and repo instructions when a repo wants durable policy and managed instructions beyond the first canonical Salt result
+  - returns a fresh `context_id` plus an embedded project-context envelope so the next repo-aware workflow can start immediately
+- `create_salt_ui`
+  - create workflow
+  - compact default returns top-level workflow state for safe branching
+  - if compact output stays `partial` or `blocked`, do not treat starter code or early file creation as completion; follow top-level `action` and `safety.blocking_reasons` first
+  - leave `solution_type` unset on broad or mixed-surface prompts unless the request already clearly points to a known Salt family
+  - request `view: "full"` only when compact output is insufficient or the user explicitly asked for starter code, richer provenance, or implementation detail such as `details.result.ide_summary` or `details.workflow.implementation_gate`
+- `review_salt_ui`
+  - review workflow
+- `migrate_to_salt`
+  - migrate workflow
+- `upgrade_salt_ui`
+  - upgrade workflow
+
+Read-only support tools for workflow follow-through:
+
+- `get_salt_entity`
+  - retrieve canonical Salt entity details by name
+  - used for `retrieve_entity` actions in `salt_workflow_v1`
+- `get_salt_entities`
+  - batch-resolve several known Salt entity names in one call
+  - prefer over repeated `get_salt_entity` calls when two or more entity names are already known
+- `get_salt_examples`
+  - retrieve canonical Salt examples for an entity
+  - used for `retrieve_examples` actions in `salt_workflow_v1`
+- `discover_salt`
+  - broad Salt discovery and routing for exploratory or ambiguous requests
+  - use when the caller is not yet sure which entity or workflow they need
+
+Advanced support tools (optional, for sophisticated hosts):
+
+- `validate_salt_review_report` (read-only)
+  - validate a durable `salt_review_report_v1` JSON file against the current registry
+  - recomputes evidence, mirror, and release-gate state
+  - returns current, stale, unsupported, or invalid status
+- `resume_salt_review` (read-only)
+  - return conservative resume state for a durable Salt review report
+  - only current source-backed reports expose reusable EvidenceRef ids
+- `persist_salt_context_pack` (**readOnlyHint: false**, **destructiveHint: true**)
+  - write the default release-gated Salt generated context pack to durable project files
+  - returns the shared semantic-core persistence check
+  - idempotent; overwrites the manifest and per-component pack files at the configured paths inside `root_dir`
+- `persist_salt_generated_artifact` (**readOnlyHint: false**, **destructiveHint: true**)
+  - write one generated Salt report or artifact JSON payload after semantic-core release gate validation
+  - idempotent; overwrites the file at the caller-supplied `artifact_path` inside `root_dir`
+
+The default public MCP surface exposes all thirteen tools. The six workflow tools come first, followed by the three read-only support tools that enable `salt_workflow_v1` action follow-through, and finally the four advanced support tools for report validation and durable artifact persistence.
+
+## Workflow Boundary
+
+The public user workflows should stay the same across MCP and CLI:
+
+- `create`
+- `review`
+- `migrate`
+- `upgrade`
+- `review --url` when runtime evidence is needed in the same pass
+
+Treat the MCP tool names above as implementation details behind those workflows unless you are integrating or debugging the MCP directly.
+
+## Usage
+
+Minimal MCP config:
+
+```json
+{
+  "mcpServers": {
+    "Salt": {
+      "command": "npx",
+      "args": ["@salt-ds/mcp@latest"]
+    }
+  }
+}
+```
+
+Capability metadata:
+
+- MCP runtime metadata includes a shared `capability_manifest` object and `capability_manifest_uri`
+- the same manifest is also available as the JSON resource `salt://capabilities/manifest`
+- retrieval catalog support is available through:
+  - `salt://catalog/manifest`
+  - `salt://catalog/entity/{name}`
+  - `salt://catalog/candidates/{query}`
+  - `salt://catalog/family/{family}`
+- use that manifest for machine-readable host setup checks instead of scraping prose for workflow vocabulary, contract version, or support-tool policy
+
+Generated context versus direct docs:
+
+- generated context is the machine-readable Salt surface for entity resolution, package status, evidence refs, workflow gates, and repeatable host branching
+- direct docs fetch is supporting context for human-readable source checks, freshness investigation, and upstream docs or registry gap closure
+- do not let a direct docs fetch bypass compact workflow gates such as `status`, `action.kind`, `safety`, or `evidence.status`
+- when docs reveal newer or missing Salt evidence, treat that as gap evidence and rerun the workflow or update source-backed registry/docs inputs before implementation
+
+## Package Size And Publish Boundary
+
+MCP has a broader agent-facing runtime surface than the CLI. It includes the
+generated registry snapshot, schemas, server and tool definitions, resource
+metadata, capability metadata, and stdio entrypoint needed for hosts to resolve
+Salt questions without fetching docs first. Byte size can be close to the CLI
+because both packages carry shared generated context and bundled workflow
+dependencies.
+
+The generated registry is runtime payload. It is part of the published package
+because the default MCP server must answer from a stable source-backed snapshot.
+`--registry-dir` remains a development and test override for custom registry
+builds.
+
+Eval fixtures, replay traces, and scenario harnesses are verification assets,
+not public runtime promises. They can be split from the published MCP package in
+a future packaging pass when the dependent scripts and tests move with them.
+Archive or baseline docs are intentionally outside the core implementation PR;
+restore them in a separate docs-history or generated-baselines PR if that audit
+trail is needed.
+
+Current publish intent is reviewable in `package.json`: the package publishes
+`bin`, `generated`, and `schemas`, bundles shared workflow dependencies, and
+keeps deep imports unsupported through the root-only export contract.
+`packages/mcp/src/__tests__/packagePublishBoundary.spec.ts` guards that
+boundary: benchmark docs, host results, workflow examples, archives, baselines,
+and eval fixtures must stay out of the publish `files` list. The only
+eval-related publish entries are explicit runner entrypoints, not fixture
+payloads.
+
+Build the package from the repo:
+
+```sh
+yarn workspace @salt-ds/mcp build
+```
+
+Generate registry artifacts for the MCP snapshot from repo sources with the maintainer script:
+
+```sh
+yarn workspace @salt-ds/semantic-core build
+node packages/mcp/scripts/buildRegistry.mjs \
+  --source-root /path/to/salt-ds \
+  --output-dir /path/to/salt-ds/packages/mcp/generated
+```
+
+Run the MCP server over stdio from a built checkout:
+
+```sh
+node dist/salt-ds-mcp/bin/salt-mcp.js
+```
+
+## Supported Programmatic Surface
+
+The root `@salt-ds/mcp` export is intentionally curated.
+
+Supported root exports:
+
+- MCP server entrypoints:
+  - `createSaltMcpServer`
+  - `runCli`
+  - `TOOL_DEFINITIONS`
+- `ToolDefinition`
+
+Registry build/load entrypoints and canonical workflow operations belong to [`../semantic-core`](../semantic-core), which is the shared owner used by both MCP and CLI. Support helpers such as discovery and entity/example lookup also live there as internal implementation detail. They are no longer part of the supported `@salt-ds/mcp` root API.
+Published package exports now enforce that root-only contract. Deep imports such as `@salt-ds/mcp/server/...` or older helper paths are internal and unsupported.
+
+## Consumer Setup Reference
+
+The consumer setup path lives in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
+
+This README is the MCP package reference. Keep setup sequencing, skill installation, CLI fallback, and first-run verification in the main AI page so consumers have one path to follow.
+
+Related maintainer references:
+
+- [`../skills/README.md`](../skills/README.md)
+
+## Notes
+
+- Salt MCP stays intentionally single-server. The simplification is in the public workflow contract, not in server splitting.
+- Public workflow responses are compact and summary-first. Branch on top-level `salt_workflow_v1` fields such as `status`, `safety`, `action`, `summary`, and `request.match_status` / `request.resolved_entity` when present.
+- If `status` is `partial` or `blocked`, do not stop after creating a starter file or scaffold. Continue the returned follow-through from `action`, or explicitly report that the workflow remains incomplete.
+- Use `view: "full"` only when you need the additive `details` block for richer detail such as `details.result.ide_summary`, `details.workflow.implementation_gate`, starter code, or deeper provenance.
+- Do not use `view: "full"` just to fix context or to guess past blocked compact output. Retry context or exact follow-through first.
+- Inspect the machine-readable capability manifest at `salt://capabilities/manifest` when the host needs to confirm the workflow vocabulary, contract version, support-tool policy, or runtime version.
+- In `view: "full"`, `create_salt_ui` keeps the same top-level `salt_workflow_v1` contract and adds `details`. Treat `details.workflow.implementation_gate` as a real implementation gate for broad or multi-surface asks.
+- `get_salt_project_context` is the explicit repo-inspection path. Repo-aware workflow tools can also auto-collect context when it is omitted.
+- Only treat `get_salt_project_context.result.context_id` as reusable when it is non-null. If `artifacts.summary.context_health.trusted` is `false`, stop and retry with `artifacts.summary.retry_with.root_dir` before relying on repo-specific guidance.
+- `bootstrap_salt_repo` is the durable-policy step when a repo wants managed `.salt` files or repo instructions after the first canonical Salt result.
+- `migrate_to_salt` owns canonical migration reasoning, but screenshot and mockup interpretation still stays outside MCP. Hosts should preprocess visual evidence into structured migrate inputs first.
+- Repo-aware workflow results keep canonical Salt output separate from repo refinements. Use `details.artifacts.project_policy`, `details.artifacts.repo_refinement`, and `details.result.final_decision` to see that layering.
+- Use `view: "full"` only when you need deeper provenance such as `details.raw.decision_debug`, `details.raw.routing_debug`, or the normalized `details.workflow.provenance.source_urls`.
+- The published package serves the bundled registry by default. `--registry-dir` is only for local development or testing against a custom registry build.
+- The published MCP contract stays root-only even though the internal source tree is more granular. Deep imports remain unsupported.
+
+## Canonical Boundary
+
+- Core Salt MCP answers: "What is the nearest correct Salt answer?"
+- Detected context answers: "What does this repo look like right now?"
+- Project conventions answer: "How should this repo apply Salt?"
+
+Keep project-specific wrappers, approved local patterns, and repo conventions out of the core Salt registry. If a repo-aware workflow sets `project_conventions.check_recommended` to `true`, confirm that `.salt/team.json` or `.salt/stack.json` declares the needed local policy and use the workflow artifacts to carry the resulting repo refinement and provenance.
+
+Use `guidance_boundary.project_conventions.topics` to narrow what kind of repo guidance is relevant, such as `wrappers`, `page-patterns`, `navigation-shell`, `local-layout`, or `migration-shims`.
+
+The project conventions contract is described on [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx), with canonical schemas in [`../semantic-core/schemas`](../semantic-core/schemas).
+The layered policy engine now lives in [`../semantic-core/src/policy`](../semantic-core/src/policy), and a concrete consumer repo workflow example lives in [`../../workflow-examples/consumer-repo`](../../workflow-examples/consumer-repo).
+Repo-aware workflow artifacts can also carry structured project policy summaries for wrappers, theme defaults, token aliases, and token-family policy when those overlays are declared.
+
+## Debugging Recommendation Provenance
+
+Use `view: "full"` when you need to understand why the MCP chose a particular path.
+
+- `create_salt_ui`
+  - `raw.decision_debug.selected_name`
+  - `raw.decision_debug.selected_guidance_sources`
+  - `raw.decision_debug.selected_categories`
+  - `raw.decision_debug.preferred_categories`
+    These fields are intended for inspection and debugging. They help explain whether a result was driven mainly by category maps, usage-doc extraction, examples, or fallback routing logic.
+
+## Maintainer Notes
+
+- Canonical registry build/load ownership lives in [`../semantic-core/src/build/buildRegistry.ts`](../semantic-core/src/build/buildRegistry.ts) and [`../semantic-core/src/registry/loadRegistry.ts`](../semantic-core/src/registry/loadRegistry.ts). MCP keeps a small internal runtime loader in [`src/registry/loadRegistry.ts`](./src/registry/loadRegistry.ts) that resolves the bundled `generated/` directory shipped via `publishExtraCopyPaths`.
+- MCP tool metadata is defined in [`src/server/toolDefinitions.ts`](./src/server/toolDefinitions.ts). The server registration layer in [`src/server/registerTools.ts`](./src/server/registerTools.ts) and [`src/server/createServer.ts`](./src/server/createServer.ts) stays intentionally thin, with runtime-vs-registry version metadata centralized in [`src/server/serverMetadata.ts`](./src/server/serverMetadata.ts).
+- Lookup, recommendation, search, translation, and code-analysis helpers now live in [`../semantic-core/src/tools`](../semantic-core/src/tools) as internal building blocks. The default public `@salt-ds/mcp` surface is the curated workflow-first set plus read-only Salt support tools, server entrypoints, and tool metadata above.
+- The main test entry points are:
+  - [`src/__tests__/tools.spec.ts`](./src/__tests__/tools.spec.ts)
+  - [`src/__tests__/codeAnalysisTools.spec.ts`](./src/__tests__/codeAnalysisTools.spec.ts)
+  - [`src/__tests__/registry.integration.spec.ts`](./src/__tests__/registry.integration.spec.ts)

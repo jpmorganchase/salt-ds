@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-coverage-gap-catalog.schema.json",
+  "title": "Salt Context Coverage Gap Catalog",
+  "description": "Cause-coded gap catalog derived from the source-backed Salt context coverage audit.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "generated_at",
+    "audit_contract",
+    "audit_generated_at",
+    "audit_status",
+    "counts",
+    "gaps"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_context_coverage_gap_catalog_v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit_contract": {
+      "const": "salt_context_coverage_audit_v1"
+    },
+    "audit_generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit_status": {
+      "enum": ["validated", "unsupported"]
+    },
+    "counts": {
+      "$ref": "#/$defs/counts"
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/gap"
+      }
+    }
+  },
+  "$defs": {
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total", "component", "pattern", "foundation"],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "component": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pattern": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "foundation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "name",
+        "missing",
+        "cause",
+        "cause_codes",
+        "evidence_ref_ids",
+        "resolution",
+        "record_count",
+        "records"
+      ],
+      "properties": {
+        "kind": {
+          "enum": ["component", "pattern", "foundation"]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "missing": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "cause": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cause_codes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/causeCode"
+          }
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/evidenceRefIds"
+        },
+        "resolution": {
+          "enum": [
+            "add_source_backed_docs_or_registry_evidence",
+            "keep_unsupported_until_source_evidence_exists"
+          ]
+        },
+        "record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "missing",
+        "cause",
+        "cause_code",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "missing": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "cause": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cause_code": {
+          "$ref": "#/$defs/causeCode"
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/evidenceRefIds"
+        }
+      }
+    },
+    "evidenceRefIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "causeCode": {
+      "enum": [
+        "missing_source_locator",
+        "missing_optional_evidence",
+        "evidence_surface_gate_failed",
+        "missing_token_policy",
+        "missing_token_policy_docs",
+        "missing_token_policy_source_evidence",
+        "missing_token_policy_docs_or_source_evidence",
+        "deprecated_token_raw_value_without_policy",
+        "deprecated_token_reference_without_policy"
+      ]
+    }
+  }
+}

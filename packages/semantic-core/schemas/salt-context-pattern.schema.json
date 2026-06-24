@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-context-pattern.schema.json",
+  "title": "Salt Pattern Context",
+  "description": "Evidence-aware static context for one Salt pattern.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "generated_at",
+    "generator",
+    "registry",
+    "status",
+    "pattern",
+    "evidence_refs",
+    "unsupported_claims",
+    "surface_gate",
+    "generated_artifact"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_context_pattern_v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "$ref": "#/$defs/generator"
+    },
+    "registry": {
+      "$ref": "#/$defs/registry"
+    },
+    "status": {
+      "enum": ["validated", "unsupported"]
+    },
+    "pattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "status",
+        "summary",
+        "when_to_use",
+        "when_not_to_use",
+        "composed_of",
+        "how_to_build",
+        "how_it_works",
+        "accessibility",
+        "resources",
+        "examples"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "$ref": "#/$defs/evidenceText"
+        },
+        "status": {
+          "$ref": "#/$defs/evidenceText"
+        },
+        "summary": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/evidenceText" }]
+        },
+        "when_to_use": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceText"
+          }
+        },
+        "when_not_to_use": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceText"
+          }
+        },
+        "composed_of": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/composition"
+          }
+        },
+        "how_to_build": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceText"
+          }
+        },
+        "how_it_works": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceText"
+          }
+        },
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["summary", "implementation_signals"],
+          "properties": {
+            "summary": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/evidenceText"
+              }
+            },
+            "implementation_signals": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/accessibilitySignal"
+              }
+            }
+          }
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resource"
+          }
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/example"
+          }
+        }
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-evidence-ref.schema.json"
+      }
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-generated-artifact.schema.json#/$defs/unsupportedClaim"
+      }
+    },
+    "surface_gate": {
+      "$ref": "#/$defs/surfaceGate"
+    },
+    "generated_artifact": {
+      "$ref": "salt-generated-artifact.schema.json"
+    }
+  },
+  "$defs": {
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "evidenceRefIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidenceText": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "evidence_ref_ids"],
+      "properties": {
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/evidenceRefIds"
+        }
+      }
+    },
+    "composition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["component", "role", "evidence_ref_ids"],
+      "properties": {
+        "component": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": ["string", "null"]
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/evidenceRefIds"
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "href", "internal", "evidence_ref_ids"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        },
+        "internal": {
+          "type": "boolean"
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/evidenceRefIds"
+        }
+      }
+    },
+    "accessibilitySignal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "values",
+        "source_kind",
+        "source_url",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "aria_attribute",
+            "aria_role",
+            "aria_announcement",
+            "semantic_element"
+          ]
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_kind": {
+          "enum": ["example", "source"]
+        },
+        "source_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/evidenceRefIds"
+        }
+      }
+    },
+    "example": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "description",
+        "code",
+        "source_url",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/evidenceRefIds"
+        }
+      }
+    },
+    "surfaceGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "validation_issues",
+        "missing",
+        "unsupported_claim_count",
+        "artifact_id",
+        "artifact_kind"
+      ],
+      "properties": {
+        "status": {
+          "enum": ["validated", "unsupported"]
+        },
+        "validation_issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceValidationIssue"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unsupported_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_kind": {
+          "const": "pattern-context"
+        }
+      }
+    },
+    "evidenceValidationIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "path"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

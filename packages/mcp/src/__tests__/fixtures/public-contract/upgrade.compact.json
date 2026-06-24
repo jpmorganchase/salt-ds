@@ -1,0 +1,33 @@
+{
+  "contract": "salt_workflow_v1",
+  "workflow": "upgrade",
+  "status": "blocked",
+  "request": {
+    "entity": null,
+    "resolved_entity": null,
+    "match_status": null,
+    "exact_match_required": null
+  },
+  "safety": {
+    "canonical_complete": true,
+    "exact_request_safe": false,
+    "blocking_reasons": [
+      "1.64.0: Fixed the status indicator in Banner being visible to screen readers.",
+      "1.64.0: Added an initialFocus prop to Drawer to allow customizing which element receives focus when the drawer opens."
+    ]
+  },
+  "action": {
+    "kind": "review",
+    "tool": "review_salt_ui",
+    "args": {},
+    "rule_ids": [
+      "upgrade-review-version-risks"
+    ],
+    "post_action": null
+  },
+  "internal_limitations": {
+    "unsupported_claim_count": 0,
+    "unsupported_rule_kinds": []
+  },
+  "summary": "Salt produced upgrade guidance for @salt-ds/core."
+}

@@ -1,0 +1,97 @@
+{
+  "scenario": {
+    "id": "intellij-create-tabs-avatar-first-pass-misroute",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "intellij", "profile", "misroute"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/intellij-create-profile",
+      "description": "Saved IntelliJ replay fixture where a profile prompt drifted to Vertical navigation before the host recovered to Tabs."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Create a user profile with tabs and avatar."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": false
+    },
+    "args": {
+      "mcp": {
+        "query": "User profile page with tabs for different sections and an avatar displaying user image",
+        "solution_type": "pattern",
+        "include_starter_code": true
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "canonical_choice": "Tabs",
+      "final_choice": "Tabs",
+      "public_contract": {
+        "workflow_status": "partial",
+        "canonical_complete": false,
+        "safe_to_implement_exact_request": false,
+        "requested_entity": "User profile page with tabs for different sections and an avatar displaying user image",
+        "resolved_entity": "Tabs",
+        "match_status": "broadened",
+        "next_step": {
+          "kind": "tool_call",
+          "tool": "create_salt_ui",
+          "mode": "exact_name",
+          "query": "Avatar"
+        },
+        "summary_includes": ["Tabs"]
+      }
+    }
+  },
+  "trace": {
+    "scenario_id": "intellij-create-tabs-avatar-first-pass-misroute",
+    "runner_id": "replay-fixture",
+    "status": "failed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved IntelliJ MCP transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "blocked",
+      "canonical_complete": false,
+      "safe_to_implement_exact_request": false,
+      "requested_entity": "User profile page with tabs for different sections and an avatar displaying user image",
+      "resolved_entity": "Vertical navigation",
+      "match_status": "no_match",
+      "blocking_reasons": [
+        "Salt could not resolve the requested entity.",
+        "required follow-through remains: Tabs, Analytical dashboard, Announcement dialog, Forms"
+      ],
+      "next_step": {
+        "kind": "tool_call",
+        "tool": "create_salt_ui",
+        "mode": "exact_name",
+        "args": {
+          "query": "Tabs"
+        }
+      },
+      "summary": "Salt could not resolve the requested entity and drifted to Vertical navigation before Tabs was retried explicitly."
+    },
+    "transcript": [
+      "Create a user profile with tabs and avatar.",
+      "The host paraphrased the request and the first pass drifted to Vertical navigation before it retried Tabs directly."
+    ],
+    "artifacts": {
+      "files": ["packages/mcp/eval-fixtures/replays/intellij-create-profile"],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

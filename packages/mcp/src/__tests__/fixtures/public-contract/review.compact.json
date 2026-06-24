@@ -1,0 +1,31 @@
+{
+  "contract": "salt_workflow_v1",
+  "workflow": "review",
+  "status": "blocked",
+  "request": {
+    "entity": null,
+    "resolved_entity": null,
+    "match_status": null,
+    "exact_match_required": null
+  },
+  "safety": {
+    "canonical_complete": true,
+    "exact_request_safe": false,
+    "blocking_reasons": [
+      "Use Link for navigation targets instead of Button."
+    ]
+  },
+  "action": {
+    "kind": "ask_user",
+    "question": "Use Link for navigation targets instead of Button.",
+    "rule_ids": [
+      "review-canonical-mismatch"
+    ],
+    "post_action": null
+  },
+  "internal_limitations": {
+    "unsupported_claim_count": 0,
+    "unsupported_rule_kinds": []
+  },
+  "summary": "Salt review found issues that still need attention."
+}

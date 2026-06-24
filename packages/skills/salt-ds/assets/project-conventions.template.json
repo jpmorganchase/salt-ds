@@ -1,0 +1,14 @@
+{
+  "contract": "project_conventions_v1",
+  "version": "1.0.0",
+  "project": "your-app",
+  "preferred_components": [],
+  "approved_wrappers": [],
+  "pattern_preferences": [],
+  "banned_choices": [],
+  "notes": [
+    "Start with .salt/team.json. Add .salt/stack.json only when shared upstream layers are real.",
+    "Keep canonical Salt guidance visible when a project convention changes the final answer.",
+    "Record only durable repo rules backed by code or docs evidence."
+  ]
+}

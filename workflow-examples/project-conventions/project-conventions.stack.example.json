@@ -1,0 +1,25 @@
+{
+  "contract": "project_conventions_stack_v1",
+  "notes": [
+    "Example layered setup for teams that need shared line-of-business defaults plus team overrides."
+  ],
+  "layers": [
+    {
+      "id": "lob-defaults",
+      "scope": "line_of_business",
+      "source": {
+        "type": "package",
+        "specifier": "@example/lob-salt-conventions",
+        "export": "markets"
+      }
+    },
+    {
+      "id": "team-checkout",
+      "scope": "team",
+      "source": {
+        "type": "file",
+        "path": "./team.json"
+      }
+    }
+  ]
+}

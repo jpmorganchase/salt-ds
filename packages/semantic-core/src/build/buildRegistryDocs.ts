@@ -1,0 +1,744 @@
+import path from "node:path";
+import fg from "fast-glob";
+import matter from "gray-matter";
+import { toPosixPath } from "../registry/paths.js";
+import type {
+  ExampleRecord,
+  GuideRecord,
+  GuideSnippet,
+  PageKind,
+  PageRecord,
+} from "../types.js";
+import {
+  extractFencedCodeBlocks,
+  extractFirstParagraph,
+  extractStatementsFromSection,
+  parseMarkdownSections,
+} from "./buildRegistryMarkdown.js";
+import {
+  asString,
+  asStringArray,
+  cleanMarkdownText,
+  normalizeWhitespace,
+  readFileOrNull,
+  toKebabCase,
+  uniqueStrings,
+} from "./buildRegistryShared.js";
+import { extractMdxTextBlocks } from "./pageTextExtractor.js";
+
+interface SiteSearchPageShape {
+  title?: unknown;
+  route?: unknown;
+  content?: unknown;
+  keywords?: unknown;
+}
+
+interface MarkdownPageMetadata {
+  summary: string | null;
+  section_headings: string[];
+}
+
+interface MarkdownPageSource extends MarkdownPageMetadata {
+  content: string[];
+}
+
+function buildGuideStep(
+  title: string,
+  statements: string[],
+  snippets: GuideSnippet[],
+) {
+  return {
+    title,
+    statements: uniqueStrings(
+      statements
+        .map((statement) => cleanMarkdownText(statement))
+        .filter((statement) => statement.length > 0),
+    ),
+    snippets,
+  };
+}
+
+function createGuideSnippet(
+  title: string,
+  language: GuideSnippet["language"],
+  code: string | null | undefined,
+): GuideSnippet | null {
+  const normalizedCode = code?.trim();
+  if (!normalizedCode) {
+    return null;
+  }
+
+  return {
+    title,
+    language,
+    code: normalizedCode,
+  };
+}
+
+function normalizeGuideStepTitle(title: string): string {
+  return title.replace(/^\d+\.\s*/, "").trim();
+}
+
+function toTitleCaseWords(value: string): string {
+  return value
+    .split(/[-_\s]+/)
+    .filter((part) => part.length > 0)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("");
+}
+
+function normalizeGuideAlias(candidate: string): string {
+  return normalizeWhitespace(cleanMarkdownText(candidate)).trim();
+}
+
+function expandGuideAliasCandidate(candidate: string): string[] {
+  const normalized = normalizeGuideAlias(candidate);
+  if (!normalized) {
+    return [];
+  }
+
+  const comparisonMatch = normalized.match(/^(.+?)\s+or\s+(.+)$/i);
+  if (!comparisonMatch) {
+    return [normalized];
+  }
+
+  return uniqueStrings([
+    normalized,
+    `${comparisonMatch[1]} vs ${comparisonMatch[2]}`,
+  ]);
+}
+
+function inferGettingStartedGuideAliases(
+  basename: string,
+  title: string,
+  content: string,
+): string[] {
+  const h2Sections = parseMarkdownSections(content, 2);
+  const h3Sections = parseMarkdownSections(content, 3);
+
+  return uniqueStrings(
+    [
+      title,
+      basename.replace(/-/g, " "),
+      ...h2Sections.map((section) => section.title),
+      ...h3Sections.map((section) => section.title),
+    ]
+      .flatMap(expandGuideAliasCandidate)
+      .filter((candidate) => candidate.length >= 3 && candidate.length <= 80),
+  );
+}
+
+function inferGettingStartedGuidePackages(content: string): string[] {
+  return uniqueStrings(
+    [...content.matchAll(/@salt-ds\/[a-z-]+/g)].map((match) => match[0]),
+  );
+}
+
+function inferGettingStartedGuideRelatedComponents(content: string): string[] {
+  return uniqueStrings(
+    [...content.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)]
+      .map((match) => match[1]?.trim() ?? "")
+      .filter((href) =>
+        /(?:^\/salt\/components\/|^\.\.?\/components\/)/i.test(href),
+      )
+      .map((href) => href.split(/[?#]/)[0]?.replace(/\\/g, "/") ?? "")
+      .map((href) =>
+        href.match(
+          /(?:^|\/)components\/([^/]+)(?:\/(?:usage|accessibility|examples|index))?$/i,
+        ),
+      )
+      .map((match) => match?.[1] ?? "")
+      .filter((slug) => slug.length > 0 && slug !== "layouts")
+      .map((slug) => toTitleCaseWords(slug)),
+  );
+}
+
+function inferGettingStartedGuideStepHeadingDepth(content: string): number {
+  const hasStepByStepSection = /^##\s+The step-by-step process\b/m.test(
+    content,
+  );
+  if (!hasStepByStepSection) {
+    return 2;
+  }
+
+  return parseMarkdownSections(content, 3).length > 0 ? 3 : 2;
+}
+
+function buildGettingStartedGuideRecord(
+  filePath: string,
+  source: string,
+  verifiedAt: string,
+): GuideRecord | null {
+  const parsed = matter(source);
+  const title = asString(parsed.data.title);
+
+  if (!title) {
+    return null;
+  }
+
+  const stepHeadingDepth = inferGettingStartedGuideStepHeadingDepth(
+    parsed.content,
+  );
+
+  const sections = parseMarkdownSections(parsed.content, stepHeadingDepth);
+  const steps = sections
+    .map((section) => {
+      const stepTitle = normalizeGuideStepTitle(section.title);
+      const snippets = extractFencedCodeBlocks(section.content)
+        .map((block, index) =>
+          createGuideSnippet(
+            `${stepTitle} example ${index + 1}`,
+            block.language,
+            block.code,
+          ),
+        )
+        .filter((snippet): snippet is GuideSnippet => snippet !== null);
+      const statements = extractStatementsFromSection(section.content);
+
+      if (statements.length === 0 && snippets.length === 0) {
+        return null;
+      }
+
+      return buildGuideStep(stepTitle, statements, snippets);
+    })
+    .filter((step): step is GuideRecord["steps"][number] => step !== null);
+
+  if (steps.length === 0) {
+    return null;
+  }
+
+  const basename = path.basename(filePath, path.extname(filePath));
+  const packages = inferGettingStartedGuidePackages(parsed.content);
+  const relatedComponents = inferGettingStartedGuideRelatedComponents(
+    parsed.content,
+  );
+
+  return {
+    id: `guide.${basename.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}`,
+    name: title,
+    aliases: inferGettingStartedGuideAliases(basename, title, parsed.content),
+    kind: "getting-started",
+    summary:
+      asString(parsed.data.description) ??
+      extractFirstParagraph(parsed.content),
+    packages,
+    steps,
+    related_docs: {
+      overview: `/salt/getting-started/${basename}`,
+      related_components: relatedComponents,
+      related_packages: packages,
+    },
+    last_verified_at: verifiedAt,
+  };
+}
+
+function normalizeSiteRoute(route: string): string {
+  return route
+    .trim()
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "")
+    .replace(/\/+/g, "/")
+    .replace(/\/$/, "");
+}
+
+function createNormalizedSiteRouteKey(route: string): string {
+  return normalizeSiteRoute(route).toLowerCase();
+}
+
+function createPageId(route: string): string {
+  return `page.${normalizeSiteRoute(route)
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/(^-|-$)/g, "")
+    .toLowerCase()}`;
+}
+
+function classifyPageKind(route: string): PageKind {
+  const normalizedRoute = normalizeSiteRoute(route).toLowerCase();
+
+  if (normalizedRoute === "salt/index" || normalizedRoute === "salt") {
+    return "landing";
+  }
+  if (normalizedRoute.startsWith("salt/about/")) {
+    return "about";
+  }
+  if (normalizedRoute.startsWith("salt/getting-started/")) {
+    return "guide";
+  }
+  if (normalizedRoute.startsWith("salt/components/")) {
+    return "component-doc";
+  }
+  if (normalizedRoute.startsWith("salt/patterns/")) {
+    return "pattern-doc";
+  }
+  if (normalizedRoute.startsWith("salt/foundations/")) {
+    // Pages under salt/foundations/fragments/** are reusable MDX
+    // includes (sidebar: exclude), not standalone foundations. Treat
+    // them as generic pages so the registry coverage audit (gold-
+    // standard roadmap task 0.6) does not demand a canonical example
+    // for them.
+    if (normalizedRoute.includes("/fragments/")) {
+      return "other";
+    }
+    return "foundation";
+  }
+  if (normalizedRoute.startsWith("salt/themes/")) {
+    return "theme-doc";
+  }
+  if (normalizedRoute.startsWith("salt/support-and-contributions/")) {
+    return "support";
+  }
+  if (normalizedRoute.startsWith("salt-github/")) {
+    return "release-note";
+  }
+
+  return "other";
+}
+
+function mergePageContentBlocks(values: string[]): string[] {
+  const cleanedValues = values
+    .map((value) => cleanMarkdownText(value))
+    .map((value) => normalizeWhitespace(value))
+    .filter((value) => value.length > 1 && /[a-z0-9]/i.test(value));
+  const blocks: string[] = [];
+  let current = "";
+
+  for (const value of cleanedValues) {
+    current = current ? `${current} ${value}` : value;
+    if (/[.!?]$/.test(value) || current.length >= 220) {
+      blocks.push(current);
+      current = "";
+    }
+  }
+
+  if (current) {
+    blocks.push(current);
+  }
+
+  return uniqueStrings(blocks);
+}
+
+function extractMarkdownPageMetadata(
+  content: string,
+  description: string | null,
+): MarkdownPageMetadata {
+  const summary = description ?? extractFirstParagraph(content);
+  const section_headings = uniqueStrings(
+    [2, 3, 4]
+      .flatMap((level) =>
+        parseMarkdownSections(content, level).map((section) =>
+          cleanMarkdownText(section.title),
+        ),
+      )
+      .filter((heading) => heading.length > 0),
+  );
+
+  return {
+    summary,
+    section_headings,
+  };
+}
+
+function extractFallbackMarkdownLines(content: string): string[] {
+  return content
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(
+      (line) =>
+        line.length > 0 &&
+        !line.startsWith("#") &&
+        !line.startsWith("```") &&
+        !line.startsWith("<"),
+    )
+    .map((line) => normalizeWhitespace(line))
+    .filter((line) => line.length > 1);
+}
+
+function extractRouteKeywords(route: string): string[] {
+  const normalizedRoute = normalizeSiteRoute(route);
+  return uniqueStrings([
+    normalizedRoute,
+    ...normalizedRoute
+      .split("/")
+      .filter((part) => part.length > 0)
+      .flatMap((part) =>
+        part
+          .split(/[-_]/)
+          .map((segment) => segment.trim())
+          .filter((segment) => segment.length > 0),
+      ),
+  ]);
+}
+
+async function readPageSnapshotMetadata(
+  repoRoot: string,
+  route: string,
+): Promise<MarkdownPageMetadata> {
+  const normalizedRoute = normalizeSiteRoute(route);
+  if (!normalizedRoute.startsWith("salt/")) {
+    return {
+      summary: null,
+      section_headings: [],
+    };
+  }
+
+  const snapshotPath = path.join(
+    repoRoot,
+    "site",
+    "snapshots",
+    "latest",
+    `${normalizedRoute}.mdx`,
+  );
+  const snapshotSource = await readFileOrNull(snapshotPath);
+  if (!snapshotSource) {
+    return {
+      summary: null,
+      section_headings: [],
+    };
+  }
+
+  const parsed = matter(snapshotSource);
+  return extractMarkdownPageMetadata(
+    parsed.content,
+    asString(parsed.data.description),
+  );
+}
+
+async function buildSiteDocsRouteMap(
+  repoRoot: string,
+): Promise<Map<string, string>> {
+  const docsRoot = path.join(repoRoot, "site", "docs");
+  const docPaths = await fg("**/*.mdx", {
+    absolute: true,
+    cwd: docsRoot,
+    onlyFiles: true,
+  });
+  const routeMap = new Map<string, string>();
+
+  for (const docPath of docPaths) {
+    const relativePath = toPosixPath(path.relative(docsRoot, docPath));
+    const route =
+      relativePath === "index.mdx"
+        ? "salt/index"
+        : `salt/${relativePath.replace(/\.mdx$/i, "")}`;
+    routeMap.set(createNormalizedSiteRouteKey(route), docPath);
+
+    if (/\/index$/i.test(route)) {
+      routeMap.set(
+        createNormalizedSiteRouteKey(route.replace(/\/index$/i, "")),
+        docPath,
+      );
+    }
+  }
+
+  return routeMap;
+}
+
+function extractMarkdownContentBlocks(content: string): string[] {
+  try {
+    return mergePageContentBlocks(extractMdxTextBlocks(content));
+  } catch {
+    return mergePageContentBlocks(extractFallbackMarkdownLines(content));
+  }
+}
+
+async function readSiteDocsPageSource(
+  route: string,
+  docsRouteMap: Map<string, string>,
+): Promise<MarkdownPageSource | null> {
+  const docPath = docsRouteMap.get(createNormalizedSiteRouteKey(route));
+  if (!docPath) {
+    return null;
+  }
+
+  const docSource = await readFileOrNull(docPath);
+  if (!docSource) {
+    return null;
+  }
+
+  const parsed = matter(docSource);
+  const metadata = extractMarkdownPageMetadata(
+    parsed.content,
+    asString(parsed.data.description),
+  );
+
+  return {
+    ...metadata,
+    content: extractMarkdownContentBlocks(parsed.content),
+  };
+}
+
+export async function extractPages(
+  repoRoot: string,
+  verifiedAt: string,
+): Promise<PageRecord[]> {
+  const searchDataPath = path.join(
+    repoRoot,
+    "site",
+    "public",
+    "search-data.json",
+  );
+  const searchDataSource = await readFileOrNull(searchDataPath);
+  if (!searchDataSource) {
+    return [];
+  }
+
+  let parsedSearchData: unknown;
+  try {
+    parsedSearchData = JSON.parse(searchDataSource);
+  } catch {
+    return [];
+  }
+
+  if (!Array.isArray(parsedSearchData)) {
+    return [];
+  }
+
+  const docsRouteMap = await buildSiteDocsRouteMap(repoRoot);
+
+  const pages = await Promise.all(
+    parsedSearchData.map(async (entry): Promise<PageRecord | null> => {
+      const page = entry as SiteSearchPageShape;
+      const title = asString(page.title);
+      const route = asString(page.route);
+      if (!title || !route) {
+        return null;
+      }
+
+      const fallbackContent = mergePageContentBlocks(
+        asStringArray(page.content),
+      );
+      const docsSource = await readSiteDocsPageSource(route, docsRouteMap);
+      const snapshotMetadata = docsSource
+        ? null
+        : await readPageSnapshotMetadata(repoRoot, route);
+      const summary =
+        docsSource?.summary ??
+        snapshotMetadata?.summary ??
+        fallbackContent[0] ??
+        cleanMarkdownText(title);
+
+      return {
+        id: createPageId(route),
+        title: cleanMarkdownText(title),
+        route,
+        page_kind: classifyPageKind(route),
+        summary,
+        keywords: uniqueStrings([
+          ...asStringArray(page.keywords).map((keyword) =>
+            normalizeWhitespace(cleanMarkdownText(keyword)),
+          ),
+          ...extractRouteKeywords(route),
+          title,
+        ]).filter((keyword) => keyword.length > 0),
+        content:
+          docsSource && docsSource.content.length > 0
+            ? docsSource.content
+            : fallbackContent,
+        section_headings:
+          docsSource?.section_headings ??
+          snapshotMetadata?.section_headings ??
+          [],
+        last_verified_at: verifiedAt,
+      };
+    }),
+  );
+
+  return pages
+    .filter((page): page is PageRecord => page !== null)
+    .sort(
+      (left, right) =>
+        left.title.localeCompare(right.title) ||
+        left.route.localeCompare(right.route),
+    );
+}
+
+export async function extractGuides(
+  repoRoot: string,
+  verifiedAt: string,
+): Promise<GuideRecord[]> {
+  const guides: GuideRecord[] = [];
+  const gettingStartedPaths = (
+    await fg("site/docs/getting-started/*.mdx", {
+      cwd: repoRoot,
+      absolute: true,
+    })
+  )
+    .filter((filePath) => path.basename(filePath) !== "index.mdx")
+    .sort((left, right) => left.localeCompare(right));
+
+  for (const guidePath of gettingStartedPaths) {
+    const guideSource = await readFileOrNull(guidePath);
+    if (!guideSource) {
+      continue;
+    }
+
+    const parsedGuide = matter(guideSource);
+    if (parsedGuide.data.salt_ai_guide !== true) {
+      continue;
+    }
+
+    const guide = buildGettingStartedGuideRecord(
+      guidePath,
+      guideSource,
+      verifiedAt,
+    );
+    if (guide) {
+      guides.push(guide);
+    }
+  }
+
+  const themesPath = path.join(repoRoot, "site/docs/themes/index.mdx");
+  const themesSource = await readFileOrNull(themesPath);
+  if (themesSource) {
+    const parsed = matter(themesSource);
+    const sections = parseMarkdownSections(parsed.content, 3);
+    const sourceBackedSteps = sections
+      .map((section) =>
+        buildGuideStep(
+          section.title,
+          extractStatementsFromSection(section.content),
+          [],
+        ),
+      )
+      .filter((step) => step.statements.length > 0);
+
+    guides.push({
+      id: "guide.themes",
+      name: "Themes",
+      aliases: uniqueStrings([
+        "theme",
+        "theming",
+        ...sections.map((section) => section.title.toLowerCase()),
+      ]),
+      kind: "theming",
+      summary:
+        asString(parsed.data.description) ??
+        extractFirstParagraph(parsed.content),
+      packages: [],
+      steps:
+        sourceBackedSteps.length > 0
+          ? sourceBackedSteps
+          : [
+              buildGuideStep(
+                "Theme evidence unavailable",
+                [
+                  "Theme provider, import, prop, font, package, and compatibility claims are unsupported until source-backed documentation or project policy supplies evidence.",
+                ],
+                [],
+              ),
+            ],
+      related_docs: {
+        overview: "/salt/themes",
+        related_components: [],
+        related_packages: [],
+      },
+      last_verified_at: verifiedAt,
+    });
+  }
+
+  return guides.sort((left, right) => left.name.localeCompare(right.name));
+}
+
+/**
+ * Extract one canonical `ExampleRecord` per foundation page so the
+ * registry-coverage audit (gold-standard roadmap task 0.6) and any
+ * theme-aware `create_salt_ui` follow-up (task 2.10) can resolve
+ * foundations through the same `target_name` lookup it uses for
+ * components and patterns.
+ *
+ * Source of truth: `site/docs/foundations/**\/*.mdx`. The first fenced
+ * code block (or the first paragraph as a fallback) becomes the
+ * example body so a model can read structured evidence without having
+ * to scrape the foundation page itself. Fragments
+ * (`site/docs/foundations/fragments/**`) are intentionally skipped —
+ * they are reusable MDX includes, not foundation entities, and
+ * `classifyPageKind` already routes them to `page_kind: other`.
+ *
+ * Each emitted example uses:
+ * - `target_type: "foundation"`
+ * - `target_name`: the page frontmatter title (lowercase match for the
+ *   coverage spec)
+ * - `source_url`: the foundation page route (so consumers can fetch
+ *   the full doc when they need it).
+ */
+export async function extractFoundationExamples(
+  repoRoot: string,
+): Promise<ExampleRecord[]> {
+  const foundationDocPaths = (
+    await fg("site/docs/foundations/**/*.mdx", {
+      cwd: repoRoot,
+      absolute: true,
+      onlyFiles: true,
+      // Mirror the pattern docs extractor: skip fragments and any
+      // index-only pages that don't classify as foundations.
+      ignore: [
+        "site/docs/foundations/fragments/**",
+        "site/docs/foundations/**/fragments/**",
+      ],
+    })
+  ).sort((left, right) => left.localeCompare(right));
+
+  const examples: ExampleRecord[] = [];
+
+  for (const foundationPath of foundationDocPaths) {
+    const source = await readFileOrNull(foundationPath);
+    if (!source) {
+      continue;
+    }
+
+    const parsed = matter(source);
+    const title = asString(parsed.data.title);
+    if (!title) {
+      continue;
+    }
+
+    // Skip docs explicitly marked as sidebar excludes that are not
+    // real foundations (these are typically embedded fragments or
+    // duplicated landing sections). We still extract index.mdx pages
+    // that are landing pages for a category (e.g. assets/index.mdx
+    // titled "Icons") because they carry primary foundation content.
+    const sidebarConfig = parsed.data.sidebar as
+      | { exclude?: unknown }
+      | undefined;
+    if (sidebarConfig?.exclude === true) {
+      continue;
+    }
+
+    const relativePath = toPosixPath(
+      path.relative(path.join(repoRoot, "site/docs/foundations"), foundationPath),
+    );
+    const routeSuffix = relativePath.replace(/\.mdx$/i, "");
+    const route = `/salt/foundations/${routeSuffix}`;
+
+    const codeBlocks = extractFencedCodeBlocks(parsed.content);
+    const firstSnippet = codeBlocks.find((block) => block.code.length > 0);
+    const summary = extractFirstParagraph(parsed.content);
+
+    const fallbackBody = summary
+      ? `// ${cleanMarkdownText(summary).slice(0, 480)}\n// See ${route}`
+      : `// Salt foundation: ${title}\n// See ${route}`;
+
+    examples.push({
+      id: `foundation.${toKebabCase(routeSuffix)}`,
+      title,
+      description: cleanMarkdownText(summary ?? title).slice(0, 500),
+      intent: uniqueStrings([
+        `${title.toLowerCase()} foundation`,
+        "foundation guidance",
+        ...title
+          .toLowerCase()
+          .split(/\s+/)
+          .filter((word) => word.length >= 3),
+      ]),
+      complexity: "basic",
+      code: firstSnippet?.code ?? fallbackBody,
+      source_url: route,
+      package: null,
+      target_type: "foundation",
+      target_name: title,
+    });
+  }
+
+  return examples;
+}
+
