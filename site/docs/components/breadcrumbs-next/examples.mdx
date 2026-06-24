@@ -10,6 +10,30 @@ data:
 
 ## Default
 
-The default example shows a basic breadcrumb trail with three levels.
+The default example shows a basic breadcrumb trail with linked previous levels and a text current level.
 
 <LivePreview componentName="breadcrumbs-next" exampleName="Default" />
+
+## Router integration
+
+Use the `render` prop to pass routing behavior through to the underlying Salt `Link`.
+
+<LivePreview componentName="breadcrumbs-next" exampleName="RouterIntegration" />
+
+## Wrapped
+
+Use `wrap` when breadcrumbs can flow onto multiple lines.
+
+<LivePreview componentName="breadcrumbs-next" exampleName="Wrapped" />
+
+## Menu collapsed
+
+Set `maxItems` to collapse the middle breadcrumb levels into a menu.
+
+<LivePreview componentName="breadcrumbs-next" exampleName="MenuCollapsed" />
+
+## Inline expansion
+
+Set `collapseMode="expand"` to reveal hidden breadcrumb levels inline.
+
+<LivePreview componentName="breadcrumbs-next" exampleName="InlineExpansion" />
