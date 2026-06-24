@@ -42,9 +42,11 @@
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltMegaMenuListItem-wrapper:hover:not(:focus-visible) {
-  outline: none;
-  background: var(--salt-overlayable-background-hover);
+@media (any-hover: hover) {
+  .saltMegaMenuListItem-wrapper:hover:not(:focus-visible) {
+    outline: none;
+    background: var(--salt-overlayable-background-hover);
+  }
 }
 
 .saltMegaMenuListItem-wrapper:active {

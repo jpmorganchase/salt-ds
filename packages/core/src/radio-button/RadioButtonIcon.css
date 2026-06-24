@@ -17,19 +17,26 @@
   box-sizing: border-box;
 }
 
-.saltRadioButton:hover .saltRadioButtonIcon {
-  border-color: var(--salt-selectable-borderColor-hover);
-  color: var(--salt-selectable-foreground-hover);
+@media (any-hover: hover) {
+  .saltRadioButton:hover .saltRadioButtonIcon {
+    border-color: var(--salt-selectable-borderColor-hover);
+    color: var(--salt-selectable-foreground-hover);
+  }
 }
 
-.saltRadioButtonIcon-checked,
-.saltRadioButton:hover .saltRadioButtonIcon-checked {
+.saltRadioButtonIcon-checked {
   border-color: var(--salt-selectable-borderColor-selected);
   color: var(--salt-selectable-foreground-selected);
 }
 
-.saltRadioButtonIcon-disabled,
-.saltRadioButton:hover .saltRadioButtonIcon-disabled {
+@media (any-hover: hover) {
+  .saltRadioButton:hover .saltRadioButtonIcon-checked {
+    border-color: var(--salt-selectable-borderColor-selected);
+    color: var(--salt-selectable-foreground-selected);
+  }
+}
+
+.saltRadioButtonIcon-disabled {
   opacity: 0.4;
 
   border-color: var(--salt-selectable-borderColor);
@@ -37,32 +44,69 @@
   color: var(--salt-selectable-foreground);
 }
 
-.saltRadioButtonIcon-checked.saltRadioButtonIcon-disabled,
-.saltRadioButton:hover .saltRadioButtonIcon-checked.saltRadioButtonIcon-disabled {
+@media (any-hover: hover) {
+  .saltRadioButton:hover .saltRadioButtonIcon-disabled {
+    opacity: 0.4;
+
+    border-color: var(--salt-selectable-borderColor);
+    background: var(--salt-container-primary-background);
+    color: var(--salt-selectable-foreground);
+  }
+}
+
+.saltRadioButtonIcon-checked.saltRadioButtonIcon-disabled {
   border-color: var(--salt-selectable-borderColor-selected);
   color: var(--salt-selectable-foreground-selected);
 }
 
-.saltRadioButtonIcon-error,
-.saltRadioButton:hover .saltRadioButtonIcon-error {
+@media (any-hover: hover) {
+  .saltRadioButton:hover .saltRadioButtonIcon-checked.saltRadioButtonIcon-disabled {
+    border-color: var(--salt-selectable-borderColor-selected);
+    color: var(--salt-selectable-foreground-selected);
+  }
+}
+
+.saltRadioButtonIcon-error {
   color: var(--salt-status-error-foreground-decorative);
   border-color: var(--salt-status-error-borderColor);
   outline-color: var(--salt-status-error-foreground-decorative);
 }
 
-.saltRadioButtonIcon-warning,
-.saltRadioButton:hover .saltRadioButtonIcon-warning {
+@media (any-hover: hover) {
+  .saltRadioButton:hover .saltRadioButtonIcon-error {
+    color: var(--salt-status-error-foreground-decorative);
+    border-color: var(--salt-status-error-borderColor);
+    outline-color: var(--salt-status-error-foreground-decorative);
+  }
+}
+
+.saltRadioButtonIcon-warning {
   color: var(--salt-status-warning-foreground-decorative);
   border-color: var(--salt-status-warning-borderColor);
   outline-color: var(--salt-status-warning-foreground-decorative);
 }
 
+@media (any-hover: hover) {
+  .saltRadioButton:hover .saltRadioButtonIcon-warning {
+    color: var(--salt-status-warning-foreground-decorative);
+    border-color: var(--salt-status-warning-borderColor);
+    outline-color: var(--salt-status-warning-foreground-decorative);
+  }
+}
+
 .saltRadioButtonIcon-readOnly,
-.saltRadioButton:hover .saltRadioButtonIcon-readOnly,
 .saltRadioButton-input:focus-visible + .saltRadioButtonIcon-readOnly {
   border-color: var(--salt-selectable-borderColor-readonly);
   border-style: var(--salt-borderStyle-dashed);
   color: var(--salt-content-primary-foreground);
+}
+
+@media (any-hover: hover) {
+  .saltRadioButton:hover .saltRadioButtonIcon-readOnly {
+    border-color: var(--salt-selectable-borderColor-readonly);
+    border-style: var(--salt-borderStyle-dashed);
+    color: var(--salt-content-primary-foreground);
+  }
 }
 
 .saltRadioButtonIcon > svg {

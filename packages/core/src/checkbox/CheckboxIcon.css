@@ -16,16 +16,24 @@
   box-sizing: border-box;
 }
 
-.saltCheckboxIcon-checked,
-.saltCheckbox:hover .saltCheckboxIcon-checked {
+.saltCheckboxIcon-checked {
   border-color: var(--salt-selectable-borderColor-selected);
   color: var(--salt-selectable-foreground-selected);
 }
 
-.saltCheckbox:hover .saltCheckboxIcon,
-.saltCheckbox:hover .saltCheckboxIcon-indeterminate {
-  border-color: var(--salt-selectable-borderColor-hover);
-  color: var(--salt-selectable-foreground-hover);
+@media (any-hover: hover) {
+  .saltCheckbox:hover .saltCheckboxIcon-checked {
+    border-color: var(--salt-selectable-borderColor-selected);
+    color: var(--salt-selectable-foreground-selected);
+  }
+}
+
+@media (any-hover: hover) {
+  .saltCheckbox:hover .saltCheckboxIcon,
+  .saltCheckbox:hover .saltCheckboxIcon-indeterminate {
+    border-color: var(--salt-selectable-borderColor-hover);
+    color: var(--salt-selectable-foreground-hover);
+  }
 }
 
 .saltCheckboxIcon-checked.saltCheckboxIcon-indeterminate {
@@ -34,9 +42,7 @@
 }
 
 .saltCheckboxIcon-disabled,
-.saltCheckbox:hover .saltCheckboxIcon-disabled,
-.saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate,
-.saltCheckbox:hover .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
+.saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
   opacity: 0.4;
 
   border-color: var(--salt-selectable-borderColor);
@@ -44,10 +50,27 @@
   color: var(--salt-selectable-foreground);
 }
 
-.saltCheckboxIcon-checked.saltCheckboxIcon-disabled,
-.saltCheckbox:hover .saltCheckboxIcon-checked.saltCheckboxIcon-disabled {
+@media (any-hover: hover) {
+  .saltCheckbox:hover .saltCheckboxIcon-disabled,
+  .saltCheckbox:hover .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
+    opacity: 0.4;
+
+    border-color: var(--salt-selectable-borderColor);
+    background: var(--salt-container-primary-background);
+    color: var(--salt-selectable-foreground);
+  }
+}
+
+.saltCheckboxIcon-checked.saltCheckboxIcon-disabled {
   border-color: var(--salt-selectable-borderColor-selected);
   color: var(--salt-selectable-foreground-selected);
+}
+
+@media (any-hover: hover) {
+  .saltCheckbox:hover .saltCheckboxIcon-checked.saltCheckboxIcon-disabled {
+    border-color: var(--salt-selectable-borderColor-selected);
+    color: var(--salt-selectable-foreground-selected);
+  }
 }
 
 .saltCheckboxIcon-indeterminate::before {
@@ -61,26 +84,47 @@
   transform: translate(-50%, -50%);
 }
 
-.saltCheckboxIcon-error,
-.saltCheckbox:hover .saltCheckboxIcon-error {
+.saltCheckboxIcon-error {
   color: var(--salt-status-error-foreground-decorative);
   border-color: var(--salt-status-error-borderColor);
   outline-color: var(--salt-status-error-foreground-decorative);
 }
 
-.saltCheckboxIcon-warning,
-.saltCheckbox:hover .saltCheckboxIcon-warning {
+@media (any-hover: hover) {
+  .saltCheckbox:hover .saltCheckboxIcon-error {
+    color: var(--salt-status-error-foreground-decorative);
+    border-color: var(--salt-status-error-borderColor);
+    outline-color: var(--salt-status-error-foreground-decorative);
+  }
+}
+
+.saltCheckboxIcon-warning {
   color: var(--salt-status-warning-foreground-decorative);
   border-color: var(--salt-status-warning-borderColor);
   outline-color: var(--salt-status-warning-foreground-decorative);
 }
 
+@media (any-hover: hover) {
+  .saltCheckbox:hover .saltCheckboxIcon-warning {
+    color: var(--salt-status-warning-foreground-decorative);
+    border-color: var(--salt-status-warning-borderColor);
+    outline-color: var(--salt-status-warning-foreground-decorative);
+  }
+}
+
 .saltCheckboxIcon-readOnly,
-.saltCheckbox:hover .saltCheckboxIcon-readOnly,
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon-readOnly {
   border-color: var(--salt-selectable-borderColor-readonly);
   border-style: var(--salt-borderStyle-dashed);
   color: var(--salt-content-primary-foreground);
+}
+
+@media (any-hover: hover) {
+  .saltCheckbox:hover .saltCheckboxIcon-readOnly {
+    border-color: var(--salt-selectable-borderColor-readonly);
+    border-style: var(--salt-borderStyle-dashed);
+    color: var(--salt-content-primary-foreground);
+  }
 }
 
 .saltCheckboxIcon > svg {

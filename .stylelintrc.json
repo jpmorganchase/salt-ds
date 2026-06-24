@@ -4,7 +4,8 @@
     "./tooling/stylelint/no-deprecated-token-usage/index.mjs",
     "./tooling/stylelint/custom-property-attributes-kebab-case/index.mjs",
     "./tooling/stylelint/custom-property-starts-with-component-name/index.mjs",
-    "./tooling/stylelint/characteristic-token-in-all-themes/index.mjs"
+    "./tooling/stylelint/characteristic-token-in-all-themes/index.mjs",
+    "./tooling/stylelint/hover-must-be-wrapped/index.mjs"
   ],
   "rules": {
     "salt/correct-theme-token-usage": {
@@ -19,7 +20,8 @@
     "salt/custom-property-starts-with-component-name": {
       "logLevel": "default"
     },
-    "salt/characteristic-token-in-all-themes": null
+    "salt/characteristic-token-in-all-themes": null,
+    "salt/hover-must-be-wrapped": true
   },
   "overrides": [
     {

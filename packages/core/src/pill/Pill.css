@@ -33,11 +33,18 @@
   cursor: var(--salt-cursor-hover);
 }
 
-.saltPill-clickable:hover,
 .saltPill-clickable:focus-visible {
   --pill-color: var(--salt-actionable-bold-foreground-hover);
   --pill-background: var(--salt-actionable-bold-background-hover);
   --pill-borderColor: var(--salt-actionable-bold-borderColor-hover);
+}
+
+@media (any-hover: hover) {
+  .saltPill-clickable:hover {
+    --pill-color: var(--salt-actionable-bold-foreground-hover);
+    --pill-background: var(--salt-actionable-bold-background-hover);
+    --pill-borderColor: var(--salt-actionable-bold-borderColor-hover);
+  }
 }
 
 .saltPill-clickable.saltPill-active,
@@ -60,12 +67,22 @@
 }
 
 /* Style applied to Pill when disabled */
-.saltPill:disabled,
-.saltPill:disabled:hover {
+.saltPill:disabled {
   --pill-color: var(--salt-actionable-bold-foreground);
   --pill-background: var(--salt-actionable-bold-background);
   --pill-borderColor: var(--salt-actionable-bold-borderColor);
   cursor: var(--salt-cursor-disabled);
 
   opacity: 0.4;
+}
+
+@media (any-hover: hover) {
+  .saltPill:disabled:hover {
+    --pill-color: var(--salt-actionable-bold-foreground);
+    --pill-background: var(--salt-actionable-bold-background);
+    --pill-borderColor: var(--salt-actionable-bold-borderColor);
+    cursor: var(--salt-cursor-disabled);
+
+    opacity: 0.4;
+  }
 }

@@ -52,14 +52,24 @@
   bottom: 0;
 }
 
-.saltTab:hover::after,
 .saltTab-focusVisible::after {
   background: var(--salt-navigable-indicator-hover);
 }
 
-.saltTab-disabled:hover::after,
+@media (any-hover: hover) {
+  .saltTab:hover::after {
+    background: var(--salt-navigable-indicator-hover);
+  }
+}
+
 .saltTab-disabled.saltTab-focusVisible::after {
   background: none;
+}
+
+@media (any-hover: hover) {
+  .saltTab-disabled:hover::after {
+    background: none;
+  }
 }
 
 .saltTab-focusVisible {

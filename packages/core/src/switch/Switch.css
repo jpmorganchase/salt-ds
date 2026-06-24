@@ -45,28 +45,49 @@
   color: var(--salt-selectable-foreground-hover);
 }
 
-.saltSwitch:hover .saltSwitch-track {
-  border-color: var(--salt-selectable-borderColor-hover);
-  color: var(--salt-selectable-foreground-hover);
+@media (any-hover: hover) {
+  .saltSwitch:hover .saltSwitch-track {
+    border-color: var(--salt-selectable-borderColor-hover);
+    color: var(--salt-selectable-foreground-hover);
+  }
 }
 
-.saltSwitch-checked .saltSwitch-track,
-.saltSwitch-checked:hover .saltSwitch-track {
+.saltSwitch-checked .saltSwitch-track {
   border-color: var(--salt-selectable-borderColor-selected);
   color: var(--salt-selectable-foreground-selected);
 }
 
-.saltSwitch-disabled .saltSwitch-track,
-.saltSwitch-disabled:hover .saltSwitch-track {
+@media (any-hover: hover) {
+  .saltSwitch-checked:hover .saltSwitch-track {
+    border-color: var(--salt-selectable-borderColor-selected);
+    color: var(--salt-selectable-foreground-selected);
+  }
+}
+
+.saltSwitch-disabled .saltSwitch-track {
   border-color: var(--salt-selectable-borderColor);
   color: var(--salt-selectable-foreground);
   background: var(--salt-container-primary-background);
 }
 
-.saltSwitch-checked.saltSwitch-disabled .saltSwitch-track,
-.saltSwitch-checked.saltSwitch-disabled:hover .saltSwitch-track {
+@media (any-hover: hover) {
+  .saltSwitch-disabled:hover .saltSwitch-track {
+    border-color: var(--salt-selectable-borderColor);
+    color: var(--salt-selectable-foreground);
+    background: var(--salt-container-primary-background);
+  }
+}
+
+.saltSwitch-checked.saltSwitch-disabled .saltSwitch-track {
   border-color: var(--salt-selectable-borderColor-selected);
   color: var(--salt-selectable-foreground-selected);
+}
+
+@media (any-hover: hover) {
+  .saltSwitch-checked.saltSwitch-disabled:hover .saltSwitch-track {
+    border-color: var(--salt-selectable-borderColor-selected);
+    color: var(--salt-selectable-foreground-selected);
+  }
 }
 
 .saltSwitch-thumb {
@@ -80,22 +101,40 @@
   border-radius: var(--salt-palette-corner-weaker, 0);
 }
 
-.saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,
-.saltSwitch:hover .saltSwitch-thumb {
+.saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb {
   border-color: var(--salt-selectable-borderColor-hover);
   transition: transform var(--salt-duration-perceptible) ease-in-out;
 }
 
-.saltSwitch-checked .saltSwitch-thumb,
-.saltSwitch-checked:hover .saltSwitch-thumb {
+@media (any-hover: hover) {
+  .saltSwitch:hover .saltSwitch-thumb {
+    border-color: var(--salt-selectable-borderColor-hover);
+    transition: transform var(--salt-duration-perceptible) ease-in-out;
+  }
+}
+
+.saltSwitch-checked .saltSwitch-thumb {
   background: transparent;
   border-color: var(--salt-selectable-borderColor-selected);
   transform: translateX(100%);
 }
 
-.saltSwitch-disabled .saltSwitch-thumb,
-.saltSwitch-disabled:hover .saltSwitch-thumb {
+@media (any-hover: hover) {
+  .saltSwitch-checked:hover .saltSwitch-thumb {
+    background: transparent;
+    border-color: var(--salt-selectable-borderColor-selected);
+    transform: translateX(100%);
+  }
+}
+
+.saltSwitch-disabled .saltSwitch-thumb {
   border: 0;
+}
+
+@media (any-hover: hover) {
+  .saltSwitch-disabled:hover .saltSwitch-thumb {
+    border: 0;
+  }
 }
 
 /* Styles applied to input element */
@@ -116,14 +155,22 @@
   cursor: var(--salt-cursor-text);
 }
 
-.saltSwitch-readOnly .saltSwitch-track,
-.saltSwitch-readOnly:hover .saltSwitch-track {
+.saltSwitch-readOnly .saltSwitch-track {
   border-color: var(--salt-selectable-borderColor-readonly);
   color: var(--salt-content-primary-foreground);
 }
 
-.saltSwitch-readOnly:hover .saltSwitch-thumb {
-  border-color: var(--salt-selectable-borderColor-readonly);
+@media (any-hover: hover) {
+  .saltSwitch-readOnly:hover .saltSwitch-track {
+    border-color: var(--salt-selectable-borderColor-readonly);
+    color: var(--salt-content-primary-foreground);
+  }
+}
+
+@media (any-hover: hover) {
+  .saltSwitch-readOnly:hover .saltSwitch-thumb {
+    border-color: var(--salt-selectable-borderColor-readonly);
+  }
 }
 
 .saltSwitch-readOnly .saltSwitch-thumb,
@@ -139,9 +186,14 @@
 }
 
 @media (prefers-reduced-motion) {
-  .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,
-  .saltSwitch:hover .saltSwitch-thumb {
+  .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb {
     transition: none;
+  }
+
+  @media (any-hover: hover) {
+    .saltSwitch:hover .saltSwitch-thumb {
+      transition: none;
+    }
   }
 }
 

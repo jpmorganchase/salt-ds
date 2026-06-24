@@ -59,8 +59,10 @@
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltTabOverflowList-list .saltTab:hover {
-  background: var(--salt-selectable-background-hover);
+@media (any-hover: hover) {
+  .saltTabOverflowList-list .saltTab:hover {
+    background: var(--salt-selectable-background-hover);
+  }
 }
 
 .saltTabOverflowList-list .saltTab-disabled {
@@ -68,10 +70,16 @@
   cursor: var(--salt-cursor-disabled);
 }
 
-.saltTabOverflowList-list .saltTab-disabled:hover,
 .saltTabOverflowList-list .saltTab-disabled:active {
   background: var(--salt-selectable-background);
   box-shadow: none;
+}
+
+@media (any-hover: hover) {
+  .saltTabOverflowList-list .saltTab-disabled:hover {
+    background: var(--salt-selectable-background);
+    box-shadow: none;
+  }
 }
 
 .saltTabOverflowList-list .saltTab:active {

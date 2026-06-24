@@ -82,7 +82,7 @@
 }
 
 /* Styles applied on hover state to LinkCard */
-@media (hover: hover) {
+@media (any-hover: hover) {
   .saltLinkCard:hover {
     cursor: var(--salt-cursor-hover);
     box-shadow: var(--salt-overlayable-shadow-hover);
