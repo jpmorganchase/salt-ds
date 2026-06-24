@@ -62,6 +62,10 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
     | "category-19"
     | "category-20";
   /**
+   * The silhouette of the Avatar. Defaults to `"round"`.
+   */
+  shape?: "round" | "square";
+  /**
    * Render prop to enable customization of the avatar root element.
    */
   render?: RenderPropsType["render"];
@@ -99,6 +103,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
     fallbackIcon: fallbackIconProp,
+    shape = "round",
     render,
     ...rest
   },
@@ -156,6 +161,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
       className={clsx(
         withBaseName(),
         withBaseName(color),
+        withBaseName(shape),
         {
           [withBaseName("withImage")]: hasImgNotFailing,
         },

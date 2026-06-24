@@ -35,6 +35,18 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Avatar name="Peter Piper" color="category-18" />
     <Avatar name="Peter Piper" color="category-19" />
     <Avatar name="Peter Piper" color="category-20" />
+    <Avatar
+      shape="square"
+      size={1}
+      name="Alex Brailescu"
+      src={persona1 as string}
+    />
+    <Avatar shape="square" size={2} src="bad_url" name="Peter Piper" />
+    <Avatar shape="square" size={3} src="bad_url" />
+    <Avatar shape="square" size={3} fallbackIcon={<SaltShakerIcon />} />
+    <Avatar shape="square" name="Peter Piper" color="category-1" />
+    <Avatar shape="square" name="Peter Piper" color="category-10" />
+    <Avatar shape="square" name="Peter Piper" color="category-20" />
   </QAContainer>
 );
 
