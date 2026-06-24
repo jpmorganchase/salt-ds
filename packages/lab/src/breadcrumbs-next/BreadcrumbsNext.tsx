@@ -7,15 +7,17 @@ import {
   MenuTrigger,
   makePrefixer,
   useControlled,
+  useIcon,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { ChevronRightIcon, OverflowMenuIcon } from "@salt-ds/icons";
+import { OverflowMenuIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
   type ComponentPropsWithoutRef,
+  type ElementType,
   forwardRef,
   isValidElement,
   type Key,
@@ -258,9 +260,9 @@ function BreadcrumbOverflowMenuItem({ item }: { item: NormalizedBreadcrumb }) {
   );
 }
 
-function renderSeparator() {
+function renderSeparator(SeparatorIcon: ElementType) {
   return (
-    <ChevronRightIcon aria-hidden className={withItemBaseName("separator")} />
+    <SeparatorIcon aria-hidden className={withItemBaseName("separator")} />
   );
 }
 
@@ -282,6 +284,7 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
     const targetWindow = useWindow();
     const triggerElements = useRef(new Map<number, BreadcrumbTriggerElement>());
     const pendingExpansionFocusIndex = useRef<number | null>(null);
+    const { BreadcrumbSeparatorIcon } = useIcon();
 
     useComponentCssInjection({
       testId: "salt-breadcrumbs-next",
@@ -416,7 +419,9 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
                       </MenuPanel>
                     </Menu>
                   )}
-                  {showSeparator ? renderSeparator() : null}
+                  {showSeparator
+                    ? renderSeparator(BreadcrumbSeparatorIcon)
+                    : null}
                 </li>
               );
             }

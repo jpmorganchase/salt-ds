@@ -37,6 +37,18 @@ import {
 } from "@salt-ds/lab";
 ```
 
+If you need to customize the separator icon, also import `SemanticIconProvider` from the core Salt package:
+
+```js
+import { SemanticIconProvider } from "@salt-ds/core";
+```
+
+For composed breadcrumb item icons, import the icon from the icons Salt package:
+
+```js
+import { HomeIcon } from "@salt-ds/icons";
+```
+
 ## Breadcrumb items
 
 Use `label` for the common case. Previous hierarchy levels should provide `href` and render as Salt `Link` elements. The current level renders as text with `aria-current="page"` and is not linked by default.
@@ -64,6 +76,28 @@ For advanced composition, such as adding a tooltip or an icon inside the trigger
     </BreadcrumbNextTrigger>
   </Tooltip>
 </BreadcrumbNext>
+```
+
+```tsx
+<BreadcrumbNext href="/accounts" label="Accounts">
+  <BreadcrumbNextTrigger>
+    <HomeIcon aria-hidden />
+    <BreadcrumbNextLabel>Accounts</BreadcrumbNextLabel>
+  </BreadcrumbNextTrigger>
+</BreadcrumbNext>
+```
+
+To customize the separator icon between breadcrumb items, provide `BreadcrumbSeparatorIcon` through `SemanticIconProvider`. The default separator remains `ChevronRightIcon`.
+
+```tsx
+<SemanticIconProvider
+  iconMap={{ BreadcrumbSeparatorIcon: CustomSeparatorIcon }}
+>
+  <BreadcrumbsNext aria-label="Breadcrumb">
+    <BreadcrumbNext href="/accounts" label="Accounts" />
+    <BreadcrumbNext label="Portfolio" />
+  </BreadcrumbsNext>
+</SemanticIconProvider>
 ```
 
 ## Routing
