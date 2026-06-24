@@ -7,6 +7,7 @@ const {
   WithCustomHeadingId,
   WithoutGroupHeading,
   WithExtraGroupLabel,
+  WithCurrentItem,
 } = composeStories(megaMenuStories);
 
 describe("Given a MegaMenu", () => {
@@ -147,6 +148,27 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("list", {
         name: "Financial Services Recommended",
       }).should("exist");
+    });
+  });
+
+  describe("current item semantics", () => {
+    it("marks the item with the `current` prop as aria-current=page", () => {
+      cy.mount(<WithCurrentItem />);
+
+      cy.findByRole("link", { name: "Digital Banking" }).should(
+        "have.attr",
+        "aria-current",
+        "page",
+      );
+    });
+
+    it("leaves other items without aria-current", () => {
+      cy.mount(<WithCurrentItem />);
+
+      cy.findByRole("link", { name: "Risk Management" }).should(
+        "not.have.attr",
+        "aria-current",
+      );
     });
   });
 

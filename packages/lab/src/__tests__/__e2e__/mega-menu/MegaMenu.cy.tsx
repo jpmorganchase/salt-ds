@@ -1,7 +1,7 @@
 import * as megaMenuStories from "@stories/mega-menu/mega-menu.stories";
 import { composeStories } from "@storybook/react-vite";
 
-const { Baseline, DefaultOpen } = composeStories(megaMenuStories);
+const { Baseline, DefaultOpen, Controlled } = composeStories(megaMenuStories);
 
 describe("Given the Baseline MegaMenu example", () => {
   it("renders triggers and keeps menus closed initially", () => {
@@ -52,18 +52,43 @@ describe("Given the Baseline MegaMenu example", () => {
     cy.get(".saltMegaMenuPanel").should("not.exist");
   });
 
-  it("does not persist item active state after selection", () => {
-    cy.mount(<Baseline />);
+});
+
+describe("Given a controlled MegaMenu", () => {
+  it("keeps the panel open when the parent owns the open state", () => {
+    cy.mount(<Controlled open />);
+    cy.get(".saltMegaMenuPanel").should("exist");
+
+    // The parent controls `open` and ignores the change request, so clicking
+    // the trigger cannot close the panel.
+    cy.findByRole("button", { name: "Solutions" }).click();
+    cy.get(".saltMegaMenuPanel").should("exist");
+  });
+});
+
+describe("Given a MegaMenu with onOpenChange", () => {
+  it("fires onOpenChange when opening and closing via the trigger", () => {
+    const onOpenChange = cy.stub().as("onOpenChange");
+    cy.mount(<Controlled onOpenChange={onOpenChange} />);
+
+    cy.findByRole("button", { name: "Solutions" }).click();
+    cy.get(".saltMegaMenuPanel").should("exist");
+    cy.get("@onOpenChange").should("have.been.calledWith", true);
+
+    cy.findByRole("button", { name: "Solutions" }).click();
+    cy.get(".saltMegaMenuPanel").should("not.exist");
+    cy.get("@onOpenChange").should("have.been.calledWith", false);
+  });
+
+  it("fires onOpenChange(false) when an item is selected", () => {
+    const onOpenChange = cy.stub().as("onOpenChange");
+    cy.mount(<Controlled onOpenChange={onOpenChange} />);
 
     cy.findByRole("button", { name: "Solutions" }).click();
     cy.findByRole("link", { name: "Digital Banking" }).click();
-    cy.get(".saltMegaMenuPanel").should("not.exist");
 
-    cy.findByRole("button", { name: "Solutions" }).click();
-    cy.findByRole("link", { name: "Digital Banking" }).should(
-      "not.have.attr",
-      "aria-current",
-    );
+    cy.get(".saltMegaMenuPanel").should("not.exist");
+    cy.get("@onOpenChange").should("have.been.calledWith", false);
   });
 });
 

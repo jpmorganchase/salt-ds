@@ -20,6 +20,7 @@ import {
   MegaMenuList,
   MegaMenuListItem,
   MegaMenuPanel,
+  type MegaMenuProps,
   MegaMenuTrigger,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
@@ -132,10 +133,7 @@ export const Showcase: StoryFn = () => (
                   Explore our latest accessibility guidelines to keep your
                   products inclusive and compliant.
                 </Text>
-                <Link
-                  href="/guidelines"
-                  color="primary"
-                >
+                <Link href="/guidelines" color="primary">
                   View guidelines
                 </Link>
               </StackLayout>
@@ -210,10 +208,7 @@ export const Showcase: StoryFn = () => (
                 <Text color="secondary">
                   See what shipped in the latest version.
                 </Text>
-                <Link
-                  href="/whats-new"
-                  color="primary"
-                >
+                <Link href="/whats-new" color="primary">
                   What's new
                 </Link>
               </StackLayout>
@@ -336,6 +331,39 @@ export const DefaultOpen: StoryFn = () => (
                       onClick={preventNav}
                     >
                       Risk Management
+                    </MegaMenuListItem>
+                  </MegaMenuList>
+                </MegaMenuGroup>
+              </MegaMenuGroups>
+            </MegaMenuContent>
+          </MegaMenuPanel>
+        </MegaMenu>
+      </li>
+    </StackLayout>
+  </nav>
+);
+
+export const Controlled: StoryFn<MegaMenuProps> = (args) => (
+  <nav aria-label="Main">
+    <StackLayout as="ul" direction="row" gap={1}>
+      <li>
+        <MegaMenu {...args}>
+          <MegaMenuTrigger>
+            <NavigationItem>Solutions</NavigationItem>
+          </MegaMenuTrigger>
+          <MegaMenuPanel aria-label="Solutions menu">
+            <MegaMenuContent>
+              <MegaMenuGroups>
+                <MegaMenuGroup>
+                  <MegaMenuGroupHeading>
+                    Financial Services
+                  </MegaMenuGroupHeading>
+                  <MegaMenuList>
+                    <MegaMenuListItem
+                      href="/digital-banking"
+                      onClick={preventNav}
+                    >
+                      Digital Banking
                     </MegaMenuListItem>
                   </MegaMenuList>
                 </MegaMenuGroup>
@@ -847,6 +875,36 @@ export const WithoutGroupHeading: StoryFn = () => (
             <MegaMenuList>
               <MegaMenuListItem href="/digital-banking" onClick={preventNav}>
                 Digital Banking
+              </MegaMenuListItem>
+            </MegaMenuList>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+      </MegaMenuContent>
+    </MegaMenuPanel>
+  </MegaMenu>
+);
+
+// An item marked as the current page via the `current` prop.
+export const WithCurrentItem: StoryFn = () => (
+  <MegaMenu defaultOpen>
+    <MegaMenuTrigger>
+      <NavigationItem>Solutions</NavigationItem>
+    </MegaMenuTrigger>
+    <MegaMenuPanel aria-label="Solutions menu">
+      <MegaMenuContent>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+            <MegaMenuGroupHeading>Financial Services</MegaMenuGroupHeading>
+            <MegaMenuList>
+              <MegaMenuListItem
+                href="/digital-banking"
+                current
+                onClick={preventNav}
+              >
+                Digital Banking
+              </MegaMenuListItem>
+              <MegaMenuListItem href="/risk-management" onClick={preventNav}>
+                Risk Management
               </MegaMenuListItem>
             </MegaMenuList>
           </MegaMenuGroup>
