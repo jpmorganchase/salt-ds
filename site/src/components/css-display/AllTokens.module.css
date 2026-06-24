@@ -1,0 +1,174 @@
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+}
+
+.controlField {
+  flex: 1;
+  min-width: 0;
+}
+
+.modeToggle {
+  flex: 0;
+}
+
+.filterInput {
+  max-width: 24rem;
+}
+
+.valueHeaderCell,
+.tokenHeaderCell {
+  vertical-align: middle;
+}
+
+.valueHeaderRow,
+.tokenHeaderRow {
+  display: flex;
+  align-items: center;
+  min-height: var(--salt-size-base);
+}
+
+.valueHeaderRow {
+  justify-content: flex-start;
+}
+
+.tokenHeaderRow {
+  justify-content: space-between;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+}
+
+.tokenHeaderCell {
+  min-width: 24rem;
+}
+
+.compactControlsOverlay {
+  max-width: 100vw;
+}
+
+.compactControlsOverlayContent > div {
+  overflow: auto;
+  display: flex;
+}
+
+.compactToggleGroup.compactToggleGroup {
+  width: 100%;
+}
+
+.compactToggleGroup.compactToggleGroup button {
+  width: unset;
+  flex: 1;
+}
+
+.tableWrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.tokenCell {
+  min-width: 24rem;
+}
+
+.codeWrapper {
+  min-height: var(--salt-size-base);
+  display: inline-flex;
+  align-items: center;
+}
+
+.tokenRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--salt-spacing-100);
+}
+
+.swatch {
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
+  border-radius: var(--salt-palette-corner-weaker);
+  border-width: var(--salt-size-fixed-100);
+  border-style: var(--salt-borderStyle-solid);
+  border-color: var(--salt-container-primary-borderColor);
+  background: var(--salt-container-primary-background);
+  overflow: hidden;
+}
+
+.swatchInner {
+  width: 100%;
+  height: 100%;
+}
+
+.swatchColor {
+  background-color: var(--preview-background-color);
+  background-image: var(--preview-background);
+}
+
+.swatchShadow,
+.swatchBorderStyle,
+.swatchBorderWidth,
+.swatchOutline {
+  background: var(--salt-container-primary-background);
+}
+
+.swatchShadow {
+  box-shadow: var(--preview-box-shadow);
+}
+
+.swatchBorderStyle {
+  border-style: var(--preview-border-style);
+}
+
+.swatchBorderWidth {
+  border-width: var(--preview-border-width);
+}
+
+.swatchOutline {
+  outline: var(--preview-outline);
+}
+
+.checkerboard {
+  background-image: linear-gradient(45deg, #e7e7e7 25%, transparent 25%, transparent 75%, #e7e7e7 75%), linear-gradient(45deg, #e7e7e7 25%, #fff 25%, #fff 75%, #e7e7e7 75%);
+  background-size: 8px 8px;
+  background-position:
+    -4px 4px,
+    16px 16px;
+}
+
+.valueCode {
+  display: inline-block;
+  max-width: 18rem;
+  overflow-wrap: anywhere;
+}
+
+.loading {
+  margin: var(--salt-spacing-300) auto;
+}
+
+@media not screen and (min-width: 960px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controlField {
+    flex: none;
+    width: 100%;
+  }
+
+  .controlDropdown {
+    width: 100%;
+  }
+
+  .modeToggle {
+    order: -1;
+    align-self: flex-start;
+  }
+
+  .filterInput {
+    width: 100%;
+    max-width: none;
+  }
+}
