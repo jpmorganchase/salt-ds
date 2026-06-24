@@ -49,3 +49,35 @@
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
+
+/* Fixed height cap so the Overflow QA story scrolls deterministically,
+   independent of the snapshot viewport. */
+.saltMegaMenuPanel.mega-menu-capped {
+  max-block-size: 320px;
+}
+
+/* Forces a narrow, single-column panel so the SmallViewport QA story renders
+   the stacked layout deterministically, independent of the snapshot viewport. */
+.saltMegaMenuPanel.mega-menu-small-viewport {
+  --saltMegaMenuPanel-inlineSize: 320px;
+  --saltMegaMenuPanel-maxInlineSize: 320px;
+}
+
+.mega-menu-small-viewport .saltMegaMenuGroups {
+  grid-template-columns: 1fr;
+  max-inline-size: 100%;
+}
+
+/* Consumer-authored small-viewport pattern for the flanked regions layout:
+   the panel stacks its columns so the leading/trailing asides sit above and
+   below the body instead of beside it. */
+.saltMegaMenuPanel.mega-menu-regions-stacked {
+  --saltMegaMenuPanel-inlineSize: 320px;
+  --saltMegaMenuPanel-maxInlineSize: 320px;
+  flex-direction: column;
+}
+
+.mega-menu-regions-stacked .saltMegaMenuGroups {
+  grid-template-columns: 1fr;
+  max-inline-size: 100%;
+}

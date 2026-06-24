@@ -36,6 +36,39 @@ export default {
   component: MegaMenu,
 } as Meta;
 
+export const Default: StoryFn<QAContainerProps> = () => (
+  <QAContainer vertical itemPadding={180}>
+    <MegaMenu defaultOpen>
+      <MegaMenuTrigger>
+        <NavigationItem>Solutions</NavigationItem>
+      </MegaMenuTrigger>
+      <MegaMenuPanel aria-label="Solutions menu">
+        <MegaMenuContent>
+          <MegaMenuGroups>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+              <MegaMenuList>
+                <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
+                <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
+              </MegaMenuList>
+            </MegaMenuGroup>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+              <MegaMenuList>
+                <MegaMenuListItem href="#">Patient management</MegaMenuListItem>
+                <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
+              </MegaMenuList>
+            </MegaMenuGroup>
+          </MegaMenuGroups>
+        </MegaMenuContent>
+      </MegaMenuPanel>
+    </MegaMenu>
+  </QAContainer>
+);
+Default.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
   <QAContainer vertical itemPadding={180}>
     <nav>
@@ -107,39 +140,6 @@ export const MultipleTriggers: StoryFn<QAContainerProps> = () => (
   </QAContainer>
 );
 MultipleTriggers.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const Default: StoryFn<QAContainerProps> = () => (
-  <QAContainer vertical itemPadding={180}>
-    <MegaMenu defaultOpen>
-      <MegaMenuTrigger>
-        <NavigationItem>Solutions</NavigationItem>
-      </MegaMenuTrigger>
-      <MegaMenuPanel aria-label="Solutions menu">
-        <MegaMenuContent>
-          <MegaMenuGroups>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
-                <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-            <MegaMenuGroup>
-              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-              <MegaMenuList>
-                <MegaMenuListItem href="#">Patient management</MegaMenuListItem>
-                <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
-              </MegaMenuList>
-            </MegaMenuGroup>
-          </MegaMenuGroups>
-        </MegaMenuContent>
-      </MegaMenuPanel>
-    </MegaMenu>
-  </QAContainer>
-);
-Default.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
@@ -296,5 +296,157 @@ export const WithContent: StoryFn<QAContainerProps> = () => (
   </QAContainer>
 );
 WithContent.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+// Flanked layout (aside, body with an action bar, aside) reused by the
+// RegionsLayout* stories. Pass a panel className to drive per-story variants.
+const flankedRegions = (panelClassName?: string) => (
+  <MegaMenu defaultOpen>
+    <MegaMenuTrigger>
+      <NavigationItem>Solutions</NavigationItem>
+    </MegaMenuTrigger>
+    <MegaMenuPanel aria-label="Solutions menu" className={panelClassName}>
+      <MegaMenuAside>
+        <StackLayout gap={1} align="start" className="mega-menu-aside">
+          <Text styleAs="h4" as="h2">
+            Featured
+          </Text>
+          <Link color="primary" href="#">
+            See all solutions
+          </Link>
+        </StackLayout>
+      </MegaMenuAside>
+      <MegaMenuContent>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+            <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+            <MegaMenuList>
+              <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
+              <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
+            </MegaMenuList>
+          </MegaMenuGroup>
+          <MegaMenuGroup>
+            <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+            <MegaMenuList>
+              <MegaMenuListItem href="#">Patient management</MegaMenuListItem>
+              <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
+            </MegaMenuList>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+        <MegaMenuActions>
+          <FlexLayout gap={3} align="center">
+            <Link color="primary" href="#">
+              Book a demo
+            </Link>
+            <Link color="primary" href="#">
+              Support center
+            </Link>
+          </FlexLayout>
+        </MegaMenuActions>
+      </MegaMenuContent>
+      <MegaMenuAside>
+        <StackLayout gap={1} align="start" className="mega-menu-aside">
+          <Text styleAs="h4" as="h2">
+            Resources
+          </Text>
+          <Link color="primary" href="#">
+            Documentation
+          </Link>
+        </StackLayout>
+      </MegaMenuAside>
+    </MegaMenuPanel>
+  </MegaMenu>
+);
+
+export const RegionsLayoutLTR: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={1} itemPadding={180}>
+    {flankedRegions()}
+  </QAContainer>
+);
+RegionsLayoutLTR.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const RegionsLayoutRTL: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={1} itemPadding={180}>
+    <div dir="rtl">{flankedRegions()}</div>
+  </QAContainer>
+);
+RegionsLayoutRTL.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const RegionsLayoutSmallViewport: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={1} densities={["medium"]} itemPadding={40}>
+    {flankedRegions("mega-menu-regions-stacked")}
+  </QAContainer>
+);
+RegionsLayoutSmallViewport.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const Overflow: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={1} itemPadding={40}>
+    <MegaMenu defaultOpen>
+      <MegaMenuTrigger>
+        <NavigationItem>Solutions</NavigationItem>
+      </MegaMenuTrigger>
+      <MegaMenuPanel aria-label="Solutions menu" className="mega-menu-capped">
+        <MegaMenuContent>
+          <MegaMenuGroups>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>All solutions</MegaMenuGroupHeading>
+              <MegaMenuList>
+                {Array.from({ length: 24 }, (_, index) => (
+                  <MegaMenuListItem key={index} href="#">
+                    Solution {index + 1}
+                  </MegaMenuListItem>
+                ))}
+              </MegaMenuList>
+            </MegaMenuGroup>
+          </MegaMenuGroups>
+        </MegaMenuContent>
+      </MegaMenuPanel>
+    </MegaMenu>
+  </QAContainer>
+);
+Overflow.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const SmallViewport: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={1} densities={["medium"]} itemPadding={40}>
+    <MegaMenu defaultOpen>
+      <MegaMenuTrigger>
+        <NavigationItem>Solutions</NavigationItem>
+      </MegaMenuTrigger>
+      <MegaMenuPanel
+        aria-label="Solutions menu"
+        className="mega-menu-small-viewport"
+      >
+        <MegaMenuContent>
+          <MegaMenuGroups>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+              <MegaMenuList>
+                <MegaMenuListItem href="#">Digital banking</MegaMenuListItem>
+                <MegaMenuListItem href="#">Risk management</MegaMenuListItem>
+              </MegaMenuList>
+            </MegaMenuGroup>
+            <MegaMenuGroup>
+              <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
+              <MegaMenuList>
+                <MegaMenuListItem href="#">Patient management</MegaMenuListItem>
+                <MegaMenuListItem href="#">Telemedicine</MegaMenuListItem>
+              </MegaMenuList>
+            </MegaMenuGroup>
+          </MegaMenuGroups>
+        </MegaMenuContent>
+      </MegaMenuPanel>
+    </MegaMenu>
+  </QAContainer>
+);
+SmallViewport.parameters = {
   chromatic: { disableSnapshot: false },
 };
