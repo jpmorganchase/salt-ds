@@ -27,11 +27,6 @@
   white-space: nowrap;
 }
 
-.saltBreadcrumbNext-icon {
-  display: inline-flex;
-  flex: 0 0 auto;
-}
-
 .saltBreadcrumbNext-separator {
   --saltIcon-color: var(--salt-content-secondary-foreground);
   --saltIcon-size: var(--salt-size-icon);
