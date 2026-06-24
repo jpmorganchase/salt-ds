@@ -138,4 +138,3 @@ ruleFunction.messages = messages;
 ruleFunction.meta = meta;
 
 export default createPlugin(ruleName, ruleFunction);
-
