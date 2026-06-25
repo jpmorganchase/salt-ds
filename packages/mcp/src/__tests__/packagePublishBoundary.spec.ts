@@ -6,10 +6,12 @@ import { describe, expect, it } from "vitest";
 type PackageManifest = {
   name?: string;
   private?: boolean;
+  engines?: Record<string, string>;
   files?: string[];
   dependencies?: Record<string, string>;
   peerDependencies?: Record<string, string>;
   peerDependenciesMeta?: Record<string, { optional?: boolean }>;
+  publishEntryPath?: string;
   publishAdditionalEntryPaths?: string[];
   publishBundledWorkspaceDependencies?: string[];
   publishConfig?: {
@@ -20,6 +22,7 @@ type PackageManifest = {
     string | { from: string; to: string; files?: string[] }
   >;
   publishScriptExcludes?: string[];
+  publishTypingEntryPath?: string;
   typescriptInclude?: string[];
 };
 
@@ -173,17 +176,24 @@ describe("package publish boundaries", () => {
     const manifest = readJson<PackageManifest>("../../package.json");
 
     expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-mcp");
+    expect(manifest.engines?.node).toBe(">=22");
     expect(manifest.files).toEqual(["bin"]);
     expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
+    expect(manifest.publishEntryPath).toBe("mcp/src/index.js");
+    expect(manifest.publishTypingEntryPath).toBe("index.d.ts");
     expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
     expect(manifest.publishBundledWorkspaceDependencies).toEqual(
       SHARED_WORKFLOW_DEPENDENCIES,
     );
     expect(manifest.publishScriptExcludes).toEqual(["build", "prepack"]);
-    expect(Object.keys(manifest.publishExports ?? {})).toEqual([
-      ".",
-      "./package.json",
-    ]);
+    expect(manifest.publishExports).toEqual({
+      ".": {
+        types: "./dist-types/index.d.ts",
+        import: "./dist-es/mcp/src/index.js",
+        require: "./dist-cjs/mcp/src/index.js",
+      },
+      "./package.json": "./package.json",
+    });
     expect(manifest.publishExtraCopyPaths).toEqual([
       {
         from: "../semantic-core/generated",

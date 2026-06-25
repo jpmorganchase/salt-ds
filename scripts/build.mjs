@@ -35,6 +35,10 @@ const {
   publishIncludeChangelog = true,
   generateTypings = true,
   publishEntryPath,
+  publishTypingEntryPath,
+  publishConfig,
+  typescriptInclude: _typescriptInclude,
+  typescriptRootDir: _typescriptRootDir,
   dependencies: _dependencies,
   devDependencies: _devDependencies,
   peerDependencies: _peerDependencies,
@@ -48,7 +52,9 @@ const FILES_TO_COPY = [
 ].concat(packageJson.files ?? []);
 
 const packageName = packageJson.name;
-const outputDir = path.join(packageJson.publishConfig.directory);
+const { directory: _publishConfigDirectory, ...publishConfigForPublish } =
+  publishConfig ?? {};
+const outputDir = path.join(publishConfig.directory);
 const sourceEntryPath = path.join(cwd, "src", "index.ts");
 const additionalSourceEntryPaths = publishAdditionalEntryPaths.map(
   (entryPath) => path.join(cwd, entryPath),
@@ -146,7 +152,8 @@ const publishedEntryPath =
     .relative(typingRootDir, sourceEntryPath)
     .replace(/\\/g, "/")
     .replace(/\.ts$/, ".js");
-const publishedTypingEntryPath = publishedEntryPath.replace(/\.js$/, ".d.ts");
+const publishedTypingEntryPath =
+  publishTypingEntryPath ?? publishedEntryPath.replace(/\.js$/, ".d.ts");
 
 console.log(`Building ${packageName}`);
 
@@ -267,6 +274,16 @@ const publishedExtraCopyPaths = publishExtraCopyPaths.map((copyConfig) =>
   typeof copyConfig === "string" ? copyConfig : copyConfig.to,
 );
 
+async function copyPublishExtraFile(fromPath, toPath) {
+  if (path.extname(fromPath) === ".json") {
+    const content = await fs.readFile(fromPath, "utf8");
+    await fs.outputFile(toPath, JSON.stringify(JSON.parse(content)), "utf8");
+    return;
+  }
+
+  await fs.copy(fromPath, toPath);
+}
+
 await fs.writeJSON(
   path.join(outputDir, "package.json"),
   {
@@ -279,6 +296,9 @@ await fs.writeJSON(
       ? {
           peerDependencies: publishedPeerDependencies,
         }
+      : {}),
+    ...(Object.keys(publishConfigForPublish).length > 0
+      ? { publishConfig: publishConfigForPublish }
       : {}),
     ...(publishExports ? { exports: publishExports } : {}),
     main: `dist-cjs/${publishedEntryPath}`,
@@ -329,7 +349,7 @@ for (const copyConfig of publishExtraCopyPaths) {
   ) {
     await Promise.all(
       copyConfig.files.map(async (relativeFilePath) => {
-        await fs.copy(
+        await copyPublishExtraFile(
           path.join(fromPath, relativeFilePath),
           path.join(toPath, relativeFilePath),
         );

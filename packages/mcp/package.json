@@ -10,7 +10,7 @@
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "sideEffects": false,
   "files": [
@@ -24,7 +24,7 @@
   },
   "publishExports": {
     ".": {
-      "types": "./dist-types/mcp/src/index.d.ts",
+      "types": "./dist-types/index.d.ts",
       "import": "./dist-es/mcp/src/index.js",
       "require": "./dist-cjs/mcp/src/index.js"
     },
@@ -34,6 +34,8 @@
     "src/index.ts"
   ],
   "typescriptRootDir": "src",
+  "publishEntryPath": "mcp/src/index.js",
+  "publishTypingEntryPath": "index.d.ts",
   "publishBundledWorkspaceDependencies": [
     "@salt-ds/runtime-inspector-core",
     "@salt-ds/semantic-core"
