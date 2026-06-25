@@ -1,5 +1,13 @@
 # @salt-ds/core
 
+## 1.65.1
+
+### Patch Changes
+
+- a41099d: Fixed `compute-scroll-into-view` not being listed as a dependency.
+- 562f2e6: - Refactored `Spinner` so its size and stroke width are driven by CSS density tokens rather than computed in JavaScript. Density changes no longer cause `Spinner` to re-render.
+  - Fixed the small `Spinner` rendering at a smaller size than intended in high density.
+
 ## 1.65.0
 
 ### Minor Changes
