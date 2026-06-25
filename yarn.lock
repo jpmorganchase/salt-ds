@@ -4442,7 +4442,7 @@ __metadata:
     "@salt-ds/window": "workspace:^"
   peerDependencies:
     "@salt-ds/theme": "workspace:^"
-    highcharts: ">=10.0.0 <13"
+    highcharts: <14
     highcharts-react-official: ^3.2.2
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
@@ -4557,7 +4557,7 @@ __metadata:
     dom-accessibility-api: "npm:^0.7.1"
     execa: "npm:^9.0.0"
     get-tsconfig: "npm:^4.7.5"
-    highcharts: "npm:10.3.3"
+    highcharts: "npm:13.0.0"
     highcharts-react-official: "npm:^3.2.2"
     mockdate: "npm:^3.0.5"
     msw: "npm:^2.12.3"
@@ -10691,10 +10691,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highcharts@npm:10.3.3":
-  version: 10.3.3
-  resolution: "highcharts@npm:10.3.3"
-  checksum: 10/7085b584379fe35cc9a45ffeac950ed1c0de8ee4bd0efaaa3224f3772b4ec1c92e225b10188172286cfbb6bb75ae8b4ffbf0bbbe3e6cb3147d04481637015097
+"highcharts@npm:13.0.0":
+  version: 13.0.0
+  resolution: "highcharts@npm:13.0.0"
+  peerDependencies:
+    jspdf: ^4.1.0
+    svg2pdf.js: ^2.7.0
+  peerDependenciesMeta:
+    jspdf:
+      optional: true
+    svg2pdf.js:
+      optional: true
+  checksum: 10/aaf386fca2f18372d734bcd174b8117f64ff50b366178e689a1f69c4f743276406cb5b12fd792cfabbb6841041e8a32e1c5c4330483cc287688269c820aa7f3a
   languageName: node
   linkType: hard
 

@@ -84,7 +84,7 @@
     "cypress-real-events": "^1.15.0",
     "deepmerge": "^4.2.2",
     "dom-accessibility-api": "^0.7.1",
-    "highcharts": "10.3.3",
+    "highcharts": "13.0.0",
     "highcharts-react-official": "^3.2.2",
     "mockdate": "^3.0.5",
     "msw": "^2.12.3",
