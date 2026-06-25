@@ -44,6 +44,13 @@ const packages = [
       "dist-es",
       "dist-types",
     ],
+    forbiddenManifestFields: [
+      "publishEntryPath",
+      "publishTypingEntryPath",
+      "typescriptInclude",
+      "typescriptRootDir",
+    ],
+    forbiddenPublishConfigFields: ["directory"],
     allowedTopLevelPaths: [
       "LICENSE",
       "README.md",
@@ -77,8 +84,8 @@ const packages = [
       "search-index.jsonl",
     ],
     maxPackageBytes: 3_000_000,
-    maxUnpackedBytes: 24_000_000,
-    maxGeneratedBytes: 20_000_000,
+    maxUnpackedBytes: 20_000_000,
+    maxGeneratedBytes: 17_500_000,
     maxSourceMapBytes: 0,
     maxEntryCount: 300,
   },
@@ -164,7 +171,94 @@ function assertBuiltManifest(packageConfig, packageDir) {
     );
   }
 
+  for (const fieldName of packageConfig.forbiddenManifestFields ?? []) {
+    if (Object.prototype.hasOwnProperty.call(manifest, fieldName)) {
+      fail(
+        `${packageConfig.name} built manifest includes build-only field ${fieldName}`,
+      );
+    }
+  }
+
+  for (const fieldName of packageConfig.forbiddenPublishConfigFields ?? []) {
+    if (
+      manifest.publishConfig &&
+      Object.prototype.hasOwnProperty.call(manifest.publishConfig, fieldName)
+    ) {
+      fail(
+        `${packageConfig.name} built manifest publishConfig includes build-only field ${fieldName}`,
+      );
+    }
+  }
+
   return manifest;
+}
+
+function collectManifestTargetPaths(value) {
+  if (typeof value === "string") {
+    return [value];
+  }
+
+  if (Array.isArray(value)) {
+    return value.flatMap(collectManifestTargetPaths);
+  }
+
+  if (value && typeof value === "object") {
+    return Object.values(value).flatMap(collectManifestTargetPaths);
+  }
+
+  return [];
+}
+
+function assertManifestTargetExists(
+  packageConfig,
+  packageDir,
+  fieldName,
+  targetPath,
+) {
+  const normalizedTarget = normalizePath(
+    targetPath.startsWith("./") ? targetPath.slice(2) : targetPath,
+  );
+
+  if (
+    normalizedTarget.length === 0 ||
+    normalizedTarget.startsWith("/") ||
+    normalizedTarget.startsWith("../") ||
+    /^[A-Za-z]:/.test(normalizedTarget)
+  ) {
+    fail(
+      `${packageConfig.name} ${fieldName} target is not package-relative: ${targetPath}`,
+    );
+    return;
+  }
+
+  if (!existsSync(path.join(packageDir, normalizedTarget))) {
+    fail(
+      `${packageConfig.name} ${fieldName} target is missing: ${targetPath}`,
+    );
+  }
+}
+
+function assertManifestTargetsExist(packageConfig, packageDir, manifest) {
+  for (const fieldName of ["main", "module", "typings", "types"]) {
+    const targetPath = manifest[fieldName];
+    if (typeof targetPath === "string") {
+      assertManifestTargetExists(
+        packageConfig,
+        packageDir,
+        fieldName,
+        targetPath,
+      );
+    }
+  }
+
+  for (const targetPath of collectManifestTargetPaths(manifest.exports)) {
+    assertManifestTargetExists(
+      packageConfig,
+      packageDir,
+      "exports",
+      targetPath,
+    );
+  }
 }
 
 function collectFilesRecursively(relativeDir) {
@@ -256,7 +350,11 @@ for (const packageConfig of packages) {
     continue;
   }
 
-  assertBuiltManifest(packageConfig, packageDir);
+  const manifest = assertBuiltManifest(packageConfig, packageDir);
+  if (manifest) {
+    assertManifestTargetsExist(packageConfig, packageDir, manifest);
+  }
+
   const packed = runPackDryRun(packageConfig, packageDir);
   if (!packed) {
     continue;
