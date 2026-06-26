@@ -1,155 +1,26 @@
-import { NavigationItem, StackLayout } from "@salt-ds/core";
-import {
-  MegaMenu,
-  MegaMenuActions,
-  MegaMenuAside,
-  MegaMenuContent,
-  MegaMenuGroup,
-  MegaMenuGroupHeading,
-  MegaMenuGroups,
-  MegaMenuList,
-  MegaMenuListItem,
-  MegaMenuPanel,
-  MegaMenuTrigger,
-} from "@salt-ds/lab";
+import * as megaMenuStories from "@stories/mega-menu/mega-menu.stories";
+import { composeStories } from "@storybook/react-vite";
 
-// Fixture mirroring the documented best-practice structure:
-// - triggers wrapped in a `<nav>` landmark
-// - triggers grouped in an `<ol>` with each trigger inside an `<li>`
-// - each `MegaMenuPanel` given an `aria-label` describing its content
-const AccessibleMegaMenu = () => (
-  <nav aria-label="Main">
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/risk-management"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Risk Management
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/patient-management"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Patient Management
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Services</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Services menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/strategy"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Strategy
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
-
-// Content regions flanking the center and an action bar inside it, to verify the
-// panel derives position purely from component type and source order (no placement
-// props): a `MegaMenuAside` before `MegaMenuContent` is the left column, one after
-// is the right column, and the action bar sits inside `MegaMenuContent` beneath the
-// groups.
-const LayoutMegaMenu = () => (
-  <nav aria-label="Main">
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu defaultOpen>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuAside>
-              <a href="/left">Left region link</a>
-            </MegaMenuAside>
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-              <MegaMenuActions>
-                <a href="/bottom">Bottom band link</a>
-              </MegaMenuActions>
-            </MegaMenuContent>
-            <MegaMenuAside>
-              <a href="/right">Right region link</a>
-            </MegaMenuAside>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
+const {
+  Baseline,
+  WithRegionsLayout,
+  WithCustomHeadingId,
+  WithoutGroupHeading,
+  WithExtraGroupLabel,
+  WithCurrentItem,
+} = composeStories(megaMenuStories);
 
 describe("Given a MegaMenu", () => {
   describe("navigation landmark and trigger structure", () => {
     it("exposes the triggers within a navigation landmark and a list", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
 
       // The triggers are reachable through the `<nav>` landmark...
       cy.findByRole("navigation", { name: "Main" })
         .findByRole("button", { name: "Solutions" })
         .should("exist");
 
-      // ...and grouped in an `<ol>` (list) with each trigger inside an `<li>`.
+      // ...and grouped in a `<ul>` (list) with each trigger inside an `<li>`.
       cy.findByRole("navigation", { name: "Main" })
         .findByRole("list")
         .findAllByRole("listitem")
@@ -159,7 +30,7 @@ describe("Given a MegaMenu", () => {
 
   describe("trigger aria attributes", () => {
     it("reflects the collapsed state with aria-expanded=false and no aria-controls", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" })
         .should("have.attr", "aria-expanded", "false")
@@ -167,7 +38,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("sets aria-expanded=true and aria-controls referencing the panel when open", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" }).click();
 
@@ -192,7 +63,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("clears aria-expanded back to false after closing", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" }).click();
       cy.findByRole("button", { name: "Solutions" }).should(
@@ -210,7 +81,7 @@ describe("Given a MegaMenu", () => {
 
   describe("panel region semantics", () => {
     it("renders the panel as a region with the provided aria-label", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" }).click();
 
@@ -220,7 +91,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("gives each panel a distinct accessible name", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Services" }).click();
       cy.findByRole("region", { name: "Services menu" }).should("exist");
@@ -230,7 +101,7 @@ describe("Given a MegaMenu", () => {
 
   describe("group list semantics", () => {
     it("exposes each group as a list named after its header", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
 
       cy.findByRole("button", { name: "Solutions" }).click();
 
@@ -242,33 +113,11 @@ describe("Given a MegaMenu", () => {
 
       cy.findByRole("list", { name: "Healthcare" })
         .findAllByRole("listitem")
-        .should("have.length", 1);
+        .should("have.length", 2);
     });
 
     it("honours a consumer-provided heading id and labels the list with it", () => {
-      cy.mount(
-        <MegaMenu defaultOpen>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading id="custom-heading-id">
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking">
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>,
-      );
+      cy.mount(<WithCustomHeadingId />);
 
       // The heading wears the consumer's id...
       cy.get('[id="custom-heading-id"]').should(
@@ -284,26 +133,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("omits aria-labelledby when the group has no heading", () => {
-      cy.mount(
-        <MegaMenu defaultOpen>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuList>
-                    <MegaMenuListItem href="/digital-banking">
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>,
-      );
+      cy.mount(<WithoutGroupHeading />);
 
       // No heading means no label target — the attribute must be absent, not a
       // dangling reference to a non-existent id.
@@ -311,36 +141,34 @@ describe("Given a MegaMenu", () => {
     });
 
     it("combines the group heading with a consumer-provided aria-labelledby", () => {
-      cy.mount(
-        <MegaMenu defaultOpen>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <span id="extra-label">Recommended</span>
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList aria-labelledby="extra-label">
-                    <MegaMenuListItem href="/digital-banking">
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>,
-      );
+      cy.mount(<WithExtraGroupLabel />);
 
       // The accessible name concatenates the heading and the consumer's element,
       // heading first.
       cy.findByRole("list", {
         name: "Financial Services Recommended",
       }).should("exist");
+    });
+  });
+
+  describe("current item semantics", () => {
+    it("marks the item with the `current` prop as aria-current=page", () => {
+      cy.mount(<WithCurrentItem />);
+
+      cy.findByRole("link", { name: "Digital Banking" }).should(
+        "have.attr",
+        "aria-current",
+        "page",
+      );
+    });
+
+    it("leaves other items without aria-current", () => {
+      cy.mount(<WithCurrentItem />);
+
+      cy.findByRole("link", { name: "Risk Management" }).should(
+        "not.have.attr",
+        "aria-current",
+      );
     });
   });
 
@@ -352,15 +180,14 @@ describe("Given a MegaMenu", () => {
     };
 
     it("collapses the menu and moves focus out when Tab passes the last item", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
       cy.realPress("Tab"); // Risk Management
-      cy.realPress("Tab"); // Patient Management (last focusable)
-      cy.findByRole("link", { name: "Patient Management" }).should(
-        "be.focused",
-      );
+      cy.realPress("Tab"); // Patient Management
+      cy.realPress("Tab"); // Telemedicine (last focusable)
+      cy.findByRole("link", { name: "Telemedicine" }).should("be.focused");
 
       cy.realPress("Tab");
       // Menu collapses and focus lands on the next trigger outside the panel.
@@ -369,7 +196,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("returns focus to the trigger when Shift+Tab passes the first item, keeping the menu open", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking (first focusable)
@@ -381,7 +208,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("closes and returns focus to the trigger on Escape", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab");
@@ -394,7 +221,7 @@ describe("Given a MegaMenu", () => {
 
     it("degrades arrows to a linear walk when the grid is stacked at a small viewport", () => {
       cy.viewport(375, 667);
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab");
@@ -418,7 +245,7 @@ describe("Given a MegaMenu", () => {
 
     it("returns focus to the trigger on ArrowUp from the first item when stacked", () => {
       cy.viewport(375, 667);
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutions();
 
       cy.realPress("Tab");
@@ -432,7 +259,7 @@ describe("Given a MegaMenu", () => {
 
   describe("panel layout (source-order positioning)", () => {
     it("places content regions around the body and the action bar inside it, from source order", () => {
-      cy.mount(<LayoutMegaMenu />);
+      cy.mount(<WithRegionsLayout />);
 
       // The panel is a single row whose direct children are, in source order,
       // the left content region, the center (body), and the right content region.
@@ -468,19 +295,19 @@ describe("Given a MegaMenu", () => {
 
   describe("axe checks", () => {
     it("has no detectable a11y violations when closed", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
       cy.checkAxeComponent();
     });
 
     it("has no detectable a11y violations when open", () => {
-      cy.mount(<AccessibleMegaMenu />);
+      cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Solutions" }).click();
       cy.findByRole("region", { name: "Solutions menu" }).should("exist");
       cy.checkAxeComponent();
     });
 
     it("has no detectable a11y violations with content regions and an action bar open", () => {
-      cy.mount(<LayoutMegaMenu />);
+      cy.mount(<WithRegionsLayout />);
       cy.findByRole("region", { name: "Solutions menu" }).should("exist");
       cy.checkAxeComponent();
     });

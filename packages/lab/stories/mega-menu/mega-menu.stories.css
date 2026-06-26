@@ -1,130 +1,55 @@
-nav > ol {
+/* Page framing for the stories so the trigger bar isn't glued to the canvas
+   corner. Scoped to the story decorator wrapper so it never affects QA snapshots. */
+.mega-menu-story {
+  padding: var(--salt-layout-page-margin);
+  box-sizing: border-box;
+}
+
+/* Top-level trigger bar only — mirrors the docs `.navList`. Does not touch the
+   group lists inside the panel (those are nested, not a direct child of nav). */
+.mega-menu-story nav > ul {
   list-style: none;
+  margin: 0;
   padding: 0;
+  justify-content: center;
 }
 
 .saltMegaMenuGroups {
   --saltMegaMenuGroups-columnWidth: 16rem;
 }
 
-.trigger-position-grid {
-  width: 100%;
-  display: grid;
-  gap: 1rem;
-}
-
-.trigger-position-left {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.trigger-position-center {
+/* Fixed-size frame for QA snapshots: reserves the open panel's footprint and
+   pins the trigger to the top, centred horizontally. Replaces ad-hoc cell padding. */
+.mega-menu-qa-frame {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
-.trigger-position-offset {
+/* With transposeDensity the snapshots group by theme (all light, then all dark).
+   Stack the densities vertically within each theme group instead of side by side,
+   since mega menu panels are too wide to sit in a row. Scoped to mega menu blocks. */
+.background-block:has(.mega-menu-qa-frame) {
   display: flex;
-  justify-content: center;
-  padding-left: 180px;
-}
-
-.trigger-position-right {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.full-width-wrapper {
-  box-sizing: border-box;
-}
-
-.full-width-panel {
-  --saltMegaMenuPanel-inlineSize: var(--saltMegaMenuPanel-availableWidth);
-  box-sizing: border-box;
-}
-
-.full-width-panel .saltMegaMenuGroups {
-  --saltMegaMenuGroups-columnWidth: 16rem;
-  align-self: stretch;
-}
-
-.edge-to-edge-wrapper {
-  --saltMegaMenuPanel-pageMargin: 0;
-  box-sizing: border-box;
-}
-
-.edge-to-edge-panel {
-  --saltMegaMenuPanel-inlineSize: 100vw;
-  --saltMegaMenuPanel-maxInlineSize: 100vw;
-  box-sizing: border-box;
-}
-
-.edge-to-edge-panel .saltMegaMenuContent {
-  max-inline-size: 100%;
-}
-
-.edge-to-edge-panel .saltMegaMenuGroups {
-  max-inline-size: 920px;
-  inline-size: 100%;
-  margin-inline: auto;
-  --saltMegaMenuGroups-columnWidth: 212px;
-}
-
-.custom-region-no-container-padding {
-  padding: 0;
-}
-
-.custom-region-side-content {
-  background: var(--salt-container-secondary-background);
-}
-
-.custom-region-right-description {
-  max-inline-size: 240px;
-}
-
-.custom-region-image {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Stacked by default: a narrow, single-column menu. The aside sits above or
-   below the groups by source order. */
-.custom-region-side {
-  --saltMegaMenuPanel-inlineSize: 24rem;
   flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
 }
 
-.custom-region-side .custom-region-side-content {
-  inline-size: 100%;
-  box-sizing: border-box;
+/* Render the two theme groups (light, dark) side by side, each keeping its
+   vertical density stack. Container shrink-wraps to the frames — width auto-fits
+   the panels (the width prop can't be "auto"; it feeds the QAContainer calc chain). */
+.saltQAContainer:has(.mega-menu-qa-frame) {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--salt-spacing-300, 24px);
+  width: fit-content;
 }
 
-.custom-region-side .custom-region-image {
-  height: 200px;
-  object-fit: cover;
-}
-
-.custom-region-side-section {
-  grid-template-columns: 1fr;
-}
-
-/* Side-by-side once there's room for the aside beside the columns (Salt `lg`). */
-@media (min-width: 1280px) {
-  .custom-region-side {
-    --saltMegaMenuPanel-inlineSize: initial;
-    flex-direction: row;
-  }
-
-  .custom-region-side .custom-region-side-content {
-    flex: 0 0 258px;
-    inline-size: 258px;
-    align-self: flex-start;
-  }
-
-  .custom-region-side-section {
-    grid-template-columns: repeat(auto-fit, minmax(0, var(--saltMegaMenuGroups-columnWidth, 12rem)));
-  }
+/* Opt-out for wide panels (with-content, regions): stack the theme groups
+   under each other instead of side by side. */
+.saltQAContainer:has(.mega-menu-qa-stacked-themes) {
+  flex-direction: column;
 }
 
 .menu-item-adornment {
@@ -138,26 +63,17 @@ nav > ol {
   inline-size: 100%;
 }
 
-.small-viewport-wrapper {
-  inline-size: 320px;
-  max-inline-size: 100%;
+.mega-menu-aside {
+  max-inline-size: 240px;
 }
 
-.small-viewport-container {
-  --saltMegaMenuPanel-inlineSize: 320px;
-  --saltMegaMenuPanel-maxInlineSize: 320px;
-}
-
-.small-viewport-container .saltMegaMenuContent {
-  max-inline-size: 100%;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.small-viewport-container .saltMegaMenuGroups {
-  grid-template-columns: 1fr;
-  max-inline-size: 100%;
-  width: 100%;
+.mega-menu-group-badge {
+  align-self: start;
+  margin-block-end: var(--salt-spacing-100);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  border-radius: var(--salt-palette-corner, 4px);
+  background: var(--salt-status-info-background);
+  color: var(--salt-content-secondary-foreground);
 }
 
 .saltMegaMenuPanel {
@@ -166,4 +82,36 @@ nav > ol {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Fixed height cap so the Overflow QA story scrolls deterministically,
+   independent of the snapshot viewport. */
+.saltMegaMenuPanel.mega-menu-capped {
+  max-block-size: 320px;
+}
+
+/* Forces a narrow, single-column panel so the SmallViewport QA story renders
+   the stacked layout deterministically, independent of the snapshot viewport. */
+.saltMegaMenuPanel.mega-menu-small-viewport {
+  --saltMegaMenuPanel-inlineSize: 320px;
+  --saltMegaMenuPanel-maxInlineSize: 320px;
+}
+
+.mega-menu-small-viewport .saltMegaMenuGroups {
+  grid-template-columns: 1fr;
+  max-inline-size: 100%;
+}
+
+/* Consumer-authored small-viewport pattern for the flanked regions layout:
+   the panel stacks its columns so the leading/trailing asides sit above and
+   below the body instead of beside it. */
+.saltMegaMenuPanel.mega-menu-regions-stacked {
+  --saltMegaMenuPanel-inlineSize: 320px;
+  --saltMegaMenuPanel-maxInlineSize: 320px;
+  flex-direction: column;
+}
+
+.mega-menu-regions-stacked .saltMegaMenuGroups {
+  grid-template-columns: 1fr;
+  max-inline-size: 100%;
 }

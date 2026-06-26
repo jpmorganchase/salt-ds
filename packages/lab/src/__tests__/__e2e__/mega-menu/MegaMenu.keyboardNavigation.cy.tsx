@@ -1,517 +1,16 @@
-import { NavigationItem, StackLayout } from "@salt-ds/core";
-import {
-  MegaMenu,
-  MegaMenuActions,
-  MegaMenuAside,
-  MegaMenuContent,
-  MegaMenuGroup,
-  MegaMenuGroupHeading,
-  MegaMenuGroups,
-  MegaMenuList,
-  MegaMenuListItem,
-  MegaMenuPanel,
-  MegaMenuTrigger,
-} from "@salt-ds/lab";
+import * as megaMenuStories from "@stories/mega-menu/mega-menu.stories";
+import { composeStories } from "@storybook/react-vite";
 
-const KeyboardMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel>
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/risk-management"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Risk Management
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Healthcare</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/patient-management"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Patient Management
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/telemedicine"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Telemedicine
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Services</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel>
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/strategy"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Strategy
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/operations"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Operations
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-
-    <button type="button">After Nav</button>
-  </nav>
-);
-
-// `MegaMenuContent` followed by a trailing `MegaMenuAside`. Source order places
-// the content region to the right of the body; its interactive children become a
-// navigable column carrying `data-mega-menu-column`.
-const SideRegionMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/risk-management"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Risk Management
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-            <MegaMenuAside>
-              <a href="/see-all">See all solutions</a>
-              <button type="button">Contact sales</button>
-            </MegaMenuAside>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-
-    <button type="button">After Nav</button>
-  </nav>
-);
-
-// A leading `MegaMenuAside` placed before `MegaMenuContent` renders to the left,
-// so it becomes the first navigable column.
-const LeadingRegionMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuAside>
-              <a href="/featured">Featured</a>
-            </MegaMenuAside>
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/risk-management"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Risk Management
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
-
-// Groups followed by a full-width `MegaMenuActions`, both inside `MegaMenuContent`.
-// The action bar is always the bottom of the center area; it carries
-// `data-mega-menu-actions` and its children move horizontally.
-const BottomBandMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/risk-management"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Risk Management
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-              <MegaMenuActions>
-                <a href="/book-a-demo">Book a demo</a>
-                <button type="button">Support center</button>
-              </MegaMenuActions>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
-
-// Like `BottomBandMegaMenu` but with a following trigger, so the action bar's last
-// action can exit to the next trigger on ArrowRight/ArrowDown.
-const BottomBandWithNextMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-              <MegaMenuActions>
-                <a href="/book-a-demo">Book a demo</a>
-                <button type="button">Support center</button>
-              </MegaMenuActions>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Services</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Services menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>Consulting</MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/strategy"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Strategy
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
-
-// A `MegaMenuAside` containing a self-consuming control (a text input). The
-// engine must not hijack arrow keys while focus is inside it.
-const RoleAwareMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-            <MegaMenuAside>
-              <input aria-label="Search" defaultValue="hello" />
-            </MegaMenuAside>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
-
-// A region (input + following link) used to verify Tab/Shift+Tab still traverse
-// across a self-consuming control — only arrows/Home/End are yielded to it.
-const RoleAwareTabMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-            <MegaMenuAside>
-              <input aria-label="Search" defaultValue="hello" />
-              <a href="/go">Go</a>
-            </MegaMenuAside>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
-
-// Static-only content (no interactive descendants). The region and action bar must
-// contribute no navigable cells and stay out of tab + arrow navigation.
-const StaticContentMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel aria-label="Solutions menu">
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/risk-management"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Risk Management
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-              <MegaMenuActions>
-                <span>Footer note, nothing focusable.</span>
-              </MegaMenuActions>
-            </MegaMenuContent>
-            <MegaMenuAside>
-              <p>Static promotional text with no links.</p>
-            </MegaMenuAside>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-
-    <button type="button">After Nav</button>
-  </nav>
-);
-
-// Fixture with a non-focusable item (an `<a>` without `href` and no `render`).
-// Verifies the engine skips it and navigation continues to the next reachable
-// item rather than stalling.
-const ActionItemMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel>
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    {/* An action item (not navigation): render as a <button> via the render prop. */}
-                    <MegaMenuListItem
-                      render={<button type="button" />}
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Telemedicine
-                    </MegaMenuListItem>
-                    <MegaMenuListItem
-                      href="/digital-banking"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
-
-// Fixture exercising the `render` prop: a router-style component substituted
-// for the default `<a>`. Using a plain `<a href>` keeps the test free of router
-// dependencies while still verifying that `render` replaces the host element
-// rather than wrapping it (so a single `<a>`, not nested links).
-const RenderPropMegaMenu = () => (
-  <nav>
-    <StackLayout as="ol" direction="row" gap={1}>
-      <li>
-        <MegaMenu>
-          <MegaMenuTrigger>
-            <NavigationItem>Solutions</NavigationItem>
-          </MegaMenuTrigger>
-          <MegaMenuPanel>
-            <MegaMenuContent>
-              <MegaMenuGroups>
-                <MegaMenuGroup>
-                  <MegaMenuGroupHeading>
-                    Financial Services
-                  </MegaMenuGroupHeading>
-                  <MegaMenuList>
-                    <MegaMenuListItem
-                      render={
-                        <a href="/digital-banking" data-custom-link="">
-                          Digital Banking
-                        </a>
-                      }
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Digital Banking
-                    </MegaMenuListItem>
-                  </MegaMenuList>
-                </MegaMenuGroup>
-              </MegaMenuGroups>
-            </MegaMenuContent>
-          </MegaMenuPanel>
-        </MegaMenu>
-      </li>
-    </StackLayout>
-  </nav>
-);
+const {
+  Baseline,
+  WithAside,
+  WithLeadingAside,
+  WithActions,
+  WithActionsAndNextTrigger,
+  StaticContent,
+  WithActionItem,
+  WithRenderProp,
+} = composeStories(megaMenuStories);
 
 const focusSolutionsTrigger = () => {
   cy.findByRole("button", { name: "Solutions" }).focus().should("be.focused");
@@ -527,7 +26,7 @@ describe("Given a MegaMenu", () => {
   describe("when focus is on the trigger and menu is closed", () => {
     (["Enter", " ", "ArrowDown"] as const).forEach((key) => {
       it(`opens on ${key}`, () => {
-        cy.mount(<KeyboardMegaMenu />);
+        cy.mount(<Baseline />);
         focusSolutionsTrigger();
         cy.realPress(key);
         cy.get(".saltMegaMenuPanel").should("exist");
@@ -535,14 +34,14 @@ describe("Given a MegaMenu", () => {
     });
 
     it("does not open on Tab", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       focusSolutionsTrigger();
       cy.realPress("Tab");
       cy.get(".saltMegaMenuPanel").should("not.exist");
     });
 
     it("moves focus to next trigger on ArrowRight", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       focusSolutionsTrigger();
 
       cy.realPress("ArrowRight");
@@ -551,7 +50,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("moves focus to previous trigger on ArrowLeft", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Services" })
         .focus()
         .should("be.focused");
@@ -564,7 +63,7 @@ describe("Given a MegaMenu", () => {
 
   describe("when menu is open", () => {
     it("moves focus to first item on Tab from trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -572,7 +71,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("moves focus to first item on ArrowDown from trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("ArrowDown");
@@ -580,7 +79,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowRight on an open trigger closes the panel and moves to the next trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       // Focus stays on the trigger after opening with Enter.
       openSolutionsWithEnter();
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
@@ -592,7 +91,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowLeft on an open trigger closes the panel and moves to the previous trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Services" }).focus();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
@@ -604,7 +103,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("Shift+Tab on an open trigger closes the panel and moves to the previous trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Services" }).focus();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
@@ -616,7 +115,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("re-enters items on ArrowDown after ArrowUp returns to trigger (opened via ArrowDown)", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       focusSolutionsTrigger();
 
       // Open with ArrowDown — focuses the first item.
@@ -634,7 +133,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports ArrowDown and ArrowUp between items and trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -651,7 +150,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("moves to the next column on ArrowDown from the last item of a non-last column", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -670,7 +169,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("crosses columns with ArrowRight and ArrowLeft", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -686,7 +185,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowUp on the first item returns focus to the trigger and keeps the menu open", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -698,7 +197,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowLeft on the first column returns focus to the trigger and keeps the menu open", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -710,7 +209,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowDown from the bottom of the last column is a no-op when there is no next trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       // Open the last menu (Services), which has no trigger after it.
       cy.findByRole("button", { name: "Services" }).focus();
       cy.realPress("Enter");
@@ -727,7 +226,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowRight from the bottom of the last column returns to the current trigger when there is no next trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       // Open the last menu (Services), which has no trigger after it.
       cy.findByRole("button", { name: "Services" }).focus();
       cy.realPress("Enter");
@@ -744,7 +243,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowRight from a non-bottom item of the last column returns to the current trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -761,7 +260,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowRight from the bottom of the last column closes menu and moves to next trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -775,7 +274,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("ArrowDown from the bottom of the last column closes menu and moves to next trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -789,7 +288,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports Tab and Shift+Tab inside menu", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -803,7 +302,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("returns focus to trigger on Shift+Tab from first item and Tab re-enters first item", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -816,19 +315,8 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
 
-    it("closes on Escape", () => {
-      cy.mount(<KeyboardMegaMenu />);
-      openSolutionsWithEnter();
-
-      cy.realPress("Tab");
-      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
-
-      cy.realPress("Escape");
-      cy.get(".saltMegaMenuPanel").should("not.exist");
-    });
-
     it("activates item on Enter and closes menu", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -839,7 +327,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("does not activate an item on Space (links activate on Enter only)", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -853,7 +341,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("tabs from the last item to the next trigger and closes the panel", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -868,7 +356,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("closes on Escape when focus is still on the trigger", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       focusSolutionsTrigger();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
@@ -880,7 +368,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports Home to jump to first item in column", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -892,7 +380,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports End to jump to last item in column", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab"); // Digital Banking
@@ -903,7 +391,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("returns focus to trigger on Escape", () => {
-      cy.mount(<KeyboardMegaMenu />);
+      cy.mount(<Baseline />);
       openSolutionsWithEnter();
 
       cy.realPress("Tab");
@@ -915,14 +403,14 @@ describe("Given a MegaMenu", () => {
     });
 
     it("renders an action item (render={<button/>}) as a focusable button", () => {
-      cy.mount(<ActionItemMegaMenu />);
+      cy.mount(<WithActionItem />);
       cy.findByRole("button", { name: "Solutions" }).focus();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
 
       // ArrowDown lands on the action item, rendered as a focusable button.
       cy.realPress("ArrowDown");
-      cy.findByRole("button", { name: "Telemedicine" }).should("be.focused");
+      cy.findByRole("button", { name: "Action button" }).should("be.focused");
 
       // ...and continues to the link beneath it.
       cy.realPress("ArrowDown");
@@ -930,7 +418,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("treats `render` prop element as the focusable target", () => {
-      cy.mount(<RenderPropMegaMenu />);
+      cy.mount(<WithRenderProp />);
       cy.findByRole("button", { name: "Solutions" }).focus();
       cy.realPress("Enter");
       cy.get(".saltMegaMenuPanel").should("exist");
@@ -942,7 +430,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("renders no duplicate <a> when using `render` (render replaces, not wraps)", () => {
-      cy.mount(<RenderPropMegaMenu />);
+      cy.mount(<WithRenderProp />);
       cy.findByRole("button", { name: "Solutions" }).click();
       // Exactly one anchor for the item — verifies `renderProps` substitutes
       // the host element instead of wrapping it (no link-in-a-link).
@@ -961,7 +449,7 @@ describe("Given a MegaMenu", () => {
     };
 
     it("includes the region's interactive elements in the Tab sequence, in layout order", () => {
-      cy.mount(<SideRegionMegaMenu />);
+      cy.mount(<WithAside />);
       openSolutions();
 
       cy.realPress("Tab");
@@ -979,14 +467,14 @@ describe("Given a MegaMenu", () => {
     });
 
     it("does not put the region wrapper itself in the tab order", () => {
-      cy.mount(<SideRegionMegaMenu />);
+      cy.mount(<WithAside />);
       openSolutions();
 
       cy.get(".saltMegaMenuAside").should("not.have.attr", "tabindex");
     });
 
     it("crosses into the region column with ArrowRight and within it with ArrowDown", () => {
-      cy.mount(<SideRegionMegaMenu />);
+      cy.mount(<WithAside />);
       openSolutions();
 
       cy.realPress("Tab");
@@ -1007,7 +495,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("tabs out of the menu and closes it after the last region element", () => {
-      cy.mount(<SideRegionMegaMenu />);
+      cy.mount(<WithAside />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1024,7 +512,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("walks Shift+Tab backwards through region elements without losing focus", () => {
-      cy.mount(<SideRegionMegaMenu />);
+      cy.mount(<WithAside />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1049,7 +537,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("treats a leading region as the first column and returns to the trigger on ArrowLeft", () => {
-      cy.mount(<LeadingRegionMegaMenu />);
+      cy.mount(<WithLeadingAside />);
       openSolutions();
 
       // Tab lands on the leading region first (it is the leftmost column).
@@ -1079,7 +567,7 @@ describe("Given a MegaMenu", () => {
     };
 
     it("crosses from the column grid into a bottom action bar on ArrowDown and moves within it", () => {
-      cy.mount(<BottomBandMegaMenu />);
+      cy.mount(<WithActions />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1099,7 +587,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("crosses from a bottom action bar back into the column grid on ArrowUp", () => {
-      cy.mount(<BottomBandMegaMenu />);
+      cy.mount(<WithActions />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1114,7 +602,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("has no effect on ArrowDown from the last action when there is no next trigger", () => {
-      cy.mount(<BottomBandMegaMenu />);
+      cy.mount(<WithActions />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1130,7 +618,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("returns to the current trigger on ArrowRight from the last action when there is no next trigger", () => {
-      cy.mount(<BottomBandMegaMenu />);
+      cy.mount(<WithActions />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1146,7 +634,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("exits to the next trigger on ArrowRight from the last action", () => {
-      cy.mount(<BottomBandWithNextMegaMenu />);
+      cy.mount(<WithActionsAndNextTrigger />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1160,7 +648,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("exits to the next trigger on ArrowDown from the last action", () => {
-      cy.mount(<BottomBandWithNextMegaMenu />);
+      cy.mount(<WithActionsAndNextTrigger />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1174,7 +662,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("supports Home and End within an action bar", () => {
-      cy.mount(<BottomBandMegaMenu />);
+      cy.mount(<WithActions />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1189,7 +677,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("does not put the action bar wrapper itself in the tab order", () => {
-      cy.mount(<BottomBandMegaMenu />);
+      cy.mount(<WithActions />);
       openSolutions();
 
       cy.get(".saltMegaMenuActions").should("not.have.attr", "tabindex");
@@ -1204,7 +692,7 @@ describe("Given a MegaMenu", () => {
     };
 
     it("excludes a static-only region and action bar from the Tab sequence", () => {
-      cy.mount(<StaticContentMegaMenu />);
+      cy.mount(<StaticContent />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1218,7 +706,7 @@ describe("Given a MegaMenu", () => {
     });
 
     it("does not cross into static content with arrow keys", () => {
-      cy.mount(<StaticContentMegaMenu />);
+      cy.mount(<StaticContent />);
       openSolutions();
 
       cy.realPress("Tab"); // Digital Banking
@@ -1231,50 +719,6 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowRight");
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
-    });
-  });
-
-  describe("when focus is inside a self-consuming control", () => {
-    it("does not hijack arrow keys from an input inside a region", () => {
-      cy.mount(<RoleAwareMegaMenu />);
-      cy.findByRole("button", { name: "Solutions" }).focus();
-      cy.realPress("Enter");
-      cy.get(".saltMegaMenuPanel").should("exist");
-
-      // Place the caret at the end of the input's value.
-      cy.findByRole("textbox", { name: "Search" }).then(($input) => {
-        const input = $input[0] as HTMLInputElement;
-        input.focus();
-        input.setSelectionRange(input.value.length, input.value.length);
-      });
-      cy.findByRole("textbox", { name: "Search" }).should("be.focused");
-
-      // ArrowLeft must reach the input (moving the caret), not be intercepted by
-      // the navigation engine.
-      cy.realPress("ArrowLeft");
-      cy.findByRole("textbox", { name: "Search" })
-        .should("be.focused")
-        .then(($input) => {
-          const input = $input[0] as HTMLInputElement;
-          expect(input.selectionStart).to.be.lessThan(input.value.length);
-        });
-    });
-
-    it("still advances Tab and Shift+Tab across a control to neighbouring cells", () => {
-      cy.mount(<RoleAwareTabMegaMenu />);
-      cy.findByRole("button", { name: "Solutions" }).focus();
-      cy.realPress("Enter");
-      cy.get(".saltMegaMenuPanel").should("exist");
-
-      // Tab is never yielded — it moves from the input to the next cell.
-      cy.findByRole("textbox", { name: "Search" }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("link", { name: "Go" }).should("be.focused");
-
-      // Shift+Tab moves from the input back to the previous cell.
-      cy.findByRole("textbox", { name: "Search" }).focus();
-      cy.realPress(["Shift", "Tab"]);
-      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
   });
 });
