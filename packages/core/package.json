@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/core",
-  "version": "1.65.0",
+  "version": "1.65.1",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:*",
     "clsx": "^2.0.0",
+    "compute-scroll-into-view": "^3.0.0",
     "dom-accessibility-api": "^0.7.1",
     "tabbable": "^6.0.0",
     "use-sync-external-store": "^1.5.0"
