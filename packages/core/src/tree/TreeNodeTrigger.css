@@ -27,8 +27,10 @@
   --saltTreeNodeTrigger-indentStep: calc(((var(--saltTreeNodeTrigger-iconSize) + var(--salt-size-selectable)) / 2) + var(--salt-spacing-100));
 }
 
-.saltTreeNodeTrigger:hover {
-  background: var(--salt-selectable-background-hover);
+@media (any-hover: hover) {
+  .saltTreeNodeTrigger:hover {
+    background: var(--salt-selectable-background-hover);
+  }
 }
 
 .saltTreeNode:focus-visible > .saltTreeNodeTrigger,
@@ -50,13 +52,22 @@
   background: var(--salt-selectable-background-selected);
 }
 
-.saltTreeNode-disabled > .saltTreeNodeTrigger,
-.saltTreeNode-disabled:hover > .saltTreeNodeTrigger {
+.saltTreeNode-disabled > .saltTreeNodeTrigger {
   opacity: 0.4;
   cursor: var(--salt-cursor-disabled);
 
   background: var(--salt-selectable-background);
   color: var(--salt-content-primary-foreground);
+}
+
+@media (any-hover: hover) {
+  .saltTreeNode-disabled:hover > .saltTreeNodeTrigger {
+    opacity: 0.4;
+    cursor: var(--salt-cursor-disabled);
+
+    background: var(--salt-selectable-background);
+    color: var(--salt-content-primary-foreground);
+  }
 }
 
 .saltTreeNodeTrigger > .saltTreeNode-checkbox {

@@ -25,12 +25,16 @@
   color: currentColor;
 }
 
-.saltBreadcrumb-regular:hover {
-  color: var(--breadcrumbs-crumb-color-hover);
+@media (any-hover: hover) {
+  .saltBreadcrumb-regular:hover {
+    color: var(--breadcrumbs-crumb-color-hover);
+  }
 }
 
-.saltBreadcrumb-regular:hover .saltBreadcrumb-icon {
-  color: var(--breadcrumbs-crumb-color-hover);
+@media (any-hover: hover) {
+  .saltBreadcrumb-regular:hover .saltBreadcrumb-icon {
+    color: var(--breadcrumbs-crumb-color-hover);
+  }
 }
 
 .saltBreadcrumb-regular:active {

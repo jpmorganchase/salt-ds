@@ -30,7 +30,6 @@
   transition: none;
   width: auto;
   -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .saltToggleButton:focus-visible {
@@ -43,7 +42,7 @@
   border-color: var(--toggleButton-borderColor-hover);
 }
 
-@media (hover: hover) {
+@media (any-hover: hover) {
   .saltToggleButton:hover {
     background: var(--toggleButton-background-hover);
     color: var(--toggleButton-text-color-hover);
@@ -65,13 +64,17 @@
   border-color: var(--toggleButton-borderColor-selected);
 }
 
-.saltToggleButton[aria-checked="true"]:hover {
-  cursor: unset;
+@media (any-hover: hover) {
+  .saltToggleButton[aria-checked="true"]:hover {
+    cursor: unset;
+  }
 }
 
-.saltToggleButton[aria-pressed="true"]:hover {
-  background: var(--toggleButton-background-selectedHover);
-  border-color: var(--toggleButton-borderColor-selectedHover);
+@media (any-hover: hover) {
+  .saltToggleButton[aria-pressed="true"]:hover {
+    background: var(--toggleButton-background-selectedHover);
+    border-color: var(--toggleButton-borderColor-selectedHover);
+  }
 }
 
 .saltToggleButton[aria-disabled="true"] {

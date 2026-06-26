@@ -153,8 +153,7 @@
 }
 
 /* Hover styling */
-.saltTab:not([aria-selected="true"]).saltFocusVisible:before,
-.saltTab:hover:not([aria-selected="true"]):before {
+.saltTab:not([aria-selected="true"]).saltFocusVisible:before {
   --tabs-tab-before-content: "";
   --tabs-tab-before-background: var(--salt-navigable-indicator-hover);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
@@ -162,6 +161,18 @@
   --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
 }
 
-.saltTab:hover:not(.saltTab-closeHover) {
-  background: var(--saltTabs-tab-hover-background, var(--salt-navigable-background-hover));
+@media (any-hover: hover) {
+  .saltTab:hover:not([aria-selected="true"]):before {
+    --tabs-tab-before-content: "";
+    --tabs-tab-before-background: var(--salt-navigable-indicator-hover);
+    --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
+    --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
+    --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
+  }
+}
+
+@media (any-hover: hover) {
+  .saltTab:hover:not(.saltTab-closeHover) {
+    background: var(--saltTabs-tab-hover-background, var(--salt-navigable-background-hover));
+  }
 }

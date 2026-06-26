@@ -121,8 +121,10 @@
 .saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton {
   background: var(--toolbar-background);
 }
-.saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton:hover {
-  background: var(--salt-actionable-secondary-background-hover);
+@media (any-hover: hover) {
+  .saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton:hover {
+    background: var(--salt-actionable-secondary-background-hover);
+  }
 }
 .saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltButton-active,
 .saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton:active {

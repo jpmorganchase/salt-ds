@@ -3,8 +3,10 @@
   width: 100%;
 }
 
-.saltFormFieldLabel:hover + .saltFormField-controls * {
-  --input-borderColor: var(--input-borderColor-hover);
+@media (any-hover: hover) {
+  .saltFormFieldLabel:hover + .saltFormField-controls * {
+    --input-borderColor: var(--input-borderColor-hover);
+  }
 }
 
 .saltFormField-labelLeft .saltFormFieldLabel.saltText {

@@ -39,8 +39,10 @@
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
-.saltCascadingMenuItem-menuItemHover:hover {
-  background: var(--salt-selectable-background-hover);
+@media (any-hover: hover) {
+  .saltCascadingMenuItem-menuItemHover:hover {
+    background: var(--salt-selectable-background-hover);
+  }
 }
 
 /* extra specificity requred to override ListItem selected */
