@@ -1,11 +1,11 @@
 import type { FloatingRootContext } from "@floating-ui/react";
-import { createContext } from "@salt-ds/core";
 import type {
   Dispatch,
   HTMLProps,
   MutableRefObject,
   SetStateAction,
 } from "react";
+import { createContext } from "../utils";
 import type { MegaMenuPlacement } from "./MegaMenu";
 
 export interface MegaMenuContextValue {

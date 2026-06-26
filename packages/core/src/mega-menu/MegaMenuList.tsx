@@ -1,8 +1,3 @@
-import {
-  makePrefixer,
-  type PolymorphicComponentPropWithRef,
-  type PolymorphicRef,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -13,6 +8,11 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
+import {
+  makePrefixer,
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
+} from "../utils";
 import { useMegaMenuGroup } from "./MegaMenuGroupContext";
 import megaMenuListCss from "./MegaMenuList.css";
 

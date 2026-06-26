@@ -1,12 +1,4 @@
 import { flip, limitShift, offset, shift } from "@floating-ui/react";
-import {
-  makePrefixer,
-  useFloatingComponent,
-  useFloatingUI,
-  useForkRef,
-  useId,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -16,6 +8,14 @@ import {
   type ReactNode,
   useEffect,
 } from "react";
+import {
+  makePrefixer,
+  useFloatingComponent,
+  useFloatingUI,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 import megaMenuPanelCss from "./MegaMenuPanel.css";
 import { useMegaMenu } from "./useMegaMenu";
 import { focusFirstItem } from "./useMegaMenuNavigation";

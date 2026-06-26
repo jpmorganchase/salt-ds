@@ -2,6 +2,17 @@ import {
   Badge,
   FlexLayout,
   Link,
+  MegaMenu,
+  MegaMenuActions,
+  MegaMenuAside,
+  MegaMenuContent,
+  MegaMenuGroup,
+  MegaMenuGroupHeading,
+  MegaMenuGroups,
+  MegaMenuList,
+  MegaMenuListItem,
+  MegaMenuPanel,
+  MegaMenuTrigger,
   NavigationItem,
   StackLayout,
   Tag,
@@ -14,26 +25,14 @@ import {
   PasteIcon,
   UserSearchIcon,
 } from "@salt-ds/icons";
-import {
-  MegaMenu,
-  MegaMenuActions,
-  MegaMenuAside,
-  MegaMenuContent,
-  MegaMenuGroup,
-  MegaMenuGroupHeading,
-  MegaMenuGroups,
-  MegaMenuList,
-  MegaMenuListItem,
-  MegaMenuPanel,
-  MegaMenuTrigger,
-} from "@salt-ds/lab";
+
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import type { CSSProperties } from "react";
 import "./mega-menu.stories.css";
 
 export default {
-  title: "Lab/Mega Menu/Mega Menu QA",
+  title: "Core/Mega Menu/Mega Menu QA",
   component: MegaMenu,
 } as Meta;
 

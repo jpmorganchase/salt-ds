@@ -4,8 +4,8 @@ import {
   useFloatingRootContext,
   useInteractions,
 } from "@floating-ui/react";
-import { useControlled } from "@salt-ds/core";
 import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
+import { useControlled } from "../utils";
 import { MegaMenuContext } from "./MegaMenuContext";
 import { useMegaMenuNavigation } from "./useMegaMenuNavigation";
 
