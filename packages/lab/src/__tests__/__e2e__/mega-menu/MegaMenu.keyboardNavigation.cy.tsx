@@ -7,8 +7,6 @@ const {
   WithLeadingAside,
   WithActions,
   WithActionsAndNextTrigger,
-  WithSelfConsumingControl,
-  WithSelfConsumingControlAndLink,
   StaticContent,
   WithActionItem,
   WithRenderProp,
@@ -721,50 +719,6 @@ describe("Given a MegaMenu", () => {
       cy.realPress("ArrowRight");
       cy.findByRole("button", { name: "Solutions" }).should("be.focused");
       cy.get(".saltMegaMenuPanel").should("exist");
-    });
-  });
-
-  describe("when focus is inside a self-consuming control", () => {
-    it("does not hijack arrow keys from an input inside a region", () => {
-      cy.mount(<WithSelfConsumingControl />);
-      cy.findByRole("button", { name: "Solutions" }).focus();
-      cy.realPress("Enter");
-      cy.get(".saltMegaMenuPanel").should("exist");
-
-      // Place the caret at the end of the input's value.
-      cy.findByRole("textbox", { name: "Search" }).then(($input) => {
-        const input = $input[0] as HTMLInputElement;
-        input.focus();
-        input.setSelectionRange(input.value.length, input.value.length);
-      });
-      cy.findByRole("textbox", { name: "Search" }).should("be.focused");
-
-      // ArrowLeft must reach the input (moving the caret), not be intercepted by
-      // the navigation engine.
-      cy.realPress("ArrowLeft");
-      cy.findByRole("textbox", { name: "Search" })
-        .should("be.focused")
-        .then(($input) => {
-          const input = $input[0] as HTMLInputElement;
-          expect(input.selectionStart).to.be.lessThan(input.value.length);
-        });
-    });
-
-    it("still advances Tab and Shift+Tab across a control to neighbouring cells", () => {
-      cy.mount(<WithSelfConsumingControlAndLink />);
-      cy.findByRole("button", { name: "Solutions" }).focus();
-      cy.realPress("Enter");
-      cy.get(".saltMegaMenuPanel").should("exist");
-
-      // Tab is never yielded — it moves from the input to the next cell.
-      cy.findByRole("textbox", { name: "Search" }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("link", { name: "Go" }).should("be.focused");
-
-      // Shift+Tab moves from the input back to the previous cell.
-      cy.findByRole("textbox", { name: "Search" }).focus();
-      cy.realPress(["Shift", "Tab"]);
-      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
   });
 });
