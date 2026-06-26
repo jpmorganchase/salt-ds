@@ -25,4 +25,3 @@ Compose it with `MegaMenuTrigger`, `MegaMenuPanel`, `MegaMenuContent`, `MegaMenu
   </MegaMenuPanel>
 </MegaMenu>
 ```
-
