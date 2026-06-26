@@ -1,5 +1,16 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.98
+
+### Minor Changes
+
+- f9f9b8e: Removed `MegaMenu` and its related components (`MegaMenuActions`, `MegaMenuAside`, `MegaMenuContent`, `MegaMenuGroup`, `MegaMenuGroupHeading`, `MegaMenuGroups`, `MegaMenuList`, `MegaMenuListItem`, `MegaMenuPanel`, and `MegaMenuTrigger`) from lab and promoted to core.
+
+### Patch Changes
+
+- Updated dependencies [f9f9b8e]
+  - @salt-ds/core@1.66.0
+
 ## 1.0.0-alpha.97
 
 ### Minor Changes
