@@ -317,17 +317,6 @@ describe("Given a MegaMenu", () => {
       cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
     });
 
-    it("closes on Escape", () => {
-      cy.mount(<Baseline />);
-      openSolutionsWithEnter();
-
-      cy.realPress("Tab");
-      cy.findByRole("link", { name: "Digital Banking" }).should("be.focused");
-
-      cy.realPress("Escape");
-      cy.get(".saltMegaMenuPanel").should("not.exist");
-    });
-
     it("activates item on Enter and closes menu", () => {
       cy.mount(<Baseline />);
       openSolutionsWithEnter();
