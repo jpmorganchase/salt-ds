@@ -25,7 +25,7 @@ import type { StoryFn } from "@storybook/react-vite";
 import "./mega-menu.stories.css";
 
 export default {
-  title: "Lab/Mega Menu",
+  title: "Core/Mega Menu",
   component: MegaMenu,
   decorators: [
     (Story: StoryFn) => (

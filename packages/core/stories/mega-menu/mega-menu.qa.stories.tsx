@@ -32,7 +32,7 @@ import type { CSSProperties } from "react";
 import "./mega-menu.stories.css";
 
 export default {
-  title: "Lab/Mega Menu/Mega Menu QA",
+  title: "Core/Mega Menu/Mega Menu QA",
   component: MegaMenu,
 } as Meta;
 
