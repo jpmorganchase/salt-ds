@@ -1,4 +1,3 @@
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -9,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { makePrefixer } from "../utils";
 import megaMenuGroupCss from "./MegaMenuGroup.css";
 import { MegaMenuGroupContext } from "./MegaMenuGroupContext";
 

@@ -1,10 +1,4 @@
 import {
-  getRefFromChildren,
-  mergeProps,
-  NavigationItem,
-  useForkRef,
-} from "@salt-ds/core";
-import {
   cloneElement,
   forwardRef,
   isValidElement,
@@ -13,6 +7,8 @@ import {
   type Ref,
   useCallback,
 } from "react";
+import { NavigationItem } from "../navigation-item";
+import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useMegaMenu } from "./useMegaMenu";
 import { FOCUSABLE_SELECTOR, focusFirstItem } from "./useMegaMenuNavigation";
 

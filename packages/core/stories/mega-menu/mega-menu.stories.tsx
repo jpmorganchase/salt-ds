@@ -3,13 +3,6 @@ import {
   Button,
   FlexLayout,
   Link,
-  NavigationItem,
-  StackLayout,
-  Tag,
-  Text,
-} from "@salt-ds/core";
-import { DatasetManagerIcon, DevicesIcon } from "@salt-ds/icons";
-import {
   MegaMenu,
   MegaMenuActions,
   MegaMenuAside,
@@ -22,7 +15,12 @@ import {
   MegaMenuPanel,
   type MegaMenuProps,
   MegaMenuTrigger,
-} from "@salt-ds/lab";
+  NavigationItem,
+  StackLayout,
+  Tag,
+  Text,
+} from "@salt-ds/core";
+import { DatasetManagerIcon, DevicesIcon } from "@salt-ds/icons";
 import type { StoryFn } from "@storybook/react-vite";
 import "./mega-menu.stories.css";
 

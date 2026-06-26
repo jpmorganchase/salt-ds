@@ -34,6 +34,7 @@ export * from "./link";
 export * from "./link-card";
 export * from "./list-box";
 export * from "./list-control";
+export * from "./mega-menu";
 export * from "./menu";
 export * from "./multiline-input";
 export * from "./navigation-item";

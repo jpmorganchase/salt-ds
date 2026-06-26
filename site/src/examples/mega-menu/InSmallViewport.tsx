@@ -1,4 +1,3 @@
-import { NavigationItem, StackLayout } from "@salt-ds/core";
 import {
   MegaMenu,
   MegaMenuContent,
@@ -9,7 +8,10 @@ import {
   MegaMenuListItem,
   MegaMenuPanel,
   MegaMenuTrigger,
-} from "@salt-ds/lab";
+  NavigationItem,
+  StackLayout,
+} from "@salt-ds/core";
+
 import { type ReactElement, useState } from "react";
 import { Link } from "react-router";
 import styles from "./index.module.css";

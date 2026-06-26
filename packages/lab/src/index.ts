@@ -42,7 +42,6 @@ export {
 } from "./list-deprecated";
 export * from "./list-next";
 export * from "./logo";
-export * from "./mega-menu";
 export * from "./menu-button";
 export * from "./metric";
 export * from "./portal";

@@ -1,4 +1,3 @@
-import { makePrefixer, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -7,6 +6,7 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
+import { makePrefixer, useId, useIsomorphicLayoutEffect } from "../utils";
 import { useMegaMenuGroup } from "./MegaMenuGroupContext";
 import megaMenuGroupHeadingCss from "./MegaMenuGroupHeading.css";
 

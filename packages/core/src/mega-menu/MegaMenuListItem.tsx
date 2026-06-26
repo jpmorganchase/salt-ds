@@ -1,4 +1,3 @@
-import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -9,6 +8,7 @@ import {
   type MouseEventHandler,
   type ReactNode,
 } from "react";
+import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
 import megaMenuListItemCss from "./MegaMenuListItem.css";
 import { useMegaMenu } from "./useMegaMenu";
 

@@ -1,5 +1,6 @@
-import { useDensity, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useState } from "react";
+import { useDensity } from "../salt-provider";
+import { useIsomorphicLayoutEffect } from "../utils";
 
 /**
  * Resolves the panel's page-margin token to pixels for floating-ui padding, to
