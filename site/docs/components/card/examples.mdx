@@ -48,7 +48,7 @@ You can incorporate actions like [links](../link) or [buttons](../button) into a
 
 ## Full width image
 
-When using images in cards, set the image to span the card's entire width. You can do this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
+When using images in cards, set the image to span the card's entire width. You can do this by using the `CardContent` component inside `Card`, `LinkCard` or `InteractableCard`. `CardContent` removes the wrapping card's default padding, allowing siblings (such as images) to extend to the card's edges, and applies its own padding to the content inside it.
 
 <LivePreview componentName="card" exampleName="FullWidthImage" />
 
@@ -63,7 +63,7 @@ You can set an image as the background of a card using [`background-image`](http
 - By default, the card components include `--salt-spacing-200` inner padding.
 - For very small cards with a limited hit area, customizing the padding to `--salt-spacing-100` is advisable.
 - When your cards are intended to occupy a significant portion of your application window, `--salt-spacing-300` is recommended.
-- Customize the spacing using the `--saltCard-padding` or `--saltLinkCard-padding` CSS properties.
+- Customize the spacing using the `--saltCard-padding`, `--saltLinkCard-padding` or `--saltInteractableCard-padding` CSS properties. When `CardContent` is used, customize the inner spacing using `--saltCardContent-padding`.
 
 <LivePreview componentName="card" exampleName="CustomPadding" />
 
