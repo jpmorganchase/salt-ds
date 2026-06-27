@@ -19,7 +19,7 @@ type FloatingStyleProps = {
 export interface OverlayContextValue {
   openState: boolean;
   floatingStyles: FloatingStyleProps;
-  arrowProps: FloatingArrowProps;
+  arrowProps: FloatingArrowProps | undefined;
   context: FloatingContext;
   reference?: (node: ReferenceType | null) => void;
   floating?: (node: HTMLElement | null) => void;
