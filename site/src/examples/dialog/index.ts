@@ -3,6 +3,7 @@ export * from "./Default";
 export * from "./DisableScrim";
 export * from "./Error";
 export * from "./Info";
+export * from "./InfoWithDescription";
 export * from "./MandatoryAction";
 export * from "./Preheader";
 export * from "./Sizes";
