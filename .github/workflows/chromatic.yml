@@ -111,6 +111,27 @@ jobs:
           git checkout -B "$BASE_BRANCH" "upstream/$BASE_BRANCH"
           git checkout -B pr-head "$HEAD_SHA"
           git clean -ffdx && git reset --hard HEAD
+      - name: Determine if Chromatic can be skipped for this commit
+        id: changed_files
+        if: ${{ steps.run_context.outputs.branchName == 'main' }}
+        timeout-minutes: 2
+        env:
+          HEAD_SHA: ${{ steps.run_context.outputs.headSha }}
+        run: |
+          set -euo pipefail
+
+          if ! parent=$(git rev-parse --verify "${HEAD_SHA}^" 2>/dev/null); then
+            echo "No parent commit available; will run Chromatic."
+            echo "skipChromatic=false" >> "$GITHUB_OUTPUT"
+            echo "### Chromatic decision: **run** _(no parent commit)_" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          if bash scripts/chromatic/should-skip-main-build.sh "$parent" "$HEAD_SHA"; then
+            echo "skipChromatic=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skipChromatic=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: "Download build artifact"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
@@ -121,18 +142,22 @@ jobs:
       - name: Publish to Chromatic
         if: ${{ steps.run_context.outputs.branchName == 'main' || steps.run_context.outputs.runChromatic == 'true' }}
         uses: chromaui/action@7804f34e4e59c0d9b3c856848f46ad96d7897429 # v17
-        # Chromatic GitHub Action options
         with:
-          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
-          # Turbosnap if this is not the main branch
-          onlyChanged: ${{ steps.run_context.outputs.branchName != 'main' && steps.run_context.outputs.noTurbosnap != 'true' }}
-          externals: ${{ steps.run_context.outputs.branchName != 'main' && steps.run_context.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
-          skip: "changeset-release/*"
+          # TurboSnap on every branch (incl. main). The `no turbosnap` PR
+          # label opts out per-PR. Theme files affect every story — force a
+          # full pass when they change.
+          onlyChanged: ${{ steps.run_context.outputs.noTurbosnap != 'true' }}
+          externals: ${{ steps.run_context.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
+          # Skip the build on main commits that only touch non-visual files;
+          # otherwise fall back to the existing changeset-release/* skip glob.
+          skip: ${{ steps.changed_files.outputs.skipChromatic == 'true' && '**' || 'changeset-release/*' }}
           autoAcceptChanges: ${{ steps.run_context.outputs.branchName == 'main' && steps.run_context.outputs.noTurbosnap != 'true' }}
           ignoreLastBuildOnBranch: "**"
-          traceChanged: ${{ (steps.run_context.outputs.branchName != 'main' && steps.run_context.outputs.noTurbosnap != 'true') && 'expanded' || '' }}
+          # Expanded tracing is conservative — more snapshots, fewer missed
+          # regressions. Keep wherever TurboSnap is active.
+          traceChanged: ${{ steps.run_context.outputs.noTurbosnap != 'true' && 'expanded' || '' }}
           storybookBuildDir: ${{ runner.temp }}/storybook-static
           branchName: ${{ steps.run_context.outputs.branchName }}
           debug: true
