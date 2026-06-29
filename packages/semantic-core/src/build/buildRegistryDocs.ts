@@ -705,7 +705,10 @@ export async function extractFoundationExamples(
     }
 
     const relativePath = toPosixPath(
-      path.relative(path.join(repoRoot, "site/docs/foundations"), foundationPath),
+      path.relative(
+        path.join(repoRoot, "site/docs/foundations"),
+        foundationPath,
+      ),
     );
     const routeSuffix = relativePath.replace(/\.mdx$/i, "");
     const route = `/salt/foundations/${routeSuffix}`;
@@ -741,4 +744,3 @@ export async function extractFoundationExamples(
 
   return examples;
 }
-

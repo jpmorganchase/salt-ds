@@ -8,10 +8,7 @@ import type { RequiredCliIo } from "../types.js";
 
 let workspace = "";
 
-function createIo(overrides: {
-  cwd: string;
-  stdin?: NodeJS.ReadableStream;
-}): {
+function createIo(overrides: { cwd: string; stdin?: NodeJS.ReadableStream }): {
   io: RequiredCliIo;
   stdout: string[];
   stderr: string[];

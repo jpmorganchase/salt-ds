@@ -36,9 +36,7 @@ const V1_RESOURCE_NAMES = [
   SALT_MCP_CATALOG_MANIFEST_URI,
 ] as const;
 
-const V1_RESOURCE_TEMPLATE_NAMES = [
-  "salt_catalog_entity",
-] as const;
+const V1_RESOURCE_TEMPLATE_NAMES = ["salt_catalog_entity"] as const;
 
 const REMOVED_PUBLIC_SURFACES = [
   "bootstrap_salt_repo",
@@ -238,12 +236,10 @@ describe("createSaltMcpServer", () => {
     ).toBe(true);
   });
 
-  it(
-    "runs public v1 calls against the slim catalog without excluded artifacts",
-    async () => {
-      await withRegistryDir(
-        copyV1CatalogArtifactsFromGenerated,
-        async (registryDir) => {
+  it("runs public v1 calls against the slim catalog without excluded artifacts", async () => {
+    await withRegistryDir(
+      copyV1CatalogArtifactsFromGenerated,
+      async (registryDir) => {
         for (const fileName of V1_EXCLUDED_CATALOG_ARTIFACT_FILES) {
           await expect(
             fs.access(path.join(registryDir, fileName)),
@@ -406,11 +402,9 @@ describe("createSaltMcpServer", () => {
         ).resolves.toEqual(
           expect.objectContaining({ contents: expect.any(Array) }),
         );
-        },
-      );
-    },
-    20_000,
-  );
+      },
+    );
+  }, 20_000);
 
   it("registers only the v1 capability and catalog resource surface", async () => {
     await withRegistryDir(
@@ -452,13 +446,9 @@ describe("createSaltMcpServer", () => {
           Object.keys(registrations._registeredResourceTemplates).sort(),
         ).toEqual([...V1_RESOURCE_TEMPLATE_NAMES]);
 
-        const manifestResult =
-          await registrations._registeredResources[
-            SALT_MCP_CAPABILITY_MANIFEST_URI
-          ].readCallback(
-            new URL(SALT_MCP_CAPABILITY_MANIFEST_URI),
-            {},
-          );
+        const manifestResult = await registrations._registeredResources[
+          SALT_MCP_CAPABILITY_MANIFEST_URI
+        ].readCallback(new URL(SALT_MCP_CAPABILITY_MANIFEST_URI), {});
         const capabilityManifest = JSON.parse(
           manifestResult.contents[0]?.text ?? "null",
         ) as {
@@ -494,13 +484,9 @@ describe("createSaltMcpServer", () => {
           SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
         ]);
 
-        const catalogManifestResult =
-          await registrations._registeredResources[
-            SALT_MCP_CATALOG_MANIFEST_URI
-          ].readCallback(
-            new URL(SALT_MCP_CATALOG_MANIFEST_URI),
-            {},
-          );
+        const catalogManifestResult = await registrations._registeredResources[
+          SALT_MCP_CATALOG_MANIFEST_URI
+        ].readCallback(new URL(SALT_MCP_CATALOG_MANIFEST_URI), {});
         const catalogManifest = JSON.parse(
           catalogManifestResult.contents[0]?.text ?? "null",
         ) as Record<string, unknown>;
@@ -528,9 +514,9 @@ describe("createSaltMcpServer", () => {
       generated_at: "2026-04-01T00:00:00Z",
     } as Parameters<typeof buildSaltMcpInstructions>[0]);
 
-    expect(metadata.capability_manifest.public_surface.default_surface_ids).toEqual(
-      [...V1_TOOL_ORDER],
-    );
+    expect(
+      metadata.capability_manifest.public_surface.default_surface_ids,
+    ).toEqual([...V1_TOOL_ORDER]);
     for (const removedSurface of REMOVED_PUBLIC_SURFACES) {
       expect(instructions).not.toContain(removedSurface);
     }

@@ -3,8 +3,8 @@ import os from "node:os";
 import path from "node:path";
 import { detectProjectPolicy } from "@salt-ds/semantic-core/policy/detection";
 import { deriveComparableSaltVersion } from "@salt-ds/semantic-core/policy/layerDiagnostics";
-import { detectLocalRuntimeTargets } from "./runtimeTargets.js";
 import { safeFetchWithTimeout } from "./inspectShared.js";
+import { detectLocalRuntimeTargets } from "./runtimeTargets.js";
 import {
   collectSaltInstallationDiagnostics as collectSaltInstallationDiagnosticsFromHelper,
   collectSaltPackages as collectSaltPackagesFromHelper,

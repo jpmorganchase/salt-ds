@@ -1,5 +1,5 @@
-import process from "node:process";
 import path from "node:path";
+import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { assert, getInstalledMcpBin, pathExists } from "./shared.mjs";
@@ -84,7 +84,9 @@ export async function runMcpWorkflowCoverage(
   existingSaltRoot,
   nonSaltRoot,
 ) {
-  console.log("Checking v1 workflow coverage through the installed MCP server...");
+  console.log(
+    "Checking v1 workflow coverage through the installed MCP server...",
+  );
   const installedMcpBinPath = getInstalledMcpBin(installRoot);
   assert(
     await pathExists(installedMcpBinPath),

@@ -76,9 +76,7 @@ export function clearArtifactCache(): void {
   cache = new Map();
 }
 
-export function configureArtifactCache(options: {
-  capacity?: number;
-}): void {
+export function configureArtifactCache(options: { capacity?: number }): void {
   if (typeof options.capacity === "number" && options.capacity > 0) {
     capacity = options.capacity;
     while (cache.size > capacity) {
@@ -102,5 +100,3 @@ export function getArtifactCacheStatsForTests(): {
     keys: [...cache.keys()],
   };
 }
-
-

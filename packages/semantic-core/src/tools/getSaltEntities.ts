@@ -1,8 +1,8 @@
 import type { SaltRegistry } from "../types.js";
 import {
-  getSaltEntity,
   type GetSaltEntityInput,
   type GetSaltEntityResult,
+  getSaltEntity,
 } from "./getSaltEntity.js";
 import {
   buildGuidanceBoundary,

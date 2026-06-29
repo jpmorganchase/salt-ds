@@ -114,5 +114,4 @@ export function registerSaltResources(
       };
     },
   );
-
 }

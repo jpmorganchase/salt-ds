@@ -19,13 +19,8 @@
   "action": {
     "kind": "install_dependencies",
     "package_manager": "pnpm",
-    "packages": [
-      "@salt-ds/core",
-      "@salt-ds/theme"
-    ],
-    "rule_ids": [
-      "create-follow-through-required"
-    ],
+    "packages": ["@salt-ds/core", "@salt-ds/theme"],
+    "rule_ids": ["create-follow-through-required"],
     "post_action": null
   },
   "internal_limitations": {

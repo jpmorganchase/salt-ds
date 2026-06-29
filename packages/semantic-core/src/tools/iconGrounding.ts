@@ -331,14 +331,18 @@ export function buildIconGroundingPlan(
   return { grounded, placeholders };
 }
 
-function toIconSlotsSnippet(plan: IconGroundingPlan): StarterCodeSnippet | null {
+function toIconSlotsSnippet(
+  plan: IconGroundingPlan,
+): StarterCodeSnippet | null {
   if (plan.grounded.length === 0 && plan.placeholders.length === 0) {
     return null;
   }
 
-  const groundedByExport = [...new Map(
-    plan.grounded.map((icon) => [icon.export_name, icon] as const),
-  ).values()];
+  const groundedByExport = [
+    ...new Map(
+      plan.grounded.map((icon) => [icon.export_name, icon] as const),
+    ).values(),
+  ];
   const importLine =
     groundedByExport.length > 0
       ? `import { ${groundedByExport
@@ -347,7 +351,8 @@ function toIconSlotsSnippet(plan: IconGroundingPlan): StarterCodeSnippet | null 
           .join(", ")} } from "@salt-ds/icons";`
       : null;
   const groundedLines = plan.grounded.map(
-    (icon) => `  ${JSON.stringify(icon.intent)}: <${icon.export_name} aria-hidden />,`,
+    (icon) =>
+      `  ${JSON.stringify(icon.intent)}: <${icon.export_name} aria-hidden />,`,
   );
   const placeholderLines = plan.placeholders.map(
     (placeholder) =>

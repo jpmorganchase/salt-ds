@@ -18,7 +18,6 @@ const DOCGEN_PACKAGE_FILE_MAP: Record<string, string> = {
   "ag-grid-theme-props.json": "@salt-ds/ag-grid-theme",
   "core-props.json": "@salt-ds/core",
   "countries-props.json": "@salt-ds/countries",
-  "data-grid-props.json": "@salt-ds/data-grid",
   "embla-carousel-props.json": "@salt-ds/embla-carousel",
   "icons-props.json": "@salt-ds/icons",
   "lab-props.json": "@salt-ds/lab",

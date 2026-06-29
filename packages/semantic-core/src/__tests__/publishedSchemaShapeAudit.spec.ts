@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -25,8 +25,7 @@ const SCHEMAS_DIR = path.resolve(
   "schemas",
 );
 
-const EXPECTED_SCHEMA_DIALECT =
-  "https://json-schema.org/draft/2020-12/schema";
+const EXPECTED_SCHEMA_DIALECT = "https://json-schema.org/draft/2020-12/schema";
 
 interface SchemaHeader {
   file: string;
@@ -60,7 +59,9 @@ describe("published JSON schemas — header shape audit", () => {
       offenders,
       `Every published schema must declare \`"$schema": "${EXPECTED_SCHEMA_DIALECT}"\`. ` +
         `Offenders:\n${offenders
-          .map((header) => `  - ${header.file}: ${JSON.stringify(header.$schema)}`)
+          .map(
+            (header) => `  - ${header.file}: ${JSON.stringify(header.$schema)}`,
+          )
           .join("\n")}`,
     ).toEqual([]);
   });
@@ -77,9 +78,9 @@ describe("published JSON schemas — header shape audit", () => {
     });
     expect(
       offenders,
-      `Every published schema must declare an absolute http(s) \`$id\`. ` +
-        `Relative or missing \`$id\` values defeat the purpose of \`$id\` ` +
-        `(uniquely identifying the schema across consumers). ` +
+      "Every published schema must declare an absolute http(s) `$id`. " +
+        "Relative or missing `$id` values defeat the purpose of `$id` " +
+        "(uniquely identifying the schema across consumers). " +
         `Offenders:\n${offenders
           .map((header) => `  - ${header.file}: ${JSON.stringify(header.$id)}`)
           .join("\n")}`,
@@ -103,8 +104,8 @@ describe("published JSON schemas — header shape audit", () => {
     const hosts = Array.from(idsByHost.keys()).sort();
     expect(
       hosts.length,
-      `All published schemas must share the same \`$id\` host so a new ` +
-        `schema cannot silently land under a fresh URL prefix. Found ` +
+      "All published schemas must share the same `$id` host so a new " +
+        "schema cannot silently land under a fresh URL prefix. Found " +
         `${hosts.length} distinct host(s):\n${hosts
           .map(
             (host) =>

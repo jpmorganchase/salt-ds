@@ -2,10 +2,7 @@ import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import {
-  buildAttestation,
-  verifyAttestation,
-} from "../lib/attestation.js";
+import { buildAttestation, verifyAttestation } from "../lib/attestation.js";
 
 let workspace = "";
 
@@ -50,12 +47,12 @@ describe("verifyAttestation security guards", () => {
     });
 
     expect(result.ok).toBe(false);
-    const escape = result.drift.find(
+    const escapeResult = result.drift.find(
       (entry) => entry.reason === "path-escape",
     );
-    expect(escape).toBeDefined();
-    expect(escape?.path).toBe("../../../../etc/passwd");
-    expect(escape?.actualHash).toBeNull();
+    expect(escapeResult).toBeDefined();
+    expect(escapeResult?.path).toBe("../../../../etc/passwd");
+    expect(escapeResult?.actualHash).toBeNull();
   });
 
   it("flags an attestation entry whose path is absolute and outside cwd", async () => {

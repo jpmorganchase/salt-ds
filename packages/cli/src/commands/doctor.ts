@@ -21,7 +21,10 @@ import {
   writeJsonFile,
 } from "../lib/common.js";
 import { inspectGeneratedContext } from "../lib/generatedContext.js";
-import { resolveSemanticRegistry, readRegistryLoadOptionsFromFlags } from "../lib/registry.js";
+import {
+  readRegistryLoadOptionsFromFlags,
+  resolveSemanticRegistry,
+} from "../lib/registry.js";
 import type { RequiredCliIo } from "../types.js";
 
 // --- check-install helpers ---
@@ -222,9 +225,7 @@ async function scanForBrowserModeUsage(rootDir: string): Promise<string[]> {
  * 2. If found, scan repo for browser-mode usage.
  * 3. Emit warn if playwright is present but unused in browser mode.
  */
-async function runCheckInstallChecks(
-  rootDir: string,
-): Promise<DoctorCheck[]> {
+async function runCheckInstallChecks(rootDir: string): Promise<DoctorCheck[]> {
   const [cliResult, mcpResult] = await Promise.all([
     findPlaywrightInTransitiveDeps(rootDir, "@salt-ds/cli"),
     findPlaywrightInTransitiveDeps(rootDir, "@salt-ds/mcp"),

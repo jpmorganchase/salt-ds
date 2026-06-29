@@ -946,8 +946,7 @@ export function resolveKnownSaltEntity(
         why: `${entityType} is not exposed on this Salt entity lookup surface.`,
       },
       entity: null,
-      next_step:
-        "Retry with an entity type exposed by this lookup surface.",
+      next_step: "Retry with an entity type exposed by this lookup surface.",
     };
   }
 

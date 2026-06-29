@@ -19,8 +19,7 @@ interface SaltValidationRuleComponentJsxAttributeMatch {
   attribute_names: string[];
 }
 
-type SaltValidationRuleMatch =
-  SaltValidationRuleComponentJsxAttributeMatch;
+type SaltValidationRuleMatch = SaltValidationRuleComponentJsxAttributeMatch;
 
 export interface SaltValidationRuleRecord {
   id: string;

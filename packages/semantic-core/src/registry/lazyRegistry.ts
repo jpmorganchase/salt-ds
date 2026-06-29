@@ -10,9 +10,10 @@ import type {
   SaltRegistry,
   SearchIndexEntry,
 } from "../types.js";
+import { getCachedArtifact, setCachedArtifact } from "./artifactCache.js";
 import {
-  type MetadataArtifact,
   type IconLiteArtifact,
+  type MetadataArtifact,
   type PageSearchIndexArtifact,
   type PatternValidationRulePackArtifact,
   REGISTRY_ARRAY_ARTIFACTS,
@@ -26,7 +27,6 @@ import {
   type RegistryArrayArtifactKey,
   type TokenPolicyStructuralRoleRulePackArtifact,
 } from "./artifacts.js";
-import { getCachedArtifact, setCachedArtifact } from "./artifactCache.js";
 import {
   registerIconLiteRecordsLoader,
   registerSerializedPageSearchIndexLoader,
@@ -87,13 +87,19 @@ type ArrayArtifactValueType<Key extends RegistryArrayArtifactKey> =
   SaltRegistry[Key][number];
 
 function readJsonFileSync<T>(absolutePath: string): T {
-  fileReadCounter.set(absolutePath, (fileReadCounter.get(absolutePath) ?? 0) + 1);
+  fileReadCounter.set(
+    absolutePath,
+    (fileReadCounter.get(absolutePath) ?? 0) + 1,
+  );
   const content = readFileSync(absolutePath, "utf8");
   return JSON.parse(content) as T;
 }
 
 function readJsonLinesSync<T>(absolutePath: string): T[] {
-  fileReadCounter.set(absolutePath, (fileReadCounter.get(absolutePath) ?? 0) + 1);
+  fileReadCounter.set(
+    absolutePath,
+    (fileReadCounter.get(absolutePath) ?? 0) + 1,
+  );
   const content = readFileSync(absolutePath, "utf8");
   return content
     .split(/\r?\n/)
@@ -276,9 +282,11 @@ function readMetadataSync(
     }
     throw error;
   }
-  const cached = getCachedArtifact<
-    CachedSingleValueArtifact<RegistryBuildInfo> | null
-  >(absolutePath, mtimeMs);
+  const cached =
+    getCachedArtifact<CachedSingleValueArtifact<RegistryBuildInfo> | null>(
+      absolutePath,
+      mtimeMs,
+    );
   if (cached !== undefined) {
     return cached;
   }
@@ -329,9 +337,11 @@ function readPageSearchIndexSync(
     }
     throw error;
   }
-  const cached = getCachedArtifact<
-    CachedSingleValueArtifact<SerializedPageSearchIndex> | null
-  >(absolutePath, mtimeMs);
+  const cached =
+    getCachedArtifact<CachedSingleValueArtifact<SerializedPageSearchIndex> | null>(
+      absolutePath,
+      mtimeMs,
+    );
   if (cached !== undefined) {
     return cached;
   }
@@ -341,9 +351,11 @@ function readPageSearchIndexSync(
     raw = readJsonFileSync<PageSearchIndexArtifact>(absolutePath);
   } catch (error) {
     if (isMissingFileError(error)) {
-      setCachedArtifact<
-        CachedSingleValueArtifact<SerializedPageSearchIndex> | null
-      >(absolutePath, null, mtimeMs);
+      setCachedArtifact<CachedSingleValueArtifact<SerializedPageSearchIndex> | null>(
+        absolutePath,
+        null,
+        mtimeMs,
+      );
       return null;
     }
     throw error;
@@ -385,9 +397,9 @@ function readIconLiteRecordsSync(
     }
     throw error;
   }
-  const cached = getCachedArtifact<
-    CachedSingleValueArtifact<IconLiteRecord[]> | null
-  >(absolutePath, mtimeMs);
+  const cached = getCachedArtifact<CachedSingleValueArtifact<
+    IconLiteRecord[]
+  > | null>(absolutePath, mtimeMs);
   if (cached !== undefined) {
     return cached;
   }
@@ -407,7 +419,10 @@ function readIconLiteRecordsSync(
     throw error;
   }
 
-  const header = assertArtifactHeader(REGISTRY_ICON_LITE_ARTIFACT.file_name, raw);
+  const header = assertArtifactHeader(
+    REGISTRY_ICON_LITE_ARTIFACT.file_name,
+    raw,
+  );
   const value = raw[REGISTRY_ICON_LITE_ARTIFACT.key];
   if (!Array.isArray(value)) {
     throw new Error("icons-lite.json is missing a valid icons_lite array.");
@@ -438,22 +453,25 @@ function readPatternValidationRulePackSync(
     }
     throw error;
   }
-  const cached = getCachedArtifact<
-    CachedSingleValueArtifact<SaltPatternValidationRulePack> | null
-  >(absolutePath, mtimeMs);
+  const cached =
+    getCachedArtifact<CachedSingleValueArtifact<SaltPatternValidationRulePack> | null>(
+      absolutePath,
+      mtimeMs,
+    );
   if (cached !== undefined) {
     return cached;
   }
 
   let raw: PatternValidationRulePackArtifact;
   try {
-    raw =
-      readJsonFileSync<PatternValidationRulePackArtifact>(absolutePath);
+    raw = readJsonFileSync<PatternValidationRulePackArtifact>(absolutePath);
   } catch (error) {
     if (isMissingFileError(error)) {
-      setCachedArtifact<
-        CachedSingleValueArtifact<SaltPatternValidationRulePack> | null
-      >(absolutePath, null, mtimeMs);
+      setCachedArtifact<CachedSingleValueArtifact<SaltPatternValidationRulePack> | null>(
+        absolutePath,
+        null,
+        mtimeMs,
+      );
       return null;
     }
     throw error;
@@ -495,9 +513,11 @@ function readTokenPolicyStructuralRoleRulePackSync(
     }
     throw error;
   }
-  const cached = getCachedArtifact<
-    CachedSingleValueArtifact<SaltTokenPolicyStructuralRoleRulePack> | null
-  >(absolutePath, mtimeMs);
+  const cached =
+    getCachedArtifact<CachedSingleValueArtifact<SaltTokenPolicyStructuralRoleRulePack> | null>(
+      absolutePath,
+      mtimeMs,
+    );
   if (cached !== undefined) {
     return cached;
   }
@@ -505,14 +525,14 @@ function readTokenPolicyStructuralRoleRulePackSync(
   let raw: TokenPolicyStructuralRoleRulePackArtifact;
   try {
     raw =
-      readJsonFileSync<TokenPolicyStructuralRoleRulePackArtifact>(
-        absolutePath,
-      );
+      readJsonFileSync<TokenPolicyStructuralRoleRulePackArtifact>(absolutePath);
   } catch (error) {
     if (isMissingFileError(error)) {
-      setCachedArtifact<
-        CachedSingleValueArtifact<SaltTokenPolicyStructuralRoleRulePack> | null
-      >(absolutePath, null, mtimeMs);
+      setCachedArtifact<CachedSingleValueArtifact<SaltTokenPolicyStructuralRoleRulePack> | null>(
+        absolutePath,
+        null,
+        mtimeMs,
+      );
       return null;
     }
     throw error;
@@ -684,7 +704,10 @@ const PROPERTY_LOADERS = {
     loadPatternValidationRulePack(state),
   token_policy_structural_role_rule_pack: (state: LazyRegistryState) =>
     loadTokenPolicyStructuralRoleRulePack(state),
-} as const satisfies Record<keyof SaltRegistry, (state: LazyRegistryState) => unknown>;
+} as const satisfies Record<
+  keyof SaltRegistry,
+  (state: LazyRegistryState) => unknown
+>;
 
 type LoaderName = keyof typeof PROPERTY_LOADERS;
 
@@ -809,18 +832,3 @@ export function createLazyRegistry(options: CreateLazyRegistryOptions): {
 
   return { registry: proxy, state };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

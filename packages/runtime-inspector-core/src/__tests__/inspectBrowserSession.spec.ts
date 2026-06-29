@@ -160,4 +160,3 @@ describe("inspectBrowserSession", () => {
     expect(result.notes).toEqual([]);
   }, 20000);
 });
-

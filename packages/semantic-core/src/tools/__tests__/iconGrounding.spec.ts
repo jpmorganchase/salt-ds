@@ -66,7 +66,7 @@ describe("polished UI icon grounding", () => {
         'import { SearchThingIcon } from "@salt-ds/icons";',
         "",
         "export function Demo() {",
-        '  return <Button><SearchThingIcon aria-hidden /> Search</Button>;',
+        "  return <Button><SearchThingIcon aria-hidden /> Search</Button>;",
         "}",
       ].join("\n"),
       framework: "react",

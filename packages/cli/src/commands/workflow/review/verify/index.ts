@@ -1,8 +1,8 @@
 import { promises as fs } from "node:fs";
 import { parseSaltAttestationNdjson } from "@salt-ds/semantic-core";
 import {
-  verifyAttestation,
   type VerifyAttestationDrift,
+  verifyAttestation,
 } from "../../../../lib/attestation.js";
 import type { RequiredCliIo } from "../../../../types.js";
 

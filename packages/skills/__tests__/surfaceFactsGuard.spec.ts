@@ -104,9 +104,7 @@ describe("Salt skill and prompt surface fact guard", () => {
 
     for (const { content, relativePath } of surfaces) {
       expect(content, relativePath).toMatch(/workflow (?:evidence|output)/i);
-      expect(content, relativePath).toMatch(
-        /pending(?: or unsupported)?/i,
-      );
+      expect(content, relativePath).toMatch(/pending(?: or unsupported)?/i);
     }
   });
 });

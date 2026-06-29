@@ -189,7 +189,9 @@ describe("salt cli", () => {
     expect(rootHelp).toContain("migrate_to_salt");
     expect(rootHelp).not.toContain("upgrade_salt_ui");
     // No CLI subcommand line should still advertise the removed workflow verbs.
-    expect(rootHelp).not.toMatch(/^\s+salt-ds (create|review|migrate|upgrade) /m);
+    expect(rootHelp).not.toMatch(
+      /^\s+salt-ds (create|review|migrate|upgrade) /m,
+    );
     expect(hookHelp).toContain("Salt DS CLI - hook");
     expect(hookHelp).toContain("--emit-attestation");
     expect(verifyHelp).toContain("Salt DS CLI - verify");
@@ -1296,7 +1298,9 @@ describe("salt cli", () => {
     expect(agents).toContain("<!-- salt-ds:repo-instructions:start -->");
     expect(agents).toContain("canonical-only");
     expect(
-      agents.match(/Use the Salt MCP \(or the `salt-ds` CLI fallback\) for any Salt UI task\./g),
+      agents.match(
+        /Use the Salt MCP \(or the `salt-ds` CLI fallback\) for any Salt UI task\./g,
+      ),
     ).toHaveLength(1);
     expect(agents).not.toContain("- a selection step through Salt MCP");
     expect(agents).not.toContain(
@@ -1349,7 +1353,9 @@ describe("salt cli", () => {
     expect(content).toContain("Team-specific notes stay here.");
     expect(content).toContain("<!-- salt-ds:repo-instructions:start -->");
     expect(
-      content.match(/Use the Salt MCP \(or the `salt-ds` CLI fallback\) for any Salt UI task\./g),
+      content.match(
+        /Use the Salt MCP \(or the `salt-ds` CLI fallback\) for any Salt UI task\./g,
+      ),
     ).toHaveLength(1);
     expect(content).not.toContain("- a selection step through Salt MCP");
     expect(content).not.toContain(
@@ -2215,30 +2221,27 @@ describe("salt cli", () => {
 
     let stdout = "";
     let stderr = "";
-    const code = await runCli(
-      ["hook", "--registry-dir", registryDir],
-      {
-        cwd: rootDir,
-        stdin: Readable.from(
-          Buffer.from(
-            JSON.stringify({
-              session_id: "sess-block",
-              cwd: rootDir,
-              hook_event_name: "PostToolUse",
-              tool_name: "Edit",
-              tool_input: { file_path: filePath },
-            }),
-            "utf8",
-          ),
+    const code = await runCli(["hook", "--registry-dir", registryDir], {
+      cwd: rootDir,
+      stdin: Readable.from(
+        Buffer.from(
+          JSON.stringify({
+            session_id: "sess-block",
+            cwd: rootDir,
+            hook_event_name: "PostToolUse",
+            tool_name: "Edit",
+            tool_input: { file_path: filePath },
+          }),
+          "utf8",
         ),
-        writeStdout: (message) => {
-          stdout += message;
-        },
-        writeStderr: (message) => {
-          stderr += message;
-        },
+      ),
+      writeStdout: (message) => {
+        stdout += message;
       },
-    );
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
 
     expect(code).toBe(2);
     expect(stdout).toBe("");
@@ -2257,28 +2260,25 @@ describe("salt cli", () => {
 
     let stdout = "";
     let stderr = "";
-    const code = await runCli(
-      ["hook", "--registry-dir", registryDir],
-      {
-        cwd: rootDir,
-        stdin: Readable.from(
-          Buffer.from(
-            JSON.stringify({
-              hook_event_name: "PostToolUse",
-              tool_name: "Edit",
-              tool_input: { file_path: filePath },
-            }),
-            "utf8",
-          ),
+    const code = await runCli(["hook", "--registry-dir", registryDir], {
+      cwd: rootDir,
+      stdin: Readable.from(
+        Buffer.from(
+          JSON.stringify({
+            hook_event_name: "PostToolUse",
+            tool_name: "Edit",
+            tool_input: { file_path: filePath },
+          }),
+          "utf8",
         ),
-        writeStdout: (message) => {
-          stdout += message;
-        },
-        writeStderr: (message) => {
-          stderr += message;
-        },
+      ),
+      writeStdout: (message) => {
+        stdout += message;
       },
-    );
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
 
     expect(code).toBe(0);
     expect(stdout).toBe("");
@@ -2386,28 +2386,25 @@ describe("salt cli", () => {
 
     let stdout = "";
     let stderr = "";
-    const code = await runCli(
-      ["hook", "--registry-dir", registryDir],
-      {
-        cwd: rootDir,
-        stdin: Readable.from(
-          Buffer.from(
-            JSON.stringify({
-              hook_event_name: "PostToolUse",
-              tool_name: "Bash",
-              tool_input: { command: "ls" },
-            }),
-            "utf8",
-          ),
+    const code = await runCli(["hook", "--registry-dir", registryDir], {
+      cwd: rootDir,
+      stdin: Readable.from(
+        Buffer.from(
+          JSON.stringify({
+            hook_event_name: "PostToolUse",
+            tool_name: "Bash",
+            tool_input: { command: "ls" },
+          }),
+          "utf8",
         ),
-        writeStdout: (message) => {
-          stdout += message;
-        },
-        writeStderr: (message) => {
-          stderr += message;
-        },
+      ),
+      writeStdout: (message) => {
+        stdout += message;
       },
-    );
+      writeStderr: (message) => {
+        stderr += message;
+      },
+    });
     expect(code).toBe(0);
     expect(stdout).toBe("");
     expect(stderr).toBe("");
@@ -2732,12 +2729,7 @@ describe("salt cli", () => {
     let stdout = "";
     let stderr = "";
     const code = await runCli(
-      [
-        "hook",
-        "--emit-attestation",
-        "--registry-dir",
-        registryDir,
-      ],
+      ["hook", "--emit-attestation", "--registry-dir", registryDir],
       {
         cwd: rootDir,
         stdin: Readable.from(
@@ -2785,11 +2777,7 @@ describe("salt cli", () => {
     const rootDir = await createTempDir("salt-cli-attest-no-emit-on-block");
     await fs.writeFile(
       path.join(rootDir, "package.json"),
-      JSON.stringify(
-        { dependencies: { "@salt-ds/core": "^2.0.0" } },
-        null,
-        2,
-      ),
+      JSON.stringify({ dependencies: { "@salt-ds/core": "^2.0.0" } }, null, 2),
       "utf8",
     );
     const filePath = path.join(rootDir, "App.tsx");
@@ -2809,12 +2797,7 @@ describe("salt cli", () => {
     let stdout = "";
     let stderr = "";
     const code = await runCli(
-      [
-        "hook",
-        "--emit-attestation",
-        "--registry-dir",
-        registryDir,
-      ],
+      ["hook", "--emit-attestation", "--registry-dir", registryDir],
       {
         cwd: rootDir,
         stdin: Readable.from(
@@ -2861,12 +2844,7 @@ describe("salt cli", () => {
     // Step 1: emit attestation via clean PostToolUse.
     let emitStdout = "";
     await runCli(
-      [
-        "hook",
-        "--emit-attestation",
-        "--registry-dir",
-        registryDir,
-      ],
+      ["hook", "--emit-attestation", "--registry-dir", registryDir],
       {
         cwd: rootDir,
         stdin: Readable.from(
@@ -2891,19 +2869,16 @@ describe("salt cli", () => {
     // Step 2: verify via stdin pipe.
     let verifyStdout = "";
     let verifyStderr = "";
-    const code = await runCli(
-      ["verify"],
-      {
-        cwd: rootDir,
-        stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
-        writeStdout: (message) => {
-          verifyStdout += message;
-        },
-        writeStderr: (message) => {
-          verifyStderr += message;
-        },
+    const code = await runCli(["verify"], {
+      cwd: rootDir,
+      stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
+      writeStdout: (message) => {
+        verifyStdout += message;
       },
-    );
+      writeStderr: (message) => {
+        verifyStderr += message;
+      },
+    });
 
     expect(code).toBe(0);
     expect(verifyStderr).toBe("");
@@ -2925,12 +2900,7 @@ describe("salt cli", () => {
 
     let emitStdout = "";
     await runCli(
-      [
-        "hook",
-        "--emit-attestation",
-        "--registry-dir",
-        registryDir,
-      ],
+      ["hook", "--emit-attestation", "--registry-dir", registryDir],
       {
         cwd: rootDir,
         stdin: Readable.from(
@@ -2956,17 +2926,14 @@ describe("salt cli", () => {
     await fs.writeFile(filePath, `${original}// drift\n`, "utf8");
 
     let verifyStderr = "";
-    const code = await runCli(
-      ["verify"],
-      {
-        cwd: rootDir,
-        stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
-        writeStdout: () => {},
-        writeStderr: (message) => {
-          verifyStderr += message;
-        },
+    const code = await runCli(["verify"], {
+      cwd: rootDir,
+      stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
+      writeStdout: () => {},
+      writeStderr: (message) => {
+        verifyStderr += message;
       },
-    );
+    });
 
     expect(code).toBe(2);
     expect(verifyStderr).toMatch(/drift finding/);
@@ -2976,19 +2943,16 @@ describe("salt cli", () => {
     await fs.writeFile(filePath, original, "utf8");
     let verifyAgainStderr = "";
     let verifyAgainStdout = "";
-    const cleanAgain = await runCli(
-      ["verify"],
-      {
-        cwd: rootDir,
-        stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
-        writeStdout: (message) => {
-          verifyAgainStdout += message;
-        },
-        writeStderr: (message) => {
-          verifyAgainStderr += message;
-        },
+    const cleanAgain = await runCli(["verify"], {
+      cwd: rootDir,
+      stdin: Readable.from(Buffer.from(emitStdout, "utf8")),
+      writeStdout: (message) => {
+        verifyAgainStdout += message;
       },
-    );
+      writeStderr: (message) => {
+        verifyAgainStderr += message;
+      },
+    });
     expect(cleanAgain).toBe(0);
     expect(verifyAgainStderr).toBe("");
     expect(verifyAgainStdout).toMatch(/All file hashes match/);

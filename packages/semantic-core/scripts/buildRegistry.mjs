@@ -1,5 +1,5 @@
-import fs from "node:fs/promises";
 import { spawnSync } from "node:child_process";
+import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 

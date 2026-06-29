@@ -489,4 +489,3 @@ export async function inspectBrowserSession(
     await browser.close();
   }
 }
-

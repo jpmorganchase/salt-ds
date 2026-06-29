@@ -247,4 +247,3 @@ describe("registry coverage audit (roadmap task 0.6)", () => {
     ).toEqual([]);
   });
 });
-

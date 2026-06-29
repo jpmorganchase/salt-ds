@@ -13,8 +13,8 @@ import {
   type ProjectPolicyDetailLevel,
 } from "@salt-ds/semantic-core/policy/detection";
 import { deriveComparableSaltVersion } from "@salt-ds/semantic-core/policy/layerDiagnostics";
-import { parseTsconfig } from "get-tsconfig";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
+import { parseTsconfig } from "get-tsconfig";
 import { getSaltMcpRuntimeMetadata } from "./serverMetadata.js";
 
 interface PackageJsonLike {
@@ -977,9 +977,7 @@ function buildSummary(input: {
       | "migrate_to_salt"
       | null,
   ) => ({
-    status: policyReason
-      ? ("not_declared" as const)
-      : ("declared" as const),
+    status: policyReason ? ("not_declared" as const) : ("declared" as const),
     reason: policyReason,
     next_tool_after_policy: policyReason ? nextToolAfterPolicy : null,
   });

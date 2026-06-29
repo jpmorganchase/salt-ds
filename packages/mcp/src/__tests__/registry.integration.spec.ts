@@ -15,10 +15,10 @@ import {
   searchSaltDocs,
   validateSaltUsage,
 } from "@salt-ds/semantic-core";
+import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { createSaltUi } from "@salt-ds/semantic-core/tools/createSaltUi";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import { REPO_ROOT } from "./registryTestUtils.js";
 
@@ -1279,22 +1279,8 @@ describe("registry integration", () => {
       false,
     );
     expect(
-      registry.packages.some((pkg) => pkg.name === "@salt-ds/data-grid"),
-    ).toBe(false);
-    expect(
       registry.search_index.some(
         (entry) => entry.type === "package" && entry.name === "@salt-ds/mcp",
-      ),
-    ).toBe(false);
-    expect(
-      registry.search_index.some(
-        (entry) =>
-          entry.type === "package" && entry.name === "@salt-ds/data-grid",
-      ),
-    ).toBe(false);
-    expect(
-      registry.changes.some(
-        (change) => change.package === "@salt-ds/data-grid",
       ),
     ).toBe(false);
   });

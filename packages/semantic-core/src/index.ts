@@ -355,6 +355,19 @@ export {
   validateTokenPolicyStructuralRoleRulePackEvidence,
 } from "./tokenPolicyStructuralRoleRules.js";
 export {
+  parseSaltAttestationNdjson,
+  parseSaltAttestationV1,
+  SALT_ATTESTATION_V1_SCHEMA_URL,
+  type SaltAttestationParseFailure,
+  type SaltAttestationParseResult,
+  type SaltAttestationParseSuccess,
+  type SaltAttestationV1,
+  type SaltAttestationV1FileTouched,
+  type SaltAttestationV1PostAction,
+  type SaltAttestationV1Registry,
+  SaltAttestationV1Schema,
+} from "./tools/attestation.js";
+export {
   clampChangeLimit,
   filterChangesSinceVersion,
   getChangesForComponent,
@@ -592,19 +605,6 @@ export {
   type ResolvedPatternTarget,
   resolvePatternTarget,
 } from "./tools/patternLookup.js";
-export {
-  parseSaltAttestationNdjson,
-  parseSaltAttestationV1,
-  SALT_ATTESTATION_V1_SCHEMA_URL,
-  type SaltAttestationParseFailure,
-  type SaltAttestationParseResult,
-  type SaltAttestationParseSuccess,
-  type SaltAttestationV1,
-  type SaltAttestationV1FileTouched,
-  type SaltAttestationV1PostAction,
-  type SaltAttestationV1Registry,
-  SaltAttestationV1Schema,
-} from "./tools/attestation.js";
 export {
   assertValidPublicContract,
   buildCreatePublicContract,

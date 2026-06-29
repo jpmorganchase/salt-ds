@@ -224,9 +224,7 @@ await bundle.write({
   dir: path.join(outputDir, "dist-cjs"),
   format: "cjs",
   exports: "auto",
-  ...(publishSourceMaps
-    ? { sourcemapPathTransform: transformSourceMap }
-    : {}),
+  ...(publishSourceMaps ? { sourcemapPathTransform: transformSourceMap } : {}),
 });
 
 await bundle.write({
@@ -236,9 +234,7 @@ await bundle.write({
   dir: path.join(outputDir, "dist-es"),
   format: "es",
   exports: "auto",
-  ...(publishSourceMaps
-    ? { sourcemapPathTransform: transformSourceMap }
-    : {}),
+  ...(publishSourceMaps ? { sourcemapPathTransform: transformSourceMap } : {}),
 });
 
 await bundle.close();

@@ -4,7 +4,5 @@
   "target": "@salt-ds/core",
   "from_version": "1.1.0",
   "to_version": "1.64.0",
-  "rule_ids": [
-    "upgrade-review-version-risks"
-  ]
+  "rule_ids": ["upgrade-review-version-risks"]
 }

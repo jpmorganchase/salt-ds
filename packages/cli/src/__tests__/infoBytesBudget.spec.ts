@@ -15,12 +15,12 @@ import { statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { runCli } from "../cli.js";
 import {
   __getFileReadCountForTests,
   __resetFileReadCountsForTests,
 } from "../../../semantic-core/src/registry/lazyRegistry.js";
 import { clearArtifactCache } from "../../../semantic-core/src/registry/loadRegistry.js";
+import { runCli } from "../cli.js";
 
 const REPO_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -123,9 +123,9 @@ describe("salt-ds info bytes-read budget (Phase 0 task 0.2)", () => {
 
     // Sanity floor: at least metadata.json was touched.
     expect(perArtifact.length).toBeGreaterThan(0);
-    expect(
-      perArtifact.some((entry) => entry.file === "metadata.json"),
-    ).toBe(true);
+    expect(perArtifact.some((entry) => entry.file === "metadata.json")).toBe(
+      true,
+    );
 
     // Surface the breakdown in the test name so a healthy run shows the
     // actual byte count we achieved, not just "passed".
@@ -137,5 +137,3 @@ describe("salt-ds info bytes-read budget (Phase 0 task 0.2)", () => {
     );
   }, 30_000);
 });
-
-

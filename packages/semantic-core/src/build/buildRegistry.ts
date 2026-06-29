@@ -55,10 +55,7 @@ import {
 import { buildSearchIndex } from "./buildSearchIndex.js";
 
 const REGISTRY_VERSION = "0.1.0";
-const EXCLUDED_REGISTRY_PACKAGES = new Set([
-  "@salt-ds/mcp",
-  "@salt-ds/data-grid",
-]);
+const EXCLUDED_REGISTRY_PACKAGES = new Set(["@salt-ds/mcp"]);
 
 function buildIconLiteRecords(icons: IconRecord[]): IconLiteRecord[] {
   return icons

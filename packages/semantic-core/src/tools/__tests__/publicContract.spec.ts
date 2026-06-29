@@ -526,7 +526,8 @@ function buildMigrateWorkflowContract(
       preserve_checks: [],
       confirmation_checks: [],
       suggested_workflow: "review_salt_ui",
-      suggested_command: "review_salt_ui via the @salt-ds/mcp server (args: { code: \"<file contents>\" })",
+      suggested_command:
+        'review_salt_ui via the @salt-ds/mcp server (args: { code: "<file contents>" })',
     },
     visual_evidence_contract: {
       role: "supporting-evidence",
@@ -1820,7 +1821,8 @@ describe("publicContract workflow adapters", () => {
         preserve_checks: [],
         confirmation_checks: [],
         suggested_workflow: "review_salt_ui",
-        suggested_command: "review_salt_ui via the @salt-ds/mcp server (args: { code: \"<file contents>\" })",
+        suggested_command:
+          'review_salt_ui via the @salt-ds/mcp server (args: { code: "<file contents>" })',
       },
     });
 

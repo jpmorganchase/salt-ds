@@ -1,6 +1,6 @@
+import fsPromises from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import fsPromises from "node:fs/promises";
 import { loadRegistry as loadSemanticRegistry } from "@salt-ds/semantic-core/registry/loadRegistry";
 import type {
   LoadRegistryOptions,
@@ -57,7 +57,10 @@ export async function loadRegistry(
     bundledRegistryDir &&
     (await pathExists(path.join(bundledRegistryDir, "metadata.json")))
   ) {
-    return loadSemanticRegistry({ ...options, registryDir: bundledRegistryDir });
+    return loadSemanticRegistry({
+      ...options,
+      registryDir: bundledRegistryDir,
+    });
   }
 
   return loadSemanticRegistry(options);

@@ -124,4 +124,3 @@ describe("inspectUrl (fetched-html path in @salt-ds/runtime-inspector-core)", ()
     expect(result.errors.some((error) => error.kind === "http")).toBe(true);
   });
 });
-

@@ -34,9 +34,7 @@ function isLikelyLintableExtension(filePath: string): boolean {
   return HOOK_LINTABLE_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
 
-async function fileContainsSaltImport(
-  filePath: string,
-): Promise<boolean> {
+async function fileContainsSaltImport(filePath: string): Promise<boolean> {
   try {
     const content = await fs.readFile(filePath, "utf8");
     return content.includes(SALT_PACKAGE_IMPORT_NEEDLE);

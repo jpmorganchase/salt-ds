@@ -1,10 +1,10 @@
+import { getSaltEntities } from "@salt-ds/semantic-core/tools/getSaltEntities";
+import { getSaltExamples } from "@salt-ds/semantic-core/tools/getSaltExamples";
 import {
   createSaltUi,
   migrateToSalt,
   reviewSaltUi,
 } from "@salt-ds/semantic-core/tools/index";
-import { getSaltEntities } from "@salt-ds/semantic-core/tools/getSaltEntities";
-import { getSaltExamples } from "@salt-ds/semantic-core/tools/getSaltExamples";
 import type { SaltRegistry } from "@salt-ds/semantic-core/types";
 import * as z from "zod/v4";
 import {
@@ -430,11 +430,7 @@ const PUBLIC_ACTION_KINDS = [
   "rerun_workflow",
   "fix_context",
 ] as const;
-const PUBLIC_WORKFLOW_IDS = [
-  "create",
-  "review",
-  "migrate",
-] as const;
+const PUBLIC_WORKFLOW_IDS = ["create", "review", "migrate"] as const;
 const PUBLIC_WORKFLOW_STATUSES = [
   "success",
   "partial",
@@ -995,18 +991,9 @@ const DEFERRED_PUBLIC_REFERENCE_IDS = {
 function toPublicReferenceSurface(value: unknown): unknown {
   if (typeof value === "string") {
     return value
-      .replaceAll(
-        DEFERRED_PUBLIC_REFERENCE_IDS.entities,
-        "get_salt_reference",
-      )
-      .replaceAll(
-        DEFERRED_PUBLIC_REFERENCE_IDS.examples,
-        "get_salt_reference",
-      )
-      .replaceAll(
-        DEFERRED_PUBLIC_REFERENCE_IDS.discover,
-        "get_salt_reference",
-      );
+      .replaceAll(DEFERRED_PUBLIC_REFERENCE_IDS.entities, "get_salt_reference")
+      .replaceAll(DEFERRED_PUBLIC_REFERENCE_IDS.examples, "get_salt_reference")
+      .replaceAll(DEFERRED_PUBLIC_REFERENCE_IDS.discover, "get_salt_reference");
   }
 
   if (Array.isArray(value)) {
@@ -1139,16 +1126,18 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: (registry, args) => {
       if (args.kind === "examples") {
-        return toPublicReferenceSurface(getSaltExamples(registry, {
-          target_type: args.target_type,
-          target_name: args.target_name ?? args.name,
-          package: args.package,
-          query: args.query,
-          complexity: args.complexity,
-          include_code: args.include_code,
-          include_starter_code: args.include_starter_code,
-          max_results: args.max_results,
-        }));
+        return toPublicReferenceSurface(
+          getSaltExamples(registry, {
+            target_type: args.target_type,
+            target_name: args.target_name ?? args.name,
+            package: args.package,
+            query: args.query,
+            complexity: args.complexity,
+            include_code: args.include_code,
+            include_starter_code: args.include_starter_code,
+            max_results: args.max_results,
+          }),
+        );
       }
 
       const names = args.names ?? (args.name ? [args.name] : []);
@@ -1158,19 +1147,21 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         );
       }
 
-      return toPublicReferenceSurface(getSaltEntities(registry, {
-        names,
-        entity_type: args.entity_type,
-        allowed_entity_types: [...V1_REFERENCE_ENTITY_TYPES],
-        allow_search_fallback: false,
-        package: args.package,
-        status: args.status,
-        include: args.include,
-        include_related: args.include_related,
-        include_starter_code: args.include_starter_code,
-        max_results: args.max_results,
-        include_deprecated: args.include_deprecated,
-      }));
+      return toPublicReferenceSurface(
+        getSaltEntities(registry, {
+          names,
+          entity_type: args.entity_type,
+          allowed_entity_types: [...V1_REFERENCE_ENTITY_TYPES],
+          allow_search_fallback: false,
+          package: args.package,
+          status: args.status,
+          include: args.include,
+          include_related: args.include_related,
+          include_starter_code: args.include_starter_code,
+          max_results: args.max_results,
+          include_deprecated: args.include_deprecated,
+        }),
+      );
     },
   }),
   defineTool<

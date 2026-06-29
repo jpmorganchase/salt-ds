@@ -6,7 +6,5 @@
   "starter_validation_status": "clean",
   "post_migration_suggested_workflow": "review",
   "visual_input_adapter_contract": "migrate_visual_evidence_v1",
-  "suggested_follow_up_workflows": [
-    "create"
-  ]
+  "suggested_follow_up_workflows": ["create"]
 }

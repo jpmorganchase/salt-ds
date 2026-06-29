@@ -102,12 +102,10 @@ function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
     }
   }
 
-  let changeIndexes:
-    | Pick<
-        RegistryIndexes,
-        "changeById" | "changesByPackage" | "changesByComponentKey"
-      >
-    | null = null;
+  let changeIndexes: Pick<
+    RegistryIndexes,
+    "changeById" | "changesByPackage" | "changesByComponentKey"
+  > | null = null;
   let searchEntryById: Map<string, SearchIndexEntry> | null = null;
 
   function getChangeIndexes() {
@@ -133,7 +131,9 @@ function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
     }
 
     changeIndexes = {
-      changeById: new Map(registry.changes.map((change) => [change.id, change])),
+      changeById: new Map(
+        registry.changes.map((change) => [change.id, change]),
+      ),
       changesByPackage,
       changesByComponentKey,
     };

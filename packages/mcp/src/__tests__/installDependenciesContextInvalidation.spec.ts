@@ -177,9 +177,9 @@ describe("install_dependencies auto-invalidates cached project context", () => {
         // both @salt-ds packages and the stale flag must be cleared so we do
         // not refetch on every subsequent call.
         const refreshedContext = runtime.projectContexts.get(contextId);
-        expect(refreshedContext?.salt.packages.map((entry) => entry.name)).toEqual(
-          expect.arrayContaining(["@salt-ds/core", "@salt-ds/theme"]),
-        );
+        expect(
+          refreshedContext?.salt.packages.map((entry) => entry.name),
+        ).toEqual(expect.arrayContaining(["@salt-ds/core", "@salt-ds/theme"]));
         expect(runtime.staleProjectContextIds.has(contextId)).toBe(false);
 
         // 4. A follow-up get_salt_entities call (the lightweight lookup the
@@ -305,5 +305,3 @@ describe("install_dependencies auto-invalidates cached project context", () => {
     );
   }, 30000);
 });
-
-

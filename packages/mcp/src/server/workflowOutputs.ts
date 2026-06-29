@@ -396,4 +396,3 @@ export function withTranslateWorkflowGuidance(
 ) {
   return buildMigrateWorkflowEnvelope(registry, result, input);
 }
-

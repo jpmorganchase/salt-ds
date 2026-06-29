@@ -8,11 +8,11 @@
  * by the MCP integration spec against the bundled registry artifact.
  */
 import { describe, expect, it } from "vitest";
+import type { SaltRegistry } from "../../types.js";
 import {
   evaluateCreateThemeProviderQuestion,
   isThemeAmbiguousQuery,
 } from "../createSaltUiThemeQuestion.js";
-import type { SaltRegistry } from "../../types.js";
 
 type ComponentRecord = SaltRegistry["components"][number];
 

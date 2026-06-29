@@ -132,8 +132,9 @@ function expectInternalLimitationsPresent(contract: PublicContract): void {
   expect(typeof contract.internal_limitations.unsupported_claim_count).toBe(
     "number",
   );
-  expect(Array.isArray(contract.internal_limitations.unsupported_rule_kinds))
-    .toBe(true);
+  expect(
+    Array.isArray(contract.internal_limitations.unsupported_rule_kinds),
+  ).toBe(true);
 }
 
 describe("salt_workflow_v1 — status × internal_limitations split", () => {
@@ -228,4 +229,3 @@ describe("salt_workflow_v1 — status × internal_limitations split", () => {
     ]);
   });
 });
-

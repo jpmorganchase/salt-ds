@@ -32,15 +32,9 @@ describe("assertFetchableUrl SSRF guard", () => {
   });
 
   it("allows loopback / private ranges by default (dev-tool default)", () => {
-    expect(() =>
-      assertFetchableUrl("http://localhost:3000/"),
-    ).not.toThrow();
-    expect(() =>
-      assertFetchableUrl("http://127.0.0.1:6006/"),
-    ).not.toThrow();
-    expect(() =>
-      assertFetchableUrl("http://192.168.1.10/"),
-    ).not.toThrow();
+    expect(() => assertFetchableUrl("http://localhost:3000/")).not.toThrow();
+    expect(() => assertFetchableUrl("http://127.0.0.1:6006/")).not.toThrow();
+    expect(() => assertFetchableUrl("http://192.168.1.10/")).not.toThrow();
   });
 
   it("blocks loopback / private ranges when blockLoopback=true", () => {

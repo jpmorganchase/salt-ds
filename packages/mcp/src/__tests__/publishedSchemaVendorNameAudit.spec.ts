@@ -1,5 +1,5 @@
-import * as z from "zod/v4";
 import { describe, expect, it } from "vitest";
+import * as z from "zod/v4";
 import { TOOL_DEFINITIONS } from "../server/toolDefinitions.js";
 
 // Phase 0 task 0.12 / PR 20: published-schema vendor-name regression test
@@ -232,9 +232,9 @@ describe("published Zod tool schemas — vendor-name regression test (PR 20 / ta
     if (allHits.length > 0) {
       throw new Error(
         `Found ${allHits.length} forbidden vendor/env-var/tool reference(s) ` +
-          `in published MCP tool schemas. Published schemas describe what ` +
-          `data means, never which CI integration or host consumes it. ` +
-          `Move the vendor-specific guidance to consumer-facing docs and ` +
+          "in published MCP tool schemas. Published schemas describe what " +
+          "data means, never which CI integration or host consumes it. " +
+          "Move the vendor-specific guidance to consumer-facing docs and " +
           `leave the schema .describe() string vendor-agnostic.\n${formatHits(allHits)}`,
       );
     }

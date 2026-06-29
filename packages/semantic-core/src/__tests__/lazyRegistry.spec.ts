@@ -59,9 +59,9 @@ beforeEach(() => {
 
 afterEach(async () => {
   await Promise.all(
-    tempDirs.splice(0, tempDirs.length).map((dir) =>
-      fs.rm(dir, { recursive: true, force: true }),
-    ),
+    tempDirs
+      .splice(0, tempDirs.length)
+      .map((dir) => fs.rm(dir, { recursive: true, force: true })),
   );
   clearArtifactCache();
   configureArtifactCache({ capacity: 64 });
@@ -196,4 +196,3 @@ describe("loadRegistry — lazy by default (Phase 0 task 0.2)", () => {
     expect(registry.build_info).toBeNull();
   });
 });
-

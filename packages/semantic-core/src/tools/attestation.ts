@@ -63,7 +63,9 @@ export const SaltAttestationV1Schema = z
     registry: SaltAttestationV1RegistrySchema,
     evidence_refs: z
       .array(z.string().min(1))
-      .describe("Stable evidence_ref_ids copied from the source review report."),
+      .describe(
+        "Stable evidence_ref_ids copied from the source review report.",
+      ),
     post_action: SaltAttestationV1PostActionSchema,
     files_touched: z.array(SaltAttestationV1FileTouchedSchema),
   })
@@ -106,8 +108,7 @@ export function parseSaltAttestationV1(
     return { ok: true, attestation: result.data };
   }
   const errors = result.error.issues.map((issue) => {
-    const pathLabel =
-      issue.path.length > 0 ? issue.path.join(".") : "(root)";
+    const pathLabel = issue.path.length > 0 ? issue.path.join(".") : "(root)";
     return `${pathLabel}: ${issue.message}`;
   });
   return { ok: false, errors };
@@ -117,16 +118,16 @@ export function parseSaltAttestationV1(
  * Parse one attestation per line (NDJSON). Empty lines and whitespace-only
  * lines are skipped. The first malformed line aborts parsing.
  */
-export function parseSaltAttestationNdjson(
-  text: string,
-): {
-  ok: true;
-  attestations: SaltAttestationV1[];
-} | {
-  ok: false;
-  lineNumber: number;
-  errors: string[];
-} {
+export function parseSaltAttestationNdjson(text: string):
+  | {
+      ok: true;
+      attestations: SaltAttestationV1[];
+    }
+  | {
+      ok: false;
+      lineNumber: number;
+      errors: string[];
+    } {
   const attestations: SaltAttestationV1[] = [];
   const lines = text.split(/\r?\n/);
   for (let index = 0; index < lines.length; index += 1) {

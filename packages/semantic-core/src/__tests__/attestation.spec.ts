@@ -1,13 +1,13 @@
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
   parseSaltAttestationNdjson,
   parseSaltAttestationV1,
   SALT_ATTESTATION_V1_SCHEMA_URL,
-  SaltAttestationV1Schema,
   type SaltAttestationV1,
+  SaltAttestationV1Schema,
 } from "../tools/attestation.js";
 
 const __filename = fileURLToPath(import.meta.url);

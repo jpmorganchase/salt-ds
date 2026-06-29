@@ -205,7 +205,9 @@ export async function installLocalPackages(rootDir) {
     );
   }
 
-  console.log("Installing built MCP package into the temp smoke tools directory...");
+  console.log(
+    "Installing built MCP package into the temp smoke tools directory...",
+  );
   await runCommand(
     getExecutable("npm"),
     ["install", "--no-package-lock", "--no-save", distMcpDir],

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -172,7 +172,7 @@ function assertBuiltManifest(packageConfig, packageDir) {
   }
 
   for (const fieldName of packageConfig.forbiddenManifestFields ?? []) {
-    if (Object.prototype.hasOwnProperty.call(manifest, fieldName)) {
+    if (Object.hasOwn(manifest, fieldName)) {
       fail(
         `${packageConfig.name} built manifest includes build-only field ${fieldName}`,
       );
@@ -182,7 +182,7 @@ function assertBuiltManifest(packageConfig, packageDir) {
   for (const fieldName of packageConfig.forbiddenPublishConfigFields ?? []) {
     if (
       manifest.publishConfig &&
-      Object.prototype.hasOwnProperty.call(manifest.publishConfig, fieldName)
+      Object.hasOwn(manifest.publishConfig, fieldName)
     ) {
       fail(
         `${packageConfig.name} built manifest publishConfig includes build-only field ${fieldName}`,
@@ -232,9 +232,7 @@ function assertManifestTargetExists(
   }
 
   if (!existsSync(path.join(packageDir, normalizedTarget))) {
-    fail(
-      `${packageConfig.name} ${fieldName} target is missing: ${targetPath}`,
-    );
+    fail(`${packageConfig.name} ${fieldName} target is missing: ${targetPath}`);
   }
 }
 
@@ -424,9 +422,9 @@ for (const packageConfig of packages) {
       .filter((filePath) => filePath.startsWith("generated/"))
       .map((filePath) => filePath.slice("generated/".length))
       .sort((left, right) => left.localeCompare(right));
-    const expectedGeneratedFiles = [...packageConfig.expectedGeneratedFiles].sort(
-      (left, right) => left.localeCompare(right),
-    );
+    const expectedGeneratedFiles = [
+      ...packageConfig.expectedGeneratedFiles,
+    ].sort((left, right) => left.localeCompare(right));
     if (
       JSON.stringify(generatedFiles) !== JSON.stringify(expectedGeneratedFiles)
     ) {

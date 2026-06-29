@@ -111,7 +111,10 @@ function findComponent(
  * React export ("SaltProvider"); query both so the lookup survives a future
  * normalization change.
  */
-const SALT_PROVIDER_NAMES: readonly string[] = ["Salt provider", "SaltProvider"];
+const SALT_PROVIDER_NAMES: readonly string[] = [
+  "Salt provider",
+  "SaltProvider",
+];
 const SALT_PROVIDER_NEXT_NAMES: readonly string[] = [
   "SaltProviderNext",
   "Salt provider next",

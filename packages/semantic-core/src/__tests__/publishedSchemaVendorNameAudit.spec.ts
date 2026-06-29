@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -75,12 +75,7 @@ function collectDescriptionStrings(
 ): void {
   if (Array.isArray(node)) {
     node.forEach((item, index) => {
-      collectDescriptionStrings(
-        schemaFile,
-        item,
-        `${pointer}/${index}`,
-        sink,
-      );
+      collectDescriptionStrings(schemaFile, item, `${pointer}/${index}`, sink);
     });
     return;
   }
@@ -178,9 +173,9 @@ describe("published JSON schemas — vendor-name regression test (PR 20 / task 0
     if (allHits.length > 0) {
       throw new Error(
         `Found ${allHits.length} forbidden vendor/env-var/tool reference(s) ` +
-          `in published JSON schemas. Published schemas describe what data ` +
-          `means, never which CI integration or host consumes it. Move the ` +
-          `vendor-specific guidance to consumer-facing docs and leave the ` +
+          "in published JSON schemas. Published schemas describe what data " +
+          "means, never which CI integration or host consumes it. Move the " +
+          "vendor-specific guidance to consumer-facing docs and leave the " +
           `schema description vendor-agnostic.\n${formatHits(allHits)}`,
       );
     }

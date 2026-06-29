@@ -44,7 +44,10 @@ import {
 } from "@salt-ds/semantic-core";
 import { pathExists, writeJsonFile } from "../lib/common.js";
 import { inspectGeneratedContext } from "../lib/generatedContext.js";
-import { resolveSemanticRegistry, readRegistryLoadOptionsFromFlags } from "../lib/registry.js";
+import {
+  readRegistryLoadOptionsFromFlags,
+  resolveSemanticRegistry,
+} from "../lib/registry.js";
 import { getSaltCliRuntimeMetadata } from "../lib/runtimeMetadata.js";
 import type { RequiredCliIo } from "../types.js";
 

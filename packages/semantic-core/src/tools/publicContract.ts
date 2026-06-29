@@ -2301,4 +2301,3 @@ export function buildMigratePublicContract(
       ),
   });
 }
-

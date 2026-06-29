@@ -77,7 +77,12 @@ export async function writeBaseArtifacts(
 export async function copyV1CatalogArtifactsFromGenerated(
   registryDir: string,
 ): Promise<void> {
-  const generatedDir = path.join(REPO_ROOT, "packages", "semantic-core", "generated");
+  const generatedDir = path.join(
+    REPO_ROOT,
+    "packages",
+    "semantic-core",
+    "generated",
+  );
   await fs.mkdir(registryDir, { recursive: true });
 
   for (const fileName of V1_CATALOG_ARTIFACT_FILES) {

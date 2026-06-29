@@ -47,9 +47,7 @@ let registry: SaltRegistry;
 let registryDir: string;
 
 beforeAll(async () => {
-  registryDir = await fs.mkdtemp(
-    path.join(os.tmpdir(), "salt-hard-gate-"),
-  );
+  registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "salt-hard-gate-"));
   await buildRegistry({
     sourceRoot: REPO_ROOT,
     outputDir: registryDir,

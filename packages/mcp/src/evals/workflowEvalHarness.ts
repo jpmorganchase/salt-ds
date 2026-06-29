@@ -1101,9 +1101,7 @@ async function bundleEvalEntrypoint(
   }
 }
 
-async function resolveExecutableScript(
-  repoRoot: string,
-): Promise<{
+async function resolveExecutableScript(repoRoot: string): Promise<{
   script_path: string;
   source: "dist" | "bundle";
   build_error?: string;
@@ -1204,7 +1202,6 @@ async function runProcess(
     });
   });
 }
-
 
 function extractStructuredToolContent(value: unknown): Record<string, unknown> {
   if (!isRecord(value) || !isRecord(value.structuredContent)) {
@@ -1626,7 +1623,6 @@ export function judgeWorkflowEvalScenario(
   };
 }
 
-
 export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
   id: "mcp-local",
   transport: "mcp",
@@ -1865,9 +1861,7 @@ export async function runWorkflowEvalScenario(
 ): Promise<WorkflowEvalTrace> {
   const startedAt = Date.now();
   const runners = options.runners ?? WORKFLOW_LOCAL_EVAL_RUNNERS;
-  const enabledTransports = new Set(
-    options.enabled_transports ?? ["mcp"],
-  );
+  const enabledTransports = new Set(options.enabled_transports ?? ["mcp"]);
   const orderedTransports = orderScenarioTransports(scenario);
   const combinedTrace: Omit<WorkflowEvalTrace, "metrics"> = {
     scenario_id: scenario.id,

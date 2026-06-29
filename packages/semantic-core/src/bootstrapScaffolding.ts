@@ -393,4 +393,3 @@ export function mergeSaltAgentHooksManifest(existing: unknown): {
 
   return { content: { hooks: merged }, changed };
 }
-

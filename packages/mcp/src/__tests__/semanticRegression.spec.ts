@@ -7,6 +7,7 @@ import {
   detectFromOutline,
   getCompositionRecipe,
 } from "@salt-ds/semantic-core";
+import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import type {
   ComponentRecord,
   PatternRecord,
@@ -14,7 +15,6 @@ import type {
   UsageSemanticsRecord,
 } from "@salt-ds/semantic-core/types";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { buildRegistry } from "@salt-ds/semantic-core/build/buildRegistry";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import { REPO_ROOT } from "./registryTestUtils.js";
 
