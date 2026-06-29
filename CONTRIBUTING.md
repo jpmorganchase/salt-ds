@@ -14,7 +14,6 @@ The repo contains below packages under `/packages`
 - ag-grid-theme: Custom theme for [AG Grid](https://ag-grid.com/)
 - core: Stable components for production use
 - countries: [Country symbol](https://www.saltdesignsystem.com/salt/components/country-symbol/) components following ISO 3166
-- data-grid: Experimental data grid implementation
 - icons: [Icon](https://www.saltdesignsystem.com/salt/components/icon/) components
 - lab: Experimental components may or may not land in core
 - styles: [Style injection](https://storybook.saltdesignsystem.com/?path=/docs/documentation-style-injection--docs) implementation

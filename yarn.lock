@@ -4338,26 +4338,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/data-grid@workspace:packages/data-grid":
-  version: 0.0.0-use.local
-  resolution: "@salt-ds/data-grid@workspace:packages/data-grid"
-  dependencies:
-    "@salt-ds/core": "workspace:^"
-    "@salt-ds/icons": "workspace:^"
-    "@salt-ds/lab": "workspace:*"
-    "@salt-ds/styles": "workspace:*"
-    "@salt-ds/window": "workspace:*"
-    clsx: "npm:^2.0.0"
-  peerDependencies:
-    "@types/react": ">=16.14.0"
-    react: ">=16.14.0"
-    react-dom: ">=16.14.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  languageName: unknown
-  linkType: soft
-
 "@salt-ds/date-adapters@workspace:^, @salt-ds/date-adapters@workspace:packages/date-adapters":
   version: 0.0.0-use.local
   resolution: "@salt-ds/date-adapters@workspace:packages/date-adapters"
@@ -4470,7 +4450,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/lab@workspace:*, @salt-ds/lab@workspace:packages/lab":
+"@salt-ds/lab@workspace:packages/lab":
   version: 0.0.0-use.local
   resolution: "@salt-ds/lab@workspace:packages/lab"
   dependencies:
