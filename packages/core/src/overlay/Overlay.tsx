@@ -22,10 +22,14 @@ export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
    * Callback function triggered when open state changes.
    */
   onOpenChange?: (open: boolean) => void;
-  /*
+  /**
    * Set the placement of the Overlay component relative to the trigger element. Defaults to `top`.
    */
   placement?: "top" | "bottom" | "left" | "right";
+  /**
+   * When `true`, the arrow indicator is hidden
+   */
+  hideArrow?: boolean;
 }
 
 export const Overlay = ({
@@ -33,6 +37,7 @@ export const Overlay = ({
   open,
   onOpenChange,
   placement: placementProp = "top",
+  hideArrow = false,
 }: OverlayProps) => {
   const arrowRef = useRef<SVGSVGElement | null>(null);
 
@@ -48,17 +53,31 @@ export const Overlay = ({
     onOpenChange?.(newOpen);
   };
 
+  const middleware = hideArrow
+    ? [
+        offset(1),
+        flip(),
+        {
+          name: "alignStart",
+          fn({ rects }: { rects: { reference: { x: number } } }) {
+            return { x: rects.reference.x };
+          },
+        },
+        shift({ limiter: limitShift() }),
+      ]
+    : [
+        offset(11),
+        flip(),
+        shift({ limiter: limitShift() }),
+        arrow({ element: arrowRef }),
+      ];
+
   const { x, y, strategy, context, elements, floating, reference } =
     useFloatingUI({
       open: openState,
       onOpenChange: handleOpenChange,
       placement: placementProp,
-      middleware: [
-        offset(11),
-        flip(),
-        shift({ limiter: limitShift() }),
-        arrow({ element: arrowRef }),
-      ],
+      middleware,
     });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -88,7 +107,7 @@ export const Overlay = ({
         openState,
         floatingStyles,
         context,
-        arrowProps,
+        arrowProps: hideArrow ? undefined : arrowProps,
         floating,
         reference,
         getFloatingProps,
