@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-ai-setup.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "status",
+    "root_dir",
+    "next_command",
+    "compatibility",
+    "steps"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_ai_setup_v1"
+    },
+    "status": {
+      "enum": ["ready", "degraded"]
+    },
+    "root_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "next_command": {
+      "type": "string",
+      "minLength": 1
+    },
+    "compatibility": {
+      "$ref": "#/$defs/compatibilityMatrix"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    }
+  },
+  "$defs": {
+    "compatibilityMatrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "checks"],
+      "properties": {
+        "status": {
+          "enum": ["compatible", "degraded"]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compatibilityCheck"
+          }
+        }
+      }
+    },
+    "compatibilityCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "evidence_source", "missing"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stepId"
+        },
+        "status": {
+          "enum": ["compatible", "degraded", "unsupported"]
+        },
+        "evidence_source": {
+          "$ref": "#/$defs/evidenceSource"
+        },
+        "missing": {
+          "$ref": "#/$defs/missingList"
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "status",
+        "summary",
+        "command",
+        "evidence_source",
+        "missing"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stepId"
+        },
+        "status": {
+          "enum": ["current", "action_required", "unsupported"]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": ["string", "null"]
+        },
+        "evidence_source": {
+          "$ref": "#/$defs/evidenceSource"
+        },
+        "missing": {
+          "$ref": "#/$defs/missingList"
+        }
+      }
+    },
+    "stepId": {
+      "enum": [
+        "repo-policy",
+        "repo-instructions",
+        "host-adapters",
+        "ui-verify",
+        "generated-context",
+        "release-gate",
+        "doctor"
+      ]
+    },
+    "evidenceSource": {
+      "enum": [
+        "project_policy",
+        "generated_context",
+        "workflow_input",
+        "runtime_check"
+      ]
+    },
+    "missingList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

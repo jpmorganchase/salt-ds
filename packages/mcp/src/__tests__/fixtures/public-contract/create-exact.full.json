@@ -1,0 +1,11 @@
+{
+  "workflow_id": "create",
+  "confidence_level": "medium",
+  "readiness_status": "starter_validated",
+  "context_requirement_status": "context_checked",
+  "final_decision_name": "Metric",
+  "final_decision_source": "canonical_salt",
+  "starter_validation_status": "clean",
+  "repo_refinement_status": null,
+  "suggested_follow_up_workflows": []
+}

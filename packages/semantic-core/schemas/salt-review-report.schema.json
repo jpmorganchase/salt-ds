@@ -1,0 +1,396 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-review-report.schema.json",
+  "title": "Salt Review Report",
+  "description": "Durable evidence-aware report for Salt review workflow results.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "generated_at",
+    "generator",
+    "registry",
+    "profile",
+    "status",
+    "workflow",
+    "scope",
+    "phases",
+    "gates",
+    "findings",
+    "fix_candidates",
+    "evidence_refs",
+    "unsupported_claims",
+    "surface_gate",
+    "release_gate",
+    "evidence_validation",
+    "generated_artifact"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_review_report_v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "profile": {
+      "enum": ["auto", "salt", "accessibility", "migration", "upgrade", "all"]
+    },
+    "status": {
+      "enum": ["clean", "needs_attention", "unsupported"]
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "transport_used",
+        "public_status",
+        "decision_status",
+        "next_required_action",
+        "rule_ids"
+      ],
+      "properties": {
+        "id": {
+          "const": "review"
+        },
+        "transport_used": {
+          "enum": ["cli", "mcp"]
+        },
+        "public_status": {
+          "enum": ["success", "partial", "blocked", "failed", null]
+        },
+        "decision_status": {
+          "enum": ["clean", "needs_attention"]
+        },
+        "next_required_action": true,
+        "rule_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targets", "file_count", "files"],
+      "properties": {
+        "root_dir": {
+          "type": ["string", "null"]
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "file_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scopeFile"
+          }
+        }
+      }
+    },
+    "phases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/phase"
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/gate"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "fix_candidates": {
+      "type": "object"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-evidence-ref.schema.json"
+      }
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-generated-artifact.schema.json#/$defs/unsupportedClaim"
+      }
+    },
+    "surface_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "validation_issues",
+        "missing",
+        "unsupported_claim_count",
+        "artifact_id",
+        "artifact_kind"
+      ],
+      "properties": {
+        "status": {
+          "enum": ["validated", "unsupported"]
+        },
+        "validation_issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceValidationIssue"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unsupported_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_kind": {
+          "const": "review-report"
+        }
+      }
+    },
+    "release_gate": {
+      "$ref": "salt-generated-artifact-release-gate.schema.json"
+    },
+    "evidence_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "issues", "missing", "unsupported_claim_count"],
+      "properties": {
+        "status": {
+          "enum": ["validated", "unsupported"]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceValidationIssue"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unsupported_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "generated_artifact": {
+      "$ref": "salt-generated-artifact.schema.json"
+    }
+  },
+  "$defs": {
+    "scopeFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "status", "errors", "warnings", "infos"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relative_path": {
+          "type": ["string", "null"]
+        },
+        "status": {
+          "enum": ["clean", "needs_attention"]
+        },
+        "errors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warnings": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "infos": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "summary"],
+      "properties": {
+        "id": {
+          "enum": [
+            "context_resolution",
+            "source_discovery",
+            "salt_static_review",
+            "runtime_inspection",
+            "evidence_validation"
+          ]
+        },
+        "status": {
+          "enum": ["complete", "skipped", "unsupported"]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "missing"],
+      "properties": {
+        "id": {
+          "enum": [
+            "context_to_source_review",
+            "static_to_runtime_review",
+            "review_to_implementation_recommendation",
+            "report_evidence_validation"
+          ]
+        },
+        "status": {
+          "enum": ["passed", "blocked", "skipped", "unsupported"]
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "message",
+        "status",
+        "evidence_ref_ids",
+        "source_urls"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": ["string", "null"]
+        },
+        "rule": {
+          "type": ["string", "null"]
+        },
+        "severity": {
+          "type": ["string", "null"]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_id": {
+          "type": ["string", "null"]
+        },
+        "unsupported_claim_id": {
+          "type": ["string", "null"]
+        },
+        "status": {
+          "enum": ["source_backed", "unsupported"]
+        },
+        "evidence_ref_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "evidenceValidationIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "path"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

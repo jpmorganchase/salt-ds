@@ -1,0 +1,116 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-chart-cross-family-compact",
+    "audience": "existing-salt-team",
+    "tags": [
+      "replay",
+      "create",
+      "descriptive-query",
+      "semantic-misroute",
+      "compact"
+    ],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-chart-cross-family",
+      "description": "Saved replay fixture for a compact descriptive create result that misroutes a chart request to Stack layout through the default public contract."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a chart to the analytical dashboard body."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "chart of data visualization component for dashboard analytical body",
+        "view": "compact"
+      },
+      "cli": {
+        "argv": [
+          "create",
+          "chart of data visualization component for dashboard analytical body",
+          "--json"
+        ]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "public_contract": {
+        "workflow_status": "blocked",
+        "canonical_complete": false,
+        "safe_to_implement_exact_request": false,
+        "requested_entity": "chart of data visualization component for dashboard analytical body",
+        "resolved_entity": "Stack layout",
+        "match_status": "misrouted",
+        "next_step": {
+          "kind": "tool_call",
+          "tool": "create_salt_ui",
+          "mode": "exact_name",
+          "query": "Chart"
+        },
+        "summary_includes": ["instead of the requested chart"]
+      },
+      "canonical_choice": "Chart",
+      "final_choice": "Chart",
+      "required_fragments": [
+        "\"requested_entity\":\"chart of data visualization component for dashboard analytical body\"",
+        "\"resolved_entity\":\"Stack layout\"",
+        "\"match_status\":\"misrouted\""
+      ]
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-chart-cross-family-compact",
+    "runner_id": "replay-fixture",
+    "status": "failed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved compact transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "blocked",
+      "canonical_complete": false,
+      "safe_to_implement_exact_request": false,
+      "requested_entity": "chart of data visualization component for dashboard analytical body",
+      "resolved_entity": "Stack layout",
+      "match_status": "misrouted",
+      "blocking_reasons": [
+        "requested entity resolved to a different Salt entity"
+      ],
+      "next_step": {
+        "kind": "tool_call",
+        "tool": "create_salt_ui",
+        "mode": "exact_name",
+        "args": {
+          "query": "Chart"
+        }
+      },
+      "summary": "Salt resolved Stack layout instead of the requested chart of data visualization component for dashboard analytical body."
+    },
+    "transcript": [
+      "Use salt-ds to add a chart to the analytical dashboard body.",
+      "The host pinned the semantic drift as a cross-family mismatch and suggested retrying with the canonical Chart target."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-chart-cross-family"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

@@ -1,0 +1,1969 @@
+import { spawn } from "node:child_process";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+
+export type EvalAudience =
+  | "existing-salt-team"
+  | "non-salt-team"
+  | "new-project-team";
+
+export type EvalWorkflow = "create" | "review" | "migrate";
+// After Phase A (14-Jun) the CLI no longer runs salt-ds workflow commands;
+// every eval scenario reaches the MCP via stdio only. EvalTransport stays as
+// a single-member literal so older `transport_used` callsites in trace
+// payloads keep a structural label.
+export type EvalTransport = "mcp";
+
+export interface WorkflowEvalScenario {
+  id: string;
+  audience: EvalAudience;
+  tags: string[];
+  fixture: {
+    kind: "repo";
+    root_dir: string;
+    description: string;
+  };
+  task: {
+    workflow: EvalWorkflow;
+    prompt: string;
+  };
+  capabilities: {
+    mcp?: boolean;
+    project_conventions?: boolean;
+    runtime_url?: boolean;
+    screenshot_input?: boolean;
+  };
+  args: {
+    mcp?: Record<string, unknown>;
+  };
+  expected: {
+    transport?: {
+      stop_if_all_fail?: true;
+    };
+    workflow?: {
+      id?: string;
+      readiness?: string;
+      implementation_ready?: boolean;
+    };
+    summary_first?: true;
+    require_verify?: true;
+    max_blocking_questions?: number;
+    canonical_choice?: string | null;
+    final_choice?: string | null;
+    required_fragments?: string[];
+    banned_fragments?: string[];
+    public_contract?: {
+      workflow_status?:
+        | "success"
+        | "partial"
+        | "blocked"
+        | "failed"
+        | Array<"success" | "partial" | "blocked" | "failed">;
+      canonical_complete?: boolean;
+      safe_to_implement_exact_request?: boolean;
+      requested_entity?: string | null;
+      resolved_entity?: string | null;
+      match_status?:
+        | "exact"
+        | "alias"
+        | "broadened"
+        | "misrouted"
+        | "no_match"
+        | null;
+      next_step?: {
+        kind?: string;
+        tool?: string;
+        mode?: string;
+        query?: string;
+        name?: string;
+      };
+      next_required_action?: {
+        kind?: string;
+        tool?: string;
+        mode?: string;
+        query?: string;
+        name?: string;
+      };
+      allowed_next_actions?: string[];
+      evidence?: {
+        status?: "complete" | "partial" | "missing";
+        required_kinds?: Array<
+          | "docs"
+          | "examples"
+          | "registry"
+          | "project_policy"
+          | "heuristic_fallback"
+        >;
+        min_source_urls?: number;
+      };
+      recipe?: {
+        required_action_kinds?: string[];
+        required_entities?: string[];
+      };
+      questions?: {
+        min_count?: number;
+        max_count?: number;
+        includes?: string[];
+      };
+      summary_includes?: string[];
+    };
+    metrics?: {
+      max_transcript_bytes?: number;
+      max_workflow_result_bytes?: number;
+      max_logs_bytes?: number;
+      max_payload_bytes?: number;
+      max_duration_ms?: number;
+    };
+  };
+}
+
+export interface WorkflowEvalMetrics {
+  transcript_line_count: number;
+  transcript_bytes: number;
+  workflow_result_bytes: number;
+  logs_bytes: number;
+  payload_bytes: number;
+  approx_prompt_tokens: number;
+  duration_ms: number;
+}
+
+export interface WorkflowEvalTrace {
+  scenario_id: string;
+  runner_id: string;
+  status: "passed" | "failed" | "skipped";
+  transport_trace: Array<{
+    transport: EvalTransport;
+    status: "succeeded" | "failed" | "fallback" | "unavailable";
+    detail: string;
+  }>;
+  workflow_result: unknown | null;
+  transcript: string[];
+  metrics: WorkflowEvalMetrics;
+  artifacts: {
+    files?: string[];
+    logs?: string[];
+    report_path?: string | null;
+  };
+}
+
+export interface WorkflowEvalJudgment {
+  status: "passed" | "failed" | "skipped";
+  reasons: string[];
+}
+
+export interface WorkflowEvalRunnerContext {
+  registry_dir: string;
+  repo_root: string;
+  timeout_ms?: number;
+}
+
+export interface WorkflowEvalRunner {
+  id: string;
+  transport: EvalTransport;
+  supports: (scenario: WorkflowEvalScenario) => boolean;
+  run: (
+    scenario: WorkflowEvalScenario,
+    context: WorkflowEvalRunnerContext,
+  ) => Promise<WorkflowEvalTrace>;
+}
+
+export interface WorkflowEvalReportEntry {
+  scenario_id: string;
+  tags: string[];
+  runner_id: string;
+  judgment: WorkflowEvalJudgment;
+  trace: WorkflowEvalTrace;
+}
+
+export interface WorkflowEvalScorecard {
+  correctness: {
+    passed: number;
+    failed: number;
+    skipped: number;
+    pass_rate: number;
+  };
+  context_safety: {
+    safe_context_stops: number;
+    fix_context_steps: number;
+    retry_contracts_present: number;
+    context_failures: number;
+  };
+  next_step_quality: {
+    branchable_next_steps: number;
+    missing_next_steps: number;
+    exact_name_follow_ups: number;
+    implement_steps: number;
+  };
+  payload_size: {
+    average_workflow_result_bytes: number;
+    max_workflow_result_bytes: number;
+    average_payload_bytes: number;
+    max_payload_bytes: number;
+  };
+  transport_parity: {
+    direct_successes: number;
+    fallback_successes: number;
+    multi_attempt_runs: number;
+    failed_runs: number;
+  };
+  workflow_efficiency: {
+    average_transport_attempts: number;
+    repeated_transport_attempts: number;
+    average_time_to_safe_next_step_ms: number;
+    average_prompt_tokens: number;
+  };
+}
+
+export interface WorkflowEvalReport {
+  generated_at: string;
+  repo_root: string;
+  registry_dir: string;
+  requested_runner_ids: string[];
+  requested_scenario_ids: string[];
+  passed: boolean;
+  metrics: WorkflowEvalMetrics;
+  scorecard: WorkflowEvalScorecard;
+  entries: WorkflowEvalReportEntry[];
+}
+
+const MCP_BIN_PATH = path.join("packages", "mcp", "bin", "salt-mcp.js");
+const MCP_DIST_ENTRY = path.join(
+  "dist",
+  "salt-ds-mcp",
+  "dist-cjs",
+  "mcp",
+  "src",
+  "index.js",
+);
+const ENSURED_BUILD_PROMISES = new Map<string, Promise<void>>();
+const BUNDLED_ENTRYPOINTS = new Map<string, Promise<string>>();
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function readString(
+  record: Record<string, unknown>,
+  key: string,
+): string | null {
+  const value = record[key];
+  return typeof value === "string" && value.trim().length > 0
+    ? value.trim()
+    : null;
+}
+
+function readStringArray(
+  record: Record<string, unknown>,
+  key: string,
+): string[] {
+  const value = record[key];
+  return Array.isArray(value)
+    ? value.filter(
+        (entry): entry is string =>
+          typeof entry === "string" && entry.trim().length > 0,
+      )
+    : [];
+}
+
+function uniqueStrings(values: Array<string | null | undefined>): string[] {
+  return [
+    ...new Set(values.filter((value): value is string => Boolean(value))),
+  ];
+}
+
+function compactStrings(values: Array<string | null | undefined>): string[] {
+  return values.filter(
+    (value): value is string => typeof value === "string" && value.length > 0,
+  );
+}
+
+function byteLength(value: string): number {
+  return Buffer.byteLength(value, "utf8");
+}
+
+function estimatePromptTokensFromBytes(bytes: number): number {
+  return Math.max(1, Math.ceil(bytes / 4));
+}
+
+function buildWorkflowEvalMetrics(input: {
+  transcript: string[];
+  workflow_result: unknown | null;
+  logs?: string[];
+  duration_ms: number;
+}): WorkflowEvalMetrics {
+  const transcriptText = input.transcript.join("\n");
+  const workflowResultText = serializeTraceResult(input.workflow_result);
+  const logsText = (input.logs ?? []).join("\n");
+  const transcriptBytes = byteLength(transcriptText);
+  const workflowResultBytes = byteLength(workflowResultText);
+  const logsBytes = byteLength(logsText);
+  const payloadBytes = transcriptBytes + workflowResultBytes + logsBytes;
+
+  return {
+    transcript_line_count: input.transcript.length,
+    transcript_bytes: transcriptBytes,
+    workflow_result_bytes: workflowResultBytes,
+    logs_bytes: logsBytes,
+    payload_bytes: payloadBytes,
+    approx_prompt_tokens: estimatePromptTokensFromBytes(
+      transcriptBytes + logsBytes,
+    ),
+    duration_ms: Math.max(0, Math.round(input.duration_ms)),
+  };
+}
+
+function attachWorkflowEvalMetrics<
+  T extends Omit<WorkflowEvalTrace, "metrics">,
+>(trace: T, startedAtMs: number): T & { metrics: WorkflowEvalMetrics } {
+  return {
+    ...trace,
+    metrics: buildWorkflowEvalMetrics({
+      transcript: trace.transcript,
+      workflow_result: trace.workflow_result,
+      logs: trace.artifacts.logs ?? [],
+      duration_ms: Date.now() - startedAtMs,
+    }),
+  };
+}
+
+function aggregateWorkflowEvalMetrics(
+  traces: WorkflowEvalTrace[],
+): WorkflowEvalMetrics {
+  return traces.reduce<WorkflowEvalMetrics>(
+    (summary, trace) => ({
+      transcript_line_count:
+        summary.transcript_line_count + trace.metrics.transcript_line_count,
+      transcript_bytes:
+        summary.transcript_bytes + trace.metrics.transcript_bytes,
+      workflow_result_bytes:
+        summary.workflow_result_bytes + trace.metrics.workflow_result_bytes,
+      logs_bytes: summary.logs_bytes + trace.metrics.logs_bytes,
+      payload_bytes: summary.payload_bytes + trace.metrics.payload_bytes,
+      approx_prompt_tokens:
+        summary.approx_prompt_tokens + trace.metrics.approx_prompt_tokens,
+      duration_ms: summary.duration_ms + trace.metrics.duration_ms,
+    }),
+    {
+      transcript_line_count: 0,
+      transcript_bytes: 0,
+      workflow_result_bytes: 0,
+      logs_bytes: 0,
+      payload_bytes: 0,
+      approx_prompt_tokens: 0,
+      duration_ms: 0,
+    },
+  );
+}
+
+function averageMetric(total: number, count: number): number {
+  if (count <= 0) {
+    return 0;
+  }
+
+  return Number((total / count).toFixed(2));
+}
+
+function extractPublicNextStep(value: unknown): Record<string, unknown> | null {
+  const publicContract = extractPublicContract(value);
+  return publicContract && isRecord(publicContract.action)
+    ? publicContract.action
+    : null;
+}
+
+function countTransportAttempts(trace: WorkflowEvalTrace): number {
+  return trace.transport_trace.filter((entry) => entry.status !== "unavailable")
+    .length;
+}
+
+function hasFallbackTransport(trace: WorkflowEvalTrace): boolean {
+  return (
+    trace.transport_trace.some((entry) => entry.status === "fallback") ||
+    trace.transport_trace.some((entry, index) => {
+      if (entry.status !== "succeeded") {
+        return false;
+      }
+
+      return trace.transport_trace
+        .slice(0, index)
+        .some((candidate) => candidate.status !== "unavailable");
+    })
+  );
+}
+
+function hasRetryContract(trace: WorkflowEvalTrace): boolean {
+  const serialized = serializeTraceResult(trace.workflow_result);
+  return (
+    serialized.includes("retry_with.root_dir") ||
+    serialized.includes("needs_explicit_root") ||
+    serialized.includes('"kind":"fix_context"') ||
+    serialized.includes('"kind": "fix_context"')
+  );
+}
+
+export function buildWorkflowEvalScorecard(
+  entries: Array<{
+    judgment: WorkflowEvalJudgment;
+    trace: WorkflowEvalTrace;
+    tags?: string[];
+  }>,
+): WorkflowEvalScorecard {
+  const entryCount = entries.length;
+  const passed = entries.filter((entry) => entry.judgment.status === "passed");
+  const failed = entries.filter((entry) => entry.judgment.status === "failed");
+  const skipped = entries.filter(
+    (entry) => entry.judgment.status === "skipped",
+  );
+  const branchableNextSteps = entries.filter((entry) =>
+    Boolean(extractPublicNextStep(entry.trace.workflow_result)),
+  );
+  const exactNameFollowUps = branchableNextSteps.filter((entry) => {
+    const nextStep = extractPublicNextStep(entry.trace.workflow_result);
+    return (
+      nextStep?.kind === "tool_call" &&
+      nextStep.mode === "exact_name" &&
+      typeof nextStep.tool === "string"
+    );
+  });
+  const implementSteps = branchableNextSteps.filter((entry) => {
+    const nextStep = extractPublicNextStep(entry.trace.workflow_result);
+    return nextStep?.kind === "implement";
+  });
+  const fixContextSteps = branchableNextSteps.filter((entry) => {
+    const nextStep = extractPublicNextStep(entry.trace.workflow_result);
+    return nextStep?.kind === "fix_context";
+  });
+  const retryContracts = entries.filter((entry) =>
+    hasRetryContract(entry.trace),
+  );
+  const safeContextStops = entries.filter((entry) => {
+    const tags = entry.tags ?? [];
+    return (
+      retryContracts.includes(entry) ||
+      fixContextSteps.includes(entry) ||
+      (tags.includes("context") && entry.judgment.status === "passed")
+    );
+  });
+  const contextFailures = entries.filter((entry) => {
+    if (entry.judgment.status !== "failed") {
+      return false;
+    }
+
+    const tags = entry.tags ?? [];
+    const reasonText = entry.judgment.reasons.join("\n");
+    return (
+      tags.includes("context") ||
+      reasonText.includes("context") ||
+      reasonText.includes("needs_explicit_root")
+    );
+  });
+  const directSuccesses = passed.filter(
+    (entry) =>
+      !hasFallbackTransport(entry.trace) &&
+      countTransportAttempts(entry.trace) <= 1,
+  );
+  const fallbackSuccesses = passed.filter((entry) =>
+    hasFallbackTransport(entry.trace),
+  );
+  const multiAttemptRuns = entries.filter(
+    (entry) => countTransportAttempts(entry.trace) > 1,
+  );
+  const totalWorkflowResultBytes = entries.reduce(
+    (sum, entry) => sum + entry.trace.metrics.workflow_result_bytes,
+    0,
+  );
+  const totalPayloadBytes = entries.reduce(
+    (sum, entry) => sum + entry.trace.metrics.payload_bytes,
+    0,
+  );
+  const totalTransportAttempts = entries.reduce(
+    (sum, entry) => sum + countTransportAttempts(entry.trace),
+    0,
+  );
+  const totalDurationMs = entries.reduce(
+    (sum, entry) => sum + entry.trace.metrics.duration_ms,
+    0,
+  );
+  const totalPromptTokens = entries.reduce(
+    (sum, entry) => sum + entry.trace.metrics.approx_prompt_tokens,
+    0,
+  );
+
+  return {
+    correctness: {
+      passed: passed.length,
+      failed: failed.length,
+      skipped: skipped.length,
+      pass_rate: averageMetric(passed.length * 100, entryCount),
+    },
+    context_safety: {
+      safe_context_stops: safeContextStops.length,
+      fix_context_steps: fixContextSteps.length,
+      retry_contracts_present: retryContracts.length,
+      context_failures: contextFailures.length,
+    },
+    next_step_quality: {
+      branchable_next_steps: branchableNextSteps.length,
+      missing_next_steps: Math.max(0, entryCount - branchableNextSteps.length),
+      exact_name_follow_ups: exactNameFollowUps.length,
+      implement_steps: implementSteps.length,
+    },
+    payload_size: {
+      average_workflow_result_bytes: averageMetric(
+        totalWorkflowResultBytes,
+        entryCount,
+      ),
+      max_workflow_result_bytes: entries.reduce(
+        (maxBytes, entry) =>
+          Math.max(maxBytes, entry.trace.metrics.workflow_result_bytes),
+        0,
+      ),
+      average_payload_bytes: averageMetric(totalPayloadBytes, entryCount),
+      max_payload_bytes: entries.reduce(
+        (maxBytes, entry) =>
+          Math.max(maxBytes, entry.trace.metrics.payload_bytes),
+        0,
+      ),
+    },
+    transport_parity: {
+      direct_successes: directSuccesses.length,
+      fallback_successes: fallbackSuccesses.length,
+      multi_attempt_runs: multiAttemptRuns.length,
+      failed_runs: failed.length,
+    },
+    workflow_efficiency: {
+      average_transport_attempts: averageMetric(
+        totalTransportAttempts,
+        entryCount,
+      ),
+      repeated_transport_attempts: multiAttemptRuns.length,
+      average_time_to_safe_next_step_ms: averageMetric(
+        totalDurationMs,
+        entryCount,
+      ),
+      average_prompt_tokens: averageMetric(totalPromptTokens, entryCount),
+    },
+  };
+}
+
+function toWorkflowToolId(workflow: EvalWorkflow): string {
+  switch (workflow) {
+    case "create":
+      return "create_salt_ui";
+    case "review":
+      return "review_salt_ui";
+    case "migrate":
+      return "migrate_to_salt";
+  }
+}
+
+function toPublicWorkflowId(rawId: string | null): string | null {
+  switch (rawId) {
+    case "create":
+      return "create_salt_ui";
+    case "review":
+      return "review_salt_ui";
+    case "migrate":
+      return "migrate_to_salt";
+    default:
+      return rawId;
+  }
+}
+
+function extractWorkflowObject(value: unknown): Record<string, unknown> | null {
+  if (
+    isRecord(value) &&
+    isRecord(value.details) &&
+    isRecord(value.details.workflow)
+  ) {
+    return value.details.workflow;
+  }
+
+  if (isRecord(value) && isRecord(value.workflow)) {
+    return value.workflow;
+  }
+
+  if (isRecord(value) && typeof value.workflow === "string") {
+    const safety = isRecord(value.safety) ? value.safety : null;
+    return {
+      id: toPublicWorkflowId(value.workflow),
+      workflow_status:
+        typeof value.status === "string" ? value.status : value.workflow_status,
+      canonical_complete:
+        typeof safety?.canonical_complete === "boolean"
+          ? safety.canonical_complete
+          : value.canonical_complete,
+      safe_to_implement_exact_request:
+        typeof safety?.exact_request_safe === "boolean"
+          ? safety.exact_request_safe
+          : value.safe_to_implement_exact_request,
+    };
+  }
+
+  return null;
+}
+
+function extractResultObject(value: unknown): Record<string, unknown> | null {
+  if (
+    isRecord(value) &&
+    isRecord(value.details) &&
+    isRecord(value.details.result)
+  ) {
+    return value.details.result;
+  }
+
+  if (isRecord(value) && isRecord(value.result)) {
+    return value.result;
+  }
+
+  if (isRecord(value) && typeof value.workflow === "string") {
+    return value;
+  }
+
+  return null;
+}
+
+export function normalizeWorkflowEvalPublicContract(
+  value: unknown,
+): Record<string, unknown> | null {
+  if (isRecord(value) && typeof value.workflow === "string") {
+    const request = isRecord(value.request) ? value.request : null;
+    const safety = isRecord(value.safety) ? value.safety : null;
+    const action = isRecord(value.action)
+      ? value.action
+      : isRecord(value.next_step)
+        ? value.next_step
+        : null;
+    const nextRequiredAction = isRecord(value.next_required_action)
+      ? value.next_required_action
+      : action;
+    const allowedNextActions = Array.isArray(value.allowed_next_actions)
+      ? value.allowed_next_actions.filter(
+          (entry): entry is string => typeof entry === "string",
+        )
+      : [];
+    const questions = readStringArray(value, "questions");
+    const evidence = isRecord(value.evidence) ? value.evidence : null;
+    const recipe = isRecord(value.recipe) ? value.recipe : null;
+    const transport =
+      typeof value.transport === "string"
+        ? value.transport
+        : typeof value.transport_used === "string"
+          ? value.transport_used
+          : null;
+    const status =
+      typeof value.status === "string"
+        ? value.status
+        : typeof value.workflow_status === "string"
+          ? value.workflow_status
+          : null;
+    const canonicalComplete =
+      typeof safety?.canonical_complete === "boolean"
+        ? safety.canonical_complete
+        : typeof value.canonical_complete === "boolean"
+          ? value.canonical_complete
+          : null;
+    const exactRequestSafe =
+      typeof safety?.exact_request_safe === "boolean"
+        ? safety.exact_request_safe
+        : typeof value.safe_to_implement_exact_request === "boolean"
+          ? value.safe_to_implement_exact_request
+          : null;
+    const blockingReasons = Array.isArray(safety?.blocking_reasons)
+      ? safety.blocking_reasons
+      : Array.isArray(value.blocking_reasons)
+        ? value.blocking_reasons
+        : [];
+    const requestedEntity =
+      typeof request?.entity === "string"
+        ? request.entity
+        : typeof value.requested_entity === "string"
+          ? value.requested_entity
+          : null;
+    const resolvedEntity =
+      typeof request?.resolved_entity === "string" ||
+      request?.resolved_entity === null
+        ? request.resolved_entity
+        : typeof value.resolved_entity === "string" ||
+            value.resolved_entity === null
+          ? value.resolved_entity
+          : null;
+    const matchStatus =
+      typeof request?.match_status === "string"
+        ? request.match_status
+        : typeof value.match_status === "string"
+          ? value.match_status
+          : null;
+    const exactMatchRequired =
+      typeof request?.exact_match_required === "boolean"
+        ? request.exact_match_required
+        : typeof value.exact_match_required === "boolean"
+          ? value.exact_match_required
+          : null;
+
+    return {
+      ...value,
+      ...(transport ? { transport } : {}),
+      ...(status ? { status } : {}),
+      request: {
+        ...(requestedEntity !== null ? { entity: requestedEntity } : {}),
+        ...(resolvedEntity !== null || value.resolved_entity === null
+          ? { resolved_entity: resolvedEntity }
+          : {}),
+        ...(matchStatus !== null ? { match_status: matchStatus } : {}),
+        ...(exactMatchRequired !== null
+          ? { exact_match_required: exactMatchRequired }
+          : {}),
+      },
+      safety: {
+        canonical_complete: canonicalComplete,
+        exact_request_safe: exactRequestSafe,
+        blocking_reasons: blockingReasons,
+      },
+      ...(action ? { action } : {}),
+      ...(nextRequiredAction
+        ? { next_required_action: nextRequiredAction }
+        : {}),
+      allowed_next_actions: allowedNextActions,
+      questions,
+      ...(evidence ? { evidence } : {}),
+      ...(recipe ? { recipe } : {}),
+      ...(transport ? { transport_used: transport } : {}),
+      ...(status ? { workflow_status: status } : {}),
+      ...(canonicalComplete !== null
+        ? { canonical_complete: canonicalComplete }
+        : {}),
+      ...(exactRequestSafe !== null
+        ? { safe_to_implement_exact_request: exactRequestSafe }
+        : {}),
+      ...(requestedEntity !== null
+        ? { requested_entity: requestedEntity }
+        : {}),
+      ...(resolvedEntity !== null || request?.resolved_entity === null
+        ? { resolved_entity: resolvedEntity }
+        : {}),
+      ...(matchStatus !== null ? { match_status: matchStatus } : {}),
+      next_step: action,
+      blocking_reasons: blockingReasons,
+    };
+  }
+
+  return null;
+}
+
+function extractPublicContract(value: unknown): Record<string, unknown> | null {
+  return normalizeWorkflowEvalPublicContract(value);
+}
+
+function countBlockingQuestions(
+  result: Record<string, unknown> | null,
+): number {
+  if (!result) {
+    return 0;
+  }
+
+  const openQuestions = Array.isArray(result.open_questions)
+    ? result.open_questions.length
+    : 0;
+  const clarifyingQuestions = Array.isArray(result.clarifying_questions)
+    ? result.clarifying_questions.length
+    : 0;
+
+  return openQuestions + clarifyingQuestions;
+}
+
+function extractVerifyEntries(
+  result: Record<string, unknown> | null,
+): string[] {
+  if (!result || !isRecord(result.ide_summary)) {
+    return [];
+  }
+
+  return Array.isArray(result.ide_summary.verify)
+    ? result.ide_summary.verify.filter(
+        (entry): entry is string => typeof entry === "string",
+      )
+    : [];
+}
+
+function extractCanonicalChoice(
+  result: Record<string, unknown> | null,
+): string | null {
+  if (!result) {
+    return null;
+  }
+
+  if (isRecord(result.decision) && typeof result.decision.name === "string") {
+    return result.decision.name;
+  }
+
+  if (isRecord(result.decision) && typeof result.decision.target === "string") {
+    return result.decision.target;
+  }
+
+  if (typeof result.resolved_entity === "string") {
+    return result.resolved_entity;
+  }
+
+  if (
+    isRecord(result.request) &&
+    typeof result.request.resolved_entity === "string"
+  ) {
+    return result.request.resolved_entity;
+  }
+
+  return null;
+}
+
+function extractFinalChoice(
+  result: Record<string, unknown> | null,
+): string | null {
+  if (!result) {
+    return null;
+  }
+
+  if (
+    isRecord(result.final_decision) &&
+    typeof result.final_decision.name === "string"
+  ) {
+    return result.final_decision.name;
+  }
+
+  if (typeof result.resolved_entity === "string") {
+    return result.resolved_entity;
+  }
+
+  if (
+    isRecord(result.request) &&
+    typeof result.request.resolved_entity === "string"
+  ) {
+    return result.request.resolved_entity;
+  }
+
+  return extractCanonicalChoice(result);
+}
+
+function readStepArg(
+  step: Record<string, unknown>,
+  key: string,
+): string | null {
+  if (!isRecord(step.args)) {
+    return null;
+  }
+  // Public reference follow-ups use get_salt_reference with
+  // `args.kind = "entity"` and `args.names`. The intent-fixture comparator
+  // still reads expectedStep.name verbatim because it stays one
+  // human-readable line.
+  if (typeof step.args[key] === "string") {
+    return step.args[key];
+  }
+  if (key === "name") {
+    const names = step.args.names;
+    if (Array.isArray(names) && typeof names[0] === "string") {
+      return names[0];
+    }
+  }
+  return null;
+}
+
+function getRecipeSteps(recipe: unknown): Array<Record<string, unknown>> {
+  if (!isRecord(recipe) || !Array.isArray(recipe.steps)) {
+    return [];
+  }
+
+  return recipe.steps.filter(isRecord);
+}
+
+function getRecipeAction(
+  step: Record<string, unknown>,
+): Record<string, unknown> | null {
+  return isRecord(step.action) ? step.action : null;
+}
+
+function recipeContainsActionKind(
+  recipe: unknown,
+  actionKind: string,
+): boolean {
+  return getRecipeSteps(recipe).some((step) => {
+    const action = getRecipeAction(step);
+    return action?.kind === actionKind;
+  });
+}
+
+function recipeContainsEntity(recipe: unknown, entity: string): boolean {
+  return getRecipeSteps(recipe).some((step) => {
+    const action = getRecipeAction(step);
+    if (!action) {
+      return false;
+    }
+
+    return (
+      readStepArg(action, "name") === entity ||
+      readStepArg(action, "query") === entity ||
+      readStepArg(action, "target_name") === entity
+    );
+  });
+}
+
+function evidenceKinds(evidence: unknown): string[] {
+  if (!isRecord(evidence) || !Array.isArray(evidence.items)) {
+    return [];
+  }
+
+  return uniqueStrings(
+    evidence.items
+      .filter(isRecord)
+      .map((item) => readString(item, "kind"))
+      .filter((entry): entry is string => Boolean(entry)),
+  );
+}
+
+function evidenceSourceUrlCount(evidence: unknown): number {
+  if (!isRecord(evidence)) {
+    return 0;
+  }
+
+  return uniqueStrings([
+    ...readStringArray(evidence, "source_urls"),
+    ...(Array.isArray(evidence.items)
+      ? evidence.items
+          .filter(isRecord)
+          .flatMap((item) => readStringArray(item, "source_urls"))
+      : []),
+  ]).length;
+}
+
+function judgeStepExpectation(
+  failures: string[],
+  label: string,
+  actualStep: unknown,
+  expectedStep: {
+    kind?: string;
+    tool?: string;
+    mode?: string;
+    query?: string;
+    name?: string;
+  },
+): void {
+  const step = isRecord(actualStep) ? actualStep : null;
+
+  if (!step) {
+    failures.push(`Workflow result did not expose ${label}.`);
+    return;
+  }
+
+  if (expectedStep.kind && step.kind !== expectedStep.kind) {
+    failures.push(
+      `${label}.kind ${String(step.kind)} did not match expected ${expectedStep.kind}.`,
+    );
+  }
+  if (expectedStep.tool && step.tool !== expectedStep.tool) {
+    failures.push(
+      `${label}.tool ${String(step.tool)} did not match expected ${expectedStep.tool}.`,
+    );
+  }
+  if (expectedStep.mode && step.mode !== expectedStep.mode) {
+    failures.push(
+      `${label}.mode ${String(step.mode)} did not match expected ${expectedStep.mode}.`,
+    );
+  }
+  if (Object.hasOwn(expectedStep, "query")) {
+    const actualQuery = readStepArg(step, "query");
+    if (actualQuery !== expectedStep.query) {
+      failures.push(
+        `${label}.args.query ${String(actualQuery)} did not match expected ${String(expectedStep.query)}.`,
+      );
+    }
+  }
+  if (Object.hasOwn(expectedStep, "name")) {
+    const actualName = readStepArg(step, "name");
+    if (actualName !== expectedStep.name) {
+      failures.push(
+        `${label}.args.name ${String(actualName)} did not match expected ${String(expectedStep.name)}.`,
+      );
+    }
+  }
+}
+
+function serializeTraceResult(value: unknown): string {
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return "";
+  }
+}
+
+async function ensureBuiltEntrypoint(
+  repoRoot: string,
+  entryPath: string,
+  buildArgs: string[],
+): Promise<void> {
+  const cacheKey = `${repoRoot}:${entryPath}`;
+  const existing = ENSURED_BUILD_PROMISES.get(cacheKey);
+  if (existing) {
+    await existing;
+    return;
+  }
+
+  const buildPromise = (async () => {
+    const result =
+      process.platform === "win32"
+        ? await runProcess(
+            process.env.ComSpec ?? "cmd.exe",
+            ["/d", "/s", "/c", "yarn", ...buildArgs],
+            {
+              cwd: repoRoot,
+              timeout_ms: 240_000,
+            },
+          )
+        : await runProcess("yarn", buildArgs, {
+            cwd: repoRoot,
+            timeout_ms: 240_000,
+          });
+
+    if (result.exit_code !== 0) {
+      throw new Error(
+        `Failed to build ${entryPath} for the eval harness.\n${result.stderr.trim()}`,
+      );
+    }
+
+    await fs.access(path.join(repoRoot, entryPath));
+  })();
+  ENSURED_BUILD_PROMISES.set(cacheKey, buildPromise);
+
+  try {
+    await buildPromise;
+  } catch (error) {
+    ENSURED_BUILD_PROMISES.delete(cacheKey);
+    throw error;
+  }
+}
+
+async function bundleEvalEntrypoint(
+  repoRoot: string,
+  options: {
+    id: "mcp";
+    source_entry: string;
+  },
+): Promise<string> {
+  const cacheKey = `${repoRoot}:${options.id}:bundle`;
+  const existing = BUNDLED_ENTRYPOINTS.get(cacheKey);
+  if (existing) {
+    return existing;
+  }
+
+  const bundlePromise = (async () => {
+    const { build } = await import("esbuild");
+    const cacheDir = path.join(repoRoot, ".salt-eval-cache");
+    const wrapperPath = path.join(cacheDir, `${options.id}-eval-entry.ts`);
+    const outputPath = path.join(cacheDir, `${options.id}-eval-entry.mjs`);
+    await fs.mkdir(cacheDir, { recursive: true });
+    await fs.writeFile(
+      wrapperPath,
+      [
+        `import { runCli } from ${JSON.stringify(options.source_entry.replaceAll("\\", "/"))};`,
+        "",
+        "runCli(process.argv.slice(2))",
+        "  .then((exitCode) => {",
+        "    process.exit(typeof exitCode === 'number' ? exitCode : 0);",
+        "  })",
+        "  .catch((error) => {",
+        `    console.error("${options.id} eval entry error:", error);`,
+        "    process.exit(1);",
+        "  });",
+        "",
+      ].join("\n"),
+      "utf8",
+    );
+
+    await build({
+      entryPoints: [wrapperPath],
+      outfile: outputPath,
+      bundle: true,
+      platform: "node",
+      format: "esm",
+      sourcemap: false,
+      absWorkingDir: repoRoot,
+      external: ["chromium-bidi/*"],
+      logLevel: "silent",
+    });
+
+    return outputPath;
+  })();
+  BUNDLED_ENTRYPOINTS.set(cacheKey, bundlePromise);
+
+  try {
+    return await bundlePromise;
+  } catch (error) {
+    BUNDLED_ENTRYPOINTS.delete(cacheKey);
+    throw error;
+  }
+}
+
+async function resolveExecutableScript(repoRoot: string): Promise<{
+  script_path: string;
+  source: "dist" | "bundle";
+  build_error?: string;
+}> {
+  try {
+    await ensureBuiltEntrypoint(repoRoot, MCP_DIST_ENTRY, [
+      "workspace",
+      "@salt-ds/mcp",
+      "build",
+    ]);
+    return {
+      script_path: path.join(repoRoot, MCP_BIN_PATH),
+      source: "dist",
+    };
+  } catch (error) {
+    const scriptPath = await bundleEvalEntrypoint(repoRoot, {
+      id: "mcp",
+      source_entry: path.join(repoRoot, "packages", "mcp", "src", "index.ts"),
+    });
+    return {
+      script_path: scriptPath,
+      source: "bundle",
+      build_error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+async function runProcess(
+  command: string,
+  args: string[],
+  options: {
+    cwd: string;
+    timeout_ms?: number;
+    env?: Record<string, string>;
+  },
+): Promise<{
+  exit_code: number | null;
+  stdout: string;
+  stderr: string;
+}> {
+  const env = Object.fromEntries(
+    Object.entries({
+      ...process.env,
+      ...options.env,
+    }).filter(
+      (entry): entry is [string, string] => typeof entry[1] === "string",
+    ),
+  );
+
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, {
+      cwd: options.cwd,
+      env,
+      stdio: ["ignore", "pipe", "pipe"],
+      windowsHide: true,
+    });
+
+    const stdoutChunks: Buffer[] = [];
+    const stderrChunks: Buffer[] = [];
+    let timedOut = false;
+    const timeout =
+      options.timeout_ms && options.timeout_ms > 0
+        ? setTimeout(() => {
+            timedOut = true;
+            child.kill();
+          }, options.timeout_ms)
+        : null;
+
+    child.stdout.on("data", (chunk: Buffer) => {
+      stdoutChunks.push(chunk);
+    });
+    child.stderr.on("data", (chunk: Buffer) => {
+      stderrChunks.push(chunk);
+    });
+    child.on("error", reject);
+    child.on("close", (code) => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
+      const stdout = Buffer.concat(stdoutChunks).toString("utf8");
+      const stderr = Buffer.concat(stderrChunks).toString("utf8");
+
+      if (timedOut) {
+        resolve({
+          exit_code: code,
+          stdout,
+          stderr: `${stderr}\nProcess timed out after ${options.timeout_ms}ms.`,
+        });
+        return;
+      }
+
+      resolve({
+        exit_code: code,
+        stdout,
+        stderr,
+      });
+    });
+  });
+}
+
+function extractStructuredToolContent(value: unknown): Record<string, unknown> {
+  if (!isRecord(value) || !isRecord(value.structuredContent)) {
+    throw new Error("MCP tool call did not return structured content.");
+  }
+
+  return value.structuredContent;
+}
+
+export function judgeWorkflowEvalScenario(
+  scenario: WorkflowEvalScenario,
+  trace: WorkflowEvalTrace,
+): WorkflowEvalJudgment {
+  if (trace.status === "skipped") {
+    return {
+      status: "skipped",
+      reasons: [`Runner ${trace.runner_id} skipped ${scenario.id}.`],
+    };
+  }
+
+  const failures: string[] = [];
+  const workflow = extractWorkflowObject(trace.workflow_result);
+  const result = extractResultObject(trace.workflow_result);
+  const publicContract = extractPublicContract(trace.workflow_result);
+  const serialized = serializeTraceResult(trace.workflow_result);
+  const successfulTransport =
+    trace.transport_trace.find((entry) => entry.status === "succeeded")
+      ?.transport ?? null;
+
+  if (trace.scenario_id !== scenario.id) {
+    failures.push(
+      `Trace scenario_id ${trace.scenario_id} did not match scenario ${scenario.id}.`,
+    );
+  }
+
+  const allTransportsUnavailable =
+    successfulTransport === null &&
+    scenario.expected.transport?.stop_if_all_fail === true &&
+    trace.transport_trace.length > 0 &&
+    trace.transport_trace.every((entry) => entry.status === "unavailable");
+  if (!allTransportsUnavailable && (!workflow || !result)) {
+    failures.push(
+      `Runner ${trace.runner_id} did not return a workflow envelope for ${scenario.id}.`,
+    );
+  }
+
+  if (allTransportsUnavailable) {
+    if (trace.status !== "failed") {
+      failures.push(
+        `Runner ${trace.runner_id} should have failed cleanly when no transport was available for ${scenario.id}.`,
+      );
+    }
+
+    return {
+      status: failures.length > 0 ? "failed" : "passed",
+      reasons:
+        failures.length > 0
+          ? failures
+          : [
+              `Runner ${trace.runner_id} stopped cleanly when all transports were unavailable for ${scenario.id}.`,
+            ],
+    };
+  }
+
+  if (
+    scenario.expected.workflow?.id &&
+    workflow?.id !== scenario.expected.workflow.id
+  ) {
+    failures.push(
+      `Workflow id ${String(workflow?.id)} did not match expected id ${scenario.expected.workflow.id}.`,
+    );
+  }
+
+  if (
+    scenario.expected.workflow?.readiness &&
+    isRecord(workflow?.readiness) &&
+    workflow.readiness.status !== scenario.expected.workflow.readiness
+  ) {
+    failures.push(
+      `Workflow readiness ${String(workflow.readiness.status)} did not match ${scenario.expected.workflow.readiness}.`,
+    );
+  }
+
+  if (
+    typeof scenario.expected.workflow?.implementation_ready === "boolean" &&
+    isRecord(workflow?.readiness) &&
+    workflow.readiness.implementation_ready !==
+      scenario.expected.workflow.implementation_ready
+  ) {
+    failures.push(
+      `Workflow implementation_ready ${String(workflow.readiness.implementation_ready)} did not match ${String(scenario.expected.workflow.implementation_ready)}.`,
+    );
+  }
+
+  if (scenario.expected.summary_first && !isRecord(result?.ide_summary)) {
+    failures.push(
+      `Workflow result for ${scenario.id} did not expose result.ide_summary.`,
+    );
+  }
+
+  if (
+    scenario.expected.require_verify &&
+    extractVerifyEntries(result).length === 0
+  ) {
+    failures.push(
+      `Workflow result for ${scenario.id} did not include a non-empty verify list in result.ide_summary.`,
+    );
+  }
+
+  if (
+    typeof scenario.expected.max_blocking_questions === "number" &&
+    countBlockingQuestions(result) > scenario.expected.max_blocking_questions
+  ) {
+    failures.push(
+      `Workflow result for ${scenario.id} exceeded the blocking-question limit ${scenario.expected.max_blocking_questions}.`,
+    );
+  }
+
+  if (
+    Object.hasOwn(scenario.expected, "canonical_choice") &&
+    extractCanonicalChoice(result) !== scenario.expected.canonical_choice
+  ) {
+    failures.push(
+      `Canonical choice ${extractCanonicalChoice(result)} did not match expected ${scenario.expected.canonical_choice}.`,
+    );
+  }
+
+  if (
+    Object.hasOwn(scenario.expected, "final_choice") &&
+    extractFinalChoice(result) !== scenario.expected.final_choice
+  ) {
+    failures.push(
+      `Final choice ${extractFinalChoice(result)} did not match expected ${scenario.expected.final_choice}.`,
+    );
+  }
+
+  if (scenario.expected.public_contract) {
+    if (!publicContract) {
+      failures.push(
+        `Workflow result for ${scenario.id} did not expose a compact public contract payload.`,
+      );
+    } else {
+      const expectedPublicContract = scenario.expected.public_contract;
+
+      if (
+        expectedPublicContract.workflow_status &&
+        (Array.isArray(expectedPublicContract.workflow_status)
+          ? !(expectedPublicContract.workflow_status as string[]).includes(
+              publicContract.workflow_status as string,
+            )
+          : publicContract.workflow_status !==
+            expectedPublicContract.workflow_status)
+      ) {
+        failures.push(
+          `workflow_status ${String(publicContract.workflow_status)} did not match expected ${expectedPublicContract.workflow_status}.`,
+        );
+      }
+
+      if (
+        typeof expectedPublicContract.canonical_complete === "boolean" &&
+        publicContract.canonical_complete !==
+          expectedPublicContract.canonical_complete
+      ) {
+        failures.push(
+          `canonical_complete ${String(publicContract.canonical_complete)} did not match expected ${String(expectedPublicContract.canonical_complete)}.`,
+        );
+      }
+
+      if (
+        typeof expectedPublicContract.safe_to_implement_exact_request ===
+          "boolean" &&
+        publicContract.safe_to_implement_exact_request !==
+          expectedPublicContract.safe_to_implement_exact_request
+      ) {
+        failures.push(
+          `safe_to_implement_exact_request ${String(publicContract.safe_to_implement_exact_request)} did not match expected ${String(expectedPublicContract.safe_to_implement_exact_request)}.`,
+        );
+      }
+
+      if (
+        Object.hasOwn(expectedPublicContract, "requested_entity") &&
+        (typeof publicContract.requested_entity === "string"
+          ? publicContract.requested_entity
+          : null) !== expectedPublicContract.requested_entity
+      ) {
+        failures.push(
+          `requested_entity ${String(publicContract.requested_entity)} did not match expected ${String(expectedPublicContract.requested_entity)}.`,
+        );
+      }
+
+      if (
+        Object.hasOwn(expectedPublicContract, "resolved_entity") &&
+        (typeof publicContract.resolved_entity === "string"
+          ? publicContract.resolved_entity
+          : null) !== expectedPublicContract.resolved_entity
+      ) {
+        failures.push(
+          `resolved_entity ${String(publicContract.resolved_entity)} did not match expected ${String(expectedPublicContract.resolved_entity)}.`,
+        );
+      }
+
+      if (
+        Object.hasOwn(expectedPublicContract, "match_status") &&
+        (typeof publicContract.match_status === "string"
+          ? publicContract.match_status
+          : null) !== expectedPublicContract.match_status
+      ) {
+        failures.push(
+          `match_status ${String(publicContract.match_status)} did not match expected ${String(expectedPublicContract.match_status)}.`,
+        );
+      }
+
+      if (expectedPublicContract.next_step) {
+        judgeStepExpectation(
+          failures,
+          "next_step",
+          publicContract.next_step,
+          expectedPublicContract.next_step,
+        );
+      }
+
+      if (expectedPublicContract.next_required_action) {
+        judgeStepExpectation(
+          failures,
+          "next_required_action",
+          publicContract.next_required_action,
+          expectedPublicContract.next_required_action,
+        );
+      }
+
+      for (const actionKind of expectedPublicContract.allowed_next_actions ??
+        []) {
+        if (
+          !Array.isArray(publicContract.allowed_next_actions) ||
+          !publicContract.allowed_next_actions.includes(actionKind)
+        ) {
+          failures.push(
+            `allowed_next_actions did not include expected action kind ${actionKind}.`,
+          );
+        }
+      }
+
+      if (expectedPublicContract.evidence) {
+        const evidence = isRecord(publicContract.evidence)
+          ? publicContract.evidence
+          : null;
+
+        if (!evidence) {
+          failures.push(
+            `Workflow result for ${scenario.id} did not expose evidence.`,
+          );
+        } else {
+          if (
+            expectedPublicContract.evidence.status &&
+            evidence.status !== expectedPublicContract.evidence.status
+          ) {
+            failures.push(
+              `evidence.status ${String(evidence.status)} did not match expected ${expectedPublicContract.evidence.status}.`,
+            );
+          }
+
+          const actualKinds = evidenceKinds(evidence);
+          for (const requiredKind of expectedPublicContract.evidence
+            .required_kinds ?? []) {
+            if (!actualKinds.includes(requiredKind)) {
+              failures.push(
+                `evidence.items did not include required kind ${requiredKind}.`,
+              );
+            }
+          }
+
+          if (
+            typeof expectedPublicContract.evidence.min_source_urls ===
+              "number" &&
+            evidenceSourceUrlCount(evidence) <
+              expectedPublicContract.evidence.min_source_urls
+          ) {
+            failures.push(
+              `evidence source URL count ${evidenceSourceUrlCount(evidence)} was below expected minimum ${expectedPublicContract.evidence.min_source_urls}.`,
+            );
+          }
+        }
+      }
+
+      if (expectedPublicContract.recipe) {
+        const recipe = publicContract.recipe;
+        for (const actionKind of expectedPublicContract.recipe
+          .required_action_kinds ?? []) {
+          if (!recipeContainsActionKind(recipe, actionKind)) {
+            failures.push(
+              `recipe.steps did not include required action kind ${actionKind}.`,
+            );
+          }
+        }
+        for (const entity of expectedPublicContract.recipe.required_entities ??
+          []) {
+          if (!recipeContainsEntity(recipe, entity)) {
+            failures.push(
+              `recipe.steps did not include required entity ${entity}.`,
+            );
+          }
+        }
+      }
+
+      if (expectedPublicContract.questions) {
+        const questions = Array.isArray(publicContract.questions)
+          ? publicContract.questions.filter(
+              (entry): entry is string => typeof entry === "string",
+            )
+          : [];
+        if (
+          typeof expectedPublicContract.questions.min_count === "number" &&
+          questions.length < expectedPublicContract.questions.min_count
+        ) {
+          failures.push(
+            `questions length ${questions.length} was below expected minimum ${expectedPublicContract.questions.min_count}.`,
+          );
+        }
+        if (
+          typeof expectedPublicContract.questions.max_count === "number" &&
+          questions.length > expectedPublicContract.questions.max_count
+        ) {
+          failures.push(
+            `questions length ${questions.length} exceeded expected maximum ${expectedPublicContract.questions.max_count}.`,
+          );
+        }
+        for (const fragment of expectedPublicContract.questions.includes ??
+          []) {
+          if (!questions.some((question) => question.includes(fragment))) {
+            failures.push(
+              `questions did not include expected fragment ${fragment}.`,
+            );
+          }
+        }
+      }
+
+      for (const fragment of expectedPublicContract.summary_includes ?? []) {
+        if (
+          typeof publicContract.summary !== "string" ||
+          !publicContract.summary.includes(fragment)
+        ) {
+          failures.push(
+            `summary ${String(publicContract.summary)} did not include expected fragment ${fragment}.`,
+          );
+        }
+      }
+    }
+  }
+
+  for (const fragment of scenario.expected.required_fragments ?? []) {
+    if (!serialized.includes(fragment)) {
+      failures.push(
+        `Workflow result for ${scenario.id} did not include required fragment ${fragment}.`,
+      );
+    }
+  }
+
+  for (const fragment of scenario.expected.banned_fragments ?? []) {
+    if (serialized.includes(fragment)) {
+      failures.push(
+        `Workflow result for ${scenario.id} included banned fragment ${fragment}.`,
+      );
+    }
+  }
+
+  if (scenario.expected.metrics) {
+    const metrics = trace.metrics;
+    const limits = scenario.expected.metrics;
+    if (
+      typeof limits.max_transcript_bytes === "number" &&
+      metrics.transcript_bytes > limits.max_transcript_bytes
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the transcript byte budget ${limits.max_transcript_bytes} (actual: ${metrics.transcript_bytes}).`,
+      );
+    }
+    if (
+      typeof limits.max_workflow_result_bytes === "number" &&
+      metrics.workflow_result_bytes > limits.max_workflow_result_bytes
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the workflow result byte budget ${limits.max_workflow_result_bytes} (actual: ${metrics.workflow_result_bytes}).`,
+      );
+    }
+    if (
+      typeof limits.max_logs_bytes === "number" &&
+      metrics.logs_bytes > limits.max_logs_bytes
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the logs byte budget ${limits.max_logs_bytes} (actual: ${metrics.logs_bytes}).`,
+      );
+    }
+    if (
+      typeof limits.max_payload_bytes === "number" &&
+      metrics.payload_bytes > limits.max_payload_bytes
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the payload byte budget ${limits.max_payload_bytes} (actual: ${metrics.payload_bytes}).`,
+      );
+    }
+    if (
+      typeof limits.max_duration_ms === "number" &&
+      metrics.duration_ms > limits.max_duration_ms
+    ) {
+      failures.push(
+        `Workflow trace for ${scenario.id} exceeded the duration budget ${limits.max_duration_ms}ms (actual: ${metrics.duration_ms}ms).`,
+      );
+    }
+  }
+
+  return {
+    status: failures.length > 0 ? "failed" : "passed",
+    reasons:
+      failures.length > 0
+        ? failures
+        : [
+            `Runner ${trace.runner_id} satisfied the deterministic workflow rubric for ${scenario.id}.`,
+          ],
+  };
+}
+
+export const MCP_LOCAL_EVAL_RUNNER: WorkflowEvalRunner = {
+  id: "mcp-local",
+  transport: "mcp",
+  supports: (scenario) => scenario.capabilities.mcp === true,
+  run: async (scenario, context) => {
+    const startedAt = Date.now();
+    const attemptLogs: string[] = [];
+    const transportTrace: WorkflowEvalTrace["transport_trace"] = [];
+    const maxAttempts = 2;
+
+    const runAttempt = async (): Promise<WorkflowEvalTrace> => {
+      const stderrLogs: string[] = [];
+      let client: Client | null = null;
+      let transport: StdioClientTransport | null = null;
+
+      try {
+        const executable = await resolveExecutableScript(context.repo_root);
+
+        transport = new StdioClientTransport({
+          command: process.execPath,
+          args: [
+            executable.script_path,
+            "serve",
+            "--registry-dir",
+            context.registry_dir,
+          ],
+          cwd: context.repo_root,
+          stderr: "pipe",
+        });
+
+        const stderrStream = transport.stderr;
+        if (stderrStream) {
+          stderrStream.on("data", (chunk: Buffer | string) => {
+            stderrLogs.push(chunk.toString());
+          });
+        }
+
+        client = new Client(
+          {
+            name: "salt-workflow-eval",
+            version: "0.0.0",
+          },
+          {
+            capabilities: {},
+          },
+        );
+
+        await client.connect(transport, {
+          timeout: context.timeout_ms ?? 120_000,
+        });
+
+        const attemptTrace: WorkflowEvalTrace["transport_trace"] = [];
+        const toolArgs = {
+          ...(scenario.args.mcp ?? {}),
+        };
+
+        const contextCall = await client.callTool(
+          {
+            name: "get_salt_project_context",
+            arguments: {
+              root_dir: scenario.fixture.root_dir,
+            },
+          },
+          undefined,
+          {
+            timeout: context.timeout_ms ?? 120_000,
+          },
+        );
+        const contextPayload = extractStructuredToolContent(contextCall);
+        const contextResult = isRecord(contextPayload.result)
+          ? contextPayload.result
+          : {};
+        const contextId = readString(contextResult, "context_id");
+
+        if (contextId) {
+          Object.assign(toolArgs, {
+            context_id: contextId,
+          });
+        }
+
+        attemptTrace.push({
+          transport: "mcp",
+          status: "succeeded",
+          detail:
+            contextId !== null
+              ? `Collected project context ${contextId} before ${scenario.task.workflow}.`
+              : `Collected project context before ${scenario.task.workflow}.`,
+        });
+
+        const workflowCall = await client.callTool(
+          {
+            name: toWorkflowToolId(scenario.task.workflow),
+            arguments: toolArgs,
+          },
+          undefined,
+          {
+            timeout: context.timeout_ms ?? 120_000,
+          },
+        );
+        const workflowResult = extractStructuredToolContent(workflowCall);
+        attemptTrace.push({
+          transport: "mcp",
+          status: "succeeded",
+          detail: `Executed ${toWorkflowToolId(scenario.task.workflow)} through the MCP stdio protocol.`,
+        });
+
+        return attachWorkflowEvalMetrics(
+          {
+            scenario_id: scenario.id,
+            runner_id: "mcp-local",
+            status: "passed",
+            transport_trace: attemptTrace,
+            workflow_result: workflowResult,
+            transcript: [
+              scenario.task.prompt,
+              `Used ${toWorkflowToolId(scenario.task.workflow)} through the real MCP stdio runner.`,
+            ],
+            artifacts: {
+              files: [scenario.fixture.root_dir],
+              logs: compactStrings([
+                executable.build_error?.trim(),
+                ...stderrLogs.filter((entry) => entry.trim().length > 0),
+              ]),
+            },
+          },
+          startedAt,
+        );
+      } finally {
+        if (client) {
+          await client.close().catch(() => undefined);
+        }
+        if (transport) {
+          await transport.close().catch(() => undefined);
+        }
+      }
+    };
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      try {
+        const trace = await runAttempt();
+        const retryDetail =
+          attempt > 1
+            ? `Recovered after MCP startup retry ${attempt - 1} for ${scenario.id}.`
+            : null;
+
+        return attachWorkflowEvalMetrics(
+          {
+            ...trace,
+            transport_trace: retryDetail
+              ? [
+                  ...transportTrace,
+                  {
+                    transport: "mcp",
+                    status: "succeeded",
+                    detail: retryDetail,
+                  },
+                  ...trace.transport_trace,
+                ]
+              : [...transportTrace, ...trace.transport_trace],
+            artifacts: {
+              ...trace.artifacts,
+              logs: compactStrings([
+                ...(trace.artifacts.logs ?? []),
+                ...attemptLogs,
+              ]),
+            },
+          },
+          startedAt,
+        );
+      } catch (error) {
+        const detail =
+          error instanceof Error
+            ? error.message
+            : "MCP runner failed unexpectedly.";
+        transportTrace.push({
+          transport: "mcp",
+          status: "failed",
+          detail:
+            attempt < maxAttempts
+              ? `${detail} Retrying MCP stdio startup once.`
+              : detail,
+        });
+        attemptLogs.push(
+          error instanceof Error
+            ? (error.stack ?? error.message)
+            : String(error),
+        );
+      }
+    }
+
+    return attachWorkflowEvalMetrics(
+      {
+        scenario_id: scenario.id,
+        runner_id: "mcp-local",
+        status: "failed",
+        transport_trace: transportTrace,
+        workflow_result: null,
+        transcript: [scenario.task.prompt, "MCP runner failed."],
+        artifacts: {
+          files: [scenario.fixture.root_dir],
+          logs: attemptLogs,
+        },
+      },
+      startedAt,
+    );
+  },
+};
+
+export const WORKFLOW_LOCAL_EVAL_RUNNERS: WorkflowEvalRunner[] = [
+  MCP_LOCAL_EVAL_RUNNER,
+];
+
+function orderScenarioTransports(
+  _scenario: WorkflowEvalScenario,
+): EvalTransport[] {
+  // After Phase A the eval harness exercises MCP-stdio only. Kept as a
+  // function so the upstream scenario-runner loop in runWorkflowEvalScenarios
+  // does not need to special-case the single-transport world.
+  return ["mcp"];
+}
+
+function findRunnerByTransport(
+  runners: WorkflowEvalRunner[],
+  transport: EvalTransport,
+): WorkflowEvalRunner | null {
+  return runners.find((runner) => runner.transport === transport) ?? null;
+}
+
+export async function runWorkflowEvalScenario(
+  scenario: WorkflowEvalScenario,
+  options: {
+    runners?: WorkflowEvalRunner[];
+    enabled_transports?: EvalTransport[];
+    context: WorkflowEvalRunnerContext;
+  },
+): Promise<WorkflowEvalTrace> {
+  const startedAt = Date.now();
+  const runners = options.runners ?? WORKFLOW_LOCAL_EVAL_RUNNERS;
+  const enabledTransports = new Set(options.enabled_transports ?? ["mcp"]);
+  const orderedTransports = orderScenarioTransports(scenario);
+  const combinedTrace: Omit<WorkflowEvalTrace, "metrics"> = {
+    scenario_id: scenario.id,
+    runner_id: "eval-harness",
+    status: "failed",
+    transport_trace: [],
+    workflow_result: null,
+    transcript: [scenario.task.prompt],
+    artifacts: {
+      files: [scenario.fixture.root_dir],
+      logs: [],
+      report_path: null,
+    },
+  };
+
+  for (const transport of orderedTransports) {
+    if (!enabledTransports.has(transport)) {
+      combinedTrace.transport_trace.push({
+        transport,
+        status: "unavailable",
+        detail: `${transport} transport was not enabled for this eval run.`,
+      });
+      continue;
+    }
+
+    const runner = findRunnerByTransport(runners, transport);
+    if (!runner || !runner.supports(scenario)) {
+      combinedTrace.transport_trace.push({
+        transport,
+        status: "unavailable",
+        detail: `${transport} transport was not available for ${scenario.id}.`,
+      });
+      continue;
+    }
+
+    const trace = await runner.run(scenario, options.context);
+    combinedTrace.runner_id = trace.runner_id;
+    combinedTrace.transport_trace.push(...trace.transport_trace);
+    combinedTrace.transcript.push(
+      ...trace.transcript.filter((entry) => entry !== scenario.task.prompt),
+    );
+    combinedTrace.artifacts.logs?.push(...(trace.artifacts.logs ?? []));
+    combinedTrace.workflow_result = trace.workflow_result;
+
+    if (trace.status === "passed") {
+      return attachWorkflowEvalMetrics(
+        {
+          ...combinedTrace,
+          status: "passed",
+        },
+        startedAt,
+      );
+    }
+  }
+
+  if (scenario.expected.transport?.stop_if_all_fail) {
+    combinedTrace.transcript.push(
+      "Stopped cleanly after every allowed transport was unavailable or failed.",
+    );
+  }
+
+  return attachWorkflowEvalMetrics(combinedTrace, startedAt);
+}
+
+export async function runWorkflowEvalScenarios(
+  scenarios: WorkflowEvalScenario[],
+  options: {
+    runners?: WorkflowEvalRunner[];
+    enabled_transports?: EvalTransport[];
+    context: WorkflowEvalRunnerContext;
+  },
+): Promise<WorkflowEvalReport> {
+  const entries: WorkflowEvalReportEntry[] = [];
+
+  for (const scenario of scenarios) {
+    const trace = await runWorkflowEvalScenario(scenario, options);
+    entries.push({
+      scenario_id: scenario.id,
+      tags: scenario.tags,
+      runner_id: trace.runner_id,
+      judgment: judgeWorkflowEvalScenario(scenario, trace),
+      trace,
+    });
+  }
+
+  return {
+    generated_at: new Date().toISOString(),
+    repo_root: options.context.repo_root,
+    registry_dir: options.context.registry_dir,
+    requested_runner_ids: (options.runners ?? WORKFLOW_LOCAL_EVAL_RUNNERS).map(
+      (runner) => runner.id,
+    ),
+    requested_scenario_ids: scenarios.map((scenario) => scenario.id),
+    passed: entries.every((entry) => entry.judgment.status === "passed"),
+    metrics: aggregateWorkflowEvalMetrics(entries.map((entry) => entry.trace)),
+    scorecard: buildWorkflowEvalScorecard(entries),
+    entries,
+  };
+}
+
+export function buildWorkflowEvalJsonReport(
+  report: WorkflowEvalReport,
+): string {
+  return JSON.stringify(report, null, 2);
+}

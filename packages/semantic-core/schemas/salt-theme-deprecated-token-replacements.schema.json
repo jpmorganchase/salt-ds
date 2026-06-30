@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-theme-deprecated-token-replacements.schema.json",
+  "title": "Salt Theme Deprecated Token Replacements",
+  "description": "Source-backed theme metadata for deprecated token replacement evidence and explicit unsupported replacement states.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "entries"],
+  "properties": {
+    "schema": {
+      "const": "salt_theme_deprecated_token_replacements_v1"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    }
+  },
+  "$defs": {
+    "saltTokenName": {
+      "type": "string",
+      "pattern": "^--salt-[A-Za-z0-9_-]+$"
+    },
+    "replacementKind": {
+      "enum": ["direct", "alternative", "scale", "manual", "unsupported"]
+    },
+    "basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_path", "line_start", "line_end"],
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line_start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "line_end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deprecated", "replacement_kind", "basis"],
+      "properties": {
+        "deprecated": {
+          "$ref": "#/$defs/saltTokenName"
+        },
+        "replacements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/saltTokenName"
+          },
+          "uniqueItems": true
+        },
+        "replacement_kind": {
+          "$ref": "#/$defs/replacementKind"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unsupported_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basis": {
+          "$ref": "#/$defs/basis"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "replacement_kind": {
+                "enum": ["direct", "alternative", "scale"]
+              }
+            },
+            "required": ["replacement_kind"]
+          },
+          "then": {
+            "required": ["replacements"],
+            "properties": {
+              "replacements": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "replacement_kind": {
+                "enum": ["manual", "unsupported"]
+              }
+            },
+            "required": ["replacement_kind"]
+          },
+          "then": {
+            "required": ["unsupported_reason"],
+            "properties": {
+              "replacements": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

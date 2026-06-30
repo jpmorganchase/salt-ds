@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/project-conventions-stack.schema.json",
+  "title": "Salt Project Conventions Stack",
+  "description": "Layered project-specific conventions resolved by `salt-ds` at policy-resolution time. Layers are loaded in declared order; later layers override earlier ones. SECURITY: layers of `type: \"package\"` cause Salt to dynamically `import()` the referenced module to read its conventions export, which means the package executes arbitrary JavaScript in the developer's process. Treat shared-conventions packs with the same trust posture as any other declared dependency (pin versions, prefer private registries with provenance). If that trust posture is unacceptable, ship the conventions as JSON via `type: \"file\"` instead.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "layers"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "contract": {
+      "const": "project_conventions_stack_v1"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/layer"
+      }
+    }
+  },
+  "$defs": {
+    "scope": {
+      "enum": ["line_of_business", "team", "repo", "other"]
+    },
+    "fileSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {
+          "const": "file"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "packageSource": {
+      "type": "object",
+      "description": "Resolves a shared-conventions JavaScript module from the host project's installed dependency graph. Salt calls `require.resolve(specifier, { paths: [rootDir] })` and then dynamically imports the resolved entry point, executing its top-level module code. The pack therefore runs with the same privileges as the developer's process. Use `type: \"file\"` instead if you need a strictly inert JSON convention payload.",
+      "additionalProperties": false,
+      "required": ["type", "specifier"],
+      "properties": {
+        "type": {
+          "const": "package"
+        },
+        "specifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "export": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/fileSource"
+        },
+        {
+          "$ref": "#/$defs/packageSource"
+        }
+      ]
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "scope", "source"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "description": {
+          "type": "string"
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      }
+    }
+  }
+}

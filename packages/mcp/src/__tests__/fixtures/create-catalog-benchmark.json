@@ -1,0 +1,41 @@
+{
+  "contract": "salt_create_catalog_benchmark_v1",
+  "scenarios": [
+    {
+      "id": "metric_trend_indicator",
+      "query": "Create a metric component to display a key value with a label and trend indicator.",
+      "expected_owner": "Metric",
+      "acceptable_statuses": ["exact", "ranked"]
+    },
+    {
+      "id": "tabs_profile_sections",
+      "query": "User profile page with tabs for different sections and an avatar showing the user's initials or image.",
+      "expected_owner": "Tabs",
+      "acceptable_statuses": ["ranked"]
+    },
+    {
+      "id": "table_with_breadcrumbs",
+      "query": "File manager page with breadcrumb navigation showing the current directory path and a data table listing files and folders.",
+      "expected_owner": "Table",
+      "acceptable_statuses": ["ranked", "ambiguous"]
+    },
+    {
+      "id": "switch_inside_settings_form",
+      "query": "Create a compact control to turn email alerts on and off inside a settings form.",
+      "expected_owner": "Switch",
+      "acceptable_statuses": ["ranked", "ambiguous"]
+    },
+    {
+      "id": "content_status_local_region",
+      "query": "Create a loading, empty, or error state inside the current content region, not as a global page state.",
+      "expected_owner": "Content status",
+      "acceptable_statuses": ["ambiguous", "ranked"]
+    },
+    {
+      "id": "app_header_shell",
+      "query": "Create a top-level product shell with brand, global actions, and workspace-wide navigation in the header.",
+      "expected_owner": "App header",
+      "acceptable_statuses": ["ranked"]
+    }
+  ]
+}

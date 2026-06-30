@@ -1,0 +1,119 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-chart-follow-up-drift",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "chart"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-chart",
+      "description": "Saved replay fixture for a chart follow-up transcript that drifted away from the canonical Chart target."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a chart to the analytical dashboard body."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "chart of data visualization component for dashboard analytical body",
+        "include_starter_code": true
+      },
+      "cli": {
+        "argv": [
+          "create",
+          "chart of data visualization component for dashboard analytical body",
+          "--include-starter-code"
+        ]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "summary_first": true,
+      "require_verify": true,
+      "canonical_choice": "Chart",
+      "final_choice": "Chart"
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-chart-follow-up-drift",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": {
+        "id": "create_salt_ui",
+        "transport_used": "mcp",
+        "confidence": {
+          "level": "medium",
+          "reasons": ["Loaded from transcript replay."]
+        },
+        "readiness": {
+          "status": "starter_needs_attention",
+          "implementation_ready": false,
+          "reason": "Saved replay fixture."
+        },
+        "contextRequirement": {
+          "status": "context_checked",
+          "repoSpecificEditsReady": true,
+          "reason": "Saved replay fixture.",
+          "satisfiedBy": "salt-ds info"
+        },
+        "projectConventionsCheck": null,
+        "provenance": {
+          "canonical_source_urls": ["/salt/components/highcharts/usage"],
+          "related_guide_urls": [],
+          "project_conventions_contract": "project_conventions_v1"
+        }
+      },
+      "result": {
+        "mode": "recommend",
+        "solution_type": "component",
+        "decision": {
+          "name": "Stack layout"
+        },
+        "final_decision": {
+          "name": "Stack layout"
+        },
+        "ide_summary": {
+          "recommended_direction": "Use Stack layout as the dashboard scaffold.",
+          "bounded_scope": [
+            "Keep the prompt on dashboard structure instead of a direct Chart target."
+          ],
+          "starter_plan": [
+            "Start with a layout scaffold and defer the chart-specific decision."
+          ],
+          "verify": [
+            "Run salt-ds review on the changed files after the first implementation pass."
+          ]
+        }
+      }
+    },
+    "transcript": [
+      "Use salt-ds to add a chart to the analytical dashboard body.",
+      "The host followed up with a broad dashboard query instead of the canonical Chart name."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-chart"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-ai-evidence-closure-report.schema.json",
+  "title": "Salt AI Evidence Closure Report",
+  "description": "Machine-readable final-pass closure report for Salt AI evidence, gap, and unsupported-surface slices.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "generated_at",
+    "generator",
+    "registry",
+    "status",
+    "ready_slice_count",
+    "degraded_slice_count",
+    "unsupported_slice_count",
+    "slices",
+    "evidence_refs",
+    "unsupported_claims",
+    "release_gate",
+    "generated_artifact"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_ai_evidence_closure_report_v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "$ref": "#/$defs/generator"
+    },
+    "registry": {
+      "$ref": "#/$defs/registry"
+    },
+    "status": {
+      "enum": ["ready", "degraded"]
+    },
+    "ready_slice_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "degraded_slice_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unsupported_slice_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "slices": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "$ref": "#/$defs/slice"
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "maxItems": 0,
+      "items": {
+        "$ref": "salt-evidence-ref.schema.json"
+      }
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unsupportedClaim"
+      }
+    },
+    "release_gate": {
+      "$ref": "salt-generated-artifact-release-gate.schema.json"
+    },
+    "generated_artifact": {
+      "$ref": "salt-generated-artifact.schema.json"
+    }
+  },
+  "$defs": {
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "sliceId": {
+      "enum": [
+        "unsupported-surface-inventory",
+        "schema-contract-lock",
+        "migration-upgrade-followup",
+        "prompt-host-instruction-closure",
+        "context-coverage-closure",
+        "release-gate-everywhere",
+        "cli-mcp-skill-parity",
+        "hardcoded-fact-sweep",
+        "doctor-info-setup-state",
+        "final-verification"
+      ]
+    },
+    "sliceStatus": {
+      "enum": ["ready", "degraded", "unsupported"]
+    },
+    "evidenceSource": {
+      "enum": [
+        "semantic_core",
+        "registry",
+        "generated_context",
+        "release_gate",
+        "workflow_report",
+        "docs_gap_register",
+        "test_guardrail"
+      ]
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slice_id",
+        "kind",
+        "id",
+        "status",
+        "missing",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "slice_id": {
+          "$ref": "#/$defs/sliceId"
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "unsupported"
+        },
+        "missing": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/stringArray"
+        }
+      }
+    },
+    "slice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "status",
+        "evidence_sources",
+        "missing",
+        "docs_registry_gaps"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/sliceId"
+        },
+        "status": {
+          "$ref": "#/$defs/sliceStatus"
+        },
+        "evidence_sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/evidenceSource"
+          }
+        },
+        "missing": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "docs_registry_gaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/gap"
+          }
+        }
+      }
+    },
+    "unsupportedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "text", "reason"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "workflow"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field_path": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}

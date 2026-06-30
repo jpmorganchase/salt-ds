@@ -1,0 +1,154 @@
+{
+  "scenario": {
+    "id": "existing-salt-review-full-and-cached-reads",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "review", "full", "cache"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-review-full-and-cached-reads",
+      "description": "Saved replay fixture for an explanation turn that requested view: full and reread cached artifacts unnecessarily."
+    },
+    "task": {
+      "workflow": "review",
+      "prompt": "Why didn't the agent use the Salt table? Explain the miss without asking for a full debug payload."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "code": "import { Table } from \"@salt-ds/core\";\n\nexport function AuditTable() {\n  return <Table aria-label=\"Audit log\" />;\n}",
+        "framework": "react",
+        "package_version": "2.0.0"
+      },
+      "cli": {
+        "argv": [
+          "review",
+          "packages/mcp/eval-fixtures/replays/existing-salt-review-full-and-cached-reads/src/AuditTable.tsx",
+          "--json"
+        ]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "review_salt_ui"
+      },
+      "summary_first": true,
+      "require_verify": true,
+      "metrics": {
+        "max_transcript_bytes": 220,
+        "max_logs_bytes": 480,
+        "max_payload_bytes": 900
+      }
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-review-full-and-cached-reads",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": {
+        "id": "review_salt_ui",
+        "transport_used": "mcp",
+        "confidence": {
+          "level": "medium",
+          "reasons": ["Loaded from transcript replay."]
+        },
+        "readiness": {
+          "status": "starter_needs_attention",
+          "implementation_ready": false,
+          "reason": "Saved replay fixture."
+        },
+        "contextRequirement": {
+          "status": "context_checked",
+          "repoSpecificEditsReady": true,
+          "reason": "Saved replay fixture.",
+          "satisfiedBy": "salt-ds info"
+        },
+        "projectConventionsCheck": null,
+        "provenance": {
+          "canonical_source_urls": ["/salt/components/table/usage"],
+          "related_guide_urls": [],
+          "project_conventions_contract": "project_conventions_v1"
+        }
+      },
+      "result": {
+        "summary": {
+          "status": "needs_attention",
+          "filesNeedingAttention": 1,
+          "cleanFiles": 0,
+          "runtimeIssues": 0,
+          "runtimeMode": null,
+          "fixCandidateCount": 1,
+          "deterministicFixCandidateCount": 1,
+          "manualReviewFixCandidateCount": 0,
+          "nextStep": "Rerun salt-ds review on the touched table file."
+        },
+        "ide_summary": {
+          "recommended_direction": "Answer directly instead of requesting another full debug view.",
+          "bounded_scope": [
+            "The explanation turn should have stayed compact and reused the canonical table answer."
+          ],
+          "starter_plan": [
+            "Reuse the existing workflow summary instead of re-reading cached content.json."
+          ],
+          "verify": [
+            "Confirm the table follow-through without requesting a larger debug payload."
+          ]
+        },
+        "sourceValidation": {
+          "files": [
+            {
+              "relativePath": "src/AuditTable.tsx",
+              "issues": [
+                {
+                  "id": "component-choice.table",
+                  "summary": "Table should be reviewed with a focused explanation."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "transcript": [
+      "Why didn't the agent use the Salt table? Explain the miss without asking for a full debug payload.",
+      "The host requested view: full on an explanation turn instead of answering directly.",
+      "The host re-read cached content.json before composing the next answer.",
+      "The same explanation loop repeated cached artifact reads instead of narrowing the payload."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-review-full-and-cached-reads"
+      ],
+      "logs": [
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn.",
+        "Read cached content.json again for the same explanation turn."
+      ],
+      "report_path": null
+    }
+  }
+}

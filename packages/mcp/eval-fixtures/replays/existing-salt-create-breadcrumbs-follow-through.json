@@ -1,0 +1,107 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-breadcrumbs-follow-through",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "follow-through"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-file-manager",
+      "description": "Saved replay fixture for a file-manager prompt that must keep exact-name follow-through on Breadcrumbs after Table is chosen."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a file manager view with breadcrumbs and a table."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "file manager with breadcrumbs and table",
+        "include_starter_code": true
+      },
+      "cli": {
+        "argv": [
+          "create",
+          "file manager with breadcrumbs and table",
+          "--include-starter-code"
+        ]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "canonical_choice": "Table",
+      "final_choice": "Table",
+      "public_contract": {
+        "workflow_status": "partial",
+        "canonical_complete": false,
+        "safe_to_implement_exact_request": false,
+        "requested_entity": "file manager with breadcrumbs and table",
+        "resolved_entity": "Table",
+        "match_status": "broadened",
+        "next_step": {
+          "kind": "tool_call",
+          "tool": "create_salt_ui",
+          "mode": "exact_name",
+          "query": "Breadcrumbs"
+        },
+        "summary_includes": ["broader Salt entity Table"]
+      },
+      "metrics": {
+        "max_workflow_result_bytes": 1100,
+        "max_payload_bytes": 1700
+      }
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-breadcrumbs-follow-through",
+    "runner_id": "replay-fixture",
+    "status": "passed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "partial",
+      "canonical_complete": false,
+      "safe_to_implement_exact_request": false,
+      "requested_entity": "file manager with breadcrumbs and table",
+      "resolved_entity": "Table",
+      "match_status": "broadened",
+      "blocking_reasons": ["required follow-through remains: Breadcrumbs"],
+      "next_step": {
+        "kind": "tool_call",
+        "tool": "create_salt_ui",
+        "mode": "exact_name",
+        "args": {
+          "query": "Breadcrumbs"
+        }
+      },
+      "summary": "Salt interpreted file manager with breadcrumbs and table as the broader Salt entity Table."
+    },
+    "transcript": [
+      "Use salt-ds to add a file manager view with breadcrumbs and a table.",
+      "The host must keep the follow-through on Breadcrumbs instead of broadening into layout drift."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-file-manager"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

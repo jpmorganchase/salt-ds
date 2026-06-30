@@ -1,0 +1,363 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/semantic-core/schemas/salt-workflow-followup-report.schema.json",
+  "title": "Salt Workflow Follow-up Report",
+  "description": "Durable evidence-aware report for Salt migration and upgrade follow-up surfaces.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "generated_at",
+    "generator",
+    "registry",
+    "workflow",
+    "status",
+    "target",
+    "source",
+    "review_evidence",
+    "summary",
+    "checks",
+    "missing",
+    "docs_registry_gaps",
+    "next_actions",
+    "evidence_refs",
+    "unsupported_claims",
+    "release_gate",
+    "generated_artifact"
+  ],
+  "properties": {
+    "contract": {
+      "const": "salt_workflow_followup_report_v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "$ref": "#/$defs/generator"
+    },
+    "registry": {
+      "$ref": "#/$defs/registry"
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "transport_used", "source_command"],
+      "properties": {
+        "id": {
+          "enum": ["migration", "upgrade"]
+        },
+        "transport_used": {
+          "enum": ["cli", "mcp"]
+        },
+        "source_command": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "status": {
+      "enum": ["ready", "degraded", "unsupported"]
+    },
+    "target": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/target" }]
+    },
+    "source": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/source" }]
+    },
+    "review_evidence": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/reviewEvidence" }]
+    },
+    "summary": {
+      "$ref": "#/$defs/summary"
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    },
+    "missing": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "docs_registry_gaps": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "next_actions": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "salt-evidence-ref.schema.json"
+      }
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unsupportedClaim"
+      }
+    },
+    "release_gate": {
+      "$ref": "salt-generated-artifact-release-gate.schema.json"
+    },
+    "generated_artifact": {
+      "$ref": "salt-generated-artifact.schema.json"
+    }
+  },
+  "$defs": {
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": ["string", "null"]
+        },
+        "hash": {
+          "type": ["string", "null"]
+        },
+        "generated_at": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_ref_ids"],
+      "properties": {
+        "package_name": {
+          "type": ["string", "null"]
+        },
+        "component_name": {
+          "type": ["string", "null"]
+        },
+        "from_version": {
+          "type": ["string", "null"]
+        },
+        "to_version": {
+          "type": ["string", "null"]
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/stringArray"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_provided", "evidence_ref_ids"],
+      "properties": {
+        "request_provided": {
+          "type": "boolean"
+        },
+        "source_outline_path": {
+          "type": ["string", "null"]
+        },
+        "runtime_url": {
+          "type": ["string", "null"]
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/stringArray"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_count",
+        "passed",
+        "action_required",
+        "skipped",
+        "unsupported"
+      ],
+      "properties": {
+        "check_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "action_required": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "skipped": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unsupported": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "reviewEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "report_path",
+        "validation_status",
+        "current",
+        "supported",
+        "reusable_evidence_ref_ids",
+        "unsupported_claim_ids",
+        "unsupported_claim_count",
+        "validation_issues",
+        "mismatches",
+        "missing",
+        "evidence_ref_ids"
+      ],
+      "properties": {
+        "report_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validation_status": {
+          "enum": ["current", "stale", "unsupported", "invalid", "unvalidated"]
+        },
+        "current": {
+          "type": "boolean"
+        },
+        "supported": {
+          "type": "boolean"
+        },
+        "reusable_evidence_ref_ids": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "unsupported_claim_ids": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "unsupported_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "validation_issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceValidationIssue"
+          }
+        },
+        "mismatches": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "missing": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/stringArray"
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "summary", "evidence_ref_ids", "missing"],
+      "properties": {
+        "id": {
+          "enum": [
+            "migration_workflow_input",
+            "migration_verification_contract",
+            "migration_runtime_evidence",
+            "migration_review_followup",
+            "upgrade_target",
+            "upgrade_version_boundary",
+            "upgrade_review_followup"
+          ]
+        },
+        "status": {
+          "enum": ["passed", "action_required", "skipped", "unsupported"]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_ref_ids": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "missing": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "next_action": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "unsupportedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "text", "reason"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "workflow"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field_path": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "evidenceValidationIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "path"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

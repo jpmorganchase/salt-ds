@@ -1,0 +1,106 @@
+{
+  "scenario": {
+    "id": "existing-salt-create-header-block-misroute-compact",
+    "audience": "existing-salt-team",
+    "tags": ["replay", "create", "exact-name", "semantic-misroute", "compact"],
+    "fixture": {
+      "kind": "repo",
+      "root_dir": "packages/mcp/eval-fixtures/replays/existing-salt-create-header-block-misroute",
+      "description": "Saved replay fixture for a compact exact-name create result that misroutes Header block to List filtering through the default public contract."
+    },
+    "task": {
+      "workflow": "create",
+      "prompt": "Use salt-ds to add a header block."
+    },
+    "capabilities": {
+      "mcp": true,
+      "cli": true
+    },
+    "args": {
+      "mcp": {
+        "query": "Header block",
+        "view": "compact"
+      },
+      "cli": {
+        "argv": ["create", "Header block", "--json"]
+      }
+    },
+    "expected": {
+      "transport": {
+        "preferred": "mcp",
+        "fallback": "cli",
+        "stop_if_all_fail": true
+      },
+      "workflow": {
+        "id": "create_salt_ui"
+      },
+      "public_contract": {
+        "workflow_status": "blocked",
+        "canonical_complete": false,
+        "safe_to_implement_exact_request": false,
+        "requested_entity": "Header block",
+        "resolved_entity": "List filtering",
+        "match_status": "misrouted",
+        "next_step": {
+          "kind": "tool_call",
+          "tool": "create_salt_ui",
+          "mode": "exact_name",
+          "query": "Header block"
+        },
+        "summary_includes": ["instead of the exact requested Header block"]
+      },
+      "canonical_choice": "Header block",
+      "final_choice": "Header block",
+      "required_fragments": [
+        "\"requested_entity\":\"Header block\"",
+        "\"resolved_entity\":\"List filtering\"",
+        "\"match_status\":\"misrouted\""
+      ]
+    }
+  },
+  "trace": {
+    "scenario_id": "existing-salt-create-header-block-misroute-compact",
+    "runner_id": "replay-fixture",
+    "status": "failed",
+    "transport_trace": [
+      {
+        "transport": "mcp",
+        "status": "succeeded",
+        "detail": "Loaded from a saved compact transcript replay fixture."
+      }
+    ],
+    "workflow_result": {
+      "workflow": "create",
+      "transport_used": "mcp",
+      "workflow_status": "blocked",
+      "canonical_complete": false,
+      "safe_to_implement_exact_request": false,
+      "requested_entity": "Header block",
+      "resolved_entity": "List filtering",
+      "match_status": "misrouted",
+      "blocking_reasons": [
+        "requested entity resolved to a different Salt entity"
+      ],
+      "next_step": {
+        "kind": "tool_call",
+        "tool": "create_salt_ui",
+        "mode": "exact_name",
+        "args": {
+          "query": "Header block"
+        }
+      },
+      "summary": "Salt resolved List filtering instead of the exact requested Header block."
+    },
+    "transcript": [
+      "Use salt-ds to add a header block.",
+      "The host treated a semantically different result as the current answer instead of preserving the exact named target."
+    ],
+    "artifacts": {
+      "files": [
+        "packages/mcp/eval-fixtures/replays/existing-salt-create-header-block-misroute"
+      ],
+      "logs": [],
+      "report_path": null
+    }
+  }
+}

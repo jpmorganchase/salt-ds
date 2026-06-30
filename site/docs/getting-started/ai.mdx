@@ -1,0 +1,124 @@
+---
+title: AI with Salt
+description: "MCP-first AI workflows for reviewing, creating, and migrating Salt UI in real repos."
+layout: DetailTechnical
+sidebar:
+  label: AI with Salt
+---
+
+Salt gives AI hosts a small, source-backed way to make Salt design-system decisions inside real repos.
+
+The first-release product model is intentionally narrow:
+
+- one public MCP package: `@salt-ds/mcp`
+- one optional skill: `salt-ds`
+- three implementation workflows: `review`, `create`, and `migrate`
+- one reference path: `get_salt_reference` plus catalog resources
+- no public CLI workflow fallback
+
+Use Salt when you want design-system-aware help in an existing codebase. Do not use Salt for generic React or CSS advice, full-stack app generation, or guessed answers that ignore Salt evidence.
+
+## Setup
+
+### 1. Connect Salt MCP
+
+Add the published Salt MCP package to your AI host:
+
+```json
+{
+  "mcpServers": {
+    "Salt": {
+      "command": "npx",
+      "args": ["-y", "@salt-ds/mcp@latest"]
+    }
+  }
+}
+```
+
+The MCP server is read-only. It does not write repo policy, persist generated artifacts, run browser sessions, or install packages.
+
+### 2. Install The Skill
+
+Install the optional `salt-ds` skill when your host supports skills:
+
+```sh
+npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --skill salt-ds
+```
+
+The skill is a thin router. It tells the agent when to call Salt MCP and how to obey the returned workflow gate; canonical Salt facts still come from MCP.
+
+### 3. Smoke Test
+
+In a consumer repo, ask:
+
+```text
+Use salt-ds to review this file.
+Report status, action.kind, evidence.status, and summary before implementation detail.
+```
+
+A good response starts from compact workflow state. It should not invent Salt APIs, cite generic React advice as Salt policy, or edit code unless the workflow says implementation is allowed.
+
+## Workflows
+
+### Review
+
+Use review for existing Salt UI, changed Salt code, deprecated usage, accessibility issues, primitive choice, and layout ownership.
+
+Expected MCP path:
+
+1. `get_salt_project_context`
+2. `review_salt_ui`
+3. `get_salt_reference` only when the workflow asks for more Salt evidence
+
+### Create
+
+Use create for bounded new Salt UI: components, forms, panels, dialogs, dashboards, pages, and small workflow surfaces.
+
+Expected MCP path:
+
+1. `get_salt_project_context`
+2. `create_salt_ui`
+3. `get_salt_reference` for unresolved component or example follow-through
+4. `review_salt_ui` after edits
+
+### Migrate
+
+Use migrate for non-Salt UI code, foreign component libraries, or structured screen outlines that should become Salt while preserving task flow and important states.
+
+Expected MCP path:
+
+1. `get_salt_project_context`
+2. `migrate_to_salt`
+3. `get_salt_reference` for unresolved Salt targets
+4. `review_salt_ui` after edits
+
+Raw screenshots and Figma nodes are not first-class MCP inputs in v1. Hosts should normalize visual evidence into code, source outlines, regions, actions, states, and notes before calling Salt.
+
+## Workflow Gate
+
+For create and migrate implementation work, edit only when the workflow returns all of:
+
+- `status: "success"`
+- `action.kind: "implement"`
+- `safety.exact_request_safe: true`
+- `evidence.status: "complete"`
+
+If the workflow returns `ask_user`, `retrieve_entity`, `retrieve_examples`, `install_dependencies`, `fix_context`, or `rerun_workflow`, perform that action and rerun the originating workflow. Do not code around the gap.
+
+## Public MCP Contract
+
+Tools:
+
+- `get_salt_project_context`
+- `get_salt_reference`
+- `review_salt_ui`
+- `create_salt_ui`
+- `migrate_to_salt`
+
+Resources:
+
+- `salt://capabilities/manifest`
+- `salt://catalog/manifest`
+- `salt://catalog/entity/{name}`
+
+Everything else is internal, experimental, or deferred until usage proves the need.
