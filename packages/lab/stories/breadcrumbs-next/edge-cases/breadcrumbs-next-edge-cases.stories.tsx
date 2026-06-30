@@ -18,11 +18,11 @@ export const NonFocusableBeforeInlineExpansion: StoryFn<
   typeof BreadcrumbsNext
 > = (props) => (
   <BreadcrumbsNext {...props} {...inlineExpansionProps}>
-    <BreadcrumbNext label="Root Level Entity" />
-    <BreadcrumbNext href="#" label="Level 2 Entity" />
-    <BreadcrumbNext href="#" label="Level 3 Entity" />
-    <BreadcrumbNext href="#" label="Level 4 Entity" />
-    <BreadcrumbNext label="Current Level Entity" />
+    <BreadcrumbNext>Root Level Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 2 Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 3 Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 4 Entity</BreadcrumbNext>
+    <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
@@ -31,11 +31,11 @@ NonFocusableBeforeInlineExpansion.storyName =
 
 export const NoFocusableItems: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props} {...inlineExpansionProps}>
-    <BreadcrumbNext label="Root Level Entity" />
-    <BreadcrumbNext label="Level 2 Entity" />
-    <BreadcrumbNext label="Level 3 Entity" />
-    <BreadcrumbNext label="Level 4 Entity" />
-    <BreadcrumbNext label="Current Level Entity" />
+    <BreadcrumbNext>Root Level Entity</BreadcrumbNext>
+    <BreadcrumbNext>Level 2 Entity</BreadcrumbNext>
+    <BreadcrumbNext>Level 3 Entity</BreadcrumbNext>
+    <BreadcrumbNext>Level 4 Entity</BreadcrumbNext>
+    <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
@@ -45,11 +45,11 @@ export const NonFocusableFirstItemWithLinksAfterExpansion: StoryFn<
   typeof BreadcrumbsNext
 > = (props) => (
   <BreadcrumbsNext {...props} {...inlineExpansionProps} itemsAfterCollapse={2}>
-    <BreadcrumbNext label="Root Level Entity" />
-    <BreadcrumbNext href="#" label="Level 2 Entity" />
-    <BreadcrumbNext href="#" label="Level 3 Entity" />
-    <BreadcrumbNext href="#" label="Level 4 Entity" />
-    <BreadcrumbNext label="Current Level Entity" />
+    <BreadcrumbNext>Root Level Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 2 Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 3 Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 4 Entity</BreadcrumbNext>
+    <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 

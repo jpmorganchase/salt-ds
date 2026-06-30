@@ -21,12 +21,6 @@
   max-width: 100%;
 }
 
-.saltBreadcrumbNext-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .saltBreadcrumbNext-separator {
   --saltIcon-color: var(--salt-content-secondary-foreground);
   --saltIcon-size: var(--salt-size-icon);

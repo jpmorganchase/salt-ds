@@ -1,11 +1,7 @@
 import {
   Button,
-  Link,
-  Menu,
-  MenuItem,
-  MenuPanel,
-  MenuTrigger,
   makePrefixer,
+  type RenderPropsType,
   useControlled,
   useIcon,
   useIsomorphicLayoutEffect,
@@ -15,12 +11,10 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  Children,
   type ComponentPropsWithoutRef,
   type ElementType,
   forwardRef,
   isValidElement,
-  type Key,
   type MouseEvent,
   type ReactElement,
   type ReactNode,
@@ -30,18 +24,16 @@ import {
 import { BreadcrumbNext, type BreadcrumbNextProps } from "./BreadcrumbNext";
 import breadcrumbsNextCss from "./BreadcrumbsNext.css";
 import { BreadcrumbNextContext } from "./internal/BreadcrumbNextContext";
+import { BreadcrumbOverflowDisclosure } from "./internal/BreadcrumbOverflowDisclosure";
+import {
+  flattenBreadcrumbItems,
+  type NormalizedBreadcrumb,
+} from "./internal/breadcrumbItems";
 
 const withBaseName = makePrefixer("saltBreadcrumbsNext");
 const withItemBaseName = makePrefixer("saltBreadcrumbNext");
 
 type BreadcrumbTriggerElement = HTMLAnchorElement | HTMLSpanElement;
-
-interface NormalizedBreadcrumb {
-  element: ReactElement<BreadcrumbNextProps>;
-  index: number;
-  key: Key | null;
-  props: BreadcrumbNextProps;
-}
 
 interface CollapseRange {
   hiddenItems: NormalizedBreadcrumb[];
@@ -67,9 +59,9 @@ export interface BreadcrumbsNextProps
   children?: ReactNode;
   /**
    * The collapse behavior used when the number of breadcrumbs exceeds `maxItems`.
-   * Defaults to "menu".
+   * Defaults to "disclosure".
    */
-  collapseMode?: "expand" | "menu";
+  collapseMode?: "disclosure" | "expand";
   /**
    * Whether inline expansion is expanded by default.
    */
@@ -100,6 +92,10 @@ export interface BreadcrumbsNextProps
     expanded: boolean,
   ) => void;
   /**
+   * Render prop to enable customization of the underlying link elements.
+   */
+  render?: RenderPropsType["render"];
+  /**
    * If `true`, breadcrumbs can wrap onto multiple lines.
    * Defaults to `false`.
    */
@@ -114,43 +110,12 @@ function isBreadcrumbNextElement(
   );
 }
 
-function getNonNegativeInteger(
-  value: number | undefined,
-  defaultValue: number,
-) {
-  if (value === undefined || !Number.isFinite(value)) {
-    return defaultValue;
-  }
-
-  return Math.max(0, Math.floor(value));
-}
-
-function getPositiveInteger(value: number | undefined, defaultValue: number) {
-  if (value === undefined || !Number.isFinite(value)) {
-    return defaultValue;
-  }
-
-  return Math.max(1, Math.floor(value));
-}
-
-function getExplicitCurrentIndex(items: NormalizedBreadcrumb[]) {
-  return items.findIndex(({ props }) => props.current);
-}
-
 function getCurrentIndex(items: NormalizedBreadcrumb[]) {
-  const explicitCurrentIndex = getExplicitCurrentIndex(items);
+  const explicitCurrentIndex = items.findIndex(({ props }) => props.current);
 
   return explicitCurrentIndex === -1
     ? Math.max(items.length - 1, 0)
     : explicitCurrentIndex;
-}
-
-function getMenuItemLabel({ children, label }: BreadcrumbNextProps) {
-  return label ?? (isPrimitiveLabel(children) ? children : undefined);
-}
-
-function isPrimitiveLabel(children: ReactNode) {
-  return typeof children === "string" || typeof children === "number";
 }
 
 function getCollapseRange({
@@ -177,10 +142,6 @@ function getCollapseRange({
   const hiddenStart = itemsBeforeCollapse;
   const hiddenEnd = itemCount - effectiveItemsAfterCollapse;
   const hiddenItems = items.slice(hiddenStart, hiddenEnd);
-
-  if (hiddenItems.length === 0) {
-    return undefined;
-  }
 
   return {
     hiddenItems,
@@ -215,51 +176,6 @@ function getBestFocusableBreadcrumb({
   }
 }
 
-function BreadcrumbOverflowMenuItem({ item }: { item: NormalizedBreadcrumb }) {
-  const linkRef = useRef<HTMLAnchorElement>(null);
-  const hasNavigation =
-    item.props.href !== undefined || item.props.render !== undefined;
-  const label = getMenuItemLabel(item.props);
-
-  // need to do this since menu doesn't allow for rendering <a> or has a render prop
-  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (!hasNavigation || !linkRef.current) {
-      return;
-    }
-
-    const target = event.target;
-
-    if (
-      target instanceof window.Node &&
-      (target === linkRef.current || linkRef.current.contains(target))
-    ) {
-      return;
-    }
-
-    linkRef.current.click();
-  };
-
-  return (
-    <MenuItem onClick={handleClick}>
-      {hasNavigation ? (
-        <Link
-          className={withBaseName("menuLink")}
-          href={item.props.href}
-          maxRows={1}
-          ref={linkRef}
-          render={item.props.render}
-          styleAs="label"
-          tabIndex={-1}
-        >
-          {label}
-        </Link>
-      ) : (
-        label
-      )}
-    </MenuItem>
-  );
-}
-
 function renderSeparator(SeparatorIcon: ElementType) {
   return (
     <SeparatorIcon aria-hidden className={withItemBaseName("separator")} />
@@ -271,13 +187,14 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
     const {
       children,
       className,
-      collapseMode = "menu",
+      collapseMode = "disclosure",
       defaultExpanded,
       expanded: expandedProp,
-      itemsAfterCollapse: itemsAfterCollapseProp,
-      itemsBeforeCollapse: itemsBeforeCollapseProp,
+      itemsAfterCollapse = 1,
+      itemsBeforeCollapse = 1,
       maxItems,
       onExpandedChange,
+      render,
       wrap = false,
       ...rest
     } = props;
@@ -299,26 +216,22 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
       state: "expanded",
     });
 
-    const items = Children.toArray(children)
+    const items = flattenBreadcrumbItems(children)
       .filter(isBreadcrumbNextElement)
       .map((element, index) => ({
         element,
         index,
-        key: element.key,
+        key: element.key ?? index,
         props: element.props,
       }));
 
     const currentIndex = getCurrentIndex(items);
-    const itemsBeforeCollapse = getNonNegativeInteger(
-      itemsBeforeCollapseProp,
-      1,
-    );
-    const itemsAfterCollapse = getPositiveInteger(itemsAfterCollapseProp, 1);
     const shouldCollapse =
       !wrap &&
       maxItems !== undefined &&
       items.length > maxItems &&
       !(collapseMode === "expand" && expanded);
+
     const collapseRange = shouldCollapse
       ? getCollapseRange({
           currentIndex,
@@ -327,6 +240,7 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
           itemsBeforeCollapse,
         })
       : undefined;
+
     const renderParts: RenderPart[] = collapseRange
       ? [
           ...collapseRange.visibleBefore.map(
@@ -399,25 +313,11 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
                       <OverflowMenuIcon aria-hidden />
                     </Button>
                   ) : (
-                    <Menu>
-                      <MenuTrigger>
-                        <Button
-                          aria-label="Show breadcrumb levels"
-                          appearance="transparent"
-                          className={withBaseName("collapseButton")}
-                        >
-                          <OverflowMenuIcon aria-hidden />
-                        </Button>
-                      </MenuTrigger>
-                      <MenuPanel>
-                        {part.hiddenItems.map((item) => (
-                          <BreadcrumbOverflowMenuItem
-                            item={item}
-                            key={item.key}
-                          />
-                        ))}
-                      </MenuPanel>
-                    </Menu>
+                    <BreadcrumbOverflowDisclosure
+                      currentIndex={currentIndex}
+                      items={part.hiddenItems}
+                      render={render}
+                    />
                   )}
                   {showSeparator
                     ? renderSeparator(BreadcrumbSeparatorIcon)
@@ -431,6 +331,8 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
                 key={part.item.key}
                 value={{
                   current: part.item.index === currentIndex,
+                  placement: "trail",
+                  render,
                   showSeparator,
                   triggerRef: (triggerElement) => {
                     if (triggerElement) {

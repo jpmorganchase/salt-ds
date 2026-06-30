@@ -10,30 +10,33 @@ data:
 
 ## Default
 
-The default example shows a basic breadcrumb trail with linked previous levels and a text current level.
+Use the default composition for a concise trail with linked previous levels and a text current level.
 
 <LivePreview componentName="breadcrumbs-next" exampleName="Default" />
 
-## Router integration
-
-Use the `render` prop to pass routing behavior through to the underlying Salt `Link`.
-
-<LivePreview componentName="breadcrumbs-next" exampleName="RouterIntegration" />
-
 ## Wrapped
 
-Use `wrap` when breadcrumbs can flow onto multiple lines.
+Use `wrap` when the breadcrumb trail should remain visible and the page layout can support additional height.
 
 <LivePreview componentName="breadcrumbs-next" exampleName="Wrapped" />
 
-## Menu collapsed
+## Disclosure collapsed
 
-Set `maxItems` to collapse the middle breadcrumb levels into a menu.
+Set `maxItems` to collapse middle breadcrumb levels into a disclosure when horizontal space is limited. The hidden levels are listed in hierarchy order.
 
-<LivePreview componentName="breadcrumbs-next" exampleName="MenuCollapsed" />
+<LivePreview
+  componentName="breadcrumbs-next"
+  exampleName="DisclosureCollapsed"
+/>
+
+## Router integration
+
+Use `render` to adapt breadcrumb links to a routing library such as React Router or Next.js. The same renderer is used for visible links and links inside the collapsed disclosure.
+
+<LivePreview componentName="breadcrumbs-next" exampleName="RouterIntegration" />
 
 ## Inline expansion
 
-Set `collapseMode="expand"` to reveal hidden breadcrumb levels inline.
+Set `collapseMode="expand"` to let users reveal hidden breadcrumb levels inline when the full path is useful in the page context.
 
 <LivePreview componentName="breadcrumbs-next" exampleName="InlineExpansion" />

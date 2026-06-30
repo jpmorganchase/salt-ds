@@ -7,12 +7,7 @@ import {
   BreadcrumbsNext,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import type { ComponentPropsWithoutRef } from "react";
-import { forwardRef, useState } from "react";
-
-const longRootLabel = "Accounts receivable ledger for EMEA region";
-const longIntermediateLabel = "Discretionary asset management mandates";
-const longCurrentLabel = "Institutional fixed income portfolio";
+import { useState } from "react";
 
 export default {
   title: "Lab/Breadcrumbs Next",
@@ -22,173 +17,95 @@ export default {
   },
 } as Meta<typeof BreadcrumbsNext>;
 
-const RouterLink = forwardRef<HTMLAnchorElement, ComponentPropsWithoutRef<"a">>(
-  function RouterLink(props, ref) {
-    return <a {...props} data-router-link="" ref={ref} />;
-  },
-);
-
-function TooltipBreadcrumbContent({
-  label,
-  tooltip,
-}: {
-  label: string;
-  tooltip: string;
-}) {
-  return (
-    <Tooltip content={tooltip} placement="top">
-      <BreadcrumbNextTrigger>
-        <BreadcrumbNextLabel>{label}</BreadcrumbNextLabel>
-      </BreadcrumbNextTrigger>
-    </Tooltip>
-  );
-}
-
 export const Default: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props}>
-    <BreadcrumbNext href="#" label="Accounts" />
-    <BreadcrumbNext href="#" label="Asset management" />
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
+    <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
 export const ExplicitCurrent: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props}>
-    <BreadcrumbNext href="#" label="Accounts" />
-    <BreadcrumbNext current href="#" label="Asset management" />
-    <BreadcrumbNext href="#" label="Portfolio" />
+    <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
+    <BreadcrumbNext current href="#">
+      Asset management
+    </BreadcrumbNext>
+    <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
 export const WithIcon: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props}>
-    <BreadcrumbNext href="#" label="Accounts">
+    <BreadcrumbNext href="#">
       <BreadcrumbNextTrigger>
         <HomeIcon aria-hidden />
         <BreadcrumbNextLabel>Accounts</BreadcrumbNextLabel>
       </BreadcrumbNextTrigger>
     </BreadcrumbNext>
-    <BreadcrumbNext href="#" label="Asset management" />
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
-export const RouterRenderProp: StoryFn<typeof BreadcrumbsNext> = (props) => (
+export const WithTooltip: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props}>
-    <BreadcrumbNext
-      href="/accounts"
-      label="Accounts"
-      render={(linkProps) => <RouterLink {...linkProps} />}
-    >
-      <BreadcrumbNextTrigger>
-        <BreadcrumbNextLabel>Accounts</BreadcrumbNextLabel>
-      </BreadcrumbNextTrigger>
+    <BreadcrumbNext href="#">
+      <Tooltip content="Client account · ID: ACC-10482" placement="top">
+        <BreadcrumbNextTrigger>
+          <BreadcrumbNextLabel>Accounts</BreadcrumbNextLabel>
+        </BreadcrumbNextTrigger>
+      </Tooltip>
     </BreadcrumbNext>
-    <BreadcrumbNext
-      href="/accounts/asset-management"
-      label="Asset management"
-      render={(linkProps) => <RouterLink {...linkProps} />}
-    >
-      <BreadcrumbNextTrigger>
-        <BreadcrumbNextLabel>Asset management</BreadcrumbNextLabel>
-      </BreadcrumbNextTrigger>
+    <BreadcrumbNext href="#">
+      <Tooltip
+        content="Asset management · Mandate: Discretionary · Region: EMEA"
+        placement="top"
+      >
+        <BreadcrumbNextTrigger>
+          <BreadcrumbNextLabel>Asset management</BreadcrumbNextLabel>
+        </BreadcrumbNextTrigger>
+      </Tooltip>
     </BreadcrumbNext>
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext>
+      <Tooltip
+        content="Portfolio · Valuation date: 30 Jun 2026 · AUM: £12.4m"
+        placement="top"
+      >
+        <BreadcrumbNextTrigger>
+          <BreadcrumbNextLabel>Portfolio</BreadcrumbNextLabel>
+        </BreadcrumbNextTrigger>
+      </Tooltip>
+    </BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
 export const Wrapped: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props} wrap>
-    <BreadcrumbNext href="#" label="Accounts" />
-    <BreadcrumbNext href="#" label="Asset management" />
-    <BreadcrumbNext href="#" label="Fixed income" />
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
+    <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
+    <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
-export const LongLabels: StoryFn<typeof BreadcrumbsNext> = (props) => (
-  <BreadcrumbsNext {...props} style={{ width: 420 }}>
-    <BreadcrumbNext href="#" label={longRootLabel} />
-    <BreadcrumbNext href="#" label={longIntermediateLabel} />
-    <BreadcrumbNext label={longCurrentLabel} />
-  </BreadcrumbsNext>
-);
-
-export const WithTooltip: StoryFn<typeof BreadcrumbsNext> = (props) => (
-  <BreadcrumbsNext {...props} style={{ width: 420 }}>
-    <BreadcrumbNext href="#" label={longRootLabel}>
-      <TooltipBreadcrumbContent
-        label={longRootLabel}
-        tooltip={`${longRootLabel} · Ledger ID: ACC-1042`}
-      />
-    </BreadcrumbNext>
-    <BreadcrumbNext href="#" label={longIntermediateLabel}>
-      <TooltipBreadcrumbContent
-        label={longIntermediateLabel}
-        tooltip={`${longIntermediateLabel} · Mandate: Discretionary`}
-      />
-    </BreadcrumbNext>
-    <BreadcrumbNext label={longCurrentLabel}>
-      <TooltipBreadcrumbContent
-        label={longCurrentLabel}
-        tooltip={`${longCurrentLabel} · AUM: $4.2B`}
-      />
-    </BreadcrumbNext>
-  </BreadcrumbsNext>
-);
-
-export const MenuCollapsed: StoryFn<typeof BreadcrumbsNext> = (props) => (
+export const DisclosureCollapsed: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props} maxItems={3}>
-    <BreadcrumbNext href="#" label="Accounts" />
-    <BreadcrumbNext href="#" label="Asset management" />
-    <BreadcrumbNext href="#" label="Fixed income" />
-    <BreadcrumbNext href="#" label="Equities" />
-    <BreadcrumbNext label="Portfolio" />
-  </BreadcrumbsNext>
-);
-
-export const MenuCollapsedWithRouterRender: StoryFn<typeof BreadcrumbsNext> = (
-  props,
-) => (
-  <BreadcrumbsNext {...props} maxItems={3}>
-    <BreadcrumbNext
-      href="/accounts"
-      label="Accounts"
-      render={(linkProps) => <RouterLink {...linkProps} />}
-    >
-      <BreadcrumbNextTrigger>
-        <BreadcrumbNextLabel>Accounts</BreadcrumbNextLabel>
-      </BreadcrumbNextTrigger>
-    </BreadcrumbNext>
-    <BreadcrumbNext
-      href="/accounts/asset-management"
-      label="Asset management"
-      render={(linkProps) => <RouterLink {...linkProps} />}
-    >
-      <BreadcrumbNextTrigger>
-        <BreadcrumbNextLabel>Asset management</BreadcrumbNextLabel>
-      </BreadcrumbNextTrigger>
-    </BreadcrumbNext>
-    <BreadcrumbNext
-      href="/accounts/asset-management/fixed-income"
-      label="Fixed income"
-      render={(linkProps) => <RouterLink {...linkProps} />}
-    >
-      <BreadcrumbNextTrigger>
-        <BreadcrumbNextLabel>Fixed income</BreadcrumbNextLabel>
-      </BreadcrumbNextTrigger>
-    </BreadcrumbNext>
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
+    <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
+    <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
+    <BreadcrumbNext href="#">Equities</BreadcrumbNext>
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
 export const InlineExpansion: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props} collapseMode="expand" maxItems={3}>
-    <BreadcrumbNext href="#" label="Accounts" />
-    <BreadcrumbNext href="#" label="Asset management" />
-    <BreadcrumbNext href="#" label="Fixed income" />
-    <BreadcrumbNext href="#" label="Equities" />
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
+    <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
+    <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
+    <BreadcrumbNext href="#">Equities</BreadcrumbNext>
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
@@ -209,11 +126,11 @@ export const ControlledInlineExpansion: StoryFn<typeof BreadcrumbsNext> = (
         maxItems={3}
         onExpandedChange={(_, nextExpanded) => setExpanded(nextExpanded)}
       >
-        <BreadcrumbNext href="#" label="Accounts" />
-        <BreadcrumbNext href="#" label="Asset management" />
-        <BreadcrumbNext href="#" label="Fixed income" />
-        <BreadcrumbNext href="#" label="Equities" />
-        <BreadcrumbNext label="Portfolio" />
+        <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
+        <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
+        <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
+        <BreadcrumbNext href="#">Equities</BreadcrumbNext>
+        <BreadcrumbNext>Portfolio</BreadcrumbNext>
       </BreadcrumbsNext>
     </StackLayout>
   );
@@ -228,25 +145,25 @@ export const CustomCollapseRanges: StoryFn<typeof BreadcrumbsNext> = (
     itemsBeforeCollapse={2}
     maxItems={4}
   >
-    <BreadcrumbNext href="#" label="Accounts" />
-    <BreadcrumbNext href="#" label="Asset management" />
-    <BreadcrumbNext href="#" label="Fixed income" />
-    <BreadcrumbNext href="#" label="Equities" />
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
+    <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
+    <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
+    <BreadcrumbNext href="#">Equities</BreadcrumbNext>
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
 export const OverflowAtStart: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props} itemsBeforeCollapse={0} maxItems={3}>
-    <BreadcrumbNext href="#" label="Accounts" />
-    <BreadcrumbNext href="#" label="Asset management" />
-    <BreadcrumbNext href="#" label="Fixed income" />
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
+    <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
+    <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
 export const SingleLevel: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props}>
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );

@@ -32,6 +32,105 @@
   --saltButton-padding: 0;
 }
 
-.saltBreadcrumbsNext-menuLink {
+.saltBreadcrumbsNext-collapseButton.saltBreadcrumbsNext-collapseButton-active {
+  background: var(--saltButton-background-active, var(--button-background-active));
+  border-color: var(--saltButton-borderColor-active, var(--button-borderColor-active));
+  color: var(--saltButton-text-color-active, var(--button-text-color-active));
+  cursor: var(--salt-cursor-active);
+}
+
+.saltBreadcrumbsNext-disclosure {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  overflow: hidden;
+  overflow-y: auto;
+  min-width: 10em;
+  position: relative;
+  z-index: var(--salt-zIndex-flyover);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  box-sizing: border-box;
+  border-radius: var(--salt-palette-corner, 0);
+}
+
+.saltBreadcrumbsNext-disclosure:focus-visible {
+  outline: none;
+}
+
+.saltBreadcrumbsNext-disclosureList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.saltBreadcrumbsNext-disclosureListItem {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.saltBreadcrumbsNext-disclosureItem {
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-selectable-background);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  font-family: var(--salt-text-fontFamily);
+  line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
+  display: flex;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  cursor: var(--salt-cursor-hover);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  text-decoration: none;
   width: 100%;
+}
+
+.saltBreadcrumbsNext-disclosureItem.saltLink {
+  --link-color: var(--salt-content-primary-foreground);
+  --link-color-hover: var(--salt-content-primary-foreground);
+  --link-color-active: var(--salt-content-primary-foreground);
+  --link-color-focus: var(--salt-content-primary-foreground);
+  --link-color-visited: var(--salt-content-primary-foreground);
+  --link-textDecoration: var(--salt-typography-textDecoration-none);
+  --link-textDecoration-hover: var(--salt-typography-textDecoration-none);
+  --link-textDecoration-active: var(--salt-typography-textDecoration-none);
+  --link-textDecoration-focus: var(--salt-typography-textDecoration-none);
+  --link-textDecoration-visited: var(--salt-typography-textDecoration-none);
+}
+
+.saltBreadcrumbsNext-disclosureItem.saltLink:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.saltBreadcrumbsNext-disclosureItem:focus-visible,
+.saltBreadcrumbsNext-disclosureItem.saltLink:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+}
+
+.saltBreadcrumbsNext-disclosureItem:hover {
+  outline: none;
+}
+
+.saltBreadcrumbsNext-disclosureItem:hover,
+.saltBreadcrumbsNext-disclosureItem:focus-visible {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltBreadcrumbsNext-disclosureItem:active {
+  background: var(--salt-selectable-background-selected);
+  box-shadow:
+    0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected),
+    0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
+}
+
+.saltBreadcrumbsNext-disclosureItem[aria-disabled="true"],
+.saltBreadcrumbsNext-disclosureItem[aria-disabled="true"]:active {
+  background: var(--salt-selectable-background-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-cursor-disabled);
+  box-shadow: none;
 }
