@@ -1,5 +1,14 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.99
+
+### Patch Changes
+
+- d37a311: Bumped Floating UI from 0.26.28 to 0.27.19.
+- Updated dependencies [e226b17]
+- Updated dependencies [d37a311]
+  - @salt-ds/core@1.66.1
+
 ## 1.0.0-alpha.98
 
 ### Minor Changes

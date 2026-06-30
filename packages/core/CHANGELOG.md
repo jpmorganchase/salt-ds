@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.66.1
+
+### Patch Changes
+
+- e226b17: Fixed `BorderLayout` reserving empty rows and columns when the `north`, `south`, `west`, or `east` regions are omitted. The grid template now only includes tracks for the regions that are present, so omitted regions no longer leave gaps in the layout.
+- d37a311: Bumped Floating UI from 0.26.28 to 0.27.19.
+
 ## 1.66.0
 
 ### Minor Changes
