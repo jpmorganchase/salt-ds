@@ -3,9 +3,9 @@ import type { ReactElement } from "react";
 
 export const Wrapped = (): ReactElement => (
   <BreadcrumbsNext aria-label="Breadcrumb" style={{ width: 250 }} wrap>
-    <BreadcrumbNext href="#" label="Root Level Entity" />
-    <BreadcrumbNext href="#" label="Level 2 Entity" />
-    <BreadcrumbNext href="#" label="Level 3 Entity" />
-    <BreadcrumbNext label="Current Level Entity" />
+    <BreadcrumbNext href="#">Root Level Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 2 Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 3 Entity</BreadcrumbNext>
+    <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
   </BreadcrumbsNext>
 );

@@ -10,19 +10,28 @@ data:
 
 ## Using the component
 
-Use `BreadcrumbsNext` with `BreadcrumbNext` items to show a trail of navigation levels. The parent renders the navigation landmark, ordered list, separators, collapse controls, and default current-item behavior.
-
-For broader guidance on when and how to use breadcrumbs in product layouts, see the [Breadcrumbs pattern](/salt/patterns/breadcrumbs).
+Use `BreadcrumbsNext` with `BreadcrumbNext` items to show a user's current location within a hierarchy. The parent renders the navigation landmark, ordered list, separators, collapse controls, and current item behavior.
 
 ### When to use
 
 - When users navigate through related pages or drill down into nested content.
-- When you need to show the current location within a hierarchy alongside the main navigation.
+- To help users understand where they are when they arrive through deep links, search results, or external sources.
+- To complement the application's main navigation with a trail back to previous hierarchy levels.
 
 ### When not to use
 
 - When there is only one level in a hierarchy.
 - As a replacement for the application's primary navigation.
+- For flat content, or when the relationship between pages is not hierarchical.
+- To show progress through a sequential workflow. Instead, use [`Stepper`](../stepper).
+
+## Content
+
+- Keep breadcrumb labels concise and descriptive. Labels should match the destination or current page closely enough to make sense out of context.
+- Keep the visible trail concise. Aim for no more than four visible levels, and use `maxItems` to collapse lower priority levels in deeper hierarchies.
+- Use contextual labels when they help users understand their current task, such as "Edit profile" instead of "Profile".
+- Shorten or combine low value levels only when the resulting trail still explains the user's location.
+- Do not make the current page a link. `BreadcrumbsNext` renders the current item as text when it is marked with `current`, or when it is the final item.
 
 ## Import
 
@@ -51,22 +60,24 @@ import { HomeIcon } from "@salt-ds/icons";
 
 ## Breadcrumb items
 
-Use `label` for the common case. Previous hierarchy levels should provide `href` and render as Salt `Link` elements. The current level renders as text with `aria-current="page"` and is not linked by default.
+Use text children for the common case. Previous hierarchy levels should provide `href` and render as Salt `Link` elements. The current level renders as text with `aria-current="page"` and is not linked by default.
 
 ```tsx
 <BreadcrumbsNext aria-label="Breadcrumb">
-  <BreadcrumbNext href="/accounts" label="Accounts" />
-  <BreadcrumbNext href="/accounts/asset-management" label="Asset management" />
-  <BreadcrumbNext label="Portfolio" />
+  <BreadcrumbNext href="/accounts">Accounts</BreadcrumbNext>
+  <BreadcrumbNext href="/accounts/asset-management">
+    Asset management
+  </BreadcrumbNext>
+  <BreadcrumbNext>Portfolio</BreadcrumbNext>
 </BreadcrumbsNext>
 ```
 
 If no child explicitly sets `current`, `BreadcrumbsNext` treats the final `BreadcrumbNext` child as the current page. Set `current` on a child when the current level needs to be declared explicitly.
 
-For advanced composition, such as adding a tooltip or an icon inside the trigger, compose `BreadcrumbNextTrigger` and `BreadcrumbNextLabel` as children. Provide `label` as the canonical item label so collapsed menus can render the breadcrumb without inspecting custom child content:
+For advanced composition, such as adding a tooltip or an icon inside the trigger, compose `BreadcrumbNextTrigger` and `BreadcrumbNextLabel` as children. `BreadcrumbNextLabel` provides the visible and accessible label for composed breadcrumbs. Collapsed disclosure items render through the same trigger path, so custom trigger props, router renderers, icons, and tooltip wrappers are preserved:
 
 ```tsx
-<BreadcrumbNext href="/accounts/asset-management" label="Asset management">
+<BreadcrumbNext href="/accounts/asset-management">
   <Tooltip
     content="Asset management · Mandate: Discretionary · Region: EMEA"
     placement="top"
@@ -79,7 +90,7 @@ For advanced composition, such as adding a tooltip or an icon inside the trigger
 ```
 
 ```tsx
-<BreadcrumbNext href="/accounts" label="Accounts">
+<BreadcrumbNext href="/accounts">
   <BreadcrumbNextTrigger>
     <HomeIcon aria-hidden />
     <BreadcrumbNextLabel>Accounts</BreadcrumbNextLabel>
@@ -94,29 +105,53 @@ To customize the separator icon between breadcrumb items, provide `BreadcrumbSep
   iconMap={{ BreadcrumbSeparatorIcon: CustomSeparatorIcon }}
 >
   <BreadcrumbsNext aria-label="Breadcrumb">
-    <BreadcrumbNext href="/accounts" label="Accounts" />
-    <BreadcrumbNext label="Portfolio" />
+    <BreadcrumbNext href="/accounts">Accounts</BreadcrumbNext>
+    <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 </SemanticIconProvider>
 ```
 
-## Routing
+## Routing libraries
 
-Use the `render` prop on `BreadcrumbNext` to integrate with a router. The prop follows the same render-prop pattern as Salt `Link`, so product code can provide a Next.js, React Router, or internal routing component while `BreadcrumbsNext` still owns the breadcrumb semantics.
+Use `render` to integrate with routing libraries such as [React Router](https://reactrouter.com/) or [Next.js](https://nextjs.org/docs/app/api-reference/components/link). Add `render` to `BreadcrumbsNext` when the same router link should be used for the whole trail. Visible breadcrumb links and links inside the collapsed disclosure use the same renderer.
 
-`BreadcrumbsNext` does not infer route data from `window.location`. Product code should map its route model to `BreadcrumbNext` children.
+```tsx
+import type { ComponentPropsWithoutRef } from "react";
+import { Link as RouterLink } from "react-router";
+
+function renderRouterLink({
+  href = "",
+  ...props
+}: ComponentPropsWithoutRef<"a">) {
+  return <RouterLink {...props} to={href} />;
+}
+
+<BreadcrumbsNext aria-label="Breadcrumb" render={renderRouterLink}>
+  <BreadcrumbNext href="/accounts">Accounts</BreadcrumbNext>
+  <BreadcrumbNext href="/accounts/asset-management">
+    Asset management
+  </BreadcrumbNext>
+  <BreadcrumbNext>Portfolio</BreadcrumbNext>
+</BreadcrumbsNext>;
+```
+
+Use `render` on `BreadcrumbNext` when one breadcrumb needs different routing behavior or link options. This item renderer takes precedence over the shared renderer from `BreadcrumbsNext`, including when the item is collapsed into the disclosure.
 
 ## Collapse and wrapping
 
-By default, breadcrumbs render on a single line and do not collapse unless `maxItems` is set. Use `wrap` when the trail can flow onto multiple lines.
+By default, breadcrumbs render on a single line and do not collapse unless `maxItems` is set. Use `maxItems`, `itemsBeforeCollapse`, and `itemsAfterCollapse` to control which levels remain visible.
 
-When the number of breadcrumbs exceeds `maxItems`, `collapseMode="menu"` hides the middle range behind a menu trigger. Use `collapseMode="expand"` to reveal hidden breadcrumbs inline with a controlled or uncontrolled expansion state.
+When the number of breadcrumbs exceeds `maxItems`, `collapseMode="disclosure"` hides the middle range behind a disclosure trigger. Use this when horizontal space is limited. Disclosure items follow the same order as the hierarchy.
+
+Use `collapseMode="expand"` when there is enough horizontal space to reveal hidden levels inline, and when showing the full path is more useful than opening a disclosure. Expansion can be controlled with `expanded` and `onExpandedChange`, or uncontrolled with `defaultExpanded`.
+
+Use `wrap` when the trail should remain visible and the surrounding layout can support additional height. Wrapping disables collapse, even when `maxItems` is set.
 
 Single-level trails are usually hidden by product code rather than suppressed by the component. Render one breadcrumb only when that is intentional for the page.
 
 ## Migration notes
 
-`BreadcrumbsNext` is a Labs component intended to replace hand-composed breadcrumb patterns before a deliberate core promotion. It differs from the older Lab `Breadcrumbs` API: the current item is derived from `current` or the final child, separators are component-owned, collapse uses Salt `Menu` primitives, and `maxItems` has no default threshold.
+`BreadcrumbsNext` is a Labs component intended to replace hand-composed breadcrumb patterns before a deliberate core promotion. It differs from the older Lab `Breadcrumbs` API: the current item is derived from `current` or the final child, separators are component-owned, collapsed hidden levels use disclosure navigation semantics, and `maxItems` has no default threshold.
 
 ## Props
 

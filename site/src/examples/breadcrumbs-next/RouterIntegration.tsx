@@ -1,25 +1,33 @@
 import { BreadcrumbNext, BreadcrumbsNext } from "@salt-ds/lab";
-import type { ComponentPropsWithoutRef, ReactElement } from "react";
-import { forwardRef } from "react";
+import type { ComponentPropsWithoutRef, ReactElement, Ref } from "react";
+import { MemoryRouter, Link as RouterLink } from "react-router";
 
-const RouterLink = forwardRef<HTMLAnchorElement, ComponentPropsWithoutRef<"a">>(
-  function RouterLink(props, ref) {
-    return <a {...props} data-router-link="" ref={ref} />;
-  },
-);
+type RouterLinkProps = ComponentPropsWithoutRef<"a"> & {
+  ref?: Ref<HTMLAnchorElement>;
+};
+
+function renderRouterLink({ href = "", ...props }: RouterLinkProps) {
+  return <RouterLink {...props} to={href} />;
+}
 
 export const RouterIntegration = (): ReactElement => (
-  <BreadcrumbsNext aria-label="Breadcrumb">
-    <BreadcrumbNext
-      href="/root"
-      label="Root Level Entity"
-      render={(linkProps) => <RouterLink {...linkProps} />}
-    />
-    <BreadcrumbNext
-      href="/root/level-2"
-      label="Level 2 Entity"
-      render={(linkProps) => <RouterLink {...linkProps} />}
-    />
-    <BreadcrumbNext label="Level 3 Entity" />
-  </BreadcrumbsNext>
+  <MemoryRouter>
+    <BreadcrumbsNext
+      aria-label="Breadcrumb"
+      maxItems={3}
+      render={renderRouterLink}
+    >
+      <BreadcrumbNext href="/accounts">Accounts</BreadcrumbNext>
+      <BreadcrumbNext href="/accounts/asset-management">
+        Asset management
+      </BreadcrumbNext>
+      <BreadcrumbNext href="/accounts/asset-management/fixed-income">
+        Fixed income
+      </BreadcrumbNext>
+      <BreadcrumbNext href="/accounts/asset-management/equities">
+        Equities
+      </BreadcrumbNext>
+      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+    </BreadcrumbsNext>
+  </MemoryRouter>
 );
