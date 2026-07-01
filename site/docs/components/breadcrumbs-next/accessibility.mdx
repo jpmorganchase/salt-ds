@@ -1,0 +1,54 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- `BreadcrumbsNext` renders a `<nav>` landmark and an ordered list of `BreadcrumbNext` items. Name the landmark with `aria-label` or `aria-labelledby` so the accessible name matches your product context.
+- Each breadcrumb level is represented by one list item. Previous hierarchy levels render as links through `BreadcrumbNextTrigger`, while the current level renders as text.
+- When composing tooltips or custom label content, wrap `BreadcrumbNextTrigger` so the tooltip attaches to the real link or current text element.
+- Use `BreadcrumbNextLabel` for the visible and accessible text inside composed triggers. Collapsed disclosure items render through the same trigger path, so the authored label remains the accessible label.
+- Separators are visual only and use `aria-hidden`.
+- When using `wrap`, ensure the surrounding layout leaves enough space for breadcrumb labels to remain understandable.
+
+## Current page
+
+The current breadcrumb receives `aria-current="page"` so assistive technologies can identify the page represented by the trail.
+
+If no item has `current`, `BreadcrumbsNext` treats the final `BreadcrumbNext` as the current page. Set `current` on a child when the current page needs to be declared explicitly. The current page is not rendered as a link by default.
+
+Activating a breadcrumb link does not mutate `aria-current` directly. `aria-current="page"` is derived from `current` or the final item, and should update when the application re-renders the trail for the new route. This follows the [APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) in spirit: after navigation, exactly one item in the trail represents the current page.
+
+Collapsed disclosure content contains hidden previous levels only; the current page remains visible in the breadcrumb trail. Hidden levels without `href` render as text and are skipped by disclosure focus movement.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Tab moves focus to each linked breadcrumb and any collapse trigger in document order. If the disclosure is open, Tab moves focus from the trigger into the revealed breadcrumb links. The current page label is not focusable unless you render custom focusable content.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+When focus is on a linked breadcrumb, Enter navigates to that breadcrumb destination. The component does not move `aria-current="page"` to the activated link; update the breadcrumb trail from your route or page state after navigation.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- When focus is on a collapsed disclosure trigger, this action toggles the disclosure and focus remains on the trigger. Use Tab to move into the revealed breadcrumb links.
+- When focus is on an inline expansion trigger, this action reveals the hidden breadcrumb levels inline.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Escape">
+
+When the collapsed disclosure is open, Escape closes it and returns focus to the disclosure trigger.
+
+</KeyboardControl>
+</KeyboardControls>
