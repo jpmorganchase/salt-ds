@@ -132,6 +132,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           focusManagerProps={{
             context: context,
             initialFocus,
+            outsideElementsInert: true,
           }}
           className={clsx(
             withBaseName(),

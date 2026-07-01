@@ -64,6 +64,7 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         position={position}
         focusManagerProps={{
           context: context,
+          outsideElementsInert: true,
         }}
         aria-labelledby={ariaLabelledby}
       >
