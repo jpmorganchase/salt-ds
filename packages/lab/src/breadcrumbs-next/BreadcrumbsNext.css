@@ -1,5 +1,6 @@
 .saltBreadcrumbsNext {
   display: block;
+  margin-block: var(--salt-spacing-25);
 }
 
 .saltBreadcrumbsNext-ol {
