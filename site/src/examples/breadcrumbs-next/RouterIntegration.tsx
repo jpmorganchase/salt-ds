@@ -17,17 +17,10 @@ export const RouterIntegration = (): ReactElement => (
       maxItems={3}
       render={renderRouterLink}
     >
-      <BreadcrumbNext href="/accounts">Accounts</BreadcrumbNext>
-      <BreadcrumbNext href="/accounts/asset-management">
-        Asset management
-      </BreadcrumbNext>
-      <BreadcrumbNext href="/accounts/asset-management/fixed-income">
-        Fixed income
-      </BreadcrumbNext>
-      <BreadcrumbNext href="/accounts/asset-management/equities">
-        Equities
-      </BreadcrumbNext>
-      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+      <BreadcrumbNext href="/">Home</BreadcrumbNext>
+      <BreadcrumbNext href="/level-2">Level 2</BreadcrumbNext>
+      <BreadcrumbNext href="/level-2/level-3">Level 3</BreadcrumbNext>
+      <BreadcrumbNext>Current level</BreadcrumbNext>
     </BreadcrumbsNext>
   </MemoryRouter>
 );

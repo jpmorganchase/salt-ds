@@ -3,8 +3,9 @@ import type { ReactElement } from "react";
 
 export const Default = (): ReactElement => (
   <BreadcrumbsNext aria-label="Breadcrumb">
-    <BreadcrumbNext href="#">Root Level Entity</BreadcrumbNext>
-    <BreadcrumbNext href="#">Level 2 Entity</BreadcrumbNext>
-    <BreadcrumbNext>Level 3 Entity</BreadcrumbNext>
+    <BreadcrumbNext href="#">Home</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 2</BreadcrumbNext>
+    <BreadcrumbNext href="#">Level 3</BreadcrumbNext>
+    <BreadcrumbNext>Current level</BreadcrumbNext>
   </BreadcrumbsNext>
 );
