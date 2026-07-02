@@ -678,6 +678,20 @@ describe("GIVEN a BreadcrumbsNext", () => {
     cy.findByRole("link", { name: "Level 2 Entity" }).should("be.focused");
   });
 
+  it("THEN moves focus to the first revealed breadcrumb after mouse inline expansion", () => {
+    cy.mount(
+      <BreadcrumbsNext collapseMode="expand" maxItems={3}>
+        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
+        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
+        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
+        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
+      </BreadcrumbsNext>,
+    );
+
+    cy.findByRole("button", { name: "Show all breadcrumbs" }).realClick();
+    cy.findByRole("link", { name: "Level 2 Entity" }).should("be.focused");
+  });
+
   it("THEN skips newly revealed breadcrumbs that are not focusable after keyboard inline expansion", () => {
     cy.mount(
       <BreadcrumbsNext collapseMode="expand" maxItems={3}>

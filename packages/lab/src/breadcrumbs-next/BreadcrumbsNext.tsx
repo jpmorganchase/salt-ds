@@ -257,10 +257,8 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
       : items.map((item): RenderPart => ({ item, type: "breadcrumb" }));
 
     const handleExpand = (event: MouseEvent<HTMLButtonElement>) => {
-      if (event.detail === 0) {
-        pendingExpansionFocusIndex.current =
-          collapseRange?.hiddenItems[0]?.index ?? null;
-      }
+      pendingExpansionFocusIndex.current =
+        collapseRange?.hiddenItems[0]?.index ?? null;
 
       setExpanded(true);
       onExpandedChange?.(event, true);
