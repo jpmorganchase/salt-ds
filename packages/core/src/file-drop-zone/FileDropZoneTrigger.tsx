@@ -3,7 +3,7 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   forwardRef,
-  type SyntheticEvent,
+  type MouseEvent,
   useRef,
 } from "react";
 import { Button, type ButtonProps } from "../button";
@@ -46,7 +46,7 @@ export const FileDropZoneTrigger = forwardRef<
   HTMLButtonElement,
   FileDropZoneTriggerProps
 >(function FileDropZoneTrigger(
-  { accept, children, disabled, multiple = false, onChange, ...rest },
+  { accept, children, disabled, multiple = false, onClick, onChange, ...rest },
   ref,
 ) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -60,17 +60,19 @@ export const FileDropZoneTrigger = forwardRef<
     buttonRef.current?.focus();
   };
 
-  const handleClick = (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
     event.stopPropagation();
     fileInputRef.current?.click();
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from((event.target as HTMLInputElement).files ?? []);
+    onChange?.(event, files);
+
     // Allow selecting the same file multiple times - #3591
     // User would still be able to put back the value in onChange, if necessary
     event.target.value = "";
-    onChange?.(event, files);
   };
   return (
     <>

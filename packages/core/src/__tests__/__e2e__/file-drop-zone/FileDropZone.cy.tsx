@@ -85,6 +85,25 @@ describe("Given a file drop zone", () => {
     });
     cy.get("@dropSpy").should("have.been.calledOnce");
   });
+  it("should not accept dropped files when disabled", () => {
+    const dropSpy = cy.stub().as("dropSpy");
+    cy.mount(<Default disabled onDrop={dropSpy} />);
+    cy.findByTestId("file-drop-zone-example").selectFile(
+      {
+        contents: Cypress.Buffer.from("file"),
+        fileName: "image",
+        mimeType: "image/jpg",
+      },
+      {
+        action: "drag-drop",
+      },
+    );
+    cy.get("@dropSpy").should("not.have.been.called");
+    cy.findByTestId("file-drop-zone-example").should(
+      "not.have.class",
+      "saltFileDropZone-success",
+    );
+  });
   it("should be disabled if disabled prop is passed", () => {
     cy.mount(<Default disabled />);
     cy.get("input").should("be.disabled");
