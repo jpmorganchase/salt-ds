@@ -153,12 +153,6 @@ export function BreadcrumbOverflowDisclosure({
       }
       return;
     }
-
-    if (event.key === "Escape" && open) {
-      event.preventDefault();
-      setOpen(false);
-      return;
-    }
   };
 
   const handleTriggerBlur = (event: FocusEvent<HTMLButtonElement>) => {
@@ -187,13 +181,6 @@ export function BreadcrumbOverflowDisclosure({
         focusTrigger();
       }
 
-      return;
-    }
-
-    if (event.key === "Escape") {
-      event.preventDefault();
-      setOpen(false);
-      focusTrigger();
       return;
     }
 
