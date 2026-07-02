@@ -54,6 +54,23 @@ describe("GIVEN a Drawer", () => {
       cy.realPress("Tab");
       cy.findByRole("button", { name: "Close Drawer" }).should("be.focused");
     });
+
+    it("THEN it should make background content inert", () => {
+      cy.mount(<Default disableScrim />);
+
+      cy.findByRole("button", { name: "Open Primary Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+
+      cy.findByRole("button", { name: "Open Primary Drawer" })
+        .parents("[inert]")
+        .should("exist");
+
+      cy.realPress("Escape");
+      cy.findByRole("dialog").should("not.exist");
+      cy.findByRole("button", { name: "Open Primary Drawer" })
+        .parents("[inert]")
+        .should("not.exist");
+    });
   });
 
   describe("WHEN a drawer without close button is open", () => {

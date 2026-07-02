@@ -96,6 +96,16 @@ describe("GIVEN a Dialog", () => {
       cy.get(".saltScrim").click("left", { force: true });
       cy.findByRole("dialog").should("exist");
     });
+
+    it("THEN it should still close when the ESC key is pressed", () => {
+      cy.mount(<Default disableDismiss />);
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+
+      cy.realPress("Escape");
+
+      cy.findByRole("dialog").should("not.exist");
+    });
   });
 
   describe("WHEN a size is provided", () => {
@@ -213,6 +223,26 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("dialog", {
         name: "Congratulations! You have created a Dialog.",
       }).should("be.visible");
+    });
+
+    it("THEN it should make background content inert", () => {
+      cy.mount(<Default />);
+
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+
+      // The trigger sits outside the floating portal, so it must be inside
+      // an inert subtree while the dialog is open.
+      cy.findByRole("button", { name: "Open dialog" })
+        .parents("[inert]")
+        .should("exist");
+
+      // Closing the dialog should remove the inert state from the background.
+      cy.realPress("Escape");
+      cy.findByRole("dialog").should("not.exist");
+      cy.findByRole("button", { name: "Open dialog" })
+        .parents("[inert]")
+        .should("not.exist");
     });
   });
 
