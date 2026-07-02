@@ -21,6 +21,11 @@
   max-width: 100%;
 }
 
+.saltBreadcrumbNext-link.saltLink {
+  --link-color-visited: var(--link-color);
+  --link-textDecoration-visited: var(--link-textDecoration);
+}
+
 .saltBreadcrumbNext-separator {
   --saltIcon-color: var(--salt-content-secondary-foreground);
   --saltIcon-size: var(--salt-size-icon);
