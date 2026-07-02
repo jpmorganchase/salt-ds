@@ -12,17 +12,28 @@ data:
 
 Use the default composition for a concise trail with linked previous levels and a text current level.
 
-<LivePreview componentName="breadcrumbs-next" exampleName="Default" />
+### Best practices
+
+- We recommend keeping the number of breadcrumb levels concise to a maximum of four, including the first level if it's displayed. Content is more easily discoverable when navigating a relatively wide and flat information hierarchy within applications. This prevents users from feeling overwhelmed.
+- Use breadcrumbs to complement the application's main navigation—never to replace it.
+- Don't show breadcrumbs when there is only one level in a hierarchy.
+  <LivePreview componentName="breadcrumbs-next" exampleName="Default" />
 
 ## Wrapped
 
-Use `wrap` when the breadcrumb trail should remain visible and the page layout can support additional height.
+Wrap breadcrumbs when there is a need to keep the breadcrumb trail visible in the app, breadcrumbs can wrap onto subsequent lines. The breadcrumb and its separator should be on the same line.
+
+Set `wrap` to allow the trail to wrap onto subsequent lines.
 
 <LivePreview componentName="breadcrumbs-next" exampleName="Wrapped" />
 
-## Disclosure collapsed
+## Collapsed breadcrumbs
 
-Set `maxItems` to collapse middle breadcrumb levels into a disclosure when horizontal space is limited. The hidden levels are listed in hierarchy order.
+Breadcrumbs can be collapsed to save space or hide lower priority levels (e.g. only displaying Home and the current level). The hidden levels can be revealed in 2 different ways:
+
+Use an overflow menu when there is not enough horizontal space available, the order of the menu items should match the hierarchy of the levels.
+
+Set `maxItems` to use `BreadcrumbsNext`'s default disclosure collapse mode for this behavior.
 
 <LivePreview
   componentName="breadcrumbs-next"
@@ -35,8 +46,10 @@ Use `render` to adapt breadcrumb links to a routing library such as React Router
 
 <LivePreview componentName="breadcrumbs-next" exampleName="RouterIntegration" />
 
-## Inline expansion
+## Expansion
 
-Set `collapseMode="expand"` to let users reveal hidden breadcrumb levels inline when the full path is useful in the page context.
+Alternatively (if there is sufficient horizontal space), use an use an expansion button to reveal all levels. Showing the levels inline can make the hierarchy of the levels more visible.
+
+Set `collapseMode="expand"` to reveal hidden breadcrumb levels inline.
 
 <LivePreview componentName="breadcrumbs-next" exampleName="InlineExpansion" />
