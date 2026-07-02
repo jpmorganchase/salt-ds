@@ -98,7 +98,7 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
     const showSeparator = parentContext?.showSeparator ?? false;
     const triggerRef = parentContext?.triggerRef;
     const resolvedRender = render ?? parentContext?.render;
-    const { BreadcrumbSeparatorIcon } = useIcon();
+    const { LevelSeparatorIcon } = useIcon();
     const missingContent = isMissingBreadcrumbContent(children);
 
     if (missingContent) {
@@ -139,7 +139,7 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
         <BreadcrumbNextContext.Provider value={context}>
           {content}
           {placement === "trail" && showSeparator ? (
-            <BreadcrumbSeparatorIcon
+            <LevelSeparatorIcon
               aria-hidden
               className={withBaseName("separator")}
             />
