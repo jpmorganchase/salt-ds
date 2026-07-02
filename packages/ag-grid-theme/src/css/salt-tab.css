@@ -1,73 +1,26 @@
-/* Salt tab layout + colour palette.
+/* Salt tab layout — bespoke `.ag-tabs` / `.ag-tab` sizing.
  *
  * Loaded via the `saltTabStyle` part. Covers the tabs that appear inside
  * the column menu (General / Filter / Columns) and inside filter popups
  * — NOT the tool-panel side bar buttons (those use `.ag-side-button-*`
  * selectors styled in `salt-cell-states.css`).
  *
- * AG v3's `.ag-tabs-header` / `.ag-tab` / `.ag-tab-selected` rules read
- * ~15 `--ag-tab-*` CSS variables. `saltTabStyle`'s typed params only set
- * two of them (`tabSelectedUnderlineColor` + `tabSelectedUnderlineWidth`);
- * the rest default to empty (the AG v3 built-in `tabStyleQuartz` part is
- * blocked because saltTabStyle uses `feature: "tabStyle"`, so AG can't
- * fill them in via the cascade). Without explicit values the tabs render
- * with transparent backgrounds and no hover indication.
+ * COLOUR PALETTE + `--ag-tab-*` VARIABLES ARE NO LONGER SET HERE.
+ * Phase 8.6 migrated every `--ag-tab-*` setting into AG Grid v3's typed
+ * `TabStyleParams` — see `saltTabStyle.ts`'s `params: {...}` block.
+ * Keeping that surface in TS gives us compile-time names + values, and
+ * matches the pattern of the `sideButton*` typed params in saltTheme.ts.
  *
- * Set the full variable surface here against Salt tokens so the tabs
- * have a proper visual hierarchy:
- *   - default tab: transparent on the Salt container background
- *   - hover: actionable-subtle-background-hover
- *   - selected: actionable-subtle-background-selected + primary fg
- *   - the underline indicator stays driven by the two typed params
- *
- * Ported from `packages/ag-grid-theme/css/parts/ag-menus.css` lines 8-13
- * and 61-66 (2.x line) PLUS the missing variable-level fill that 2.x
- * didn't need (AG v32 supplied them via the legacy theme base).
- * (Phase 8.6 port 2026-06-14.)
+ * What's left in this file: the two layout rules ported from
+ * `packages/ag-grid-theme/css/parts/ag-menus.css` lines 8-13 and 61-66
+ * (2.x line). These have no typed-param equivalents — `.ag-tabs` outer
+ * padding and the per-tab `flex` / `height` rhythm can only be set in
+ * CSS. (Phase 8.6 cleanup 2026-06-14.)
  */
-
-/* ===== Layout (port of 2.x ag-menus.css L8-13 + L61-66) ============== */
 .ag-tabs {
   padding: var(--salt-spacing-100);
 }
-
 .ag-tab {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   flex: 1 1 auto;
-}
-
-/* ===== Variable fill for AG v3's .ag-tab* rules ====================
- *
- * Scope to `.ag-root-wrapper` so the variables don't leak to other AG
- * components on the page. AG v3's `.ag-tabs-header` / `.ag-tab` rules
- * resolve `var(--ag-tab-*)` at the nearest ancestor that defines them,
- * so setting on the root wrapper covers all in-grid tabs.
- */
-.ag-root-wrapper {
-  /* Tab bar (the strip holding the tab buttons) */
-  --ag-tab-bar-background-color: var(--salt-container-primary-background);
-  --ag-tab-bar-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
-    var(--salt-separable-tertiary-borderColor);
-  --ag-tab-bar-top-padding: 0;
-  --ag-tab-bar-horizontal-padding: 0;
-
-  /* Tab body padding (within each tab) */
-  --ag-tab-horizontal-padding: var(--salt-spacing-100);
-  --ag-tab-bottom-padding: 0;
-
-  /* Default tab — transparent (inherits Salt secondary fg from parent) */
-  --ag-tab-background-color: transparent;
-
-  /* Hover state */
-  --ag-tab-hover-background-color: var(--salt-actionable-subtle-background-hover);
-  --ag-tab-hover-text-color: var(--salt-actionable-subtle-foreground-hover);
-
-  /* Selected state — underline color/width come from saltTabStyle params */
-  --ag-tab-selected-background-color: var(--salt-actionable-subtle-background-selected);
-  --ag-tab-selected-text-color: var(--salt-content-primary-foreground);
-  --ag-tab-selected-border-color: transparent;
-  --ag-tab-selected-border-width: 0;
-
-  /* Disable transition so screenshot tests don't catch mid-animation */
-  --ag-tab-selected-underline-transition-duration: 0s;
 }

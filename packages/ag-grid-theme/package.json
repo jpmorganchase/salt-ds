@@ -8,26 +8,28 @@
     "directory": "packages/ag-grid-theme"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "main": "src/index.ts",
   "style": "salt-ag-theme.css",
   "files": [
     "/fonts",
     "/salt-ag-theme.css"
   ],
   "sideEffects": [
-    "*.css",
-    "src/dependencies/setupAgGridLegacy.ts"
+    "*.css"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
-    "build-watch": "yarn node ./scripts/build.mjs --watch"
+    "build-watch": "yarn node ./scripts/build.mjs --watch",
+    "icons:extract": "yarn node ./scripts/extract-svgs.mjs",
+  "publishConfig": {
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-ag-grid-theme",
     "provenance": true
   },
   "devDependencies": {
-    "del": "^8.0.0"
+    "del": "^8.0.0",
+    "fantasticon": "^3.0.0",
+    "opentype.js": "^1.3.4"
   },
   "peerDependencies": {
     "@salt-ds/theme": "workspace:^",

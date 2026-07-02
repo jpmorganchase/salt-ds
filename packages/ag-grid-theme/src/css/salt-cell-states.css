@@ -388,16 +388,10 @@
   min-width: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-/* Each side button (Columns / Filters / etc. — the tool-panel tabs)
- * — 8px vertical, 4px horizontal padding (matches the side-bar
- * rhythm) + zero out the browser-default `<button>` border + background
- * so the tabs render clean (AG v3 ships no `.ag-side-button-button` CSS,
- * so the native chrome leaks through without this reset). */
-button.ag-side-button-button {
-  border: 0;
-  background: transparent;
-  padding: var(--salt-spacing-100) var(--salt-spacing-50);
-}
+/* Side-button base (border + background + padding) is now driven by
+ * the typed `sideButtonBorder` / `sideButtonBackgroundColor` /
+ * `sideButton{Vertical,Left,Right}Padding` params in `saltTheme.ts`.
+ * (Phase 8.6 typed-params migration 2026-06-14.) */
 
 /* Empty-state message shown when no columns/values have been dragged
  * into the row-group / pivot / values drop zones. */
@@ -410,65 +404,197 @@ button.ag-side-button-button {
   margin-bottom: var(--salt-spacing-100);
 }
 
-/* === Side button hover + selected state ===============================
+/* === Side button accent indicator (selected state) ====================
  *
- * AG v3 ships ZERO CSS for `.ag-side-button-button` — only the
- * structural Phase 8.3 rules (padding, min-width, icon-wrapper margin)
- * apply. The legacy 2.x line didn't carry this either, but the broader
- * AG v32 base CSS that 2.x implicitly relied on shipped a baseline
- * hover/active treatment. AG v3 dropped that baseline as part of the
- * part-composition refactor.
- *
- * Add the two missing states explicitly so the tool-panel sidebar
- * tabs (Columns / Filters / etc.) show visual feedback. AG marks the
- * active tab via the `ag-selected` class on the `.ag-side-button`
- * wrapper (not on the inner button), so both selectors are scoped to
- * the wrapper. (Phase 8.6 port 2026-06-14.)
- */
-
-/* Hover — Salt actionable-subtle hover background */
-.ag-side-button-button:hover {
-  background-color: var(--salt-actionable-subtle-background-hover);
-  color: var(--salt-actionable-subtle-foreground-hover);
-}
-
-/* Selected (active tab) — Salt actionable-subtle active background +
- * an accent indicator on the leading edge so the active tab is
- * unambiguous even when the panel content shifts. */
+ * Hover + selected background/text colors live as typed params in
+ * `saltTheme.ts` (`sideButton{Hover,Selected}{Background,Text}Color`).
+ * The inline-start accent indicator below has no typed-param equivalent,
+ * so it stays as a CSS box-shadow rule scoped to BOTH AG's native
+ * `.ag-side-button.ag-selected` wrapper class and the `aria-pressed`
+ * attribute (covers AG release variations that toggle one or the other).
+ * (Phase 8.6 typed-params migration 2026-06-14.) */
 .ag-side-button.ag-selected .ag-side-button-button,
 .ag-side-button-button[aria-pressed="true"] {
-  background-color: var(--salt-actionable-subtle-background-selected);
-  color: var(--salt-actionable-subtle-foreground-selected);
   /* Inline-start accent indicator (logical — works in RTL too) */
   box-shadow: inset var(--salt-size-indicator) 0 0
     var(--salt-navigable-accent-indicator-active);
 }
 
-/* === Toggle button positioning =========================================
+/* === Toggle button — Salt Switch look =================================
  *
- * Port of `packages/ag-grid-theme/css/parts/ag-toggle-button.css` (2.x line).
- * Used by AG's toggle-button widget (pivot panel, group panel toggles).
- * AG v3 ships the default rectangle + switch knob via its base CSS; these
- * two rules adjust the knob inset and the checked-state position so they
- * align with Salt's selectable border tokens.
+ * Restyles AG Grid's toggle-button widget (used for "Pivot Mode" in the
+ * Columns tool panel, group / pivot panel toggles, etc.) so it visually
+ * matches Salt's `<Switch>` component. Salt's switch (see
+ * `packages/core/src/switch/Switch.css`) renders as:
+ *   - a SQUARE track (NOT a pill — `border-radius: --salt-palette-corner-weak`,
+ *     which resolves to 0 in the default Salt palette)
+ *   - a SQUARE thumb that sits INSIDE the track with `--salt-spacing-25`
+ *     margin on all sides (so the thumb is smaller than the track)
+ *   - the track background stays as the page background in BOTH on / off
+ *     states; only the border colour + thumb position change
+ *   - the thumb fills with `currentColor` (= the Salt selectable
+ *     foreground token) when OFF, and becomes transparent when ON so the
+ *     thumb border shows on the selected colour
  *
- * (Phase 8.3 port 2026-06-14.)
+ * AG Grid v3 hardcodes its toggle as a pill (`border-radius:
+ * calc(--ag-toggle-button-height * 0.5)`) with a circular thumb
+ * (`border-radius: 100%`) sized identical to the track height. It does
+ * NOT expose typed theme params for the toggle button, so this lives
+ * here as CSS-variable overrides plus direct property overrides where
+ * AG hardcodes pill / circle geometry. Sizing is keyed off the same
+ * `--salt-size-selectable` / `--salt-size-base` / `--salt-spacing-25`
+ * tokens that `Switch.css` uses, so density flows through automatically.
+ * (Phase 8.7 Salt-Switch look 2026-06-14, supersedes Phase 8.3 port.)
  */
-.ag-toggle-button-input-wrapper::before {
-  top: calc(1px - var(--ag-toggle-button-border-width));
-  left: calc(1px - var(--ag-toggle-button-border-width));
-  height: calc(
-    var(--ag-toggle-button-height) - 2 * var(--ag-toggle-button-border-width)
+.ag-toggle-button-input-wrapper {
+  /* Track sizing — derived from the same tokens Salt's `.saltSwitch-track` uses. */
+  --ag-toggle-button-width: calc(
+    (var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-fixed-100)) * 2
   );
-  width: calc(
-    var(--ag-toggle-button-height) - 2 * var(--ag-toggle-button-border-width)
-  );
+  --ag-toggle-button-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  /* Both off + on backgrounds stay as the page background; the border
+   * colour + thumb position are the on / off affordances. */
+  --ag-toggle-button-off-background-color: var(--salt-container-primary-background);
+  --ag-toggle-button-on-background-color: var(--salt-container-primary-background);
+  /* Thumb fill (set via AG's `::before` `background-color` rule) —
+   * `currentcolor` ties the thumb fill to the wrapper's `color`,
+   * mirroring Salt Switch's `currentColor` cascade. */
+  --ag-toggle-button-switch-background-color: currentcolor;
+
+  /* Salt switch is SQUARE (AG defaults to a pill via `calc(height * 0.5)`). */
+  border-radius: var(--salt-palette-corner-weak, 0);
+  /* Drives the thumb's `background: currentcolor` cascade above. */
+  color: var(--salt-selectable-foreground);
+
+  /* IMPORTANT: AG Grid v3's part-system refactor DROPPED the wrapper
+   * `border` declaration — the legacy `--ag-toggle-button-{off,on,switch}-
+   * border-color` and `--ag-toggle-button-border-width` variables no
+   * longer connect to any rule. The border has to be set directly here.
+   * `box-sizing: border-box` keeps the 1px border INSIDE the track width
+   * so the wrapper outer dimensions stay at the values we set above. */
+  box-sizing: border-box;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-selectable-borderColor);
 }
 
+/* Checked (on) — flip border + text colour to selected; the checked thumb
+ * rule below makes the thumb transparent so just its border shows. */
+.ag-toggle-button-input-wrapper.ag-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+
+/* Hover (off) — Salt selectable-hover border + foreground tokens. */
+.ag-toggle-button-input-wrapper:hover {
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+
+/* Hover (on) — keep selected colours (matches Salt's checked:hover rule). */
+.ag-toggle-button-input-wrapper.ag-checked:hover {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+
+/* Focus — Salt outline ring (replaces AG's default `box-shadow` ring). */
+.ag-toggle-button-input-wrapper:focus-within {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+    var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  /* Suppress AG's default `box-shadow: var(--ag-focus-shadow)` ring. */
+  box-shadow: none;
+}
+
+/* Disabled — Salt 40% opacity treatment. */
+.ag-toggle-button-input-wrapper.ag-disabled {
+  opacity: 0.4;
+}
+
+/* Thumb — square, fills with `currentcolor` when off.
+ *
+ * Salt's switch thumb (`--salt-size-selectable`, 16px @ medium) is
+ * intentionally TALLER than the track (`--salt-size-base - --salt-spacing-100`,
+ * 12px @ medium), so the thumb overflows the track top/bottom — Salt's
+ * `.saltSwitch-track` uses flexbox `align-items: center` to centre it.
+ * AG positions the `::before` thumb absolutely, so we replicate the
+ * vertical centring with `top: 50% + translateY(-50%)`. AG defaults
+ * `top: var(--ag-toggle-button-switch-inset)` which would leave the
+ * Salt-sized thumb misaligned, so this override is required.
+ *
+ * Like the wrapper, AG v3's `::before` rule has NO border declaration,
+ * so the thumb border is added directly here. `box-sizing: border-box`
+ * keeps the 1px border INSIDE the thumb width/height.
+ *
+ * Horizontal position: 2px inset from the left in OFF state
+ * (`--salt-spacing-25`). The checked rule below moves it to the right. */
+.ag-toggle-button-input-wrapper::before {
+  width: var(--salt-size-selectable);
+  height: var(--salt-size-selectable);
+  top: 50%;
+  left: var(--salt-spacing-25);
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid)
+    var(--salt-selectable-borderColor);
+  border-radius: var(--salt-palette-corner-weaker, 0);
+}
+
+/* Hover thumb (off) — Salt selectable-hover border tracks the wrapper. */
+.ag-toggle-button-input-wrapper:hover::before {
+  border-color: var(--salt-selectable-borderColor-hover);
+}
+
+/* Checked thumb — translate to the right edge and fill with the Salt
+ * accent background token. The white `::after` checkmark glyph sits on
+ * top (see below) to give a solid-coloured thumb with a white tick. */
 .ag-toggle-button-input-wrapper.ag-checked::before {
-  --ag-toggle-button-switch-background-color: var(--salt-selectable-borderColor-selected);
-  border-color: var(--ag-toggle-button-switch-border-color);
-  left: calc(
-    100% - var(--ag-toggle-button-height) + 2 * var(--ag-toggle-button-border-width)
-  );
+  left: calc(100% - var(--salt-size-selectable) - var(--salt-spacing-25));
+  background-color: var(--salt-actionable-accented-bold-background);
+  border-color: var(--salt-selectable-borderColor-selected);
+}
+
+/* Checkmark icon overlay (checked state only).
+ *
+ * Salt's `<Switch>` renders a `<CheckmarkSolidIcon>` child of the thumb
+ * when checked. AG Grid renders no children inside the toggle button,
+ * so we re-create the icon as an `::after` pseudo-element (AG v3 uses
+ * `::before` for the thumb but does NOT touch `::after` — verified by
+ * extracting the rule from
+ * `node_modules/ag-grid-community/dist/package/main.cjs.js`).
+ *
+ * Uses Salt's `salt-icons` font (`tick` glyph at U+E933 — see
+ * `SALT_ICONS` in `parts/saltIconSet.ts`). The font's `@font-face` is
+ * injected at document root by saltIconSet on module import, so the
+ * glyph is always available regardless of which icon-set part composes
+ * into the theme. This avoids an inline SVG data-URI mask and lets the
+ * glyph inherit `color` directly (no `background-color: currentcolor`
+ * + `mask` trick required).
+ *
+ * `font-weight: 400` matches the pin in saltIconSet (the salt-icons
+ * font isn't designed for heavy weights and otherwise gets synthetic
+ * bold from the wrapper's font-weight inheritance).
+ *
+ * Position: same coordinates as the checked `::before` thumb so the
+ * glyph sits exactly over it. Flex-centred inside its own 16x16 box. */
+.ag-toggle-button-input-wrapper.ag-checked::after {
+  content: "\e933";
+  font-family: "salt-icons";
+  font-weight: 400;
+  font-size: var(--salt-size-selectable);
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: calc(100% - var(--salt-size-selectable) - var(--salt-spacing-25));
+  width: var(--salt-size-selectable);
+  height: var(--salt-size-selectable);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* White-on-accent glyph fill. `--salt-actionable-accented-bold-foreground`
+   * resolves to white in light theme + light grey in dark theme, paired
+   * with the `--salt-actionable-accented-bold-background` accent fill on
+   * the `::before` thumb above for proper contrast. */
+  color: var(--salt-actionable-accented-bold-foreground);
 }

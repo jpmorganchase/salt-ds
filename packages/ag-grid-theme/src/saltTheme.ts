@@ -158,6 +158,27 @@ export const saltTheme = createTheme()
     // No menu border — AG v3 ships a 1px border by default that 2.x didn't have;
     // Salt menus rely on the Salt shadow + bg for separation. (Phase 7 finding 2026-06-13.)
     menuBorder: false,
+    // ----- Tool-panel side buttons (Columns / Filters / etc. tabs) -----
+    //
+    // Phase 8.6 (2026-06-14): every side-button surface previously styled
+    // via raw CSS in salt-cell-states.css moved to AG Grid v3's typed
+    // `sideButton*` params. The remaining CSS for side buttons covers
+    // only the inline-start accent indicator (no typed-param equivalent)
+    // and the icon-wrapper margin / wrapper min-width.
+    //
+    // `sideButtonSelectedBorder: false` zeroes AG v3's default border on
+    // the active tab so it doesn't clash with Salt's accent indicator.
+    sideButtonSelectedBorder: false,
+    sideButtonBorder: false,
+    sideButtonBackgroundColor: "transparent",
+    sideButtonVerticalPadding: "var(--salt-spacing-100)",
+    sideButtonLeftPadding: "var(--salt-spacing-50)",
+    sideButtonRightPadding: "var(--salt-spacing-50)",
+    // Hover — Salt actionable-subtle hover tokens
+    sideButtonHoverBackgroundColor: "transparent",
+    // Selected — actionable-subtle has no `-selected` variant; use `-active`
+    // (matches the salt-header.css precedent for pressed/selected subtle controls).
+    sideButtonSelectedBackgroundColor: "transparent",
     // No editor border — AG v3 paints `border: 1px solid var(--ag-accent-color)`
     // on `.ag-cell-inline-editing` (with `!important`) but 2.x had no editor
     // border at all. Setting `cellEditingBorder: false` resolves
@@ -175,7 +196,17 @@ export const saltTheme = createTheme()
     // keys. Salt's own selector-level CSS in `salt-input.css` handles the
     // editor border / focus look directly. (Phase 7 finding.)
 
-    // tabs — see saltTabStyle part (§4.6.3) for tabSelectedUnderline{Color,Width}
+    // tabs — see saltTabStyle part (§4.6.3); Phase 8.6 broadened it to own
+    // every `--ag-tab-*` variable via typed `TabStyleParams`.
+
+    // status bar — Phase 8.6 (2026-06-14) migrated the colour + font-weight
+    // rules out of salt-buttons.css into these typed params. The remaining
+    // CSS in salt-buttons.css covers only border / height / padding (no
+    // typed-param equivalent).
+    statusBarLabelColor: "var(--salt-content-secondary-foreground)",
+    statusBarLabelFontWeight: "var(--salt-text-label-fontWeight)",
+    statusBarValueColor: "var(--salt-content-primary-foreground)",
+    statusBarValueFontWeight: "var(--salt-text-fontWeight-strong)",
 
     // overlays
     popupShadow: "var(--salt-overlayable-shadow-modal)",
