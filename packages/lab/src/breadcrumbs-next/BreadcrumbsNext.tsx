@@ -201,7 +201,7 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
     const targetWindow = useWindow();
     const triggerElements = useRef(new Map<number, BreadcrumbTriggerElement>());
     const pendingExpansionFocusIndex = useRef<number | null>(null);
-    const { BreadcrumbSeparatorIcon } = useIcon();
+    const { LevelSeparatorIcon } = useIcon();
 
     useComponentCssInjection({
       testId: "salt-breadcrumbs-next",
@@ -317,9 +317,7 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
                       render={render}
                     />
                   )}
-                  {showSeparator
-                    ? renderSeparator(BreadcrumbSeparatorIcon)
-                    : null}
+                  {showSeparator ? renderSeparator(LevelSeparatorIcon) : null}
                 </li>
               );
             }
