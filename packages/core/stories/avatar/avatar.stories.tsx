@@ -117,24 +117,26 @@ export const WithAvatarGroup: StoryFn<typeof AvatarGroup> = (args) => {
 
 export const AvatarGroupWithMenu: StoryFn<typeof AvatarGroup> = (args) => {
   return (
-    <Menu placement="bottom-end">
-      <MenuTrigger>
-        <AvatarGroup
-          max={3}
-          size={3}
-          render={<button type="button" aria-label="Alex Brailescu profile" />}
-          {...args}
-        >
-          <Avatar name="Alex Brailescu" src={persona1} />
-          <Avatar name="Peter Piper" color="category-2" />
-          <Avatar name="John Doe" color="category-3" />
-          <Avatar name="Jane Doe" color="category-4" />
-        </AvatarGroup>
-      </MenuTrigger>
-      <MenuPanel>
-        <MenuItem>John Doe</MenuItem>
-        <MenuItem>Lizzy Lee</MenuItem>
-      </MenuPanel>
-    </Menu>
+    <AvatarGroup max={3} size={3} {...args}>
+      <Avatar name="Alex Brailescu" src={persona1} />
+      <Avatar name="Peter Piper" color="category-2" />
+      <Avatar name="John Doe" color="category-3" />
+      <Avatar name="Jane Doe" color="category-4" />
+
+      <Menu placement="bottom-end">
+        <MenuTrigger>
+          <Avatar
+            name="Alex Brailescu"
+            render={
+              <button type="button" aria-label="Alex Brailescu profile" />
+            }
+          />
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuItem>John Doe</MenuItem>
+          <MenuItem>Lizzy Lee</MenuItem>
+        </MenuPanel>
+      </Menu>
+    </AvatarGroup>
   );
 };

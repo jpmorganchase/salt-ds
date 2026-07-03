@@ -3,7 +3,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
-  type ComponentPropsWithoutRef,
   cloneElement,
   forwardRef,
   type HTMLAttributes,
@@ -11,7 +10,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
+import { makePrefixer } from "../utils";
 import { Avatar, type AvatarProps, DEFAULT_AVATAR_SIZE } from "./Avatar";
 
 import avatarGroupCss from "./AvatarGroup.css";
@@ -29,24 +28,10 @@ export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
    * The children to be rendered inside the AvatarGroup. Should be Avatar components.
    */
   children?: ReactNode;
-  /**
-   * Render prop to enable customization of the avatar root element.
-   */
-  render?: RenderPropsType["render"];
 }
 
 const withBaseName = makePrefixer("saltAvatarGroup");
 const DEFAULT_AVATAR_GROUP_MAX = 5;
-
-interface AvatarGroupActionProps extends ComponentPropsWithoutRef<"div"> {
-  render?: RenderPropsType["render"];
-}
-
-const AvatarGroupAction = forwardRef<HTMLDivElement, AvatarGroupActionProps>(
-  function AvatarGroupAction(props, ref) {
-    return renderProps("div", { ...props, ref });
-  },
-);
 
 export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
   function AvatarGroup(
@@ -56,7 +41,6 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       max = DEFAULT_AVATAR_GROUP_MAX,
       size = DEFAULT_AVATAR_SIZE,
       style: styleProp,
-      render,
       ...rest
     },
     ref,
@@ -82,11 +66,10 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
     const hiddenChildrenCount = childrenArray.length - visibleChildren.length;
 
     return (
-      <AvatarGroupAction
+      <div
         className={clsx(withBaseName(), className)}
         ref={ref}
         style={style}
-        render={render}
         {...rest}
       >
         {visibleChildren}
@@ -97,7 +80,7 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
             name={`+ ${hiddenChildrenCount}`}
           />
         )}
-      </AvatarGroupAction>
+      </div>
     );
   },
 );
