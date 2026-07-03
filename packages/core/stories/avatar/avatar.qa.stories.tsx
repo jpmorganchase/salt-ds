@@ -43,3 +43,27 @@ AllVariantsGrid.parameters = {
     disableSnapshot: false,
   },
 };
+
+export const BusinessGrid: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer height={200} width={1000} {...props}>
+    <Avatar
+      represents="business"
+      size={1}
+      name="Alex Brailescu"
+      src={persona1 as string}
+    />
+    <Avatar represents="business" size={2} src="bad_url" name="Peter Piper" />
+    <Avatar represents="business" size={3} src="bad_url" />
+    <Avatar represents="business" size={3} />
+    <Avatar represents="business" size={3} fallbackIcon={<SaltShakerIcon />} />
+    <Avatar represents="business" name="Peter Piper" color="category-1" />
+    <Avatar represents="business" name="Peter Piper" color="category-2" />
+    <Avatar represents="business" name="Peter Piper" color="category-3" />
+  </QAContainer>
+);
+
+BusinessGrid.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};

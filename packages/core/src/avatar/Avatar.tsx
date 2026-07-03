@@ -1,3 +1,4 @@
+import { BankIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -33,9 +34,18 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
    */
   size?: number;
   /**
-   * Icon to be used as a default item. Defaults to `UserIcon`.
+   * Icon to be used as a default item. Defaults to `UserIcon` when `represents` is
+   * `"person"`, and `BankIcon` when `represents` is `"business"`.
    */
   fallbackIcon?: ReactNode;
+  /**
+   * What the Avatar represents, which determines its default shape and fallback icon:
+   * - `"person"` renders a circular Avatar (default).
+   * - `"business"` renders a square Avatar.
+   *
+   * @default "person"
+   */
+  represents?: "person" | "business";
   /**
    * Changes Avatar's color.
    */
@@ -95,6 +105,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     color = "accent",
     name,
     nameToInitials = defaultNameToInitials,
+    represents = "person",
     src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
@@ -107,9 +118,10 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const targetWindow = useWindow();
   const { UserIcon } = useIcon();
 
+  const DefaultFallbackIcon = represents === "business" ? BankIcon : UserIcon;
   const fallbackIcon =
     fallbackIconProp === undefined ? (
-      <UserIcon aria-hidden />
+      <DefaultFallbackIcon aria-hidden />
     ) : (
       fallbackIconProp
     );
@@ -156,6 +168,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
       className={clsx(
         withBaseName(),
         withBaseName(color),
+        withBaseName(represents),
         {
           [withBaseName("withImage")]: hasImgNotFailing,
         },
