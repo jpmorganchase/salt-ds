@@ -1,7 +1,12 @@
 import {
   Avatar,
+  AvatarGroup,
   FlowLayout,
   Label,
+  Menu,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
   StackLayout,
   useAvatarImage,
 } from "@salt-ds/core";
@@ -96,5 +101,40 @@ export const WithCustomImg: StoryFn<typeof Avatar> = () => {
     <Avatar name="Peter Piper" size={3}>
       {children}
     </Avatar>
+  );
+};
+
+export const WithAvatarGroup: StoryFn<typeof AvatarGroup> = (args) => {
+  return (
+    <AvatarGroup max={3} size={3} {...args}>
+      <Avatar name="Alex Brailescu" src={persona1} />
+      <Avatar name="Peter Piper" color="category-2" />
+      <Avatar name="John Doe" color="category-3" />
+      <Avatar name="Jane Doe" color="category-4" />
+    </AvatarGroup>
+  );
+};
+
+export const AvatarGroupWithMenu: StoryFn<typeof AvatarGroup> = (args) => {
+  return (
+    <Menu placement="bottom-end">
+      <MenuTrigger>
+        <AvatarGroup
+          max={3}
+          size={3}
+          render={<button type="button" aria-label="Alex Brailescu profile" />}
+          {...args}
+        >
+          <Avatar name="Alex Brailescu" src={persona1} />
+          <Avatar name="Peter Piper" color="category-2" />
+          <Avatar name="John Doe" color="category-3" />
+          <Avatar name="Jane Doe" color="category-4" />
+        </AvatarGroup>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuItem>John Doe</MenuItem>
+        <MenuItem>Lizzy Lee</MenuItem>
+      </MenuPanel>
+    </Menu>
   );
 };
