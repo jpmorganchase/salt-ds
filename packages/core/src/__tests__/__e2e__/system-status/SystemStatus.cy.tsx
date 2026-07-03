@@ -1,4 +1,4 @@
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/core";
 import * as systemStatusStories from "@stories/system-status/system-status.stories";
 import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";

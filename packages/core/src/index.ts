@@ -66,6 +66,7 @@ export * from "./status-adornment";
 export * from "./status-indicator";
 export * from "./stepper";
 export * from "./switch";
+export * from "./system-status";
 export * from "./table";
 export * from "./tabs";
 export * from "./tag";
