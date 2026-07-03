@@ -13,4 +13,3 @@ Compose it with `SystemStatusContent` and `SystemStatusActions`.
   </SystemStatusContent>
 </SystemStatus>
 ```
- 
