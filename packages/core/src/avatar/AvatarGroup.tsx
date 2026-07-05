@@ -35,7 +35,7 @@ export interface AvatarGroupOverflowProps {
 
 export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The maximum number of Avatars to display in the group. If the number of children exceeds this value, an overflow Avatar will be displayed with the count of hidden Avatars.
+   * The maximum number of Avatars to display in the group.
    */
   max?: number;
   /**
@@ -44,8 +44,6 @@ export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
   size?: number;
   /**
    * Render the overflow indicator shown when the number of children exceeds `max`.
-   *
-   * Use this to control what the overflow Avatar renders as, for example wrapping it in a Menu, Tooltip or Dialog. Defaults to a non-interactive Avatar displaying `+{count}`.
    */
   renderOverflow?: (props: AvatarGroupOverflowProps) => ReactNode;
   /**
@@ -65,7 +63,6 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       max = DEFAULT_AVATAR_GROUP_MAX,
       size = DEFAULT_AVATAR_SIZE,
       renderOverflow,
-      style: styleProp,
       ...rest
     },
     ref,
@@ -77,31 +74,25 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       window: targetWindow,
     });
 
-    const style = {
-      ...styleProp,
-      "--saltAvatarGroup-size-multiplier": `${size}`,
-    };
+    // Preserve all valid children (e.g. Avatars wrapped in a Tooltip or Badge),
+    // only injecting `size` into direct Avatar children.
+    const items = Children.toArray(children).filter(
+      isValidElement,
+    ) as ReactElement<AvatarProps>[];
 
-    const avatars = Children.toArray(children).filter(
-      (child): child is ReactElement<AvatarProps> =>
-        isValidElement(child) && child.type === Avatar,
+    const visibleItems = items.slice(0, max).map((child) =>
+      child.type === Avatar
+        ? cloneElement(child, {
+            size: child.props.size ?? size,
+          })
+        : child,
     );
-    const visibleAvatars = avatars.slice(0, max).map((child) =>
-      cloneElement(child, {
-        size: child.props.size ?? size,
-      }),
-    );
-    const hiddenAvatars = avatars.slice(visibleAvatars.length);
+    const hiddenAvatars = items.slice(visibleItems.length);
     const hiddenAvatarsCount = hiddenAvatars.length;
 
     return (
-      <div
-        className={clsx(withBaseName(), className)}
-        ref={ref}
-        style={style}
-        {...rest}
-      >
-        {visibleAvatars}
+      <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
+        {visibleItems}
         {hiddenAvatarsCount > 0 &&
           (renderOverflow ? (
             renderOverflow({
@@ -110,11 +101,9 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
               size,
             })
           ) : (
-            <Avatar
-              className={withBaseName("hiddenAvatar")}
-              size={size}
-              name={`+ ${hiddenAvatarsCount}`}
-            />
+            <Avatar size={size} name={`${hiddenAvatarsCount} more`}>
+              {`+${hiddenAvatarsCount}`}
+            </Avatar>
           ))}
       </div>
     );
