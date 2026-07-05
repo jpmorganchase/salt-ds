@@ -1,26 +1,16 @@
 .saltAvatarGroup {
-  --avatarGroup-size-multiplier: var(--saltAvatarGroup-size-multiplier, 1);
-  /* Overlap scales with the avatar size; defaults to 1/4 of the avatar diameter */
-  --avatarGroup-overlap: var(--saltAvatarGroup-overlap, calc(var(--salt-size-base) * var(--avatarGroup-size-multiplier) * 0.25));
-
+  --avatarGroup-overlap: var(--saltAvatarGroup-overlap, calc(var(--salt-size-base) * 0.25));
   display: flex;
 }
 
 button.saltAvatarGroup,
 a.saltAvatarGroup {
   cursor: var(--salt-cursor-hover);
-  /* background-color: transparent;
-  border: none; */
 }
 
 button.saltAvatarGroup:disabled {
   cursor: var(--salt-cursor-disabled);
 }
-
-/* .saltAvatarGroup[aria-expanded="true"][aria-haspopup="menu"]::after,
-.saltAvatarGroup[aria-expanded="true"][aria-haspopup="dialog"]::after {
-  background: var(--salt-overlayable-background-hover);
-} */
 
 .saltAvatarGroup .saltAvatar:not(:first-child) {
   margin-left: calc(-1 * var(--avatarGroup-overlap));
