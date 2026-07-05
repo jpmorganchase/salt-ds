@@ -117,26 +117,35 @@ export const WithAvatarGroup: StoryFn<typeof AvatarGroup> = (args) => {
 
 export const AvatarGroupWithMenu: StoryFn<typeof AvatarGroup> = (args) => {
   return (
-    <AvatarGroup max={3} size={3} {...args}>
+    <AvatarGroup
+      max={3}
+      size={3}
+      {...args}
+      renderOverflow={({ count, hiddenAvatars, size }) => (
+        <Menu placement="bottom-end">
+          <MenuTrigger>
+            <Avatar
+              name={`+ ${count}`}
+              size={size}
+              render={
+                <button type="button" aria-label={`${count} more people`} />
+              }
+            />
+          </MenuTrigger>
+          <MenuPanel>
+            {hiddenAvatars.map((avatar) => (
+              <MenuItem key={avatar.props.name}>{avatar.props.name}</MenuItem>
+            ))}
+          </MenuPanel>
+        </Menu>
+      )}
+    >
       <Avatar name="Alex Brailescu" src={persona1} />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
       <Avatar name="Jane Doe" color="category-4" />
-
-      <Menu placement="bottom-end">
-        <MenuTrigger>
-          <Avatar
-            name="Alex Brailescu"
-            render={
-              <button type="button" aria-label="Alex Brailescu profile" />
-            }
-          />
-        </MenuTrigger>
-        <MenuPanel>
-          <MenuItem>John Doe</MenuItem>
-          <MenuItem>Lizzy Lee</MenuItem>
-        </MenuPanel>
-      </Menu>
+      <Avatar name="Lizzy Lee" color="category-5" />
+      <Avatar name="John Smith" color="category-6" />
     </AvatarGroup>
   );
 };
