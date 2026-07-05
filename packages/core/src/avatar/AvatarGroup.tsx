@@ -74,8 +74,6 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       window: targetWindow,
     });
 
-    // Preserve all valid children (e.g. Avatars wrapped in a Tooltip or Badge),
-    // only injecting `size` into direct Avatar children.
     const items = Children.toArray(children).filter(
       isValidElement,
     ) as ReactElement<AvatarProps>[];
