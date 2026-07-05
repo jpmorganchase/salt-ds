@@ -3,15 +3,6 @@
   display: flex;
 }
 
-button.saltAvatarGroup,
-a.saltAvatarGroup {
-  cursor: var(--salt-cursor-hover);
-}
-
-button.saltAvatarGroup:disabled {
-  cursor: var(--salt-cursor-disabled);
-}
-
 .saltAvatarGroup .saltAvatar:not(:first-child) {
   margin-left: calc(-1 * var(--avatarGroup-overlap));
 }
