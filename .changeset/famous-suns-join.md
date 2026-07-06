@@ -11,4 +11,3 @@ Added a `represents` prop to `Avatar` to distinguish usage by what the Avatar re
 <Avatar name="Alex Brailescu" />
 <Avatar represents="business" name="Blackrock" />
 ```
-
