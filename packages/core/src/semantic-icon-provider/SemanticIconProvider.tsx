@@ -38,7 +38,6 @@ import { WarningAdornmentIcon } from "../status-adornment/WarningAdornment";
 
 export interface SemanticIconMap {
   ActiveIcon: ElementType;
-  EntityIcon: ElementType;
   CalendarIcon: ElementType;
   CloseIcon: ElementType;
   CollapseGroupIcon: ElementType;
@@ -47,6 +46,7 @@ export interface SemanticIconMap {
   CollapseRightIcon: ElementType;
   CompletedIcon: ElementType;
   DecreaseIcon: ElementType;
+  EntityIcon: ElementType;
   ErrorIcon: ElementType;
   ErrorStatusAdornment: ElementType;
   ExpandGroupIcon: ElementType;
@@ -85,7 +85,6 @@ export interface SemanticIconProviderProps {
 
 const defaultIconMap: SemanticIconMap = {
   ActiveIcon: StepActiveIcon,
-  EntityIcon: BankIcon,
   CalendarIcon: CalendarIcon,
   CloseIcon: CloseIcon,
   CollapseGroupIcon: ChevronDownIcon,
@@ -94,6 +93,7 @@ const defaultIconMap: SemanticIconMap = {
   CollapseRightIcon: DoubleChevronRightIcon,
   CompletedIcon: SuccessCircleSolidIcon,
   DecreaseIcon: TriangleDownIcon,
+  EntityIcon: BankIcon,
   ErrorIcon: ErrorSolidIcon,
   ErrorStatusAdornment: ErrorAdornmentIcon,
   ExpandGroupIcon: ChevronRightIcon,
