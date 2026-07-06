@@ -70,8 +70,8 @@ export const FileDropZoneTrigger = forwardRef<
     const files = Array.from((event.target as HTMLInputElement).files ?? []);
     onChange?.(event, files);
 
-    // Allow selecting the same file multiple times - #3591
-    // User would still be able to put back the value in onChange, if necessary
+    // Reset after onChange so consumers can read the selected files first.
+    // Clearing the value allows selecting the same file again - #3591.
     event.target.value = "";
   };
   return (

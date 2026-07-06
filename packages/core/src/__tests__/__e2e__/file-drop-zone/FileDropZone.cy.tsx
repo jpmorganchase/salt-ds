@@ -85,6 +85,25 @@ describe("Given a file drop zone", () => {
     });
     cy.get("@dropSpy").should("have.been.calledOnce");
   });
+  it("should prevent native behaviour but not trigger onDrop when non-files are dropped", () => {
+    const dropSpy = cy.stub().as("dropSpy");
+    cy.mount(<Default onDrop={dropSpy} />);
+
+    cy.findByTestId("file-drop-zone-example").then(($dropZone) => {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.setData("text/uri-list", "https://example.com");
+      const event = new DragEvent("drop", {
+        bubbles: true,
+        cancelable: true,
+        dataTransfer,
+      });
+
+      expect($dropZone[0].dispatchEvent(event)).to.equal(false);
+      expect(event.defaultPrevented).to.equal(true);
+    });
+
+    cy.get("@dropSpy").should("not.have.been.called");
+  });
   it("should not accept dropped files when disabled", () => {
     const dropSpy = cy.stub().as("dropSpy");
     cy.mount(<Default disabled onDrop={dropSpy} />);

@@ -61,14 +61,20 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
       onDragOver?.(event);
 
       const hasFiles = containsFiles(event);
-      if (!hasFiles) {
-        return;
-      }
-
       // Need to cancel the default events to allow drop
       // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Drag_operations#droptargets
       event.preventDefault();
       event.stopPropagation();
+
+      if (!hasFiles) {
+        if (event.dataTransfer) {
+          event.dataTransfer.dropEffect = "none";
+        }
+        if (isActive) {
+          setActive(false);
+        }
+        return;
+      }
 
       if (disabled) {
         if (event.dataTransfer) {
@@ -100,11 +106,12 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
     };
 
     const handleDrop: DragEventHandler<HTMLDivElement> = (event) => {
+      event.preventDefault();
+
       if (!containsFiles(event)) {
+        setActive(false);
         return;
       }
-
-      event.preventDefault();
 
       if (disabled) {
         setActive(false);
