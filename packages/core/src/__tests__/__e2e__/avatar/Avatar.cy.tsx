@@ -62,18 +62,18 @@ describe("Given an Avatar", () => {
   it("should default to representing a person with a circular shape and person fallback icon", () => {
     cy.mount(<Default />);
     cy.findByTestId("UserSolidIcon").should("exist");
-    cy.get(".saltAvatar").should("not.have.class", "saltAvatar-business");
+    cy.get(".saltAvatar").should("not.have.class", "saltAvatar-entity");
   });
 
   it("should render a square shape and business fallback icon when representing a business", () => {
-    cy.mount(<Default represents="business" />);
+    cy.mount(<Default kind="entity" />);
     cy.findByTestId("BankIcon").should("exist");
-    cy.get(".saltAvatar").should("have.class", "saltAvatar-business");
+    cy.get(".saltAvatar").should("have.class", "saltAvatar-entity");
   });
 
   it("should support a custom fallback icon when representing a business", () => {
     const fallbackIcon = <UserGroupSolidIcon />;
-    cy.mount(<Default represents="business" fallbackIcon={fallbackIcon} />);
+    cy.mount(<Default kind="entity" fallbackIcon={fallbackIcon} />);
     cy.findByTestId("UserGroupSolidIcon").should("exist");
     cy.findByTestId("BankIcon").should("not.exist");
   });

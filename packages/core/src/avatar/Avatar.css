@@ -36,7 +36,7 @@
   user-select: none;
 }
 
-.saltAvatar-business {
+.saltAvatar-entity {
   border-radius: var(--saltAvatar-borderRadius, var(--salt-palette-corner-weak, 0));
 }
 

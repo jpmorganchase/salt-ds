@@ -11,7 +11,7 @@ export default {
 
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} {...props}>
-    <Avatar size={1} name="Alex Brailescu" src={persona1 as string} />
+    <Avatar size={1} name="Alex Brailescu" src={persona1} />
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
     <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
@@ -44,25 +44,20 @@ AllVariantsGrid.parameters = {
   },
 };
 
-export const BusinessGrid: StoryFn<QAContainerProps> = (props) => (
+export const EntityGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={200} width={1000} {...props}>
-    <Avatar
-      represents="business"
-      size={1}
-      name="Alex Brailescu"
-      src={persona1 as string}
-    />
-    <Avatar represents="business" size={2} src="bad_url" name="Peter Piper" />
-    <Avatar represents="business" size={3} src="bad_url" />
-    <Avatar represents="business" size={3} />
-    <Avatar represents="business" size={3} fallbackIcon={<SaltShakerIcon />} />
-    <Avatar represents="business" name="Peter Piper" color="category-1" />
-    <Avatar represents="business" name="Peter Piper" color="category-2" />
-    <Avatar represents="business" name="Peter Piper" color="category-3" />
+    <Avatar kind="entity" size={1} name="Alex Brailescu" src={persona1} />
+    <Avatar kind="entity" size={2} src="bad_url" name="Peter Piper" />
+    <Avatar kind="entity" size={3} src="bad_url" />
+    <Avatar kind="entity" size={3} />
+    <Avatar kind="entity" size={3} fallbackIcon={<SaltShakerIcon />} />
+    <Avatar kind="entity" name="Peter Piper" color="category-1" />
+    <Avatar kind="entity" name="Peter Piper" color="category-2" />
+    <Avatar kind="entity" name="Peter Piper" color="category-3" />
   </QAContainer>
 );
 
-BusinessGrid.parameters = {
+EntityGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
   },

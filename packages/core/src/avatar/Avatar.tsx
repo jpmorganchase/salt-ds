@@ -34,18 +34,18 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   size?: number;
   /**
    * Icon to be used as a default item. Defaults to the semantic `UserIcon` when
-   * `represents` is `"person"`, and the semantic `BusinessIcon` when `represents`
-   * is `"business"`.
+   * `kind` is `"person"`, and the semantic `EntityIcon` when `kind`
+   * is `"entity"`.
    */
   fallbackIcon?: ReactNode;
   /**
-   * What the Avatar represents, which determines its default shape and fallback icon:
+   * What the Avatar depicts, which determines its default shape and fallback icon:
    * - `"person"` renders a circular Avatar (default).
-   * - `"business"` renders a square Avatar.
+   * - `"entity"` renders a square Avatar.
    *
    * @default "person"
    */
-  represents?: "person" | "business";
+  kind?: "person" | "entity";
   /**
    * Changes Avatar's color.
    */
@@ -105,7 +105,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     color = "accent",
     name,
     nameToInitials = defaultNameToInitials,
-    represents = "person",
+    kind = "person",
     src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
@@ -116,10 +116,9 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   ref,
 ) {
   const targetWindow = useWindow();
-  const { UserIcon, BusinessIcon } = useIcon();
+  const { UserIcon, EntityIcon } = useIcon();
 
-  const DefaultFallbackIcon =
-    represents === "business" ? BusinessIcon : UserIcon;
+  const DefaultFallbackIcon = kind === "entity" ? EntityIcon : UserIcon;
   const fallbackIcon =
     fallbackIconProp === undefined ? (
       <DefaultFallbackIcon aria-hidden />
@@ -169,7 +168,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
       className={clsx(
         withBaseName(),
         withBaseName(color),
-        withBaseName(represents),
+        withBaseName(kind),
         {
           [withBaseName("withImage")]: hasImgNotFailing,
         },

@@ -26,16 +26,16 @@ const CustomAvatarButton = (props: ComponentProps<"button">) => (
 
 export const Default = Template.bind({});
 
-export const Represents: StoryFn<typeof Avatar> = (args) => {
+export const Kind: StoryFn<typeof Avatar> = (args) => {
   return (
     <FlowLayout gap={3}>
       <StackLayout align="center" gap={1}>
-        <Avatar {...args} represents="person" name="Alex Brailescu" />
+        <Avatar {...args} kind="person" name="John Doe" />
         <Label>Person</Label>
       </StackLayout>
       <StackLayout align="center" gap={1}>
-        <Avatar {...args} represents="business" name="Blackrock" />
-        <Label>Business</Label>
+        <Avatar {...args} kind="entity" name="JPMC" />
+        <Label>Entity</Label>
       </StackLayout>
     </FlowLayout>
   );
