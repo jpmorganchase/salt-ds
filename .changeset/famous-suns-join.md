@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/core": minor
 ---
 
 Added a `represents` prop to `Avatar` to distinguish usage by what the Avatar represents.
