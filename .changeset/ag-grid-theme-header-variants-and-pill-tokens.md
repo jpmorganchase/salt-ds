@@ -4,15 +4,14 @@
 
 Aligned the AG Grid theme with the Salt `Table` component (#5391) and fixed the Row Group Panel pill colors (#6196).
 
-- **Header background and divider variants.** New modifier class names on the grid wrapper mirror the Salt `Table` `<THead variant divider />` API, giving AG Grid headers the same visual-distinction options:
+- **Header background variants.** New modifier class names on the grid wrapper mirror the Salt `Table` `<THead variant />` API, giving AG Grid headers the same visual-distinction options:
 
   - `ag-theme-salt-header-primary` (default), `ag-theme-salt-header-secondary`, `ag-theme-salt-header-tertiary` — swap the header background between Salt's primary, secondary and tertiary container tokens.
-  - `ag-theme-salt-header-divider-primary` (default), `-secondary`, `-tertiary`, `-none` — control the strength of the line between the header and the body.
 
   Add them alongside the mode class on the grid wrapper:
 
   ```jsx
-  <div className="ag-theme-salt-light ag-theme-salt-header-secondary ag-theme-salt-header-divider-primary">
+  <div className="ag-theme-salt-light ag-theme-salt-header-secondary">
     <AgGridReact rowData={rowData} columnDefs={columnDefs} />
   </div>
   ```

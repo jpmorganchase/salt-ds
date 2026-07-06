@@ -38,8 +38,6 @@ Optional modifiers can be added alongside the mode class:
 - `ag-theme-salt-variant-secondary`, `ag-theme-salt-variant-tertiary`,
   `ag-theme-salt-variant-zebra` — body background variants
 - `ag-theme-salt-header-{primary,secondary,tertiary}` — header background
-- `ag-theme-salt-header-divider-{primary,secondary,tertiary,none}` — header
-  bottom border
 
 See the full
 [documentation and examples](https://www.saltdesignsystem.com/salt/components/ag-grid-theme).
