@@ -36,7 +36,6 @@
   user-select: none;
 }
 
-/* Square modifier used when the Avatar represents a business. Circle (person) remains the default. */
 .saltAvatar-business {
   border-radius: var(--salt-palette-corner-weak);
 }
