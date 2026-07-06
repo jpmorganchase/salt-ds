@@ -16,6 +16,8 @@ div[class*="ag-theme-salt"] .ag-column-drop-cell {
   --ag-secondary-foreground-color: var(--salt-actionable-bold-foreground);
   --ag-icon-font-color: var(--salt-actionable-bold-foreground);
   --ag-chip-background-color: var(--salt-actionable-bold-background);
+
+  color: var(--ag-secondary-foreground-color);
 }
 
 div[class*="ag-theme-salt"] .ag-column-drop-cell:hover {
