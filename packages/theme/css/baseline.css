@@ -1,0 +1,146 @@
+/*
+ * Salt baseline CSS
+ *
+ * Minimal, opt-in reset for apps using Salt. Import once at the root
+ * of your application (e.g. `@import "@salt-ds/theme/css/baseline.css";`)
+ * after the Salt theme.
+ *
+ * Salt components style themselves via component classes and never
+ * touch bare HTML tags. Typography, color, and focus-visible are
+ * applied by the `.salt-theme` class (see `global.css`) and only
+ * resolve inside that scope. This file therefore intentionally does
+ * NOT set typography or color on `html` / `body` — doing so would
+ * reference `--salt-*` tokens that are not defined at that scope.
+ *
+ * Scope of this reset:
+ *   - `box-sizing: border-box` globally.
+ *   - Zeroes browser default margin / padding (physical AND logical
+ *     longhands) on the block elements that most commonly interfere
+ *     with Salt layouts.
+ *   - Prevents browser-default heading sizes from breaking layouts.
+ *   - Sensible defaults for media, form controls, `<button>`,
+ *     `<fieldset>`, `<table>`, and `<a>` so bare (non-Salt) elements
+ *     don't render with jarring browser chrome.
+ *
+ * Not included (deliberately — these are app-level concerns, not
+ * resets):
+ *   - Body background / color / min-height / font-smoothing.
+ *   - `list-style: none` on `<ul>` / `<ol>`.
+ *   - `prefers-reduced-motion` global overrides.
+ *   - Mobile-only tweaks (`-webkit-text-size-adjust`, tap highlight).
+ */
+
+/* Modern box-sizing — every element (and pseudo-element) uses
+ * border-box so widths / heights include padding and border. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margins / padding from the most common
+ * block-level elements. Salt components own their own spacing via
+ * `--salt-spacing-*` tokens — leaving browser defaults in place
+ * means every consumer has to manually zero them out.
+ *
+ * Note: we reset the logical `margin-block-*` / `margin-inline-*`
+ * and `padding-block-*` / `padding-inline-*` explicitly, not just
+ * the physical shorthand. Modern UA stylesheets declare defaults
+ * like `p { margin-block-start: 1em; margin-block-end: 1em; }`, and
+ * because logical and physical margin properties are distinct
+ * longhands in the CSS cascade an author-level `margin: 0` does not
+ * always win over a UA-level logical longhand. Resetting both
+ * variants guarantees the reset actually wins. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+figure,
+dl,
+dd,
+ul,
+ol,
+fieldset,
+hr {
+  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
+  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+/* Prevent the browser's oversized default `<h1>` etc. from breaking
+ * layouts. Apps that want an editorial hierarchy should use Salt's
+ * typography components (e.g. `<H1>`, `<Text>`). */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Media elements — sensible defaults so images and videos never
+ * overflow their container. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form controls — inherit typography so bare inputs / buttons don't
+ * fall back to the browser's system font. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Bare `<button>` — strip UA chrome. Salt's `<Button>` component
+ * owns its own visual treatment; this only affects non-Salt buttons
+ * so they don't render with browser gradients / borders that clash
+ * with the Salt theme. */
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Fieldsets ship with a browser-default border that is almost
+ * never wanted. Padding is already zeroed above. */
+fieldset {
+  border: 0;
+}
+
+/* Collapse table borders by default so bare tables don't render
+ * with the browser's "double line" cell borders. */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Anchor color inherits from the surrounding text so unthemed
+ * `<a>` elements do not render as the browser's default bright
+ * blue. Salt's `<Link>` component still applies its own treatment. */
+a {
+  color: inherit;
+  text-decoration: none;
+}
