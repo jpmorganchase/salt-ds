@@ -15,23 +15,6 @@ You still need to import Salt’s theme CSS. Theme CSS provides global tokens, t
 
 See [Developing with Salt](./developing) for the full setup.
 
-## Disable style injection
-
-Style injection is enabled by default. If your application imports Salt component CSS another way, set `enableStyleInjection={false}` on `SaltProvider` or `SaltProviderNext` to disable runtime injection.
-
-Use this option if your build requires static CSS files, or if your application’s Content Security Policy doesn't allow runtime style tags.
-
-### Static CSS bundle paths
-
-Each package documents its own CSS import requirements in its component or package guidance. If you disable runtime style injection, import the static CSS bundle for each Salt package that your application uses.
-
-| Package                    | Static CSS import                                       |
-| -------------------------- | ------------------------------------------------------- |
-| `@salt-ds/core`            | `@salt-ds/core/css/salt-core.css`                       |
-| `@salt-ds/lab`             | `@salt-ds/lab/css/salt-lab.css`                         |
-| `@salt-ds/date-components` | `@salt-ds/date-components/css/salt-date-components.css` |
-| `@salt-ds/embla-carousel`  | `@salt-ds/embla-carousel/css/salt-embla-carousel.css`   |
-
 ## Use style injection with a Content Security Policy
 
 If your application uses a Content Security Policy that requires nonces for inline styles, wrap your app with `CSPProvider` from `@salt-ds/styles`. Salt applies the nonce to its injected `<style>` elements.
@@ -78,6 +61,23 @@ If your CSP blocks inline style attributes as well as style elements, you have a
 - Relax `style-src-attr`, for example with `'unsafe-inline'`, if your security model allows inline style attributes.
 - Render affected components only on the client if inline style attributes are only present in server-rendered HTML.
 - Move affected inline styles into CSS, or override/unset inline styles that come from composed components where the component API allows it.
+
+## Disable style injection
+
+Style injection is enabled by default. If your application imports Salt component CSS another way, set `enableStyleInjection={false}` on `SaltProvider` or `SaltProviderNext` to disable runtime injection.
+
+Use this option if your build requires static CSS files, or if your application’s Content Security Policy doesn't allow runtime style tags.
+
+### Static CSS bundle paths
+
+Each package documents its own CSS import requirements in its component or package guidance. If you disable runtime style injection, import the static CSS bundle for each Salt package that your application uses.
+
+| Package                    | Static CSS import                                       |
+| -------------------------- | ------------------------------------------------------- |
+| `@salt-ds/core`            | `@salt-ds/core/css/salt-core.css`                       |
+| `@salt-ds/lab`             | `@salt-ds/lab/css/salt-lab.css`                         |
+| `@salt-ds/date-components` | `@salt-ds/date-components/css/salt-date-components.css` |
+| `@salt-ds/embla-carousel`  | `@salt-ds/embla-carousel/css/salt-embla-carousel.css`   |
 
 ## Choosing an approach
 
