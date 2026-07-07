@@ -1,0 +1,65 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+Use `BreadcrumbsNext` with `BreadcrumbNext` items to show a user's current location within a hierarchy.
+
+- We recommend keeping the number of breadcrumb levels concise to a maximum of four, including the first level if it's displayed. Content is more easily discoverable when navigating a relatively wide and flat information hierarchy within applications. This prevents users from feeling overwhelmed.
+- Use `maxItems` to collapse lower priority levels in deeper hierarchies.
+- Shorten or combine low value levels only when the resulting trail still explains the user's location.
+
+### When to use
+
+- To show a user's current location within a hierarchy when they navigate related pages or drill down into data.
+- To provide secondary navigation back to previous levels in a user's current workflow or selection.
+- To complement the application's main navigation—never to replace it.
+
+### When not to use
+
+- When there is only one level in the hierarchy.
+- When the user needs primary navigation between major areas of an application. Instead, use [`NavigationItem`](../navigation-item).
+- When the user needs to switch between related views on the same page. Instead, use [`Tabs`](../tabs).
+
+## Content
+
+- Keep breadcrumb labels concise and descriptive. Labels should match the destination or current page closely enough to make sense out of context.
+- Use contextual labels when they help users understand their current task, such as "Edit profile" instead of "Profile".
+
+## Import
+
+To import `BreadcrumbsNext` and related components from the lab Salt package, use:
+
+```js
+import {
+  BreadcrumbNext,
+  BreadcrumbNextLabel,
+  BreadcrumbNextTrigger,
+  BreadcrumbsNext,
+} from "@salt-ds/lab";
+```
+
+## Props
+
+### `BreadcrumbsNext`
+
+<PropsTable packageName="lab" componentName="BreadcrumbsNext" />
+
+### `BreadcrumbNext`
+
+<PropsTable packageName="lab" componentName="BreadcrumbNext" />
+
+### `BreadcrumbNextTrigger`
+
+<PropsTable packageName="lab" componentName="BreadcrumbNextTrigger" />
+
+### `BreadcrumbNextLabel`
+
+<PropsTable packageName="lab" componentName="BreadcrumbNextLabel" />

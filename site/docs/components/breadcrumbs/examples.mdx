@@ -1,0 +1,61 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+Use the default composition for a concise trail with linked previous levels and a text current level.
+
+<LivePreview componentName="breadcrumbs" exampleName="Default" />
+
+## Current level
+
+The current level renders as text with `aria-current="page"` rather than as a link. By default this is the final `BreadcrumbNext`, but set `current` on a child to declare it explicitly when the current level is not the last item.
+
+<LivePreview componentName="breadcrumbs" exampleName="CurrentLevel" />
+
+## Composed items
+
+Compose `BreadcrumbNextTrigger` and `BreadcrumbNextLabel` as children to add an icon or tooltip to a breadcrumb. `BreadcrumbNextLabel` provides the visible and accessible label, and `BreadcrumbNextTrigger` is required for `href` to render the item as a link.
+
+<LivePreview componentName="breadcrumbs" exampleName="ComposedItems" />
+
+## Wrapped
+
+When the content exceeds the available width, breadcrumbs can wrap onto subsequent lines. The breadcrumb and its separator should be on the same line.
+
+Set `wrap` to allow the trail to wrap onto subsequent lines.
+
+<LivePreview componentName="breadcrumbs" exampleName="Wrapped" />
+
+## Collapsed breadcrumbs
+
+Breadcrumbs can be collapsed to save space or hide lower priority levels (e.g. only displaying Home and the current level). The hidden levels can be revealed in 2 different ways:
+
+### Overflow menu
+
+Use an overflow menu when there is not enough horizontal space available, the order of the menu items should match the hierarchy of the levels.
+
+Set `maxItems` to use `BreadcrumbsNext`'s default disclosure collapse mode for this behavior.
+
+<LivePreview componentName="breadcrumbs" exampleName="DisclosureCollapsed" />
+
+### Expansion
+
+Alternatively, if there is sufficient horizontal space, use an expansion button to reveal all levels. Showing the levels inline can make the hierarchy of the levels more visible.
+
+Set `collapseMode="expand"` to reveal hidden breadcrumb levels inline.
+
+<LivePreview componentName="breadcrumbs" exampleName="InlineExpansion" />
+
+## Router integration
+
+Use `render` to adapt breadcrumb links to a routing library such as React Router or Next.js. The same renderer is used for visible links and links inside the collapsed disclosure.
+
+<LivePreview componentName="breadcrumbs" exampleName="RouterIntegration" />
