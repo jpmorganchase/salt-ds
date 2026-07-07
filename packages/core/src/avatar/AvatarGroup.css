@@ -3,10 +3,22 @@
   --avatarGroup-gap: var(--saltAvatarGroup-gap, var(--salt-size-fixed-100));
   --avatarGroup-gap-feather: var(--saltAvatarGroup-gap-feather, 0.1px);
   display: flex;
+  border: none;
+  padding: 0;
+  background-color: transparent;
 }
 
 .saltAvatarGroup .saltAvatar:not(:first-child) {
   margin-left: calc(-1 * var(--avatarGroup-overlap));
+}
+
+button.saltAvatarGroup,
+a.saltAvatarGroup {
+  cursor: var(--salt-cursor-hover);
+}
+
+button.saltAvatarGroup:disabled {
+  cursor: var(--salt-cursor-disabled);
 }
 
 /* Cut a 1px gap out of each avatar where the following sibling overlaps it, to show separation */

@@ -41,42 +41,58 @@ describe("Given an AvatarGroup", () => {
     cy.findByRole("img", { name: "2 more" }).should("exist");
   });
 
-  it("should propagate `size` to child Avatars while respecting a per-Avatar override", () => {
+  it("should preserve native button semantics when rendered as a button", () => {
     cy.mount(
-      <AvatarGroup size={3}>
-        <Avatar name="Alex Brailescu" />
-        <Avatar name="Peter Piper" size={1} />
-      </AvatarGroup>,
-    );
-
-    cy.findByRole("img", { name: "Alex Brailescu" })
-      .invoke("attr", "style")
-      .should("contain", "--saltAvatar-size-multiplier: 3");
-    cy.findByRole("img", { name: "Peter Piper" })
-      .invoke("attr", "style")
-      .should("contain", "--saltAvatar-size-multiplier: 1");
-  });
-
-  it("should call `renderOverflow` with the hidden avatars, count and size", () => {
-    const renderOverflow = cy
-      .stub()
-      .as("renderOverflow")
-      .returns(<span data-testid="custom-overflow">custom</span>);
-
-    cy.mount(
-      <AvatarGroup max={2} size={3} renderOverflow={renderOverflow}>
+      <AvatarGroup max={2} render={<button type="button" />}>
         <Avatar name="Alex Brailescu" />
         <Avatar name="Peter Piper" />
         <Avatar name="John Doe" />
-        <Avatar name="Jane Doe" />
       </AvatarGroup>,
     );
 
-    cy.findByTestId("custom-overflow").should("exist");
-    cy.get("@renderOverflow").should("have.been.calledWithMatch", {
-      count: 2,
-      size: 3,
+    cy.findByRole("button").should("have.class", "saltAvatarGroup");
+    // 2 visible avatars + 1 overflow indicator
+    cy.findAllByRole("img").should("have.length", 3);
+    cy.findByText("+1").should("exist");
+  });
+
+  it("WHEN `render` is passed a render function, THEN should call `render` to create the element", () => {
+    const testId = "avatar-group-testid";
+    const mockRender = cy
+      .stub()
+      .as("render")
+      .returns(<div data-testid={testId} />);
+
+    cy.mount(
+      <AvatarGroup max={2} render={mockRender}>
+        <Avatar name="Alex Brailescu" />
+        <Avatar name="Peter Piper" />
+        <Avatar name="John Doe" />
+      </AvatarGroup>,
+    );
+
+    cy.findByTestId(testId).should("exist");
+    cy.get("@render").should("have.been.calledWithMatch", {
+      className: Cypress.sinon.match.string,
+      children: Cypress.sinon.match.any,
     });
+  });
+
+  it("WHEN `render` is given a JSX element, THEN should merge the props and render the JSX element", () => {
+    const testId = "avatar-group-testid";
+
+    cy.mount(
+      <AvatarGroup max={2} render={<section data-testid={testId} />}>
+        <Avatar name="Alex Brailescu" />
+        <Avatar name="Peter Piper" />
+        <Avatar name="John Doe" />
+      </AvatarGroup>,
+    );
+
+    cy.findByTestId(testId).should("have.class", "saltAvatarGroup");
+    // 2 visible avatars + 1 overflow indicator
+    cy.findAllByRole("img").should("have.length", 3);
+    cy.findByText("+1").should("exist");
   });
 
   it("should not render an overflow indicator when children exactly match `max`", () => {

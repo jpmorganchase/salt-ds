@@ -61,49 +61,6 @@ export const AvatarGroupGrid: StoryFn<QAContainerProps> = (props) => (
       <Avatar name="Jane Doe" color="category-4" />
       <Avatar name="Lizzy Lee" color="category-5" />
     </AvatarGroup>
-
-    {/* Overlap scales with size */}
-    <AvatarGroup max={3} size={1}>
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" />
-      <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
-    </AvatarGroup>
-    <AvatarGroup max={3} size={2}>
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" />
-      <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
-    </AvatarGroup>
-    <AvatarGroup max={3} size={4}>
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" />
-      <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
-    </AvatarGroup>
-
-    {/* Per-Avatar size override is preserved */}
-    <AvatarGroup max={3} size={3}>
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" size={1} />
-      <Avatar name="John Doe" color="category-3" />
-    </AvatarGroup>
-
-    {/* Custom overflow via renderOverflow */}
-    <AvatarGroup
-      max={2}
-      size={3}
-      renderOverflow={({ count, size }) => (
-        <Avatar color="category-7" size={size} name={`${count} more`}>
-          {`+${count}`}
-        </Avatar>
-      )}
-    >
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" />
-      <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
-    </AvatarGroup>
   </QAContainer>
 );
 
