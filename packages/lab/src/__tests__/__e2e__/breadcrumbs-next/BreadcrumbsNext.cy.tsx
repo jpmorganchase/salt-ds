@@ -5,12 +5,7 @@ import {
   BreadcrumbNextTrigger,
   BreadcrumbsNext,
 } from "@salt-ds/lab";
-import {
-  type ComponentPropsWithoutRef,
-  Fragment,
-  forwardRef,
-  useState,
-} from "react";
+import { type ComponentPropsWithoutRef, Fragment, forwardRef } from "react";
 
 const TestRouterLink = forwardRef<
   HTMLAnchorElement,
@@ -298,6 +293,9 @@ describe("GIVEN a BreadcrumbsNext", () => {
     cy.findByText("Level 3 Entity").should("not.exist");
     cy.findByText("Current Level Entity").should("exist");
     cy.findByRole("button", { name: "Show breadcrumb levels" }).should("exist");
+    cy.findByRole("button", { name: "Show all breadcrumbs" }).should(
+      "not.exist",
+    );
   });
 
   it("THEN supports custom collapse ranges and overflow at the start", () => {
@@ -644,109 +642,5 @@ describe("GIVEN a BreadcrumbsNext", () => {
       .realClick();
     cy.get("@onClick").should("have.been.calledOnce");
     cy.get("@trigger").should("have.attr", "aria-expanded", "false");
-  });
-
-  it("THEN reveals hidden breadcrumbs with uncontrolled inline expansion", () => {
-    cy.mount(
-      <BreadcrumbsNext collapseMode="expand" maxItems={3}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
-    );
-
-    cy.findByText("Level 2 Entity").should("not.exist");
-    cy.findByText("Level 3 Entity").should("not.exist");
-    cy.findByRole("button", { name: "Show all breadcrumbs" }).realClick();
-    cy.findByText("Level 2 Entity").should("exist");
-    cy.findByText("Level 3 Entity").should("exist");
-  });
-
-  it("THEN moves focus to the first revealed breadcrumb after keyboard inline expansion", () => {
-    cy.mount(
-      <BreadcrumbsNext collapseMode="expand" maxItems={3}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
-    );
-
-    cy.findByRole("button", { name: "Show all breadcrumbs" }).focus();
-    cy.realPress("Space");
-    cy.findByRole("link", { name: "Level 2 Entity" }).should("be.focused");
-  });
-
-  it("THEN moves focus to the first revealed breadcrumb after mouse inline expansion", () => {
-    cy.mount(
-      <BreadcrumbsNext collapseMode="expand" maxItems={3}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
-    );
-
-    cy.findByRole("button", { name: "Show all breadcrumbs" }).realClick();
-    cy.findByRole("link", { name: "Level 2 Entity" }).should("be.focused");
-  });
-
-  it("THEN skips newly revealed breadcrumbs that are not focusable after keyboard inline expansion", () => {
-    cy.mount(
-      <BreadcrumbsNext collapseMode="expand" maxItems={3}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">
-          <BreadcrumbNextTrigger tabIndex={-1}>
-            <BreadcrumbNextLabel>Level 2 Entity</BreadcrumbNextLabel>
-          </BreadcrumbNextTrigger>
-        </BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
-    );
-
-    cy.findByRole("button", { name: "Show all breadcrumbs" }).focus();
-    cy.realPress("Space");
-    cy.findByRole("link", { name: "Level 3 Entity" }).should("be.focused");
-  });
-
-  it("THEN supports controlled inline expansion and native links after expansion", () => {
-    const onExpandedChange = cy.stub().as("onExpandedChange");
-
-    function ControlledBreadcrumbsNext() {
-      const [expanded, setExpanded] = useState(false);
-
-      return (
-        <BreadcrumbsNext
-          collapseMode="expand"
-          expanded={expanded}
-          maxItems={3}
-          onExpandedChange={(event, nextExpanded) => {
-            onExpandedChange(event, nextExpanded);
-            setExpanded(nextExpanded);
-          }}
-        >
-          <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-          <BreadcrumbNext href="/level-2">Level 2 Entity</BreadcrumbNext>
-          <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-          <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
-      );
-    }
-
-    cy.mount(<ControlledBreadcrumbsNext />);
-    cy.findByText("Level 2 Entity").should("not.exist");
-    cy.findByRole("button", { name: "Show all breadcrumbs" }).realClick();
-    cy.get("@onExpandedChange").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      true,
-    );
-    cy.findByRole("link", { name: "Level 2 Entity" }).should(
-      "have.attr",
-      "href",
-      "/level-2",
-    );
   });
 });

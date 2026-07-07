@@ -36,23 +36,11 @@ Set `wrap` to allow the trail to wrap onto subsequent lines.
 
 ## Collapsed breadcrumbs
 
-Breadcrumbs can be collapsed to save space or hide lower priority levels (e.g. only displaying Home and the current level). The hidden levels can be revealed in 2 different ways:
+Breadcrumbs can be collapsed to save space or hide lower priority levels (e.g. only displaying Home and the current level). Hidden levels are revealed in an overflow disclosure, and the order of the menu items matches the hierarchy of the levels.
 
-### Overflow menu
-
-Use an overflow menu when there is not enough horizontal space available, the order of the menu items should match the hierarchy of the levels.
-
-Set `maxItems` to use `BreadcrumbsNext`'s default disclosure collapse mode for this behavior.
+Set `maxItems` to collapse lower priority levels into the disclosure.
 
 <LivePreview componentName="breadcrumbs" exampleName="DisclosureCollapsed" />
-
-### Expansion
-
-Alternatively, if there is sufficient horizontal space, use an expansion button to reveal all levels. Showing the levels inline can make the hierarchy of the levels more visible.
-
-Set `collapseMode="expand"` to reveal hidden breadcrumb levels inline.
-
-<LivePreview componentName="breadcrumbs" exampleName="InlineExpansion" />
 
 ## Router integration
 

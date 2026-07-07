@@ -1,4 +1,4 @@
-import { Button, StackLayout, Tooltip } from "@salt-ds/core";
+import { Tooltip } from "@salt-ds/core";
 import { HomeIcon } from "@salt-ds/icons";
 import {
   BreadcrumbNext,
@@ -7,7 +7,6 @@ import {
   BreadcrumbsNext,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
 
 export default {
   title: "Lab/Breadcrumbs Next",
@@ -98,43 +97,6 @@ export const DisclosureCollapsed: StoryFn<typeof BreadcrumbsNext> = (props) => (
     <BreadcrumbNext>Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
-
-export const InlineExpansion: StoryFn<typeof BreadcrumbsNext> = (props) => (
-  <BreadcrumbsNext {...props} collapseMode="expand" maxItems={3}>
-    <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
-    <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
-    <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
-    <BreadcrumbNext href="#">Equities</BreadcrumbNext>
-    <BreadcrumbNext>Portfolio</BreadcrumbNext>
-  </BreadcrumbsNext>
-);
-
-export const ControlledInlineExpansion: StoryFn<typeof BreadcrumbsNext> = (
-  props,
-) => {
-  const [expanded, setExpanded] = useState(false);
-
-  return (
-    <StackLayout align="start" gap={2}>
-      <Button onClick={() => setExpanded(!expanded)}>
-        {expanded ? "Collapse" : "Expand"}
-      </Button>
-      <BreadcrumbsNext
-        {...props}
-        collapseMode="expand"
-        expanded={expanded}
-        maxItems={3}
-        onExpandedChange={(_, nextExpanded) => setExpanded(nextExpanded)}
-      >
-        <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
-        <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
-        <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
-        <BreadcrumbNext href="#">Equities</BreadcrumbNext>
-        <BreadcrumbNext>Portfolio</BreadcrumbNext>
-      </BreadcrumbsNext>
-    </StackLayout>
-  );
-};
 
 export const CustomCollapseRanges: StoryFn<typeof BreadcrumbsNext> = (
   props,
