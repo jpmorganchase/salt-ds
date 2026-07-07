@@ -12,7 +12,7 @@ import { QAContainer, type QAContainerProps } from "docs/components";
 import "docs/story.css";
 
 export default {
-  title: "Lab/Breadcrumbs Next/QA",
+  title: "Lab/Breadcrumbs Next/Breadcrumbs Next QA",
   component: BreadcrumbsNext,
 } as Meta<typeof BreadcrumbsNext>;
 
