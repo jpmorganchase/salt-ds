@@ -10,14 +10,13 @@ data:
 
 ## Best practices
 
-- `BreadcrumbsNext` renders a `<nav>` landmark. Give it an accessible name with `aria-label` or `aria-labelledby`, and ensure the name is unique when more than one breadcrumb trail is present on a page.
-- Separators are decorative and are hidden from assistive technologies with `aria-hidden`.
+- Provide an accessible name for each breadcrumb trail with `aria-label` or `aria-labelledby`.
 
 ## Current page
 
 The current breadcrumb renders as text rather than a link, with `aria-current="page"` so assistive technologies can identify the page represented by the trail.
 
-`aria-current="page"` is derived from the `current` prop or the final item; activating a link does not move it. Update the trail from your route or page state after navigation so exactly one item represents the current page.
+`aria-current="page"` is derived from the `current` prop or the final item. Activating a link does not move it; update the trail from your route or page state after navigation.
 
 In collapsed trails, hidden levels without an `href` render as text and are skipped by disclosure focus movement, while the current page stays visible in the trail.
 
