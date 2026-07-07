@@ -1,8 +1,26 @@
 .saltAvatarGroup {
   --avatarGroup-overlap: var(--saltAvatarGroup-overlap, calc(var(--salt-size-base) * 0.25));
+  --avatarGroup-gap: var(--saltAvatarGroup-gap, var(--salt-size-fixed-100));
+  --avatarGroup-gap-feather: var(--saltAvatarGroup-gap-feather, 0.1px);
   display: flex;
 }
 
 .saltAvatarGroup .saltAvatar:not(:first-child) {
   margin-left: calc(-1 * var(--avatarGroup-overlap));
+}
+
+/* Cut a 1px gap out of each avatar where the following sibling overlaps it, to show separation */
+.saltAvatarGroup .saltAvatar:not(:last-child) {
+  --avatarGroup-mask-radius: calc(var(--avatar-container-size) / 2 + var(--avatarGroup-gap));
+  --avatarGroup-mask-x: calc(var(--avatar-container-size) * 1.5 - var(--avatarGroup-overlap));
+  -webkit-mask: radial-gradient(
+    circle var(--avatarGroup-mask-radius) at var(--avatarGroup-mask-x) 50%,
+    transparent calc(var(--avatarGroup-mask-radius) - var(--avatarGroup-gap-feather)),
+    black calc(var(--avatarGroup-mask-radius) + var(--avatarGroup-gap-feather))
+  );
+  mask: radial-gradient(
+    circle var(--avatarGroup-mask-radius) at var(--avatarGroup-mask-x) 50%,
+    transparent calc(var(--avatarGroup-mask-radius) - var(--avatarGroup-gap-feather)),
+    black calc(var(--avatarGroup-mask-radius) + var(--avatarGroup-gap-feather))
+  );
 }
