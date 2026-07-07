@@ -18,7 +18,6 @@ import {
 } from "@salt-ds/core";
 import { OverflowMenuIcon } from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
-import { clsx } from "clsx";
 import {
   type FocusEvent,
   type KeyboardEvent,
@@ -229,9 +228,7 @@ export function BreadcrumbOverflowDisclosure({
         aria-expanded={open}
         aria-label="Show breadcrumb levels"
         appearance="transparent"
-        className={clsx(withBaseName("collapseButton"), {
-          [withBaseName("collapseButton-active")]: open,
-        })}
+        className={withBaseName("collapseButton")}
         ref={handleTriggerRef}
         {...getReferenceProps({
           onBlur: handleTriggerBlur,

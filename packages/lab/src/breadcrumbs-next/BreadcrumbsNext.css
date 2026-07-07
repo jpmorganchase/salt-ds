@@ -27,13 +27,7 @@
   min-width: 0;
 }
 
-.saltBreadcrumbsNext-collapseButton {
-  --saltButton-height: var(--salt-size-base);
-  --saltButton-minWidth: var(--salt-size-base);
-  --saltButton-padding: 0;
-}
-
-.saltBreadcrumbsNext-collapseButton.saltBreadcrumbsNext-collapseButton-active {
+.saltBreadcrumbsNext-collapseButton[aria-expanded="true"] {
   background: var(--saltButton-background-active, var(--button-background-active));
   border-color: var(--saltButton-borderColor-active, var(--button-borderColor-active));
   color: var(--saltButton-text-color-active, var(--button-text-color-active));
@@ -51,10 +45,6 @@
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner, 0);
-}
-
-.saltBreadcrumbsNext-disclosure:focus-visible {
-  outline: none;
 }
 
 .saltBreadcrumbsNext-disclosureList {
