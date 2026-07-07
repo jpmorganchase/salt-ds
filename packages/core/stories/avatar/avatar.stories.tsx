@@ -1,8 +1,8 @@
 import {
   Avatar,
   FlowLayout,
-  Label,
   StackLayout,
+  Text,
   useAvatarImage,
 } from "@salt-ds/core";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
@@ -31,11 +31,11 @@ export const Kind: StoryFn<typeof Avatar> = (args) => {
     <FlowLayout gap={3}>
       <StackLayout align="center" gap={1}>
         <Avatar {...args} kind="person" name="John Doe" />
-        <Label>Person</Label>
+        <Text>Person</Text>
       </StackLayout>
       <StackLayout align="center" gap={1}>
         <Avatar {...args} kind="entity" name="JPMC" />
-        <Label>Entity</Label>
+        <Text>Entity</Text>
       </StackLayout>
     </FlowLayout>
   );
@@ -47,7 +47,7 @@ export const Sizes: StoryFn<typeof Avatar> = (args) => {
       {sizes.map((size) => (
         <StackLayout key={size} align="center">
           <Avatar {...args} key={size} size={size} />
-          <Label>size: {size}</Label>
+          <Text>size: {size}</Text>
         </StackLayout>
       ))}
     </FlowLayout>
