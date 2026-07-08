@@ -8,6 +8,18 @@ data:
   $ref: ./#/data
 ---
 
+## Avatar kinds
+
+Choose the avatar kind that best matches the identity you’re communicating. Avatars can represent an individual person or a named non-person entity such as a team, organization, or business. Person and Entity kinds use different shapes to help users quickly understand what the avatar represents.
+
+### Person (circle)
+
+Use kind=”person” when the identity is a single individual (e.g., user profile, author, assignee, commenter). We recommend using an image when available; otherwise fall back to initials or a person icon. If you need to represent multiple people together, use Avatar Group.
+
+### Entity (square)
+
+Use kind="entity" when the identity is a named non-person entity such as a team, business, organization, company, or account. Use an Entity avatar when representing the team as a single named identity; use Avatar Group when representing the team’s members. Use a logo/image when available; otherwise use entity initials/code or an appropriate icon (e.g., office/building).
+
 ## Image
 
 You can pass an image as the avatar image using the `src` prop.
@@ -31,15 +43,6 @@ The `color` prop can be used to change Avatar's background to one of the 20 [cat
 
 <LivePreview componentName="avatar" exampleName="Categories" />
 
-## Kind
-
-Use the `kind` prop to describe what the Avatar depicts, rather than describing its shape:
-
-- `kind="person"` (default) renders a circular Avatar and falls back to a person icon.
-- `kind="entity"` renders a square Avatar and falls back to an entity icon.
-
-<LivePreview componentName="avatar" exampleName="Kind" />
-
 ## Interactive
 
 Avatar can be made interactive using the `render` prop. Props defined on the JSX element will be merged with props from the Avatar.
@@ -56,17 +59,17 @@ Common interactive use cases include:
 
 <LivePreview componentName="avatar" exampleName="Interactive" />
 
-## Name to color
-
-You can deterministically derive an avatar's `color` from its `name` so that the same person is always represented by the same [categorical color](/salt/foundations/color#categorical). In the example below, a simple hash of the name is used to pick one of the 20 categorical colors.
-
-<LivePreview componentName="avatar" exampleName="NameToColor" />
-
 ## Sizes
 
 You can use the `size` prop to modify the avatar size. Each avatar variant has a default size across all four densities, equal to the [size foundation](/salt/foundations/size) `size-base`: 20px (HD), 28px (MD), 36px (LD), and 44px (TD). The size property acts as a multiplier of the base size.
 
 <LivePreview componentName="avatar" exampleName="Sizes" />
+
+## Shape
+
+Avatar is round by default. Setting `shape="square"` can help distinguish entities such as organizations, products or teams from individuals, but round remains a valid choice for these cases.
+
+<LivePreview componentName="avatar" exampleName="Shape" />
 
 ## Custom fallback icon
 
