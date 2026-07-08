@@ -24,6 +24,6 @@ export const ComposedItems = (): ReactElement => (
         </BreadcrumbNextTrigger>
       </Tooltip>
     </BreadcrumbNext>
-    <BreadcrumbNext>Current level</BreadcrumbNext>
+    <BreadcrumbNext href="#">Current level</BreadcrumbNext>
   </BreadcrumbsNext>
 );

@@ -26,6 +26,10 @@
   --link-textDecoration-visited: var(--link-textDecoration);
 }
 
+.saltBreadcrumbNext-current.saltLink {
+  cursor: var(--salt-cursor-text);
+}
+
 .saltBreadcrumbNext-separator {
   --saltIcon-color: var(--salt-content-secondary-foreground);
   --saltIcon-size: var(--salt-size-icon);

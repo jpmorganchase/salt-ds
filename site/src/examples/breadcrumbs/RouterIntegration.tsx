@@ -20,7 +20,9 @@ export const RouterIntegration = (): ReactElement => (
       <BreadcrumbNext href="/">Home</BreadcrumbNext>
       <BreadcrumbNext href="/level-2">Level 2</BreadcrumbNext>
       <BreadcrumbNext href="/level-2/level-3">Level 3</BreadcrumbNext>
-      <BreadcrumbNext>Current level</BreadcrumbNext>
+      <BreadcrumbNext href="/level-2/level-3/current">
+        Current level
+      </BreadcrumbNext>
     </BreadcrumbsNext>
   </MemoryRouter>
 );

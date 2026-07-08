@@ -6,6 +6,6 @@ export const Default = (): ReactElement => (
     <BreadcrumbNext href="#">Home</BreadcrumbNext>
     <BreadcrumbNext href="#">Level 2</BreadcrumbNext>
     <BreadcrumbNext href="#">Level 3</BreadcrumbNext>
-    <BreadcrumbNext>Current level</BreadcrumbNext>
+    <BreadcrumbNext href="#">Current level</BreadcrumbNext>
   </BreadcrumbsNext>
 );

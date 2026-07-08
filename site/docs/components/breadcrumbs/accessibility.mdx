@@ -14,18 +14,18 @@ data:
 
 ## Current page
 
-The current breadcrumb renders as text rather than a link, with `aria-current="page"` so assistive technologies can identify the page represented by the trail.
+The current breadcrumb carries `aria-current="page"` so assistive technologies can identify the page represented by the trail. Provide an `href` for the current breadcrumb so keyboard and screen reader users can reach it and hear the current-page announcement
 
 `aria-current="page"` is derived from the `current` prop or the final item. Activating a link does not move it; update the trail from your route or page state after navigation.
 
-In collapsed trails, hidden levels without an `href` render as text and are skipped by disclosure focus movement, while the current page stays visible in the trail.
+In collapsed trails, hidden levels without an `href` are skipped by disclosure focus movement, while the current page stays visible in the trail.
 
 ## Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-Tab moves focus to each linked breadcrumb and any collapse trigger in document order. If the disclosure is open, Tab moves focus from the trigger into the revealed breadcrumb links. The current page label is not focusable unless you render custom focusable content.
+Tab moves focus to each linked breadcrumb and any collapse trigger in document order. If the disclosure is open, Tab moves focus from the trigger into the revealed breadcrumb links.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">

@@ -20,7 +20,7 @@ export const Default: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props}>
     <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
     <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
-    <BreadcrumbNext>Portfolio</BreadcrumbNext>
+    <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
@@ -43,7 +43,7 @@ export const WithIcon: StoryFn<typeof BreadcrumbsNext> = (props) => (
       </BreadcrumbNextTrigger>
     </BreadcrumbNext>
     <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
-    <BreadcrumbNext>Portfolio</BreadcrumbNext>
+    <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
@@ -66,7 +66,7 @@ export const WithTooltip: StoryFn<typeof BreadcrumbsNext> = (props) => (
         </BreadcrumbNextTrigger>
       </Tooltip>
     </BreadcrumbNext>
-    <BreadcrumbNext>
+    <BreadcrumbNext href="#">
       <Tooltip
         content="Portfolio · Valuation date: 30 Jun 2026 · AUM: £12.4m"
         placement="top"
@@ -84,7 +84,7 @@ export const Wrapped: StoryFn<typeof BreadcrumbsNext> = (props) => (
     <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
     <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
     <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
-    <BreadcrumbNext>Portfolio</BreadcrumbNext>
+    <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
@@ -94,7 +94,7 @@ export const DisclosureCollapsed: StoryFn<typeof BreadcrumbsNext> = (props) => (
     <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
     <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
     <BreadcrumbNext href="#">Equities</BreadcrumbNext>
-    <BreadcrumbNext>Portfolio</BreadcrumbNext>
+    <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
@@ -111,7 +111,7 @@ export const CustomCollapseRanges: StoryFn<typeof BreadcrumbsNext> = (
     <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
     <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
     <BreadcrumbNext href="#">Equities</BreadcrumbNext>
-    <BreadcrumbNext>Portfolio</BreadcrumbNext>
+    <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
@@ -120,12 +120,12 @@ export const OverflowAtStart: StoryFn<typeof BreadcrumbsNext> = (props) => (
     <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
     <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
     <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
-    <BreadcrumbNext>Portfolio</BreadcrumbNext>
+    <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );
 
 export const SingleLevel: StoryFn<typeof BreadcrumbsNext> = (props) => (
   <BreadcrumbsNext {...props}>
-    <BreadcrumbNext>Portfolio</BreadcrumbNext>
+    <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
   </BreadcrumbsNext>
 );

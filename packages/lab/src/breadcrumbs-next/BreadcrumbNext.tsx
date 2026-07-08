@@ -65,7 +65,8 @@ export interface BreadcrumbNextProps
    */
   current?: boolean;
   /**
-   * The URL for a navigable breadcrumb.
+   * The URL for the breadcrumb. Provide this for the current breadcrumb so it
+   * renders as a focusable link with `aria-current="page"`.
    */
   href?: string;
   /**

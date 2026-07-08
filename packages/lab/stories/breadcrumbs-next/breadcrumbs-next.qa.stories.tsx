@@ -21,7 +21,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
     <BreadcrumbsNext aria-label="Breadcrumb">
       <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
       <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
-      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+      <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
     </BreadcrumbsNext>
 
     <BreadcrumbsNext aria-label="Breadcrumb">
@@ -40,7 +40,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
         </BreadcrumbNextTrigger>
       </BreadcrumbNext>
       <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
-      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+      <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
     </BreadcrumbsNext>
 
     <BreadcrumbsNext aria-label="Breadcrumb">
@@ -58,7 +58,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
           </BreadcrumbNextTrigger>
         </Tooltip>
       </BreadcrumbNext>
-      <BreadcrumbNext>
+      <BreadcrumbNext href="#">
         <Tooltip content="Portfolio valuation date" placement="top">
           <BreadcrumbNextTrigger>
             <BreadcrumbNextLabel>Portfolio</BreadcrumbNextLabel>
@@ -71,7 +71,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
       <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
       <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
       <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
-      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+      <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
     </BreadcrumbsNext>
 
     <BreadcrumbsNext aria-label="Breadcrumb" maxItems={3}>
@@ -79,7 +79,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
       <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
       <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
       <BreadcrumbNext href="#">Equities</BreadcrumbNext>
-      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+      <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
     </BreadcrumbsNext>
 
     <BreadcrumbsNext
@@ -92,7 +92,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
       <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
       <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
       <BreadcrumbNext href="#">Equities</BreadcrumbNext>
-      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+      <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
     </BreadcrumbsNext>
 
     <BreadcrumbsNext
@@ -103,11 +103,11 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
       <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
       <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
       <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
-      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+      <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
     </BreadcrumbsNext>
 
     <BreadcrumbsNext aria-label="Breadcrumb">
-      <BreadcrumbNext>Portfolio</BreadcrumbNext>
+      <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
     </BreadcrumbsNext>
   </QAContainer>
 );

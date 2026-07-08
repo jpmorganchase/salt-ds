@@ -1,11 +1,10 @@
-import { Link, makePrefixer, Text, useForkRef } from "@salt-ds/core";
+import { Link, makePrefixer, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEventHandler,
   type ReactNode,
-  type Ref,
 } from "react";
 import { useBreadcrumbNextContext } from "./internal/BreadcrumbNextContext";
 
@@ -21,7 +20,7 @@ export interface BreadcrumbNextTriggerProps
 }
 
 export const BreadcrumbNextTrigger = forwardRef<
-  HTMLAnchorElement | HTMLSpanElement,
+  HTMLAnchorElement,
   BreadcrumbNextTriggerProps
 >(function BreadcrumbNextTrigger(props, ref) {
   const { children, className, onClick, ...rest } = props;
@@ -42,6 +41,7 @@ export const BreadcrumbNextTrigger = forwardRef<
       : withBaseName("trigger"),
     className,
   );
+  const isNavigable = href !== undefined;
   const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
     onClick?.(event);
 
@@ -49,49 +49,21 @@ export const BreadcrumbNextTrigger = forwardRef<
       onNavigate?.();
     }
   };
-  const textOnClick = onClick as ComponentPropsWithoutRef<"span">["onClick"];
-
-  if (current) {
-    return (
-      <Text
-        as="span"
-        aria-current="page"
-        className={clsx(triggerClassName, withBaseName("current"))}
-        onClick={textOnClick}
-        ref={handleRef as Ref<HTMLSpanElement>}
-        styleAs="label"
-        {...rest}
-      >
-        {children}
-      </Text>
-    );
-  }
-
-  if (href === undefined) {
-    return (
-      <Text
-        as="span"
-        className={triggerClassName}
-        onClick={textOnClick}
-        ref={handleRef as Ref<HTMLSpanElement>}
-        styleAs="label"
-        {...rest}
-      >
-        {children}
-      </Text>
-    );
-  }
 
   return (
     <Link
-      className={clsx(triggerClassName, withBaseName("link"))}
+      aria-current={current ? "page" : undefined}
+      className={clsx(triggerClassName, {
+        [withBaseName("link")]: isNavigable,
+        [withBaseName("current")]: current,
+      })}
       color={isDisclosure ? "inherit" : undefined}
       href={href}
-      onClick={handleClick}
-      ref={handleRef as Ref<HTMLAnchorElement>}
-      render={render}
+      onClick={isNavigable ? handleClick : onClick}
+      ref={handleRef}
+      render={isNavigable ? render : undefined}
       styleAs="label"
-      underline={isDisclosure ? "never" : undefined}
+      underline={current || !isNavigable || isDisclosure ? "never" : undefined}
       {...rest}
     >
       {children}

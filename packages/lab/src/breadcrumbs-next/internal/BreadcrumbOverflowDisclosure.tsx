@@ -226,7 +226,7 @@ export function BreadcrumbOverflowDisclosure({
       <Button
         aria-controls={disclosureId}
         aria-expanded={open}
-        aria-label="Show breadcrumb levels"
+        aria-label="Additional breadcrumbs"
         appearance="transparent"
         className={withBaseName("collapseButton")}
         ref={handleTriggerRef}
@@ -277,11 +277,13 @@ export function BreadcrumbOverflowDisclosure({
                 render,
                 showSeparator: false,
                 triggerRef: (element) => {
-                  if (element?.tagName === "A") {
-                    itemElements.current.set(
-                      index,
-                      element as HTMLAnchorElement,
-                    );
+                  // Placeholder anchors (no href) are not focusable, so only
+                  // navigable items take part in disclosure focus movement.
+                  if (
+                    element?.tagName === "A" &&
+                    element.hasAttribute("href")
+                  ) {
+                    itemElements.current.set(index, element);
                   } else {
                     itemElements.current.delete(index);
                   }

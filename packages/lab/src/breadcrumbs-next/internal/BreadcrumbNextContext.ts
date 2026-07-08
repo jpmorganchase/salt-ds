@@ -10,7 +10,7 @@ export interface BreadcrumbNextContextValue {
   placement: BreadcrumbNextPlacement;
   render?: RenderPropsType["render"];
   showSeparator: boolean;
-  triggerRef?: Ref<HTMLAnchorElement | HTMLSpanElement>;
+  triggerRef?: Ref<HTMLAnchorElement>;
 }
 
 export const BreadcrumbNextContext = createContext<
