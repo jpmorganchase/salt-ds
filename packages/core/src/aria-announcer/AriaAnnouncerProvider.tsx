@@ -1,3 +1,4 @@
+import { useWindow } from "@salt-ds/window";
 import {
   type ComponentPropsWithRef,
   forwardRef,
@@ -48,6 +49,8 @@ export const AriaAnnouncerProvider = forwardRef<
   HTMLDivElement,
   AriaAnnouncerProviderProps
 >(function AriaAnnouncerProvider({ children, style, target, ...rest }, ref) {
+  const targetWindow = useWindow();
+
   const [politeAnnouncements, setPoliteAnnouncements] = useState<
     AnnouncementMessage[]
   >([]);
@@ -56,19 +59,17 @@ export const AriaAnnouncerProvider = forwardRef<
   >([]);
 
   const idCounterRef = useRef(0);
-  const timeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+  const timeoutsRef = useRef<Set<number>>(new Set());
 
   const scheduleRemoval = useCallback(
-    (
-      id: string,
-      assertiveness: "polite" | "assertive",
-      duration: number,
-    ) => {
+    (id: string, assertiveness: "polite" | "assertive", duration: number) => {
+      if (!targetWindow) return;
+
       const setter =
         assertiveness === "polite"
           ? setPoliteAnnouncements
           : setAssertiveAnnouncements;
-      const handle: ReturnType<typeof setTimeout> = setTimeout(() => {
+      const handle = targetWindow.setTimeout(() => {
         timeoutsRef.current.delete(handle);
         setter((previous) =>
           previous.filter((announcement) => announcement.id !== id),
@@ -76,7 +77,7 @@ export const AriaAnnouncerProvider = forwardRef<
       }, duration);
       timeoutsRef.current.add(handle);
     },
-    [],
+    [targetWindow],
   );
 
   const makeAnnouncement = useCallback(
@@ -108,11 +109,11 @@ export const AriaAnnouncerProvider = forwardRef<
     const timeouts = timeoutsRef.current;
     return () => {
       for (const handle of timeouts) {
-        clearTimeout(handle);
+        targetWindow?.clearTimeout(handle);
       }
       timeouts.clear();
     };
-  }, []);
+  }, [targetWindow]);
 
   const announce = useCallback(
     (
