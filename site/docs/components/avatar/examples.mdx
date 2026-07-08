@@ -9,6 +9,16 @@ data:
 ---
 ## Avatar kinds
 
+Choose the avatar kind that best matches the identity you’re communicating. Avatars can represent an individual person or a named non-person entity such as a team, organization, or business. Person and Entity kinds use different shapes to help users quickly understand what the avatar represents.
+
+### Person (circle)
+
+Use kind=”person” when the identity is a single individual (e.g., user profile, author, assignee, commenter). We recommend using an image when available; otherwise fall back to initials or a person icon. If you need to represent multiple people together, use Avatar Group.
+
+### Entity (square)
+
+Use kind="entity" when the identity is a named non-person entity such as a team, business, organization, company, or account. Use an Entity avatar when representing the team as a single named identity; use Avatar Group when representing the team’s members. Use a logo/image when available; otherwise use entity initials/code or an appropriate icon (e.g., office/building).
+
 ## Image
 
 You can pass an image as the avatar image using the `src` prop.
@@ -64,4 +74,23 @@ You can use the `size` prop to modify the avatar size. Each avatar variant has a
 
 `Avatar` renders with an icon defined by `UserSolidIcon`, but you can pass an alternative icon as `fallbackIcon`.
 
-<LivePreview componentName="avatar" exampleName="CustomFallbackIcon" />
+## Avatar group
+
+An Avatar Group represents multiple users in a compact space using a horizontal stack of overlapping avatars. It supports collaboration patterns by summarizing group membership and providing access to the full list when space is limited.
+
+Selecting the group opens a menu that displays the full list of members (including any hidden users), along with any supporting content such as labels or actions.
+
+If an overflow avatar (e.g., “+N” where N is the total number of members) is shown, it indicates additional hidden members when the group exceeds the visible maximum.
+
+### Best practices
+
+- The Avatar Group is a single interactive target; individual avatars within the stack are not interactive.
+- Ensure any overflow indicator appears as the final avatar when used, and that it functions as an indicator—not a separate trigger.
+
+## Visible avatars
+
+Avatar Group doesn’t have a fixed maximum—its visible count is dynamic and, as space shrinks, avatars collapse into the menu one at a time with the overflow indicator updating. In limited space, aim for at least 2 visible avatars; if only one fits, use a single Avatar (Person or Entity) instead of an Avatar Group.
+
+### Best practices
+
+Avatar Group is typically displayed alongside other actions (for example, in toolbars, headers, or list row actions). For consistency and alignment, we recommend using the default size (1x) and not scaling an Avatar Group beyond the default multiplier.
