@@ -13,7 +13,7 @@ function renderRouterLink({ href = "", ...props }: RouterLinkProps) {
 export const RouterIntegration = (): ReactElement => (
   <MemoryRouter>
     <BreadcrumbsNext
-      aria-label="Breadcrumb"
+      aria-label="Breadcrumbs"
       maxItems={3}
       render={renderRouterLink}
     >

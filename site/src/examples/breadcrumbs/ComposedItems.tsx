@@ -9,7 +9,7 @@ import {
 import type { ReactElement } from "react";
 
 export const ComposedItems = (): ReactElement => (
-  <BreadcrumbsNext aria-label="Breadcrumb">
+  <BreadcrumbsNext aria-label="Breadcrumbs">
     <BreadcrumbNext href="#">
       <BreadcrumbNextTrigger>
         <HomeIcon aria-hidden />
