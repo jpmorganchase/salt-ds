@@ -28,9 +28,9 @@
 }
 
 .saltBreadcrumbsNext-collapseButton[aria-expanded="true"] {
-  background: var(--saltButton-background-active, var(--button-background-active));
-  border-color: var(--saltButton-borderColor-active, var(--button-borderColor-active));
-  color: var(--saltButton-text-color-active, var(--button-text-color-active));
+  --saltButton-background: var(--salt-actionable-subtle-background-active);
+  --saltButton-text-color: var(--salt-actionable-subtle-foreground-active);
+  --saltButton-borderColor: var(--salt-actionable-subtle-borderColor-active);
   cursor: var(--salt-cursor-active);
 }
 
@@ -79,25 +79,7 @@
   width: 100%;
 }
 
-.saltBreadcrumbsNext-disclosureItem.saltLink {
-  --link-color: var(--salt-content-primary-foreground);
-  --link-color-hover: var(--salt-content-primary-foreground);
-  --link-color-active: var(--salt-content-primary-foreground);
-  --link-color-focus: var(--salt-content-primary-foreground);
-  --link-color-visited: var(--salt-content-primary-foreground);
-  --link-textDecoration: var(--salt-typography-textDecoration-none);
-  --link-textDecoration-hover: var(--salt-typography-textDecoration-none);
-  --link-textDecoration-active: var(--salt-typography-textDecoration-none);
-  --link-textDecoration-focus: var(--salt-typography-textDecoration-none);
-  --link-textDecoration-visited: var(--salt-typography-textDecoration-none);
-}
-
-.saltBreadcrumbsNext-disclosureItem.saltLink:focus:not(:focus-visible) {
-  outline: none;
-}
-
-.saltBreadcrumbsNext-disclosureItem:focus-visible,
-.saltBreadcrumbsNext-disclosureItem.saltLink:focus-visible {
+.saltBreadcrumbsNext-disclosureItem:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }

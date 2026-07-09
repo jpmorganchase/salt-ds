@@ -1,4 +1,4 @@
-import { Link, makePrefixer, useForkRef } from "@salt-ds/core";
+import { makePrefixer, renderProps, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -50,23 +50,17 @@ export const BreadcrumbNextTrigger = forwardRef<
     }
   };
 
-  return (
-    <Link
-      aria-current={current ? "page" : undefined}
-      className={clsx(triggerClassName, {
-        [withBaseName("link")]: isNavigable,
-        [withBaseName("current")]: current,
-      })}
-      color={isDisclosure ? "inherit" : undefined}
-      href={href}
-      onClick={isNavigable ? handleClick : onClick}
-      ref={handleRef}
-      render={isNavigable ? render : undefined}
-      styleAs="label"
-      underline={current || !isNavigable || isDisclosure ? "never" : undefined}
-      {...rest}
-    >
-      {children}
-    </Link>
-  );
+  return renderProps("a", {
+    "aria-current": current ? "page" : undefined,
+    children,
+    className: clsx(triggerClassName, {
+      [withBaseName("link")]: !isDisclosure && isNavigable,
+      [withBaseName("current")]: current,
+    }),
+    href,
+    onClick: isNavigable ? handleClick : onClick,
+    ref: handleRef,
+    render: isNavigable ? render : undefined,
+    ...rest,
+  });
 });

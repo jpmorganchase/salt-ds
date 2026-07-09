@@ -167,7 +167,6 @@ describe("GIVEN a BreadcrumbsNext", () => {
         cy.findByRole("link", { name: "Current Level Entity" })
           .as("currentLink")
           .should("have.class", "saltBreadcrumbNext-current")
-          .and("have.class", "saltLink-underlineNever")
           .and("have.attr", "href", "#level-2")
           .should(($link) => {
             const styles = getComputedStyle($link[0]);
@@ -498,8 +497,6 @@ describe("GIVEN a BreadcrumbsNext", () => {
     cy.findByRole("link", { name: "Level 2 Entity" })
       .as("hiddenLink")
       .should("have.class", "saltBreadcrumbsNext-disclosureItem")
-      .and("have.class", "saltLink-underlineNever")
-      .and("not.have.class", "saltLink-primary")
       .should(($link) => {
         const styles = getComputedStyle($link[0]);
 
