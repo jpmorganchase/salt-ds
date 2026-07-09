@@ -16,9 +16,13 @@ Choose the avatar kind that best matches the identity you’re communicating. Av
 
 Use kind=”person” when the identity is a single individual (e.g., user profile, author, assignee, commenter). We recommend using an image when available; otherwise fall back to initials or a person icon. If you need to represent multiple people together, use Avatar Group.
 
+<LivePreview componentName="avatar" exampleName="Person" />
+
 ### Entity (square)
 
 Use kind="entity" when the identity is a named non-person entity such as a team, business, organization, company, or account. Use an Entity avatar when representing the team as a single named identity; use Avatar Group when representing the team’s members. Use a logo/image when available; otherwise use entity initials/code or an appropriate icon (e.g., office/building).
+
+<LivePreview componentName="avatar" exampleName="Entity" />
 
 ## Image
 
@@ -68,8 +72,6 @@ You can use the `size` prop to modify the avatar size. Each avatar variant has a
 ## Shape
 
 Avatar is round by default. Setting `shape="square"` can help distinguish entities such as organizations, products or teams from individuals, but round remains a valid choice for these cases.
-
-<LivePreview componentName="avatar" exampleName="Shape" />
 
 ## Custom fallback icon
 
