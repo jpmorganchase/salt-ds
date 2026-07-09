@@ -10,6 +10,10 @@
   border-radius: var(--salt-palette-corner-strongest, 50%);
 }
 
+.saltAvatarGroup .saltAvatar {
+  --avatar-size-multiplier: 1;
+}
+
 .saltAvatarGroup .saltAvatar:not(:first-child) {
   margin-left: calc(-1 * var(--avatarGroup-overlap));
 }

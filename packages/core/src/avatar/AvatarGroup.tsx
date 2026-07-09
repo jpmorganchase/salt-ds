@@ -4,7 +4,6 @@ import { clsx } from "clsx";
 import {
   Children,
   type ComponentPropsWithoutRef,
-  cloneElement,
   forwardRef,
   type HTMLAttributes,
   isValidElement,
@@ -15,8 +14,6 @@ import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
 import { Avatar, type AvatarProps } from "./Avatar";
 
 import avatarGroupCss from "./AvatarGroup.css";
-
-const AVATAR_GROUP_SIZE = 1;
 
 /**
  * Details passed to `renderOverflow` describing the Avatars hidden by `max`.
@@ -79,13 +76,16 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       isValidElement,
     ) as ReactElement<AvatarProps>[];
 
-    const slicedItems = typeof max === "number" ? items.slice(0, max) : items;
-    const visibleItems = slicedItems.map((child) =>
-      child.type === Avatar
-        ? cloneElement(child, { size: AVATAR_GROUP_SIZE })
-        : child,
-    );
-    const hiddenAvatars = items.slice(slicedItems.length);
+    // Clamp `max` to a non-negative integer; other values (negative, fractional,
+    // NaN) would slice incorrectly and miscount the overflow.
+    const safeMax =
+      typeof max === "number" && Number.isFinite(max)
+        ? Math.max(0, Math.floor(max))
+        : undefined;
+
+    const visibleItems =
+      safeMax !== undefined ? items.slice(0, safeMax) : items;
+    const hiddenAvatars = items.slice(visibleItems.length);
     const hiddenAvatarsCount = hiddenAvatars.length;
 
     return (
@@ -103,10 +103,7 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
               hiddenAvatars,
             })
           ) : (
-            <Avatar
-              size={AVATAR_GROUP_SIZE}
-              name={`${hiddenAvatarsCount} more`}
-            >
+            <Avatar name={`${hiddenAvatarsCount} more`}>
               {`+${hiddenAvatarsCount}`}
             </Avatar>
           ))}

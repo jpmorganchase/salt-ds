@@ -50,17 +50,18 @@ describe("Given an AvatarGroup", () => {
       </AvatarGroup>,
     );
 
-    // Explicit child size is overridden to 1
+    // Regardless of any explicit child `size`, every avatar (and the default
+    // overflow indicator) is normalized to the same size-1 width.
     cy.findByRole("img", { name: "Alex Brailescu" })
-      .invoke("attr", "style")
-      .should("contain", "--saltAvatar-size-multiplier: 1");
-    cy.findByRole("img", { name: "Peter Piper" })
-      .invoke("attr", "style")
-      .should("contain", "--saltAvatar-size-multiplier: 1");
-    // Default overflow indicator is also size 1
-    cy.findByRole("img", { name: "1 more" })
-      .invoke("attr", "style")
-      .should("contain", "--saltAvatar-size-multiplier: 1");
+      .invoke("outerWidth")
+      .then((width) => {
+        cy.findByRole("img", { name: "Peter Piper" })
+          .invoke("outerWidth")
+          .should("eq", width);
+        cy.findByRole("img", { name: "1 more" })
+          .invoke("outerWidth")
+          .should("eq", width);
+      });
   });
 
   it("should call `renderOverflow` with the hidden avatars and count", () => {
@@ -156,6 +157,57 @@ describe("Given an AvatarGroup", () => {
     // 2 visible avatars + 1 overflow indicator
     cy.findAllByRole("img").should("have.length", 3);
     cy.findByText("+1").should("exist");
+  });
+
+  it("should normalize wrapped Avatars to size 1", () => {
+    cy.mount(
+      <AvatarGroup max={3}>
+        <Avatar name="Alex Brailescu" />
+        <Tooltip content="Peter Piper">
+          <Avatar name="Peter Piper" size={4} />
+        </Tooltip>
+        <Avatar name="John Doe" />
+      </AvatarGroup>,
+    );
+
+    // A wrapped Avatar with an explicit size still renders at the group's
+    // size-1 width, matching its unwrapped siblings.
+    cy.findByRole("img", { name: "Alex Brailescu" })
+      .invoke("outerWidth")
+      .then((width) => {
+        cy.findByRole("img", { name: "Peter Piper" })
+          .invoke("outerWidth")
+          .should("eq", width);
+      });
+  });
+
+  it("should ignore negative, fractional, and non-finite `max` values", () => {
+    cy.mount(
+      <AvatarGroup max={-1}>
+        <Avatar name="Alex Brailescu" />
+        <Avatar name="Peter Piper" />
+        <Avatar name="John Doe" />
+      </AvatarGroup>,
+    );
+
+    // Negative `max` must not drop the last avatar or show an overflow.
+    cy.findAllByRole("img").should("have.length", 3);
+    cy.findByRole("img", { name: "John Doe" }).should("exist");
+    cy.findByText(/\+\d+/).should("not.exist");
+  });
+
+  it("should floor fractional `max` values", () => {
+    cy.mount(
+      <AvatarGroup max={1.9}>
+        <Avatar name="Alex Brailescu" />
+        <Avatar name="Peter Piper" />
+        <Avatar name="John Doe" />
+      </AvatarGroup>,
+    );
+
+    // 1.9 floors to 1 visible avatar + overflow indicator.
+    cy.findByRole("img", { name: "Alex Brailescu" }).should("exist");
+    cy.findByText("+2").should("exist");
   });
 
   it("should not render an overflow indicator when children exactly match `max`", () => {
