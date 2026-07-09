@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import {
   Children,
   type ComponentPropsWithoutRef,
+  cloneElement,
   forwardRef,
   type HTMLAttributes,
   isValidElement,
@@ -15,6 +16,22 @@ import { Avatar, type AvatarProps } from "./Avatar";
 
 import avatarGroupCss from "./AvatarGroup.css";
 
+const AVATAR_GROUP_SIZE = 1;
+
+/**
+ * Details passed to `renderOverflow` describing the Avatars hidden by `max`.
+ */
+export interface AvatarGroupOverflowProps {
+  /**
+   * The number of Avatars hidden by `max`.
+   */
+  count: number;
+  /**
+   * The Avatars hidden by `max`, in source order.
+   */
+  hiddenAvatars: ReactElement<AvatarProps>[];
+}
+
 export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The maximum number of Avatars to display in the group. If not set, all Avatars are shown.
@@ -24,6 +41,10 @@ export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
    * The children to be rendered inside the AvatarGroup. Should be Avatar components.
    */
   children?: ReactNode;
+  /**
+   * Render the overflow indicator shown when the number of children exceeds `max`.
+   */
+  renderOverflow?: (props: AvatarGroupOverflowProps) => ReactNode;
   /**
    * Render prop to enable customization of the avatar group root element.
    */
@@ -43,7 +64,10 @@ const AvatarGroupAction = forwardRef<HTMLDivElement, AvatarGroupActionProps>(
 );
 
 export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
-  function AvatarGroup({ className, children, max, render, ...rest }, ref) {
+  function AvatarGroup(
+    { className, children, max, render, renderOverflow, ...rest },
+    ref,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-avatar-group",
@@ -55,8 +79,14 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       isValidElement,
     ) as ReactElement<AvatarProps>[];
 
-    const visibleItems = typeof max === "number" ? items.slice(0, max) : items;
-    const hiddenAvatarsCount = items.length - visibleItems.length;
+    const slicedItems = typeof max === "number" ? items.slice(0, max) : items;
+    const visibleItems = slicedItems.map((child) =>
+      child.type === Avatar
+        ? cloneElement(child, { size: AVATAR_GROUP_SIZE })
+        : child,
+    );
+    const hiddenAvatars = items.slice(slicedItems.length);
+    const hiddenAvatarsCount = hiddenAvatars.length;
 
     return (
       <AvatarGroupAction
@@ -66,11 +96,20 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
         {...rest}
       >
         {visibleItems}
-        {hiddenAvatarsCount > 0 && (
-          <Avatar name={`${hiddenAvatarsCount} more`}>
-            {`+${hiddenAvatarsCount}`}
-          </Avatar>
-        )}
+        {hiddenAvatarsCount > 0 &&
+          (renderOverflow ? (
+            renderOverflow({
+              count: hiddenAvatarsCount,
+              hiddenAvatars,
+            })
+          ) : (
+            <Avatar
+              size={AVATAR_GROUP_SIZE}
+              name={`${hiddenAvatarsCount} more`}
+            >
+              {`+${hiddenAvatarsCount}`}
+            </Avatar>
+          ))}
       </AvatarGroupAction>
     );
   },
