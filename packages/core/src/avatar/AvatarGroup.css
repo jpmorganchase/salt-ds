@@ -3,13 +3,28 @@
   --avatarGroup-gap: var(--saltAvatarGroup-gap, var(--salt-size-fixed-100));
   --avatarGroup-gap-feather: var(--saltAvatarGroup-gap-feather, 0.1px);
   display: flex;
-  border: none;
   padding: 0;
+  border: none;
   background-color: transparent;
+  position: relative;
+  border-radius: var(--salt-palette-corner-strongest, 50%);
 }
 
 .saltAvatarGroup .saltAvatar:not(:first-child) {
   margin-left: calc(-1 * var(--avatarGroup-overlap));
+}
+
+.saltAvatarGroup:focus-visible {
+  outline-offset: var(--salt-spacing-fixed-200);
+}
+
+.saltAvatarGroup::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-color: transparent;
 }
 
 button.saltAvatarGroup,
@@ -35,4 +50,15 @@ button.saltAvatarGroup:disabled {
     transparent calc(var(--avatarGroup-mask-radius) - var(--avatarGroup-gap-feather)),
     black calc(var(--avatarGroup-mask-radius) + var(--avatarGroup-gap-feather))
   );
+}
+
+@media (hover: hover) {
+  button.saltAvatarGroup:hover::after,
+  a.saltAvatarGroup:hover::after {
+    background-color: var(--salt-overlayable-background-hover);
+  }
+
+  button.saltAvatarGroup:disabled:hover::after {
+    background-color: transparent;
+  }
 }

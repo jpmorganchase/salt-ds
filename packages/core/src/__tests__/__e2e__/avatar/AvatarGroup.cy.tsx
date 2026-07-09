@@ -41,6 +41,69 @@ describe("Given an AvatarGroup", () => {
     cy.findByRole("img", { name: "2 more" }).should("exist");
   });
 
+  it("should force child Avatars to size 1", () => {
+    cy.mount(
+      <AvatarGroup max={2}>
+        <Avatar name="Alex Brailescu" />
+        <Avatar name="Peter Piper" size={3} />
+        <Avatar name="John Doe" />
+      </AvatarGroup>,
+    );
+
+    // Explicit child size is overridden to 1
+    cy.findByRole("img", { name: "Alex Brailescu" })
+      .invoke("attr", "style")
+      .should("contain", "--saltAvatar-size-multiplier: 1");
+    cy.findByRole("img", { name: "Peter Piper" })
+      .invoke("attr", "style")
+      .should("contain", "--saltAvatar-size-multiplier: 1");
+    // Default overflow indicator is also size 1
+    cy.findByRole("img", { name: "1 more" })
+      .invoke("attr", "style")
+      .should("contain", "--saltAvatar-size-multiplier: 1");
+  });
+
+  it("should call `renderOverflow` with the hidden avatars and count", () => {
+    const renderOverflow = cy
+      .stub()
+      .as("renderOverflow")
+      .returns(<span data-testid="custom-overflow">custom</span>);
+
+    cy.mount(
+      <AvatarGroup max={2} renderOverflow={renderOverflow}>
+        <Avatar name="Alex Brailescu" />
+        <Avatar name="Peter Piper" />
+        <Avatar name="John Doe" />
+        <Avatar name="Jane Doe" />
+      </AvatarGroup>,
+    );
+
+    cy.findByTestId("custom-overflow").should("exist");
+    // Default overflow indicator is not rendered
+    cy.findByText("+2").should("not.exist");
+    cy.get("@renderOverflow").should("have.been.calledWithMatch", {
+      count: 2,
+    });
+  });
+
+  it("should not call `renderOverflow` when children are within `max`", () => {
+    const renderOverflow = cy
+      .stub()
+      .as("renderOverflow")
+      .returns(<span data-testid="custom-overflow">custom</span>);
+
+    cy.mount(
+      <AvatarGroup max={3} renderOverflow={renderOverflow}>
+        <Avatar name="Alex Brailescu" />
+        <Avatar name="Peter Piper" />
+        <Avatar name="John Doe" />
+      </AvatarGroup>,
+    );
+
+    cy.findByTestId("custom-overflow").should("not.exist");
+    cy.get("@renderOverflow").should("not.have.been.called");
+  });
+
   it("should preserve native button semantics when rendered as a button", () => {
     cy.mount(
       <AvatarGroup max={2} render={<button type="button" />}>
