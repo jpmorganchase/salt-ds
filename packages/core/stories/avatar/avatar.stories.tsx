@@ -134,7 +134,7 @@ export const AvatarGroupWithMenu: StoryFn<typeof AvatarGroup> = (args) => {
   return (
     <AvatarGroup
       max={3}
-      renderOverflow={({ count, hiddenAvatars }) => (
+      renderSurplus={({ count, hiddenAvatars }) => (
         <Menu placement="bottom-end">
           <MenuTrigger>
             <Avatar

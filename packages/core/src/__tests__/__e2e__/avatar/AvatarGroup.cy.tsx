@@ -64,14 +64,14 @@ describe("Given an AvatarGroup", () => {
       });
   });
 
-  it("should call `renderOverflow` with the hidden avatars and count", () => {
-    const renderOverflow = cy
+  it("should call `renderSurplus` with the hidden avatars and count", () => {
+    const renderSurplus = cy
       .stub()
-      .as("renderOverflow")
+      .as("renderSurplus")
       .returns(<span data-testid="custom-overflow">custom</span>);
 
     cy.mount(
-      <AvatarGroup max={2} renderOverflow={renderOverflow}>
+      <AvatarGroup max={2} renderSurplus={renderSurplus}>
         <Avatar name="Alex Brailescu" />
         <Avatar name="Peter Piper" />
         <Avatar name="John Doe" />
@@ -80,21 +80,21 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findByTestId("custom-overflow").should("exist");
-    // Default overflow indicator is not rendered
+    // Default surplus indicator is not rendered
     cy.findByText("+2").should("not.exist");
-    cy.get("@renderOverflow").should("have.been.calledWithMatch", {
+    cy.get("@renderSurplus").should("have.been.calledWithMatch", {
       count: 2,
     });
   });
 
-  it("should not call `renderOverflow` when children are within `max`", () => {
-    const renderOverflow = cy
+  it("should not call `renderSurplus` when children are within `max`", () => {
+    const renderSurplus = cy
       .stub()
-      .as("renderOverflow")
+      .as("renderSurplus")
       .returns(<span data-testid="custom-overflow">custom</span>);
 
     cy.mount(
-      <AvatarGroup max={3} renderOverflow={renderOverflow}>
+      <AvatarGroup max={3} renderSurplus={renderSurplus}>
         <Avatar name="Alex Brailescu" />
         <Avatar name="Peter Piper" />
         <Avatar name="John Doe" />
@@ -102,7 +102,7 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findByTestId("custom-overflow").should("not.exist");
-    cy.get("@renderOverflow").should("not.have.been.called");
+    cy.get("@renderSurplus").should("not.have.been.called");
   });
 
   it("should preserve native button semantics when rendered as a button", () => {

@@ -15,10 +15,7 @@ import { Avatar, type AvatarProps } from "./Avatar";
 
 import avatarGroupCss from "./AvatarGroup.css";
 
-/**
- * Details passed to `renderOverflow` describing the Avatars hidden by `max`.
- */
-export interface AvatarGroupOverflowProps {
+export interface AvatarGroupSurplusProps {
   /**
    * The number of Avatars hidden by `max`.
    */
@@ -39,9 +36,9 @@ export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
    */
   children?: ReactNode;
   /**
-   * Render the overflow indicator shown when the number of children exceeds `max`.
+   * Render the surplus indicator shown when the number of children exceeds `max`.
    */
-  renderOverflow?: (props: AvatarGroupOverflowProps) => ReactNode;
+  renderSurplus?: (props: AvatarGroupSurplusProps) => ReactNode;
   /**
    * Render prop to enable customization of the avatar group root element.
    */
@@ -62,7 +59,7 @@ const AvatarGroupAction = forwardRef<HTMLDivElement, AvatarGroupActionProps>(
 
 export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
   function AvatarGroup(
-    { className, children, max, render, renderOverflow, ...rest },
+    { className, children, max, render, renderSurplus, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -97,8 +94,8 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       >
         {visibleItems}
         {hiddenAvatarsCount > 0 &&
-          (renderOverflow ? (
-            renderOverflow({
+          (renderSurplus ? (
+            renderSurplus({
               count: hiddenAvatarsCount,
               hiddenAvatars,
             })
