@@ -73,12 +73,13 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       isValidElement,
     ) as ReactElement<AvatarProps>[];
 
-    // Clamp `max` to a non-negative integer; other values (negative, fractional,
-    // NaN) would slice incorrectly and miscount the overflow.
-    const safeMax =
+    // Floor a valid `max`, ignore negative or non-finite values (treated as unset).
+    const flooredMax =
       typeof max === "number" && Number.isFinite(max)
-        ? Math.max(0, Math.floor(max))
+        ? Math.floor(max)
         : undefined;
+    const safeMax =
+      flooredMax !== undefined && flooredMax >= 0 ? flooredMax : undefined;
 
     const visibleItems =
       safeMax !== undefined ? items.slice(0, safeMax) : items;

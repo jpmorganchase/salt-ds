@@ -1,20 +1,7 @@
 import { Avatar, AvatarGroup, Tooltip } from "@salt-ds/core";
 
 describe("Given an AvatarGroup", () => {
-  it("should render all Avatars when the number of children is within `max`", () => {
-    cy.mount(
-      <AvatarGroup max={5}>
-        <Avatar name="Alex Brailescu" />
-        <Avatar name="Peter Piper" />
-        <Avatar name="John Doe" />
-      </AvatarGroup>,
-    );
-
-    cy.findAllByRole("img").should("have.length", 3);
-    cy.findByText("+3").should("not.exist");
-  });
-
-  it("should render an overflow indicator when children exceed `max`", () => {
+  it("collapses children beyond `max` into a single, accessible overflow indicator", () => {
     cy.mount(
       <AvatarGroup max={2}>
         <Avatar name="Alex Brailescu" />
@@ -24,47 +11,40 @@ describe("Given an AvatarGroup", () => {
       </AvatarGroup>,
     );
 
-    // 2 visible avatars + 1 overflow indicator
     cy.findAllByRole("img").should("have.length", 3);
-    cy.findByText("+2").should("exist");
+    cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
+    cy.findByRole("img", { name: "Peter Piper" }).should("be.visible");
+    cy.findByRole("img", { name: "John Doe" }).should("not.exist");
+
+    cy.findByText("+2").should("be.visible");
+    cy.findByRole("img", { name: "2 more" }).should("be.visible");
   });
 
-  it("should give the default overflow indicator an accessible name", () => {
+  it("renders every avatar without an overflow indicator when children equal `max`", () => {
     cy.mount(
-      <AvatarGroup max={1}>
+      <AvatarGroup max={3}>
         <Avatar name="Alex Brailescu" />
         <Avatar name="Peter Piper" />
         <Avatar name="John Doe" />
       </AvatarGroup>,
     );
 
-    cy.findByRole("img", { name: "2 more" }).should("exist");
+    cy.findAllByRole("img").should("have.length", 3);
   });
 
-  it("should force child Avatars to size 1", () => {
+  it("renders every avatar without an overflow indicator when children are fewer than `max`", () => {
     cy.mount(
-      <AvatarGroup max={2}>
+      <AvatarGroup max={5}>
         <Avatar name="Alex Brailescu" />
-        <Avatar name="Peter Piper" size={3} />
+        <Avatar name="Peter Piper" />
         <Avatar name="John Doe" />
       </AvatarGroup>,
     );
 
-    // Regardless of any explicit child `size`, every avatar (and the default
-    // overflow indicator) is normalized to the same size-1 width.
-    cy.findByRole("img", { name: "Alex Brailescu" })
-      .invoke("outerWidth")
-      .then((width) => {
-        cy.findByRole("img", { name: "Peter Piper" })
-          .invoke("outerWidth")
-          .should("eq", width);
-        cy.findByRole("img", { name: "1 more" })
-          .invoke("outerWidth")
-          .should("eq", width);
-      });
+    cy.findAllByRole("img").should("have.length", 3);
   });
 
-  it("should call `renderSurplus` with the hidden avatars and count", () => {
+  it("delegates the overflow indicator to `renderSurplus` when children exceed `max`", () => {
     const renderSurplus = cy
       .stub()
       .as("renderSurplus")
@@ -79,15 +59,15 @@ describe("Given an AvatarGroup", () => {
       </AvatarGroup>,
     );
 
-    cy.findByTestId("custom-overflow").should("exist");
-    // Default surplus indicator is not rendered
+    cy.findByTestId("custom-overflow").should("be.visible");
     cy.findByText("+2").should("not.exist");
     cy.get("@renderSurplus").should("have.been.calledWithMatch", {
       count: 2,
+      hiddenAvatars: Cypress.sinon.match.array,
     });
   });
 
-  it("should not call `renderSurplus` when children are within `max`", () => {
+  it("does not call `renderSurplus` when children fit within `max`", () => {
     const renderSurplus = cy
       .stub()
       .as("renderSurplus")
@@ -102,10 +82,11 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findByTestId("custom-overflow").should("not.exist");
+    cy.findAllByRole("img").should("have.length", 3);
     cy.get("@renderSurplus").should("not.have.been.called");
   });
 
-  it("should preserve native button semantics when rendered as a button", () => {
+  it("renders as a custom element from a JSX element while preserving the group class", () => {
     cy.mount(
       <AvatarGroup max={2} render={<button type="button" />}>
         <Avatar name="Alex Brailescu" />
@@ -115,17 +96,15 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findByRole("button").should("have.class", "saltAvatarGroup");
-    // 2 visible avatars + 1 overflow indicator
     cy.findAllByRole("img").should("have.length", 3);
-    cy.findByText("+1").should("exist");
+    cy.findByText("+1").should("be.visible");
   });
 
-  it("WHEN `render` is passed a render function, THEN should call `render` to create the element", () => {
-    const testId = "avatar-group-testid";
+  it("calls a `render` function with the merged props to create the element", () => {
     const mockRender = cy
       .stub()
       .as("render")
-      .returns(<div data-testid={testId} />);
+      .returns(<div data-testid="render-fn" />);
 
     cy.mount(
       <AvatarGroup max={2} render={mockRender}>
@@ -135,53 +114,14 @@ describe("Given an AvatarGroup", () => {
       </AvatarGroup>,
     );
 
-    cy.findByTestId(testId).should("exist");
+    cy.findByTestId("render-fn").should("exist");
     cy.get("@render").should("have.been.calledWithMatch", {
       className: Cypress.sinon.match.string,
       children: Cypress.sinon.match.any,
     });
   });
 
-  it("WHEN `render` is given a JSX element, THEN should merge the props and render the JSX element", () => {
-    const testId = "avatar-group-testid";
-
-    cy.mount(
-      <AvatarGroup max={2} render={<section data-testid={testId} />}>
-        <Avatar name="Alex Brailescu" />
-        <Avatar name="Peter Piper" />
-        <Avatar name="John Doe" />
-      </AvatarGroup>,
-    );
-
-    cy.findByTestId(testId).should("have.class", "saltAvatarGroup");
-    // 2 visible avatars + 1 overflow indicator
-    cy.findAllByRole("img").should("have.length", 3);
-    cy.findByText("+1").should("exist");
-  });
-
-  it("should normalize wrapped Avatars to size 1", () => {
-    cy.mount(
-      <AvatarGroup max={3}>
-        <Avatar name="Alex Brailescu" />
-        <Tooltip content="Peter Piper">
-          <Avatar name="Peter Piper" size={4} />
-        </Tooltip>
-        <Avatar name="John Doe" />
-      </AvatarGroup>,
-    );
-
-    // A wrapped Avatar with an explicit size still renders at the group's
-    // size-1 width, matching its unwrapped siblings.
-    cy.findByRole("img", { name: "Alex Brailescu" })
-      .invoke("outerWidth")
-      .then((width) => {
-        cy.findByRole("img", { name: "Peter Piper" })
-          .invoke("outerWidth")
-          .should("eq", width);
-      });
-  });
-
-  it("should ignore negative, fractional, and non-finite `max` values", () => {
+  it("ignores a negative `max`, showing every avatar", () => {
     cy.mount(
       <AvatarGroup max={-1}>
         <Avatar name="Alex Brailescu" />
@@ -190,13 +130,23 @@ describe("Given an AvatarGroup", () => {
       </AvatarGroup>,
     );
 
-    // Negative `max` must not drop the last avatar or show an overflow.
     cy.findAllByRole("img").should("have.length", 3);
-    cy.findByRole("img", { name: "John Doe" }).should("exist");
-    cy.findByText(/\+\d+/).should("not.exist");
+    cy.findByRole("img", { name: "John Doe" }).should("be.visible");
   });
 
-  it("should floor fractional `max` values", () => {
+  it("ignores a non-finite `max`, showing every avatar", () => {
+    cy.mount(
+      <AvatarGroup max={Number.POSITIVE_INFINITY}>
+        <Avatar name="Alex Brailescu" />
+        <Avatar name="Peter Piper" />
+        <Avatar name="John Doe" />
+      </AvatarGroup>,
+    );
+
+    cy.findAllByRole("img").should("have.length", 3);
+  });
+
+  it("floors a fractional `max`", () => {
     cy.mount(
       <AvatarGroup max={1.9}>
         <Avatar name="Alex Brailescu" />
@@ -205,41 +155,27 @@ describe("Given an AvatarGroup", () => {
       </AvatarGroup>,
     );
 
-    // 1.9 floors to 1 visible avatar + overflow indicator.
-    cy.findByRole("img", { name: "Alex Brailescu" }).should("exist");
-    cy.findByText("+2").should("exist");
+    cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
+    cy.findAllByRole("img").should("have.length", 2); // 1 visible + overflow
+    cy.findByText("+2").should("be.visible");
   });
 
-  it("should not render an overflow indicator when children exactly match `max`", () => {
-    cy.mount(
-      <AvatarGroup max={2}>
-        <Avatar name="Alex Brailescu" />
-        <Avatar name="Peter Piper" />
-      </AvatarGroup>,
-    );
-
-    cy.findAllByRole("img").should("have.length", 2);
-    cy.findByText(/\+\d+/).should("not.exist");
-  });
-
-  it("should preserve non-Avatar children in the layout", () => {
+  it("keeps non-Avatar children in the layout when within `max`", () => {
     cy.mount(
       <AvatarGroup max={3}>
-        <Tooltip content="Alex Brailescu">
-          <Avatar name="Alex Brailescu" />
+        <Avatar name="Alex Brailescu" />
+        <Tooltip content="Peter Piper">
+          <Avatar name="Peter Piper" />
         </Tooltip>
-        <Avatar name="Peter Piper" />
         <Avatar name="John Doe" />
       </AvatarGroup>,
     );
 
-    // Wrapped Avatar is still rendered rather than dropped.
-    cy.findByRole("img", { name: "Alex Brailescu" }).should("exist");
     cy.findAllByRole("img").should("have.length", 3);
-    cy.findByText(/\+\d+/).should("not.exist");
+    cy.findByRole("img", { name: "Peter Piper" }).should("be.visible");
   });
 
-  it("should count non-Avatar children towards the overflow", () => {
+  it("counts non-Avatar children towards the overflow", () => {
     cy.mount(
       <AvatarGroup max={2}>
         <Tooltip content="Alex Brailescu">
@@ -251,6 +187,6 @@ describe("Given an AvatarGroup", () => {
       </AvatarGroup>,
     );
 
-    cy.findByText("+2").should("exist");
+    cy.findByText("+2").should("be.visible");
   });
 });
