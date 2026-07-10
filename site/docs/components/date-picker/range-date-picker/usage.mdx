@@ -22,10 +22,10 @@ Salt provides the following `children` for convenience:
 
 When `selectionVariant` is "range":
 
-- `DatePickerRangeInput` - a composable [DateInputRange](../DateInput) pre-wired to the `DatePicker` selection context.
-- `DatePickerRangeGridPanel` - composable [Calendar](../Calendar) grid pre-wired to the `DatePicker` selection context.
+- `DatePickerRangeInput` - a composable [DateInputRange](../../date-input) pre-wired to the `DatePicker` selection context.
+- `DatePickerRangeGridPanel` - composable [Calendar](../../calendar) grid pre-wired to the `DatePicker` selection context.
   - Opt for `DatePickerRangeGridPanel` when dealing with short date ranges or when displaying the dates in-between enhances the user experience.
-- `DatePickerRangePanel` - composable dual [Calendar](../Calendar) view pre-wired to the `DatePicker` selection context.
+- `DatePickerRangePanel` - composable dual [Calendar](../../calendar) view pre-wired to the `DatePicker` selection context.
   - Choose `DatePickerRangePanel` for long date ranges or when the focus is primarily on the start and end dates, rather than the dates in-between.
 
 A composable API enables you to use provided child components, such as `DatePickerRangeInput` and `DatePickerRangePanel`.
@@ -58,7 +58,7 @@ import { DatePicker } from "@salt-ds/date-components";
 
 ### Setting the date
 
-Date controls, require your application to contain a [LocalizationProvider](../LocalizationProvider).
+Date controls, require your application to contain a [LocalizationProvider](../../localization-provider).
 
 Pass a range object from your configured date framework using the `defaultDate` or `date` props.
 
@@ -94,7 +94,7 @@ import {
 
 The default locale for Salt's date adapters is "enUS".
 
-`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../LocalizationProvider).
+`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../../localization-provider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 For example, if you are using `date-fns`, you may need to import the specific locale you want to use, such as `es` or `frFR`.
@@ -129,7 +129,7 @@ Valid values for `timezone` are date framework specific and can be one of the fo
   componentName="DatePickerSingleInput"
 />
 
-`DatePickerSingleInput` composes a [DateInputSingle](../DateInput) that uses the `DatePicker` context for single date selection.
+`DatePickerSingleInput` composes a [DateInputSingle](../../date-input) that uses the `DatePicker` context for single date selection.
 
 ### DatePickerRangeInput
 
@@ -138,7 +138,7 @@ Valid values for `timezone` are date framework specific and can be one of the fo
   componentName="DatePickerRangeInput"
 />
 
-`DatePickerRangeInput` composes a [DateInputRange](../DateInput) that uses the `DatePicker` context for date range selection.
+`DatePickerRangeInput` composes a [DateInputRange](../../date-input) that uses the `DatePicker` context for date range selection.
 
 ### DatePickerSingleGridPanel
 
@@ -147,7 +147,7 @@ Valid values for `timezone` are date framework specific and can be one of the fo
   componentName="DatePickerSingleGridPanel"
 />
 
-`DatePickerSingleGridPanel` composes a [Calendar](../Calendar) that uses the `DatePicker` context for single date selection.
+`DatePickerSingleGridPanel` composes a [Calendar](../../calendar) that uses the `DatePicker` context for single date selection.
 
 ### DatePickerRangePanel
 
@@ -156,7 +156,7 @@ Valid values for `timezone` are date framework specific and can be one of the fo
   componentName="DatePickerRangePanel"
 />
 
-`DatePickerRangePanel` composes a [Calendar](../Calendar) that uses the `DatePicker` context for date range selection.
+`DatePickerRangePanel` composes a [Calendar](../../calendar) that uses the `DatePicker` context for date range selection.
 
 ### DatePickerOverlay
 
