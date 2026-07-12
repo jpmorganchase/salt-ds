@@ -1,0 +1,125 @@
+---
+title: Accessibility evidence
+layout: DetailTechnical
+sidebar:
+  label: Accessibility evidence
+  groupLabel: About
+  groupPriority: 7
+---
+
+Salt targets WCAG 2.2 Level AA. Accessibility is assessed at the level of a
+component and its documented use, then re-assessed in the product where it is
+composed. We do not currently claim formal conformance for the full Salt
+library.
+
+The pilot below makes the evidence boundary explicit. It records what automated
+tests cover, which manual assistive-technology scenarios are pending, known
+limitations, an owner and the next review date. The
+[machine-readable manifest](https://github.com/jpmorganchase/salt-ds/blob/main/accessibility/component-evidence.json)
+is the source of truth.
+
+## Evidence vocabulary
+
+- **Target** identifies the guideline and level a component is designed to meet.
+  It is a goal, not a test result.
+- **Tested** means the linked automated or manual evidence passed for the exact
+  behavior and environment recorded. It does not cover unlisted behavior.
+- **Supported** means the maintainers have current, dated evidence for the
+  documented browser and assistive-technology combination.
+- **Exception** is a known gap against the target. Each exception must describe
+  its impact, owner and review date.
+- **Formally conformant** is reserved for a defined scope that has completed an
+  appropriate conformance assessment. None of the pilot entries makes this
+  claim.
+
+## Manual testing targets
+
+Salt targets these combinations for manual testing. A target becomes tested or
+supported only when the component manifest links a dated result.
+
+| Operating system | Browser | Assistive technology |
+| ---------------- | ------- | -------------------- |
+| Windows          | Firefox | NVDA                 |
+| Windows          | Chrome  | JAWS                 |
+| macOS            | Safari  | VoiceOver            |
+
+All three combinations are currently **not tested** for the pilot components in
+the public evidence record. Automated axe, keyboard and DOM assertions are
+useful evidence, but they do not substitute for operating the component with a
+screen reader.
+
+## Pilot components
+
+### Spinner
+
+- **Status:** Tested automated behavior; not formally conformant.
+- **WCAG evidence:** 1.1.1 Non-text Content and 4.1.3 Status Messages.
+- **Automated evidence:** Accessible names, recurring progress announcements,
+  completion, disabled announcements and unmount cleanup are covered in the
+  [Spinner accessibility test](https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/__tests__/__e2e__/spinner/Spinner.accessibility.cy.tsx).
+- **Manual evidence:** NVDA with Firefox, JAWS with Chrome and VoiceOver with
+  Safari are pending for progress and completion announcements.
+- **Known exceptions:** None recorded.
+- **Limitation:** Programmatic announcement assertions do not establish how a
+  screen reader presents the messages.
+- **Owner and review:** Salt maintainers; reviewed July 12, 2026; review by
+  October 12, 2026.
+
+### Number Input
+
+- **Status:** Tested automated behavior; not formally conformant.
+- **WCAG evidence:** 1.3.1 Info and Relationships, 2.1.1 Keyboard, 3.3.2 Labels
+  or Instructions and 4.1.2 Name, Role, Value.
+- **Automated evidence:** The
+  [accessibility test](https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/__tests__/__e2e__/number-input/NumberInput.accessibility.cy.tsx)
+  covers role, name, description, bounds, validity and decorative controls. The
+  [interaction test](https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/__tests__/__e2e__/number-input/NumberInput.cy.tsx)
+  covers keyboard changes.
+- **Manual evidence:** NVDA with Firefox, JAWS with Chrome and VoiceOver with
+  Safari are pending for labels, help text, value changes and validation.
+- **Known exceptions:** None recorded.
+- **Limitation:** Product labels, instructions and validation content remain the
+  product team's responsibility and require testing in context.
+- **Owner and review:** Salt maintainers; reviewed July 12, 2026; review by
+  October 12, 2026.
+
+### Mega Menu
+
+- **Status:** Exception. The listed automated behavior passed; the focus-guard
+  exception below remains open; not formally conformant.
+- **WCAG evidence:** 1.3.1 Info and Relationships, 2.1.1 Keyboard, 2.4.3 Focus
+  Order and 4.1.2 Name, Role, Value.
+- **Automated evidence:** The
+  [accessibility test](https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/__tests__/__e2e__/mega-menu/MegaMenu.accessibility.cy.tsx)
+  covers landmarks, names, lists, state, current items and enforced axe checks
+  other than the documented focus-guard rule. The
+  [keyboard test](https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/__tests__/__e2e__/mega-menu/MegaMenu.keyboardNavigation.cy.tsx)
+  covers trigger, panel, responsive and nested-control navigation.
+- **Manual evidence:** NVDA with Firefox, JAWS with Chrome and VoiceOver with
+  Safari are pending for identifying, opening, navigating and closing the menu.
+- **Known exception:** With a panel open, axe 4.11 reports
+  `aria-hidden-focus` for Floating UI's `aria-hidden`, tabbable focus guards.
+  The rule is explicitly excluded while its assistive-technology impact is
+  assessed. This relates to WCAG 4.1.2; Salt maintainers own the open exception
+  and will review it by October 12, 2026.
+- **Limitation:** Automated keyboard and axe checks do not establish reading
+  order or announcement quality in assistive technology.
+- **Owner and review:** Salt maintainers; reviewed July 12, 2026; review by
+  October 12, 2026.
+
+## Maintaining evidence
+
+The accessibility manifest is reviewed at least quarterly and whenever a pilot
+component's accessibility behavior changes. `yarn check:accessibility-evidence`
+fails when a review is stale, required fields or manual matrix entries are
+missing, evidence links do not resolve, or a pilot is marked formally conformant
+without an assessment. It runs as part of `yarn verify:lint` in continuous
+integration.
+
+Manual results should be added only after the named scenario is run with the
+exact operating system, browser and assistive technology in the manifest.
+Record the date and outcome, summarize relevant observations without personal or
+confidential information, and create an owned exception for a failure. If a
+detailed record cannot be made public, publish only the safe attestation fields
+in the manifest: combination, scenario, outcome, date and owner. Never infer a
+manual pass from an automated test.

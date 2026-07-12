@@ -1,6 +1,7 @@
 import { runCommands, yarnTask } from "./verifyRunner.mjs";
 
 const lintTasks = [
+  yarnTask("Accessibility evidence", ["check:accessibility-evidence"]),
   yarnTask("Line endings", ["check:line-endings"]),
   yarnTask("Prettier", ["prettier:ci"]),
   yarnTask("Biome", ["check:biome"]),

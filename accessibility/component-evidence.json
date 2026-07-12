@@ -1,0 +1,277 @@
+{
+  "$schema": "./component-evidence.schema.json",
+  "schemaVersion": 1,
+  "conformanceTarget": "WCAG 2.2 Level AA",
+  "publicDocumentation": "site/docs/about/accessibility-evidence.mdx",
+  "supportMatrix": [
+    {
+      "id": "nvda-firefox-windows",
+      "operatingSystem": "Windows",
+      "browser": "Firefox",
+      "assistiveTechnology": "NVDA"
+    },
+    {
+      "id": "jaws-chrome-windows",
+      "operatingSystem": "Windows",
+      "browser": "Chrome",
+      "assistiveTechnology": "JAWS"
+    },
+    {
+      "id": "voiceover-safari-macos",
+      "operatingSystem": "macOS",
+      "browser": "Safari",
+      "assistiveTechnology": "VoiceOver"
+    }
+  ],
+  "components": [
+    {
+      "id": "spinner",
+      "name": "Spinner",
+      "package": "@salt-ds/core",
+      "owner": "Salt maintainers",
+      "status": "tested",
+      "formallyConformant": false,
+      "reviewedOn": "2026-07-12",
+      "reviewBy": "2026-10-12",
+      "documentation": "site/docs/components/spinner/accessibility.mdx",
+      "successCriteria": [
+        {
+          "criterion": "1.1.1",
+          "level": "A",
+          "evidenceIds": ["spinner-accessible-name"]
+        },
+        {
+          "criterion": "4.1.3",
+          "level": "AA",
+          "evidenceIds": ["spinner-announcements"]
+        }
+      ],
+      "automatedEvidence": [
+        {
+          "id": "spinner-accessible-name",
+          "kind": "behavior",
+          "path": "packages/core/src/__tests__/__e2e__/spinner/Spinner.accessibility.cy.tsx",
+          "covers": "Default and consumer-provided accessible names",
+          "status": "passed",
+          "recordedOn": "2026-07-12",
+          "command": "yarn cypress run --component --browser chrome --headless --spec packages/core/src/__tests__/__e2e__/spinner/Spinner.accessibility.cy.tsx"
+        },
+        {
+          "id": "spinner-announcements",
+          "kind": "behavior",
+          "path": "packages/core/src/__tests__/__e2e__/spinner/Spinner.accessibility.cy.tsx",
+          "covers": "Timed progress, completion, disabled, and unmounted announcements",
+          "status": "passed",
+          "recordedOn": "2026-07-12",
+          "command": "yarn cypress run --component --browser chrome --headless --spec packages/core/src/__tests__/__e2e__/spinner/Spinner.accessibility.cy.tsx"
+        }
+      ],
+      "manualEvidence": [
+        {
+          "matrixId": "nvda-firefox-windows",
+          "status": "not-tested",
+          "scenarios": ["Progress and completion announcements"],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        },
+        {
+          "matrixId": "jaws-chrome-windows",
+          "status": "not-tested",
+          "scenarios": ["Progress and completion announcements"],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        },
+        {
+          "matrixId": "voiceover-safari-macos",
+          "status": "not-tested",
+          "scenarios": ["Progress and completion announcements"],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        }
+      ],
+      "exceptions": [],
+      "limitations": [
+        "Automated DOM and announcement assertions do not establish screen-reader compatibility."
+      ]
+    },
+    {
+      "id": "number-input",
+      "name": "Number Input",
+      "package": "@salt-ds/core",
+      "owner": "Salt maintainers",
+      "status": "tested",
+      "formallyConformant": false,
+      "reviewedOn": "2026-07-12",
+      "reviewBy": "2026-10-12",
+      "documentation": "site/docs/components/number-input/accessibility.mdx",
+      "successCriteria": [
+        {
+          "criterion": "1.3.1",
+          "level": "A",
+          "evidenceIds": ["number-input-semantics"]
+        },
+        {
+          "criterion": "2.1.1",
+          "level": "A",
+          "evidenceIds": ["number-input-keyboard"]
+        },
+        {
+          "criterion": "3.3.2",
+          "level": "A",
+          "evidenceIds": ["number-input-semantics"]
+        },
+        {
+          "criterion": "4.1.2",
+          "level": "A",
+          "evidenceIds": ["number-input-semantics"]
+        }
+      ],
+      "automatedEvidence": [
+        {
+          "id": "number-input-semantics",
+          "kind": "behavior",
+          "path": "packages/core/src/__tests__/__e2e__/number-input/NumberInput.accessibility.cy.tsx",
+          "covers": "Spinbutton role, name, description, value bounds, validity, and decorative controls",
+          "status": "passed",
+          "recordedOn": "2026-07-12",
+          "command": "yarn cypress run --component --browser chrome --headless --spec packages/core/src/__tests__/__e2e__/number-input/NumberInput.accessibility.cy.tsx"
+        },
+        {
+          "id": "number-input-keyboard",
+          "kind": "keyboard",
+          "path": "packages/core/src/__tests__/__e2e__/number-input/NumberInput.cy.tsx",
+          "covers": "Arrow, page, Home, and End keyboard interactions",
+          "status": "passed",
+          "recordedOn": "2026-07-12",
+          "command": "yarn cypress run --component --browser chrome --headless --spec packages/core/src/__tests__/__e2e__/number-input/NumberInput.cy.tsx"
+        }
+      ],
+      "manualEvidence": [
+        {
+          "matrixId": "nvda-firefox-windows",
+          "status": "not-tested",
+          "scenarios": ["Label and help text", "Value changes and validation"],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        },
+        {
+          "matrixId": "jaws-chrome-windows",
+          "status": "not-tested",
+          "scenarios": ["Label and help text", "Value changes and validation"],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        },
+        {
+          "matrixId": "voiceover-safari-macos",
+          "status": "not-tested",
+          "scenarios": ["Label and help text", "Value changes and validation"],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        }
+      ],
+      "exceptions": [],
+      "limitations": [
+        "Automated tests cover Salt behavior but not application-specific labels, instructions, or validation content."
+      ]
+    },
+    {
+      "id": "mega-menu",
+      "name": "Mega Menu",
+      "package": "@salt-ds/core",
+      "owner": "Salt maintainers",
+      "status": "exception",
+      "formallyConformant": false,
+      "reviewedOn": "2026-07-12",
+      "reviewBy": "2026-10-12",
+      "documentation": "site/docs/components/mega-menu/accessibility.mdx",
+      "successCriteria": [
+        {
+          "criterion": "1.3.1",
+          "level": "A",
+          "evidenceIds": ["mega-menu-semantics"]
+        },
+        {
+          "criterion": "2.1.1",
+          "level": "A",
+          "evidenceIds": ["mega-menu-keyboard"]
+        },
+        {
+          "criterion": "2.4.3",
+          "level": "A",
+          "evidenceIds": ["mega-menu-keyboard"]
+        },
+        {
+          "criterion": "4.1.2",
+          "level": "A",
+          "evidenceIds": ["mega-menu-semantics"]
+        }
+      ],
+      "automatedEvidence": [
+        {
+          "id": "mega-menu-semantics",
+          "kind": "axe",
+          "path": "packages/core/src/__tests__/__e2e__/mega-menu/MegaMenu.accessibility.cy.tsx",
+          "covers": "Landmarks, names, list structure, expanded state, current item, and enforced axe checks excluding the documented focus-guard exception",
+          "status": "passed",
+          "recordedOn": "2026-07-12",
+          "command": "yarn cypress run --component --browser chrome --headless --spec packages/core/src/__tests__/__e2e__/mega-menu/MegaMenu.accessibility.cy.tsx"
+        },
+        {
+          "id": "mega-menu-keyboard",
+          "kind": "keyboard",
+          "path": "packages/core/src/__tests__/__e2e__/mega-menu/MegaMenu.keyboardNavigation.cy.tsx",
+          "covers": "Trigger, panel, responsive, and nested-control keyboard navigation",
+          "status": "passed",
+          "recordedOn": "2026-07-12",
+          "command": "yarn cypress run --component --browser chrome --headless --spec packages/core/src/__tests__/__e2e__/mega-menu/MegaMenu.keyboardNavigation.cy.tsx"
+        }
+      ],
+      "manualEvidence": [
+        {
+          "matrixId": "nvda-firefox-windows",
+          "status": "not-tested",
+          "scenarios": [
+            "Open, identify, navigate, and close menu",
+            "Responsive stacked navigation"
+          ],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        },
+        {
+          "matrixId": "jaws-chrome-windows",
+          "status": "not-tested",
+          "scenarios": [
+            "Open, identify, navigate, and close menu",
+            "Responsive stacked navigation"
+          ],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        },
+        {
+          "matrixId": "voiceover-safari-macos",
+          "status": "not-tested",
+          "scenarios": [
+            "Open, identify, navigate, and close menu",
+            "Responsive stacked navigation"
+          ],
+          "recordedOn": null,
+          "notes": "No public manual test record is available."
+        }
+      ],
+      "exceptions": [
+        {
+          "id": "mega-menu-floating-ui-focus-guards",
+          "impact": "When a panel is open, axe reports aria-hidden-focus for Floating UI's aria-hidden, tabbable focus guards. The rule is excluded from the enforced scan pending assistive-technology assessment.",
+          "owner": "Salt maintainers",
+          "status": "open",
+          "reviewBy": "2026-10-12",
+          "successCriteria": ["4.1.2"]
+        }
+      ],
+      "limitations": [
+        "Automated keyboard and axe checks do not establish assistive-technology reading order or announcement quality.",
+        "The aria-hidden-focus rule is excluded for open panels while the documented focus-guard exception is assessed."
+      ]
+    }
+  ]
+}

@@ -11,7 +11,7 @@ We have included a theming system which allows you to easily create theme variat
 Salt has been developed with the following design goals:
 
 - Providing a comprehensive set of commonly-used UI controls.
-- Complying with WCAG 2.1 accessibility guidelines.
+- Targeting WCAG 2.2 Level AA accessibility guidelines.
 - To be lightweight and performant.
 - Offering flexible styling and theming support.
 - Minimizing dependencies on third-party libraries.
@@ -60,12 +60,17 @@ function App() {
 
 ## Accessibility
 
-Salt is a high-quality, WCAG 2.1 compliant solution for building great, accessible experiences for your users.
+Salt targets WCAG 2.2 Level AA and maintains component-level evidence for
+specific tested behaviors. This is an incremental program, not a claim that
+every component or product assembled with Salt is formally conformant. See the
+[accessibility evidence model](site/docs/about/accessibility-evidence.mdx) for
+the current pilot, limitations, and review dates.
 
-### Screen reader support & compatibility
+### Screen reader testing targets
 
-We support specific combinations of assistive technologies (ATs) and
-browsers, outlined in the table below.
+The combinations below are Salt's manual testing targets. Support is recorded
+per component only after a dated test; a combination listed here is not by
+itself evidence that every component has been tested with it.
 
 | Operating System | Web browser | Screen reader |
 | ---------------- | ----------- | ------------- |

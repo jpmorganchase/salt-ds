@@ -15,6 +15,7 @@
     "start": "yarn storybook",
     "build": "yarn workspaces foreach --exclude @salt-ds/site -Apt run build && yarn bundle:css",
     "check:published-artifacts": "yarn node scripts/checkPublishedArtifacts.mjs",
+    "check:accessibility-evidence": "yarn node scripts/checkAccessibilityEvidence.mjs",
     "check:biome": "yarn node scripts/checkBiome.mjs",
     "check:line-endings": "yarn node scripts/checkLineEndings.mjs",
     "check:source-imports": "yarn node scripts/checkSourceImports.mjs",

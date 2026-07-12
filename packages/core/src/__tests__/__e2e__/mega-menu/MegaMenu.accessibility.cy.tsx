@@ -10,6 +10,15 @@ const {
   WithCurrentItem,
 } = composeStories(megaMenuStories);
 
+const floatingUiFocusGuardException = {
+  rules: {
+    // Floating UI renders aria-hidden, tabbable focus guards around an open
+    // panel. Keep every other axe rule enforced while this 4.1.2 exception is
+    // assessed and tracked in accessibility/component-evidence.json.
+    "aria-hidden-focus": { enabled: false },
+  },
+};
+
 describe("Given a MegaMenu", () => {
   describe("navigation landmark and trigger structure", () => {
     it("exposes the triggers within a navigation landmark and a list", () => {
@@ -296,20 +305,20 @@ describe("Given a MegaMenu", () => {
   describe("axe checks", () => {
     it("has no detectable a11y violations when closed", () => {
       cy.mount(<Baseline />);
-      cy.checkAxeComponent();
+      cy.checkAxeComponent({}, true);
     });
 
-    it("has no detectable a11y violations when open", () => {
+    it("has no axe violations beyond the documented focus-guard exception when open", () => {
       cy.mount(<Baseline />);
       cy.findByRole("button", { name: "Solutions" }).click();
       cy.findByRole("region", { name: "Solutions menu" }).should("exist");
-      cy.checkAxeComponent();
+      cy.checkAxeComponent(floatingUiFocusGuardException, true);
     });
 
-    it("has no detectable a11y violations with content regions and an action bar open", () => {
+    it("has no axe violations beyond the documented focus-guard exception with content regions and an action bar open", () => {
       cy.mount(<WithRegionsLayout />);
       cy.findByRole("region", { name: "Solutions menu" }).should("exist");
-      cy.checkAxeComponent();
+      cy.checkAxeComponent(floatingUiFocusGuardException, true);
     });
   });
 });
