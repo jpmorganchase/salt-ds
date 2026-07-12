@@ -16,8 +16,8 @@ import {
 
 type Constructor = {
   (...args: Parameters<typeof defaultDayjs>): Dayjs;
-  tz?: (value: Parameters<typeof defaultDayjs>[0], timezone: string) => Dayjs;
-  utc?: (value?: Parameters<typeof defaultDayjs>[0]) => Dayjs;
+  tz?: typeof defaultDayjs.tz;
+  utc?: typeof defaultDayjs.utc;
 };
 
 declare module "@salt-ds/date-adapters" {
@@ -88,7 +88,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
       return undefined;
     }
     if (timezone === "system") {
-      return defaultDayjs.tz.guess();
+      return this.dayjs.tz?.guess();
     }
     return timezone;
   };
@@ -102,11 +102,11 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     if (!this.dayjs.tz) {
       throw new Error("Salt Day.js adapter: missing timezone plugin");
     }
-    const timezone = defaultDayjs.tz.guess();
+    const timezone = this.dayjs.tz.guess();
     if (timezone !== "UTC") {
-      return defaultDayjs.tz(value, timezone);
+      return this.dayjs.tz(value, timezone);
     }
-    return defaultDayjs(value);
+    return this.dayjs(value);
   };
 
   /**
