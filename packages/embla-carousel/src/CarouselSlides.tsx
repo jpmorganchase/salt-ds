@@ -42,15 +42,7 @@ const announceSlideChangesFrom: CarouselAnnouncementTrigger[] = [
 
 export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
   function CarouselSlides(
-    {
-      children,
-      className,
-      id,
-      onKeyDown,
-      onMouseDown,
-      onMouseUp,
-      ...rest
-    },
+    { children, className, id, onKeyDown, onMouseDown, onMouseUp, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();

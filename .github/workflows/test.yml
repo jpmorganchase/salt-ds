@@ -27,21 +27,9 @@ jobs:
           node-version: "24"
           cache: "yarn"
       - name: Install dependencies
-        run: yarn
-      - name: Lint
-        run: yarn biome ci --reporter=github
-      - name: Prettier
-        run: yarn run prettier:ci
-      - name: Stylelint
-        run: yarn run lint:style
-      - name: Check no import from src
-        run: |
-          if find ./packages -type f \( -iname \*.ts -o -iname \*.tsx \) -exec grep "@salt-ds/.*/src" {} +; then
-            echo "Should not import from src in any typescript file"
-            exit 1;
-          fi
-      - name: Spellcheck
-        run: yarn workspace @salt-ds/site spellcheck
+        run: yarn install --immutable
+      - name: Verify lint policy
+        run: yarn verify:lint
 
   dependency-check:
     name: Dependency Check
@@ -57,11 +45,9 @@ jobs:
           node-version: "24"
           cache: "yarn"
       - name: Install dependencies
-        run: yarn
-      - name: Build
-        run: yarn build
-      - name: Check published artifacts
-        run: yarn check:published-artifacts
+        run: yarn install --immutable
+      - name: Verify published artifacts
+        run: yarn verify:artifacts
   type-checks:
     name: Type Checks
     runs-on: ubuntu-latest
@@ -76,11 +62,11 @@ jobs:
           node-version: "24"
           cache: "yarn"
       - name: Install dependencies
-        run: yarn
-      - name: Run typecheck
-        run: yarn run typecheck
-  jest-tests:
-    name: Jest Tests
+        run: yarn install --immutable
+      - name: Verify types
+        run: yarn verify:typecheck
+  unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -93,8 +79,9 @@ jobs:
           node-version: "24"
           cache: "yarn"
       - name: Install dependencies
-        run: yarn
-      - run: yarn run test
+        run: yarn install --immutable
+      - name: Verify units
+        run: yarn verify:unit
   cypress-tests:
     name: Cypress Tests (React ${{ matrix.react }})
     strategy:
@@ -113,7 +100,7 @@ jobs:
           node-version: "24"
           cache: "yarn"
       - name: Install dependencies
-        run: yarn
+        run: yarn install --immutable
       - name: Setup react
         env:
           REACT_VERSION: ${{ matrix.react }}

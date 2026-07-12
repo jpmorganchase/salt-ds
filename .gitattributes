@@ -1,0 +1,28 @@
+* text=auto eol=lf
+
+# Binary assets must never be line-ending normalized.
+*.eot binary
+*.gif binary
+*.ico binary
+*.jpeg binary
+*.jpg binary
+*.pdf binary
+*.png binary
+*.ttf binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.xlsx binary
+*.zip binary
+
+# Generated source remains LF-normalized and is hidden from language statistics.
+packages/countries/saltCountries.css linguist-generated=true
+packages/countries/saltSharpCountries.css linguist-generated=true
+packages/countries/src/components/** linguist-generated=true
+packages/countries/src/countryComponentMap.ts linguist-generated=true
+packages/countries/src/countryMetaMap.ts linguist-generated=true
+packages/countries/src/lazy-country-symbol/lazyMap.ts linguist-generated=true
+packages/icons/saltIcons.css linguist-generated=true
+packages/icons/src/components/** linguist-generated=true
+packages/icons/stories/icon.all.ts linguist-generated=true
+site/src/components/icon-preview/allIconsList.ts linguist-generated=true

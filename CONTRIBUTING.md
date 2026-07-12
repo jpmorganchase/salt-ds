@@ -7,6 +7,14 @@ Follow below instructions to contribute to Salt.
 3. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
 4. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
 
+## Verification
+
+- Run `yarn verify` for the authoritative local checks: immutable install validation, formatting, linting, source-import policy, spelling, types, and unit tests.
+- Run `yarn verify:extended` before shipping broad or package-boundary changes. It adds package builds, published-artifact consumer smoke tests, and Cypress component tests.
+- Run `yarn verify:site` when you need a local production site build. Vercel's production build on every pull request is the authoritative required site-build check, so GitHub Actions does not duplicate it.
+
+The verification commands are non-mutating and stop at the first failed child command.
+
 ## Packages
 
 The repo contains below packages under `/packages`

@@ -91,10 +91,7 @@ describe("GIVEN an available announcer", () => {
   it("THEN it should not announce completion message when set to null", () => {
     cy.clock();
     cy.mount(
-      <SpinnerHarness
-        aria-label={ariaLabel}
-        completionAnnouncement={null}
-      />,
+      <SpinnerHarness aria-label={ariaLabel} completionAnnouncement={null} />,
     );
 
     cy.findByRole("img").should("announce", ariaLabel);

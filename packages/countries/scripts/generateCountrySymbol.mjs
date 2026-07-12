@@ -17,6 +17,7 @@ biome.applyConfiguration(project.projectKey, {
   formatter: {
     enabled: true,
     indentStyle: "space",
+    lineEnding: "lf",
   },
 });
 

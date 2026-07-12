@@ -148,8 +148,8 @@
   --salt-actionable-positive-subtle-foreground: var(--salt-palette-positive-foreground);
 
   /* saltButton-caution-solid */
-  --salt-actionable-caution-bold-background-active: var(--salt-palette-warning-action-active);
-  --salt-actionable-caution-bold-background-hover: var(--salt-palette-warning-action-hover);
+  --salt-actionable-caution-bold-background-active: var(--salt-color-orange-800);
+  --salt-actionable-caution-bold-background-hover: var(--salt-color-orange-500);
   --salt-actionable-caution-bold-background: var(--salt-palette-warning-action);
   --salt-actionable-caution-bold-borderColor-active: var(--salt-color-transparent);
   --salt-actionable-caution-bold-borderColor-hover: var(--salt-color-transparent);
@@ -159,8 +159,8 @@
   --salt-actionable-caution-bold-foreground: var(--salt-palette-warning-action-foreground);
 
   /* saltButton-caution-outline */
-  --salt-actionable-caution-background-active: var(--salt-palette-warning-action-active);
-  --salt-actionable-caution-background-hover: var(--salt-palette-warning-action-hover);
+  --salt-actionable-caution-background-active: var(--salt-color-orange-800);
+  --salt-actionable-caution-background-hover: var(--salt-color-orange-500);
   --salt-actionable-caution-background: var(--salt-color-transparent);
   --salt-actionable-caution-borderColor-active: var(--salt-color-transparent);
   --salt-actionable-caution-borderColor-hover: var(--salt-color-transparent);
@@ -169,13 +169,13 @@
   --salt-actionable-caution-foreground-hover: var(--salt-palette-warning-action-foreground);
   --salt-actionable-caution-foreground: var(--salt-palette-warning-foreground-informative);
 
-  --salt-actionable-caution-background-selected: var(--salt-palette-warning-action-active);
+  --salt-actionable-caution-background-selected: var(--salt-color-orange-800);
   --salt-actionable-caution-borderColor-selected: var(--salt-color-transparent);
   --salt-actionable-caution-foreground-selected: var(--salt-palette-interact-cta-foreground);
 
   /* saltButton-caution-transparent */
-  --salt-actionable-caution-subtle-background-active: var(--salt-palette-warning-action-active);
-  --salt-actionable-caution-subtle-background-hover: var(--salt-palette-warning-action-hover);
+  --salt-actionable-caution-subtle-background-active: var(--salt-color-orange-800);
+  --salt-actionable-caution-subtle-background-hover: var(--salt-color-orange-500);
   --salt-actionable-caution-subtle-background: var(--salt-color-transparent);
   --salt-actionable-caution-subtle-borderColor-active: var(--salt-color-transparent);
   --salt-actionable-caution-subtle-borderColor-hover: var(--salt-color-transparent);

@@ -16,6 +16,7 @@ biome.applyConfiguration(project.projectKey, {
   formatter: {
     enabled: true,
     indentStyle: "space",
+    lineEnding: "lf",
   },
   files: {
     maxSize: 1000000000, // 1 GB

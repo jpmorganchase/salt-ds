@@ -22,7 +22,9 @@ const createInjectedDayjs = () => {
   injectedTimezone.guess = () => systemTimezone;
   injectedTimezone.setDefault = dayjs.tz.setDefault;
   const injectedUtc = ((...args: Parameters<typeof dayjs.utc>) =>
-    args.length === 0 ? dayjs.utc(fixedNow) : dayjs.utc(...args)) as typeof dayjs.utc;
+    args.length === 0
+      ? dayjs.utc(fixedNow)
+      : dayjs.utc(...args)) as typeof dayjs.utc;
   const factory = Object.assign(
     (...args: Parameters<typeof dayjs>) =>
       args.length === 0 ? dayjs(fixedNow) : dayjs(...args),
@@ -39,15 +41,15 @@ describe("GIVEN a AdapterDayjs", () => {
     const { factory, fixedNow, systemTimezone } = createInjectedDayjs();
     const injectedAdapter = new AdapterDayjs({ locale: "fr" }, factory);
 
-    it.each(["default", "system"] as const)(
-      "SHOULD use its timezone configuration for %s dates",
-      (timezone) => {
-        const date = injectedAdapter.date("2025-01-05T00:00:00", timezone);
+    it.each([
+      "default",
+      "system",
+    ] as const)("SHOULD use its timezone configuration for %s dates", (timezone) => {
+      const date = injectedAdapter.date("2025-01-05T00:00:00", timezone);
 
-        expect(injectedAdapter.getTimezone(date)).toBe(systemTimezone);
-        expect(date.format("Z")).toBe("+09:00");
-      },
-    );
+      expect(injectedAdapter.getTimezone(date)).toBe(systemTimezone);
+      expect(date.format("Z")).toBe("+09:00");
+    });
 
     it("SHOULD use its UTC factory", () => {
       const date = injectedAdapter.date("2025-01-05T00:00:00", "UTC");

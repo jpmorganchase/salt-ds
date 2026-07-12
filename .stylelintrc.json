@@ -50,9 +50,18 @@
       }
     },
     {
-      "files": ["**/theme/css/deprecated/**/*.css"],
+      "files": [
+        "**/theme/css/deprecated/**/*.css",
+        "**/theme/css/*/deprecated/**/*.css"
+      ],
       "rules": {
         "salt/no-deprecated-token-usage": null
+      }
+    },
+    {
+      "files": ["**/react-resizable-panels-theme/**/*.css"],
+      "rules": {
+        "salt/custom-property-starts-with-component-name": null
       }
     },
     {
