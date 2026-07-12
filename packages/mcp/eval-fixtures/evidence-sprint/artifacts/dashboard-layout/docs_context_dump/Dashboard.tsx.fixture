@@ -1,0 +1,37 @@
+import {
+  Button,
+  Card,
+  GridLayout,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
+
+export function Dashboard() {
+  return (
+    <StackLayout gap={3}>
+      <GridLayout columns={12} gap={3}>
+        <Card>
+          <Card>
+            <Text styleAs="h3">Revenue</Text>
+            <Text>$12.4m</Text>
+          </Card>
+        </Card>
+        <Card>
+          <StackLayout gap={1}>
+            <Text styleAs="h3">Expenses</Text>
+            <Text>$8.1m</Text>
+          </StackLayout>
+        </Card>
+      </GridLayout>
+      <Button appearance="transparent">Refresh</Button>
+      <table>
+        <tbody>
+          <tr>
+            <td>Trade</td>
+            <td>Settled</td>
+          </tr>
+        </tbody>
+      </table>
+    </StackLayout>
+  );
+}

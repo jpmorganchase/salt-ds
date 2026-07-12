@@ -1,6 +1,7 @@
 affordances
 Alaina
 Armaan
+autodetection
 Blaise
 Brailescu
 Cathrine
@@ -54,6 +55,7 @@ UITK
 trackpad
 toggletip
 toggletips
+wayfinding
 Zhang
 Priya
 Mateus

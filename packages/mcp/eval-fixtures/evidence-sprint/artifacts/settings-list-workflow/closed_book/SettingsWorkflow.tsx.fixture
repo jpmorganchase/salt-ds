@@ -1,0 +1,20 @@
+import {
+  Button,
+  Input,
+  StackLayout,
+  Switch,
+  Text,
+  UnknownSettingsList,
+} from "@salt-ds/core";
+
+export function SettingsWorkflow() {
+  return (
+    <StackLayout gap={2}>
+      <Text variant="h2">Notifications</Text>
+      <Input value="daily summary" />
+      <Switch checked />
+      <UnknownSettingsList />
+      <Button>Save</Button>
+    </StackLayout>
+  );
+}

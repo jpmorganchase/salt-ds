@@ -1,0 +1,6 @@
+{
+  "regions": ["header", "sidebar", "main content", "dialog footer"],
+  "actions": ["primary action", "navigation link"],
+  "states": ["loading", "validation"],
+  "notes": ["Preserve the important navigation anchors and confirmation flow."]
+}

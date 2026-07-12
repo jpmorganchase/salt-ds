@@ -1,0 +1,51 @@
+{
+  "contract": "project_conventions_v1",
+  "version": "1.0.0",
+  "project": "workspace-trader",
+  "preferred_components": [
+    {
+      "salt_name": "Button",
+      "prefer": "TradeButton",
+      "reason": "Primary trading actions use a wrapper that adds analytics, permissions, and sentiment defaults.",
+      "docs": ["./docs/trade-button.md"]
+    },
+    {
+      "salt_name": "Input",
+      "prefer": "TradeInput",
+      "reason": "Inputs are wrapped to attach field telemetry and product-level validation copy.",
+      "docs": ["./docs/trade-input.md"]
+    }
+  ],
+  "approved_wrappers": [
+    {
+      "name": "TradeButton",
+      "wraps": "Button",
+      "reason": "Adds analytics and standardized trade action defaults.",
+      "import": {
+        "from": "@/components/TradeButton",
+        "name": "TradeButton"
+      },
+      "use_when": ["trade tickets", "execution toolbars"],
+      "avoid_when": ["generic marketing pages"],
+      "migration_shim": false,
+      "docs": ["./docs/trade-button.md"]
+    },
+    {
+      "name": "TradeInput",
+      "wraps": "Input",
+      "reason": "Adds product validation and telemetry without replacing the canonical Salt field primitive.",
+      "import": {
+        "from": "@/components/TradeInput",
+        "name": "TradeInput"
+      },
+      "use_when": ["instrument search", "ticket forms"],
+      "avoid_when": ["plain documentation examples"],
+      "migration_shim": true,
+      "docs": ["./docs/trade-input.md"]
+    }
+  ],
+  "notes": [
+    "Prefer wrappers only when they add stable product behavior or telemetry.",
+    "Do not treat wrapper names as canonical Salt entities."
+  ]
+}

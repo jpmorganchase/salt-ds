@@ -1,0 +1,1588 @@
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { buildRegistry } from "../core/build/buildRegistry.js";
+import { loadRegistry } from "../core/registry/loadRegistry.js";
+import { createSaltUi } from "../core/tools/createSaltUi.js";
+import { getCountrySymbol } from "../core/tools/getCountrySymbol.js";
+import { getCountrySymbols } from "../core/tools/getCountrySymbols.js";
+import { getGuide } from "../core/tools/getGuide.js";
+import { getIcon } from "../core/tools/getIcon.js";
+import { getPage } from "../core/tools/getPage.js";
+import { getPattern } from "../core/tools/getPattern.js";
+import { getSaltEntity } from "../core/tools/getSaltEntity.js";
+import { recommendComponent } from "../core/tools/recommendComponent.js";
+import { validateSaltUsage } from "../core/tools/validateSaltUsage.js";
+import type { SaltRegistry } from "../core/types.js";
+import {
+  REPO_ROOT,
+  V1_CATALOG_ARTIFACT_FILES,
+  V1_EXCLUDED_CATALOG_ARTIFACT_FILES,
+} from "./registryTestUtils.js";
+
+const BUILT_AT = "2026-03-10T00:00:00Z";
+
+let registry: SaltRegistry;
+let builtRegistry: SaltRegistry;
+let registryDir: string;
+
+beforeAll(async () => {
+  registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "salt-mcp-registry-"));
+  builtRegistry = await buildRegistry({
+    sourceRoot: REPO_ROOT,
+    outputDir: registryDir,
+    timestamp: BUILT_AT,
+  });
+  registry = await loadRegistry({ registryDir });
+}, 120000);
+
+afterAll(async () => {
+  if (registryDir) {
+    await fs.rm(registryDir, { recursive: true, force: true });
+  }
+});
+
+describe("registry integration", () => {
+  it("writes only the runtime catalog artifacts used by the public MCP contract", async () => {
+    const generatedFiles = (await fs.readdir(registryDir)).sort((left, right) =>
+      left.localeCompare(right),
+    );
+
+    expect(generatedFiles).toEqual(
+      [...V1_CATALOG_ARTIFACT_FILES].sort((left, right) =>
+        left.localeCompare(right),
+      ),
+    );
+    expect(generatedFiles).not.toEqual(
+      expect.arrayContaining([...V1_EXCLUDED_CATALOG_ARTIFACT_FILES]),
+    );
+  });
+
+  it("keeps non-persisted build data available to in-memory build consumers", () => {
+    expect(builtRegistry.examples.length).toBeGreaterThan(0);
+  });
+
+  it("maps Button variant deprecation to Button guidance", () => {
+    const result = validateSaltUsage(registry, {
+      code: 'import { Button } from "@salt-ds/core"; const Demo = () => <Button variant="cta">Go</Button>;',
+      framework: "react",
+      package_version: "2.0.0",
+    });
+    const variantIssue = result.issues.find(
+      (issue) => issue.id === "deprecated.prop.salt-ds-core.variant",
+    );
+
+    expect(variantIssue).toBeDefined();
+    expect(variantIssue?.message.toLowerCase()).toContain("appearance");
+    expect(
+      variantIssue?.source_urls.some((url) =>
+        url.includes("packages/core/src/button/Button.tsx"),
+      ),
+    ).toBe(true);
+  });
+
+  it("flags Button href as navigation misuse", () => {
+    const result = validateSaltUsage(registry, {
+      code: 'import { Button } from "@salt-ds/core"; const Demo = () => <Button href="/next">Go</Button>;',
+      framework: "react",
+    });
+
+    expect(
+      result.issues.some((issue) => issue.id === "component-choice.navigation"),
+    ).toBe(true);
+  });
+
+  it("resolves package metadata for non-core components", () => {
+    const rangeDatePicker = registry.components.find(
+      (component) => component.name === "Range date picker",
+    );
+    // Range date picker graduated from @salt-ds/lab to @salt-ds/date-components
+    // upstream; the registry now reflects that package move.
+    expect(rangeDatePicker?.package.name).toBe("@salt-ds/date-components");
+
+    const rangeSlider = registry.components.find(
+      (component) => component.name === "Range slider",
+    );
+    expect(rangeSlider?.package.name).toBe("@salt-ds/core");
+  });
+
+  it("uses the build timestamp for verification fields", () => {
+    expect(registry.build_info).toBeTruthy();
+    expect(registry.build_info?.source_artifacts.docs_root.path).toBe(
+      "site/docs",
+    );
+    expect(registry.build_info?.source_artifacts.search_data.path).toBe(
+      "site/public/search-data.json",
+    );
+    expect(registry.components[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.icons[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.country_symbols[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.patterns[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.guides[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.tokens[0]?.last_verified_at).toBe(BUILT_AT);
+    expect(registry.pages[0]?.last_verified_at).toBe(BUILT_AT);
+  });
+
+  it("attaches token usage policy metadata for palette, characteristic, and foundation tokens", () => {
+    const paletteToken = registry.tokens.find(
+      (token) => token.name === "--salt-palette-accent-border",
+    );
+    const separableToken = registry.tokens.find(
+      (token) => token.name === "--salt-separable-secondary-borderColor",
+    );
+    const fixedSizeToken = registry.tokens.find(
+      (token) => token.name === "--salt-size-fixed-100",
+    );
+
+    expect(paletteToken?.policy).toMatchObject({
+      usage_tier: "palette",
+      direct_component_use: "never",
+    });
+    expect(separableToken?.policy).toMatchObject({
+      usage_tier: "characteristic",
+      direct_component_use: "always",
+    });
+    expect(fixedSizeToken?.policy).toMatchObject({
+      usage_tier: "foundation",
+      direct_component_use: "conditional",
+    });
+    expect(fixedSizeToken?.policy?.docs).toContain("/salt/foundations/size");
+    expect(fixedSizeToken?.policy?.evidence_refs?.length).toBe(
+      fixedSizeToken?.policy?.docs.length,
+    );
+  });
+
+  it("derives component and pattern guidance from category maps and usage docs", () => {
+    const button = registry.components.find(
+      (component) => component.name === "Button",
+    );
+    const link = registry.components.find(
+      (component) => component.name === "Link",
+    );
+    const verticalNavigationComponent = registry.components.find(
+      (component) => component.name === "Vertical navigation",
+    );
+    const navigationItem = registry.components.find(
+      (component) => component.name === "Navigation item",
+    );
+    const dropdown = registry.components.find(
+      (component) => component.name === "Dropdown",
+    );
+    const comboBox = registry.components.find(
+      (component) => component.name === "Combo box",
+    );
+    const dialog = registry.components.find(
+      (component) => component.name === "Dialog",
+    );
+    const menu = registry.components.find(
+      (component) => component.name === "Menu",
+    );
+    const tabs = registry.components.find(
+      (component) => component.name === "Tabs",
+    );
+    const banner = registry.components.find(
+      (component) => component.name === "Banner",
+    );
+    const toast = registry.components.find(
+      (component) => component.name === "Toast",
+    );
+    const verticalNavigationPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Vertical navigation",
+    );
+    const splitButtonPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Split button",
+    );
+
+    expect(button?.category).toEqual(["actions"]);
+    expect(button?.semantics).toMatchObject({
+      category: ["actions"],
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        expect.stringContaining("allow the user to execute an action"),
+      ]),
+      not_for: expect.arrayContaining([
+        expect.stringContaining(
+          "primary action is to take the user to another page",
+        ),
+      ]),
+    });
+
+    expect(link?.category).toEqual(["navigation"]);
+    expect(link?.semantics).toMatchObject({
+      category: ["navigation"],
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "To provide navigation to a page on the same or different site.",
+      ]),
+      not_for: expect.arrayContaining([
+        "To trigger an action, such as submitting a form or opening a dialog. Instead, use Button.",
+      ]),
+    });
+
+    expect(verticalNavigationComponent?.category).toEqual(["navigation"]);
+    expect(verticalNavigationComponent?.semantics).toMatchObject({
+      category: ["navigation"],
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "When you have multiple levels of navigation in your application or website.",
+      ]),
+    });
+
+    expect(navigationItem?.category).toEqual(["navigation"]);
+    expect(navigationItem?.semantics).toMatchObject({
+      category: ["navigation"],
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+    });
+
+    expect(dropdown?.semantics).toMatchObject({
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "When a user needs the ability to choose one value from a set of five to 10 options.",
+      ]),
+    });
+
+    expect(comboBox?.semantics).toMatchObject({
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "If a workflow benefits from having a filter to quickly narrow down the available options.",
+      ]),
+      not_for: expect.arrayContaining([
+        "To choose one value from a set of five to ten options that does not require filtering. Instead, use Dropdown.",
+      ]),
+    });
+
+    expect(dialog?.semantics).toMatchObject({
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "To notify the user of critical information related to their current workflow that requires immediate action.",
+      ]),
+      not_for: expect.arrayContaining([
+        "When you don't need to interrupt the user's flow. If the information is part of an event that’s occurred in a peripheral application or workflow, use Toast instead. If the information is related to the current workflow, use Banner instead.",
+      ]),
+    });
+
+    expect(menu?.semantics).toMatchObject({
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "When you need to display a list of actions or options.",
+      ]),
+      not_for: expect.arrayContaining([
+        "Inside a form. Instead, use ComboBox or Dropdown.",
+      ]),
+    });
+
+    expect(tabs?.semantics).toMatchObject({
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "Use tabs to organize logically related but mutually exclusive content on a single page.",
+      ]),
+      not_for: expect.arrayContaining([
+        "Don’t use tabs for primary navigation, taking the user off the current page. Instead, use NavigationItem.",
+      ]),
+    });
+
+    expect(banner?.semantics).toMatchObject({
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "To show a notification that applies to the user’s current task or workflow.",
+      ]),
+      not_for: expect.arrayContaining([
+        "To notify users of an event that has occurred in a peripheral application or workflow. Instead, use Toast.",
+      ]),
+    });
+
+    expect(toast?.semantics).toMatchObject({
+      derived_from: expect.arrayContaining([
+        "component-category-map",
+        "usage-docs",
+      ]),
+      not_for: expect.arrayContaining([
+        "When the notification requires immediate action and relates to the user’s current task. Instead, use Dialog to interrupt the user's workflow.",
+      ]),
+    });
+
+    expect(verticalNavigationPattern?.category).toEqual([
+      "navigation-and-wayfinding",
+      "layout-and-shells",
+    ]);
+    expect(verticalNavigationPattern?.semantics).toMatchObject({
+      category: ["navigation-and-wayfinding", "layout-and-shells"],
+      derived_from: expect.arrayContaining([
+        "pattern-category-map",
+        "pattern-docs",
+        "usage-callouts",
+      ]),
+      preferred_for: expect.arrayContaining([
+        "Use vertical navigation when the page needs a persistent navigation pane that organizes multiple sections of an application into a vertical hierarchy.",
+      ]),
+    });
+    expect(verticalNavigationPattern?.composed_of).toEqual([
+      expect.objectContaining({ component: "Vertical navigation" }),
+    ]);
+    expect(
+      verticalNavigationPattern?.examples.some((example) =>
+        /\bNavigationItem\b/u.test(example.code),
+      ),
+    ).toBe(false);
+
+    expect(splitButtonPattern?.category).toEqual(["actions-and-commands"]);
+    expect(splitButtonPattern?.semantics).toMatchObject({
+      category: ["actions-and-commands"],
+      derived_from: expect.arrayContaining([
+        "pattern-category-map",
+        "pattern-docs",
+        "usage-callouts",
+      ]),
+    });
+  });
+
+  it("prefers Chart for chart-focused component recommendation prompts", () => {
+    const result = recommendComponent(registry, {
+      task: "chart of data visualization component for dashboard analytical body",
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: "Chart",
+      component: {
+        package: "@salt-ds/highcharts-theme",
+      },
+    });
+  });
+
+  it("matches Chart through its Highcharts alias during component recommendation", () => {
+    const result = recommendComponent(registry, {
+      task: "highcharts data visualization component",
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: "Chart",
+      component: {
+        package: "@salt-ds/highcharts-theme",
+      },
+    });
+  });
+
+  it("prefers Dialog over decorative icon matches for confirmation dialog prompts", () => {
+    const result = recommendComponent(registry, {
+      task: "confirmation dialog with warning icon",
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: "Dialog",
+      component: {
+        package: "@salt-ds/core",
+      },
+    });
+  });
+
+  it("prefers Tabs over Avatar when the prompt names both a surface owner and decoration", () => {
+    const result = recommendComponent(registry, {
+      task: "user profile with tabs and avatar",
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: "Tabs",
+      component: {
+        package: "@salt-ds/core",
+      },
+    });
+  });
+
+  it.each([
+    [
+      "Table component with custom cell rendering and column definitions",
+      "Data grid",
+      "@salt-ds/ag-grid-theme",
+    ],
+    ["table in analytical dashboard main body", "Table", "@salt-ds/core"],
+    [
+      "use the table in the analytical dashboard body",
+      "Table",
+      "@salt-ds/core",
+    ],
+    [
+      "data grid with custom cell rendering and column definitions",
+      "Data grid",
+      "@salt-ds/ag-grid-theme",
+    ],
+  ])("returns %s for tabular component recommendation prompts", (task, expectedName, expectedPackage) => {
+    const result = recommendComponent(registry, {
+      task,
+      top_k: 5,
+      view: "full",
+    });
+
+    expect(result.recommendations?.[0]).toMatchObject({
+      name: expectedName,
+      component: {
+        package: expectedPackage,
+      },
+    });
+  });
+
+  it("extracts explicit usage boundaries for Table, Data grid, and Chart", () => {
+    const table = registry.components.find(
+      (component) => component.name === "Table",
+    );
+    const dataGrid = registry.components.find(
+      (component) => component.name === "Data grid",
+    );
+    const chart = registry.components.find(
+      (component) => component.name === "Chart",
+    );
+
+    expect(table?.summary).toContain("simple, structured tabular data");
+    expect(table?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("simple data in a structured, tabular format"),
+      ]),
+    );
+    expect(table?.when_not_to_use).toEqual(
+      expect.arrayContaining([expect.stringContaining("Data grid")]),
+    );
+
+    expect(dataGrid?.summary).toContain("complex or high-volume data");
+    expect(dataGrid?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("complex or high-volume data"),
+      ]),
+    );
+    expect(dataGrid?.when_not_to_use).toEqual(
+      expect.arrayContaining([expect.stringContaining("Table")]),
+    );
+
+    expect(chart?.summary).toContain("Highcharts-backed visualization surface");
+    expect(chart?.when_to_use).toEqual(
+      expect.arrayContaining([expect.stringContaining("visualize trends")]),
+    );
+    expect(chart?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("inspect exact values"),
+        expect.stringContaining("edit, filter, or select rows"),
+      ]),
+    );
+  });
+
+  it("exposes Data grid CSS imports directly from usage docs", () => {
+    const dataGrid = registry.components.find(
+      (component) => component.name === "Data grid",
+    );
+
+    expect(dataGrid?.implementation_requirements).toEqual({
+      required_imports: expect.arrayContaining([
+        {
+          kind: "css",
+          specifier: "ag-grid-community/styles/ag-grid.css",
+          statement: 'import "ag-grid-community/styles/ag-grid.css";',
+          source_url: "/salt/components/ag-grid-theme/usage",
+        },
+        {
+          kind: "css",
+          specifier: "@salt-ds/ag-grid-theme/salt-ag-theme.css",
+          statement: 'import "@salt-ds/ag-grid-theme/salt-ag-theme.css";',
+          source_url: "/salt/components/ag-grid-theme/usage",
+        },
+      ]),
+    });
+    expect(
+      dataGrid?.implementation_requirements?.required_imports.map(
+        (entry) => entry.specifier,
+      ),
+    ).not.toContain("@salt-ds/ag-grid-theme/css/salt-ag-theme.css");
+
+    const lookup = getSaltEntity(registry, {
+      name: "Data grid",
+      entity_type: "component",
+      view: "compact",
+    });
+
+    expect(lookup.entity).toMatchObject({
+      implementation_requirements: {
+        required_imports: expect.arrayContaining([
+          expect.objectContaining({
+            specifier: "@salt-ds/ag-grid-theme/salt-ag-theme.css",
+            source_url: "/salt/components/ag-grid-theme/usage",
+          }),
+        ]),
+      },
+    });
+  });
+
+  it("extracts explicit usage guidance for Search, Button bar, and Forms", () => {
+    const searchPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Search",
+    );
+    const buttonBarPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Button bar",
+    );
+    const formsPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Forms",
+    );
+
+    expect(searchPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Locate information in applications with large amounts of data",
+        ),
+        expect.stringContaining("Look through a catalog of items"),
+        expect.stringContaining("Navigate to a page or resource"),
+      ]),
+    );
+    expect(searchPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("link, button, or navigation item"),
+        expect.stringContaining("filtering a visible data set in place"),
+        expect.stringContaining("small, fixed set of options"),
+      ]),
+    );
+
+    expect(buttonBarPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Navigating to previous or next steps"),
+        expect.stringContaining("Submitting a form"),
+        expect.stringContaining("Acknowledging or canceling changes"),
+      ]),
+    );
+    expect(buttonBarPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("toolbar or another action surface"),
+        expect.stringContaining("single primary action"),
+        expect.stringContaining(
+          "navigation rather than task-completion actions",
+        ),
+      ]),
+    );
+
+    expect(formsPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "enter, edit, or confirm structured information",
+        ),
+        expect.stringContaining("labels, helper text, and validation"),
+        expect.stringContaining("clear action area at the end of the form"),
+      ]),
+    );
+    expect(formsPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("When the task is only a single action"),
+        expect.stringContaining("dashboard, table, or Data grid"),
+        expect.stringContaining("short, bounded decision"),
+        expect.stringContaining("Dialog or smaller overlay pattern"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Preferences dialog and Announcement dialog", () => {
+    const preferencesDialogPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Preferences dialog",
+    );
+    const announcementDialogPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Announcement dialog",
+    );
+
+    expect(preferencesDialogPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("centralize application or window settings"),
+        expect.stringContaining("navigate between related settings panels"),
+        expect.stringContaining("relevant settings panel"),
+        expect.stringContaining("apply/cancel action area"),
+      ]),
+    );
+    expect(preferencesDialogPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("single, short confirmation or alert"),
+        expect.stringContaining("page-based settings surface"),
+        expect.stringContaining("simpler form or overlay pattern"),
+      ]),
+    );
+
+    expect(announcementDialogPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "new product features or the highlights of a recent release",
+        ),
+        expect.stringContaining("follow-up action"),
+        expect.stringContaining("modal interruption"),
+        expect.stringContaining("concise announcement or informational notice"),
+      ]),
+    );
+    expect(announcementDialogPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Preferences dialog"),
+        expect.stringContaining("Toast or Banner"),
+        expect.stringContaining("page section or card"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Content status", () => {
+    const contentStatusPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Content status",
+    );
+
+    expect(contentStatusPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("content is loading"),
+        expect.stringContaining("empty-state message"),
+        expect.stringContaining("information, warnings, or errors"),
+        expect.stringContaining(
+          "successfully submitted content or completed an action",
+        ),
+      ]),
+    );
+    expect(contentStatusPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("reach across the app"),
+        expect.stringContaining("full workflow interruption"),
+        expect.stringContaining("inline text or another component"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for List filtering", () => {
+    const listFilteringPattern = registry.patterns.find(
+      (pattern) => pattern.name === "List filtering",
+    );
+
+    expect(listFilteringPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Use filtering when you have a lengthy list that users have to scroll to view all available options",
+        ),
+        expect.stringContaining(
+          "pattern typically comprises input and list based components",
+        ),
+      ]),
+    );
+    expect(listFilteringPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("search across broader content or pages"),
+        expect.stringContaining("dashboard or table shell"),
+        expect.stringContaining("Dropdown or another selection control"),
+      ]),
+    );
+    expect(listFilteringPattern?.how_to_build).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Build the filtering flow around filter logic, no-match feedback, highlighted matching characters, and loading feedback for slow results",
+        ),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for File upload", () => {
+    const fileUploadPattern = registry.patterns.find(
+      (pattern) => pattern.name === "File upload",
+    );
+
+    expect(fileUploadPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("files or records that already exist"),
+        expect.stringContaining("file URL, path, or other text reference"),
+        expect.stringContaining("ongoing file management after upload"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Menu button", () => {
+    const menuButtonPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Menu button",
+    );
+
+    expect(menuButtonPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("one clear action"),
+        expect.stringContaining("high priority and should remain visible"),
+        expect.stringContaining(
+          "choosing a value rather than triggering an action",
+        ),
+        expect.stringContaining("navigate users to another location"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Comments", () => {
+    const commentsPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Comments",
+    );
+
+    expect(commentsPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("system-generated events or history"),
+        expect.stringContaining("private or submitted once"),
+        expect.stringContaining("long-form documentation"),
+        expect.stringContaining("real-time conversation"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Formatted input", () => {
+    const formattedInputPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Formatted input",
+    );
+
+    expect(formattedInputPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "increment, decrement, or adjust a numeric value",
+        ),
+        expect.stringContaining("single date or date range"),
+        expect.stringContaining(
+          "country-specific formatting with a location selector",
+        ),
+        expect.stringContaining("open-ended text"),
+        expect.stringContaining("known set of values"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Indication", () => {
+    const indicationPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Indication",
+    );
+
+    expect(indicationPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("state or condition of a system or process"),
+        expect.stringContaining("visual cues about potential outcomes"),
+        expect.stringContaining("stage of a process or workflow"),
+        expect.stringContaining("level of risk"),
+      ]),
+    );
+    expect(indicationPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("detailed message, recovery instruction"),
+        expect.stringContaining("primary action"),
+        expect.stringContaining("navigate between locations"),
+        expect.stringContaining("only decorative"),
+      ]),
+    );
+    expect(indicationPattern?.how_to_build).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Choose the indication type"),
+        expect.stringContaining("Apply the color, icon, and label guidance"),
+        expect.stringContaining("status for system or process conditions"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Experience customization", () => {
+    const experienceCustomizationPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Experience customization",
+    );
+
+    expect(experienceCustomizationPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("fixed by policy, role, permissions"),
+        expect.stringContaining("current task, page, or data view"),
+        expect.stringContaining("business task"),
+        expect.stringContaining("styling, component design"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for International address form", () => {
+    const internationalAddressFormPattern = registry.patterns.find(
+      (pattern) => pattern.name === "International address form",
+    );
+
+    expect(internationalAddressFormPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("one known country"),
+        expect.stringContaining("only need to select a country or region"),
+        expect.stringContaining("location detection, address lookup"),
+        expect.stringContaining("non-address contact information"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for International phone number", () => {
+    const internationalPhoneNumberPattern = registry.patterns.find(
+      (pattern) => pattern.name === "International phone number",
+    );
+
+    expect(internationalPhoneNumberPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("not country-specific"),
+        expect.stringContaining("only need to select a country or region"),
+        expect.stringContaining("location autodetection"),
+        expect.stringContaining("not phone numbers"),
+      ]),
+    );
+  });
+
+  it("extracts explicit avoidance guidance for Keyboard shortcuts", () => {
+    const keyboardShortcutsPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Keyboard shortcuts",
+    );
+
+    expect(keyboardShortcutsPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("does not provide keyboard shortcuts"),
+        expect.stringContaining("perform an action directly"),
+        expect.stringContaining("standard keyboard navigation"),
+        expect.stringContaining("conflicts with essential system"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for List builder", () => {
+    const listBuilderPattern = registry.patterns.find(
+      (pattern) => pattern.name === "List builder",
+    );
+
+    expect(listBuilderPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Use this pattern when users need to customize a list from a selection of options",
+        ),
+        expect.stringContaining(
+          "distinguish selected items from a larger list of available items",
+        ),
+        expect.stringContaining("two lists side-by-side"),
+      ]),
+    );
+    expect(listBuilderPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("single selection"),
+        expect.stringContaining("List filtering"),
+        expect.stringContaining("simple re-orderable list"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Wizard", () => {
+    const wizardPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Wizard",
+    );
+
+    expect(wizardPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "guide users through a series of steps or tasks in a specific, linear order",
+        ),
+        expect.stringContaining(
+          "Users must complete each step in order before moving on to the next",
+        ),
+      ]),
+    );
+    expect(wizardPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("single form or short dialog"),
+        expect.stringContaining("Tabs or Vertical navigation"),
+        expect.stringContaining("dashboard, table, or list-based pattern"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Header block", () => {
+    const headerBlockPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Header block",
+    );
+
+    expect(headerBlockPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Display a combination of headings, pre-headers and descriptions within container components such as Dialog, Drawer and Overlay",
+        ),
+        expect.stringContaining(
+          "Maintain a visually consistent layout and presentation for headers",
+        ),
+        expect.stringContaining("Display headings with status icons"),
+      ]),
+    );
+    expect(headerBlockPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("App header"),
+        expect.stringContaining("Navigation or Vertical navigation"),
+        expect.stringContaining("Heading or Text"),
+      ]),
+    );
+  });
+
+  it("extracts explicit guidance for Navigation", () => {
+    const navigationPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Navigation",
+    );
+
+    expect(navigationPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "Display navigation in websites or applications with two or more pages",
+        ),
+        expect.stringContaining(
+          "content hierarchy and help users orient themselves",
+        ),
+        expect.stringContaining("Simplify your hierarchy"),
+        expect.stringContaining("Label effectively"),
+      ]),
+    );
+    expect(navigationPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Forms, Wizard, or Dialog"),
+        expect.stringContaining("Tabs or segmented controls"),
+        expect.stringContaining("Button bar or toolbar"),
+      ]),
+    );
+  });
+
+  it("preserves canonical scaffold metadata for the priority patterns", () => {
+    const metricPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Metric",
+    );
+    const appHeaderPattern = registry.patterns.find(
+      (pattern) => pattern.name === "App header",
+    );
+    const analyticalDashboardPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Analytical dashboard",
+    );
+    const verticalNavigationPattern = registry.patterns.find(
+      (pattern) => pattern.name === "Vertical navigation",
+    );
+
+    expect(metricPattern?.starter_scaffold).toMatchObject({
+      fidelity: "hybrid",
+      semantics: {
+        required_regions: [],
+        optional_regions: ["metric-supporting-context"],
+        build_around: expect.arrayContaining([
+          "Metric title",
+          "Metric value",
+          "Metric supporting context",
+        ]),
+        preserve_constraints: expect.arrayContaining([
+          expect.stringContaining("Never leave the user guessing"),
+          expect.stringContaining("same orientation"),
+        ]),
+      },
+      source_urls: expect.arrayContaining(["/salt/patterns/metric"]),
+    });
+    expect(metricPattern?.starter_scaffold?.template).toMatchObject({
+      kind: "fallback-template",
+      imports: expect.arrayContaining([
+        expect.objectContaining({
+          name: "StackLayout",
+          package: "@salt-ds/core",
+        }),
+      ]),
+      jsx_lines: expect.arrayContaining([
+        expect.stringContaining("Portfolio value"),
+      ]),
+    });
+    expect(metricPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("single key measurement"),
+        expect.stringContaining("dashboard building block"),
+      ]),
+    );
+    expect(metricPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("full dashboard shell"),
+        expect.stringContaining("charts or tables"),
+      ]),
+    );
+    expect(appHeaderPattern?.starter_scaffold).toMatchObject({
+      fidelity: "hybrid",
+      semantics: {
+        required_regions: [],
+        optional_regions: ["primary-navigation"],
+        build_around: expect.arrayContaining([
+          "Branding",
+          "Navigation",
+          "Utilities",
+        ]),
+        preserve_constraints: expect.arrayContaining([
+          expect.stringContaining("top-left corner"),
+          expect.stringContaining("app home page"),
+        ]),
+      },
+      source_urls: expect.arrayContaining(["/salt/patterns/app-header"]),
+    });
+    expect(appHeaderPattern?.starter_scaffold?.template).toMatchObject({
+      kind: "fallback-template",
+      imports: expect.arrayContaining([
+        expect.objectContaining({
+          name: "NavigationItem",
+          package: "@salt-ds/core",
+        }),
+      ]),
+      jsx_lines: expect.arrayContaining([expect.stringContaining("<header>")]),
+    });
+    expect(appHeaderPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("top-level, globally persistent shell element"),
+        expect.stringContaining("persistent branding area"),
+        expect.stringContaining(
+          "application-wide navigation or utility actions",
+        ),
+      ]),
+    );
+    expect(appHeaderPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("not globally persistent"),
+        expect.stringContaining("multiple levels"),
+        expect.stringContaining("brand lockup"),
+      ]),
+    );
+    expect(analyticalDashboardPattern?.starter_scaffold).toMatchObject({
+      fidelity: "hybrid",
+      semantics: {
+        required_regions: ["main-body"],
+        optional_regions: expect.arrayContaining([
+          "dashboard-header",
+          "key-metrics",
+          "fixed-panel",
+        ]),
+        build_around: expect.arrayContaining([
+          "Dashboard header",
+          "Key metrics",
+          "Fixed controls or filters",
+          "Main analytical body",
+        ]),
+      },
+      source_urls: expect.arrayContaining([
+        "/salt/patterns/analytical-dashboard",
+      ]),
+    });
+    expect(analyticalDashboardPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("top-level dashboard shell"),
+        expect.stringContaining(
+          "charts, graphs, tables, and other visual elements",
+        ),
+        expect.stringContaining("Data-intensive environments"),
+        expect.stringContaining("Performance tracking"),
+      ]),
+    );
+    expect(analyticalDashboardPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("simple presentation surface"),
+        expect.stringContaining("Metric"),
+        expect.stringContaining("Table"),
+        expect.stringContaining("Data grid"),
+      ]),
+    );
+    expect(
+      analyticalDashboardPattern?.starter_scaffold?.template,
+    ).toMatchObject({
+      kind: "fallback-template",
+      imports: expect.arrayContaining([
+        expect.objectContaining({
+          name: "BorderLayout",
+          package: "@salt-ds/core",
+        }),
+        expect.objectContaining({
+          name: "Tabs",
+          package: "@salt-ds/core",
+        }),
+      ]),
+      jsx_lines: expect.arrayContaining([
+        expect.stringContaining("<BorderLayout>"),
+        expect.stringContaining("Key metrics bar"),
+      ]),
+    });
+    expect(verticalNavigationPattern?.starter_scaffold?.template).toMatchObject(
+      {
+        kind: "fallback-template",
+        imports: [
+          { name: "BorderItem", package: "@salt-ds/core" },
+          { name: "BorderLayout", package: "@salt-ds/core" },
+          { name: "Link", package: "@salt-ds/core" },
+          { name: "SkipLink", package: "@salt-ds/core" },
+          { name: "StackLayout", package: "@salt-ds/core" },
+          { name: "VerticalNavigation", package: "@salt-ds/core" },
+          { name: "VerticalNavigationItem", package: "@salt-ds/core" },
+          {
+            name: "VerticalNavigationItemContent",
+            package: "@salt-ds/core",
+          },
+          {
+            name: "VerticalNavigationItemLabel",
+            package: "@salt-ds/core",
+          },
+          {
+            name: "VerticalNavigationItemTrigger",
+            package: "@salt-ds/core",
+          },
+        ],
+        jsx_lines: expect.arrayContaining([
+          "<BorderLayout>",
+          '  <BorderItem position="west" as="aside">',
+          '    <SkipLink targetId="main-content">Skip to main content</SkipLink>',
+          '    <VerticalNavigation aria-label="Primary" appearance="bordered">',
+          "      <VerticalNavigationItem active>",
+          "        <VerticalNavigationItemContent>",
+          '          <VerticalNavigationItemTrigger render={<Link href="/overview" />}>',
+          "            <VerticalNavigationItemLabel>Overview</VerticalNavigationItemLabel>",
+          '  <BorderItem position="center" as="main" id="main-content" tabIndex={-1}>',
+          "    <StackLayout>{/* Main content area stays distinct from the navigation tree */}</StackLayout>",
+        ]),
+      },
+    );
+    expect(verticalNavigationPattern?.starter_scaffold).toMatchObject({
+      fidelity: "hybrid",
+      semantics: {
+        required_regions: ["navigation-pane"],
+        optional_regions: ["nested-navigation"],
+        build_around: expect.any(Array),
+      },
+      source_urls: expect.arrayContaining([
+        "/salt/patterns/vertical-navigation",
+      ]),
+    });
+    expect(verticalNavigationPattern?.when_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("persistent navigation pane"),
+        expect.stringContaining("multiple top-level categories"),
+        expect.stringContaining("information architecture is complex"),
+      ]),
+    );
+    expect(verticalNavigationPattern?.when_not_to_use).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("small number of top-level destinations"),
+        expect.stringContaining("secondary or page-local"),
+        expect.stringContaining("modal or task-oriented"),
+      ]),
+    );
+  });
+
+  it("adds route-slug aliases to built pattern records", () => {
+    const preferencesDialog = registry.patterns.find(
+      (pattern) => pattern.name === "Preferences dialog",
+    );
+
+    expect(preferencesDialog?.aliases).toContain("preferences-dialog");
+  });
+
+  it("records build inference metadata for component docgen, tokens, and deprecations", () => {
+    const button = registry.components.find(
+      (component) => component.name === "Button",
+    );
+    const buttonVariantDeprecation = registry.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.kind === "prop" &&
+        deprecation.name === "variant",
+    );
+
+    expect(button?.inference?.docgen?.candidate_count).toBeGreaterThan(0);
+    expect(button?.inference?.docgen?.selected_display_name).toBeTruthy();
+    // tokens inference was removed when per-component tokens were dropped
+    expect(button?.inference?.deprecations?.matched_count).toBeGreaterThan(0);
+    expect(
+      buttonVariantDeprecation?.inference?.matched_component_names,
+    ).toContain("Button");
+    expect(typeof buttonVariantDeprecation?.inference?.component_inferred).toBe(
+      "boolean",
+    );
+  });
+
+  it("builds icon metadata from the icon synonym source", () => {
+    const workflowIcon = registry.icons.find(
+      (icon) => icon.name === "WorkflowIcon",
+    );
+    const sparkleRefreshIcon = registry.icons.find(
+      (icon) => icon.name === "SparkleRefreshIcon",
+    );
+
+    expect(workflowIcon).toBeDefined();
+    expect(workflowIcon?.category).toBe("organize");
+    expect(workflowIcon?.synonyms).toEqual(
+      expect.arrayContaining(["nodes", "process", "sequence"]),
+    );
+    expect(workflowIcon?.related_docs.foundation).toBe(
+      "/salt/foundations/assets/index",
+    );
+
+    expect(sparkleRefreshIcon?.synonyms).toEqual(
+      expect.arrayContaining(["ai", "llm", "artificial intelligence"]),
+    );
+  });
+
+  it("builds country symbol metadata from countryMetaMap", () => {
+    const unitedStates = registry.country_symbols.find(
+      (countrySymbol) => countrySymbol.code === "US",
+    );
+    const england = registry.country_symbols.find(
+      (countrySymbol) => countrySymbol.code === "GB-ENG",
+    );
+
+    expect(unitedStates).toBeDefined();
+    expect(unitedStates?.aliases).toEqual(
+      expect.arrayContaining(["United States of America", "United States"]),
+    );
+    expect(unitedStates?.related_docs.foundation).toBe(
+      "/salt/foundations/assets/country-symbols",
+    );
+    expect(unitedStates?.variants.sharp.export_name).toBe("US_Sharp");
+
+    expect(england?.variants.circle.export_name).toBe("GB_ENG");
+  });
+
+  it("resolves country symbol lookups by code, fuzzy country name, and query search", () => {
+    const codeResult = getCountrySymbol(registry, {
+      name: "US",
+    });
+    const fuzzyResult = getCountrySymbol(registry, {
+      name: "United States",
+    });
+    const listResult = getCountrySymbols(registry, {
+      query: "england",
+      max_results: 10,
+    });
+
+    expect(codeResult.country_symbol).toMatchObject({
+      code: "US",
+    });
+    expect(fuzzyResult.country_symbol).toMatchObject({
+      code: "US",
+    });
+    expect(
+      listResult.country_symbols.some(
+        (countrySymbol) => countrySymbol.code === "GB-ENG",
+      ),
+    ).toBe(true);
+  });
+
+  it("treats shared icon base names as ambiguous across outline and solid variants", () => {
+    const result = getIcon(registry, {
+      name: "workflow",
+    });
+
+    expect(result.icon).toBeNull();
+    expect(result.ambiguity).toMatchObject({
+      query: "workflow",
+      matched_by: "name",
+    });
+    expect(result.ambiguity?.matches).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "WorkflowIcon",
+          variant: "outline",
+        }),
+        expect.objectContaining({
+          name: "WorkflowSolidIcon",
+          variant: "solid",
+        }),
+      ]),
+    );
+  });
+
+  it("excludes non-consumer packages from consumer registry artifacts", () => {
+    expect(registry.packages.some((pkg) => pkg.name === "@salt-ds/mcp")).toBe(
+      false,
+    );
+  });
+
+  it("emits unique deprecation ids and source-backed deprecated_in versions", () => {
+    expect(
+      new Set(registry.deprecations.map((deprecation) => deprecation.id)).size,
+    ).toBe(registry.deprecations.length);
+
+    const buttonVariantDeprecation = registry.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.kind === "prop" &&
+        deprecation.name === "variant",
+    );
+    expect(buttonVariantDeprecation?.deprecated_in).toBe("1.36.0");
+    expect(buttonVariantDeprecation?.replacement.notes).toBe(
+      "Use appearance and sentiment instead.",
+    );
+
+    const dialogIdPropDeprecation = registry.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.kind === "prop" &&
+        deprecation.name === "idProp",
+    );
+    expect(dialogIdPropDeprecation?.deprecated_in).toBe("1.58.0");
+
+    const unstableProviderDeprecation = registry.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.kind === "component" &&
+        deprecation.name === "UNSTABLE_SaltProviderNext",
+    );
+    expect(unstableProviderDeprecation?.deprecated_in).toBe("1.32.0");
+    expect(unstableProviderDeprecation?.replacement.name).toBe(
+      "SaltProviderNext",
+    );
+  });
+
+  it("attaches package metadata to component and pattern-story examples", () => {
+    const componentExamples = registry.examples.filter(
+      (example) => example.target_type === "component",
+    );
+    expect(componentExamples.length).toBeGreaterThan(0);
+    expect(
+      componentExamples.every((example) =>
+        example.package?.startsWith("@salt-ds/"),
+      ),
+    ).toBe(true);
+
+    const patternStoryExample = registry.examples.find((example) =>
+      example.id.startsWith("pattern-story."),
+    );
+    expect(patternStoryExample?.package).toMatch(/^@salt-ds\//);
+  });
+
+  it("returns component examples by canonical component name", () => {
+    const component = registry.components.find(
+      (entry) => entry.name === "Data grid",
+    );
+
+    expect(component?.examples.length).toBeGreaterThan(0);
+  });
+
+  it("extracts multiline LivePreview examples from docs pages", () => {
+    const examples =
+      registry.components.find((entry) => entry.name === "Date input")
+        ?.examples ?? [];
+
+    expect(examples.length).toBeGreaterThan(2);
+    expect(
+      examples.some((example) => example.title === "Single controlled"),
+    ).toBe(true);
+    expect(
+      examples.some((example) => example.title === "Range controlled"),
+    ).toBe(true);
+  });
+
+  it("returns pattern story examples by canonical pattern name", () => {
+    const examples =
+      registry.patterns.find((entry) => entry.name === "Button bar")
+        ?.examples ?? [];
+
+    expect(
+      examples.some((example) =>
+        String(example.id).startsWith("pattern-story."),
+      ),
+    ).toBe(true);
+  });
+
+  it("extracts getting-started guides with registered aliases", () => {
+    const result = getGuide(registry, {
+      // "developing" matches the basename-derived alias the registry build
+      // synthesizes via inferGettingStartedGuideAliases for the
+      // `developing.mdx` getting-started page; the guide itself does not
+      // contain the word "bootstrap" in its title, frontmatter, or section
+      // headings, so using "developing" verifies the registered lookup path
+      // without forcing a prose edit on user-facing docs.
+      name: "developing",
+      view: "full",
+    });
+
+    expect(result.guide).toMatchObject({
+      name: "Developing with Salt",
+      kind: "getting-started",
+    });
+  });
+
+  it("extracts primitive-choice and composition guides into the registry", () => {
+    const primitiveGuide = getGuide(registry, {
+      name: "button vs link",
+      view: "full",
+    });
+    const compositionGuide = getGuide(registry, {
+      name: "nested interactive",
+      view: "full",
+    });
+    const wrapperGuide = getGuide(registry, {
+      name: "wrapper review",
+      view: "full",
+    });
+
+    expect(primitiveGuide.guide).toMatchObject({
+      name: "Choosing the right primitive",
+      kind: "getting-started",
+      related_docs: expect.objectContaining({
+        overview: "/salt/getting-started/choosing-the-right-primitive",
+      }),
+    });
+    expect(compositionGuide.guide).toMatchObject({
+      name: "Composition pitfalls",
+      kind: "getting-started",
+      related_docs: expect.objectContaining({
+        overview: "/salt/getting-started/composition-pitfalls",
+      }),
+    });
+    expect(wrapperGuide.guide).toMatchObject({
+      name: "Custom wrappers",
+      kind: "getting-started",
+      related_docs: expect.objectContaining({
+        overview: "/salt/getting-started/custom-wrappers",
+      }),
+    });
+  });
+
+  it("returns a page record for the Salt homepage", () => {
+    const result = getPage(registry, {
+      name: "/salt/index",
+    });
+
+    expect(result.page).toMatchObject({
+      title: "Salt Design System",
+      route: "/salt/index",
+    });
+  });
+
+  it("preserves inline code tokens in docs-backed page content", () => {
+    const layoutGridPage = getPage(registry, {
+      name: "/salt/foundations/responsiveness/index",
+      view: "full",
+    });
+    const spacingPage = getPage(registry, {
+      name: "/salt/foundations/spacing",
+      view: "full",
+    });
+
+    const layoutGridContent =
+      (layoutGridPage.page as { content?: string[] } | null)?.content ?? [];
+    const spacingContent =
+      (spacingPage.page as { content?: string[] } | null)?.content ?? [];
+
+    expect(
+      layoutGridContent.some((block) => block.includes("--salt-layout-gap")),
+    ).toBe(true);
+    expect(
+      spacingContent.some(
+        (block) =>
+          block.includes("--salt-layout-gap") &&
+          block.includes("--salt-spacing-300"),
+      ),
+    ).toBe(true);
+  });
+
+  it("uses structured MDX extraction instead of flattened site-search code blocks", () => {
+    const result = getPage(registry, {
+      name: "/salt/themes/index",
+      view: "full",
+    });
+    const content =
+      (result.page as { content?: string[] } | null)?.content ?? [];
+
+    // The positive anchor verifies that prose extraction happened at all
+    // (the themes index mentions the Amplitude font in flowing prose like
+    // "requires the Amplitude web font"); the negative anchors are the
+    // real test invariants -- structured MDX extraction must not emit raw
+    // fenced code blocks or @font-face CSS source declarations.
+    expect(content.some((block) => block.includes("Amplitude"))).toBe(true);
+    expect(content.some((block) => block.includes("```"))).toBe(false);
+    expect(content.some((block) => block.includes("src: local("))).toBe(false);
+  });
+
+  it("resolves patterns by slug and includes docs-backed build guidance", () => {
+    const result = getPattern(registry, {
+      name: "preferences-dialog",
+    });
+
+    expect(result.pattern).toMatchObject({
+      name: "Preferences dialog",
+    });
+    expect(
+      Array.isArray(
+        (result.pattern as { how_to_build?: unknown }).how_to_build,
+      ),
+    ).toBe(true);
+  });
+
+  it("emits examples only for supported target types", () => {
+    expect(
+      registry.examples.every(
+        (example) =>
+          example.target_type === "component" ||
+          example.target_type === "pattern" ||
+          example.target_type === "foundation",
+      ),
+    ).toBe(true);
+  });
+
+  it("resolves known entities through the single-entity helper used by get_salt_reference", () => {
+    const results = ["Button", "Card", "Input"].map((name) =>
+      getSaltEntity(registry, { name }),
+    );
+
+    expect(results.map((result) => result.entity?.name)).toEqual([
+      "Button",
+      "Card",
+      "Input",
+    ]);
+    for (const result of results) {
+      expect(result.decision.status).toBe("found");
+      expect(result.entity).not.toBeNull();
+      expect(result.guidance_boundary).toBeTruthy();
+    }
+  });
+
+  it("create_salt_ui emits a SaltProvider vs SaltProviderNext open_question for theme-ambiguous prompts against the bundled registry", async () => {
+    // PR 10 closed the registry-build gap so SaltProviderNext now resolves
+    // as a first-class component record on every clean build. The semantic-
+    // core unit spec at
+    // packages/mcp/src/core/tools/__tests__/createSaltUiThemeQuestion.spec.ts
+    // pins the question shape (transitional framing, recommended option,
+    // convergence_note) against a synthetic registry; this integration
+    // test verifies the same flow lands end-to-end against the bundled
+    // registry artifact that real CLI/MCP callers load.
+    const { loadRegistry } = await import("../core/registry/loadRegistry.js");
+    const bundledRegistry = await loadRegistry();
+
+    const result = createSaltUi(bundledRegistry, {
+      query: "apply the JPM brand theme to my page",
+    });
+    const themeQuestions = (result.open_questions ?? []).filter(
+      (entry) => entry.kind === "theme-provider-choice",
+    );
+    expect(themeQuestions).toHaveLength(1);
+    expect(themeQuestions[0]?.prompt).toMatch(/SaltProviderNext/);
+
+    // When the host signals a declared provider, the question is suppressed.
+    const skipped = createSaltUi(bundledRegistry, {
+      query: "apply the JPM brand theme to my page",
+      repo_has_theme_provider: true,
+    });
+    const skippedThemeQuestions = (skipped.open_questions ?? []).filter(
+      (entry) => entry.kind === "theme-provider-choice",
+    );
+    expect(skippedThemeQuestions).toEqual([]);
+  });
+});

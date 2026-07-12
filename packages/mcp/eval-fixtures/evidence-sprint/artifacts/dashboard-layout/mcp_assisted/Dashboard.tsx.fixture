@@ -1,0 +1,42 @@
+import {
+  BorderItem,
+  BorderLayout,
+  Button,
+  Card,
+  GridLayout,
+  StackLayout,
+  Table,
+  Text,
+} from "@salt-ds/core";
+
+export function Dashboard() {
+  return (
+    <BorderLayout>
+      <BorderItem position="north">
+        <StackLayout direction="row" gap={2}>
+          <Text styleAs="h2">Trading dashboard</Text>
+          <Button appearance="bordered">Refresh</Button>
+        </StackLayout>
+      </BorderItem>
+      <BorderItem position="center">
+        <StackLayout gap={3}>
+          <GridLayout columns={12} gap={3}>
+            <Card>
+              <StackLayout gap={1}>
+                <Text styleAs="h3">Revenue</Text>
+                <Text>$12.4m</Text>
+              </StackLayout>
+            </Card>
+            <Card>
+              <StackLayout gap={1}>
+                <Text styleAs="h3">Expenses</Text>
+                <Text>$8.1m</Text>
+              </StackLayout>
+            </Card>
+          </GridLayout>
+          <Table aria-label="Transactions" />
+        </StackLayout>
+      </BorderItem>
+    </BorderLayout>
+  );
+}

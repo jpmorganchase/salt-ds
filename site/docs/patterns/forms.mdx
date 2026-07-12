@@ -27,17 +27,31 @@ data:
 
 Use a form to enable users to input and submit data. Forms can be simple and user-oriented, such as contact forms, surveys, and sign-up pages. They can also be complex and product-oriented, such as app preferences, settings, and multi-step forms split across different screens.
 
+Use the pattern when:
+
+- the user needs to enter, edit, or confirm structured information
+- related fields should stay grouped together with labels, helper text, and validation
+- the workflow needs a clear action area at the end of the form
+
+## When not to use
+
+- When the task is only a single action, use a Button or Button bar instead of a full form.
+- When the content is primarily for reading or comparing information, use a dashboard, table, or Data grid instead.
+- When the interaction is a short, bounded decision rather than a data-entry flow, use a Dialog or smaller overlay pattern.
+
 ## How to build
 
 ### Anatomy
 
-You can display a form as a dedicated page, within a dialog, nested into drawers or within a side panel. Independently of how a form is displayed, you would generally include the following elements in a form:
+You can display a form as a dedicated page, within a dialog, nested into drawers, or within a side panel. Independently of how a form is displayed, you would generally include the following elements in a form:
 
 1. **Heading**: Provides users with additional context.
 2. **Label**: Helps users understand what information to provide.
 3. **Form controls**: Enable users to provide input on forms.
 4. **Helper text**: Assists users in providing the right information.
-5. **Button bar**: Provides next steps when a user reaches the end of the form, such as navigating to the previous or next steps, submitting their form or cancelling changes. For more details, visit the [button bar pattern](/salt/patterns/button-bar). 
+5. **Button bar**: Provides next steps when a user reaches the end of the form, such as navigating to the previous or next steps, submitting the form, or cancelling changes. For more details, visit the [button bar pattern](/salt/patterns/button-bar).
+
+Keep the heading, fields, helper text, and button bar in a consistent vertical reading order so the form stays easy to scan.
 
 <Diagram
   src="/img/patterns/forms/form-anatomy.png"

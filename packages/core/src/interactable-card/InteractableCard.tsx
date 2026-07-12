@@ -145,6 +145,7 @@ export const InteractableCard = forwardRef<
 
   return (
     // biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role provided by the role variable. aria-checked is only used when the role is appropriate.
+    // biome-ignore lint/a11y/useKeyWithClickEvents: Keyboard events are applied with `cardProps`.
     <div
       {...cardProps}
       role={role}
