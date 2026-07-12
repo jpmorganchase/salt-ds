@@ -1,6 +1,7 @@
 import { useViewport, ViewportContext, ViewportProvider } from "@salt-ds/core";
 import { mount } from "cypress/react";
 import { useEffect } from "react";
+import { SecondaryWindow } from "../../../../../../cypress/support/SecondaryWindow";
 
 const TestComponent = ({
   onViewPortWidthChange,
@@ -30,6 +31,44 @@ describe("Given a ViewportProvider", () => {
     cy.findByText("550");
     cy.viewport(650, 750);
     cy.findByText("650");
+  });
+
+  it("measures and observes the WindowProvider body in a secondary window", () => {
+    const observe = Cypress.sinon.stub();
+    const disconnect = Cypress.sinon.stub();
+    const childResizeObserver = Cypress.sinon.stub().callsFake(() => ({
+      observe,
+      disconnect,
+    }));
+    let childBody: HTMLElement | undefined;
+
+    mount(
+      <SecondaryWindow
+        prepareWindow={(targetWindow) => {
+          childBody = targetWindow.document.body;
+          Cypress.sinon
+            .stub(childBody, "getBoundingClientRect")
+            .returns({ width: 777 } as DOMRect);
+          Object.defineProperty(targetWindow, "ResizeObserver", {
+            configurable: true,
+            value: childResizeObserver,
+          });
+        }}
+      >
+        <ViewportProvider>
+          <TestComponent />
+        </ViewportProvider>
+      </SecondaryWindow>,
+    );
+
+    cy.get("iframe")
+      .its("0.contentDocument.body")
+      .should("contain.text", "777");
+    cy.wrap(childResizeObserver).should("have.been.calledOnce");
+    cy.then(() => {
+      expect(observe).to.have.been.calledOnceWith(childBody);
+    });
+    cy.get("@resizeObserver").should("not.have.been.called");
   });
 
   describe("WHEN there is no parent ViewportProvider", () => {

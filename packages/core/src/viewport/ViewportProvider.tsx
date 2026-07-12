@@ -1,3 +1,4 @@
+import { useWindow } from "@salt-ds/window";
 import { createContext, type ReactNode, useContext, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 
@@ -11,30 +12,31 @@ const ViewportProvider = ({ children }: ViewportProviderProps) => {
   // Get value directly from the ViewportContext so we can detect if the value is null (no inherited ViewportProvider)
   const existingViewport = useContext(ViewportContext);
   const [viewport, setViewport] = useState(existingViewport);
+  const targetWindow = useWindow();
+  const body = targetWindow?.document.body;
+  const ResizeObserverConstructor = (
+    targetWindow as (Window & typeof globalThis) | null
+  )?.ResizeObserver;
 
   const noExistingViewport = existingViewport === null;
   const viewportValue = existingViewport || viewport || 0;
 
   useIsomorphicLayoutEffect(() => {
-    let observer: ResizeObserver | null = null;
-
-    if (noExistingViewport) {
-      observer = new ResizeObserver(
+    if (noExistingViewport && body && ResizeObserverConstructor) {
+      const observer = new ResizeObserverConstructor(
         (observerEntries: ResizeObserverEntry[]) => {
           setViewport(observerEntries[0].contentRect.width);
         },
       );
 
-      observer.observe(document.body);
-      setViewport(document.body.getBoundingClientRect().width);
-    }
+      observer.observe(body);
+      setViewport(body.getBoundingClientRect().width);
 
-    return () => {
-      if (observer) {
+      return () => {
         observer.disconnect();
-      }
-    };
-  }, [noExistingViewport]);
+      };
+    }
+  }, [body, noExistingViewport, ResizeObserverConstructor]);
 
   return (
     <ViewportContext.Provider value={viewportValue}>

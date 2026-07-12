@@ -12,20 +12,29 @@ export function useResizeObserver({ ref, onResize }: UseResizeObserverProps) {
     if (!element) return;
 
     const win = ownerWindow(element);
+    if (win.closed) return;
+
+    let frameId: number | undefined;
 
     const resizeObserver = new win.ResizeObserver((entries) => {
-      requestAnimationFrame(() => {
-        if (entries.length === 0) return;
+      if (entries.length === 0) return;
 
+      if (frameId !== undefined) {
+        win.cancelAnimationFrame(frameId);
+      }
+
+      frameId = win.requestAnimationFrame(() => {
+        frameId = undefined;
         onResize();
       });
     });
     resizeObserver.observe(element);
 
     return () => {
-      if (element) {
-        resizeObserver.unobserve(element);
+      if (frameId !== undefined) {
+        win.cancelAnimationFrame(frameId);
       }
+      resizeObserver.disconnect();
     };
   }, [ref, onResize]);
 }
