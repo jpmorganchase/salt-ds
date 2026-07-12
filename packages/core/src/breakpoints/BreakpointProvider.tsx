@@ -1,3 +1,4 @@
+import { useWindow } from "@salt-ds/window";
 import { type ReactNode, useContext, useMemo, useState } from "react";
 import { createContext } from "../utils/createContext";
 import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
@@ -29,13 +30,14 @@ export function BreakpointProvider(props: BreakpointProviderProps) {
 }
 
 export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
+  const targetWindow = useWindow();
+  const matchMedia = targetWindow?.matchMedia;
   const entries = useMemo(
     () => Object.entries(breakpoints).sort(([, a], [, b]) => b - a),
     [breakpoints],
   );
 
-  const supportsMatchMedia =
-    typeof window !== "undefined" && typeof window.matchMedia === "function";
+  const supportsMatchMedia = typeof matchMedia === "function";
 
   const [matchedBreakpoints, setMatchedBreakpoints] = useState<
     Partial<Record<Breakpoint, boolean>>
@@ -49,7 +51,7 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
     const queries = entries.map(([, value]) => `(min-width: ${value}px)`);
 
     const matchers = queries.map((query, index) => {
-      const mq = window.matchMedia(query);
+      const mq = matchMedia.call(targetWindow, query);
       const bp = entries[index][0] as Breakpoint;
 
       return {
@@ -75,7 +77,7 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
         mq.removeEventListener("change", handler);
       }
     };
-  }, [supportsMatchMedia, entries]);
+  }, [entries, matchMedia, supportsMatchMedia, targetWindow]);
 
   return Object.keys(matchedBreakpoints).filter(
     (bp) => matchedBreakpoints[bp as Breakpoint],

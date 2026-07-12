@@ -1,4 +1,10 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
+import { FloatingFocusManager } from "@floating-ui/react";
+import {
+  type FloatingComponentProps,
+  FloatingComponentProvider,
+  FormField,
+  FormFieldLabel,
+} from "@salt-ds/core";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -20,6 +26,45 @@ import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment";
+import { type CSSProperties, forwardRef } from "react";
+import { SecondaryWindow } from "../../../../../../cypress/support/SecondaryWindow";
+
+const InlineFloatingComponent = forwardRef<
+  HTMLDivElement,
+  FloatingComponentProps
+>(function InlineFloatingComponent(
+  {
+    open,
+    top,
+    left,
+    position,
+    width: _width,
+    height: _height,
+    focusManagerProps,
+    lockScroll: _lockScroll,
+    style: styleProp,
+    ...rest
+  },
+  ref,
+) {
+  if (!open) return null;
+
+  const floatingElement = (
+    <div
+      {...rest}
+      ref={ref}
+      style={{ ...styleProp, top, left, position } as CSSProperties}
+    />
+  );
+
+  return focusManagerProps ? (
+    <FloatingFocusManager {...focusManagerProps}>
+      {floatingElement}
+    </FloatingFocusManager>
+  ) : (
+    floatingElement
+  );
+});
 
 // Initialize adapters
 const adapterDateFnsTZ = new AdapterDateFnsTZ();
@@ -1144,5 +1189,78 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         });
       });
     });
+  });
+});
+
+describe("GIVEN a single DatePicker in a secondary window", () => {
+  let childWindow: Window | undefined;
+
+  beforeEach(() => {
+    cy.setDateAdapter(adapterDateFnsTZ);
+    const selectedDate = adapterDateFnsTZ.parse(
+      "05 Jan 2025",
+      "DD MMM YYYY",
+    ).date;
+
+    cy.mount(
+      <SecondaryWindow
+        prepareWindow={(targetWindow) => {
+          childWindow = targetWindow;
+        }}
+      >
+        <FloatingComponentProvider Component={InlineFloatingComponent}>
+          <Single defaultSelectedDate={selectedDate} />
+        </FloatingComponentProvider>
+      </SecondaryWindow>,
+    );
+
+    cy.get("iframe").its("0.contentDocument.body").as("childBody");
+    cy.get("@childBody").find("input").as("childInput");
+  });
+
+  const clickCalendarButton = () => {
+    cy.get("@childBody")
+      .find('button[aria-label="Open Calendar"]')
+      .trigger("click");
+  };
+
+  it("restores focus and input selection through the owner document", () => {
+    cy.get("@childInput").focus().type("{downArrow}", { force: true });
+    cy.get("@childBody").find('[role="dialog"]').should("exist");
+    cy.then(() => {
+      expect(childWindow?.document.activeElement).not.to.equal(
+        document.activeElement,
+      );
+    });
+
+    cy.realPress("Escape");
+    cy.get("@childBody").find('[role="dialog"]').should("not.exist");
+    cy.get("@childInput").should(($input) => {
+      const input = $input[0] as HTMLInputElement;
+      expect(input.ownerDocument.activeElement).to.equal(input);
+      expect(input.selectionStart).to.equal(0);
+      expect(input.selectionEnd).to.equal(input.value.length);
+    });
+  });
+
+  it("uses the owner document when focus leaves the trigger", () => {
+    clickCalendarButton();
+    cy.get("@childBody").find('[role="dialog"]').should("exist");
+    cy.get("@childInput")
+      .focus()
+      .trigger("keydown", { key: "Tab", shiftKey: true });
+    cy.get("@childBody").find('[role="dialog"]').should("not.exist");
+  });
+
+  it("dismisses an overlay from an owner-document outside press", () => {
+    clickCalendarButton();
+    cy.get("@childBody").find('[role="dialog"]').should("exist");
+    cy.then(() => {
+      const targetWindow = childWindow as Window & typeof globalThis;
+      targetWindow.document.body.dispatchEvent(
+        new targetWindow.PointerEvent("pointerdown", { bubbles: true }),
+      );
+    });
+    cy.get("@childBody").find('[role="dialog"]').should("not.exist");
   });
 });

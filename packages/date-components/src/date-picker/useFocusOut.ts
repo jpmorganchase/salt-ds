@@ -46,11 +46,11 @@ export function useFocusOut(
       onKeyDown(event: React.KeyboardEvent<Element>) {
         if (event.key === "Tab") {
           const tabbableElements = getTabbableElements(referenceElement);
+          const activeElement = referenceElement.ownerDocument.activeElement;
           const tabbedBeforeFirstElement =
-            event.shiftKey && document.activeElement === tabbableElements[0];
+            event.shiftKey && activeElement === tabbableElements[0];
           const tabbedAfterLastElement =
-            document.activeElement ===
-            tabbableElements[tabbableElements.length - 1];
+            activeElement === tabbableElements[tabbableElements.length - 1];
           if (tabbedBeforeFirstElement || tabbedAfterLastElement) {
             onOpenChange(false, event.nativeEvent, "focus-out");
           }

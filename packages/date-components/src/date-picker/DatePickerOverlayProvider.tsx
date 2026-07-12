@@ -8,10 +8,12 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { createContext, useControlled, useFloatingUI } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
 import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -153,6 +155,8 @@ export const DatePickerOverlayProvider: React.FC<
   interactions,
   readOnly,
 }) => {
+  const targetWindow = useWindow();
+  const targetDocument = targetWindow?.document;
   const [open, setOpenState, isOpenControlled] = useControlled({
     controlled: openProp,
     default: Boolean(defaultOpen),
@@ -161,6 +165,10 @@ export const DatePickerOverlayProvider: React.FC<
   });
   const triggeringElementRef = useRef<HTMLElement | null>(null);
   const initialFocusRef = useRef<HTMLElement | null>(null);
+  const selectionTimeoutRef = useRef<
+    { id: number; window: Window } | undefined
+  >();
+  const blurTimeoutRef = useRef<{ id: number; window: Window } | undefined>();
   const [focused, setFocused] = useState(false);
   const onDismissCallback = useRef<(event?: Event) => void>();
   const handleOpenChange = useCallback(
@@ -169,17 +177,34 @@ export const DatePickerOverlayProvider: React.FC<
         if (readOnly) {
           return;
         }
-        triggeringElementRef.current = document.activeElement as HTMLElement;
+        if (selectionTimeoutRef.current) {
+          selectionTimeoutRef.current.window.clearTimeout(
+            selectionTimeoutRef.current.id,
+          );
+          selectionTimeoutRef.current = undefined;
+        }
+        triggeringElementRef.current =
+          (targetDocument?.activeElement as HTMLElement | null) ?? null;
         setFocused(true);
       } else if (!isOpenControlled && reason !== "focus-out") {
         const trigger = triggeringElementRef.current as HTMLElement;
         if (trigger) {
           trigger.focus();
-        }
-        if (trigger instanceof HTMLInputElement) {
-          setTimeout(() => {
-            trigger.setSelectionRange(0, trigger.value.length);
-          }, 1);
+          const triggerWindow = trigger.ownerDocument.defaultView;
+          const InputConstructor = triggerWindow?.HTMLInputElement;
+          if (
+            triggerWindow &&
+            InputConstructor &&
+            trigger instanceof InputConstructor
+          ) {
+            selectionTimeoutRef.current = {
+              window: triggerWindow,
+              id: triggerWindow.setTimeout(() => {
+                selectionTimeoutRef.current = undefined;
+                trigger.setSelectionRange(0, trigger.value.length);
+              }, 1),
+            };
+          }
         }
         triggeringElementRef.current = null;
       }
@@ -194,7 +219,7 @@ export const DatePickerOverlayProvider: React.FC<
         onDismissCallback?.current?.();
       }
     },
-    [isOpenControlled, onOpenChange, readOnly],
+    [isOpenControlled, onOpenChange, readOnly, targetDocument],
   );
 
   const openState = open && !readOnly;
@@ -205,15 +230,42 @@ export const DatePickerOverlayProvider: React.FC<
     middleware: [flip({ fallbackStrategy: "initialPlacement" })],
   });
 
+  const floatingRef = floatingUIResult.refs.floating;
   const handleContainerBlur = useCallback(() => {
-    setTimeout(() => {
-      setFocused(
-        !!floatingUIResult?.refs.floating?.current?.contains(
-          document.activeElement,
-        ),
-      );
-    }, 0);
-  }, [floatingUIResult]);
+    if (blurTimeoutRef.current) {
+      blurTimeoutRef.current.window.clearTimeout(blurTimeoutRef.current.id);
+      blurTimeoutRef.current = undefined;
+    }
+    const floatingElement = floatingRef.current;
+    const floatingWindow =
+      floatingElement?.ownerDocument.defaultView ?? targetWindow;
+    if (!floatingWindow) return;
+
+    blurTimeoutRef.current = {
+      window: floatingWindow,
+      id: floatingWindow.setTimeout(() => {
+        blurTimeoutRef.current = undefined;
+        setFocused(
+          !!floatingRef.current?.contains(
+            floatingWindow.document.activeElement,
+          ),
+        );
+      }, 0),
+    };
+  }, [floatingRef, targetWindow]);
+
+  useEffect(() => {
+    return () => {
+      if (selectionTimeoutRef.current) {
+        selectionTimeoutRef.current.window.clearTimeout(
+          selectionTimeoutRef.current.id,
+        );
+      }
+      if (blurTimeoutRef.current) {
+        blurTimeoutRef.current.window.clearTimeout(blurTimeoutRef.current.id);
+      }
+    };
+  }, []);
 
   const defaultInteractions = [
     useDismiss(floatingUIResult.context, {}),
