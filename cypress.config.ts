@@ -55,11 +55,15 @@ async function getViteConfig(config: UserConfig) {
         },
       },
       optimizeDeps: {
+        entries: [
+          "cypress/support/component.ts",
+          "packages/**/src/**/*.cy.{js,ts,jsx,tsx}",
+        ],
         include: [
           "@salt-ds/core",
           "@salt-ds/date-components",
-          "@salt-ds/lab",
           "@salt-ds/icons",
+          "@salt-ds/lab",
           "@salt-ds/window",
         ],
       },

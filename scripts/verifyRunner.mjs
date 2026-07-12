@@ -47,7 +47,7 @@ export function yarnTask(label, args) {
 }
 
 export function runCommand(
-  { label, command, args = [] },
+  { label, command, args = [], env: taskEnvironment = {} },
   { cwd = process.cwd(), env = process.env } = {},
 ) {
   console.log(`\n[verify] ${label}`);
@@ -55,7 +55,7 @@ export function runCommand(
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
       cwd,
-      env,
+      env: { ...env, ...taskEnvironment },
       stdio: "inherit",
       windowsHide: true,
     });

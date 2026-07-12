@@ -40,7 +40,10 @@ function selectTasks(arguments_) {
     ? [
         ...baseTasks,
         ...groups.artifacts,
-        yarnTask("Cypress components", ["test:components"]),
+        {
+          ...yarnTask("Cypress components", ["test:components"]),
+          env: { CI: "true" },
+        },
       ]
     : baseTasks;
 }
