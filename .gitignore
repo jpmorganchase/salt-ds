@@ -49,3 +49,8 @@ yarn-error.log*
 /docs/css/salt-countries.css
 /docs/css/salt-embla-carousel.css
 /docs/css/salt-date-components.css
+
+# MCP registry
+
+/packages/mcp/generated
+.salt-eval-cache

@@ -1,6 +1,6 @@
 ---
 title: Metric
-description: "A metric displays an important number value prominently. You can add indicators or labels to help provide context to the presented value."
+description: "A metric displays an important number or summary value prominently. You can add labels, indicators, or trend context to help interpret the value."
 layout: DetailPattern
 tags:
   - pattern
@@ -13,6 +13,21 @@ data:
       { href: "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0", label: "Metric examples", internal: true },
     ]
   components: ["Icon", "Link", "Stack layout", "Text"]
+  ai:
+    aliases: ["large metric", "kpi", "key metric", "dashboard metric"]
+    starterScaffold:
+      sourceUrls: ["/salt/patterns/metric"]
+      template: "metric"
+      semantics:
+        regions: ["metric-title", "metric-value", "metric-supporting-context"]
+        optionalRegions: ["metric-supporting-context"]
+        buildAround: ["Metric title", "Metric value", "Metric supporting context"]
+        preserveConstraints:
+          [
+            "Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.",
+            "Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.",
+            "Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information.",
+          ]
 ---
 
   <Diagram
@@ -24,9 +39,22 @@ data:
 
 ## When to use
 
-Use the pattern to give more prominence to key measurements. Metrics often serve as building blocks in dashboards. They effectively direct users to key information that they may otherwise overlook, particularly when multiple numerical values are visible.
+Use the pattern to give more prominence to a single key measurement or a small number of related measurements. Metrics often serve as building blocks in dashboards, where they direct users to key information that they may otherwise overlook.
+
+Use it when:
+
+- you need one prominent value with a subtitle, subvalue, or indicator
+- you need a single KPI-style summary with a label and optional trend or direction indicator
+- the metric should act as a dashboard building block rather than the primary page container
+- the layout should stay compact and oriented around a single value or a short metric group
 
 You can add multiple metrics to your UI if needed. Visual differences, like size and positioning, can help users understand which metrics are most important.
+
+## When not to use
+
+- When the page needs a full dashboard shell, use [Analytical dashboard](../analytical-dashboard).
+- When you need charts or tables as the primary content, use the relevant visualization component or pattern instead.
+- When the value is not the main point of the UI, use a text or content component instead.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
   - Place metrics higher in your layout when you want to emphasize their importance.
@@ -39,11 +67,11 @@ You can add multiple metrics to your UI if needed. Visual differences, like size
 
 ### Anatomy
 
-A single metric typically comprises:
+A single metric typically comprises these named regions:
 
-1. **Metric value:** can either be numeric or a string.
-2. **Subtitles and subvalues:** displays supporting information to improve the user’s understanding of a metric. Subtitles can link to related pages.
-3. **Visual indicators:** communicates contextual information.
+1. **Metric title**: labels the value and gives it meaning.
+2. **Metric value**: can be numeric or a string.
+3. **Metric supporting context**: subtitles, subvalues, and indicators provide the surrounding context needed to interpret the number.
 
 <Diagram
   src="/img/patterns/metric/metric-anatomy.png"
@@ -51,6 +79,8 @@ A single metric typically comprises:
   contentPosition="top"
   border
 />
+
+The metric should stay visually compact, with the value and supporting context clearly grouped together. If you are showing several metrics, keep them aligned to the same orientation so the dashboard reads consistently.
 
 ### Layout
 
@@ -73,7 +103,7 @@ A single metric typically comprises:
   label="Show horizontal metric"
 />
 
-Metric is available in three sizes—small, medium and large. Change the size of the metric by changing the value text style between display 1, display 2 or display 3.  Metric is available in both horizontal and vertical layouts.
+Metric is available in three sizes-small, medium and large. Change the size of the metric by changing the value text style between display 1, display 2, or display 3. Metric is available in both horizontal and vertical layouts.
 
 See the vertical and horizontal examples below for individual spacing values.
 
@@ -83,7 +113,7 @@ See the vertical and horizontal examples below for individual spacing values.
 
 ### Vertical metric
 
-By default, metrics are arranged vertically with the value positioned beneath the title.
+By default, metrics are arranged vertically with the value positioned beneath the title. Use this orientation when the metric needs to read like a compact stack of title, value, and supporting context.
 
 #### Large
 
@@ -114,7 +144,7 @@ By default, metrics are arranged vertically with the value positioned beneath th
 
 ### Horizontal metric
 
-You can display the metric component in a horizontal orientation if that's more suitable for your layout. Ensure the margin height is adjusted in line with the size of the metric.
+You can display the metric component in a horizontal orientation if that is more suitable for your layout. Ensure the margin height is adjusted in line with the size of the metric.
 
 #### Large
 
@@ -146,7 +176,7 @@ You can display the metric component in a horizontal orientation if that's more 
 
 ## Subtitle and subvalue
 
-In addition to the title, you can display a supporting subtitle and/or subvalue within a metric. You can use this to provide more context and improve users' comprehension of a metric's value and its impact.
+In addition to the title, you can display a supporting subtitle and/or subvalue within a metric. Use this to provide more context and improve users' comprehension of a metric's value and impact.
 
 Place subtitles directly beneath the title, and subvalues beneath the key value.
 
@@ -176,7 +206,7 @@ Enable users to navigate to another page by linking from the subtitle.
 
 ## Indicators
 
-Use indicators to provide further contextual information. For example, if the metric value represents a change from a previous value, i.e. from positive to negative, you can display an arrow icon as a strong visual indicator of the direction in change.
+Use indicators to provide further contextual information. For example, if the metric value represents a change from a previous value, such as a positive or negative trend, you can display an arrow icon as a strong visual indicator of the direction of change.
 
   <Diagram
     src="/img/patterns/metric/metric-indicators.png"

@@ -1,0 +1,11 @@
+{
+  "condition": "closed_book",
+  "reference_results": [],
+  "workflow_calls": [
+    {
+      "tool": "local_generation",
+      "args": {},
+      "contract": null
+    }
+  ]
+}

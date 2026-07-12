@@ -44,7 +44,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
       | "code";
     /**
      * Change text color palette
-     * @deprecated Use `color` instead
+     * @deprecated since 1.28.0. Use `color` instead.
      */
     variant?: "primary" | "secondary";
     /*

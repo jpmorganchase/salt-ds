@@ -231,6 +231,9 @@ jobs:
       - name: Build snapshot packages
         run: yarn build
 
+      - name: Verify MCP package and installed consumer
+        run: yarn release:verify:mcp
+
       - name: Publish snapshot packages
         id: publish
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9

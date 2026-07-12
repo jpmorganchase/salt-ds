@@ -1,0 +1,169 @@
+{
+  "sprint_id": "salt-mcp-scorer-regression-3task",
+  "version": 3,
+  "evidence_provenance": "synthetic_scorer_regression",
+  "conditions": [
+    {
+      "id": "closed_book",
+      "label": "Closed-book baseline",
+      "description": "Captured artifact from model memory without Salt docs or MCP contracts."
+    },
+    {
+      "id": "docs_context_dump",
+      "label": "Docs/context-dump baseline",
+      "description": "Captured artifact with static Salt context but no MCP implement gate or post-action review contract."
+    },
+    {
+      "id": "mcp_assisted",
+      "label": "Seeded MCP-shaped fixture",
+      "description": "Synthetic scorer-regression artifact shaped to exercise source lookup, implement-gate, and review-handoff criteria; not a captured MCP run."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "app-shell-vertical-navigation",
+      "title": "App shell with VerticalNavigation",
+      "workflow": "create",
+      "prompt": "Build a Salt app shell with a left VerticalNavigation, a page header, and a main content region.",
+      "capability_tags": ["navigation", "composition", "gate-integrity"],
+      "practical_gates": [
+        "yarn typecheck",
+        "yarn workspace @salt-ds/mcp build",
+        "yarn smoke:consumer --skip-build"
+      ],
+      "expectations": {
+        "required_imports": [
+          {
+            "package": "@salt-ds/core",
+            "names": [
+              "VerticalNavigation",
+              "VerticalNavigationItem",
+              "VerticalNavigationItemContent",
+              "VerticalNavigationItemLabel",
+              "VerticalNavigationItemTrigger"
+            ]
+          }
+        ],
+        "required_ancestors": [
+          {
+            "child": "VerticalNavigationItemTrigger",
+            "ancestor": "VerticalNavigationItemContent",
+            "rule_id": "composition.vertical-navigation-item-content",
+            "required": true
+          }
+        ],
+        "banned_patterns": ["fake_href"],
+        "unresolved_probe_names": ["DefinitelyMissingSaltExport"]
+      },
+      "conditions": {
+        "closed_book": {
+          "artifact": "artifacts/app-shell-vertical-navigation/closed_book/AppShell.tsx.fixture",
+          "contract_history": "artifacts/app-shell-vertical-navigation/closed_book/contract-history.json"
+        },
+        "docs_context_dump": {
+          "artifact": "artifacts/app-shell-vertical-navigation/docs_context_dump/AppShell.tsx.fixture",
+          "contract_history": "artifacts/app-shell-vertical-navigation/docs_context_dump/contract-history.json"
+        },
+        "mcp_assisted": {
+          "artifact": "artifacts/app-shell-vertical-navigation/mcp_assisted/AppShell.tsx.fixture",
+          "contract_history": "artifacts/app-shell-vertical-navigation/mcp_assisted/contract-history.json"
+        }
+      }
+    },
+    {
+      "id": "dashboard-layout",
+      "title": "Dashboard and layout task",
+      "workflow": "create",
+      "prompt": "Create a Salt dashboard layout with key metrics, filter actions, and a transaction table.",
+      "capability_tags": ["dashboard", "layout", "systemic-rules"],
+      "practical_gates": [
+        "yarn typecheck",
+        "yarn workspace @salt-ds/mcp build",
+        "yarn check:ai-tooling:pack"
+      ],
+      "expectations": {
+        "required_imports": [
+          {
+            "package": "@salt-ds/core",
+            "names": ["Button", "Card", "Table", "Text"]
+          }
+        ],
+        "banned_patterns": [
+          "native_table",
+          "nested_card",
+          "deprecated_text_variant"
+        ],
+        "unresolved_probe_names": ["DefinitelyMissingDashboardPanel"]
+      },
+      "conditions": {
+        "closed_book": {
+          "artifact": "artifacts/dashboard-layout/closed_book/Dashboard.tsx.fixture",
+          "contract_history": "artifacts/dashboard-layout/closed_book/contract-history.json"
+        },
+        "docs_context_dump": {
+          "artifact": "artifacts/dashboard-layout/docs_context_dump/Dashboard.tsx.fixture",
+          "contract_history": "artifacts/dashboard-layout/docs_context_dump/contract-history.json"
+        },
+        "mcp_assisted": {
+          "artifact": "artifacts/dashboard-layout/mcp_assisted/Dashboard.tsx.fixture",
+          "contract_history": "artifacts/dashboard-layout/mcp_assisted/contract-history.json"
+        }
+      }
+    },
+    {
+      "id": "settings-list-workflow",
+      "title": "Settings form and list workflow",
+      "workflow": "create",
+      "prompt": "Build a Salt settings workflow with form controls, save actions, and a compact list of notification preferences.",
+      "capability_tags": ["forms", "settings", "composition"],
+      "practical_gates": [
+        "yarn typecheck",
+        "yarn workspace @salt-ds/mcp build",
+        "yarn check:ai-tooling:pack"
+      ],
+      "expectations": {
+        "required_imports": [
+          {
+            "package": "@salt-ds/core",
+            "names": ["Button", "FormField", "Input"]
+          }
+        ],
+        "required_any_of": [
+          {
+            "package": "@salt-ds/core",
+            "names": ["Switch", "Checkbox"]
+          }
+        ],
+        "required_ancestors": [
+          {
+            "child": "Input",
+            "ancestor": "FormField",
+            "rule_id": "composition.form-control-requires-form-field",
+            "required": true
+          },
+          {
+            "child": "Switch",
+            "ancestor": "FormField",
+            "rule_id": "composition.form-control-requires-form-field"
+          }
+        ],
+        "banned_patterns": ["deprecated_text_variant"],
+        "unresolved_probe_names": ["DefinitelyMissingSettingsList"]
+      },
+      "conditions": {
+        "closed_book": {
+          "artifact": "artifacts/settings-list-workflow/closed_book/SettingsWorkflow.tsx.fixture",
+          "contract_history": "artifacts/settings-list-workflow/closed_book/contract-history.json"
+        },
+        "docs_context_dump": {
+          "artifact": "artifacts/settings-list-workflow/docs_context_dump/SettingsWorkflow.tsx.fixture",
+          "contract_history": "artifacts/settings-list-workflow/docs_context_dump/contract-history.json"
+        },
+        "mcp_assisted": {
+          "artifact": "artifacts/settings-list-workflow/mcp_assisted/SettingsWorkflow.tsx.fixture",
+          "contract_history": "artifacts/settings-list-workflow/mcp_assisted/contract-history.json"
+        }
+      }
+    }
+  ]
+}

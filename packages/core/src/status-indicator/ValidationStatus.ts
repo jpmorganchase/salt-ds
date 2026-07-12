@@ -10,6 +10,6 @@ export type ValidationStatus = keyof ValidationStatuses;
 const ValidationStatusValues = ["error", "warning", "success", "info"] as const;
 
 /**
- * @deprecated use ValidationStatusValues
+ * @deprecated since 1.55.0. Use `ValidationStatusValues`.
  */
 export const VALIDATION_NAMED_STATUS = ValidationStatusValues;
