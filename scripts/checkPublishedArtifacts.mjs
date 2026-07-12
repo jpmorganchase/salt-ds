@@ -18,6 +18,14 @@ const requiredCss = new Map([
   ["@salt-ds/icons", ["css/salt-icon.css"]],
   ["@salt-ds/countries", ["css/salt-countries.css"]],
 ]);
+const forbiddenDependencies = new Map([
+  ["@salt-ds/core", new Set(["@salt-ds/core", "@salt-ds/lab"])],
+  [
+    "@salt-ds/icons",
+    new Set(["@salt-ds/icons", "@salt-ds/core", "@salt-ds/lab"]),
+  ],
+  ["@salt-ds/lab", new Set(["@salt-ds/lab"])],
+]);
 const smokePackages = [
   "@salt-ds/core",
   "@salt-ds/date-adapters",
@@ -111,6 +119,11 @@ export function validatePublishedPackage({ outputDirectory, manifest }) {
       if (typeof version === "string" && version.startsWith("workspace:")) {
         errors.push(
           `${manifest.name}: unresolved ${field} range for ${name}: ${version}`,
+        );
+      }
+      if (forbiddenDependencies.get(manifest.name)?.has(name)) {
+        errors.push(
+          `${manifest.name}: forbidden dependency in ${field}: ${name}`,
         );
       }
     }

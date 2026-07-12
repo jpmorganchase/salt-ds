@@ -64,6 +64,23 @@ describe("published artifact validation", () => {
     expect(validatePublishedPackage(packageInfo)[0]).toContain("workspace:^");
   });
 
+  it.each([
+    ["@salt-ds/core", "@salt-ds/core"],
+    ["@salt-ds/core", "@salt-ds/lab"],
+    ["@salt-ds/icons", "@salt-ds/icons"],
+    ["@salt-ds/icons", "@salt-ds/core"],
+    ["@salt-ds/icons", "@salt-ds/lab"],
+    ["@salt-ds/lab", "@salt-ds/lab"],
+  ])("rejects %s depending on %s", (name, forbiddenDependency) => {
+    const packageInfo = createPackage({
+      name,
+      dependencies: { [forbiddenDependency]: "1.2.3" },
+    });
+    expect(validatePublishedPackage(packageInfo)).toContain(
+      `${name}: forbidden dependency in dependencies: ${forbiddenDependency}`,
+    );
+  });
+
   it("reports required package CSS", () => {
     const packageInfo = createPackage({ name: "@salt-ds/icons" });
     expect(validatePublishedPackage(packageInfo)[0]).toContain(
