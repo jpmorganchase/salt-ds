@@ -1,0 +1,39 @@
+{
+  "contract": "salt_workflow_v1",
+  "workflow": "create",
+  "status": "partial",
+  "request": {
+    "entity": "analytical dashboard body",
+    "resolved_entity": "Analytical dashboard",
+    "match_status": "broadened",
+    "exact_match_required": false
+  },
+  "safety": {
+    "canonical_complete": false,
+    "exact_request_safe": false,
+    "blocking_reasons": [
+      "required follow-through remains: App header, Header block, Metric"
+    ]
+  },
+  "action": {
+    "kind": "retrieve_reference",
+    "tool": "get_salt_reference",
+    "args": {
+      "names": ["App header"]
+    },
+    "rule_ids": ["create-follow-through-required"],
+    "post_action": {
+      "kind": "rerun_workflow",
+      "tool": "create_salt_ui",
+      "args": {
+        "query": "analytical dashboard body",
+        "resolved_entities": ["App header"]
+      }
+    }
+  },
+  "internal_limitations": {
+    "unsupported_claim_count": 0,
+    "unsupported_rule_kinds": []
+  },
+  "summary": "Salt interpreted analytical dashboard body as the broader Salt entity Analytical dashboard."
+}

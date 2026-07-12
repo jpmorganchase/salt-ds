@@ -1,0 +1,85 @@
+{
+  "condition": "mcp_assisted",
+  "reference_results": [
+    { "name": "Form field", "status": "found" },
+    { "name": "FormFieldLabel", "status": "found" },
+    { "name": "Switch", "status": "found" },
+    { "name": "Input", "status": "found" },
+    { "name": "Button", "status": "found" },
+    { "name": "StackLayout", "status": "found" },
+    { "name": "DefinitelyMissingSettingsList", "status": "not_found" }
+  ],
+  "workflow_calls": [
+    {
+      "tool": "create_salt_ui",
+      "args": {
+        "resolved_entities": ["DefinitelyMissingSettingsList"]
+      },
+      "contract": {
+        "contract": "salt_workflow_v1",
+        "status": "partial",
+        "action": {
+          "kind": "retrieve_reference",
+          "tool": "get_salt_reference",
+          "args": {
+            "names": ["DefinitelyMissingSettingsList"]
+          }
+        },
+        "safety": {
+          "exact_request_safe": false
+        },
+        "evidence": {
+          "status": "partial"
+        }
+      }
+    },
+    {
+      "tool": "create_salt_ui",
+      "args": {
+        "resolved_entities": [
+          "Form field",
+          "FormFieldLabel",
+          "Switch",
+          "Input",
+          "Button",
+          "StackLayout"
+        ]
+      },
+      "contract": {
+        "contract": "salt_workflow_v1",
+        "status": "success",
+        "action": {
+          "kind": "implement",
+          "post_action": {
+            "kind": "review",
+            "tool": "review_salt_ui",
+            "required_input": ["complete_updated_file"]
+          }
+        },
+        "safety": {
+          "exact_request_safe": true
+        },
+        "evidence": {
+          "status": "complete"
+        }
+      }
+    },
+    {
+      "tool": "review_salt_ui",
+      "args": {},
+      "contract": {
+        "contract": "salt_workflow_v1",
+        "status": "success",
+        "action": {
+          "kind": "complete"
+        },
+        "safety": {
+          "exact_request_safe": true
+        },
+        "evidence": {
+          "status": "complete"
+        }
+      }
+    }
+  ]
+}

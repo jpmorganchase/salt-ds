@@ -1,0 +1,139 @@
+---
+title: AI with Salt
+description: "MCP-first AI workflows for reviewing, creating, and migrating Salt UI in real repos."
+layout: DetailTechnical
+sidebar:
+  label: AI with Salt
+---
+
+Salt gives AI hosts a small, source-backed way to make Salt design-system decisions inside real repos.
+
+The first-release product model is intentionally narrow:
+
+- one public MCP package: `@salt-ds/mcp`
+- one optional skill: `salt-ds`
+- three implementation workflows: `review`, `create`, and `migrate`
+- one reference path: `get_salt_reference` plus catalog resources
+- no public CLI workflow fallback
+
+Use Salt when you want design-system-aware help in an existing codebase. Do not use Salt for generic React or CSS advice, full-stack app generation, or guessed answers that ignore Salt evidence.
+
+## Setup
+
+### 1. Connect Salt MCP
+
+Add the published Salt MCP package to your AI host:
+
+```json
+{
+  "mcpServers": {
+    "Salt": {
+      "command": "npx",
+      "args": ["-y", "@salt-ds/mcp@latest"]
+    }
+  }
+}
+```
+
+The MCP server is read-only. It does not write repo policy, persist generated artifacts, run browser sessions, or install packages.
+
+### 2. Install The Skill
+
+Install the optional `salt-ds` skill when your host supports skills:
+
+```sh
+npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --skill salt-ds
+```
+
+The skill is a thin router. It tells the agent when to call Salt MCP and how to obey the returned workflow gate; canonical Salt facts still come from MCP.
+
+### 3. Smoke Test
+
+In a consumer repo, ask:
+
+```text
+Use salt-ds to review this file.
+Lead with the review outcome, evidence-backed fixes, and anything still blocked.
+```
+
+A good response leads with the user outcome. It should not invent Salt APIs, cite generic React advice as Salt policy, dump the workflow payload, or edit code without both user authorization and an executable workflow action.
+
+## Workflows
+
+### Review
+
+Use review for existing Salt UI, changed Salt code, deprecated usage, accessibility issues, primitive choice, and layout ownership.
+
+Expected MCP path:
+
+1. Call `review_salt_ui` with the known `root_dir`; the workflow collects repo context.
+2. Treat workflow evidence as grounding. Call `get_salt_reference` only when the workflow asks for it, the user requests an exact reference, or an intended API remains ungrounded.
+
+Use `get_salt_project_context` separately only to diagnose a disputed root. Pass `root_dir` to each repo-aware workflow call; diagnostic results are not reusable workflow state.
+
+### Create
+
+Use create for bounded new Salt UI: components, forms, panels, dialogs, dashboards, pages, and small workflow surfaces.
+
+Expected MCP path:
+
+1. Call `create_salt_ui` with the known `root_dir`; the workflow collects repo context.
+2. Perform the returned action, calling `action.tool` with `action.args` exactly when supplied. For reference retrieval, call `action.post_action.tool` with `action.post_action.args` when present. Dependency installation remains a normal host/repo step outside the semantic workflow contract.
+3. Review every changed Salt file's complete contents after edits. Pass `guidance.review_targets` unchanged only to a composition-root file that owns the complete target set; review leaf files without them.
+
+### Migrate
+
+Use migrate for non-Salt UI code, foreign component libraries, or structured screen outlines that should become Salt while preserving task flow and important states.
+
+Expected MCP path:
+
+1. Call `migrate_to_salt` with the active package `root_dir` and a concise migration-goal `query`; add source code or an outline as evidence when available. The workflow collects repo context.
+2. Follow the returned action. Workflow evidence counts as grounding; use `get_salt_reference` only under the same narrow conditions as review and create.
+3. Review every changed Salt file's complete contents after edits. Pass `guidance.review_targets` unchanged only to a composition-root file that owns the complete target set; review leaf files without them.
+
+Raw screenshots and Figma nodes are not first-class MCP inputs in v1. Hosts should normalize visual evidence into code, source outlines, regions, actions, states, and notes before calling Salt.
+
+## Workflow Gate
+
+For create and migrate implementation work, edit only when the workflow returns all of:
+
+- `status: "success"`
+- `action.kind: "implement"`
+- `safety.exact_request_safe: true`
+- `evidence.status: "complete"`
+
+If the workflow returns `ask_user`, ask the returned question and stop; its `action.post_action` is `null`. When an action includes a tool and concrete arguments, call it without inventing aliases or substituting placeholders. For `retrieve_reference`, perform the prerequisite and then honor its post-action. For `fix_context`, diagnose and correct the explicit root or policy problem, then rerun the original workflow fresh.
+
+For review, `action.kind: "apply_fixes"` with `scope: "grounded_findings"` identifies source-backed fixes. It does not authorize mutation. Apply only those fixes when the user already requested edits, then review the complete updated file through the returned post-action; otherwise report the findings and request authorization.
+
+## Completion Protocol
+
+Workflow evidence counts as grounding. Obtain extra exact reference evidence only when a returned action requires it or an intended API remains ungrounded.
+
+Submit every changed Salt source file's complete current contents separately to `review_salt_ui`; never use a diff or excerpt. The v1 limit is 524,288 characters per file. Pass source-backed `guidance.review_targets` unchanged only to a composition-root file that owns the complete target set, and omit them for leaf files. If no single file owns a target or composition contract distributed across files, review the files but disclose that v1 cannot prove aggregate coverage and do not claim that check complete.
+
+Rerun after grounded fixes or source gaps. A file is deterministically clean only when its latest result has `status: success`, `action.kind: complete`, `evidence.status: complete`, and no source blocker. Disclose nonzero `internal_limitations.unsupported_claim_count` and `unsupported_rule_kinds`; run the repo's existing typecheck, focused tests, and relevant browser or Storybook checks for claims outside semantic review.
+
+## Recovery
+
+On a schema rejection or unknown action, refresh the live tool surface and originating workflow once. If server-returned arguments still fail their target schema, report a Salt contract defect and stop; replaying invalid arguments cannot repair it. For context failures, correct or obtain the explicit root or policy decision, then rerun the original workflow fresh. A diagnostic context result is never reusable workflow state.
+
+## Public MCP Contract
+
+Tools:
+
+- `get_salt_project_context`
+- `get_salt_reference`
+- `review_salt_ui`
+- `create_salt_ui`
+- `migrate_to_salt`
+
+Resources:
+
+- `salt://capabilities/manifest`
+- `salt://catalog/manifest`
+- `salt://catalog/entity/{name}`
+
+Read the capability manifest only when the live surface or contract version disagrees with these instructions. Catalog resources support lightweight discovery but do not replace workflow evidence or `get_salt_reference`.
+
+Everything else is internal, experimental, or deferred until usage proves the need.

@@ -12,6 +12,16 @@ data:
 
 For further details on how to use the component to provide navigation, see the [navigation pattern](/salt/patterns/navigation/)
 
+<Callout variant="secondary" status="warning">
+
+Use [`VerticalNavigation`](/salt/components/vertical-navigation) for new
+vertical navigation. `NavigationItem` can remain in existing vertical
+implementations during migration, but we recommend moving to
+`VerticalNavigation` because it provides a more structured approach and
+`NavigationItem` vertical usage will be deprecated in a future release.
+
+</Callout>
+
 ### Routing libraries
 
 If you are using a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), you can use the `render` prop to render a link component from the routing library. This allows you to take advantage of the routing library's features, such as client-side navigation and route matching.
@@ -24,6 +34,7 @@ If you are using a routing library such as [React Router](https://reactrouter.co
 
 ### When not to use
 
+- When you are creating new vertical navigation. Use [`VerticalNavigation`](/salt/components/vertical-navigation) instead.
 - When you need to show different views of content within the same page. Instead, use [`Tabs`](/salt/components/tabs/).
 - When your content is very specific. In this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Instead, use [`InteractableCard`](../card), or [`Link`](../link) within the body of the page.
 

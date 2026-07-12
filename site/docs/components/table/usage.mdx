@@ -10,17 +10,20 @@ data:
 
 ### Best practices
 
-- Only use the `Table` component for when you need to present simple data.
+- Use `Table` for simple, structured tabular data that is mostly read-only.
+- Keep the table shape obvious: rows, columns, and a clear caption or label.
 
 ## Using the component
 
 ### When to use
 
-- When you need to present data in a structured, tableau format.
+- When you need to present simple data in a structured, tabular format.
+- When the content is best read row by row, without interactive behaviors such as sorting, filtering, editing, selection, or virtualization.
 
 ### When not to use
 
-- When you need to show complex data, instead use [Data grid](../ag-grid-theme/examples)
+- When you need sorting, filtering, editing, selection, pinned columns, or custom cell renderers, use [Data grid](../ag-grid-theme).
+- When the table is acting as a data-analysis surface rather than a simple presentation surface, use [Data grid](../ag-grid-theme).
 
 ## Content
 

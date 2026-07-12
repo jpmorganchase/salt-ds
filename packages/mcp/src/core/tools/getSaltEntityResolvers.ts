@@ -1,0 +1,850 @@
+import { normalizeRegistryLookupKey } from "../registry/runtimeCache.js";
+import type { SaltRegistry } from "../types.js";
+import { toCountrySymbolMatchKey } from "./countrySymbolSearch.js";
+import { type GetComponentInput, getComponent } from "./getComponent.js";
+import { getCountrySymbol } from "./getCountrySymbol.js";
+import { getCountrySymbols } from "./getCountrySymbols.js";
+import { getFoundation } from "./getFoundation.js";
+import { getGuideByIdentifier } from "./getGuide.js";
+import { getIcon } from "./getIcon.js";
+import { getIcons } from "./getIcons.js";
+import { getPackage } from "./getPackage.js";
+import { getPage } from "./getPage.js";
+import { getPattern } from "./getPattern.js";
+import { getRelatedEntities } from "./getRelatedEntities.js";
+import type {
+  GetSaltEntityInput,
+  GetSaltEntityResult,
+  SaltEntityType,
+} from "./getSaltEntity.js";
+import { getToken, getTokenNextStep } from "./getToken.js";
+import { listFoundations } from "./listFoundations.js";
+import {
+  createComponentStarterCode,
+  createRecipeStarterCode,
+  type StarterCodeSnippet,
+} from "./starterCode.js";
+
+type KnownSaltEntityType = Exclude<SaltEntityType, "auto">;
+
+export interface GetSaltEntityContext {
+  registry: SaltRegistry;
+  input: GetSaltEntityInput;
+  view: "compact" | "full";
+  maxResults: number;
+  lookupValue: string;
+  allowedEntityTypes: readonly KnownSaltEntityType[] | null;
+}
+
+type EntityResolver = (context: GetSaltEntityContext) => GetSaltEntityResult;
+
+function clampMaxResults(value: number | undefined, fallback = 5, max = 50) {
+  return Math.max(1, Math.min(value ?? fallback, max));
+}
+
+function getSuggestedRelated(
+  registry: SaltRegistry,
+  entityType: KnownSaltEntityType,
+  name: string,
+  packageName?: string,
+) {
+  switch (entityType) {
+    case "component":
+    case "pattern":
+    case "token":
+    case "guide":
+    case "page":
+      return getRelatedEntities(registry, {
+        target_type: entityType,
+        name,
+        package: packageName,
+      }).related;
+    case "foundation":
+      return getRelatedEntities(registry, {
+        target_type: "page",
+        name,
+      }).related;
+    default:
+      return undefined;
+  }
+}
+
+function createPatternStarterCode(
+  registry: SaltRegistry,
+  patternName: string,
+): StarterCodeSnippet[] | undefined {
+  const pattern =
+    registry.patterns.find((entry) => entry.name === patternName) ?? null;
+  if (!pattern) {
+    return undefined;
+  }
+
+  return createRecipeStarterCode({
+    recipeName: pattern.name,
+    components: pattern.composed_of.map((entry) => ({
+      name: entry.component,
+      package: null,
+      role: entry.role,
+    })),
+    starter_scaffold: pattern.starter_scaffold ?? null,
+    supporting_example: pattern.examples[0]
+      ? {
+          title: pattern.examples[0].title,
+          code: pattern.examples[0].code,
+          source_url: pattern.examples[0].source_url,
+        }
+      : null,
+    allow_generic_component_starter: false,
+    prefer_supporting_example_as_starter: false,
+    include_supporting_example: false,
+  });
+}
+
+function buildNearMatchResult(
+  entityType: KnownSaltEntityType,
+  matches: Array<Record<string, unknown>>,
+  raw: Record<string, unknown> | undefined,
+): GetSaltEntityResult {
+  return {
+    entity_type: entityType,
+    decision: {
+      status: matches.length > 0 ? "results" : "not_found",
+      why:
+        matches.length > 0
+          ? "No exact Salt entity match was found, so nearby matches are returned instead."
+          : "No matching Salt entity was found.",
+    },
+    entity: null,
+    matches: matches.length > 0 ? matches : undefined,
+    next_step:
+      matches.length > 0
+        ? "Choose one of the nearby matches and retry with the exact name."
+        : "Broaden the design request with create_salt_ui.",
+    raw,
+  };
+}
+
+function buildRawPayload(
+  view: GetSaltEntityContext["view"],
+  key: string,
+  payload: unknown,
+): Record<string, unknown> | undefined {
+  return view === "full"
+    ? ({ [key]: payload } as Record<string, unknown>)
+    : undefined;
+}
+
+function buildFoundResult(input: {
+  entityType: KnownSaltEntityType;
+  why: string;
+  entity: Record<string, unknown>;
+  nextStep?: string;
+  related?: GetSaltEntityResult["related"];
+  starterCode?: StarterCodeSnippet[];
+  suggestedFollowUps?: GetSaltEntityResult["suggested_follow_ups"];
+  raw?: Record<string, unknown>;
+}): GetSaltEntityResult {
+  return {
+    entity_type: input.entityType,
+    decision: {
+      status: "found",
+      why: input.why,
+    },
+    entity: input.entity,
+    related: input.related,
+    starter_code: input.starterCode,
+    suggested_follow_ups: input.suggestedFollowUps,
+    next_step: input.nextStep,
+    raw: input.raw,
+  };
+}
+
+function buildAmbiguityResult(input: {
+  entityType: KnownSaltEntityType;
+  why: string;
+  matches: Array<Record<string, unknown>>;
+  ambiguity: Record<string, unknown>;
+  nextStep: string;
+  didYouMean?: string[];
+}): GetSaltEntityResult {
+  return {
+    entity_type: input.entityType,
+    decision: {
+      status: "multiple_matches",
+      why: input.why,
+    },
+    entity: null,
+    matches: input.matches,
+    did_you_mean: input.didYouMean,
+    ambiguity: input.ambiguity,
+    next_step: input.nextStep,
+  };
+}
+
+function buildExactMissResult(
+  context: GetSaltEntityContext,
+  entityType: KnownSaltEntityType,
+): GetSaltEntityResult {
+  return buildNearMatchResult(
+    entityType,
+    [],
+    context.view === "full"
+      ? { lookup: "exact_or_alias", query: context.lookupValue }
+      : undefined,
+  );
+}
+
+function resolveComponentEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult {
+  const { registry, input, view } = context;
+  const result = input.name
+    ? getComponent(registry, {
+        name: input.name,
+        package: input.package,
+        view,
+        include: input.include?.filter((item) =>
+          ["examples", "props", "accessibility", "deprecations"].includes(item),
+        ) as GetComponentInput["include"],
+      })
+    : ({ component: null } as ReturnType<typeof getComponent>);
+
+  if (result.component) {
+    const componentName = String(result.component.name);
+    const packageName =
+      typeof result.component.package === "string"
+        ? result.component.package
+        : input.package;
+    const component =
+      registry.components.find(
+        (entry) =>
+          entry.name === componentName &&
+          (packageName ? entry.package.name === packageName : true),
+      ) ?? null;
+
+    return buildFoundResult({
+      entityType: "component",
+      why: `Resolved ${componentName} as a Salt component.`,
+      entity: result.component,
+      related:
+        input.include_related && componentName
+          ? getSuggestedRelated(
+              registry,
+              "component",
+              componentName,
+              packageName,
+            )
+          : undefined,
+      starterCode:
+        input.include_starter_code && component
+          ? createComponentStarterCode(component, {
+              include_supporting_example: false,
+            })
+          : undefined,
+      suggestedFollowUps: result.suggested_follow_ups,
+      nextStep: result.next_step,
+      raw: buildRawPayload(view, "component", result),
+    });
+  }
+
+  if (result.ambiguity) {
+    return buildAmbiguityResult({
+      entityType: "component",
+      why: "Multiple Salt components share that alias.",
+      matches: result.ambiguity.matches,
+      didYouMean: result.did_you_mean,
+      ambiguity: result.ambiguity as Record<string, unknown>,
+      nextStep:
+        "Choose one of the suggested component names and retry with the exact name.",
+    });
+  }
+
+  return buildExactMissResult(context, "component");
+}
+
+function resolvePatternEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult {
+  const { registry, input, view } = context;
+  const result = input.name
+    ? getPattern(registry, {
+        name: input.name,
+        view,
+        include: input.include?.filter((item) =>
+          ["examples", "accessibility"].includes(item),
+        ) as Array<"examples" | "accessibility"> | undefined,
+      })
+    : ({ pattern: null } as ReturnType<typeof getPattern>);
+
+  if (result.pattern) {
+    const patternName = String(result.pattern.name);
+    return buildFoundResult({
+      entityType: "pattern",
+      why: `Resolved ${patternName} as a Salt pattern.`,
+      entity: result.pattern,
+      related: input.include_related
+        ? getSuggestedRelated(registry, "pattern", patternName)
+        : undefined,
+      starterCode: input.include_starter_code
+        ? createPatternStarterCode(registry, patternName)
+        : undefined,
+      suggestedFollowUps: result.suggested_follow_ups,
+      nextStep: result.next_step,
+      raw: buildRawPayload(view, "pattern", result),
+    });
+  }
+
+  if (result.ambiguity) {
+    return buildAmbiguityResult({
+      entityType: "pattern",
+      why: "Multiple Salt patterns share that alias or slug.",
+      matches: result.ambiguity.matches,
+      didYouMean: result.did_you_mean,
+      ambiguity: result.ambiguity as Record<string, unknown>,
+      nextStep:
+        "Choose one of the suggested pattern names and retry with the exact name.",
+    });
+  }
+
+  return buildExactMissResult(context, "pattern");
+}
+
+function resolveFoundationEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult {
+  const { registry, input, view, maxResults, lookupValue } = context;
+  const exact = input.name
+    ? getFoundation(registry, {
+        name: input.name,
+        include_starter_code: input.include_starter_code,
+        view,
+      })
+    : ({ foundation: null } as ReturnType<typeof getFoundation>);
+
+  if (exact.foundation) {
+    const title = String(exact.foundation.title);
+    return buildFoundResult({
+      entityType: "foundation",
+      why: `Resolved ${title} as Salt foundation guidance.`,
+      entity: exact.foundation,
+      related: input.include_related
+        ? getSuggestedRelated(registry, "foundation", title)
+        : undefined,
+      starterCode: exact.starter_code,
+      suggestedFollowUps: exact.suggested_follow_ups,
+      nextStep: exact.next_step,
+      raw: buildRawPayload(view, "foundation", exact),
+    });
+  }
+
+  if (exact.ambiguity) {
+    return buildAmbiguityResult({
+      entityType: "foundation",
+      why: "Multiple Salt foundation pages share that title or slug.",
+      matches: exact.ambiguity.matches,
+      didYouMean: exact.did_you_mean,
+      ambiguity: exact.ambiguity as Record<string, unknown>,
+      nextStep:
+        "Choose one of the suggested foundation titles and retry with the exact name.",
+    });
+  }
+
+  const list = listFoundations(registry, {
+    query: lookupValue,
+    max_results: maxResults,
+  });
+
+  return buildNearMatchResult(
+    "foundation",
+    list.foundations,
+    view === "full" ? { foundations: list } : undefined,
+  );
+}
+
+function resolveTokenEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult {
+  const { registry, input, view, maxResults, lookupValue } = context;
+  const tokenResult = input.name
+    ? getToken(registry, {
+        name: input.name,
+        // Exact reference retrieval reports deprecated tokens instead of
+        // pretending they do not exist. Recommendation/search workflows can
+        // still exclude deprecated candidates by default.
+        include_deprecated: true,
+        max_results: maxResults,
+      })
+    : null;
+
+  if (tokenResult && tokenResult.tokens.length === 1) {
+    const tokenName = String(tokenResult.tokens[0]?.name ?? "Token");
+    return buildFoundResult({
+      entityType: "token",
+      why: `Resolved ${tokenName} as a Salt design token.`,
+      entity: tokenResult.tokens[0] ?? {},
+      related: input.include_related
+        ? getSuggestedRelated(registry, "token", tokenName)
+        : undefined,
+      nextStep: getTokenNextStep(
+        tokenResult.tokens[0] as Parameters<typeof getTokenNextStep>[0],
+      ),
+      raw: buildRawPayload(view, "token_result", tokenResult),
+    });
+  }
+
+  if (tokenResult && tokenResult.tokens.length > 1) {
+    return {
+      entity_type: "token",
+      decision: {
+        status: "results",
+        why: "Multiple Salt tokens match the provided lookup.",
+      },
+      entity: null,
+      matches: tokenResult.tokens,
+      next_step:
+        "Choose the closest token name and retry with an exact token lookup.",
+      raw: view === "full" ? { token_result: tokenResult } : undefined,
+    };
+  }
+
+  return buildNearMatchResult(
+    "token",
+    [],
+    view === "full" ? { lookup: "exact", query: lookupValue } : undefined,
+  );
+}
+
+function resolveGuideEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult {
+  const { registry, input, view } = context;
+  const result = input.name
+    ? getGuideByIdentifier(registry, {
+        name: input.name,
+        view,
+      })
+    : ({ guide: null } as ReturnType<typeof getGuideByIdentifier>);
+
+  if (result.guide) {
+    const guideName = String(result.guide.name);
+    return buildFoundResult({
+      entityType: "guide",
+      why: `Resolved ${guideName} as Salt guide content.`,
+      entity: result.guide,
+      related: input.include_related
+        ? getSuggestedRelated(registry, "guide", guideName)
+        : undefined,
+      nextStep: `Review the ${guideName} guidance and apply the relevant setup steps.`,
+      raw: buildRawPayload(view, "guide", result),
+    });
+  }
+
+  if (result.ambiguity) {
+    return buildAmbiguityResult({
+      entityType: "guide",
+      why: "Multiple Salt guides share that alias.",
+      matches: result.ambiguity.matches,
+      didYouMean: result.did_you_mean,
+      ambiguity: result.ambiguity as Record<string, unknown>,
+      nextStep:
+        "Choose one of the suggested guide names and retry with the exact name.",
+    });
+  }
+
+  return buildExactMissResult(context, "guide");
+}
+
+function resolvePageEntity(context: GetSaltEntityContext): GetSaltEntityResult {
+  const { registry, input, view } = context;
+  const result = input.name
+    ? getPage(registry, {
+        name: input.name,
+        view,
+      })
+    : ({ page: null } as ReturnType<typeof getPage>);
+
+  if (result.page) {
+    const pageTitle = String(result.page.title);
+    return buildFoundResult({
+      entityType: "page",
+      why: `Resolved ${pageTitle} as a Salt docs page.`,
+      entity: result.page,
+      related: input.include_related
+        ? getSuggestedRelated(registry, "page", pageTitle)
+        : undefined,
+      nextStep: `Review ${pageTitle} and apply the referenced Salt guidance.`,
+      raw: buildRawPayload(view, "page", result),
+    });
+  }
+
+  if (result.ambiguity) {
+    return buildAmbiguityResult({
+      entityType: "page",
+      why: "Multiple Salt pages share that title or slug.",
+      matches: result.ambiguity.matches,
+      didYouMean: result.did_you_mean,
+      ambiguity: result.ambiguity as Record<string, unknown>,
+      nextStep:
+        "Choose one of the suggested page titles and retry with the exact name.",
+    });
+  }
+
+  return buildExactMissResult(context, "page");
+}
+
+function resolvePackageEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult {
+  const { registry, input, view } = context;
+  const result = input.name
+    ? getPackage(registry, {
+        name: input.name,
+      })
+    : ({ package: null } as ReturnType<typeof getPackage>);
+
+  if (result.package) {
+    return buildFoundResult({
+      entityType: "package",
+      why: `Resolved ${String(result.package.name)} as a Salt package.`,
+      entity: result.package,
+      nextStep: `Review ${String(result.package.name)} before upgrading or importing from it.`,
+      raw: buildRawPayload(view, "package", result),
+    });
+  }
+
+  return buildExactMissResult(context, "package");
+}
+
+function resolveIconEntity(context: GetSaltEntityContext): GetSaltEntityResult {
+  const { registry, input, view, maxResults, lookupValue } = context;
+  const exact = input.name
+    ? getIcon(registry, {
+        name: input.name,
+        view,
+      })
+    : ({ icon: null } as ReturnType<typeof getIcon>);
+
+  if (exact.icon) {
+    return buildFoundResult({
+      entityType: "icon",
+      why: `Resolved ${String(exact.icon.name)} as a Salt icon.`,
+      entity: exact.icon,
+      nextStep: `Confirm ${String(exact.icon.name)} is the right visual metaphor before using it.`,
+      raw: buildRawPayload(view, "icon", exact),
+    });
+  }
+
+  if (exact.ambiguity) {
+    return buildAmbiguityResult({
+      entityType: "icon",
+      why: "Multiple Salt icons share that base name or alias.",
+      matches: exact.ambiguity.matches,
+      ambiguity: exact.ambiguity as Record<string, unknown>,
+      nextStep:
+        "Choose one of the suggested icons and retry with the exact export name.",
+    });
+  }
+
+  const icons = getIcons(registry, {
+    query: lookupValue,
+    status: input.status,
+    max_results: maxResults,
+  });
+
+  return buildNearMatchResult(
+    "icon",
+    icons.icons,
+    view === "full" ? { icons } : undefined,
+  );
+}
+
+function resolveCountrySymbolEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult {
+  const { registry, input, view, maxResults, lookupValue } = context;
+  const exact = input.name
+    ? getCountrySymbol(registry, {
+        name: input.name,
+        view,
+      })
+    : ({ country_symbol: null } as ReturnType<typeof getCountrySymbol>);
+
+  if (exact.country_symbol) {
+    return buildFoundResult({
+      entityType: "country_symbol",
+      why: `Resolved ${String(exact.country_symbol.name)} as a Salt country symbol.`,
+      entity: exact.country_symbol,
+      nextStep: `Confirm the ${String(exact.country_symbol.code)} symbol variant you need before using it.`,
+      raw: buildRawPayload(view, "country_symbol", exact),
+    });
+  }
+
+  if (exact.ambiguity) {
+    return buildAmbiguityResult({
+      entityType: "country_symbol",
+      why: "Multiple Salt country symbols share that alias.",
+      matches: exact.ambiguity.matches,
+      ambiguity: exact.ambiguity as Record<string, unknown>,
+      nextStep:
+        "Choose one of the suggested country symbols and retry with the exact code or name.",
+    });
+  }
+
+  const countrySymbols = getCountrySymbols(registry, {
+    query: lookupValue,
+    status: input.status,
+    max_results: maxResults,
+  });
+
+  return buildNearMatchResult(
+    "country_symbol",
+    countrySymbols.country_symbols,
+    view === "full" ? { country_symbols: countrySymbols } : undefined,
+  );
+}
+
+const ENTITY_RESOLVERS: Record<KnownSaltEntityType, EntityResolver> = {
+  component: resolveComponentEntity,
+  pattern: resolvePatternEntity,
+  foundation: resolveFoundationEntity,
+  token: resolveTokenEntity,
+  guide: resolveGuideEntity,
+  page: resolvePageEntity,
+  package: resolvePackageEntity,
+  icon: resolveIconEntity,
+  country_symbol: resolveCountrySymbolEntity,
+};
+
+const AUTO_EXACT_ENTITY_PRIORITY: KnownSaltEntityType[] = [
+  "component",
+  "pattern",
+  "foundation",
+  "token",
+  "guide",
+  "package",
+  "page",
+  "icon",
+  "country_symbol",
+];
+
+function normalizeSlugLikeName(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+function normalizeAssetName(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+
+/**
+ * Auto lookup accepts aliases for convenience, but a canonical identifier in
+ * one family must never lose to an alias or content match in an earlier
+ * family. This lightweight check establishes match quality before the normal
+ * family-priority tie-break is applied.
+ */
+function hasCanonicalAutoMatch(
+  registry: SaltRegistry,
+  entityType: KnownSaltEntityType,
+  lookupValue: string,
+): boolean {
+  const exactKey = normalizeRegistryLookupKey(lookupValue);
+  const slugKey = normalizeSlugLikeName(lookupValue);
+  const assetKey = normalizeAssetName(lookupValue);
+
+  switch (entityType) {
+    case "component":
+      return registry.components.some(
+        (component) => normalizeRegistryLookupKey(component.name) === exactKey,
+      );
+    case "pattern":
+      return registry.patterns.some(
+        (pattern) => normalizeSlugLikeName(pattern.name) === slugKey,
+      );
+    case "foundation":
+      return registry.pages.some(
+        (page) =>
+          page.page_kind === "foundation" &&
+          normalizeSlugLikeName(page.title) === slugKey,
+      );
+    case "token":
+      return registry.tokens.some(
+        (token) => normalizeRegistryLookupKey(token.name) === exactKey,
+      );
+    case "guide":
+      return registry.guides.some(
+        (guide) => normalizeSlugLikeName(guide.name) === slugKey,
+      );
+    case "package":
+      return registry.packages.some(
+        (packageRecord) =>
+          normalizeRegistryLookupKey(packageRecord.name) === exactKey,
+      );
+    case "page":
+      return registry.pages.some(
+        (page) => normalizeSlugLikeName(page.title) === slugKey,
+      );
+    case "icon":
+      return registry.icons.some((icon) =>
+        [icon.name, icon.base_name, icon.figma_name].some(
+          (candidate) => normalizeAssetName(candidate) === assetKey,
+        ),
+      );
+    case "country_symbol":
+      return registry.country_symbols.some((countrySymbol) =>
+        [countrySymbol.code, countrySymbol.name].some(
+          (candidate) =>
+            toCountrySymbolMatchKey(candidate) ===
+            toCountrySymbolMatchKey(lookupValue),
+        ),
+      );
+  }
+}
+
+export function createGetSaltEntityContext(
+  registry: SaltRegistry,
+  input: GetSaltEntityInput,
+): GetSaltEntityContext {
+  return {
+    registry,
+    input,
+    view: input.view ?? "compact",
+    maxResults: clampMaxResults(input.max_results, 5, 50),
+    lookupValue: input.name?.trim() || input.query?.trim() || "",
+    allowedEntityTypes:
+      input.allowed_entity_types && input.allowed_entity_types.length > 0
+        ? input.allowed_entity_types
+        : null,
+  };
+}
+
+function isEntityTypeAllowed(
+  context: GetSaltEntityContext,
+  entityType: KnownSaltEntityType,
+): boolean {
+  return (
+    context.allowedEntityTypes === null ||
+    context.allowedEntityTypes.includes(entityType)
+  );
+}
+
+function resolveExactAutoSaltEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult | null {
+  const { registry, input, lookupValue } = context;
+
+  if (!input.name?.trim()) {
+    return null;
+  }
+
+  const resolveEntityType = (
+    entityType: KnownSaltEntityType,
+  ): GetSaltEntityResult =>
+    resolveKnownSaltEntity(
+      createGetSaltEntityContext(registry, {
+        ...input,
+        entity_type: entityType,
+        name: lookupValue,
+        query: undefined,
+      }),
+      entityType,
+    );
+
+  // First resolve canonical names across every family. Family priority is a
+  // tie-break only after match quality, so an exact package name cannot be
+  // captured by a guide alias that happens to appear earlier in the list.
+  for (const entityType of AUTO_EXACT_ENTITY_PRIORITY) {
+    if (!isEntityTypeAllowed(context, entityType)) {
+      continue;
+    }
+
+    if (!hasCanonicalAutoMatch(registry, entityType, lookupValue)) {
+      continue;
+    }
+
+    const resolved = resolveEntityType(entityType);
+
+    if (resolved.decision.status === "found") {
+      return resolved;
+    }
+  }
+
+  // No canonical name resolved. Preserve convenient alias/slug resolution,
+  // with the same stable family ordering used before canonical ranking.
+  for (const entityType of AUTO_EXACT_ENTITY_PRIORITY) {
+    if (!isEntityTypeAllowed(context, entityType)) {
+      continue;
+    }
+
+    const resolved = resolveEntityType(entityType);
+
+    if (resolved.decision.status === "found") {
+      return resolved;
+    }
+  }
+
+  return null;
+}
+
+export function resolveAutoSaltEntity(
+  context: GetSaltEntityContext,
+): GetSaltEntityResult {
+  const { lookupValue, view } = context;
+
+  if (!lookupValue) {
+    return {
+      entity_type: null,
+      decision: {
+        status: "not_found",
+        why: "Provide a Salt entity name or query to resolve.",
+      },
+      entity: null,
+      next_step:
+        "Pass a component, pattern, token, guide, page, icon, or country symbol name.",
+    };
+  }
+
+  const exactEntity = resolveExactAutoSaltEntity(context);
+  if (exactEntity) {
+    return exactEntity;
+  }
+
+  return {
+    entity_type: null,
+    decision: {
+      status: "not_found",
+      why: "No exact Salt entity match was found in the public v1 catalog surface.",
+    },
+    entity: null,
+    next_step:
+      "Retry with an exact component, pattern, foundation, token, guide, page, or package name, or use create_salt_ui for broader routing.",
+    raw:
+      view === "full"
+        ? { lookup: "exact_or_alias", query: lookupValue }
+        : undefined,
+  };
+}
+
+export function resolveKnownSaltEntity(
+  context: GetSaltEntityContext,
+  entityType: KnownSaltEntityType,
+): GetSaltEntityResult {
+  if (!isEntityTypeAllowed(context, entityType)) {
+    return {
+      entity_type: null,
+      decision: {
+        status: "not_found",
+        why: `${entityType} is not exposed on this Salt entity lookup surface.`,
+      },
+      entity: null,
+      next_step: "Retry with an entity type exposed by this lookup surface.",
+    };
+  }
+
+  return ENTITY_RESOLVERS[entityType](context);
+}

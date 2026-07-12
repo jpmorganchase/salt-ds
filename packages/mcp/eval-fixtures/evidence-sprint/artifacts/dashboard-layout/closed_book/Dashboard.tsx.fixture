@@ -1,0 +1,28 @@
+import {
+  Card,
+  FakeDataGrid,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
+
+export function Dashboard() {
+  return (
+    <StackLayout gap={3}>
+      <Card>
+        <Card>
+          <Text variant="h3">Revenue</Text>
+          <Text>$12.4m</Text>
+        </Card>
+      </Card>
+      <FakeDataGrid />
+      <table>
+        <tbody>
+          <tr>
+            <td>Trade</td>
+            <td>Settled</td>
+          </tr>
+        </tbody>
+      </table>
+    </StackLayout>
+  );
+}

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jpmorganchase/salt-ds/blob/main/packages/mcp/schemas/salt-evidence-ref.schema.json",
+  "title": "Salt Evidence Reference",
+  "description": "Source locator for a Salt-specific generated claim. Salt facts should resolve to one or more evidence references instead of living only in prompt or template text.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "id", "source_kind", "claim_kind", "confidence"],
+  "properties": {
+    "contract": {
+      "const": "salt_evidence_ref_v1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_kind": {
+      "enum": [
+        "registry",
+        "docs",
+        "source",
+        "example",
+        "token",
+        "package",
+        "project_policy",
+        "workflow_input",
+        "runtime"
+      ]
+    },
+    "claim_kind": {
+      "enum": [
+        "component",
+        "pattern",
+        "prop",
+        "token",
+        "import",
+        "package",
+        "provider",
+        "accessibility",
+        "example",
+        "composition",
+        "status",
+        "workflow",
+        "project_policy"
+      ]
+    },
+    "registry": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/registryRef" }]
+    },
+    "source": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sourceRef" }]
+    },
+    "package": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/packageRef" }]
+    },
+    "project_policy": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/projectPolicyRef" }]
+    },
+    "workflow_input": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/workflowInputRef" }]
+    },
+    "confidence": {
+      "enum": ["high", "medium", "low"]
+    },
+    "verified_at": {
+      "type": ["string", "null"]
+    },
+    "note": {
+      "type": ["string", "null"]
+    }
+  },
+  "$defs": {
+    "registryRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_type", "entity_id"],
+      "properties": {
+        "entity_type": {
+          "enum": [
+            "component",
+            "pattern",
+            "guide",
+            "token",
+            "example",
+            "package",
+            "page",
+            "deprecation",
+            "change"
+          ]
+        },
+        "entity_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entity_name": {
+          "type": ["string", "null"]
+        },
+        "field_path": {
+          "type": ["string", "null"]
+        },
+        "registry_version": {
+          "type": ["string", "null"]
+        },
+        "registry_hash": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": ["string", "null"]
+        },
+        "repo_path": {
+          "type": ["string", "null"]
+        },
+        "section": {
+          "type": ["string", "null"]
+        },
+        "line_start": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "line_end": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        }
+      }
+    },
+    "packageRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "projectPolicyRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layer": {
+          "type": ["string", "null"]
+        },
+        "field_path": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "workflowInputRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_path"],
+      "properties": {
+        "field_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}

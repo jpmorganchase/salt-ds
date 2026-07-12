@@ -1,0 +1,11 @@
+{
+  "condition": "docs_context_dump",
+  "reference_results": [],
+  "workflow_calls": [
+    {
+      "tool": "static_context_prompt",
+      "args": {},
+      "contract": null
+    }
+  ]
+}

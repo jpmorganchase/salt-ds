@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Orders App Runtime</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      #app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      header {
+        padding: 16px 24px;
+        border-bottom: 1px solid #d4d8dd;
+      }
+
+      main {
+        display: grid;
+        gap: 16px;
+        align-content: start;
+        padding: 24px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <nav aria-label="Primary">
+          <a href="/orders">Orders</a>
+        </nav>
+      </header>
+      <main>
+        <h1>Orders</h1>
+        <div class="actions">
+          <button type="button">Save</button>
+          <button type="button">Cancel</button>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

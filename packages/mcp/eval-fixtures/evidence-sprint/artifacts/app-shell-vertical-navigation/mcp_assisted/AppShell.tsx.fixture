@@ -1,0 +1,43 @@
+import {
+  BorderItem,
+  BorderLayout,
+  StackLayout,
+  Text,
+  VerticalNavigation,
+  VerticalNavigationItem,
+  VerticalNavigationItemContent,
+  VerticalNavigationItemLabel,
+  VerticalNavigationItemTrigger,
+} from "@salt-ds/core";
+
+export function AppShell() {
+  return (
+    <BorderLayout>
+      <BorderItem position="north">
+        <Text styleAs="h1">Market monitor</Text>
+      </BorderItem>
+      <BorderItem position="west">
+        <VerticalNavigation
+          aria-label="Application sections"
+          appearance="indicator"
+        >
+          <VerticalNavigationItem active>
+            <VerticalNavigationItemContent>
+              <VerticalNavigationItemTrigger>
+                <VerticalNavigationItemLabel>
+                  Overview
+                </VerticalNavigationItemLabel>
+              </VerticalNavigationItemTrigger>
+            </VerticalNavigationItemContent>
+          </VerticalNavigationItem>
+        </VerticalNavigation>
+      </BorderItem>
+      <BorderItem position="center">
+        <StackLayout gap={2}>
+          <Text styleAs="h2">Overview</Text>
+          <Text>Portfolio activity and alerts.</Text>
+        </StackLayout>
+      </BorderItem>
+    </BorderLayout>
+  );
+}

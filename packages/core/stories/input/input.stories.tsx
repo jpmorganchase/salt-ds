@@ -38,7 +38,14 @@ export const Controlled: StoryFn<typeof Input> = (args) => {
     setValue(value);
   };
 
-  return <Input {...args} value={value} onChange={handleChange} />;
+  return (
+    <Input
+      {...args}
+      inputProps={{ name: "example", ...args.inputProps }}
+      value={value}
+      onChange={handleChange}
+    />
+  );
 };
 
 export const Variants: StoryFn<typeof Input> = (args) => {

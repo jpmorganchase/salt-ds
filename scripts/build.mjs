@@ -13,29 +13,108 @@ import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
 import { distinct } from "./utils.mjs";
 
 const cwd = process.cwd();
+const repoRoot = path.resolve(
+  path.dirname(url.fileURLToPath(import.meta.url)),
+  "..",
+);
 
 const packageJson = (
   await import(url.pathToFileURL(path.join(cwd, "package.json")), {
     with: { type: "json" },
   })
 ).default;
+const {
+  publishExports,
+  publishBinEntrypoints = {},
+  publishScriptExcludes = [],
+  publishAdditionalDependencies = {},
+  publishAdditionalEntryPaths = [],
+  publishExtraCopyPaths = [],
+  publishPreserveModules = true,
+  publishSourceMaps = true,
+  publishIncludeChangelog = true,
+  generateTypings = true,
+  publishTypingEntryOnly = false,
+  publishConfig,
+  typescriptInclude: _typescriptInclude,
+  typescriptRootDir: _typescriptRootDir,
+  dependencies: _dependencies,
+  devDependencies: _devDependencies,
+  peerDependencies: _peerDependencies,
+  ...packageJsonForPublish
+} = packageJson;
 
-const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"].concat(
-  packageJson.files ?? [],
-);
+const FILES_TO_COPY = [
+  "README.md",
+  "LICENSE",
+  ...(publishIncludeChangelog ? ["CHANGELOG.md"] : []),
+].concat(packageJson.files ?? []);
 
 const packageName = packageJson.name;
-const outputDir = path.join(packageJson.publishConfig.directory);
+const { directory: _publishConfigDirectory, ...publishConfigForPublish } =
+  publishConfig ?? {};
+const outputDir = path.join(publishConfig.directory);
+const sourceEntryPath = path.join(cwd, "src", "index.ts");
+const additionalSourceEntryPaths = publishAdditionalEntryPaths.map(
+  (entryPath) => path.join(cwd, entryPath),
+);
+
+const typingSourceConfig =
+  packageJson.typescriptInclude || packageJson.typescriptRootDir
+    ? {
+        include: (packageJson.typescriptInclude ?? ["src"]).map((entry) =>
+          path.join(cwd, entry),
+        ),
+        rootDir: path.join(cwd, packageJson.typescriptRootDir ?? "src"),
+      }
+    : path.join(cwd, "src");
+const typingRootDir =
+  typeof typingSourceConfig === "string"
+    ? typingSourceConfig
+    : typingSourceConfig.rootDir;
+
+const publishedEntryPath = path
+  .relative(typingRootDir, sourceEntryPath)
+  .replace(/\\/g, "/")
+  .replace(/\.ts$/, ".js");
+const publishedTypingEntryPath = publishedEntryPath.replace(/\.js$/, ".d.ts");
 
 console.log(`Building ${packageName}`);
 
 await fs.mkdirp(outputDir);
 await fs.emptyDir(outputDir);
 
-await makeTypings(outputDir);
+if (generateTypings) {
+  await makeTypings(outputDir, typingSourceConfig);
+
+  if (publishTypingEntryOnly) {
+    const typingsDir = path.join(outputDir, "dist-types");
+    const typingEntryPath = path.resolve(typingsDir, publishedTypingEntryPath);
+    const relativeTypingEntryPath = path.relative(typingsDir, typingEntryPath);
+
+    if (
+      relativeTypingEntryPath.startsWith("..") ||
+      path.isAbsolute(relativeTypingEntryPath)
+    ) {
+      throw new Error(
+        `Published typing entry must stay inside dist-types: ${publishedTypingEntryPath}`,
+      );
+    }
+
+    const typingEntry = await fs.readFile(typingEntryPath, "utf8");
+    if (/(?:from\s+|import\s*\()\s*["']\.\.?\//u.test(typingEntry)) {
+      throw new Error(
+        `Cannot publish only ${publishedTypingEntryPath}: its declaration still references a relative module`,
+      );
+    }
+
+    await fs.emptyDir(typingsDir);
+    await fs.outputFile(typingEntryPath, typingEntry, "utf8");
+  }
+}
 
 const bundle = await rollup({
-  input: path.join(cwd, "src/index.ts"),
+  input: [sourceEntryPath, ...additionalSourceEntryPaths],
   external: (id) => {
     // via tsdx
     // TODO: this should probably be included into deps instead
@@ -59,7 +138,7 @@ const bundle = await rollup({
     esbuild({
       target: browserslistToEsbuild(),
       minify: false,
-      sourceMap: true,
+      sourceMap: publishSourceMaps,
     }),
     postcss({ extract: false, inject: false }),
     json(),
@@ -81,54 +160,116 @@ const transformSourceMap = (relativeSourcePath, sourceMapPath) => {
 
 await bundle.write({
   freeze: false,
-  sourcemap: true,
-  preserveModules: true,
+  sourcemap: publishSourceMaps,
+  preserveModules: publishPreserveModules,
   dir: path.join(outputDir, "dist-cjs"),
   format: "cjs",
   exports: "auto",
-  sourcemapPathTransform: transformSourceMap,
+  ...(publishSourceMaps ? { sourcemapPathTransform: transformSourceMap } : {}),
 });
 
 await bundle.write({
   freeze: false,
-  sourcemap: true,
-  preserveModules: true,
+  sourcemap: publishSourceMaps,
+  preserveModules: publishPreserveModules,
   dir: path.join(outputDir, "dist-es"),
   format: "es",
   exports: "auto",
-  sourcemapPathTransform: transformSourceMap,
+  ...(publishSourceMaps ? { sourcemapPathTransform: transformSourceMap } : {}),
 });
 
 await bundle.close();
 
+// The repository root intentionally has no package `type`, while the build
+// emits `.js` files for both module formats. Give Node an unambiguous format
+// boundary so ESM consumers do not trigger MODULE_TYPELESS_PACKAGE_JSON
+// reparsing warnings, and so CJS remains correct if a package later opts into
+// `type: module` at its root.
+await Promise.all([
+  fs.writeJSON(path.join(outputDir, "dist-cjs", "package.json"), {
+    type: "commonjs",
+  }),
+  fs.writeJSON(path.join(outputDir, "dist-es", "package.json"), {
+    type: "module",
+  }),
+]);
+
+const publishedScripts =
+  packageJsonForPublish.scripts &&
+  typeof packageJsonForPublish.scripts === "object"
+    ? Object.fromEntries(
+        Object.entries(packageJsonForPublish.scripts).filter(
+          ([scriptName]) => !publishScriptExcludes.includes(scriptName),
+        ),
+      )
+    : undefined;
+
+if (publishedScripts && Object.keys(publishedScripts).length > 0) {
+  packageJsonForPublish.scripts = publishedScripts;
+} else {
+  delete packageJsonForPublish.scripts;
+}
+
+const publishedDependencies = await transformWorkspaceDeps({
+  ...(packageJson.dependencies ?? {}),
+  ...publishAdditionalDependencies,
+});
+const publishedPeerDependencies = packageJson.peerDependencies
+  ? await transformWorkspaceDeps(packageJson.peerDependencies)
+  : null;
+const publishedExtraCopyPaths = publishExtraCopyPaths.map((copyConfig) =>
+  typeof copyConfig === "string" ? copyConfig : copyConfig.to,
+);
+
+async function copyPublishExtraFile(fromPath, toPath) {
+  if (path.extname(fromPath) === ".json") {
+    const content = await fs.readFile(fromPath, "utf8");
+    await fs.outputFile(toPath, JSON.stringify(JSON.parse(content)), "utf8");
+    return;
+  }
+
+  await fs.copy(fromPath, toPath);
+}
+
 await fs.writeJSON(
   path.join(outputDir, "package.json"),
   {
-    ...packageJson,
-    dependencies: await transformWorkspaceDeps(packageJson.dependencies),
-    ...(packageJson.peerDependencies
+    ...packageJsonForPublish,
+    ...(Object.keys(publishedDependencies).length > 0
+      ? { dependencies: publishedDependencies }
+      : {}),
+    ...(publishedPeerDependencies &&
+    Object.keys(publishedPeerDependencies).length > 0
       ? {
-          peerDependencies: await transformWorkspaceDeps(
-            packageJson.peerDependencies,
-          ),
+          peerDependencies: publishedPeerDependencies,
         }
       : {}),
-    main: "dist-cjs/index.js",
-    module: "dist-es/index.js",
-    typings: "dist-types/index.d.ts",
+    ...(Object.keys(publishConfigForPublish).length > 0
+      ? { publishConfig: publishConfigForPublish }
+      : {}),
+    ...(publishExports ? { exports: publishExports } : {}),
+    main: `dist-cjs/${publishedEntryPath}`,
+    module: `dist-es/${publishedEntryPath}`,
+    ...(generateTypings
+      ? { typings: `dist-types/${publishedTypingEntryPath}` }
+      : {}),
     files: distinct([
       ...(packageJson.files ?? []),
+      ...publishedExtraCopyPaths,
       "dist-cjs",
       "dist-es",
-      "dist-types",
-      "CHANGELOG.md",
+      ...(generateTypings ? ["dist-types"] : []),
+      ...(publishIncludeChangelog ? ["CHANGELOG.md"] : []),
     ]),
   },
   { spaces: 2 },
 );
 
 for (const file of FILES_TO_COPY) {
-  const filePath = path.join(cwd, file);
+  let filePath = path.join(cwd, file);
+  if (file === "LICENSE" && !(await fs.pathExists(filePath))) {
+    filePath = path.join(repoRoot, file);
+  }
   try {
     await fs.copy(filePath, path.join(outputDir, file));
   } catch (error) {
@@ -136,6 +277,65 @@ for (const file of FILES_TO_COPY) {
       throw error;
     }
   }
+}
+
+for (const copyConfig of publishExtraCopyPaths) {
+  const fromPath =
+    typeof copyConfig === "string"
+      ? path.join(cwd, copyConfig)
+      : path.resolve(cwd, copyConfig.from);
+  const toPath =
+    typeof copyConfig === "string"
+      ? path.join(outputDir, copyConfig)
+      : path.join(outputDir, copyConfig.to);
+
+  if (
+    typeof copyConfig === "object" &&
+    Array.isArray(copyConfig.files) &&
+    copyConfig.files.length > 0
+  ) {
+    await Promise.all(
+      copyConfig.files.map(async (relativeFilePath) => {
+        await copyPublishExtraFile(
+          path.join(fromPath, relativeFilePath),
+          path.join(toPath, relativeFilePath),
+        );
+      }),
+    );
+  } else {
+    await fs.copy(fromPath, toPath);
+  }
+}
+
+for (const [relativeBinPath, entrypoint] of Object.entries(
+  publishBinEntrypoints,
+)) {
+  const {
+    requirePath,
+    exportName = "runCli",
+    errorPrefix = `${packageName} error:`,
+  } = entrypoint;
+  const binPath = path.join(outputDir, relativeBinPath);
+
+  await fs.mkdirp(path.dirname(binPath));
+  await fs.writeFile(
+    binPath,
+    `#!/usr/bin/env node
+
+const { ${exportName} } = require(${JSON.stringify(requirePath)});
+
+${exportName}(process.argv.slice(2))
+  .then((exitCode) => {
+    process.exit(exitCode);
+  })
+  .catch((error) => {
+    console.error(${JSON.stringify(errorPrefix)}, error);
+    process.exit(1);
+  });
+`,
+    "utf8",
+  );
+  await fs.chmod(binPath, 0o755);
 }
 
 console.log(`Built ${packageName} into ${outputDir}`);

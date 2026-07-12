@@ -25,9 +25,15 @@ data:
 
 Use the pattern when the user needs to perform actions after reaching the end of a task in a page or a dialog. Some examples include:
 
-- Navigating to previous or next steps
-- Submitting a form
-- Acknowledging or canceling changes
+- Navigating to previous or next steps.
+- Submitting a form.
+- Acknowledging or canceling changes.
+
+## When not to use
+
+- When the actions are not tied to finishing a task, use a toolbar or another action surface instead.
+- When the page only needs a single primary action, use a Button without a button bar.
+- When the controls are navigation rather than task-completion actions, use links or navigation items instead.
 
 ## How to build
 
@@ -49,7 +55,7 @@ A button bar typically contains:
 
 * Use [`Button`](/salt/components/button) to display actions in a button bar.
 * Use [`StackLayout`](/salt/components/layouts/stack-layout) to group your buttons together.
-* Use [`SplitLayout`](/salt/components/layouts/split-layout) to separate the button groups.
+* Use [`SplitLayout`](/salt/components/layouts/split-layout) to separate the button groups and keep core actions visually clear.
 
   <Diagram
     src="/img/patterns/button-bar/button-bar-layout-1.png"

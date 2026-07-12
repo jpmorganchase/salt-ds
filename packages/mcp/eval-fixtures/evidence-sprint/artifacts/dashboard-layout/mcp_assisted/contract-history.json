@@ -1,0 +1,89 @@
+{
+  "condition": "mcp_assisted",
+  "reference_results": [
+    { "name": "Analytical dashboard", "status": "found" },
+    { "name": "Metric", "status": "found" },
+    { "name": "Table", "status": "found" },
+    { "name": "Card", "status": "found" },
+    { "name": "BorderItem", "status": "found" },
+    { "name": "BorderLayout", "status": "found" },
+    { "name": "GridLayout", "status": "found" },
+    { "name": "StackLayout", "status": "found" },
+    { "name": "DefinitelyMissingDashboardPanel", "status": "not_found" }
+  ],
+  "workflow_calls": [
+    {
+      "tool": "create_salt_ui",
+      "args": {
+        "resolved_entities": ["DefinitelyMissingDashboardPanel"]
+      },
+      "contract": {
+        "contract": "salt_workflow_v1",
+        "status": "partial",
+        "action": {
+          "kind": "retrieve_reference",
+          "tool": "get_salt_reference",
+          "args": {
+            "names": ["DefinitelyMissingDashboardPanel"]
+          }
+        },
+        "safety": {
+          "exact_request_safe": false
+        },
+        "evidence": {
+          "status": "partial"
+        }
+      }
+    },
+    {
+      "tool": "create_salt_ui",
+      "args": {
+        "resolved_entities": [
+          "Analytical dashboard",
+          "Metric",
+          "Table",
+          "Card",
+          "BorderItem",
+          "BorderLayout",
+          "GridLayout",
+          "StackLayout"
+        ]
+      },
+      "contract": {
+        "contract": "salt_workflow_v1",
+        "status": "success",
+        "action": {
+          "kind": "implement",
+          "post_action": {
+            "kind": "review",
+            "tool": "review_salt_ui",
+            "required_input": ["complete_updated_file"]
+          }
+        },
+        "safety": {
+          "exact_request_safe": true
+        },
+        "evidence": {
+          "status": "complete"
+        }
+      }
+    },
+    {
+      "tool": "review_salt_ui",
+      "args": {},
+      "contract": {
+        "contract": "salt_workflow_v1",
+        "status": "success",
+        "action": {
+          "kind": "complete"
+        },
+        "safety": {
+          "exact_request_safe": true
+        },
+        "evidence": {
+          "status": "complete"
+        }
+      }
+    }
+  ]
+}

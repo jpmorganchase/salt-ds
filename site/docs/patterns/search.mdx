@@ -26,16 +26,22 @@ Use this pattern to help users
 - Look through a catalog of items, like a product catalog or a library.
 - Navigate to a page or resource.
 
+## When not to use
+
+- When users already know the destination and only need a direct navigation control, use a link, button, or navigation item instead.
+- When the task is filtering a visible data set in place, use filters or a data grid instead of Search.
+- When the scope is a small, fixed set of options, use a Combo box or Select control instead of Search.
+
 ## How to build
 
 ### Anatomy
 
-A search pattern can be present in an application, as a global or focused search, depending of the scope of the search functionality. Independently of how a search is presented, the following elements are present in a search pattern:
+A search pattern can be present in an application as a global or focused search, depending on the scope of the search functionality. Independently of how a search is presented, the following elements are present in a search pattern:
 
-1. **Search input field:** A single input field where users type their queries. 
+1. **Search input field:** A single input field where users type their queries.
 2. **Search icon:** The magnifying glass icon indicates search.
 3. **Placeholder text:** Hints to users what information can be searched for. Placeholder text should be clear and tell the user exactly what can be searched for if results are limited. For example, if only page titles can be searched, placeholder text should read “Search page titles.”
-4. **Close button:** Close button that appears within the search input field, allowing users to quickly clear their current query and start a new search.
+4. **Close button:** A close button that appears within the search input field, allowing users to quickly clear their current query and start a new search.
 5. **Expand button:** A chevron icon button typically used to indicate that a dropdown menu can be expanded or collapsed.
 6. **Section header:** A label used to organize search results into distinct categories within the dropdown list. It helps users quickly identify and navigate different types of results, such as recent searches, suggestions, pages, and people.
 7. **Result item:** An individual entry within the search results dropdown. It can include various elements such as secondary labels, icons, or avatars.
@@ -48,7 +54,7 @@ A search pattern can be present in an application, as a global or focused search
 />
 
 ### Layout
-- Use [`Combo box`](/salt/components/combo-box) to display search field.
+- Use [`Combo box`](/salt/components/combo-box) to display the search field.
 - Use Option Group to group the search results.
 - Use Option to display a search result.
 
@@ -170,7 +176,7 @@ Choosing a suggestion from the dropdown takes the user directly to the page of t
 
 ## Free text search capability
 
-In addition to returning matching results in the menu, use free text search capability to allow users to enter a custom string to perform a search, returning a search results page with a range of matching results. 
+In addition to returning matching results in the menu, use free text search capability to allow users to enter a custom string and search across a broader result set.
 
 <Diagrams>
 
@@ -202,7 +208,7 @@ Users can navigate through the menu using arrow keys or click on a result to sel
 
 ### Optional search button
 
-A search button can also be added as an optional element, providing a clear call to action and visual cue, which aligns with user expectations for a more comprehensive search experience.
+A search button can also be added as an optional element, providing a clear call to action and visual cue for more explicit search experiences.
 
 <Diagram
   src="/img/patterns/search/search-pattern-13.png"
@@ -212,7 +218,7 @@ A search button can also be added as an optional element, providing a clear call
 />
 
 ## Search result item types
-The search pattern currently supports basic search result items that compromise of non-focusable elements: text, icons, country symbols, avatars. 
+The search pattern currently supports basic search result items that comprise non-focusable elements: text, icons, country symbols, and avatars.
 The following are examples of the types of results items you can create.
 
 <Diagram
