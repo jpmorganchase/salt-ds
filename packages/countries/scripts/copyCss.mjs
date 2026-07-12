@@ -22,4 +22,5 @@ try {
   console.log(`salt-countries.css copied to: ${storybookFolder} `);
 } catch (err) {
   console.error(err.message);
+  throw err;
 }

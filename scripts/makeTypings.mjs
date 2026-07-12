@@ -24,6 +24,20 @@ export function reportTSDiagnostics(diagnostics) {
   }
 }
 
+export function assertSuccessfulTypeEmit(program, emitResult) {
+  const diagnostics = ts
+    .getPreEmitDiagnostics(program)
+    .concat(emitResult.diagnostics);
+
+  if (diagnostics.length > 0) {
+    reportTSDiagnostics(diagnostics);
+  }
+
+  if (emitResult.emitSkipped || diagnostics.length > 0) {
+    throw new Error("Could not generate .d.ts files");
+  }
+}
+
 export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
   const typescriptConfig = await getTypescriptConfig(cwd, srcDir);
 
@@ -78,15 +92,5 @@ export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
 
   const emitResult = program.emit();
 
-  // Skip diagnostic reporting in CI
-  if (isCI) {
-    return;
-  }
-  const diagnostics = ts
-    .getPreEmitDiagnostics(program)
-    .concat(emitResult.diagnostics);
-  if (diagnostics.length > 0) {
-    reportTSDiagnostics(diagnostics);
-    throw new Error("Could not generate .d.ts files");
-  }
+  assertSuccessfulTypeEmit(program, emitResult);
 }

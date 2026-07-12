@@ -16,4 +16,5 @@ try {
   console.log(`Icon.css copied to: ${cssFolder} `);
 } catch (err) {
   console.error(err.message);
+  throw err;
 }

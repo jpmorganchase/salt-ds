@@ -60,24 +60,8 @@ jobs:
         run: yarn
       - name: Build
         run: yarn build
-      - name: Check build core package.json dependencies
-        run: |
-          if grep -q "@salt-ds\/\(core\|lab\)\":" dist/salt-ds-core/package.json; then
-              echo "Core package can not reference itself or lab package"
-              exit 1;
-          fi
-      - name: Check build icon package.json dependencies
-        run: |
-          if grep -q "@salt-ds\/\(icon\|core\|lab\)\":" dist/salt-ds-icon/package.json; then
-              echo "Icon package can not reference itself or core or lab package"
-              exit 1;
-          fi
-      - name: Check build lab package.json dependencies
-        run: |
-          if grep -q "@salt-ds\/lab\":" dist/salt-ds-lab/package.json; then
-              echo "Lab package can not reference itself"
-              exit 1;
-          fi
+      - name: Check published artifacts
+        run: yarn check:published-artifacts
   type-checks:
     name: Type Checks
     runs-on: ubuntu-latest
