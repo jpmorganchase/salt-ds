@@ -109,6 +109,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       >
         <section
           key={`carousel-${ariaVariant}}`}
+          id={carouselId}
           aria-roledescription="carousel"
           role="region"
           className={clsx(withBaseName(), className)}

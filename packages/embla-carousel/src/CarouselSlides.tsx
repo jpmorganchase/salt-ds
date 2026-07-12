@@ -42,7 +42,15 @@ const announceSlideChangesFrom: CarouselAnnouncementTrigger[] = [
 
 export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
   function CarouselSlides(
-    { children, className, id, onKeyDown, ...rest },
+    {
+      children,
+      className,
+      id,
+      onKeyDown,
+      onMouseDown,
+      onMouseUp,
+      ...rest
+    },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -258,15 +266,16 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
 
     const handleMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
       setDragging(true);
-      rest.onMouseDown?.(event);
+      onMouseDown?.(event);
     };
     const handleMouseUp: MouseEventHandler<HTMLDivElement> = (event) => {
       setDragging(false);
-      rest.onMouseUp?.(event);
+      onMouseUp?.(event);
     };
 
     return (
       <div
+        {...rest}
         onKeyDown={handleKeyDown}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
@@ -276,7 +285,6 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           { [withBaseName("dragging")]: dragging },
           className,
         )}
-        {...rest}
       >
         <div
           className={withBaseName("container")}

@@ -33,6 +33,7 @@ const smokePackages = [
   "@salt-ds/countries",
   "@salt-ds/embla-carousel",
 ];
+const requiredCarouselPeer = "embla-carousel-react";
 
 function readJson(filename) {
   return JSON.parse(fs.readFileSync(filename, "utf8"));
@@ -175,6 +176,9 @@ function runConsumerSmoke(packages) {
           }
         }
       } else {
+        if (entry.name === requiredCarouselPeer) {
+          continue;
+        }
         fs.symlinkSync(
           path.join(repositoryNodeModules, entry.name),
           path.join(consumerNodeModules, entry.name),
@@ -213,6 +217,46 @@ function runConsumerSmoke(packages) {
         ),
       };
     });
+
+    const missingPeerScriptPath = path.join(
+      temporaryDirectory,
+      "missing-carousel-peer.cjs",
+    );
+    fs.writeFileSync(
+      missingPeerScriptPath,
+      'require("@salt-ds/embla-carousel");',
+    );
+    const missingPeerResult = spawnSync(
+      process.execPath,
+      [missingPeerScriptPath],
+      {
+        cwd: temporaryDirectory,
+        encoding: "utf8",
+        env: {
+          ...process.env,
+          NODE_OPTIONS: "",
+        },
+      },
+    );
+    const missingPeerDiagnostic =
+      missingPeerResult.error?.stack ||
+      missingPeerResult.stderr ||
+      missingPeerResult.stdout ||
+      "";
+    if (
+      missingPeerResult.status === 0 ||
+      !missingPeerDiagnostic.includes(requiredCarouselPeer)
+    ) {
+      throw new Error(
+        `Missing ${requiredCarouselPeer} was not diagnosed by the carousel root import:\n${missingPeerDiagnostic}`,
+      );
+    }
+
+    fs.symlinkSync(
+      path.join(repositoryNodeModules, requiredCarouselPeer),
+      path.join(consumerNodeModules, requiredCarouselPeer),
+      "junction",
+    );
 
     const cjsScript = entries
       .map(({ packageName }) => `require(${JSON.stringify(packageName)});`)

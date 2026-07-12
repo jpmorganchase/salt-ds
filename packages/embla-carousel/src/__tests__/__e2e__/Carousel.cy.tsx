@@ -2,7 +2,11 @@ import * as carouselStories from "@stories/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
 import { useEffect, useState } from "react";
-import type { CarouselEmblaApiType } from "../../index";
+import {
+  Carousel,
+  type CarouselEmblaApiType,
+  CarouselSlides,
+} from "../../index";
 
 const composedStories = composeStories(carouselStories);
 const { Default, SlideGroup, MultiSlide } = composedStories;
@@ -81,6 +85,58 @@ describe("Given a Carousel", () => {
       cy.get(".carouselSlide.is-snapped.is-in-view").should("not.be.focused");
     }
   };
+
+  it("should render an explicit ID on the section and use it for child IDs", () => {
+    cy.mount(<Default id="custom-carousel" />);
+
+    cy.findByRole("region").should("have.attr", "id", "custom-carousel");
+    cy.get(".saltCarouselSlides-container").should(
+      "have.attr",
+      "id",
+      "custom-carousel-slides",
+    );
+  });
+
+  it("should render a generated section ID and use it for child IDs", () => {
+    cy.mount(<Default />);
+
+    cy.findByRole("region").then(($region) => {
+      const id = $region.attr("id");
+      expect(id).to.not.be.empty;
+      cy.get(".saltCarouselSlides-container").should(
+        "have.attr",
+        "id",
+        `${id}-slides`,
+      );
+    });
+  });
+
+  it("should compose mouse callbacks with internal drag state", () => {
+    const onMouseDown = cy.stub().as("onMouseDown");
+    const onMouseUp = cy.stub().as("onMouseUp");
+
+    cy.mount(
+      <Carousel aria-label="Mouse event carousel">
+        <CarouselSlides
+          data-testid="slides"
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+        >
+          <div>Slide</div>
+        </CarouselSlides>
+      </Carousel>,
+    );
+
+    cy.findByTestId("slides")
+      .realMouseDown()
+      .should("have.class", "saltCarouselSlides-dragging");
+    cy.get("@onMouseDown").should("have.been.calledOnce");
+
+    cy.findByTestId("slides")
+      .realMouseUp()
+      .should("not.have.class", "saltCarouselSlides-dragging");
+    cy.get("@onMouseUp").should("have.been.calledOnce");
+  });
 
   it("should render the carousel with four slides as a tabbed list", () => {
     cy.mount(<Default />);

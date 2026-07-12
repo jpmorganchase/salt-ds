@@ -32,9 +32,6 @@
   "peerDependenciesMeta": {
     "@types/react": {
       "optional": true
-    },
-    "embla-carousel-react": {
-      "optional": true
     }
   },
   "publishConfig": {

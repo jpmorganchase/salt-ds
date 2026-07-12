@@ -4460,8 +4460,6 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-    embla-carousel-react:
-      optional: true
   languageName: unknown
   linkType: soft
 
