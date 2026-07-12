@@ -57,6 +57,70 @@ export function defaultValueToString<Item>(item: Item): string {
   return String(item);
 }
 
+export function findOptionFromSearch<Item>(
+  options: readonly { data: OptionValue<Item> }[],
+  search: string,
+  valueToString: (item: Item) => string,
+  startFrom?: OptionValue<Item>,
+): OptionValue<Item> | undefined {
+  const collator = new Intl.Collator("en", {
+    usage: "search",
+    sensitivity: "base",
+  });
+
+  const startFromIndex = startFrom
+    ? options.findIndex((item) => item.data.value === startFrom.value)
+    : -1;
+  const startIndex = startFrom ? startFromIndex + 1 : 0;
+
+  // getIndexOfOption historically identifies options by the first matching value.
+  // Retain that identity behavior for duplicate values without looking the option up
+  // again for every search candidate.
+  const firstIndexByValue = new Map<Item, number>();
+  for (let index = 0; index < options.length; index++) {
+    const value = options[index].data.value;
+    // findIndex with strict equality never finds NaN.
+    if (
+      (typeof value !== "number" || !Number.isNaN(value)) &&
+      !firstIndexByValue.has(value)
+    ) {
+      firstIndexByValue.set(value, index);
+    }
+  }
+
+  const letters = search.split("");
+  const allSameLetter =
+    letters.length > 0 &&
+    letters.every((letter) => collator.compare(letter, letters[0]) === 0);
+  let repeatedCharacterMatch: OptionValue<Item> | undefined;
+
+  for (let offset = 0; offset < options.length; offset++) {
+    const index = (startIndex + offset) % options.length;
+    const option = options[index].data;
+
+    if (firstIndexByValue.get(option.value) !== index) {
+      continue;
+    }
+
+    const optionText = valueToString(option.value);
+    if (
+      collator.compare(optionText.substring(0, search.length), search) === 0
+    ) {
+      return option;
+    }
+
+    if (
+      repeatedCharacterMatch === undefined &&
+      allSameLetter &&
+      collator.compare(optionText[0].toLowerCase(), letters[0]) === 0
+    ) {
+      repeatedCharacterMatch = option;
+    }
+  }
+
+  return repeatedCharacterMatch;
+}
+
 export function useListControl<Item>(props: ListControlProps<Item>) {
   const {
     open: openProp,
@@ -251,41 +315,14 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
   const getOptionFromSearch = useCallback(
     (search: string, startFrom?: OptionValue<Item>) => {
-      const collator = new Intl.Collator("en", {
-        usage: "search",
-        sensitivity: "base",
-      });
-
-      const startIndex = startFrom ? getIndexOfOption(startFrom) + 1 : 0;
-      const searchList = optionsRef.current.map((item) => item.data);
-
-      let matches = searchList.filter(
-        (option) =>
-          collator.compare(
-            valueToString(option.value).substring(0, search.length),
-            search,
-          ) === 0,
+      return findOptionFromSearch(
+        optionsRef.current,
+        search,
+        valueToString,
+        startFrom,
       );
-
-      if (matches.length === 0) {
-        const letters = search.split("");
-        const allSameLetter =
-          letters.length > 0 &&
-          letters.every((letter) => collator.compare(letter, letters[0]) === 0);
-        if (allSameLetter) {
-          matches = searchList.filter(
-            (option) =>
-              collator.compare(
-                valueToString(option.value)[0].toLowerCase(),
-                letters[0],
-              ) === 0,
-          );
-        }
-      }
-
-      return matches.find((option) => getIndexOfOption(option) >= startIndex);
     },
-    [getIndexOfOption, valueToString],
+    [valueToString],
   );
 
   const getFirstOption = useCallback(() => {
