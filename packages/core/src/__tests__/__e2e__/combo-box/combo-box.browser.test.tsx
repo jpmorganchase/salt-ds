@@ -25,6 +25,7 @@ const {
   SelectOnTab,
   LongList,
   PerformanceTest,
+  PerformanceTestOneThousand,
   Virtualized,
 } = composeStories(comboBoxStories);
 
@@ -573,7 +574,64 @@ describe("Given a ComboBox", () => {
     await renderWithSalt(<PerformanceTest />);
     await input().click();
     await expect.element(listbox()).toBeVisible();
+    expect(document.querySelectorAll(".saltOption")).toHaveLength(10_000);
   });
+
+  for (const [size, Fixture] of [
+    [1_000, PerformanceTestOneThousand],
+    [10_000, PerformanceTest],
+  ] as const) {
+    it(`supports ${size} non-virtualized options through focus, open, navigation, filter, and close`, async () => {
+      await renderWithSalt(
+        <>
+          <Fixture />
+          <button type="button">Outside</button>
+        </>,
+      );
+      input().element().focus();
+      await expect.element(input()).toHaveFocus();
+      await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+      const collapsedList = document.querySelector<HTMLElement>(
+        ".saltOptionList-collapsed",
+      );
+      if (!collapsedList) throw new Error("Collapsed option list missing");
+      await expect
+        .element(page.elementLocator(collapsedList))
+        .not.toBeVisible();
+      expect(document.querySelectorAll(".saltOption")).toHaveLength(size);
+
+      await input().click();
+      await expect
+        .poll(() => document.querySelectorAll(".saltOption").length, {
+          timeout: 30_000,
+        })
+        .toBe(size);
+      await page.getByRole("button", { name: "Outside" }).click();
+      await expect.element(listbox()).not.toBeInTheDocument();
+      expect(document.querySelectorAll(".saltOption")).toHaveLength(0);
+
+      input().element().focus();
+      await userEvent.keyboard("{ArrowDown}");
+      await expect
+        .poll(() => document.querySelectorAll(".saltOption").length, {
+          timeout: 30_000,
+        })
+        .toBe(size);
+      await expectActive(0);
+      await userEvent.keyboard("{ArrowDown}");
+      await expectActive(1);
+
+      await userEvent.keyboard(String(size - 1));
+      await expect
+        .poll(() => document.querySelectorAll(".saltOption").length, {
+          timeout: 30_000,
+        })
+        .toBe(1);
+      await page.getByRole("button", { name: "Outside" }).click();
+      await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+      expect(document.querySelectorAll(".saltOption")).toHaveLength(0);
+    });
+  }
 
   it("removes active descendant whenever the popup closes", async () => {
     await renderWithSalt(<Default />);

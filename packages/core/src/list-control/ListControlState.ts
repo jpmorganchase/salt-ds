@@ -7,6 +7,11 @@ import {
 } from "react";
 import { useControlled, useForkRef } from "../utils";
 import type { OptionValue } from "./ListControlContext";
+import {
+  createCoalescedRebuild,
+  ListControlRegistry,
+  type RegisteredOption,
+} from "./ListControlRegistry";
 
 export type OpenChangeReason = "input" | "manual";
 
@@ -55,6 +60,66 @@ export type ListControlProps<Item> = {
 
 export function defaultValueToString<Item>(item: Item): string {
   return String(item);
+}
+
+export function findOptionFromSearch<Item>(
+  options: readonly Pick<RegisteredOption<Item>, "data">[],
+  search: string,
+  valueToString: (item: Item) => string,
+  startFrom?: OptionValue<Item>,
+): OptionValue<Item> | undefined {
+  const collator = new Intl.Collator("en", {
+    usage: "search",
+    sensitivity: "base",
+  });
+  const startFromIndex = startFrom
+    ? options.findIndex((item) => item.data.value === startFrom.value)
+    : -1;
+  const startIndex = startFrom ? startFromIndex + 1 : 0;
+  const firstIndexByValue = new Map<Item, number>();
+
+  for (let index = 0; index < options.length; index++) {
+    const value = options[index].data.value;
+    // Strict equality, used by the legacy lookup, never matches NaN.
+    if (
+      (typeof value !== "number" || !Number.isNaN(value)) &&
+      !firstIndexByValue.has(value)
+    ) {
+      firstIndexByValue.set(value, index);
+    }
+  }
+
+  const letters = search.split("");
+  const allSameLetter =
+    letters.length > 0 &&
+    letters.every((letter) => collator.compare(letter, letters[0]) === 0);
+  let repeatedCharacterMatch: OptionValue<Item> | undefined;
+
+  for (let offset = 0; offset < options.length; offset++) {
+    const index = (startIndex + offset) % options.length;
+    const option = options[index].data;
+
+    if (firstIndexByValue.get(option.value) !== index) {
+      continue;
+    }
+
+    const optionText = valueToString(option.value);
+    if (
+      collator.compare(optionText.substring(0, search.length), search) === 0
+    ) {
+      return option;
+    }
+
+    if (
+      repeatedCharacterMatch === undefined &&
+      allSameLetter &&
+      collator.compare(optionText[0]?.toLowerCase(), letters[0]) === 0
+    ) {
+      repeatedCharacterMatch = option;
+    }
+  }
+
+  return repeatedCharacterMatch;
 }
 
 export function useListControl<Item>(props: ListControlProps<Item>) {
@@ -161,131 +226,70 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     }
   };
 
-  const optionsRef = useRef<
-    { data: OptionValue<Item>; element: HTMLElement }[]
-  >([]);
+  const registryRef = useRef<ListControlRegistry<Item> | null>(null);
+  if (registryRef.current === null) {
+    registryRef.current = new ListControlRegistry<Item>();
+  }
+  const registry = registryRef.current;
 
   const register = useCallback(
     (optionValue: OptionValue<Item>, element: HTMLElement) => {
-      const { id } = optionValue;
-
-      // Remove any existing entry with the same id to prevent duplicates.
-      // This is needed for virtualization where components may re-register.
-      const existingIndex = optionsRef.current.findIndex(
-        (item) => item.data.id === id,
-      );
-      if (existingIndex !== -1) {
-        optionsRef.current.splice(existingIndex, 1);
-      }
-
-      optionsRef.current.push({ data: optionValue, element });
-
-      return () => {
-        optionsRef.current = optionsRef.current.filter(
-          (item) => item.data.id !== id,
-        );
-      };
+      return registry.register(optionValue, element);
     },
-    [],
+    [registry],
   );
 
   useEffect(() => {
-    const sortOptions = () => {
-      optionsRef.current = optionsRef.current
-        .filter((a) => a.element.isConnected)
-        .sort(({ element: a }, { element: b }) => {
-          if (a === b) return 0;
-          const pos = a.compareDocumentPosition(b);
-          if (pos & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
-          if (pos & Node.DOCUMENT_POSITION_PRECEDING) return 1;
-          // Disconnected / impl-specific — keep input order (stable) or add your own rule
-          return 0;
-        });
-    };
-
-    const mutationObserver = new MutationObserver((mutations) => {
-      const optionsChanged = mutations.some((mutation) =>
-        Array.from(mutation.addedNodes).some(
-          (node) =>
-            node instanceof HTMLElement && node.matches?.('[role="option"]'),
-        ),
-      );
-
-      if (optionsChanged) {
-        sortOptions();
-      }
-    });
-
     if (!listElement) return;
+    const rebuild = () => registry.rebuild(listElement);
+    const coalescedRebuild = createCoalescedRebuild(rebuild);
+    const mutationObserver = new MutationObserver(coalescedRebuild.schedule);
     mutationObserver.observe(listElement, {
       childList: true,
       subtree: true,
     });
 
-    sortOptions();
+    rebuild();
 
-    return () => mutationObserver.disconnect();
-  }, [listElement]);
+    return () => {
+      coalescedRebuild.cancel();
+      mutationObserver.disconnect();
+    };
+  }, [listElement, registry]);
 
   const getOptionAtIndex = useCallback(
     (
       index: number,
     ): { data: OptionValue<Item>; element: HTMLElement } | undefined => {
-      return optionsRef.current[index];
+      return registry.getAt(index);
     },
-    [],
+    [registry],
   );
 
-  const getIndexOfOption = useCallback((option: OptionValue<Item>) => {
-    return optionsRef.current.findIndex(
-      (item) => item.data.value === option.value,
-    );
-  }, []);
+  const getIndexOfOption = useCallback(
+    (option: OptionValue<Item>) => {
+      return registry.indexOfValue(option.value);
+    },
+    [registry],
+  );
 
   const getOptionsMatching = useCallback(
     (predicate: (option: OptionValue<Item>) => boolean) => {
-      return optionsRef.current.filter((item) => predicate(item.data));
+      return registry.matching(predicate);
     },
-    [],
+    [registry],
   );
 
   const getOptionFromSearch = useCallback(
     (search: string, startFrom?: OptionValue<Item>) => {
-      const collator = new Intl.Collator("en", {
-        usage: "search",
-        sensitivity: "base",
-      });
-
-      const startIndex = startFrom ? getIndexOfOption(startFrom) + 1 : 0;
-      const searchList = optionsRef.current.map((item) => item.data);
-
-      let matches = searchList.filter(
-        (option) =>
-          collator.compare(
-            valueToString(option.value).substring(0, search.length),
-            search,
-          ) === 0,
+      return findOptionFromSearch(
+        registry.snapshot(),
+        search,
+        valueToString,
+        startFrom,
       );
-
-      if (matches.length === 0) {
-        const letters = search.split("");
-        const allSameLetter =
-          letters.length > 0 &&
-          letters.every((letter) => collator.compare(letter, letters[0]) === 0);
-        if (allSameLetter) {
-          matches = searchList.filter(
-            (option) =>
-              collator.compare(
-                valueToString(option.value)[0].toLowerCase(),
-                letters[0],
-              ) === 0,
-          );
-        }
-      }
-
-      return matches.find((option) => getIndexOfOption(option) >= startIndex);
     },
-    [getIndexOfOption, valueToString],
+    [registry, valueToString],
   );
 
   const getFirstOption = useCallback(() => {
@@ -293,29 +297,29 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   }, [getOptionAtIndex]);
 
   const getLastOption = useCallback(() => {
-    return getOptionAtIndex(optionsRef.current.length - 1);
-  }, [getOptionAtIndex]);
+    return getOptionAtIndex(registry.length - 1);
+  }, [getOptionAtIndex, registry]);
 
   const getOptionBefore = useCallback(
     (option: OptionValue<Item>) => {
-      const index = getIndexOfOption(option);
+      const index = registry.indexOfId(option.id);
       return getOptionAtIndex(index - 1);
     },
-    [getIndexOfOption, getOptionAtIndex],
+    [getOptionAtIndex, registry],
   );
 
   const getOptionAfter = useCallback(
     (option: OptionValue<Item>) => {
-      const index = getIndexOfOption(option);
+      const index = registry.indexOfId(option.id);
       return getOptionAtIndex(index + 1);
     },
-    [getIndexOfOption, getOptionAtIndex],
+    [getOptionAtIndex, registry],
   );
 
   const getOptionPageAbove = useCallback(
     (start: OptionValue<Item>) => {
       const list = listRef.current;
-      let option = optionsRef.current.find((option) => option.data === start);
+      let option = registry.findByData(start);
 
       if (!list || !option) {
         return undefined;
@@ -338,13 +342,13 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
       return option ?? getFirstOption();
     },
-    [getFirstOption, getOptionBefore],
+    [getFirstOption, getOptionBefore, registry],
   );
 
   const getOptionPageBelow = useCallback(
     (start: OptionValue<Item>) => {
       const list = listRef.current;
-      let option = optionsRef.current.find((option) => option.data === start);
+      let option = registry.findByData(start);
 
       if (!list || !option) {
         return undefined;
@@ -367,14 +371,14 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
       return option ?? getLastOption();
     },
-    [getLastOption, getOptionAfter],
+    [getLastOption, getOptionAfter, registry],
   );
 
   useEffect(() => {
     if (listRef.current) {
-      const activeElement = optionsRef.current.find(
-        (option) => option.data === activeState,
-      )?.element;
+      const activeElement = activeState
+        ? registry.findByData(activeState)?.element
+        : undefined;
 
       if (!activeElement) {
         return;
@@ -385,7 +389,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
         inline: "nearest",
       });
     }
-  }, [activeState]);
+  }, [activeState, registry]);
 
   return {
     multiselect: Boolean(multiselect),
@@ -404,7 +408,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     setFocusedState,
     setListRef,
     listRef,
-    options: optionsRef.current.map((option) => option.element),
     register,
     getOptionAtIndex,
     getIndexOfOption,

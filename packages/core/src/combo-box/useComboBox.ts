@@ -9,6 +9,14 @@ import { useControlled } from "../utils";
 export type UseComboBoxProps<Item> = ListControlProps<Item> &
   Pick<ComponentPropsWithoutRef<"input">, "value" | "defaultValue">;
 
+export function getInputValueAfterSelection<Item>(
+  option: OptionValue<Item>,
+  multiselect: boolean | undefined,
+  valueToString: (item: Item) => string,
+): string {
+  return multiselect ? "" : valueToString(option.value);
+}
+
 export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
   const {
     open,
@@ -38,8 +46,7 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
     valueToString,
   });
 
-  const { selectedState, getOptionsMatching, setSelectedState, setOpen } =
-    listControl;
+  const { selectedState, setSelectedState, setOpen } = listControl;
 
   const [valueState, setValueState] = useControlled({
     controlled: value,
@@ -68,10 +75,13 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
     }
 
     setSelectedState(newSelected);
-    const newValue = getOptionsMatching((option) =>
-      newSelected.includes(option.value),
-    ).map((option) => listControl.valueToString(option.data.value));
-    setValueState(multiselect ? "" : newValue[0]);
+    setValueState(
+      getInputValueAfterSelection(
+        option,
+        multiselect,
+        listControl.valueToString,
+      ),
+    );
     onSelectionChange?.(event, newSelected);
 
     if (!multiselect) {
