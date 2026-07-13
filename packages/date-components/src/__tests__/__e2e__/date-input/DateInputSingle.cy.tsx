@@ -128,6 +128,16 @@ describe("GIVEN a DateInputSingle", () => {
         cy.findByRole("textbox").should("have.attr", "aria-invalid", "true");
       });
 
+      it("SHOULD show the empty marker when read-only with an empty default value", () => {
+        cy.mount(<DateInputSingle defaultValue="" readOnly />);
+        cy.findByRole("textbox").should("have.value", "—");
+      });
+
+      it("SHOULD show the empty marker when read-only with a controlled empty value", () => {
+        cy.mount(<DateInputSingle value="" readOnly />);
+        cy.findByRole("textbox").should("have.value", "—");
+      });
+
       it("SHOULD use top-level aria-label", () => {
         cy.mount(<DateInputSingle aria-label="trade date" />);
 
