@@ -1,5 +1,23 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.99
+
+### Minor Changes
+
+- 9c9b83e: Added `BreadcrumbsNext`, `BreadcrumbNext`, `BreadcrumbNextTrigger`, and `BreadcrumbNextLabel` for accessible breadcrumb navigation. Supports wrapping, disclosure collapse, and routing integration via `render` props.
+
+### Patch Changes
+
+- d37a311: Updated Floating UI from `0.26.28` to `0.27.19`.
+- Updated dependencies [747cb08]
+- Updated dependencies [d84df88]
+- Updated dependencies [56855cb]
+- Updated dependencies [e226b17]
+- Updated dependencies [9c9b83e]
+- Updated dependencies [747cb08]
+- Updated dependencies [d37a311]
+  - @salt-ds/core@1.67.0
+
 ## 1.0.0-alpha.98
 
 ### Minor Changes

@@ -1,0 +1,38 @@
+.saltBreadcrumbNext {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 1 auto;
+  gap: var(--salt-spacing-100);
+  list-style: none;
+  min-width: 0;
+}
+
+.saltBreadcrumbNext-current,
+.saltBreadcrumbNext-label,
+.saltBreadcrumbNext-link,
+.saltBreadcrumbNext-trigger {
+  min-width: 0;
+}
+
+.saltBreadcrumbNext-trigger {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--salt-spacing-50);
+  max-width: 100%;
+}
+
+.saltBreadcrumbNext-link.saltLink {
+  --link-color-visited: var(--link-color);
+  --link-textDecoration-visited: var(--link-textDecoration);
+}
+
+.saltBreadcrumbNext-current.saltLink {
+  cursor: var(--salt-cursor-text);
+}
+
+.saltBreadcrumbNext-separator {
+  --saltIcon-color: var(--salt-content-secondary-foreground);
+  --saltIcon-size: var(--salt-size-icon);
+
+  flex: 0 0 auto;
+}

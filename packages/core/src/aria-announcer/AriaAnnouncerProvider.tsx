@@ -1,7 +1,9 @@
+import { useWindow } from "@salt-ds/window";
 import {
   type ComponentPropsWithRef,
   forwardRef,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -47,6 +49,8 @@ export const AriaAnnouncerProvider = forwardRef<
   HTMLDivElement,
   AriaAnnouncerProviderProps
 >(function AriaAnnouncerProvider({ children, style, target, ...rest }, ref) {
+  const targetWindow = useWindow();
+
   const [politeAnnouncements, setPoliteAnnouncements] = useState<
     AnnouncementMessage[]
   >([]);
@@ -55,6 +59,26 @@ export const AriaAnnouncerProvider = forwardRef<
   >([]);
 
   const idCounterRef = useRef(0);
+  const timeoutsRef = useRef<Set<number>>(new Set());
+
+  const scheduleRemoval = useCallback(
+    (id: string, assertiveness: "polite" | "assertive", duration: number) => {
+      if (!targetWindow) return;
+
+      const setter =
+        assertiveness === "polite"
+          ? setPoliteAnnouncements
+          : setAssertiveAnnouncements;
+      const handle = targetWindow.setTimeout(() => {
+        timeoutsRef.current.delete(handle);
+        setter((previous) =>
+          previous.filter((announcement) => announcement.id !== id),
+        );
+      }, duration);
+      timeoutsRef.current.add(handle);
+    },
+    [targetWindow],
+  );
 
   const makeAnnouncement = useCallback(
     (
@@ -71,26 +95,25 @@ export const AriaAnnouncerProvider = forwardRef<
         setPoliteAnnouncements((previous) => {
           return previous.concat({ id, message });
         });
-
-        setTimeout(() => {
-          setPoliteAnnouncements((previous) =>
-            previous.filter((announcement) => announcement.id !== id),
-          );
-        }, duration);
       } else {
         setAssertiveAnnouncements((previous) => {
           return previous.concat({ id, message });
         });
-
-        setTimeout(() => {
-          setAssertiveAnnouncements((previous) =>
-            previous.filter((announcement) => announcement.id !== id),
-          );
-        }, duration);
       }
+      scheduleRemoval(id, assertiveness, duration);
     },
-    [],
+    [scheduleRemoval],
   );
+
+  useEffect(() => {
+    const timeouts = timeoutsRef.current;
+    return () => {
+      for (const handle of timeouts) {
+        targetWindow?.clearTimeout(handle);
+      }
+      timeouts.clear();
+    };
+  }, [targetWindow]);
 
   const announce = useCallback(
     (
