@@ -17,9 +17,12 @@ Icons come in two variant types: **Outline** and **Solid**. Please note that all
 
 **Outline icons** place less emphasis on non-imperative items and are more recognizable when they have wider inner spacing. They’re also better to use when you need to make subtle design cues more noticeable.
 
-<Image
+<Diagram
   src="/img/foundations/iconography-icon-variants.png"
+  srcDark="/img/foundations/iconography-icon-variants-dark.png"
   alt="Example of solid and outline icons"
+  border
+  background="secondary"
 />
 
 ## All icons
@@ -30,9 +33,15 @@ Icons come in two variant types: **Outline** and **Solid**. Please note that all
 
 Icon size will vary based on use case and system requirements. Standard sizing ensures components maintain a consistent spatial relationship with surrounding elements.
 
-<Image
+<Diagram
   src="/img/foundations/iconography-icon-size.png"
+  srcDark="/img/foundations/iconography-icon-size-dark.png"
   alt="Example of an icon in three scaled sizes"
+  border
+  background="secondary"
+/>
+
+
 />
 
 | Size token         | Multiplier | High Density (HD) | Medium Density (MD) | Low Density (LD) | Touch Density (TD) |
@@ -43,3 +52,118 @@ Icon size will vary based on use case and system requirements. Standard sizing e
 |                    | x4         | 40                | 48                  | 56               | 64                 |
 
 \* Icons have a minimum size set at 12px and should not be displayed any smaller. For high density this means the default size of an icon is 12px, but the rest of the scale grows based on small base dimension.
+
+### Icon sizing when paired with display and heading text
+
+- Icon container height = text line-height
+- Icon glyph size = text font-size
+- Icon vertical alignment = center
+
+When an icon is paired with **display** or **heading** text styles, the icon size (i.e., the glyph) is aligned with the text size, and the icon’s container is aligned with text line height. 
+This approach ensures the icon and text remain visually balanced and that the icon stays perfectly aligned with the text block, even in multi-line layouts.
+
+<Diagram
+  src="/img/foundations/iconography-icon-heading-size.png"
+  srcDark="/img/foundations/iconography-icon-heading-size-dark.png"
+  alt="Icon aligned with Display1 text, with spacing measurements"
+  border
+  background="secondary"
+/>
+*The diagram shown is based on medium density values. Always use design tokens for icon sizing and spacing; do not hardcode pixel values.*
+
+## Spacing between icon and text
+
+Spacing between an icon and its paired text varies by context. The sub-sections below cover key scenarios.
+
+### When to use spacing-50
+Apply --salt-spacing-50 — the icon is used within small, primitive components to describe the interaction or label. This applies to:
+- Button
+- Toggle Button
+- Pill
+- Tag
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/iconography-icon-spacing-50.png", alt: "Spacing 50 examples for icon and text." },
+    { src: "/img/foundations/iconography-icon-spacing-50-spacer.png", alt: "Spacing 50 examples for icon and text with annotation." },
+  ]}
+  darkImages={[
+    { src: "/img/foundations/iconography-icon-spacing-50-dark.png", alt: "Spacing 50 examples for icon and text." },
+    { src: "/img/foundations/iconography-icon-spacing-50-spacer-dark.png", alt: "Spacing 50 examples for icon and text with annotaion." },
+  ]}
+  label="Show spacing"
+/>
+
+### When to use spacing-75
+Apply --salt-spacing-75 — the icon describes a heading or statement; often used within ‘messaging’ type components or where the icon is part of a sentence; it isn’t constrained within a small component. This applies to:
+- Banner
+- Toast
+- Dialog
+- Tooltip
+- Form Field Status Text
+- Link
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/iconography-icon-spacing-75.png", alt: "Spacing 75 examples for icon and text." },
+    { src: "/img/foundations/iconography-icon-spacing-75-spacer.png", alt: "Spacing 75 examples for icon and text with annotation." },
+  ]}
+  darkImages={[
+    { src: "/img/foundations/iconography-icon-spacing-75-dark.png", alt: "Spacing 75 examples for icon and text." },
+    { src: "/img/foundations/iconography-icon-spacing-75-spacer-dark.png", alt: "Spacing 75 examples for icon and text with annotaion." },
+  ]}
+  label="Show spacing"
+/>
+
+### When to use spacing-100
+Apply --salt-spacing-100 — the icon describes the title or label of ‘stackable’ (i.e., those with a slightly larger height, designed to accommodated nested controls, such as buttons) or repeated elements (where clean vertical alignment is required); also applies to radio/checkbox controls. This applies to:
+- Accordion Headers
+- Vertical Navigation
+- Tabs
+- Tree, List Box, Menu Items
+- Checkbox, Radio Button
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/iconography-icon-spacing-100.png", alt: "Spacing 100 examples for icon and text." },
+    { src: "/img/foundations/iconography-icon-spacing-100-spacer.png", alt: "Spacing 100 examples for icon and text with annotation." },
+  ]}
+  darkImages={[
+    { src: "/img/foundations/iconography-icon-spacing-100-dark.png", alt: "Spacing 100 examples for icon and text." },
+    { src: "/img/foundations/iconography-icon-spacing-100-spacer-dark.png", alt: "Spacing 100 examples for icon and text with annotaion." },
+  ]}
+  label="Show spacing"
+/>
+
+### Spacing between icon and heading/ display text
+<Callout
+  status="info"
+>
+This spacing update is experimental. We welcome your feedback to help us refine and optimize this guideline. The goal is to apply these updated rules to existing components, including Dialog (currently using --spacing-75, see above). Please [reach out to the team](/salt/support-and-contributions/index)with any thoughts or suggestions on this new spacing rule.
+</Callout>
+
+To ensure visual balance and readability, spacing between icons and Heading/Display text is tailored according to the size of the text. This approach helps maintain a harmonious and comfortable layout across different heading and display levels.
+
+This is the recommended spacing in editorial/marketing layouts and where headings are used within components.
+
+
+| Heading/ Display text | Spacing between Icon & Text |
+| --------------------- | --------------------------- | 
+| Display1, Display2    | Spacing-300                 | 
+| Display3, Display4    | Spacing-250                 | 
+| H1, H2                | Spacing-150                 | 
+| H3, H4                | Spacing-100                 | 
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/iconography-icon-spacing-heading.png", alt: "Icon spacing examples for Display and Heading text sizes." },
+    { src: "/img/foundations/iconography-icon-spacing-heading-spacer.png", alt: "Icon spacing examples for Display and Heading text size with annotation." },
+  ]}
+  darkImages={[
+    { src: "/img/foundations/iconography-icon-spacing-heading-dark.png", alt: "Icon spacing examples for Display and Heading text sizes." },
+    { src: "/img/foundations/iconography-icon-spacing-heading-spacer-dark.png", alt: "Icon spacing examples for Display and Heading text size with annotation." },
+  ]}
+  label="Show spacing"
+/>
+
+:fragment{src="./../fragments/feedback.mdx"}
