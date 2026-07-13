@@ -7,7 +7,6 @@
   box-sizing: border-box;
   display: flex;
   gap: var(--salt-spacing-75);
-  /* stylelint-disable-next-line salt/correct-theme-token-usage -- page margin is intentional for full-width, page-level system status */
   padding: var(--saltSystemStatus-padding, var(--salt-spacing-100) var(--salt-layout-page-margin));
   width: 100%;
   font-family: var(--salt-text-fontFamily);
