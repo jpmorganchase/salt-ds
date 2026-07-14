@@ -3,10 +3,6 @@ import {
   AvatarGroup,
   FlowLayout,
   Label,
-  Menu,
-  MenuItem,
-  MenuPanel,
-  MenuTrigger,
   StackLayout,
   useAvatarImage,
 } from "@salt-ds/core";
@@ -126,42 +122,6 @@ export const AvatarGroupRenderProp: StoryFn<typeof AvatarGroup> = (args) => {
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
       <Avatar name="Jane Doe" color="category-4" />
-    </AvatarGroup>
-  );
-};
-
-export const AvatarGroupWithMenu: StoryFn<typeof AvatarGroup> = (args) => {
-  return (
-    <AvatarGroup
-      max={3}
-      renderSurplus={({ count, hiddenAvatars }) => (
-        <Menu placement="bottom-end">
-          <MenuTrigger>
-            <Avatar
-              size={1}
-              name={`+${count}`}
-              render={
-                <button type="button" aria-label={`${count} more people`} />
-              }
-            >
-              {`+${count}`}
-            </Avatar>
-          </MenuTrigger>
-          <MenuPanel>
-            {hiddenAvatars.map((avatar) => (
-              <MenuItem key={avatar.props.name}>{avatar.props.name}</MenuItem>
-            ))}
-          </MenuPanel>
-        </Menu>
-      )}
-      {...args}
-    >
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" />
-      <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
-      <Avatar name="Lizzy Lee" color="category-5" />
-      <Avatar name="John Smith" color="category-6" />
     </AvatarGroup>
   );
 };
