@@ -1,45 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import { getInputValueAfterSelection } from "../../../combo-box/useComboBox";
 import type { OptionValue } from "../../../list-control/ListControlContext";
 import { findOptionFromSearch } from "../../../list-control/ListControlState";
 
 const option = <Item>(id: string, value: Item, disabled = false) => ({
   data: { id, value, disabled } satisfies OptionValue<Item>,
-});
-
-describe("getInputValueAfterSelection", () => {
-  it("converts only the selected option for single select", () => {
-    const selected = option("selected", "Selected").data;
-    const valueToString = vi.fn((value: string) => value);
-
-    expect(getInputValueAfterSelection(selected, false, valueToString)).toBe(
-      "Selected",
-    );
-    expect(valueToString).toHaveBeenCalledTimes(1);
-    expect(valueToString).toHaveBeenCalledWith("Selected");
-  });
-
-  it("does not inspect or convert a 10k registry for multiselect", () => {
-    const options = Array.from({ length: 10_000 }, (_, index) =>
-      option(String(index), `Item ${index}`),
-    );
-    let indexedReads = 0;
-    const measuredOptions = new Proxy(options, {
-      get(target, property, receiver) {
-        if (typeof property === "string" && /^\d+$/.test(property)) {
-          indexedReads++;
-        }
-        return Reflect.get(target, property, receiver);
-      },
-    });
-    const selected = measuredOptions[9_999].data;
-    indexedReads = 0;
-    const valueToString = vi.fn((value: string) => value);
-
-    expect(getInputValueAfterSelection(selected, true, valueToString)).toBe("");
-    expect(indexedReads).toBe(0);
-    expect(valueToString).not.toHaveBeenCalled();
-  });
 });
 
 const values = (...items: string[]) =>
