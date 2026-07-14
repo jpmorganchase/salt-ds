@@ -68,7 +68,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const withBaseName = makePrefixer("saltAvatar");
-export const DEFAULT_AVATAR_SIZE = 2; // medium
+const DEFAULT_AVATAR_SIZE = 2; // medium
 
 interface AvatarActionProps extends ComponentPropsWithoutRef<"div"> {
   render?: RenderPropsType["render"];
