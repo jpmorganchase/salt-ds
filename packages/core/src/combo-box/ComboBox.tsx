@@ -26,10 +26,8 @@ import {
 } from "react";
 import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";
-import {
-  ListControlContext,
-  type OptionValue,
-} from "../list-control/ListControlContext";
+import type { OptionValue } from "../list-control/ListControlContext";
+import { ListControlProvider } from "../list-control/ListControlProvider";
 import { defaultValueToString } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
 import { PillInput, type PillInputProps } from "../pill-input";
@@ -467,7 +465,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     );
 
   return (
-    <ListControlContext.Provider value={listControl}>
+    <ListControlProvider value={listControl}>
       <PillInput
         // Ensures that the field is focused when you don't directly click on the input.
         tabIndex={!disabled ? -1 : undefined}
@@ -535,7 +533,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       >
         {children}
       </OptionList>
-    </ListControlContext.Provider>
+    </ListControlProvider>
   );
 }) as <Item = string>(
   props: ComboBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
