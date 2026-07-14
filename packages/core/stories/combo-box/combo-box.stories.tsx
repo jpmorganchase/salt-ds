@@ -920,7 +920,7 @@ export const Bordered = () => {
   );
 };
 
-export const createPerformanceItems = (size: number) =>
+const createPerformanceItems = (size: number) =>
   Array.from({ length: size }, (_, index) => `Option ${index}`);
 
 const performanceItems = {

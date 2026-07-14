@@ -7,7 +7,6 @@ import {
   type MouseEvent,
   memo,
   type ReactNode,
-  useEffect,
   useMemo,
   useRef,
 } from "react";
@@ -20,7 +19,12 @@ import {
   OPTION_STATE_FOCUS_VISIBLE,
   OPTION_STATE_SELECTED,
 } from "../list-control/ListControlOptionStore";
-import { makePrefixer, useForkRef, useId } from "../utils";
+import {
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 import optionCss from "./Option.css";
 
 export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
@@ -118,7 +122,7 @@ const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
       setActive(optionValue);
     };
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (id && optionRef.current) {
         return register(optionValue, optionRef.current);
       }
@@ -127,6 +131,7 @@ const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
     const handleRef = useForkRef(optionRef, ref);
 
     return (
+      // biome-ignore lint/a11y/useKeyWithClickEvents: The click event is handled by the parent list control, which manages keyboard interactions.
       <div
         aria-disabled={disabled ? "true" : undefined}
         aria-selected={selected}

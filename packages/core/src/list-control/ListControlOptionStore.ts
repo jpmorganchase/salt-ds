@@ -129,11 +129,6 @@ export class ListControlOptionStore<Item> {
     }
   }
 
-  /** Test-only observability without exposing mutable listener state. */
-  get listenerEntryCount(): number {
-    return this.#listeners.size;
-  }
-
   #notify(id: string): void {
     const listeners = this.#listeners.get(id);
     if (!listeners) return;
