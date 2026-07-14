@@ -4,14 +4,15 @@ import {
   BannerContent,
   Button,
   StackLayout,
+  SystemStatus,
+  SystemStatusContent,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
-  title: "Lab/System Status",
+  title: "Core/System Status",
   component: SystemStatus,
 } as Meta<typeof SystemStatus>;
 
