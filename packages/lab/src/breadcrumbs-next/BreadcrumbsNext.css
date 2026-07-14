@@ -29,8 +29,11 @@
 
 .saltBreadcrumbsNext-collapseButton[aria-expanded="true"] {
   --saltButton-background: var(--salt-actionable-subtle-background-active);
+  --saltButton-background-hover: var(--salt-actionable-subtle-background-active);
   --saltButton-text-color: var(--salt-actionable-subtle-foreground-active);
+  --saltButton-text-color-hover: var(--salt-actionable-subtle-foreground-active);
   --saltButton-borderColor: var(--salt-actionable-subtle-borderColor-active);
+  --saltButton-borderColor-hover: var(--salt-actionable-subtle-borderColor-active);
   cursor: var(--salt-cursor-active);
 }
 
