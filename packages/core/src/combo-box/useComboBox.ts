@@ -4,7 +4,7 @@ import {
   type ListControlProps,
   useListControl,
 } from "../list-control/ListControlState";
-import { useControlled } from "../utils";
+import { useControlled, useEventCallback } from "../utils";
 
 export type UseComboBoxProps<Item> = ListControlProps<Item> &
   Pick<ComponentPropsWithoutRef<"input">, "value" | "defaultValue">;
@@ -59,35 +59,37 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
     state: "value",
   });
 
-  const select = (event: SyntheticEvent, option: OptionValue<Item>) => {
-    if (option.disabled || disabled || readOnly) {
-      return;
-    }
-
-    let newSelected = [option.value];
-
-    if (multiselect) {
-      if (selectedState.includes(option.value)) {
-        newSelected = selectedState.filter((item) => item !== option.value);
-      } else {
-        newSelected = selectedState.concat([option.value]);
+  const select = useEventCallback(
+    (event: SyntheticEvent, option: OptionValue<Item>) => {
+      if (option.disabled || disabled || readOnly) {
+        return;
       }
-    }
 
-    setSelectedState(newSelected);
-    setValueState(
-      getInputValueAfterSelection(
-        option,
-        multiselect,
-        listControl.valueToString,
-      ),
-    );
-    onSelectionChange?.(event, newSelected);
+      let newSelected = [option.value];
 
-    if (!multiselect) {
-      setOpen(false);
-    }
-  };
+      if (multiselect) {
+        if (selectedState.includes(option.value)) {
+          newSelected = selectedState.filter((item) => item !== option.value);
+        } else {
+          newSelected = selectedState.concat([option.value]);
+        }
+      }
+
+      setSelectedState(newSelected);
+      setValueState(
+        getInputValueAfterSelection(
+          option,
+          multiselect,
+          listControl.valueToString,
+        ),
+      );
+      onSelectionChange?.(event, newSelected);
+
+      if (!multiselect) {
+        setOpen(false);
+      }
+    },
+  );
 
   const removePill = (event: SyntheticEvent, itemToRemove: Item) => {
     if (!multiselect || disabled || readOnly) {
