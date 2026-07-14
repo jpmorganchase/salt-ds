@@ -40,6 +40,7 @@ button.saltAvatarGroup:disabled {
   cursor: var(--salt-cursor-disabled);
 }
 
+/* Fallback separator when :has() is unsupported. */
 .saltAvatarGroup .saltAvatar:not(:first-child)::after {
   content: "";
   position: absolute;
@@ -51,13 +52,11 @@ button.saltAvatarGroup:disabled {
 }
 
 @supports selector(:has(*)) {
-  /* Remove only the fallback border so the interactive hover overlay on ::after is preserved. */
   .saltAvatarGroup .saltAvatar:not(:first-child)::after {
     border: none;
   }
 
-  /* Cut a gap where the following sibling overlaps. Keyed off the following sibling's kind so mixed
-     groups mask correctly; a round (person) neighbour uses a circular cut matching its silhouette plus the gap. */
+  /* Match the cut to the following avatar's shape. */
   .saltAvatarGroup .saltAvatar:has(+ .saltAvatar:not(.saltAvatar-entity)) {
     --avatarGroup-mask-radius: calc(var(--avatar-container-size) / 2 + var(--avatarGroup-gap));
     --avatarGroup-mask-x: calc(var(--avatar-container-size) * 1.5 - var(--avatarGroup-overlap));
@@ -73,13 +72,10 @@ button.saltAvatarGroup:disabled {
     );
   }
 
-  /* Entity avatars are square, so a square neighbour needs a rounded-rectangle notch instead of a circular
-     cut: a straight channel down its left edge plus rounded corners top and bottom. */
+  /* Square neighbours need a rounded-rectangle notch. */
   .saltAvatarGroup .saltAvatar:has(+ .saltAvatar-entity) {
-    /* Following entity's corner radius, expanded by the gap so the cut sits a gap-width outside it */
     --avatarGroup-notch-corner: var(--saltAvatar-entity-borderRadius, var(--salt-palette-corner-weak, 0));
     --avatarGroup-notch-radius: calc(var(--avatarGroup-notch-corner) + var(--avatarGroup-gap));
-    /* Left edge of the cut: the following sibling's left edge, moved left by the gap */
     --avatarGroup-notch-x: calc(var(--avatar-container-size) - var(--avatarGroup-overlap) - var(--avatarGroup-gap));
     -webkit-mask:
       linear-gradient(to right, black var(--avatarGroup-notch-x), transparent var(--avatarGroup-notch-x)) 0 0 / 100% 100% no-repeat,
