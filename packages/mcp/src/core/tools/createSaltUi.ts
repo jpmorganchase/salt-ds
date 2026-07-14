@@ -1,0 +1,870 @@
+import type { SaltRegistry, SaltStatus } from "../types.js";
+import { compareOptions } from "./compareOptions.js";
+import {
+  buildCreateCompositionGuidance,
+  type WorkflowCompositionContract,
+  type WorkflowOpenQuestion,
+} from "./compositionContract.js";
+import type { SuggestedFollowUp } from "./consumerPresentation.js";
+import { enrichResolvedCreateResult } from "./createEnrichment.js";
+import {
+  type CreateRecommendationResolution,
+  hasCreateComparisonInput,
+  resolveCreateRecommendation,
+} from "./createResolve.js";
+import { deriveCreateTargetReferenceFromQuery } from "./createRetrieval.js";
+import {
+  buildDecisionDebug,
+  getCreateSaltUiRelatedGuides,
+  getDecisionName,
+  getGuidanceSources,
+  getNamedRecords,
+  reorderByPreferredCategories,
+  scoreFoundationComparison,
+  toFoundationDifference,
+  uniqueNormalized,
+} from "./createSaltUiHelpers.js";
+import {
+  type CreateThemeProviderQuestion,
+  evaluateCreateThemeProviderQuestion,
+} from "./createSaltUiThemeQuestion.js";
+import { getCompositionRecipe } from "./getCompositionRecipe.js";
+import { getFoundation } from "./getFoundation.js";
+import { getSaltEntity } from "./getSaltEntity.js";
+import {
+  appendProjectConventionsNextStep,
+  buildGuidanceBoundary,
+  type GuidanceBoundary,
+} from "./guidanceBoundary.js";
+import type { GuideReference } from "./guideAwareness.js";
+import { appendGroundedIconStarterSnippet } from "./iconGrounding.js";
+import { listFoundations } from "./listFoundations.js";
+import { recommendComponent } from "./recommendComponent.js";
+import { recommendTokens } from "./recommendTokens.js";
+import { searchComponentCapabilities } from "./searchComponentCapabilities.js";
+import {
+  createFoundationStarterCode,
+  type StarterCodeSnippet,
+} from "./starterCode.js";
+import { normalizeQuery } from "./utils.js";
+
+export type SaltSolutionType =
+  | "auto"
+  | "component"
+  | "pattern"
+  | "foundation"
+  | "token";
+
+export interface CreateSaltUiInput {
+  query?: string;
+  names?: string[];
+  solution_type?: SaltSolutionType;
+  preferred_categories?: string[];
+  package?: string;
+  status?: SaltStatus;
+  top_k?: number;
+  production_ready?: boolean;
+  prefer_stable?: boolean;
+  a11y_required?: boolean;
+  form_field_support?: boolean;
+  include_starter_code?: boolean;
+  resolved_entities?: string[];
+  view?: "compact" | "full";
+  /**
+   * Three-valued provider-declaration signal from the calling host.
+   * - `true` — the host detected a declared theme provider in the repo;
+   *   create_salt_ui will NOT emit the SaltProvider vs SaltProviderNext
+   *   theme-provider-choice question even if the query is theme-ambiguous.
+   * - `false` — the host confirmed no provider is declared; the
+   *   theme-provider-choice question is eligible whenever the query is
+   *   theme- or brand-ambiguous.
+   * - `undefined` — the host has no signal; ambiguity alone triggers the
+   *   question because there is no evidence either way.
+   */
+  repo_has_theme_provider?: boolean;
+}
+
+export interface CreateSaltUiResult {
+  mode: "recommend" | "compare";
+  solution_type: Exclude<SaltSolutionType, "auto">;
+  guidance_boundary: GuidanceBoundary;
+  guidance_sources?: string[];
+  decision: {
+    name: string | null;
+    why: string;
+  };
+  recommended?: Record<string, unknown> | null;
+  alternatives?: Array<Record<string, unknown>>;
+  compared?: Array<Record<string, unknown>>;
+  differences?: Array<{
+    criterion: string;
+    values: Array<{
+      name: string;
+      value: string | boolean | number | null;
+    }>;
+  }>;
+  suggested_follow_ups?: SuggestedFollowUp[];
+  related_guides?: GuideReference[];
+  starter_code?: StarterCodeSnippet[];
+  composition_contract?: WorkflowCompositionContract | null;
+  open_questions?: WorkflowOpenQuestion[];
+  next_step?: string;
+  did_you_mean?: string[];
+  ambiguity?: Record<string, unknown>;
+  raw?: Record<string, unknown>;
+}
+
+function withCompositionGuidance(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  result: CreateSaltUiResult,
+): CreateSaltUiResult {
+  const compositionGuidance = buildCreateCompositionGuidance(registry, {
+    query: input.query,
+    solution_type: result.solution_type,
+    decision_name: result.decision.name,
+  });
+
+  return {
+    ...result,
+    composition_contract: compositionGuidance.composition_contract,
+    ...(compositionGuidance.open_questions.length > 0
+      ? { open_questions: compositionGuidance.open_questions }
+      : {}),
+  };
+}
+
+function shouldUseNamedPatternGuidance(input: {
+  registry: SaltRegistry;
+  query: string | undefined;
+  routed_query: string | undefined;
+  retrieval: CreateRecommendationResolution["retrieval"];
+}): boolean {
+  const targetName = input.routed_query?.trim();
+  if (!targetName) {
+    return false;
+  }
+
+  if (!input.query) {
+    return true;
+  }
+
+  if (normalizeQuery(targetName) === normalizeQuery(input.query)) {
+    return true;
+  }
+
+  const reference = deriveCreateTargetReferenceFromQuery(
+    input.registry,
+    input.query,
+  );
+  if (
+    !reference ||
+    reference.requested_target.entity_type !== "pattern" ||
+    reference.requested_target.name !== targetName
+  ) {
+    const retrievalOwner = input.retrieval?.owner;
+    return (
+      retrievalOwner?.entity_type === "pattern" &&
+      retrievalOwner.entity_name === targetName &&
+      retrievalOwner.explicit_owner_hits > 0
+    );
+  }
+
+  return (
+    reference.reference_kind === "exact" || reference.reference_kind === "alias"
+  );
+}
+
+function buildNamedPatternCreateResult(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  guidanceBoundary: GuidanceBoundary,
+  retrieval: CreateRecommendationResolution["retrieval"],
+  preferredCategories: string[],
+  patternName: string,
+): CreateSaltUiResult | null {
+  const exact = getSaltEntity(registry, {
+    entity_type: "pattern",
+    name: patternName,
+    include_related: true,
+    include_starter_code: input.include_starter_code !== false,
+    view: input.view ?? "compact",
+  });
+
+  if (exact.decision.status !== "found" || !exact.entity) {
+    return null;
+  }
+
+  const relatedPatterns =
+    exact.related?.patterns?.filter(
+      (entry): entry is Record<string, unknown> =>
+        Boolean(entry) && typeof entry === "object",
+    ) ?? [];
+  const relatedComponents =
+    exact.related?.components?.filter(
+      (entry): entry is Record<string, unknown> =>
+        Boolean(entry) && typeof entry === "object",
+    ) ?? [];
+
+  return withCompositionGuidance(registry, input, {
+    mode: "recommend",
+    solution_type: "pattern",
+    guidance_boundary: guidanceBoundary,
+    decision: {
+      name: getDecisionName(exact.entity),
+      why: exact.decision.why,
+    },
+    guidance_sources: getGuidanceSources(exact.entity),
+    recommended: exact.entity,
+    alternatives: reorderByPreferredCategories(
+      registry,
+      "pattern",
+      relatedPatterns,
+      preferredCategories,
+    ),
+    suggested_follow_ups: exact.suggested_follow_ups,
+    related_guides: getCreateSaltUiRelatedGuides(registry, [
+      exact.entity,
+      ...relatedPatterns,
+      ...relatedComponents,
+    ]),
+    starter_code: exact.starter_code,
+    next_step: appendProjectConventionsNextStep(
+      exact.next_step,
+      guidanceBoundary,
+    ),
+    did_you_mean: exact.did_you_mean,
+    ambiguity: exact.ambiguity as Record<string, unknown> | undefined,
+    raw:
+      (input.view ?? "compact") === "full"
+        ? {
+            decision_debug: buildDecisionDebug(
+              registry,
+              "pattern",
+              exact.entity,
+              preferredCategories,
+            ),
+            create_retrieval: retrieval,
+            exact_pattern: exact,
+          }
+        : undefined,
+  });
+}
+
+function createSaltUiAtView(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  resolutionInput?: CreateRecommendationResolution,
+): CreateSaltUiResult {
+  const view = input.view ?? "compact";
+  const includeStarterCode = input.include_starter_code !== false;
+  const topK = Math.max(1, Math.min(input.top_k ?? 5, 25));
+  const resolution =
+    resolutionInput ?? resolveCreateRecommendation(registry, input);
+  const query = resolution.query;
+  const comparisonRequested = resolution.comparison_requested;
+  const names = [...new Set((input.names ?? []).map((name) => name.trim()))]
+    .filter(Boolean)
+    .slice(0, 10);
+  const solutionType = resolution.solution_type;
+  const routedQuery = resolution.routed_query;
+  const retrieval = resolution.retrieval;
+  const preferredCategories = uniqueNormalized(
+    input.preferred_categories ?? [],
+  );
+  const guidanceBoundary = buildGuidanceBoundary({
+    workflow: "create_salt_ui",
+    solution_type: solutionType,
+  });
+
+  // When names are supplied, comparison mode takes precedence over query-based recommendation.
+  if (comparisonRequested) {
+    if (solutionType === "foundation") {
+      if (names.length < 2) {
+        return withCompositionGuidance(registry, input, {
+          mode: "compare",
+          solution_type: "foundation",
+          guidance_boundary: guidanceBoundary,
+          decision: {
+            name: null,
+            why: "Comparison mode was requested, but at least two exact foundation titles are required.",
+          },
+          compared: [],
+          next_step:
+            "Provide at least two exact foundation titles to compare, or remove names and use query for recommendation mode.",
+        });
+      }
+
+      const compared: Array<Record<string, unknown>> = [];
+
+      for (const name of names) {
+        const result = getFoundation(registry, {
+          name,
+          view,
+        });
+        if (result.ambiguity) {
+          return withCompositionGuidance(registry, input, {
+            mode: "compare",
+            solution_type: "foundation",
+            guidance_boundary: guidanceBoundary,
+            decision: {
+              name: null,
+              why: "Multiple foundation matches share that title or slug.",
+            },
+            compared: [],
+            did_you_mean: result.did_you_mean,
+            ambiguity: result.ambiguity as Record<string, unknown>,
+            next_step:
+              "Retry with the exact foundation titles you want to compare.",
+          });
+        }
+        if (!result.foundation) {
+          return withCompositionGuidance(registry, input, {
+            mode: "compare",
+            solution_type: "foundation",
+            guidance_boundary: guidanceBoundary,
+            decision: {
+              name: null,
+              why: `At least one foundation could not be resolved from ${name}.`,
+            },
+            compared: [],
+            next_step:
+              "Retry with exact foundation titles or resolve the foundation first with get_salt_reference.",
+          });
+        }
+
+        compared.push(result.foundation);
+      }
+
+      const ranked = [...compared].sort((left, right) => {
+        const rightScore = scoreFoundationComparison(right, query ?? "");
+        const leftScore = scoreFoundationComparison(left, query ?? "");
+        if (leftScore !== rightScore) {
+          return rightScore - leftScore;
+        }
+        return String(left.title ?? left.name).localeCompare(
+          String(right.title ?? right.name),
+        );
+      });
+      const [recommended] = ranked;
+      const recommendedName = getDecisionName(recommended);
+
+      return withCompositionGuidance(registry, input, {
+        mode: "compare",
+        solution_type: "foundation",
+        guidance_boundary: guidanceBoundary,
+        decision: {
+          name: recommendedName,
+          why: query
+            ? `Best fit for "${query}" based on the closest matching foundation guidance.`
+            : "Best default starting point from the compared foundation guidance.",
+        },
+        guidance_sources: getGuidanceSources(recommended),
+        compared: view === "full" ? ranked : compared,
+        differences: compared.length
+          ? [
+              toFoundationDifference(
+                "Topic count",
+                compared.map((foundation) => ({
+                  name: String(foundation.title ?? "Foundation"),
+                  value: Array.isArray(foundation.topics)
+                    ? foundation.topics.length
+                    : Array.isArray(foundation.section_headings)
+                      ? foundation.section_headings.length
+                      : 0,
+                })),
+              ),
+              toFoundationDifference(
+                "Guidance excerpts",
+                compared.map((foundation) => ({
+                  name: String(foundation.title ?? "Foundation"),
+                  value: Array.isArray(foundation.guidance)
+                    ? foundation.guidance.length
+                    : Array.isArray(foundation.content)
+                      ? foundation.content.length
+                      : 0,
+                })),
+              ),
+            ]
+          : undefined,
+        related_guides: getCreateSaltUiRelatedGuides(registry, ranked),
+        next_step: appendProjectConventionsNextStep(
+          typeof recommended?.next_step === "string"
+            ? recommended.next_step
+            : recommendedName
+              ? `Apply the ${recommendedName.toLowerCase()} guidance to the current work.`
+              : undefined,
+          guidanceBoundary,
+        ),
+        raw:
+          view === "full"
+            ? {
+                decision_debug: buildDecisionDebug(
+                  registry,
+                  "foundation",
+                  recommended,
+                  preferredCategories,
+                ),
+                compared,
+              }
+            : undefined,
+      });
+    }
+
+    const comparison = compareOptions(registry, {
+      names,
+      option_type: solutionType === "pattern" ? "pattern" : "component",
+      package: input.package,
+      task: input.query,
+      production_ready: input.production_ready,
+      prefer_stable: input.prefer_stable,
+      a11y_required: input.a11y_required,
+      form_field_support: input.form_field_support,
+      view,
+    });
+
+    return withCompositionGuidance(registry, input, {
+      mode: "compare",
+      solution_type: solutionType === "pattern" ? "pattern" : "component",
+      guidance_boundary: guidanceBoundary,
+      decision: {
+        name: comparison.recommendation?.name ?? null,
+        why:
+          comparison.recommendation?.why ??
+          "No clear comparison winner was found from the provided options.",
+      },
+      guidance_sources: getGuidanceSources(
+        comparison.compared.find(
+          (record) =>
+            getDecisionName(record) === comparison.recommendation?.name,
+        ),
+      ),
+      compared: comparison.compared,
+      differences: comparison.differences,
+      suggested_follow_ups: comparison.suggested_follow_ups,
+      related_guides:
+        comparison.related_guides ??
+        getCreateSaltUiRelatedGuides(
+          registry,
+          comparison.compared,
+          solutionType === "component"
+            ? {
+                fallbackComponentNames: names,
+                fallbackPackages: input.package ? [input.package] : undefined,
+              }
+            : undefined,
+        ),
+      next_step: appendProjectConventionsNextStep(
+        comparison.next_step,
+        guidanceBoundary,
+      ),
+      did_you_mean: comparison.did_you_mean,
+      ambiguity: comparison.ambiguity as Record<string, unknown> | undefined,
+      raw:
+        view === "full"
+          ? {
+              decision_debug: buildDecisionDebug(
+                registry,
+                solutionType === "pattern" ? "pattern" : "component",
+                comparison.compared.find(
+                  (record) =>
+                    getDecisionName(record) === comparison.recommendation?.name,
+                ) ?? null,
+                preferredCategories,
+              ),
+              comparison,
+            }
+          : undefined,
+    });
+  }
+
+  if (solutionType === "foundation") {
+    const exact = query
+      ? getFoundation(registry, {
+          name: routedQuery ?? query,
+          include_starter_code: includeStarterCode,
+          view,
+        })
+      : ({ foundation: null } as ReturnType<typeof getFoundation>);
+    const list = listFoundations(registry, {
+      query: routedQuery ?? query,
+      max_results: topK,
+    });
+    const [recommended, ...alternatives] = exact.foundation
+      ? [
+          exact.foundation,
+          ...list.foundations.filter(
+            (item) => item.title !== exact.foundation?.title,
+          ),
+        ]
+      : list.foundations;
+    const recommendedName = getDecisionName(recommended);
+
+    return withCompositionGuidance(registry, input, {
+      mode: "recommend",
+      solution_type: "foundation",
+      guidance_boundary: guidanceBoundary,
+      decision: {
+        name: recommendedName,
+        why: recommendedName
+          ? query
+            ? `Best Salt foundation match for "${query}".`
+            : "Best Salt foundation starting point."
+          : "No close foundation match was found.",
+      },
+      guidance_sources: getGuidanceSources(recommended),
+      recommended: recommended ?? null,
+      alternatives,
+      suggested_follow_ups: exact.suggested_follow_ups,
+      related_guides: getCreateSaltUiRelatedGuides(registry, [
+        recommended,
+        ...alternatives,
+      ]),
+      starter_code:
+        exact.starter_code ??
+        (() => {
+          if (!includeStarterCode || !recommendedName) {
+            return undefined;
+          }
+
+          const page =
+            registry.pages.find((entry) => entry.title === recommendedName) ??
+            null;
+
+          return page ? createFoundationStarterCode(page) : undefined;
+        })(),
+      next_step: appendProjectConventionsNextStep(
+        exact.next_step ??
+          (recommendedName
+            ? `Apply the ${recommendedName.toLowerCase()} guidance to the current work.`
+            : "Try a more specific Salt foundation topic."),
+        guidanceBoundary,
+      ),
+      did_you_mean: exact.did_you_mean,
+      ambiguity: exact.ambiguity as Record<string, unknown> | undefined,
+      raw:
+        view === "full"
+          ? {
+              decision_debug: buildDecisionDebug(
+                registry,
+                "foundation",
+                recommended,
+                preferredCategories,
+              ),
+              create_retrieval: retrieval,
+              exact,
+              list,
+            }
+          : undefined,
+    });
+  }
+
+  if (solutionType === "token") {
+    const tokenResult = recommendTokens(registry, {
+      query: routedQuery ?? query ?? "",
+      top_k: topK,
+      view,
+    });
+    const recommendations =
+      view === "full"
+        ? getNamedRecords(tokenResult.recommendations)
+        : [
+            ...(tokenResult.recommended ? [tokenResult.recommended] : []),
+            ...(tokenResult.alternatives ?? []),
+          ];
+    const [recommended, ...alternatives] = recommendations;
+
+    return withCompositionGuidance(registry, input, {
+      mode: "recommend",
+      solution_type: "token",
+      guidance_boundary: guidanceBoundary,
+      decision: {
+        name: getDecisionName(recommended),
+        why:
+          typeof recommended?.why === "string"
+            ? recommended.why
+            : "Best Salt token match for the styling need.",
+      },
+      guidance_sources: getGuidanceSources(recommended),
+      recommended: recommended ?? null,
+      alternatives,
+      related_guides: getCreateSaltUiRelatedGuides(registry, [
+        recommended,
+        ...alternatives,
+      ]),
+      next_step: appendProjectConventionsNextStep(
+        tokenResult.next_step,
+        guidanceBoundary,
+      ),
+      raw:
+        view === "full"
+          ? {
+              decision_debug: buildDecisionDebug(
+                registry,
+                "token",
+                recommended,
+                preferredCategories,
+              ),
+              create_retrieval: retrieval,
+              token_recommendations: tokenResult,
+            }
+          : undefined,
+    });
+  }
+
+  if (solutionType === "pattern") {
+    const exactPatternResult =
+      shouldUseNamedPatternGuidance({
+        registry,
+        query,
+        routed_query: routedQuery ?? query,
+        retrieval,
+      }) && routedQuery
+        ? buildNamedPatternCreateResult(
+            registry,
+            input,
+            guidanceBoundary,
+            retrieval,
+            preferredCategories,
+            routedQuery,
+          )
+        : null;
+
+    if (exactPatternResult) {
+      return exactPatternResult;
+    }
+
+    const recipeResult = getCompositionRecipe(registry, {
+      query: routedQuery ?? query ?? "",
+      top_k: Math.min(topK, 10),
+      production_ready: input.production_ready,
+      prefer_stable: input.prefer_stable,
+      a11y_required: input.a11y_required,
+      form_field_support: input.form_field_support,
+      include_starter_code: includeStarterCode,
+      view,
+    });
+    const recipes =
+      view === "full"
+        ? getNamedRecords(recipeResult.recipes)
+        : [
+            ...(recipeResult.recommended ? [recipeResult.recommended] : []),
+            ...(recipeResult.alternatives ?? []),
+          ];
+    const [recommended, ...alternatives] = reorderByPreferredCategories(
+      registry,
+      "pattern",
+      recipes,
+      preferredCategories,
+    );
+
+    return withCompositionGuidance(registry, input, {
+      mode: "recommend",
+      solution_type: "pattern",
+      guidance_boundary: guidanceBoundary,
+      decision: {
+        name: getDecisionName(recommended),
+        why:
+          typeof recommended?.summary === "string"
+            ? recommended.summary
+            : "Best Salt pattern or composition match for the requested flow.",
+      },
+      guidance_sources: getGuidanceSources(recommended),
+      recommended: recommended ?? null,
+      alternatives,
+      suggested_follow_ups: recipeResult.suggested_follow_ups,
+      related_guides: getCreateSaltUiRelatedGuides(registry, [
+        recommended,
+        ...alternatives,
+      ]),
+      starter_code: recipeResult.starter_code,
+      next_step: appendProjectConventionsNextStep(
+        recipeResult.next_step,
+        guidanceBoundary,
+      ),
+      raw:
+        view === "full"
+          ? {
+              decision_debug: buildDecisionDebug(
+                registry,
+                "pattern",
+                recommended,
+                preferredCategories,
+              ),
+              create_retrieval: retrieval,
+              composition_recipe: recipeResult,
+            }
+          : undefined,
+    });
+  }
+
+  const recommendation = recommendComponent(registry, {
+    task: routedQuery ?? query ?? "",
+    package: input.package,
+    status: input.status,
+    top_k: topK,
+    production_ready: input.production_ready,
+    prefer_stable: input.prefer_stable,
+    a11y_required: input.a11y_required,
+    form_field_support: input.form_field_support,
+    include_starter_code: includeStarterCode,
+    view,
+  });
+  const componentRecommendations =
+    view === "full"
+      ? getNamedRecords(recommendation.recommendations)
+      : [
+          ...(recommendation.recommended ? [recommendation.recommended] : []),
+          ...(recommendation.alternatives ?? []),
+        ];
+  const [recommended, ...alternatives] = reorderByPreferredCategories(
+    registry,
+    "component",
+    componentRecommendations,
+    preferredCategories,
+  );
+
+  return withCompositionGuidance(registry, input, {
+    mode: "recommend",
+    solution_type: "component",
+    guidance_boundary: guidanceBoundary,
+    decision: {
+      name: getDecisionName(recommended),
+      why:
+        typeof recommended?.why === "string"
+          ? recommended.why
+          : "Best Salt component match for the requested need.",
+    },
+    guidance_sources: getGuidanceSources(recommended),
+    recommended: recommended ?? null,
+    alternatives,
+    suggested_follow_ups: recommendation.suggested_follow_ups,
+    related_guides: getCreateSaltUiRelatedGuides(
+      registry,
+      [recommended, ...alternatives],
+      {
+        fallbackComponentNames:
+          typeof recommended?.name === "string" ? [recommended.name] : [],
+        fallbackPackages: input.package ? [input.package] : undefined,
+      },
+    ),
+    starter_code: recommendation.starter_code,
+    next_step: appendProjectConventionsNextStep(
+      recommendation.next_step,
+      guidanceBoundary,
+    ),
+    raw:
+      view === "full"
+        ? {
+            decision_debug: buildDecisionDebug(
+              registry,
+              "component",
+              recommended,
+              preferredCategories,
+            ),
+            create_retrieval: retrieval,
+            component_recommendations: recommendation,
+            capability_matches: searchComponentCapabilities(registry, {
+              query: query ?? "",
+              package: input.package,
+              status: input.status,
+              top_k: Math.min(topK, 10),
+            }),
+          }
+        : undefined,
+  });
+}
+
+export function createSaltUi(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+): CreateSaltUiResult {
+  const requestedView = input.view ?? "compact";
+  const resolution = resolveCreateRecommendation(registry, input);
+
+  const baseResult =
+    requestedView !== "full" || hasCreateComparisonInput(input)
+      ? createSaltUiAtView(registry, input, resolution)
+      : enrichResolvedCreateResult(
+          registry,
+          input,
+          createSaltUiAtView(
+            registry,
+            { ...input, view: "compact" },
+            resolution,
+          ),
+          resolution,
+        );
+
+  return applyGroundedIconStarterSnippet(
+    registry,
+    input,
+    applyThemeProviderQuestion(registry, input, baseResult),
+  );
+}
+
+function applyGroundedIconStarterSnippet(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  result: CreateSaltUiResult,
+): CreateSaltUiResult {
+  if (input.include_starter_code === false) {
+    return result;
+  }
+
+  const text = [input.query, ...(input.names ?? [])]
+    .filter((value): value is string => Boolean(value?.trim()))
+    .join(" ");
+  if (!text) {
+    return result;
+  }
+
+  const starterCode = appendGroundedIconStarterSnippet(
+    registry,
+    result.starter_code,
+    text,
+  );
+  return starterCode === result.starter_code
+    ? result
+    : { ...result, starter_code: starterCode };
+}
+
+function applyThemeProviderQuestion(
+  registry: SaltRegistry,
+  input: CreateSaltUiInput,
+  result: CreateSaltUiResult,
+): CreateSaltUiResult {
+  // Comparison mode and name lookups are not theme-ambiguous in the same way
+  // as a free-form recommendation — skip the check when the caller already
+  // pinned exact names.
+  if (hasCreateComparisonInput(input)) {
+    return result;
+  }
+
+  const themeQuestion = evaluateCreateThemeProviderQuestion(registry, {
+    query: input.query,
+    repoHasThemeProvider: input.repo_has_theme_provider,
+  });
+  if (!themeQuestion) {
+    return result;
+  }
+
+  const existing = result.open_questions ?? [];
+  const alreadyPresent = existing.some(
+    (question) => question.kind === "theme-provider-choice",
+  );
+  if (alreadyPresent) {
+    return result;
+  }
+
+  // Prepend so the theme-provider choice is the first thing the agent
+  // resolves; downstream evaluators read open_questions[0] for the leading
+  // ask_user prompt.
+  return {
+    ...result,
+    open_questions: [
+      themeQuestion satisfies CreateThemeProviderQuestion,
+      ...existing,
+    ],
+  };
+}

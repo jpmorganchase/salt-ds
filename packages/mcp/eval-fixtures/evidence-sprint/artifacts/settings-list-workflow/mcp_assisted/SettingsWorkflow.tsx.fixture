@@ -1,0 +1,26 @@
+import {
+  Button,
+  FormField,
+  FormFieldLabel,
+  Input,
+  StackLayout,
+  Switch,
+  Text,
+} from "@salt-ds/core";
+
+export function SettingsWorkflow() {
+  return (
+    <StackLayout gap={2}>
+      <Text styleAs="h2">Notifications</Text>
+      <FormField>
+        <FormFieldLabel>Summary cadence</FormFieldLabel>
+        <Input defaultValue="daily summary" />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Email alerts</FormFieldLabel>
+        <Switch defaultChecked />
+      </FormField>
+      <Button>Save</Button>
+    </StackLayout>
+  );
+}

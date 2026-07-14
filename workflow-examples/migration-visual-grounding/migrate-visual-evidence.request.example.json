@@ -1,0 +1,18 @@
+{
+  "contract": "migrate_visual_evidence_v1",
+  "cwd": "D:/Work/consumer-app",
+  "inputs": [
+    {
+      "kind": "mockup",
+      "source_type": "file",
+      "source": "D:/Work/consumer-app/designs/legacy-orders.mockup.png",
+      "label": "legacy-orders.mockup.png"
+    },
+    {
+      "kind": "screenshot",
+      "source_type": "url",
+      "source": "https://example.test/legacy-orders/current-toolbar.png",
+      "label": "current-toolbar.png"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "name": "@salt-ds/mcp",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "sideEffects": false,
+  "files": [
+    "bin"
+  ],
+  "publishBinEntrypoints": {
+    "bin/salt-mcp.js": {
+      "requirePath": "../dist-cjs/index.js",
+      "errorPrefix": "salt-mcp error:"
+    }
+  },
+  "publishExports": {
+    ".": {
+      "types": "./dist-types/index.d.ts",
+      "import": "./dist-es/index.js",
+      "require": "./dist-cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typescriptInclude": [
+    "src/index.ts"
+  ],
+  "typescriptRootDir": "src",
+  "publishTypingEntryOnly": true,
+  "publishPreserveModules": false,
+  "publishScriptExcludes": [
+    "build",
+    "build:package",
+    "build:registry",
+    "prepack"
+  ],
+  "publishExtraCopyPaths": [
+    {
+      "from": "generated",
+      "to": "generated",
+      "files": [
+        "metadata.json",
+        "packages.json",
+        "components.json",
+        "patterns.json",
+        "pages.json",
+        "guides.json",
+        "icons.json",
+        "country-symbols.json",
+        "tokens.json",
+        "deprecations.json",
+        "token-policy-structural-role-rules.json"
+      ]
+    }
+  ],
+  "publishSourceMaps": false,
+  "publishIncludeChangelog": false,
+  "bin": {
+    "salt-mcp": "bin/salt-mcp.js"
+  },
+  "scripts": {
+    "build:registry": "node ./scripts/buildRegistry.mjs",
+    "build:package": "yarn node ../../scripts/build.mjs",
+    "build": "yarn build:registry && yarn build:package",
+    "prepack": "yarn build"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.4",
+    "@babel/traverse": "^7.28.4",
+    "@babel/types": "^7.28.4",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "get-tsconfig": "^4.7.5",
+    "semver": "^7.7.3",
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "@types/semver": "^7.7.1",
+    "ajv": "^8.17.1",
+    "esbuild": "^0.28.0",
+    "fast-glob": "^3.3.3",
+    "gray-matter": "^4.0.3",
+    "mdast-util-to-string": "^4.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "typescript": "^6.0.0",
+    "unified": "^11.0.5"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-mcp",
+    "provenance": true
+  }
+}
