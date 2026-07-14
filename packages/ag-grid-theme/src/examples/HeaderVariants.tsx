@@ -13,7 +13,14 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 type HeaderVariant = "primary" | "secondary" | "tertiary";
 
-const HeaderVariants = (props: AgGridReactProps) => {
+type HeaderVariantsProps = AgGridReactProps & {
+  containerClassName?: string;
+};
+
+const HeaderVariants = ({
+  containerClassName,
+  ...props
+}: HeaderVariantsProps) => {
   const [variant, setVariant] = useState<HeaderVariant>("secondary");
 
   const { agGridProps, containerProps } = useAgGridHelpers();
@@ -26,7 +33,11 @@ const HeaderVariants = (props: AgGridReactProps) => {
     <StackLayout style={{ width: "100%" }}>
       <StackLayout gap={1}>
         <Label>Header background</Label>
-        <ToggleButtonGroup onChange={onVariantChange} value={variant}>
+        <ToggleButtonGroup
+          aria-label="Header background"
+          onChange={onVariantChange}
+          value={variant}
+        >
           <ToggleButton value="primary">Primary</ToggleButton>
           <ToggleButton value="secondary">Secondary</ToggleButton>
           <ToggleButton value="tertiary">Tertiary</ToggleButton>
@@ -36,6 +47,7 @@ const HeaderVariants = (props: AgGridReactProps) => {
         {...containerProps}
         className={clsx(
           containerProps.className,
+          containerClassName,
           `ag-theme-salt-header-${variant}`,
         )}
       >
@@ -44,6 +56,7 @@ const HeaderVariants = (props: AgGridReactProps) => {
           {...props}
           columnDefs={dataGridExampleColumns}
           rowData={dataGridExampleData}
+          rowSelection="multiple"
         />
       </div>
     </StackLayout>

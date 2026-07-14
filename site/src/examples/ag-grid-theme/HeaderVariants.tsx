@@ -27,8 +27,12 @@ export const HeaderVariants = (props: AgGridReactProps) => {
   return (
     <StackLayout style={{ width: "100%" }}>
       <StackLayout gap={1}>
-        <Label>Variant</Label>
-        <ToggleButtonGroup onChange={onVariantChange} value={variant}>
+        <Label>Header background</Label>
+        <ToggleButtonGroup
+          aria-label="Header background"
+          onChange={onVariantChange}
+          value={variant}
+        >
           <ToggleButton value="primary">Primary</ToggleButton>
           <ToggleButton value="secondary">Secondary</ToggleButton>
           <ToggleButton value="tertiary">Tertiary</ToggleButton>

@@ -1,15 +1,15 @@
 /* --- Background --- */
-div[class*="ag-theme-salt"].ag-theme-salt-header-primary {
+div[class*="ag-theme-salt"].ag-theme-salt-header-primary,
+div[class*="ag-theme-salt"].ag-theme-salt-header-primary.ag-theme-salt-variant-zebra {
   --ag-header-background-color: var(--salt-container-primary-background);
-  --ag-header-cell-hover-background-color: var(--ag-header-background-color);
 }
 
-div[class*="ag-theme-salt"].ag-theme-salt-header-secondary {
+div[class*="ag-theme-salt"].ag-theme-salt-header-secondary,
+div[class*="ag-theme-salt"].ag-theme-salt-header-secondary.ag-theme-salt-variant-zebra {
   --ag-header-background-color: var(--salt-container-secondary-background);
-  --ag-header-cell-hover-background-color: var(--ag-header-background-color);
 }
 
-div[class*="ag-theme-salt"].ag-theme-salt-header-tertiary {
+div[class*="ag-theme-salt"].ag-theme-salt-header-tertiary,
+div[class*="ag-theme-salt"].ag-theme-salt-header-tertiary.ag-theme-salt-variant-zebra {
   --ag-header-background-color: var(--salt-container-tertiary-background);
-  --ag-header-cell-hover-background-color: var(--ag-header-background-color);
 }
