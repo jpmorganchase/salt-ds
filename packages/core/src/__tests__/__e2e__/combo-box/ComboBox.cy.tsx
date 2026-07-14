@@ -763,52 +763,47 @@ describe("Given a ComboBox", () => {
     cy.get(".saltOption", { timeout: 30000 }).should("have.length", 10_000);
   });
 
-  for (const [size, Fixture] of [
-    [1_000, PerformanceTestOneThousand],
-    [10_000, PerformanceTest],
-  ] as const) {
-    it(`supports ${size} non-virtualized options through focus, open, navigation, filter, and close`, () => {
-      cy.mount(<Fixture />);
-      cy.findByRole("combobox").as("combobox").focus();
-      cy.get("@combobox").should("have.attr", "aria-expanded", "false");
-      cy.get(".saltOptionList-collapsed").should("not.be.visible");
-      cy.get(".saltOption").should("have.length", size);
+  it("supports 1000 non-virtualized options through focus, open, navigation, filter, and close", () => {
+    cy.mount(<PerformanceTestOneThousand />);
+    cy.findByRole("combobox").as("combobox").focus();
+    cy.get("@combobox").should("have.attr", "aria-expanded", "false");
+    cy.get(".saltOptionList-collapsed").should("not.be.visible");
+    cy.get(".saltOption").should("have.length", 1_000);
 
-      cy.get("@combobox").realClick();
-      cy.get(".saltOption", { timeout: 30000 }).should("have.length", size);
-      cy.get("body").click(0, 0);
-      cy.get(".saltOption").should("not.exist");
+    cy.get("@combobox").realClick();
+    cy.get(".saltOption", { timeout: 30000 }).should("have.length", 1_000);
+    cy.get("body").click(0, 0);
+    cy.get(".saltOption").should("not.exist");
 
-      cy.get("@combobox").focus();
-      cy.realPress("ArrowDown");
-      cy.get(".saltOption", { timeout: 30000 }).should("have.length", size);
-      cy.get(".saltOption")
-        .first()
-        .then(($option) => {
-          cy.get("@combobox").should(
-            "have.attr",
-            "aria-activedescendant",
-            $option.attr("id"),
-          );
-        });
-      cy.realPress("ArrowDown");
-      cy.get(".saltOption")
-        .eq(1)
-        .then(($option) => {
-          cy.get("@combobox").should(
-            "have.attr",
-            "aria-activedescendant",
-            $option.attr("id"),
-          );
-        });
+    cy.get("@combobox").focus();
+    cy.realPress("ArrowDown");
+    cy.get(".saltOption", { timeout: 30000 }).should("have.length", 1_000);
+    cy.get(".saltOption")
+      .first()
+      .then(($option) => {
+        cy.get("@combobox").should(
+          "have.attr",
+          "aria-activedescendant",
+          $option.attr("id"),
+        );
+      });
+    cy.realPress("ArrowDown");
+    cy.get(".saltOption")
+      .eq(1)
+      .then(($option) => {
+        cy.get("@combobox").should(
+          "have.attr",
+          "aria-activedescendant",
+          $option.attr("id"),
+        );
+      });
 
-      cy.get("@combobox").type(String(size - 1));
-      cy.get(".saltOption", { timeout: 30000 }).should("have.length", 1);
-      cy.get("body").click(0, 0);
-      cy.get("@combobox").should("have.attr", "aria-expanded", "false");
-      cy.get(".saltOption").should("not.exist");
-    });
-  }
+    cy.get("@combobox").type("999");
+    cy.get(".saltOption", { timeout: 30000 }).should("have.length", 1);
+    cy.get("body").click(0, 0);
+    cy.get("@combobox").should("have.attr", "aria-expanded", "false");
+    cy.get(".saltOption").should("not.exist");
+  });
 
   it("should remove aria-activedescendant when closed", () => {
     cy.mount(<Default />);

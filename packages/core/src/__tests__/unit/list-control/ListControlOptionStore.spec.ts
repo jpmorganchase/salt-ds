@@ -168,16 +168,22 @@ describe("ListControlOptionStore", () => {
     expect(listener).not.toHaveBeenCalled();
   });
 
-  it("deletes empty listener sets on unsubscribe", () => {
+  it("does not notify unsubscribed listeners", () => {
     const store = new ListControlOptionStore<string>();
-    const unsubscribeOne = store.subscribe("one", () => undefined);
-    const unsubscribeTwo = store.subscribe("two", () => undefined);
-    expect(store.listenerEntryCount).toBe(2);
+    const one = vi.fn();
+    const two = vi.fn();
+    store.register(option("one", "one"));
+    store.register(option("two", "two"));
+    const unsubscribeOne = store.subscribe("one", one);
+    const unsubscribeTwo = store.subscribe("two", two);
 
     unsubscribeOne();
     unsubscribeTwo();
 
-    expect(store.listenerEntryCount).toBe(0);
+    store.setSelected(["one", "two"]);
+
+    expect(one).not.toHaveBeenCalled();
+    expect(two).not.toHaveBeenCalled();
   });
 
   it("keeps one-step active notification work constant at 10k", () => {

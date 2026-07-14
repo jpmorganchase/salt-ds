@@ -108,7 +108,7 @@ describe("List control Option subscriptions", () => {
     });
   });
 
-  it("bounds mouse-over and focus-visible-only commits", () => {
+  it("bounds mouse-over and keyboard active movement commits", () => {
     const commits = Array.from({ length: 100 }, () => 0);
     cy.mount(
       <Dropdown>
@@ -314,7 +314,7 @@ describe("List control Option subscriptions", () => {
       .and("have.attr", "aria-disabled", "true");
   });
 
-  it("re-registers filtered children in their current DOM order", () => {
+  it("tracks filtered children in their current DOM order", () => {
     const Fixture = () => {
       const [showFirst, setShowFirst] = useState(true);
       return (
@@ -341,6 +341,11 @@ describe("List control Option subscriptions", () => {
     cy.findByRole("option", { name: "First" }).should("not.exist");
     cy.findByRole("listbox").focus();
     cy.findByRole("option", { name: "Second" }).should("be.activeDescendant");
+
+    cy.findByRole("button", { name: "Toggle first" }).click();
+    cy.findByRole("option", { name: "First" }).should("exist");
+    cy.findByRole("listbox").focus();
+    cy.findByRole("option", { name: "First" }).should("be.activeDescendant");
   });
 
   it("keeps the public context behavior available to custom consumers", () => {
