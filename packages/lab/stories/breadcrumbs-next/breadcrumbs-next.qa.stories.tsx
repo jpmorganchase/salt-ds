@@ -8,6 +8,7 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import { waitFor } from "storybook/test";
 
 import "docs/story.css";
 
@@ -74,7 +75,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
       <BreadcrumbNext href="#">Portfolio</BreadcrumbNext>
     </BreadcrumbsNext>
 
-    <BreadcrumbsNext aria-label="Breadcrumb" maxItems={3}>
+    <BreadcrumbsNext aria-label="Breadcrumb with open disclosure" maxItems={3}>
       <BreadcrumbNext href="#">Accounts</BreadcrumbNext>
       <BreadcrumbNext href="#">Asset management</BreadcrumbNext>
       <BreadcrumbNext href="#">Fixed income</BreadcrumbNext>
@@ -114,4 +115,24 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = () => (
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
+};
+
+AllExamplesGrid.play = async ({ canvasElement }) => {
+  const triggers = canvasElement.querySelectorAll<HTMLButtonElement>(
+    'nav[aria-label="Breadcrumb with open disclosure"] button[aria-expanded]',
+  );
+
+  for (const trigger of triggers) {
+    trigger.click();
+  }
+
+  await waitFor(() => {
+    const disclosures = canvasElement.ownerDocument.querySelectorAll(
+      '[aria-label="Hidden breadcrumb levels"]',
+    );
+
+    if (disclosures.length !== triggers.length) {
+      throw new Error("Not all breadcrumb overflow disclosures are open");
+    }
+  });
 };

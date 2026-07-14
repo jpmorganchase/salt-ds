@@ -16,17 +16,36 @@
 
 .saltBreadcrumbNext-trigger {
   align-items: center;
+  color: var(--salt-content-primary-foreground);
   display: inline-flex;
+  font-family: var(--salt-text-label-fontFamily);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-fontWeight);
   gap: var(--salt-spacing-50);
+  letter-spacing: var(--salt-text-letterSpacing);
+  line-height: var(--salt-text-label-lineHeight);
   max-width: 100%;
+  text-decoration: var(--salt-typography-textDecoration-none);
 }
 
-.saltBreadcrumbNext-link.saltLink {
-  --link-color-visited: var(--link-color);
-  --link-textDecoration-visited: var(--link-textDecoration);
+.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current) {
+  text-decoration: var(--salt-typography-textDecoration-underline);
 }
 
-.saltBreadcrumbNext-current.saltLink {
+.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current):hover {
+  text-decoration: var(--salt-typography-textDecoration-none);
+}
+
+.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current):active {
+  text-decoration: var(--salt-typography-textDecoration-underline);
+}
+
+.saltBreadcrumbNext-trigger:focus {
+  outline: var(--salt-focused-outline);
+  text-decoration: var(--salt-typography-textDecoration-none);
+}
+
+.saltBreadcrumbNext-current {
   cursor: var(--salt-cursor-text);
 }
 
