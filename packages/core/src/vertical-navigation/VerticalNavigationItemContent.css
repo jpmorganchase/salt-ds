@@ -38,9 +38,14 @@
   font-size: var(--salt-text-h4-fontSize);
 }
 
-.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active,
-.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active:hover {
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active {
   background: var(--salt-navigable-accent-background-active);
+}
+
+@media (any-hover: hover) {
+  .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active:hover {
+    background: var(--salt-navigable-accent-background-active);
+  }
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent::before {
@@ -61,10 +66,16 @@
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
 }
 
-.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active,
-.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active:hover {
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active {
   background: var(--salt-navigable-accent-background-active);
   border-color: var(--salt-navigable-accent-borderColor-active);
+}
+
+@media (any-hover: hover) {
+  .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active:hover {
+    background: var(--salt-navigable-accent-background-active);
+    border-color: var(--salt-navigable-accent-borderColor-active);
+  }
 }
 
 .saltVerticalNavigationItemContent .saltIcon,
@@ -78,8 +89,10 @@
   z-index: 1;
 }
 
-.saltVerticalNavigationItemContent:hover {
-  background: var(--salt-overlayable-background-hover);
+@media (any-hover: hover) {
+  .saltVerticalNavigationItemContent:hover {
+    background: var(--salt-overlayable-background-hover);
+  }
 }
 
 .saltVerticalNavigation .saltVerticalNavigationItemContent-active,
@@ -88,7 +101,9 @@
 }
 
 @supports selector(:has(*)) {
-  .saltVerticalNavigationItemContent-active:hover:has(.saltVerticalNavigationItemTrigger[aria-controls]) {
-    background: linear-gradient(var(--salt-overlayable-background-hover), var(--salt-overlayable-background-hover)) var(--salt-navigable-accent-background-active);
+  @media (any-hover: hover) {
+    .saltVerticalNavigationItemContent-active:hover:has(.saltVerticalNavigationItemTrigger[aria-controls]) {
+      background: linear-gradient(var(--salt-overlayable-background-hover), var(--salt-overlayable-background-hover)) var(--salt-navigable-accent-background-active);
+    }
   }
 }

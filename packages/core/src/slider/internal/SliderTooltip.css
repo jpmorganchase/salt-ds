@@ -16,9 +16,14 @@
   z-index: var(--saltTooltip-zIndex, var(--salt-zIndex-flyover));
 }
 
-.saltSliderTooltip-visible,
-.saltSliderTooltip:hover {
+.saltSliderTooltip-visible {
   visibility: visible;
+}
+
+@media (any-hover: hover) {
+  .saltSliderTooltip:hover {
+    visibility: visible;
+  }
 }
 
 .saltSliderTooltip-arrow {

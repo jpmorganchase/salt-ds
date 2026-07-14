@@ -16,9 +16,14 @@
   border-radius: var(--salt-palette-corner-weak);
 }
 
-.saltPageButton:hover,
 .saltPageButton:focus-visible {
   background: var(--salt-selectable-background-hover);
+}
+
+@media (any-hover: hover) {
+  .saltPageButton:hover {
+    background: var(--salt-selectable-background-hover);
+  }
 }
 
 .saltPageButton:active {

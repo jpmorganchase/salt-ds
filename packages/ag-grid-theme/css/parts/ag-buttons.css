@@ -13,12 +13,14 @@
   text-transform: uppercase;
 }
 
-.ag-theme-salt-light .ag-standard-button:hover,
-.ag-theme-salt-dark .ag-standard-button:hover,
-.ag-theme-salt-compact-light .ag-standard-button:hover,
-.ag-theme-salt-compact-dark .ag-standard-button:hover {
-  background-color: var(--salt-actionable-secondary-background-hover);
-  color: var(--salt-actionable-secondary-foreground-hover);
+@media (any-hover: hover) {
+  .ag-theme-salt-light .ag-standard-button:hover,
+  .ag-theme-salt-dark .ag-standard-button:hover,
+  .ag-theme-salt-compact-light .ag-standard-button:hover,
+  .ag-theme-salt-compact-dark .ag-standard-button:hover {
+    background-color: var(--salt-actionable-secondary-background-hover);
+    color: var(--salt-actionable-secondary-foreground-hover);
+  }
 }
 
 .ag-theme-salt-light .ag-ltr .ag-filter-apply-panel-button,
@@ -40,16 +42,18 @@
   color: var(--salt-actionable-cta-foreground);
 }
 
-.ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
-.ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
-.ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
-.ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
-.ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
-.ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
-.ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
-.ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
-  background: var(--salt-actionable-cta-background-hover);
-  color: var(--salt-actionable-cta-foreground-hover);
+@media (any-hover: hover) {
+  .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+  .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+  .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+  .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+  .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
+  .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
+  .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
+  .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
+    background: var(--salt-actionable-cta-background-hover);
+    color: var(--salt-actionable-cta-foreground-hover);
+  }
 }
 
 .ag-theme-salt-light .ag-keyboard-focus .ag-header-cell:focus:after,

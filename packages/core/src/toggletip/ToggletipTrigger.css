@@ -20,7 +20,6 @@
   transition: none;
   width: auto;
   -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
 
   color: var(--salt-content-primary-foreground);
   background: transparent;

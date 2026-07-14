@@ -27,7 +27,6 @@
   transition: none;
   width: var(--saltButton-width, auto);
   -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
   /* Styles applied to align children*/
   font-weight: var(--saltButton-fontWeight, var(--salt-text-action-fontWeight));
 }
@@ -43,7 +42,7 @@
   border-color: var(--saltButton-borderColor-hover, var(--button-borderColor-hover));
 }
 
-@media (hover: hover) {
+@media (any-hover: hover) {
   /* Pseudo-class applied to the root element on hover when Button is not active or disabled */
   .saltButton:hover {
     background: var(--saltButton-background-hover, var(--button-background-hover));
@@ -77,14 +76,24 @@
 .saltButton.saltButton-disabled,
 .saltButton.saltButton-disabled:active,
 .saltButton.saltButton-disabled:focus-visible,
-.saltButton.saltButton-disabled:focus-visible:active,
-.saltButton.saltButton-disabled:hover {
+.saltButton.saltButton-disabled:focus-visible:active {
   background: var(--saltButton-background-disabled, var(--button-background));
   color: var(--saltButton-text-color-disabled, var(--button-text-color));
   cursor: var(--saltButton-cursor-disabled, var(--salt-cursor-disabled));
   border-color: var(--saltButton-borderColor-disabled, var(--button-borderColor));
 
   opacity: 0.4;
+}
+
+@media (any-hover: hover) {
+  .saltButton.saltButton-disabled:hover {
+    background: var(--saltButton-background-disabled, var(--button-background));
+    color: var(--saltButton-text-color-disabled, var(--button-text-color));
+    cursor: var(--saltButton-cursor-disabled, var(--salt-cursor-disabled));
+    border-color: var(--saltButton-borderColor-disabled, var(--button-borderColor));
+
+    opacity: 0.4;
+  }
 }
 
 .saltButton-accented.saltButton-solid {
