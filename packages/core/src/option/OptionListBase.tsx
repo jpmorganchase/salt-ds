@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { makePrefixer } from "../utils";
 import optionListCss from "./OptionList.css";
+import { OptionStyleInjection } from "./OptionStyleInjection";
 
 const withBaseName = makePrefixer("saltOptionList");
 
@@ -21,13 +22,16 @@ export const OptionListBase = forwardRef<HTMLDivElement, OptionListBaseProps>(
     });
 
     return (
-      <div
-        className={clsx(withBaseName("container"), className)}
-        {...rest}
-        ref={ref}
-      >
-        {children}
-      </div>
+      <>
+        <OptionStyleInjection />
+        <div
+          className={clsx(withBaseName("container"), className)}
+          {...rest}
+          ref={ref}
+        >
+          {children}
+        </div>
+      </>
     );
   },
 );

@@ -1,5 +1,3 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -21,7 +19,6 @@ import {
   OPTION_STATE_SELECTED,
 } from "../list-control/ListControlOptionStore";
 import { makePrefixer, useForkRef, useId } from "../utils";
-import optionCss from "./Option.css";
 
 export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -51,13 +48,6 @@ const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
       value,
       ...rest
     } = props;
-
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-option",
-      css: optionCss,
-      window: targetWindow,
-    });
 
     const optionRef = useRef(null);
     const id = useId(idProp);

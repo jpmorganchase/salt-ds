@@ -18,6 +18,7 @@ import {
   type ListControlProps,
   useListControl,
 } from "../list-control/ListControlState";
+import { OptionStyleInjection } from "../option/OptionStyleInjection";
 import { makePrefixer, useForkRef } from "../utils";
 
 import listBoxCss from "./ListBox.css";
@@ -248,6 +249,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
 
   return (
     <ListControlProvider value={listControl}>
+      <OptionStyleInjection />
       <div
         className={clsx(
           withBaseName(),
