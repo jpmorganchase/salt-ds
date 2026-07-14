@@ -29,10 +29,8 @@ import {
   type FormFieldValidationStatus,
   useFormFieldProps,
 } from "../form-field-context";
-import {
-  ListControlContext,
-  type OptionValue,
-} from "../list-control/ListControlContext";
+import type { OptionValue } from "../list-control/ListControlContext";
+import { ListControlProvider } from "../list-control/ListControlProvider";
 import {
   defaultValueToString,
   type ListControlProps,
@@ -446,7 +444,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const handleListRef = useForkRef<HTMLDivElement>(setListRef, floating);
 
   return (
-    <ListControlContext.Provider value={listControl}>
+    <ListControlProvider value={listControl}>
       <button
         className={clsx(
           withBaseName(),
@@ -520,7 +518,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       >
         {children}
       </OptionList>
-    </ListControlContext.Provider>
+    </ListControlProvider>
   );
 }) as <Item = string>(
   props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> },
