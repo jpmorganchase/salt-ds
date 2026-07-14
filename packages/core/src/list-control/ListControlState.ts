@@ -5,8 +5,14 @@ import {
   useRef,
   useState,
 } from "react";
-import { useControlled, useForkRef } from "../utils";
+import {
+  useControlled,
+  useEventCallback,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 import type { OptionValue } from "./ListControlContext";
+import { ListControlOptionStore } from "./ListControlOptionStore";
 import {
   createCoalescedRebuild,
   ListControlRegistry,
@@ -136,12 +142,23 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     valueToString = defaultValueToString,
   } = props;
 
+  const optionStateStoreRef = useRef<ListControlOptionStore<Item> | null>(null);
+  if (optionStateStoreRef.current === null) {
+    optionStateStoreRef.current = new ListControlOptionStore(
+      selectedProp ?? defaultSelected ?? [],
+    );
+  }
+  const optionStateStore = optionStateStoreRef.current;
+
   const listRef = useRef<HTMLDivElement>(null);
   const [listElement, setListElement] = useState<HTMLDivElement | null>(null);
   const setListRef = useForkRef<HTMLDivElement>(listRef, setListElement);
 
   const [focusedState, setFocusedState] = useState(false);
-  const [focusVisibleState, setFocusVisibleState] = useState(false);
+  const [focusVisibleState, setFocusVisibleStateInternal] = useState(false);
+  const setFocusVisibleState = useCallback((newValue: boolean) => {
+    setFocusVisibleStateInternal(newValue);
+  }, []);
 
   useEffect(() => {
     // remove focus when controlling disabled
@@ -149,7 +166,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       setFocusedState(false);
       setFocusVisibleState(false);
     }
-  }, [disabled, focusedState]);
+  }, [disabled, focusedState, setFocusVisibleState]);
 
   const [activeState, setActiveState] = useState<OptionValue<Item> | undefined>(
     undefined,
@@ -196,28 +213,30 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     state: "selected",
   });
 
-  const select = (event: SyntheticEvent, option: OptionValue<Item>) => {
-    if (option.disabled || readOnly || disabled) {
-      return;
-    }
-
-    let newSelected = [option.value];
-
-    if (multiselect) {
-      if (selectedState.includes(option.value)) {
-        newSelected = selectedState.filter((item) => item !== option.value);
-      } else {
-        newSelected = selectedState.concat([option.value]);
+  const select = useEventCallback(
+    (event: SyntheticEvent, option: OptionValue<Item>) => {
+      if (option.disabled || readOnly || disabled) {
+        return;
       }
-    }
 
-    setSelectedState(newSelected);
-    onSelectionChange?.(event, newSelected);
+      let newSelected = [option.value];
 
-    if (!multiselect) {
-      setOpen(false);
-    }
-  };
+      if (multiselect) {
+        if (selectedState.includes(option.value)) {
+          newSelected = selectedState.filter((item) => item !== option.value);
+        } else {
+          newSelected = selectedState.concat([option.value]);
+        }
+      }
+
+      setSelectedState(newSelected);
+      onSelectionChange?.(event, newSelected);
+
+      if (!multiselect) {
+        setOpen(false);
+      }
+    },
+  );
 
   const clear = (event: SyntheticEvent) => {
     setSelectedState([]);
@@ -232,11 +251,28 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   }
   const registry = registryRef.current;
 
+  useIsomorphicLayoutEffect(() => {
+    optionStateStore.setActiveId(activeState?.id);
+  }, [activeState?.id, optionStateStore]);
+
+  useIsomorphicLayoutEffect(() => {
+    optionStateStore.setFocusVisible(focusVisibleState);
+  }, [focusVisibleState, optionStateStore]);
+
+  useIsomorphicLayoutEffect(() => {
+    optionStateStore.setSelected(selectedState);
+  }, [optionStateStore, selectedState]);
+
   const register = useCallback(
     (optionValue: OptionValue<Item>, element: HTMLElement) => {
-      return registry.register(optionValue, element);
+      const unregisterOptionState = optionStateStore.register(optionValue);
+      const unregisterRegistry = registry.register(optionValue, element);
+      return () => {
+        unregisterRegistry();
+        unregisterOptionState();
+      };
     },
-    [registry],
+    [optionStateStore, registry],
   );
 
   useEffect(() => {
@@ -421,5 +457,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     getLastOption,
     valueToString,
     disabled,
+    optionStateStore,
   };
 }
