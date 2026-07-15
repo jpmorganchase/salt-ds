@@ -812,4 +812,10 @@ describe("Given a Range Slider", () => {
           .should("eq", valAfterDrag);
       });
   });
+
+  it("SHOULD apply minName and maxName to the respective inputs", () => {
+    cy.mount(<Default minName="price-min" maxName="price-max" />);
+    cy.findAllByRole("slider").eq(0).should("have.attr", "name", "price-min");
+    cy.findAllByRole("slider").eq(1).should("have.attr", "name", "price-max");
+  });
 });

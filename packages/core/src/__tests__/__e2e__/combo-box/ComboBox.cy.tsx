@@ -903,4 +903,14 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").should("not.have.attr", "aria-describedby");
     cy.findByRole("combobox").should("not.have.attr", "aria-labelledby");
   });
+
+  it("SHOULD apply the name prop to the input", () => {
+    cy.mount(<Default name="city" />);
+    cy.findByRole("combobox").should("have.attr", "name", "city");
+  });
+
+  it("SHOULD allow inputProps.name to override the top-level name prop", () => {
+    cy.mount(<Default name="city" inputProps={{ name: "override" }} />);
+    cy.findByRole("combobox").should("have.attr", "name", "override");
+  });
 });

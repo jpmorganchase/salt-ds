@@ -125,6 +125,10 @@ export interface NumberInputProps
    */
   min?: number;
   /**
+   * The name applied to the input.
+   */
+  name?: string;
+  /**
    * Callback function that is triggered when the value changes via user input or increment/decrement.
    * Use `onNumberChange` if you want stable number, after blur or through increment/decrement
    *
@@ -302,6 +306,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
+      name,
       onBlur,
       onChange,
       onMouseUp,
@@ -620,6 +625,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             inputClassName,
           )}
           disabled={isDisabled}
+          name={name}
           onBlur={handleInputBlur}
           onChange={handleInputChange}
           onFocus={handleInputFocus}

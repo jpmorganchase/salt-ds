@@ -142,6 +142,37 @@ describe("GIVEN a DateInputRange", () => {
         cy.clock().then((clock) => clock.restore());
       });
 
+      it("SHOULD apply startName and endName to the respective inputs", () => {
+        cy.mount(<DateInputRange startName="trip-start" endName="trip-end" />);
+        cy.findByLabelText("Start date").should(
+          "have.attr",
+          "name",
+          "trip-start",
+        );
+        cy.findByLabelText("End date").should("have.attr", "name", "trip-end");
+      });
+
+      it("SHOULD allow startInputProps.name and endInputProps.name to override", () => {
+        cy.mount(
+          <DateInputRange
+            startName="trip-start"
+            endName="trip-end"
+            startInputProps={{ name: "start-override" }}
+            endInputProps={{ name: "end-override" }}
+          />,
+        );
+        cy.findByLabelText("Start date").should(
+          "have.attr",
+          "name",
+          "start-override",
+        );
+        cy.findByLabelText("End date").should(
+          "have.attr",
+          "name",
+          "end-override",
+        );
+      });
+
       const initialDate = {
         startDate: adapter.parse("05 Jan 2025", "DD MMM YYYY").date,
         endDate: adapter.parse("06 Feb 2026", "DD MMM YYYY").date,

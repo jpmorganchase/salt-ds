@@ -1141,4 +1141,14 @@ describe("Number Input", () => {
       });
     });
   });
+
+  it("SHOULD apply the name prop to the input", () => {
+    cy.mount(<Default name="quantity" />);
+    cy.findByRole("spinbutton").should("have.attr", "name", "quantity");
+  });
+
+  it("SHOULD allow inputProps.name to override the top-level name prop", () => {
+    cy.mount(<Default name="quantity" inputProps={{ name: "override" }} />);
+    cy.findByRole("spinbutton").should("have.attr", "name", "override");
+  });
 });
