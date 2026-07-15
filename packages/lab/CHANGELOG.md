@@ -1,5 +1,15 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.100
+
+### Patch Changes
+
+- dddc705: Updated `SystemStatus` default styling to better suit full-width, page-level messaging.
+- c032879: Updated `BreadcrumbsNext` overflow disclosure items to render as plain anchors instead of Link, and scoped overflow trigger styling to Button’s public CSS variables.
+- Updated dependencies [2c459c3]
+  - @salt-ds/core@1.67.1
+  - @salt-ds/icons@1.18.1
+
 ## 1.0.0-alpha.99
 
 ### Minor Changes
