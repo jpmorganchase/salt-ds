@@ -9,6 +9,7 @@ export * from "./Default";
 export * from "./DragRowOrder";
 export * from "./FloatingFilter";
 export * from "./HDCompact";
+export * from "./HeaderVariants";
 export * from "./InfiniteScroll";
 export * from "./LoadingOverlay";
 export * from "./MasterDetail";
