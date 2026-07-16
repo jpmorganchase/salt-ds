@@ -4649,6 +4649,7 @@ __metadata:
     fast-glob: "npm:^3.3.3"
     get-tsconfig: "npm:^4.7.5"
     gray-matter: "npm:^4.0.3"
+    jsonc-parser: "npm:^3.3.1"
     mdast-util-to-string: "npm:^4.0.0"
     remark-gfm: "npm:^4.0.1"
     remark-mdx: "npm:^3.1.1"

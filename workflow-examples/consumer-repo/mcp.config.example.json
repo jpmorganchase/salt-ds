@@ -2,7 +2,7 @@
   "mcpServers": {
     "Salt": {
       "command": "npx",
-      "args": ["-y", "@salt-ds/mcp@latest"]
+      "args": ["-y", "@salt-ds/mcp@0.1.0"]
     }
   }
 }

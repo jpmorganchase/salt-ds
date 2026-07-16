@@ -1,7 +1,8 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { parseTsconfig } from "get-tsconfig";
+import { createPathsMatcher, parseTsconfig } from "get-tsconfig";
+import { parse as parseJsonc, type ParseError } from "jsonc-parser";
 import {
   deriveComparableSaltVersion,
   detectProjectPolicy,
@@ -13,6 +14,8 @@ import {
   collectSaltPackages as collectSaltPackagesFromHelper,
   detectPackageManagerName as detectPackageManagerNameFromHelper,
   detectSaltWorkspaceScope,
+  inspectPackageJsonFile,
+  type MarkerInspectionReason,
   readPackageJsonFile,
   type SaltPackageJsonLike,
 } from "./projectContext/saltInstallation.js";
@@ -50,6 +53,11 @@ type ProjectContextHealthSummary = {
   reason: string | null;
 };
 type PublicRepoAwareWorkflow = "review" | "migrate";
+
+interface InvalidProjectMarker {
+  path: string;
+  reason: MarkerInspectionReason;
+}
 
 interface SaltProjectContextSource {
   original: string;
@@ -667,6 +675,8 @@ async function detectImportConventions(rootDir: string): Promise<{
     alias: string;
     targets: string[];
   }>;
+  marker_issue: InvalidProjectMarker | null;
+  paths_matcher: ((specifier: string) => string[]) | null;
 }> {
   const tsconfigPath =
     (await findAncestorWithChild(rootDir, ["tsconfig.json"])) ??
@@ -675,16 +685,86 @@ async function detectImportConventions(rootDir: string): Promise<{
     return {
       tsconfig_path: null,
       aliases: [],
+      marker_issue: null,
+      paths_matcher: null,
+    };
+  }
+
+  const normalizedTsconfigPath = toPosix(tsconfigPath) ?? tsconfigPath;
+  let realPath: string;
+
+  try {
+    const [realRoot, resolvedPath] = await Promise.all([
+      fs.realpath(path.dirname(tsconfigPath)),
+      fs.realpath(tsconfigPath),
+    ]);
+    realPath = resolvedPath;
+    const relative = path.relative(realRoot, resolvedPath);
+    if (
+      relative === ".." ||
+      relative.startsWith(`..${path.sep}`) ||
+      path.isAbsolute(relative)
+    ) {
+      return {
+        tsconfig_path: null,
+        aliases: [],
+        marker_issue: {
+          path: normalizedTsconfigPath,
+          reason: "outside_root",
+        },
+        paths_matcher: null,
+      };
+    }
+    if (!(await fs.stat(resolvedPath)).isFile()) {
+      return {
+        tsconfig_path: null,
+        aliases: [],
+        marker_issue: {
+          path: normalizedTsconfigPath,
+          reason: "not_file",
+        },
+        paths_matcher: null,
+      };
+    }
+  } catch {
+    return {
+      tsconfig_path: null,
+      aliases: [],
+      marker_issue: {
+        path: normalizedTsconfigPath,
+        reason: "unreadable",
+      },
+      paths_matcher: null,
     };
   }
 
   let tsconfig: ReturnType<typeof parseTsconfig>;
   try {
-    tsconfig = parseTsconfig(tsconfigPath);
+    const contents = await fs.readFile(realPath, "utf8");
+    const parseErrors: ParseError[] = [];
+    const parsed = parseJsonc(
+      contents.charCodeAt(0) === 0xfeff ? contents.slice(1) : contents,
+      parseErrors,
+      { allowTrailingComma: true },
+    ) as unknown;
+    if (
+      parseErrors.length > 0 ||
+      typeof parsed !== "object" ||
+      parsed === null ||
+      Array.isArray(parsed)
+    ) {
+      throw new SyntaxError("Invalid tsconfig JSONC object.");
+    }
+    tsconfig = parseTsconfig(realPath);
   } catch {
     return {
-      tsconfig_path: toPosix(tsconfigPath),
+      tsconfig_path: null,
       aliases: [],
+      marker_issue: {
+        path: normalizedTsconfigPath,
+        reason: "parse_error",
+      },
+      paths_matcher: null,
     };
   }
 
@@ -709,8 +789,19 @@ async function detectImportConventions(rootDir: string): Promise<{
     }));
 
   return {
-    tsconfig_path: toPosix(tsconfigPath),
+    tsconfig_path: normalizedTsconfigPath,
     aliases,
+    marker_issue: null,
+    paths_matcher: (() => {
+      try {
+        return createPathsMatcher({
+          path: realPath,
+          config: tsconfig,
+        });
+      } catch {
+        return null;
+      }
+    })(),
   };
 }
 
@@ -837,6 +928,7 @@ function buildSummary(input: {
   resolution: SaltProjectContextData["resolution"];
   retryRootDir: string | null;
   policyBlockingReasons: string[];
+  markerBlockingReasons: string[];
 }): SaltProjectContextData["summary"] {
   const policyBlockingReason =
     input.policyBlockingReasons.length > 0
@@ -844,10 +936,17 @@ function buildSummary(input: {
       : null;
   const contextHealth: ProjectContextHealthSummary = {
     resolution_status: input.resolution.status,
-    trusted: input.resolution.status === "resolved",
+    trusted:
+      input.resolution.status === "resolved" &&
+      input.markerBlockingReasons.length === 0,
     repo_specific_workflows_ready:
-      input.resolution.status === "resolved" && !policyBlockingReason,
-    reason: input.resolution.reason ?? policyBlockingReason,
+      input.resolution.status === "resolved" &&
+      input.markerBlockingReasons.length === 0 &&
+      !policyBlockingReason,
+    reason:
+      input.markerBlockingReasons[0] ??
+      input.resolution.reason ??
+      policyBlockingReason,
   };
   const retryWith: ProjectContextRetry = {
     root_dir: input.retryRootDir ?? null,
@@ -866,9 +965,24 @@ function buildSummary(input: {
         next_tool_after_policy: null,
       },
       reasons: [
+        ...input.markerBlockingReasons,
         input.resolution.reason ??
           "Project context could not confidently resolve the repo root. Re-run get_salt_project_context with an explicit root_dir before relying on repo-aware workflow guidance.",
       ],
+      context_health: contextHealth,
+      retry_with: retryWith,
+    };
+  }
+
+  if (input.markerBlockingReasons.length > 0) {
+    return {
+      recommended_next_tool: null,
+      policy_note: {
+        status: "not_applicable",
+        reason: null,
+        next_tool_after_policy: null,
+      },
+      reasons: input.markerBlockingReasons,
       context_health: contextHealth,
       retry_with: retryWith,
     };
@@ -1055,10 +1169,7 @@ function buildProjectContextResolution(input: {
 export function isSaltProjectContextReadyForRepoAwareWork(
   context: SaltProjectContextData,
 ): boolean {
-  return (
-    context.resolution.status === "resolved" &&
-    context.policy.import_targets.blocking_count === 0
-  );
+  return context.summary.context_health.repo_specific_workflows_ready;
 }
 
 export async function getSaltProjectContext(
@@ -1162,10 +1273,19 @@ async function collectSaltProjectContextBundleWithOptions(
   options: { installationDiagnostics: boolean },
 ): Promise<SaltWorkflowContextBundle> {
   const rootDir = path.resolve(process.cwd(), args.root_dir ?? ".");
-  const packageJsonPath = await findAncestorWithChild(rootDir, [
+  const discoveredPackageJsonPath = await findAncestorWithChild(rootDir, [
     "package.json",
   ]);
-  const packageJson = await readPackageJson(packageJsonPath);
+  const packageInspection = await inspectPackageJsonFile(
+    discoveredPackageJsonPath,
+    discoveredPackageJsonPath
+      ? path.dirname(discoveredPackageJsonPath)
+      : undefined,
+  );
+  const packageJsonPath =
+    packageInspection.status === "valid" ? packageInspection.path : null;
+  const packageJson =
+    packageInspection.status === "valid" ? packageInspection.value : null;
   const packageManager = await detectPackageManagerNameFromHelper(
     rootDir,
     packageJson,
@@ -1203,7 +1323,26 @@ async function collectSaltProjectContextBundleWithOptions(
     framework.name,
     policy,
   );
-  const imports = await detectImportConventions(rootDir);
+  const detectedImports = await detectImportConventions(rootDir);
+  const imports: SaltProjectContextData["imports"] = {
+    tsconfig_path: detectedImports.tsconfig_path,
+    aliases: detectedImports.aliases,
+  };
+  const invalidMarkers: InvalidProjectMarker[] = [
+    ...(packageInspection.status === "invalid"
+      ? [
+          {
+            path: packageInspection.path,
+            reason: packageInspection.reason,
+          },
+        ]
+      : []),
+    ...(detectedImports.marker_issue ? [detectedImports.marker_issue] : []),
+  ];
+  const markerBlockingReasons = invalidMarkers.map(
+    (marker) =>
+      `Invalid project marker ${marker.path} (${marker.reason}); fix or remove it before relying on repo-specific workflow guidance.`,
+  );
   const runtimeMetadata = getSaltMcpRuntimeMetadata(registry);
   const publicBlockingWorkflows =
     saltInstallation.health_summary.blocking_workflows;
@@ -1215,6 +1354,10 @@ async function collectSaltProjectContextBundleWithOptions(
     rootDir: normalizedRootDir,
     currentSaltVersion,
     policy,
+    importConventions: {
+      pathsMatcher: detectedImports.paths_matcher,
+      aliasPatterns: detectedImports.aliases.map((entry) => entry.alias),
+    },
   });
   const policyWithImportTargets: SaltProjectContextData["policy"] = {
     ...policy,
@@ -1289,6 +1432,7 @@ async function collectSaltProjectContextBundleWithOptions(
   if (resolution.reason) {
     notes.push(resolution.reason);
   }
+  notes.push(...markerBlockingReasons);
   const sources = buildContextSources({
     packageJsonPath: normalizedPackageJsonPath,
     repoInstructionsPath: repoInstructions.path,
@@ -1339,6 +1483,7 @@ async function collectSaltProjectContextBundleWithOptions(
       retryRootDir:
         resolution.status === "resolved" ? normalizedRootDir : detectedRepoRoot,
       policyBlockingReasons: policyInspection.blockingReasons,
+      markerBlockingReasons,
     }),
     notes,
     sources,

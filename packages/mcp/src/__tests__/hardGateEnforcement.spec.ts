@@ -12,6 +12,7 @@ import {
 } from "../core/tools/publicContract.js";
 import { reviewSaltUi } from "../core/tools/reviewSaltUi.js";
 import type { SaltRegistry } from "../core/types.js";
+import { collectSaltWorkflowContextData } from "../server/projectContext.js";
 import {
   withAnalyzeWorkflowGuidance,
   withChooseWorkflowGuidance,
@@ -76,13 +77,113 @@ function assertHardGate(contract: PublicContract): void {
 }
 
 describe("Hard Gate enforcement (behaviour-level, not prose)", () => {
+  it("invalid project markers keep create, review, and migrate fail-closed", async () => {
+    const projectRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-invalid-marker-"),
+    );
+
+    try {
+      await fs.writeFile(
+        path.join(projectRoot, "package.json"),
+        JSON.stringify({
+          dependencies: { "@salt-ds/core": "^2.0.0" },
+        }),
+      );
+      await fs.writeFile(path.join(projectRoot, "tsconfig.json"), "{");
+
+      const context = await collectSaltWorkflowContextData(registry, {
+        root_dir: projectRoot,
+      });
+      const contextChecked =
+        context.summary.context_health.repo_specific_workflows_ready;
+
+      expect(context.resolution.status).toBe("resolved");
+      expect(context.imports.tsconfig_path).toBeNull();
+      expect(contextChecked).toBe(false);
+      expect(context.summary.context_health.reason).toMatch(/parse_error/u);
+
+      const createResult = createSaltUi(registry, {
+        query: "Button",
+        include_starter_code: true,
+      });
+      const createContract = withChooseWorkflowGuidance(
+        registry,
+        createResult,
+        {
+          create_rerun_args: {
+            query: "Button",
+            root_dir: projectRoot,
+          },
+          context_checked: contextChecked,
+          context_retry_with_root_dir: projectRoot,
+        },
+      ) as PublicContract;
+
+      const reviewCode = `
+        import { Button } from "@salt-ds/core";
+
+        export function SaveAction() {
+          return <Button>Save</Button>;
+        }
+      `;
+      const reviewResult = reviewSaltUi(registry, {
+        framework: "react",
+        code: reviewCode,
+        view: "compact",
+      });
+      const reviewContract = withAnalyzeWorkflowGuidance(
+        registry,
+        reviewResult,
+        {
+          code: reviewCode,
+          root_dir: projectRoot,
+          context_checked: contextChecked,
+        },
+      ) as PublicContract;
+
+      const sourceOutline = {
+        regions: ["header", "main content", "dialog footer"],
+        actions: ["primary action"],
+        states: ["loading", "validation"],
+        notes: ["This screen has a confirmation dialog."],
+      };
+      const migrateResult = migrateToSalt(registry, {
+        source_outline: sourceOutline,
+        include_starter_code: true,
+      });
+      const migrateContract = withTranslateWorkflowGuidance(
+        registry,
+        migrateResult,
+        {
+          source_outline: sourceOutline,
+          context_checked: contextChecked,
+          context_retry_with_root_dir: projectRoot,
+        },
+      ) as PublicContract;
+
+      for (const contract of [
+        createContract,
+        reviewContract,
+        migrateContract,
+      ]) {
+        assertHardGate(contract);
+        expect(contract.action).toMatchObject({
+          kind: "fix_context",
+          tool: "get_salt_project_context",
+        });
+      }
+    } finally {
+      await fs.rm(projectRoot, { recursive: true, force: true });
+    }
+  });
+
   it("create_salt_ui: ambiguous prompt does not authorise implementation", () => {
     const ambiguous = createSaltUi(registry, {
       query: "make something good for users",
       include_starter_code: false,
     });
     const contract = withChooseWorkflowGuidance(registry, ambiguous, {
-      query: "make something good for users",
+      create_rerun_args: { query: "make something good for users" },
     }) as PublicContract;
 
     assertHardGate(contract);
@@ -95,11 +196,37 @@ describe("Hard Gate enforcement (behaviour-level, not prose)", () => {
       include_starter_code: false,
     });
     const contract = withChooseWorkflowGuidance(registry, empty, {
-      query: "",
+      create_rerun_args: { query: "" },
     }) as PublicContract;
 
     assertHardGate(contract);
     expect(contract.action.kind).not.toBe("implement");
+  });
+
+  it("create_salt_ui: unrelated resolved entities cannot authorize implementation", () => {
+    const result = createSaltUi(registry, {
+      query: "Button",
+      include_starter_code: true,
+    });
+    const contract = withChooseWorkflowGuidance(registry, result, {
+      create_rerun_args: {
+        query: "Button",
+        resolved_entities: ["Table"],
+      },
+      context_checked: true,
+    }) as PublicContract;
+
+    assertHardGate(contract);
+    expect(contract.status).toBe("blocked");
+    expect(contract.action).toMatchObject({
+      kind: "ask_user",
+      question: expect.stringMatching(/remove.*resolved_entities/i),
+      post_action: null,
+    });
+    expect(contract.action.kind).not.toBe("implement");
+    expect(contract.evidence.items).not.toEqual(
+      expect.arrayContaining([expect.objectContaining({ entity: "Table" })]),
+    );
   });
 
   it("review_salt_ui: empty source does not authorise implementation", () => {
@@ -163,6 +290,43 @@ describe("Hard Gate enforcement (behaviour-level, not prose)", () => {
         expect.stringContaining("complete current contents"),
       ]),
     );
+  });
+
+  it("review_salt_ui: apply_fixes exposes only source-backed fix rule IDs", () => {
+    const code = `
+      import { Text } from "@salt-ds/core";
+
+      export function DemoText() {
+        return <Text variant="secondary">Projected revenue</Text>;
+      }
+    `;
+    const reviewed = reviewSaltUi(registry, {
+      framework: "react",
+      code,
+      package_version: "2.0.0",
+      view: "compact",
+    });
+    const contract = withAnalyzeWorkflowGuidance(registry, reviewed, {
+      code,
+    }) as PublicContract;
+
+    assertHardGate(contract);
+    expect(contract.action.kind).toBe("apply_fixes");
+    expect(contract.guidance.kind).toBe("review");
+    if (contract.guidance.kind !== "review") return;
+    expect(contract.guidance.fixes.length).toBeGreaterThan(0);
+    expect(
+      contract.guidance.fixes.every((fix) =>
+        fix.source_urls.some((sourceUrl) => sourceUrl.trim().length > 0),
+      ),
+    ).toBe(true);
+    expect(contract.action.rule_ids).toEqual([
+      ...new Set(
+        contract.guidance.fixes
+          .map((fix) => fix.rule_id?.trim())
+          .filter((ruleId): ruleId is string => Boolean(ruleId)),
+      ),
+    ]);
   });
 
   it("migrate_to_salt: empty source outline does not authorise implementation", () => {
