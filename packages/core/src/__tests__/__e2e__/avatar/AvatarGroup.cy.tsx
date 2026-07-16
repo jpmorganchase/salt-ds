@@ -14,13 +14,15 @@ describe("Given an AvatarGroup", () => {
     cy.findAllByRole("img").should("have.length", 3);
     cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
     cy.findByRole("img", { name: "Peter Piper" }).should("be.visible");
+
     cy.findByRole("img", { name: "John Doe" }).should("not.exist");
+    cy.findByRole("img", { name: "Jane Doe" }).should("not.exist");
 
     cy.findByText("+2").should("be.visible");
     cy.findByRole("img", { name: "2 more" }).should("be.visible");
   });
 
-  it("renders every avatar without an overflow indicator when children equal `max`", () => {
+  it("renders every avatar and no overflow indicator when children do not exceed `max`", () => {
     cy.mount(
       <AvatarGroup max={3}>
         <Avatar name="Alex Brailescu" />
@@ -30,18 +32,11 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findAllByRole("img").should("have.length", 3);
-  });
+    cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
+    cy.findByRole("img", { name: "Peter Piper" }).should("be.visible");
+    cy.findByRole("img", { name: "John Doe" }).should("be.visible");
 
-  it("renders every avatar without an overflow indicator when children are fewer than `max`", () => {
-    cy.mount(
-      <AvatarGroup max={5}>
-        <Avatar name="Alex Brailescu" />
-        <Avatar name="Peter Piper" />
-        <Avatar name="John Doe" />
-      </AvatarGroup>,
-    );
-
-    cy.findAllByRole("img").should("have.length", 3);
+    cy.findByRole("img", { name: /\d+ more/ }).should("not.exist");
   });
 
   it("delegates the overflow indicator to `renderSurplus` when children exceed `max`", () => {
@@ -61,6 +56,10 @@ describe("Given an AvatarGroup", () => {
 
     cy.findByTestId("custom-overflow").should("be.visible");
     cy.findByText("+2").should("not.exist");
+    cy.findByRole("img", { name: "2 more" }).should("not.exist");
+
+    cy.findAllByRole("img").should("have.length", 2);
+
     cy.get("@renderSurplus").should("have.been.calledWithMatch", {
       count: 2,
       hiddenAvatars: Cypress.sinon.match.array,
@@ -121,7 +120,7 @@ describe("Given an AvatarGroup", () => {
     });
   });
 
-  it("ignores a negative `max`, showing every avatar", () => {
+  it("treats a negative `max` as unset, showing every avatar with no overflow", () => {
     cy.mount(
       <AvatarGroup max={-1}>
         <Avatar name="Alex Brailescu" />
@@ -131,10 +130,11 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findAllByRole("img").should("have.length", 3);
+    cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
     cy.findByRole("img", { name: "John Doe" }).should("be.visible");
   });
 
-  it("ignores a non-finite `max`, showing every avatar", () => {
+  it("treats a non-finite `max` as unset, showing every avatar with no overflow", () => {
     cy.mount(
       <AvatarGroup max={Number.POSITIVE_INFINITY}>
         <Avatar name="Alex Brailescu" />
@@ -144,6 +144,8 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findAllByRole("img").should("have.length", 3);
+    cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
+    cy.findByRole("img", { name: "John Doe" }).should("be.visible");
   });
 
   it("floors a fractional `max`", () => {
@@ -156,8 +158,12 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
-    cy.findAllByRole("img").should("have.length", 2); // 1 visible + overflow
+    cy.findByRole("img", { name: "Peter Piper" }).should("not.exist");
+    cy.findByRole("img", { name: "John Doe" }).should("not.exist");
+
+    cy.findAllByRole("img").should("have.length", 2);
     cy.findByText("+2").should("be.visible");
+    cy.findByRole("img", { name: "2 more" }).should("be.visible");
   });
 
   it("keeps non-Avatar children in the layout when within `max`", () => {
@@ -172,7 +178,9 @@ describe("Given an AvatarGroup", () => {
     );
 
     cy.findAllByRole("img").should("have.length", 3);
+    cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
     cy.findByRole("img", { name: "Peter Piper" }).should("be.visible");
+    cy.findByRole("img", { name: "John Doe" }).should("be.visible");
   });
 
   it("counts non-Avatar children towards the overflow", () => {
@@ -187,6 +195,11 @@ describe("Given an AvatarGroup", () => {
       </AvatarGroup>,
     );
 
+    cy.findAllByRole("img").should("have.length", 3);
+    cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
+    cy.findByRole("img", { name: "John Doe" }).should("not.exist");
+    cy.findByRole("img", { name: "Jane Doe" }).should("not.exist");
     cy.findByText("+2").should("be.visible");
+    cy.findByRole("img", { name: "2 more" }).should("be.visible");
   });
 });
