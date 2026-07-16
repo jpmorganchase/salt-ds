@@ -40,11 +40,16 @@ export { createSaltUi } from "./tools/createSaltUi.js";
 export { getSaltEntities } from "./tools/getSaltEntities.js";
 export type { MigrateToSaltResult } from "./tools/migrateToSalt.js";
 export { migrateToSalt } from "./tools/migrateToSalt.js";
-export type { PublicReferenceEntityType } from "./tools/publicContract.js";
+export type {
+  PublicCreateRerunArgs,
+  PublicReferenceEntityType,
+} from "./tools/publicContract.js";
 export {
   buildCreatePublicContract,
   buildMigratePublicContract,
   buildReviewPublicContract,
+  PUBLIC_CREATE_REFERENCE_BATCH_MAX,
+  PUBLIC_CREATE_RESOLVED_ENTITY_MAX,
   PUBLIC_REFERENCE_ENTITY_TYPES,
 } from "./tools/publicContract.js";
 export type {

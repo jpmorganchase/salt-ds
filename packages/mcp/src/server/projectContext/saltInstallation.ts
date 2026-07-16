@@ -36,6 +36,18 @@ const SALT_PACKAGE_NAME_PATTERN = /^@salt-ds\/[a-z0-9][a-z0-9._-]*$/;
 const GRAPH_LIMITATION =
   "Salt inspected only declared packages through bounded manifest resolution. Use the host package manager for full dependency-graph and duplicate-install diagnosis.";
 
+export type MarkerInspectionReason =
+  | "outside_root"
+  | "not_file"
+  | "unreadable"
+  | "oversized"
+  | "parse_error";
+
+export type MarkerInspection<T> =
+  | { status: "absent"; path: null }
+  | { status: "valid"; path: string; value: T }
+  | { status: "invalid"; path: string; reason: MarkerInspectionReason };
+
 async function pathExists(targetPath: string): Promise<boolean> {
   try {
     await fs.access(targetPath);
@@ -117,32 +129,69 @@ function dependencyEntries(value: unknown): Array<[string, string]> {
   );
 }
 
-export async function readPackageJsonFile(
+export async function inspectPackageJsonFile(
   packageJsonPath: string | null,
   containingRoot?: string,
-): Promise<SaltPackageJsonLike | null> {
-  if (!packageJsonPath) return null;
+): Promise<MarkerInspection<SaltPackageJsonLike>> {
+  if (!packageJsonPath) return { status: "absent", path: null };
+  const absolutePath = path.resolve(packageJsonPath);
+  const normalizedPath = toPosix(absolutePath);
+  const absoluteRoot = path.resolve(
+    containingRoot ?? path.dirname(absolutePath),
+  );
+  if (!isPathInside(absoluteRoot, absolutePath)) {
+    return { status: "invalid", path: normalizedPath, reason: "outside_root" };
+  }
   try {
-    const absolutePath = path.resolve(packageJsonPath);
-    const absoluteRoot = path.resolve(
-      containingRoot ?? path.dirname(absolutePath),
-    );
-    if (!isPathInside(absoluteRoot, absolutePath)) return null;
     const [realRoot, realPath] = await Promise.all([
       fs.realpath(absoluteRoot),
       fs.realpath(absolutePath),
     ]);
-    if (!isPathInside(realRoot, realPath)) return null;
+    if (!isPathInside(realRoot, realPath)) {
+      return {
+        status: "invalid",
+        path: normalizedPath,
+        reason: "outside_root",
+      };
+    }
     const stats = await fs.stat(realPath);
-    if (!stats.isFile() || stats.size > MAX_PACKAGE_JSON_BYTES) return null;
+    if (!stats.isFile()) {
+      return { status: "invalid", path: normalizedPath, reason: "not_file" };
+    }
+    if (stats.size > MAX_PACKAGE_JSON_BYTES) {
+      return { status: "invalid", path: normalizedPath, reason: "oversized" };
+    }
     const contents = await fs.readFile(realPath, "utf8");
-    if (Buffer.byteLength(contents, "utf8") > MAX_PACKAGE_JSON_BYTES)
-      return null;
+    if (Buffer.byteLength(contents, "utf8") > MAX_PACKAGE_JSON_BYTES) {
+      return { status: "invalid", path: normalizedPath, reason: "oversized" };
+    }
     const parsed = JSON.parse(contents) as unknown;
-    return isRecord(parsed) ? (parsed as SaltPackageJsonLike) : null;
-  } catch {
-    return null;
+    return isRecord(parsed)
+      ? { status: "valid", path: normalizedPath, value: parsed }
+      : { status: "invalid", path: normalizedPath, reason: "parse_error" };
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code === "ENOENT") {
+      return { status: "absent", path: null };
+    }
+    return {
+      status: "invalid",
+      path: normalizedPath,
+      reason:
+        error instanceof SyntaxError ? "parse_error" : "unreadable",
+    };
   }
+}
+
+export async function readPackageJsonFile(
+  packageJsonPath: string | null,
+  containingRoot?: string,
+): Promise<SaltPackageJsonLike | null> {
+  const inspection = await inspectPackageJsonFile(
+    packageJsonPath,
+    containingRoot,
+  );
+  return inspection.status === "valid" ? inspection.value : null;
 }
 
 function toPosix(inputPath: string): string {

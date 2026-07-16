@@ -49,6 +49,108 @@ describe("getSaltProjectContext", () => {
     expect(context.salt.packages).toEqual([]);
     expect(context.salt.package_version).toBeNull();
     expect(context.framework).toEqual({ name: "unknown", evidence: [] });
+    expect(context.package_json_path).toBeNull();
+    expect(context.summary.context_health).toMatchObject({
+      trusted: false,
+      repo_specific_workflows_ready: false,
+      reason: expect.stringContaining("oversized"),
+    });
+    expect(context.sources).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          original: expect.stringContaining("package.json"),
+        }),
+      ]),
+    );
+  });
+
+  it("keeps a malformed package marker untrusted even with a valid repo signal", async () => {
+    const rootDir = await createTempDir("salt-mcp-invalid-package-marker");
+    await fs.mkdir(path.join(rootDir, ".git"));
+    await fs.writeFile(path.join(rootDir, "package.json"), "{", "utf8");
+    await fs.writeFile(path.join(rootDir, "AGENTS.md"), "# Instructions\n");
+
+    const context = await collectSaltWorkflowContextData(
+      CODE_ANALYSIS_REGISTRY,
+      { root_dir: rootDir },
+    );
+
+    expect(context.resolution.status).toBe("resolved");
+    expect(context.package_json_path).toBeNull();
+    expect(context.summary.context_health).toMatchObject({
+      trusted: false,
+      repo_specific_workflows_ready: false,
+      reason: expect.stringContaining("parse_error"),
+    });
+    expect(context.summary.reasons).toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(
+          /Invalid project marker.*package\.json.*parse_error/,
+        ),
+      ]),
+    );
+  });
+
+  it("keeps a valid package root untrusted when its tsconfig marker is invalid", async () => {
+    const rootDir = await createTempDir("salt-mcp-invalid-tsconfig-marker");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify({ name: "valid-package", private: true }),
+      "utf8",
+    );
+    await fs.writeFile(path.join(rootDir, "tsconfig.json"), "{", "utf8");
+
+    const context = await collectSaltWorkflowContextData(
+      CODE_ANALYSIS_REGISTRY,
+      { root_dir: rootDir },
+    );
+
+    expect(context.resolution.status).toBe("resolved");
+    expect(context.package_json_path).toContain("package.json");
+    expect(context.imports).toEqual({ tsconfig_path: null, aliases: [] });
+    expect(context.summary.context_health).toMatchObject({
+      trusted: false,
+      repo_specific_workflows_ready: false,
+      reason: expect.stringContaining("parse_error"),
+    });
+    expect(context.sources).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          original: expect.stringContaining("tsconfig.json"),
+        }),
+      ]),
+    );
+  });
+
+  it("accepts a valid BOM-prefixed tsconfig marker", async () => {
+    const rootDir = await createTempDir("salt-mcp-bom-tsconfig");
+    await fs.writeFile(
+      path.join(rootDir, "package.json"),
+      JSON.stringify({ name: "valid-package", private: true }),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(rootDir, "tsconfig.json"),
+      `\uFEFF${JSON.stringify({
+        compilerOptions: { paths: { "@valid/*": ["./src/*"] } },
+      })}`,
+      "utf8",
+    );
+
+    const context = await collectSaltWorkflowContextData(
+      CODE_ANALYSIS_REGISTRY,
+      { root_dir: rootDir },
+    );
+
+    expect(context.resolution.status).toBe("resolved");
+    expect(context.imports).toMatchObject({
+      tsconfig_path: expect.stringContaining("tsconfig.json"),
+      aliases: [{ alias: "@valid/*", targets: ["./src/*"] }],
+    });
+    expect(context.summary.context_health).toMatchObject({
+      trusted: true,
+      repo_specific_workflows_ready: true,
+    });
   });
 
   it("ignores malformed manifest sections in the normal workflow context path", async () => {

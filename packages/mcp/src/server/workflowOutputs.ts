@@ -9,6 +9,7 @@ import {
   type CreateSaltUiResult,
   type MigrateToSaltResult,
   type NormalizedVisualEvidenceInput,
+  type PublicCreateRerunArgs,
   type ReviewExpectedTargets,
   type ReviewSaltUiResult,
   type SaltRegistry,
@@ -16,34 +17,33 @@ import {
   type WorkflowProjectPolicyArtifact,
 } from "../core/runtime.js";
 
+interface CreateWorkflowEnvelopeInput {
+  create_rerun_args: PublicCreateRerunArgs;
+  context_checked?: boolean;
+  context_retry_with_root_dir?: string | null;
+  project_policy?: WorkflowProjectPolicyArtifact | null;
+}
+
 function buildCreateWorkflowEnvelope(
   registry: SaltRegistry,
   result: CreateSaltUiResult,
-  input: {
-    query?: string;
-    package?: string;
-    context_checked?: boolean;
-    context_retry_with_root_dir?: string | null;
-    root_dir?: string;
-    project_policy?: WorkflowProjectPolicyArtifact | null;
-    resolved_entities?: string[];
-  } = {},
+  input: CreateWorkflowEnvelopeInput,
 ) {
   const starter_code = applyProjectPolicyToStarterCodeSnippets(
     result.starter_code,
     input.project_policy,
   );
   const contract = buildCreateSaltUiWorkflowContract(registry, result, {
-    ...input,
+    query: input.create_rerun_args.query,
+    context_checked: input.context_checked,
+    context_retry_with_root_dir: input.context_retry_with_root_dir,
+    project_policy: input.project_policy,
     starter_code,
   });
 
   return buildCreatePublicContract(result, contract, {
     registry,
-    query: input.query,
-    package: input.package,
-    resolved_entities: input.resolved_entities,
-    root_dir: input.root_dir,
+    create_rerun_args: input.create_rerun_args,
     starter_code,
   });
 }
@@ -118,15 +118,7 @@ function buildMigrateWorkflowEnvelope(
 export function withChooseWorkflowGuidance(
   registry: SaltRegistry,
   result: CreateSaltUiResult,
-  input: {
-    query?: string;
-    package?: string;
-    context_checked?: boolean;
-    context_retry_with_root_dir?: string | null;
-    root_dir?: string;
-    project_policy?: WorkflowProjectPolicyArtifact | null;
-    resolved_entities?: string[];
-  } = {},
+  input: CreateWorkflowEnvelopeInput,
 ) {
   return buildCreateWorkflowEnvelope(registry, result, input);
 }

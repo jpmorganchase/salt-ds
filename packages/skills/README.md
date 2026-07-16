@@ -12,15 +12,15 @@ Use [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/a
 
 This README stays intentionally thin so the workflow story only needs to be maintained in one place.
 
-## Public Skill
+## Authored Skill
 
 - `salt-ds`
-  - the single public workflow skill for external consumers
+  - the single authored workflow skill for external consumers
   - routes Salt review, create, and migrate work through the v1 MCP surface
 
 ## Install Source
 
-The current install source and verification flow live in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
+The skill is deliberately omitted from public `@salt-ds/mcp@0.1.0` onboarding because no immutable reviewed skill commit exists yet. Do not publish a mutable `main`, branch, or short-SHA install URL as a substitute. The current public setup and the condition for exposing the skill live in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
 
 If you are working from a local checkout, validate `./packages/skills` with `npx skills add ./packages/skills --list` before pointing other docs at it.
 

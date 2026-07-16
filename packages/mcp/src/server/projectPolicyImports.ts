@@ -464,26 +464,36 @@ async function validateTarget(
 export async function validateProjectPolicyImportTargets(
   rootDir: string,
   targets: ProjectPolicyImportTargetInput[],
+  suppliedImportConventions?: {
+    pathsMatcher: ((specifier: string) => string[]) | null;
+    aliasPatterns: string[];
+  },
 ): Promise<ProjectPolicyImportTargetDiagnostics> {
   const inspectedTargets = targets.slice(0, MAX_PROJECT_POLICY_IMPORT_TARGETS);
   const overflowReason =
     targets.length > MAX_PROJECT_POLICY_IMPORT_TARGETS
       ? `Project policy declares ${targets.length} import targets, exceeding the bounded inspection limit of ${MAX_PROJECT_POLICY_IMPORT_TARGETS}. Reduce or split the declared policy before relying on repo-specific guidance.`
       : null;
-  let pathsMatcher: ((specifier: string) => string[]) | null = null;
-  let aliasPatterns: string[] = [];
-  try {
-    const tsconfig = getTsconfig(rootDir);
-    pathsMatcher = tsconfig ? createPathsMatcher(tsconfig) : null;
-    aliasPatterns = Object.keys(tsconfig?.config.compilerOptions?.paths ?? {});
-  } catch {
-    // Relative repo-local imports remain inspectable when tsconfig is invalid.
+  let importConventions = suppliedImportConventions;
+  if (!importConventions) {
+    try {
+      const tsconfig = getTsconfig(rootDir);
+      importConventions = {
+        pathsMatcher: tsconfig ? createPathsMatcher(tsconfig) : null,
+        aliasPatterns: Object.keys(
+          tsconfig?.config.compilerOptions?.paths ?? {},
+        ),
+      };
+    } catch {
+      // Relative repo-local imports remain inspectable when tsconfig is invalid.
+    }
   }
+  importConventions ??= { pathsMatcher: null, aliasPatterns: [] };
   const diagnostics = await validateTargetsInBoundedBatches(
     rootDir,
     inspectedTargets,
-    pathsMatcher,
-    aliasPatterns,
+    importConventions.pathsMatcher,
+    importConventions.aliasPatterns,
   );
   const blockingReasons = [
     ...diagnostics.flatMap((diagnostic) =>

@@ -11,7 +11,7 @@ Salt gives AI hosts a small, source-backed way to make Salt design-system decisi
 The first-release product model is intentionally narrow:
 
 - one public MCP package: `@salt-ds/mcp`
-- one optional skill: `salt-ds`
+- one authored optional skill: `salt-ds`, withheld from public `0.1.0` setup until it has an immutable reviewed source
 - three implementation workflows: `review`, `create`, and `migrate`
 - one reference path: `get_salt_reference` plus catalog resources
 - no public CLI workflow fallback
@@ -22,37 +22,39 @@ Use Salt when you want design-system-aware help in an existing codebase. Do not 
 
 ### 1. Connect Salt MCP
 
-Add the published Salt MCP package to your AI host:
+Install Node.js 22 or newer first. Then add the exact reviewed Salt MCP beta package to your AI host:
 
 ```json
 {
   "mcpServers": {
     "Salt": {
       "command": "npx",
-      "args": ["-y", "@salt-ds/mcp@latest"]
+      "args": ["-y", "@salt-ds/mcp@0.1.0"]
     }
   }
 }
 ```
 
-The MCP server is read-only. It does not write repo policy, persist generated artifacts, run browser sessions, or install packages.
+The MCP server is read-only. It does not write repo policy, persist generated artifacts, run browser sessions, or install packages. `.salt/team.json` is optional and remains repo/user-owned; when it and the advanced optional `.salt/stack.json` are absent, Salt gives canonical-only guidance and does not invent durable team conventions.
 
-### 2. Install The Skill
+#### Local Filesystem Trust
 
-Install the optional `salt-ds` skill when your host supports skills:
+The CLI runs locally with the filesystem permissions of the account that launches it. `root_dir` selects where context discovery starts; it is not a sandbox or authorization boundary. Invalid package or tsconfig markers fail repo-specific workflows closed, while valid ancestor and inherited-config resolution may read outside `root_dir`.
 
-```sh
-npx skills add https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills --skill salt-ds
-```
+Use the least practical privileges and sandbox the process for untrusted repositories. Remote or shared hosts must add authentication, tenant isolation, and path confinement. The complete trust model and inspection limits are documented in the package's `CORE_ARCHITECTURE.md`.
 
-The skill is a thin router. It tells the agent when to call Salt MCP and how to obey the returned workflow gate; canonical Salt facts still come from MCP.
+### 2. Optional Skill Status
+
+The authored `salt-ds` skill is not part of public `0.1.0` setup. It will only be exposed from a full immutable commit whose skill tree has been reviewed and verified against the release. A mutable `main` or branch URL is not a reproducible substitute.
+
+The MCP package remains the complete public path: connect it directly and ask the host to use the Salt workflow tools. No public skill-behavior or skill-effect claim is made for this beta.
 
 ### 3. Smoke Test
 
-In a consumer repo, ask:
+In a consumer repo, ask your MCP-connected host:
 
 ```text
-Use salt-ds to review this file.
+Use the Salt MCP to review this file.
 Lead with the review outcome, evidence-backed fixes, and anything still blocked.
 ```
 
@@ -102,7 +104,7 @@ For create and migrate implementation work, edit only when the workflow returns 
 - `safety.exact_request_safe: true`
 - `evidence.status: "complete"`
 
-If the workflow returns `ask_user`, ask the returned question and stop; its `action.post_action` is `null`. When an action includes a tool and concrete arguments, call it without inventing aliases or substituting placeholders. For `retrieve_reference`, perform the prerequisite and then honor its post-action. For `fix_context`, diagnose and correct the explicit root or policy problem, then rerun the original workflow fresh.
+If the workflow returns `ask_user`, ask the returned question and stop; its `action.post_action` is `null`. When an action includes a tool and concrete arguments, treat `action.tool` and `action.post_action.tool` as stable server-local semantic IDs while recognizing that a host may expose bare or qualified function names. Inspect live tools grouped under the configured Salt server and select the unique exact bare name or qualified name whose final semantic segment equals the returned ID. Preserve `action.args` exactly and never suffix-match across unrelated or unidentified servers. If no unique Salt match exists, refresh that server's live surface once, then report the ambiguity and stop. For `retrieve_reference`, run the post-action only when the immediately preceding response has `decision.status: "results"`, requested and found counts equal the action's requested-name count, zero not-found and ambiguous counts, no unresolved names, and every nested result decision is `found`. Otherwise stop. For `fix_context`, diagnose and correct the explicit root or policy problem, then rerun the original workflow fresh.
 
 For review, `action.kind: "apply_fixes"` with `scope: "grounded_findings"` identifies source-backed fixes. It does not authorize mutation. Apply only those fixes when the user already requested edits, then review the complete updated file through the returned post-action; otherwise report the findings and request authorization.
 

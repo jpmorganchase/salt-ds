@@ -385,11 +385,16 @@ export async function inspectWorkflowProjectPolicyArtifact(input: {
   rootDir: string;
   currentSaltVersion: string | null;
   policy: ProjectPolicySnapshot;
+  importConventions?: {
+    pathsMatcher: ((specifier: string) => string[]) | null;
+    aliasPatterns: string[];
+  };
 }): Promise<WorkflowProjectPolicyInspection> {
   const artifact = await buildWorkflowProjectPolicyArtifactForContext(input);
   const importTargets = await validateProjectPolicyImportTargets(
     input.rootDir,
     collectImportTargets(artifact),
+    input.importConventions,
   );
   const sanitizedArtifact = withoutInvalidImportTargets(
     artifact,

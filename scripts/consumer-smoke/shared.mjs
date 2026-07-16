@@ -46,13 +46,77 @@ export function parseArgs(argv) {
     index += 1;
   }
 
-  return {
+  const published = flags.published === "true";
+  const skillsSource = flags["skills-source"];
+  const expectedSkillTreeHash = flags["expected-skill-tree-hash"];
+  const result = {
+    published,
     keepTemp: flags["keep-temp"] === "true",
     skipBuild: flags["skip-build"] === "true",
-    skillsSource: flags["skills-source"]
-      ? path.resolve(flags["skills-source"])
-      : defaultSkillsSource,
+    skillsSource: published
+      ? skillsSource
+      : skillsSource
+        ? path.resolve(skillsSource)
+        : defaultSkillsSource,
+    expectedSkillTreeHash,
+    mcpSpec: flags["mcp-spec"],
+    expectedVersion: flags["expected-version"],
+    expectedGitHead: flags["expected-git-head"],
   };
+
+  if (!published) {
+    assert(
+      !result.mcpSpec &&
+        !result.expectedVersion &&
+        !result.expectedGitHead &&
+        !result.expectedSkillTreeHash,
+      "Published identity options require --published.",
+    );
+    return result;
+  }
+
+  assert(result.mcpSpec, "Published smoke requires --mcp-spec.");
+  assert(
+    result.expectedVersion,
+    "Published smoke requires --expected-version.",
+  );
+  assert(
+    result.expectedGitHead,
+    "Published smoke requires --expected-git-head.",
+  );
+  const specMatch = result.mcpSpec.match(
+    /^@salt-ds\/mcp@(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)$/u,
+  );
+  assert(
+    specMatch && !/snapshot/iu.test(result.mcpSpec),
+    "Published --mcp-spec must be an exact non-snapshot @salt-ds/mcp version.",
+  );
+  assert(
+    specMatch[1] === result.expectedVersion,
+    "--mcp-spec and --expected-version must identify the same version.",
+  );
+  assert(
+    /^[0-9a-f]{40}$/u.test(result.expectedGitHead),
+    "--expected-git-head must be a full lowercase 40-character commit SHA.",
+  );
+  assert(
+    Boolean(result.skillsSource) === Boolean(result.expectedSkillTreeHash),
+    "Published skill source and expected tree hash must be supplied together.",
+  );
+  if (result.skillsSource) {
+    assert(
+      /^https:\/\/github\.com\/jpmorganchase\/salt-ds\/tree\/[0-9a-f]{40}\/packages\/skills\/?$/u.test(
+        result.skillsSource,
+      ),
+      "Published --skills-source must use the immutable Salt GitHub tree URL with a full commit SHA.",
+    );
+    assert(
+      /^[0-9a-f]{64}$/u.test(result.expectedSkillTreeHash),
+      "--expected-skill-tree-hash must be a lowercase SHA-256 digest.",
+    );
+  }
+
+  return result;
 }
 
 export function assert(condition, message) {

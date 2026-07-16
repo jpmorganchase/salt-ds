@@ -6,6 +6,8 @@ import {
   collectSaltInstallationDiagnostics,
   collectSaltPackages,
   detectPackageManagerName,
+  inspectPackageJsonFile,
+  MAX_PACKAGE_JSON_BYTES,
   type SaltPackageJsonLike,
 } from "../server/projectContext/saltInstallation.js";
 
@@ -48,6 +50,59 @@ afterEach(async () => {
 });
 
 describe("MCP project-context installation diagnostics", () => {
+  it("distinguishes valid, absent, and invalid package markers", async () => {
+    const rootDir = await createTempDir("salt-mcp-marker-inspection");
+    const markerPath = path.join(rootDir, "package.json");
+
+    await expect(
+      inspectPackageJsonFile(markerPath, rootDir),
+    ).resolves.toEqual({ status: "absent", path: null });
+
+    await fs.writeFile(markerPath, "{", "utf8");
+    await expect(
+      inspectPackageJsonFile(markerPath, rootDir),
+    ).resolves.toMatchObject({ status: "invalid", reason: "parse_error" });
+
+    await fs.writeFile(markerPath, "[]", "utf8");
+    await expect(
+      inspectPackageJsonFile(markerPath, rootDir),
+    ).resolves.toMatchObject({ status: "invalid", reason: "parse_error" });
+
+    const prefix = '{"padding":"';
+    const suffix = '"}';
+    const atLimit = `${prefix}${"x".repeat(
+      MAX_PACKAGE_JSON_BYTES - Buffer.byteLength(prefix + suffix, "utf8"),
+    )}${suffix}`;
+    expect(Buffer.byteLength(atLimit, "utf8")).toBe(MAX_PACKAGE_JSON_BYTES);
+    await fs.writeFile(markerPath, atLimit, "utf8");
+    await expect(
+      inspectPackageJsonFile(markerPath, rootDir),
+    ).resolves.toMatchObject({ status: "valid" });
+
+    await fs.writeFile(markerPath, `${atLimit} `, "utf8");
+    await expect(
+      inspectPackageJsonFile(markerPath, rootDir),
+    ).resolves.toMatchObject({ status: "invalid", reason: "oversized" });
+  });
+
+  it("rejects non-file and escaping package markers", async () => {
+    const rootDir = await createTempDir("salt-mcp-marker-boundary");
+    const markerPath = path.join(rootDir, "package.json");
+    await fs.mkdir(markerPath);
+    await expect(
+      inspectPackageJsonFile(markerPath, rootDir),
+    ).resolves.toMatchObject({ status: "invalid", reason: "not_file" });
+
+    await fs.rm(markerPath, { recursive: true, force: true });
+    const outsideDir = await createTempDir("salt-mcp-marker-outside");
+    const outsideMarker = path.join(outsideDir, "package.json");
+    await fs.writeFile(outsideMarker, "{}", "utf8");
+    await fs.symlink(outsideMarker, markerPath, "file");
+    await expect(
+      inspectPackageJsonFile(markerPath, rootDir),
+    ).resolves.toMatchObject({ status: "invalid", reason: "outside_root" });
+  });
+
   it("ignores malformed dependency fields and invalid Salt package names", async () => {
     const rootDir = await createTempDir("salt-mcp-malformed-manifest");
     const packageJson = {
