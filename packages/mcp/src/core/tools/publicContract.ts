@@ -56,13 +56,14 @@ export const PUBLIC_REFERENCE_ENTITY_TYPES = [
 export type PublicReferenceEntityType =
   (typeof PUBLIC_REFERENCE_ENTITY_TYPES)[number];
 
+export const PUBLIC_CREATE_REFERENCE_BATCH_MAX = 3;
+export const PUBLIC_CREATE_RESOLVED_ENTITY_MAX = 25;
+
 export type PublicToolCallStep = {
   kind: "tool_call";
   tool: "create_salt_ui";
   mode: "exact_name";
-  args: {
-    query: string;
-  };
+  args: PublicCreateRerunArgs;
 };
 
 export type PublicRetrieveReferenceStep = {
@@ -211,15 +212,22 @@ export interface PublicReviewPostAction {
   required_input: ["complete_updated_file"];
 }
 
+export interface PublicCreateRerunArgs {
+  query: string;
+  solution_type?: "auto" | "component" | "pattern" | "foundation" | "token";
+  package?: string;
+  status?: "stable" | "beta" | "lab" | "deprecated";
+  prefer_stable?: boolean;
+  a11y_required?: boolean;
+  include_starter_code?: boolean;
+  resolved_entities?: string[];
+  root_dir?: string;
+}
+
 export interface PublicCreateRerunPostAction {
   kind: "rerun_workflow";
   tool: "create_salt_ui";
-  args: {
-    query: string;
-    package?: string;
-    root_dir?: string;
-    resolved_entities?: string[];
-  };
+  args: PublicCreateRerunArgs;
 }
 
 export type PublicPostAction =
@@ -271,6 +279,7 @@ export interface PublicReviewFinding {
 }
 
 export interface PublicReviewFix {
+  rule_id: string | null;
   title: string;
   recommendation: string;
   safety: WorkflowFixCandidate["safety"];
@@ -387,9 +396,7 @@ export interface PublicContractBuildOptions {
   blocking_reasons?: string[];
   next_step?: PublicNextStep;
   registry?: SaltRegistry;
-  query?: string;
-  package?: string;
-  resolved_entities?: string[];
+  create_rerun_args?: PublicCreateRerunArgs;
   root_dir?: string;
   context_checked?: boolean;
   starter_code?: StarterCodeSnippet[];
@@ -482,6 +489,15 @@ function hasActionablePublicReviewFix(value: unknown): boolean {
     fix &&
       hasNonEmptyPublicString(fix.title) &&
       hasNonEmptyPublicString(fix.recommendation),
+  );
+}
+
+function hasSourceBackedPublicReviewFix(value: unknown): boolean {
+  const fix = readRecord(value);
+  return Boolean(
+    fix &&
+      Array.isArray(fix.source_urls) &&
+      fix.source_urls.some(hasNonEmptyPublicString),
   );
 }
 
@@ -888,6 +904,28 @@ export function getPublicContractValidationErrors(
         "action.kind=apply_fixes requires authorization=host_or_user_required",
       );
     }
+    if (
+      contract.guidance?.kind === "review" &&
+      contract.guidance.fixes.some(
+        (fix) => !hasSourceBackedPublicReviewFix(fix),
+      )
+    ) {
+      errors.push(
+        "action.kind=apply_fixes requires source provenance for every review fix",
+      );
+    }
+    if (contract.guidance?.kind === "review") {
+      const representedRuleIds = uniqueNonEmptyStrings(
+        contract.guidance.fixes.map((fix) => fix.rule_id),
+      );
+      if (
+        JSON.stringify(action.rule_ids) !== JSON.stringify(representedRuleIds)
+      ) {
+        errors.push(
+          "action.kind=apply_fixes requires action.rule_ids to match public review fix rule_ids",
+        );
+      }
+    }
   }
 
   const postAction = action.post_action;
@@ -1189,8 +1227,8 @@ function deriveCreateExactRequest(
   }
 
   const requestMatch = deriveCreateRequestMatch(options.registry, {
-    query: options.query,
-    package: options.package,
+    query: options.create_rerun_args?.query,
+    package: options.create_rerun_args?.package,
     result_mode: result.mode,
     result_decision_name: result.decision.name,
     result_solution_type: result.solution_type,
@@ -1211,19 +1249,23 @@ function deriveCreateExactRequest(
 function buildCreateRetrieveReferenceArgs(
   result: CreateSaltUiResult,
   reference: CreateRequestMatch["reference"] | undefined,
-  name: string,
+  names: string[],
   includes: Pick<
     PublicRetrieveReferenceStep["args"],
     "include" | "include_starter_code"
   > = {},
 ): PublicRetrieveReferenceStep["args"] {
-  const normalizedName = normalizeEvidenceKey(name);
+  const normalizedNames = uniqueCreateEntityNames(names);
+  const singleName = normalizedNames.length === 1 ? normalizedNames[0] : null;
+  const normalizedName = singleName ? normalizeEvidenceKey(singleName) : null;
   const referenceEntityType =
+    normalizedName &&
     reference &&
     normalizeEvidenceKey(reference.requested_target.name) === normalizedName
       ? reference.requested_target.entity_type
       : undefined;
   const decisionEntityType =
+    normalizedName &&
     result.decision.name &&
     normalizeEvidenceKey(result.decision.name) === normalizedName &&
     PUBLIC_REFERENCE_ENTITY_TYPES.includes(
@@ -1234,10 +1276,131 @@ function buildCreateRetrieveReferenceArgs(
   const entityType = referenceEntityType ?? decisionEntityType;
 
   return {
-    names: [name],
+    names: normalizedNames,
     ...(entityType ? { entity_type: entityType } : {}),
     ...includes,
   };
+}
+
+function uniqueCreateEntityNames(values: string[]): string[] {
+  const names: string[] = [];
+  const keys = new Set<string>();
+
+  for (const value of values) {
+    const name = value.trim();
+    if (!name) {
+      continue;
+    }
+    const key = normalizeEvidenceKey(name);
+    if (keys.has(key)) {
+      continue;
+    }
+    keys.add(key);
+    names.push(name);
+  }
+
+  return names;
+}
+
+function selectCreateReferenceNames(
+  requiredFollowThrough: FollowThroughItem[],
+  resolvedEntities: string[],
+): string[] {
+  const supplied = uniqueCreateEntityNames(resolvedEntities).slice(
+    0,
+    PUBLIC_CREATE_RESOLVED_ENTITY_MAX,
+  );
+  const unionKeys = new Set(supplied.map(normalizeEvidenceKey));
+  const selected: string[] = [];
+  const selectedKeys = new Set<string>();
+
+  for (const followThrough of requiredFollowThrough) {
+    if (selected.length >= PUBLIC_CREATE_REFERENCE_BATCH_MAX) {
+      break;
+    }
+
+    const name = followThrough.entity.trim();
+    if (!name) {
+      continue;
+    }
+    const key = normalizeEvidenceKey(name);
+    if (selectedKeys.has(key)) {
+      continue;
+    }
+    if (
+      !unionKeys.has(key) &&
+      unionKeys.size >= PUBLIC_CREATE_RESOLVED_ENTITY_MAX
+    ) {
+      continue;
+    }
+
+    selected.push(name);
+    selectedKeys.add(key);
+    unionKeys.add(key);
+  }
+
+  return selected;
+}
+
+function buildCreateExactRetryBlocker(input: {
+  registry?: SaltRegistry;
+  exact_request?: PublicContractExactRequest;
+  create_rerun_args?: PublicCreateRerunArgs;
+}): string | null {
+  const requestedEntity = input.exact_request?.requested_entity?.trim();
+  if (
+    !requestedEntity ||
+    !input.exact_request?.exact_match_required ||
+    !["misrouted", "no_match", "broadened"].includes(
+      input.exact_request.match_status ?? "",
+    )
+  ) {
+    return null;
+  }
+
+  const matches = collectCreateEvidenceIdentityMatches(
+    input.registry,
+    requestedEntity,
+  );
+  if (matches.length > 1) {
+    return `The exact create identity ${requestedEntity} is ambiguous; choose one canonical Salt entity before retrying.`;
+  }
+  if (matches.length === 0) {
+    return null;
+  }
+
+  const match = matches[0];
+  const requestedPackage = input.create_rerun_args?.package;
+  const actualSolutionType = match.identity.split(":", 1)[0];
+  const actualPackage = readRecordString(
+    readRecord(match.record.package),
+    "name",
+  );
+  if (
+    requestedPackage &&
+    (actualSolutionType !== "component" ||
+      !actualPackage ||
+      requestedPackage !== actualPackage)
+  ) {
+    return `The exact create retry for ${match.canonical_name} conflicts with the explicit package filter ${requestedPackage}; change the package filter or choose a matching entity.`;
+  }
+
+  const requestedStatus = input.create_rerun_args?.status;
+  const actualStatus = readRecordString(match.record, "status");
+  if (requestedStatus && actualStatus && requestedStatus !== actualStatus) {
+    return `The exact create retry for ${match.canonical_name} conflicts with the explicit status filter ${requestedStatus}; change the status filter or choose a matching entity.`;
+  }
+
+  const requestedSolutionType = input.create_rerun_args?.solution_type;
+  if (
+    requestedSolutionType &&
+    requestedSolutionType !== "auto" &&
+    requestedSolutionType !== actualSolutionType
+  ) {
+    return `The exact create retry for ${match.canonical_name} conflicts with the explicit solution_type filter ${requestedSolutionType}; change the solution_type filter or choose a matching entity.`;
+  }
+
+  return null;
 }
 
 function buildCreateNextStep(
@@ -1248,7 +1411,9 @@ function buildCreateNextStep(
   evidence?: PublicEvidenceSummary,
   requiredFollowThrough: FollowThroughItem[] = contract.implementation_gate
     .required_follow_through,
-  resolvedEntities: string[] = [],
+  createRerunArgs?: PublicCreateRerunArgs,
+  invalidResolvedEntityQuestion?: string | null,
+  exactRetryBlocker?: string | null,
 ): PublicNextStep {
   if (!contract.context_requirement.repo_specific_edits_ready) {
     return toFixContextStep(
@@ -1257,10 +1422,17 @@ function buildCreateNextStep(
     );
   }
 
-  if (contract.implementation_gate.blocking_questions.length > 0) {
+  if (invalidResolvedEntityQuestion) {
     return {
       kind: "ask_user",
-      question: contract.implementation_gate.blocking_questions[0],
+      question: invalidResolvedEntityQuestion,
+    };
+  }
+
+  if (exactRetryBlocker) {
+    return {
+      kind: "ask_user",
+      question: exactRetryBlocker,
     };
   }
 
@@ -1276,17 +1448,35 @@ function buildCreateNextStep(
       tool: "create_salt_ui",
       mode: "exact_name",
       args: {
+        ...createRerunArgs,
         query: exactRequest.requested_entity,
       },
     };
   }
 
+  if (contract.implementation_gate.blocking_questions.length > 0) {
+    return {
+      kind: "ask_user",
+      question: contract.implementation_gate.blocking_questions[0],
+    };
+  }
+
   if (requiredFollowThrough.length > 0) {
-    const name = requiredFollowThrough[0].entity;
+    const names = selectCreateReferenceNames(
+      requiredFollowThrough,
+      createRerunArgs?.resolved_entities ?? [],
+    );
+    if (names.length === 0) {
+      return {
+        kind: "ask_user",
+        question:
+          "Narrow the create request or remove unrelated resolved entities before retrieving more Salt references.",
+      };
+    }
     return {
       kind: "retrieve_reference",
       tool: "get_salt_reference",
-      args: buildCreateRetrieveReferenceArgs(result, reference, name),
+      args: buildCreateRetrieveReferenceArgs(result, reference, names),
     };
   }
 
@@ -1301,14 +1491,14 @@ function buildCreateNextStep(
       args: buildCreateRetrieveReferenceArgs(
         result,
         reference,
-        reference.requested_target.name,
+        [reference.requested_target.name],
       ),
     };
   }
 
   if (evidence && evidence.status !== "complete") {
     const resolvedEntityKeys = new Set(
-      resolvedEntities.map(normalizeEvidenceKey),
+      (createRerunArgs?.resolved_entities ?? []).map(normalizeEvidenceKey),
     );
     if (
       exactRequest?.resolved_entity &&
@@ -1322,7 +1512,7 @@ function buildCreateNextStep(
         args: buildCreateRetrieveReferenceArgs(
           result,
           reference,
-          exactRequest.resolved_entity,
+          [exactRequest.resolved_entity],
         ),
       };
     }
@@ -1347,7 +1537,7 @@ function buildCreateNextStep(
     return {
       kind: "retrieve_reference",
       tool: "get_salt_reference",
-      args: buildCreateRetrieveReferenceArgs(result, reference, exampleTarget, {
+      args: buildCreateRetrieveReferenceArgs(result, reference, [exampleTarget], {
         include: ["examples"],
         include_starter_code: true,
       }),
@@ -1387,10 +1577,19 @@ function isGroundedReviewFixCandidate(
   );
 }
 
+function selectGroundedPublicReviewFixCandidates(
+  candidates: WorkflowFixCandidate[],
+): WorkflowFixCandidate[] {
+  return candidates
+    .filter(isGroundedReviewFixCandidate)
+    .slice(0, PUBLIC_GUIDANCE_LIMITS.review_fixes);
+}
+
 function buildReviewNextStep(
   result: ReviewSaltUiResult,
   contract: ReviewSaltUiWorkflowContract,
   evidence: PublicEvidenceSummary,
+  groundedCandidates: WorkflowFixCandidate[],
   options?: { can_complete: boolean },
 ): PublicNextStep {
   if (options?.can_complete) {
@@ -1400,11 +1599,8 @@ function buildReviewNextStep(
     };
   }
 
-  const topFixCandidate = contract.fix_candidates.candidates.find(
-    isGroundedReviewFixCandidate,
-  );
   if (
-    topFixCandidate &&
+    groundedCandidates.length > 0 &&
     evidence.status === "complete" &&
     hasSourceBackedEvidence(evidence)
   ) {
@@ -1708,45 +1904,75 @@ function readEntityName(value: unknown): string | undefined {
   return readRecordString(value, "name") ?? undefined;
 }
 
+interface CreateEvidenceIdentityMatch {
+  identity: string;
+  canonical_name: string;
+  record: Record<string, unknown>;
+}
+
+function collectCreateEvidenceIdentityMatches(
+  registry: SaltRegistry | undefined,
+  entity: string | null,
+): CreateEvidenceIdentityMatch[] {
+  if (!registry || !entity?.trim()) {
+    return [];
+  }
+
+  const normalizedEntity = normalizeEvidenceKey(entity);
+  const matches: CreateEvidenceIdentityMatch[] = [];
+  const appendMatch = (kind: string, value: unknown) => {
+    const record = readRecord(value);
+    const canonicalName = readEntityName(record);
+    if (!record || !canonicalName) {
+      return;
+    }
+    const id = readRecordString(record, "id") ?? canonicalName;
+    matches.push({
+      identity: `${kind}:${normalizeEvidenceKey(id)}`,
+      canonical_name: canonicalName,
+      record,
+    });
+  };
+
+  for (const component of registry.components) {
+    if (componentMatchesLookupName(component, entity)) {
+      appendMatch("component", component);
+    }
+  }
+
+  const collections: Array<{ kind: string; values: unknown[] }> = [
+    { kind: "pattern", values: registry.patterns },
+    { kind: "page", values: registry.pages },
+    { kind: "guide", values: registry.guides },
+    { kind: "token", values: registry.tokens },
+  ];
+  for (const { kind, values } of collections) {
+    for (const value of values) {
+      const record = readRecord(value);
+      if (
+        readEntityName(record)?.toLowerCase() === normalizedEntity ||
+        readRecordStringArray(record, "aliases").some(
+          (alias) => normalizeEvidenceKey(alias) === normalizedEntity,
+        )
+      ) {
+        appendMatch(kind, record);
+      }
+    }
+  }
+
+  return matches.filter(
+    (match, index, all) =>
+      all.findIndex((candidate) => candidate.identity === match.identity) ===
+      index,
+  );
+}
+
 function findCreateEvidenceRecord(
   registry: SaltRegistry | undefined,
   entity: string | null,
 ): Record<string, unknown> | null {
-  if (!registry || !entity) {
-    return null;
-  }
-
-  const normalizedEntity = entity.trim().toLowerCase();
-  const componentRecord = registry.components.find((component) =>
-    componentMatchesLookupName(component, entity),
-  );
-  if (componentRecord) {
-    return componentRecord as unknown as Record<string, unknown>;
-  }
-
-  const collections: unknown[][] = [
-    registry.patterns,
-    registry.pages,
-    registry.guides,
-    registry.tokens,
-  ];
-
-  for (const collection of collections) {
-    const record = collection
-      .map((entry) => readRecord(entry))
-      .find(
-        (entry) =>
-          readEntityName(entry)?.toLowerCase() === normalizedEntity ||
-          readRecordStringArray(entry, "aliases").some(
-            (alias) => alias.toLowerCase() === normalizedEntity,
-          ),
-      );
-    if (record) {
-      return record;
-    }
-  }
-
-  return null;
+  const matches = collectCreateEvidenceIdentityMatches(registry, entity);
+  return matches.length === 1 ? matches[0].record : null;
 }
 
 function buildEvidenceItem(input: {
@@ -1962,6 +2188,7 @@ function buildCreateEvidence(
   options: {
     remaining_follow_through?: FollowThroughItem[];
     resolved_follow_through_evidence?: PublicEvidenceItem[];
+    additional_missing?: string[];
   } = {},
 ): PublicEvidenceSummary {
   const recommended = readRecord(result.recommended);
@@ -2070,6 +2297,7 @@ function buildCreateEvidence(
     ...remainingFollowThrough.map(
       (item) => `follow-through evidence for ${item.entity}`,
     ),
+    ...(options.additional_missing ?? []),
     ...contract.implementation_gate.blocking_questions.map(
       () => "answered clarification",
     ),
@@ -2094,40 +2322,133 @@ function buildCreateEvidence(
 
 function buildResolvedFollowThroughEvidence(input: {
   registry?: SaltRegistry;
+  owner_entity?: string | null;
+  owner_entity_type?: "component" | "pattern";
+  required_entity_types?: Map<string, "component" | "pattern">;
   required_follow_through: FollowThroughItem[];
   resolved_entities?: string[];
 }): {
   remaining_follow_through: FollowThroughItem[];
   evidence_items: PublicEvidenceItem[];
+  validated_resolved_entities: string[];
+  invalid_resolved_entities: string[];
   full_request_evidence_complete: boolean;
 } {
   const resolvedEntities = uniqueNonEmptyStrings(input.resolved_entities ?? []);
-  const resolvedEntityKeys = new Set(
-    resolvedEntities.map(normalizeEvidenceKey),
-  );
-  const requiredEntityKeys = new Set(
-    input.required_follow_through.map((item) =>
-      normalizeEvidenceKey(item.entity),
-    ),
-  );
   const remaining: FollowThroughItem[] = [];
   const evidenceItems: PublicEvidenceItem[] = [];
+  const validatedResolvedEntities: string[] = [];
+  const invalidResolvedEntities: string[] = [];
   let resolvedRequiredCount = 0;
 
+  if (!input.registry) {
+    return {
+      remaining_follow_through: [...input.required_follow_through],
+      evidence_items: [],
+      validated_resolved_entities: resolvedEntities,
+      invalid_resolved_entities: [],
+      full_request_evidence_complete: false,
+    };
+  }
+
+  const allowedIdentities = new Map<
+    string,
+    {
+      canonical_name: string;
+      record: Record<string, unknown>;
+      role: "owner" | "required";
+    }
+  >();
+  const addAllowedIdentity = (
+    entity: string | null | undefined,
+    role: "owner" | "required",
+    preferredType?: "component" | "pattern",
+  ) => {
+    const allMatches = collectCreateEvidenceIdentityMatches(
+      input.registry,
+      entity ?? null,
+    );
+    const preferredMatches = preferredType
+      ? allMatches.filter((match) =>
+          match.identity.startsWith(`${preferredType}:`),
+        )
+      : [];
+    const matches = preferredMatches.length > 0 ? preferredMatches : allMatches;
+    if (matches.length !== 1) {
+      return;
+    }
+    const match = matches[0];
+    const existing = allowedIdentities.get(match.identity);
+    allowedIdentities.set(match.identity, {
+      canonical_name: match.canonical_name,
+      record: match.record,
+      role: existing?.role === "required" ? "required" : role,
+    });
+  };
+
+  addAllowedIdentity(input.owner_entity, "owner", input.owner_entity_type);
   for (const followThrough of input.required_follow_through) {
-    if (!resolvedEntityKeys.has(normalizeEvidenceKey(followThrough.entity))) {
+    addAllowedIdentity(
+      followThrough.entity,
+      "required",
+      input.required_entity_types?.get(
+        normalizeEvidenceKey(followThrough.entity),
+      ),
+    );
+  }
+
+  const suppliedIdentities = new Set<string>();
+  for (const entity of resolvedEntities) {
+    const allMatches = collectCreateEvidenceIdentityMatches(
+      input.registry,
+      entity,
+    );
+    const matches = allMatches.filter((match) =>
+      allowedIdentities.has(match.identity),
+    );
+    const hasAllowedCanonicalName = matches.some(
+      (match) =>
+        normalizeEvidenceKey(match.canonical_name) ===
+        normalizeEvidenceKey(entity),
+    );
+    if (matches.length !== 1) {
+      invalidResolvedEntities.push(entity);
+      continue;
+    }
+    if (allMatches.length > 1 && !hasAllowedCanonicalName) {
+      invalidResolvedEntities.push(entity);
+      continue;
+    }
+    const match = matches[0];
+    const allowed = allowedIdentities.get(match.identity);
+    if (!allowed) {
+      invalidResolvedEntities.push(entity);
+      continue;
+    }
+    if (!suppliedIdentities.has(match.identity)) {
+      suppliedIdentities.add(match.identity);
+      validatedResolvedEntities.push(allowed.canonical_name);
+    }
+  }
+
+  for (const followThrough of input.required_follow_through) {
+    const matches = collectCreateEvidenceIdentityMatches(
+      input.registry,
+      followThrough.entity,
+    ).filter(
+      (candidate) =>
+        allowedIdentities.get(candidate.identity)?.role === "required",
+    );
+    const match = matches.length === 1 ? matches[0] : null;
+    if (!match || !suppliedIdentities.has(match.identity)) {
       remaining.push(followThrough);
       continue;
     }
 
-    const record = findCreateEvidenceRecord(
-      input.registry,
-      followThrough.entity,
-    );
     const sourceUrls = uniqueNonEmptyStrings([
-      ...readRecordStringArray(record, "source_urls"),
-      ...readRelatedDocUrls(record),
-      ...readExampleSourceUrls(record),
+      ...readRecordStringArray(match.record, "source_urls"),
+      ...readRelatedDocUrls(match.record),
+      ...readExampleSourceUrls(match.record),
     ]);
 
     if (sourceUrls.length === 0) {
@@ -2138,52 +2459,23 @@ function buildResolvedFollowThroughEvidence(input: {
     evidenceItems.push(
       buildEvidenceItem({
         kind: "docs",
-        entity: followThrough.entity,
+        entity: match.canonical_name,
         field: "resolved_follow_through",
         source_urls: sourceUrls.slice(0, 4),
-        summary: `Retrieved canonical Salt evidence for ${followThrough.entity} before implementing the ${followThrough.region} region.`,
+        summary: `Retrieved canonical Salt evidence for ${match.canonical_name} before implementing the ${followThrough.region} region.`,
       }),
     );
     resolvedRequiredCount += 1;
   }
 
-  for (const entity of resolvedEntities) {
-    const entityKey = normalizeEvidenceKey(entity);
-    if (requiredEntityKeys.has(entityKey)) {
-      continue;
-    }
-
-    const record = findCreateEvidenceRecord(input.registry, entity);
-    const sourceUrls = uniqueNonEmptyStrings([
-      ...readRecordStringArray(record, "source_urls"),
-      ...readRelatedDocUrls(record),
-      ...readExampleSourceUrls(record),
-    ]);
-
-    if (sourceUrls.length === 0) {
-      remaining.push({
-        region: "resolved_entities",
-        entity,
-      });
-      continue;
-    }
-
-    evidenceItems.push(
-      buildEvidenceItem({
-        kind: "docs",
-        entity,
-        field: "resolved_entities",
-        source_urls: sourceUrls.slice(0, 4),
-        summary: `Verified source-backed Salt evidence for supplied resolved entity ${entity}.`,
-      }),
-    );
-  }
-
   return {
     remaining_follow_through: remaining,
     evidence_items: evidenceItems,
+    validated_resolved_entities: validatedResolvedEntities,
+    invalid_resolved_entities: uniqueNonEmptyStrings(invalidResolvedEntities),
     full_request_evidence_complete:
       input.required_follow_through.length > 0 &&
+      invalidResolvedEntities.length === 0 &&
       remaining.length === 0 &&
       resolvedRequiredCount === input.required_follow_through.length,
   };
@@ -2332,7 +2624,7 @@ function buildCreateGuidance(
 
 function buildReviewGuidance(
   result: ReviewSaltUiResult,
-  contract: ReviewSaltUiWorkflowContract,
+  groundedCandidates: WorkflowFixCandidate[],
 ): PublicReviewGuidance {
   const findings = (result.issues ?? [])
     .slice(0, PUBLIC_GUIDANCE_LIMITS.review_findings)
@@ -2355,9 +2647,8 @@ function buildReviewGuidance(
         ),
       };
     });
-  const fixes = contract.fix_candidates.candidates
-    .slice(0, PUBLIC_GUIDANCE_LIMITS.review_fixes)
-    .map((candidate) => ({
+  const fixes = groundedCandidates.map((candidate) => ({
+      rule_id: candidate.rule_id?.trim() || null,
       title: candidate.title,
       recommendation:
         candidate.recommendation ?? candidate.reason ?? candidate.title,
@@ -2481,22 +2772,21 @@ function buildCreateContinuationPostAction(input: {
     return null;
   }
 
-  const query =
-    input.options.query?.trim() || input.contract.intent.user_task.trim();
-  if (!query) {
+  const createRerunArgs = input.options.create_rerun_args;
+  const query = createRerunArgs?.query ?? input.contract.intent.user_task;
+  if (!query.trim()) {
     return null;
   }
 
-  const retrievedEntities = uniqueNonEmptyStrings([
-    ...(input.options.resolved_entities ?? []),
+  const retrievedEntities = uniqueCreateEntityNames([
+    ...(createRerunArgs?.resolved_entities ?? []),
     ...(input.next_step.kind === "retrieve_reference"
       ? input.next_step.args.names
       : []),
-  ]);
+  ]).slice(0, PUBLIC_CREATE_RESOLVED_ENTITY_MAX);
   const args: PublicCreateRerunPostAction["args"] = {
+    ...createRerunArgs,
     query,
-    ...(input.options.package ? { package: input.options.package } : {}),
-    ...(input.options.root_dir ? { root_dir: input.options.root_dir } : {}),
     ...(retrievedEntities.length > 0
       ? { resolved_entities: retrievedEntities }
       : {}),
@@ -2516,8 +2806,8 @@ export function buildCreatePublicContract(
 ): PublicContract {
   const requestMatch = options.registry
     ? deriveCreateRequestMatch(options.registry, {
-        query: options.query,
-        package: options.package,
+        query: options.create_rerun_args?.query,
+        package: options.create_rerun_args?.package,
         result_mode: result.mode,
         result_decision_name: result.decision.name,
         result_solution_type: result.solution_type,
@@ -2525,12 +2815,73 @@ export function buildCreatePublicContract(
     : undefined;
   const exactRequest = deriveCreateExactRequest(result, options);
   const starterBlockers = buildStarterBlockers(contract.starter_validation);
+  const requiredEntityTypes = new Map<string, "component" | "pattern">();
+  for (const name of [
+    ...(result.composition_contract?.expected_components ?? []),
+    ...(result.composition_contract?.slots.flatMap(
+      (slot) => slot.preferred_components,
+    ) ?? []),
+  ]) {
+    requiredEntityTypes.set(normalizeEvidenceKey(name), "component");
+  }
+  for (const name of [
+    ...(result.composition_contract?.expected_patterns ?? []),
+    ...(result.composition_contract?.slots.flatMap(
+      (slot) => slot.preferred_patterns,
+    ) ?? []),
+  ]) {
+    requiredEntityTypes.set(normalizeEvidenceKey(name), "pattern");
+  }
   const followThroughEvidence = buildResolvedFollowThroughEvidence({
     registry: options.registry,
+    owner_entity: exactRequest?.exact_match_required
+      ? exactRequest.requested_entity
+      : (exactRequest?.resolved_entity ??
+        result.decision.name ??
+        contract.intent.canonical_choice),
+    owner_entity_type:
+      result.solution_type === "component" || result.solution_type === "pattern"
+        ? result.solution_type
+        : undefined,
+    required_entity_types: requiredEntityTypes,
     required_follow_through:
       contract.implementation_gate.required_follow_through,
-    resolved_entities: options.resolved_entities,
+    resolved_entities: options.create_rerun_args?.resolved_entities,
   });
+  const invalidResolvedEntityQuestion =
+    followThroughEvidence.invalid_resolved_entities.length > 0
+      ? `Remove unrelated, ambiguous, or unknown resolved_entities (${followThroughEvidence.invalid_resolved_entities
+          .slice(0, 5)
+          .join(", ")}) and rerun only the required Salt reference lookup before continuing.`
+      : null;
+  const scopedCreateRerunArgs = options.create_rerun_args
+    ? (() => {
+        const request = { ...options.create_rerun_args };
+        delete request.resolved_entities;
+        return {
+          ...request,
+          ...(followThroughEvidence.validated_resolved_entities.length > 0
+            ? {
+                resolved_entities:
+                  followThroughEvidence.validated_resolved_entities,
+              }
+            : {}),
+        };
+      })()
+    : undefined;
+  const scopedOptions: PublicContractBuildOptions = {
+    ...options,
+    create_rerun_args: scopedCreateRerunArgs,
+  };
+  const exactRetryBlocker = buildCreateExactRetryBlocker({
+    registry: options.registry,
+    exact_request: exactRequest,
+    create_rerun_args: scopedCreateRerunArgs,
+  });
+  const inputBlockerQuestions = uniqueNonEmptyStrings([
+    invalidResolvedEntityQuestion,
+    exactRetryBlocker,
+  ]);
   if (exactRequest && followThroughEvidence.full_request_evidence_complete) {
     exactRequest.full_request_evidence_complete = true;
   }
@@ -2542,6 +2893,7 @@ export function buildCreatePublicContract(
     {
       remaining_follow_through: followThroughEvidence.remaining_follow_through,
       resolved_follow_through_evidence: followThroughEvidence.evidence_items,
+      additional_missing: inputBlockerQuestions,
     },
   );
   const nextStep =
@@ -2553,7 +2905,9 @@ export function buildCreatePublicContract(
       requestMatch?.reference,
       evidence,
       followThroughEvidence.remaining_follow_through,
-      options.resolved_entities,
+      scopedCreateRerunArgs,
+      invalidResolvedEntityQuestion,
+      exactRetryBlocker,
     );
   const projectPolicyBlockers = buildProjectPolicyBlockers({
     implementation_ready: contract.readiness.implementation_ready,
@@ -2563,7 +2917,7 @@ export function buildCreatePublicContract(
   const continuationPostAction = buildCreateContinuationPostAction({
     next_step: nextStep,
     contract,
-    options,
+    options: scopedOptions,
   });
   const createBlockingReasons = uniqueNonEmptyStrings([
     ...(options.blocking_reasons ?? []),
@@ -2579,7 +2933,10 @@ export function buildCreatePublicContract(
     state: {
       implementation_ready: contract.readiness.implementation_ready,
       required_follow_through: followThroughEvidence.remaining_follow_through,
-      blocking_questions: contract.implementation_gate.blocking_questions,
+      blocking_questions: uniqueNonEmptyStrings([
+        ...contract.implementation_gate.blocking_questions,
+        ...inputBlockerQuestions,
+      ]),
       starter_blockers: starterBlockers,
       project_policy_blockers: [...projectPolicyBlockers],
       hard_blocked: false,
@@ -2594,12 +2951,15 @@ export function buildCreatePublicContract(
     guidance: buildCreateGuidance(
       result,
       contract,
-      options,
+      scopedOptions,
       followThroughEvidence.evidence_items.flatMap((item) =>
         item.entity ? [item.entity] : [],
       ),
     ),
-    questions: contract.implementation_gate.blocking_questions,
+    questions: uniqueNonEmptyStrings([
+      ...contract.implementation_gate.blocking_questions,
+      ...inputBlockerQuestions,
+    ]),
     evidence,
     ...(continuationPostAction ? { post_action: continuationPostAction } : {}),
     rule_ids: contract.implementation_gate.rule_ids,
@@ -2613,6 +2973,9 @@ export function buildReviewPublicContract(
   options: PublicContractBuildOptions,
 ): PublicContract {
   const contextReady = options.context_checked !== false;
+  const groundedCandidates = selectGroundedPublicReviewFixCandidates(
+    contract.fix_candidates.candidates,
+  );
   const evidenceGate = buildReviewEvidenceGate(result, options.registry);
   const sourceCompletenessGaps = collectReviewSourceCompletenessGaps(result);
   const artifactImports = result.artifact_verification?.component_imports ?? [];
@@ -2655,7 +3018,7 @@ export function buildReviewPublicContract(
     : (options.next_step ??
       (sourceCompletenessGaps.length > 0
         ? buildReviewSourceResubmissionStep()
-        : buildReviewNextStep(result, contract, evidence, {
+        : buildReviewNextStep(result, contract, evidence, groundedCandidates, {
             can_complete:
               implementationReady &&
               evidence.status === "complete" &&
@@ -2687,7 +3050,7 @@ export function buildReviewPublicContract(
           ? "Salt semantic review found no issues blocking the reviewed scope. This is not a TypeScript compile; run the repo typecheck and verification commands before completion."
           : "Salt review found issues that still need attention.",
     next_step: nextStep,
-    guidance: buildReviewGuidance(result, contract),
+    guidance: buildReviewGuidance(result, groundedCandidates),
     evidence,
     internal_limitations: deriveReviewInternalLimitations(
       evidenceGate,
@@ -2695,13 +3058,9 @@ export function buildReviewPublicContract(
     ),
     rule_ids:
       nextStep.kind === "apply_fixes"
-        ? [
-            ...contract.rule_ids,
-            ...contract.fix_candidates.candidates
-              .filter(isGroundedReviewFixCandidate)
-              .map((candidate) => candidate.rule_id)
-              .filter((ruleId): ruleId is string => Boolean(ruleId?.trim())),
-          ]
+        ? uniqueNonEmptyStrings(
+            groundedCandidates.map((candidate) => candidate.rule_id),
+          )
         : contract.rule_ids,
     blocking_reasons: uniqueNonEmptyStrings([
       ...(options.blocking_reasons ??

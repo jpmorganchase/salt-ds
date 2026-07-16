@@ -8,9 +8,11 @@ import {
   createNonSaltRepo,
   ensureBuildArtifacts,
   installLocalPackages,
+  installPublishedPackage,
   verifyInstalledMcpModuleExports,
   verifyInstalledMcpTypes,
   verifySkills,
+  verifyStandaloneConsumerExample,
 } from "./consumer-smoke/fixture.mjs";
 import { parseArgs } from "./consumer-smoke/shared.mjs";
 
@@ -25,23 +27,40 @@ async function main() {
 
   try {
     console.log(`Using temp smoke root: ${tempRoot}`);
-    await ensureBuildArtifacts(options.skipBuild);
+    if (options.published) {
+      const identity = await installPublishedPackage(
+        installedToolsRoot,
+        options,
+      );
+      console.log(`Verified registry identity: ${JSON.stringify(identity)}`);
+    } else {
+      await ensureBuildArtifacts(options.skipBuild);
+      await installLocalPackages(installedToolsRoot);
+    }
     await fs.mkdir(existingSaltRepo, { recursive: true });
     await fs.mkdir(nonSaltRepo, { recursive: true });
     await Promise.all([
       createExistingSaltRepo(existingSaltRepo),
       createNonSaltRepo(nonSaltRepo),
     ]);
-    await installLocalPackages(installedToolsRoot);
     await verifyInstalledMcpModuleExports(installedToolsRoot);
     await verifyInstalledMcpTypes(installedToolsRoot);
-    await verifySkills(existingSaltRepo, options.skillsSource);
+    if (options.skillsSource) {
+      await verifySkills(
+        existingSaltRepo,
+        options.skillsSource,
+        options.expectedSkillTreeHash,
+      );
+    }
 
     await runMcpWorkflowCoverage(
       installedToolsRoot,
       existingSaltRepo,
       nonSaltRepo,
     );
+    if (options.published) {
+      await verifyStandaloneConsumerExample(tempRoot);
+    }
 
     console.log("");
     console.log("Consumer smoke test passed.");

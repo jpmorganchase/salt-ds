@@ -256,8 +256,6 @@ export function migrateToSalt(
   );
   const assumptions = buildAssumptions(sourceProfile, sourceUiModel);
   const clarifyingQuestions = buildClarifyingQuestions({
-    sourceProfile,
-    sourceModel: sourceUiModel,
     translations,
   });
   const decisionGates = buildDecisionGates(translations);

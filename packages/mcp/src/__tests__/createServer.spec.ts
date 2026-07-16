@@ -43,6 +43,11 @@ const V1_RESOURCE_NAMES = [
 
 const V1_RESOURCE_TEMPLATE_NAMES = ["salt_catalog_entity"] as const;
 
+// The strict create continuation repeats the complete nine-field public input
+// schema so hosts can safely execute the advertised follow-up without losing
+// request intent. Keep an explicit, still-bounded allowance for that contract.
+const MAX_ADVERTISED_TOOL_SCHEMA_BYTES = 45_000;
+
 function objectSchemaKeys(definitionName: string): string[] {
   return Object.keys(getInputObjectSchema(definitionName).shape).sort();
 }
@@ -200,6 +205,76 @@ describe("createSaltMcpServer", () => {
     ]);
   });
 
+  it("keeps create input and continuation rerun schemas in exact parity", () => {
+    const inputSchema = getInputObjectSchema("create_salt_ui");
+    const outputSchema = getToolDefinition("create_salt_ui")
+      .outputSchema as z.ZodType;
+    const validArgs = {
+      query: "  profile page with tabs and avatar  ",
+      solution_type: "component",
+      package: "@salt-ds/core",
+      status: "beta",
+      prefer_stable: false,
+      a11y_required: false,
+      include_starter_code: false,
+      resolved_entities: ["Tabs", "Avatar"],
+      root_dir: "C:\\workspace\\consumer",
+    };
+    const acceptsRerunArgs = (args: Record<string, unknown>) => {
+      const fixture = buildValidCreateOutputSchemaFixture();
+      return outputSchema.safeParse({
+        ...fixture,
+        action: {
+          ...fixture.action,
+          post_action: {
+            ...fixture.action.post_action,
+            args,
+          },
+        },
+      }).success;
+    };
+    const acceptsExactRetryArgs = (args: Record<string, unknown>) => {
+      const fixture = buildValidCreateOutputSchemaFixture();
+      return outputSchema.safeParse({
+        ...fixture,
+        action: {
+          kind: "tool_call",
+          tool: "create_salt_ui",
+          mode: "exact_name",
+          args,
+          rule_ids: [],
+          post_action: null,
+        },
+      }).success;
+    };
+
+    expect(inputSchema.safeParse(validArgs).success).toBe(true);
+    expect(acceptsRerunArgs(validArgs)).toBe(true);
+    expect(acceptsExactRetryArgs(validArgs)).toBe(true);
+
+    const invalidArgs = [
+      { ...validArgs, query: "x".repeat(10_001) },
+      { ...validArgs, query: "   " },
+      { ...validArgs, package: "p".repeat(257) },
+      { ...validArgs, root_dir: "r".repeat(4_097) },
+      {
+        ...validArgs,
+        resolved_entities: Array.from(
+          { length: 26 },
+          (_, index) => `Entity ${index}`,
+        ),
+      },
+      { ...validArgs, resolved_entities: ["e".repeat(257)] },
+      { ...validArgs, undeclared: true },
+    ];
+
+    for (const args of invalidArgs) {
+      expect(inputSchema.safeParse(args).success).toBe(false);
+      expect(acceptsRerunArgs(args)).toBe(false);
+      expect(acceptsExactRetryArgs(args)).toBe(false);
+    }
+  });
+
   it("rejects invented live-evaluation arguments before workflow execution", () => {
     const toStrictInputSchema = (name: string) => {
       const inputSchema = getToolDefinition(name).inputSchema;
@@ -279,7 +354,7 @@ describe("createSaltMcpServer", () => {
           ]);
           expect(
             Buffer.byteLength(JSON.stringify(listedTools.tools), "utf8"),
-          ).toBeLessThanOrEqual(43_500);
+          ).toBeLessThanOrEqual(MAX_ADVERTISED_TOOL_SCHEMA_BYTES);
           for (const tool of listedTools.tools) {
             expect(tool.inputSchema.additionalProperties).toBe(false);
           }
@@ -987,7 +1062,9 @@ describe("createSaltMcpServer", () => {
     expect(
       schemaBytes.reduce((total, bytes) => total + bytes, 0),
     ).toBeLessThanOrEqual(32_000);
-    expect(advertisedBytes).toBeLessThanOrEqual(43_500);
+    expect(advertisedBytes).toBeLessThanOrEqual(
+      MAX_ADVERTISED_TOOL_SCHEMA_BYTES,
+    );
   });
 
   it("uses one exact entity lookup shape for details and examples", () => {
@@ -1065,6 +1142,166 @@ describe("createSaltMcpServer", () => {
     );
   });
 
+  it("preserves create inputs through a bounded all-found continuation", async () => {
+    const registry = await loadRegistry();
+    const createTool = getToolDefinition("create_salt_ui");
+    const referenceTool = getToolDefinition("get_salt_reference");
+    const query =
+      "  Build a financial dashboard with an app header, key metrics, a chart, and a transaction table.  ";
+    const firstArgs = {
+      query,
+      solution_type: "pattern" as const,
+      package: "@salt-ds/core",
+      status: "stable" as const,
+      prefer_stable: false,
+      a11y_required: false,
+      include_starter_code: false,
+      resolved_entities: [],
+      root_dir: `${REPO_ROOT}${path.sep}.`,
+    };
+    const first = (await createTool.execute(registry, firstArgs)) as {
+      action: {
+        kind: string;
+        args?: { names?: string[] };
+        post_action?: {
+          kind: string;
+          tool: string;
+          args: Record<string, unknown>;
+        } | null;
+      };
+    };
+
+    expect(first.action.kind).toBe("retrieve_reference");
+    const names = first.action.args?.names ?? [];
+    expect(names.length).toBeGreaterThan(0);
+    expect(names.length).toBeLessThanOrEqual(3);
+
+    const reference = (await referenceTool.execute(registry, {
+      names,
+    })) as {
+      decision?: { status?: string };
+      requested_count?: number;
+      found_count?: number;
+      not_found_count?: number;
+      ambiguous_count?: number;
+      unresolved_names?: string[];
+      results?: Array<{ result?: { decision?: { status?: string } } }>;
+    };
+    expect(reference).toMatchObject({
+      decision: { status: "results" },
+      requested_count: names.length,
+      found_count: names.length,
+      not_found_count: 0,
+      ambiguous_count: 0,
+      unresolved_names: [],
+    });
+    expect(
+      reference.results?.every(
+        (row) => row.result?.decision?.status === "found",
+      ),
+    ).toBe(true);
+
+    const postAction = first.action.post_action;
+    const { root_dir: _rawRoot, ...expectedPreservedArgs } = firstArgs;
+    expect(postAction).toMatchObject({
+      kind: "rerun_workflow",
+      tool: "create_salt_ui",
+      args: {
+        ...expectedPreservedArgs,
+        resolved_entities: names,
+      },
+    });
+    expect(postAction?.args.query).toBe(query);
+    expect(path.resolve(String(postAction?.args.root_dir))).toBe(
+      path.resolve(REPO_ROOT),
+    );
+    const second = (await createTool.execute(
+      registry,
+      postAction?.args ?? {},
+    )) as { action?: { kind?: string } };
+    expect(second.action?.kind).toBeDefined();
+
+    const missingName = "Definitely Missing Salt Thing";
+    const missingReference = (await referenceTool.execute(registry, {
+      names: [missingName],
+    })) as {
+      decision?: { status?: string };
+      found_count?: number;
+    };
+    expect(missingReference).toMatchObject({
+      decision: { status: "not_found" },
+      found_count: 0,
+    });
+    const unsafeRerun = (await createTool.execute(registry, {
+      ...firstArgs,
+      root_dir: REPO_ROOT,
+      resolved_entities: [missingName],
+    })) as { status?: string; action?: { kind?: string } };
+    expect(unsafeRerun.status).not.toBe("success");
+    expect(unsafeRerun.action?.kind).not.toBe("implement");
+  });
+
+  it("preserves canonical project identity through an executable exact-name retry", async () => {
+    const registry = await loadRegistry();
+    const createTool = getToolDefinition("create_salt_ui");
+    const args = {
+      query: "Header block",
+      solution_type: "pattern" as const,
+      status: "stable" as const,
+      prefer_stable: false,
+      a11y_required: false,
+      include_starter_code: true,
+      resolved_entities: [],
+      root_dir: `${REPO_ROOT}${path.sep}.`,
+    };
+    const firstPass = createSaltUi(registry, {
+      ...args,
+      view: "compact",
+    });
+    firstPass.decision = {
+      name: "App header",
+      why: "Fixture simulates a nearby result instead of the exact Header block request.",
+    };
+    const first = withChooseWorkflowGuidance(registry, firstPass, {
+      create_rerun_args: {
+        ...args,
+        root_dir: path.resolve(REPO_ROOT),
+      },
+      context_checked: true,
+    }) as {
+      action?: {
+        kind?: string;
+        mode?: string;
+        args?: Record<string, unknown>;
+        post_action?: unknown;
+      };
+    };
+    const {
+      root_dir: _rawRoot,
+      resolved_entities: _emptyResolvedEntities,
+      ...preservedArgs
+    } = args;
+
+    expect(first.action).toEqual({
+      kind: "tool_call",
+      tool: "create_salt_ui",
+      mode: "exact_name",
+      args: {
+        ...preservedArgs,
+        query: "Header block",
+        root_dir: path.resolve(REPO_ROOT),
+      },
+      rule_ids: [],
+      post_action: null,
+    });
+    const second = (await createTool.execute(
+      registry,
+      first.action?.args ?? {},
+    )) as { workflow?: string; action?: { kind?: string } };
+    expect(second.workflow).toBe("create");
+    expect(second.action?.kind).toBeDefined();
+  });
+
   it("rejects branch-invalid workflow actions and post-action pairings", () => {
     const createSchema = getToolDefinition("create_salt_ui")
       .outputSchema as z.ZodType;
@@ -1136,7 +1373,7 @@ describe("createSaltMcpServer", () => {
         ];
 
         const output = withChooseWorkflowGuidance(registry, result, {
-          query: "Button",
+          create_rerun_args: { query: "Button" },
           context_checked: true,
         });
 
@@ -1353,10 +1590,60 @@ describe("createSaltMcpServer", () => {
           }).success,
         ).toBe(false);
 
+        const groundedReviewResult = (await callPublicTool("review_salt_ui", {
+          code: [
+            'import { Text } from "@salt-ds/core";',
+            "",
+            "export function DemoText() {",
+            '  return <Text variant="secondary">Projected revenue</Text>;',
+            "}",
+          ].join("\n"),
+          framework: "react",
+          package_version: "2.0.0",
+        })) as {
+          action?: { kind?: string; rule_ids?: string[] };
+          guidance?: {
+            kind?: string;
+            fixes?: Array<{
+              rule_id?: string | null;
+              source_urls?: string[];
+            }>;
+          };
+        };
+        expect(groundedReviewResult.action?.kind).toBe("apply_fixes");
+        expect(groundedReviewResult.guidance?.fixes?.length).toBeGreaterThan(0);
+        expect(
+          groundedReviewResult.guidance?.fixes?.every((fix) =>
+            fix.source_urls?.some((sourceUrl) => sourceUrl.trim().length > 0),
+          ),
+        ).toBe(true);
+        expect(groundedReviewResult.action?.rule_ids).toEqual([
+          ...new Set(
+            groundedReviewResult.guidance?.fixes
+              ?.map((fix) => fix.rule_id?.trim())
+              .filter((ruleId): ruleId is string => Boolean(ruleId)) ?? [],
+          ),
+        ]);
+        expect(
+          (
+            getToolDefinition("review_salt_ui").outputSchema as z.ZodType
+          ).safeParse(groundedReviewResult).success,
+        ).toBe(true);
+
         const migrateResult = (await callPublicTool("migrate_to_salt", {
           query:
             "Convert a non-Salt toolbar with a search icon, filter icon, settings menu, loading state, and error message into Salt.",
-        })) as { contract?: string; workflow?: string };
+        })) as {
+          contract?: string;
+          workflow?: string;
+          questions?: string[];
+          guidance?: {
+            post_migration_verification?: {
+              preserve_checks?: string[];
+              confirmation_checks?: string[];
+            };
+          };
+        };
         expect(migrateResult).toEqual(
           expect.objectContaining({
             contract: "salt_workflow_v1",
@@ -1368,6 +1655,28 @@ describe("createSaltMcpServer", () => {
             getToolDefinition("migrate_to_salt").outputSchema as z.ZodType
           ).safeParse(migrateResult).success,
         ).toBe(true);
+        expect(JSON.stringify(migrateResult.questions ?? [])).not.toMatch(
+          /What must remain familiar|Which loading, empty, error, or validation states are critical|Salt-native recomposition change the layout/,
+        );
+        expect(
+          migrateResult.guidance?.post_migration_verification?.preserve_checks,
+        ).toEqual(
+          expect.arrayContaining([
+            expect.stringContaining("core task flow and information hierarchy"),
+            expect.stringContaining(
+              "loading, empty, error, and validation states",
+            ),
+          ]),
+        );
+        expect(
+          migrateResult.guidance?.post_migration_verification
+            ?.confirmation_checks,
+        ).toEqual(
+          expect.arrayContaining([
+            expect.stringContaining("Merged, split, or removed steps"),
+            expect.stringContaining("state visibility"),
+          ]),
+        );
         const migrateGuidance = (
           migrateResult as unknown as {
             guidance: Record<string, unknown>;
@@ -1549,6 +1858,21 @@ describe("createSaltMcpServer", () => {
     );
     expect(instructions).toContain(
       "obtain host or user authorization before applying fixes",
+    );
+    expect(instructions).toContain(
+      "A create reference action may request one to three names",
+    );
+    expect(instructions).toContain(
+      "execute the complete action.args object unchanged",
+    );
+    expect(instructions).toContain(
+      "Never add unrelated entities to resolved_entities as helpful evidence",
+    );
+    expect(instructions).toContain(
+      "requested_count and found_count equal the action's requested-name count",
+    );
+    expect(instructions).toContain(
+      "never treat the post-action's requested names as evidence",
     );
   });
 });

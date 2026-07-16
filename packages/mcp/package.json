@@ -78,6 +78,7 @@
     "@babel/types": "^7.28.4",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "get-tsconfig": "^4.7.5",
+    "jsonc-parser": "^3.3.1",
     "semver": "^7.7.3",
     "zod": "^4.1.11"
   },

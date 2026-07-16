@@ -184,6 +184,44 @@ describe("Salt skill contracts", () => {
     );
   });
 
+  it("resolves stable action IDs to one Salt-server-scoped host tool", async () => {
+    const [core, troubleshooting, aiPage, serverMetadata] = await Promise.all([
+      readSkill("salt-ds/references/core.md"),
+      readSkill("salt-ds/references/troubleshooting.md"),
+      fs.readFile(
+        path.join(repoRoot, "site", "docs", "getting-started", "ai.mdx"),
+        "utf8",
+      ),
+      fs.readFile(
+        path.join(
+          repoRoot,
+          "packages",
+          "mcp",
+          "src",
+          "server",
+          "serverMetadata.ts",
+        ),
+        "utf8",
+      ),
+    ]);
+
+    for (const surface of [core, troubleshooting, aiPage, serverMetadata]) {
+      expect(surface).toMatch(/stable.*semantic (tool )?IDs?/i);
+      expect(surface).toMatch(/configured Salt server/i);
+      expect(surface).toMatch(/unique.*exact bare.*qualified/i);
+      expect(surface).toMatch(/final semantic segment/i);
+      expect(surface).toMatch(/refresh.*once[\s\S]*stop/i);
+      expect(surface).toMatch(/unrelated or unidentified servers/i);
+    }
+    for (const surface of [core, aiPage, serverMetadata]) {
+      expect(surface).toMatch(/preserve.*args.*exact/i);
+      expect(surface).toMatch(
+        /decision\.status.*results[\s\S]*requested[\s\S]*found[\s\S]*(zero|= 0).*ambiguous[\s\S]*unresolved[\s\S]*nested.*found/i,
+      );
+      expect(surface).toMatch(/ask_user[\s\S]*stop/i);
+    }
+  });
+
   it("treats workflow evidence as grounding without redundant integration playbooks", async () => {
     const [core, create, review, migrate] = await Promise.all([
       readSkill("salt-ds/references/core.md"),
@@ -336,7 +374,7 @@ describe("Salt skill contracts", () => {
     expect(aiPage).not.toMatch(/`mcp` hint|mcp hint/i);
     expect(consumerConfig.mcpServers?.Salt).toEqual({
       command: "npx",
-      args: ["-y", "@salt-ds/mcp@latest"],
+      args: ["-y", "@salt-ds/mcp@0.1.0"],
     });
   });
 });

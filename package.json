@@ -14,8 +14,9 @@
   "scripts": {
     "start": "yarn storybook",
     "build": "yarn workspace @salt-ds/mcp build && yarn workspaces foreach --exclude @salt-ds/site --exclude @salt-ds/mcp -Apt run build && yarn bundle:css",
-    "release": "yarn build && yarn release:verify:mcp && yarn changeset publish",
-    "release:verify:mcp": "yarn typecheck:mcp && yarn test:ai-tooling && yarn eval:evidence-sprint && yarn check:ai-tooling:pack && yarn smoke:consumer --skip-build",
+    "release": "yarn build && yarn release:verify:mcp:after-build && yarn changeset publish",
+    "release:verify:mcp": "yarn workspace @salt-ds/mcp build && yarn release:verify:mcp:after-build",
+    "release:verify:mcp:after-build": "yarn typecheck:mcp && yarn test:ai-tooling && yarn eval:evidence-sprint && yarn check:ai-tooling:pack && yarn smoke:consumer --skip-build",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspace @salt-ds/highcharts-theme build",
     "bundle:css": "yarn bundle:core:css && yarn bundle:lab:css && yarn bundle:date-components:css & yarn bundle:embla-carousel:css && yarn copy:icon:css && yarn copy:countries:css",
@@ -49,6 +50,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "smoke:consumer": "node ./scripts/consumerRepoSmoke.mjs",
+    "smoke:consumer:published": "node ./scripts/consumerRepoSmoke.mjs --published",
     "typecheck": "tsgo --noEmit",
     "typecheck:mcp": "tsc -p packages/mcp/tsconfig.test.json --noEmit",
     "chromatic": "chromatic"

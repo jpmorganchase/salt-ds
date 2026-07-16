@@ -95,10 +95,12 @@ function runCreateWorkflowFull(input: {
     starter_code: starterCode,
   });
   const publicContract = withChooseWorkflowGuidance(registry, result, {
-    query: input.query,
+    create_rerun_args: {
+      query: input.query,
+      resolved_entities: input.resolvedEntities,
+    },
     context_checked: input.contextChecked,
     project_policy: input.projectPolicy,
-    resolved_entities: input.resolvedEntities,
   }) as PublicContract;
 
   return toWorkflowDiagnosticResult(publicContract, {
@@ -273,17 +275,17 @@ describe("deterministic agentic evals", () => {
       resolvedEntities: lookupCases.map(([exportName]) => exportName),
     });
 
-    expect(createResult.status).toBe("success");
-    expect(createResult.action.kind).toBe("implement");
-    expect(createResult.evidence.items).toEqual(
-      expect.arrayContaining(
-        lookupCases.map(([exportName]) =>
-          expect.objectContaining({
-            entity: exportName,
-            field: "resolved_entities",
-          }),
-        ),
-      ),
+    expect(createResult.status).toBe("blocked");
+    expect(createResult.action).toMatchObject({
+      kind: "ask_user",
+      question: expect.stringMatching(/remove.*resolved_entities/i),
+      post_action: null,
+    });
+    expect(createResult.action.kind).not.toBe("implement");
+    expect(createResult.evidence.items).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ field: "resolved_entities" }),
+      ]),
     );
   });
 
@@ -294,21 +296,19 @@ describe("deterministic agentic evals", () => {
       resolvedEntities: ["Button", "DefinitelyMissingSaltExport"],
     });
 
-    expect(result.status).toBe("partial");
+    expect(result.status).toBe("blocked");
     expect(result.safety.exact_request_safe).toBe(false);
     expect(result.action).toEqual(
       expect.objectContaining({
-        kind: "retrieve_reference",
-        tool: "get_salt_reference",
-        args: {
-          names: ["DefinitelyMissingSaltExport"],
-        },
+        kind: "ask_user",
+        question: expect.stringContaining("DefinitelyMissingSaltExport"),
+        post_action: null,
       }),
     );
     expect(result.action.kind).not.toBe("implement");
     expect(result.evidence.missing).toEqual(
       expect.arrayContaining([
-        "follow-through evidence for DefinitelyMissingSaltExport",
+        expect.stringContaining("DefinitelyMissingSaltExport"),
       ]),
     );
   });
@@ -362,8 +362,8 @@ describe("deterministic agentic evals", () => {
       resolvedEntities: requiredEntities,
     });
 
-    expect(afterGrounding.evidence.status).toBe("complete");
     expect(afterGrounding.evidence.missing).toEqual([]);
+    expect(afterGrounding.evidence.status).toBe("complete");
     expect(afterGrounding.evidence.items).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -394,8 +394,8 @@ describe("deterministic agentic evals", () => {
       resolvedEntities: requiredEntities,
     });
 
-    expect(afterGrounding.evidence.status).toBe("complete");
     expect(afterGrounding.evidence.missing).toEqual([]);
+    expect(afterGrounding.evidence.status).toBe("complete");
     expect(afterGrounding.action.kind).toBe("implement");
     expect(afterGrounding.action).not.toEqual(
       expect.objectContaining({
@@ -679,6 +679,21 @@ describe("deterministic agentic evals", () => {
         required_input: ["complete_updated_file"],
       },
     });
+    expect(result.guidance.kind).toBe("review");
+    if (result.guidance.kind !== "review") return;
+    expect(result.guidance.fixes.length).toBeGreaterThan(0);
+    expect(
+      result.guidance.fixes.every((fix) =>
+        fix.source_urls.some((sourceUrl) => sourceUrl.trim().length > 0),
+      ),
+    ).toBe(true);
+    expect(result.action.rule_ids).toEqual([
+      ...new Set(
+        result.guidance.fixes
+          .map((fix) => fix.rule_id?.trim())
+          .filter((ruleId): ruleId is string => Boolean(ruleId)),
+      ),
+    ]);
     expect(result.result.issues).toEqual(
       expect.arrayContaining([
         expect.objectContaining({

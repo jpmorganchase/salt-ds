@@ -4,8 +4,11 @@ import {
   deriveComparableSaltVersion,
   getSaltEntities,
   migrateToSalt,
+  PUBLIC_CREATE_REFERENCE_BATCH_MAX,
+  PUBLIC_CREATE_RESOLVED_ENTITY_MAX,
   PUBLIC_REFERENCE_ENTITY_TYPES,
   reviewSaltUi,
+  type PublicCreateRerunArgs,
   type SaltEvidenceValidationIssueCode,
   type SaltGeneratedArtifactKind,
   type SaltRegistry,
@@ -45,7 +48,7 @@ const REFERENCE_NAMES_SCHEMA = z
       .regex(CONTAINS_NON_WHITESPACE),
   )
   .min(1)
-  .max(3);
+  .max(PUBLIC_CREATE_REFERENCE_BATCH_MAX);
 const OUTLINE_ENTRIES_SCHEMA = z
   .array(
     z
@@ -323,14 +326,49 @@ type _AllGeneratedArtifactKindsAreDeclared = AssertExhaustive<
   >
 >;
 
-const PUBLIC_CREATE_RERUN_ARGS_SCHEMA = z
+const PUBLIC_CREATE_INPUT_SCHEMA = z
   .object({
-    query: z.string().min(1),
-    package: z.string().optional(),
-    root_dir: z.string().optional(),
-    resolved_entities: z.array(z.string().min(1)).optional(),
+    query: z
+      .string()
+      .min(1)
+      .max(MAX_QUERY_CHARS)
+      .regex(CONTAINS_NON_WHITESPACE)
+      .describe("User need, task, flow, or capability to build."),
+    solution_type: z
+      .enum(["auto", "component", "pattern", "foundation", "token"])
+      .optional()
+      .describe("Optional solution-family hint."),
+    package: z
+      .string()
+      .max(MAX_PACKAGE_NAME_CHARS)
+      .optional()
+      .describe("Restrict candidates to a Salt package."),
+    status: z
+      .enum(STATUSES)
+      .optional()
+      .describe("Restrict candidates by release status."),
+    prefer_stable: z.boolean().optional(),
+    a11y_required: z.boolean().optional(),
+    include_starter_code: z
+      .boolean()
+      .optional()
+      .describe("Include starter code; defaults to true."),
+    resolved_entities: z
+      .array(z.string().min(1).max(MAX_REFERENCE_NAME_CHARS))
+      .max(PUBLIC_CREATE_RESOLVED_ENTITY_MAX)
+      .optional()
+      .describe("Canonical entities already resolved for a create rerun."),
+    root_dir: z
+      .string()
+      .max(MAX_PATH_CHARS)
+      .optional()
+      .describe(
+        "Target project or workspace-package root; defaults to the MCP working directory.",
+      ),
   })
-  .strict();
+  .strict()
+  .meta({ id: "SaltPublicCreateInput" });
+const PUBLIC_CREATE_RERUN_ARGS_SCHEMA = PUBLIC_CREATE_INPUT_SCHEMA;
 const PUBLIC_REVIEW_POST_ACTION_SCHEMA = z
   .object({
     kind: z.literal("review"),
@@ -363,7 +401,7 @@ const PUBLIC_CREATE_TOOL_CALL_ACTION_SCHEMA = z
     kind: z.literal("tool_call"),
     tool: z.literal("create_salt_ui"),
     mode: z.literal("exact_name"),
-    args: z.object({ query: z.string().min(1) }).strict(),
+    args: PUBLIC_CREATE_INPUT_SCHEMA,
     post_action: z.null(),
   })
   .extend(PUBLIC_ACTION_COMMON_SHAPE)
@@ -538,6 +576,7 @@ const PUBLIC_REVIEW_FINDING_SCHEMA = z
   .strict();
 const PUBLIC_REVIEW_FIX_SCHEMA = z
   .object({
+    rule_id: z.string().min(1).nullable(),
     title: z.string().min(1),
     recommendation: z.string().min(1),
     safety: z.enum(["deterministic", "manual_review"]),
@@ -883,51 +922,11 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       );
     },
   }),
-  defineTool<Parameters<typeof createSaltUi>[1] & { root_dir?: string }>({
+  defineTool<PublicCreateRerunArgs>({
     name: "create_salt_ui",
     description:
       "Generate or scaffold a new Salt UI such as a dashboard, form, toolbar, action menu, or layout. Chooses the best source-backed component or pattern from a broad request.",
-    inputSchema: z
-      .object({
-        query: z
-          .string()
-          .min(1)
-          .max(MAX_QUERY_CHARS)
-          .regex(CONTAINS_NON_WHITESPACE)
-          .describe("User need, task, flow, or capability to build."),
-        solution_type: z
-          .enum(["auto", "component", "pattern", "foundation", "token"])
-          .optional()
-          .describe("Optional solution-family hint."),
-        package: z
-          .string()
-          .max(MAX_PACKAGE_NAME_CHARS)
-          .optional()
-          .describe("Restrict candidates to a Salt package."),
-        status: z
-          .enum(STATUSES)
-          .optional()
-          .describe("Restrict candidates by release status."),
-        prefer_stable: z.boolean().optional(),
-        a11y_required: z.boolean().optional(),
-        include_starter_code: z
-          .boolean()
-          .optional()
-          .describe("Include starter code; defaults to true."),
-        resolved_entities: z
-          .array(z.string().min(1).max(MAX_REFERENCE_NAME_CHARS))
-          .max(25)
-          .optional()
-          .describe("Canonical entities already resolved for a create rerun."),
-        root_dir: z
-          .string()
-          .max(MAX_PATH_CHARS)
-          .optional()
-          .describe(
-            "Target project or workspace-package root; defaults to the MCP working directory.",
-          ),
-      })
-      .strict(),
+    inputSchema: PUBLIC_CREATE_INPUT_SCHEMA,
     outputSchema: CHOOSE_OUTPUT_SCHEMA,
     annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
     execute: async (registry, args) => {
@@ -939,6 +938,10 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
       const contextChecked =
         projectContext.summary.context_health.repo_specific_workflows_ready;
       const projectPolicy = contextChecked ? policyInspection.artifact : null;
+      const createRerunArgs: PublicCreateRerunArgs = {
+        ...workflowArgs,
+        root_dir: projectContext.root_dir,
+      };
       return withChooseWorkflowGuidance(
         registry,
         createSaltUi(registry, {
@@ -949,14 +952,11 @@ const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
             : undefined,
         }),
         {
-          query: workflowArgs.query,
-          package: workflowArgs.package,
-          root_dir: projectContext.root_dir,
+          create_rerun_args: createRerunArgs,
           context_checked: contextChecked,
           context_retry_with_root_dir:
             projectContext.summary.retry_with.root_dir,
           project_policy: projectPolicy,
-          resolved_entities: workflowArgs.resolved_entities,
         },
       );
     },

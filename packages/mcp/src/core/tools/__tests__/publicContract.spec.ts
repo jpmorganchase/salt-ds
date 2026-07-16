@@ -26,6 +26,7 @@ import type {
   WorkflowCreateIdeSummary,
   WorkflowCreateImplementationGate,
   WorkflowMigrateIdeSummary,
+  WorkflowFixCandidate,
   WorkflowReviewIdeSummary,
 } from "../workflowContracts.js";
 
@@ -237,6 +238,52 @@ function buildReviewIdeSummary(
     safest_next_fix: null,
     ...overrides,
   };
+}
+
+function buildReviewFixCandidate(
+  overrides: Partial<WorkflowFixCandidate> = {},
+): WorkflowFixCandidate {
+  return {
+    candidate_type: "guided_fix",
+    safety: "manual_review",
+    kind: null,
+    title: "Replace incorrect component usage.",
+    recommendation:
+      "Replace the current element with the canonical Salt primitive.",
+    from: null,
+    to: null,
+    reason: "Canonical Salt validation found issues.",
+    category: "canonical",
+    rule: "canonical",
+    rule_id: "review-canonical-mismatch",
+    source_urls: ["/salt/components/button"],
+    ...overrides,
+  };
+}
+
+function buildNeedsAttentionReviewResult(): ReviewSaltUiResult {
+  return {
+    guidance_boundary: {
+      workflow: "review_salt_ui",
+    },
+    decision: {
+      status: "needs_attention",
+      why: "Canonical Salt validation found issues.",
+    },
+    summary: {
+      errors: 1,
+      warnings: 0,
+      infos: 0,
+      fix_count: 1,
+      migration_count: 0,
+    },
+    fixes: [],
+    issues: [],
+    migrations: [],
+    next_step: "Fix the remaining review issues and rerun review.",
+    missing_data: [],
+    source_urls: ["/salt/components/button"],
+  } as unknown as ReviewSaltUiResult;
 }
 
 function buildMigrateIdeSummary(
@@ -1101,7 +1148,7 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "Metric",
+      create_rerun_args: { query: "Metric" },
     });
 
     expect(toComparablePublicContract(compact)).toEqual(
@@ -1154,7 +1201,7 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "dashboard summary area",
+      create_rerun_args: { query: "dashboard summary area" },
     });
 
     expect(toComparablePublicContract(compact)).toEqual(
@@ -1206,7 +1253,7 @@ describe("publicContract workflow adapters", () => {
     });
 
     const compact = buildCreatePublicContract(result, contract, {
-      query: "Create a split action control.",
+      create_rerun_args: { query: "Create a split action control." },
     });
 
     expect(compact.action).toEqual(
@@ -1239,7 +1286,7 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "Header block",
+      create_rerun_args: { query: "Header block" },
     });
 
     expect(toComparablePublicContract(compact)).toEqual(
@@ -1285,7 +1332,7 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "Header block",
+      create_rerun_args: { query: "Header block" },
     });
 
     expect(toComparablePublicContract(compact)).toEqual(
@@ -1331,8 +1378,10 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query:
-        "chart of data visualization component for dashboard analytical body",
+      create_rerun_args: {
+        query:
+          "chart of data visualization component for dashboard analytical body",
+      },
     });
 
     expect(toComparablePublicContract(compact)).toEqual(
@@ -1377,7 +1426,7 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "Hotkeys",
+      create_rerun_args: { query: "Hotkeys" },
     });
 
     expect(toComparablePublicContract(compact)).toEqual(
@@ -1417,7 +1466,7 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "Metric",
+      create_rerun_args: { query: "Metric" },
     });
 
     expect(toComparablePublicContract(compact)).toEqual(
@@ -1444,6 +1493,179 @@ describe("publicContract workflow adapters", () => {
     );
   });
 
+  it.each(["misrouted", "no_match", "broadened"] as const)(
+    "preserves the full create request for an exact-name %s retry",
+    (matchStatus) => {
+      const registry = buildRegistryFixture();
+      const result = {
+        mode: "recommend",
+        solution_type: "component",
+        decision: {
+          name: matchStatus === "no_match" ? null : "Chart",
+          why: "The first create pass did not preserve the exact Table request.",
+        },
+      } as unknown as CreateSaltUiResult;
+      const createRerunArgs = {
+        query: "  Table  ",
+        solution_type: "component" as const,
+        package: "@salt-ds/core",
+        status: "stable" as const,
+        prefer_stable: false,
+        a11y_required: false,
+        include_starter_code: false,
+        resolved_entities: ["Table"],
+        root_dir: "/canonical/repo",
+      };
+      const compact = buildCreatePublicContract(
+        result,
+        buildCreateWorkflowContract(),
+        {
+          registry,
+          exact_request: {
+            requested_entity: "Table",
+            resolved_entity: matchStatus === "no_match" ? null : "Chart",
+            match_status: matchStatus,
+            exact_match_required: true,
+          },
+          create_rerun_args: createRerunArgs,
+        },
+      );
+
+      expect(compact.action).toEqual({
+        kind: "tool_call",
+        tool: "create_salt_ui",
+        mode: "exact_name",
+        args: {
+          ...createRerunArgs,
+          query: "Table",
+        },
+        rule_ids: [],
+        post_action: null,
+      });
+    },
+  );
+
+  it.each([
+    { field: "package", value: "@salt-ds/lab" },
+    { field: "status", value: "beta" },
+    { field: "solution_type", value: "pattern" },
+  ] as const)(
+    "blocks an exact retry that conflicts with the explicit $field filter",
+    ({ field, value }) => {
+      const registry = buildRegistryFixture();
+      const compact = buildCreatePublicContract(
+        {
+          mode: "recommend",
+          solution_type: "component",
+          decision: {
+            name: "Chart",
+            why: "The first pass did not preserve the exact Table request.",
+          },
+        } as unknown as CreateSaltUiResult,
+        buildCreateWorkflowContract(),
+        {
+          registry,
+          exact_request: {
+            requested_entity: "Table",
+            resolved_entity: "Chart",
+            match_status: "misrouted",
+            exact_match_required: true,
+          },
+          create_rerun_args: {
+            query: "Table",
+            [field]: value,
+            root_dir: "/canonical/repo",
+          },
+        },
+      );
+
+      expect(compact.action).toMatchObject({
+        kind: "ask_user",
+        question: expect.stringContaining(field),
+        post_action: null,
+      });
+      expect(compact.action.kind).not.toBe("tool_call");
+    },
+  );
+
+  it("blocks an exact pattern retry when a package filter is present", () => {
+    const registry = buildRegistryFixture();
+    const compact = buildCreatePublicContract(
+      {
+        mode: "recommend",
+        solution_type: "pattern",
+        decision: {
+          name: null,
+          why: "The first pass did not preserve the exact Header block request.",
+        },
+      } as unknown as CreateSaltUiResult,
+      buildCreateWorkflowContract(),
+      {
+        registry,
+        exact_request: {
+          requested_entity: "Header block",
+          resolved_entity: null,
+          match_status: "no_match",
+          exact_match_required: true,
+        },
+        create_rerun_args: {
+          query: "Header block",
+          solution_type: "pattern",
+          package: "@salt-ds/core",
+          root_dir: "/canonical/repo",
+        },
+      },
+    );
+
+    expect(compact.action).toMatchObject({
+      kind: "ask_user",
+      question: expect.stringContaining("package filter"),
+      post_action: null,
+    });
+    expect(compact.action.kind).not.toBe("tool_call");
+  });
+
+  it("blocks an exact retry when its alias maps to multiple records", () => {
+    const registry = buildRegistryFixture();
+    registry.components.find(
+      (component) => component.name === "Chart",
+    )?.aliases.push("SharedAlias");
+    registry.components.find(
+      (component) => component.name === "Table",
+    )?.aliases.push("SharedAlias");
+    const compact = buildCreatePublicContract(
+      {
+        mode: "recommend",
+        solution_type: "component",
+        decision: {
+          name: null,
+          why: "The alias is ambiguous.",
+        },
+      } as unknown as CreateSaltUiResult,
+      buildCreateWorkflowContract(),
+      {
+        registry,
+        exact_request: {
+          requested_entity: "SharedAlias",
+          resolved_entity: null,
+          match_status: "no_match",
+          exact_match_required: true,
+        },
+        create_rerun_args: {
+          query: "SharedAlias",
+          root_dir: "/canonical/repo",
+        },
+      },
+    );
+
+    expect(compact.action).toMatchObject({
+      kind: "ask_user",
+      question: expect.stringMatching(/SharedAlias.*ambiguous/i),
+      post_action: null,
+    });
+    expect(compact.action.kind).not.toBe("tool_call");
+  });
+
   it("asks for a canonical example target instead of retrieving targetless examples", () => {
     const result = {
       mode: "recommend",
@@ -1467,7 +1689,7 @@ describe("publicContract workflow adapters", () => {
     });
 
     const compact = buildCreatePublicContract(result, contract, {
-      query: "Create an unfamiliar interface region.",
+      create_rerun_args: { query: "Create an unfamiliar interface region." },
     });
 
     expect(compact.action).toEqual({
@@ -1519,7 +1741,10 @@ describe("publicContract workflow adapters", () => {
   });
 
   it("derives create contract output from the shared create workflow contract", () => {
+    const registry = buildRegistryFixture();
     const result = {
+      mode: "recommend",
+      solution_type: "pattern",
       decision: {
         name: "Analytical dashboard",
         why: "The request describes a dashboard workflow with summary metrics.",
@@ -1548,7 +1773,21 @@ describe("publicContract workflow adapters", () => {
       }),
     });
 
-    const compact = buildCreatePublicContract(result, contract, {});
+    const createRerunArgs = {
+      query: "  dashboard with header and metrics  ",
+      solution_type: "pattern" as const,
+      package: "@salt-ds/core",
+      status: "beta" as const,
+      prefer_stable: false,
+      a11y_required: false,
+      include_starter_code: false,
+      resolved_entities: [],
+      root_dir: "/repo",
+    };
+    const compact = buildCreatePublicContract(result, contract, {
+      registry,
+      create_rerun_args: createRerunArgs,
+    } as unknown as Parameters<typeof buildCreatePublicContract>[2]);
 
     expect(toComparablePublicContract(compact)).toEqual(
       expect.objectContaining({
@@ -1563,11 +1802,149 @@ describe("publicContract workflow adapters", () => {
           kind: "retrieve_reference",
           tool: "get_salt_reference",
           args: {
-            names: ["App header"],
+            names: ["App header", "Metric"],
           },
         },
       }),
     );
+    expect(compact.action.post_action).toEqual({
+      kind: "rerun_workflow",
+      tool: "create_salt_ui",
+      args: {
+        ...createRerunArgs,
+        resolved_entities: ["App header", "Metric"],
+      },
+    });
+  });
+
+  it("batches at most three stable unique create follow-through names", () => {
+    const result = {
+      mode: "recommend",
+      solution_type: "pattern",
+      decision: {
+        name: "Analytical dashboard",
+        why: "Use the dashboard composition.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const contract = buildCreateWorkflowContract({
+      readiness: {
+        implementation_ready: false,
+        reason: "Reference evidence remains.",
+      },
+      implementation_gate: buildCreateImplementationGate({
+        required_follow_through: [
+          { region: "one", entity: " App header " },
+          { region: "duplicate", entity: "App header" },
+          { region: "blank", entity: "   " },
+          { region: "two", entity: "Metric" },
+          { region: "three", entity: "Table" },
+          { region: "four", entity: "Grid layout" },
+        ],
+      }),
+    });
+
+    const compact = buildCreatePublicContract(result, contract, {
+      create_rerun_args: { query: "dashboard" },
+    } as unknown as Parameters<typeof buildCreatePublicContract>[2]);
+
+    expect(compact.action).toMatchObject({
+      kind: "retrieve_reference",
+      args: {
+        names: ["App header", "Metric", "Table"],
+      },
+    });
+    expect(
+      compact.action.kind === "retrieve_reference"
+        ? compact.action.args
+        : undefined,
+    ).not.toHaveProperty("entity_type");
+    expect(compact.action.post_action).toMatchObject({
+      args: {
+        resolved_entities: ["App header", "Metric", "Table"],
+      },
+    });
+  });
+
+  it("keeps create continuation unions within the resolved-entity cap", () => {
+    const supplied = Array.from({ length: 25 }, (_, index) => `Entity ${index}`);
+    const result = {
+      mode: "recommend",
+      solution_type: "pattern",
+      decision: {
+        name: "Analytical dashboard",
+        why: "Use the dashboard composition.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const contract = buildCreateWorkflowContract({
+      readiness: {
+        implementation_ready: false,
+        reason: "Reference evidence remains.",
+      },
+      implementation_gate: buildCreateImplementationGate({
+        required_follow_through: [
+          { region: "new", entity: "Entity 26" },
+          { region: "existing", entity: "Entity 24" },
+        ],
+      }),
+    });
+
+    const compact = buildCreatePublicContract(result, contract, {
+      create_rerun_args: {
+        query: "dashboard",
+        resolved_entities: supplied,
+      },
+    } as unknown as Parameters<typeof buildCreatePublicContract>[2]);
+
+    expect(compact.action).toMatchObject({
+      kind: "retrieve_reference",
+      args: { names: expect.arrayContaining(["Entity 24"]) },
+    });
+    const rerunEntities =
+      compact.action.post_action?.kind === "rerun_workflow"
+        ? compact.action.post_action.args.resolved_entities
+        : undefined;
+    expect(new Set(rerunEntities).size).toBeLessThanOrEqual(25);
+    expect(rerunEntities).not.toContain("Entity 26");
+  });
+
+  it("asks for a narrower create request when no reference candidate fits", () => {
+    const supplied = Array.from({ length: 25 }, (_, index) => `Entity ${index}`);
+    const registry = buildRegistryFixture();
+    registry.components.push(
+      ...supplied.map((name) => buildComponent(name)),
+    );
+    const result = {
+      mode: "recommend",
+      solution_type: "pattern",
+      decision: {
+        name: "Analytical dashboard",
+        why: "Use the dashboard composition.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const contract = buildCreateWorkflowContract({
+      readiness: {
+        implementation_ready: false,
+        reason: "Reference evidence remains.",
+      },
+      implementation_gate: buildCreateImplementationGate({
+        required_follow_through: [{ region: "new", entity: "Entity 26" }],
+      }),
+    });
+
+    const compact = buildCreatePublicContract(result, contract, {
+      registry,
+      create_rerun_args: {
+        query: "dashboard",
+        resolved_entities: supplied,
+      },
+    } as unknown as Parameters<typeof buildCreatePublicContract>[2]);
+
+    expect(compact.action).toEqual({
+      kind: "ask_user",
+      question: expect.stringMatching(/narrow|remove unrelated/i),
+      rule_ids: [],
+      post_action: null,
+    });
   });
 
   it("derives review contract output from the shared review workflow contract", () => {
@@ -1664,6 +2041,204 @@ describe("publicContract workflow adapters", () => {
       throw new Error("Expected review guidance for grounded fixes");
     }
     expect(compact.guidance.fixes[0]?.safety).toBe("manual_review");
+  });
+
+  it.each([
+    {
+      label: "ungrounded before grounded",
+      candidates: [
+        buildReviewFixCandidate({
+          title: "Ungrounded observation",
+          rule_id: "review-ungrounded",
+          source_urls: [],
+        }),
+        buildReviewFixCandidate(),
+      ],
+    },
+    {
+      label: "grounded before ungrounded",
+      candidates: [
+        buildReviewFixCandidate(),
+        buildReviewFixCandidate({
+          title: "Ungrounded observation",
+          rule_id: "review-ungrounded",
+          source_urls: [],
+        }),
+      ],
+    },
+  ])(
+    "publishes only grounded review fixes with stable rule IDs ($label)",
+    ({ candidates }) => {
+      const compact = buildReviewPublicContract(
+        buildNeedsAttentionReviewResult(),
+        buildReviewWorkflowContract({
+          decision: buildNeedsAttentionReviewResult().decision,
+          fix_candidates: { candidates },
+          rule_ids: ["review-ungrounded", "review-canonical-mismatch"],
+          provenance: {
+            canonical_source_urls: ["/salt/components/button"],
+            related_guide_urls: [],
+            starter_source_urls: [],
+            source_urls: ["/salt/components/button"],
+          },
+        }),
+        {},
+      );
+
+      expect(compact.action).toMatchObject({
+        kind: "apply_fixes",
+        rule_ids: ["review-canonical-mismatch"],
+      });
+      expect(compact.guidance).toEqual(
+        expect.objectContaining({
+          kind: "review",
+          fixes: [
+            expect.objectContaining({
+              rule_id: "review-canonical-mismatch",
+              source_urls: ["/salt/components/button"],
+            }),
+          ],
+        }),
+      );
+    },
+  );
+
+  it("filters review fixes for grounding before applying the public limit", () => {
+    const ungrounded = Array.from({ length: 12 }, (_, index) =>
+      buildReviewFixCandidate({
+        title: `Ungrounded observation ${index + 1}`,
+        rule_id: `review-ungrounded-${index + 1}`,
+        source_urls: [],
+      }),
+    );
+    const compact = buildReviewPublicContract(
+      buildNeedsAttentionReviewResult(),
+      buildReviewWorkflowContract({
+        decision: buildNeedsAttentionReviewResult().decision,
+        fix_candidates: {
+          candidates: [...ungrounded, buildReviewFixCandidate()],
+        },
+        rule_ids: [
+          ...ungrounded.map((candidate) => candidate.rule_id ?? ""),
+          "review-canonical-mismatch",
+        ],
+        provenance: {
+          canonical_source_urls: ["/salt/components/button"],
+          related_guide_urls: [],
+          starter_source_urls: [],
+          source_urls: ["/salt/components/button"],
+        },
+      }),
+      {},
+    );
+
+    expect(compact.action).toMatchObject({
+      kind: "apply_fixes",
+      rule_ids: ["review-canonical-mismatch"],
+    });
+    expect(compact.guidance.kind).toBe("review");
+    if (compact.guidance.kind !== "review") return;
+    expect(compact.guidance.fixes).toEqual([
+      expect.objectContaining({
+        rule_id: "review-canonical-mismatch",
+        source_urls: ["/salt/components/button"],
+      }),
+    ]);
+  });
+
+  it("keeps an ungrounded-only review result non-mutating", () => {
+    const compact = buildReviewPublicContract(
+      buildNeedsAttentionReviewResult(),
+      buildReviewWorkflowContract({
+        decision: buildNeedsAttentionReviewResult().decision,
+        fix_candidates: {
+          candidates: [
+            buildReviewFixCandidate({
+              rule_id: "review-ungrounded",
+              source_urls: [],
+            }),
+          ],
+        },
+        rule_ids: ["review-ungrounded"],
+      }),
+      {},
+    );
+
+    expect(compact.action).toMatchObject({
+      kind: "ask_user",
+      rule_ids: ["review-ungrounded"],
+      post_action: null,
+    });
+    expect(compact.guidance.kind).toBe("review");
+    if (compact.guidance.kind !== "review") return;
+    expect(compact.guidance.fixes).toEqual([]);
+  });
+
+  it("rejects apply_fixes when fix provenance or rule IDs diverge", () => {
+    const valid = buildPublicContract(
+      buildInput({
+        workflow: "review",
+        state: {
+          implementation_ready: false,
+          required_follow_through: [],
+          blocking_questions: [],
+          starter_blockers: [],
+          project_policy_blockers: [],
+          hard_blocked: false,
+          context_ready: true,
+          usable_guidance_present: true,
+          transport_failed: false,
+        },
+        next_step: {
+          kind: "apply_fixes",
+          scope: "grounded_findings",
+          authorization: "host_or_user_required",
+        },
+        guidance: {
+          kind: "review",
+          findings: [],
+          fixes: [
+            {
+              rule_id: "review-canonical-mismatch",
+              title: "Replace incorrect component usage.",
+              recommendation:
+                "Replace the current element with the canonical Salt primitive.",
+              safety: "manual_review",
+              source_urls: ["/salt/components/button"],
+            },
+          ],
+        },
+        rule_ids: ["review-canonical-mismatch"],
+      }),
+    );
+    const errors = getPublicContractValidationErrors({
+      ...valid,
+      action: {
+        ...valid.action,
+        rule_ids: ["review-unrelated"],
+      },
+      guidance: {
+        kind: "review",
+        findings: [],
+        fixes: [
+          ...(valid.guidance.kind === "review" ? valid.guidance.fixes : []),
+          {
+            rule_id: "review-ungrounded",
+            title: "Ungrounded fix",
+            recommendation: "Apply an unsupported replacement.",
+            safety: "manual_review",
+            source_urls: [],
+          },
+        ],
+      },
+    });
+
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        "action.kind=apply_fixes requires source provenance for every review fix",
+        "action.kind=apply_fixes requires action.rule_ids to match public review fix rule_ids",
+      ]),
+    );
   });
 
   it("asks about the concrete review blocker instead of immediately reviewing without code", () => {
@@ -1953,7 +2528,7 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "profile page with tabs",
+      create_rerun_args: { query: "profile page with tabs" },
     });
     expect(compact.action).toEqual(
       expect.objectContaining({
@@ -1994,10 +2569,12 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "file manager with breadcrumbs and table",
-      package: "@salt-ds/core",
-      root_dir: "/repo",
-      resolved_entities: ["Table"],
+      create_rerun_args: {
+        query: "file manager with breadcrumbs and table",
+        package: "@salt-ds/core",
+        root_dir: "/repo",
+        resolved_entities: ["Table"],
+      },
     });
 
     expect(toComparablePublicContract(compact)).toEqual(
@@ -2063,8 +2640,10 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "dashboard with a transaction table and filter actions",
-      resolved_entities: ["Table"],
+      create_rerun_args: {
+        query: "dashboard with a transaction table and filter actions",
+        resolved_entities: ["Table"],
+      },
     });
 
     expect(compact.action).toEqual(
@@ -2127,8 +2706,10 @@ describe("publicContract workflow adapters", () => {
 
     const compact = buildCreatePublicContract(result, contract, {
       registry,
-      query: "analytical dashboard with a table and grid layout",
-      resolved_entities: ["Table", "Grid layout"],
+      create_rerun_args: {
+        query: "analytical dashboard with a table and grid layout",
+        resolved_entities: ["Table", "Grid layout"],
+      },
     });
 
     expect(compact.guidance).toMatchObject({
@@ -2148,6 +2729,176 @@ describe("publicContract workflow adapters", () => {
         source: "create_report",
       },
     });
+  });
+
+  it("accepts the exact create owner without adding a duplicate binding check", () => {
+    const registry = buildRegistryFixture();
+    const result = {
+      mode: "recommend",
+      solution_type: "component",
+      decision: {
+        name: "Table",
+        why: "Use the canonical Salt Table.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const compact = buildCreatePublicContract(
+      result,
+      buildCreateWorkflowContract({
+        intent: {
+          user_task: "Create a Table.",
+          canonical_choice: "Table",
+        },
+      }),
+      {
+        registry,
+        create_rerun_args: {
+          query: "Table",
+          resolved_entities: ["Table"],
+        },
+      },
+    );
+
+    expect(compact.action.kind).toBe("implement");
+    expect(compact.evidence.items).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ field: "resolved_entities" }),
+      ]),
+    );
+    expect(compact.guidance.kind).toBe("create");
+    if (compact.guidance.kind !== "create") return;
+    expect(compact.guidance.starter_guidance.plan).not.toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(/Binding check \(resolved entity\).*Table/),
+      ]),
+    );
+  });
+
+  it("accepts a canonical alias only for required follow-through evidence", () => {
+    const registry = buildRegistryFixture();
+    const table = registry.components.find(
+      (component) => component.name === "Table",
+    );
+    table?.aliases.push("DataTable");
+    const result = {
+      mode: "recommend",
+      solution_type: "pattern",
+      decision: {
+        name: "Analytical dashboard",
+        why: "Use the canonical Salt dashboard composition.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const compact = buildCreatePublicContract(
+      result,
+      buildCreateWorkflowContract({
+        implementation_gate: buildCreateImplementationGate({
+          required_follow_through: [
+            { region: "data-table", entity: "Table" },
+          ],
+        }),
+      }),
+      {
+        registry,
+        create_rerun_args: {
+          query: "analytical dashboard with a table",
+          resolved_entities: ["DataTable"],
+        },
+      },
+    );
+
+    expect(compact.action.kind).toBe("implement");
+    expect(compact.evidence.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          entity: "Table",
+          field: "resolved_follow_through",
+        }),
+      ]),
+    );
+    expect(compact.evidence.items).not.toEqual(
+      expect.arrayContaining([expect.objectContaining({ entity: "DataTable" })]),
+    );
+  });
+
+  it.each([
+    { label: "unrelated", supplied: ["Chart"] },
+    { label: "mixed allowed and unrelated", supplied: ["Table", "Chart"] },
+    { label: "unknown", supplied: ["DefinitelyMissingSaltEntity"] },
+  ])("rejects $label resolved create evidence", ({ supplied }) => {
+    const registry = buildRegistryFixture();
+    const result = {
+      mode: "recommend",
+      solution_type: "component",
+      decision: {
+        name: "Table",
+        why: "Use the canonical Salt Table.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const compact = buildCreatePublicContract(
+      result,
+      buildCreateWorkflowContract({
+        intent: {
+          user_task: "Create a Table.",
+          canonical_choice: "Table",
+        },
+      }),
+      {
+        registry,
+        create_rerun_args: {
+          query: "Table",
+          resolved_entities: supplied,
+        },
+      },
+    );
+
+    expect(compact.action).toMatchObject({
+      kind: "ask_user",
+      question: expect.stringMatching(/remove|rerun/i),
+      post_action: null,
+    });
+    expect(compact.action.kind).not.toBe("implement");
+    expect(compact.evidence.items).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          entity: expect.stringMatching(/Chart|DefinitelyMissingSaltEntity/),
+        }),
+      ]),
+    );
+  });
+
+  it("rejects a supplied alias that resolves to multiple canonical records", () => {
+    const registry = buildRegistryFixture();
+    registry.components.find(
+      (component) => component.name === "Chart",
+    )?.aliases.push("SharedAlias");
+    registry.components.find(
+      (component) => component.name === "Table",
+    )?.aliases.push("SharedAlias");
+    const result = {
+      mode: "recommend",
+      solution_type: "component",
+      decision: {
+        name: "Table",
+        why: "Use the canonical Salt Table.",
+      },
+    } as unknown as CreateSaltUiResult;
+    const compact = buildCreatePublicContract(
+      result,
+      buildCreateWorkflowContract(),
+      {
+        registry,
+        create_rerun_args: {
+          query: "Table",
+          resolved_entities: ["SharedAlias"],
+        },
+      },
+    );
+
+    expect(compact.action).toMatchObject({
+      kind: "ask_user",
+      question: expect.stringContaining("SharedAlias"),
+      post_action: null,
+    });
+    expect(compact.action.kind).not.toBe("implement");
   });
 
   it("derives migrate contract output from the shared migrate workflow contract", () => {
@@ -2409,5 +3160,35 @@ describe("publicContract workflow adapters", () => {
       rule_ids: [],
       post_action: null,
     });
+  });
+
+  it("keeps dense-data clarification blocking when context is ready", () => {
+    const question =
+      "Which Salt pattern should replace this dense data surface before implementation?";
+    const result = {
+      translations: [{}],
+      migration_plan: ["Map the dense data workflow before implementation."],
+      clarifying_questions: [question],
+    } as unknown as MigrateToSaltResult;
+    const contract = buildMigrateWorkflowContract({
+      provenance: {
+        canonical_source_urls: ["/salt/patterns/data-display"],
+        related_guide_urls: [],
+        starter_source_urls: ["/salt/patterns/data-display"],
+        source_urls: ["/salt/patterns/data-display"],
+      },
+    });
+
+    const compact = buildMigratePublicContract(result, contract, {});
+
+    expect(compact.status).toBe("blocked");
+    expect(compact.questions).toContain(question);
+    expect(compact.action).toEqual({
+      kind: "ask_user",
+      question,
+      rule_ids: [],
+      post_action: null,
+    });
+    expect(compact.safety.exact_request_safe).toBe(false);
   });
 });

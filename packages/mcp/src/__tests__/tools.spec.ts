@@ -26,6 +26,7 @@ import { recommendComponent } from "../core/tools/recommendComponent.js";
 import { recommendTokens } from "../core/tools/recommendTokens.js";
 import { searchComponentCapabilities } from "../core/tools/searchComponentCapabilities.js";
 import { isComponentAllowedByDocsPolicy } from "../core/tools/utils.js";
+import { buildMigrateToSaltWorkflowContract } from "../core/tools/workflowContracts.js";
 import type { SaltRegistry } from "../core/types.js";
 
 const TIMESTAMP = "2026-03-10T00:00:00Z";
@@ -2711,6 +2712,30 @@ describe("consumer tools", () => {
         followUp.reason.includes("project conventions"),
       ),
     ).toBe(true);
+    expect(result.clarifying_questions).not.toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("What must remain familiar"),
+        expect.stringContaining("Salt-native recomposition change the layout"),
+      ]),
+    );
+    expect(result.familiarity_contract.preserve).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("core task flow and information hierarchy"),
+        expect.stringContaining("primary action hierarchy"),
+      ]),
+    );
+    expect(result.familiarity_contract.allow_salt_changes).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Salt-native changes"),
+        expect.stringContaining("canonical Salt composition"),
+      ]),
+    );
+    expect(result.familiarity_contract.requires_confirmation).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Reordered primary and secondary tasks"),
+        expect.stringContaining("Merged, split, or removed steps"),
+      ]),
+    );
   });
 
   it("keeps migration rerun follow-up arguments on the public MCP surface", () => {
@@ -2820,6 +2845,47 @@ describe("consumer tools", () => {
             ),
           }),
         }),
+      ]),
+    );
+    expect(result.clarifying_questions).not.toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("loading, empty, error, or validation states"),
+      ]),
+    );
+    expect(result.familiarity_contract.preserve).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          "critical loading, empty, error, and validation states",
+        ),
+      ]),
+    );
+    expect(result.familiarity_contract.allow_salt_changes).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Salt-native recomposition"),
+      ]),
+    );
+    expect(result.familiarity_contract.requires_confirmation).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("different shell structure"),
+      ]),
+    );
+    const workflowContract = buildMigrateToSaltWorkflowContract(
+      REGISTRY,
+      result,
+      { context_checked: true },
+    );
+    expect(workflowContract.post_migration_verification.preserve_checks).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("core task flow and information hierarchy"),
+        expect.stringContaining("loading, empty, error, and validation states"),
+      ]),
+    );
+    expect(
+      workflowContract.post_migration_verification.confirmation_checks,
+    ).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Merged, split, or removed steps"),
+        expect.stringContaining("state visibility"),
       ]),
     );
   });

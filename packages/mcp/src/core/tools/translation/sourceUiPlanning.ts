@@ -678,12 +678,10 @@ export function buildAssumptions(
 }
 
 export function buildClarifyingQuestions(input: {
-  sourceProfile: MigrateToSaltResult["source_profile"];
-  sourceModel: SourceUiModel;
   translations: TranslationRecord[];
 }): string[] | undefined {
-  const questions = unique([
-    ...input.translations
+  const questions = unique(
+    input.translations
       .filter(
         (translation) =>
           (translation.confidence_detail.level === "low" ||
@@ -693,26 +691,7 @@ export function buildClarifyingQuestions(input: {
       .map(
         (translation) => translation.confidence_detail.next_question as string,
       ),
-    ...(input.sourceProfile.ui_flavor === "external-ui" ||
-    input.sourceProfile.ui_flavor === "generic-react" ||
-    input.sourceProfile.ui_flavor === "mixed"
-      ? [
-          "What must remain familiar for existing users: task order, action hierarchy, landmarks, or state visibility?",
-        ]
-      : []),
-    ...(input.sourceModel.states.length > 0
-      ? [
-          "Which loading, empty, error, or validation states are critical in the first migration pass?",
-        ]
-      : []),
-    ...(input.translations.some(
-      (translation) => translation.delta_category === "salt-recomposition",
-    )
-      ? [
-          "Can Salt-native recomposition change the layout, or should the migrated result stay closer to the current structure?",
-        ]
-      : []),
-  ]);
+  );
 
   return questions.length > 0 ? questions.slice(0, 4) : undefined;
 }

@@ -8,10 +8,11 @@ import {
   repoRoot,
   runCommand,
 } from "./shared.mjs";
+import { hashCanonicalSkillTree } from "./skillTreeHash.mjs";
 
 const FORBIDDEN_PRIVATE_DEPENDENCIES = ["@salt-ds/semantic-core"];
 
-function parseNpmJsonOutput(output, label) {
+export function parseNpmJsonOutput(output, label) {
   try {
     return JSON.parse(output);
   } catch (error) {
@@ -316,6 +317,120 @@ export async function installLocalPackages(rootDir) {
   );
 }
 
+export async function installPublishedPackage(
+  rootDir,
+  { mcpSpec, expectedVersion, expectedGitHead },
+) {
+  await fs.mkdir(rootDir, { recursive: true });
+  await fs.writeFile(
+    path.join(rootDir, "package.json"),
+    `${JSON.stringify(
+      { name: "salt-published-consumer-smoke", private: true },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+
+  console.log(`Resolving immutable registry identity for ${mcpSpec}...`);
+  const viewResult = await runCommand(
+    getExecutable("npm"),
+    ["view", mcpSpec, "version", "gitHead", "dist.integrity", "--json"],
+    { cwd: rootDir, label: `npm view ${mcpSpec}` },
+  );
+  const registry = parseNpmJsonOutput(viewResult.stdout, `npm view ${mcpSpec}`);
+  assert(
+    registry?.version === expectedVersion,
+    `Registry version ${registry?.version ?? "<missing>"} did not match ${expectedVersion}.`,
+  );
+  assert(
+    registry?.gitHead === expectedGitHead,
+    `Registry gitHead ${registry?.gitHead ?? "<missing>"} did not match ${expectedGitHead}.`,
+  );
+  assert(
+    typeof registry?.dist?.integrity === "string" &&
+      registry.dist.integrity.length > 0,
+    "Registry metadata did not include npm tarball integrity.",
+  );
+
+  console.log(`Installing ${mcpSpec} in a fresh consumer...`);
+  await runCommand(
+    getExecutable("npm"),
+    [
+      "install",
+      "--package-lock",
+      "--save-exact",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      mcpSpec,
+    ],
+    { cwd: rootDir, label: `npm install ${mcpSpec}` },
+  );
+
+  const installedPackageDir = path.join(
+    rootDir,
+    "node_modules",
+    "@salt-ds",
+    "mcp",
+  );
+  const installedManifest = JSON.parse(
+    await fs.readFile(path.join(installedPackageDir, "package.json"), "utf8"),
+  );
+  const installedStats = await fs.lstat(installedPackageDir);
+  assert(
+    installedStats.isDirectory() && !installedStats.isSymbolicLink(),
+    "Published MCP must install as an isolated directory, not a link.",
+  );
+  assert(
+    installedManifest.name === "@salt-ds/mcp" &&
+      installedManifest.version === expectedVersion,
+    "Installed published MCP manifest did not match the requested exact identity.",
+  );
+  for (const dependencyName of FORBIDDEN_PRIVATE_DEPENDENCIES) {
+    assert(
+      !Object.hasOwn(installedManifest.dependencies ?? {}, dependencyName),
+      `Published MCP declares bundled private dependency ${dependencyName}.`,
+    );
+  }
+
+  const lockfile = JSON.parse(
+    await fs.readFile(path.join(rootDir, "package-lock.json"), "utf8"),
+  );
+  const lockedPackage = lockfile?.packages?.["node_modules/@salt-ds/mcp"];
+  assert(
+    lockedPackage?.version === expectedVersion &&
+      lockedPackage?.integrity === registry.dist.integrity,
+    "Installed package-lock identity did not match the registry tarball integrity.",
+  );
+
+  const dependencyTreeResult = await runCommand(
+    getExecutable("npm"),
+    ["ls", "--all", "--json"],
+    { cwd: rootDir, label: "npm ls published Salt MCP dependency tree" },
+  );
+  const dependencyTree = parseNpmJsonOutput(
+    dependencyTreeResult.stdout,
+    "npm ls published Salt MCP dependency tree",
+  );
+  assert(
+    dependencyTree?.dependencies?.["@salt-ds/mcp"]?.version === expectedVersion,
+    "Published dependency tree did not include the exact installed MCP version.",
+  );
+  assert(
+    !Array.isArray(dependencyTree.problems) ||
+      dependencyTree.problems.length === 0,
+    `Published dependency tree reported problems: ${(dependencyTree.problems ?? []).join("; ")}`,
+  );
+
+  return {
+    npmName: installedManifest.name,
+    version: installedManifest.version,
+    gitHead: registry.gitHead,
+    integrity: registry.dist.integrity,
+  };
+}
+
 export async function verifyInstalledMcpTypes(rootDir) {
   const sourcePath = path.join(rootDir, "mcp-type-consumer.mts");
   const tsconfigPath = path.join(rootDir, "tsconfig.typecheck.json");
@@ -414,7 +529,7 @@ export async function verifyInstalledMcpModuleExports(rootDir) {
   );
 }
 
-export async function verifySkills(rootDir, skillsSource) {
+export async function verifySkills(rootDir, skillsSource, expectedTreeHash) {
   console.log("Verifying skills source and isolated skill installation...");
   const expectedSkills = ["salt-ds"];
   // Keep the release gate deterministic; update this deliberately after
@@ -455,5 +570,50 @@ export async function verifySkills(rootDir, skillsSource) {
       await pathExists(installedSkillPath),
       `Expected installed skill at ${installedSkillPath}.`,
     );
+
+    const installedSkillRoot = path.dirname(installedSkillPath);
+    const installedHash = await hashCanonicalSkillTree(installedSkillRoot);
+    const sourceIsRemote = /^https:\/\//u.test(skillsSource);
+    const sourceHash = sourceIsRemote
+      ? null
+      : await hashCanonicalSkillTree(path.join(skillsSource, skill));
+    const requiredHash = expectedTreeHash ?? sourceHash?.sha256;
+    assert(
+      requiredHash && installedHash.sha256 === requiredHash,
+      `Installed ${skill} tree hash ${installedHash.sha256} did not match ${requiredHash ?? "<missing expected hash>"}.`,
+    );
   }
+}
+
+export async function verifyStandaloneConsumerExample(tempRoot) {
+  const sourceRoot = path.join(repoRoot, "workflow-examples", "consumer-repo");
+  const targetRoot = path.join(tempRoot, "standalone-consumer-example");
+  const sourceEntries = await fs.readdir(sourceRoot, { withFileTypes: true });
+  await fs.mkdir(targetRoot, { recursive: true });
+  for (const entry of sourceEntries) {
+    const sourcePath = path.join(sourceRoot, entry.name);
+    const stats = await fs.lstat(sourcePath);
+    assert(
+      !stats.isSymbolicLink(),
+      `Standalone example contains a link: ${sourcePath}`,
+    );
+    await fs.cp(sourcePath, path.join(targetRoot, entry.name), {
+      recursive: stats.isDirectory(),
+      errorOnExist: true,
+      force: false,
+      verbatimSymlinks: true,
+    });
+  }
+
+  console.log("Installing the standalone consumer example immutably...");
+  await runCommand(
+    getExecutable("corepack"),
+    ["yarn", "install", "--immutable"],
+    { cwd: targetRoot, label: "standalone corepack yarn install --immutable" },
+  );
+  console.log("Running the standalone consumer example verification...");
+  await runCommand(getExecutable("corepack"), ["yarn", "ui:verify"], {
+    cwd: targetRoot,
+    label: "standalone corepack yarn ui:verify",
+  });
 }
