@@ -1,0 +1,10 @@
+.saltCardHeader {
+  padding: var(--saltCardHeader-padding, var(--salt-spacing-200));
+  box-sizing: border-box;
+}
+
+.saltCard-sectioned > .saltCardHeader,
+.saltLinkCard-sectioned > .saltCardHeader,
+.saltInteractableCard-sectioned > .saltCardHeader {
+  flex-shrink: 0;
+}

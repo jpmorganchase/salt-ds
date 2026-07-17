@@ -14,21 +14,10 @@
   --card-padding: var(--salt-spacing-200);
 }
 
-/*
- * Suppress the interactable card's default inner padding when a `CardContent`
- * child is present. Modern browsers handle this purely in CSS via `:has()`.
- * The `saltInteractableCard-noPadding` class is the JS fallback (toggled by
- * `CardContent` through `CardContext`) for browsers that do not yet support
- * `:has()`.
- */
-.saltInteractableCard-noPadding {
-  --card-padding: 0;
-}
-
-@supports selector(:has(*)) {
-  .saltInteractableCard:has(> .saltCardContent) {
-    --card-padding: 0;
-  }
+.saltInteractableCard.saltInteractableCard-sectioned {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Styles applied to InteractableCard when variant="primary" */

@@ -1,5 +1,7 @@
 import {
   CardContent,
+  CardFooter,
+  CardHeader,
   H1,
   InteractableCard,
   InteractableCardGroup,
@@ -76,6 +78,17 @@ export const AllExamples: StoryFn<QAContainerProps & { className?: string }> = (
           <H1>Panel + CardContent</H1>
           <Text>Content</Text>
         </CardContent>
+      </InteractableCard>
+      <InteractableCard>
+        <CardHeader>
+          <H1>Interactable card header</H1>
+        </CardHeader>
+        <CardContent>
+          <Text>Interactable card content</Text>
+        </CardContent>
+        <CardFooter>
+          <Text color="secondary">Interactable card footer</Text>
+        </CardFooter>
       </InteractableCard>
     </QAContainer>
   );
