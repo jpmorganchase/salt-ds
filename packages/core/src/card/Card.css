@@ -13,20 +13,10 @@
   --card-padding: var(--salt-spacing-200);
 }
 
-/*
- * Suppress the card's default inner padding when a `CardContent` child is
- * present. Modern browsers handle this purely in CSS via `:has()`. The
- * `saltCard-noPadding` class is the JS fallback (toggled by `CardContent`
- * through `CardContext`) for browsers that do not yet support `:has()`.
- */
-.saltCard-noPadding {
-  --card-padding: 0;
-}
-
-@supports selector(:has(*)) {
-  .saltCard:has(> .saltCardContent) {
-    --card-padding: 0;
-  }
+.saltCard.saltCard-sectioned {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .saltCard-primary {

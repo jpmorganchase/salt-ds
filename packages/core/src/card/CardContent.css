@@ -1,3 +1,19 @@
 .saltCardContent {
   padding: var(--saltCardContent-padding, var(--salt-spacing-200));
+  box-sizing: border-box;
+}
+
+.saltCard-sectioned > .saltCardHeader + .saltCardContent,
+.saltCard-sectioned > .saltCardContent + .saltCardContent,
+.saltLinkCard-sectioned > .saltCardHeader + .saltCardContent,
+.saltLinkCard-sectioned > .saltCardContent + .saltCardContent,
+.saltInteractableCard-sectioned > .saltCardHeader + .saltCardContent,
+.saltInteractableCard-sectioned > .saltCardContent + .saltCardContent {
+  padding-top: 0;
+}
+
+.saltCard-sectioned > .saltCardContent,
+.saltLinkCard-sectioned > .saltCardContent,
+.saltInteractableCard-sectioned > .saltCardContent {
+  flex: 1 1 auto;
 }

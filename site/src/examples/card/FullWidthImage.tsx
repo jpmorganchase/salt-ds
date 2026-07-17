@@ -4,11 +4,7 @@ import type { ReactElement } from "react";
 export const FullWidthImage = (): ReactElement => {
   return (
     <Card style={{ width: "260px" }}>
-      <img
-        src="/img/examples/cardExample.jpg"
-        alt="placeholder"
-        style={{ width: "100%" }}
-      />
+      <img src="/img/examples/cardExample.jpg" alt="placeholder" />
       <CardContent>
         <StackLayout gap={1}>
           <H3 style={{ margin: 0 }}>Sustainable investing products</H3>

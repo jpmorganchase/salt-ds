@@ -10,5 +10,6 @@ export * from "./FullWidthImage";
 export * from "./Ghost";
 export * from "./InteractableCardExample";
 export * from "./LinkCardExample";
+export * from "./Sections";
 export * from "./ToggleGroup";
 export * from "./Variants";

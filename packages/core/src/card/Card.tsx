@@ -1,12 +1,12 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef, useState } from "react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import { capitalize, makePrefixer } from "../utils";
 
 import cardCss from "./Card.css";
-import { CardContext } from "./CardContext";
+import { hasCardSection } from "./hasCardSection";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
@@ -57,31 +57,29 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       window: targetWindow,
     });
 
-    const [noPadding, setNoPadding] = useState(false);
+    const sectioned = hasCardSection(children);
 
     return (
-      <CardContext.Provider value={{ setNoPadding }}>
-        <div
-          className={clsx(
-            withBaseName(),
-            withBaseName(variant),
-            {
-              [withBaseName("accent")]: accent,
-              [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
-              [withBaseName("hoverable")]: hoverable,
-              /* **Deprecated:** InteractableCard should be used instead for these features */
-              [withBaseName("disabled")]: disabled,
-              [withBaseName("interactable")]: interactable,
-              [withBaseName("noPadding")]: noPadding,
-            },
-            className,
-          )}
-          ref={ref}
-          {...rest}
-        >
-          {children}
-        </div>
-      </CardContext.Provider>
+      <div
+        className={clsx(
+          withBaseName(),
+          withBaseName(variant),
+          {
+            [withBaseName("accent")]: accent,
+            [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+            [withBaseName("hoverable")]: hoverable,
+            /* **Deprecated:** InteractableCard should be used instead for these features */
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("interactable")]: interactable,
+            [withBaseName("sectioned")]: sectioned,
+          },
+          className,
+        )}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </div>
     );
   },
 );

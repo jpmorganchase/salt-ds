@@ -3,20 +3,20 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { makePrefixer } from "../utils";
-import cardContentCss from "./CardContent.css";
+import cardHeaderCss from "./CardHeader.css";
 
-export interface CardContentProps extends ComponentPropsWithoutRef<"div"> {}
+export interface CardHeaderProps extends ComponentPropsWithoutRef<"div"> {}
 
-const withBaseName = makePrefixer("saltCardContent");
+const withBaseName = makePrefixer("saltCardHeader");
 
-export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
-  function CardContent(props, ref) {
+export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
+  function CardHeader(props, ref) {
     const { className, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-card-content",
-      css: cardContentCss,
+      testId: "salt-card-header",
+      css: cardHeaderCss,
       window: targetWindow,
     });
 
