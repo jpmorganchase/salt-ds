@@ -1,0 +1,75 @@
+.saltMonthYearPanel {
+  --calendar-gap: var(--salt-spacing-fixed-100);
+  --monthGrid-columns: 3;
+  --monthGrid-padding: var(--salt-spacing-200);
+  --monthGrid-minWidth: 15em;
+
+  box-sizing: border-box;
+  padding: var(--monthGrid-padding);
+  min-width: var(--monthGrid-minWidth);
+  display: flex;
+  flex-direction: column;
+  gap: var(--calendar-gap);
+}
+
+.saltMonthYearPanel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--calendar-gap);
+}
+
+.saltMonthYearPanel-yearDropdown {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.saltMonthYearPanel-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--calendar-gap);
+}
+
+.saltMonthYearPanel-row {
+  display: grid;
+  grid-template-columns: repeat(var(--monthGrid-columns), 1fr);
+  gap: var(--calendar-gap);
+}
+
+.saltMonthYearPanel-cell {
+  display: block;
+  width: 100%;
+}
+
+/*
+ * Month buttons inherit the .saltCalendarDay visual treatment (background,
+ * hover, focus ring, selected pill) so they read as the same class of
+ * interactive cell as calendar days. CalendarDay is a fixed square sized to
+ * --salt-size-base; override that here so the button fills the grid cell.
+ */
+.saltMonthYearPanel-cell > .saltCalendarDay {
+  width: 100%;
+}
+
+/*
+ * Clamp the range-span bridge pseudo-element to the row edges so the
+ * "in-between" pill does not overflow the leftmost or rightmost month cell
+ * in a row. Mirrors the CalendarMonth `.saltCalendarMonth-week` clamps that
+ * CalendarDay.css already applies for day rows.
+ */
+.saltMonthYearPanel-row > .saltMonthYearPanel-cell:first-child > .saltCalendarDay::before {
+  left: 0;
+}
+.saltMonthYearPanel-row > .saltMonthYearPanel-cell:last-child > .saltCalendarDay::before {
+  right: 0;
+}
+
+.saltMonthYearPanel-helper {
+  padding: var(--salt-spacing-100);
+}
+
+.saltMonthYearPanel-rangeContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
