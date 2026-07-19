@@ -1,0 +1,106 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+`MonthYearSinglePanel` is a drop-in replacement for `DatePickerSingleGridPanel` inside the `DatePicker` composition. It reads the same `DatePicker` context (`selectedDate`, `minDate`, `maxDate`, `timezone`, `readOnly`, `disabled`) and calls the same `helpers.select` when the user picks a month, so it composes with the rest of the Salt date picker surface without additional wiring.
+
+The panel renders the twelve months of the visible year in a 3 × 4 grid. The header of the grid pairs previous / next year buttons with a year `Dropdown` for quick jumps across many years.
+
+### When to use
+
+- Use `MonthYearSinglePanel` when the semantic value is a month (for example, statement period, reporting month, effective-from month) and the user should not have to pick a specific day.
+- Prefer the standard [`DatePickerSingleGridPanel`](../) when the user is choosing an actual calendar day.
+- If the field is entirely fixed (only a handful of allowed months, no free typing), consider a `Dropdown` of pre-formatted options instead of a picker.
+
+### Best practices
+
+- Match the input `format` (typically `MMMM YYYY`) with the panel's visible representation so typed and picked values render identically.
+- When min/max is set, use `defaultVisibleYear` to open the panel on a year that contains selectable months so keyboard users don't land on a disabled row.
+- Provide a `parse` function on the input that accepts the common month-year formats used by your audience (`MMMM YYYY`, `MMM YYYY`, `MM/YYYY`, `M/YYYY`) and always normalise to the first of the month.
+
+## Import
+
+```js
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+  MonthYearSinglePanel,
+} from "@salt-ds/date-components";
+```
+
+### Composition
+
+Date controls require your application to contain a [LocalizationProvider](../../localization-provider).
+
+```tsx
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+  LocalizationProvider,
+  MonthYearSinglePanel,
+} from "@salt-ds/date-components";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+  <DatePicker selectionVariant="single">
+    <DatePickerTrigger>
+      <DatePickerSingleInput format="MMMM YYYY" />
+    </DatePickerTrigger>
+    <DatePickerOverlay>
+      <MonthYearSinglePanel />
+    </DatePickerOverlay>
+  </DatePicker>
+</LocalizationProvider>;
+```
+
+### Controlled visible year
+
+`MonthYearSinglePanel` accepts a controlled `visibleYear` (with matching `onVisibleYearChange`) or uncontrolled `defaultVisibleYear`. When no selection is present the panel defaults to the current year in the configured timezone. When a `selectedDate` is present the panel keeps its visible year in sync with it.
+
+### Disabled months
+
+Use the `isMonthUnselectable` prop to disable months beyond simple min/max windows. The callback is called with a date positioned at the first of each month and should return either a rejection message (surfaced to assistive technology and used as a tooltip) or `false` to allow the month.
+
+```tsx
+<MonthYearSinglePanel
+  isMonthUnselectable={(month) => {
+    const monthIndex = dateAdapter.getMonth(month); // 0-based across all adapters
+    return monthIndex === 6 || monthIndex === 7 || monthIndex === 8
+      ? "Q3 months are unavailable"
+      : false;
+  }}
+/>
+```
+
+### Locale
+
+`MonthYearSinglePanel` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider](../../localization-provider). Month names in the grid buttons and the year label are formatted through the adapter, so they respect the locale automatically.
+
+### Timezone
+
+`DatePicker` accepts a `timezone` prop that flows into the panel. When no selection is present the default focused month follows "today" in that timezone.
+
+### Year dropdown
+
+The header of the grid renders a `Dropdown` of selectable years alongside the previous / next year buttons. The list of years is centred on the visible year and clamped to any `minDate` / `maxDate` on the parent `DatePicker`. Use `yearDropdownRange` to change how many years appear on each side of the visible year (defaults to 100).
+
+## Props
+
+### MonthYearSinglePanel
+
+<PropsTable
+  packageName="date-components"
+  componentName="MonthYearSinglePanel"
+/>
