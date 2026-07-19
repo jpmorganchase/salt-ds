@@ -1,0 +1,131 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+`MonthYearRangePanel` is a drop-in replacement for `DatePickerRangePanel` inside the `DatePicker` composition when `selectionVariant` is `"range"`. It reads the same `DatePicker` context (`selectedDate`, `minDate`, `maxDate`, `timezone`, `readOnly`, `disabled`) and calls the same `helpers.select` when the user picks a start or end month, so it composes with the rest of the Salt date picker surface without additional wiring.
+
+The panel renders two independent month grids side by side:
+
+- The **start (left) grid** controls the start of the range and normalises its selection to the first of the month.
+- The **end (right) grid** controls the end of the range and normalises its selection to the last of the month.
+
+The header of each grid pairs previous / next year buttons with a year `Dropdown` for quick jumps across many years.
+
+### Range selection
+
+Selection follows the same rules as `DatePickerRangePanel`:
+
+- If **no dates** are selected, the picked month becomes the start.
+- If **only the start** is set and the picked month is on or after the start, it completes the range as the end. Picking a month before the start restarts the range from that month.
+- If **both start and end** are already set, the picked month starts a fresh range.
+
+Months that fall inside the current range are highlighted (`selectedSpan`), the start and end are marked with `selectedStart` / `selectedEnd`, and when start and end are in the same month the button uses `selectedSameDay`. While a range is being drafted (only start is set), hovering or arrow-keying over a candidate end month renders a preview highlight (`hoveredStart` / `hoveredEnd` / `hoveredSpan`).
+
+### Year linking
+
+The two grids in `MonthYearRangePanel` are always kept on **different, consecutive years** — they never show the same year at the same time:
+
+- Advancing the start year onto or past the end year pushes the end year forward.
+- Moving the end year onto or back past the start year pulls the start year back.
+- Selecting a month in one grid does not re-anchor the other grid unless the selected year would collide with the sibling.
+
+This is enforced across manual year navigation (buttons, dropdown, keyboard), external `selectedDate` updates, and initial mount. When min/max windows prevent the invariant from holding, the side that received the direct change wins and the sibling clamps as close as allowed.
+
+### Cross-grid keyboard navigation
+
+When the two grids show consecutive years, arrow-key navigation past the last visible month of the start grid transfers focus to January of the end grid, and vice versa. The visible years only advance when navigating past the edges of the outermost grid.
+
+### Year dropdown
+
+Each grid header renders a `Dropdown` of selectable years alongside the previous / next year buttons. The list is centred on that grid's visible year and clamped to any `minDate` / `maxDate` on the parent `DatePicker`. Use `yearDropdownRange` to change how many years appear on each side of the visible year (defaults to 100).
+
+### When to use
+
+- Use `MonthYearRangePanel` when the semantic value is a month range (reporting periods, statement ranges, effective-from/to months) and the user should not have to pick specific days.
+- Prefer the standard [`DatePickerRangePanel`](../range-date-picker) when the user is choosing actual calendar days.
+
+### Best practices
+
+- Match the input `format` (typically `MMMM YYYY`) with the panel's visible representation so typed and picked values render identically.
+- When min/max is set, use `defaultStartVisibleYear` and `defaultEndVisibleYear` to open each grid on a year that contains selectable months.
+- Provide a `parse` function that accepts the common month-year formats used by your audience (`MMMM YYYY`, `MMM YYYY`, `MM/YYYY`, `M/YYYY`) and normalises to the first/last of the month based on `DateParserField.START` / `DateParserField.END`.
+
+## Import
+
+```js
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerRangeInput,
+  DatePickerTrigger,
+  MonthYearRangePanel,
+} from "@salt-ds/date-components";
+```
+
+### Composition
+
+Date controls require your application to contain a [LocalizationProvider](../../localization-provider).
+
+```tsx
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerRangeInput,
+  DatePickerTrigger,
+  LocalizationProvider,
+  MonthYearRangePanel,
+} from "@salt-ds/date-components";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+  <DatePicker selectionVariant="range">
+    <DatePickerTrigger>
+      <DatePickerRangeInput format="MMMM YYYY" />
+    </DatePickerTrigger>
+    <DatePickerOverlay>
+      <MonthYearRangePanel />
+    </DatePickerOverlay>
+  </DatePicker>
+</LocalizationProvider>;
+```
+
+### Controlled visible years
+
+`MonthYearRangePanel` accepts controlled `startVisibleYear` / `endVisibleYear` (with matching `onStartVisibleYearChange` / `onEndVisibleYearChange`) or uncontrolled `defaultStartVisibleYear` / `defaultEndVisibleYear`. Because of the year-linking invariant, either callback can fire in response to a change on the opposite side; controlled consumers should update both values when either fires.
+
+### Disabled months
+
+Use the `isMonthUnselectable` prop to disable months beyond simple min/max windows. The callback is applied to both the start and end grids and is called with a date positioned at the first of each month; return either a rejection message (surfaced to assistive technology and used as a tooltip) or `false` to allow the month.
+
+```tsx
+<MonthYearRangePanel
+  isMonthUnselectable={(month) => {
+    const monthIndex = dateAdapter.getMonth(month); // 0-based across all adapters
+    return monthIndex === 6 || monthIndex === 7 || monthIndex === 8
+      ? "Q3 months are unavailable"
+      : false;
+  }}
+/>
+```
+
+### Locale
+
+`MonthYearRangePanel` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider](../../localization-provider). Month names in the grid buttons and the year labels are formatted through the adapter, so they respect the locale automatically.
+
+### Timezone
+
+`DatePicker` accepts a `timezone` prop that flows into the panel. When no selection is present the default focused month follows "today" in that timezone.
+
+## Props
+
+### MonthYearRangePanel
+
+<PropsTable packageName="date-components" componentName="MonthYearRangePanel" />
