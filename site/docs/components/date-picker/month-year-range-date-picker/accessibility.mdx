@@ -1,0 +1,91 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Wrap the `DatePicker` in [`FormField`](/salt/components/form-field) so both inputs receive a visible label, help text and a status message. Screen reader users rely on the label to understand which range they are entering.
+- Clearly indicate months that cannot be selected — via `minDate` / `maxDate` on the parent `DatePicker`, or via `isMonthUnselectable` on the panel. The rejection message you return from `isMonthUnselectable` is surfaced to assistive technology on both grids.
+- Match the input `format` (typically `MMMM YYYY`) with the panel's rendered value so screen reader users hear consistent phrasing between the typed and picked value.
+
+### Focus
+
+- When the overlay opens, focus lands on the start grid's currently-focused month button (the selected start month, or January when there is no selection). This is wired via `useDatePickerOverlay().state.initialFocusRef`.
+- Closing the overlay (Escape, apply, outside-press) returns focus to the triggering input, handled by `DatePickerOverlayProvider`.
+- Within each grid, roving `tabindex` means only the focused month is in the tab order; arrow keys move focus between months in that grid.
+- Tab / Shift + Tab move focus between the start grid, the end grid, and the previous/next year buttons of each grid.
+
+### Provide instructions and feedback
+
+- Include clear instructions in the input's helper text (for example, "Select a month range (e.g. January 2026 - March 2026)").
+- Display validation messages via `FormField` `validationStatus`. Inverted ranges (end before start) surface as validation errors rather than silent corrections.
+
+### Announce changes dynamically
+
+- Selection changes are announced through Salt's shared `aria-live` announcer as "Selected range: start {Month YYYY}, end {Month YYYY}".
+- Each grid uses ARIA `role="grid"` with `aria-rowcount` / `aria-colcount` and an `aria-label` of "Start month, {year}" or "End month, {year}". Each month button has an `aria-label` of the form "January 2026" so it is understandable in isolation.
+
+## Keyboard interactions
+
+<KeyboardControls>
+  <KeyboardControl keyOrCombos="Tab">
+    - If focus is above the input, Tab moves focus onto the input. - If the
+    input has focus, Tab moves focus to the calendar button. If the panel is
+    open and the input holds a valid month/year, Tab formats the value. - If
+    focus is on the calendar button and the panel is open, Tab moves focus to
+    the focused month in the start grid. - If focus is within the panel, Tab
+    moves focus to the next focusable element (previous year button, year
+    dropdown and next year button for each grid, plus the focused month in the
+    end grid, then out of the overlay).
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Shift + Tab">
+    - If focus is on the input, Shift + Tab moves focus out of the component. -
+    If focus is on the calendar button, Shift + Tab moves focus back to the
+    input. - If focus is within the panel, Shift + Tab moves focus to the
+    previous focusable element.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Enter / Space">
+    - If focus is on a month button, Enter or Space selects that month for the
+    grid it belongs to (start or end), following the same range-selection rules
+    as `DatePickerRangePanel`. - If focus is on a previous/next year button,
+    Enter or Space navigates to the adjacent year in that grid. - If focus is on
+    a year dropdown, Enter or Space opens the year list. - If focus is on the
+    calendar button, Enter or Space toggles the panel.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Left Arrow / Right Arrow">
+    When focus is on a month button, moves focus to the previous / next month in
+    the same grid. When the two grids show consecutive years, moving past
+    December of the start grid transfers focus to January of the end grid, and
+    moving past January of the end grid transfers focus to December of the start
+    grid. When there is no sibling grid to receive focus, the year is
+    incremented / decremented in place.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Up Arrow / Down Arrow">
+    When focus is on a month button, moves focus by one row (three months) in
+    the same grid. Crossing the top or bottom edge transfers focus to the
+    sibling grid when the years are consecutive; otherwise the year is rolled
+    over in place.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Home / End">
+    When focus is on a month button, moves focus to the first / last month of
+    the current row.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Page Up / Page Down">
+    When focus is on a month button, decreases / increases that grid's visible
+    year by one. Focus stays on the same month index. The sibling grid is pushed
+    forward or pulled back if needed to preserve `end year > start year`.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Shift + Page Up / Shift + Page Down">
+    When focus is on a month button, decreases / increases that grid's visible
+    year by ten.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Escape">
+    Closes the overlay and returns focus to the triggering input.
+  </KeyboardControl>
+</KeyboardControls>
