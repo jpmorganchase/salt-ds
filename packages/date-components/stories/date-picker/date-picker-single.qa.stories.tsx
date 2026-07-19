@@ -63,24 +63,22 @@ const renderQAContainer = (
     checkDayOfWeek(day, 5, 4, "is a Friday");
 
   return (
-    <QAContainer itemPadding={10} width={1000}>
-      <div style={{ height: 500 }}>
-        <DatePicker
-          defaultSelectedDate={dateAdapter.today()}
-          selectionVariant="single"
-          isDayHighlighted={isFriday}
-          isDayUnselectable={isSaturday}
-          open
-          {...props}
-        >
-          <DatePickerTrigger>
-            <DatePickerSingleInput />
-          </DatePickerTrigger>
-          <DatePickerOverlay>
-            <DatePickerSingleGridPanel numberOfVisibleMonths={2} columns={2} />
-          </DatePickerOverlay>
-        </DatePicker>
-      </div>
+    <QAContainer itemPadding={10} width={1000} height={1000}>
+      <DatePicker
+        defaultSelectedDate={dateAdapter.today()}
+        selectionVariant="single"
+        isDayHighlighted={isFriday}
+        isDayUnselectable={isSaturday}
+        open
+        {...props}
+      >
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerSingleGridPanel numberOfVisibleMonths={2} columns={2} />
+        </DatePickerOverlay>
+      </DatePicker>
     </QAContainer>
   );
 };
