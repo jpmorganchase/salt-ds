@@ -429,6 +429,52 @@ describe("Given useAriaAnnouncer", () => {
     });
   });
 
+  describe("when the provider unmounts before announcements drain", () => {
+    it("should clear pending removal timers and not warn about setState on an unmounted component", () => {
+      const AnnounceOnMount = () => {
+        const { announce } = useAriaAnnouncer();
+        React.useEffect(() => {
+          announce("hello", { ariaLive: "polite" });
+          announce("hello", { ariaLive: "assertive" });
+        }, [announce]);
+        return null;
+      };
+
+      const Wrapper = () => {
+        const [mounted, setMounted] = React.useState(true);
+        return (
+          <>
+            <button onClick={() => setMounted(false)}>unmount provider</button>
+            {mounted ? (
+              <AriaAnnouncerProvider>
+                <AnnounceOnMount />
+              </AriaAnnouncerProvider>
+            ) : null}
+          </>
+        );
+      };
+
+      cy.window().then((win) => {
+        cy.spy(win.console, "error").as("consoleError");
+      });
+
+      mount(<Wrapper />);
+
+      // Sanity: the announcements landed in the live regions.
+      cy.get('[aria-live="polite"]').should("contain.text", "hello");
+      cy.get('[aria-live="assertive"]').should("contain.text", "hello");
+
+      // Unmount the provider inside the ANNOUNCEMENT_TIME_IN_DOM window.
+      cy.findByRole("button", { name: "unmount provider" }).click();
+
+      // Wait past the drain window; the pending timers, if not cleared, would
+      // fire against an unmounted tree and log a React warning.
+      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+
+      cy.get("@consoleError").should("not.have.been.called");
+    });
+  });
+
   describe("edge cases", () => {
     it("should handle empty announcements gracefully", () => {
       mount(

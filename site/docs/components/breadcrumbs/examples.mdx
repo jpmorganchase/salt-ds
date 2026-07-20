@@ -1,0 +1,49 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+Use the default composition for a concise trail with linked levels.
+
+<LivePreview componentName="breadcrumbs" exampleName="Default" />
+
+## Current level
+
+The current level carries `aria-current="page"`. By default the current level is the final `BreadcrumbNext`, but set `current` on a child to declare it explicitly when the current level is not the last item.
+
+<LivePreview componentName="breadcrumbs" exampleName="CurrentLevel" />
+
+## With tooltip
+
+Compose `BreadcrumbNextTrigger` and `BreadcrumbNextLabel` as children to add a tooltip to a breadcrumb. `BreadcrumbNextLabel` provides the visible and accessible label, and `BreadcrumbNextTrigger` is required for `href` to render the item as a link.
+
+<LivePreview componentName="breadcrumbs" exampleName="ComposedItems" />
+
+## Wrapped
+
+When the content exceeds the available width, breadcrumbs can wrap onto subsequent lines. The breadcrumb and its separator should be on the same line.
+
+Set `wrap` to allow the trail to wrap onto subsequent lines.
+
+<LivePreview componentName="breadcrumbs" exampleName="Wrapped" />
+
+## Collapsed breadcrumbs
+
+Breadcrumbs can be collapsed to save space or hide lower priority levels (e.g. only displaying Home and the current level). Hidden levels are revealed in an overflow disclosure, and the order of the menu items matches the hierarchy of the levels.
+
+Set `maxItems` to collapse lower priority levels into the disclosure.
+
+<LivePreview componentName="breadcrumbs" exampleName="DisclosureCollapsed" />
+
+## Router integration
+
+Use `render` to adapt breadcrumb links to a routing library such as React Router or Next.js. The same renderer is used for visible links and links inside the collapsed disclosure.
+
+<LivePreview componentName="breadcrumbs" exampleName="RouterIntegration" />

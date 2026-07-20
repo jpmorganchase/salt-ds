@@ -1,0 +1,51 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Provide an accessible name for each breadcrumb trail with `aria-label` or `aria-labelledby`.
+
+## Current page
+
+The current breadcrumb carries `aria-current="page"` so assistive technologies can identify the page represented by the trail. Provide an `href` for the current breadcrumb so keyboard and screen reader users can reach it and hear the current-page announcement.
+
+`aria-current="page"` is derived from the `current` prop or the final item. Activating a link does not move it; update the trail from your route or page state after navigation.
+
+In collapsed trails, hidden levels without an `href` are skipped by disclosure focus movement, while the current page stays visible in the trail.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Tab moves focus to each linked breadcrumb and any collapse trigger in document order. If the disclosure is open, Tab moves focus from the trigger into the revealed breadcrumb links.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+When focus is on a linked breadcrumb, Enter navigates to that breadcrumb's destination.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+When focus is on a collapsed disclosure trigger, this action toggles the disclosure and focus remains on the trigger. Use Tab to move into the revealed breadcrumb links.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Escape">
+
+When the collapsed disclosure is open, Escape closes it and returns focus to the disclosure trigger.
+
+</KeyboardControl>
+</KeyboardControls>
+
+## References
+
+- [ARIA Breadcrumb Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/)
+- [APG Disclosure Navigation Menu Example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)

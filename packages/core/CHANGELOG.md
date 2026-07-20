@@ -1,5 +1,28 @@
 # @salt-ds/core
 
+## 1.67.1
+
+### Patch Changes
+
+- 2c459c3: Updated deprecated JSDocs for legacy props, theme aliases, icons, and the Moment date adapter to include deprecation versions and clearer migration guidance.
+- Updated dependencies [2c459c3]
+  - @salt-ds/icons@1.18.1
+
+## 1.67.0
+
+### Minor Changes
+
+- 9c9b83e: Added `LevelSeparatorIcon` to `SemanticIconProvider`, defaulting to `ChevronRightIcon`.
+
+### Patch Changes
+
+- 747cb08: Fixed `Dialog` not closing on `Escape` when `disableDismiss` was set. `disableDismiss` now only prevents dismissal via outside press, keeping `Escape` available so the dialog remains accessible.
+- d84df88: Fixed `FileDropZone` drag-and-drop handling so disabled drop zones ignore dropped files while preventing browser file navigation, and non-file drops are cancelled without invoking the file `onDrop` callback. `FileDropZoneTrigger` now composes consumer `onClick` handlers and calls `onChange` before resetting the input value.
+- 56855cb: Fixed `AriaAnnouncerProvider` leaking pending `setTimeout` handles used to drain announcements from the live region. The provider now tracks each scheduled removal and clears any outstanding timers on unmount, preventing `setState`-on-unmounted warnings and test-worker crashes (e.g. `ReferenceError: window is not defined`) when the provider unmounts within the announcement drain window.
+- e226b17: Fixed `BorderLayout` leaving empty rows or columns when the `north`, `south`, `west`, or `east` regions were omitted. The grid template now only includes tracks for the regions that are present, so omitted regions no longer leave gaps.
+- 747cb08: Fixed background content remaining interactive while a modal floating element (`Dialog`, `Drawer`, `Overlay`) was open. Outside elements are now marked inert for the duration the floating element is shown.
+- d37a311: Updated Floating UI from `0.26.28` to `0.27.19`.
+
 ## 1.66.0
 
 ### Minor Changes

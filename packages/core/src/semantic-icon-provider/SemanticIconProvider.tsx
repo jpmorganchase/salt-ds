@@ -54,6 +54,7 @@ export interface SemanticIconMap {
   InfoIcon: ElementType;
   InProgressIcon: ElementType;
   LockedIcon: ElementType;
+  LevelSeparatorIcon: ElementType;
   NextIcon: ElementType;
   OverflowIcon: ElementType;
   PendingIcon: ElementType;
@@ -100,6 +101,7 @@ const defaultIconMap: SemanticIconMap = {
   InfoIcon: InfoSolidIcon,
   InProgressIcon: ProgressInprogressIcon,
   LockedIcon: LockedIcon,
+  LevelSeparatorIcon: ChevronRightIcon,
   NextIcon: ChevronRightIcon,
   OverflowIcon: OverflowMenuIcon,
   PendingIcon: StepDefaultIcon,

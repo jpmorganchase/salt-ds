@@ -4369,7 +4369,7 @@ __metadata:
   resolution: "@salt-ds/date-components@workspace:packages/date-components"
   dependencies:
     "@date-fns/tz": "npm:^1.4.1"
-    "@floating-ui/react": "npm:^0.26.28"
+    "@floating-ui/react": "npm:^0.27.19"
     "@salt-ds/core": "workspace:^"
     "@salt-ds/date-adapters": "workspace:^"
     "@salt-ds/icons": "workspace:^"

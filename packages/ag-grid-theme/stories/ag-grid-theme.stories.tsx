@@ -33,6 +33,7 @@ export {
   DragRowOrder,
   FloatingFilter,
   HDCompact,
+  HeaderVariants,
   Icons,
   InfiniteScroll,
   LoadingOverlay,

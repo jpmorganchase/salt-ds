@@ -8,6 +8,7 @@ import {
   ContextMenu as ContextMenuGrid,
   CustomFilter,
   Default,
+  HeaderVariants as HeaderVariantsGrid,
   ProvidedCellEditors,
   ToolPanel,
   VariantZebra,
@@ -481,5 +482,29 @@ ZebraVariantRowSelection.play = async ({ canvasElement }) => {
   const fifthRows = rows.find((row) => row.getAttribute("row-index") === "5");
   if (fifthRows) {
     await userEvent.click(within(fifthRows).getByRole("checkbox"));
+  }
+};
+
+// Explicit header variants must take precedence over combined body variants.
+export const HeaderVariants: StoryObj<typeof AgGridReact> = {
+  render: () => (
+    <HeaderVariantsGrid containerClassName="ag-theme-salt-variant-secondary ag-theme-salt-variant-zebra" />
+  ),
+};
+HeaderVariants.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  await userEvent.click(canvas.getByRole("button", { name: "Tertiary" }));
+
+  const rows = (await canvas.findAllByRole("row"))
+    .filter((row) => row.hasAttribute("row-index"))
+    .slice(0, 2);
+
+  for (const row of rows) {
+    await userEvent.click(within(row).getByRole("checkbox"));
+  }
+
+  for (const row of rows) {
+    await expect(within(row).getByRole("checkbox")).toBeChecked();
   }
 };

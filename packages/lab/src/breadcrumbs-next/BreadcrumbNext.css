@@ -1,0 +1,57 @@
+.saltBreadcrumbNext {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 1 auto;
+  gap: var(--salt-spacing-100);
+  list-style: none;
+  min-width: 0;
+}
+
+.saltBreadcrumbNext-current,
+.saltBreadcrumbNext-label,
+.saltBreadcrumbNext-link,
+.saltBreadcrumbNext-trigger {
+  min-width: 0;
+}
+
+.saltBreadcrumbNext-trigger {
+  align-items: center;
+  color: var(--salt-content-primary-foreground);
+  display: inline-flex;
+  font-family: var(--salt-text-label-fontFamily);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  gap: var(--salt-spacing-50);
+  letter-spacing: var(--salt-text-letterSpacing);
+  line-height: var(--salt-text-label-lineHeight);
+  max-width: 100%;
+  text-decoration: var(--salt-typography-textDecoration-none);
+}
+
+.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current) {
+  text-decoration: var(--salt-typography-textDecoration-underline);
+}
+
+.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current):hover {
+  text-decoration: var(--salt-typography-textDecoration-none);
+}
+
+.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current):active {
+  text-decoration: var(--salt-typography-textDecoration-underline);
+}
+
+.saltBreadcrumbNext-trigger:focus {
+  outline: var(--salt-focused-outline);
+  text-decoration: var(--salt-typography-textDecoration-none);
+}
+
+.saltBreadcrumbNext-current {
+  cursor: var(--salt-cursor-text);
+}
+
+.saltBreadcrumbNext-separator {
+  --saltIcon-color: var(--salt-content-secondary-foreground);
+  --saltIcon-size: var(--salt-size-icon);
+
+  flex: 0 0 auto;
+}

@@ -9,6 +9,7 @@ export { default as Default } from "./Default";
 export { default as DragRowOrder } from "./DragRowOrder";
 export { default as FloatingFilter } from "./FloatingFilter";
 export { default as HDCompact } from "./HDCompact";
+export { default as HeaderVariants } from "./HeaderVariants";
 export { default as Icons } from "./Icons";
 export { default as InfiniteScroll } from "./InfiniteScroll";
 export { default as LoadingOverlay } from "./LoadingOverlay";

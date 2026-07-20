@@ -6,7 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type LineChartIconProps = IconProps;
 
-/** @deprecated - Use `ChartLineIcon` instead. */
+/** @deprecated since 1.16.0. Use `ChartLineIcon` instead. */
 export const LineChartIcon = forwardRef<SVGSVGElement, LineChartIconProps>(
   function LineChartIcon(props: LineChartIconProps, ref) {
     return (

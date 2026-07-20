@@ -6,7 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type SuccessSmallSolidIconProps = IconProps;
 
-/** @deprecated - Use `CheckmarkSolidIcon` instead. */
+/** @deprecated since 1.13.0. Use `CheckmarkSolidIcon` instead. */
 export const SuccessSmallSolidIcon = forwardRef<
   SVGSVGElement,
   SuccessSmallSolidIconProps
