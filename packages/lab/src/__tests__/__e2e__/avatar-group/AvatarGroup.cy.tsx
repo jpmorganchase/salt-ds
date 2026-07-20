@@ -1,4 +1,5 @@
-import { Avatar, AvatarGroup, Tooltip } from "@salt-ds/core";
+import { Avatar, Tooltip } from "@salt-ds/core";
+import { AvatarGroup } from "@salt-ds/lab";
 
 describe("Given an AvatarGroup", () => {
   it("collapses children beyond `max` into a single, accessible overflow indicator", () => {
