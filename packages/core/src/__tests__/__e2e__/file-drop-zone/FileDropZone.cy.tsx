@@ -85,6 +85,44 @@ describe("Given a file drop zone", () => {
     });
     cy.get("@dropSpy").should("have.been.calledOnce");
   });
+  it("should prevent native behaviour but not trigger onDrop when non-files are dropped", () => {
+    const dropSpy = cy.stub().as("dropSpy");
+    cy.mount(<Default onDrop={dropSpy} />);
+
+    cy.findByTestId("file-drop-zone-example").then(($dropZone) => {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.setData("text/uri-list", "https://example.com");
+      const event = new DragEvent("drop", {
+        bubbles: true,
+        cancelable: true,
+        dataTransfer,
+      });
+
+      expect($dropZone[0].dispatchEvent(event)).to.equal(false);
+      expect(event.defaultPrevented).to.equal(true);
+    });
+
+    cy.get("@dropSpy").should("not.have.been.called");
+  });
+  it("should not accept dropped files when disabled", () => {
+    const dropSpy = cy.stub().as("dropSpy");
+    cy.mount(<Default disabled onDrop={dropSpy} />);
+    cy.findByTestId("file-drop-zone-example").selectFile(
+      {
+        contents: Cypress.Buffer.from("file"),
+        fileName: "image",
+        mimeType: "image/jpg",
+      },
+      {
+        action: "drag-drop",
+      },
+    );
+    cy.get("@dropSpy").should("not.have.been.called");
+    cy.findByTestId("file-drop-zone-example").should(
+      "not.have.class",
+      "saltFileDropZone-success",
+    );
+  });
   it("should be disabled if disabled prop is passed", () => {
     cy.mount(<Default disabled />);
     cy.get("input").should("be.disabled");
