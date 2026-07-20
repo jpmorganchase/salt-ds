@@ -12,22 +12,25 @@ data:
 
 Choose the avatar kind that best matches the identity you’re communicating. Avatars can represent an individual person or a named non-person entity such as a team, organization, or business. Person and Entity kinds use different shapes to help users quickly understand what the avatar represents.
 
-### Person (circle)
+### Person
 
-Use kind=”person” when the identity is a single individual (e.g., user profile, author, assignee, commenter). We recommend using an image when available; otherwise fall back to initials or a person icon. If you need to represent multiple people together, use Avatar Group.
+Use `kind=”person”` when the identity is a single individual (e.g., user profile, author, assignee, commenter). We recommend using an image when available; otherwise fall back to initials or a person icon. If you need to represent multiple people together, use `AvatarGroup`.
 
 <LivePreview componentName="avatar" exampleName="Person" />
 
-### Entity (square)
+#### Best practices
 
-Use kind="entity" when the identity is a named non-person entity such as a team, business, organization, company, or account. Use an Entity avatar when representing the team as a single named identity; use Avatar Group when representing the team’s members. Use a logo/image when available; otherwise use entity initials/code or an appropriate icon (e.g., office/building).
+Use up to 2 characters for Person avatars, typically the first and last name initials.
+
+### Entity
+
+Use `kind="entity"` when the identity is a named non-person entity such as a team, business, organization, company, or account. Use an Entity avatar when representing the team as a single named identity; use Avatar Group when representing the team’s members. Use a logo/image when available; otherwise use entity initials/code or an appropriate icon (e.g., office/building).
 
 <LivePreview componentName="avatar" exampleName="Entity" />
 
 #### Best practices
 
-- Use up to 2 characters for Person avatars, typically the first and last name initials.
-- Use up to 3 characters for Entity avatars, to support company names, codes, and shorthand identifiers.
+Use up to 3 characters for Entity avatars, to support company names, codes, and shorthand identifiers.
 
 ## Image
 
@@ -73,10 +76,6 @@ Common interactive use cases include:
 You can use the `size` prop to modify the avatar size. Each avatar variant has a default size across all four densities, equal to the [size foundation](/salt/foundations/size) `size-base`: 20px (HD), 28px (MD), 36px (LD), and 44px (TD). The size property acts as a multiplier of the base size.
 
 <LivePreview componentName="avatar" exampleName="Sizes" />
-
-## Shape
-
-Avatar is round by default. Setting `shape="square"` can help distinguish entities such as organizations, products or teams from individuals, but round remains a valid choice for these cases.
 
 ## Custom fallback icon
 
