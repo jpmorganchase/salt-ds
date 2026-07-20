@@ -1,3 +1,10 @@
+import {
+  Avatar,
+  type AvatarProps,
+  makePrefixer,
+  type RenderPropsType,
+  renderProps,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -10,8 +17,6 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
-import { Avatar, type AvatarProps } from "./Avatar";
 
 import avatarGroupCss from "./AvatarGroup.css";
 

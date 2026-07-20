@@ -1,4 +1,5 @@
-import { Avatar, AvatarGroup } from "@salt-ds/core";
+import { Avatar } from "@salt-ds/core";
+import { AvatarGroup } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Visible = (): ReactElement => {

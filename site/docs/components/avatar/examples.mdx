@@ -47,37 +47,18 @@ You can use the `size` prop to modify the avatar size. Each avatar variant has a
 
 `Avatar` renders with an icon defined by `UserSolidIcon`, but you can pass an alternative icon as `fallbackIcon`.
 
-## Avatar group
-
-An Avatar Group represents multiple users in a compact space using a horizontal stack of overlapping avatars. It supports collaboration patterns by summarizing group membership and providing access to the full list when space is limited.
-
-If an overflow avatar (e.g., “+N” where N is the total number of members) is shown, it indicates additional hidden members when the group exceeds the visible maximum.
-
-<LivePreview componentName="avatar" exampleName="Group" />
-
-### Visible avatars
-
-In limited space, aim for at least 2 visible avatars; if only one fits, use a single Avatar instead of an Avatar Group.
-
-<LivePreview componentName="avatar" exampleName="Visible" />
-
-### Best practices
-
-For consistency and alignment, we recommend using the default size (1x) and not scaling an Avatar Group beyond the default multiplier.
-
 ## Interactive
 
-Both `Avatar` and `AvatarGroup` can be made interactive using the `render` prop. Props defined on the JSX element will be merged with props from the component.
+`Avatar` can be made interactive using the `render` prop. Props defined on the JSX element will be merged with props from the component.
 
 Common interactive use cases include:
 
 - Navigating to a user profile page when an avatar is clicked.
 - Opening a menu with user-related actions (e.g., ‘Settings’, ‘Log out’).
-- Revealing the full list of members when an Avatar Group is activated.
 
 ### Best practices
 
-- Ensure the Avatar or Avatar Group has a meaningful accessible name so screen reader users understand what action will occur.
+- Ensure the Avatar has a meaningful accessible name so screen reader users understand what action will occur.
 - Avoid using size modifiers on interactive avatars, as they can shrink the touch target and make them harder to interact with.
 
 <LivePreview componentName="avatar" exampleName="Interactive" />

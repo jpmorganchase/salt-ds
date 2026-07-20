@@ -1,6 +1,5 @@
 import {
   Avatar,
-  AvatarGroup,
   FlowLayout,
   Label,
   StackLayout,
@@ -97,31 +96,5 @@ export const WithCustomImg: StoryFn<typeof Avatar> = () => {
     <Avatar name="Peter Piper" size={3}>
       {children}
     </Avatar>
-  );
-};
-
-export const WithAvatarGroup: StoryFn<typeof AvatarGroup> = (args) => {
-  return (
-    <AvatarGroup max={3} {...args}>
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" />
-      <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
-    </AvatarGroup>
-  );
-};
-
-export const AvatarGroupRenderProp: StoryFn<typeof AvatarGroup> = (args) => {
-  return (
-    <AvatarGroup
-      max={3}
-      render={<CustomAvatarButton aria-label="Avatar group" />}
-      {...args}
-    >
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" />
-      <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
-    </AvatarGroup>
   );
 };
