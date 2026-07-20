@@ -137,6 +137,26 @@ export const ZoomableLineChart = {
   },
 };
 
+const legendTitleLineOptions: Options = {
+  ...lineOptions,
+  legend: {
+    ...lineOptions.legend,
+    title: {
+      text: "Currencies",
+    },
+  },
+};
+
+export const LegendTitleLineChart = {
+  render: (args: ChartStoryArgs) => (
+    <LineChartComponent {...getChromaticStableArgs(args)} />
+  ),
+  args: {
+    fillPatterns: false,
+    options: legendTitleLineOptions,
+  },
+};
+
 export const DualAxisChart = {
   render: (args: ChartStoryArgs) => (
     <DualAxisChartComponent {...getChromaticStableArgs(args)} />
