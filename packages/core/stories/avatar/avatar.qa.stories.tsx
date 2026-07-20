@@ -50,7 +50,7 @@ export const EntityGrid: StoryFn<QAContainerProps> = (props) => (
     <Avatar kind="entity" size={2} src="bad_url" name="Peter Piper" />
     <Avatar kind="entity" size={3} src="bad_url" />
     <Avatar kind="entity" size={3} />
-    <Avatar kind="entity" size={3} fallbackIcon={<SaltShakerIcon />} />
+    <Avatar kind="entity" size={3} fallbackIcon={<SaltShakerIcon aria-hidden />} />
     <Avatar kind="entity" name="Peter Piper" color="category-1" />
     <Avatar kind="entity" name="Peter Piper" color="category-2" />
     <Avatar kind="entity" name="Peter Piper" color="category-3" />
