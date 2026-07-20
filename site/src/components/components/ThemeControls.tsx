@@ -57,7 +57,7 @@ export function ThemeControls() {
           value={theme}
         >
           <ToggleButton value="legacy">Legacy</ToggleButton>
-          <ToggleButton value="brand">JPM Brand</ToggleButton>
+          <ToggleButton value="brand">JPMorgan</ToggleButton>
         </ToggleButtonGroup>
       </StackLayout>
     </StackLayout>
