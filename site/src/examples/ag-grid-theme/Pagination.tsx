@@ -1,7 +1,29 @@
+import {
+  Button,
+  CompactInput,
+  CompactPaginator,
+  Dropdown,
+  FlexLayout,
+  Option,
+  Pagination as SaltPagination,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
+import { FirstIcon, LastIcon } from "@salt-ds/icons";
+import type { GridApi, PaginationChangedEvent } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
+import {
+  type SyntheticEvent,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
+
+const PAGE_SIZES = [20, 50, 100] as const;
 
 const generateData = (states: typeof defaultData) =>
   states.reduce(
@@ -16,21 +38,140 @@ const generateData = (states: typeof defaultData) =>
     [] as typeof defaultData,
   );
 
+const formatCount = (value: number) => value.toLocaleString("en-US");
+
 export const Pagination = (props: AgGridReactProps) => {
+  const { onPaginationChanged: onPaginationChangedProp } = props;
   // We've created a local custom hook to set the rows and column sizes.
   // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
   const { agGridProps, containerProps } = useAgGridHelpers();
+  const gridApiRef = useRef<GridApi | undefined>(undefined);
+  const rowData = useMemo(() => generateData(defaultData), []);
+
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+  const [pageSize, setPageSize] = useState(100);
+  const [rowCount, setRowCount] = useState(0);
+
+  const syncPaginationState = useCallback((api: GridApi) => {
+    gridApiRef.current = api;
+    setPage(api.paginationGetCurrentPage() + 1);
+    setPageCount(api.paginationGetTotalPages());
+    setPageSize(api.paginationGetPageSize());
+    setRowCount(api.paginationGetRowCount());
+  }, []);
+
+  const handlePaginationChanged = useCallback(
+    (event: PaginationChangedEvent) => {
+      syncPaginationState(event.api);
+      onPaginationChangedProp?.(event);
+    },
+    [onPaginationChangedProp, syncPaginationState],
+  );
+
+  const handlePageChange = useCallback(
+    (_event: SyntheticEvent, nextPage: number) => {
+      gridApiRef.current?.paginationGoToPage(nextPage - 1);
+    },
+    [],
+  );
+
+  const handlePageSizeChange = useCallback(
+    (_event: SyntheticEvent, selected: number[]) => {
+      const nextPageSize = selected[0];
+      if (nextPageSize == null) {
+        return;
+      }
+      setPageSize(nextPageSize);
+      gridApiRef.current?.setGridOption("paginationPageSize", nextPageSize);
+    },
+    [],
+  );
+
+  const firstRow = rowCount === 0 ? 0 : (page - 1) * pageSize + 1;
+  const lastRow = Math.min(page * pageSize, rowCount);
+  const rangeLabel = `${formatCount(firstRow)} to ${formatCount(lastRow)} of ${formatCount(rowCount)}`;
+
+  const isOnFirstPage = page <= 1;
+  const isOnLastPage = pageCount === 0 || page >= pageCount;
 
   return (
-    <div {...containerProps}>
-      <AgGridReact
-        columnDefs={defaultColumns}
-        pagination
-        paginationPageSize={100}
-        rowData={generateData(defaultData)}
-        {...agGridProps}
-        {...props}
-      />
-    </div>
+    <StackLayout gap={0} style={{ width: containerProps.style?.width }}>
+      <div {...containerProps}>
+        <AgGridReact
+          {...agGridProps}
+          {...props}
+          columnDefs={defaultColumns}
+          pagination
+          paginationPageSize={pageSize}
+          paginationPageSizeSelector={false}
+          suppressPaginationPanel
+          rowData={rowData}
+          onPaginationChanged={handlePaginationChanged}
+        />
+      </div>
+      <FlexLayout
+        align="center"
+        justify="end"
+        gap={3}
+        style={{
+          borderTop:
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor)",
+          paddingBlock: "var(--salt-spacing-100)",
+          paddingInline: "var(--salt-spacing-100)",
+        }}
+      >
+        <FlexLayout align="center" gap={1}>
+          <Text styleAs="label">Page Size</Text>
+          <Dropdown
+            aria-label="Page Size"
+            selected={[pageSize]}
+            onSelectionChange={handlePageSizeChange}
+            bordered
+            style={{ width: "calc(var(--salt-size-base) * 3)" }}
+          >
+            {PAGE_SIZES.map((size) => (
+              <Option value={size} key={size}>
+                {size}
+              </Option>
+            ))}
+          </Dropdown>
+        </FlexLayout>
+        <Text>{rangeLabel}</Text>
+        {pageCount >= 2 && (
+          <SaltPagination
+            count={pageCount}
+            page={page}
+            onPageChange={handlePageChange}
+          >
+            <FlexLayout align="center" gap={0}>
+              <Button
+                appearance="transparent"
+                aria-label="First Page"
+                disabled={isOnFirstPage}
+                onClick={() => {
+                  gridApiRef.current?.paginationGoToFirstPage();
+                }}
+              >
+                <FirstIcon aria-hidden />
+              </Button>
+              <CompactPaginator>
+                <CompactInput />
+              </CompactPaginator>
+              <Button
+                appearance="transparent"
+                aria-label="Last Page"
+                disabled={isOnLastPage}
+                onClick={() => {
+                  gridApiRef.current?.paginationGoToLastPage();
+                }}
+              >
+                <LastIcon aria-hidden />
+              </Button>
+            </FlexLayout>
+          </SaltPagination>
+        )}
+      </FlexLayout>
+    </StackLayout>
   );
 };
