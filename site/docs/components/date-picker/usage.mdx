@@ -20,7 +20,7 @@ Salt provides the following `children` for convenience:
 
 When `selectionVariant` is "single":
 
-- `DatePickerSingleInput` - a composable [DateInputSingle](../DateInput) component pre-wired to the `DatePicker` selection context.
+- `DatePickerSingleInput` - a composable [DateInputSingle](../date-input) component pre-wired to the `DatePicker` selection context.
 - `DatePickerSingleGridPanel` - a composable [Calendar](../Calendar) grid pre-wired to the `DatePicker` selection context.
 
 #### When to use
@@ -57,7 +57,7 @@ import { DatePicker } from "@salt-ds/date-components";
 
 ### Setting the date
 
-Date controls, require your application to contain a [LocalizationProvider](../LocalizationProvider).
+Date controls, require your application to contain a [LocalizationProvider](../localization-provider).
 
 Pass a date object from your configured date framework via the `defaultDate` or `date` props.
 
@@ -93,7 +93,7 @@ import {
 
 The default locale for Salt's date adapters is "enUS".
 
-`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../LocalizationProvider).
+`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../localization-provider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 For example, if you are using `date-fns`, you may need to import the specific locale you want to use, such as `es` or `frFR`.
@@ -128,7 +128,7 @@ Valid values for `timezone` are date framework specific and can be one of the fo
   componentName="DatePickerSingleInput"
 />
 
-`DatePickerSingleInput` composes a [DateInputSingle](../DateInput) that uses the `DatePicker` context for single date selection.
+`DatePickerSingleInput` composes a [DateInputSingle](../date-input) that uses the `DatePicker` context for single date selection.
 
 ### DatePickerRangeInput
 
@@ -137,7 +137,7 @@ Valid values for `timezone` are date framework specific and can be one of the fo
   componentName="DatePickerRangeInput"
 />
 
-`DatePickerRangeInput` composes a [DateInputRange](../DateInput) that uses the `DatePicker` context for date range selection.
+`DatePickerRangeInput` composes a [DateInputRange](../date-input) that uses the `DatePicker` context for date range selection.
 
 ### DatePickerSingleGridPanel
 

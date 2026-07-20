@@ -1,5 +1,11 @@
 # @salt-ds/date-adapters
 
+## 1.0.1
+
+### Patch Changes
+
+- 2c459c3: Updated deprecated JSDocs for legacy props, theme aliases, icons, and the Moment date adapter to include deprecation versions and clearer migration guidance.
+
 ## 1.0.0
 
 ### Major Changes
