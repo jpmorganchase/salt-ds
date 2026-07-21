@@ -216,6 +216,35 @@ Add these props to the provider, alongside any theme props from earlier:
 
 Refer to the [SaltProvider](../components/salt-provider) docs for the full API.
 
+#### (Optional) Apply the CSS baseline reset
+
+Salt components style themselves through component classes and never touch bare HTML tags. Typography, color, and focus styles are applied by the `.salt-theme` class from `global.css` and only apply inside that scope. Anything you render outside a Salt component—plain `<h1>`, `<p>`, `<ul>`, `<button>`, `<a>`—still picks up the browser's default user-agent styles, which vary between browsers and often conflict with Salt layouts (oversized headings, default list bullets/indentation, bright-blue links, browser button chrome, etc.).
+
+To avoid this, `@salt-ds/theme` ships an opt-in baseline reset. Import it once at the root of your app, after the theme CSS:
+
+```tsx
+import "@salt-ds/theme/css/global.css";
+import "@salt-ds/theme/css/theme-next.css";
+import "@salt-ds/theme/css/baseline.css";
+```
+
+The reset is deliberately minimal. It:
+
+- Applies `box-sizing: border-box` globally.
+- Zeroes browser default margin and padding on common block elements (`h1`–`h6`, `p`, `ul`, `ol`, `dl`, `dd`, `blockquote`, `pre`, `figure`, `fieldset`, `hr`).
+- Makes headings inherit `font-size` and `font-weight` so bare `<h1>` doesn't break layouts.
+- Sets sensible defaults for media (`img`, `svg`, …), form controls, bare `<button>`, `<fieldset>`, `<table>`, and `<a>`.
+
+It deliberately does **not** set body background/color, restyle lists, or override motion preferences—those are app-level decisions.
+
+The reset is safe to use alongside Salt: every Salt component styles itself via a class selector, which wins by specificity over the reset's bare tag selectors. Non-Salt markup in your app will have its browser defaults normalized.
+
+<Callout title="Not using the reset?">
+  You can skip the baseline import if you already have your own reset (e.g.
+  `normalize.css`, Tailwind Preflight) or prefer to keep browser defaults for
+  non-Salt markup.
+</Callout>
+
 ### 4. Import components
 
 To use a Salt UI component, import it from the `@salt-ds/core` package and reference it in your JSX.
