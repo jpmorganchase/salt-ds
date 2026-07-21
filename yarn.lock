@@ -4543,7 +4543,7 @@ __metadata:
     msw: "npm:^2.12.3"
     msw-storybook-addon: "npm:^2.0.7"
     prettier: "npm:^3.3.3"
-    react: "npm:^18.3.1"
+    react: "npm:^19.0.0"
     react-docgen-typescript: "npm:2.4.0"
     react-dom: "npm:^18.3.1"
     react-hotkeys-hook: "npm:^5.1.0"
@@ -4603,7 +4603,7 @@ __metadata:
     moment-timezone: "npm:^0.6.1"
     next: "npm:^16.0.0"
     next-auth: "npm:^4.24.11"
-    react: "npm:^18.3.1"
+    react: "npm:^19.0.0"
     react-dom: "npm:^18.3.1"
     react-markdown: "npm:^10.0.0"
     shiki: "npm:^4.0.0"
@@ -15050,12 +15050,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.0.0":
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10/261137d3f3993eaa2368a83110466fc0e558bc2c7f7ae7ca52d94f03aac945f45146bd85e5f481044db1758a1dbb57879e2fcdd33924e2dde1bdc550ce73f7bf
+"react@npm:^19.0.0":
+  version: 19.2.7
+  resolution: "react@npm:19.2.7"
+  checksum: 10/2939997e87d7f0ee0d9d2bb556866b616b999dfb7916283647034eda867a045a39c4f7a736c8ea6beffffcd78397fc30f63a7a3aaf8425b683c3060670859560
   languageName: node
   linkType: hard
 
