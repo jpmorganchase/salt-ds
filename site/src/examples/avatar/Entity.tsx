@@ -9,7 +9,7 @@ export const Entity = (): ReactElement => (
       kind="entity"
     />
     <Avatar
-      name="012"
+      name="OPS"
       kind="entity"
       nameToInitials={(name = "") => name.slice(0, 3)}
     />
