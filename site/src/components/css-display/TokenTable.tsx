@@ -38,7 +38,7 @@ export type TokenTier = "characteristic" | "foundation";
 
 export const themes: Array<{ displayName: string; value: ThemeType }> = [
   {
-    displayName: "JPMorgan",
+    displayName: "J.P. Morgan",
     value: "next",
   },
   {
@@ -271,7 +271,7 @@ function TokenTableSettings({
                 }
               >
                 <ToggleButton value="legacy">Legacy</ToggleButton>
-                <ToggleButton value="next">JPMorgan</ToggleButton>
+                <ToggleButton value="next">J.P. Morgan</ToggleButton>
               </ToggleButtonGroup>
             </StackLayout>
           </StackLayout>
