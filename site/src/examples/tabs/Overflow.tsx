@@ -1,10 +1,4 @@
-import {
-  TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
+import { Tab, TabBar, TabList, Tabs, TabTrigger } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 const tabs = [
@@ -29,16 +23,18 @@ const tabs = [
 
 export const Overflow = (): ReactElement => {
   return (
-    <TabsNext defaultValue={tabs[0]}>
-      <TabBar inset divider>
-        <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
-          {tabs.map((label) => (
-            <TabNext value={label} key={label}>
-              <TabNextTrigger>{label}</TabNextTrigger>
-            </TabNext>
-          ))}
-        </TabListNext>
-      </TabBar>
-    </TabsNext>
+    <div style={{ width: "100%", minWidth: 0, maxWidth: 350 }}>
+      <Tabs defaultValue={tabs[0]}>
+        <TabBar inset divider>
+          <TabList aria-label="Example tablist">
+            {tabs.map((label) => (
+              <Tab value={label} key={label}>
+                <TabTrigger>{label}</TabTrigger>
+              </Tab>
+            ))}
+          </TabList>
+        </TabBar>
+      </Tabs>
+    </div>
   );
 };

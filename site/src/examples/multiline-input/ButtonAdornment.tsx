@@ -13,17 +13,17 @@ export const ButtonAdornment = (): ReactElement => (
   <FlowLayout style={{ width: "256px" }}>
     <MultilineInput
       startAdornment={
-        <Button sentiment="accented">
-          <EditSolidIcon />
+        <Button aria-label="Edit" sentiment="accented">
+          <EditSolidIcon aria-hidden />
         </Button>
       }
       endAdornment={
         <>
-          <Button appearance="transparent">
-            <HelpSolidIcon />
+          <Button aria-label="Help" appearance="transparent">
+            <HelpSolidIcon aria-hidden />
           </Button>
-          <Button sentiment="accented">
-            <SendIcon />
+          <Button aria-label="Send" sentiment="accented">
+            <SendIcon aria-hidden />
           </Button>
         </>
       }
@@ -31,8 +31,8 @@ export const ButtonAdornment = (): ReactElement => (
     />
     <MultilineInput
       endAdornment={
-        <Button>
-          <BookmarkSolidIcon />
+        <Button aria-label="Bookmark">
+          <BookmarkSolidIcon aria-hidden />
         </Button>
       }
       defaultValue="Value"
@@ -40,8 +40,8 @@ export const ButtonAdornment = (): ReactElement => (
     <MultilineInput
       disabled
       endAdornment={
-        <Button disabled>
-          <UserBadgeIcon />
+        <Button aria-label="User profile" disabled>
+          <UserBadgeIcon aria-hidden />
         </Button>
       }
       defaultValue="Disabled value"
@@ -49,8 +49,8 @@ export const ButtonAdornment = (): ReactElement => (
     <MultilineInput
       readOnly
       endAdornment={
-        <Button appearance="transparent" disabled>
-          <BankCheckSolidIcon />
+        <Button aria-label="Bank check" appearance="transparent" disabled>
+          <BankCheckSolidIcon aria-hidden />
         </Button>
       }
       defaultValue="Readonly value"

@@ -15,10 +15,10 @@
   border-color: var(--ag-selected-row-border-color);
 }
 
-.ag-theme-salt-light .ag-row-selected:before,
-.ag-theme-salt-dark .ag-row-selected:before,
-.ag-theme-salt-compact-light .ag-row-selected:before,
-.ag-theme-salt-compact-dark .ag-row-selected:before,
+.ag-theme-salt-light .ag-row-selected::before,
+.ag-theme-salt-dark .ag-row-selected::before,
+.ag-theme-salt-compact-light .ag-row-selected::before,
+.ag-theme-salt-compact-dark .ag-row-selected::before,
 .ag-theme-salt-light .ag-row-hover.ag-row-selected::before,
 .ag-theme-salt-dark .ag-row-hover.ag-row-selected::before,
 .ag-theme-salt-compact-light .ag-row-hover.ag-row-selected::before,
@@ -331,29 +331,29 @@
   border-color: transparent;
 }
 
-.ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus:before,
-.ag-theme-salt-light .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
-.ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
-.ag-theme-salt-light .editable-cell.ag-cell-inline-editing:before,
-.ag-theme-salt-dark .ag-cell.editable-cell.ag-cell-focus:focus:before,
-.ag-theme-salt-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
-.ag-theme-salt-dark .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
-.ag-theme-salt-dark .editable-cell.ag-cell-inline-editing:before,
-.ag-theme-salt-compact-light .ag-cell.editable-cell.ag-cell-focus:focus:before,
-.ag-theme-salt-compact-light .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
-.ag-theme-salt-compact-light .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
-.ag-theme-salt-compact-light .editable-cell.ag-cell-inline-editing:before,
-.ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus:before,
-.ag-theme-salt-compact-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
-.ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
-.ag-theme-salt-compact-dark .editable-cell.ag-cell-inline-editing:before {
+.ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-light .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.ag-theme-salt-light .editable-cell.ag-cell-inline-editing::before,
+.ag-theme-salt-dark .ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-dark .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.ag-theme-salt-dark .editable-cell.ag-cell-inline-editing::before,
+.ag-theme-salt-compact-light .ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-compact-light .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-compact-light .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.ag-theme-salt-compact-light .editable-cell.ag-cell-inline-editing::before,
+.ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-compact-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.ag-theme-salt-compact-dark .editable-cell.ag-cell-inline-editing::before {
   border-bottom: calc(var(--salt-size-adornment) + 4px) solid transparent;
   border-left: calc(var(--salt-size-adornment) + 4px) solid var(--salt-editable-borderColor-hover);
   border-top: 0 solid transparent;
   content: "";
-  left: 0px;
+  left: 0;
   position: absolute;
-  top: 0px;
+  top: 0;
   z-index: 2;
 }
 
@@ -467,8 +467,8 @@
 .ag-theme-salt-compact-dark .ag-rich-select-row-selected {
   /* Match selected row border to Option */
   box-shadow:
-    inset 0px var(--salt-size-fixed-100) 0px var(--salt-selectable-borderColor-selected),
-    inset 0px calc(var(--salt-size-fixed-100) * -1) 0px var(--salt-selectable-borderColor-selected);
+    inset 0 var(--salt-size-fixed-100) 0 var(--salt-selectable-borderColor-selected),
+    inset 0 calc(var(--salt-size-fixed-100) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
 /* Range selection cross cells "fake" outlines */

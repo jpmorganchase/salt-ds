@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/highcharts-theme",
-  "version": "0.2.2",
+  "version": "1.0.2",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -8,14 +8,7 @@
     "directory": "packages/highcharts-theme"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "style": "index.css",
-  "files": [
-    "index.css",
-    "css"
-  ],
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": false,
   "scripts": {
     "build": "yarn node ../../scripts/build.mjs"
   },
@@ -26,11 +19,12 @@
   },
   "dependencies": {
     "@salt-ds/core": "workspace:^",
+    "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:^"
   },
   "peerDependencies": {
     "@salt-ds/theme": "workspace:^",
-    "highcharts": "10.2.0 || >=11.0.0 <13",
+    "highcharts": ">=10.0.0 <13",
     "highcharts-react-official": "^3.2.2",
     "react": ">=16.14.0",
     "react-dom": ">=16.14.0"

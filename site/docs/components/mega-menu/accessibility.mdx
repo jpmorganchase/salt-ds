@@ -1,0 +1,102 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+### Navigation landmark
+
+- Wrap the mega menu in a `<nav>` element to expose it as a navigation landmark.
+
+### Accessible name
+
+- `MegaMenuPanel` renders a `<div>` with `role="region"`. Always provide an `aria-label` that describes the menu content (for example, `aria-label="Solutions menu"`) so assistive-technology users can distinguish it from other landmarks on the page.
+
+### List semantics
+
+- Triggers and group links are unordered lists: use a `<ul>` with each item in its own `<li>`. Reserve `<ol>` for when the sequence is meaningful and must be announced to assistive technology.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Enter / Space / Down arrow">
+
+- When the trigger has focus, pressing Enter, Space, or the Down arrow opens the mega menu.
+- The Down arrow additionally moves focus to the first mega menu item.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Escape">
+
+- If focus is in the mega menu, Escape closes the mega menu and returns focus to the triggering element.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Tab">
+
+- Focus starts on the first mega menu item and moves sequentially through each item in a group, then continues to the first item of the next group once the last item is reached.
+- Tab includes interactive elements within custom regions in the focus sequence, based on their position in the layout. The custom region itself is not focusable.
+- After the last focusable element, Tab moves focus out of the mega menu and collapses it.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is on a mega menu item, Shift+Tab moves focus to the previous item.
+- On the first item, Shift+Tab returns focus to the trigger and keeps the menu open.
+- On the trigger while the menu is open, Shift+Tab closes the menu and moves focus to the previous focusable element.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Up arrow">
+
+- Moves focus to the previous item within a column.
+- On the first item of a column, moves focus to the trigger and keeps the menu open.
+- In the actions row, returns focus to the last column.
+- In a stacked layout (small viewport), moves to the previous item across the whole panel; on the first item, moves to the trigger.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Down arrow">
+
+- Moves focus to the next item within a column.
+- On the last item of a column, moves focus to the first item of the next column.
+- On the last item of the last column, moves into the actions row if one is present; otherwise it moves focus to the next trigger and closes the menu, or does nothing when there is no next trigger.
+- In the actions row, the last action moves focus to the next trigger and closes the menu, or does nothing when there is no next trigger.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Left arrow">
+
+- On a trigger, moves focus to the previous trigger, closing the menu if open.
+- Within the panel, moves focus to the first item of the previous column.
+- On the first column, moves focus to the trigger and keeps the menu open.
+- In the actions row, moves focus to the previous action.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Right arrow">
+
+- On a trigger, moves focus to the next trigger, closing the menu if open.
+- Within the panel, moves focus to the first item of the next column.
+- On the last column, moves focus to the trigger and keeps the menu open — except on the last item, where it moves focus to the next trigger and closes the menu when one exists.
+- In the actions row, moves focus to the next action; on the last action it behaves like the last item of the last column.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Home / End">
+
+- Home moves focus to the first item in the current group, and End to the last.
+- In a stacked layout (small viewport), Home and End move to the first and last item of the whole panel.
+- In the actions row, they move to the first and last action.
+
+</KeyboardControl>
+</KeyboardControls>
+
+Interactive controls that manage their own arrow, Home, and End keys — inputs, comboboxes, listboxes, sliders, and similar — keep those keys when focused; the mega menu does not override them. Only focusable elements are reachable by keyboard, so non-interactive content within a custom region is skipped.

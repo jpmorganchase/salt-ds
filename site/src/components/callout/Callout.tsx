@@ -1,8 +1,8 @@
 import { Banner, BannerContent, H4, Text } from "@salt-ds/core";
-import type { ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import styles from "./Callout.module.css";
 
-type CalloutProps = {
+type CalloutProps = ComponentPropsWithoutRef<typeof Banner> & {
   title: string;
   children: ReactNode;
 };

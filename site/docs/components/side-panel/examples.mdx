@@ -1,0 +1,70 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Right side panel
+
+By default, a side panel anchors to the right edge of the screen. Consider using a right‑anchored side panel to surface contextual details and secondary tasks related to the current view—such as item details, comments, history, or quick edits. Always set the panel’s width to suit its content and ensure the main page stays visible and focusable while the panel is open.
+
+<LivePreview componentName="side-panel" exampleName="RightPanel" />
+
+## Left side panel
+
+Consider using a left‑anchored side panel for structure and exploration—such as hierarchical filters, folders, outlines, or multi‑facet filtering.
+
+<LivePreview componentName="side-panel" exampleName="LeftPanel" />
+
+## Panel variants
+
+By default, the side panel styling uses `variant="primary"`. Set `variant="secondary"` for a secondary side panel, `variant="tertiary"` for a tertiary side panel, or `variant="none"` to remove the default styling.
+
+<LivePreview componentName="side-panel" exampleName="Variants" />
+
+Use `variant="none"` when the side panel needs a custom visual treatment. This removes the default panel background and divider so the surrounding background can show through, or so you can compose your own container inside the panel.
+
+<LivePreview componentName="side-panel" exampleName="CustomContainer" />
+
+## In-context triggers
+
+Local affordances are in-context triggers that open side panels for quick tasks, typically placed close to what they affect so settings can be adjusted without losing sight of the primary page.
+
+A side panel can be triggered via a page-level utility, for example a control in the app header that acts on the current page’s primary content:
+
+<LivePreview componentName="side-panel" exampleName="WithAppHeader" />
+
+A side panel can also be triggered via a control embedded within the main content area, usually scoped to a specific component or subset of data (e.g., a grid toolbar button, row‑level action, card menu):
+
+<LivePreview componentName="side-panel" exampleName="WithTable" />
+
+## Manual Trigger
+
+For layouts that need more control over the side panel’s open/close behavior, use manual trigger management instead of SidePanelProvider. This is useful when the trigger and the panel can’t sit together in the component tree, or when open/close behavior needs to be driven by custom logic.
+
+Manual trigger management makes it possible to:
+
+- Place the trigger and the panel in different layout areas.
+- Manage the panel’s open state with application state.
+- Handle multiple panels with custom rules.
+- Integrate with other components that control the panel state.
+
+This approach trades convenience for flexibility: it requires more wiring, but enables more control over placement and behavior.
+
+<LivePreview componentName="side-panel" exampleName="ManualTrigger" />
+
+## Side panels between content areas
+
+Side Panels can sit between content areas to create a multi-panel layout. When using multiple panels, ensure that the layout remains clear and that users can easily distinguish between different panels and their purposes.
+
+<LivePreview componentName="side-panel" exampleName="WithNav" />
+
+## Scrollable content within panels
+
+Side Panels can contain scrollable content and still keep the main page visible and interactive. When using scrollable content within a panel, ensure the title and close button remain visible and accessible to users.
+
+<LivePreview componentName="side-panel" exampleName="Scrollable" />

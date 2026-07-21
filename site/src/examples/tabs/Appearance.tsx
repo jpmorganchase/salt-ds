@@ -1,40 +1,41 @@
-import { StackLayout } from "@salt-ds/core";
 import {
+  StackLayout,
+  Tab,
   TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabsNext,
-} from "@salt-ds/lab";
+  TabList,
+  Tabs,
+  TabTrigger,
+} from "@salt-ds/core";
 import type { ReactElement } from "react";
+import styles from "./index.module.css";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
 export const Appearance = (): ReactElement => {
   return (
-    <StackLayout>
-      <TabsNext defaultValue={tabs[0]}>
+    <StackLayout className={styles.example}>
+      <Tabs defaultValue={tabs[0]}>
         <TabBar>
-          <TabListNext appearance="bordered">
+          <TabList appearance="bordered" aria-label="Example tablist">
             {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
+              <Tab value={label} key={label}>
+                <TabTrigger>{label}</TabTrigger>
+              </Tab>
             ))}
-          </TabListNext>
+          </TabList>
         </TabBar>
-      </TabsNext>
-      <TabsNext defaultValue={tabs[0]}>
+      </Tabs>
+      <Tabs defaultValue={tabs[0]}>
         <TabBar>
-          <TabListNext appearance="transparent">
+          <TabList appearance="transparent" aria-label="Example tablist">
             {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
+              <Tab value={label} key={label}>
+                <TabTrigger>{label}</TabTrigger>
+              </Tab>
             ))}
-          </TabListNext>
+          </TabList>
         </TabBar>
-      </TabsNext>
+      </Tabs>
     </StackLayout>
   );
 };

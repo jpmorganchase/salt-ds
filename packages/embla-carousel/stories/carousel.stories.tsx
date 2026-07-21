@@ -119,7 +119,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
     <Carousel
       aria-labelledby={`${carouselId}-title`}
       className="carouselMultipleSlide"
-      emblaOptions={{ align: "center", slidesToScroll: "auto" }}
+      emblaOptions={{ align: "center", slidesToScroll: 2 }}
       {...args}
     >
       <H2 id={`${carouselId}-title`} className="carouselHeading">
@@ -166,3 +166,13 @@ FadePlugin.args = {
   },
   emblaPlugins: [Fade()],
 };
+
+export const FixedWidthSlide: StoryFn<CarouselProps> = (args) => (
+  <div className="fixedWidthCarouselContainer">
+    <CarouselNumberExample
+      {...args}
+      className="fixedWidthCarousel"
+      emblaOptions={{ align: "start", slidesToScroll: 1, containScroll: false }}
+    />
+  </div>
+);

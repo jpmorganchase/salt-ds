@@ -18,9 +18,13 @@ Static separators use primary, secondary, and tertiary variants to provide diffe
   background="secondary"
 />
 
-`--salt-separable-primary-borderColor` \
-`--salt-separable-secondary-borderColor` \
-`--salt-separable-tertiary-borderColor`
+<TokenTableWithControls
+  tokens={[
+    "--salt-separable-primary-borderColor",
+    "--salt-separable-secondary-borderColor",
+    "--salt-separable-tertiary-borderColor",
+  ]}
+/>
 
 ## Controllable separators
 
@@ -33,9 +37,13 @@ Controllable separators use different tokens to indicate interactive states, suc
   background="secondary"
 />
 
-`--salt-container-primary-background` \
-`--salt-separable-foreground` \
-`--salt-separable-secondary-borderColor`
+<TokenTableWithControls
+  tokens={[
+    "--salt-container-primary-background",
+    "--salt-separable-foreground",
+    "--salt-separable-secondary-borderColor",
+  ]}
+/>
 
 On hover, controllable separators update their background and border tokens to provide subtle visual feedback, indicating the separator is interactive.
 
@@ -46,9 +54,13 @@ On hover, controllable separators update their background and border tokens to p
   background="secondary"
 />
 
-`--salt-separable-background-hover` \
-`--salt-separable-foreground-hover` \
-`--salt-separable-secondary-borderColor`
+<TokenTableWithControls
+  tokens={[
+    "--salt-separable-background-hover",
+    "--salt-separable-foreground-hover",
+    "--salt-separable-secondary-borderColor",
+  ]}
+/>
 
 When active, the tokens change again to highlight the separator, making it clear which element is currently being adjusted.
 
@@ -59,5 +71,9 @@ When active, the tokens change again to highlight the separator, making it clear
   background="secondary"
 />
 
-`--salt-separable-background-active` \
-`--salt-separable-foreground-active`
+<TokenTableWithControls
+  tokens={[
+    "--salt-separable-background-active",
+    "--salt-separable-foreground-active",
+  ]}
+/>

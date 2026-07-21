@@ -60,6 +60,7 @@ const allAllowedKeys = [
   "borderStyle",
   "cursor",
   "spacing",
+  "layout",
   "typography-textDecoration",
   // icon size
   "icon-size",
@@ -109,28 +110,32 @@ const ruleFunction = (primaryOption) => {
     root.walkDecls((decl) => {
       const { prop, value } = decl;
 
-      const parsedValue = valueParser(value);
+      if (value.includes("var(")) {
+        const parsedValue = valueParser(value);
 
-      parsedValue.walk((node) => {
-        if (!isVarFunction(node)) return;
+        parsedValue.walk((node) => {
+          if (!isVarFunction(node)) return;
 
-        const { nodes } = node;
+          const { nodes } = node;
 
-        const firstNode = nodes[0];
+          const firstNode = nodes[0];
 
-        verboseLog && console.log({ nodes });
+          verboseLog && console.log({ nodes });
 
-        if (!firstNode) return;
+          if (!firstNode) return;
 
-        if (!isAllowedKeys(firstNode.value, verboseLog)) {
-          complainNoExpectedFoundationOrPalette(
-            declarationValueIndex(decl) + firstNode.sourceIndex,
-            firstNode.value.length,
-            decl,
-            firstNode.value,
-          );
-        }
-      });
+          if (!isAllowedKeys(firstNode.value, verboseLog)) {
+            complainNoExpectedFoundationOrPalette(
+              declarationValueIndex(decl) + firstNode.sourceIndex,
+              firstNode.value.length,
+              decl,
+              firstNode.value,
+            );
+          }
+        });
+      }
+
+      if (!prop.startsWith("--salt-")) return;
 
       verboseLog && console.log({ prop });
 

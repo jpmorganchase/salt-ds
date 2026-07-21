@@ -1,0 +1,25 @@
+.saltTreeNodeExpansionIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--saltTreeNodeTrigger-iconSize);
+  min-width: var(--saltTreeNodeTrigger-iconSize);
+  height: var(--saltTreeNodeTrigger-iconSize);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.saltTreeNodeExpansionIcon-icon {
+  color: var(--salt-content-primary-foreground);
+}
+
+.saltTreeNodeExpansionIcon::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

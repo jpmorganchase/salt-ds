@@ -34,13 +34,9 @@ import { AccountTypeContent } from "./AccountTypeContent";
 import { AdditionalInfoContent } from "./AdditionalInfoContent";
 import { ContentOverflow } from "./ContentOverflow";
 import { ReviewAccountContent } from "./ReviewAccountContent";
-import {
-  type FieldValidation,
-  type StepValidationResult,
-  useWizardForm,
-  type ValidationStatus,
-} from "./useWizardForm";
+import { type FieldValidation, useWizardForm } from "./useWizardForm";
 import "./ContentOverflow.css";
+import { getStepStage, validateStep } from "./utils";
 
 export default {
   title: "Patterns/Wizard",
@@ -141,66 +137,12 @@ const stepValidationSchemas: Record<
   review: Yup.object({}), // No validation
 };
 
-// Map Yup validation errors (including custom warning severity) to FieldValidation shape
-interface YupValidationErrorShape {
-  inner?: Array<{
-    path: string;
-    message: string;
-    params?: Record<string, unknown>;
-  }>;
-  path?: string;
-  message?: string;
-}
-
-function mapYupErrors(
-  err: YupValidationErrorShape,
-): StepValidationResult["fields"] {
-  const out: StepValidationResult["fields"] = {};
-  const list = err.inner ?? [];
-
-  for (const e of list) {
-    const rawSeverity = e.params?.severity as ValidationStatus | undefined;
-    const status: ValidationStatus =
-      rawSeverity === "warning" ? "warning" : "error";
-    // Last message wins for a field; overwrite for clarity
-    out[e.path] = { status, message: e.message };
-  }
-  // Fallback single error (when abortEarly true or inner empty)
-  if (!list.length && err.path) {
-    out[err.path] = { status: "error", message: err.message };
-  }
-
-  return out;
-}
-
-// Validate a single wizard step given current form data; returns fields map
-async function validateStep(
-  stepId: string,
-  // biome-ignore lint/suspicious/noExplicitAny: This is acceptable for an example.
-  data: any,
-): Promise<Record<string, FieldValidation>> {
-  const schema = stepValidationSchemas[stepId];
-  if (!schema) return {};
-  try {
-    await schema.validate(data, { abortEarly: false });
-    return {}; // valid
-  } catch (err) {
-    return mapYupErrors(err as YupValidationErrorShape);
-  }
-}
-
-const getStepStage = (index: number, activeStepIndex: number) => {
-  if (index === activeStepIndex) return "active";
-  if (index < activeStepIndex) return "completed";
-  return "pending";
-};
-
 export const Horizontal = () => {
   const {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -211,7 +153,8 @@ export const Horizontal = () => {
       formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep,
+    validateStep: (stepId, data) =>
+      validateStep(stepValidationSchemas, stepId, data),
   });
 
   const [successOpen, setSuccessOpen] = useState(false);
@@ -236,7 +179,7 @@ export const Horizontal = () => {
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -245,14 +188,11 @@ export const Horizontal = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value: string, name: string) =>
       updateField(name, value),
-    handleRadioChange: (e) => {
-      console.log("x");
-      updateField(e.target.name, e.target.value);
-    },
+    handleRadioChange: (e) => updateField(e.target.name, e.target.value),
     stepFieldValidation: validationsByStep[currentStepId]?.fields || {},
   };
 
@@ -365,7 +305,7 @@ export const HorizontalWithCancelConfirmation = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -376,7 +316,8 @@ export const HorizontalWithCancelConfirmation = () => {
       formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep,
+    validateStep: (stepId, data) =>
+      validateStep(stepValidationSchemas, stepId, data),
   });
 
   const [successOpen, setSuccessOpen] = useState(false);
@@ -395,14 +336,14 @@ export const HorizontalWithCancelConfirmation = () => {
   }, [activeStepIndex]);
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       setSuccessOpen(true);
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -411,7 +352,7 @@ export const HorizontalWithCancelConfirmation = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value: string, name: string) =>
       updateField(name, value),
@@ -545,7 +486,7 @@ export const VerticalWithCancelConfirmation = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -556,7 +497,8 @@ export const VerticalWithCancelConfirmation = () => {
       formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep,
+    validateStep: (stepId, data) =>
+      validateStep(stepValidationSchemas, stepId, data),
   });
 
   const [successOpen, setSuccessOpen] = useState(false);
@@ -575,14 +517,14 @@ export const VerticalWithCancelConfirmation = () => {
   }, [activeStepIndex]);
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       setSuccessOpen(true);
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -591,7 +533,7 @@ export const VerticalWithCancelConfirmation = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value: string, name: string) =>
       updateField(name, value),
@@ -719,7 +661,7 @@ export const Modal = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -730,7 +672,8 @@ export const Modal = () => {
       formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep,
+    validateStep: (stepId, data) =>
+      validateStep(stepValidationSchemas, stepId, data),
   });
 
   const [open, setOpen] = useState(false);
@@ -760,14 +703,14 @@ export const Modal = () => {
   const isFirstStep = activeStepIndex === 0;
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       closeWizardAndReset();
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -776,7 +719,7 @@ export const Modal = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value, name) => updateField(name, value),
     onBlur: () => {}, // Add blur logic if needed
@@ -870,7 +813,7 @@ export const ModalWithConfirmations = () => {
     state: { activeStepIndex, formData, validationsByStep },
     currentStepId,
     updateField,
-    next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,
@@ -881,7 +824,8 @@ export const ModalWithConfirmations = () => {
       formData: initialFormData,
       validationsByStep: {},
     },
-    validateStep,
+    validateStep: (stepId, data) =>
+      validateStep(stepValidationSchemas, stepId, data),
   });
 
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -924,14 +868,14 @@ export const ModalWithConfirmations = () => {
   };
 
   const handleNext = async () => {
-    const valid = await runValidationAndStore();
+    const { valid } = await runValidationAndStore();
     if (!valid) return;
     if (isLastStep) {
       createAccount();
       return;
     }
     navigatedRef.current = true;
-    next();
+    nextWithoutValidation();
   };
 
   const handlePrevious = () => {
@@ -940,7 +884,7 @@ export const ModalWithConfirmations = () => {
   };
 
   const sharedFormProps: FormContentProps = {
-    formData: formData as FormContentProps["formData"],
+    formData,
     handleInputChange: (e) => updateField(e.target.name, e.target.value),
     handleSelectChange: (value, name) => updateField(name, value),
     handleRadioChange: (e) => updateField(e.target.name, e.target.value),

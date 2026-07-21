@@ -1,5 +1,86 @@
 # @salt-ds/highcharts-theme
 
+## 1.0.2
+
+### Patch Changes
+
+- 8762118: Styled the reset zoom button to (imperfectly) match Salt Button solid neutral appearance, including hover and focus states.
+
+  Salt defaults now set `chart.zooming.resetButton.theme` and `accessibility.keyboardNavigation.focusBorder`. When Highcharts accessibility is loaded, `useChart` also applies the reset button hover state while its accessibility proxy has keyboard focus.
+
+- Updated dependencies [1a48c1a]
+  - @salt-ds/core@1.64.1
+
+## 1.0.1
+
+### Patch Changes
+
+- ed7fc43: Fixed `useChart` so charts rendered before web fonts finish loading re-measure their text once the fonts are ready. Highcharts caches text bounding boxes without accounting for font family, so labels measured against a fallback font (e.g. pie and donut data labels and their connectors) previously stayed mispositioned until the chart was remounted. Charts now re-layout once `document.fonts.ready` resolves, making first-load rendering consistent with subsequent renders.
+- Updated dependencies [9729a10]
+- Updated dependencies [52daa64]
+- Updated dependencies [ed2779c]
+- Updated dependencies [07e4d5d]
+  - @salt-ds/core@1.64.0
+
+## 1.0.0
+
+### Major Changes
+
+- cb08502: Salt's Highchart theme is now stable.
+
+  The package provides Salt styling and default chart options for Highcharts through the `useChart` hook. `useChart` reads Salt theme and density values, builds the Salt defaults for the chart, and injects the required Highcharts theme CSS so consumers no longer need to manage those styles manually.
+
+  Consumer chart options are still supplied as regular Highcharts options. Salt defaults are applied first, then the user-supplied options are merged on top, so product-specific chart configuration takes priority while keeping the Salt baseline styling, accessibility patterns, and optional Salt color-axis support available through the hook.
+
+  This stable release supports Highcharts v10, v11, and v12.
+
+  See the Chart usage docs for further setup details, module-loading guidance, and examples of supported chart types.
+
+  ```tsx
+  import Highcharts from "highcharts";
+  import HighchartsReact from "highcharts-react-official";
+  import { useRef } from "react";
+  import { useChart } from "@salt-ds/highcharts-theme";
+
+  export function MyChart({ chartOptions }) {
+    const chartRef = useRef(null);
+    const options = useChart(chartRef, chartOptions);
+
+    return (
+      <HighchartsReact
+        ref={chartRef}
+        highcharts={Highcharts}
+        options={options}
+      />
+    );
+  }
+  ```
+
+### Patch Changes
+
+- 92d15e9: Fixed `useChart` to update merged chart options when the active Salt theme changes and widen types for Highcharts v12
+
+## 0.3.0
+
+### Minor Changes
+
+- 3b2dbc2: Drive Salt Highcharts styling through chart options and `useChart` instead of package-level CSS imports.
+
+  The Highcharts theme now injects its required CSS and builds Salt defaults from tokens in the hook, so consumers no longer need to import `highcharts/css/highcharts.css`, `@salt-ds/highcharts-theme/index.css`, or wrap charts with the previous theme/pattern class names.
+
+  Accessibility patterns are now enabled with `useChart(chartRef, chartOptions, { fillPatterns: true })` after loading the Highcharts `pattern-fill` module. The hook also supports Salt color-axis configuration for token-aware continuous, threshold, and data-class color scales.
+
+### Patch Changes
+
+- 3b2dbc2: Added Heatmap chart support. The `saltColorAxis` option on `useChart` can now be used with heatmaps so color scales align with Salt design tokens (continuous gradients, data classes, or discrete ranges).
+
+  To see an example configuration, see the Heatmap Options example in the Chart example section, and the Color axis section of the Chart usage docs.
+
+- Updated dependencies [7bd425f]
+- Updated dependencies [5d4de6f]
+  - @salt-ds/theme@1.43.0
+  - @salt-ds/core@1.60.0
+
 ## 0.2.2
 
 ### Patch Changes

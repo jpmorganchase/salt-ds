@@ -1,0 +1,70 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+The mega menu displays grouped navigation links in a multi-column layout sized to hug its contents. On open, the panel is centered beneath its trigger and constrained to the viewport.
+
+As the content grows wider — or the viewport shrinks — the container expands until it reaches the default max-width (100% of the viewport minus the `--salt-layout-page-margin` on both sides). Once there is no more room, it shifts to stay within the nearest edge and the groups wrap to fewer columns, down to a single column. If the panel is taller than the viewport, it scrolls vertically.
+
+<LivePreview componentName="mega-menu" exampleName="Default" />
+
+## Full width
+
+To display the mega menu at its full available width, set `--saltMegaMenuPanel-inlineSize` to `--saltMegaMenuPanel-availableWidth` and widen the group columns with `--saltMegaMenuGroups-columnWidth` so they fill it.
+
+<LivePreview componentName="mega-menu" exampleName="FullWidth" />
+
+## Edge to edge
+
+To render the mega menu edge-to-edge, set `--saltMegaMenuPanel-inlineSize` and `--saltMegaMenuPanel-maxInlineSize` to span the viewport and `--saltMegaMenuPanel-pageMargin` to `0` to remove the gutter, then constrain and center the inner content so it keeps balanced margins on large displays.
+
+<LivePreview componentName="mega-menu" exampleName="EdgeToEdge" />
+
+## In small viewport
+
+When the mega menu is triggered in a small viewport, or the screen size changes to a small viewport, the expanded mega menu arranges its groups, Contents, and links in a stacked layout, preserving their original order. This ensures the menu remains accessible and easy to navigate on smaller screens.
+
+### Best practices
+
+- Although the mega menu stacks into a single column on small screens, it’s more suitable for desktop. In small viewports it can become hard to scan, scroll-heavy, and more error-prone on touch.
+
+- If content is large or frequently used on mobile, use an alternative navigation component better suited to small screens, such as vertical navigation.
+
+<LivePreview componentName="mega-menu" exampleName="InSmallViewport" />
+
+## With icons
+
+Includes an icon alongside the text, enhancing visual recognition and making navigation more intuitive.
+
+<LivePreview componentName="mega-menu" exampleName="WithIcons" />
+
+## With adornment
+
+You can display adornments such as tags, badges, or icons. This allows you to indicate statuses, show counts, or signal external navigation.
+
+### Best practices
+
+- Only one component—such as a tag or badge should be displayed per item.
+- When using badge components, it’s recommended not to mix default badges and dot badges within the same mega menu container.
+
+<LivePreview componentName="mega-menu" exampleName="WithAdornment" />
+
+## With link
+
+You can add a link to give users a quick way to access a broader section or view all related items. Place a `MegaMenuActions` inside `MegaMenuContent`, after the `MegaMenuGroups`, to render one or more links as a band beneath the menu groups.
+
+<LivePreview componentName="mega-menu" exampleName="WithLink" />
+
+## With side content
+
+Use `MegaMenuAside` for side content (it renders to the left of `MegaMenuContent` when placed before it, and to the right when placed after) and `MegaMenuActions` for links beneath the menu groups. Inside `MegaMenuContent`, wrap the `MegaMenuGroup`s in `MegaMenuGroups` and place `MegaMenuActions` after it. Side content position is driven by source order. In small viewports, it reflows into the stacked mega menu in its original order, appearing at the top or bottom of the stack.
+
+<LivePreview componentName="mega-menu" exampleName="WithContent" />

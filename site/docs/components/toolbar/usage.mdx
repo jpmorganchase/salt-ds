@@ -1,0 +1,54 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- To organize related controls, such as actions, commands, or filters.
+- To improve the discoverability of related controls.
+- To provide a consistent, predictable location for related controls within a page, panel, or section.
+
+### When not to use
+
+- For placing controls that are not directly related to the current context or content.
+- As primary navigation between major sections or pages. Instead, use [`Navigation item`](../navigation-item).
+- To display only one control.
+- To display a brand logo, navigation, and utility actions. Instead, use [`App header`](/salt/patterns/app-header).
+
+## Content
+
+- Follow the respective content guidance for all components used inside a toolbar.
+- Always place controls inside `Tooltray`. Both composition models require it.
+- For simple toolbars, place `Tooltray` directly inside `Toolbar`. Use the `align` prop to position each tray at the `start`, `center`, or `end`.
+- When a position needs multiple `Tooltray` components, dividers, custom spacing, or content-level props, wrap them in `ToolbarContent` and set the `position` prop.
+- Use one composition model per toolbar.
+
+## Import
+
+To import `Toolbar` and related components from the core Salt package, use:
+
+```js
+import { ToolbarContent, Toolbar, Tooltray } from "@salt-ds/core";
+```
+
+## Props
+
+### Toolbar
+
+<PropsTable packageName="core" componentName="Toolbar" />
+
+### Toolbar content
+
+<PropsTable packageName="core" componentName="ToolbarContent" />
+
+### Tooltray
+
+<PropsTable packageName="core" componentName="Tooltray" />

@@ -1,0 +1,62 @@
+.saltMegaMenuListItem {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.saltMegaMenuListItem-wrapper {
+  display: flex;
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  align-items: flex-start;
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-selectable-background);
+  cursor: var(--salt-cursor-hover);
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  box-sizing: border-box;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  border-radius: var(--salt-palette-corner-weak, 0);
+  text-decoration: none;
+  border: none;
+  font: inherit;
+  text-align: start;
+}
+
+.saltMegaMenuListItem-wrapper > .saltIcon {
+  display: flex;
+  height: var(--salt-size-base);
+  align-items: center;
+}
+
+.saltMegaMenuListItem-content {
+  flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+}
+
+.saltMegaMenuListItem-wrapper:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+}
+
+.saltMegaMenuListItem-wrapper:hover:not(:focus-visible) {
+  outline: none;
+  background: var(--salt-overlayable-background-hover);
+}
+
+.saltMegaMenuListItem-wrapper:active {
+  background: var(--salt-navigable-accent-background-active);
+}
+
+.saltMegaMenuListItem-wrapper:active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border-radius: inherit;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-navigable-accent-borderColor-active);
+  pointer-events: none;
+}

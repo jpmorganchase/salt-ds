@@ -168,7 +168,11 @@ export const Expansion = () => {
             </StackLayout>
           </>
         ) : (
-          <Button appearance="transparent" onClick={() => setIsExpanded(true)}>
+          <Button
+            aria-label="Show all breadcrumbs"
+            appearance="transparent"
+            onClick={() => setIsExpanded(true)}
+          >
             <OverflowMenuIcon aria-hidden />
           </Button>
         )}

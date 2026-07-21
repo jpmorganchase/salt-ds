@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import type { CarouselEmblaApiType } from "../../index";
 
 const composedStories = composeStories(carouselStories);
-const { Default, SlideGroup } = composedStories;
+const { Default, SlideGroup, MultiSlide } = composedStories;
 
 describe("Given a Carousel", () => {
   let emblaTestApi: CarouselEmblaApiType | null | undefined;
@@ -154,7 +154,6 @@ describe("Given a Carousel", () => {
 
       cy.realPress("ArrowLeft");
       cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2", true));
-      cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2", true));
 
       cy.realPress("ArrowLeft");
       cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1", true));
@@ -239,6 +238,155 @@ describe("Given a Carousel", () => {
       cy.realPress("End");
       cy.wrap(waitForSettle(emblaApi, 3)).then(() => verifySlide("4", false));
       cy.findAllByRole("tab").eq(3).should("have.focus");
+    });
+  });
+
+  describe("Given a Carousel with odd number of slides in multi-slide mode", () => {
+    let emblaTestApi: CarouselEmblaApiType | null | undefined;
+
+    const mountMultiSlideCarousel =
+      (): Cypress.Chainable<CarouselEmblaApiType> => {
+        const FiveSlideCarousel = () => {
+          const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(
+            null,
+          );
+
+          useEffect(() => {
+            emblaTestApi = emblaApi;
+          }, [emblaApi]);
+
+          return (
+            <MultiSlide
+              emblaOptions={{
+                align: "start",
+                slidesToScroll: 2,
+                duration: 1,
+              }}
+              getEmblaApi={setEmblaApi}
+            />
+          );
+        };
+
+        cy.mount(<FiveSlideCarousel />);
+        cy.findByRole("region").should("exist");
+
+        return cy.wrap(
+          new Cypress.Promise<CarouselEmblaApiType>((resolve) => {
+            const checkEmblaApi = () => {
+              if (emblaTestApi) {
+                resolve(emblaTestApi);
+              } else {
+                setTimeout(checkEmblaApi, 1000);
+              }
+            };
+            checkEmblaApi();
+          }),
+        );
+      };
+
+    beforeEach(() => {
+      emblaTestApi = null;
+    });
+
+    it("should not snap back to start when clicking Next with 5 slides and 2 per view", () => {
+      mountMultiSlideCarousel().then((emblaApi) => {
+        // Verify we start at snap 0
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        // Click next
+        cy.findByLabelText(/Next slide/).click();
+
+        // Wait for settle and verify we moved forward (not back to 0)
+        cy.wrap(
+          new Cypress.Promise((resolve) => {
+            const handleSettle = () => {
+              emblaApi?.off("settle", handleSettle);
+              resolve();
+            };
+            emblaApi?.on("settle", handleSettle);
+          }),
+        ).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.be.greaterThan(0);
+        });
+
+        // Wait additional time to ensure it doesn't snap back
+        cy.wait(500).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.be.greaterThan(0);
+        });
+      });
+    });
+
+    it("should move focus within the current snap without scrolling, and only scroll when crossing snap groups", () => {
+      mountMultiSlideCarousel().then((emblaApi) => {
+        // Focus the first slide
+        cy.get(".carouselSlide").eq(0).focus();
+        cy.get(".carouselSlide").eq(0).should("be.focused");
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        // ArrowRight within snap 0: focus moves to slide 2, snap unchanged.
+        cy.realPress("ArrowRight");
+        cy.get(".carouselSlide").eq(1).should("be.focused");
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        // ArrowRight crossing snap boundary: focus moves to slide 3 and the
+        // carousel scrolls to snap 1.
+        cy.realPress("ArrowRight");
+        cy.wrap(waitForSettle(emblaApi, 1)).then(() => {
+          cy.get(".carouselSlide").eq(2).should("be.focused");
+          expect(emblaApi?.selectedScrollSnap()).to.equal(1);
+        });
+
+        // ArrowLeft crossing snap boundary the other way: focus moves to
+        // slide 2 and the carousel scrolls back to snap 0.
+        cy.realPress("ArrowLeft");
+        cy.wrap(waitForSettle(emblaApi, 0)).then(() => {
+          cy.get(".carouselSlide").eq(1).should("be.focused");
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        // ArrowLeft within snap 0: focus moves to slide 1, snap unchanged.
+        cy.realPress("ArrowLeft");
+        cy.get(".carouselSlide").eq(0).should("be.focused");
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+      });
+    });
+
+    it("should expose every visible slide as an independent tab stop and exclude off-screen slides", () => {
+      mountMultiSlideCarousel().then((emblaApi) => {
+        // Initially visible: slides 1 and 2. The other three slides must not
+        // be reachable with Tab.
+        cy.get(".carouselSlide").eq(0).should("have.attr", "tabindex", "0");
+        cy.get(".carouselSlide").eq(1).should("have.attr", "tabindex", "0");
+        cy.get(".carouselSlide").eq(2).should("have.attr", "tabindex", "-1");
+        cy.get(".carouselSlide").eq(3).should("have.attr", "tabindex", "-1");
+        cy.get(".carouselSlide").eq(4).should("have.attr", "tabindex", "-1");
+
+        // Tab from the first visible slide should land on the second visible
+        // slide, proving each visible slide is an independent tab stop
+        // rather than a single roving tabindex entry.
+        cy.get(".carouselSlide").eq(0).focus();
+        cy.realPress("Tab");
+        cy.get(".carouselSlide").eq(1).should("be.focused");
+
+        // After scrolling to the next snap, the tab-stop set must shift to
+        // the newly visible slides.
+        cy.findByLabelText(/Next slide group/).click();
+        cy.wrap(waitForSettle(emblaApi, 1)).then(() => {
+          cy.get(".carouselSlide").eq(0).should("have.attr", "tabindex", "-1");
+          cy.get(".carouselSlide").eq(1).should("have.attr", "tabindex", "-1");
+          cy.get(".carouselSlide").eq(2).should("have.attr", "tabindex", "0");
+          cy.get(".carouselSlide").eq(3).should("have.attr", "tabindex", "0");
+          cy.get(".carouselSlide").eq(4).should("have.attr", "tabindex", "-1");
+        });
+      });
     });
   });
 });

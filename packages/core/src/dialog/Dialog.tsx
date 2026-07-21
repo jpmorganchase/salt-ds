@@ -72,7 +72,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * */
   disableScrim?: boolean;
   /**
-   * @deprecated IDs are now auto-generated internally for proper ARIA labeling.
+   * @deprecated since 1.58.0. IDs are now auto-generated internally for proper ARIA labeling.
    *
    * Optional id prop
    * Used for accessibility purposes to announce the title and subtitle when using a screen reader
@@ -119,7 +119,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
 
     const { getFloatingProps } = useInteractions([
       useClick(context),
-      useDismiss(context, { enabled: !disableDismiss }),
+      useDismiss(context, { outsidePress: !disableDismiss }),
     ]);
 
     const { Component: FloatingComponent } = useFloatingComponent();
@@ -160,6 +160,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
             focusManagerProps={{
               context: context,
               initialFocus,
+              outsideElementsInert: true,
             }}
             className={clsx(
               withBaseName(),

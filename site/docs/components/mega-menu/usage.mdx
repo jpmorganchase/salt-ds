@@ -1,0 +1,113 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- When your website or application has a large number of pages, categories, or options that need to be organized and easily accessible from the main navigation.
+- When you want to provide users with a clear overview of complex site structures, allowing them to quickly find relevant content without excessive clicking.
+- When you need to group related links, resources, or products in a visually organized, multi-column layout.
+
+### When not to use
+
+- When your site has a simple structure with only a few navigation options or categories, as a mega menu may be unnecessarily complex.
+- When you want to maintain a minimal or streamlined user interface, especially for mobile devices where mega menus can be difficult to use.
+- Consider these alternatives instead:
+  - Dropdown menus
+  - Vertical navigation
+  - Hamburger menu
+
+### Consistency within one navigation system
+
+- If multiple top-level navigation items belong to the same navigation system, use one same pattern across them to keep the experience consistent.
+- If any top-level item requires a mega menu, use the mega menu for all top-level items in that navigation system.
+
+### Opening and closing
+
+- The mega menu opens on click, not on hover, so it does not expand unexpectedly as the pointer moves across the navigation.
+- It closes when the trigger is clicked again, an item is selected, the user clicks outside the panel, or the user presses `Escape`.
+
+### Grouping items
+
+- Give each `MegaMenuGroup` a single `MegaMenuGroupHeading`.
+- Keep groups concise, splitting larger sets into additional groups so the menu stays scannable.
+
+### Structure
+
+- Wrap each mega menu in its own `<li>` within the trigger `<ul>` — arrow-key navigation between triggers relies on it.
+- Place `MegaMenuActions` inside `MegaMenuContent`, after `MegaMenuGroups`.
+- `MegaMenuAside` position follows source order: before `MegaMenuContent` it renders to the left, after it renders to the right.
+
+## Import
+
+To import `MegaMenu` and related components from the core package, use:
+
+```js
+import {
+  MegaMenu,
+  MegaMenuTrigger,
+  MegaMenuPanel,
+  MegaMenuAside,
+  MegaMenuContent,
+  MegaMenuGroups,
+  MegaMenuGroup,
+  MegaMenuGroupHeading,
+  MegaMenuList,
+  MegaMenuListItem,
+  MegaMenuActions,
+} from "@salt-ds/core";
+```
+
+## Props
+
+### `MegaMenu`
+
+<PropsTable packageName="core" componentName="MegaMenu" />
+
+### `MegaMenuTrigger`
+
+<PropsTable packageName="core" componentName="MegaMenuTrigger" />
+
+### `MegaMenuPanel`
+
+<PropsTable packageName="core" componentName="MegaMenuPanel" />
+
+### `MegaMenuAside`
+
+<PropsTable packageName="core" componentName="MegaMenuAside" />
+
+### `MegaMenuContent`
+
+<PropsTable packageName="core" componentName="MegaMenuContent" />
+
+### `MegaMenuGroups`
+
+<PropsTable packageName="core" componentName="MegaMenuGroups" />
+
+### `MegaMenuGroup`
+
+<PropsTable packageName="core" componentName="MegaMenuGroup" />
+
+### `MegaMenuGroupHeading`
+
+<PropsTable packageName="core" componentName="MegaMenuGroupHeading" />
+
+### `MegaMenuList`
+
+<PropsTable packageName="core" componentName="MegaMenuList" />
+
+### `MegaMenuListItem`
+
+<PropsTable packageName="core" componentName="MegaMenuListItem" />
+
+### `MegaMenuActions`
+
+<PropsTable packageName="core" componentName="MegaMenuActions" />

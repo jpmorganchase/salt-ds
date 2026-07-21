@@ -17,6 +17,11 @@ describe("GIVEN a Banner", () => {
     cy.findByTestId("SuccessCircleSolidIcon").should("exist");
     cy.findByTestId("WarningSolidIcon").should("exist");
     cy.findByTestId("ErrorSolidIcon").should("exist");
+
+    cy.findByRole("img", { name: "info" }).should("not.exist");
+    cy.findByRole("img", { name: "error" }).should("not.exist");
+    cy.findByRole("img", { name: "success" }).should("not.exist");
+    cy.findByRole("img", { name: "warning" }).should("not.exist");
   });
 
   xit("THEN should announce the contents of the Banner", () => {

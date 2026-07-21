@@ -22,10 +22,10 @@ Salt provides the following `children` for convenience:
 
 When `selectionVariant` is "range":
 
-- `DatePickerRangeInput` - a composable [DateInputRange](../DateInput) pre-wired to the `DatePicker` selection context.
-- `DatePickerRangeGridPanel` - composable [Calendar](../Calendar) grid pre-wired to the `DatePicker` selection context.
+- `DatePickerRangeInput` - a composable [DateInputRange](../../date-input) pre-wired to the `DatePicker` selection context.
+- `DatePickerRangeGridPanel` - composable [Calendar](../../calendar) grid pre-wired to the `DatePicker` selection context.
   - Opt for `DatePickerRangeGridPanel` when dealing with short date ranges or when displaying the dates in-between enhances the user experience.
-- `DatePickerRangePanel` - composable dual [Calendar](../Calendar) view pre-wired to the `DatePicker` selection context.
+- `DatePickerRangePanel` - composable dual [Calendar](../../calendar) view pre-wired to the `DatePicker` selection context.
   - Choose `DatePickerRangePanel` for long date ranges or when the focus is primarily on the start and end dates, rather than the dates in-between.
 
 A composable API enables you to use provided child components, such as `DatePickerRangeInput` and `DatePickerRangePanel`.
@@ -50,17 +50,51 @@ To improve consistency and simplify your messaging, recommend a single acceptabl
 
 ## Import
 
-To import `DatePicker` from the Salt lab package, use:
+To import `DatePicker` from the Salt date components package, use:
 
 ```js
-import { DatePicker } from "@salt-ds/lab";
+import { DatePicker } from "@salt-ds/date-components";
+```
+
+### Setting the date
+
+Date controls, require your application to contain a [LocalizationProvider](../../localization-provider).
+
+Pass a range object from your configured date framework using the `defaultDate` or `date` props.
+
+```tsx
+import { DateTime } from "luxon";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import {
+  DateInputRange,
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerRangeGridPanel,
+  DatePickerRangeInput,
+  DatePickerTrigger,
+  LocalizationProvider,
+} from "@salt-ds/date-components";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+  <DatePicker
+    selectionVariant="range"
+    defaultSelectedDate={{startDate: DateTime.fromFormat("23-06-2025", "dd-MM-yyyy") , endDate: DateTime.fromFormat("25-06-2025", "dd-MM-yyyy")}
+  >
+    <DatePickerTrigger>
+      <DatePickerRangeInput />
+    </DatePickerTrigger>
+    <DatePickerOverlay>
+      <DatePickerRangeGridPanel />
+    </DatePickerOverlay>
+  </DatePicker>
+<LocalizationProvider>
 ```
 
 ### Locale
 
 The default locale for Salt's date adapters is "enUS".
 
-`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../LocalizationProvider).
+`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../../localization-provider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 For example, if you are using `date-fns`, you may need to import the specific locale you want to use, such as `es` or `frFR`.
@@ -86,52 +120,71 @@ Valid values for `timezone` are date framework specific and can be one of the fo
 
 ### DatePicker
 
-<PropsTable packageName="lab" componentName="DatePicker" />
+<PropsTable packageName="date-components" componentName="DatePicker" />
 
 ### DatePickerSingleInput
 
-<PropsTable packageName="lab" componentName="DatePickerSingleInput" />
+<PropsTable
+  packageName="date-components"
+  componentName="DatePickerSingleInput"
+/>
 
-`DatePickerSingleInput` composes a [DateInputSingle](../DateInput) that uses the `DatePicker` context for single date selection.
+`DatePickerSingleInput` composes a [DateInputSingle](../../date-input) that uses the `DatePicker` context for single date selection.
 
 ### DatePickerRangeInput
 
-<PropsTable packageName="lab" componentName="DatePickerRangeInput" />
+<PropsTable
+  packageName="date-components"
+  componentName="DatePickerRangeInput"
+/>
 
-`DatePickerRangeInput` composes a [DateInputRange](../DateInput) that uses the `DatePicker` context for date range selection.
+`DatePickerRangeInput` composes a [DateInputRange](../../date-input) that uses the `DatePicker` context for date range selection.
 
-### DatePickerSinglePanel
+### DatePickerSingleGridPanel
 
-<PropsTable packageName="lab" componentName="DatePickerSinglePanel" />
+<PropsTable
+  packageName="date-components"
+  componentName="DatePickerSingleGridPanel"
+/>
 
-`DatePickerSinglePanel` composes a [Calendar](../Calendar) that uses the `DatePicker` context for single date selection.
+`DatePickerSingleGridPanel` composes a [Calendar](../../calendar) that uses the `DatePicker` context for single date selection.
 
 ### DatePickerRangePanel
 
-<PropsTable packageName="lab" componentName="DatePickerRangePanel" />
+<PropsTable
+  packageName="date-components"
+  componentName="DatePickerRangePanel"
+/>
 
-`DatePickerRangePanel` composes a [Calendar](../Calendar) that uses the `DatePicker` context for date range selection.
+`DatePickerRangePanel` composes a [Calendar](../../calendar) that uses the `DatePicker` context for date range selection.
 
 ### DatePickerOverlay
 
-<PropsTable packageName="lab" componentName="DatePickerOverlay" />
+<PropsTable packageName="date-components" componentName="DatePickerOverlay" />
 
 `DatePickerOverlay` is the container component for the `DatePicker` overlay.
 
 ### DatePickerActions
 
-<PropsTable packageName="lab" componentName="DatePickerActions" />
+<PropsTable packageName="date-components" componentName="DatePickerActions" />
 
 `DatePickerActions` provides the controls to apply or cancel a date selection.
+
+When using a modal `DatePicker` with confirmation controls, you must explicitly set `enableApply={true}` on the `DatePicker` component to enable apply mode. This ensures that date selections are not committed until the user explicitly applies them through the confirmation controls (e.g., Apply button).
+
+If you are creating your own confirmation controls instead of using `DatePickerActions`, you must also explicitly set `enableApply={true}` on the `DatePicker` component.
 
 ### useDatePicker
 
 The `useDatePicker` hook provides `state` and `helpers` to manage the `DatePicker` state.
 
-<PropsTable packageName="lab" componentName="useDatePicker" />
+<PropsTable packageName="date-components" componentName="useDatePicker" />
 
 ### useDatePickerOverlay
 
 The `useDatePickerOverlay` hook provides `state` and `helpers` to manage the `DatePickerOverlay` state.
 
-<PropsTable packageName="lab" componentName="useDatePickerOverlay" />
+<PropsTable
+  packageName="date-components"
+  componentName="useDatePickerOverlay"
+/>

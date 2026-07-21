@@ -4,51 +4,344 @@ on:
   push:
     branches:
       - main
-      - release-ag-grid-theme-v1
+  issue_comment:
+    types:
+      - created
 
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
-  issues: write
+permissions: {}
 
 jobs:
   release:
     name: Release
-    if: github.repository == 'jpmorganchase/salt-ds'
+    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write # Needed for changesets to create the Version Packages PR, push tags, and create GitHub releases.
+      pull-requests: write # Needed for changesets to open/update the Version Packages PR.
+      id-token: write # Needed for npm trusted publishing provenance.
+    concurrency:
+      group: ${{ github.workflow }}-release-${{ github.ref }}
+      cancel-in-progress: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: "24"
-          cache: "yarn"
+          package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: yarn install
-      - name: Build
-        run: yarn build
-      - name: Create Release Pull Request or Publish packages
-        id: changesets
-        uses: changesets/action@v1
+      - name: Create Release Pull Request or publish to npm
+        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # v1
         with:
-          publish: yarn changeset publish
+          version: yarn changeset version
+          publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_SALTDESIGNSYSTEM }}
-          NPM_CONFIG_PROVENANCE: true
+          NPM_CONFIG_PROVENANCE: "true"
 
+  build-release-storybook:
+    name: Build Release Storybook
+    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions: {}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Install dependencies
+        run: yarn install
       - name: Run Storybook build
         run: yarn build-storybook
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
+      - name: Upload Storybook Static
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: storybook-build
+          path: ./storybook-static
+          retention-days: 1
+
+  publish-storybook:
+    name: Publish Storybook
+    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
+    needs: build-release-storybook
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      actions: read # Needed to download the Storybook build artifact from the release job.
+    concurrency:
+      group: ${{ github.workflow }}-storybook-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Download Storybook build
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: storybook-build
+          path: ./storybook-static
       - name: Publish Storybook
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
           command: pages deploy ./storybook-static --project-name saltdesignsystem-storybook --branch ${{ github.head_ref || github.ref_name }}
+
+  snapshot:
+    name: Snapshot Release
+    if: |
+      github.event_name == 'issue_comment' &&
+      github.repository == 'jpmorganchase/salt-ds' &&
+      github.event.issue.pull_request &&
+      (github.event.comment.body == '/release-pr' || github.event.comment.body == '/snapshot-release')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      issues: write # Needed to post and update the snapshot status comment on the PR's issue timeline.
+      pull-requests: write # Needed to add reactions to the trigger comment (PR comments are scoped under the pull_requests permission, not issues).
+      id-token: write # Needed for npm trusted publishing provenance.
+    concurrency:
+      group: ${{ github.workflow }}-snapshot-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - name: Enforce write permissions
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          COMMENT_ID: ${{ github.event.comment.id }}
+        with:
+          script: |
+            const username = context.payload.comment.user.login;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+
+            const response = await github.rest.repos.getCollaboratorPermissionLevel({
+              owner,
+              repo,
+              username,
+            });
+
+            const permission = response.data.permission;
+            const allowedPermissions = new Set(["admin", "maintain", "write"]);
+
+            if (allowedPermissions.has(permission)) {
+              await github.rest.reactions.createForIssueComment({
+                owner,
+                repo,
+                comment_id: process.env.COMMENT_ID,
+                content: "eyes",
+              });
+            } else {
+              const errorMessage = `Snapshot release was not started because @${username} does not have write permissions.`;
+
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner,
+                repo,
+                body: `${errorMessage}\n\n[View workflow run](${runUrl})`,
+              });
+
+              core.setFailed(errorMessage);
+            }
+
+      - name: Validate pull request
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        id: pr_data
+        with:
+          script: |
+            try {
+              const pullRequest = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+              });
+
+              core.setOutput("headRepository", pullRequest.data.head.repo.full_name);
+              core.setOutput("headSha", pullRequest.data.head.sha);
+
+              if (pullRequest.data.head.repo.fork) {
+                const errorMessage = 'snapshot releases not supported on pull requests from forked repositories.';
+                await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: errorMessage,
+                });
+                core.setFailed(errorMessage);
+              }
+            } catch (err) {
+              core.setFailed(`Request failed with error ${err}`);
+            }
+
+      - name: Create snapshot status comment
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        id: snapshot_status
+        env:
+          HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const headSha = process.env.HEAD_SHA;
+            const shortSha = headSha.slice(0, 7);
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+
+            const response = await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner,
+              repo,
+              body: `Snapshot release started for \`${shortSha}\`.\n\n[View workflow run](${runUrl})`,
+            });
+
+            core.setOutput("commentId", response.data.id);
+
+      - name: Checkout pull request
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: ${{ steps.pr_data.outputs.headRepository }}
+          ref: ${{ steps.pr_data.outputs.headSha }}
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Create snapshot versions
+        run: yarn changeset version --snapshot snapshot
+
+      - name: Build snapshot packages
+        run: yarn build
+
+      - name: Publish snapshot packages
+        id: publish
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
+        with:
+          script: |
+            let output = '';
+            await exec.exec(
+              'yarn',
+              ['changeset', 'publish', '--tag', 'snapshot', '--no-git-tag'],
+              {
+                listeners: {
+                  stdout: (data) => { output += data.toString(); },
+                  stderr: (data) => { output += data.toString(); },
+                },
+              },
+            );
+
+            // `changeset publish` prints a banner followed by an indented
+            // list of `name@version` tags for each successfully published
+            // package, e.g.
+            //
+            //   🦋  packages published successfully:
+            //   🦋    @salt-ds/core@1.63.1-snapshot-abcdef0
+            //   🦋    @salt-ds/lab@1.0.0-alpha.80-snapshot-abcdef0
+            //
+            // Anchoring on the banner string avoids picking up unrelated
+            // `name@version` mentions in warnings or errors.
+            const [, after = ''] = output.split('packages published successfully:\n');
+            const newTags = after
+              .split('\n')
+              .flatMap((line) => Array.from(line.matchAll(/\s+(\S+@\S+)/g), (m) => m[1]));
+
+            core.setOutput('publishedTags', newTags.join('\n'));
+
+      - name: Update snapshot status comment
+        if: success() && steps.snapshot_status.outputs.commentId != ''
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          COMMENT_ID: ${{ github.event.comment.id }}
+          HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
+          PUBLISHED_TAGS: ${{ steps.publish.outputs.publishedTags }}
+          STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const statusCommentId = Number.parseInt(process.env.STATUS_COMMENT_ID, 10);
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+            const shortSha = process.env.HEAD_SHA.slice(0, 7);
+            const newTags = (process.env.PUBLISHED_TAGS || '')
+              .split('\n')
+              .map((tag) => tag.trim())
+              .filter(Boolean);
+
+            if (newTags.length) {
+              const multiple = newTags.length > 1;
+              const body = (
+                `Snapshot release completed for \`${shortSha}\`.\n\n` +
+                `🫰✨ **Thanks @${context.actor}! ` +
+                `Your snapshot${multiple ? 's have' : ' has'} been published to npm.**\n\n` +
+                `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
+                `with the newly published version${multiple ? 's' : ''}:\n` +
+                newTags.map((tag) => (
+                  '```sh\n' +
+                  `yarn add ${tag}\n` +
+                  '```'
+                )).join('\n') +
+                `\n\n[View workflow run](${runUrl})`
+              );
+
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: statusCommentId,
+                body,
+              });
+
+              await github.rest.reactions.createForIssueComment({
+                owner,
+                repo,
+                comment_id: process.env.COMMENT_ID,
+                content: "rocket",
+              });
+            } else {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: statusCommentId,
+                body: `Snapshot release finished for \`${shortSha}\`, but no packages were published.\n\n[View workflow run](${runUrl})`,
+              });
+            }
+
+      - name: Update snapshot status on failure
+        if: ${{ always() && steps.snapshot_status.outputs.commentId != '' && (failure() || cancelled()) }}
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}
+          HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const statusCommentId = Number.parseInt(process.env.STATUS_COMMENT_ID, 10);
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+            const shortSha = process.env.HEAD_SHA.slice(0, 7);
+
+            await github.rest.issues.updateComment({
+              owner,
+              repo,
+              comment_id: statusCommentId,
+              body: `Snapshot release failed for \`${shortSha}\`.\n\n[View workflow run](${runUrl})`,
+            });

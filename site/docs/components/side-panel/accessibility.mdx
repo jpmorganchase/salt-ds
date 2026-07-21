@@ -1,0 +1,46 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+**Provide a clear accessible name for the `SidePanel`**
+
+The `SidePanelTitle` component automatically provides the accessible name for both the panel region and the close button when used within `SidePanelHeader` and alongside `SidePanelCloseButton`.
+
+If you aren't using `SidePanelTitle`, you must provide an accessible name explicitly using `aria-labelledby` (preferred when a visible heading exists) or `aria-label` (when no visible heading is available) and apply an accessible name to the `SidePanelCloseButton`.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Tab moves focus through focusable content elements in the panel in reading order.
+- Because the panel is non‑modal, after the last focusable element in the panel, focus continues to the next focusable element that follows the trigger in page order. Focus can leave the panel.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- This action moves focus to the previous focusable content element in the panel.
+- From the first focusable element in the panel, focus returns to the trigger (and can continue backward to earlier page elements). Focus can leave the panel.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- If focus is on the trigger element, this action activates the element and opens the side panel. Focus moves into the panel (to the container or first focusable element). Panel items appear immediately after the trigger in the tab sequence.
+- If focus is on the Close button, this action closes the panel. Focus returns to the trigger element.
+- If focus is on a content element configured to close the panel (for example, a Submit button), this action closes the panel and returns focus to the trigger.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Escape">
+
+- If focus is in the side panel, Escape closes the side panel and returns focus to the triggering element.
+
+</KeyboardControl>
+</KeyboardControls>

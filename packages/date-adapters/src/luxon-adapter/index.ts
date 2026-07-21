@@ -1,4 +1,4 @@
-import { DateTime, Duration, Info, Settings } from "luxon";
+import { DateTime, Duration, Info } from "luxon";
 import {
   type AdapterOptions,
   DateDetailError,
@@ -85,7 +85,6 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    */
   constructor({ locale }: AdapterOptions<string, typeof DateTime> = {}) {
     this.locale = locale || "en-US";
-    Settings.defaultLocale = this.locale;
   }
 
   /**
@@ -165,7 +164,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    */
   public format(
     date: DateTime | null | undefined,
-    format: RecommendedFormats = "dd MMM yyyy",
+    format: RecommendedFormats = "DD MMM YYYY",
   ): string {
     if (this.isValid(date)) {
       const luxonFormat = this.mapToLuxonFormat(format);
@@ -458,15 +457,6 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   }
 
   /**
-   * Gets the day of the week for a Luxon DateTime object.
-   * @param date - The Luxon DateTime object.
-   * @returns The day of the week as a number (1-7).
-   */
-  public getDayOfWeek(date: DateTime): number {
-    return date.weekday;
-  }
-
-  /**
    * Gets the day of the month for a Luxon DateTime object.
    * @param date - The Luxon DateTime object.
    * @returns The day of the month as a number (1-31).
@@ -521,6 +511,17 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @param date
    */
   public clone(date: DateTime): DateTime {
-    return DateTime.fromMillis(date.toMillis());
+    // DateTime.fromMillis() uses the system zone by default, which would drop the
+    // original zone. Preserve the *instant* and keep the original zone.
+    // (Do NOT use keepLocalTime here, as that can change the instant and fail equality checks.)
+    // Preserve the original date's locale for consistency with other adapters.
+    return DateTime.fromMillis(date.toMillis(), {
+      zone: date.zone,
+      locale: date.locale ?? this.locale,
+    });
   }
+
+  public toJSDate = (value: DateTime) => {
+    return value.toJSDate();
+  };
 }

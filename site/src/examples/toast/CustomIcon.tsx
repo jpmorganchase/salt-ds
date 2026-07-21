@@ -21,8 +21,8 @@ export const CustomIcon = (): ReactElement => (
         </Text>
         <div>Filters have been cleared</div>
       </ToastContent>
-      <Button appearance="transparent">
-        <CloseIcon />
+      <Button aria-label="Dismiss" appearance="transparent">
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
     <Toast
@@ -36,8 +36,8 @@ export const CustomIcon = (): ReactElement => (
         </Text>
         <div>The world is connected</div>
       </ToastContent>
-      <Button appearance="transparent">
-        <CloseIcon />
+      <Button aria-label="Dismiss" appearance="transparent">
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
     <Toast
@@ -51,8 +51,8 @@ export const CustomIcon = (): ReactElement => (
         </Text>
         <div>There is not enough seasoning</div>
       </ToastContent>
-      <Button appearance="transparent">
-        <CloseIcon />
+      <Button aria-label="Dismiss" appearance="transparent">
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
     <Toast
@@ -66,8 +66,8 @@ export const CustomIcon = (): ReactElement => (
         </Text>
         <div>There is a wild animal here</div>
       </ToastContent>
-      <Button appearance="transparent">
-        <CloseIcon />
+      <Button aria-label="Dismiss" appearance="transparent">
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
   </div>

@@ -1,0 +1,55 @@
+.saltTreeNode {
+  list-style: none;
+  position: relative;
+  cursor: var(--salt-cursor-hover);
+}
+
+.saltTreeNode:focus {
+  outline: none;
+}
+
+/* Focus visible styles - applied when keyboard navigation is used */
+.saltTreeNode:focus-visible > .saltTreeNodeTrigger,
+.saltTreeNode-focusVisible > .saltTreeNodeTrigger {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+  position: relative;
+  z-index: calc(var(--salt-zIndex-default) + 1);
+}
+
+/* Selected + focus visible */
+.saltTreeNode-selected:focus-visible > .saltTreeNodeTrigger,
+.saltTreeNode-selected.saltTreeNode-focusVisible > .saltTreeNodeTrigger {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+  z-index: calc(var(--salt-zIndex-default) + 1);
+}
+
+.saltTreeNode-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-fixed-100);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-top: var(--salt-spacing-fixed-100);
+}
+
+.saltTreeNode-checkbox {
+  flex-shrink: 0;
+  height: var(--salt-size-selectable);
+}
+
+.saltTreeNode-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--saltTreeNodeTrigger-iconSize);
+  min-width: var(--saltTreeNodeTrigger-iconSize);
+  height: var(--saltTreeNodeTrigger-iconSize);
+  flex-shrink: 0;
+}
+
+.saltTreeNode-icon > * {
+  color: var(--salt-content-primary-foreground);
+}

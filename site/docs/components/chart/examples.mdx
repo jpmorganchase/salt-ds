@@ -12,13 +12,10 @@ data:
   <ul>
     <li>
       To ensure the presentation is accessible, line or fill patterns can be
-      applied to the chart (see [Patterns and Fills](./usage#patterns-and-fills)
-      for details). Use the "Show patterns" switch to toggle patterns.
-    </li>
-    <li>
-      This package is a WIP. Please check the [current
-      issues](https://github.com/jpmorganchase/salt-ds/issues/5878) for known
-      issues/gaps.
+      applied to the chart. See [Module loading](./usage#module-loading) for
+      version-specific Highcharts module setup and [Patterns and
+      Fills](./usage#patterns-and-fills) for details. Use the "Show patterns"
+      switch to toggle patterns.
     </li>
   </ul>
 </Callout>
@@ -126,15 +123,12 @@ Use an area chart to show trends over time and the contribution of categories to
 
 Use a scatter chart to show the relationship between two numerical variables.
 
-The `axes-grid-lines` class name applied to the container enables both vertical and horizontal grid lines.
-
 <LivePreview componentName="chart" exampleName="ScatterChart" />
 
 ## Bubble chart
 
 Use a bubble chart to show the relationship between two variables, with a third variable represented by the size of each bubble.
-
-The `axes-grid-lines` class name applied to the container enables both vertical and horizontal grid lines.
+To ensure accessible presentation, data labels have text borders when pattern fills are enabled.
 
 <Callout title="Note">
   To use the bubble chart, import the Highcharts `highcharts-more` module and
@@ -142,3 +136,18 @@ The `axes-grid-lines` class name applied to the container enables both vertical 
 </Callout>
 
 <LivePreview componentName="chart" exampleName="BubbleChart" />
+
+## Heatmap chart
+
+Use a heatmap chart to compare values across two categorical axes, with color
+used to show magnitude. To ensure accessible presentation, data labels have have borders by default.
+
+For heatmap variations such as discrete range legends or two-color banding, see
+[Color axis](./usage#color-axis) in the usage guide.
+
+<Callout title="Note">
+  To use the heatmap chart, import the Highcharts `heatmap` module and use it to
+  wrap the `Highcharts` object as shown in the example.
+</Callout>
+
+<LivePreview componentName="chart" exampleName="HeatmapChart" />

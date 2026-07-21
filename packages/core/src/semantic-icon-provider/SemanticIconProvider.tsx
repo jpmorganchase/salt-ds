@@ -5,6 +5,8 @@ import {
   ChevronRightIcon,
   ChevronUpIcon,
   CloseIcon,
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
   ErrorSolidIcon,
   FavoriteIcon,
   FavoriteSolidIcon,
@@ -34,35 +36,38 @@ import { SuccessAdornmentIcon } from "../status-adornment/SuccessAdornment";
 import { WarningAdornmentIcon } from "../status-adornment/WarningAdornment";
 
 export interface SemanticIconMap {
-  ExpandIcon: ElementType;
-  CollapseIcon: ElementType;
-  ExpandGroupIcon: ElementType;
-  CollapseGroupIcon: ElementType;
-  NextIcon: ElementType;
-  PreviousIcon: ElementType;
-  IncreaseIcon: ElementType;
-  DecreaseIcon: ElementType;
-  UploadIcon: ElementType;
-  ErrorIcon: ElementType;
-  SuccessIcon: ElementType;
-  InfoIcon: ElementType;
-  WarningIcon: ElementType;
-  OverflowIcon: ElementType;
-  UserIcon: ElementType;
+  ActiveIcon: ElementType;
   CalendarIcon: ElementType;
   CloseIcon: ElementType;
-  ExternalIcon: ElementType;
-  PendingIcon: ElementType;
-  ActiveIcon: ElementType;
+  CollapseGroupIcon: ElementType;
+  CollapseIcon: ElementType;
+  CollapseLeftIcon: ElementType;
+  CollapseRightIcon: ElementType;
   CompletedIcon: ElementType;
-  LockedIcon: ElementType;
+  DecreaseIcon: ElementType;
+  ErrorIcon: ElementType;
+  ErrorStatusAdornment: ElementType;
+  ExpandGroupIcon: ElementType;
+  ExpandIcon: ElementType;
+  ExternalIcon: ElementType;
+  IncreaseIcon: ElementType;
+  InfoIcon: ElementType;
   InProgressIcon: ElementType;
+  LockedIcon: ElementType;
+  LevelSeparatorIcon: ElementType;
+  NextIcon: ElementType;
+  OverflowIcon: ElementType;
+  PendingIcon: ElementType;
+  PreviousIcon: ElementType;
   RatingIcon: ElementType;
   RatingSelectedIcon: ElementType;
   RatingUnselectingIcon: ElementType;
-  ErrorStatusAdornment: ElementType;
-  WarningStatusAdornment: ElementType;
+  SuccessIcon: ElementType;
   SuccessStatusAdornment: ElementType;
+  UploadIcon: ElementType;
+  UserIcon: ElementType;
+  WarningIcon: ElementType;
+  WarningStatusAdornment: ElementType;
 }
 
 export interface SemanticIconProviderProps {
@@ -78,35 +83,38 @@ export interface SemanticIconProviderProps {
 }
 
 const defaultIconMap: SemanticIconMap = {
-  ExpandIcon: ChevronDownIcon,
-  CollapseIcon: ChevronUpIcon,
-  ExpandGroupIcon: ChevronRightIcon,
-  CollapseGroupIcon: ChevronDownIcon,
-  NextIcon: ChevronRightIcon,
-  PreviousIcon: ChevronLeftIcon,
-  IncreaseIcon: TriangleUpIcon,
-  DecreaseIcon: TriangleDownIcon,
-  UploadIcon,
-  ErrorIcon: ErrorSolidIcon,
-  SuccessIcon: SuccessCircleSolidIcon,
-  InfoIcon: InfoSolidIcon,
-  WarningIcon: WarningSolidIcon,
-  OverflowIcon: OverflowMenuIcon,
-  UserIcon: UserSolidIcon,
+  ActiveIcon: StepActiveIcon,
   CalendarIcon: CalendarIcon,
   CloseIcon: CloseIcon,
-  ExternalIcon: TearOutIcon,
-  PendingIcon: StepDefaultIcon,
-  ActiveIcon: StepActiveIcon,
+  CollapseGroupIcon: ChevronDownIcon,
+  CollapseIcon: ChevronUpIcon,
+  CollapseLeftIcon: DoubleChevronLeftIcon,
+  CollapseRightIcon: DoubleChevronRightIcon,
   CompletedIcon: SuccessCircleSolidIcon,
-  LockedIcon: LockedIcon,
+  DecreaseIcon: TriangleDownIcon,
+  ErrorIcon: ErrorSolidIcon,
+  ErrorStatusAdornment: ErrorAdornmentIcon,
+  ExpandGroupIcon: ChevronRightIcon,
+  ExpandIcon: ChevronDownIcon,
+  ExternalIcon: TearOutIcon,
+  IncreaseIcon: TriangleUpIcon,
+  InfoIcon: InfoSolidIcon,
   InProgressIcon: ProgressInprogressIcon,
+  LockedIcon: LockedIcon,
+  LevelSeparatorIcon: ChevronRightIcon,
+  NextIcon: ChevronRightIcon,
+  OverflowIcon: OverflowMenuIcon,
+  PendingIcon: StepDefaultIcon,
+  PreviousIcon: ChevronLeftIcon,
   RatingIcon: FavoriteIcon,
   RatingSelectedIcon: FavoriteSolidIcon,
   RatingUnselectingIcon: FavoriteStrongIcon,
-  ErrorStatusAdornment: ErrorAdornmentIcon,
-  WarningStatusAdornment: WarningAdornmentIcon,
+  SuccessIcon: SuccessCircleSolidIcon,
   SuccessStatusAdornment: SuccessAdornmentIcon,
+  UploadIcon,
+  UserIcon: UserSolidIcon,
+  WarningIcon: WarningSolidIcon,
+  WarningStatusAdornment: WarningAdornmentIcon,
 };
 
 const SemanticIconContext = createContext<SemanticIconMap>(defaultIconMap);

@@ -1,8 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":preserveSemverRanges"],
+  "extends": [
+    "config:recommended",
+    ":preserveSemverRanges",
+    "helpers:pinGitHubActionDigests",
+    ":configMigration"
+  ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "packageRules": [
+    {
+      "description": "Default npm minimum release age",
+      "matchManagers": ["npm"],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "description": "More conservative for minor/major npm updates",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "major"],
+      "minimumReleaseAge": "14 days"
+    },
     {
       "groupName": "Mosaic",
       "matchPackageNames": ["@jpmorganchase/mosaic**"]

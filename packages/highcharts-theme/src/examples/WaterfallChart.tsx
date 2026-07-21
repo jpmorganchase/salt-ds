@@ -1,35 +1,32 @@
 import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
+import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
 import { waterfallOptions } from "./dependencies";
 
+patternFill(Highcharts);
+
 export interface WaterfallChartProps {
-  patterns?: boolean;
+  fillPatterns?: boolean;
   options: Options;
 }
 
 const WaterfallChart: FC<WaterfallChartProps> = ({
-  patterns = false,
+  fillPatterns = false,
   options = waterfallOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
-
-  const chartOptions = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, options, {
+    fillPatterns,
+  });
 
   return (
-    <div
-      className={clsx("highcharts-theme-salt", {
-        "salt-fill-patterns": patterns,
-      })}
-    >
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-        ref={chartRef}
-      />
-    </div>
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={chartOptions}
+      ref={chartRef}
+    />
   );
 };
 

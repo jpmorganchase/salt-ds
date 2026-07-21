@@ -19,7 +19,7 @@ data:
 
 - Don’t use tabs when users need to compare information between views.
 - Don’t use tabs to communicate progress. Instead, use [`Stepper`](/salt/components/stepper).
-- Don’t use tabs for primary navigation, taking the user off the current page. Instead, use [`Navigation Item`](/salt/components/navigation-item).
+- Don’t use tabs for primary navigation, taking the user off the current page. Instead, use [`NavigationItem`](/salt/components/navigation-item).
 
 ## Content
 
@@ -29,41 +29,50 @@ data:
 - Always use sentence case for badge labels when nesting in a tab.
 - Do not wrap labels. Use truncation with `Tooltip` if necessary.
 - Icon and text should match each other semantically.
+- Each `Tab` and matching `TabPanel` must use a unique `value` within a single `Tabs`.
 
 ## Import
 
-To import `TabsNext` and related components from the lab Salt package, use:
+To import `Tabs` and related components from the core Salt package, use:
 
 ```js
 import {
-  TabsNext,
+  Tab,
+  TabAction,
   TabBar,
-  TabListNext,
-  TabNext,
-  TabNextTrigger,
-  TabNextAction,
-  TabPanelNext,
-} from "@salt-ds/lab";
+  TabList,
+  TabPanel,
+  Tabs,
+  TabTrigger,
+} from "@salt-ds/core";
 ```
 
 ## Props
 
-### `TabsNext`
+### `Tabs`
 
-<PropsTable packageName="lab" componentName="TabsNext" />
+<PropsTable packageName="core" componentName="Tabs" />
 
 ### `TabBar`
 
-<PropsTable packageName="lab" componentName="TabBar" />
+<PropsTable packageName="core" componentName="TabBar" />
 
-### `TabListNext`
+### `TabList`
 
-<PropsTable packageName="lab" componentName="TabListNext" />
+<PropsTable packageName="core" componentName="TabList" />
 
-### `TabNext`
+### `Tab`
 
-<PropsTable packageName="lab" componentName="TabNext" />
+<PropsTable packageName="core" componentName="Tab" />
 
-### `TabNextAction`
+### `TabTrigger`
 
-<PropsTable packageName="lab" componentName="TabNextAction" />
+<PropsTable packageName="core" componentName="TabTrigger" />
+
+### `TabAction`
+
+<PropsTable packageName="core" componentName="TabAction" />
+
+### `TabPanel`
+
+<PropsTable packageName="core" componentName="TabPanel" />

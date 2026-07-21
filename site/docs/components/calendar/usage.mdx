@@ -39,41 +39,70 @@ Use the `Calendar` component when you need a versatile date selection tool that 
 
 ### Calendar
 
-To import `Calendar` from the Salt lab package, use:
+To import `Calendar` from the Salt date components package, use:
 
 ```js
-import { Calendar } from "@salt-ds/lab";
+import { Calendar } from "@salt-ds/date-components";
 ```
 
 ### CalendarNavigation
 
-To import `CalendarNavigation` from the Salt lab package, use:
+To import `CalendarNavigation` from the Salt date components package, use:
 
 ```js
-import { CalendarNavigation } from "@salt-ds/lab";
+import { CalendarNavigation } from "@salt-ds/date-components";
 ```
 
 ### CalendarWeekHeader
 
-To import `CalendarWeekHeader` from the Salt lab package, use:
+To import `CalendarWeekHeader` from the Salt date components package, use:
 
 ```js
-import { CalendarWeekHeader } from "@salt-ds/lab";
+import { CalendarWeekHeader } from "@salt-ds/date-components";
 ```
 
 ### CalendarGrid
 
-To import `CalendarGrid` from the Salt lab package, use:
+To import `CalendarGrid` from the Salt date components package, use:
 
 ```js
-import { CalendarGrid } from "@salt-ds/lab";
+import { CalendarGrid } from "@salt-ds/date-components";
+```
+
+### Setting the date
+
+Date controls, require your application to contain a [LocalizationProvider](../localization-provider).
+
+Pass a date object from your configured date framework via the `defaultDate` or `date` props.
+
+```tsx
+import { DateTime } from "luxon";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import {
+  LocalizationProvider,
+  DateInputSingle,
+  DateInputRange,
+  Calendar,
+  CalendarNavigation,
+  CalendarGrid,
+} from "@salt-ds/date-components";
+
+<LocalizationProvider DateAdapter={AdapterLuxon}>
+    <Calendar
+      selectionVariant={"single"}
+      defaultSelectedDate={new DateTime().now()}
+    >
+      <CalendarNavigation />
+      <CalendarGrid />
+    </Calendar>
+<LocalizationProvider>
 ```
 
 ### Locale
 
 The default locale for Salt's date adapters is "enUS".
 
-`Calendar` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider](../LocalizationProvider).
+`Calendar` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider](../localization-provider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 Refer to the documentation of the date library you are using for information on how to configure other locales.
@@ -95,12 +124,12 @@ Valid values for `timezone` are date framework specific and can be one of the fo
 
 ### Calendar
 
-<PropsTable packageName="lab" componentName="Calendar" />
+<PropsTable packageName="date-components" componentName="Calendar" />
 
 ### CalendarWeekHeader
 
-<PropsTable packageName="lab" componentName="CalendarWeekHeader" />
+<PropsTable packageName="date-components" componentName="CalendarWeekHeader" />
 
 ### CalendarGrid
 
-<PropsTable packageName="lab" componentName="CalendarGrid" />
+<PropsTable packageName="date-components" componentName="CalendarGrid" />

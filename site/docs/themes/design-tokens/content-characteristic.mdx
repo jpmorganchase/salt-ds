@@ -18,8 +18,12 @@ There are two main options for static foregrounds: primary or secondary. Since b
   background="secondary"
 />
 
-`--salt-content-primary-foreground` \
-`--salt-content-secondary-foreground`
+<TokenTableWithControls
+  tokens={[
+    "--salt-content-primary-foreground",
+    "--salt-content-secondary-foreground",
+  ]}
+/>
 
 ## Interactive components
 
@@ -43,8 +47,12 @@ Accented foreground tokens can be used to indicate interactive content, such as 
   background="secondary"
 />
 
-`--salt-content-accent-foreground` \
-`--salt-content-foreground-visited`
+<TokenTableWithControls
+  tokens={[
+    "--salt-content-accent-foreground",
+    "--salt-content-foreground-visited",
+  ]}
+/>
 
 ## Adding emphasis
 
@@ -57,7 +65,7 @@ If you need to make static content more prominent, use bold foreground tokens—
   background="secondary"
 />
 
-`--salt-content-bold-foreground`
+<TokenTableWithControls tokens={["--salt-content-bold-foreground"]} />
 
 ## Calling attention
 
@@ -70,4 +78,4 @@ The attention foreground token can be used to highlight specific labels, such as
   background="secondary"
 />
 
-`--salt-content-attention-foreground`
+<TokenTableWithControls tokens={["--salt-content-attention-foreground"]} />

@@ -1,35 +1,32 @@
 import { useChart } from "@salt-ds/highcharts-theme";
-import { clsx } from "clsx";
 import Highcharts, { type Options } from "highcharts";
+import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
 import { type FC, useRef } from "react";
 import { scatterOptions } from "./dependencies";
 
+patternFill(Highcharts);
+
 export interface ScatterChartProps {
-  patterns?: boolean;
+  fillPatterns?: boolean;
   options: Options;
 }
 
 const ScatterChart: FC<ScatterChartProps> = ({
-  patterns = false,
+  fillPatterns = false,
   options = scatterOptions,
 }) => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
-
-  const chartOptions = useChart(chartRef, options);
+  const chartOptions = useChart(chartRef, options, {
+    fillPatterns,
+  });
 
   return (
-    <div
-      className={clsx("highcharts-theme-salt", "axes-grid-lines", {
-        "salt-fill-patterns": patterns,
-      })}
-    >
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-        ref={chartRef}
-      />
-    </div>
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={chartOptions}
+      ref={chartRef}
+    />
   );
 };
 

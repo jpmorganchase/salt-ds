@@ -99,4 +99,39 @@ describe("renderProps function", () => {
       "test-class",
     );
   });
+
+  it("should shallow-merge `style` objects from the host and the render element", () => {
+    cy.mount(
+      renderProps(Button, {
+        render: (
+          <Button style={{ padding: 8, color: "red" }}>Button Children</Button>
+        ),
+        style: { margin: 4, color: "blue" },
+      }),
+    );
+
+    cy.findByRole("button", { name: "Button Children" })
+      .should("have.css", "margin", "4px")
+      .and("have.css", "padding", "8px")
+      // render element wins on conflicting keys
+      .and("have.css", "color", "rgb(255, 0, 0)");
+  });
+
+  it("should preserve CSS custom properties set by the host when the render element supplies its own style", () => {
+    cy.mount(
+      renderProps(Button, {
+        render: (
+          <Button style={{ padding: 8 }} data-testid="render-target">
+            Button Children
+          </Button>
+        ),
+        style: { "--my-var": "42" } as React.CSSProperties,
+      }),
+    );
+
+    cy.findByTestId("render-target")
+      .should("have.attr", "style")
+      .and("contain", "--my-var")
+      .and("contain", "padding");
+  });
 });

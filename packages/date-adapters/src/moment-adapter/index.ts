@@ -20,7 +20,7 @@ declare module "@salt-ds/date-adapters" {
  * Provides methods for date manipulation and formatting using Moment.js.
  * Salt provides a Moment adapter to aid migration to a maintained library.
  *
- * @deprecated Moment date library has been deprecated by its maintainers since September 2020, consider migration to a maintained OSS library.
+ * @deprecated since 0.1.0-alpha.1. Moment date library has been deprecated by its maintainers since September 2020; consider migration to a maintained OSS library.
  */
 export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   /**
@@ -396,7 +396,11 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     }
 
     if (timezone === "UTC") {
-      return date.clone().utc();
+      // Preserve the wall-clock time when switching to UTC, consistent with
+      // the other adapters (date-fns-tz, dayjs, luxon) which all keep local
+      // time.  `utcOffset(0, true)` sets the offset to 0 while keeping the
+      // same year/month/day/hour/minute/second values.
+      return date.clone().utcOffset(0, true);
     }
 
     if (timezone === "system") {
@@ -505,16 +509,10 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     format: "long" | "short" | "narrow",
   ): string {
     const day = this.moment().locale(this.locale).weekday(dow);
-    return format === "narrow" ? day.format("dd")[0] : day.format("dddd");
-  }
-
-  /**
-   * Gets the day of the week for a Moment.js date object.
-   * @param date - The Moment.js date object.
-   * @returns The day of the week as a number (0-6).
-   */
-  public getDayOfWeek(date: Moment): number {
-    return date.day();
+    if (format === "narrow") {
+      return day.format("dd")[0];
+    }
+    return day.format(format === "short" ? "ddd" : "dddd");
   }
 
   /**
@@ -574,4 +572,8 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   public clone(date: Moment): Moment {
     return date.clone();
   }
+
+  public toJSDate = (value: Moment) => {
+    return value.toDate();
+  };
 }

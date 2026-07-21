@@ -35,6 +35,26 @@ describe("GIVEN a AdapterDayjs", () => {
     expect(date.tz(timezone).format("Z")).toBe(date.format("Z")); // Check if the timezone is applied
   });
 
+  it("SHOULD preserve the instant for ISO strings with explicit numeric offsets", () => {
+    const value = "2025-01-05T00:00:00.000+02:00";
+    const date = adapter.date(value, "Europe/London");
+
+    expect(date.toISOString()).toBe("2025-01-04T22:00:00.000Z");
+    expect(date.format("YYYY-MM-DDTHH:mm:ssZ")).toBe(
+      "2025-01-04T22:00:00+00:00",
+    );
+  });
+
+  it("SHOULD preserve the instant for ISO strings with explicit UTC offset", () => {
+    const value = "2025-01-05T00:00:00.000Z";
+    const date = adapter.date(value, "America/New_York");
+
+    expect(date.toISOString()).toBe("2025-01-05T00:00:00.000Z");
+    expect(date.format("YYYY-MM-DDTHH:mm:ssZ")).toBe(
+      "2025-01-04T19:00:00-05:00",
+    );
+  });
+
   it("SHOULD handle invalid date strings", () => {
     const date = adapter.date("invalid-date", "system");
     expect(date.isValid()).toBe(false);
@@ -144,11 +164,6 @@ describe("GIVEN a AdapterDayjs", () => {
     expect(now.date()).toBe(current.date());
   });
 
-  it("SHOULD get the day of the week", () => {
-    const date = dayjs("2023-11-01"); // November 1, 2023 is a Wednesday
-    expect(adapter.getDayOfWeek(date)).toBe(3); // 0 = Sunday, 3 = Wednesday
-  });
-
   it("SHOULD get the name of the day of the week", () => {
     const dayName = adapter.getDayOfWeekName(3, "long");
     expect(dayName).toBe("Wednesday");
@@ -183,6 +198,26 @@ describe("GIVEN a AdapterDayjs", () => {
     const clonedDate = adapter.clone(date);
     expect(clonedDate.isSame(date)).toBe(true);
     expect(clonedDate).not.toBe(date); // Ensure it's a different instance
+  });
+
+  it("SHOULD clone a Dayjs date and preserve timezone", () => {
+    const timezone = "America/New_York";
+    const date = adapter.date("2023-11-01", timezone);
+    const clonedDate = adapter.clone(date);
+    expect(adapter.getTimezone(clonedDate)).toBe(timezone);
+    expect(clonedDate.isSame(date)).toBe(true);
+    expect(clonedDate).not.toBe(date);
+  });
+
+  it("SHOULD clone a Dayjs date and preserve locale", () => {
+    const frAdapter = new AdapterDayjs({ locale: "fr" });
+    const date = frAdapter.date("2023-11-01", "system");
+    const clonedDate = frAdapter.clone(date);
+
+    // In tests we don't load dayjs locale bundles (e.g. "dayjs/locale/fr"), so
+    // assert using numeric output which is locale-agnostic but still validates
+    // cloning doesn't break formatting.
+    expect(frAdapter.format(clonedDate, "DD/MM/YYYY")).toBe("01/11/2023");
   });
 
   const TIMEZONES = ["America/New_York", "Europe/London"];
@@ -310,6 +345,60 @@ describe("GIVEN a AdapterDayjs", () => {
     });
   });
 
+  describe("GIVEN timezone conversions for DatePicker/DateInput semantics", () => {
+    it("SHOULD setTimezone reinterpret a naive local midnight as midnight in America/New_York", () => {
+      // This mirrors the Lab flow: user types a date (naive wall-clock), it is parsed without a timezone,
+      // then setTimezone(assign) is applied.
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const ny = adapter.setTimezone(parsedNaive, "America/New_York");
+      expect(adapter.toJSDate(ny).toISOString()).toBe(
+        "2025-01-05T05:00:00.000Z",
+      );
+    });
+
+    it("SHOULD setTimezone reinterpret a naive local midnight as midnight in Asia/Shanghai", () => {
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const sh = adapter.setTimezone(parsedNaive, "Asia/Shanghai");
+      expect(adapter.toJSDate(sh).toISOString()).toBe(
+        "2025-01-04T16:00:00.000Z",
+      );
+    });
+
+    it("SHOULD keep the instant when parsing an explicit UTC instant (Z) with an IANA timezone", () => {
+      const utcInstant = "2025-01-05T00:00:00.000Z";
+      const ny = adapter.date(utcInstant, "America/New_York");
+      // Must remain the same instant.
+      expect(adapter.toJSDate(ny).toISOString()).toBe(utcInstant);
+    });
+  });
+
+  describe("GIVEN timezone conversions for DateInputRange RangeWithTimezone story", () => {
+    it("SHOULD match the ISO output used by the Lab RangeWithTimezone story for America/New_York", () => {
+      // User input "05 Jan 2025" -> midnight in the selected timezone -> shifted UTC ISO
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const start = adapter.setTimezone(parsedNaive, "America/New_York");
+      expect(adapter.toJSDate(start).toISOString()).toBe(
+        "2025-01-05T05:00:00.000Z",
+      );
+    });
+
+    it("SHOULD match the ISO output used by the Lab RangeWithTimezone story for Asia/Shanghai", () => {
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const start = adapter.setTimezone(parsedNaive, "Asia/Shanghai");
+      expect(adapter.toJSDate(start).toISOString()).toBe(
+        "2025-01-04T16:00:00.000Z",
+      );
+    });
+
+    it("SHOULD handle half-hour offsets (Asia/Kolkata) the same way the Lab story does", () => {
+      const parsedNaive = dayjs("2025-01-05T00:00:00");
+      const start = adapter.setTimezone(parsedNaive, "Asia/Kolkata");
+      expect(adapter.toJSDate(start).toISOString()).toBe(
+        "2025-01-04T18:30:00.000Z",
+      );
+    });
+  });
+
   describe("GIVEN isSame is passed an invalid date", () => {
     it("SHOULD return false if dateA is invalid", () => {
       const dateA = adapter.date("invalid-date", "UTC");
@@ -420,8 +509,94 @@ describe("GIVEN a AdapterDayjs", () => {
     it("compare: both dates invalid returns 0", () => {
       const dateA = adapter.date("invalid-date", "UTC");
       const dateB = adapter.date("invalid-date", "UTC");
-      // Your implementation may vary; adjust expectation if needed
       expect(adapter.compare(dateA, dateB)).toBe(0);
+    });
+  });
+
+  describe("getTimezone", () => {
+    it("SHOULD return UTC for dates in UTC", () => {
+      const date = adapter.date("2025-01-05T00:00:00.000Z", "UTC");
+      expect(adapter.getTimezone(date)).toBe("UTC");
+    });
+
+    it("SHOULD return IANA timezone name for explicit timezone", () => {
+      const date = adapter.date("2025-01-05", "America/New_York");
+      const tz = adapter.getTimezone(date);
+      expect(tz).toBe("America/New_York");
+    });
+
+    it("SHOULD return system semantic or resolved system timezone for system timezone", () => {
+      const date = adapter.date("2025-01-05", "system");
+      const tz = adapter.getTimezone(date);
+      expect(["system", dayjs.tz.guess()]).toContain(tz);
+    });
+
+    it("SHOULD return system semantic or resolved system timezone for default timezone", () => {
+      const date = adapter.date("2025-01-05", "default");
+      const tz = adapter.getTimezone(date);
+      expect(["system", dayjs.tz.guess()]).toContain(tz);
+    });
+  });
+
+  describe("setTimezone", () => {
+    it("SHOULD preserve wall-clock time when changing timezone", () => {
+      const date = adapter.date("2025-01-05T12:30:00", "America/New_York");
+      const changed = adapter.setTimezone(date, "Europe/London");
+
+      // Wall-clock should remain 12:30
+      expect(changed.format("HH:mm")).toBe("12:30");
+      expect(changed.format("YYYY-MM-DD")).toBe("2025-01-05");
+    });
+
+    it("SHOULD handle setTimezone with default timezone", () => {
+      const date = adapter.date("2025-01-05T12:30:00", "America/New_York");
+      const changed = adapter.setTimezone(date, "default");
+
+      // Should resolve to system timezone and preserve wall-clock
+      expect(adapter.isValid(changed)).toBe(true);
+      expect(changed.format("HH:mm")).toBe("12:30");
+    });
+
+    it("SHOULD handle setTimezone to system timezone", () => {
+      const date = adapter.date("2025-01-05T12:30:00", "America/New_York");
+      const changed = adapter.setTimezone(date, "system");
+
+      expect(adapter.isValid(changed)).toBe(true);
+    });
+
+    it("SHOULD be idempotent when timezone is already set", () => {
+      const date = adapter.date("2025-01-05T12:30:00", "America/New_York");
+      const changed = adapter.setTimezone(date, "America/New_York");
+
+      // Should return the same date since it's already in that timezone
+      expect(adapter.compare(date, changed)).toBe(0);
+    });
+  });
+
+  describe("clone", () => {
+    it("SHOULD create an independent copy", () => {
+      const date = adapter.date("2025-01-05T12:30:00", "America/New_York");
+      const cloned = adapter.clone(date);
+
+      expect(adapter.compare(date, cloned)).toBe(0);
+      expect(date).not.toBe(cloned);
+    });
+
+    it("SHOULD preserve instant and timezone", () => {
+      const date = adapter.date("2025-01-05T00:00:00.000Z", "America/New_York");
+      const cloned = adapter.clone(date);
+
+      expect(date.toISOString()).toBe(cloned.toISOString());
+      expect(adapter.getTimezone(date)).toBe(adapter.getTimezone(cloned));
+    });
+
+    it("SHOULD preserve locale", () => {
+      const adapterWithLocale = new AdapterDayjs({ locale: "fr" });
+      const date = adapterWithLocale.date("2025-01-05");
+      const cloned = adapterWithLocale.clone(date);
+
+      // Both should format the same way
+      expect(date.locale()).toBe(cloned.locale());
     });
   });
 });

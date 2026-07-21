@@ -1,5 +1,5 @@
 .saltCarouselSlides {
-  overflow: hidden;
+  overflow: clip;
   cursor: var(--salt-cursor-grab);
 }
 

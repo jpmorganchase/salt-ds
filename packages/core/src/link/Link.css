@@ -94,14 +94,20 @@
   text-decoration: var(--link-textDecoration-focus);
 }
 
-/* Class for ADA content */
+/* Class for ADA content - visually hidden but accessible to screen readers.
+   Uses clip-path and prevents user selection so the text isn't included
+   when users copy the link's visible content. */
 .saltLink-externalLinkADA {
-  display: block;
   position: absolute;
   width: 1px;
   height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-  top: 0px;
-  left: 0px;
-  opacity: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
 }

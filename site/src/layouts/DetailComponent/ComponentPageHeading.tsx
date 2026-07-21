@@ -163,14 +163,14 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
           </FlexLayout>
         </FlexLayout>
         {description && (
-          <Markdown className={headingStyles.description}>
-            {description}
-          </Markdown>
+          <div className={headingStyles.description}>
+            <Markdown>{description}</Markdown>
+          </div>
         )}
         {externalDependency?.description && (
-          <Markdown className={headingStyles.description}>
-            {externalDependency.description}
-          </Markdown>
+          <div className={headingStyles.description}>
+            <Markdown>{externalDependency.description}</Markdown>
+          </div>
         )}
         {alsoKnownAs.length > 0 && (
           <Text>

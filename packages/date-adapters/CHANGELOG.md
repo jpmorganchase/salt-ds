@@ -1,5 +1,41 @@
 # @salt-ds/date-adapters
 
+## 1.0.1
+
+### Patch Changes
+
+- 2c459c3: Updated deprecated JSDocs for legacy props, theme aliases, icons, and the Moment date adapter to include deprecation versions and clearer migration guidance.
+
+## 1.0.0
+
+### Major Changes
+
+- 8687aa7: `@salt-ds/date-adapters` is now stable.
+
+  Adapters continue to be available from their dedicated subpaths:
+
+  - `@salt-ds/date-adapters/date-fns`
+  - `@salt-ds/date-adapters/date-fns-tz`
+  - `@salt-ds/date-adapters/dayjs`
+  - `@salt-ds/date-adapters/luxon`
+  - `@salt-ds/date-adapters/moment`
+
+## 0.1.0-alpha.7
+
+### Patch Changes
+
+- 5d4de6f: ## Adapter fixes
+
+  - Fixed `AdapterDayjs#setTimezone` so `"default"` no longer behaves as a no-op and is handled consistently with adapter timezone resolution.
+  - Updated `AdapterLuxon#clone` to preserve the source date locale when cloning (with a safe fallback), while still preserving instant and zone.
+  - Removed Luxon global locale mutation from the adapter constructor to avoid cross-instance locale side effects.
+  - Fixed `AdapterMoment#getDayOfWeekName` so `"short"` returns abbreviated weekday names (for example `Wed`) instead of long-form names.
+
+  ## Consumer impact
+
+  - Potentially breaking (RC): `AdapterLuxon` no longer mutates Luxon global locale defaults during adapter construction. If an app relied on that side effect to localize non-adapter Luxon usage, locale behavior may change.
+  - Recommended migration: set Luxon global defaults explicitly in app bootstrap when global behavior is required, or set locale per Luxon `DateTime` instance where needed.
+
 ## 0.1.0-alpha.6
 
 ### Patch Changes

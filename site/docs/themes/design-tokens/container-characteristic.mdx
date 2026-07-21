@@ -44,8 +44,12 @@ Primary containers combine background and border tokens to ensure a consistent c
   background="secondary"
 />
 
-`--salt-container-primary-background` \
-`--salt-container-primary-borderColor`
+<TokenTableWithControls
+  tokens={[
+    "--salt-container-primary-background",
+    "--salt-container-primary-borderColor",
+  ]}
+/>
 
 ## Secondary containers
 
@@ -58,8 +62,12 @@ Secondary containers combine secondary background and border tokens to provide a
   background="primary"
 />
 
-`--salt-container-secondary-background` \
-`--salt-container-secondary-borderColor`
+<TokenTableWithControls
+  tokens={[
+    "--salt-container-secondary-background",
+    "--salt-container-secondary-borderColor",
+  ]}
+/>
 
 ## Tertiary containers
 
@@ -73,8 +81,12 @@ Tertiary containers use tertiary background and border tokens to offer an altern
   border
 />
 
-`--salt-container-tertiary-background` \
-`--salt-container-tertiary-borderColor`
+<TokenTableWithControls
+  tokens={[
+    "--salt-container-tertiary-background",
+    "--salt-container-tertiary-borderColor",
+  ]}
+/>
 
 ## Ghost containers
 
@@ -87,8 +99,12 @@ Ghost containers use translucent backgrounds and borders to blend seamlessly wit
   background="primary"
 />
 
-`--salt-container-ghost-background` \
-`--salt-container-ghost-borderColor`
+<TokenTableWithControls
+  tokens={[
+    "--salt-container-ghost-background",
+    "--salt-container-ghost-borderColor",
+  ]}
+/>
 
 ## Styling a container as a drop target
 
@@ -101,8 +117,9 @@ The target characteristic is used in drag-and-drop interactions to visually indi
   background="secondary"
 />
 
-`--salt-target-background-hover` \
-`--salt-target-borderColor-hover`
+<TokenTableWithControls
+  tokens={["--salt-target-background-hover", "--salt-target-borderColor-hover"]}
+/>
 
 Drag-and-drop targets are one of the few instances where a container’s border style differs from the standard solid style. The `--salt-borderStyle-dashed` token is used to indicate that a container is a valid drop target.
 

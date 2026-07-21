@@ -10,19 +10,20 @@ data:
 
 <Callout title="Note">
 
-All date components requires [LocalizationProvider](/salt/components/localization-provider/examples) to be set up in your application.
+All date components require a [LocalizationProvider](/salt/components/localization-provider/examples) to be set up in your application.
+For the purpose of the examples, we use type `DateFrameworkType` so the examples can be used across all date adapters. For your own code you can replace this type with the type of your date object (e.g luxon would use `DateTime` type instead).
 
 </Callout>
 
 ## Default
 
-An uncontrolled `DatePicker`, composed of a [DateInputRange](../DateInput) and a [Calendar](../Calendar) component, allows users to select a date range when the `selectionVariant` prop is set to "range", without requiring explicit state management in the parent component, making it ideal for selecting start and end dates for various applications.
+An uncontrolled `DatePicker`, composed of a [DateInputRange](../../date-input) and a [Calendar](../../calendar) component, allows users to select a date range when the `selectionVariant` prop is set to "range", without requiring explicit state management in the parent component, making it ideal for selecting start and end dates for various applications.
 
 <LivePreview componentName="date-picker" exampleName="Range" />
 
 ## Controlled
 
-A controlled `DatePicker`, composed of a [DateInputRange](../DateInput) and a [Calendar](../Calendar) component, allows users to select a date range when the `selectionVariant` prop is set to "range", with the parent component explicitly managing the start and end date states, providing greater control over the date range selection process.
+A controlled `DatePicker`, composed of a [DateInputRange](../../date-input) and a [Calendar](../../calendar) component, allows users to select a date range when the `selectionVariant` prop is set to "range", with the parent component explicitly managing the start and end date states, providing greater control over the date range selection process.
 
 <LivePreview componentName="date-picker" exampleName="RangeControlled" />
 
@@ -83,7 +84,7 @@ The composed nature of the `DatePicker` enables you to control the content of th
 
 ## With confirmation
 
-You can change dates upon selection, or apply the selection with additional controls.
+When using a modal `DatePicker` with confirmation controls, set the `enableApply` prop to `true` to enable apply mode. This ensures that date range selections are not committed until the user explicitly applies them by clicking the Apply button. This is useful when you want to validate selections or allow users to cancel their changes before confirming.
 
 <LivePreview componentName="date-picker" exampleName="RangeWithConfirmation" />
 

@@ -3,7 +3,8 @@ import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(drawerStories);
 
-const { Default, OptionalCloseAction } = composedStories;
+const { Default, OptionalCloseAction, InitialFocusIndex, InitialFocusRef } =
+  composedStories;
 
 describe("GIVEN a Drawer", () => {
   describe("WHEN a drawer with close button is open", () => {
@@ -53,6 +54,23 @@ describe("GIVEN a Drawer", () => {
       cy.realPress("Tab");
       cy.findByRole("button", { name: "Close Drawer" }).should("be.focused");
     });
+
+    it("THEN it should make background content inert", () => {
+      cy.mount(<Default disableScrim />);
+
+      cy.findByRole("button", { name: "Open Primary Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+
+      cy.findByRole("button", { name: "Open Primary Drawer" })
+        .parents("[inert]")
+        .should("exist");
+
+      cy.realPress("Escape");
+      cy.findByRole("dialog").should("not.exist");
+      cy.findByRole("button", { name: "Open Primary Drawer" })
+        .parents("[inert]")
+        .should("not.exist");
+    });
   });
 
   describe("WHEN a drawer without close button is open", () => {
@@ -100,6 +118,24 @@ describe("GIVEN a Drawer", () => {
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: "Submit" }).click();
       cy.findByRole("dialog").should("not.be.visible");
+    });
+  });
+
+  describe("WHEN initialFocus prop is provided", () => {
+    it("THEN it should focus the element at the given tabbable index", () => {
+      cy.mount(<InitialFocusIndex />);
+
+      cy.findByRole("button", { name: "Open Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("textbox", { name: "Third" }).should("be.focused");
+    });
+
+    it("THEN it should focus the element referenced by the provided ref", () => {
+      cy.mount(<InitialFocusRef />);
+
+      cy.findByRole("button", { name: "Open Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("textbox", { name: "Third" }).should("be.focused");
     });
   });
 });

@@ -2,7 +2,7 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  Input,
+  NumberInput,
   RangeSlider,
   type RangeSliderProps,
   StackLayout,
@@ -11,7 +11,7 @@ import {
 } from "@salt-ds/core";
 import type { StoryFn } from "@storybook/react-vite";
 import { toFloat } from "packages/core/src/slider/internal/utils";
-import { type ChangeEvent, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 
 const marks = [
   {
@@ -352,22 +352,18 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
   const maximumInputLabel = useId();
 
   const handleInputChange = (
-    event: ChangeEvent<HTMLInputElement>,
+    _event: SyntheticEvent | null,
+    newInputValue: string,
     variant: "min" | "max",
   ) => {
-    const inputValue = event.target.value;
     const sliderValues = [...value];
 
-    variant === "min"
-      ? setMinInputValue(inputValue)
-      : setMaxInputValue(inputValue);
-
     if (variant === "min") {
-      setMinInputValue(inputValue);
-      sliderValues[0] = toFloat(inputValue);
+      setMinInputValue(newInputValue);
+      sliderValues[0] = toFloat(newInputValue);
     } else {
-      setMaxInputValue(inputValue);
-      sliderValues[1] = toFloat(inputValue);
+      setMaxInputValue(newInputValue);
+      sliderValues[1] = toFloat(newInputValue);
     }
 
     setValue(sliderValues as [number, number]);
@@ -380,14 +376,16 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
         <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
           Minimum
         </span>
-        <Input
+        <NumberInput
           value={minInputValue}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            handleInputChange(event, "min")
+          onChange={(event, newInputValue) =>
+            handleInputChange(event, newInputValue, "min")
           }
           style={{ flex: 1 }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           inputProps={{
-            style: { textAlign: "center" },
             "aria-labelledby": minimumInputLabel,
           }}
         />
@@ -405,14 +403,16 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
         <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
           Maximum
         </span>
-        <Input
+        <NumberInput
           value={maxInputValue}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            handleInputChange(event, "max")
+          onChange={(event, newInputValue) =>
+            handleInputChange(event, newInputValue, "max")
           }
           style={{ flex: 1 }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           inputProps={{
-            style: { textAlign: "center" },
             "aria-labelledby": maximumInputLabel,
           }}
         />
@@ -430,22 +430,18 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
   const maximumInputLabel = useId();
 
   const handleInputChange = (
-    event: ChangeEvent<HTMLInputElement>,
+    _event: SyntheticEvent | null,
+    newInputValue: string,
     variant: "min" | "max",
   ) => {
-    const inputValue = event.target.value;
     const sliderValues = [...value];
 
-    variant === "min"
-      ? setMinInputValue(inputValue)
-      : setMaxInputValue(inputValue);
-
     if (variant === "min") {
-      setMinInputValue(inputValue);
-      sliderValues[0] = toFloat(inputValue);
+      setMinInputValue(newInputValue);
+      sliderValues[0] = toFloat(newInputValue);
     } else {
-      setMaxInputValue(inputValue);
-      sliderValues[1] = toFloat(inputValue);
+      setMaxInputValue(newInputValue);
+      sliderValues[1] = toFloat(newInputValue);
     }
 
     setValue(sliderValues as [number, number]);
@@ -458,14 +454,16 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
         <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
           Minimum
         </span>
-        <Input
+        <NumberInput
           value={minInputValue}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            handleInputChange(event, "min")
+          onChange={(event, newInputValue) =>
+            handleInputChange(event, newInputValue, "min")
           }
           style={{ flex: 1 }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           inputProps={{
-            style: { textAlign: "center" },
             "aria-labelledby": minimumInputLabel,
           }}
         />
@@ -485,14 +483,16 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
         <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
           Maximum
         </span>
-        <Input
+        <NumberInput
           value={maxInputValue}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            handleInputChange(event, "max")
+          onChange={(event, newInputValue) =>
+            handleInputChange(event, newInputValue, "max")
           }
           style={{ flex: 1 }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           inputProps={{
-            style: { textAlign: "center" },
             "aria-labelledby": maximumInputLabel,
           }}
         />
@@ -510,22 +510,18 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
   const maximumInputLabel = useId();
 
   const handleInputChange = (
-    event: ChangeEvent<HTMLInputElement>,
+    _event: SyntheticEvent | null,
+    newInputValue: string,
     variant: "min" | "max",
   ) => {
-    const inputValue = event.target.value;
     const sliderValues = [...value];
 
-    variant === "min"
-      ? setMinInputValue(inputValue)
-      : setMaxInputValue(inputValue);
-
     if (variant === "min") {
-      setMinInputValue(inputValue);
-      sliderValues[0] = toFloat(inputValue);
+      setMinInputValue(newInputValue);
+      sliderValues[0] = toFloat(newInputValue);
     } else {
-      setMaxInputValue(inputValue);
-      sliderValues[1] = toFloat(inputValue);
+      setMaxInputValue(newInputValue);
+      sliderValues[1] = toFloat(newInputValue);
     }
 
     setValue(sliderValues as [number, number]);
@@ -538,15 +534,17 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
         <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
           Minimum
         </span>
-        <Input
+        <NumberInput
           value={minInputValue}
           style={{ flex: 1 }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           inputProps={{
-            style: { textAlign: "center" },
             "aria-labelledby": minimumInputLabel,
           }}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            handleInputChange(event, "min")
+          onChange={(event, newInputValue) =>
+            handleInputChange(event, newInputValue, "min")
           }
         />
         <RangeSlider
@@ -578,15 +576,17 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
         <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
           Maximum
         </span>
-        <Input
+        <NumberInput
           value={maxInputValue}
           style={{ flex: 1 }}
+          textAlign="center"
+          min={bounds[0]}
+          max={bounds[1]}
           inputProps={{
-            style: { textAlign: "center" },
             "aria-labelledby": maximumInputLabel,
           }}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            handleInputChange(event, "max")
+          onChange={(event, newInputValue) =>
+            handleInputChange(event, newInputValue, "max")
           }
         />
       </FlexLayout>

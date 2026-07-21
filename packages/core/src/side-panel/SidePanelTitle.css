@@ -1,0 +1,7 @@
+.saltSidePanelTitle {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--salt-size-base);
+  display: flex;
+  align-items: center;
+}

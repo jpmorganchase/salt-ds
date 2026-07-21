@@ -1,0 +1,6 @@
+.example {
+  display: grid;
+  gap: var(--salt-spacing-200);
+  inline-size: 100%;
+  min-inline-size: 0;
+}

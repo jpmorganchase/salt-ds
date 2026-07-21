@@ -1,5 +1,504 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.100
+
+### Patch Changes
+
+- dddc705: Updated `SystemStatus` default styling to better suit full-width, page-level messaging.
+- c032879: Updated `BreadcrumbsNext` overflow disclosure items to render as plain anchors instead of Link, and scoped overflow trigger styling to Button’s public CSS variables.
+- Updated dependencies [2c459c3]
+  - @salt-ds/core@1.67.1
+  - @salt-ds/icons@1.18.1
+
+## 1.0.0-alpha.99
+
+### Minor Changes
+
+- 9c9b83e: Added `BreadcrumbsNext`, `BreadcrumbNext`, `BreadcrumbNextTrigger`, and `BreadcrumbNextLabel` for accessible breadcrumb navigation. Supports wrapping, disclosure collapse, and routing integration via `render` props.
+
+### Patch Changes
+
+- d37a311: Updated Floating UI from `0.26.28` to `0.27.19`.
+- Updated dependencies [747cb08]
+- Updated dependencies [d84df88]
+- Updated dependencies [56855cb]
+- Updated dependencies [e226b17]
+- Updated dependencies [9c9b83e]
+- Updated dependencies [747cb08]
+- Updated dependencies [d37a311]
+  - @salt-ds/core@1.67.0
+
+## 1.0.0-alpha.98
+
+### Minor Changes
+
+- f9f9b8e: Removed `MegaMenu` and its related components (`MegaMenuActions`, `MegaMenuAside`, `MegaMenuContent`, `MegaMenuGroup`, `MegaMenuGroupHeading`, `MegaMenuGroups`, `MegaMenuList`, `MegaMenuListItem`, `MegaMenuPanel`, and `MegaMenuTrigger`) from lab and promoted to core.
+
+### Patch Changes
+
+- Updated dependencies [f9f9b8e]
+  - @salt-ds/core@1.66.0
+
+## 1.0.0-alpha.97
+
+### Minor Changes
+
+- 2516755: Removed `ToolbarNext`, `ToolbarContentNext`, and `TooltrayNext` from lab and promoted to core. As part of the promotion the components were renamed e.g., `ToolbarNext` is now `Toolbar`.
+
+  The legacy `Toolbar` and `Tooltray` exports in lab are unchanged.
+
+### Patch Changes
+
+- Updated dependencies [906c94e]
+- Updated dependencies [2516755]
+- Updated dependencies [027f8c4]
+- Updated dependencies [027f8c4]
+  - @salt-ds/core@1.65.0
+
+## 1.0.0-alpha.96
+
+### Minor Changes
+
+- 248982a: Reworked `MegaMenu` for more semantic, accessible markup and more predictable
+  keyboard navigation.
+
+  - **Renamed `MegaMenuHeader` to `MegaMenuGroupHeading`.** It now renders a real heading (`<h3>` by default; set the level with `as`, e.g. `as="h2"`) instead of a `<div>`, so each group appears in the document outline for assistive technology.
+  - **Renamed `MegaMenuItem` to `MegaMenuListItem`.** It renders an `<a>` by default — pass a `render` element such as `react-router`'s `Link` — and accepts a `current` prop that sets `aria-current="page"` for the active page.
+  - **Added `MegaMenuList`.** Wrap a group's items in it so they are announced as a list; `MegaMenuListItem` can no longer be placed directly inside `MegaMenuGroup`.
+  - **Renamed `MegaMenuSupportingContent` to `MegaMenuAside`.** It now renders an `<aside>` landmark, making the supporting region discoverable to screen-reader users.
+  - **Renamed `MegaMenuSupportingActions` to `MegaMenuActions`.**
+  - **Added `MegaMenuContent`.** It is the center navigation region holding the groups and an optional `MegaMenuActions` band; `MegaMenuAside` sits beside it, positioned by source order.
+  - **Narrowed `MegaMenu`'s `placement` prop** to `"bottom" | "bottom-start" | "bottom-end"` (the new `MegaMenuPlacement` type).
+  - **Menu columns now adapt to the available width** instead of overflowing, keeping panels usable on narrower viewports.
+  - **Keyboard navigation is more predictable** between the columns, the actions row, and the trigger;
+
+  ```diff
+    <MegaMenuPanel aria-label="Solutions menu">
+  +   <MegaMenuContent>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+  -         <MegaMenuHeader>Financial services</MegaMenuHeader>
+  -         <MegaMenuItem render={<Link to="/digital-banking" />}>Digital banking</MegaMenuItem>
+  +         <MegaMenuGroupHeading>Financial services</MegaMenuGroupHeading>
+  +         <MegaMenuList>
+  +           <MegaMenuListItem render={<Link to="/digital-banking" />}>Digital banking</MegaMenuListItem>
+  +         </MegaMenuList>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+  -     <MegaMenuSupportingActions>
+  +     <MegaMenuActions>
+          <Link href="#demo">Book a demo</Link>
+  -     </MegaMenuSupportingActions>
+  +     </MegaMenuActions>
+  +   </MegaMenuContent>
+  -   <MegaMenuSupportingContent>...</MegaMenuSupportingContent>
+  +   <MegaMenuAside>...</MegaMenuAside>
+    </MegaMenuPanel>
+  ```
+
+### Patch Changes
+
+- bab3b6c: Fixed `ToolbarNext` overflow calculations to preserve fractional browser measurements and avoid false overflow caused by subpixel rounding.
+- Updated dependencies [1a48c1a]
+  - @salt-ds/core@1.64.1
+
+## 1.0.0-alpha.95
+
+### Minor Changes
+
+- 8043fee: Updated `MegaMenu` with several API improvements:
+
+  - **Renamed `MegaMenuSection` to `MegaMenuGroups`.** The associated CSS custom property `--saltMegaMenuSection-columnWidth` has been renamed to `--saltMegaMenuGroups-columnWidth`.
+  - **Renamed `MegaMenuContent` to `MegaMenuSupportingContent`** to better convey its purpose as a region for supporting content alongside the menu groups.
+  - **Removed `MegaMenuItemContent`.** Pass the label directly to `MegaMenuItem`.
+  - **Added `MegaMenuSupportingActions`.** Use it to group one or more supporting action links beneath the menu groups in a `MegaMenuPanel`.
+  - **Added a `render` prop to `MegaMenuItem`** for integration with custom link or routing components (such as `react-router`'s `Link`).
+
+  ```diff
+  - <MegaMenuSection>
+  + <MegaMenuGroups>
+      <MegaMenuGroup>
+        <MegaMenuHeader>Financial services</MegaMenuHeader>
+  -     <MegaMenuItem>
+  -       <Icon aria-hidden />
+  -       <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+  -     </MegaMenuItem>
+  +     <MegaMenuItem render={<Link to="/digital-banking" />}>
+  +       <Icon aria-hidden />
+  +       Digital banking
+  +     </MegaMenuItem>
+      </MegaMenuGroup>
+  - </MegaMenuSection>
+  + </MegaMenuGroups>
+  - <MegaMenuContent>...</MegaMenuContent>
+  + <MegaMenuSupportingContent>...</MegaMenuSupportingContent>
+  + <MegaMenuSupportingActions>
+  +   <Link href="#demo" IconComponent={ChevronRightIcon}>Book a demo</Link>
+  + </MegaMenuSupportingActions>
+  ```
+
+- 8687aa7: Date-related components and utilities are no longer re-exported from `@salt-ds/lab`. Update the import source to `@salt-ds/date-components`.
+
+  The exact set of components depends on the selection variant you're using.
+
+  **Single-date selection** (`DateInputSingle`, single `DatePicker`, `DatePickerSingleInput`, `DatePickerSingleGridPanel`, single `Calendar`):
+
+  ```diff
+    import {
+      type DateInputSingleDetails,
+      DateInputSingle,
+      DatePicker,
+      DatePickerOverlay,
+      DatePickerSingleGridPanel,
+      DatePickerSingleInput,
+      DatePickerTrigger,
+      type SingleDateSelection,
+      Calendar,
+      CalendarGrid,
+      CalendarNavigation,
+      LocalizationProvider,
+      useLocalization,
+  - } from "@salt-ds/lab";
+  + } from "@salt-ds/date-components";
+  ```
+
+  **Range selection** (`DateInputRange`, range `DatePicker`, `DatePickerRangeInput`, `DatePickerRangePanel`, `DatePickerRangeGridPanel`, range `Calendar`):
+
+  ```diff
+    import {
+      type DateInputRangeDetails,
+      DateInputRange,
+      DatePicker,
+      DatePickerOverlay,
+      DatePickerRangeGridPanel,
+      DatePickerRangeInput,
+      DatePickerRangePanel,
+      DatePickerTrigger,
+      type DateRangeSelection,
+      Calendar,
+      CalendarGrid,
+      CalendarNavigation,
+      LocalizationProvider,
+      useLocalization,
+  - } from "@salt-ds/lab";
+  + } from "@salt-ds/date-components";
+  ```
+
+  **Offset selection** (offset `Calendar`; offset `DatePicker` built from the range input + range panel with `selectionVariant="offset"`):
+
+  ```diff
+    import {
+      type DateRangeSelection,
+      Calendar,
+      CalendarGrid,
+      CalendarNavigation,
+      DatePicker,
+      DatePickerOverlay,
+      DatePickerRangeInput,
+      DatePickerRangePanel,
+      DatePickerTrigger,
+      LocalizationProvider,
+      useLocalization,
+  - } from "@salt-ds/lab";
+  + } from "@salt-ds/date-components";
+  ```
+
+### Patch Changes
+
+- 4314ca5: Fixed `ToolbarNext` focus handling when composing multiselect `ComboBox` controls, preserving pill keyboard navigation and preventing focus flashes when restoring toolbar focus.
+- Updated dependencies [9729a10]
+- Updated dependencies [52daa64]
+- Updated dependencies [ed2779c]
+- Updated dependencies [07e4d5d]
+  - @salt-ds/core@1.64.0
+
+## 1.0.0-alpha.94
+
+### Minor Changes
+
+- fcf295b: Removed `Tree`, `TreeNode`, `TreeNodeTrigger`, and `TreeNodeLabel` from lab and promoted to core.
+- 5fc9124: ## Summary
+
+  New `ToolbarNext`, `ToolbarContentNext`, and `TooltrayNext` components for composing horizontal toolbars with responsive overflow, grouped controls, and keyboard navigation.
+
+  **What's included**
+
+  - Flat authoring with `TooltrayNext` children aligned to start, center, or end
+  - Explicit `ToolbarContentNext` regions for start, center, and end toolbar layouts
+  - Shared, named, grouped, independent, and non-overflowing tooltray overflow modes
+  - Overflow priority control for deciding which trays collapse first
+  - Bordered and transparent appearances with primary, secondary, and tertiary variants
+  - Horizontal toolbar semantics and keyboard navigation across toolbar controls and overflow menus
+  - `TooltrayNext` as a layout-only wrapper, with optional `role="group"` and accessible labels for meaningful control groups
+
+  ## Examples
+
+  **Basic Toolbar** — place `TooltrayNext` components directly inside `ToolbarNext`; use `align="end"` for trailing actions
+
+  ```tsx
+  import { Button, Dropdown, Input, Option } from "@salt-ds/core";
+  import { GridIcon, ListIcon, SearchIcon } from "@salt-ds/icons";
+  import { ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+
+  const options = ["Option A", "Option B", "Option C"];
+
+  <ToolbarNext aria-label="Data controls">
+    <TooltrayNext>
+      <Dropdown bordered defaultSelected={["Option A"]} style={{ width: 160 }}>
+        {options.map((option) => (
+          <Option value={option} key={option} />
+        ))}
+      </Dropdown>
+    </TooltrayNext>
+    <TooltrayNext role="group" aria-label="Search">
+      <Input
+        bordered
+        startAdornment={<SearchIcon />}
+        placeholder="Search"
+        style={{ width: 180 }}
+      />
+    </TooltrayNext>
+    <TooltrayNext align="end" role="group" aria-label="View and actions">
+      <Button appearance="transparent" aria-label="Grid view">
+        <GridIcon aria-hidden />
+      </Button>
+      <Button appearance="transparent" aria-label="List view">
+        <ListIcon aria-hidden />
+      </Button>
+      <Button appearance="solid">Run</Button>
+    </TooltrayNext>
+  </ToolbarNext>;
+  ```
+
+  **Centered Toolbar With Named Overflow** — use `ToolbarContentNext` when you need explicit start, center, and end regions; named overflow keeps related actions behind a labelled trigger
+
+  ```tsx
+  import { Button, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+  import { ToolbarContentNext, ToolbarNext, TooltrayNext } from "@salt-ds/lab";
+
+  <ToolbarNext aria-label="Centered actions">
+    <ToolbarContentNext position="start">
+      <TooltrayNext
+        overflowMode="none"
+        role="group"
+        aria-label="Primary action"
+      >
+        <Button appearance="solid">Create</Button>
+      </TooltrayNext>
+    </ToolbarContentNext>
+    <ToolbarContentNext position="center">
+      <TooltrayNext overflowMode="none" role="group" aria-label="View options">
+        <ToggleButtonGroup>
+          <ToggleButton value="day">Day</ToggleButton>
+          <ToggleButton value="week">Week</ToggleButton>
+          <ToggleButton value="month">Month</ToggleButton>
+        </ToggleButtonGroup>
+      </TooltrayNext>
+    </ToolbarContentNext>
+    <ToolbarContentNext position="end">
+      <TooltrayNext
+        overflowGroup="Actions"
+        overflowLabel="Actions"
+        overflowMode="grouped"
+        overflowPriority={5}
+        role="group"
+        aria-label="Secondary actions"
+      >
+        <Button appearance="transparent">Export</Button>
+        <Button appearance="transparent">Settings</Button>
+      </TooltrayNext>
+    </ToolbarContentNext>
+  </ToolbarNext>;
+  ```
+
+### Patch Changes
+
+- Updated dependencies [fcf295b]
+  - @salt-ds/core@1.63.0
+
+## 1.0.0-alpha.93
+
+### Minor Changes
+
+- 8980f01: Removed `SidePanel` and its related components (`SidePanelProvider`, `SidePanelTrigger`, `SidePanelCloseButton`, `SidePanelHeader`, `SidePanelTitle`, `SidePanelContent`, and the `useSidePanel` hook) from lab and promoted to core.
+
+### Patch Changes
+
+- 1718878: Updated Tree node layout to use `spacing-75 + spacing-50` vertical padding and `size-icon` chevron to align with design.
+- Updated dependencies [8980f01]
+  - @salt-ds/core@1.62.0
+
+## 1.0.0-alpha.92
+
+### Patch Changes
+
+- 4f2d850: Fix `SidePanel` animation, focus behaviour, and width handling.
+
+  - `--saltSidePanel-width` now accepts any CSS length, including percentages (`20%`), `clamp()`, `vw`, and `rem`.
+  - Tabbing into, through, and out of an open panel now works in both directions, including for custom triggers registered via `setTriggerRef` (e.g. table rows). Focus no longer gets trapped or lost.
+
+## 1.0.0-alpha.91
+
+### Minor Changes
+
+- e74d4d8: Added `MegaMenu`.
+
+  `MegaMenu` is a multi-column dropdown that opens from a trigger to display a large set of grouped navigation items. Use `MegaMenu` to manage open state, `MegaMenuTrigger` to toggle the panel, `MegaMenuPanel` for the floating container, and `MegaMenuSection` / `MegaMenuGroup` / `MegaMenuHeader` / `MegaMenuItem` / `MegaMenuItemContent` / `MegaMenuContent` to structure the contents.
+
+  ```tsx
+  const [open, setOpen] = useState(false);
+
+  <MegaMenu open={open} onOpenChange={setOpen}>
+    <MegaMenuTrigger>
+      <NavigationItem>Solutions</NavigationItem>
+    </MegaMenuTrigger>
+    <MegaMenuPanel aria-label="Solutions menu">
+      <MegaMenuSection>
+        <MegaMenuGroup>
+          <MegaMenuHeader>Financial services</MegaMenuHeader>
+          <MegaMenuItem onClick={() => console.log("Digital banking")}>
+            <MegaMenuItemContent>Digital banking</MegaMenuItemContent>
+          </MegaMenuItem>
+          <MegaMenuItem onClick={() => console.log("Risk management")}>
+            <MegaMenuItemContent>Risk management</MegaMenuItemContent>
+          </MegaMenuItem>
+        </MegaMenuGroup>
+      </MegaMenuSection>
+    </MegaMenuPanel>
+  </MegaMenu>;
+  ```
+
+- 7ffd0fd: Removed `TabsNext` and related components from lab and promoted to core. As part of the promotion the components were renamed e.g., `TabsNext` is now `Tabs`.
+- 2db14be: Removed `Rating` from lab and promoted to core.
+- 6368299: Added `SidePanelCloseButton` component that handles close logic, icon rendering, and accessible labelling (`aria-label` + `aria-labelledby` linked to the panel title) automatically. Removes the need for consumers to manually wire up IDs, icons, and click handlers.
+- 6368299: Updated `getTriggerProps` in `useSidePanel` to include a built-in `onClick` handler that toggles the panel open state, removing the need for consumers to manage toggle logic themselves, unless they want to.
+
+### Patch Changes
+
+- 78ca46a: Fix TreeNodes wrapped in React Fragments not participating in keyboard navigation
+- 6368299: Fixed `SidePanel` animating on first render when using `defaultOpen`. The panel now appears immediately without animation when initially open, and only animates on subsequent open/close interactions.
+- Updated dependencies [e74d4d8]
+- Updated dependencies [2db14be]
+- Updated dependencies [7ffd0fd]
+  - @salt-ds/core@1.61.0
+
+## 1.0.0-alpha.90
+
+### Minor Changes
+
+- 5d4de6f: Date components and related utilities have been extracted into a new package: `@salt-ds/date-components`. This package is intended to be the long-term home for these components.
+
+  To avoid a breaking change while the date components remain in release-candidate status, `@salt-ds/lab` continues to re-export the same APIs for now. Importing these APIs from `@salt-ds/lab` will emit a deprecation warning in development.
+
+  New code should import directly from `@salt-ds/date-components`. Once `@salt-ds/date-components` is marked stable, the date component exports will be removed from `@salt-ds/lab`.
+
+  In addition, `DatePickerSinglePanel` which was previously deprecated in favour of `DatePickerSingleGridPanel` has now been removed. Consumers should update to use `DatePickerSingleGridPanel` from `@salt-ds/date-components` if they have not already done so.
+
+  ```diff
+  - import { DatePickerSinglePanel } from "@salt-ds/lab";
+  + import { DatePickerSingleGridPanel } from "@salt-ds/date-components";
+  ```
+
+  ### DatePicker `enableApply` prop deprecation
+
+  The automatic detection of `DatePickerActions` to infer the `enableApply` prop is now deprecated. When using a modal `DatePicker` with confirmation controls, you must explicitly set `enableApply={true}` on the `DatePicker` component.
+
+  A deprecation warning will be emitted in development mode if `DatePickerActions` is detected and `enableApply` is not explicitly provided.
+
+  **Migration:**
+
+  Update your DatePicker usage to explicitly set `enableApply`:
+
+  ```diff
+    <DatePicker
+      selectionVariant="single"
+  +   enableApply={true}
+      onApply={handleApply}
+      onCancel={handleCancel}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput />
+      </DatePickerTrigger>
+      <DatePickerOverlay>
+        <DatePickerSingleGridPanel />
+        <DatePickerActions selectionVariant="single" />
+      </DatePickerOverlay>
+    </DatePicker>
+  ```
+
+  The automatic detection will be removed in a future version.
+
+  ### DatePickerRangePanel navigation fix
+
+  Fixed an issue where the end calendar's Next button was incorrectly disabled near `minDate`. The `isEndNextDisabled` guard was comparing against `minDate` plus one month instead of `maxDate`, which meant the Next button could be disabled even when valid later months were available.
+
+  ### DatePickerActions label fix
+
+  Fixed an issue where action button labels (Apply/Cancel) were missing context when `selectedDate` was `undefined` (e.g. an untouched uncontrolled picker). The guard now checks for both `null` and `undefined`. Additionally, partial range selections now show explicit wording (`"no start date"` / `"no end date"`) instead of blank labels.
+
+- 282c739: Added `SidePanel`.
+
+  `SidePanel` is a collapsible container that slides in from an edge of its parent, providing supplementary content or controls without disrupting the main layout.
+
+  Use `SidePanelProvider` to manage open state, `SidePanelTrigger` to toggle the panel, `SidePanelTitle` provides the accessible name for the panel region automatically and `useSidePanel` to access `setOpen` for programmatic close.
+
+  ```tsx
+  const PanelContent = () => {
+    const { CloseIcon } = useIcon();
+    const { setOpen } = useSidePanel();
+    return (
+      <SidePanel>
+        <SidePanelHeader>
+          <SidePanelTitle>
+            <H2>Panel Title</H2>
+          </SidePanelTitle>
+          <Button
+            aria-label="Close"
+            appearance="transparent"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        </SidePanelHeader>
+        <SidePanelContent>
+          <Text>Panel body content.</Text>
+        </SidePanelContent>
+      </SidePanel>
+    );
+  };
+
+  <SidePanelProvider>
+    <SidePanelTrigger>
+      <Button>Open Panel</Button>
+    </SidePanelTrigger>
+    <PanelContent />
+  </SidePanelProvider>;
+  ```
+
+### Patch Changes
+
+- Updated dependencies [5d4de6f]
+- Updated dependencies [5d4de6f]
+- Updated dependencies [5d4de6f]
+- Updated dependencies [5d4de6f]
+  - @salt-ds/date-components@0.1.0
+  - @salt-ds/date-adapters@0.1.0-alpha.7
+  - @salt-ds/core@1.60.0
+
+## 1.0.0-alpha.89
+
+### Patch Changes
+
+- e131baa: Improved `useEventCallback`'s stability.
+- 7427b2c: - Updated spacing between tree node elements.
+  - Fixed missing gap between node elements.
+  - Fixed node focus indicator outline placement.
+- 39e684a: Fixed incorrect Tooltip positioning and behavior when used with TreeNodeTrigger.
+- b9c81ae: Refactored Tabs to address accessibility issues, known bugs and improve stability.
+- Updated dependencies [e131baa]
+- Updated dependencies [2d2d62b]
+  - @salt-ds/core@1.59.1
+
 ## 1.0.0-alpha.88
 
 ### Patch Changes

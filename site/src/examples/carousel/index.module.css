@@ -59,3 +59,8 @@
   height: var(--carousel-slide-height);
   user-select: none;
 }
+
+.fixedWidth:global(.saltCarousel) {
+  width: 100%;
+  --carousel-slide-size: 550px;
+}

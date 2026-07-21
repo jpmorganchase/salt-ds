@@ -23,15 +23,26 @@ export type ValidateStepFn = (
 ) => Promise<StepValidationResult["fields"]>; // Returns a promise resolving to field validation results
 
 // Represents the state of the wizard form
-export interface WizardFormState {
-  activeStepIndex: number; // Index of the currently active step
+export interface WizardFormState<
   // biome-ignore lint/suspicious/noExplicitAny: This is acceptable to support other use-cases.
-  formData: Record<string, any>; // The form data collected across steps
+  TFormData extends Record<string, any> = Record<string, any>,
+> {
+  activeStepIndex: number; // Index of the currently active step
+  formData: TFormData; // The form data collected across steps
   validationsByStep: Partial<Record<string, StepValidationResult>>; // Validation results for each step
 }
 
 export type WizardFormAction =
-  | { type: "UPDATE_FIELD"; name: string; value: string } // Update a specific field in the form data
+  | { type: "UPDATE_FIELD"; name: string; value: unknown } // Update a specific field in the form data
+  | {
+      type: "UPDATE_FIELDS";
+      fields: Record<string, unknown>;
+    } // Update multiple fields in the form data
+  | {
+      type: "CLEAR_FIELD_VALIDATION";
+      stepId: string;
+      name: string;
+    }
   | {
       type: "SET_VALIDATION"; // Set validation results for a step
       stepId: string; // The ID of the step being validated
@@ -64,6 +75,32 @@ export const wizardFormReducer = (
         ...state,
         formData: { ...state.formData, [action.name]: action.value },
       };
+    case "UPDATE_FIELDS":
+      return {
+        ...state,
+        formData: { ...state.formData, ...action.fields },
+      };
+    case "CLEAR_FIELD_VALIDATION": {
+      const currentStepValidation = state.validationsByStep[action.stepId];
+
+      if (!currentStepValidation?.fields[action.name]) {
+        return state;
+      }
+
+      const nextFields = { ...currentStepValidation.fields };
+      delete nextFields[action.name];
+
+      return {
+        ...state,
+        validationsByStep: {
+          ...state.validationsByStep,
+          [action.stepId]: {
+            fields: nextFields,
+            status: deriveStatus(nextFields),
+          },
+        },
+      };
+    }
     case "SET_VALIDATION":
       return {
         ...state,
@@ -101,22 +138,24 @@ export type UseWizardReducer = (
 ) => WizardFormState;
 
 // Options for configuring the `useWizardForm` hook
-interface UseWizardFormOptions {
+// biome-ignore lint/suspicious/noExplicitAny: This is acceptable to support other use-cases.
+interface UseWizardFormOptions<TFormData extends Record<string, any>> {
   steps: string[]; // Array of step IDs in the wizard
-  initialState: WizardFormState; // Initial state of the wizard form
+  initialState: WizardFormState<TFormData>; // Initial state of the wizard form
   validateStep: ValidateStepFn; // Function to validate a step
   reducer?: UseWizardReducer; // Reducer function to handle state transitions
 }
 
-export function useWizardForm({
+// biome-ignore lint/suspicious/noExplicitAny: This is acceptable to support other use-cases.
+export function useWizardForm<TFormData extends Record<string, any>>({
   steps,
   initialState,
   validateStep,
   reducer = wizardFormReducer,
-}: UseWizardFormOptions) {
+}: UseWizardFormOptions<TFormData>) {
   const [state, dispatch] = useReducer(
-    (state: WizardFormState, action: WizardFormAction) =>
-      reducer(state, action, steps, initialState),
+    (state: WizardFormState<TFormData>, action: WizardFormAction) =>
+      reducer(state, action, steps, initialState) as WizardFormState<TFormData>,
     initialState,
   );
 
@@ -129,42 +168,62 @@ export function useWizardForm({
       const fields = await validateStep(currentStepId, dataToUse);
       dispatch({ type: "SET_VALIDATION", stepId: currentStepId, fields });
       const hasErrors = Object.values(fields).some((f) => f.status === "error");
-      return !hasErrors;
+      return { valid: !hasErrors, fields };
     },
     [currentStepId, state.formData, validateStep],
   );
 
-  // Updates a specific field in the form data and revalidates the step
+  // Updates a specific field in the form data and revalidates if there are existing errors
   const updateField = useCallback(
-    (name: string, value: string) => {
+    (name: string, value: unknown) => {
       dispatch({ type: "UPDATE_FIELD", name, value });
-      runValidationAndStore({ ...state.formData, [name]: value });
+      // Only revalidate if there are already validation errors on this step
+      if (state.validationsByStep[currentStepId]) {
+        runValidationAndStore({ ...state.formData, [name]: value });
+      }
     },
-    [state.formData, runValidationAndStore],
+    [
+      state.formData,
+      state.validationsByStep,
+      currentStepId,
+      runValidationAndStore,
+    ],
   );
+
+  // Updates multiple fields in the form data without triggering revalidation.
+  // Useful when validation should be deferred (e.g. until the user clicks Next).
+  const updateFieldsWithoutValidation = (fields: Record<string, unknown>) => {
+    dispatch({ type: "UPDATE_FIELDS", fields });
+  };
+
+  const clearFieldValidation = (stepId: string, name: string) => {
+    dispatch({ type: "CLEAR_FIELD_VALIDATION", stepId, name });
+  };
 
   // Moves to the next step if the current step is valid
   const next = useCallback(() => {
-    runValidationAndStore().then((isValid) => {
+    runValidationAndStore().then(({ valid: isValid }) => {
       if (isValid) dispatch({ type: "NEXT_STEP" });
     });
   }, [runValidationAndStore]);
 
+  // Moves to the next step without revalidating. Useful after explicit validation has already completed.
+  const nextWithoutValidation = () => dispatch({ type: "NEXT_STEP" });
+
   // Moves to the previous step
-  const previous = useCallback(() => {
-    dispatch({ type: "PREVIOUS_STEP" });
-  }, []);
+  const previous = () => dispatch({ type: "PREVIOUS_STEP" });
 
   // Resets the wizard form to its initial state
-  const reset = useCallback(() => {
-    dispatch({ type: "RESET" });
-  }, []);
+  const reset = () => dispatch({ type: "RESET" });
 
   return {
     state,
     currentStepId,
     updateField,
+    updateFieldsWithoutValidation,
+    clearFieldValidation,
     next,
+    nextWithoutValidation,
     previous,
     reset,
     runValidationAndStore,

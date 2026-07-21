@@ -76,7 +76,6 @@
 }
 
 /** Move sort arrow towards menu icon */
-/** v32 doesn't have filter icon */
 .ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
 .ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
 .ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
@@ -261,10 +260,10 @@
   --ag-icon-font-code-filter: var(--ag-icon-font-code-filter-filled);
 }
 
-.ag-theme-salt-light .ag-floating-filter:after,
-.ag-theme-salt-dark .ag-floating-filter:after,
-.ag-theme-salt-compact-light .ag-floating-filter:after,
-.ag-theme-salt-compact-dark .ag-floating-filter:after {
+.ag-theme-salt-light .ag-floating-filter::after,
+.ag-theme-salt-dark .ag-floating-filter::after,
+.ag-theme-salt-compact-light .ag-floating-filter::after,
+.ag-theme-salt-compact-dark .ag-floating-filter::after {
   width: 0;
 }
 
@@ -336,10 +335,10 @@
     From ag grid v32, a new `.ag-has-popup-positioned-under` can be potentially used, however `.ag-column-menu-visible` will still be applied
     when open filter menu from floating filter.
   */
-  background: var(--salt-actionable-secondary-background-active);
-  color: var(--salt-actionable-secondary-foreground-active);
+  background: var(--salt-actionable-subtle-background-active);
+  color: var(--salt-actionable-subtle-foreground-active);
   /* Color for menu / filter icons */
-  --ag-icon-font-color: var(--salt-actionable-secondary-foreground-active);
+  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-active);
   /** don't show hover style, don't want to flip between light / dark */
   --salt-actionable-subtle-background-hover: var(--salt-actionable-subtle-background-active);
 }
@@ -348,7 +347,7 @@
 .ag-theme-salt-dark .ag-header-cell.ag-column-menu-visible .ag-icon,
 .ag-theme-salt-compact-light .ag-header-cell.ag-column-menu-visible .ag-icon,
 .ag-theme-salt-compact-dark .ag-header-cell.ag-column-menu-visible .ag-icon {
-  color: var(--salt-actionable-secondary-foreground-active);
+  color: var(--salt-actionable-subtle-foreground-active);
 }
 
 .ag-theme-salt-light .ag-cell-label-container,

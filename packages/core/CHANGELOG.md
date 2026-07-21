@@ -1,5 +1,250 @@
 # @salt-ds/core
 
+## 1.67.1
+
+### Patch Changes
+
+- 2c459c3: Updated deprecated JSDocs for legacy props, theme aliases, icons, and the Moment date adapter to include deprecation versions and clearer migration guidance.
+- Updated dependencies [2c459c3]
+  - @salt-ds/icons@1.18.1
+
+## 1.67.0
+
+### Minor Changes
+
+- 9c9b83e: Added `LevelSeparatorIcon` to `SemanticIconProvider`, defaulting to `ChevronRightIcon`.
+
+### Patch Changes
+
+- 747cb08: Fixed `Dialog` not closing on `Escape` when `disableDismiss` was set. `disableDismiss` now only prevents dismissal via outside press, keeping `Escape` available so the dialog remains accessible.
+- d84df88: Fixed `FileDropZone` drag-and-drop handling so disabled drop zones ignore dropped files while preventing browser file navigation, and non-file drops are cancelled without invoking the file `onDrop` callback. `FileDropZoneTrigger` now composes consumer `onClick` handlers and calls `onChange` before resetting the input value.
+- 56855cb: Fixed `AriaAnnouncerProvider` leaking pending `setTimeout` handles used to drain announcements from the live region. The provider now tracks each scheduled removal and clears any outstanding timers on unmount, preventing `setState`-on-unmounted warnings and test-worker crashes (e.g. `ReferenceError: window is not defined`) when the provider unmounts within the announcement drain window.
+- e226b17: Fixed `BorderLayout` leaving empty rows or columns when the `north`, `south`, `west`, or `east` regions were omitted. The grid template now only includes tracks for the regions that are present, so omitted regions no longer leave gaps.
+- 747cb08: Fixed background content remaining interactive while a modal floating element (`Dialog`, `Drawer`, `Overlay`) was open. Outside elements are now marked inert for the duration the floating element is shown.
+- d37a311: Updated Floating UI from `0.26.28` to `0.27.19`.
+
+## 1.66.0
+
+### Minor Changes
+
+- f9f9b8e: `MegaMenu` is a large, expandable panel which opens from the main navigation. It displays and categorizes links to key application pages in a multi-column layout, allowing users to access a wide range of app features and content from a single menu.
+
+  Compose it with `MegaMenuTrigger`, `MegaMenuPanel`, `MegaMenuContent`, `MegaMenuAside`, `MegaMenuActions`, `MegaMenuGroups`, `MegaMenuGroup`, `MegaMenuGroupHeading`, `MegaMenuList`, and `MegaMenuListItem`.
+
+  ```tsx
+  <MegaMenu>
+    <MegaMenuTrigger>
+      <NavigationItem>Products</NavigationItem>
+    </MegaMenuTrigger>
+    <MegaMenuPanel>
+      <MegaMenuContent>
+        <MegaMenuGroups>
+          <MegaMenuGroup>
+            <MegaMenuGroupHeading>Group</MegaMenuGroupHeading>
+            <MegaMenuList>
+              <MegaMenuListItem href="#">Item</MegaMenuListItem>
+            </MegaMenuList>
+          </MegaMenuGroup>
+        </MegaMenuGroups>
+      </MegaMenuContent>
+    </MegaMenuPanel>
+  </MegaMenu>
+  ```
+
+## 1.65.1
+
+### Patch Changes
+
+- a41099d: Fixed `compute-scroll-into-view` not being listed as a dependency.
+- 562f2e6: - Refactored `Spinner` so its size and stroke width are driven by CSS density tokens rather than computed in JavaScript. Density changes no longer cause `Spinner` to re-render.
+  - Fixed the small `Spinner` rendering at a smaller size than intended in high density.
+
+## 1.65.0
+
+### Minor Changes
+
+- 2516755: Added `Toolbar`, `ToolbarContent`, and `Tooltray` for composing horizontal toolbars with responsive overflow, grouped controls, and keyboard navigation.
+
+  Renamed from `ToolbarNext`, `ToolbarContentNext`, and `TooltrayNext` in lab.
+
+  **Basic Toolbar** — place `Tooltray` components directly inside `Toolbar`; use `align="end"` for trailing actions
+
+  ```tsx
+  import { Toolbar, Tooltray } from "@salt-ds/core";
+
+  <Toolbar aria-label="Data controls">
+    <Tooltray>{/* controls */}</Tooltray>
+    <Tooltray align="end" role="group" aria-label="View and actions">
+      {/* controls */}
+    </Tooltray>
+  </Toolbar>;
+  ```
+
+  **Centered Toolbar With Named Overflow** — use `ToolbarContent` when you need explicit start, center, and end regions
+
+  ```tsx
+  import { ToolbarContent, Toolbar, Tooltray } from "@salt-ds/core";
+
+  <Toolbar aria-label="Centered actions">
+    <ToolbarContent position="start">
+      <Tooltray overflowGroup="filters" overflowLabel="Filters">
+        {/* controls */}
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="center">
+      <Tooltray overflowMode="none" role="group" aria-label="View options">
+        {/* controls */}
+      </Tooltray>
+    </ToolbarContent>
+    <ToolbarContent position="end">
+      <Tooltray align="end">{/* controls */}</Tooltray>
+    </ToolbarContent>
+  </Toolbar>;
+  ```
+
+- 027f8c4: Added a `render` prop to `Avatar` so teams can render the avatar root as a custom interactive element such as a button or link.
+
+### Patch Changes
+
+- 906c94e: Fixed `Avatar` to use the notation text characteristic tokens for `font-family` and `font-weight`, aligning with its existing `font-size` and `line-height` values.
+- 027f8c4: Fixed `mergeProps` discarding the host component's inline `style` when the render element supplied its own `style`. Both `style` objects are now shallow-merged, so CSS custom properties set internally by the component are preserved. Conflicting keys still resolve in favor of the render element's value.
+
+## 1.64.1
+
+### Patch Changes
+
+- 1a48c1a: Fixed Pagination page button focus outline being covered by a sibling button's hover state.
+
+## 1.64.0
+
+### Minor Changes
+
+- 52daa64: Added an `initialFocus` prop to `Drawer` to allow customizing which element receives focus when the drawer opens.
+- ed2779c: Added `appearance` and `sentiment` props to `FileDropZoneTrigger`. `sentiment` accepts `'accented' | 'neutral'` (defaults to `'neutral'`) and `appearance` accepts `'solid' | 'bordered' | 'transparent'` (defaults to `'solid'`).
+
+  ```tsx
+  <FileDropZoneTrigger appearance="bordered" sentiment="accented" />
+  ```
+
+  Also widened the props type so all native `<button>` attributes (e.g. `type`, `name`, `form`, `value`) are now accepted.
+
+### Patch Changes
+
+- 9729a10: Fixed the status indicator in Banner being visible to screen readers.
+- 07e4d5d: Fixed an issue where the visually hidden "Opens in a new tab" text on `Link` (when `target="_blank"`) was included when users selected and copied the link's contents.
+
+## 1.63.0
+
+### Minor Changes
+
+- fcf295b: Added `Tree`, `TreeNode`, `TreeNodeTrigger`, and `TreeNodeLabel`.
+
+  `Tree` displays hierarchical data as an expandable and collapsible structure. Users can navigate nested items and optionally select one or more nodes.
+
+  ```tsx
+  <Tree aria-label="File browser" defaultExpanded={["documents"]}>
+    <TreeNode value="documents" label="Documents">
+      <TreeNode value="reports" label="Reports">
+        <TreeNode value="annual-report" label="Annual Report" />
+      </TreeNode>
+    </TreeNode>
+  </Tree>
+  ```
+
+## 1.62.0
+
+### Minor Changes
+
+- 8980f01: A side panel is a persistent, side-by-side workspace that keeps supporting information and controls available while users continue their main task. It’s intended for ongoing parallel work—such as referencing details, inspecting data, filtering results, or editing attributes—where maintaining visibility and context improves accuracy and efficiency.
+
+  ```tsx
+  <SidePanelProvider>
+    <SidePanelTrigger>
+      <Button />
+    </SidePanelTrigger>
+    <SidePanel>
+      <SidePanelHeader>
+        <SidePanelTitle>Section Title</SidePanelTitle>
+        <SidePanelCloseButton />
+      </SidePanelHeader>
+      <SidePanelContent>
+        <Text>Side panel content goes here.</Text>
+      </SidePanelContent>
+    </SidePanel>
+  </SidePanelProvider>
+  ```
+
+## 1.61.0
+
+### Minor Changes
+
+- 2db14be: Added `Rating`.
+
+  `Rating` component allows users to submit feedback and view average scores on a defined scale, reflecting your product, service or experience.
+
+  ```tsx
+  <Rating aria-label="Rating" defaultValue={3} />
+  ```
+
+- 7ffd0fd: Added `Tab`, `TabAction`, `TabBar`, `TabList`, `TabPanel`, `Tabs`, `TabTrigger`.
+
+  `Tabs` allow users to move between different views of related content without leave the current page.
+
+  ```tsx
+  <Tabs defaultValue="Home">
+    <TabBar>
+      <TabList aria-label="Example tablist">
+        <Tab value="Home">
+          <TabTrigger>Home</TabTrigger>
+        </Tab>
+        <Tab value="Transactions">
+          <TabTrigger>Transactions</TabTrigger>
+        </Tab>
+        <Tab value="Checks">
+          <TabTrigger>Checks</TabTrigger>
+        </Tab>
+      </TabList>
+    </TabBar>
+  </Tabs>
+  ```
+
+### Patch Changes
+
+- e74d4d8: Fixed `aria-controls` on `NavigationItem` being applied to the outer wrapper element instead of the interactive trigger element.
+
+## 1.60.0
+
+### Minor Changes
+
+- 5d4de6f: `AriaAnnouncer` prop `delay` is deprecated in favour of an `options` prop.
+
+  The `options` prop provides `ariaLive` which can be set to either `polite` or `assertive` depending on the use case.
+  It also provides `target`, which routes announcements to a specific `AriaAnnouncerProvider` target (useful for nested contexts such as dialogs/modals).
+
+  ```diff
+  const { announce } = useAriaAnnouncer();
+  - announce("message", 500)
+  + announce("message", { ariaLive: "polite" });
+  + announce("message", { target: "date-picker-overlay", ariaLive: "polite" });
+  ```
+
+  The `delay` is replaced by two DOM elements that are used to announce messages.
+  The first element is used for `assertive` messages and the second for `polite` messages.
+  Messages are queued and remain in the DOM for 300 msecs before being removed, negating the need for a delay.
+
+  By default using the options prop will default to `polite` announcements.
+
+  In addition `Spinner`, `Pagination` and `ContentStatus` have been updated to default to `polite` announcements, to meet firmwide accessibility standards.
+
+  As part of the refactor, fixed announcements triggered during component unmount/cleanup (e.g. `Spinner` `completionAnnouncement`) being blocked.
+
+## 1.59.1
+
+### Patch Changes
+
+- e131baa: Improved `useEventCallback`'s stability.
+- 2d2d62b: Changed Accordion's value prop to be optional.
+
 ## 1.59.0
 
 ### Minor Changes

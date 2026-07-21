@@ -15,13 +15,19 @@
   background: var(--saltAvatar-background, var(--avatar-background));
   font-size: var(--avatar-fontSize);
   line-height: var(--saltAvatar-lineHeight, var(--salt-text-notation-lineHeight));
-  font-family: var(--salt-text-fontFamily);
-  font-weight: var(--salt-text-fontWeight);
+  font-family: var(--salt-text-notation-fontFamily);
+  font-weight: var(--salt-text-notation-fontWeight);
   width: var(--avatar-container-size);
   min-width: var(--avatar-container-size);
   height: var(--avatar-container-size);
   min-height: var(--avatar-container-size);
   border-radius: var(--saltAvatar-borderRadius, var(--salt-palette-corner-strongest, 50%));
+  border: none;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  text-decoration: none;
+  position: relative;
 
   display: flex;
   justify-content: center;
@@ -113,4 +119,43 @@
 .saltAvatar > svg:not(.saltIcon) {
   width: 100%;
   height: 100%;
+}
+
+.saltAvatar:focus-visible {
+  outline-offset: var(--salt-spacing-fixed-100);
+}
+
+button.saltAvatar,
+a.saltAvatar {
+  cursor: var(--salt-cursor-hover);
+}
+
+button.saltAvatar:disabled {
+  cursor: var(--salt-cursor-disabled);
+}
+
+button.saltAvatar::after,
+a.saltAvatar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: transparent;
+}
+
+.saltAvatar[aria-expanded="true"][aria-haspopup="menu"]::after,
+.saltAvatar[aria-expanded="true"][aria-haspopup="dialog"]::after {
+  background: var(--salt-overlayable-background-hover);
+}
+
+@media (hover: hover) {
+  button.saltAvatar:hover::after,
+  a.saltAvatar:hover::after {
+    background: var(--salt-overlayable-background-hover);
+  }
+
+  button.saltAvatar:disabled:hover::after {
+    background: transparent;
+  }
 }

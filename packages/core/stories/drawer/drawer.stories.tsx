@@ -24,6 +24,7 @@ import {
   type ChangeEvent,
   type SyntheticEvent,
   useEffect,
+  useRef,
   useState,
 } from "react";
 
@@ -391,6 +392,53 @@ export const OptionalCloseAction = () => {
           <FlexItem align="end">
             <Button onClick={handleClose}>Submit</Button>
           </FlexItem>
+        </StackLayout>
+      </Drawer>
+    </>
+  );
+};
+
+export const InitialFocusIndex: StoryFn<DrawerProps> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        {...args}
+        open={open}
+        onOpenChange={setOpen}
+        initialFocus={args.initialFocus ?? 2}
+      >
+        <StackLayout>
+          <Button>First</Button>
+          <Button>Second</Button>
+          <Input inputProps={{ "aria-label": "Third" }} />
+          <Button>Fourth</Button>
+        </StackLayout>
+      </Drawer>
+    </>
+  );
+};
+
+export const InitialFocusRef: StoryFn<DrawerProps> = (args) => {
+  const [open, setOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        {...args}
+        open={open}
+        onOpenChange={setOpen}
+        initialFocus={inputRef}
+      >
+        <StackLayout>
+          <Button>First</Button>
+          <Button>Second</Button>
+          <Input inputRef={inputRef} inputProps={{ "aria-label": "Third" }} />
+          <Button>Fourth</Button>
         </StackLayout>
       </Drawer>
     </>

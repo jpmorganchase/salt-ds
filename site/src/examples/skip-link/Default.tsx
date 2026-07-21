@@ -54,8 +54,8 @@ export const Default = (): ReactElement => {
             </nav>
             <FlexItem align="center">
               <StackLayout direction="row" gap={1}>
-                <Button appearance="transparent">
-                  <GithubIcon />
+                <Button aria-label="GitHub" appearance="transparent">
+                  <GithubIcon aria-hidden />
                 </Button>
               </StackLayout>
             </FlexItem>

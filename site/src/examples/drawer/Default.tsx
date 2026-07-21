@@ -10,6 +10,7 @@ export const Default = (): ReactElement => {
     <StackLayout>
       <Button onClick={() => setOpenPrimary(true)}>Open Primary Drawer</Button>
       <Drawer
+        aria-label="Primary drawer"
         open={openPrimary}
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
         style={{ width: 200 }}
@@ -20,6 +21,7 @@ export const Default = (): ReactElement => {
         Open Secondary Drawer
       </Button>
       <Drawer
+        aria-label="Secondary drawer"
         open={openSecondary}
         onOpenChange={(newOpen) => setOpenSecondary(newOpen)}
         variant="secondary"
@@ -31,6 +33,7 @@ export const Default = (): ReactElement => {
         Open Tertiary Drawer
       </Button>
       <Drawer
+        aria-label="Tertiary drawer"
         open={openTertiary}
         onOpenChange={(newOpen) => setOpenTertiary(newOpen)}
         variant="tertiary"

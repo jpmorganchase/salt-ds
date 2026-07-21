@@ -26,4 +26,11 @@ export const sliderData = [
       "Simplified view of all your accounts, with search functionality across all transactions.",
     link: "Download app",
   },
+  {
+    title: "Make your first deposit",
+    image: "/img/examples/carouselSlide3.png",
+    content:
+      "Fund your account to start transacting and unlock reporting capabilities, offers, and more.",
+    link: "Fund account",
+  },
 ];

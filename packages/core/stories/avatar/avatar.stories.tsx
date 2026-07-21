@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/core";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import persona1 from "../assets/avatar.png";
 
 export default {
@@ -19,6 +19,10 @@ const sizes = [1, 2, 3, 4] as const;
 const Template: StoryFn<typeof Avatar> = (args) => {
   return <Avatar {...args} />;
 };
+
+const CustomAvatarButton = (props: ComponentProps<"button">) => (
+  <button type="button" {...props} />
+);
 
 export const Default = Template.bind({});
 
@@ -63,6 +67,20 @@ const CustomSVG = (
 export const WithCustomSvg = Template.bind({});
 WithCustomSvg.args = {
   children: CustomSVG,
+};
+
+export const RenderElement = Template.bind({});
+RenderElement.args = {
+  name: "Alex Brailescu",
+  render: <CustomAvatarButton aria-label="Alex Brailescu profile" />,
+};
+
+export const RenderProp = Template.bind({});
+RenderProp.args = {
+  name: "Alex Brailescu",
+  render: (props) => (
+    <CustomAvatarButton {...props} aria-label="Alex Brailescu profile" />
+  ),
 };
 
 export const WithCustomImg: StoryFn<typeof Avatar> = () => {

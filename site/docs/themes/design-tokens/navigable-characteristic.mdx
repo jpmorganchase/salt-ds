@@ -18,9 +18,13 @@ Navigable items typically appear in a list and use standard content and containe
   background="secondary"
 />
 
-`--salt-container-primary-background` \
-`--salt-separable-tertiary-borderColor` \
-`--salt-content-primary-foreground`
+<TokenTableWithControls
+  tokens={[
+    "--salt-container-primary-background",
+    "--salt-separable-tertiary-borderColor",
+    "--salt-content-primary-foreground",
+  ]}
+/>
 
 ## Active states
 
@@ -33,8 +37,12 @@ An active tab, page, or section can be indicated using accented border and backg
   background="secondary"
 />
 
-`--salt-navigable-accent-background-active` \
-`--salt-navigable-accent-borderColor-active`
+<TokenTableWithControls
+  tokens={[
+    "--salt-navigable-accent-background-active",
+    "--salt-navigable-accent-borderColor-active",
+  ]}
+/>
 
 ## Hover states
 
@@ -47,7 +55,7 @@ Hover states for navigable items use the overlayable characteristic to provide a
   background="secondary"
 />
 
-`--salt-overlayable-background-hover`
+<TokenTableWithControls tokens={["--salt-overlayable-background-hover"]} />
 
 ## Navigation indicators
 
@@ -60,7 +68,7 @@ Indicators can be used alongside or instead of background and border changes to 
   background="secondary"
 />
 
-`--salt-navigable-accent-indicator-active`
+<TokenTableWithControls tokens={["--salt-navigable-accent-indicator-active"]} />
 
 Alternatively, relying solely on indicators for hover and active states creates a subtler navigation experience, which is typically reserved for in-page navigation components such as tabs. This approach helps maintain a clean interface while still providing clear feedback to users.
 
@@ -71,5 +79,9 @@ Alternatively, relying solely on indicators for hover and active states creates 
   background="secondary"
 />
 
-`--salt-navigable-accent-indicator-active` \
-`--salt-navigable-indicator-hover`
+<TokenTableWithControls
+  tokens={[
+    "--salt-navigable-accent-indicator-active",
+    "--salt-navigable-indicator-hover",
+  ]}
+/>

@@ -46,7 +46,7 @@ export default {
   decorators: [
     (Story) => {
       return (
-        <MemoryRouter unstable_useTransitions={!isLegacyReact}>
+        <MemoryRouter useTransitions={!isLegacyReact}>
           <Story />
         </MemoryRouter>
       );

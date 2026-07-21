@@ -1,0 +1,13 @@
+.saltMegaMenuGroupHeading {
+  display: flex;
+  align-items: center;
+  margin: 0 0 var(--salt-spacing-50);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+  min-height: var(--salt-size-base);
+  font-family: var(--salt-text-label-fontFamily);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-fontWeight-strong);
+  line-height: var(--salt-text-label-lineHeight);
+  color: var(--salt-content-secondary-foreground);
+}

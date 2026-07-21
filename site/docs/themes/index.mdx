@@ -7,7 +7,7 @@ sidebar:
   groupPriority: 4
 ---
 
-A theme is a collection of design tokens that define the overall look and feel of an interface. Themes allow you to quickly switch the visual style of components to match different brands or user preferences, ensuring consistency across your application.
+A theme is a collection of [design tokens](/salt/themes/design-tokens) that define the overall look and feel of an interface. Themes allow you to quickly switch the visual style of components to match different brands or user preferences, ensuring consistency across your application.
 
 ## What is a Salt theme
 
@@ -21,7 +21,13 @@ In Salt, a theme is made up of tokens for colors, typography, shadows and corner
 
 ## Which theme to pick
 
-Salt offers two themes: the default ‘JPM Brand’ for all new projects, and ‘Legacy’ for migrating older applications from the previous design system, with the eventual goal of transitioning to the brand theme.
+Salt offers three themes:
+
+- **JPM Brand** (default)—_recommended for all new projects._
+- **Legacy (UITK)**—designed to support the migration of applications from Salt’s predecessor.
+- **Chase**—available exclusively to JPMorganChase employees for applications serving Chase customers.
+
+The long-term goal for Legacy users remains transitioning to the JPM Brand theme.
 
 ### JPM Brand theme
 
@@ -31,11 +37,17 @@ The JPM Brand theme is Salt’s long-term visual style, designed to match the JP
 
 For a gradual move from the UITK system, Salt’s Legacy (UITK) theme can be used with UITK components to support different migration timelines and needs. J.P. Morgan employees can find more details on [migration options and system comparisons](https://go/saltds-migration).
 
+### Chase theme
+
+The Chase theme enables teams to build and deliver products within the Chase visual identity. Chase is available as a separate library in Figma and as a standalone package in code. JPMorganChase employees can find [installation instructions and setup guidance](https://go/saltds-chase-theme) internally.
+
 ## How to use themes in code
 
-You can set themes in code using a provider and CSS imports:
+You can set themes in code using a provider and CSS imports. For a step-by-step walkthrough that covers installing the packages, adding web fonts and wrapping your application, see [Developing with Salt](../getting-started/developing).
 
-### JPM Brand theme
+### Setting up the JPM Brand theme
+
+Import the base theme CSS plus the JPM Brand layer, then wrap your app in `<SaltProviderNext>`:
 
 ```tsx
 import { SaltProviderNext } from "@salt-ds/core";
@@ -48,11 +60,16 @@ import "@salt-ds/theme/css/theme-next.css";
   headingFont="Amplitude"
   actionFont="Amplitude"
 >
-  // ...
+  {/* ... */}
 </SaltProviderNext>;
 ```
 
-To ensure that every user sees the Amplitude font correctly, you'll need to add it to your application, which can be downloaded from [fonts](https://go/salt-ds-internal/resources/index) on the internal site if you're part of JPMC.
+The JPM Brand theme requires the **Amplitude** web font. JPMC employees can download the font files from [Salt internal resources](https://go/salt-ds-internal/resources/index), then add the following `@font-face` declarations to your application CSS:
+
+<Disclosure
+  id="amplitude-font-face"
+  summary={<>View the Amplitude <code>@font-face</code> declarations</>}
+>
 
 ```css
 @font-face {
@@ -92,14 +109,11 @@ To ensure that every user sees the Amplitude font correctly, you'll need to add 
 }
 ```
 
-### Legacy (UITK) theme
+</Disclosure>
 
-```tsx
-import { SaltProvider } from "@salt-ds/core";
-import "@salt-ds/theme/index.css";
+### Setting up the Legacy (UITK) theme
 
-<SaltProvider>// ...</SaltProvider>;
-```
+The Legacy theme uses `<SaltProvider>` with the base theme CSS—no additional fonts or props are required. See [Using the Legacy theme](../getting-started/developing#using-the-legacy-uitk-theme) in Developing with Salt for the full setup.
 
 ## How to use themes in Figma
 
@@ -113,7 +127,7 @@ When using the Salt DS Figma libraries, you can use the variable mode ‘Theme�
 
 The Salt DS Themes library includes all the Figma variables needed to style with Salt. It includes the semantic characteristics, size and spacing values, shadows, corner radii and typographic styles.
 
-The Figma variables are set up to match Salt tokens in code. When inspecting a design in Figma's Dev Mode, you can see references that match the tokens, such as color, size and spacing values.
+The Figma variables are set up to match Salt tokens in code. When inspecting a design in Figma’s Dev Mode, you can see references that match the tokens, such as color, size and spacing values.
 
 <Image
   src="/img/theming/figma-themes-devmode-light.png"
@@ -122,7 +136,3 @@ The Figma variables are set up to match Salt tokens in code. When inspecting a d
 />
 
 When referencing a design created using Salt with ‘View only’ Figma access, you’ll be able to see the Figma variables but not the token references. However, the variables match the same structure, so they should be relatively easy to translate.
-
-## What are design tokens
-
-Design tokens are the building blocks for how Salt styles components and patterns. Learn more about [how design tokens function in Salt](/salt/themes/design-tokens).

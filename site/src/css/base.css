@@ -3,6 +3,18 @@
 
   --site-app-header-height: calc(var(--salt-spacing-200) + var(--salt-size-base));
   --site-content-max-width: 100ch;
+
+  scroll-padding-top: calc(var(--site-app-header-height) + var(--salt-spacing-100));
+}
+
+/* Animate in-page anchor / `scrollIntoView` jumps, but only when the user
+   hasn't asked the OS to reduce motion. Pairs with `data-scroll-behavior="smooth"`
+   on `<html>` in `_document.tsx`, which lets Next.js suppress the animation
+   during route transitions. */
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
 }
 
 *,

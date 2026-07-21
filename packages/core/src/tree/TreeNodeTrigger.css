@@ -1,0 +1,76 @@
+.saltTreeNodeTrigger {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+
+  padding-top: calc(var(--salt-spacing-75) + var(--salt-spacing-50));
+  padding-bottom: calc(var(--salt-spacing-75) + var(--salt-spacing-50));
+  padding-right: var(--salt-spacing-100);
+  /* Keep a fixed spacing-100 outer left padding for all nodes, then add one
+   indent step per additional level. Each indent step = (icon column width +
+   inter-item gap).
+   Level-1 nodes get no extra indent; level-2 gets 1 step, level-3 gets 2, etc.
+   */
+  --saltTreeNodeTrigger-iconSize: max(var(--salt-size-icon), 12px);
+  --saltTreeNodeTrigger-indentStep: calc(var(--saltTreeNodeTrigger-iconSize) + var(--salt-spacing-100));
+  --saltTreeNodeTrigger-iconOffsetY: calc((var(--salt-text-lineHeight) - var(--saltTreeNodeTrigger-iconSize)) / 2);
+  --saltTreeNodeTrigger-checkboxOffsetY: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
+  padding-left: calc(var(--salt-spacing-100) + (var(--saltTreeNodeTrigger-indentStep) * (var(--saltTreeNode-level, 1) - 1)));
+  background: var(--salt-selectable-background);
+  color: var(--salt-content-primary-foreground);
+}
+
+/* Account for selectable and icon token size differences */
+.saltTree-multiselect .saltTreeNodeTrigger {
+  --saltTreeNodeTrigger-indentStep: calc(((var(--saltTreeNodeTrigger-iconSize) + var(--salt-size-selectable)) / 2) + var(--salt-spacing-100));
+}
+
+.saltTreeNodeTrigger:hover {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltTreeNode:focus-visible > .saltTreeNodeTrigger,
+.saltTreeNode-focusVisible > .saltTreeNodeTrigger {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltTreeNode-selected > .saltTreeNodeTrigger {
+  background: var(--salt-selectable-background-selected);
+  box-shadow:
+    0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected),
+    0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
+  position: relative;
+  z-index: var(--salt-zIndex-default);
+}
+
+.saltTreeNode-selected:focus-visible > .saltTreeNodeTrigger,
+.saltTreeNode-selected.saltTreeNode-focusVisible > .saltTreeNodeTrigger {
+  background: var(--salt-selectable-background-selected);
+}
+
+.saltTreeNode-disabled > .saltTreeNodeTrigger,
+.saltTreeNode-disabled:hover > .saltTreeNodeTrigger {
+  opacity: 0.4;
+  cursor: var(--salt-cursor-disabled);
+
+  background: var(--salt-selectable-background);
+  color: var(--salt-content-primary-foreground);
+}
+
+.saltTreeNodeTrigger > .saltTreeNode-checkbox {
+  margin-top: var(--saltTreeNodeTrigger-checkboxOffsetY);
+  margin-bottom: 0;
+}
+
+.saltTreeNodeTrigger > .saltTreeNodeExpansionIcon,
+.saltTreeNodeTrigger > .saltTreeNode-icon {
+  margin-top: var(--saltTreeNodeTrigger-iconOffsetY);
+}
+
+.saltTreeNodeTrigger > .saltIcon {
+  margin-top: var(--saltTreeNodeTrigger-iconOffsetY);
+  flex-shrink: 0;
+  color: var(--salt-content-primary-foreground);
+}

@@ -1,0 +1,85 @@
+.saltToolbarOverflow-content {
+  position: relative;
+}
+
+.saltToolbarOverflow-slot,
+.saltToolbarOverflow-panelItem {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--salt-spacing-100);
+  min-width: 0;
+}
+
+.saltToolbarOverflow-slot[data-align="end"] {
+  margin-inline-start: auto;
+}
+
+.saltToolbarOverflow-slot[data-align="center"] {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.saltToolbarOverflow-item {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.saltToolbarOverflow-menu {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.saltToolbarOverflow-itemHost,
+.saltToolbarOverflow-contentHost {
+  display: contents;
+}
+
+.saltToolbarOverflow-trigger {
+  white-space: nowrap;
+}
+
+.saltToolbarOverflow-panel {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  border-radius: var(--salt-palette-corner, 0);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  box-sizing: border-box;
+  max-width: min(32rem, calc(100vw - var(--salt-spacing-300)));
+  overflow: auto;
+  position: absolute;
+  z-index: var(--salt-zIndex-flyover);
+}
+
+/* TODO: improve this as brittle */
+.saltToolbarOverflow-floatingDescendant.saltToolbarOverflow-floatingDescendant {
+  z-index: calc(var(--salt-zIndex-flyover) + var(--salt-zIndex-default));
+}
+
+.saltToolbarOverflow-panelContent {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-100);
+  max-width: inherit;
+  min-width: max-content;
+  padding: var(--salt-spacing-100);
+}
+
+.saltToolbarOverflow-panel .saltTooltray[data-align="center"],
+.saltToolbarOverflow-panel .saltTooltray[data-align="end"] {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+.saltToolbarOverflow-panel .saltTooltray > * {
+  inline-size: auto;
+}
+
+.saltToolbarOverflow-content > .saltToolbarOverflow-slot .saltTooltray[data-align="center"],
+.saltToolbarOverflow-content > .saltToolbarOverflow-slot .saltTooltray[data-align="end"] {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}

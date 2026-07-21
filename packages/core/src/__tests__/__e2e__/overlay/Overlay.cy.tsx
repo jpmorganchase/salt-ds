@@ -52,6 +52,23 @@ describe("GIVEN an Overlay", () => {
       cy.realPress("Tab");
       cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
     });
+
+    it("THEN it should make background content inert", () => {
+      cy.mount(<CloseButton />);
+
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+
+      cy.findByRole("button", { name: /Show Overlay/i })
+        .parents("[inert]")
+        .should("exist");
+
+      cy.realPress("Escape");
+      cy.findByRole("dialog").should("not.exist");
+      cy.findByRole("button", { name: /Show Overlay/i })
+        .parents("[inert]")
+        .should("not.exist");
+    });
   });
 
   describe("WHEN mounted top", () => {
