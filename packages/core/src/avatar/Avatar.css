@@ -37,7 +37,7 @@
 }
 
 .saltAvatar-entity {
-  border-radius: var(--saltAvatar-entity-borderRadius, var(--salt-palette-corner-weak, 0));
+  border-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .saltAvatar-accent {
