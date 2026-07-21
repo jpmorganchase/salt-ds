@@ -14,7 +14,7 @@ Choose the avatar kind that best matches the identity you’re communicating. Av
 
 ### Person
 
-Use `kind=”person”` when the identity is a single individual (e.g., user profile, author, assignee, commenter). We recommend using an image when available; otherwise fall back to initials or a person icon. If you need to represent multiple people together, use `AvatarGroup`.
+Use `kind="person"` when the identity is a single individual (e.g., user profile, author, assignee, commenter). If you need to represent multiple people together, use `AvatarGroup`.
 
 <LivePreview componentName="avatar" exampleName="Person" />
 
@@ -24,7 +24,7 @@ Use up to 2 characters for Person avatars, typically the first and last name ini
 
 ### Entity
 
-Use `kind="entity"` when the identity is a named non-person entity such as a team, business, organization, company, or account. Use an Entity avatar when representing the team as a single named identity; use Avatar Group when representing the team’s members. Use a logo/image when available; otherwise use entity initials/code or an appropriate icon (e.g., office/building).
+Use `kind="entity"` when the identity is a named non-person entity such as a team, business, organization, company, or account. Use an Entity avatar when representing the team as a single named identity and `AvatarGroup` when representing the team’s members.
 
 <LivePreview componentName="avatar" exampleName="Entity" />
 
@@ -34,7 +34,7 @@ Use up to 3 characters for Entity avatars, to support company names, codes, and 
 
 ## Image
 
-You can pass an image as the avatar image using the `src` prop.
+We recommend using an image when available; You can pass an image as the avatar image using the `src` prop.
 
 You can also pass a custom image or SVG as the child of the component. Note that for images passed as children, you'll also need to handle the fallback logic.
 
