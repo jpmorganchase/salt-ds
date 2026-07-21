@@ -216,6 +216,8 @@ Add these props to the provider, alongside any theme props from earlier:
 
 Refer to the [SaltProvider](../components/salt-provider) docs for the full API.
 
+Salt injects component styles at runtime by default, so you don’t need to import component CSS for the setup above. If you need static component CSS or your application uses a Content Security Policy that requires a nonce for injected styles, see [Style injection](./style-injection).
+
 ### 4. Import components
 
 To use a Salt UI component, import it from the `@salt-ds/core` package and reference it in your JSX.
