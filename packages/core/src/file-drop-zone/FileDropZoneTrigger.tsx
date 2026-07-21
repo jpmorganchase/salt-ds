@@ -26,7 +26,7 @@ export interface FileDropZoneTriggerProps
    */
   multiple?: boolean;
   /**
-   * The name applied to the input.
+   * The name applied to the hidden input.
    */
   name?: string;
   /**

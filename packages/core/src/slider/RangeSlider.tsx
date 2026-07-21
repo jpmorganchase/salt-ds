@@ -69,17 +69,17 @@ export interface RangeSliderProps
    */
   maxLabel?: string;
   /**
-   * The name applied to the maximum value input.
-   */
-  maxName?: string;
-  /**
    * Label for minimum value.
    */
   minLabel?: string;
   /**
-   * The name applied to the minimum value input.
+   * The name applied to the start value input.
    */
-  minName?: string;
+  startName?: string;
+  /**
+   * The name applied to the end value input.
+   */
+  endName?: string;
   /**
    * Callback called when slider value is changed.
    * It provides a generic event and the current value of the slider.
@@ -130,10 +130,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       marks,
       max = 100,
       min = 0,
+      endName,
       maxLabel,
-      maxName,
       minLabel,
-      minName,
+      startName,
       onChange,
       onChangeEnd,
       restrictToMarks = false,
@@ -274,7 +274,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           onFocus={() => handleFocus(0)}
           onBlur={() => handleBlur(0)}
           {...thumbProps}
-          name={minName}
+          name={startName}
         />
         <SliderThumb
           index={1}
@@ -288,7 +288,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           onFocus={() => handleFocus(1)}
           onBlur={() => handleBlur(1)}
           {...thumbProps}
-          name={maxName}
+          name={endName}
         />
       </SliderTrack>
     );
