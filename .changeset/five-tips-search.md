@@ -3,4 +3,4 @@
 ---
 
 - Added a top-level `name` prop to `DateInputSingle`.
-- Added `startName` & `endName` to `DateInputRange` which map to the underlying native inputs.
+- Added `startName` and `endName` to `DateInputRange` which map to the underlying native inputs.
