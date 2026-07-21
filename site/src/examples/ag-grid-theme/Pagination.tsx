@@ -4,6 +4,8 @@ import {
   CompactPaginator,
   Dropdown,
   FlexLayout,
+  FormField,
+  FormFieldLabel,
   Option,
   Pagination as SaltPagination,
   StackLayout,
@@ -13,6 +15,7 @@ import { FirstIcon, LastIcon } from "@salt-ds/icons";
 import type { GridApi, PaginationChangedEvent } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import {
+  type CSSProperties,
   type SyntheticEvent,
   useCallback,
   useMemo,
@@ -121,14 +124,20 @@ export const Pagination = (props: AgGridReactProps) => {
           paddingInline: "var(--salt-spacing-100)",
         }}
       >
-        <FlexLayout align="center" gap={1}>
-          <Text styleAs="label">Page Size</Text>
+        <FormField
+          labelPlacement="left"
+          style={
+            {
+              width: "max-content",
+              "--saltFormField-label-width": "max-content",
+            } as CSSProperties
+          }
+        >
+          <FormFieldLabel>Page Size</FormFieldLabel>
           <Dropdown
-            aria-label="Page Size"
             selected={[pageSize]}
             onSelectionChange={handlePageSizeChange}
             bordered
-            style={{ width: "calc(var(--salt-size-base) * 3)" }}
           >
             {PAGE_SIZES.map((size) => (
               <Option value={size} key={size}>
@@ -136,7 +145,7 @@ export const Pagination = (props: AgGridReactProps) => {
               </Option>
             ))}
           </Dropdown>
-        </FlexLayout>
+        </FormField>
         <Text>{rangeLabel}</Text>
         {pageCount >= 2 && (
           <SaltPagination
