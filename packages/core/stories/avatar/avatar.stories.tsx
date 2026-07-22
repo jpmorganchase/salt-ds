@@ -34,7 +34,12 @@ export const Kind: StoryFn<typeof Avatar> = (args) => {
         <Text>Person</Text>
       </StackLayout>
       <StackLayout align="center" gap={1}>
-        <Avatar {...args} kind="entity" name="JPMC" />
+        <Avatar
+          {...args}
+          kind="entity"
+          name="J.P. Morgan"
+          nameToInitials={() => "JPM"}
+        />
         <Text>Entity</Text>
       </StackLayout>
     </FlowLayout>

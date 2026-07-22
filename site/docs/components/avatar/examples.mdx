@@ -14,7 +14,7 @@ Choose the avatar kind that best matches the identity you’re communicating. Av
 
 ### Person
 
-Use `kind="person"` when the identity is a single individual (e.g., user profile, author, assignee, commenter). If you need to represent multiple people together, use `AvatarGroup`.
+Use `kind="person"` when the identity is a single individual (e.g., user profile, author, assignee, commenter).
 
 <LivePreview componentName="avatar" exampleName="Person" />
 
@@ -79,6 +79,6 @@ You can use the `size` prop to modify the avatar size. Each avatar variant has a
 
 ## Custom fallback icon
 
-`Avatar` renders with an icon defined by `UserSolidIcon`, but you can pass an alternative icon as `fallbackIcon`.
+`Avatar` renders with an icon defined by `UserSolidIcon` when kind is person and `BankIcon` when kind is entity, but you can pass an alternative icon as `fallbackIcon`.
 
 <LivePreview componentName="avatar" exampleName="CustomFallbackIcon" />
