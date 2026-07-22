@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCSPNonce } from "../csp-provider";
 import { useStyleInjection } from "../style-injection-provider";
 import { useInsertionPoint } from "./InsertionPointProvider";
 
@@ -10,6 +11,7 @@ const maybeUseInsertionEffect: typeof React.useLayoutEffect =
 export interface UseComponentCssInjection {
   testId?: string;
   css: string;
+  nonce?: string;
   window?: Window | null;
 }
 
@@ -19,21 +21,29 @@ type StyleElementMap = Map<
 >;
 
 // windowSheetsMap maps window objects to StyleElementMaps
-// A StyleElementMap maps css strings to style element tags
+// A StyleElementMap maps style keys to style element tags
 const windowSheetsMap = new WeakMap<Window, StyleElementMap>();
+
+function getStyleKey(css: string, nonce?: string) {
+  return JSON.stringify([nonce ?? null, css]);
+}
 
 export function useComponentCssInjection({
   testId,
   css,
+  nonce: nonceProp,
   window: targetWindow,
 }: UseComponentCssInjection): void {
   const styleInjectionEnabled = useStyleInjection();
   const insertionPoint = useInsertionPoint();
+  const nonce = useCSPNonce(nonceProp);
 
   maybeUseInsertionEffect(() => {
     if (!targetWindow || !styleInjectionEnabled) {
       return;
     }
+
+    const styleKey = getStyleKey(css, nonce);
 
     const sheetsMap =
       windowSheetsMap.get(targetWindow) ??
@@ -41,12 +51,18 @@ export function useComponentCssInjection({
         string,
         { styleElement: HTMLStyleElement | null; count: number }
       >();
-    const styleMap = sheetsMap.get(css) ?? { styleElement: null, count: 0 };
+    const styleMap = sheetsMap.get(styleKey) ?? {
+      styleElement: null,
+      count: 0,
+    };
 
     if (styleMap.styleElement == null) {
       styleMap.styleElement = targetWindow.document.createElement("style");
       styleMap.styleElement.setAttribute("type", "text/css");
       styleMap.styleElement.setAttribute("data-salt-style", testId || "");
+      if (nonce) {
+        styleMap.styleElement.nonce = nonce;
+      }
       styleMap.styleElement.textContent = css;
 
       styleMap.count = 1;
@@ -59,20 +75,20 @@ export function useComponentCssInjection({
       styleMap.styleElement.textContent = css;
       styleMap.count++;
     }
-    sheetsMap.set(css, styleMap);
+    sheetsMap.set(styleKey, styleMap);
     windowSheetsMap.set(targetWindow, sheetsMap);
 
     return () => {
       const sheetsMap = windowSheetsMap.get(targetWindow);
-      const styleMap = sheetsMap?.get(css);
+      const styleMap = sheetsMap?.get(styleKey);
       if (styleMap?.styleElement) {
         styleMap.count--;
         if (styleMap.count < 1) {
           targetWindow.document.head.removeChild(styleMap.styleElement);
           styleMap.styleElement = null;
-          sheetsMap?.delete(css);
+          sheetsMap?.delete(styleKey);
         }
       }
     };
-  }, [testId, css, targetWindow]);
+  }, [testId, css, nonce, targetWindow, styleInjectionEnabled, insertionPoint]);
 }

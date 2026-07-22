@@ -170,9 +170,31 @@ describe("GIVEN an Input", () => {
         cy.findByRole("textbox").should("have.value", "—");
       });
 
+      it("THEN should show an emdash for an empty default value", () => {
+        cy.mount(<Input defaultValue="" readOnly />);
+        cy.findByRole("textbox").should("have.value", "—");
+      });
+
+      it("THEN should show an emdash for a controlled empty value", () => {
+        cy.mount(<Input value="" readOnly />);
+        cy.findByRole("textbox").should("have.value", "—");
+      });
+
       it("THEN should cy.mount an custom marker", () => {
         cy.mount(<Input emptyReadOnlyMarker="#" readOnly />);
         cy.findByRole("textbox").should("have.value", "#");
+      });
+    });
+
+    describe("AND the value is zero", () => {
+      it("THEN should show the zero value rather than the empty marker", () => {
+        cy.mount(<Input defaultValue={0} readOnly />);
+        cy.findByRole("textbox").should("have.value", "0");
+      });
+
+      it("THEN should show a controlled zero value rather than the empty marker", () => {
+        cy.mount(<Input value={0} readOnly />);
+        cy.findByRole("textbox").should("have.value", "0");
       });
     });
   });

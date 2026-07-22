@@ -200,6 +200,29 @@ describe("GIVEN a DateInputRange", () => {
           .date,
       };
 
+      it("SHOULD show the empty marker when read-only with an empty default value", () => {
+        cy.mount(
+          <DateInputRange
+            defaultValue={{ startDate: "", endDate: "" }}
+            readOnly
+          />,
+        );
+
+        cy.findAllByRole("textbox").each(($input) => {
+          cy.wrap($input).should("have.value", "—");
+        });
+      });
+
+      it("SHOULD show the empty marker when read-only with a controlled empty value", () => {
+        cy.mount(
+          <DateInputRange value={{ startDate: "", endDate: "" }} readOnly />,
+        );
+
+        cy.findAllByRole("textbox").each(($input) => {
+          cy.wrap($input).should("have.value", "—");
+        });
+      });
+
       it("SHOULD have an accessible name via aria-labelledby when wrapped in a FormField", () => {
         cy.mount(
           <FormField>

@@ -89,6 +89,16 @@ export interface PillInputProps
   bordered?: boolean;
 }
 
+function isEmptyReadOnlyValue(
+  value: PillInputProps["value"] | PillInputProps["defaultValue"],
+) {
+  return (
+    value == null ||
+    value === "" ||
+    (Array.isArray(value) && value.length === 0)
+  );
+}
+
 export const PillInput = forwardRef(function PillInput(
   {
     "aria-activedescendant": ariaActiveDescendant,
@@ -153,8 +163,18 @@ export const PillInput = forwardRef(function PillInput(
   const [focused, setFocused] = useState(false);
   const [focusedPillIndex, setFocusedPillIndex] = useState(-1);
 
-  const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
-  const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
+  const isValueEmptyReadOnly = isReadOnly && isEmptyReadOnlyValue(valueProp);
+  const isDefaultValueEmptyReadOnly =
+    isReadOnly && isEmptyReadOnlyValue(defaultValueProp);
+  const controlledValue =
+    valueProp === undefined
+      ? undefined
+      : isValueEmptyReadOnly
+        ? emptyReadOnlyMarker
+        : valueProp;
+  const defaultValue = isDefaultValueEmptyReadOnly
+    ? emptyReadOnlyMarker
+    : defaultValueProp;
 
   const {
     "aria-describedby": inputDescribedBy,
@@ -172,7 +192,7 @@ export const PillInput = forwardRef(function PillInput(
     : inputPropsRequired;
 
   const [value, setValue] = useControlled({
-    controlled: valueProp,
+    controlled: controlledValue,
     default: defaultValue,
     name: "Input",
     state: "value",

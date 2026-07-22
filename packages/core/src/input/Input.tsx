@@ -78,6 +78,16 @@ export interface InputProps
   bordered?: boolean;
 }
 
+function isEmptyReadOnlyValue(
+  value: InputProps["value"] | InputProps["defaultValue"],
+) {
+  return (
+    value == null ||
+    value === "" ||
+    (Array.isArray(value) && value.length === 0)
+  );
+}
+
 export const Input = forwardRef<HTMLDivElement, InputProps>(
   function Input(props, ref) {
     const { className, props: finalProps } = useClassNameInjection(
@@ -139,8 +149,16 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
 
     const [focused, setFocused] = useState(false);
 
-    const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
-    const defaultValue = isEmptyReadOnly
+    const isValueEmptyReadOnly = isReadOnly && isEmptyReadOnlyValue(valueProp);
+    const isDefaultValueEmptyReadOnly =
+      isReadOnly && isEmptyReadOnlyValue(defaultValueProp);
+    const controlledValue =
+      valueProp === undefined
+        ? undefined
+        : isValueEmptyReadOnly
+          ? emptyReadOnlyMarker
+          : valueProp;
+    const defaultValue = isDefaultValueEmptyReadOnly
       ? emptyReadOnlyMarker
       : defaultValueProp;
 
@@ -159,7 +177,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
       : inputPropsRequired;
 
     const [value, setValue] = useControlled({
-      controlled: valueProp,
+      controlled: controlledValue,
       default: defaultValue,
       name: "Input",
       state: "value",
