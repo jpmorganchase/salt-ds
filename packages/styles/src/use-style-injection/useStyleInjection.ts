@@ -72,7 +72,8 @@ export function useComponentCssInjection({
         insertionPoint || targetWindow.document.head.firstChild,
       );
     } else {
-      styleMap.styleElement.textContent = css;
+      // The map is keyed by the CSS string, so an existing style element
+      // already contains this CSS and only the reference count needs updating.
       styleMap.count++;
     }
     sheetsMap.set(styleKey, styleMap);
@@ -84,9 +85,12 @@ export function useComponentCssInjection({
       if (styleMap?.styleElement) {
         styleMap.count--;
         if (styleMap.count < 1) {
-          targetWindow.document.head.removeChild(styleMap.styleElement);
+          styleMap.styleElement.remove();
           styleMap.styleElement = null;
           sheetsMap?.delete(styleKey);
+          if (sheetsMap?.size === 0) {
+            windowSheetsMap.delete(targetWindow);
+          }
         }
       }
     };
