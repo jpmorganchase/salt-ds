@@ -1,5 +1,29 @@
 # @salt-ds/core
 
+## 1.68.0
+
+### Minor Changes
+
+- 87a8a85: Added a top-level `name` prop to form controls which map to underlying native inputs:
+
+  - `Input`, `MultilineInput`, `NumberInput`, `PillInput`, `ComboBox`, `Slider` and `FileDropZoneTrigger` accept `name`
+  - `FileDropZoneTrigger`: `name` is now applied to the hidden input instead of the button
+  - `RangeSlider` accepts `startName` and `endName`
+  - `Checkbox` now inherits `name` from `CheckboxGroup` when not set on the checkbox itself
+
+### Patch Changes
+
+- 8aaa8d0: Fixed `Dropdown` validation status precedence to align with the other form controls, so the `FormField` validation status now takes precedence over the `Dropdown`'s own `validationStatus` prop.
+- 8aaa8d0: Fixed read-only inputs so empty controlled values, empty default values, and empty selections consistently display the `emptyReadOnlyMarker` (`—` by default), while non-empty values such as numeric `0` continue to display the real value.
+- 8156149: Updated `InteractableCard` disabled styling to apply `opacity: 0.4` at the card level.
+
+  _Note:_ This may introduce a visual regression for apps that relied on the previous per-variant disabled appearance or on disabled tokens applied to nested content.
+
+- Updated dependencies [fc112cb]
+- Updated dependencies [7a828e4]
+  - @salt-ds/styles@0.4.0
+  - @salt-ds/icons@1.18.2
+
 ## 1.67.1
 
 ### Patch Changes
