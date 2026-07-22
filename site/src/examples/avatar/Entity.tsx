@@ -1,17 +1,23 @@
 import { Avatar, FlexLayout } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
+const user = {
+  name: "Alex Brailescu",
+  image: "/img/examples/entityAvatar.jpg",
+};
+
+const team = {
+  name: "Operations",
+  initials: "OPS",
+};
+
 export const Entity = (): ReactElement => (
   <FlexLayout>
+    <Avatar kind="entity" name={user.name} src={user.image} />
     <Avatar
-      name="Alex Brailescu"
-      src="/img/examples/entityAvatar.jpg"
       kind="entity"
-    />
-    <Avatar
-      name="OPS"
-      kind="entity"
-      nameToInitials={(name = "") => name.slice(0, 3)}
+      name={team.name}
+      nameToInitials={() => team.initials}
     />
     <Avatar kind="entity" />
   </FlexLayout>
