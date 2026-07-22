@@ -1,22 +1,24 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEvent,
+  memo,
   type ReactNode,
   useEffect,
   useMemo,
   useRef,
 } from "react";
+import { useSyncExternalStore } from "use-sync-external-store/shim";
 import { CheckboxIcon } from "../checkbox";
+import type { OptionValue } from "../list-control/ListControlContext";
+import { useListControlOptionContext } from "../list-control/ListControlOptionContext";
 import {
-  type OptionValue,
-  useListControlContext,
-} from "../list-control/ListControlContext";
+  OPTION_STATE_ACTIVE,
+  OPTION_STATE_FOCUS_VISIBLE,
+  OPTION_STATE_SELECTED,
+} from "../list-control/ListControlOptionStore";
 import { makePrefixer, useForkRef, useId } from "../utils";
-import optionCss from "./Option.css";
 
 export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -35,7 +37,7 @@ export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltOption");
 
-export const Option = forwardRef<HTMLDivElement, OptionProps>(
+const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
   function Option(props, ref) {
     const {
       className,
@@ -47,42 +49,45 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
       ...rest
     } = props;
 
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-option",
-      css: optionCss,
-      window: targetWindow,
-    });
-
     const optionRef = useRef(null);
     const id = useId(idProp);
 
     const {
       setActive,
-      activeState,
       multiselect,
       select,
       register,
-      selectedState,
-      focusVisibleState,
+      optionStateStore,
       valueToString,
       disabled: listDisabled,
       listRef,
-    } = useListControlContext();
+    } = useListControlOptionContext();
 
     const disabled = disabledProp || listDisabled;
 
-    const selected = selectedState.includes(value);
-    const active = activeState?.value === value;
-
-    const optionValue: OptionValue<unknown> = useMemo(
-      () => ({
-        id: String(id),
+    const optionId = String(id);
+    const { getSnapshot, optionValue, subscribe } = useMemo(() => {
+      const nextOptionValue: OptionValue<unknown> = {
+        id: optionId,
         disabled: Boolean(disabled),
         value,
-      }),
-      [id, disabled, value],
+      };
+      return {
+        getSnapshot: () =>
+          optionStateStore.getSnapshot(optionId, nextOptionValue),
+        optionValue: nextOptionValue,
+        subscribe: (listener: () => void) =>
+          optionStateStore.subscribe(optionId, listener),
+      };
+    }, [optionId, disabled, value, optionStateStore]);
+    const optionState = useSyncExternalStore(
+      subscribe,
+      getSnapshot,
+      getSnapshot,
     );
+    const selected = (optionState & OPTION_STATE_SELECTED) !== 0;
+    const active = (optionState & OPTION_STATE_ACTIVE) !== 0;
+    const focusVisible = (optionState & OPTION_STATE_FOCUS_VISIBLE) !== 0;
 
     const handleClick = (event: MouseEvent<HTMLDivElement>) => {
       if (disabled || id === undefined) {
@@ -119,7 +124,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
           withBaseName(),
           {
             [withBaseName("active")]: active,
-            [withBaseName("focusVisible")]: focusVisibleState && active,
+            [withBaseName("focusVisible")]: focusVisible,
           },
           className,
         )}
@@ -137,3 +142,6 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
     );
   },
 );
+
+// Context isolation makes this bailout effective for unchanged option props.
+export const Option = memo(OptionComponent) as typeof OptionComponent;

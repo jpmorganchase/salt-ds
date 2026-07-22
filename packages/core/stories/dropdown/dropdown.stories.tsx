@@ -426,3 +426,29 @@ export const Bordered = () => {
     </StackLayout>
   );
 };
+
+const createPerformanceItems = (size: number) =>
+  Array.from({ length: size }, (_, index) => `Option ${index}`);
+
+const performanceItems = {
+  1000: createPerformanceItems(1_000),
+  10000: createPerformanceItems(10_000),
+};
+
+const DropdownPerformanceFixture = ({ size }: { size: 1_000 | 10_000 }) => (
+  <Dropdown>
+    {performanceItems[size].map((item) => (
+      <Option key={item} value={item}>
+        {item}
+      </Option>
+    ))}
+  </Dropdown>
+);
+
+export const PerformanceTest = () => (
+  <DropdownPerformanceFixture size={10_000} />
+);
+
+export const PerformanceTestOneThousand = () => (
+  <DropdownPerformanceFixture size={1_000} />
+);
