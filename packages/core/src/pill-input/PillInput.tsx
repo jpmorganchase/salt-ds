@@ -54,6 +54,10 @@ export interface PillInputProps
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
+   * The name applied to the input.
+   */
+  name?: string;
+  /**
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
@@ -108,6 +112,7 @@ export const PillInput = forwardRef(function PillInput(
     id: idProp,
     inputProps = {},
     inputRef: inputRefProp,
+    name,
     placeholder,
     pills = [],
     onPillRemove,
@@ -364,6 +369,7 @@ export const PillInput = forwardRef(function PillInput(
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}
           id={id}
+          name={name}
           readOnly={isReadOnly}
           ref={handleInputRef}
           role={role}

@@ -296,4 +296,14 @@ describe("GIVEN an Input", () => {
     cy.findByRole("textbox").should("not.have.attr", "aria-describedby");
     cy.findByRole("textbox").should("not.have.attr", "aria-labelledby");
   });
+
+  it("SHOULD apply the name prop to the input", () => {
+    cy.mount(<Input name="username" />);
+    cy.findByRole("textbox").should("have.attr", "name", "username");
+  });
+
+  it("SHOULD allow inputProps.name to override the top-level name prop", () => {
+    cy.mount(<Input name="username" inputProps={{ name: "override" }} />);
+    cy.findByRole("textbox").should("have.attr", "name", "override");
+  });
 });

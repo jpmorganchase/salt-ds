@@ -1,3 +1,4 @@
+import { FileDropZoneTrigger } from "@salt-ds/core";
 import * as fileDropZoneStories from "@stories/file-drop-zone/file-drop-zone.stories";
 import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
@@ -135,5 +136,12 @@ describe("Given a file drop zone", () => {
     // tab into the component
     cy.realPress("Tab");
     cy.findByTestId("file-input-trigger").should("be.focused");
+  });
+
+  it("SHOULD apply the name prop to the file input", () => {
+    cy.mount(
+      <FileDropZoneTrigger name="attachments" data-testid="named-trigger" />,
+    );
+    cy.get('input[type="file"]').should("have.attr", "name", "attachments");
   });
 });

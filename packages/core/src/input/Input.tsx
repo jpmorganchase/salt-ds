@@ -50,6 +50,10 @@ export interface InputProps
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
+   * The name applied to the input.
+   */
+  name?: string;
+  /**
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
@@ -100,6 +104,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
       id,
       inputProps = {},
       inputRef,
+      name,
       placeholder,
       readOnly: readOnlyProp,
       role,
@@ -232,6 +237,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}
           id={id}
+          name={name}
           readOnly={isReadOnly}
           ref={inputRef}
           role={role}

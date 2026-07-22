@@ -105,6 +105,21 @@ describe("GIVEN a DateInputSingle", () => {
         cy.clock().then((clock) => clock.restore());
       });
 
+      it("SHOULD apply the name prop to the input", () => {
+        cy.mount(<DateInputSingle name="start-date" />);
+        cy.findByRole("textbox").should("have.attr", "name", "start-date");
+      });
+
+      it("SHOULD allow inputProps.name to override the top-level name prop", () => {
+        cy.mount(
+          <DateInputSingle
+            name="start-date"
+            inputProps={{ name: "override" }}
+          />,
+        );
+        cy.findByRole("textbox").should("have.attr", "name", "override");
+      });
+
       const initialDateValue = "05 Jan 2025";
       const initialDate = adapter.parse(initialDateValue, "DD MMM YYYY").date;
 
