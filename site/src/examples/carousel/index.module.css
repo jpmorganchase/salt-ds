@@ -64,3 +64,40 @@
   width: 100%;
   --carousel-slide-size: 550px;
 }
+
+.avatarCarousel {
+  width: 100%;
+  max-width: 480px;
+  --carousel-slide-size: auto;
+  --carousel-slide-height: auto;
+  --carousel-slide-spacing: var(--salt-spacing-25);
+}
+
+.avatarCarousel :global(.saltCarouselSlides) {
+  overflow-clip-margin: var(--salt-spacing-100);
+}
+
+.avatarSlide {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  min-width: 0;
+  padding-left: var(--carousel-slide-spacing);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarSlide:focus-visible {
+  outline: none;
+}
+
+.avatarSlide.avatarSlide:focus-visible .avatarSlideIndicator > * {
+  outline: var(--salt-focused-outline);
+  outline-offset: var(--salt-focused-outlineOffset);
+  border-radius: 50%;
+}
+
+.avatarSlideIndicator {
+  display: inline-flex;
+  border-radius: 50%;
+}
