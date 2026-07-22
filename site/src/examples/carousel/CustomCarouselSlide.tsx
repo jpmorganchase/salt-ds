@@ -29,16 +29,16 @@ const avatars: AvatarInfo[] = [
   { name: "Chen Wei", color: "category-2" },
   { name: "Maria Silva", color: "category-3" },
   { name: "Sam Taylor", color: "category-4" },
-  { name: "Yuki Tanaka", color: "category-5" },
+  { name: "Emma Wilson", color: "category-5" },
   { name: "Liam O'Neill", color: "category-6" },
   { name: "Fatima Khan", color: "category-7" },
   { name: "Noah Cohen", color: "category-8" },
-  { name: "Ava Rossi", color: "category-9" },
+  { name: "Ava Bennett", color: "category-9" },
   { name: "Diego Morales", color: "category-10" },
   { name: "Zara Ahmed", color: "category-11" },
   { name: "Ethan Clark", color: "category-12" },
-  { name: "Sofia Novak", color: "category-13" },
-  { name: "Kenji Sato", color: "category-14" },
+  { name: "Sofia Bailey", color: "category-13" },
+  { name: "Oliver Hayes", color: "category-14" },
 ];
 
 export const CustomCarouselSlide = (): ReactElement => {
