@@ -31,6 +31,22 @@ The `color` prop can be used to change Avatar's background to one of the 20 [cat
 
 <LivePreview componentName="avatar" exampleName="Categories" />
 
+## Interactive
+
+Avatar can be made interactive using the `render` prop. Props defined on the JSX element will be merged with props from the Avatar.
+
+Common interactive use cases include:
+
+- Navigating to a user profile page when the avatar is clicked.
+- Opening a menu with user-related actions (e.g., ‘Settings’, ‘Log out’).
+
+### Best practices
+
+- Ensure the Avatar has a meaningful accessible name so screen reader users understand what action will occur.
+- Avoid using size modifiers on interactive avatars, as they can shrink the touch target and make them harder to interact with.
+
+<LivePreview componentName="avatar" exampleName="Interactive" />
+
 ## Name to color
 
 You can deterministically derive an avatar's `color` from its `name` so that the same person is always represented by the same [categorical color](/salt/foundations/color#categorical). In the example below, a simple hash of the name is used to pick one of the 20 categorical colors.
@@ -47,18 +63,4 @@ You can use the `size` prop to modify the avatar size. Each avatar variant has a
 
 `Avatar` renders with an icon defined by `UserSolidIcon`, but you can pass an alternative icon as `fallbackIcon`.
 
-## Interactive
-
-`Avatar` can be made interactive using the `render` prop. Props defined on the JSX element will be merged with props from the component.
-
-Common interactive use cases include:
-
-- Navigating to a user profile page when an avatar is clicked.
-- Opening a menu with user-related actions (e.g., ‘Settings’, ‘Log out’).
-
-### Best practices
-
-- Ensure the Avatar has a meaningful accessible name so screen reader users understand what action will occur.
-- Avoid using size modifiers on interactive avatars, as they can shrink the touch target and make them harder to interact with.
-
-<LivePreview componentName="avatar" exampleName="Interactive" />
+<LivePreview componentName="avatar" exampleName="CustomFallbackIcon" />
