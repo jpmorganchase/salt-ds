@@ -5,7 +5,6 @@ export * from "./Card";
 export * from "./CardActions";
 export * from "./CardActions";
 export * from "./ControlledCarousel";
-export * from "./CustomCarouselSlide";
 export * from "./FixedWidth";
 export * from "./MultipleSlides";
 export * from "./TabListBottom";
