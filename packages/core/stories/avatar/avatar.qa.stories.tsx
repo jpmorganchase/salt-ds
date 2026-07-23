@@ -11,10 +11,10 @@ export default {
 
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} {...props}>
-    <Avatar size={1} name="Alex Brailescu" src={persona1 as string} />
+    <Avatar size={1} name="Alex Brailescu" src={persona1} />
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
-    <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
+    <Avatar size={3} fallbackIcon={<SaltShakerIcon aria-hidden />} />
     <Avatar name="Peter Piper" color="category-1" />
     <Avatar name="Peter Piper" color="category-2" />
     <Avatar name="Peter Piper" color="category-3" />
@@ -39,6 +39,29 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
 );
 
 AllVariantsGrid.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+export const EntityGrid: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer height={200} width={1000} {...props}>
+    <Avatar kind="entity" size={1} name="Alex Brailescu" src={persona1} />
+    <Avatar kind="entity" size={2} src="bad_url" name="Peter Piper" />
+    <Avatar kind="entity" size={3} src="bad_url" />
+    <Avatar kind="entity" size={3} />
+    <Avatar
+      kind="entity"
+      size={3}
+      fallbackIcon={<SaltShakerIcon aria-hidden />}
+    />
+    <Avatar kind="entity" name="Peter Piper" color="category-1" />
+    <Avatar kind="entity" name="Peter Piper" color="category-2" />
+    <Avatar kind="entity" name="Peter Piper" color="category-3" />
+  </QAContainer>
+);
+
+EntityGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
   },
