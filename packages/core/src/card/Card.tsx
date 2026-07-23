@@ -6,6 +6,7 @@ import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { capitalize, makePrefixer } from "../utils";
 
 import cardCss from "./Card.css";
+import { hasCardSection } from "./hasCardSection";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
@@ -56,6 +57,8 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       window: targetWindow,
     });
 
+    const sectioned = hasCardSection(children);
+
     return (
       <div
         className={clsx(
@@ -68,6 +71,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
             /* **Deprecated:** InteractableCard should be used instead for these features */
             [withBaseName("disabled")]: disabled,
             [withBaseName("interactable")]: interactable,
+            [withBaseName("sectioned")]: sectioned,
           },
           className,
         )}

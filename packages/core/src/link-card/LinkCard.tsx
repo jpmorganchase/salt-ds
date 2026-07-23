@@ -3,6 +3,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
+import { hasCardSection } from "../card/hasCardSection";
 import { capitalize, makePrefixer } from "../utils";
 
 import linkCardCss from "./LinkCard.css";
@@ -38,6 +39,8 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       window: targetWindow,
     });
 
+    const sectioned = hasCardSection(children);
+
     return (
       <a
         className={clsx(
@@ -46,6 +49,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
           {
             [withBaseName("accent")]: accent,
             [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
+            [withBaseName("sectioned")]: sectioned,
           },
           className,
         )}

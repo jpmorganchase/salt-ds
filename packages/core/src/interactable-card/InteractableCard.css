@@ -5,12 +5,19 @@
   border-radius: var(--saltInteractableCard-borderRadius, var(--salt-palette-corner, 0));
   box-shadow: var(--salt-overlayable-shadow);
   display: block;
-  padding: var(--saltInteractableCard-padding, var(--salt-spacing-200));
+  padding: var(--saltInteractableCard-padding, var(--card-padding));
   position: relative;
   text-align: start;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   overflow: hidden;
   --card-accent-color: var(--salt-sentiment-accent-background);
+  --card-padding: var(--salt-spacing-200);
+}
+
+.saltInteractableCard.saltInteractableCard-sectioned {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Styles applied to InteractableCard when variant="primary" */

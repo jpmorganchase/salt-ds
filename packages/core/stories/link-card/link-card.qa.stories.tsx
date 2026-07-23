@@ -1,4 +1,12 @@
-import { H1, LinkCard, Text } from "@salt-ds/core";
+import {
+  CardContent,
+  CardFooter,
+  CardHeader,
+  H1,
+  LinkCard,
+  Panel,
+  Text,
+} from "@salt-ds/core";
 
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -38,6 +46,30 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => {
       <LinkCard accent="left">
         <H1>Accent left</H1>
         <Text>Content</Text>
+      </LinkCard>
+      <LinkCard>
+        <CardContent>
+          <H1>With CardContent</H1>
+          <Text>Content</Text>
+        </CardContent>
+      </LinkCard>
+      <LinkCard>
+        <Panel variant="secondary" style={{ height: 20 }} />
+        <CardContent>
+          <H1>Panel + CardContent</H1>
+          <Text>Content</Text>
+        </CardContent>
+      </LinkCard>
+      <LinkCard>
+        <CardHeader>
+          <H1>Link card header</H1>
+        </CardHeader>
+        <CardContent>
+          <Text>Link card content</Text>
+        </CardContent>
+        <CardFooter>
+          <Text color="secondary">Link card footer</Text>
+        </CardFooter>
       </LinkCard>
     </QAContainer>
   );

@@ -1,7 +1,11 @@
 import {
+  CardContent,
+  CardFooter,
+  CardHeader,
   H1,
   InteractableCard,
   InteractableCardGroup,
+  Panel,
   Text,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -61,6 +65,30 @@ export const AllExamples: StoryFn<QAContainerProps & { className?: string }> = (
       <InteractableCard disabled variant="tertiary">
         <H1>Disabled tertiary</H1>
         <Text>Content</Text>
+      </InteractableCard>
+      <InteractableCard>
+        <CardContent>
+          <H1>With CardContent</H1>
+          <Text>Content</Text>
+        </CardContent>
+      </InteractableCard>
+      <InteractableCard>
+        <Panel variant="secondary" style={{ height: 20 }} />
+        <CardContent>
+          <H1>Panel + CardContent</H1>
+          <Text>Content</Text>
+        </CardContent>
+      </InteractableCard>
+      <InteractableCard>
+        <CardHeader>
+          <H1>Interactable card header</H1>
+        </CardHeader>
+        <CardContent>
+          <Text>Interactable card content</Text>
+        </CardContent>
+        <CardFooter>
+          <Text color="secondary">Interactable card footer</Text>
+        </CardFooter>
       </InteractableCard>
     </QAContainer>
   );

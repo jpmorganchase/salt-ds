@@ -1,7 +1,11 @@
 import {
   Button,
   Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
   type CardProps,
+  FlexLayout,
   H3,
   Label,
   Link,
@@ -10,6 +14,7 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
 import exampleImage from "./../assets/exampleImage1x.png";
@@ -36,8 +41,8 @@ export const Default: StoryFn<typeof Card> = (args) => (
 
 export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
   <Card {...args} style={{ width: "260px" }}>
-    <StackLayout gap={3}>
-      <img alt="example" src={exampleImage} style={{ width: "100%" }} />
+    <img alt="example" src={exampleImage} />
+    <CardContent>
       <StackLayout gap={1}>
         <H3>Sustainable investing products</H3>
         <Text>
@@ -45,8 +50,95 @@ export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
           to enable you to align your financial goals to your values.
         </Text>
       </StackLayout>
-    </StackLayout>
+    </CardContent>
   </Card>
+);
+
+export const Sections: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "320px" }}>
+    <CardHeader>
+      <StackLayout gap={1}>
+        <H3>Quarterly investment report</H3>
+        <Text color="secondary">Updated 16 July 2026</Text>
+      </StackLayout>
+    </CardHeader>
+    <CardContent>
+      <Text>
+        Review portfolio performance and the market changes that affected this
+        quarter.
+      </Text>
+    </CardContent>
+    <CardFooter>
+      <Button>View report</Button>
+    </CardFooter>
+  </Card>
+);
+
+export const HeaderWithAction: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "320px" }}>
+    <CardHeader>
+      <FlexLayout align="start" gap={1} justify="space-between">
+        <StackLayout gap={1}>
+          <H3>Quarterly investment report</H3>
+          <Text color="secondary">Updated 16 July 2026</Text>
+        </StackLayout>
+        <Button
+          appearance="transparent"
+          aria-label="Dismiss"
+          sentiment="neutral"
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      </FlexLayout>
+    </CardHeader>
+    <CardContent>
+      <Text>
+        Review portfolio performance and the market changes that affected this
+        quarter.
+      </Text>
+    </CardContent>
+    <CardFooter>
+      <Button>View report</Button>
+    </CardFooter>
+  </Card>
+);
+
+export const EqualHeightSections: StoryFn<typeof Card> = (args) => (
+  <StackLayout align="stretch" direction="row" gap={2}>
+    <Card {...args} style={{ width: "220px" }}>
+      <CardHeader>
+        <H3>Short report</H3>
+      </CardHeader>
+      <CardContent>
+        <Text>A concise portfolio update.</Text>
+      </CardContent>
+      <CardFooter>
+        <Button>View report</Button>
+      </CardFooter>
+    </Card>
+    <Card {...args} style={{ width: "220px" }}>
+      <CardHeader>
+        <H3>Header and footer</H3>
+      </CardHeader>
+      <CardFooter>
+        <Button>View report</Button>
+      </CardFooter>
+    </Card>
+    <Card {...args} style={{ width: "220px" }}>
+      <CardHeader>
+        <H3>Longer report</H3>
+      </CardHeader>
+      <CardContent>
+        <Text>
+          A more detailed portfolio update containing additional supporting
+          information.
+        </Text>
+      </CardContent>
+      <CardFooter>
+        <Button>View report</Button>
+      </CardFooter>
+    </Card>
+  </StackLayout>
 );
 
 export const DefaultWithLink: StoryFn<typeof Card> = (args) => (

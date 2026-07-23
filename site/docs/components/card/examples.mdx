@@ -38,6 +38,14 @@ You can incorporate actions like [links](../link) or [buttons](../button) into a
 
 <LivePreview componentName="card" exampleName="Actions" />
 
+## Structural sections
+
+Use `CardHeader`, `CardContent` and `CardFooter` to create distinct padded sections within `Card`, `LinkCard` or `InteractableCard`. Sections must be direct children of the card; don't wrap them in fragments or other components. When a section is present, the card removes its own padding and the sections provide consistent inner spacing. Adjacent sections share a single `--salt-spacing-200` gap.
+
+`CardHeader` and `CardContent` don't impose an inner layout, so compose their children with Salt layout components as needed. `CardFooter` arranges its children in a horizontal row. Footers can contain actions in a default card, but must contain only static content in link and interactable cards.
+
+<LivePreview componentName="card" exampleName="Sections" />
+
 ## Link card
 
 - Use a link card when the entire card is clickable and navigates the user within the same tab or to a new tab.
@@ -48,7 +56,7 @@ You can incorporate actions like [links](../link) or [buttons](../button) into a
 
 ## Full width image
 
-When using images in cards, set the image to span the card's entire width. You can do this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
+When using images in cards, set the image to span the card's entire width. You can do this by using the `CardContent` component inside `Card`, `LinkCard` or `InteractableCard`. `CardContent` removes the wrapping card's default padding, allowing siblings (such as images) to extend to the card's edges, and applies its own padding to the content inside it.
 
 <LivePreview componentName="card" exampleName="FullWidthImage" />
 
@@ -63,7 +71,8 @@ You can set an image as the background of a card using [`background-image`](http
 - By default, the card components include `--salt-spacing-200` inner padding.
 - For very small cards with a limited hit area, customizing the padding to `--salt-spacing-100` is advisable.
 - When your cards are intended to occupy a significant portion of your application window, `--salt-spacing-300` is recommended.
-- Customize the spacing using the `--saltCard-padding` or `--saltLinkCard-padding` CSS properties.
+- Customize the spacing using the `--saltCard-padding`, `--saltLinkCard-padding` or `--saltInteractableCard-padding` CSS properties.
+- When structural sections are used, the card's root padding is always removed. Customize section spacing using `--saltCardHeader-padding`, `--saltCardContent-padding` or `--saltCardFooter-padding` instead.
 
 <LivePreview componentName="card" exampleName="CustomPadding" />
 

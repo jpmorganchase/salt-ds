@@ -2,7 +2,7 @@
 .saltCard {
   border-width: var(--saltCard-borderWidth, var(--salt-size-fixed-100));
   border-style: var(--salt-borderStyle-solid);
-  padding: var(--saltCard-padding, var(--salt-spacing-200));
+  padding: var(--saltCard-padding, var(--card-padding));
   position: relative;
   box-shadow: var(--salt-overlayable-shadow);
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
@@ -10,6 +10,13 @@
   border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
   overflow: hidden;
   --card-accent-color: var(--salt-sentiment-accent-background);
+  --card-padding: var(--salt-spacing-200);
+}
+
+.saltCard.saltCard-sectioned {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .saltCard-primary {
