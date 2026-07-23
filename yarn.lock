@@ -4602,7 +4602,7 @@ __metadata:
     moment: "npm:^2.30.1"
     moment-timezone: "npm:^0.6.1"
     next: "npm:^16.0.0"
-    next-auth: "npm:^4.24.11"
+    next-auth: "npm:^4.24.15"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-markdown: "npm:^10.0.0"
@@ -13073,9 +13073,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.24.11":
-  version: 4.24.12
-  resolution: "next-auth@npm:4.24.12"
+"next-auth@npm:^4.24.15":
+  version: 4.24.15
+  resolution: "next-auth@npm:4.24.15"
   dependencies:
     "@babel/runtime": "npm:^7.20.13"
     "@panva/hkdf": "npm:^1.0.2"
@@ -13085,9 +13085,9 @@ __metadata:
     openid-client: "npm:^5.4.0"
     preact: "npm:^10.6.3"
     preact-render-to-string: "npm:^5.1.19"
-    uuid: "npm:^8.3.2"
+    uuid: "npm:^11.1.1"
   peerDependencies:
-    "@auth/core": 0.34.2
+    "@auth/core": 0.34.3
     next: ^12.2.5 || ^13 || ^14 || ^15 || ^16
     nodemailer: ^7.0.7
     react: ^17.0.2 || ^18 || ^19
@@ -13097,7 +13097,7 @@ __metadata:
       optional: true
     nodemailer:
       optional: true
-  checksum: 10/d37408aaf313f96070e9b794c7df48050234188d35808188e149995c3091e88880bf9c5dae97ff37e241beeb0a09ffe52e8cbcd7b679e7c096fe939f497d47a3
+  checksum: 10/e92f3a5ea448b251ae13c64186d054a56877356275b5e53c358fd551d4ba92d38d9cab3c43f5ff190c16849072e5d0471b9dafb115ec895d42097d0beac72ef1
   languageName: node
   linkType: hard
 
@@ -17506,6 +17506,15 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 10/474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "uuid@npm:11.1.1"
+  bin:
+    uuid: dist/esm/bin/uuid
+  checksum: 10/16411d3dc12a08d6691616c09a75e66a7f900ba1beef6628a76fe0602f82fae2ee537b564d0b7bc95c24f58d059ca9b58c75a1e806118efb50e17822ff00ddd2
   languageName: node
   linkType: hard
 
