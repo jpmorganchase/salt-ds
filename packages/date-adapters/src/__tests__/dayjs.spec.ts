@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import "dayjs/locale/fr";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -11,8 +12,77 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(customParseFormat);
 
+const createInjectedDayjs = () => {
+  const fixedNow = "2030-06-15T12:34:56.000Z";
+  const systemTimezone = "Asia/Tokyo";
+  const injectedTimezone = ((
+    value?: Parameters<typeof dayjs.tz>[0],
+    timezone?: string,
+  ) => dayjs.tz(value ?? fixedNow, timezone)) as typeof dayjs.tz;
+  injectedTimezone.guess = () => systemTimezone;
+  injectedTimezone.setDefault = dayjs.tz.setDefault;
+  const injectedUtc = ((...args: Parameters<typeof dayjs.utc>) =>
+    args.length === 0
+      ? dayjs.utc(fixedNow)
+      : dayjs.utc(...args)) as typeof dayjs.utc;
+  const factory = Object.assign(
+    (...args: Parameters<typeof dayjs>) =>
+      args.length === 0 ? dayjs(fixedNow) : dayjs(...args),
+    { tz: injectedTimezone, utc: injectedUtc },
+  );
+
+  return { factory, fixedNow, systemTimezone };
+};
+
 describe("GIVEN a AdapterDayjs", () => {
   const adapter = new AdapterDayjs({ locale: "en" });
+
+  describe("GIVEN an injected Day.js factory", () => {
+    const { factory, fixedNow, systemTimezone } = createInjectedDayjs();
+    const injectedAdapter = new AdapterDayjs({ locale: "fr" }, factory);
+
+    it.each([
+      "default",
+      "system",
+    ] as const)("SHOULD use its timezone configuration for %s dates", (timezone) => {
+      const date = injectedAdapter.date("2025-01-05T00:00:00", timezone);
+
+      expect(injectedAdapter.getTimezone(date)).toBe(systemTimezone);
+      expect(date.format("Z")).toBe("+09:00");
+    });
+
+    it("SHOULD use its UTC factory", () => {
+      const date = injectedAdapter.date("2025-01-05T00:00:00", "UTC");
+
+      expect(date.utcOffset()).toBe(0);
+    });
+
+    it("SHOULD use its timezone factory for an explicit IANA timezone", () => {
+      const date = injectedAdapter.date(
+        "2025-01-05T00:00:00",
+        "America/New_York",
+      );
+
+      expect(injectedAdapter.getTimezone(date)).toBe("America/New_York");
+      expect(date.format("Z")).toBe("-05:00");
+    });
+
+    it("SHOULD apply the configured locale", () => {
+      const date = injectedAdapter.date("2025-01-05T00:00:00", "UTC");
+
+      expect(injectedAdapter.format(date, "MMMM")).toBe("janvier");
+    });
+
+    it("SHOULD use its clock for today", () => {
+      expect(injectedAdapter.today("UTC").format("YYYY-MM-DD HH:mm:ss")).toBe(
+        "2030-06-15 00:00:00",
+      );
+    });
+
+    it("SHOULD use its clock for now", () => {
+      expect(injectedAdapter.now("UTC").toISOString()).toBe(fixedNow);
+    });
+  });
 
   it("SHOULD create a Dayjs date in the system timezone", () => {
     const date = adapter.date("2023-11-01", "system");
