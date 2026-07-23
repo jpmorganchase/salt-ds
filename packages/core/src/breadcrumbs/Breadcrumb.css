@@ -1,4 +1,4 @@
-.saltBreadcrumbNext {
+.saltBreadcrumb {
   align-items: center;
   display: inline-flex;
   flex: 0 1 auto;
@@ -7,14 +7,14 @@
   min-width: 0;
 }
 
-.saltBreadcrumbNext-current,
-.saltBreadcrumbNext-label,
-.saltBreadcrumbNext-link,
-.saltBreadcrumbNext-trigger {
+.saltBreadcrumb-current,
+.saltBreadcrumb-label,
+.saltBreadcrumb-link,
+.saltBreadcrumb-trigger {
   min-width: 0;
 }
 
-.saltBreadcrumbNext-trigger {
+.saltBreadcrumb-trigger {
   align-items: center;
   color: var(--salt-content-primary-foreground);
   display: inline-flex;
@@ -28,28 +28,28 @@
   text-decoration: var(--salt-typography-textDecoration-none);
 }
 
-.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current) {
+.saltBreadcrumb-link:not(.saltBreadcrumb-current) {
   text-decoration: var(--salt-typography-textDecoration-underline);
 }
 
-.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current):hover {
+.saltBreadcrumb-link:not(.saltBreadcrumb-current):hover {
   text-decoration: var(--salt-typography-textDecoration-none);
 }
 
-.saltBreadcrumbNext-link:not(.saltBreadcrumbNext-current):active {
+.saltBreadcrumb-link:not(.saltBreadcrumb-current):active {
   text-decoration: var(--salt-typography-textDecoration-underline);
 }
 
-.saltBreadcrumbNext-trigger:focus {
+.saltBreadcrumb-trigger:focus {
   outline: var(--salt-focused-outline);
   text-decoration: var(--salt-typography-textDecoration-none);
 }
 
-.saltBreadcrumbNext-current {
+.saltBreadcrumb-current {
   cursor: var(--salt-cursor-text);
 }
 
-.saltBreadcrumbNext-separator {
+.saltBreadcrumb-separator {
   --saltIcon-color: var(--salt-content-secondary-foreground);
   --saltIcon-size: var(--salt-size-icon);
 

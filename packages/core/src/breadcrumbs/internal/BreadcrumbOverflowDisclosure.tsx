@@ -7,15 +7,6 @@ import {
   useDismiss,
   useInteractions,
 } from "@floating-ui/react";
-import {
-  Button,
-  makePrefixer,
-  type RenderPropsType,
-  useFloatingComponent,
-  useFloatingUI,
-  useForkRef,
-  useId,
-} from "@salt-ds/core";
 import { OverflowMenuIcon } from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
 import {
@@ -25,10 +16,19 @@ import {
   useRef,
   useState,
 } from "react";
-import { BreadcrumbNextContext } from "./BreadcrumbNextContext";
+import { Button } from "../../button";
+import {
+  makePrefixer,
+  type RenderPropsType,
+  useFloatingComponent,
+  useFloatingUI,
+  useForkRef,
+  useId,
+} from "../../utils";
+import { BreadcrumbContext } from "./BreadcrumbContext";
 import type { NormalizedBreadcrumb } from "./breadcrumbItems";
 
-const withBaseName = makePrefixer("saltBreadcrumbsNext");
+const withBaseName = makePrefixer("saltBreadcrumbs");
 
 interface BreadcrumbOverflowDisclosureProps {
   currentIndex: number;
@@ -268,7 +268,7 @@ export function BreadcrumbOverflowDisclosure({
           className={withBaseName("disclosureList")}
         >
           {items.map((item, index) => (
-            <BreadcrumbNextContext.Provider
+            <BreadcrumbContext.Provider
               key={item.key}
               value={{
                 current: item.index === currentIndex,
@@ -291,7 +291,7 @@ export function BreadcrumbOverflowDisclosure({
               }}
             >
               {item.element}
-            </BreadcrumbNextContext.Provider>
+            </BreadcrumbContext.Provider>
           ))}
         </ol>
       </FloatingComponent>

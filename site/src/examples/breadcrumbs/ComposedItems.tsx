@@ -1,29 +1,29 @@
-import { Tooltip } from "@salt-ds/core";
-import { HomeIcon } from "@salt-ds/icons";
 import {
-  BreadcrumbNext,
-  BreadcrumbNextLabel,
-  BreadcrumbNextTrigger,
-  BreadcrumbsNext,
-} from "@salt-ds/lab";
+  Breadcrumb,
+  BreadcrumbLabel,
+  Breadcrumbs,
+  BreadcrumbTrigger,
+  Tooltip,
+} from "@salt-ds/core";
+import { HomeIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const ComposedItems = (): ReactElement => (
-  <BreadcrumbsNext aria-label="Breadcrumbs">
-    <BreadcrumbNext href="#">
-      <BreadcrumbNextTrigger>
+  <Breadcrumbs aria-label="Breadcrumbs">
+    <Breadcrumb href="#">
+      <BreadcrumbTrigger>
         <HomeIcon aria-hidden />
-        <BreadcrumbNextLabel>Home</BreadcrumbNextLabel>
-      </BreadcrumbNextTrigger>
-    </BreadcrumbNext>
-    <BreadcrumbNext href="#">Level 2</BreadcrumbNext>
-    <BreadcrumbNext href="#">
+        <BreadcrumbLabel>Home</BreadcrumbLabel>
+      </BreadcrumbTrigger>
+    </Breadcrumb>
+    <Breadcrumb href="#">Level 2</Breadcrumb>
+    <Breadcrumb href="#">
       <Tooltip content="Level 3 · Additional context" placement="top">
-        <BreadcrumbNextTrigger>
-          <BreadcrumbNextLabel>Level 3</BreadcrumbNextLabel>
-        </BreadcrumbNextTrigger>
+        <BreadcrumbTrigger>
+          <BreadcrumbLabel>Level 3</BreadcrumbLabel>
+        </BreadcrumbTrigger>
       </Tooltip>
-    </BreadcrumbNext>
-    <BreadcrumbNext href="#">Current level</BreadcrumbNext>
-  </BreadcrumbsNext>
+    </Breadcrumb>
+    <Breadcrumb href="#">Current level</Breadcrumb>
+  </Breadcrumbs>
 );

@@ -1,4 +1,3 @@
-import { makePrefixer, type RenderPropsType, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -8,16 +7,18 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
-import breadcrumbNextCss from "./BreadcrumbNext.css";
-import { BreadcrumbNextLabel } from "./BreadcrumbNextLabel";
-import { BreadcrumbNextTrigger } from "./BreadcrumbNextTrigger";
+import { useIcon } from "../semantic-icon-provider";
+import { makePrefixer, type RenderPropsType } from "../utils";
+import breadcrumbCss from "./Breadcrumb.css";
+import { BreadcrumbLabel } from "./BreadcrumbLabel";
+import { BreadcrumbTrigger } from "./BreadcrumbTrigger";
 import {
-  BreadcrumbNextContext,
-  useBreadcrumbNextContext,
-} from "./internal/BreadcrumbNextContext";
+  BreadcrumbContext,
+  useBreadcrumbContext,
+} from "./internal/BreadcrumbContext";
 
-const withBaseName = makePrefixer("saltBreadcrumbNext");
-const withBreadcrumbsBaseName = makePrefixer("saltBreadcrumbsNext");
+const withBaseName = makePrefixer("saltBreadcrumb");
+const withBreadcrumbsBaseName = makePrefixer("saltBreadcrumbs");
 
 function isPrimitiveBreadcrumbLabel(children: ReactNode) {
   return (
@@ -49,15 +50,15 @@ function warnIfMissingBreadcrumbContent() {
 
   missingBreadcrumbContentWarningShown = true;
   console.warn(
-    "BreadcrumbNext requires children to render a named breadcrumb item. Use text children for simple items or BreadcrumbNextTrigger with BreadcrumbNextLabel for composed items.",
+    "Breadcrumb requires children to render a named breadcrumb item. Use text children for simple items or BreadcrumbTrigger with BreadcrumbLabel for composed items.",
   );
 }
 
-export interface BreadcrumbNextProps
+export interface BreadcrumbProps
   extends Omit<ComponentPropsWithoutRef<"li">, "children"> {
   /**
    * Custom breadcrumb content. Use this for advanced composition with
-   * `BreadcrumbNextTrigger` and `BreadcrumbNextLabel`.
+   * `BreadcrumbTrigger` and `BreadcrumbLabel`.
    */
   children?: ReactNode;
   /**
@@ -75,8 +76,8 @@ export interface BreadcrumbNextProps
   render?: RenderPropsType["render"];
 }
 
-export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
-  function BreadcrumbNext(props, ref) {
+export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
+  function Breadcrumb(props, ref) {
     const {
       children,
       className,
@@ -87,12 +88,12 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
     } = props;
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-breadcrumb-next",
-      css: breadcrumbNextCss,
+      testId: "salt-breadcrumb",
+      css: breadcrumbCss,
       window: targetWindow,
     });
 
-    const parentContext = useBreadcrumbNextContext();
+    const parentContext = useBreadcrumbContext();
     const current = parentContext?.current ?? Boolean(currentProp);
     const onNavigate = parentContext?.onNavigate;
     const placement = parentContext?.placement ?? "trail";
@@ -110,9 +111,9 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
       ? children
       : undefined;
     const content = missingContent ? null : primitiveChildren !== undefined ? (
-      <BreadcrumbNextTrigger>
-        <BreadcrumbNextLabel>{primitiveChildren}</BreadcrumbNextLabel>
-      </BreadcrumbNextTrigger>
+      <BreadcrumbTrigger>
+        <BreadcrumbLabel>{primitiveChildren}</BreadcrumbLabel>
+      </BreadcrumbTrigger>
     ) : (
       children
     );
@@ -137,7 +138,7 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
         )}
         {...rest}
       >
-        <BreadcrumbNextContext.Provider value={context}>
+        <BreadcrumbContext.Provider value={context}>
           {content}
           {placement === "trail" && showSeparator ? (
             <LevelSeparatorIcon
@@ -145,7 +146,7 @@ export const BreadcrumbNext = forwardRef<HTMLLIElement, BreadcrumbNextProps>(
               className={withBaseName("separator")}
             />
           ) : null}
-        </BreadcrumbNextContext.Provider>
+        </BreadcrumbContext.Provider>
       </li>
     );
   },
