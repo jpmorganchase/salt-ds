@@ -1,4 +1,4 @@
-import { Dropdown, Option } from "@salt-ds/core";
+import { Dropdown, FormField, FormFieldLabel, Option } from "@salt-ds/core";
 import * as dropdownStories from "@stories/dropdown/dropdown.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
@@ -223,6 +223,36 @@ describe("Given a Dropdown", () => {
 
     cy.realType("abc");
     cy.findByRole("combobox").should("have.text", "California");
+  });
+
+  it("should show the empty marker when it is readonly with no selection", () => {
+    cy.mount(
+      <Dropdown readOnly>
+        <Option value="Alabama" />
+      </Dropdown>,
+    );
+
+    cy.findByRole("combobox").should("have.text", "—");
+  });
+
+  it("should show the empty marker when it is readonly with a controlled empty value", () => {
+    cy.mount(
+      <Dropdown readOnly value="">
+        <Option value="Alabama" />
+      </Dropdown>,
+    );
+
+    cy.findByRole("combobox").should("have.text", "—");
+  });
+
+  it("should show custom value text rather than the empty marker when it is readonly", () => {
+    cy.mount(
+      <Dropdown readOnly value="Custom value">
+        <Option value="Alabama" />
+      </Dropdown>,
+    );
+
+    cy.findByRole("combobox").should("have.text", "Custom value");
   });
 
   it("should not receive focus via tab if it is disabled", () => {
@@ -525,5 +555,32 @@ describe("Given a Dropdown", () => {
     cy.findByTestId("overlay")
       .should("exist")
       .and("have.attr", "role", "listbox");
+  });
+
+  describe("validation status", () => {
+    it("should use its own validation status when not in a FormField", () => {
+      cy.mount(
+        <Dropdown validationStatus="warning">
+          <Option value={1}>1</Option>
+        </Dropdown>,
+      );
+      cy.findByRole("combobox").should("have.class", "saltDropdown-warning");
+    });
+
+    it("should prioritize the FormField validation status over its own", () => {
+      cy.mount(
+        <FormField validationStatus="error">
+          <FormFieldLabel>Field</FormFieldLabel>
+          <Dropdown validationStatus="warning">
+            <Option value={1}>1</Option>
+          </Dropdown>
+        </FormField>,
+      );
+      cy.findByRole("combobox").should("have.class", "saltDropdown-error");
+      cy.findByRole("combobox").should(
+        "not.have.class",
+        "saltDropdown-warning",
+      );
+    });
   });
 });
