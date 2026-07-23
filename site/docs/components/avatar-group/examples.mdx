@@ -1,0 +1,45 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+`AvatarGroup` represents multiple users, entities or objects in a compact space using a horizontal stack of overlapping avatars. It supports collaboration patterns by summarizing group membership and providing access to the full list when space is limited.
+
+If a surplus avatar (e.g., “+N” where N is the number of hidden members) is shown, it indicates additional members hidden when the group exceeds the visible maximum set by `max`.
+
+<LivePreview componentName="avatar-group" exampleName="Default" />
+
+## Visible avatars
+
+Use the `max` prop to control how many avatars are visible before the surplus indicator appears.
+
+In limited space, aim for at least 2 visible avatars; if only one fits, use a single [Avatar](/salt/components/avatar) instead of an Avatar Group.
+
+<LivePreview componentName="avatar-group" exampleName="Visible" />
+
+### Best practices
+
+For consistency and alignment, we recommend using the default size (1x) and not scaling an Avatar Group beyond the default multiplier.
+
+## Interactive
+
+`AvatarGroup` can be made interactive using the `render` prop. Props defined on the JSX element will be merged with props from the component.
+
+Common interactive use cases include:
+
+- Revealing the full list of members when an Avatar Group is activated.
+- Opening a menu with group-related actions.
+
+<LivePreview componentName="avatar-group" exampleName="Interactive" />
+
+### Best practices
+
+- Ensure the Avatar Group has a meaningful accessible name so screen reader users understand what action will occur.
+- Avoid using size modifiers on interactive avatar groups, as they can shrink the touch target and make them harder to interact with.

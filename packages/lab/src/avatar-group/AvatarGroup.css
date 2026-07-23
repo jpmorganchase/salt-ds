@@ -1,0 +1,104 @@
+.saltAvatarGroup {
+  --avatarGroup-overlap: var(--saltAvatarGroup-overlap, calc(var(--salt-size-base) * 0.25));
+  --avatarGroup-gap: var(--saltAvatarGroup-gap, var(--salt-size-fixed-100));
+  --avatarGroup-gap-feather: var(--saltAvatarGroup-gap-feather, 0.1px);
+  display: flex;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  position: relative;
+  border-radius: var(--salt-palette-corner-strongest, 50%);
+}
+
+.saltAvatarGroup .saltAvatar {
+  --avatar-size-multiplier: 1;
+}
+
+.saltAvatarGroup .saltAvatar:not(:first-child) {
+  margin-left: calc(-1 * var(--avatarGroup-overlap));
+}
+
+.saltAvatarGroup:focus-visible {
+  outline-offset: var(--salt-spacing-fixed-200);
+}
+
+.saltAvatarGroup::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-color: transparent;
+}
+
+button.saltAvatarGroup,
+a.saltAvatarGroup {
+  cursor: var(--salt-cursor-hover);
+}
+
+button.saltAvatarGroup:disabled {
+  cursor: var(--salt-cursor-disabled);
+}
+
+/* Fallback separator when :has() is unsupported. */
+.saltAvatarGroup .saltAvatar:not(:first-child)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border-radius: inherit;
+  border: var(--avatarGroup-gap) solid var(--salt-container-primary-background);
+  pointer-events: none;
+}
+
+@supports selector(:has(*)) {
+  .saltAvatarGroup .saltAvatar:not(:first-child)::after {
+    border: none;
+  }
+
+  /* Match the cut to the following avatar's shape. */
+  .saltAvatarGroup .saltAvatar:has(+ .saltAvatar:not(.saltAvatar-entity)) {
+    --avatarGroup-mask-radius: calc(var(--avatar-container-size) / 2 + var(--avatarGroup-gap));
+    --avatarGroup-mask-x: calc(var(--avatar-container-size) * 1.5 - var(--avatarGroup-overlap));
+    -webkit-mask: radial-gradient(
+      circle var(--avatarGroup-mask-radius) at var(--avatarGroup-mask-x) 50%,
+      transparent calc(var(--avatarGroup-mask-radius) - var(--avatarGroup-gap-feather)),
+      black calc(var(--avatarGroup-mask-radius) + var(--avatarGroup-gap-feather))
+    );
+    mask: radial-gradient(
+      circle var(--avatarGroup-mask-radius) at var(--avatarGroup-mask-x) 50%,
+      transparent calc(var(--avatarGroup-mask-radius) - var(--avatarGroup-gap-feather)),
+      black calc(var(--avatarGroup-mask-radius) + var(--avatarGroup-gap-feather))
+    );
+  }
+
+  /* Square neighbours need a rounded-rectangle notch. */
+  .saltAvatarGroup .saltAvatar:has(+ .saltAvatar-entity) {
+    --avatarGroup-notch-corner: var(--saltAvatar-entity-borderRadius, var(--salt-palette-corner-weak, 0));
+    --avatarGroup-notch-radius: calc(var(--avatarGroup-notch-corner) + var(--avatarGroup-gap));
+    --avatarGroup-notch-x: calc(var(--avatar-container-size) - var(--avatarGroup-overlap) - var(--avatarGroup-gap));
+    -webkit-mask:
+      linear-gradient(to right, black var(--avatarGroup-notch-x), transparent var(--avatarGroup-notch-x)) 0 0 / 100% 100% no-repeat,
+      radial-gradient(circle var(--avatarGroup-notch-radius) at 100% 100%, transparent calc(100% - var(--avatarGroup-gap-feather)), black 100%) var(--avatarGroup-notch-x)
+      calc(-1 * var(--avatarGroup-gap)) / var(--avatarGroup-notch-radius) var(--avatarGroup-notch-radius) no-repeat,
+      radial-gradient(circle var(--avatarGroup-notch-radius) at 100% 0%, transparent calc(100% - var(--avatarGroup-gap-feather)), black 100%) var(--avatarGroup-notch-x)
+      calc(var(--avatar-container-size) - var(--avatarGroup-notch-corner)) / var(--avatarGroup-notch-radius) var(--avatarGroup-notch-radius) no-repeat;
+    mask:
+      linear-gradient(to right, black var(--avatarGroup-notch-x), transparent var(--avatarGroup-notch-x)) 0 0 / 100% 100% no-repeat,
+      radial-gradient(circle var(--avatarGroup-notch-radius) at 100% 100%, transparent calc(100% - var(--avatarGroup-gap-feather)), black 100%) var(--avatarGroup-notch-x)
+      calc(-1 * var(--avatarGroup-gap)) / var(--avatarGroup-notch-radius) var(--avatarGroup-notch-radius) no-repeat,
+      radial-gradient(circle var(--avatarGroup-notch-radius) at 100% 0%, transparent calc(100% - var(--avatarGroup-gap-feather)), black 100%) var(--avatarGroup-notch-x)
+      calc(var(--avatar-container-size) - var(--avatarGroup-notch-corner)) / var(--avatarGroup-notch-radius) var(--avatarGroup-notch-radius) no-repeat;
+  }
+}
+
+@media (hover: hover) {
+  button.saltAvatarGroup:hover::after,
+  a.saltAvatarGroup:hover::after {
+    background-color: var(--salt-overlayable-background-hover);
+  }
+
+  button.saltAvatarGroup:disabled:hover::after {
+    background-color: transparent;
+  }
+}
