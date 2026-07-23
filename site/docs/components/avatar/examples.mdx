@@ -40,12 +40,6 @@ You can also pass a custom image or SVG as the child of the component. Note that
 
 <LivePreview componentName="avatar" exampleName="Image" />
 
-## Name to color
-
-You can deterministically derive an avatar's `color` from its `name` so that the same person is always represented by the same [categorical color](/salt/foundations/color#categorical). In the example below, a simple hash of the name is used to pick one of the 20 categorical colors.
-
-<LivePreview componentName="avatar" exampleName="NameToColor" />
-
 ## Initials
 
 If a photo isn't available, the avatar will fall back to initials or an icon:
@@ -76,6 +70,12 @@ Common interactive use cases include:
 - Avoid using size modifiers on interactive avatars, as they can shrink the touch target and make them harder to interact with.
 
 <LivePreview componentName="avatar" exampleName="Interactive" />
+
+## Name to color
+
+You can deterministically derive an avatar's `color` from its `name` so that the same person is always represented by the same [categorical color](/salt/foundations/color#categorical). In the example below, a simple hash of the name is used to pick one of the 20 categorical colors.
+
+<LivePreview componentName="avatar" exampleName="NameToColor" />
 
 ## Sizes
 
