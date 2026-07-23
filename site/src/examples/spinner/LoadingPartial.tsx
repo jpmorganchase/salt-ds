@@ -17,6 +17,8 @@ import {
 import styles from "./LoadingPartial.module.css";
 
 const LOADING_DELAY = 2000;
+const LOADING_MESSAGE = "Reloading panel";
+const COMPLETION_MESSAGE = "Panel reloaded";
 
 type LoadingItemProps = ComponentPropsWithoutRef<typeof GridItem> & {
   isLoading: boolean;
@@ -47,16 +49,30 @@ export const LoadingPartial = (): ReactElement => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    if (!isLoading) return;
+
+    const loadingTimer = setTimeout(() => {
       setIsLoading(false);
     }, LOADING_DELAY);
-  }, []);
+
+    return () => {
+      clearTimeout(loadingTimer);
+    };
+  }, [isLoading]);
 
   return (
     <StackLayout align="stretch">
       <GridLayout columns={4} rows={3} gap={1} className={styles.loadingGrid}>
         <LoadingItem isLoading={isLoading} colSpan={2} rowSpan={2}>
-          {isLoading ? <Spinner aria-label="loading" role="status" /> : 1}
+          {isLoading ? (
+            <Spinner
+              aria-label={LOADING_MESSAGE}
+              completionAnnouncement={COMPLETION_MESSAGE}
+              role="status"
+            />
+          ) : (
+            1
+          )}
         </LoadingItem>
         <LoadingItem isLoading={false} colSpan={1} rowSpan={1}>
           2
@@ -78,16 +94,12 @@ export const LoadingPartial = (): ReactElement => {
         </LoadingItem>
       </GridLayout>
       <Button
+        disabled={isLoading}
+        focusableWhenDisabled
         sentiment="accented"
         onClick={() => {
-          if (!isLoading) {
-            setIsLoading(true);
-            setTimeout(() => {
-              setIsLoading(false);
-            }, LOADING_DELAY);
-          }
+          setIsLoading(true);
         }}
-        disabled={isLoading}
       >
         Reload Panel
       </Button>

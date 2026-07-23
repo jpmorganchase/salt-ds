@@ -1,0 +1,86 @@
+---
+title: Style injection
+layout: DetailTechnical
+sidebar:
+  label: Style injection
+---
+
+Salt components include their component styles through runtime style injection. This means Salt adds component CSS to the document when components mount, so most applications only need to import the theme CSS during setup.
+
+## How style injection works
+
+When a Salt component renders, Salt inserts a `<style>` element into the document head for that component’s CSS. The same CSS is shared by matching component instances, so Salt avoids injecting duplicate style tags for the same styles.
+
+You still need to import Salt’s theme CSS. Theme CSS provides global tokens, theme variables and foundational styles. Style injection provides the CSS for individual components.
+
+See [Developing with Salt](./developing) for the full setup.
+
+## Use style injection with a Content Security Policy
+
+If your application uses a Content Security Policy that requires nonces for inline styles, wrap your app with `CSPProvider` from `@salt-ds/styles`. Salt applies the nonce to its injected `<style>` elements.
+
+Install `@salt-ds/styles` if your app imports it directly:
+
+```bash
+npm install @salt-ds/styles
+```
+
+Then pass the request nonce to `CSPProvider` near the root of your React tree:
+
+```tsx
+import { SaltProviderNext } from "@salt-ds/core";
+import { CSPProvider } from "@salt-ds/styles";
+
+function Root({ nonce }: { nonce: string }) {
+  return (
+    <CSPProvider nonce={nonce}>
+      <SaltProviderNext>
+        <App />
+      </SaltProviderNext>
+    </CSPProvider>
+  );
+}
+```
+
+Your server or framework should generate a fresh nonce for each response and include the same value in your CSP header. For example, your policy might include `style-src 'self' 'nonce-<value>'`.
+
+<Callout title="Keep the nonce per request">
+  Generate a new nonce for each HTML response. Don’t reuse a hard-coded nonce
+  across requests.
+</Callout>
+
+### Inline style attributes
+
+`CSPProvider` applies nonces to Salt’s injected `<style>` elements. It doesn't cover inline `style` attributes, for example `<div style="...">`.
+
+In CSP, `style-src` applies to both `<style>` elements and `style=""` attributes. If you want to control only `<style>` elements, use `style-src-elem`. If you also need to control inline style attributes, use `style-src-attr`.
+
+If your CSP blocks inline style attributes as well as style elements, you have a few options:
+
+- Use `style-src-elem` when your policy only needs to restrict `<style>` elements.
+- Relax `style-src-attr`, for example with `'unsafe-inline'`, if your security model allows inline style attributes.
+- Render affected components only on the client if inline style attributes are only present in server-rendered HTML.
+- Move affected inline styles into CSS, or override/unset inline styles that come from composed components where the component API allows it.
+
+## Disable style injection
+
+Style injection is enabled by default. If your application imports Salt component CSS another way, set `enableStyleInjection={false}` on `SaltProvider` or `SaltProviderNext` to disable runtime injection.
+
+Use this option if your build requires static CSS files, or if your application’s Content Security Policy doesn't allow runtime style tags.
+
+### Static CSS bundle paths
+
+Each package documents its own CSS import requirements in its component or package guidance. If you disable runtime style injection, import the static CSS bundle for each Salt package that your application uses.
+
+| Package                    | Static CSS import                                       |
+| -------------------------- | ------------------------------------------------------- |
+| `@salt-ds/core`            | `@salt-ds/core/css/salt-core.css`                       |
+| `@salt-ds/lab`             | `@salt-ds/lab/css/salt-lab.css`                         |
+| `@salt-ds/date-components` | `@salt-ds/date-components/css/salt-date-components.css` |
+| `@salt-ds/embla-carousel`  | `@salt-ds/embla-carousel/css/salt-embla-carousel.css`   |
+| `@salt-ds/countries`       | `@salt-ds/countries/css/salt-countries.css`             |
+| `@salt-ds/icons`           | `@salt-ds/icons/css/salt-icon.css`                      |
+
+## Choosing an approach
+
+Use the default style injection setup for most Salt applications. Use `CSPProvider` when your CSP permits inline styles only with a nonce. Disable style injection and import the relevant static CSS bundles when your application needs all component CSS to come from static CSS files.

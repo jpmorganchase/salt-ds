@@ -54,7 +54,7 @@ To install with [yarn](https://yarnpkg.com/) or another package manager, run the
 
 Salt requires the Open Sans and PT Mono web fonts. You can integrate them into your application using one of the following methods.
 
-If you’re planning to use the JPM Brand theme (recommended in step 3), you’ll also need the **Amplitude** web font—see [Setting up the JPM Brand theme](../themes#setting-up-the-jpm-brand-theme) in Themes for where to obtain the font files and the `@font-face` declarations.
+If you’re planning to use the J.P. Morgan theme (recommended in step 3), you’ll also need the **Amplitude** web font—see [Setting up the J.P. Morgan theme](../themes#setting-up-the-jp-morgan-theme) in Themes for where to obtain the font files and the `@font-face` declarations.
 
 #### Use Fontsource (recommended)
 
@@ -139,14 +139,14 @@ If you prefer not to use Fontsource or Google Fonts, you can use any other metho
 
 The `@salt-ds/theme` package ships two themes:
 
-- **JPM Brand**—_recommended for all new projects._ Salt’s long-term visual style, aligned with the J.P. Morgan brand.
+- **J.P. Morgan**—_recommended for all new projects._ Salt’s long-term visual style, aligned with the J.P. Morgan brand.
 - **Legacy (UITK)**—for applications migrating from UITK that need to preserve the existing visual style.
 
 Additional themes, such as Chase, are distributed as separate packages. See [Themes](../themes) for a full comparison.
 
 Apply themes using the provider components (`<SaltProvider>` or `<SaltProviderNext>`), which also provide context for other settings such as mode and density.
 
-#### Using the JPM Brand theme (recommended)
+#### Using the J.P. Morgan theme (recommended)
 
 Set up the **Amplitude** web font first (see [step 2](#2-add-required-web-fonts)). In a typical React project, add the provider to `src/index.tsx` as follows:
 
@@ -215,6 +215,8 @@ Add these props to the provider, alongside any theme props from earlier:
 ```
 
 Refer to the [SaltProvider](../components/salt-provider) docs for the full API.
+
+Salt injects component styles at runtime by default, so you don’t need to import component CSS for the setup above. If you need static component CSS or your application uses a Content Security Policy that requires a nonce for injected styles, see [Style injection](./style-injection).
 
 ### 4. Import components
 

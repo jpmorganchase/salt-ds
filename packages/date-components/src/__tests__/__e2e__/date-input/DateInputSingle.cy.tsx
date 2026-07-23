@@ -105,6 +105,21 @@ describe("GIVEN a DateInputSingle", () => {
         cy.clock().then((clock) => clock.restore());
       });
 
+      it("SHOULD apply the name prop to the input", () => {
+        cy.mount(<DateInputSingle name="start-date" />);
+        cy.findByRole("textbox").should("have.attr", "name", "start-date");
+      });
+
+      it("SHOULD allow inputProps.name to override the top-level name prop", () => {
+        cy.mount(
+          <DateInputSingle
+            name="start-date"
+            inputProps={{ name: "override" }}
+          />,
+        );
+        cy.findByRole("textbox").should("have.attr", "name", "override");
+      });
+
       const initialDateValue = "05 Jan 2025";
       const initialDate = adapter.parse(initialDateValue, "DD MMM YYYY").date;
 
@@ -126,6 +141,16 @@ describe("GIVEN a DateInputSingle", () => {
         );
         cy.findByRole("textbox").should("have.value", "date value");
         cy.findByRole("textbox").should("have.attr", "aria-invalid", "true");
+      });
+
+      it("SHOULD show the empty marker when read-only with an empty default value", () => {
+        cy.mount(<DateInputSingle defaultValue="" readOnly />);
+        cy.findByRole("textbox").should("have.value", "—");
+      });
+
+      it("SHOULD show the empty marker when read-only with a controlled empty value", () => {
+        cy.mount(<DateInputSingle value="" readOnly />);
+        cy.findByRole("textbox").should("have.value", "—");
       });
 
       it("SHOULD use top-level aria-label", () => {

@@ -1047,6 +1047,16 @@ describe("Number Input", () => {
       cy.findByRole("textbox").should("have.value", "—");
     });
 
+    it("should show emdash for an empty default value", () => {
+      cy.mount(<ReadOnly defaultValue="" readOnly />);
+      cy.findByRole("textbox").should("have.value", "—");
+    });
+
+    it("should show emdash for a controlled empty value", () => {
+      cy.mount(<ReadOnly value="" readOnly />);
+      cy.findByRole("textbox").should("have.value", "—");
+    });
+
     it("should show a custom marker if provided when empty", () => {
       cy.mount(
         <ReadOnly defaultValue={undefined} readOnly emptyReadOnlyMarker="#" />,
@@ -1140,5 +1150,15 @@ describe("Number Input", () => {
         );
       });
     });
+  });
+
+  it("SHOULD apply the name prop to the input", () => {
+    cy.mount(<Default name="quantity" />);
+    cy.findByRole("spinbutton").should("have.attr", "name", "quantity");
+  });
+
+  it("SHOULD allow inputProps.name to override the top-level name prop", () => {
+    cy.mount(<Default name="quantity" inputProps={{ name: "override" }} />);
+    cy.findByRole("spinbutton").should("have.attr", "name", "override");
   });
 });

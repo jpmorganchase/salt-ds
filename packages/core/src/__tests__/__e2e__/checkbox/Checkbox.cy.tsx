@@ -107,4 +107,9 @@ describe("GIVEN a Checkbox", () => {
     cy.findByRole("checkbox").should("not.have.attr", "aria-describedby");
     cy.findByRole("checkbox").should("not.have.attr", "aria-labelledby");
   });
+
+  it("SHOULD apply the name prop to the input", () => {
+    cy.mount(<Checkbox name="accept" />);
+    cy.findByRole("checkbox").should("have.attr", "name", "accept");
+  });
 });

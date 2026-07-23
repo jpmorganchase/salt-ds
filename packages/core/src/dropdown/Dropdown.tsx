@@ -177,7 +177,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   const disabled = Boolean(disabledProp) || formFieldDisabled;
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
-  const validationStatus = validationStatusProp ?? formFieldValidationStatus;
+  const validationStatus = formFieldValidationStatus ?? validationStatusProp;
   const required = formFieldRequired
     ? ["required", "asterisk"].includes(formFieldRequired)
     : requiredProp;
@@ -219,10 +219,9 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const selectedValue = selectedState
     .map((item) => valueToString(item))
     .join(", ");
-  const isEmptyReadOnly = readOnly && selectedValue === "";
-  const valueText = isEmptyReadOnly
-    ? emptyReadOnlyMarker
-    : (value ?? selectedValue);
+  const displayedValue = value ?? selectedValue;
+  const valueText =
+    readOnly && displayedValue === "" ? emptyReadOnlyMarker : displayedValue;
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     newOpen,

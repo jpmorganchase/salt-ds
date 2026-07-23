@@ -494,7 +494,7 @@ export const HeaderVariants: StoryObj<typeof AgGridReact> = {
 HeaderVariants.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  await userEvent.click(canvas.getByRole("button", { name: "Tertiary" }));
+  await userEvent.click(canvas.getByRole("radio", { name: "Tertiary" }));
 
   const rows = (await canvas.findAllByRole("row"))
     .filter((row) => row.hasAttribute("row-index"))

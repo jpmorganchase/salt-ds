@@ -622,4 +622,9 @@ describe("Given a Slider", () => {
         cy.findByRole("slider").invoke("val").should("eq", valAfterDrag);
       });
   });
+
+  it("SHOULD apply the name prop to the input", () => {
+    cy.mount(<Default name="volume" />);
+    cy.findByRole("slider").should("have.attr", "name", "volume");
+  });
 });
