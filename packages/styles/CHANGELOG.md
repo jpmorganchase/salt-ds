@@ -1,5 +1,15 @@
 # @salt-ds/styles
 
+## 0.4.0
+
+### Minor Changes
+
+- 7a828e4: Added `CSPProvider` and nonce support for dynamically injected style tags.
+
+### Patch Changes
+
+- fc112cb: Improved component CSS injection to avoid redundant duplicate style writes, respond to style injection and insertion point changes, and clean up injected style state more defensively.
+
 ## 0.3.0
 
 ### Minor Changes

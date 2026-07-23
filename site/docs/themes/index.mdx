@@ -21,17 +21,18 @@ In Salt, a theme is made up of tokens for colors, typography, shadows and corner
 
 ## Which theme to pick
 
-Salt offers three themes:
+Salt offers four themes:
 
-- **JPM Brand** (default)—_recommended for all new projects._
+- **J.P. Morgan** (default)—_recommended for all new projects._
 - **Legacy (UITK)**—designed to support the migration of applications from Salt’s predecessor.
-- **Chase**—available exclusively to JPMorganChase employees for applications serving Chase customers.
+- **Chase Consumer**—available exclusively to JPMorganChase employees for applications serving Chase customers.
+- **JPMorganChase**—available exclusively to JPMorganChase employees for applications representing the parent brand.
 
-The long-term goal for Legacy users remains transitioning to the JPM Brand theme.
+The long-term goal for Legacy users remains transitioning to the J.P. Morgan theme.
 
-### JPM Brand theme
+### J.P. Morgan theme
 
-The JPM Brand theme is Salt’s long-term visual style, designed to match the JPMorgan look across CIB digital applications. Developed with Corporate Brand and CIB Marketing, it uses approved styles for consistent visuals on desktop and web. Salt recommends switching to the JPM Brand theme for better accessibility and brand alignment.
+The J.P. Morgan theme is Salt’s long-term visual style, designed to match the J.P. Morgan brand across CIB digital applications. Developed with Corporate Brand and CIB Marketing, it uses approved styles for consistent visuals on desktop and web. Salt recommends using the J.P. Morgan theme for better accessibility and brand alignment.
 
 ### Legacy (UITK) theme
 
@@ -41,13 +42,17 @@ For a gradual move from the UITK system, Salt’s Legacy (UITK) theme can be use
 
 The Chase theme enables teams to build and deliver products within the Chase visual identity. Chase is available as a separate library in Figma and as a standalone package in code. JPMorganChase employees can find [installation instructions and setup guidance](https://go/saltds-chase-theme) internally.
 
+### JPMorganChase theme
+
+The JPMorganChase theme enables teams to build and deliver products aligned to the JPMorganChase parent brand. JPMorganChase theme is available as a separate library in Figma and as a standalone package in code.
+
 ## How to use themes in code
 
 You can set themes in code using a provider and CSS imports. For a step-by-step walkthrough that covers installing the packages, adding web fonts and wrapping your application, see [Developing with Salt](../getting-started/developing).
 
-### Setting up the JPM Brand theme
+### Setting up the J.P. Morgan theme
 
-Import the base theme CSS plus the JPM Brand layer, then wrap your app in `<SaltProviderNext>`:
+Import the base theme CSS plus the J.P. Morgan layer, then wrap your app in `<SaltProviderNext>`:
 
 ```tsx
 import { SaltProviderNext } from "@salt-ds/core";
@@ -64,7 +69,7 @@ import "@salt-ds/theme/css/theme-next.css";
 </SaltProviderNext>;
 ```
 
-The JPM Brand theme requires the **Amplitude** web font. JPMC employees can download the font files from [Salt internal resources](https://go/salt-ds-internal/resources/index), then add the following `@font-face` declarations to your application CSS:
+The J.P. Morgan theme requires the **Amplitude** web font. JPMC employees can download the font files from [Salt internal resources](https://go/salt-ds-internal/resources/index), then add the following `@font-face` declarations to your application CSS:
 
 <Disclosure
   id="amplitude-font-face"
@@ -117,7 +122,7 @@ The Legacy theme uses `<SaltProvider>` with the base theme CSS—no additional f
 
 ## How to use themes in Figma
 
-When using the Salt DS Figma libraries, you can use the variable mode ‘Theme’ to change between ‘Legacy’ (UITK) and JPM Brand. All components, patterns and styles are compatible with each theme in Salt.
+When using the Salt DS Figma libraries, you can use variable modes to change between ‘J.P. Morgan’ and ‘Legacy (UITK)’. All components, patterns and styles are compatible with each theme in Salt. The Chase and JPMorganChase themes are provided as extended collections for internal use only.
 
 <Image
   src="/img/theming/figma-themes-light.png"
