@@ -107,45 +107,13 @@
 /* Styles applied to InteractableCard if `disabled={true}` */
 .saltInteractableCard-disabled,
 .saltInteractableCard-disabled:focus,
+.saltInteractableCard-disabled:focus-visible,
+.saltInteractableCard-disabled:hover,
 .saltInteractableCard-disabled:active {
   box-shadow: none;
-  color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-cursor-disabled);
   outline: none;
-  --card-accent-color: var(--salt-sentiment-accent-background-disabled);
-}
-
-/* Styles applied to InteractableCard primary variant if `disabled={true}` */
-.saltInteractableCard-primary.saltInteractableCard-disabled,
-.saltInteractableCard-primary.saltInteractableCard-disabled:focus,
-.saltInteractableCard-primary.saltInteractableCard-disabled:active {
-  background: var(--salt-container-primary-background-disabled);
-  border-color: var(--salt-container-primary-borderColor-disabled);
-}
-
-/* Styles applied to InteractableCard secondary variant if `disabled={true}` */
-.saltInteractableCard-secondary.saltInteractableCard-disabled,
-.saltInteractableCard-secondary.saltInteractableCard-disabled:focus,
-.saltInteractableCard-secondary.saltInteractableCard-disabled:active {
-  background: var(--saltInteractableCard-background-disabled, var(--salt-container-secondary-background-disabled));
-  border-color: var(--salt-container-secondary-borderColor-disabled);
-}
-
-/* Styles applied to InteractableCard tertiary variant if `disabled={true}` */
-.saltInteractableCard-tertiary.saltInteractableCard-disabled,
-.saltInteractableCard-tertiary.saltInteractableCard-disabled:focus,
-.saltInteractableCard-tertiary.saltInteractableCard-disabled:active {
-  background: var(--salt-container-tertiary-background-disabled);
-  border-color: var(--salt-container-tertiary-borderColor-disabled);
-}
-
-/* Styles applied to InteractableCard if `selected={true}`and `disabled={true}` */
-.saltInteractableCard-selected.saltInteractableCard-disabled,
-.saltInteractableCard-selected.saltInteractableCard-disabled:focus,
-.saltInteractableCard-selected.saltInteractableCard-disabled:hover,
-.saltInteractableCard-selected.saltInteractableCard-disabled:active {
-  border-color: var(--salt-selectable-borderColor-selectedDisabled);
-  --card-accent-color: var(--salt-selectable-foreground-selectedDisabled);
+  opacity: 0.4;
 }
 
 /* Styles applied to nested divs in InteractableCard if `disabled={true}` */

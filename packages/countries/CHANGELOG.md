@@ -1,5 +1,18 @@
 # @salt-ds/countries
 
+## 1.5.2
+
+### Patch Changes
+
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [fc112cb]
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [7a828e4]
+- Updated dependencies [87a8a85]
+- Updated dependencies [8156149]
+  - @salt-ds/core@1.68.0
+  - @salt-ds/styles@0.4.0
+
 ## 1.5.1
 
 ### Patch Changes
