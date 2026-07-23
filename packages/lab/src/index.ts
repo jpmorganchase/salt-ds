@@ -1,6 +1,4 @@
 export * from "./app-header";
-export * from "./breadcrumbs";
-export * from "./breadcrumbs-next";
 export * from "./button-bar";
 export * from "./cascading-menu";
 export * from "./color-chooser";

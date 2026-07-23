@@ -1,4 +1,3 @@
-import { makePrefixer, type RenderPropsType, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -10,17 +9,19 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { BreadcrumbNext, type BreadcrumbNextProps } from "./BreadcrumbNext";
-import breadcrumbsNextCss from "./BreadcrumbsNext.css";
-import { BreadcrumbNextContext } from "./internal/BreadcrumbNextContext";
+import { useIcon } from "../semantic-icon-provider";
+import { makePrefixer, type RenderPropsType } from "../utils";
+import { Breadcrumb, type BreadcrumbProps } from "./Breadcrumb";
+import breadcrumbsCss from "./Breadcrumbs.css";
+import { BreadcrumbContext } from "./internal/BreadcrumbContext";
 import { BreadcrumbOverflowDisclosure } from "./internal/BreadcrumbOverflowDisclosure";
 import {
   flattenBreadcrumbItems,
   type NormalizedBreadcrumb,
 } from "./internal/breadcrumbItems";
 
-const withBaseName = makePrefixer("saltBreadcrumbsNext");
-const withItemBaseName = makePrefixer("saltBreadcrumbNext");
+const withBaseName = makePrefixer("saltBreadcrumbs");
+const withItemBaseName = makePrefixer("saltBreadcrumb");
 
 interface CollapseRange {
   hiddenItems: NormalizedBreadcrumb[];
@@ -38,7 +39,7 @@ type RenderPart =
       type: "collapse";
     };
 
-export interface BreadcrumbsNextProps
+export interface BreadcrumbsProps
   extends Omit<ComponentPropsWithoutRef<"nav">, "children"> {
   /**
    * Breadcrumb items.
@@ -69,12 +70,10 @@ export interface BreadcrumbsNextProps
   wrap?: boolean;
 }
 
-function isBreadcrumbNextElement(
+function isBreadcrumbElement(
   child: ReactNode,
-): child is ReactElement<BreadcrumbNextProps> {
-  return (
-    isValidElement<BreadcrumbNextProps>(child) && child.type === BreadcrumbNext
-  );
+): child is ReactElement<BreadcrumbProps> {
+  return isValidElement<BreadcrumbProps>(child) && child.type === Breadcrumb;
 }
 
 function getCurrentIndex(items: NormalizedBreadcrumb[]) {
@@ -123,8 +122,8 @@ function renderSeparator(SeparatorIcon: ElementType) {
   );
 }
 
-export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
-  function BreadcrumbsNext(props, ref) {
+export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
+  function Breadcrumbs(props, ref) {
     const {
       children,
       className,
@@ -139,13 +138,13 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
     const { LevelSeparatorIcon } = useIcon();
 
     useComponentCssInjection({
-      testId: "salt-breadcrumbs-next",
-      css: breadcrumbsNextCss,
+      testId: "salt-breadcrumbs",
+      css: breadcrumbsCss,
       window: targetWindow,
     });
 
     const items = flattenBreadcrumbItems(children)
-      .filter(isBreadcrumbNextElement)
+      .filter(isBreadcrumbElement)
       .map((element, index) => ({
         element,
         index,
@@ -198,7 +197,7 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
                     withItemBaseName(),
                     withBaseName("collapseItem"),
                   )}
-                  key="breadcrumbs-next-collapse"
+                  key="breadcrumbs-collapse"
                 >
                   <BreadcrumbOverflowDisclosure
                     currentIndex={currentIndex}
@@ -211,7 +210,7 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
             }
 
             return (
-              <BreadcrumbNextContext.Provider
+              <BreadcrumbContext.Provider
                 key={part.item.key}
                 value={{
                   current: part.item.index === currentIndex,
@@ -221,7 +220,7 @@ export const BreadcrumbsNext = forwardRef<HTMLElement, BreadcrumbsNextProps>(
                 }}
               >
                 {part.item.element}
-              </BreadcrumbNextContext.Provider>
+              </BreadcrumbContext.Provider>
             );
           })}
         </ol>

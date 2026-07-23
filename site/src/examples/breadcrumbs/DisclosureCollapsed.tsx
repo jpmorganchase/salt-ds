@@ -1,11 +1,11 @@
-import { BreadcrumbNext, BreadcrumbsNext } from "@salt-ds/lab";
+import { Breadcrumb, Breadcrumbs } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const DisclosureCollapsed = (): ReactElement => (
-  <BreadcrumbsNext aria-label="Breadcrumbs" maxItems={3}>
-    <BreadcrumbNext href="#">Home</BreadcrumbNext>
-    <BreadcrumbNext href="#">Level 2</BreadcrumbNext>
-    <BreadcrumbNext href="#">Level 3</BreadcrumbNext>
-    <BreadcrumbNext href="#">Current level</BreadcrumbNext>
-  </BreadcrumbsNext>
+  <Breadcrumbs aria-label="Breadcrumbs" maxItems={3}>
+    <Breadcrumb href="#">Home</Breadcrumb>
+    <Breadcrumb href="#">Level 2</Breadcrumb>
+    <Breadcrumb href="#">Level 3</Breadcrumb>
+    <Breadcrumb href="#">Current level</Breadcrumb>
+  </Breadcrumbs>
 );
