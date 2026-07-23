@@ -95,7 +95,7 @@
     "react-dom": "^18.3.1",
     "react-hotkeys-hook": "^5.1.0",
     "react-resizable-panels": "^3.0.0",
-    "react-router": "^7.10.1",
+    "react-router": "^7.18.0",
     "storybook": "10.4.6",
     "stylelint": "^17.0.0",
     "typescript": "^6.0.0",
