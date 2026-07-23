@@ -1,0 +1,45 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<Callout title="Note">
+
+All date components require a [LocalizationProvider](/salt/components/localization-provider/examples) to be set up in your application.
+For the purpose of the examples, we use type `DateFrameworkType` so the examples can be used across all date adapters. For your own code you can replace this type with the type of your date object (e.g luxon would use `DateTime` type instead).
+
+</Callout>
+
+## Default
+
+`MonthYearRangePanel` drops into the existing `DatePicker` composition and lets users pick a month range rather than a specific start and end day. The panel renders two independent month grids (start and end) with their own year navigation. In the example below the input's `parse` function normalises the start value to the first day of the month and the end value to the last day of the month, so the resulting range always covers the full inclusive months.
+
+The two grids are also kept in sync so they never show the same year — advancing the start year past the end year pushes the end forward, and moving the end year back past the start year pulls the start back.
+
+<LivePreview
+  componentName="date-picker"
+  exampleName="RangeWithMonthYearPanel"
+/>
+
+## Min and max dates
+
+Provide `minDate` and `maxDate` on the `DatePicker` to constrain the selectable months on both start and end grids. Months whose full span falls outside the allowed window are rendered as disabled and skipped by keyboard navigation. Use `defaultStartVisibleYear` and `defaultEndVisibleYear` on `MonthYearRangePanel` to open each grid on a year that contains a selectable month.
+
+<LivePreview
+  componentName="date-picker"
+  exampleName="RangeWithMonthYearPanelMinMaxDate"
+/>
+
+## Disabled months
+
+Use the `isMonthUnselectable` prop on `MonthYearRangePanel` to disable individual months. The callback is applied to both the start and end grids and receives a date positioned at the first of the month; return a rejection message when the month is unavailable, or `false` to allow it. The message is surfaced to assistive technology and shown as a tooltip on the month button. In the example below the third-quarter months (July, August and September) are unavailable in both grids.
+
+<LivePreview
+  componentName="date-picker"
+  exampleName="RangeWithMonthYearPanelUnselectableMonths"
+/>
