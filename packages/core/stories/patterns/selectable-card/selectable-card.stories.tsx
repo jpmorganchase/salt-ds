@@ -32,7 +32,6 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
 
   return (
     <InteractableCardGroup
-      style={{ gap: "var(--salt-spacing-300)" }}
       onChange={(_event, value) => {
         setSelected(value);
       }}
@@ -40,7 +39,14 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
       <InteractableCard {...args} value="card" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <CreditCardIcon aria-hidden />
+            <CreditCardIcon
+              aria-hidden
+              style={
+                {
+                  "--saltIcon-size": "var(--salt-text-h3-fontSize)",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Credit Card</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -52,7 +58,14 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
       <InteractableCard value="wire" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <BankIcon aria-hidden />
+            <BankIcon
+              aria-hidden
+              style={
+                {
+                  "--saltIcon-size": "var(--salt-text-h3-fontSize)",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Bank wire</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -70,7 +83,6 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
 
   return (
     <InteractableCardGroup
-      style={{ gap: "var(--salt-spacing-300)" }}
       onChange={(_event, value) => {
         setSelected(value);
       }}
@@ -163,15 +175,18 @@ export const Image: StoryFn<typeof InteractableCard> = (args) => {
 
 export const Disabled: StoryFn<typeof InteractableCard> = (args) => {
   return (
-    <InteractableCardGroup
-      disabled
-      style={{ gap: "var(--salt-spacing-300)" }}
-      defaultValue="card"
-    >
+    <InteractableCardGroup disabled defaultValue="card">
       <InteractableCard {...args} value="card" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <CreditCardIcon aria-hidden />
+            <CreditCardIcon
+              aria-hidden
+              style={
+                {
+                  "--saltIcon-size": "var(--salt-text-h3-fontSize)",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Credit Card</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -183,7 +198,14 @@ export const Disabled: StoryFn<typeof InteractableCard> = (args) => {
       <InteractableCard value="wire" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <BankIcon aria-hidden />
+            <BankIcon
+              aria-hidden
+              style={
+                {
+                  "--saltIcon-size": "var(--salt-text-h3-fontSize)",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Bank wire</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -195,7 +217,14 @@ export const Disabled: StoryFn<typeof InteractableCard> = (args) => {
       <InteractableCard value="crypto" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <DiamondIcon aria-hidden />
+            <DiamondIcon
+              aria-hidden
+              style={
+                {
+                  "--saltIcon-size": "var(--salt-text-h3-fontSize)",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Cryptocurrency</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -215,11 +244,10 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
     <StackLayout gap={2}>
       <Banner status="error">
         <BannerContent>
-          A selection is required. Please choose an option
+          A selection is required. Please choose an option.
         </BannerContent>
       </Banner>
       <InteractableCardGroup
-        style={{ gap: "var(--salt-spacing-300)" }}
         onChange={(_event, value) => {
           setSelected(value);
         }}
@@ -311,7 +339,7 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
 
 export const ReadOnly: StoryFn = () => {
   return (
-    <StackLayout direction="row" gap={3}>
+    <StackLayout direction="row">
       <Card
         style={{
           width: "250px",
