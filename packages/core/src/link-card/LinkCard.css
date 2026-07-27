@@ -20,6 +20,14 @@
   flex-direction: column;
 }
 
+@supports selector(:has(*)) {
+  .saltLinkCard:has(> .saltCardHeader, > .saltCardContent, > .saltCardFooter) {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 /* Styles applied to LinkCard when variant="primary" */
 .saltLinkCard-primary {
   background: var(--saltLinkCard-background, var(--salt-container-primary-background));

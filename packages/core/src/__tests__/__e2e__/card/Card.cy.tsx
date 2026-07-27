@@ -76,7 +76,16 @@ describe("Given a Card", () => {
       </Card>,
     );
 
-    cy.findByTestId("card").should("have.class", "saltCard-sectioned");
+    cy.findByTestId("card")
+      .should("have.class", "saltCard-sectioned")
+      .then(($card) => {
+        // Remove the fallback class so the layout assertions exercise :has().
+        $card.removeClass("saltCard-sectioned");
+      })
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).display).to.equal("flex");
+        expect(getComputedStyle($card[0]).paddingTop).to.equal("0px");
+      });
   });
 
   it("should update sectioned layout when direct sections change", () => {
@@ -217,10 +226,23 @@ describe("Given a Card", () => {
       </>,
     );
 
-    cy.findByTestId("link-card").should("have.class", "saltLinkCard-sectioned");
-    cy.findByTestId("interactable-card").should(
-      "have.class",
-      "saltInteractableCard-sectioned",
-    );
+    cy.findByTestId("link-card")
+      .should("have.class", "saltLinkCard-sectioned")
+      .then(($card) => {
+        // Remove the fallback class so the layout assertion exercises :has().
+        $card.removeClass("saltLinkCard-sectioned");
+      })
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).paddingTop).to.equal("0px");
+      });
+    cy.findByTestId("interactable-card")
+      .should("have.class", "saltInteractableCard-sectioned")
+      .then(($card) => {
+        // Remove the fallback class so the layout assertion exercises :has().
+        $card.removeClass("saltInteractableCard-sectioned");
+      })
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).paddingTop).to.equal("0px");
+      });
   });
 });

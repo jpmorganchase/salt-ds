@@ -20,6 +20,14 @@
   flex-direction: column;
 }
 
+@supports selector(:has(*)) {
+  .saltInteractableCard:has(> .saltCardHeader, > .saltCardContent, > .saltCardFooter) {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 /* Styles applied to InteractableCard when variant="primary" */
 .saltInteractableCard-primary {
   background: var(--saltInteractableCard-background, var(--salt-container-primary-background));

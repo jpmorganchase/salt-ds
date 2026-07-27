@@ -17,3 +17,20 @@
 .saltInteractableCard-sectioned > .saltCardContent {
   flex: 1 1 auto;
 }
+
+@supports selector(:has(*)) {
+  .saltCard > .saltCardHeader + .saltCardContent,
+  .saltCard > .saltCardContent + .saltCardContent,
+  .saltLinkCard > .saltCardHeader + .saltCardContent,
+  .saltLinkCard > .saltCardContent + .saltCardContent,
+  .saltInteractableCard > .saltCardHeader + .saltCardContent,
+  .saltInteractableCard > .saltCardContent + .saltCardContent {
+    padding-top: 0;
+  }
+
+  .saltCard > .saltCardContent,
+  .saltLinkCard > .saltCardContent,
+  .saltInteractableCard > .saltCardContent {
+    flex: 1 1 auto;
+  }
+}

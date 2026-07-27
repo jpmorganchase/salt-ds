@@ -8,3 +8,11 @@
 .saltInteractableCard-sectioned > .saltCardHeader {
   flex-shrink: 0;
 }
+
+@supports selector(:has(*)) {
+  .saltCard > .saltCardHeader,
+  .saltLinkCard > .saltCardHeader,
+  .saltInteractableCard > .saltCardHeader {
+    flex-shrink: 0;
+  }
+}
