@@ -23,6 +23,12 @@ type VerticalNavigationItemContextType = {
   active: boolean;
   focusVisible: boolean;
   setFocusVisible: Dispatch<SetStateAction<boolean>>;
+  /**
+   * Text of the item's label, used as tooltip content when the navigation is
+   * collapsed and the label itself is hidden.
+   */
+  labelText?: string;
+  setLabelText: Dispatch<SetStateAction<string | undefined>>;
 };
 
 const VerticalNavigationItemContext =
@@ -32,6 +38,7 @@ const VerticalNavigationItemContext =
       active: false,
       focusVisible: false,
       setFocusVisible: () => {},
+      setLabelText: () => {},
     },
   );
 
@@ -47,14 +54,17 @@ export const VerticalNavigationItem = forwardRef<
 
   const { depth } = useSubMenuContext();
   const [focusVisible, setFocusVisible] = useState(false);
+  const [labelText, setLabelText] = useState<string | undefined>(undefined);
 
   const context = useMemo(
     () => ({
       active,
       focusVisible,
       setFocusVisible,
+      labelText,
+      setLabelText,
     }),
-    [active, focusVisible],
+    [active, focusVisible, labelText],
   );
 
   return (

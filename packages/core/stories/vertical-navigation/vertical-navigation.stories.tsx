@@ -11,6 +11,7 @@ import {
   Tooltip,
   useId,
   VerticalNavigation,
+  VerticalNavigationCollapseTrigger,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
   VerticalNavigationItemExpansionIcon,
@@ -24,6 +25,7 @@ import {
   forwardRef,
   type ReactNode,
   version as reactVersion,
+  type SyntheticEvent,
   useState,
 } from "react";
 import { Link, MemoryRouter, useLocation } from "react-router";
@@ -505,6 +507,125 @@ export const WithIcon: StoryFn<typeof VerticalNavigation> = (args) => {
         <NestedItem key={item.title} item={item} icon />
       ))}
     </VerticalNavigation>
+  );
+};
+
+function CollapsibleNavItem(props: {
+  item: NavItem;
+  collapsed: boolean;
+  openGroups: Record<string, boolean>;
+  onGroupOpenChange: (
+    event: SyntheticEvent,
+    item: NavItem,
+    open: boolean,
+  ) => void;
+}) {
+  const { item, collapsed, openGroups, onGroupOpenChange } = props;
+
+  const location = useLocation();
+
+  if (Array.isArray(item.children) && item.children.length > 0) {
+    // Groups are forced shut while the rail is collapsed, so the trigger's
+    // aria-expanded matches the hidden panel.
+    const open = !collapsed && Boolean(openGroups[item.title]);
+
+    return (
+      <VerticalNavigationItem
+        active={location.pathname.startsWith(item.href) && !open}
+      >
+        <Collapsible
+          open={open}
+          onOpenChange={(event, newOpen) =>
+            onGroupOpenChange(event, item, newOpen)
+          }
+        >
+          <VerticalNavigationItemContent>
+            <CollapsibleTrigger>
+              <VerticalNavigationItemTrigger>
+                {item.icon}
+                <VerticalNavigationItemLabel>
+                  {item.title}
+                </VerticalNavigationItemLabel>
+                <VerticalNavigationItemExpansionIcon />
+              </VerticalNavigationItemTrigger>
+            </CollapsibleTrigger>
+          </VerticalNavigationItemContent>
+          <CollapsiblePanel>
+            <VerticalNavigationSubMenu>
+              {item.children.map((child) => (
+                <CollapsibleNavItem
+                  key={child.title}
+                  item={child}
+                  collapsed={collapsed}
+                  openGroups={openGroups}
+                  onGroupOpenChange={onGroupOpenChange}
+                />
+              ))}
+            </VerticalNavigationSubMenu>
+          </CollapsiblePanel>
+        </Collapsible>
+      </VerticalNavigationItem>
+    );
+  }
+
+  return (
+    <VerticalNavigationItem active={location.pathname === item.href}>
+      <VerticalNavigationItemContent>
+        <MockedTrigger to={item.href}>
+          {item.icon}
+          <VerticalNavigationItemLabel>
+            {item.title}
+          </VerticalNavigationItemLabel>
+        </MockedTrigger>
+      </VerticalNavigationItemContent>
+    </VerticalNavigationItem>
+  );
+}
+
+export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+
+  const handleCollapsedChange = (
+    _event: SyntheticEvent,
+    newCollapsed: boolean,
+  ) => {
+    setCollapsed(newCollapsed);
+    if (newCollapsed) {
+      setOpenGroups({});
+    }
+  };
+
+  const handleGroupOpenChange = (
+    _event: SyntheticEvent,
+    item: NavItem,
+    open: boolean,
+  ) => {
+    // Activating a group in the rail expands the navigation around it.
+    setCollapsed(false);
+    setOpenGroups((groups) => ({ ...groups, [item.title]: open }));
+  };
+
+  return (
+    <div style={{ display: "flex", height: 400 }}>
+      <VerticalNavigation
+        {...args}
+        collapsed={collapsed}
+        onCollapsedChange={handleCollapsedChange}
+        style={{ width: collapsed ? undefined : 250 }}
+      >
+        <VerticalNavigationCollapseTrigger />
+        {nested.map((item) => (
+          <CollapsibleNavItem
+            key={item.title}
+            item={item}
+            collapsed={collapsed}
+            openGroups={openGroups}
+            onGroupOpenChange={handleGroupOpenChange}
+          />
+        ))}
+      </VerticalNavigation>
+    </div>
   );
 };
 
