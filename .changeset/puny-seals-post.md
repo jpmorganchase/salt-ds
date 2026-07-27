@@ -10,8 +10,8 @@ Renamed from `BreadcrumbsNext`, `BreadcrumbNext`, `BreadcrumbNextTrigger`, and `
 import { Breadcrumb, Breadcrumbs } from "@salt-ds/core";
 
 <Breadcrumbs aria-label="Breadcrumb">
-  <Breadcrumb href="#">Home</Breadcrumb>
-  <Breadcrumb href="#">Level 2</Breadcrumb>
-  <Breadcrumb>Current level</Breadcrumb>
+  <Breadcrumb href="/">Home</Breadcrumb>
+  <Breadcrumb href="/level-1">Level 1 </Breadcrumb>
+  <Breadcrumb href="/level-2">Current level</Breadcrumb>
 </Breadcrumbs>;
 ```
