@@ -36,6 +36,10 @@
   user-select: none;
 }
 
+.saltAvatar-entity {
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
 .saltAvatar-accent {
   --avatar-background: var(--salt-sentiment-accent-background);
 }
