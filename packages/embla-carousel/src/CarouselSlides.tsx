@@ -70,6 +70,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [focusedSlideIndex, setFocusedSlideIndex] = useState<number>(-1);
     const [dragging, setDragging] = useState(false);
+    const isPointerDown = useRef<boolean>(false);
     const focusOnSettle = useRef<boolean>(false);
     const pendingFocusIndex = useRef<number | null>(null);
     const hasSettled = useRef<boolean>(false);
@@ -118,16 +119,22 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         hasSettled.current = false;
       };
       const pointerDownCallback = () => {
+        isPointerDown.current = true;
         setAnnouncementState("drag");
+      };
+      const pointerUpCallback = () => {
+        isPointerDown.current = false;
       };
       emblaApi.on("scroll", scrollCallback);
       emblaApi.on("select", selectCallback);
       emblaApi.on("pointerDown", pointerDownCallback);
+      emblaApi.on("pointerUp", pointerUpCallback);
       // Cleanup listener on component unmount
       return () => {
         emblaApi.off("scroll", scrollCallback);
         emblaApi.off("select", selectCallback);
         emblaApi.off("pointerDown", pointerDownCallback);
+        emblaApi.off("pointerUp", pointerUpCallback);
       };
     }, [emblaApi, setAnnouncementState]);
 
@@ -148,7 +155,10 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         );
 
         // Don't scroll if the focused slide is already visible in the current snap
-        if (!currentVisibleIndexes.includes(focusedSlideIndex + 1)) {
+        if (
+          !currentVisibleIndexes.includes(focusedSlideIndex + 1) &&
+          !isPointerDown.current
+        ) {
           const nearestScrollSnap = Math.min(
             Math.floor(focusedSlideIndex / numberOfSlidesPerSnap),
             numberOfSnaps - 1,
