@@ -41,7 +41,7 @@ export const Default: StoryFn<typeof Card> = (args) => (
 
 export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
   <Card {...args} style={{ width: "260px" }}>
-    <img alt="example" src={exampleImage} />
+    <img aria-hidden alt="" src={exampleImage} />
     <CardContent>
       <StackLayout gap={1}>
         <H3>Sustainable investing products</H3>
