@@ -1,7 +1,3 @@
-.saltVerticalNavigation {
-  --saltVerticalNavigation-collapsedWidth: calc(var(--salt-size-base) + var(--salt-spacing-100));
-}
-
 .saltVerticalNavigation ol {
   display: flex;
   flex-direction: column;
@@ -36,28 +32,4 @@
 .saltVerticalNavigation .saltCollapsiblePanel-inner .saltCollapsiblePanel-inner .saltVerticalNavigationSubMenu,
 .saltVerticalNavigation .saltCollapsiblePanel[aria-hidden="true"] .saltCollapsiblePanel-inner .saltVerticalNavigationSubMenu {
   border-bottom: none;
-}
-
-/* Collapsed (icon rail).
-   Selectors double up on the root class so they outrank the appearance rules
-   in VerticalNavigationItemContent.css, which have equal specificity and are
-   injected in mount order. */
-
-.saltVerticalNavigation.saltVerticalNavigation-collapsed {
-  width: var(--saltVerticalNavigation-collapsedWidth);
-}
-
-.saltVerticalNavigation.saltVerticalNavigation-collapsed .saltVerticalNavigationItemContent {
-  --verticalNavigationItem-paddingLeft: var(--salt-spacing-100);
-  min-width: 0;
-  justify-content: center;
-}
-
-.saltVerticalNavigation.saltVerticalNavigation-collapsed .saltVerticalNavigationItemTrigger {
-  justify-content: center;
-}
-
-.saltVerticalNavigation.saltVerticalNavigation-collapsed .saltVerticalNavigationItemExpansionIcon,
-.saltVerticalNavigation.saltVerticalNavigation-collapsed .saltCollapsiblePanel {
-  display: none;
 }

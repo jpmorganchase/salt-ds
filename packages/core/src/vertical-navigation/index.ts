@@ -1,6 +1,4 @@
 export * from "./VerticalNavigation";
-export * from "./VerticalNavigationCollapseTrigger";
-export * from "./VerticalNavigationContext";
 export * from "./VerticalNavigationItem";
 export * from "./VerticalNavigationItemContent";
 export * from "./VerticalNavigationItemExpansionIcon";

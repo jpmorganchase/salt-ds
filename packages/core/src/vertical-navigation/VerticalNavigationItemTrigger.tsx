@@ -8,9 +8,7 @@ import {
   type MouseEvent,
   useRef,
 } from "react";
-import { Tooltip } from "../tooltip";
 import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
-import { useVerticalNavigationContext } from "./VerticalNavigationContext";
 import { useVerticalNavigationItem } from "./VerticalNavigationItem";
 import verticalNavigationItemTriggerCss from "./VerticalNavigationItemTrigger.css";
 
@@ -49,8 +47,7 @@ export const VerticalNavigationItemTrigger = forwardRef<
   });
 
   const isLink = href != null;
-  const { active, setFocusVisible, labelText } = useVerticalNavigationItem();
-  const { collapsed } = useVerticalNavigationContext();
+  const { active, setFocusVisible } = useVerticalNavigationItem();
 
   const wasMouseDownRef = useRef(false);
 
@@ -72,7 +69,7 @@ export const VerticalNavigationItemTrigger = forwardRef<
     onMouseDown?.(event);
   };
 
-  const trigger = (
+  return (
     <ItemAction
       className={clsx(withBaseName(), className)}
       href={href}
@@ -86,18 +83,5 @@ export const VerticalNavigationItemTrigger = forwardRef<
     >
       {children}
     </ItemAction>
-  );
-
-  if (!collapsed) {
-    return trigger;
-  }
-
-  // The wrapper is keyed off `collapsed` alone, never off `labelText`, which
-  // the label registers on mount. Making the tree shape depend on the label
-  // would unmount and remount the label that sets it.
-  return (
-    <Tooltip content={labelText} disabled={!labelText} placement="right">
-      {trigger}
-    </Tooltip>
   );
 });
