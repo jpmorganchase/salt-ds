@@ -4513,6 +4513,7 @@ __metadata:
     "@salt-ds/core": "workspace:^"
     clsx: "npm:^2.0.0"
     embla-carousel-autoplay: "npm:^8.6.0"
+    embla-carousel-class-names: "npm:^8.6.0"
     embla-carousel-fade: "npm:^8.6.0"
   peerDependencies:
     "@types/react": ">=16.14.0"

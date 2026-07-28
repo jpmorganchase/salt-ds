@@ -69,39 +69,34 @@
   --carousel-slide-size: 550px;
 }
 
-.avatarCarousel {
+.customContentCarousel {
   width: 100%;
-  max-width: 480px;
-  --carousel-slide-size: auto;
-  --carousel-slide-height: auto;
+  max-width: 700px;
+  --carousel-slide-size: 320px;
+  --carousel-slide-height: 200px;
   --carousel-slide-spacing: var(--salt-spacing-25);
 }
 
-.avatarCarousel .saltCarouselSlides {
+.customContentCarousel .saltCarouselSlides {
   overflow-clip-margin: var(--salt-spacing-100);
 }
 
-.avatarSlide {
-  box-sizing: border-box;
-  flex: 0 0 auto;
-  min-width: 0;
-  padding-left: var(--carousel-slide-spacing);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.customContentCarousel .saltCarouselSlides-container {
+  padding-top: var(--salt-spacing-100);
 }
 
-.avatarSlide:focus-visible {
-  outline: none;
+.customContentSlide {
+  height: var(--carousel-slide-height);
 }
 
-.avatarSlide:focus-visible .avatarSlideIndicator > * {
-  outline: var(--salt-focused-outline);
-  outline-offset: var(--salt-focused-outlineOffset);
-  border-radius: 50%;
+.customContentSlide .saltCarouselCard-bordered-content {
+  padding-top: var(--salt-spacing-200);
 }
 
-.avatarSlideIndicator {
-  display: inline-flex;
-  border-radius: 50%;
+.customContentSlide .saltCarouselCard-actions {
+  margin-top: auto;
+}
+
+.customContentActions {
+  width: 100%;
 }
