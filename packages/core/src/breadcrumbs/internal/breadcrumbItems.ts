@@ -6,13 +6,13 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import type { BreadcrumbNextProps } from "../BreadcrumbNext";
+import type { BreadcrumbProps } from "../Breadcrumb";
 
 export interface NormalizedBreadcrumb {
-  element: ReactElement<BreadcrumbNextProps>;
+  element: ReactElement<BreadcrumbProps>;
   index: number;
   key: Key;
-  props: BreadcrumbNextProps;
+  props: BreadcrumbProps;
 }
 
 function isFragmentElement(

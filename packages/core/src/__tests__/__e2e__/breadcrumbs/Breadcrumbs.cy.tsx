@@ -1,10 +1,10 @@
-import { Tooltip } from "@salt-ds/core";
 import {
-  BreadcrumbNext,
-  BreadcrumbNextLabel,
-  BreadcrumbNextTrigger,
-  BreadcrumbsNext,
-} from "@salt-ds/lab";
+  Breadcrumb,
+  BreadcrumbLabel,
+  Breadcrumbs,
+  BreadcrumbTrigger,
+  Tooltip,
+} from "@salt-ds/core";
 import { type ComponentPropsWithoutRef, Fragment, forwardRef } from "react";
 
 const TestRouterLink = forwardRef<
@@ -32,29 +32,29 @@ function CollapsedBreadcrumbs({
   levelTwoHref?: string;
 }) {
   return (
-    <BreadcrumbsNext maxItems={3}>
-      <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-      <BreadcrumbNext href={levelTwoHref}>Level 2 Entity</BreadcrumbNext>
-      <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-      <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-    </BreadcrumbsNext>
+    <Breadcrumbs maxItems={3}>
+      <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+      <Breadcrumb href={levelTwoHref}>Level 2 Entity</Breadcrumb>
+      <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+      <Breadcrumb>Current Level Entity</Breadcrumb>
+    </Breadcrumbs>
   );
 }
 
-describe("GIVEN a BreadcrumbsNext", () => {
+describe("GIVEN a Breadcrumbs", () => {
   it("THEN renders a named navigation landmark with an ordered list", () => {
     cy.mount(
-      <BreadcrumbsNext aria-label="Breadcrumb">
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs aria-label="Breadcrumb">
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-2">Level 2 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("navigation", { name: "Breadcrumb" }).should("exist");
     cy.findByRole("list").should("match", "ol");
     cy.findAllByRole("listitem").should("have.length", 3);
-    cy.get(".saltBreadcrumbNext-content").should("not.exist");
+    cy.get(".saltBreadcrumb-content").should("not.exist");
     cy.findByRole("link", { name: "Root Level Entity" }).should(
       "have.attr",
       "href",
@@ -66,9 +66,9 @@ describe("GIVEN a BreadcrumbsNext", () => {
       "#level-2",
     );
     cy.findByText("Current Level Entity")
-      .parents(".saltBreadcrumbNext-current")
+      .parents(".saltBreadcrumb-current")
       .should("have.attr", "aria-current", "page");
-    cy.get(".saltBreadcrumbNext-separator")
+    cy.get(".saltBreadcrumb-separator")
       .should("have.length", 2)
       .and("have.attr", "aria-hidden", "true");
   });
@@ -77,12 +77,12 @@ describe("GIVEN a BreadcrumbsNext", () => {
     cy.mount(
       <>
         <span id="breadcrumb-label">Page location</span>
-        <BreadcrumbsNext aria-labelledby="breadcrumb-label">
-          <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
-        <BreadcrumbsNext aria-label="Secondary path">
-          <BreadcrumbNext>Secondary Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
+        <Breadcrumbs aria-labelledby="breadcrumb-label">
+          <Breadcrumb>Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
+        <Breadcrumbs aria-label="Secondary path">
+          <Breadcrumb>Secondary Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
       </>,
     );
 
@@ -93,22 +93,22 @@ describe("GIVEN a BreadcrumbsNext", () => {
   it("THEN defaults the final item to current and respects an explicit current item", () => {
     cy.mount(
       <>
-        <BreadcrumbsNext>
-          <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-          <BreadcrumbNext>Default Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
-        <BreadcrumbsNext>
-          <BreadcrumbNext href="#root">Second Root Level Entity</BreadcrumbNext>
-          <BreadcrumbNext current>Explicit Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
+        <Breadcrumbs>
+          <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+          <Breadcrumb>Default Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
+        <Breadcrumbs>
+          <Breadcrumb href="#root">Second Root Level Entity</Breadcrumb>
+          <Breadcrumb current>Explicit Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
       </>,
     );
 
     cy.findByText("Default Current Level Entity")
-      .parents(".saltBreadcrumbNext-current")
+      .parents(".saltBreadcrumb-current")
       .should("have.attr", "aria-current", "page");
     cy.findByText("Explicit Current Level Entity")
-      .parents(".saltBreadcrumbNext-current")
+      .parents(".saltBreadcrumb-current")
       .should("have.attr", "aria-current", "page");
     cy.findByRole("link", { name: "Default Current Level Entity" }).should(
       "not.exist",
@@ -120,13 +120,13 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN keeps linked current items in the focus order with aria-current", () => {
     cy.mount(
-      <BreadcrumbsNext>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext current href="#level-2">
+      <Breadcrumbs>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb current href="#level-2">
           Current Level Entity
-        </BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+        </Breadcrumb>
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.realPress("Tab");
@@ -142,31 +142,27 @@ describe("GIVEN a BreadcrumbsNext", () => {
   it("THEN renders linked current items without link visual treatment", () => {
     cy.mount(
       <>
-        <BreadcrumbsNext>
-          <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-          <BreadcrumbNext current href="#level-2">
+        <Breadcrumbs>
+          <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+          <Breadcrumb current href="#level-2">
             Current Level Entity
-          </BreadcrumbNext>
-        </BreadcrumbsNext>
-        <BreadcrumbsNext>
-          <BreadcrumbNext href="#other-root">
-            Other Root Level Entity
-          </BreadcrumbNext>
-          <BreadcrumbNext current>
-            Placeholder Current Level Entity
-          </BreadcrumbNext>
-        </BreadcrumbsNext>
+          </Breadcrumb>
+        </Breadcrumbs>
+        <Breadcrumbs>
+          <Breadcrumb href="#other-root">Other Root Level Entity</Breadcrumb>
+          <Breadcrumb current>Placeholder Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
       </>,
     );
 
     cy.findByText("Placeholder Current Level Entity")
-      .parents(".saltBreadcrumbNext-current")
+      .parents(".saltBreadcrumb-current")
       .then(($text) => {
         const textColor = getComputedStyle($text[0]).color;
 
         cy.findByRole("link", { name: "Current Level Entity" })
           .as("currentLink")
-          .should("have.class", "saltBreadcrumbNext-current")
+          .should("have.class", "saltBreadcrumb-current")
           .and("have.attr", "href", "#level-2")
           .should(($link) => {
             const styles = getComputedStyle($link[0]);
@@ -191,35 +187,35 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN renders non-current items without navigation as placeholder links", () => {
     cy.mount(
-      <BreadcrumbsNext>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext current>Current Level Entity</BreadcrumbNext>
-        <BreadcrumbNext>Non navigable Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb current>Current Level Entity</Breadcrumb>
+        <Breadcrumb>Non navigable Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("link", { name: "Non navigable Level Entity" }).should(
       "not.exist",
     );
     cy.findByText("Non navigable Level Entity")
-      .parents(".saltBreadcrumbNext-trigger")
+      .parents(".saltBreadcrumb-trigger")
       .should("match", "a")
-      .and("not.have.class", "saltBreadcrumbNext-link")
+      .and("not.have.class", "saltBreadcrumb-link")
       .and("not.have.attr", "aria-current");
   });
 
   it("THEN supports text children shorthand and explicit trigger composition", () => {
     cy.mount(
-      <BreadcrumbsNext>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">
-          <BreadcrumbNextTrigger data-testid="custom-trigger">
+      <Breadcrumbs>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-2">
+          <BreadcrumbTrigger data-testid="custom-trigger">
             <span aria-hidden>Icon</span>
-            <BreadcrumbNextLabel>Custom Level 2 Entity</BreadcrumbNextLabel>
-          </BreadcrumbNextTrigger>
-        </BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+            <BreadcrumbLabel>Custom Level 2 Entity</BreadcrumbLabel>
+          </BreadcrumbTrigger>
+        </Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("link", { name: "Root Level Entity" }).should(
@@ -231,7 +227,7 @@ describe("GIVEN a BreadcrumbsNext", () => {
       .should("have.attr", "href", "#level-2")
       .and("have.text", "IconCustom Level 2 Entity");
     cy.findByText("Current Level Entity")
-      .parents(".saltBreadcrumbNext-current")
+      .parents(".saltBreadcrumb-current")
       .should("have.attr", "aria-current", "page");
   });
 
@@ -244,15 +240,15 @@ describe("GIVEN a BreadcrumbsNext", () => {
       ));
 
     cy.mount(
-      <BreadcrumbsNext render={render}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">
-          <BreadcrumbNextTrigger data-testid="composed-trigger">
-            <BreadcrumbNextLabel>Level 2 Entity</BreadcrumbNextLabel>
-          </BreadcrumbNextTrigger>
-        </BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs render={render}>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-2">
+          <BreadcrumbTrigger data-testid="composed-trigger">
+            <BreadcrumbLabel>Level 2 Entity</BreadcrumbLabel>
+          </BreadcrumbTrigger>
+        </Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("link", { name: "Root Level Entity" })
@@ -273,16 +269,16 @@ describe("GIVEN a BreadcrumbsNext", () => {
       ));
 
     cy.mount(
-      <BreadcrumbsNext render={render}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs render={render}>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("link", { name: "Root Level Entity" }).should("exist");
     cy.findByRole("link", { name: "Current Level Entity" }).should("not.exist");
     cy.findByText("Current Level Entity")
-      .parents(".saltBreadcrumbNext-trigger")
+      .parents(".saltBreadcrumb-trigger")
       .should("match", "a")
       .should("not.have.attr", "href");
     cy.get("@render").should((stub) => {
@@ -297,16 +293,16 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN lets item render override the shared routed link renderer", () => {
     cy.mount(
-      <BreadcrumbsNext render={<TestRouterLink data-router-link="shared" />}>
-        <BreadcrumbNext
+      <Breadcrumbs render={<TestRouterLink data-router-link="shared" />}>
+        <Breadcrumb
           href="#root"
           render={<TestRouterLink data-router-link="item" />}
         >
           Root Level Entity
-        </BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+        </Breadcrumb>
+        <Breadcrumb href="#level-2">Level 2 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("link", { name: "Root Level Entity" }).should(
@@ -325,26 +321,26 @@ describe("GIVEN a BreadcrumbsNext", () => {
     cy.stub(console, "warn").as("warn");
 
     cy.mount(
-      <BreadcrumbsNext>
-        <BreadcrumbNext />
-      </BreadcrumbsNext>,
+      <Breadcrumbs>
+        <Breadcrumb />
+      </Breadcrumbs>,
     );
 
     cy.get("@warn").should(
       "have.been.calledWith",
-      Cypress.sinon.match("BreadcrumbNext requires children"),
+      Cypress.sinon.match("Breadcrumb requires children"),
     );
-    cy.findByText("I am BreadcrumbNext").should("not.exist");
+    cy.findByText("I am Breadcrumb").should("not.exist");
     cy.get("a").should("not.exist");
   });
 
   it("THEN keeps keyboard focus order as visible link order", () => {
     cy.mount(
-      <BreadcrumbsNext>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-2">Level 2 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.realPress("Tab");
@@ -355,12 +351,12 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN does not collapse without a maxItems threshold", () => {
     cy.mount(
-      <BreadcrumbsNext>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-2">Level 2 Entity</Breadcrumb>
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("button", { name: "Additional breadcrumbs" }).should(
@@ -372,12 +368,12 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN collapses the middle range when the threshold is exceeded", () => {
     cy.mount(
-      <BreadcrumbsNext maxItems={3}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs maxItems={3}>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-2">Level 2 Entity</Breadcrumb>
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByText("Root Level Entity").should("exist");
@@ -393,29 +389,23 @@ describe("GIVEN a BreadcrumbsNext", () => {
   it("THEN supports custom collapse ranges and overflow at the start", () => {
     cy.mount(
       <>
-        <BreadcrumbsNext
+        <Breadcrumbs
           itemsAfterCollapse={2}
           itemsBeforeCollapse={2}
           maxItems={4}
         >
-          <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-          <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-          <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-          <BreadcrumbNext href="#level-4">Level 4 Entity</BreadcrumbNext>
-          <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
-        <BreadcrumbsNext itemsBeforeCollapse={0} maxItems={3}>
-          <BreadcrumbNext href="#start-root">
-            Start Root Level Entity
-          </BreadcrumbNext>
-          <BreadcrumbNext href="#start-level-2">
-            Start Level 2 Entity
-          </BreadcrumbNext>
-          <BreadcrumbNext href="#start-level-3">
-            Start Level 3 Entity
-          </BreadcrumbNext>
-          <BreadcrumbNext>Start Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
+          <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+          <Breadcrumb href="#level-2">Level 2 Entity</Breadcrumb>
+          <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+          <Breadcrumb href="#level-4">Level 4 Entity</Breadcrumb>
+          <Breadcrumb>Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
+        <Breadcrumbs itemsBeforeCollapse={0} maxItems={3}>
+          <Breadcrumb href="#start-root">Start Root Level Entity</Breadcrumb>
+          <Breadcrumb href="#start-level-2">Start Level 2 Entity</Breadcrumb>
+          <Breadcrumb href="#start-level-3">Start Level 3 Entity</Breadcrumb>
+          <Breadcrumb>Start Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
       </>,
     );
 
@@ -434,24 +424,20 @@ describe("GIVEN a BreadcrumbsNext", () => {
   it("THEN does not collapse when wrapping or when the configuration hides no items", () => {
     cy.mount(
       <>
-        <BreadcrumbsNext maxItems={2} wrap>
-          <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-          <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-          <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
-        <BreadcrumbsNext
+        <Breadcrumbs maxItems={2} wrap>
+          <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+          <Breadcrumb href="#level-2">Level 2 Entity</Breadcrumb>
+          <Breadcrumb>Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
+        <Breadcrumbs
           itemsAfterCollapse={2}
           itemsBeforeCollapse={2}
           maxItems={3}
         >
-          <BreadcrumbNext href="#other-root">
-            Other Root Level Entity
-          </BreadcrumbNext>
-          <BreadcrumbNext href="#other-level-2">
-            Other Level 2 Entity
-          </BreadcrumbNext>
-          <BreadcrumbNext>Other Current Level Entity</BreadcrumbNext>
-        </BreadcrumbsNext>
+          <Breadcrumb href="#other-root">Other Root Level Entity</Breadcrumb>
+          <Breadcrumb href="#other-level-2">Other Level 2 Entity</Breadcrumb>
+          <Breadcrumb>Other Current Level Entity</Breadcrumb>
+        </Breadcrumbs>
       </>,
     );
 
@@ -496,7 +482,7 @@ describe("GIVEN a BreadcrumbsNext", () => {
     cy.findByRole("button", { name: "Additional breadcrumbs" }).realClick();
     cy.findByRole("link", { name: "Level 2 Entity" })
       .as("hiddenLink")
-      .should("have.class", "saltBreadcrumbsNext-disclosureItem")
+      .should("have.class", "saltBreadcrumbs-disclosureItem")
       .should(($link) => {
         const styles = getComputedStyle($link[0]);
 
@@ -565,17 +551,17 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN renders composed hidden breadcrumb levels in the disclosure", () => {
     cy.mount(
-      <BreadcrumbsNext maxItems={3}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="/level-2">
-          <BreadcrumbNextTrigger data-testid="hidden-composed-trigger">
+      <Breadcrumbs maxItems={3}>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="/level-2">
+          <BreadcrumbTrigger data-testid="hidden-composed-trigger">
             <span aria-hidden>Icon</span>
-            <BreadcrumbNextLabel>Custom Level 2 Entity</BreadcrumbNextLabel>
-          </BreadcrumbNextTrigger>
-        </BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+            <BreadcrumbLabel>Custom Level 2 Entity</BreadcrumbLabel>
+          </BreadcrumbTrigger>
+        </Breadcrumb>
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("button", { name: "Additional breadcrumbs" }).realClick();
@@ -587,23 +573,23 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN renders wrapped hidden breadcrumb triggers in the disclosure", () => {
     cy.mount(
-      <BreadcrumbsNext maxItems={3}>
+      <Breadcrumbs maxItems={3}>
         <Fragment key="wrapped-breadcrumbs">
-          <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-          <BreadcrumbNext href="#level-2">
+          <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+          <Breadcrumb href="#level-2">
             <Tooltip content="Level 2 tooltip">
-              <BreadcrumbNextTrigger>
+              <BreadcrumbTrigger>
                 <Fragment key="trigger-content">
                   <span aria-hidden>Icon</span>
-                  <BreadcrumbNextLabel>Level 2 Entity</BreadcrumbNextLabel>
+                  <BreadcrumbLabel>Level 2 Entity</BreadcrumbLabel>
                 </Fragment>
-              </BreadcrumbNextTrigger>
+              </BreadcrumbTrigger>
             </Tooltip>
-          </BreadcrumbNext>
+          </Breadcrumb>
         </Fragment>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("button", { name: "Additional breadcrumbs" }).realClick();
@@ -623,12 +609,12 @@ describe("GIVEN a BreadcrumbsNext", () => {
       ));
 
     cy.mount(
-      <BreadcrumbsNext maxItems={3} render={render}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">Level 2 Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs maxItems={3} render={render}>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-2">Level 2 Entity</Breadcrumb>
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("button", { name: "Additional breadcrumbs" })
@@ -648,20 +634,20 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN lets item render override the shared renderer inside the hidden breadcrumb disclosure", () => {
     cy.mount(
-      <BreadcrumbsNext
+      <Breadcrumbs
         maxItems={3}
         render={<TestRouterLink data-router-link="shared" />}
       >
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb
           href="#level-2"
           render={<TestRouterLink data-router-link="item" />}
         >
           Level 2 Entity
-        </BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+        </Breadcrumb>
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("button", { name: "Additional breadcrumbs" }).realClick();
@@ -679,12 +665,12 @@ describe("GIVEN a BreadcrumbsNext", () => {
 
   it("THEN keeps hidden non-navigable breadcrumbs out of disclosure focus movement", () => {
     cy.mount(
-      <BreadcrumbsNext maxItems={3}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext>Non navigable Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs maxItems={3}>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb>Non navigable Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("button", { name: "Additional breadcrumbs" })
@@ -692,7 +678,7 @@ describe("GIVEN a BreadcrumbsNext", () => {
       .focus();
     cy.realPress("Enter");
     cy.findByText("Non navigable Level Entity")
-      .parents(".saltBreadcrumbsNext-disclosureItem")
+      .parents(".saltBreadcrumbs-disclosureItem")
       .should("not.have.attr", "href");
     cy.findByRole("link", { name: "Non navigable Level Entity" }).should(
       "not.exist",
@@ -709,19 +695,16 @@ describe("GIVEN a BreadcrumbsNext", () => {
     const onClick = cy.stub().as("onClick");
 
     cy.mount(
-      <BreadcrumbsNext maxItems={3}>
-        <BreadcrumbNext href="#root">Root Level Entity</BreadcrumbNext>
-        <BreadcrumbNext href="#level-2">
-          <BreadcrumbNextTrigger
-            data-trigger-placement="hidden"
-            onClick={onClick}
-          >
-            <BreadcrumbNextLabel>Level 2 Entity</BreadcrumbNextLabel>
-          </BreadcrumbNextTrigger>
-        </BreadcrumbNext>
-        <BreadcrumbNext href="#level-3">Level 3 Entity</BreadcrumbNext>
-        <BreadcrumbNext>Current Level Entity</BreadcrumbNext>
-      </BreadcrumbsNext>,
+      <Breadcrumbs maxItems={3}>
+        <Breadcrumb href="#root">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#level-2">
+          <BreadcrumbTrigger data-trigger-placement="hidden" onClick={onClick}>
+            <BreadcrumbLabel>Level 2 Entity</BreadcrumbLabel>
+          </BreadcrumbTrigger>
+        </Breadcrumb>
+        <Breadcrumb href="#level-3">Level 3 Entity</Breadcrumb>
+        <Breadcrumb>Current Level Entity</Breadcrumb>
+      </Breadcrumbs>,
     );
 
     cy.findByRole("button", { name: "Additional breadcrumbs" })
