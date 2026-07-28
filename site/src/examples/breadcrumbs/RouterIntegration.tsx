@@ -1,4 +1,4 @@
-import { BreadcrumbNext, BreadcrumbsNext } from "@salt-ds/lab";
+import { Breadcrumb, Breadcrumbs } from "@salt-ds/core";
 import type { ComponentPropsWithoutRef, ReactElement, Ref } from "react";
 import { MemoryRouter, Link as RouterLink } from "react-router";
 
@@ -12,17 +12,15 @@ function renderRouterLink({ href = "", ...props }: RouterLinkProps) {
 
 export const RouterIntegration = (): ReactElement => (
   <MemoryRouter>
-    <BreadcrumbsNext
+    <Breadcrumbs
       aria-label="Breadcrumbs"
       maxItems={3}
       render={renderRouterLink}
     >
-      <BreadcrumbNext href="/">Home</BreadcrumbNext>
-      <BreadcrumbNext href="/level-2">Level 2</BreadcrumbNext>
-      <BreadcrumbNext href="/level-2/level-3">Level 3</BreadcrumbNext>
-      <BreadcrumbNext href="/level-2/level-3/current">
-        Current level
-      </BreadcrumbNext>
-    </BreadcrumbsNext>
+      <Breadcrumb href="/">Home</Breadcrumb>
+      <Breadcrumb href="/level-2">Level 2</Breadcrumb>
+      <Breadcrumb href="/level-2/level-3">Level 3</Breadcrumb>
+      <Breadcrumb href="/level-2/level-3/current">Current level</Breadcrumb>
+    </Breadcrumbs>
   </MemoryRouter>
 );

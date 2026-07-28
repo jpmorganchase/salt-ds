@@ -1,4 +1,3 @@
-import { makePrefixer, renderProps, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -6,12 +5,13 @@ import {
   type MouseEventHandler,
   type ReactNode,
 } from "react";
-import { useBreadcrumbNextContext } from "./internal/BreadcrumbNextContext";
+import { makePrefixer, renderProps, useForkRef } from "../utils";
+import { useBreadcrumbContext } from "./internal/BreadcrumbContext";
 
-const withBaseName = makePrefixer("saltBreadcrumbNext");
-const withBreadcrumbsBaseName = makePrefixer("saltBreadcrumbsNext");
+const withBaseName = makePrefixer("saltBreadcrumb");
+const withBreadcrumbsBaseName = makePrefixer("saltBreadcrumbs");
 
-export interface BreadcrumbNextTriggerProps
+export interface BreadcrumbTriggerProps
   extends Omit<ComponentPropsWithoutRef<"a">, "children" | "color" | "href"> {
   /**
    * Breadcrumb trigger content.
@@ -19,17 +19,15 @@ export interface BreadcrumbNextTriggerProps
   children?: ReactNode;
 }
 
-export const BreadcrumbNextTrigger = forwardRef<
+export const BreadcrumbTrigger = forwardRef<
   HTMLAnchorElement,
-  BreadcrumbNextTriggerProps
->(function BreadcrumbNextTrigger(props, ref) {
+  BreadcrumbTriggerProps
+>(function BreadcrumbTrigger(props, ref) {
   const { children, className, onClick, ...rest } = props;
-  const context = useBreadcrumbNextContext();
+  const context = useBreadcrumbContext();
 
   if (!context) {
-    throw new Error(
-      "BreadcrumbNextTrigger must be rendered inside BreadcrumbNext",
-    );
+    throw new Error("BreadcrumbTrigger must be rendered inside Breadcrumb");
   }
 
   const { current, href, onNavigate, placement, render, triggerRef } = context;
