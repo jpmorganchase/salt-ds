@@ -16,13 +16,13 @@ Use the default composition for a concise trail with linked levels.
 
 ## Current level
 
-The current level carries `aria-current="page"`. By default the current level is the final `BreadcrumbNext`, but set `current` on a child to declare it explicitly when the current level is not the last item.
+The current level carries `aria-current="page"`. By default the current level is the final `Breadcrumb`, but set `current` on a child to declare it explicitly when the current level is not the last item.
 
 <LivePreview componentName="breadcrumbs" exampleName="CurrentLevel" />
 
 ## With tooltip
 
-Compose `BreadcrumbNextTrigger` and `BreadcrumbNextLabel` as children to add a tooltip to a breadcrumb. `BreadcrumbNextLabel` provides the visible and accessible label, and `BreadcrumbNextTrigger` is required for `href` to render the item as a link.
+Compose `BreadcrumbTrigger` and `BreadcrumbLabel` as children to add a tooltip to a breadcrumb. `BreadcrumbLabel` provides the visible and accessible label, and `BreadcrumbTrigger` is required for `href` to render the item as a link.
 
 <LivePreview componentName="breadcrumbs" exampleName="ComposedItems" />
 
