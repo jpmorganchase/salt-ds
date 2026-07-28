@@ -11,7 +11,7 @@
 }
 
 .saltAvatarGroup .saltAvatar {
-  --avatar-size-multiplier: 1;
+  --avatar-size-multiplier: var(--saltAvatarGroup-size-multiplier, 1);
 }
 
 .saltAvatarGroup .saltAvatar:not(:first-child) {
