@@ -1,34 +1,39 @@
+import carouselSlide1 from "@stories/assets/carouselSlide1.png";
+import carouselSlide2 from "@stories/assets/carouselSlide2.png";
+import carouselSlide3 from "@stories/assets/carouselSlide3.png";
+import carouselSlide4 from "@stories/assets/carouselSlide4.png";
+
 export const sliderData = [
   {
     title: "Your accounts, on the move",
-    image: "/img/examples/carouselSlide1.png",
+    image: carouselSlide1,
     content: "Discover our latest personal accounts app for iOS.",
     link: "Open an account",
   },
   {
     title: "Preview your account information",
-    image: "/img/examples/carouselSlide2.png",
+    image: carouselSlide2,
     content:
       "The new dashboard provides a complete overview of all your key account details.",
     link: "Go to dashboard",
   },
   {
     title: "Clear view of your cash positions",
-    image: "/img/examples/carouselSlide3.png",
+    image: carouselSlide3,
     content:
       "Dedicated screen showing your positions, currencies and accounts.",
     link: "Learn more about views",
   },
   {
     title: "Redesigned accounts",
-    image: "/img/examples/carouselSlide4.png",
+    image: carouselSlide4,
     content:
       "Simplified view of all your accounts, with search functionality across all transactions.",
     link: "Download app",
   },
   {
     title: "Make your first deposit",
-    image: "/img/examples/carouselSlide3.png",
+    image: carouselSlide3,
     content:
       "Fund your account to start transacting and unlock reporting capabilities, offers, and more.",
     link: "Fund account",
