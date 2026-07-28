@@ -29,6 +29,8 @@ import {
 import { Link, MemoryRouter, useLocation } from "react-router";
 import "./vertical-navigation.stories.css";
 import {
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
   HelpSolidIcon,
   MessageSolidIcon,
   MicroMenuIcon,
@@ -505,6 +507,143 @@ export const WithIcon: StoryFn<typeof VerticalNavigation> = (args) => {
         <NestedItem key={item.title} item={item} icon />
       ))}
     </VerticalNavigation>
+  );
+};
+
+function CollapsibleNavItem(props: {
+  item: NavItem;
+  collapsed: boolean;
+  openGroups: Record<string, boolean>;
+  onGroupOpenChange: (item: NavItem, open: boolean) => void;
+}) {
+  const { item, collapsed, openGroups, onGroupOpenChange } = props;
+
+  const location = useLocation();
+
+  // When collapsed, the label is visually hidden but stays in the DOM
+  // so the item keeps its accessible name.
+  const label = (
+    <VerticalNavigationItemLabel
+      className={collapsed ? "salt-visuallyHidden" : undefined}
+    >
+      {item.title}
+    </VerticalNavigationItemLabel>
+  );
+
+  if (Array.isArray(item.children) && item.children.length > 0) {
+    // Submenus stay closed while the navigation is collapsed.
+    const open = !collapsed && Boolean(openGroups[item.title]);
+
+    return (
+      <VerticalNavigationItem
+        active={location.pathname.startsWith(item.href) && !open}
+      >
+        <Collapsible
+          open={open}
+          onOpenChange={(_event, newOpen) => onGroupOpenChange(item, newOpen)}
+        >
+          {/* VerticalNavigationItemContent forwards its ref, which the
+              tooltip needs for positioning. */}
+          <Tooltip content={item.title} disabled={!collapsed} placement="right">
+            <VerticalNavigationItemContent>
+              <CollapsibleTrigger>
+                <VerticalNavigationItemTrigger>
+                  {item.icon}
+                  {label}
+                  {!collapsed && <VerticalNavigationItemExpansionIcon />}
+                </VerticalNavigationItemTrigger>
+              </CollapsibleTrigger>
+            </VerticalNavigationItemContent>
+          </Tooltip>
+          <CollapsiblePanel>
+            <VerticalNavigationSubMenu>
+              {item.children.map((child) => (
+                <CollapsibleNavItem
+                  key={child.title}
+                  item={child}
+                  collapsed={collapsed}
+                  openGroups={openGroups}
+                  onGroupOpenChange={onGroupOpenChange}
+                />
+              ))}
+            </VerticalNavigationSubMenu>
+          </CollapsiblePanel>
+        </Collapsible>
+      </VerticalNavigationItem>
+    );
+  }
+
+  return (
+    <VerticalNavigationItem active={location.pathname === item.href}>
+      <Tooltip content={item.title} disabled={!collapsed} placement="right">
+        <VerticalNavigationItemContent>
+          {/* Replace with your routing library's link, or a plain <a href>. */}
+          <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
+            {item.icon}
+            {label}
+          </VerticalNavigationItemTrigger>
+        </VerticalNavigationItemContent>
+      </Tooltip>
+    </VerticalNavigationItem>
+  );
+}
+
+export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+  const navId = useId();
+
+  const handleToggle = () => {
+    setCollapsed(!collapsed);
+    if (!collapsed) {
+      setOpenGroups({});
+    }
+  };
+
+  const handleGroupOpenChange = (item: NavItem, open: boolean) => {
+    // Opening a submenu while collapsed expands the navigation first.
+    setCollapsed(false);
+    setOpenGroups((groups) => ({ ...groups, [item.title]: open }));
+  };
+
+  return (
+    <div
+      className={clsx("collapsibleNavExample", {
+        "collapsibleNavExample-collapsed": collapsed,
+      })}
+    >
+      <Tooltip
+        content="Expand navigation"
+        disabled={!collapsed}
+        placement="right"
+      >
+        <Button
+          appearance="transparent"
+          aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
+          aria-expanded={!collapsed}
+          aria-controls={navId}
+          className="collapsibleNavExample-toggle"
+          onClick={handleToggle}
+        >
+          {collapsed ? (
+            <DoubleChevronRightIcon aria-hidden />
+          ) : (
+            <DoubleChevronLeftIcon aria-hidden />
+          )}
+        </Button>
+      </Tooltip>
+      <VerticalNavigation {...args} id={navId}>
+        {nested.map((item) => (
+          <CollapsibleNavItem
+            key={item.title}
+            item={item}
+            collapsed={collapsed}
+            openGroups={openGroups}
+            onGroupOpenChange={handleGroupOpenChange}
+          />
+        ))}
+      </VerticalNavigation>
+    </div>
   );
 };
 

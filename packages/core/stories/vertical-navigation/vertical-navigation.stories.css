@@ -1,3 +1,48 @@
 .saltVerticalNavigation {
   min-width: 30ch;
 }
+
+/* CollapsibleNav example: a sidebar that collapses to an icon-only rail. */
+
+.collapsibleNavExample {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  width: 250px;
+  height: 400px;
+}
+
+.collapsibleNavExample .saltVerticalNavigation {
+  /* Overrides the story-wide min-width set above; not needed in an app. */
+  min-width: 0;
+  width: 100%;
+}
+
+.collapsibleNavExample-toggle {
+  align-self: flex-end;
+}
+
+.collapsibleNavExample-collapsed {
+  /* Matches the item height so collapsed items are square. */
+  width: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+.collapsibleNavExample-collapsed .collapsibleNavExample-toggle {
+  align-self: center;
+}
+
+/* Increased specificity to reliably override the component's base styles. */
+
+.collapsibleNavExample-collapsed .saltVerticalNavigation .saltVerticalNavigationItemContent {
+  min-width: 0;
+  padding-left: var(--salt-spacing-100);
+  justify-content: center;
+}
+
+.collapsibleNavExample-collapsed .saltVerticalNavigation .saltVerticalNavigationItemTrigger {
+  width: auto;
+}
+
+.collapsibleNavExample-collapsed .saltVerticalNavigation .saltCollapsiblePanel {
+  display: none;
+}
