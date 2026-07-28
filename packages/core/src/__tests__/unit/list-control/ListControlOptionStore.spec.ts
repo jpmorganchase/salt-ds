@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import type { OptionValue } from "../../../list-control/ListControlContext";
 import {
+  hasOptionState,
   ListControlOptionStore,
   OPTION_STATE_ACTIVE,
   OPTION_STATE_FOCUS_VISIBLE,
@@ -14,6 +15,14 @@ const option = <Item>(
 ): OptionValue<Item> => ({ id, value, disabled });
 
 describe("ListControlOptionStore", () => {
+  it("checks whether a primitive snapshot contains a state flag", () => {
+    const snapshot = OPTION_STATE_ACTIVE | OPTION_STATE_SELECTED;
+
+    expect(hasOptionState(snapshot, OPTION_STATE_ACTIVE)).toBe(true);
+    expect(hasOptionState(snapshot, OPTION_STATE_SELECTED)).toBe(true);
+    expect(hasOptionState(snapshot, OPTION_STATE_FOCUS_VISIBLE)).toBe(false);
+  });
+
   it("returns stable primitive snapshots for active, selected, and focus-visible state", () => {
     const store = new ListControlOptionStore<string>(["two"]);
     store.register(option("one", "one"));
