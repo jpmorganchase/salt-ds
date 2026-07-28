@@ -24,20 +24,19 @@ export interface ListControlOptionContextValue<Item> {
 
 const fallbackOptionStateStore = new ListControlOptionStore<unknown>();
 
-const defaultListControlOptionContext: ListControlOptionContextValue<unknown> = {
-  disabled: false,
-  listRef: undefined,
-  multiselect: false,
-  optionStateStore: fallbackOptionStateStore,
-  register: () => () => undefined,
-  select: () => undefined,
-  setActive: () => undefined,
-  valueToString: (item) => String(item),
-};
+const defaultListControlOptionContext: ListControlOptionContextValue<unknown> =
+  {
+    disabled: false,
+    listRef: undefined,
+    multiselect: false,
+    optionStateStore: fallbackOptionStateStore,
+    register: () => () => undefined,
+    select: () => undefined,
+    setActive: () => undefined,
+    valueToString: (item) => String(item),
+  };
 
-const ListControlOptionContext = createContext(
-  defaultListControlOptionContext,
-);
+const ListControlOptionContext = createContext(defaultListControlOptionContext);
 
 export function ListControlOptionContextProvider<Item>({
   children,

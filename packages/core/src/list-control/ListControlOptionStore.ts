@@ -6,6 +6,13 @@ export const OPTION_STATE_FOCUS_VISIBLE = 4;
 
 export type OptionStateSnapshot = number;
 
+export function hasOptionState(
+  snapshot: OptionStateSnapshot,
+  state: OptionStateSnapshot,
+): boolean {
+  return (snapshot & state) !== 0;
+}
+
 interface OptionEntry<Item> {
   generation: number;
   option: OptionValue<Item>;

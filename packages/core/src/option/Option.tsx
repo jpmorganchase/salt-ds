@@ -15,6 +15,7 @@ import { CheckboxIcon } from "../checkbox";
 import type { OptionValue } from "../list-control/ListControlContext";
 import { useListControlOptionContext } from "../list-control/ListControlOptionContext";
 import {
+  hasOptionState,
   OPTION_STATE_ACTIVE,
   OPTION_STATE_FOCUS_VISIBLE,
   OPTION_STATE_SELECTED,
@@ -99,9 +100,12 @@ const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
       getSnapshot,
       getSnapshot,
     );
-    const selected = (optionState & OPTION_STATE_SELECTED) !== 0;
-    const active = (optionState & OPTION_STATE_ACTIVE) !== 0;
-    const focusVisible = (optionState & OPTION_STATE_FOCUS_VISIBLE) !== 0;
+    const selected = hasOptionState(optionState, OPTION_STATE_SELECTED);
+    const active = hasOptionState(optionState, OPTION_STATE_ACTIVE);
+    const focusVisible = hasOptionState(
+      optionState,
+      OPTION_STATE_FOCUS_VISIBLE,
+    );
 
     const handleClick = (event: MouseEvent<HTMLDivElement>) => {
       if (disabled || id === undefined) {
