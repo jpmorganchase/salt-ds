@@ -373,4 +373,15 @@ describe("List control Option subscriptions", () => {
     cy.realPress("Enter");
     cy.findByTestId("public-context").should("have.text", "one:one");
   });
+
+  it("keeps standalone Option backward-compatible", () => {
+    const onClick = cy.stub().as("onClick");
+
+    cy.mount(<Option value="standalone" onClick={onClick} />);
+    cy.findByRole("option", { name: "standalone" })
+      .should("have.attr", "aria-selected", "false")
+      .realHover()
+      .click();
+    cy.get("@onClick").should("have.been.calledOnce");
+  });
 });
