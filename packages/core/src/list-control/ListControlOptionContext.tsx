@@ -6,7 +6,7 @@ import {
   useContext,
 } from "react";
 import type { OptionValue } from "./ListControlContext";
-import type { ListControlOptionStore } from "./ListControlOptionStore";
+import { ListControlOptionStore } from "./ListControlOptionStore";
 
 export interface ListControlOptionContextValue<Item> {
   disabled?: boolean;
@@ -22,9 +22,22 @@ export interface ListControlOptionContextValue<Item> {
   valueToString: (item: Item) => string;
 }
 
-const ListControlOptionContext = createContext<
-  ListControlOptionContextValue<unknown> | undefined
->(undefined);
+const fallbackOptionStateStore = new ListControlOptionStore<unknown>();
+
+const defaultListControlOptionContext: ListControlOptionContextValue<unknown> = {
+  disabled: false,
+  listRef: undefined,
+  multiselect: false,
+  optionStateStore: fallbackOptionStateStore,
+  register: () => () => undefined,
+  select: () => undefined,
+  setActive: () => undefined,
+  valueToString: (item) => String(item),
+};
+
+const ListControlOptionContext = createContext(
+  defaultListControlOptionContext,
+);
 
 export function ListControlOptionContextProvider<Item>({
   children,
@@ -44,10 +57,5 @@ export function ListControlOptionContextProvider<Item>({
 
 export function useListControlOptionContext<Item>() {
   const context = useContext(ListControlOptionContext);
-  if (context === undefined) {
-    throw new Error(
-      "useListControlOptionContext must be used within a ListControlProvider",
-    );
-  }
   return context as unknown as ListControlOptionContextValue<Item>;
 }
