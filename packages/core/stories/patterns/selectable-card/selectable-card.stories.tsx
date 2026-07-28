@@ -91,7 +91,16 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
       <InteractableCard {...args} value="jane-doe" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar aria-hidden size={1} src={persona1} />
+            <Avatar
+              aria-hidden
+              src={persona1}
+              style={
+                {
+                  "--saltAvatar-size-multiplier":
+                    "calc(var(--salt-text-h3-lineHeight) / var(--salt-size-base))",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Jane Doe</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -106,7 +115,16 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
       <InteractableCard value="tom-roberts" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar aria-hidden size={1} src={persona2} />
+            <Avatar
+              aria-hidden
+              src={persona2}
+              style={
+                {
+                  "--saltAvatar-size-multiplier":
+                    "calc(var(--salt-text-h3-lineHeight) / var(--salt-size-base))",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Tom Roberts</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -121,7 +139,16 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
       <InteractableCard value="ray-smith" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar aria-hidden size={1} src={persona3} />
+            <Avatar
+              aria-hidden
+              src={persona3}
+              style={
+                {
+                  "--saltAvatar-size-multiplier":
+                    "calc(var(--salt-text-h3-lineHeight) / var(--salt-size-base))",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Ray Smith</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
