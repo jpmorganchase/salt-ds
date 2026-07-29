@@ -184,7 +184,8 @@ export const Image: StoryFn<typeof InteractableCard> = (args) => {
         }
       >
         <img
-          alt="example"
+          aria-hidden
+          alt=""
           src={exampleImage}
           style={{ display: "block", width: "100%" }}
         />
