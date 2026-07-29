@@ -1,11 +1,11 @@
-.saltVerticalNavigation {
+.saltVerticalNavigation:not(.collapsibleNavExample *) {
   min-width: 30ch;
 }
 
 /* CollapsibleNav example: a sidebar that collapses to an icon-only rail. */
 
 .collapsibleNavExample {
-  --collapsibleNavExample-width: 250px;
+  --collapsibleNavExample-width: 30ch;
   display: flex;
   width: 700px;
   height: 400px;
@@ -46,7 +46,6 @@
 
 .collapsibleNavExample .saltVerticalNavigation {
   flex: 1;
-  min-width: 0;
   width: var(--collapsibleNavExample-width);
   overflow-x: hidden;
   overflow-y: auto;
