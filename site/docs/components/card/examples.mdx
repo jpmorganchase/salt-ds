@@ -38,11 +38,11 @@ You can incorporate actions like [links](../link) or [buttons](../button) into a
 
 <LivePreview componentName="card" exampleName="Actions" />
 
-## Structural sections
+## Sections
 
-Use `CardHeader`, `CardContent` and `CardFooter` to create distinct padded sections within `Card`, `LinkCard` or `InteractableCard`. Sections must be direct children of the card; don't wrap them in fragments or other components. When a section is present, the card removes its own padding and the sections provide consistent inner spacing. Adjacent sections share a single `--salt-spacing-200` gap.
+Use `CardHeader`, `CardContent` and `CardFooter` to create distinct padded sections within `Card`, `LinkCard` or `InteractableCard`. When a section is present, the card removes its own padding and the sections provide consistent inner spacing. Adjacent sections share a single `--salt-spacing-200` gap.
 
-`CardHeader` and `CardContent` don't impose an inner layout, so compose their children with Salt layout components as needed. `CardFooter` arranges its children in a horizontal row. Footers can contain actions in a default card, but must contain only static content in link and interactable cards.
+Sections must be direct children of the card; don't wrap them in fragments or other components.
 
 <LivePreview componentName="card" exampleName="Sections" />
 
