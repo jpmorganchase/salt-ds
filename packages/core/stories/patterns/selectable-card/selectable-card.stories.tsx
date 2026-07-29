@@ -50,7 +50,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3 style={{ margin: 0 }}>Credit Card</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <RadioButtonIcon aria-hidden checked={selected === "card"} />
+            <RadioButtonIcon checked={selected === "card"} />
             <Text>Make a payment by credit or debit card</Text>
           </StackLayout>
         </StackLayout>
@@ -59,7 +59,6 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <BankIcon
-              aria-hidden
               style={
                 {
                   "--saltIcon-size": "var(--salt-text-h3-fontSize)",
@@ -69,7 +68,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3 style={{ margin: 0 }}>Bank wire</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <RadioButtonIcon aria-hidden checked={selected === "wire"} />
+            <RadioButtonIcon checked={selected === "wire"} />
             <Text>Make a payment by wire transfer</Text>
           </StackLayout>
         </StackLayout>
@@ -104,10 +103,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3 style={{ margin: 0 }}>Jane Doe</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon
-              aria-hidden
-              checked={selected?.includes("jane-doe")}
-            />
+            <CheckboxIcon checked={selected?.includes("jane-doe")} />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -128,10 +124,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3 style={{ margin: 0 }}>Tom Roberts</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon
-              aria-hidden
-              checked={selected?.includes("tom-roberts")}
-            />
+            <CheckboxIcon checked={selected?.includes("tom-roberts")} />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -152,10 +145,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3 style={{ margin: 0 }}>Ray Smith</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon
-              aria-hidden
-              checked={selected?.includes("ray-smith")}
-            />
+            <CheckboxIcon checked={selected?.includes("ray-smith")} />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -300,10 +290,7 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
           <StackLayout gap={1} padding={2}>
             <H3 style={{ margin: 0 }}>Jane Doe</H3>
             <StackLayout direction="row" gap={1}>
-              <CheckboxIcon
-                aria-hidden
-                checked={selected?.includes("jane-doe")}
-              />
+              <CheckboxIcon checked={selected?.includes("jane-doe")} />
               <Text>Add as business owner</Text>
             </StackLayout>
           </StackLayout>
@@ -326,10 +313,7 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
           <StackLayout gap={1} padding={2}>
             <H3 style={{ margin: 0 }}>Tom Roberts</H3>
             <StackLayout direction="row" gap={1}>
-              <CheckboxIcon
-                aria-hidden
-                checked={selected?.includes("tom-roberts")}
-              />
+              <CheckboxIcon checked={selected?.includes("tom-roberts")} />
               <Text>Add as business owner</Text>
             </StackLayout>
           </StackLayout>
@@ -352,10 +336,7 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
           <StackLayout gap={1} padding={2}>
             <H3 style={{ margin: 0 }}>Ray Smith</H3>
             <StackLayout direction="row" gap={1}>
-              <CheckboxIcon
-                aria-hidden
-                checked={selected?.includes("ray-smith")}
-              />
+              <CheckboxIcon checked={selected?.includes("ray-smith")} />
               <Text>Add as business owner</Text>
             </StackLayout>
           </StackLayout>
@@ -375,7 +356,17 @@ export const ReadOnly: StoryFn = () => {
       >
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar aria-hidden size={1} src={persona1} />
+            <Avatar
+              aria-hidden
+              size={1}
+              src={persona1}
+              style={
+                {
+                  "--saltAvatar-size-multiplier":
+                    "calc(var(--salt-text-h3-lineHeight) / var(--salt-size-base))",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Jane Doe</H3>
           </StackLayout>
           <Checkbox readOnly checked label="Add as business owner" />
@@ -384,7 +375,17 @@ export const ReadOnly: StoryFn = () => {
       <Card style={{ width: "250px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar aria-hidden size={1} src={persona2} />
+            <Avatar
+              aria-hidden
+              size={1}
+              src={persona2}
+              style={
+                {
+                  "--saltAvatar-size-multiplier":
+                    "calc(var(--salt-text-h3-lineHeight) / var(--salt-size-base))",
+                } as CSSProperties
+              }
+            />
             <H3 style={{ margin: 0 }}>Tom Roberts</H3>
           </StackLayout>
           <Checkbox readOnly label="Add as business owner" />
