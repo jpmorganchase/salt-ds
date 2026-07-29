@@ -20,7 +20,7 @@
   align-items: flex-start;
   flex-shrink: 0;
   gap: var(--salt-spacing-100);
-  padding-block: var(--salt-spacing-100);
+  padding: var(--salt-spacing-100);
   border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
   background: var(--salt-container-secondary-background);
 }
