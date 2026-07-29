@@ -5,38 +5,92 @@
 /* CollapsibleNav example: a sidebar that collapses to an icon-only rail. */
 
 .collapsibleNavExample {
+  --collapsibleNavExample-width: 250px;
+  display: flex;
+  width: 700px;
+  height: 400px;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  background: var(--salt-container-primary-background);
+  overflow: hidden;
+}
+
+.collapsibleNavExample-sidebar {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
   gap: var(--salt-spacing-100);
-  width: 250px;
-  height: 400px;
+  padding-block: var(--salt-spacing-100);
+  border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
+  background: var(--salt-container-secondary-background);
+}
+
+.collapsibleNavExample-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--salt-spacing-200);
+  padding: var(--salt-spacing-200);
+  overflow: hidden;
+}
+
+.collapsibleNavExample-heading {
+  flex: 0 0 var(--salt-size-base);
+  width: 40%;
+  background: var(--salt-container-secondary-background);
+}
+
+.collapsibleNavExample-block {
+  flex: 1;
+  background: var(--salt-container-secondary-background);
 }
 
 .collapsibleNavExample .saltVerticalNavigation {
   /* Overrides the story-wide min-width set above; not needed in an app. */
   min-width: 0;
-  width: 100%;
+  width: var(--collapsibleNavExample-width);
+  transition: width var(--salt-duration-perceptible) var(--salt-animation-timing-function);
 }
 
-.collapsibleNavExample-toggle {
-  align-self: flex-end;
+/* While the width animates, items keep their expanded size and are clipped
+   by the navigation, so nothing reflows. */
+
+.collapsibleNavExample-animating .saltVerticalNavigation {
+  contain: paint;
 }
 
-.collapsibleNavExample-collapsed {
-  /* Matches the item height so collapsed items are square. */
-  width: calc(var(--salt-size-base) + var(--salt-spacing-100));
+.collapsibleNavExample-animating .saltVerticalNavigation ol {
+  width: var(--collapsibleNavExample-width);
 }
 
-.collapsibleNavExample-collapsed .collapsibleNavExample-toggle {
-  align-self: center;
+/* An opening submenu waits for the width; a closing one collapses at once. */
+
+.collapsibleNavExample-animating .saltCollapsiblePanel:not([aria-hidden="true"]) {
+  transition-delay: var(--salt-duration-perceptible);
+}
+
+/* Lengths rather than fit-content, which cannot be animated: the icon plus
+   the padding each appearance gives an item. */
+
+.collapsibleNavExample-collapsed .saltVerticalNavigation {
+  width: calc(var(--salt-size-icon) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
+}
+
+.collapsibleNavExample-collapsed .saltVerticalNavigation-indicator {
+  width: calc(var(--salt-size-icon) + var(--salt-spacing-150) + var(--salt-size-indicator) + var(--salt-spacing-100));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapsibleNavExample .saltVerticalNavigation {
+    transition: none;
+  }
 }
 
 /* Increased specificity to reliably override the component's base styles. */
 
-.collapsibleNavExample-collapsed .saltVerticalNavigation .saltVerticalNavigationItemContent {
+.collapsibleNavExample .saltVerticalNavigation .saltVerticalNavigationItemContent {
+  /* Lets items narrow with the navigation rather than overflow it. */
   min-width: 0;
-  padding-left: var(--salt-spacing-100);
-  justify-content: center;
 }
 
 .collapsibleNavExample-collapsed .saltVerticalNavigation .saltVerticalNavigationItemTrigger {

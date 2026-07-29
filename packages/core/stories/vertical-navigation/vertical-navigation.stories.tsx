@@ -22,6 +22,7 @@ import type { Meta, StoryFn } from "@storybook/react";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
+  type KeyboardEvent,
   type ReactNode,
   version as reactVersion,
   useState,
@@ -513,18 +514,26 @@ export const WithIcon: StoryFn<typeof VerticalNavigation> = (args) => {
 function CollapsibleNavItem(props: {
   item: NavItem;
   collapsed: boolean;
+  animating: boolean;
+  showLabels: boolean;
   openGroups: Record<string, boolean>;
   onGroupOpenChange: (item: NavItem, open: boolean) => void;
 }) {
-  const { item, collapsed, openGroups, onGroupOpenChange } = props;
+  const {
+    item,
+    collapsed,
+    animating,
+    showLabels,
+    openGroups,
+    onGroupOpenChange,
+  } = props;
 
   const location = useLocation();
 
-  // When collapsed, the label is visually hidden but stays in the DOM
-  // so the item keeps its accessible name.
+  // Hidden once collapsed, but kept in the DOM for the item's accessible name.
   const label = (
     <VerticalNavigationItemLabel
-      className={collapsed ? "salt-visuallyHidden" : undefined}
+      className={showLabels ? undefined : "salt-visuallyHidden"}
     >
       {item.title}
     </VerticalNavigationItemLabel>
@@ -534,6 +543,19 @@ function CollapsibleNavItem(props: {
     // Submenus stay closed while the navigation is collapsed.
     const open = !collapsed && Boolean(openGroups[item.title]);
 
+    // Escape closes the submenu and returns focus to its trigger.
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key !== "Escape" || !open) {
+        return;
+      }
+
+      event.stopPropagation();
+      onGroupOpenChange(item, false);
+      event.currentTarget
+        .querySelector<HTMLElement>("[aria-expanded]")
+        ?.focus();
+    };
+
     return (
       <VerticalNavigationItem
         active={location.pathname.startsWith(item.href) && !open}
@@ -541,16 +563,19 @@ function CollapsibleNavItem(props: {
         <Collapsible
           open={open}
           onOpenChange={(_event, newOpen) => onGroupOpenChange(item, newOpen)}
+          onKeyDown={handleKeyDown}
         >
-          {/* VerticalNavigationItemContent forwards its ref, which the
-              tooltip needs for positioning. */}
+          {/* The tooltip anchors to the item content, which forwards its ref. */}
           <Tooltip content={item.title} disabled={!collapsed} placement="right">
             <VerticalNavigationItemContent>
               <CollapsibleTrigger>
                 <VerticalNavigationItemTrigger>
                   {item.icon}
                   {label}
-                  {!collapsed && <VerticalNavigationItemExpansionIcon />}
+                  {/* Shown only once the width has settled. */}
+                  {!collapsed && !animating && (
+                    <VerticalNavigationItemExpansionIcon />
+                  )}
                 </VerticalNavigationItemTrigger>
               </CollapsibleTrigger>
             </VerticalNavigationItemContent>
@@ -562,6 +587,8 @@ function CollapsibleNavItem(props: {
                   key={child.title}
                   item={child}
                   collapsed={collapsed}
+                  animating={animating}
+                  showLabels={showLabels}
                   openGroups={openGroups}
                   onGroupOpenChange={onGroupOpenChange}
                 />
@@ -590,10 +617,22 @@ function CollapsibleNavItem(props: {
 
 export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [animating, setAnimating] = useState(false);
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
-  const navId = useId();
+
+  const showLabels = !collapsed || animating;
+
+  // With reduced motion there is no transition, so no animation to track.
+  const startWidthAnimation = () => {
+    const prefersReducedMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    )?.matches;
+
+    setAnimating(!prefersReducedMotion);
+  };
 
   const handleToggle = () => {
+    startWidthAnimation();
     setCollapsed(!collapsed);
     if (!collapsed) {
       setOpenGroups({});
@@ -602,6 +641,9 @@ export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
 
   const handleGroupOpenChange = (item: NavItem, open: boolean) => {
     // Opening a submenu while collapsed expands the navigation first.
+    if (collapsed) {
+      startWidthAnimation();
+    }
     setCollapsed(false);
     setOpenGroups((groups) => ({ ...groups, [item.title]: open }));
   };
@@ -610,39 +652,59 @@ export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
     <div
       className={clsx("collapsibleNavExample", {
         "collapsibleNavExample-collapsed": collapsed,
+        "collapsibleNavExample-animating": animating,
       })}
     >
-      <Tooltip
-        content="Expand navigation"
-        disabled={!collapsed}
-        placement="right"
-      >
-        <Button
-          appearance="transparent"
-          aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
-          aria-expanded={!collapsed}
-          aria-controls={navId}
-          className="collapsibleNavExample-toggle"
-          onClick={handleToggle}
+      <div className="collapsibleNavExample-sidebar">
+        <Tooltip
+          content="Expand navigation"
+          disabled={!collapsed}
+          placement="right"
         >
-          {collapsed ? (
-            <DoubleChevronRightIcon aria-hidden />
-          ) : (
-            <DoubleChevronLeftIcon aria-hidden />
-          )}
-        </Button>
-      </Tooltip>
-      <VerticalNavigation {...args} id={navId}>
-        {nested.map((item) => (
-          <CollapsibleNavItem
-            key={item.title}
-            item={item}
-            collapsed={collapsed}
-            openGroups={openGroups}
-            onGroupOpenChange={handleGroupOpenChange}
-          />
-        ))}
-      </VerticalNavigation>
+          {/* The navigation is narrowed rather than hidden, so the label
+              carries the state instead of aria-expanded. */}
+          <Button
+            appearance="transparent"
+            aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
+            onClick={handleToggle}
+          >
+            {collapsed ? (
+              <DoubleChevronRightIcon aria-hidden />
+            ) : (
+              <DoubleChevronLeftIcon aria-hidden />
+            )}
+          </Button>
+        </Tooltip>
+        <VerticalNavigation
+          {...args}
+          onTransitionEnd={(event) => {
+            if (
+              event.target === event.currentTarget &&
+              event.propertyName === "width"
+            ) {
+              setAnimating(false);
+            }
+          }}
+        >
+          {nested.map((item) => (
+            <CollapsibleNavItem
+              key={item.title}
+              item={item}
+              collapsed={collapsed}
+              animating={animating}
+              showLabels={showLabels}
+              openGroups={openGroups}
+              onGroupOpenChange={handleGroupOpenChange}
+            />
+          ))}
+        </VerticalNavigation>
+      </div>
+      {/* Placeholder page content, so the space the navigation frees is visible. */}
+      <div className="collapsibleNavExample-content">
+        <div className="collapsibleNavExample-heading" />
+        <div className="collapsibleNavExample-block" />
+        <div className="collapsibleNavExample-block" />
+      </div>
     </div>
   );
 };
