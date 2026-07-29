@@ -107,7 +107,6 @@
   "resolutions": {
     "@changesets/assemble-release-plan@npm:^6.0.9": "patch:@changesets/assemble-release-plan@npm%3A6.0.9#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.9-e01af97ef4.patch",
     "@floating-ui/react": "^0.27.19",
-    "next": "^16.0.0",
     "cookie": "^1.0.0",
     "esbuild": "^0.28.0",
     "ag-grid-community": "32.2.1",
@@ -118,7 +117,9 @@
     "react-dom": "^18.0.0",
     "react-error-boundary": "^6.0.0",
     "tslib": "^2.0.0",
-    "path-to-regexp": "^8.4.0"
+    "path-to-regexp": "^8.4.0",
+    "postcss": "^8.5.24",
+    "vite": "^7.1.5"
   },
   "browserslist": {
     "production": [
