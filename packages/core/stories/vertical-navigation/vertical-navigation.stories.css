@@ -68,10 +68,6 @@
   width: calc(var(--salt-size-icon) + var(--salt-spacing-150) + var(--salt-size-indicator) + var(--salt-spacing-100));
 }
 
-.collapsibleNavExample-overlayPanel .saltVerticalNavigation {
-  min-width: 20ch;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .collapsibleNavExample .saltVerticalNavigation {
     transition: none;
