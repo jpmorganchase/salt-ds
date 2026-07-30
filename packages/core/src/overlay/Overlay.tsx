@@ -53,31 +53,17 @@ export const Overlay = ({
     onOpenChange?.(newOpen);
   };
 
-  const middleware = hideArrow
-    ? [
-        offset(1),
-        flip(),
-        {
-          name: "alignStart",
-          fn({ rects }: { rects: { reference: { x: number } } }) {
-            return { x: rects.reference.x };
-          },
-        },
-        shift({ limiter: limitShift() }),
-      ]
-    : [
-        offset(11),
-        flip(),
-        shift({ limiter: limitShift() }),
-        arrow({ element: arrowRef }),
-      ];
-
   const { x, y, strategy, context, elements, floating, reference } =
     useFloatingUI({
       open: openState,
       onOpenChange: handleOpenChange,
       placement: placementProp,
-      middleware,
+      middleware: [
+        offset(11),
+        flip(),
+        shift({ limiter: limitShift() }),
+        arrow({ element: arrowRef }),
+      ],
     });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -107,7 +93,8 @@ export const Overlay = ({
         openState,
         floatingStyles,
         context,
-        arrowProps: hideArrow ? undefined : arrowProps,
+        arrowProps,
+        hideArrow,
         floating,
         reference,
         getFloatingProps,

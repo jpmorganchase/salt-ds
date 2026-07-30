@@ -3,8 +3,16 @@ import * as overlayStories from "~stories/overlay/overlay.stories";
 import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, CloseButton, LongContent, WithTooltip } =
-  composedStories;
+const {
+  Default,
+  Right,
+  Bottom,
+  Left,
+  CloseButton,
+  HideArrow,
+  LongContent,
+  WithTooltip,
+} = composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -122,6 +130,35 @@ describe("GIVEN an Overlay", () => {
         const textPosition = $el[0].getBoundingClientRect().x;
         cy.findByText(/Show Overlay/i).should(($el) => {
           expect($el[0].getBoundingClientRect().x).greaterThan(textPosition);
+        });
+      });
+    });
+  });
+
+  describe("WHEN hideArrow", () => {
+    it("THEN it should show the arrow by default", () => {
+      cy.mount(<Default />);
+
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
+      cy.get(".saltOverlayPanel-arrow").should("be.visible");
+    });
+
+    it('THEN the arrow is not displayed when "hideArrow=true"', () => {
+      cy.mount(<HideArrow />);
+
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.get(".saltOverlayPanel-arrow").should("not.exist");
+    });
+
+    it("THEN it should still appear on bottom of trigger element", () => {
+      cy.mount(<HideArrow />);
+
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
+      cy.findByRole("dialog").then(($el) => {
+        const position = $el[0].getBoundingClientRect().y;
+        cy.findByText(/Show Overlay/i).should(($el) => {
+          expect($el[0].getBoundingClientRect().y).lessThan(position);
         });
       });
     });

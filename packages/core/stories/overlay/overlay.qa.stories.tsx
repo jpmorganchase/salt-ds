@@ -128,27 +128,34 @@ DeprecatedCloseButton.parameters = {
   },
 };
 
+const HideArrowTemplate: StoryFn<typeof Overlay> = (args) => (
+  <Overlay hideArrow open {...args}>
+    <OverlayTrigger>
+      <Button>Show Overlay</Button>
+    </OverlayTrigger>
+    <OverlayPanel>
+      <OverlayPanelContent>
+        <h3 className="content-heading">Title</h3>
+        <div>Content of Overlay</div>
+      </OverlayPanelContent>
+    </OverlayPanel>
+  </Overlay>
+);
+
 export const HideArrow: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer
       height={800}
-      cols={5}
-      itemPadding={50}
+      itemPadding={100}
       itemWidthAuto
+      vertical
       width={1200}
       {...props}
     >
-      <Overlay open placement="bottom" hideArrow>
-        <OverlayTrigger>
-          <Button>Show Overlay</Button>
-        </OverlayTrigger>
-        <OverlayPanel>
-          <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
-            <div>Content of Overlay</div>
-          </OverlayPanelContent>
-        </OverlayPanel>
-      </Overlay>
+      <HideArrowTemplate placement="top" />
+      <HideArrowTemplate placement="right" />
+      <HideArrowTemplate placement="bottom" />
+      <HideArrowTemplate placement="left" />
     </QAContainer>
   );
 };

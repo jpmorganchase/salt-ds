@@ -44,6 +44,7 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       getFloatingProps,
       floating,
       arrowProps,
+      hideArrow,
     } = useOverlayContext();
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
@@ -69,9 +70,10 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         aria-labelledby={ariaLabelledby}
       >
         <div {...rest}> {children} </div>
-        {arrowProps && (
+        {!hideArrow && (
           <FloatingArrow
             {...arrowProps}
+            className={withBaseName("arrow")}
             strokeWidth={1}
             fill="var(--overlay-background)"
             stroke="var(--overlay-borderColor)"
