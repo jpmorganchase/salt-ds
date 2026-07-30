@@ -67,9 +67,6 @@ export const CollapsibleNavigation = () => {
                 appearance="transparent"
                 aria-controls={navId}
                 aria-expanded={!collapsed}
-                aria-label={
-                  collapsed ? "Expand navigation" : "Collapse navigation"
-                }
                 onClick={() => setCollapsed(!collapsed)}
               >
                 {collapsed ? (
@@ -93,7 +90,6 @@ export const CollapsibleNavigation = () => {
         </BorderItem>
         <BorderItem position="center">
           <StackLayout direction="column" gap={1}>
-            {/* The heading levels in this example are demonstrational only */}
             <H3 styleAs="h1">Collapsible navigation</H3>
             <Text>
               Collapse the navigation to give the main content more room. While
