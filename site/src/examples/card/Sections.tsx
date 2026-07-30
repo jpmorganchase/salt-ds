@@ -13,8 +13,8 @@ import type { ReactElement } from "react";
 export const Sections = (): ReactElement => (
   <Card style={{ width: "320px" }}>
     <CardHeader>
-      <StackLayout gap={1}>
-        <H3>Quarterly investment report</H3>
+      <StackLayout gap={0.5}>
+        <H3 style={{ margin: 0 }}>Quarterly investment report</H3>
         <Text color="secondary">Updated 16 July 2026</Text>
       </StackLayout>
     </CardHeader>

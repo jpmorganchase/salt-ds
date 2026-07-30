@@ -1,4 +1,12 @@
-import { Card, CardContent, H3, Link, StackLayout, Text } from "@salt-ds/core";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  H3,
+  Link,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const FullWidthImage = (): ReactElement => {
@@ -12,11 +20,13 @@ export const FullWidthImage = (): ReactElement => {
             We have a commitment to provide a wide range of investment solutions
             to enable you to align your financial goals to your values.
           </Text>
-          <Link href="#" IconComponent={null}>
-            Learn more
-          </Link>
         </StackLayout>
       </CardContent>
+      <CardFooter>
+        <Link href="#" IconComponent={null}>
+          Learn more
+        </Link>
+      </CardFooter>
     </Card>
   );
 };
