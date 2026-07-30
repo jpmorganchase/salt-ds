@@ -568,10 +568,9 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
           content={collapsed ? "Expand navigation" : "Collapse navigation"}
           placement="right"
         >
-          {/* The navigation is narrowed rather than hidden, so the label
-              carries the state instead of aria-expanded. */}
           <Button
             appearance="transparent"
+            aria-expanded={!collapsed}
             aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
             onClick={handleToggle}
           >
