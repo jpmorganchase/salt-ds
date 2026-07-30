@@ -1,0 +1,27 @@
+.nav {
+  --collapsibleNavigation-expandedWidth: 30ch;
+  --collapsibleNavigation-collapsedWidth: calc(var(--salt-size-icon) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
+  width: var(--collapsibleNavigation-expandedWidth);
+  transition: width var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+}
+
+.nav.collapsed {
+  width: var(--collapsibleNavigation-collapsedWidth);
+}
+
+/* Lets an item narrow to the width of its icon, past its default minimum. */
+.nav :global(.saltVerticalNavigationItemContent) {
+  min-width: 0;
+}
+
+/* Keeps labels on one line so the closing rail clips them, rather than
+   rewrapping them as the items narrow. */
+.nav :global(.saltVerticalNavigationItemLabel) {
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav {
+    transition: none;
+  }
+}

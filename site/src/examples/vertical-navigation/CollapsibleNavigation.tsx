@@ -1,0 +1,115 @@
+import {
+  BorderItem,
+  BorderLayout,
+  Button,
+  H3,
+  StackLayout,
+  Text,
+  Tooltip,
+  useId,
+  VerticalNavigation,
+  VerticalNavigationItem,
+  VerticalNavigationItemContent,
+  VerticalNavigationItemLabel,
+  VerticalNavigationItemTrigger,
+} from "@salt-ds/core";
+import { DoubleChevronLeftIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
+import { useState } from "react";
+import { Link, useLocation } from "react-router";
+import styles from "./CollapsibleNavigation.module.css";
+import { flatNavData, type Item } from "./data";
+import { MockHistory } from "./MockHistory";
+
+function NavItem({ item, collapsed }: { item: Item; collapsed: boolean }) {
+  const location = useLocation();
+
+  return (
+    <VerticalNavigationItem active={location.pathname === item.href}>
+      <VerticalNavigationItemContent>
+        <Tooltip content={item.title} disabled={!collapsed} placement="right">
+          <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
+            {item.icon}
+            <VerticalNavigationItemLabel>
+              {item.title}
+            </VerticalNavigationItemLabel>
+          </VerticalNavigationItemTrigger>
+        </Tooltip>
+      </VerticalNavigationItemContent>
+    </VerticalNavigationItem>
+  );
+}
+
+export const CollapsibleNavigation = () => {
+  const navId = useId();
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <MockHistory>
+      <BorderLayout columnGap={2} rowGap={2}>
+        <BorderItem position="north">
+          <div
+            style={{
+              background: "var(--salt-container-secondary-background)",
+              borderBottom:
+                "var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor)",
+              height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+            }}
+          />
+        </BorderItem>
+        <BorderItem position="west">
+          <StackLayout align="start" gap={1}>
+            <Tooltip
+              content={collapsed ? "Expand navigation" : "Collapse navigation"}
+              placement="right"
+            >
+              <Button
+                appearance="transparent"
+                aria-controls={navId}
+                aria-expanded={!collapsed}
+                aria-label={
+                  collapsed ? "Expand navigation" : "Collapse navigation"
+                }
+                onClick={() => setCollapsed(!collapsed)}
+              >
+                {collapsed ? (
+                  <DoubleChevronRightIcon aria-hidden />
+                ) : (
+                  <DoubleChevronLeftIcon aria-hidden />
+                )}
+              </Button>
+            </Tooltip>
+            <VerticalNavigation
+              aria-label="Collapsible sidebar"
+              appearance="bordered"
+              className={clsx(styles.nav, { [styles.collapsed]: collapsed })}
+              id={navId}
+            >
+              {flatNavData.map((item) => (
+                <NavItem key={item.href} item={item} collapsed={collapsed} />
+              ))}
+            </VerticalNavigation>
+          </StackLayout>
+        </BorderItem>
+        <BorderItem position="center">
+          <StackLayout direction="column" gap={1}>
+            {/* The heading levels in this example are demonstrational only */}
+            <H3 styleAs="h1">Collapsible navigation</H3>
+            <Text>
+              Collapse the navigation to give the main content more room. While
+              collapsed, each item is identified by its icon and a tooltip.
+            </Text>
+            <Text>
+              This placeholder text is provided to illustrate how content will
+              appear within the component. The sentences are intended for
+              demonstration only and do not convey specific information. Generic
+              examples like this help review layout, spacing, and overall
+              design. Adjust the wording as needed to fit your use case or
+              display requirements.
+            </Text>
+          </StackLayout>
+        </BorderItem>
+      </BorderLayout>
+    </MockHistory>
+  );
+};
