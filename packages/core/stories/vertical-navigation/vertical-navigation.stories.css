@@ -6,6 +6,7 @@
 
 .collapsibleNavigationExample {
   --collapsibleNavigationExample-width: 30ch;
+  --collapsibleNavigationExample-iconSize: max(var(--salt-size-icon), 12px);
   display: flex;
   width: 700px;
   height: 400px;
@@ -61,11 +62,11 @@
 }
 
 .collapsibleNavigationExample-collapsed .saltVerticalNavigation {
-  width: calc(var(--salt-size-icon) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
+  width: calc(var(--collapsibleNavigationExample-iconSize) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
 }
 
 .collapsibleNavigationExample-collapsed .saltVerticalNavigation-indicator {
-  width: calc(var(--salt-size-icon) + var(--salt-spacing-150) + var(--salt-size-indicator) + var(--salt-spacing-100));
+  width: calc(var(--collapsibleNavigationExample-iconSize) + var(--salt-spacing-150) + var(--salt-size-indicator) + var(--salt-spacing-100));
 }
 
 @media (prefers-reduced-motion: reduce) {

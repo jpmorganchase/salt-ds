@@ -565,8 +565,7 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
     >
       <div className="collapsibleNavigationExample-sidebar">
         <Tooltip
-          content="Expand navigation"
-          disabled={!collapsed}
+          content={collapsed ? "Expand navigation" : "Collapse navigation"}
           placement="right"
         >
           {/* The navigation is narrowed rather than hidden, so the label
@@ -599,12 +598,12 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
               key={item.title}
               active={location.pathname === item.href}
             >
-              <Tooltip
-                content={item.title}
-                disabled={!collapsed}
-                placement="right"
-              >
-                <VerticalNavigationItemContent>
+              <VerticalNavigationItemContent>
+                <Tooltip
+                  content={item.title}
+                  disabled={!collapsed}
+                  placement="right"
+                >
                   <MockedTrigger to={item.href}>
                     {item.icon}
                     {/* Hidden once collapsed, but kept in the DOM for the
@@ -615,8 +614,8 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
                       {item.title}
                     </VerticalNavigationItemLabel>
                   </MockedTrigger>
-                </VerticalNavigationItemContent>
-              </Tooltip>
+                </Tooltip>
+              </VerticalNavigationItemContent>
             </VerticalNavigationItem>
           ))}
         </VerticalNavigation>
