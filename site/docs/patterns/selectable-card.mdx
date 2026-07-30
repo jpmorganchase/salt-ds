@@ -23,10 +23,10 @@ data:
 
 ## When to use
 
-Use the selectable card pattern when you have options that:
+Use the selectable card pattern for options that:
 - Are the main focus of your UI (and space permits).
 - Benefit from an illustration or explanation.
-- Users may need to select on a mobile device, offering a large target/hit area for swift interaction.
+- Should be easy to select on mobile, with a large tap target for quick interaction.
 
 
 <Callout status="success" title="Best practices">
@@ -39,7 +39,7 @@ Use the selectable card pattern when you have options that:
 
 ### Anatomy
 
-The following elements are commonly found in a selectable card:
+The following elements are used in a selectable card:
 
 1. **Interactable card**: The whole card is interactive and allows the user to make selections by clicking anywhere on the card.
 2. **Image**: Images are optional and should span the full width of the card. Refer to [`Card`](/salt/components/card) documentation for more guidance on using images.
@@ -86,12 +86,12 @@ Use radio buttons in selectable cards when your users need to make a single sele
 
 ## Multiple selection
 
-Use checkboxes in selectable cards when your users need to make multiple selections from a list of options. Checkboxes allow users to select multiple items independently.
+Use checkboxes in selectable cards when your users need to make multiple selections from a list of options.
 
 <Diagram
   src="/img/patterns/selectable-card/selectable-card-checkbox.png"
   srcDark="/img/patterns/selectable-card/selectable-card-checkbox-dark.png"
-  alt="Mutually exclusive selection."
+  alt="Multiple selection."
   border
 />
 
@@ -100,26 +100,23 @@ Selectable cards must include a non-color selection indicator for selected v
 </Callout>
 
 ## States
-Selectable Cards support the following states: 
+Selectable cards support the following states: 
 - **Default**: Available option; card and selection control are interactive but not selected.
 - **Hover**: Pointer hover highlights the entire card to indicate it can be selected by clicking anywhere in the card.
 - **Selected**: Option is chosen; selected styling and the selected radio/checkbox indicator are shown.
 - **Disabled**: Option is unavailable; card and selection control are muted and not interactive.
 - **Read-only**: Shown for review; selection state may be displayed, but the card/control cannot be changed.
-- **Read-only(Selected)**:  Shown for review with the option already selected. Selected styling and the selected indicator may be shown, but the card/control is not interactive and the selection cannot be changed.
+- **Read-only (selected)**:  Shown for review with the option already selected. Selected styling and the selected indicator may be shown, but the card/control is not interactive and the selection cannot be changed.
 
 <Diagram
   src="/img/patterns/selectable-card/selectable-card-states.png"
   srcDark="/img/patterns/selectable-card/selectable-card-states-dark.png"
-  alt="Profile card state examples: default, hover, selected, disabled, read-only."
+  alt="Profile card state examples: default, hover, selected, disabled, read-only, read-only(selected)."
   border
 />
 
-## Error feedback
-When at least one selection is required, an error message may be shown at the group level if the user attempts to proceed without making a valid selection.
-- Display a validation banner at the top of the selectable card set to provide immediate, in-context feedback.
-- Show the banner after a validation event (e.g., Continue/Submit, or when the field is otherwise validated).
-- Keep the banner visible until the user makes a valid selection; then remove it automatically.
+## Validation message
+When at least one selection is required and the user attempts to proceed without a valid selection, display a [Banner](/salt/components/banner) at the top of the selectable card set to provide immediate, in-context feedback. Show it after a validation event (e.g., Continue/Submit or other field validation), keep it visible until the user makes a valid selection, then remove it automatically.
 
 <Diagram
   src="/img/patterns/selectable-card/selectable-card-error-feedback.png"
