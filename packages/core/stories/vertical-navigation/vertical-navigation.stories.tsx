@@ -8,6 +8,11 @@ import {
   MenuItem,
   MenuPanel,
   MenuTrigger,
+  Overlay,
+  OverlayHeader,
+  OverlayPanel,
+  OverlayPanelContent,
+  OverlayTrigger,
   Tooltip,
   useId,
   VerticalNavigation,
@@ -511,6 +516,19 @@ export const WithIcon: StoryFn<typeof VerticalNavigation> = (args) => {
   );
 };
 
+// overlay needs ref onto the trigger's DOM node as its positioning anchor.
+const CollapsibleNavGroupTrigger = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<"a">
+>(function CollapsibleNavGroupTrigger(props, ref) {
+  return (
+    <VerticalNavigationItemTrigger
+      render={<button type="button" ref={ref} />}
+      {...props}
+    />
+  );
+});
+
 function CollapsibleNavItem(props: {
   item: NavItem;
   collapsed: boolean;
@@ -518,6 +536,7 @@ function CollapsibleNavItem(props: {
   showLabels: boolean;
   openGroups: Record<string, boolean>;
   onGroupOpenChange: (item: NavItem, open: boolean) => void;
+  onNavigate?: () => void;
 }) {
   const {
     item,
@@ -526,9 +545,17 @@ function CollapsibleNavItem(props: {
     showLabels,
     openGroups,
     onGroupOpenChange,
+    onNavigate,
   } = props;
 
   const location = useLocation();
+  const [overlayOpen, setOverlayOpen] = useState(false);
+  const overlayId = useId();
+  const panelId = useId();
+
+  if (!collapsed && overlayOpen) {
+    setOverlayOpen(false);
+  }
 
   // Hidden once collapsed, but kept in the DOM for the item's accessible name.
   const label = (
@@ -540,7 +567,6 @@ function CollapsibleNavItem(props: {
   );
 
   if (Array.isArray(item.children) && item.children.length > 0) {
-    // Submenus stay closed while the navigation is collapsed.
     const open = !collapsed && Boolean(openGroups[item.title]);
 
     // Escape closes the submenu and returns focus to its trigger.
@@ -560,42 +586,87 @@ function CollapsibleNavItem(props: {
       <VerticalNavigationItem
         active={location.pathname.startsWith(item.href) && !open}
       >
-        <Collapsible
-          open={open}
-          onOpenChange={(_event, newOpen) => onGroupOpenChange(item, newOpen)}
-          onKeyDown={handleKeyDown}
+        <Overlay
+          placement="right"
+          open={collapsed && overlayOpen}
+          onOpenChange={(newOpen) => {
+            if (collapsed) {
+              setOverlayOpen(newOpen);
+            }
+          }}
         >
-          {/* The tooltip anchors to the item content, which forwards its ref. */}
-          <Tooltip content={item.title} disabled={!collapsed} placement="right">
-            <VerticalNavigationItemContent>
-              <CollapsibleTrigger>
-                <VerticalNavigationItemTrigger>
-                  {item.icon}
-                  {label}
-                  {/* Shown only once the width has settled. */}
-                  {!collapsed && !animating && (
-                    <VerticalNavigationItemExpansionIcon />
-                  )}
-                </VerticalNavigationItemTrigger>
-              </CollapsibleTrigger>
-            </VerticalNavigationItemContent>
-          </Tooltip>
-          <CollapsiblePanel>
-            <VerticalNavigationSubMenu>
-              {item.children.map((child) => (
-                <CollapsibleNavItem
-                  key={child.title}
-                  item={child}
-                  collapsed={collapsed}
-                  animating={animating}
-                  showLabels={showLabels}
-                  openGroups={openGroups}
-                  onGroupOpenChange={onGroupOpenChange}
-                />
-              ))}
-            </VerticalNavigationSubMenu>
-          </CollapsiblePanel>
-        </Collapsible>
+          <Collapsible
+            open={open}
+            onOpenChange={(_event, newOpen) => {
+              if (!collapsed) {
+                onGroupOpenChange(item, newOpen);
+              }
+            }}
+            onKeyDown={handleKeyDown}
+          >
+            {/* Anchored to the item content, which forwards its ref. */}
+            <Tooltip
+              content={collapsed && !overlayOpen ? item.title : ""}
+              placement="right"
+            >
+              <VerticalNavigationItemContent>
+                <OverlayTrigger>
+                  <CollapsibleTrigger>
+                    <CollapsibleNavGroupTrigger
+                      aria-expanded={collapsed ? overlayOpen : open}
+                      aria-haspopup={collapsed ? "dialog" : false}
+                      aria-controls={collapsed ? undefined : panelId}
+                    >
+                      {item.icon}
+                      {label}
+                      {!collapsed && !animating && (
+                        <VerticalNavigationItemExpansionIcon />
+                      )}
+                    </CollapsibleNavGroupTrigger>
+                  </CollapsibleTrigger>
+                </OverlayTrigger>
+              </VerticalNavigationItemContent>
+            </Tooltip>
+            <CollapsiblePanel id={panelId}>
+              <VerticalNavigationSubMenu>
+                {item.children.map((child) => (
+                  <CollapsibleNavItem
+                    key={child.title}
+                    item={child}
+                    collapsed={collapsed}
+                    animating={animating}
+                    showLabels={showLabels}
+                    openGroups={openGroups}
+                    onGroupOpenChange={onGroupOpenChange}
+                    onNavigate={onNavigate}
+                  />
+                ))}
+              </VerticalNavigationSubMenu>
+            </CollapsiblePanel>
+          </Collapsible>
+          <OverlayPanel
+            aria-labelledby={overlayId}
+            className="collapsibleNavExample-overlayPanel"
+          >
+            <OverlayHeader header={item.title} id={overlayId} />
+            <OverlayPanelContent>
+              <VerticalNavigation>
+                {item.children.map((child) => (
+                  <CollapsibleNavItem
+                    key={child.title}
+                    item={child}
+                    collapsed={false}
+                    animating={false}
+                    showLabels
+                    openGroups={openGroups}
+                    onGroupOpenChange={onGroupOpenChange}
+                    onNavigate={() => setOverlayOpen(false)}
+                  />
+                ))}
+              </VerticalNavigation>
+            </OverlayPanelContent>
+          </OverlayPanel>
+        </Overlay>
       </VerticalNavigationItem>
     );
   }
@@ -605,7 +676,9 @@ function CollapsibleNavItem(props: {
       <Tooltip content={item.title} disabled={!collapsed} placement="right">
         <VerticalNavigationItemContent>
           {/* Replace with your routing library's link, or a plain <a href>. */}
-          <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
+          <VerticalNavigationItemTrigger
+            render={<Link to={item.href} onClick={onNavigate} />}
+          >
             {item.icon}
             {label}
           </VerticalNavigationItemTrigger>
@@ -640,11 +713,6 @@ export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
   };
 
   const handleGroupOpenChange = (item: NavItem, open: boolean) => {
-    // Opening a submenu while collapsed expands the navigation first.
-    if (collapsed) {
-      startWidthAnimation();
-    }
-    setCollapsed(false);
     setOpenGroups((groups) => ({ ...groups, [item.title]: open }));
   };
 
@@ -699,9 +767,10 @@ export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
           ))}
         </VerticalNavigation>
       </div>
-      {/* Placeholder page content, so the space the navigation frees is visible. */}
+      {/* Placeholder page content */}
       <div className="collapsibleNavExample-content">
         <div className="collapsibleNavExample-heading" />
+        <Link to="/somewhere">Focusable test link</Link>
         <div className="collapsibleNavExample-block" />
         <div className="collapsibleNavExample-block" />
       </div>
