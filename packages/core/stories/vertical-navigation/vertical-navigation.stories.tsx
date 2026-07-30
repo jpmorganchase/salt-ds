@@ -533,7 +533,9 @@ const simpleWithIcons: NavItem[] = [
   },
 ];
 
-export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
+export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
+  args,
+) => {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [animating, setAnimating] = useState(false);
@@ -556,12 +558,12 @@ export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
 
   return (
     <div
-      className={clsx("collapsibleNavExample", {
-        "collapsibleNavExample-collapsed": collapsed,
-        "collapsibleNavExample-animating": animating,
+      className={clsx("collapsibleNavigationExample", {
+        "collapsibleNavigationExample-collapsed": collapsed,
+        "collapsibleNavigationExample-animating": animating,
       })}
     >
-      <div className="collapsibleNavExample-sidebar">
+      <div className="collapsibleNavigationExample-sidebar">
         <Tooltip
           content="Expand navigation"
           disabled={!collapsed}
@@ -620,10 +622,10 @@ export const CollapsibleNav: StoryFn<typeof VerticalNavigation> = (args) => {
         </VerticalNavigation>
       </div>
       {/* Placeholder page content */}
-      <div className="collapsibleNavExample-content">
-        <div className="collapsibleNavExample-heading" />
-        <div className="collapsibleNavExample-block" />
-        <div className="collapsibleNavExample-block" />
+      <div className="collapsibleNavigationExample-content">
+        <div className="collapsibleNavigationExample-heading" />
+        <div className="collapsibleNavigationExample-block" />
+        <div className="collapsibleNavigationExample-block" />
       </div>
     </div>
   );

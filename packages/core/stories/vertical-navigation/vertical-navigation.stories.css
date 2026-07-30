@@ -1,11 +1,11 @@
-.saltVerticalNavigation:not(.collapsibleNavExample *) {
+.saltVerticalNavigation:not(.collapsibleNavigationExample *) {
   min-width: 30ch;
 }
 
-/* CollapsibleNav example*/
+/* CollapsibleNavigation example */
 
-.collapsibleNavExample {
-  --collapsibleNavExample-width: 30ch;
+.collapsibleNavigationExample {
+  --collapsibleNavigationExample-width: 30ch;
   display: flex;
   width: 700px;
   height: 400px;
@@ -14,7 +14,7 @@
   overflow: hidden;
 }
 
-.collapsibleNavExample-sidebar {
+.collapsibleNavigationExample-sidebar {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -24,7 +24,7 @@
   background: var(--salt-container-secondary-background);
 }
 
-.collapsibleNavExample-content {
+.collapsibleNavigationExample-content {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -33,43 +33,43 @@
   overflow: hidden;
 }
 
-.collapsibleNavExample-heading {
+.collapsibleNavigationExample-heading {
   flex: 0 0 var(--salt-size-base);
   width: 40%;
   background: var(--salt-container-secondary-background);
 }
 
-.collapsibleNavExample-block {
+.collapsibleNavigationExample-block {
   flex: 1;
   background: var(--salt-container-secondary-background);
 }
 
-.collapsibleNavExample .saltVerticalNavigation {
+.collapsibleNavigationExample .saltVerticalNavigation {
   flex: 1;
-  width: var(--collapsibleNavExample-width);
+  width: var(--collapsibleNavigationExample-width);
   overflow-x: hidden;
   overflow-y: auto;
   transition: width var(--salt-duration-perceptible) var(--salt-animation-timing-function);
 }
 
-.collapsibleNavExample .saltVerticalNavigationItemContent {
+.collapsibleNavigationExample .saltVerticalNavigationItemContent {
   min-width: 0;
 }
 
-.collapsibleNavExample-animating .saltVerticalNavigation ol {
-  width: var(--collapsibleNavExample-width);
+.collapsibleNavigationExample-animating .saltVerticalNavigation ol {
+  width: var(--collapsibleNavigationExample-width);
 }
 
-.collapsibleNavExample-collapsed .saltVerticalNavigation {
+.collapsibleNavigationExample-collapsed .saltVerticalNavigation {
   width: calc(var(--salt-size-icon) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
 }
 
-.collapsibleNavExample-collapsed .saltVerticalNavigation-indicator {
+.collapsibleNavigationExample-collapsed .saltVerticalNavigation-indicator {
   width: calc(var(--salt-size-icon) + var(--salt-spacing-150) + var(--salt-size-indicator) + var(--salt-spacing-100));
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .collapsibleNavExample .saltVerticalNavigation {
+  .collapsibleNavigationExample .saltVerticalNavigation {
     transition: none;
   }
 }
