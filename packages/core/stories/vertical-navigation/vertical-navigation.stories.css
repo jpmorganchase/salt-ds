@@ -2,7 +2,7 @@
   min-width: 30ch;
 }
 
-/* CollapsibleNav example: a sidebar that collapses to an icon-only rail. */
+/* CollapsibleNav example*/
 
 .collapsibleNavExample {
   --collapsibleNavExample-width: 30ch;
@@ -60,12 +60,6 @@
   width: var(--collapsibleNavExample-width);
 }
 
-.collapsibleNavExample-animating .saltCollapsiblePanel:not([aria-hidden="true"]) {
-  transition-delay: var(--salt-duration-perceptible);
-}
-
-/* Lengths rather than fit-content, which cannot be animated. */
-
 .collapsibleNavExample-collapsed .saltVerticalNavigation {
   width: calc(var(--salt-size-icon) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
 }
@@ -74,8 +68,8 @@
   width: calc(var(--salt-size-icon) + var(--salt-spacing-150) + var(--salt-size-indicator) + var(--salt-spacing-100));
 }
 
-.collapsibleNavExample-collapsed .saltCollapsiblePanel {
-  display: none;
+.collapsibleNavExample-overlayPanel .saltVerticalNavigation {
+  min-width: 20ch;
 }
 
 @media (prefers-reduced-motion: reduce) {
