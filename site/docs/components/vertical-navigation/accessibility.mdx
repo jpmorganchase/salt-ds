@@ -16,6 +16,11 @@ data:
   - If more than one vertical navigation component is present on the page, ensure that each has a unique accessible name.
   - Avoid adding the word “navigation” to the accessible name. Assistive technologies will announce it automatically due to its role.
 
+### Collapsible navigation
+
+- Give the collapse toggle an accessible name that states the action it performs, such as “Collapse navigation” or “Expand navigation”, and update it as the state changes.
+- Set `aria-expanded` on the toggle to reflect the current state.
+
 ## Keyboard interactions
 
 <KeyboardControls>
