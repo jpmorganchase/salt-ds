@@ -1,13 +1,13 @@
-import { BreadcrumbNext, BreadcrumbsNext } from "@salt-ds/lab";
+import { Breadcrumb, Breadcrumbs } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const CurrentLevel = (): ReactElement => (
-  <BreadcrumbsNext aria-label="Breadcrumbs">
-    <BreadcrumbNext href="#">Home</BreadcrumbNext>
-    <BreadcrumbNext href="#">Level 2</BreadcrumbNext>
-    <BreadcrumbNext current href="#">
+  <Breadcrumbs aria-label="Breadcrumbs">
+    <Breadcrumb href="#">Home</Breadcrumb>
+    <Breadcrumb href="#">Level 2</Breadcrumb>
+    <Breadcrumb current href="#">
       Level 3
-    </BreadcrumbNext>
-    <BreadcrumbNext href="#">Level 4</BreadcrumbNext>
-  </BreadcrumbsNext>
+    </Breadcrumb>
+    <Breadcrumb href="#">Level 4</Breadcrumb>
+  </Breadcrumbs>
 );

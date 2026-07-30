@@ -10,7 +10,7 @@ describe("Given an Avatar", () => {
 
   it("should show the default fallback icon when nothing is provided", () => {
     cy.mount(<Default />);
-    cy.findByTestId("UserSolidIcon").should("exist");
+    cy.findByTestId("UserIcon").should("exist");
   });
 
   it("should show initials if only a name is provided", () => {
@@ -28,7 +28,7 @@ describe("Given an Avatar", () => {
 
   it("should show a fallback icon if an image is provided and fails to load and name is not provided", () => {
     cy.mount(<Default src="bad_url.png" />);
-    cy.findByTestId("UserSolidIcon").should("exist");
+    cy.findByTestId("UserIcon").should("exist");
     cy.findByRole("img").should("not.exist");
   });
 
@@ -57,6 +57,25 @@ describe("Given an Avatar", () => {
     const fallbackIcon = <UserGroupSolidIcon />;
     cy.mount(<Default fallbackIcon={fallbackIcon} />);
     cy.findByTestId("UserGroupSolidIcon").should("exist");
+  });
+
+  it("should default to representing a person with a circular shape and person fallback icon", () => {
+    cy.mount(<Default />);
+    cy.findByTestId("UserIcon").should("exist");
+    cy.get(".saltAvatar").should("not.have.class", "saltAvatar-entity");
+  });
+
+  it("should render a square shape and business fallback icon when representing a business", () => {
+    cy.mount(<Default kind="entity" />);
+    cy.findByTestId("BankIcon").should("exist");
+    cy.get(".saltAvatar").should("have.class", "saltAvatar-entity");
+  });
+
+  it("should support a custom fallback icon when representing a business", () => {
+    const fallbackIcon = <UserGroupSolidIcon />;
+    cy.mount(<Default kind="entity" fallbackIcon={fallbackIcon} />);
+    cy.findByTestId("UserGroupSolidIcon").should("exist");
+    cy.findByTestId("BankIcon").should("not.exist");
   });
 
   it("should preserve native button semantics when rendered as a button", () => {

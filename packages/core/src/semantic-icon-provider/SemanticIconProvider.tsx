@@ -1,4 +1,5 @@
 import {
+  BankIcon,
   CalendarIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -22,7 +23,7 @@ import {
   TriangleDownIcon,
   TriangleUpIcon,
   UploadIcon,
-  UserSolidIcon,
+  UserIcon,
   WarningSolidIcon,
 } from "@salt-ds/icons";
 import {
@@ -45,6 +46,7 @@ export interface SemanticIconMap {
   CollapseRightIcon: ElementType;
   CompletedIcon: ElementType;
   DecreaseIcon: ElementType;
+  EntityIcon: ElementType;
   ErrorIcon: ElementType;
   ErrorStatusAdornment: ElementType;
   ExpandGroupIcon: ElementType;
@@ -92,6 +94,7 @@ const defaultIconMap: SemanticIconMap = {
   CollapseRightIcon: DoubleChevronRightIcon,
   CompletedIcon: SuccessCircleSolidIcon,
   DecreaseIcon: TriangleDownIcon,
+  EntityIcon: BankIcon,
   ErrorIcon: ErrorSolidIcon,
   ErrorStatusAdornment: ErrorAdornmentIcon,
   ExpandGroupIcon: ChevronRightIcon,
@@ -112,7 +115,7 @@ const defaultIconMap: SemanticIconMap = {
   SuccessIcon: SuccessCircleSolidIcon,
   SuccessStatusAdornment: SuccessAdornmentIcon,
   UploadIcon,
-  UserIcon: UserSolidIcon,
+  UserIcon: UserIcon,
   WarningIcon: WarningSolidIcon,
   WarningStatusAdornment: WarningAdornmentIcon,
 };

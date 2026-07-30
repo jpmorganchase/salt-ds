@@ -1,9 +1,9 @@
-.saltBreadcrumbsNext {
+.saltBreadcrumbs {
   display: block;
   margin-block: var(--salt-spacing-25);
 }
 
-.saltBreadcrumbsNext-ol {
+.saltBreadcrumbs-ol {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -14,11 +14,11 @@
   padding: 0;
 }
 
-.saltBreadcrumbsNext-ol-wrap {
+.saltBreadcrumbs-ol-wrap {
   flex-wrap: wrap;
 }
 
-.saltBreadcrumbsNext-collapseItem {
+.saltBreadcrumbs-collapseItem {
   align-items: center;
   display: inline-flex;
   flex: 0 1 auto;
@@ -27,7 +27,7 @@
   min-width: 0;
 }
 
-.saltBreadcrumbsNext-collapseButton[aria-expanded="true"] {
+.saltBreadcrumbs-collapseButton[aria-expanded="true"] {
   --saltButton-background: var(--salt-actionable-subtle-background-active);
   --saltButton-background-hover: var(--salt-actionable-subtle-background-active);
   --saltButton-text-color: var(--salt-actionable-subtle-foreground-active);
@@ -37,7 +37,7 @@
   cursor: var(--salt-cursor-active);
 }
 
-.saltBreadcrumbsNext-disclosure {
+.saltBreadcrumbs-disclosure {
   background: var(--salt-container-primary-background);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
   overflow: hidden;
@@ -50,19 +50,19 @@
   border-radius: var(--salt-palette-corner, 0);
 }
 
-.saltBreadcrumbsNext-disclosureList {
+.saltBreadcrumbs-disclosureList {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.saltBreadcrumbsNext-disclosureListItem {
+.saltBreadcrumbs-disclosureListItem {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.saltBreadcrumbsNext-disclosureItem {
+.saltBreadcrumbs-disclosureItem {
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background);
   font-size: var(--salt-text-fontSize);
@@ -82,29 +82,29 @@
   width: 100%;
 }
 
-.saltBreadcrumbsNext-disclosureItem:focus-visible {
+.saltBreadcrumbs-disclosureItem:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltBreadcrumbsNext-disclosureItem:hover {
+.saltBreadcrumbs-disclosureItem:hover {
   outline: none;
 }
 
-.saltBreadcrumbsNext-disclosureItem:hover,
-.saltBreadcrumbsNext-disclosureItem:focus-visible {
+.saltBreadcrumbs-disclosureItem:hover,
+.saltBreadcrumbs-disclosureItem:focus-visible {
   background: var(--salt-selectable-background-hover);
 }
 
-.saltBreadcrumbsNext-disclosureItem:active {
+.saltBreadcrumbs-disclosureItem:active {
   background: var(--salt-selectable-background-selected);
   box-shadow:
     0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected),
     0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
 }
 
-.saltBreadcrumbsNext-disclosureItem[aria-disabled="true"],
-.saltBreadcrumbsNext-disclosureItem[aria-disabled="true"]:active {
+.saltBreadcrumbs-disclosureItem[aria-disabled="true"],
+.saltBreadcrumbs-disclosureItem[aria-disabled="true"]:active {
   background: var(--salt-selectable-background-disabled);
   color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-cursor-disabled);

@@ -1,16 +1,16 @@
-import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { makePrefixer } from "../utils";
 
-const withBaseName = makePrefixer("saltBreadcrumbNext");
+const withBaseName = makePrefixer("saltBreadcrumb");
 
-export interface BreadcrumbNextLabelProps
+export interface BreadcrumbLabelProps
   extends ComponentPropsWithoutRef<"span"> {}
 
-export const BreadcrumbNextLabel = forwardRef<
+export const BreadcrumbLabel = forwardRef<
   HTMLSpanElement,
-  BreadcrumbNextLabelProps
->(function BreadcrumbNextLabel({ className, ...rest }, ref) {
+  BreadcrumbLabelProps
+>(function BreadcrumbLabel({ className, ...rest }, ref) {
   return (
     <span
       ref={ref}

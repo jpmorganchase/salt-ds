@@ -1,8 +1,8 @@
 import {
   Avatar,
   FlowLayout,
-  Label,
   StackLayout,
+  Text,
   useAvatarImage,
 } from "@salt-ds/core";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
@@ -26,13 +26,33 @@ const CustomAvatarButton = (props: ComponentProps<"button">) => (
 
 export const Default = Template.bind({});
 
+export const Kind: StoryFn<typeof Avatar> = (args) => {
+  return (
+    <FlowLayout gap={3}>
+      <StackLayout align="center" gap={1}>
+        <Avatar {...args} kind="person" name="John Doe" />
+        <Text>Person</Text>
+      </StackLayout>
+      <StackLayout align="center" gap={1}>
+        <Avatar
+          {...args}
+          kind="entity"
+          name="J.P. Morgan"
+          nameToInitials={() => "JPM"}
+        />
+        <Text>Entity</Text>
+      </StackLayout>
+    </FlowLayout>
+  );
+};
+
 export const Sizes: StoryFn<typeof Avatar> = (args) => {
   return (
     <FlowLayout gap={7} align="end">
       {sizes.map((size) => (
         <StackLayout key={size} align="center">
           <Avatar {...args} key={size} size={size} />
-          <Label>size: {size}</Label>
+          <Text>size: {size}</Text>
         </StackLayout>
       ))}
     </FlowLayout>
