@@ -6,9 +6,9 @@ import {
   InteractableCard,
   LinkCard,
 } from "@salt-ds/core";
-import * as cardStories from "~stories/card/card.stories";
 import { composeStories } from "@storybook/react-vite";
 import { Fragment, useState } from "react";
+import * as cardStories from "~stories/card/card.stories";
 import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(cardStories);
