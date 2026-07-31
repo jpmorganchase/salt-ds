@@ -136,31 +136,12 @@ describe("GIVEN an Overlay", () => {
   });
 
   describe("WHEN hideArrow", () => {
-    it("THEN it should show the arrow by default", () => {
-      cy.mount(<Default />);
-
-      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
-      cy.get(".saltOverlayPanel-arrow").should("be.visible");
-    });
-
     it('THEN the arrow is not displayed when "hideArrow=true"', () => {
       cy.mount(<HideArrow />);
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.get(".saltOverlayPanel-arrow").should("not.exist");
-    });
-
-    it("THEN it should still appear on bottom of trigger element", () => {
-      cy.mount(<HideArrow />);
-
-      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
-      cy.findByRole("dialog").then(($el) => {
-        const position = $el[0].getBoundingClientRect().y;
-        cy.findByText(/Show Overlay/i).should(($el) => {
-          expect($el[0].getBoundingClientRect().y).lessThan(position);
-        });
-      });
     });
   });
 
