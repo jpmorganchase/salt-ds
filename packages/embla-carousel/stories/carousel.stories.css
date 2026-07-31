@@ -74,7 +74,6 @@
   max-width: 700px;
   --carousel-slide-size: 320px;
   --carousel-slide-height: 200px;
-  --carousel-slide-spacing: var(--salt-spacing-25);
 }
 
 .customContentCarousel .saltCarouselSlides {
