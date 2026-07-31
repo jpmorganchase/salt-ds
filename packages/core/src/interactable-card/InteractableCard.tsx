@@ -8,6 +8,7 @@ import {
   type SyntheticEvent,
   useRef,
 } from "react";
+import { hasCardSection } from "../card/hasCardSection";
 import { capitalize, makePrefixer, useControlled, useForkRef } from "../utils";
 import interactableCardCss from "./InteractableCard.css";
 import {
@@ -140,6 +141,8 @@ export const InteractableCard = forwardRef<
     onClick,
   });
 
+  const sectioned = hasCardSection(children);
+
   return (
     // biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role provided by the role variable. aria-checked is only used when the role is appropriate.
     <div
@@ -157,6 +160,7 @@ export const InteractableCard = forwardRef<
           [withBaseName("active")]: role === "button" && active,
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,
+          [withBaseName("sectioned")]: sectioned,
         },
         className,
       )}

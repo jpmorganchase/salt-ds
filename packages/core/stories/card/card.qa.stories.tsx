@@ -1,4 +1,13 @@
-import { Card, H1, Panel, Text } from "@salt-ds/core";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  H1,
+  Panel,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -40,6 +49,56 @@ export const AllExamplesUsingText: StoryFn<
         <H1>Accent left</H1>
         <Text>Content</Text>
       </Card>
+      <Card>
+        <CardContent>
+          <H1>With CardContent</H1>
+          <Text>Content</Text>
+        </CardContent>
+      </Card>
+      <Card accent="top">
+        <Panel variant="secondary" style={{ height: 20 }} />
+        <CardContent>
+          <H1>Panel + CardContent</H1>
+          <Text>Content</Text>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <H1>Card header</H1>
+        </CardHeader>
+        <CardContent>
+          <Text>Card content</Text>
+        </CardContent>
+        <CardFooter>
+          <Text color="secondary">Card footer</Text>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <H1>Header only</H1>
+        </CardHeader>
+      </Card>
+      <StackLayout align="stretch" direction="row" gap={2}>
+        <Card style={{ minHeight: 220, width: 180 }}>
+          <CardHeader>
+            <H1>With content</H1>
+          </CardHeader>
+          <CardContent>
+            <Text>Content fills the available height.</Text>
+          </CardContent>
+          <CardFooter>
+            <Text color="secondary">Footer</Text>
+          </CardFooter>
+        </Card>
+        <Card style={{ minHeight: 220, width: 180 }}>
+          <CardHeader>
+            <H1>Without content</H1>
+          </CardHeader>
+          <CardFooter>
+            <Text color="secondary">Footer</Text>
+          </CardFooter>
+        </Card>
+      </StackLayout>
       <Panel variant="tertiary">
         <Card variant="ghost">
           <H1>Ghost card</H1>
