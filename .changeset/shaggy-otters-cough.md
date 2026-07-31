@@ -9,8 +9,6 @@ Add `hideArrow` prop to `Overlay`.
   <OverlayTrigger>
     <Button>Show Overlay</Button>
   </OverlayTrigger>
-  <OverlayPanel>
-    Overlay content
-  </OverlayPanel>
+  <OverlayPanel>Overlay content</OverlayPanel>
 </Overlay>
 ```
