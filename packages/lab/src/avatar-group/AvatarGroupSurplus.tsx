@@ -14,4 +14,3 @@ export const AvatarGroupSurplus = forwardRef<
     <Avatar ref={ref} className={clsx(withBaseName(), className)} {...rest} />
   );
 });
-
