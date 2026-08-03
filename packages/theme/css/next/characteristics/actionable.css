@@ -183,4 +183,14 @@
   --salt-actionable-caution-subtle-foreground-active: var(--salt-palette-foreground-primary);
   --salt-actionable-caution-subtle-foreground-hover: var(--salt-palette-warning-stronger);
   --salt-actionable-caution-subtle-foreground: var(--salt-palette-warning-strong);
+
+  --salt-actionable-onSolid-subtle-background: var(--salt-color-transparent);
+  --salt-actionable-onSolid-subtle-background-active: var(--salt-palette-alpha-dark-low);
+  --salt-actionable-onSolid-subtle-background-hover: var(--salt-palette-alpha-dark-lower);
+  --salt-actionable-onSolid-subtle-borderColor: var(--salt-color-transparent);
+  --salt-actionable-onSolid-subtle-borderColor-active: var(--salt-color-transparent);
+  --salt-actionable-onSolid-subtle-borderColor-hover: var(--salt-color-transparent);
+  --salt-actionable-onSolid-subtle-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-onSolid-subtle-foreground-active: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-onSolid-subtle-foreground-hover: var(--salt-palette-foreground-primary-alt);
 }
