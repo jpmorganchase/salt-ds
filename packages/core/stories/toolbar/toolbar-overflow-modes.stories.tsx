@@ -38,7 +38,7 @@ const wrapGlobals = {
 const noteStyle = {
   background: "var(--salt-container-secondary-background)",
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   borderRadius: "var(--salt-palette-corner, 0)",
   padding: "var(--salt-spacing-200)",
 };
@@ -57,7 +57,7 @@ const comparisonGridStyle = {
 const comparisonCardStyle = {
   background: "var(--salt-container-primary-background)",
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   borderRadius: "var(--salt-palette-corner, 0)",
   padding: "var(--salt-spacing-200)",
 };

@@ -162,4 +162,11 @@
   --salt-editable-secondary-background-readonly: var(--salt-color-transparent);
 
   --salt-sentiment-neutral-track-disabled: var(--salt-palette-alpha-contrast-lower);
+
+  --salt-container-primary-borderColor: var(--salt-palette-alpha-contrast-medium); /* Use --salt-container-bold-borderColor */
+  --salt-container-primary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower); /* Use --salt-container-bold-borderColor-disabled */
+  --salt-container-secondary-borderColor: var(--salt-palette-alpha-contrast-medium); /* Use --salt-container-bold-borderColor */
+  --salt-container-secondary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower); /* Use --salt-container-bold-borderColor-disabled */
+  --salt-container-tertiary-borderColor: var(--salt-palette-alpha-contrast-medium); /* Use --salt-container-bold-borderColor */
+  --salt-container-tertiary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower); /* Use --salt-container-bold-borderColor-disabled */
 }
