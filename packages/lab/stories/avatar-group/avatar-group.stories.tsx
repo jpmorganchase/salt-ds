@@ -1,5 +1,5 @@
 import { Avatar } from "@salt-ds/core";
-import { AvatarGroup } from "@salt-ds/lab";
+import { AvatarGroup, AvatarGroupSurplus } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import type { ComponentProps } from "react";
 import persona1 from "../assets/avatar1.png";
@@ -15,26 +15,22 @@ const CustomAvatarButton = (props: ComponentProps<"button">) => (
 
 export const Default: StoryFn<typeof AvatarGroup> = (args) => {
   return (
-    <AvatarGroup max={3} {...args}>
+    <AvatarGroup {...args}>
       <Avatar name="Alex Brailescu" src={persona1} />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
+      <AvatarGroupSurplus name="1 more">+1</AvatarGroupSurplus>
     </AvatarGroup>
   );
 };
 
 export const RenderProp: StoryFn<typeof AvatarGroup> = (args) => {
   return (
-    <AvatarGroup
-      max={3}
-      render={<CustomAvatarButton aria-label="Avatar group" />}
-      {...args}
-    >
+    <AvatarGroup render={<CustomAvatarButton aria-label="Avatar group" />} {...args}>
       <Avatar name="Alex Brailescu" src={persona1} />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
-      <Avatar name="Jane Doe" color="category-4" />
+      <AvatarGroupSurplus name="1 more">+1</AvatarGroupSurplus>
     </AvatarGroup>
   );
 };
