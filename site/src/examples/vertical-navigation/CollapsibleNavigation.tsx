@@ -30,7 +30,11 @@ function NavItem({ item, collapsed }: { item: Item; collapsed: boolean }) {
         <Tooltip content={item.title} disabled={!collapsed} placement="right">
           <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
             {item.icon}
-            <VerticalNavigationItemLabel>
+            {/* Hidden once collapsed, but kept in the DOM for the item's
+                accessible name. */}
+            <VerticalNavigationItemLabel
+              className={collapsed ? "salt-visuallyHidden" : undefined}
+            >
               {item.title}
             </VerticalNavigationItemLabel>
           </VerticalNavigationItemTrigger>

@@ -18,7 +18,7 @@ data:
 
 ### Collapsible navigation
 
-- Give the collapse toggle an accessible name that states the action it performs, such as “Collapse navigation” or “Expand navigation”, and update it as the state changes.
+- Give the collapse toggle a stable accessible name, such as “Toggle navigation”. Avoid changing the name based on state, as `aria-expanded` already conveys whether the navigation is expanded or collapsed.
 - Set `aria-expanded` on the toggle to reflect the current state.
 
 ## Keyboard interactions

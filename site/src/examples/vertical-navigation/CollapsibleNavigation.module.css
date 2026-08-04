@@ -14,11 +14,6 @@
   min-width: 0;
 }
 
-/* Keeps labels on one line so the closing rail clips them, rather than
-   rewrapping them as the items narrow. */
-.nav :global(.saltVerticalNavigationItemLabel) {
-  white-space: nowrap;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .nav {
