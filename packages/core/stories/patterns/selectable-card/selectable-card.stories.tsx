@@ -254,11 +254,13 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
 
   return (
     <StackLayout gap={2}>
-      <Banner status="error">
-        <BannerContent>
-          A selection is required. Please choose an option.
-        </BannerContent>
-      </Banner>
+      {!selected?.length && (
+        <Banner status="error">
+          <BannerContent>
+            A selection is required. Please choose an option.
+          </BannerContent>
+        </Banner>
+      )}
       <InteractableCardGroup
         onChange={(_event, value) => {
           setSelected(value);
