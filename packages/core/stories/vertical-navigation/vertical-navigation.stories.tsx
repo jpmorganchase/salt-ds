@@ -542,6 +542,8 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
 
   const showLabels = !collapsed || animating;
 
+  const toggleLabel = collapsed ? "Expand navigation" : "Minimize navigation";
+
   // With reduced motion there is no transition, so no animation to track.
   const startWidthAnimation = () => {
     const prefersReducedMotion = window.matchMedia?.(
@@ -564,14 +566,10 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
       })}
     >
       <div className="collapsibleNavigationExample-sidebar">
-        <Tooltip
-          content={collapsed ? "Expand navigation" : "Collapse navigation"}
-          placement="right"
-        >
+        <Tooltip content={toggleLabel} placement="right">
           <Button
             appearance="transparent"
-            aria-expanded={!collapsed}
-            aria-label="Toggle Navigation"
+            aria-label={toggleLabel}
             onClick={handleToggle}
           >
             {collapsed ? (
@@ -582,6 +580,7 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
           </Button>
         </Tooltip>
         <VerticalNavigation
+          aria-label={"Main navigation"}
           {...args}
           onTransitionEnd={(event) => {
             if (
