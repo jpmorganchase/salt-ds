@@ -1,2 +1,2 @@
 export * from "./AvatarGroup";
-export * from "./AvatarGroupSurplus";
+export * from "./AvatarGroupCount";

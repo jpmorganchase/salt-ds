@@ -1,13 +1,13 @@
 import { Avatar } from "@salt-ds/core";
-import { AvatarGroup, AvatarGroupSurplus } from "@salt-ds/lab";
+import { AvatarGroup, AvatarGroupCount } from "@salt-ds/lab";
 
 describe("Given an AvatarGroup", () => {
-  it("renders a composed AvatarGroupSurplus as an accessible indicator", () => {
+  it("renders a composed AvatarGroupCount as an accessible indicator", () => {
     cy.mount(
       <AvatarGroup>
         <Avatar name="Alex Brailescu" />
         <Avatar name="Peter Piper" />
-        <AvatarGroupSurplus name="2 more">+2</AvatarGroupSurplus>
+        <AvatarGroupCount name="2 more">+2</AvatarGroupCount>
       </AvatarGroup>,
     );
 
@@ -20,7 +20,7 @@ describe("Given an AvatarGroup", () => {
       <AvatarGroup render={<button type="button" />}>
         <Avatar name="Alex Brailescu" />
         <Avatar name="Peter Piper" />
-        <AvatarGroupSurplus name="1 more">+1</AvatarGroupSurplus>
+        <AvatarGroupCount name="1 more">+1</AvatarGroupCount>
       </AvatarGroup>,
     );
 
