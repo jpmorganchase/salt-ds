@@ -57,6 +57,20 @@
   min-width: 0;
 }
 
+/* Visually hide the labels once collapsed, but keep them in the DOM for the
+   item's accessible name. */
+.collapsibleNavigationExample .visuallyHidden {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .collapsibleNavigationExample-animating .saltVerticalNavigation ol {
   width: var(--collapsibleNavigationExample-width);
 }

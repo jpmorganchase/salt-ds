@@ -31,7 +31,7 @@ import "./vertical-navigation.stories.css";
 import {
   DoubleChevronLeftIcon,
   DoubleChevronRightIcon,
-  HelpSolidIcon,
+  HelpCircleSolidIcon,
   MessageSolidIcon,
   MicroMenuIcon,
   StorageSolidIcon,
@@ -170,7 +170,7 @@ const nested: NavItem[] = [
   {
     title: "Support",
     href: "/support",
-    icon: <HelpSolidIcon aria-hidden />,
+    icon: <HelpCircleSolidIcon aria-hidden />,
   },
   {
     title: "Contact",
@@ -524,7 +524,7 @@ const simpleWithIcons: NavItem[] = [
   {
     title: "Support",
     href: "/support",
-    icon: <HelpSolidIcon aria-hidden />,
+    icon: <HelpCircleSolidIcon aria-hidden />,
   },
   {
     title: "Contact",
@@ -571,7 +571,7 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
           <Button
             appearance="transparent"
             aria-expanded={!collapsed}
-            aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
+            aria-label="Toggle Navigation"
             onClick={handleToggle}
           >
             {collapsed ? (
@@ -608,7 +608,7 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
                     {/* Hidden once collapsed, but kept in the DOM for the
                         item's accessible name. */}
                     <VerticalNavigationItemLabel
-                      className={showLabels ? undefined : "salt-visuallyHidden"}
+                      className={showLabels ? undefined : "visuallyHidden"}
                     >
                       {item.title}
                     </VerticalNavigationItemLabel>
