@@ -77,7 +77,6 @@
 }
 
 .saltMegaMenuPanel {
-  max-block-size: calc(100vh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
   max-block-size: calc(100dvh - var(--salt-size-base) - 2rem - var(--salt-spacing-100) * 2);
   overflow-y: auto;
   overflow-x: hidden;

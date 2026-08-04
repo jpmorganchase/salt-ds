@@ -48,4 +48,4 @@ const useViewport = (): number => {
   return value === null ? 0 : value;
 };
 
-export { ViewportProvider, ViewportContext, useViewport };
+export { useViewport, ViewportContext, ViewportProvider };

@@ -75,57 +75,41 @@ describe("GIVEN a FlexLayout", () => {
       xl: false,
     };
 
-    it(
-      "THEN it should not wrap on xl viewport",
-      {
-        viewportHeight: 900,
-        viewportWidth: 1921,
-      },
-      () => {
-        cy.mount(<Default wrap={wrap} />);
+    it("THEN it should not wrap on xl viewport", {
+      viewportHeight: 900,
+      viewportWidth: 1921,
+    }, () => {
+      cy.mount(<Default wrap={wrap} />);
 
-        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
-      },
-    );
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
+    });
 
-    it(
-      "THEN it should wrap on md viewport",
-      {
-        viewportHeight: 900,
-        viewportWidth: 961,
-      },
-      () => {
-        cy.mount(<Default wrap={wrap} />);
+    it("THEN it should wrap on md viewport", {
+      viewportHeight: 900,
+      viewportWidth: 961,
+    }, () => {
+      cy.mount(<Default wrap={wrap} />);
 
-        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
-      },
-    );
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
+    });
 
-    it(
-      "THEN it should wrap on sm viewport",
-      {
-        viewportHeight: 900,
-        viewportWidth: 700,
-      },
-      () => {
-        cy.mount(<Default wrap={wrap} />);
+    it("THEN it should wrap on sm viewport", {
+      viewportHeight: 900,
+      viewportWidth: 700,
+    }, () => {
+      cy.mount(<Default wrap={wrap} />);
 
-        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
-      },
-    );
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
+    });
 
-    it(
-      "THEN it should wrap on xs viewport",
-      {
-        viewportHeight: 900,
-        viewportWidth: 600,
-      },
-      () => {
-        cy.mount(<Default wrap={wrap} />);
+    it("THEN it should wrap on xs viewport", {
+      viewportHeight: 900,
+      viewportWidth: 600,
+    }, () => {
+      cy.mount(<Default wrap={wrap} />);
 
-        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
-      },
-    );
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
+    });
   });
 
   describe("WHEN custom breakpoints are provided", () => {
@@ -145,72 +129,56 @@ describe("GIVEN a FlexLayout", () => {
       xl: 1820,
     };
 
-    it(
-      "THEN it should not wrap on xl viewport",
-      {
-        viewportHeight: 900,
-        viewportWidth: 1821,
-      },
-      () => {
-        cy.mount(
-          <SaltProvider breakpoints={breakpoints}>
-            <Default wrap={wrap} />
-          </SaltProvider>,
-        );
+    it("THEN it should not wrap on xl viewport", {
+      viewportHeight: 900,
+      viewportWidth: 1821,
+    }, () => {
+      cy.mount(
+        <SaltProvider breakpoints={breakpoints}>
+          <Default wrap={wrap} />
+        </SaltProvider>,
+      );
 
-        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
-      },
-    );
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
+    });
 
-    it(
-      "THEN it should wrap on md viewport",
-      {
-        viewportHeight: 900,
-        viewportWidth: 1101,
-      },
-      () => {
-        cy.mount(
-          <SaltProvider breakpoints={breakpoints}>
-            <Default wrap={wrap} />
-          </SaltProvider>,
-        );
+    it("THEN it should wrap on md viewport", {
+      viewportHeight: 900,
+      viewportWidth: 1101,
+    }, () => {
+      cy.mount(
+        <SaltProvider breakpoints={breakpoints}>
+          <Default wrap={wrap} />
+        </SaltProvider>,
+      );
 
-        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
-      },
-    );
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
+    });
 
-    it(
-      "THEN it should wrap on sm viewport",
-      {
-        viewportHeight: 900,
-        viewportWidth: 741,
-      },
-      () => {
-        cy.mount(
-          <SaltProvider breakpoints={breakpoints}>
-            <Default wrap={wrap} />
-          </SaltProvider>,
-        );
+    it("THEN it should wrap on sm viewport", {
+      viewportHeight: 900,
+      viewportWidth: 741,
+    }, () => {
+      cy.mount(
+        <SaltProvider breakpoints={breakpoints}>
+          <Default wrap={wrap} />
+        </SaltProvider>,
+      );
 
-        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
-      },
-    );
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
+    });
 
-    it(
-      "THEN it should wrap on xs viewport",
-      {
-        viewportHeight: 900,
-        viewportWidth: 499,
-      },
-      () => {
-        cy.mount(
-          <SaltProvider breakpoints={breakpoints}>
-            <Default wrap={wrap} />
-          </SaltProvider>,
-        );
+    it("THEN it should wrap on xs viewport", {
+      viewportHeight: 900,
+      viewportWidth: 499,
+    }, () => {
+      cy.mount(
+        <SaltProvider breakpoints={breakpoints}>
+          <Default wrap={wrap} />
+        </SaltProvider>,
+      );
 
-        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
-      },
-    );
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
+    });
   });
 });

@@ -16,18 +16,12 @@ describe("GIVEN a Split", () => {
       cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
     });
 
-    it(
-      "THEN it should wrap at the default small breakpoint",
-      { viewportWidth: 599 },
-      () => {
-        cy.mount(<Default />);
-        cy.get(".saltFlexLayout").should(
-          "have.css",
-          "flex-direction",
-          "column",
-        );
-      },
-    );
+    it("THEN it should wrap at the default small breakpoint", {
+      viewportWidth: 599,
+    }, () => {
+      cy.mount(<Default />);
+      cy.get(".saltFlexLayout").should("have.css", "flex-direction", "column");
+    });
 
     it("THEN it should render with a default gap", () => {
       cy.mount(<Default />);
