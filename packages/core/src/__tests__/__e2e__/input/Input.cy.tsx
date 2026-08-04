@@ -1,7 +1,7 @@
 import { Button, FormField, FormFieldLabel, Input } from "@salt-ds/core";
-import * as inputStories from "@stories/input/input.stories";
 import { composeStories } from "@storybook/react";
 import { type ChangeEvent, useState } from "react";
+import * as inputStories from "~stories/input/input.stories";
 
 const { WithFormField } = composeStories(inputStories);
 

@@ -23,9 +23,9 @@ import {
   MessageIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import persona from "@stories/assets/avatar.png";
 import type { StoryFn } from "@storybook/react";
 import { useState } from "react";
+import persona from "~stories/assets/avatar.png";
 
 export default {
   title: "Core/Collapsible",

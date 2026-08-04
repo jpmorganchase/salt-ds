@@ -18,8 +18,9 @@
     "noImplicitAny": true,
     "jsx": "react-jsx",
     "paths": {
-      ".storybook/*": ["./.storybook/*"],
-      "@stories/*": [
+      "~storybook-decorators/*": ["./.storybook/decorators/*"],
+      "~test-utils/*": ["./cypress/tests/*"],
+      "~stories/*": [
         "./packages/ag-grid-theme/stories/*",
         "./packages/core/stories/*",
         "./packages/date-components/stories/*",
@@ -30,8 +31,7 @@
       ],
       "@salt-ds/date-adapters/*": [
         "./packages/date-adapters/src/*-adapter/index.ts"
-      ],
-      "packages/*": ["./packages/*"]
+      ]
     },
     "types": [
       "cypress",

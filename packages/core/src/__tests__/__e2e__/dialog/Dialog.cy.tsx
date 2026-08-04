@@ -1,5 +1,5 @@
-import * as dialogStories from "@stories/dialog/dialog.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as dialogStories from "~stories/dialog/dialog.stories";
 
 const composedStories = composeStories(dialogStories);
 
