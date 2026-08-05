@@ -1,0 +1,6 @@
+*.md text eol=lf
+scenarios.json text eol=lf
+captured/*.json text eol=lf
+artifacts/*.json text eol=lf
+artifacts/*.mjs text eol=lf
+artifacts/*.tgz binary

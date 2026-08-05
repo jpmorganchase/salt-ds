@@ -1,8 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { SALT_EVIDENCE_REF_CONTRACT } from "../../evidence.js";
 import {
-  buildTokenPolicyStructuralRoleRulePack,
-  type SaltTokenPolicyStructuralRoleRulePack,
+  getSaltRegistryFingerprint,
+  toSaltEvidenceRegistryIdentity,
+} from "../../registry/fingerprint.js";
+import {
+  bindTokenPolicyStructuralRoleRulePackToInMemoryRegistry,
+  buildTokenPolicyStructuralRoleRulePackBody,
+  type SaltTokenPolicyStructuralRoleRulePackBody,
 } from "../../tokenPolicyStructuralRoleRules.js";
 import type {
   ComponentRecord,
@@ -111,9 +116,9 @@ function buildFixtureRegistry(
   components: ComponentRecord[],
   guides: GuideRecord[] = [],
   tokens: TokenRecord[] = [],
-  tokenPolicyStructuralRoleRulePack?: SaltTokenPolicyStructuralRoleRulePack | null,
+  tokenPolicyStructuralRoleRulePackBody?: SaltTokenPolicyStructuralRoleRulePackBody | null,
 ): SaltRegistry {
-  return {
+  const registry: SaltRegistry = {
     generated_at: "2026-04-30T00:00:00.000Z",
     version: "fixture-registry",
     build_info: null,
@@ -127,9 +132,17 @@ function buildFixtureRegistry(
     tokens,
     deprecations: [],
     examples: [],
-    token_policy_structural_role_rule_pack:
-      tokenPolicyStructuralRoleRulePack ?? null,
+    token_policy_structural_role_rule_pack: null,
   };
+  if (tokenPolicyStructuralRoleRulePackBody) {
+    registry.token_policy_structural_role_rule_pack =
+      bindTokenPolicyStructuralRoleRulePackToInMemoryRegistry(
+        tokenPolicyStructuralRoleRulePackBody,
+        registry,
+        null,
+      );
+  }
+  return registry;
 }
 
 function buildFixtureStructuralRoleRulePack(input: {
@@ -139,8 +152,8 @@ function buildFixtureStructuralRoleRulePack(input: {
   tokenModifier?: string;
   evidenceText: string;
   evidenceTerms: string[];
-}): SaltTokenPolicyStructuralRoleRulePack {
-  return buildTokenPolicyStructuralRoleRulePack({
+}): SaltTokenPolicyStructuralRoleRulePackBody {
+  return buildTokenPolicyStructuralRoleRulePackBody({
     structural_role_rules: [
       {
         id: `/fixture/docs/token-rules#${input.category}`,
@@ -156,12 +169,8 @@ function buildFixtureStructuralRoleRulePack(input: {
         token_modifier: input.tokenModifier,
       },
     ],
-    generated_at: "2026-04-30T00:00:00.000Z",
     generator: {
       name: "mcp-core validator fixture",
-    },
-    registry: {
-      version: "fixture-registry",
     },
   });
 }
@@ -200,6 +209,7 @@ describe("validateSaltUsage evidence refs", () => {
         }),
       }),
     ]);
+    expect(JSON.stringify(issue?.evidence_refs)).not.toContain("verified_at");
   });
 
   it("does not emit catalog-status evidence refs for fixture components absent from the registry", () => {
@@ -244,7 +254,8 @@ describe("validateSaltUsage evidence refs", () => {
         name: "mcp-core validation rule pack fixture",
       },
       registry: {
-        version: "fixture-registry",
+        version: registry.version,
+        hash: getSaltRegistryFingerprint(registry),
         generated_at: "2026-04-30T00:00:00.000Z",
       },
       rules: [
@@ -256,7 +267,10 @@ describe("validateSaltUsage evidence refs", () => {
           title: "Fixture prop needs review",
           message: "Fixture rule matched a registry-backed prop.",
           suggested_fix: null,
-          confidence: 0.9,
+          confidence: {
+            basis: "deterministic_match",
+            score: 1,
+          },
           match: {
             kind: "component_jsx_attribute",
             component_id: "fixture-nonstable-action",
@@ -272,9 +286,8 @@ describe("validateSaltUsage evidence refs", () => {
                 entity_type: "component",
                 entity_id: "fixture-nonstable-action",
                 field_path: "props.fixtureRisk",
-                registry_version: "fixture-registry",
+                ...toSaltEvidenceRegistryIdentity(registry),
               },
-              confidence: "high",
             },
           ],
         },
@@ -309,8 +322,8 @@ describe("validateSaltUsage evidence refs", () => {
             claim_kind: "component",
           }),
           expect.objectContaining({
-            id: "fixture.component-prop-risk.workflow-input.code.validation-ref",
-            source_kind: "workflow_input",
+            id: "fixture.component-prop-risk.submitted-text.code.validation-ref",
+            source_kind: "submitted_text",
           }),
         ]),
       }),
@@ -327,7 +340,8 @@ describe("validateSaltUsage evidence refs", () => {
         name: "mcp-core validation rule pack fixture",
       },
       registry: {
-        version: "fixture-registry",
+        version: registry.version,
+        hash: getSaltRegistryFingerprint(registry),
         generated_at: "2026-04-30T00:00:00.000Z",
       },
       rules: [
@@ -339,7 +353,10 @@ describe("validateSaltUsage evidence refs", () => {
           title: "Fixture undocumented prop risk",
           message: "Fixture rule should not run without registry evidence.",
           suggested_fix: null,
-          confidence: 0.9,
+          confidence: {
+            basis: "deterministic_match",
+            score: 1,
+          },
           match: {
             kind: "component_jsx_attribute",
             component_id: "fixture-nonstable-action",
@@ -355,9 +372,8 @@ describe("validateSaltUsage evidence refs", () => {
                 entity_type: "component",
                 entity_id: "fixture-nonstable-action",
                 field_path: "name",
-                registry_version: "fixture-registry",
+                ...toSaltEvidenceRegistryIdentity(registry),
               },
-              confidence: "high",
             },
           ],
         },
@@ -1724,9 +1740,9 @@ describe("validateSaltUsage evidence refs", () => {
             }),
           }),
           expect.objectContaining({
-            source_kind: "workflow_input",
-            claim_kind: "workflow",
-            workflow_input: expect.objectContaining({
+            source_kind: "submitted_text",
+            claim_kind: "composition",
+            submitted_text: expect.objectContaining({
               field_path: "code",
             }),
           }),
@@ -1870,8 +1886,8 @@ describe("validateSaltUsage evidence refs", () => {
               }),
             }),
             expect.objectContaining({
-              source_kind: "workflow_input",
-              claim_kind: "workflow",
+              source_kind: "submitted_text",
+              claim_kind: "token",
             }),
           ]),
         }),
@@ -1886,8 +1902,8 @@ describe("validateSaltUsage evidence refs", () => {
               }),
             }),
             expect.objectContaining({
-              source_kind: "workflow_input",
-              claim_kind: "workflow",
+              source_kind: "submitted_text",
+              claim_kind: "token",
             }),
           ]),
         }),
@@ -2110,8 +2126,8 @@ describe("validateSaltUsage evidence refs", () => {
       expect.objectContaining({
         evidence_refs: [
           expect.objectContaining({
-            source_kind: "workflow_input",
-            claim_kind: "workflow",
+            source_kind: "submitted_text",
+            claim_kind: "token",
           }),
         ],
       }),

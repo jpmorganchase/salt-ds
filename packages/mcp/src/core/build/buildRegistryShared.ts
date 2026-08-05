@@ -1,7 +1,7 @@
-import fs from "node:fs/promises";
 import semver from "semver";
 import type { UsageSemanticsRecord, UsageSemanticsSource } from "../types.js";
 import { normalizeComparableVersion } from "../versionUtils.js";
+import { readCatalogInputFileOrNull } from "./catalogInputInventory.js";
 
 export function normalizeWhitespace(input: string): string {
   return input.replace(/\s+/g, " ").trim();
@@ -130,9 +130,5 @@ export function stripLeadingCommitHash(input: string): string {
 export async function readFileOrNull(
   targetPath: string,
 ): Promise<string | null> {
-  try {
-    return await fs.readFile(targetPath, "utf8");
-  } catch {
-    return null;
-  }
+  return readCatalogInputFileOrNull(targetPath, "utf8");
 }

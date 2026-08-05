@@ -2,14 +2,19 @@ import * as t from "@babel/types";
 import {
   SALT_EVIDENCE_REF_CONTRACT,
   type SaltEvidenceRef,
+  type SaltRegistryEvidenceRef,
 } from "../../evidence.js";
-import { findTokenStructuralRoleRuleEvidence } from "../../tokenPolicyStructuralRoleRules.js";
+import { toSaltEvidenceRegistryIdentity } from "../../registry/fingerprint.js";
+import {
+  findTokenStructuralRoleRuleEvidence,
+  validateTokenPolicyStructuralRoleRulePackEvidence,
+} from "../../tokenPolicyStructuralRoleRules.js";
 import type { SaltRegistry, TokenRecord } from "../../types.js";
 import { unique } from "../utils.js";
 import type { ValidationIssue } from "./shared.js";
 import {
   buildEvidence,
-  buildWorkflowInputCodeEvidenceRef,
+  buildSubmittedTextCodeEvidenceRef,
   slugify,
 } from "./validateSaltUsageHelpers.js";
 
@@ -789,11 +794,11 @@ interface TokenEvidence {
 }
 
 function buildTokenRegistryEvidenceRef(input: {
-  registry: Pick<SaltRegistry, "version">;
+  registry: SaltRegistry;
   token: TokenRecord;
   field_path: string;
   id_suffix: string;
-}): SaltEvidenceRef {
+}): SaltRegistryEvidenceRef {
   const sourceUrl = input.token.policy?.docs[0] ?? null;
 
   return {
@@ -806,24 +811,23 @@ function buildTokenRegistryEvidenceRef(input: {
       entity_id: input.token.name,
       entity_name: input.token.name,
       field_path: input.field_path,
-      registry_version: input.registry.version,
+      ...toSaltEvidenceRegistryIdentity(input.registry),
     },
     source: sourceUrl ? { url: sourceUrl } : null,
-    confidence: "high",
-    verified_at: input.token.last_verified_at,
   };
 }
 
 function tokenStructuralRoleRuleEvidenceRefs(
-  registry: Pick<
-    SaltRegistry,
-    "token_policy_structural_role_rule_pack" | "version"
-  >,
+  registry: SaltRegistry,
   token: TokenRecord,
   structuralRole: string,
 ): SaltEvidenceRef[] {
   const rulePack = registry.token_policy_structural_role_rule_pack;
-  if (!rulePack) {
+  if (
+    !rulePack ||
+    validateTokenPolicyStructuralRoleRulePackEvidence(rulePack, registry)
+      .length > 0
+  ) {
     return [];
   }
 
@@ -835,10 +839,7 @@ function tokenStructuralRoleRuleEvidenceRefs(
 }
 
 function hasSourceBackedStructuralRole(
-  registry: Pick<
-    SaltRegistry,
-    "token_policy_structural_role_rule_pack" | "version"
-  >,
+  registry: SaltRegistry,
   token: TokenRecord,
   structuralRole: string,
 ): boolean {
@@ -850,10 +851,7 @@ function hasSourceBackedStructuralRole(
 }
 
 function hasAnySourceBackedStructuralRole(
-  registry: Pick<
-    SaltRegistry,
-    "token_policy_structural_role_rule_pack" | "version"
-  >,
+  registry: SaltRegistry,
   token: TokenRecord,
   structuralRoles: string[],
 ): boolean {
@@ -893,7 +891,7 @@ function tokenTextCandidates(
 }
 
 function buildTokenEvidence(input: {
-  registry: Pick<SaltRegistry, "version">;
+  registry: SaltRegistry;
   token: TokenRecord;
   id_suffix: string;
   predicate?: (candidate: { text: string; field_path: string }) => boolean;
@@ -928,10 +926,7 @@ function buildTokenEvidence(input: {
 }
 
 function findTokenEvidence(input: {
-  registry: Pick<
-    SaltRegistry,
-    "tokens" | "version" | "token_policy_structural_role_rule_pack"
-  >;
+  registry: SaltRegistry;
   id_suffix: string;
   predicate: (token: TokenRecord) => boolean;
   guidance_predicate?: (candidate: {
@@ -957,10 +952,7 @@ function findTokenEvidence(input: {
 }
 
 function findTokenEvidenceByNames(input: {
-  registry: Pick<
-    SaltRegistry,
-    "tokens" | "version" | "token_policy_structural_role_rule_pack"
-  >;
+  registry: SaltRegistry;
   token_names: string[];
   id_suffix: string;
   guidance_predicate?: (candidate: {
@@ -1058,8 +1050,9 @@ function buildTokenPolicyIssue(input: {
       evidence.evidence_ref,
       ...evidence.supporting_evidence_refs,
     ]),
-    buildWorkflowInputCodeEvidenceRef({
+    buildSubmittedTextCodeEvidenceRef({
       id: input.id,
+      claim_kind: "token",
       note: "Validator matched token-related styling in source code supplied to validateSaltUsage.",
     }),
   ]);
@@ -1201,8 +1194,9 @@ export function addTokenPolicyIssues(input: {
       confidence: 0.88,
       source_urls: [],
       evidence_refs: [
-        buildWorkflowInputCodeEvidenceRef({
+        buildSubmittedTextCodeEvidenceRef({
           id: "tokens.unknown-salt-token",
+          claim_kind: "token",
           note: "Validator matched registry-looking token references in source code supplied to validateSaltUsage.",
         }),
       ],

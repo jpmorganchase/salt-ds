@@ -62,13 +62,17 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * The variant to use. Options are 'primary', 'secondary' and 'cta'.
    * 'primary' is the default value.
    *
-   * @deprecated since 1.36.0. Use `appearance` and `sentiment` instead.
+   * @deprecated since 1.36.0. Use {@link ButtonProps.appearance appearance} and {@link ButtonProps.sentiment sentiment} instead.
    *
    * | variant     | appearance    | sentiment   |
    * | ----------- | ------------- | ----------- |
    * | `cta`       | `solid`       | `accented`  |
    * | `primary`   | `solid`       | `neutral`   |
    * | `secondary` | `transparent` | `neutral`   |
+   *
+   * @saltValueMap {"from":"cta","set":[["appearance","solid"],["sentiment","accented"]]}
+   * @saltValueMap {"from":"primary","set":[["appearance","solid"],["sentiment","neutral"]]}
+   * @saltValueMap {"from":"secondary","set":[["appearance","transparent"],["sentiment","neutral"]]}
    */
   variant?: ButtonVariant;
   /**

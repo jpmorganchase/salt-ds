@@ -1,8 +1,17 @@
 import { describe, expect, it } from "vitest";
 import {
+  type CatalogProjectionStore,
+  projectCatalogRegistry,
+} from "../catalog/catalogRegistryProjection.js";
+import {
   createSaltRegistryFingerprint,
   getSaltRegistryFingerprint,
+  registerSaltRegistryFingerprintVerifier,
 } from "../registry/fingerprint.js";
+import {
+  bindTokenPolicyStructuralRoleRulePackToInMemoryRegistry,
+  buildTokenPolicyStructuralRoleRulePackBody,
+} from "../tokenPolicyStructuralRoleRules.js";
 import type { RegistryBuildInfo, SaltRegistry } from "../types.js";
 
 const VERIFIED_AT = "2026-07-11T10:00:00.000Z";
@@ -128,21 +137,57 @@ function registry(overrides: Partial<SaltRegistry> = {}): SaltRegistry {
 }
 
 describe("Salt registry semantic fingerprint", () => {
-  it("uses a valid build-time semantic hash without touching collections", () => {
-    const semanticHash = `sha256:${"b".repeat(64)}`;
-    const lazyRegistry = new Proxy(
-      { semantic_hash: semanticHash },
-      {
-        get(target, property, receiver) {
-          if (property !== "semantic_hash") {
-            throw new Error(`Unexpected registry read: ${String(property)}`);
-          }
-          return Reflect.get(target, property, receiver);
-        },
-      },
-    ) as unknown as SaltRegistry;
+  it("promotes a pending verified fingerprint exactly once", () => {
+    const candidate = registry();
+    const fingerprint = `sha256:${"a".repeat(64)}`;
+    let verificationCalls = 0;
+    registerSaltRegistryFingerprintVerifier(candidate, fingerprint, () => {
+      verificationCalls += 1;
+    });
 
-    expect(getSaltRegistryFingerprint(lazyRegistry)).toBe(semanticHash);
+    expect(getSaltRegistryFingerprint(candidate)).toBe(fingerprint);
+    expect(getSaltRegistryFingerprint(candidate)).toBe(fingerprint);
+    expect(verificationCalls).toBe(1);
+  });
+
+  it("does not promote a fingerprint when verification fails", () => {
+    const candidate = registry();
+    const fingerprint = `sha256:${"c".repeat(64)}`;
+    let verificationCalls = 0;
+    registerSaltRegistryFingerprintVerifier(candidate, fingerprint, () => {
+      verificationCalls += 1;
+      throw new Error("fixture verification failure");
+    });
+
+    expect(() => getSaltRegistryFingerprint(candidate)).toThrow(
+      /fixture verification failure/u,
+    );
+    expect(() => getSaltRegistryFingerprint(candidate)).toThrow(
+      /fixture verification failure/u,
+    );
+    expect(verificationCalls).toBe(2);
+  });
+
+  it("rejects re-entrant pending fingerprint verification", () => {
+    const candidate = registry();
+    const fingerprint = `sha256:${"d".repeat(64)}`;
+    registerSaltRegistryFingerprintVerifier(candidate, fingerprint, () => {
+      getSaltRegistryFingerprint(candidate);
+    });
+
+    expect(() => getSaltRegistryFingerprint(candidate)).toThrow(/re-entered/u);
+  });
+
+  it("does not trust semantic_hash metadata on arbitrary registry objects", () => {
+    const semanticHash = `sha256:${"b".repeat(64)}`;
+    const untrustedRegistry = registry({ semantic_hash: semanticHash });
+
+    expect(getSaltRegistryFingerprint(untrustedRegistry)).toBe(
+      createSaltRegistryFingerprint(untrustedRegistry),
+    );
+    expect(getSaltRegistryFingerprint(untrustedRegistry)).not.toBe(
+      semanticHash,
+    );
   });
 
   it("changes when icon or country-symbol content changes", () => {
@@ -203,5 +248,91 @@ describe("Salt registry semantic fingerprint", () => {
     expect(createSaltRegistryFingerprint(first)).toBe(
       createSaltRegistryFingerprint(second),
     );
+  });
+
+  it("does not self-certify a generic catalog projection", () => {
+    const manifestFingerprint = `sha256:${"e".repeat(64)}`;
+    const projected = projectCatalogRegistry({
+      manifest: {
+        catalog_version: "fixture",
+        semantic_digest: manifestFingerprint,
+      },
+      getFamily: () => [],
+      getRecord: () => null,
+      getContentText: () => {
+        throw new Error("Fixture has no content.");
+      },
+      getContentJson: () => {
+        throw new Error("Fixture has no content.");
+      },
+      prefetch: () => undefined,
+    } as unknown as CatalogProjectionStore);
+
+    expect(getSaltRegistryFingerprint(projected)).not.toBe(manifestFingerprint);
+  });
+
+  it("hashes structural-rule semantics without self-referential pack identity", () => {
+    const body = buildTokenPolicyStructuralRoleRulePackBody({
+      structural_role_rules: [
+        {
+          id: "/fixture/docs/token-rules#fixture-pairing",
+          category: "fixture",
+          kind: "container-pairing",
+          source: {
+            route: "/fixture/docs/token-rules",
+            repo_path: "fixture/docs/token-rules.mdx",
+          },
+          evidence_text:
+            "Fixture role source says fixture backgrounds and border colors are paired.",
+          evidence_terms: ["fixture"],
+          token_family: "fixture",
+        },
+      ],
+      generator: {
+        name: "mcp-core fingerprint fixture",
+      },
+    });
+    const baseRegistry = registry();
+    const boundPack = bindTokenPolicyStructuralRoleRulePackToInMemoryRegistry(
+      body,
+      baseRegistry,
+      null,
+    );
+    const registryWithPack = registry({
+      token_policy_structural_role_rule_pack: boundPack,
+    });
+    const fingerprint = createSaltRegistryFingerprint(registryWithPack);
+
+    expect(boundPack.registry.hash).toBe(fingerprint);
+    expect(
+      createSaltRegistryFingerprint(
+        registry({
+          token_policy_structural_role_rule_pack: {
+            ...boundPack,
+            generated_at: "2030-01-01T00:00:00.000Z",
+            registry: {
+              version: "another-container-version",
+              hash: `sha256:${"f".repeat(64)}`,
+              generated_at: "2030-01-01T00:00:00.000Z",
+            },
+          },
+        }),
+      ),
+    ).toBe(fingerprint);
+    expect(
+      createSaltRegistryFingerprint(
+        registry({
+          token_policy_structural_role_rule_pack: {
+            ...boundPack,
+            rules: [
+              {
+                ...boundPack.rules[0],
+                evidence_text: "Changed fixture structural-rule semantics.",
+              },
+            ],
+          },
+        }),
+      ),
+    ).not.toBe(fingerprint);
   });
 });

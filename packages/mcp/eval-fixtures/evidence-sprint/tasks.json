@@ -6,17 +6,17 @@
     {
       "id": "closed_book",
       "label": "Closed-book baseline",
-      "description": "Captured artifact from model memory without Salt docs or MCP contracts."
+      "description": "Captured artifact from model memory without Salt docs."
     },
     {
       "id": "docs_context_dump",
       "label": "Docs/context-dump baseline",
-      "description": "Captured artifact with static Salt context but no MCP implement gate or post-action review contract."
+      "description": "Captured artifact with static Salt context but no live catalog search or submitted-text analysis."
     },
     {
       "id": "mcp_assisted",
       "label": "Seeded MCP-shaped fixture",
-      "description": "Synthetic scorer-regression artifact shaped to exercise source lookup, implement-gate, and review-handoff criteria; not a captured MCP run."
+      "description": "Synthetic scorer-regression artifact shaped to exercise source lookup and code-analysis criteria; not a captured MCP run."
     }
   ],
   "tasks": [
@@ -57,16 +57,13 @@
       },
       "conditions": {
         "closed_book": {
-          "artifact": "artifacts/app-shell-vertical-navigation/closed_book/AppShell.tsx.fixture",
-          "contract_history": "artifacts/app-shell-vertical-navigation/closed_book/contract-history.json"
+          "artifact": "artifacts/app-shell-vertical-navigation/closed_book/AppShell.tsx.fixture"
         },
         "docs_context_dump": {
-          "artifact": "artifacts/app-shell-vertical-navigation/docs_context_dump/AppShell.tsx.fixture",
-          "contract_history": "artifacts/app-shell-vertical-navigation/docs_context_dump/contract-history.json"
+          "artifact": "artifacts/app-shell-vertical-navigation/docs_context_dump/AppShell.tsx.fixture"
         },
         "mcp_assisted": {
-          "artifact": "artifacts/app-shell-vertical-navigation/mcp_assisted/AppShell.tsx.fixture",
-          "contract_history": "artifacts/app-shell-vertical-navigation/mcp_assisted/contract-history.json"
+          "artifact": "artifacts/app-shell-vertical-navigation/mcp_assisted/AppShell.tsx.fixture"
         }
       }
     },
@@ -97,16 +94,13 @@
       },
       "conditions": {
         "closed_book": {
-          "artifact": "artifacts/dashboard-layout/closed_book/Dashboard.tsx.fixture",
-          "contract_history": "artifacts/dashboard-layout/closed_book/contract-history.json"
+          "artifact": "artifacts/dashboard-layout/closed_book/Dashboard.tsx.fixture"
         },
         "docs_context_dump": {
-          "artifact": "artifacts/dashboard-layout/docs_context_dump/Dashboard.tsx.fixture",
-          "contract_history": "artifacts/dashboard-layout/docs_context_dump/contract-history.json"
+          "artifact": "artifacts/dashboard-layout/docs_context_dump/Dashboard.tsx.fixture"
         },
         "mcp_assisted": {
-          "artifact": "artifacts/dashboard-layout/mcp_assisted/Dashboard.tsx.fixture",
-          "contract_history": "artifacts/dashboard-layout/mcp_assisted/contract-history.json"
+          "artifact": "artifacts/dashboard-layout/mcp_assisted/Dashboard.tsx.fixture"
         }
       }
     },
@@ -152,16 +146,13 @@
       },
       "conditions": {
         "closed_book": {
-          "artifact": "artifacts/settings-list-workflow/closed_book/SettingsWorkflow.tsx.fixture",
-          "contract_history": "artifacts/settings-list-workflow/closed_book/contract-history.json"
+          "artifact": "artifacts/settings-list-workflow/closed_book/SettingsWorkflow.tsx.fixture"
         },
         "docs_context_dump": {
-          "artifact": "artifacts/settings-list-workflow/docs_context_dump/SettingsWorkflow.tsx.fixture",
-          "contract_history": "artifacts/settings-list-workflow/docs_context_dump/contract-history.json"
+          "artifact": "artifacts/settings-list-workflow/docs_context_dump/SettingsWorkflow.tsx.fixture"
         },
         "mcp_assisted": {
-          "artifact": "artifacts/settings-list-workflow/mcp_assisted/SettingsWorkflow.tsx.fixture",
-          "contract_history": "artifacts/settings-list-workflow/mcp_assisted/contract-history.json"
+          "artifact": "artifacts/settings-list-workflow/mcp_assisted/SettingsWorkflow.tsx.fixture"
         }
       }
     }

@@ -27,15 +27,23 @@ async function main() {
 
   try {
     console.log(`Using temp smoke root: ${tempRoot}`);
+    let standaloneMcpSpec = options.mcpSpec;
+    let standaloneExpectedVersion = options.expectedVersion ?? null;
+    let standaloneExpectedPackageTreeSha256 = null;
     if (options.published) {
       const identity = await installPublishedPackage(
         installedToolsRoot,
         options,
       );
+      standaloneExpectedPackageTreeSha256 = identity.installedTreeSha256;
       console.log(`Verified registry identity: ${JSON.stringify(identity)}`);
     } else {
       await ensureBuildArtifacts(options.skipBuild);
-      await installLocalPackages(installedToolsRoot);
+      const localInstallation = await installLocalPackages(installedToolsRoot);
+      standaloneMcpSpec = localInstallation.tarballPath;
+      standaloneExpectedVersion = localInstallation.packMetadata.version;
+      standaloneExpectedPackageTreeSha256 =
+        localInstallation.installedTreeSha256;
     }
     await fs.mkdir(existingSaltRepo, { recursive: true });
     await fs.mkdir(nonSaltRepo, { recursive: true });
@@ -43,7 +51,10 @@ async function main() {
       createExistingSaltRepo(existingSaltRepo),
       createNonSaltRepo(nonSaltRepo),
     ]);
-    await verifyInstalledMcpModuleExports(installedToolsRoot);
+    const moduleFingerprint = await verifyInstalledMcpModuleExports(
+      installedToolsRoot,
+      existingSaltRepo,
+    );
     await verifyInstalledMcpTypes(installedToolsRoot);
     if (options.skillsSource) {
       await verifySkills(
@@ -57,10 +68,19 @@ async function main() {
       installedToolsRoot,
       existingSaltRepo,
       nonSaltRepo,
+      moduleFingerprint,
     );
-    if (options.published) {
-      await verifyStandaloneConsumerExample(tempRoot);
-    }
+    const standaloneReceipt = await verifyStandaloneConsumerExample(
+      tempRoot,
+      standaloneMcpSpec,
+      {
+        expectedPackageTreeSha256: standaloneExpectedPackageTreeSha256,
+        expectedVersion: standaloneExpectedVersion,
+      },
+    );
+    console.log(
+      `Verified standalone exact-package replay: ${JSON.stringify(standaloneReceipt)}`,
+    );
 
     console.log("");
     console.log("Consumer smoke test passed.");

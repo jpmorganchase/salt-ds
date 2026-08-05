@@ -1,28 +1,35 @@
 # Salt Troubleshooting
 
-Load this reference only after a context, schema, registry, or complete-source failure.
+Load this reference only after a tool, catalog, project-root, or submitted-text
+failure.
 
 ## Recovery
 
-- Context or policy failure: use `get_salt_project_context` with the disputed root, correct or obtain the explicit root or policy decision, then rerun the original workflow fresh. Diagnostic context is not reusable workflow state.
-- Schema rejection: refresh the live tool surface and originating workflow once. If server-returned action arguments still fail their target schema, report a contract defect and stop; replaying invalid arguments cannot repair it.
-- Tool mapping failure: inspect only the configured Salt server's live tools. Match the stable semantic tool ID to one unique exact bare name or qualified name with the same final semantic segment, refresh once, then stop and report missing, ambiguous, or unidentified-server mappings. Never guess across unrelated or unidentified servers.
-- Registry disagreement: inspect `salt://capabilities/manifest` and, when catalog identity matters, `salt://catalog/manifest`. Use `salt://catalog/entity/{name}` only for optional discovery. Missing source, an explicit version mismatch, or unavailable registry data is a real freshness gap; do not infer staleness from age alone.
-- Complete-source failure: `review_salt_ui` accepts at most 524,288 characters in one file. Never substitute a diff or excerpt. Report larger files and cross-file target contracts as unsupported by v1 rather than claiming deterministic completion.
-- Repeated failure: stop with the exact failing action, schema, root, or evidence gap and state what remains unverified.
+- Project-root failure: verify the caller-authorized root, correct it once, and
+  retry the bounded inspection. Do not treat the root as a sandbox guarantee.
+- Schema rejection: refresh the configured Salt server's live surface, correct
+  caller arguments once, and report a contract defect if valid arguments still
+  fail.
+- Catalog disagreement: read the catalog manifest and the exact entity resource.
+  Missing source, a digest mismatch, or an explicit version mismatch is a
+  freshness failure; age alone is not.
+- Submitted-text failure: submit the intended artifact within the advertised
+  input limit. Never silently replace it with a diff or truncated excerpt.
+- Repeated failure: stop with the exact operation, root, schema, artifact, or
+  evidence gap and state what remains unverified.
 
 ## Public surface
 
 Tools:
 
-- `get_salt_project_context`
-- `get_salt_reference`
-- `review_salt_ui`
-- `create_salt_ui`
-- `migrate_to_salt`
+- `search_salt`
+- `inspect_salt_project`
+- `review_salt_code`
 
 Resources:
 
-- `salt://capabilities/manifest`
-- `salt://catalog/manifest`
-- `salt://catalog/entity/{name}`
+- `salt://catalog/v2/sha256-<digest>/manifest`
+- `salt://catalog/v2/sha256-<digest>/{family}/{id}`
+
+Creation and migration remain host-agent procedures. No private continuation or
+workflow protocol is part of this surface.

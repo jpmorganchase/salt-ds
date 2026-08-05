@@ -20,6 +20,7 @@ const TEXT_EXTENSIONS = new Set([
   ".yaml",
   ".yml",
 ]);
+const IGNORED_SKILL_TREE_PATHS = new Set([".yarn/install-state.gz"]);
 const utf8Decoder = new TextDecoder("utf-8", { fatal: true });
 
 function sha256(bytes) {
@@ -47,8 +48,15 @@ export function normalizeRelativeSkillPath(relativePath) {
 }
 
 export function canonicalizeSkillRecords(inputRecords) {
+  const includedRecords = inputRecords.filter(
+    ({ path: relativePath }) =>
+      !IGNORED_SKILL_TREE_PATHS.has(
+        normalizeRelativeSkillPath(relativePath),
+      ),
+  );
+  assert(includedRecords.length > 0, "Canonical skill tree is empty.");
   const seen = new Set();
-  const records = inputRecords.map(({ path: relativePath, bytes }) => {
+  const records = includedRecords.map(({ path: relativePath, bytes }) => {
     const normalizedPath = normalizeRelativeSkillPath(relativePath);
     assert(
       !seen.has(normalizedPath),

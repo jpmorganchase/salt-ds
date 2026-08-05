@@ -1,10 +1,6 @@
 import { createHash } from "node:crypto";
 import type { SaltGeneratedArtifactRegistry } from "../evidence.js";
 import type { SaltRegistry } from "../types.js";
-import {
-  REGISTRY_ARRAY_ARTIFACTS,
-  REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT,
-} from "./artifacts.js";
 
 const VOLATILE_SEMANTIC_KEYS = new Set([
   "generated_at",
@@ -13,6 +9,37 @@ const VOLATILE_SEMANTIC_KEYS = new Set([
   "newest_file_modified_at",
   "verified_at",
 ]);
+
+const SALT_REGISTRY_SEMANTIC_COLLECTIONS = [
+  "packages",
+  "components",
+  "icons",
+  "country_symbols",
+  "pages",
+  "patterns",
+  "guides",
+  "tokens",
+  "deprecations",
+  "token_policy_structural_role_rule_pack",
+] as const satisfies readonly (keyof SaltRegistry)[];
+
+const verifiedRegistryFingerprints = new WeakMap<SaltRegistry, string>();
+const pendingRegistryFingerprintVerifiers = new WeakMap<
+  SaltRegistry,
+  {
+    fingerprint: string;
+    verify: () => void;
+  }
+>();
+const verifyingRegistryFingerprints = new WeakSet<SaltRegistry>();
+
+function assertValidFingerprint(fingerprint: string): void {
+  if (!/^sha256:[0-9a-f]{64}$/u.test(fingerprint)) {
+    throw new Error(
+      `Cannot register invalid Salt registry fingerprint '${fingerprint}'.`,
+    );
+  }
+}
 
 function normalizeForStableJson(
   value: unknown,
@@ -47,15 +74,21 @@ export function stableRegistryJson(value: unknown): string {
 }
 
 export function createSaltRegistryFingerprint(registry: SaltRegistry): string {
-  const publishedCollections = Object.fromEntries(
-    REGISTRY_ARRAY_ARTIFACTS.map(({ key }) => [key, registry[key]]),
+  const payload = Object.fromEntries(
+    SALT_REGISTRY_SEMANTIC_COLLECTIONS.map((key) => [
+      key,
+      key === "token_policy_structural_role_rule_pack" &&
+      registry.token_policy_structural_role_rule_pack
+        ? {
+            contract: registry.token_policy_structural_role_rule_pack.contract,
+            id: registry.token_policy_structural_role_rule_pack.id,
+            generator:
+              registry.token_policy_structural_role_rule_pack.generator,
+            rules: registry.token_policy_structural_role_rule_pack.rules,
+          }
+        : (registry[key] ?? null),
+    ]),
   );
-  const tokenPolicyKey =
-    REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.key;
-  const payload = {
-    ...publishedCollections,
-    [tokenPolicyKey]: registry[tokenPolicyKey] ?? null,
-  };
   const digest = createHash("sha256")
     .update(
       JSON.stringify(normalizeForStableJson(payload, VOLATILE_SEMANTIC_KEYS)),
@@ -66,10 +99,65 @@ export function createSaltRegistryFingerprint(registry: SaltRegistry): string {
 }
 
 export function getSaltRegistryFingerprint(registry: SaltRegistry): string {
-  return typeof registry.semantic_hash === "string" &&
-    /^sha256:[0-9a-f]{64}$/u.test(registry.semantic_hash)
-    ? registry.semantic_hash
-    : createSaltRegistryFingerprint(registry);
+  const verified = verifiedRegistryFingerprints.get(registry);
+  if (verified) return verified;
+
+  const pending = pendingRegistryFingerprintVerifiers.get(registry);
+  if (!pending) return createSaltRegistryFingerprint(registry);
+  if (verifyingRegistryFingerprints.has(registry)) {
+    throw new Error("Salt registry fingerprint verification re-entered.");
+  }
+
+  verifyingRegistryFingerprints.add(registry);
+  try {
+    pending.verify();
+    pendingRegistryFingerprintVerifiers.delete(registry);
+    verifiedRegistryFingerprints.set(registry, pending.fingerprint);
+    return pending.fingerprint;
+  } finally {
+    verifyingRegistryFingerprints.delete(registry);
+  }
+}
+
+export function registerVerifiedSaltRegistryFingerprint(
+  registry: SaltRegistry,
+  fingerprint: string,
+): void {
+  assertValidFingerprint(fingerprint);
+  if (pendingRegistryFingerprintVerifiers.has(registry)) {
+    throw new Error(
+      "Cannot bypass pending Salt registry fingerprint verification.",
+    );
+  }
+  const verified = verifiedRegistryFingerprints.get(registry);
+  if (verified && verified !== fingerprint) {
+    throw new Error(
+      `Salt registry fingerprint is already registered as '${verified}'.`,
+    );
+  }
+  verifiedRegistryFingerprints.set(registry, fingerprint);
+}
+
+export function registerSaltRegistryFingerprintVerifier(
+  registry: SaltRegistry,
+  fingerprint: string,
+  verify: () => void,
+): void {
+  assertValidFingerprint(fingerprint);
+  if (verifiedRegistryFingerprints.has(registry)) {
+    throw new Error(
+      "Cannot register a verifier for an already verified Salt registry fingerprint.",
+    );
+  }
+  if (pendingRegistryFingerprintVerifiers.has(registry)) {
+    throw new Error(
+      "Salt registry fingerprint verifier is already registered.",
+    );
+  }
+  pendingRegistryFingerprintVerifiers.set(registry, {
+    fingerprint,
+    verify,
+  });
 }
 
 export function toSaltGeneratedArtifactRegistry(
@@ -79,5 +167,15 @@ export function toSaltGeneratedArtifactRegistry(
     version: registry.version,
     hash: getSaltRegistryFingerprint(registry),
     generated_at: registry.generated_at,
+  };
+}
+
+export function toSaltEvidenceRegistryIdentity(registry: SaltRegistry): {
+  registry_version: string;
+  registry_hash: string;
+} {
+  return {
+    registry_version: registry.version,
+    registry_hash: getSaltRegistryFingerprint(registry),
   };
 }

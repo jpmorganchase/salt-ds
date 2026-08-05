@@ -21,6 +21,7 @@ declare module "@salt-ds/date-adapters" {
  * Salt provides a Moment adapter to aid migration to a maintained library.
  *
  * @deprecated since 0.1.0-alpha.1. Moment date library has been deprecated by its maintainers since September 2020; consider migration to a maintained OSS library.
+ * @saltMigration manual
  */
 export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   /**

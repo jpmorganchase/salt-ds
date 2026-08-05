@@ -11,75 +11,61 @@ async function read(relativePath: string): Promise<string> {
   return fs.readFile(path.join(repoRoot, relativePath), "utf8");
 }
 
-function extractMcpSpecs(content: string): string[] {
-  return Array.from(
-    content.matchAll(/@salt-ds\/mcp@[^\s"'`,\]]+/gu),
-    (match) => match[0],
-  );
-}
-
-describe("public AI onboarding contract", () => {
-  it("pins every public setup surface to one exact release version", async () => {
-    const surfaces = await Promise.all([
-      read("site/docs/getting-started/ai.mdx"),
-      read("packages/mcp/README.md"),
-      read("workflow-examples/consumer-repo/mcp.config.example.json"),
-    ]);
-    const specs = surfaces.map((content) => extractMcpSpecs(content));
-    const exactSpec = specs[0]?.[0];
-
-    expect(exactSpec).toMatch(/^@salt-ds\/mcp@\d+\.\d+\.\d+$/u);
-    expect(exactSpec).not.toBe("@salt-ds/mcp@0.0.0");
-    for (const [index, content] of surfaces.entries()) {
-      expect(specs[index]).toContain(exactSpec);
-      expect(content).not.toMatch(/@salt-ds\/mcp@(latest|snapshot\b)/iu);
-      expect(content).not.toMatch(/@salt-ds\/mcp@0\.0\.0(?:\b|-)/u);
-    }
-  });
-
-  it("states the Node prerequisite before the first setup command", async () => {
-    for (const content of await Promise.all([
-      read("site/docs/getting-started/ai.mdx"),
-      read("packages/mcp/README.md"),
-      read("workflow-examples/consumer-repo/README.md"),
-    ])) {
-      const nodePrerequisite = content.search(/Node(?:\.js)? 22 or newer/iu);
-      const setupCommand = content.search(/(?:@salt-ds\/mcp@|corepack yarn)/u);
-
-      expect(nodePrerequisite).toBeGreaterThanOrEqual(0);
-      expect(setupCommand).toBeGreaterThan(nodePrerequisite);
-    }
-  });
-
-  it("deliberately omits a mutable public skill install", async () => {
+describe("public AI onboarding contract during remediation", () => {
+  it("publishes no registry install spec or release-ready claim", async () => {
     const surfaces = await Promise.all([
       read("site/docs/getting-started/ai.mdx"),
       read("packages/mcp/README.md"),
       read("packages/skills/README.md"),
       read("workflow-examples/consumer-repo/README.md"),
+      read("workflow-examples/consumer-repo/mcp.config.example.json"),
     ]);
 
     for (const content of surfaces) {
-      expect(content).toMatch(/skill[\s\S]*(omitted|not part|withheld)/iu);
-      expect(content).toMatch(/immutable/iu);
+      expect(content).not.toMatch(/@salt-ds\/mcp@[^\s"'`,\]]+/u);
       expect(content).not.toMatch(
         /https:\/\/github\.com\/jpmorganchase\/salt-ds\/tree\/(?:main|[\w./-]*branch[\w./-]*)\/packages\/skills/iu,
+      );
+      expect(content).not.toMatch(
+        /\bbeta\b|\bbeta-ready\b|\brelease-ready\b/iu,
       );
     }
   });
 
-  it("explains optional repo policy and canonical-only fallback", async () => {
+  it("keeps the checked-in MCP config local-only", async () => {
+    const config = JSON.parse(
+      await read("workflow-examples/consumer-repo/mcp.config.example.json"),
+    ) as { mcpServers?: { Salt?: { command?: string; args?: string[] } } };
+
+    expect(config.mcpServers?.Salt).toEqual({
+      command: "node",
+      args: ["./node_modules/@salt-ds/mcp/bin/salt-mcp.js"],
+    });
+    expect(JSON.stringify(config)).not.toMatch(/\bnpx\b|@salt-ds\/mcp@/u);
+  });
+
+  it("states the responsibility and trust boundaries consistently", async () => {
     for (const content of await Promise.all([
       read("site/docs/getting-started/ai.mdx"),
       read("packages/mcp/README.md"),
       read("workflow-examples/consumer-repo/README.md"),
+      read("workflow-examples/consumer-repo/AGENTS.md"),
     ])) {
+      expect(content).toMatch(/agent[\s\S]*(owns|owned)/iu);
+      expect(content).toMatch(/read-only/iu);
+      expect(content).toMatch(/authoriz/iu);
       expect(content).toMatch(
-        /\.salt\/team\.json[\s\S]*optional|optional[\s\S]*\.salt\/team\.json/iu,
+        /does not|no MCP (?:response|result)|never infer|not.*proof/iu,
       );
-      expect(content).toMatch(/canonical-only/iu);
-      expect(content).toMatch(/(?:repo|user|host)[/-]owned/iu);
     }
+  });
+
+  it("withholds a mutable public skill install", async () => {
+    const readme = await read("packages/skills/README.md");
+
+    expect(readme).toMatch(/Public installation is withheld/iu);
+    expect(readme).toMatch(/immutable/iu);
+    expect(readme).toMatch(/mutable branch/iu);
   });
 
   it("keeps the consumer example independent of this workspace", async () => {

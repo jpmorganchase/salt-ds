@@ -4,7 +4,6 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { extractGuides } from "../core/build/buildRegistryDocs.js";
 
-const TIMESTAMP = "2026-03-10T00:00:00Z";
 const tempRoots: string[] = [];
 
 // Fixture-only documentation snippets in this file are synthetic source inputs
@@ -21,6 +20,15 @@ async function createTempRepo(structure: Record<string, string>) {
   }
 
   return root;
+}
+
+function componentRoute(name: string, slug: string) {
+  return {
+    name,
+    related_docs: {
+      overview: `/salt/components/${slug}`,
+    },
+  };
 }
 
 afterEach(async () => {
@@ -79,7 +87,10 @@ This page should not become an AI guide.
 `,
     });
 
-    const guides = await extractGuides(repoRoot, TIMESTAMP);
+    const guides = await extractGuides(repoRoot, [
+      componentRoute("Fixture Button", "fixture-button"),
+      componentRoute("Fixture Link", "fixture-link"),
+    ]);
     const developingGuide = guides.find(
       (guide) => guide.name === "Developing with Salt",
     );
@@ -95,7 +106,7 @@ This page should not become an AI guide.
       ]),
       related_docs: {
         overview: "/salt/getting-started/developing",
-        related_components: ["FixtureButton"],
+        related_components: ["Fixture Button"],
         related_packages: expect.arrayContaining([
           "@salt-ds/fixture-core",
           "@salt-ds/fixture-theme",
@@ -112,6 +123,60 @@ This page should not become an AI guide.
     expect(
       guides.find((guide) => guide.name === "Visual polish notes"),
     ).toBeUndefined();
+  });
+
+  it("resolves linked component routes to canonical registry names", async () => {
+    const repoRoot = await createTempRepo({
+      "site/docs/getting-started/developing.mdx": `---
+title: Developing with Salt
+description: Learn how to add optional packages.
+salt_ai_guide: true
+---
+
+Install optional Salt packages.
+
+## Optional packages
+
+Use the [AG Grid theme](../components/ag-grid-theme/usage) when building a data grid.
+See the [Data grid overview](/salt/components/ag-grid-theme) and use the
+[Country symbol](../components/country-symbol) package when displaying flags.
+The [Range date picker](/salt/components/date-picker/range-date-picker/examples)
+supports date ranges.
+`,
+    });
+
+    const guides = await extractGuides(repoRoot, [
+      componentRoute("Data grid", "ag-grid-theme"),
+      componentRoute("Country symbol", "country-symbol"),
+      componentRoute("Range date picker", "date-picker/range-date-picker"),
+    ]);
+
+    expect(guides[0]?.related_docs.related_components).toEqual([
+      "Data grid",
+      "Country symbol",
+      "Range date picker",
+    ]);
+  });
+
+  it("rejects linked component routes that have no canonical registry component", async () => {
+    const repoRoot = await createTempRepo({
+      "site/docs/getting-started/developing.mdx": `---
+title: Developing with Salt
+description: Learn how to add optional packages.
+salt_ai_guide: true
+---
+
+Install optional Salt packages.
+
+## Optional packages
+
+Use the [missing component](../components/missing-component/usage).
+`,
+    });
+
+    await expect(extractGuides(repoRoot, [])).rejects.toThrow(
+      /links unknown component route 'missing-component'/u,
+    );
   });
 
   it("derives guide aliases from file names, titles, and headings", async () => {
@@ -134,7 +199,7 @@ Check whether the wrapper adds behavior or only renames a component.
 `,
     });
 
-    const guides = await extractGuides(repoRoot, TIMESTAMP);
+    const guides = await extractGuides(repoRoot, []);
     const wrapperGuide = guides.find(
       (guide) => guide.name === "Custom wrappers",
     );
@@ -168,7 +233,7 @@ Fixture migration theme guidance comes from this source document.
 `,
     });
 
-    const guides = await extractGuides(repoRoot, TIMESTAMP);
+    const guides = await extractGuides(repoRoot, []);
     const themesGuide = guides.find((guide) => guide.id === "guide.themes");
     const sourceBackedStep = themesGuide?.steps.find(
       (step) => step.title === "Fixture current theme",

@@ -8,40 +8,40 @@
   "required": ["contract", "version"],
   "properties": {
     "$schema": {
-      "type": "string"
+      "$ref": "#/$defs/nonBlankString"
     },
     "contract": {
       "const": "project_conventions_v1"
     },
     "id": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonBlankString"
     },
     "version": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonBlankString"
     },
     "project": {
-      "type": "string"
+      "$ref": "#/$defs/nonBlankString"
     },
     "supported_salt_range": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonBlankString"
     },
     "preferred_components": {
       "type": "array",
+      "maxItems": 100,
       "items": {
         "$ref": "#/$defs/preferredComponent"
       }
     },
     "approved_wrappers": {
       "type": "array",
+      "maxItems": 100,
       "items": {
         "$ref": "#/$defs/approvedWrapper"
       }
     },
     "token_aliases": {
       "type": "array",
+      "maxItems": 100,
       "items": {
         "$ref": "#/$defs/tokenAlias"
       }
@@ -51,49 +51,59 @@
     },
     "token_family_policies": {
       "type": "array",
+      "maxItems": 100,
       "items": {
         "$ref": "#/$defs/tokenFamilyPolicy"
       }
     },
     "pattern_preferences": {
       "type": "array",
+      "maxItems": 100,
       "items": {
         "$ref": "#/$defs/patternPreference"
       }
     },
     "banned_choices": {
       "type": "array",
+      "maxItems": 100,
       "items": {
         "$ref": "#/$defs/bannedChoice"
       }
     },
     "notes": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+      "$ref": "#/$defs/boundedStringArray"
     }
   },
   "$defs": {
+    "nonBlankString": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": ".*\\S.*"
+    },
+    "boundedStringArray": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/nonBlankString"
+      }
+    },
     "preferredComponent": {
       "type": "object",
       "additionalProperties": false,
       "required": ["salt_name", "prefer", "reason"],
       "properties": {
         "salt_name": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "prefer": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "reason": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "docs": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         }
       }
     },
@@ -103,37 +113,28 @@
       "required": ["name", "wraps", "reason"],
       "properties": {
         "name": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "wraps": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "reason": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "import": {
           "$ref": "#/$defs/importReference"
         },
         "use_when": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         },
         "avoid_when": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         },
         "migration_shim": {
           "type": "boolean"
         },
         "docs": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         }
       }
     },
@@ -143,12 +144,10 @@
       "required": ["from", "name"],
       "properties": {
         "from": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/nonBlankString"
         },
         "name": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/nonBlankString"
         }
       }
     },
@@ -158,22 +157,19 @@
       "required": ["intent", "prefer", "reason"],
       "properties": {
         "intent": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "prefer": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "canonical_salt_start": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "reason": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "docs": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         }
       }
     },
@@ -183,19 +179,16 @@
       "required": ["salt_name", "prefer", "reason"],
       "properties": {
         "salt_name": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "prefer": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "reason": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "docs": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         }
       }
     },
@@ -205,12 +198,10 @@
       "required": ["name", "value"],
       "properties": {
         "name": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/nonBlankString"
         },
         "value": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/nonBlankString"
         }
       }
     },
@@ -224,7 +215,7 @@
             "required": ["provider"],
             "properties": {
               "provider": {
-                "type": "string",
+                "$ref": "#/$defs/nonBlankString",
                 "not": {
                   "enum": ["SaltProvider", "SaltProviderNext"]
                 }
@@ -238,7 +229,7 @@
       ],
       "properties": {
         "provider": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "provider_import": {
           "type": "object",
@@ -246,35 +237,28 @@
           "required": ["from", "name"],
           "properties": {
             "from": {
-              "type": "string",
-              "minLength": 1
+              "$ref": "#/$defs/nonBlankString"
             },
             "name": {
-              "type": "string",
-              "minLength": 1
+              "$ref": "#/$defs/nonBlankString"
             }
           }
         },
         "imports": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         },
         "props": {
           "type": "array",
+          "maxItems": 100,
           "items": {
             "$ref": "#/$defs/themeDefaultProp"
           }
         },
         "reason": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "docs": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         }
       }
     },
@@ -284,7 +268,7 @@
       "required": ["family", "mode", "reason"],
       "properties": {
         "family": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "mode": {
           "enum": [
@@ -294,13 +278,10 @@
           ]
         },
         "reason": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "docs": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         }
       }
     },
@@ -310,19 +291,16 @@
       "required": ["name", "reason"],
       "properties": {
         "name": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "reason": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "replacement": {
-          "type": "string"
+          "$ref": "#/$defs/nonBlankString"
         },
         "docs": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/boundedStringArray"
         }
       }
     }

@@ -11,7 +11,9 @@ export interface CheckboxIconProps {
   className?: string;
   disabled?: boolean;
   /**
-   * @deprecated since 1.8.0-rc.2. Use `validationStatus` instead.
+   * @deprecated since 1.8.0-rc.2. Use {@link CheckboxIconProps.validationStatus validationStatus} instead.
+   * @saltValueMap {"from":true,"set":[["validationStatus","error"]]}
+   * @saltValueMap {"from":false,"set":[]}
    */
   error?: boolean;
   indeterminate?: boolean;

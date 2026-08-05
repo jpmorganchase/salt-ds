@@ -1,28 +1,63 @@
-import fs from "node:fs";
 import path from "node:path";
+import * as docgen from "react-docgen-typescript";
+import * as ts from "typescript";
+import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
+import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
+import { toPosixPath } from "../registry/paths.js";
 import type {
   ComponentDocgenInference,
   ComponentProp,
+  ComponentPropSubject,
   ComponentSubComponent,
 } from "../types.js";
 import {
   asString,
   cleanMarkdownText,
-  readFileOrNull,
   toMatchKey,
   toPascalCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import type { PackageValueExportGraph } from "./catalogExportGraph.js";
+import { readCatalogInputFileSyncOrNull } from "./catalogInputInventory.js";
+import {
+  generatorDependencyDirectoryExists,
+  generatorDependencyFileExists,
+  generatorDependencyRealpath,
+  generatorDependencyWorkspacePath,
+  isGeneratorDependencyInventoryActive,
+  isGeneratorDependencyPath,
+  readGeneratorDependencyFileSyncOrNull,
+} from "./generatorDependencyInventory.js";
+import { typescriptScriptKindForFileName } from "./typescriptScriptKind.js";
 
-const DOCGEN_PACKAGE_FILE_MAP: Record<string, string> = {
-  "ag-grid-theme-props.json": "@salt-ds/ag-grid-theme",
-  "core-props.json": "@salt-ds/core",
-  "countries-props.json": "@salt-ds/countries",
-  "embla-carousel-props.json": "@salt-ds/embla-carousel",
-  "icons-props.json": "@salt-ds/icons",
-  "lab-props.json": "@salt-ds/lab",
-  "react-resizable-panel-theme-props.json":
-    "@salt-ds/react-resizable-panels-theme",
+export const DOCGEN_PACKAGES = [
+  { directory: "lab", packageName: "@salt-ds/lab" },
+  { directory: "core", packageName: "@salt-ds/core" },
+  {
+    directory: "date-components",
+    packageName: "@salt-ds/date-components",
+  },
+  { directory: "icons", packageName: "@salt-ds/icons" },
+  { directory: "countries", packageName: "@salt-ds/countries" },
+  {
+    directory: "embla-carousel",
+    packageName: "@salt-ds/embla-carousel",
+  },
+] as const;
+
+const DOCGEN_COMPILER_OPTIONS: ts.CompilerOptions = {
+  jsx: ts.JsxEmit.React,
+  module: ts.ModuleKind.CommonJS,
+  target: ts.ScriptTarget.Latest,
+  esModuleInterop: true,
+  types: [],
+};
+
+const DOCGEN_PARSER_OPTIONS: docgen.ParserOptions = {
+  propFilter: (prop) =>
+    !/@types[\\/]react[\\/]/u.test(prop.parent?.fileName ?? ""),
+  shouldExtractLiteralValuesFromEnum: true,
+  shouldRemoveUndefinedFromOptional: true,
 };
 
 type DocgenTypeValue =
@@ -41,10 +76,17 @@ interface DocgenTypeShape {
 }
 
 interface DocgenPropShape {
+  declarations?: unknown;
   defaultValue?: unknown;
   description?: unknown;
+  parent?: unknown;
   required?: unknown;
   type?: DocgenTypeShape;
+}
+
+interface DocgenPropDeclarationShape {
+  fileName: string;
+  name: string;
 }
 
 interface DocgenComponentShape {
@@ -59,6 +101,177 @@ export interface PropMetadata {
 export interface DocgenSelection {
   candidate: DocgenComponentShape | null;
   inference: ComponentDocgenInference;
+}
+
+export type UnresolvedComponentSubComponent = Omit<
+  ComponentSubComponent,
+  "repo_path"
+>;
+
+function isFirstPartyRepoPath(repoRoot: string, targetPath: string): boolean {
+  const relativePath = path.relative(repoRoot, targetPath);
+  return (
+    relativePath.length > 0 &&
+    !relativePath.startsWith("..") &&
+    !path.isAbsolute(relativePath) &&
+    !relativePath.split(path.sep).includes("node_modules")
+  );
+}
+
+export function createTrackedDocgenCompilerHost(
+  repoRoot: string,
+): ts.CompilerHost {
+  const compilerHost = ts.createCompilerHost(DOCGEN_COMPILER_OPTIONS);
+  const originalReadFile = compilerHost.readFile.bind(compilerHost);
+  const originalFileExists = compilerHost.fileExists.bind(compilerHost);
+  const originalDirectoryExists =
+    compilerHost.directoryExists?.bind(compilerHost);
+  const originalRealpath = compilerHost.realpath?.bind(compilerHost);
+
+  const firstPartyPath = (targetPath: string): string | null => {
+    const resolvedPath = path.resolve(targetPath);
+    if (isGeneratorDependencyInventoryActive()) {
+      const workspacePath = generatorDependencyWorkspacePath(resolvedPath);
+      if (workspacePath) return workspacePath;
+      if (isGeneratorDependencyPath(resolvedPath)) return null;
+    }
+    return isFirstPartyRepoPath(repoRoot, resolvedPath) ? resolvedPath : null;
+  };
+
+  compilerHost.readFile = (fileName) => {
+    const trackedPath = firstPartyPath(fileName);
+    if (!trackedPath) {
+      return isGeneratorDependencyInventoryActive()
+        ? (readGeneratorDependencyFileSyncOrNull(fileName) ?? undefined)
+        : originalReadFile(fileName);
+    }
+    return readCatalogInputFileSyncOrNull(trackedPath, "utf8") ?? undefined;
+  };
+  compilerHost.fileExists = (fileName) => {
+    const trackedPath = firstPartyPath(fileName);
+    if (!trackedPath) {
+      return isGeneratorDependencyInventoryActive()
+        ? generatorDependencyFileExists(fileName)
+        : originalFileExists(fileName);
+    }
+    return readCatalogInputFileSyncOrNull(trackedPath, "utf8") !== null;
+  };
+  compilerHost.directoryExists = (directoryName) => {
+    const trackedPath = firstPartyPath(directoryName);
+    if (trackedPath) {
+      // Directory existence does not affect resolution independently of the
+      // tracked candidate files. Returning true forces resolution through
+      // fileExists/readFile, where declared inputs are verified fail-closed.
+      return true;
+    }
+    return isGeneratorDependencyInventoryActive()
+      ? generatorDependencyDirectoryExists(directoryName)
+      : (originalDirectoryExists?.(directoryName) ?? false);
+  };
+  compilerHost.realpath = (targetPath) => {
+    const trackedPath = firstPartyPath(targetPath);
+    if (trackedPath) return trackedPath;
+    if (isGeneratorDependencyInventoryActive()) {
+      const dependencyRealpath = generatorDependencyRealpath(targetPath);
+      if (!dependencyRealpath) {
+        throw new Error(
+          `TypeScript attempted to resolve an un-inventoried dependency path: ${targetPath}.`,
+        );
+      }
+      return dependencyRealpath;
+    }
+    return originalRealpath?.(targetPath) ?? targetPath;
+  };
+  compilerHost.getDirectories = (directoryName) => {
+    if (isGeneratorDependencyInventoryActive()) {
+      void directoryName;
+      return [];
+    }
+    return ts.sys.getDirectories(directoryName);
+  };
+  compilerHost.readDirectory = (
+    rootDir,
+    extensions,
+    excludes,
+    includes,
+    depth,
+  ) => {
+    if (isGeneratorDependencyInventoryActive()) {
+      void rootDir;
+      void extensions;
+      void excludes;
+      void includes;
+      void depth;
+      return [];
+    }
+    return ts.sys.readDirectory(rootDir, extensions, excludes, includes, depth);
+  };
+  compilerHost.getSourceFile = (
+    fileName,
+    languageVersionOrOptions,
+    onError,
+  ) => {
+    try {
+      const source = compilerHost.readFile(fileName);
+      return source === undefined
+        ? undefined
+        : ts.createSourceFile(
+            fileName,
+            source,
+            languageVersionOrOptions,
+            true,
+            typescriptScriptKindForFileName(fileName),
+          );
+    } catch (error) {
+      onError?.(error instanceof Error ? error.message : String(error));
+      throw error;
+    }
+  };
+
+  return compilerHost;
+}
+
+function createTrackedDocgenProgram(
+  repoRoot: string,
+  entryPath: string,
+): ts.Program {
+  return ts.createProgram(
+    [entryPath],
+    DOCGEN_COMPILER_OPTIONS,
+    createTrackedDocgenCompilerHost(repoRoot),
+  );
+}
+
+function publicValueExportNames(
+  program: ts.Program,
+  entryPath: string,
+): ReadonlySet<string> {
+  const sourceFile = program.getSourceFile(entryPath);
+  if (!sourceFile) {
+    throw new Error(`Docgen entrypoint was not loaded: ${entryPath}.`);
+  }
+  const checker = program.getTypeChecker();
+  const moduleSymbol = checker.getSymbolAtLocation(sourceFile);
+  if (!moduleSymbol) {
+    throw new Error(`Docgen entrypoint has no module symbol: ${entryPath}.`);
+  }
+
+  const names = new Set<string>();
+  for (const exportedSymbol of checker.getExportsOfModule(moduleSymbol)) {
+    let targetSymbol = exportedSymbol;
+    if ((exportedSymbol.flags & ts.SymbolFlags.Alias) !== 0) {
+      targetSymbol = checker.getAliasedSymbol(exportedSymbol);
+    }
+    if (
+      ((exportedSymbol.flags | targetSymbol.flags) & ts.SymbolFlags.Value) ===
+      0
+    ) {
+      continue;
+    }
+    names.add(exportedSymbol.getName());
+    names.add(targetSymbol.getName());
+  }
+  return names;
 }
 
 function parseDocgenDefaultValue(value: unknown): string | null {
@@ -251,40 +464,266 @@ export function toComponentProps(docgenProps: unknown): ComponentProp[] {
       return parsedProp;
     })
     .filter((prop) => prop.name.trim().length > 0)
-    .sort((left, right) => left.name.localeCompare(right.name));
+    .sort((left, right) => compareOrdinalStrings(left.name, right.name));
+}
+
+function docgenPropDeclaration(
+  value: unknown,
+): DocgenPropDeclarationShape | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const record = value as Record<string, unknown>;
+  const fileName = asString(record.fileName);
+  const name = asString(record.name);
+  return fileName && name ? { fileName, name } : null;
+}
+
+function docgenDeclarationRepoPath(
+  repoRoot: string,
+  fileName: string,
+): string | null {
+  const absoluteRepoRoot = path.resolve(repoRoot);
+  const normalizedFileName = toPosixPath(fileName);
+  const repoDirectoryPrefix = `${path.basename(absoluteRepoRoot)}/`;
+  const absoluteFileName = path.isAbsolute(fileName)
+    ? path.resolve(fileName)
+    : normalizedFileName.startsWith(repoDirectoryPrefix)
+      ? path.resolve(path.dirname(absoluteRepoRoot), fileName)
+      : path.resolve(absoluteRepoRoot, fileName);
+  const repoPath = toPosixPath(
+    path.relative(absoluteRepoRoot, absoluteFileName),
+  );
+  return isPortableRepositoryPath(repoPath) ? repoPath : null;
+}
+
+function staticTypePropertyName(node: ts.PropertyName): string | null {
+  if (ts.isIdentifier(node) || ts.isStringLiteral(node)) return node.text;
+  if (ts.isNumericLiteral(node)) return node.text;
+  return null;
+}
+
+const typeLiteralOwnerDeclarationCache = new Map<
+  string,
+  ReadonlyMap<string, readonly DocgenPropDeclarationShape[]>
+>();
+
+function typeLiteralPublicOwnerDeclarations(
+  repoRoot: string,
+  repoPath: string,
+  propName: string,
+): DocgenPropDeclarationShape[] {
+  const absolutePath = path.join(repoRoot, ...repoPath.split("/"));
+  const cached = typeLiteralOwnerDeclarationCache.get(absolutePath);
+  if (cached) return [...(cached.get(propName) ?? [])];
+  const sourceText = readCatalogInputFileSyncOrNull(absolutePath, "utf8");
+  if (sourceText === null) {
+    typeLiteralOwnerDeclarationCache.set(absolutePath, new Map());
+    return [];
+  }
+  const sourceFile = ts.createSourceFile(
+    absolutePath,
+    sourceText,
+    ts.ScriptTarget.Latest,
+    true,
+    typescriptScriptKindForFileName(absolutePath),
+  );
+  const ownerNamesByProperty = new Map<string, Set<string>>();
+  const visit = (node: ts.Node): void => {
+    const propertyName = ts.isPropertySignature(node)
+      ? staticTypePropertyName(node.name)
+      : null;
+    if (
+      ts.isPropertySignature(node) &&
+      ts.isTypeLiteralNode(node.parent) &&
+      propertyName !== null
+    ) {
+      for (
+        let owner: ts.Node | undefined = node.parent.parent;
+        owner;
+        owner = owner.parent
+      ) {
+        if (
+          (ts.isTypeAliasDeclaration(owner) ||
+            ts.isInterfaceDeclaration(owner) ||
+            ts.isClassDeclaration(owner)) &&
+          owner.name
+        ) {
+          const owners = ownerNamesByProperty.get(propertyName) ?? new Set();
+          owners.add(owner.name.text);
+          ownerNamesByProperty.set(propertyName, owners);
+          break;
+        }
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+  const index = new Map(
+    [...ownerNamesByProperty].map(([property, ownerNames]) => [
+      property,
+      [...ownerNames]
+        .sort(compareOrdinalStrings)
+        .map((name) => ({ fileName: absolutePath, name })),
+    ]),
+  );
+  typeLiteralOwnerDeclarationCache.set(absolutePath, index);
+  return [...(index.get(propName) ?? [])];
+}
+
+function sameExportOrigin(
+  origin: { repoPath: string; declarationName: string | null },
+  repoPath: string,
+  declarationName: string,
+): boolean {
+  return (
+    origin.repoPath === repoPath && origin.declarationName === declarationName
+  );
+}
+
+function compareApiSymbolIdentities(
+  left: ComponentPropSubject,
+  right: ComponentPropSubject,
+): number {
+  return (
+    compareOrdinalStrings(left.package, right.package) ||
+    compareOrdinalStrings(left.entrypoint, right.entrypoint) ||
+    compareOrdinalStrings(left.export_name, right.export_name) ||
+    compareOrdinalStrings(left.symbol_space, right.symbol_space) ||
+    compareOrdinalStrings(
+      left.member_path[0]?.name ?? "",
+      right.member_path[0]?.name ?? "",
+    )
+  );
+}
+
+export function toComponentPropSubjects(
+  docgenProps: unknown,
+  repoRoot: string,
+  graph: PackageValueExportGraph,
+  publicEntrypoint: string,
+): ComponentPropSubject[] {
+  if (!docgenProps || typeof docgenProps !== "object") return [];
+  const subjects = new Map<string, ComponentPropSubject>();
+  const publicTypeOriginRepoPaths = new Set(
+    [...graph.typeExportOrigins.values()].flatMap((origins) =>
+      origins.map((origin) => origin.repoPath),
+    ),
+  );
+
+  for (const [propName, rawProp] of Object.entries(
+    docgenProps as Record<string, unknown>,
+  )) {
+    if (!rawProp || typeof rawProp !== "object" || Array.isArray(rawProp)) {
+      continue;
+    }
+    const prop = rawProp as DocgenPropShape;
+    const rawDeclarations = [
+      ...(Array.isArray(prop.declarations) ? prop.declarations : []),
+      prop.parent,
+    ]
+      .map(docgenPropDeclaration)
+      .filter(
+        (declaration): declaration is DocgenPropDeclarationShape =>
+          declaration !== null,
+      );
+    const declarations = rawDeclarations.flatMap((declaration) => {
+      if (declaration.name !== "TypeLiteral") return [declaration];
+      const repoPath = docgenDeclarationRepoPath(
+        repoRoot,
+        declaration.fileName,
+      );
+      return repoPath && publicTypeOriginRepoPaths.has(repoPath)
+        ? typeLiteralPublicOwnerDeclarations(repoRoot, repoPath, propName)
+        : [];
+    });
+    const publicOriginKeys = new Set<string>();
+    for (const declaration of declarations) {
+      const repoPath = docgenDeclarationRepoPath(
+        repoRoot,
+        declaration.fileName,
+      );
+      if (!repoPath) continue;
+      for (const typeOrigins of graph.typeExportOrigins.values()) {
+        if (
+          typeOrigins.some((origin) =>
+            sameExportOrigin(origin, repoPath, declaration.name),
+          )
+        ) {
+          publicOriginKeys.add(`${repoPath}\0${declaration.name}`);
+        }
+      }
+    }
+    if (
+      rawDeclarations.some(
+        (declaration) => declaration.name === "TypeLiteral",
+      ) &&
+      publicOriginKeys.size !== 1
+    ) {
+      continue;
+    }
+
+    for (const declaration of declarations) {
+      const repoPath = docgenDeclarationRepoPath(
+        repoRoot,
+        declaration.fileName,
+      );
+      if (!repoPath) continue;
+      for (const [exportName, typeOrigins] of graph.typeExportOrigins) {
+        if (
+          !typeOrigins.some((origin) =>
+            sameExportOrigin(origin, repoPath, declaration.name),
+          )
+        ) {
+          continue;
+        }
+        const hasMatchingValueOrigin = (
+          graph.valueExportOrigins.get(exportName) ?? []
+        ).some((origin) =>
+          sameExportOrigin(origin, repoPath, declaration.name),
+        );
+        const subject: ComponentPropSubject = {
+          package: graph.packageName,
+          entrypoint: publicEntrypoint,
+          export_name: exportName,
+          symbol_space: hasMatchingValueOrigin ? "type_and_value" : "type",
+          member_path: [{ kind: "prop", name: propName }],
+        };
+        subjects.set(JSON.stringify(subject), subject);
+      }
+    }
+  }
+
+  return [...subjects.values()].sort(compareApiSymbolIdentities);
 }
 
 export async function loadPropMetadata(
   repoRoot: string,
 ): Promise<PropMetadata> {
   const byPackage = new Map<string, Map<string, DocgenComponentShape[]>>();
-  const propsDir = path.join(repoRoot, "site/src/props");
+  const parser = docgen.withCompilerOptions(
+    DOCGEN_COMPILER_OPTIONS,
+    DOCGEN_PARSER_OPTIONS,
+  );
 
-  for (const [fileName, packageName] of Object.entries(
-    DOCGEN_PACKAGE_FILE_MAP,
-  )) {
-    const filePath = path.join(propsDir, fileName);
-    const raw = await readFileOrNull(filePath);
-    if (!raw) {
-      continue;
+  for (const { directory, packageName } of DOCGEN_PACKAGES) {
+    const entryPath = path.join(
+      repoRoot,
+      "packages",
+      directory,
+      "src",
+      "index.ts",
+    );
+    const program = createTrackedDocgenProgram(repoRoot, entryPath);
+    const valueExportNames = publicValueExportNames(program, entryPath);
+    const parsed = parser
+      .parseWithProgramProvider(entryPath, () => program)
+      .filter((entry) => valueExportNames.has(entry.displayName));
+    if (parsed.length === 0) {
+      throw new Error(
+        `Docgen produced no component metadata for ${packageName} (${entryPath}).`,
+      );
     }
-
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(raw);
-    } catch {
-      continue;
-    }
-
-    if (!Array.isArray(parsed)) {
-      continue;
-    }
-
     const packageEntries = byPackage.get(packageName) ?? new Map();
     for (const entry of parsed) {
-      if (!entry || typeof entry !== "object") {
-        continue;
-      }
       const docgen = entry as DocgenComponentShape;
       const displayName = asString(docgen.displayName);
       if (!displayName || displayName.startsWith("use")) {
@@ -309,7 +748,8 @@ export function selectDocgenComponent(
   componentName: string,
   aliases: string[],
   routeSuffix: string,
-  sourceRepoPath?: string | null,
+  sourceRepoPath: string | null,
+  declaredPrimaryExport: string | null,
 ): DocgenSelection {
   const packageEntries = propMetadata.byPackage.get(packageName);
   if (!packageEntries) {
@@ -338,6 +778,9 @@ export function selectDocgenComponent(
   }
 
   const candidateNames = uniqueStrings([
+    ...(typeof declaredPrimaryExport === "string"
+      ? [declaredPrimaryExport]
+      : []),
     componentName,
     ...aliases,
     toPascalCase(componentName),
@@ -356,13 +799,32 @@ export function selectDocgenComponent(
     }
   }
 
-  const candidates = [...candidateSet];
+  const candidates =
+    typeof declaredPrimaryExport === "string"
+      ? [...(packageEntries.get(toMatchKey(declaredPrimaryExport)) ?? [])]
+      : [...candidateSet];
   if (candidates.length === 0) {
     return {
       candidate: null,
       inference: {
         candidate_count: 0,
         candidate_display_names: [],
+        selected_display_name: null,
+        selected_score: null,
+      },
+    };
+  }
+
+  if (declaredPrimaryExport === null) {
+    return {
+      candidate: null,
+      inference: {
+        candidate_count: candidates.length,
+        candidate_display_names: uniqueStrings(
+          candidates
+            .map((candidate) => asString(candidate.displayName))
+            .filter((value): value is string => Boolean(value)),
+        ).sort(compareOrdinalStrings),
         selected_display_name: null,
         selected_score: null,
       },
@@ -411,6 +873,14 @@ export function selectDocgenComponent(
     .sort((left, right) => right.score - left.score);
 
   const selected = scored[0];
+  const strongestCandidates = selected
+    ? scored.filter((candidate) => candidate.score === selected.score)
+    : [];
+  if (strongestCandidates.length > 1) {
+    throw new Error(
+      `Declared primary export '${declaredPrimaryExport}' resolves to ${strongestCandidates.length} equally ranked docgen candidates in '${packageName}'.`,
+    );
+  }
 
   return {
     candidate: selected?.candidate ?? null,
@@ -420,7 +890,7 @@ export function selectDocgenComponent(
         candidates
           .map((candidate) => asString(candidate.displayName))
           .filter((value): value is string => Boolean(value)),
-      ).sort((left, right) => left.localeCompare(right)),
+      ).sort(compareOrdinalStrings),
       selected_display_name: asString(selected?.candidate.displayName) ?? null,
       selected_score: selected?.score ?? null,
     },
@@ -437,7 +907,7 @@ export function selectSubComponents(
   propMetadata: PropMetadata,
   packageName: string,
   rootDisplayName: string,
-): ComponentSubComponent[] {
+): UnresolvedComponentSubComponent[] {
   const packageEntries = propMetadata.byPackage.get(packageName);
   if (!packageEntries) {
     return [];
@@ -466,7 +936,7 @@ export function selectSubComponents(
   // renderable sub-component.
   const NON_COMPONENT_SUFFIX_PATTERN = /^(?:SizeValues|Values|Constants)$/;
 
-  const subComponents: ComponentSubComponent[] = [];
+  const subComponents: UnresolvedComponentSubComponent[] = [];
 
   for (const candidates of packageEntries.values()) {
     for (const candidate of candidates) {
@@ -504,7 +974,7 @@ export function selectSubComponents(
   }
 
   return subComponents.sort((left, right) =>
-    left.export_name.localeCompare(right.export_name),
+    compareOrdinalStrings(left.export_name, right.export_name),
   );
 }
 
@@ -520,27 +990,16 @@ export function selectSubComponentsBySourceExports(
   rootDisplayName: string,
   sourceRepoPath: string | null,
   repoRoot: string,
-): ComponentSubComponent[] {
+): UnresolvedComponentSubComponent[] {
   if (!sourceRepoPath || !repoRoot) {
     return [];
   }
 
   const sourceDir = path.resolve(repoRoot, sourceRepoPath);
-  const indexPath = path.join(sourceDir, "index.ts");
-  let indexContent: string;
-  try {
-    indexContent = fs.readFileSync(indexPath, "utf-8");
-  } catch {
-    // Try index.tsx as fallback
-    try {
-      indexContent = fs.readFileSync(
-        path.join(sourceDir, "index.tsx"),
-        "utf-8",
-      );
-    } catch {
-      return [];
-    }
-  }
+  const indexContent =
+    readCatalogInputFileSyncOrNull(path.join(sourceDir, "index.ts"), "utf-8") ??
+    readCatalogInputFileSyncOrNull(path.join(sourceDir, "index.tsx"), "utf-8");
+  if (indexContent === null) return [];
 
   // Extract exported component names from the index file.
   // Matches: export { Foo } from, export { Foo, Bar } from, export type { ... } from
@@ -583,7 +1042,7 @@ export function selectSubComponentsBySourceExports(
     return [];
   }
 
-  const subComponents: ComponentSubComponent[] = [];
+  const subComponents: UnresolvedComponentSubComponent[] = [];
   for (const candidates of packageEntries.values()) {
     for (const candidate of candidates) {
       const displayName = asString(candidate.displayName);
@@ -601,6 +1060,6 @@ export function selectSubComponentsBySourceExports(
   }
 
   return subComponents.sort((left, right) =>
-    left.export_name.localeCompare(right.export_name),
+    compareOrdinalStrings(left.export_name, right.export_name),
   );
 }

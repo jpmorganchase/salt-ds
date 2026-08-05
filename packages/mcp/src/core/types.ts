@@ -1,4 +1,4 @@
-import type { SaltEvidenceRef } from "./evidence.js";
+import type { SaltTokenPolicyEvidenceRef } from "./evidence.js";
 import type { SaltTokenPolicyStructuralRoleRulePack } from "./tokenPolicyStructuralRoleRules.js";
 
 export type SaltStatus = "stable" | "beta" | "lab" | "deprecated";
@@ -61,17 +61,28 @@ export interface ComponentProp {
   deprecation_note?: string | null;
 }
 
+export interface ComponentPropSubject {
+  package: string;
+  entrypoint: string;
+  export_name: string;
+  symbol_space: "type" | "type_and_value";
+  member_path: [{ kind: "prop"; name: string }];
+}
+
 export interface ComponentSubComponent {
   name: string;
   export_name: string;
   props: ComponentProp[];
+  /** Compiler-resolved implementation origin for generated records. */
+  repo_path: string;
 }
 
-export interface ComponentCanonicalExampleExport {
+export type ComponentCanonicalExampleExport = {
   export_name: string;
   example_id: string;
-  source_url: string;
-}
+  /** Compiler-resolved implementation origin for generated catalog records. */
+  export_repo_path: string;
+} & RegistrySourceLocator;
 
 export interface ComponentComposition {
   required_children?: string[];
@@ -84,6 +95,26 @@ export interface AccessibilityRule {
   severity: "info" | "warning" | "error";
   rule: string;
 }
+
+export type RegistrySourceLocator =
+  | {
+      source_url: string;
+      source_path: null;
+    }
+  | {
+      source_url: null;
+      source_path: string;
+    };
+
+export type AccessibilityImplementationSignal = {
+  kind:
+    | "aria_attribute"
+    | "aria_role"
+    | "aria_announcement"
+    | "semantic_element";
+  values: string[];
+  source_kind: "example" | "source";
+} & RegistrySourceLocator;
 
 export interface ComponentDocgenInference {
   candidate_count: number;
@@ -143,18 +174,17 @@ export interface ComponentImplementationRequirements {
   required_imports: ComponentImplementationImport[];
 }
 
-export interface ExampleRecord {
+export type ExampleRecord = {
   id: string;
   title: string;
   description: string;
   intent: string[];
   complexity: "basic" | "intermediate" | "advanced";
   code: string;
-  source_url: string | null;
   package: string | null;
   target_type: "component" | "pattern" | "foundation";
   target_name: string;
-}
+} & RegistrySourceLocator;
 
 export interface ComponentRecord {
   id: string;
@@ -171,8 +201,16 @@ export interface ComponentRecord {
   tags: string[];
   when_to_use: string[];
   when_not_to_use: string[];
+  /** Canonical component-usage content payload backing the usage arrays. */
+  usage_content_ref?: string;
   alternatives: ComponentAlternative[];
   props: ComponentProp[];
+  /**
+   * Exact public API identities proved by the selected compiler/docgen prop
+   * declarations. Review rules use these identities instead of inferring a
+   * props owner from component or type names.
+   */
+  prop_subjects?: ComponentPropSubject[];
   sub_components?: ComponentSubComponent[];
   /**
    * Value exports whose ownership is proved by a source-backed canonical
@@ -188,6 +226,7 @@ export interface ComponentRecord {
   accessibility: {
     summary: string[];
     rules: AccessibilityRule[];
+    implementation_signals?: AccessibilityImplementationSignal[];
   };
   patterns: string[];
   examples: ExampleRecord[];
@@ -200,13 +239,19 @@ export interface ComponentRecord {
   };
   semantics?: UsageSemanticsRecord;
   retrieval_signals?: RetrievalSignalsRecord;
+  /**
+   * When `export_name` is present, `repo_path` is the exact module file proved
+   * by the package export graph. Without an export name, `repo_path` is only
+   * the authored component provenance boundary and cannot establish a
+   * top-level public export identity.
+   */
   source: {
     repo_path: string | null;
     export_name: string | null;
   };
   inference?: ComponentInference;
   deprecations: string[];
-  last_verified_at: string;
+  last_verified_at: string | null;
 }
 
 export interface IconRecord {
@@ -231,11 +276,11 @@ export interface IconRecord {
     foundation: string | null;
   };
   source: {
-    repo_path: string | null;
-    export_name: string | null;
+    repo_path: string;
+    export_name: string;
   };
   deprecations: string[];
-  last_verified_at: string;
+  last_verified_at: string | null;
 }
 
 export interface IconLiteRecord {
@@ -264,11 +309,11 @@ export interface CountrySymbolRecord {
   variants: {
     circle: {
       export_name: string;
-      repo_path: string | null;
+      repo_path: string;
     };
     sharp: {
       export_name: string;
-      repo_path: string | null;
+      repo_path: string;
     };
   };
   related_docs: {
@@ -279,7 +324,7 @@ export interface CountrySymbolRecord {
     foundation: string | null;
   };
   deprecations: string[];
-  last_verified_at: string;
+  last_verified_at: string | null;
 }
 
 export interface PatternRecord {
@@ -304,16 +349,7 @@ export interface PatternRecord {
       field_path: string;
       source_url: string;
     }>;
-    implementation_signals?: Array<{
-      kind:
-        | "aria_attribute"
-        | "aria_role"
-        | "aria_announcement"
-        | "semantic_element";
-      values: string[];
-      source_kind: "example" | "source";
-      source_url: string;
-    }>;
+    implementation_signals?: AccessibilityImplementationSignal[];
   };
   resources: Array<{
     label: string;
@@ -321,71 +357,12 @@ export interface PatternRecord {
     internal: boolean;
   }>;
   examples: ExampleRecord[];
-  starter_scaffold?: {
-    fidelity?: "canonical" | "hybrid" | "draft";
-    source_urls?: string[];
-    example_source_urls?: string[];
-    semantics: {
-      regions: string[];
-      required_regions?: string[];
-      optional_regions?: string[];
-      build_around: string[];
-      preserve_constraints: string[];
-    };
-    template?: {
-      kind: "fallback-template";
-      imports: Array<{
-        name: string;
-        package: string;
-      }>;
-      jsx_lines: string[];
-      notes?: string[];
-    };
-  };
-  /**
-   * Machine-readable description of how a pattern is assembled from its
-   * constituent components so `create_salt_ui`, `review_salt_ui`, and any
-   * agent surface can branch on it without re-reading the pattern docs.
-   *
-   * - `components`: every component the pattern composes, classified as
-   *   `required` (appears in a canonical pattern story) or `optional`
-   *   (declared in `composed_of` but not in any canonical example). The
-   *   `role` mirrors the `composed_of` role string.
-   * - `regions` / `required_regions` / `optional_regions`: the spatial
-   *   regions extracted from the pattern docs anatomy and dashboard
-   *   regions sections. Mirrors the `starter_scaffold.semantics`
-   *   region fields so consumers only have to read one place.
-   * - `build_around`: anchor concepts the agent should build the JSX
-   *   around (e.g. the dashboard header for an analytical dashboard).
-   * - `preserve_constraints`: normative statements lifted from the
-   *   pattern docs that must not be relaxed by an automated edit.
-   *
-   * The field is optional only on legacy partial extractions; the build
-   * extractor (`extractPatterns`) always populates it for pattern docs
-   * that resolve to at least one composed component or one region.
-   */
-  composition_contract?: PatternCompositionContract;
   related_docs: {
     overview: string | null;
   };
   semantics?: UsageSemanticsRecord;
   retrieval_signals?: RetrievalSignalsRecord;
-  last_verified_at: string;
-}
-
-export interface PatternCompositionComponent {
-  component: string;
-  role: string | null;
-  requirement: "required" | "optional";
-}
-
-export interface PatternCompositionContract {
-  components: PatternCompositionComponent[];
-  regions: string[];
-  required_regions: string[];
-  optional_regions: string[];
-  build_around: string[];
-  preserve_constraints: string[];
+  last_verified_at: string | null;
 }
 
 export interface GuideSnippet {
@@ -413,7 +390,7 @@ export interface GuideRecord {
     related_components: string[];
     related_packages: string[];
   };
-  last_verified_at: string;
+  last_verified_at: string | null;
 }
 
 export interface PageRecord {
@@ -425,14 +402,80 @@ export interface PageRecord {
   keywords: string[];
   content: string[];
   section_headings: string[];
-  last_verified_at: string;
+  source_path: string;
+  last_verified_at: string | null;
+}
+
+export interface TokenDeclarationSourceRange {
+  start_offset: number;
+  end_offset: number;
+  start_line: number;
+  start_column: number;
+  end_line: number;
+  end_column: number;
+}
+
+export interface TokenDeclarationDimension {
+  name: string;
+  value: string;
+  selector: string;
+  established_by: "selector" | "source_path" | "import_entrypoint";
+}
+
+export interface TokenDeclarationSelectorConstraint {
+  name: string;
+  operator: string | null;
+  value: string | null;
+  insensitive: boolean;
+}
+
+export interface TokenDeclarationSelectorVariant {
+  selector: string;
+  dimensions: TokenDeclarationDimension[];
+  constraints: TokenDeclarationSelectorConstraint[];
+}
+
+export interface TokenDeclarationAtRule {
+  name: string;
+  params: string;
+}
+
+export interface TokenDeclarationSourceContext {
+  entrypoint: string;
+  theme: "salt" | "next";
+  import_chain: string[];
+  condition: string | null;
+}
+
+export interface TokenDeclarationProjection {
+  id: string;
+  value: string;
+  raw_value?: string | null;
+  important?: boolean;
+  raw_selector: string | null;
+  source_context: string[];
+  at_rules?: TokenDeclarationAtRule[];
+  selector_variants?: TokenDeclarationSelectorVariant[];
+  source_contexts?: TokenDeclarationSourceContext[];
+  source_range: TokenDeclarationSourceRange;
+  source_path: string;
+  dimensions: TokenDeclarationDimension[];
+  deprecated: boolean;
+  replacement: string | null;
 }
 
 export interface TokenRecord {
   name: string;
   category: string;
   type: string;
-  value: string;
+  /**
+   * Present only when canonical source data explicitly identifies a default
+   * declaration. Contextual values always live in declarations; equality
+   * across declarations is not evidence of a default.
+   */
+  value: string | null;
+  default_declaration_id?: string | null;
+  declarations?: TokenDeclarationProjection[];
   semantic_intent: string | null;
   themes: string[];
   densities: string[];
@@ -452,37 +495,92 @@ export interface TokenRecord {
       role: string;
       level?: string | null;
     } | null;
-    evidence_refs?: SaltEvidenceRef[];
+    evidence_refs?: SaltTokenPolicyEvidenceRef[];
   } | null;
   policy_gap?: {
     reason: string;
     missing: string[];
-    evidence_refs: SaltEvidenceRef[];
+    evidence_refs: SaltTokenPolicyEvidenceRef[];
   } | null;
+  /** True only when every declaration is deprecated. */
   deprecated: boolean;
-  last_verified_at: string;
+  last_verified_at: string | null;
+}
+
+export interface ApiSymbolIdentity {
+  package: string;
+  /** Public package export key, for example "." or "./moment". */
+  entrypoint: string;
+  export_name: string;
+  symbol_space: "value" | "type" | "type_and_value";
+  /** Phase 1 supports either a top-level export or one immediate public member. */
+  member_path: Array<{
+    kind: "prop" | "method" | "static_method";
+    name: string;
+  }>;
+}
+
+export type ApiLiteral = string | number | boolean | null;
+
+export interface DeprecationValueMapCase {
+  from: ApiLiteral;
+  set: Array<{
+    target: ApiSymbolIdentity;
+    value: ApiLiteral;
+  }>;
+}
+
+export interface DeprecationValueMap {
+  cases: DeprecationValueMapCase[];
+  /**
+   * Dynamic expressions and values not represented by a finite authored case
+   * always require human review.
+   */
+  fallback: "manual";
+}
+
+export interface DeprecationSourceOccurrence {
+  source_path: string;
+  source_range: TokenDeclarationSourceRange;
 }
 
 export interface DeprecationRecord {
   id: string;
+  /** Stable semantic subject; source locations and prose never participate. */
+  subject: ApiSymbolIdentity;
   package: string;
+  /** Unique registered UI component association; never a generic API owner. */
   component: string | null;
-  kind: "import" | "component" | "prop" | "token" | "type" | "other";
+  kind: "import" | "component" | "prop" | "method" | "token" | "type" | "other";
   name: string;
   deprecated_in: string | null;
   removed_in: string | null;
   replacement: {
+    /**
+     * `name` is a non-authoritative compatibility projection populated only
+     * for a direct single target. Canonical identity is carried by target(s).
+     */
+    mode: "none" | "single" | "composite";
+    target: ApiSymbolIdentity | null;
+    targets: ApiSymbolIdentity[];
     type: string | null;
     name: string | null;
     notes: string | null;
   };
   migration: {
-    strategy: "replace" | "remove" | "manual";
+    strategy: "replace" | "remove" | "transform" | "manual" | "unspecified";
+    value_map: DeprecationValueMap | null;
+    /** Non-authoritative compatibility projection for legacy readers. */
     details: Array<{
       from: string;
       to: string;
     }>;
   };
+  /** Repository-relative source files captured by the authored builder. */
+  source_paths?: string[];
+  /** Exact source occurrences; locations are provenance, never identity. */
+  source_occurrences: DeprecationSourceOccurrence[];
+  /** Public documentation routes or external HTTPS references. */
   source_urls: string[];
   inference?: {
     matched_component_names: string[];
@@ -491,58 +589,14 @@ export interface DeprecationRecord {
   };
 }
 
-export type CreateRetrievalEntityType = "component" | "pattern";
-
-export type CreateRetrievalSourceKind =
-  | "canonical_name"
-  | "alias"
-  | "summary"
-  | "category"
-  | "tag"
-  | "when_to_use"
-  | "when_not_to_use"
-  | "contrast_target"
-  | "related_surface"
-  | "semantics_preferred_for"
-  | "semantics_not_for"
-  | "example"
-  | "prop"
-  | "capability"
-  | "pattern_composition"
-  | "pattern_how_to_build"
-  | "pattern_how_it_works"
-  | "starter_scaffold_region"
-  | "starter_scaffold_build_around"
-  | "starter_scaffold_constraint";
-
-export type CreateRetrievalEvidenceRole = "owner" | "supporting" | "caution";
-
-export interface CreateRetrievalDocument {
-  id: string;
-  entity_id: string;
-  entity_type: CreateRetrievalEntityType;
-  entity_name: string;
-  package: string | null;
-  status: SaltStatus | null;
-  source_kind: CreateRetrievalSourceKind;
-  evidence_role: CreateRetrievalEvidenceRole;
-  text: string;
-  normalized_text: string;
-  tokens: string[];
-  stemmed_tokens: string[];
-  source_weight: number;
-  structural_weight: number;
-  categories: string[];
-}
-
 export interface RegistryArtifact<T> {
-  generated_at: string;
+  generated_at: string | null;
   version: string;
-  [key: string]: T[] | string;
+  [key: string]: T[] | string | null;
 }
 
 export interface SaltRegistry {
-  generated_at: string;
+  generated_at: string | null;
   version: string;
   /** Build-time hash of the published semantic registry payload. */
   semantic_hash?: string | null;
@@ -564,16 +618,19 @@ export interface BuildRegistryOptions {
   sourceRoot?: string;
   outputDir?: string;
   version?: string;
-  timestamp?: string;
+  sourceRevision?: string;
+  generatorVersion?: string;
+  generatorDigest?: string;
+  enforceBudgets?: boolean;
 }
 
 export interface LoadRegistryOptions {
   registryDir?: string;
   /**
-   * When `true`, eagerly read every registry artifact (components,
-   * patterns, tokens, examples, and rule packs) up front. Defaults
-   * to `false`: only metadata.json is loaded eagerly and each other
-   * artifact loads from disk on first property touch.
+   * When `true`, verify the complete catalog, nested payloads, and recursive
+   * references before returning. Defaults to `false`: only
+   * catalog-manifest.json is read eagerly; semantic identity or collection
+   * access triggers the same cached integrity barrier.
    *
    * Pass `true` from hosts that know they will touch most of the
    * registry and want a single bounded warm-up cost instead of per-touch

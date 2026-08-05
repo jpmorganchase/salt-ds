@@ -1,0 +1,6 @@
+preregistration.json text eol=lf
+preregistration.lock.json text eol=lf
+runtime-capability-lock.json text eol=lf
+setup/*.ts text eol=lf
+artifacts/*.json text eol=lf
+artifacts/*.tgz binary

@@ -10,18 +10,13 @@ import {
   getTokenPolicy,
   type TokenPolicySourceRegistry,
 } from "../core/build/buildRegistryTokenPolicy.js";
+import { CatalogStoreV2 } from "../core/catalog/catalogStoreV2.js";
 import {
   SALT_EVIDENCE_REF_CONTRACT,
   type SaltGeneratedArtifact,
 } from "../core/evidence.js";
 import { validateGeneratedArtifactRegistryEvidence } from "../core/generatedArtifactValidation.js";
-import {
-  getRegistryPatternValidationRulePack,
-  SALT_PATTERN_VALIDATION_RULE_PACK_CONTRACT,
-  type SaltPatternValidationRulePack,
-  validatePatternValidationRulePackEvidence,
-} from "../core/patternValidationRulePacks.js";
-import { REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT } from "../core/registry/artifacts.js";
+import { getSaltRegistryFingerprint } from "../core/registry/fingerprint.js";
 import { loadRegistry } from "../core/registry/loadRegistry.js";
 import {
   buildTokenPolicyStructuralRoleRulePack,
@@ -29,43 +24,18 @@ import {
   type SaltTokenPolicyStructuralRoleRulePack,
   validateTokenPolicyStructuralRoleRulePackEvidence,
 } from "../core/tokenPolicyStructuralRoleRules.js";
-import { getToken } from "../core/tools/getToken.js";
-import { recommendTokens } from "../core/tools/recommendTokens.js";
 import type { SaltRegistry } from "../core/types.js";
-import { REPO_ROOT } from "./registryTestUtils.js";
+import {
+  REPO_ROOT,
+  SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS,
+} from "./registryTestUtils.js";
 
-const DESIGN_TOKENS_URL = "/salt/themes/design-tokens/index";
+const DESIGN_TOKENS_URL = "/salt/themes/design-tokens";
 let outputDir = "";
 let builtRegistry: Awaited<ReturnType<typeof buildRegistry>>;
 let tokenPolicySources: TokenPolicySourceRegistry;
-let builtPatternRulePack: SaltPatternValidationRulePack;
 let builtStructuralRoleRulePack: SaltTokenPolicyStructuralRoleRulePack;
-let builtTokensArtifact: {
-  tokens: Array<{
-    name: string;
-    policy?: {
-      preferred_for?: string[] | null;
-      avoid_for?: string[] | null;
-      notes?: string[] | null;
-      docs?: string[] | null;
-      evidence_refs?: Array<{
-        contract: string;
-        source_kind: string;
-        claim_kind: string;
-        source?: {
-          url?: string | null;
-          repo_path?: string | null;
-        } | null;
-      }> | null;
-      structural_roles?: string[] | null;
-      pairing?: {
-        family: string;
-        role: string;
-        level?: string | null;
-      } | null;
-    } | null;
-  }>;
-};
+let loadedRegistry: SaltRegistry;
 
 function readJsonFile(filePath: string): Record<string, unknown> {
   return JSON.parse(fs.readFileSync(filePath, "utf8")) as Record<
@@ -83,23 +53,21 @@ beforeAll(async () => {
     buildRegistry({
       sourceRoot: REPO_ROOT,
       outputDir,
-      timestamp: "2026-03-26T00:00:00Z",
     }),
   ]);
-  builtTokensArtifact = JSON.parse(
-    fs.readFileSync(path.join(outputDir, "tokens.json"), "utf8"),
-  ) as typeof builtTokensArtifact;
-  const structuralRoleRulePackArtifact = readJsonFile(
-    path.join(
-      outputDir,
-      REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.file_name,
-    ),
-  );
-  builtStructuralRoleRulePack = structuralRoleRulePackArtifact[
-    REGISTRY_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_ARTIFACT.key
-  ] as SaltTokenPolicyStructuralRoleRulePack;
-  builtPatternRulePack = getRegistryPatternValidationRulePack(builtRegistry);
-}, 120_000);
+  loadedRegistry = await loadRegistry({
+    registryDir: outputDir,
+    prefetch: true,
+  });
+  const loadedStructuralRoleRulePack =
+    loadedRegistry.token_policy_structural_role_rule_pack;
+  if (!loadedStructuralRoleRulePack) {
+    throw new Error(
+      "Salt catalog schema v2 omitted the structural-role policy profile.",
+    );
+  }
+  builtStructuralRoleRulePack = loadedStructuralRoleRulePack;
+}, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
 
 afterAll(() => {
   if (outputDir) {
@@ -335,6 +303,7 @@ describe("generated token policy", () => {
       },
       registry: {
         version: builtRegistry.version,
+        hash: getSaltRegistryFingerprint(builtRegistry),
         generated_at: builtRegistry.generated_at,
       },
     });
@@ -345,9 +314,12 @@ describe("generated token policy", () => {
     expect(rulePack.rules).toHaveLength(
       tokenPolicySources.structural_role_rules.length,
     );
-    expect(validateTokenPolicyStructuralRoleRulePackEvidence(rulePack)).toEqual(
-      [],
-    );
+    expect(
+      validateTokenPolicyStructuralRoleRulePackEvidence(
+        rulePack,
+        builtRegistry,
+      ),
+    ).toEqual([]);
     expect(rulePack.rules).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -369,12 +341,9 @@ describe("generated token policy", () => {
     );
   });
 
-  it("writes the structural role rule pack with the registry build output", () => {
+  it("writes the structural role rule pack into the loaded v2 catalog projection", () => {
     expect(builtStructuralRoleRulePack.contract).toBe(
       SALT_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_CONTRACT,
-    );
-    expect(builtRegistry.token_policy_structural_role_rule_pack).toEqual(
-      builtStructuralRoleRulePack,
     );
     expect(builtStructuralRoleRulePack.rules).toHaveLength(
       tokenPolicySources.structural_role_rules.length,
@@ -382,39 +351,37 @@ describe("generated token policy", () => {
     expect(
       validateTokenPolicyStructuralRoleRulePackEvidence(
         builtStructuralRoleRulePack,
+        loadedRegistry,
       ),
     ).toEqual([]);
+    expect(builtStructuralRoleRulePack.registry).toEqual({
+      version: loadedRegistry.version,
+      hash: getSaltRegistryFingerprint(loadedRegistry),
+      generated_at: null,
+    });
+  });
+
+  it("stores an unbound structural-rule body and inherits identity from the catalog manifest", () => {
+    const store = new CatalogStoreV2({ registryDir: outputDir });
+    const profile = store
+      .getFamily("policy_profile")
+      .find((candidate) => candidate.policy_kind === "structural_role_rules");
+    if (!profile || profile.policy_kind !== "structural_role_rules") {
+      throw new Error("Catalog omitted its structural-role policy profile.");
+    }
+    const payload = store.getContentJson(profile.body_content_ref);
+
+    expect(payload).not.toHaveProperty("registry");
+    expect(builtStructuralRoleRulePack.registry).toEqual({
+      version: store.manifest.catalog_version,
+      hash: store.manifest.semantic_digest,
+      generated_at: null,
+    });
   });
 
   it("loads the structural role rule pack through the shared registry loader", async () => {
-    const loadedRegistry = await loadRegistry({
-      registryDir: outputDir,
-    });
-
     expect(loadedRegistry.token_policy_structural_role_rule_pack).toEqual(
       builtStructuralRoleRulePack,
-    );
-  });
-
-  it("derives and caches the pattern validation rule pack from current patterns", async () => {
-    expect(builtPatternRulePack.contract).toBe(
-      SALT_PATTERN_VALIDATION_RULE_PACK_CONTRACT,
-    );
-    expect(getRegistryPatternValidationRulePack(builtRegistry)).toBe(
-      builtPatternRulePack,
-    );
-    expect(
-      validatePatternValidationRulePackEvidence(
-        builtPatternRulePack,
-        builtRegistry,
-      ),
-    ).toEqual([]);
-
-    const loadedRegistry = await loadRegistry({
-      registryDir: outputDir,
-    });
-    expect(getRegistryPatternValidationRulePack(loadedRegistry)).toEqual(
-      builtPatternRulePack,
     );
   });
 
@@ -443,31 +410,6 @@ describe("generated token policy", () => {
     expect(valid, JSON.stringify(validate.errors, null, 2)).toBe(true);
   });
 
-  it("validates the pattern validation rule pack schema", () => {
-    const ajv = new Ajv2020({
-      allErrors: true,
-      strict: false,
-    });
-    ajv.addSchema(
-      readJsonFile(
-        path.join(
-          REPO_ROOT,
-          "packages/mcp/schemas/salt-evidence-ref.schema.json",
-        ),
-      ),
-    );
-    const schema = readJsonFile(
-      path.join(
-        REPO_ROOT,
-        "packages/mcp/schemas/salt-pattern-validation-rule-pack.schema.json",
-      ),
-    );
-    const validate = ajv.compile(schema);
-    const valid = validate(builtPatternRulePack);
-
-    expect(valid, JSON.stringify(validate.errors, null, 2)).toBe(true);
-  });
-
   it("requires structural role claims to resolve to rule-pack evidence", () => {
     const structuralRoleToken = builtRegistry.tokens.find(
       (token) => (token.policy?.structural_roles?.length ?? 0) > 0,
@@ -476,6 +418,7 @@ describe("generated token policy", () => {
       throw new Error("Expected source-backed structural-role token.");
     }
 
+    const registryHash = getSaltRegistryFingerprint(builtRegistry);
     const artifact: SaltGeneratedArtifact = {
       contract: "salt_generated_artifact_v1",
       artifact_kind: "pattern-guidance",
@@ -486,6 +429,7 @@ describe("generated token policy", () => {
       },
       registry: {
         version: builtRegistry.version,
+        hash: registryHash,
         generated_at: builtRegistry.generated_at,
       },
       claims: [
@@ -509,27 +453,53 @@ describe("generated token policy", () => {
             entity_name: structuralRoleToken.name,
             field_path: "policy.structural_roles.0",
             registry_version: builtRegistry.version,
+            registry_hash: registryHash,
           },
           source: structuralRoleToken.policy?.docs[0]
             ? {
                 url: structuralRoleToken.policy.docs[0],
               }
             : null,
-          confidence: "high",
         },
       ],
     };
 
     expect(
-      validateGeneratedArtifactRegistryEvidence(artifact, builtRegistry, {
-        tokenPolicyStructuralRoleRulePack: builtStructuralRoleRulePack,
-      }),
+      validateGeneratedArtifactRegistryEvidence(artifact, builtRegistry),
     ).toEqual([]);
+    const registryWithoutRulePack: SaltRegistry = {
+      ...builtRegistry,
+      semantic_hash: null,
+      token_policy_structural_role_rule_pack: null,
+    };
+    const registryWithoutRulePackHash = getSaltRegistryFingerprint(
+      registryWithoutRulePack,
+    );
+    const artifactWithoutRulePack: SaltGeneratedArtifact = {
+      ...artifact,
+      registry: {
+        version: registryWithoutRulePack.version,
+        hash: registryWithoutRulePackHash,
+        generated_at: registryWithoutRulePack.generated_at,
+      },
+      evidence_refs: artifact.evidence_refs.map((ref) =>
+        ref.source_kind === "registry"
+          ? {
+              ...ref,
+              registry: {
+                ...ref.registry,
+                registry_version: registryWithoutRulePack.version,
+                registry_hash: registryWithoutRulePackHash,
+              },
+            }
+          : ref,
+      ),
+    };
     expect(
-      validateGeneratedArtifactRegistryEvidence(artifact, {
-        ...builtRegistry,
-        token_policy_structural_role_rule_pack: null,
-      }),
+      validateGeneratedArtifactRegistryEvidence(
+        artifactWithoutRulePack,
+        registryWithoutRulePack,
+      ),
     ).toEqual([
       expect.objectContaining({
         code: "missing_structural_role_rule_evidence",
@@ -592,13 +562,13 @@ describe("generated token policy", () => {
   });
 
   it("keeps the generated token artifact aligned with the specific docs", () => {
-    const accentToken = builtTokensArtifact.tokens.find(
+    const accentToken = loadedRegistry.tokens.find(
       (token) => token.name === "--salt-accent-background",
     );
-    const containerToken = builtTokensArtifact.tokens.find(
+    const containerToken = loadedRegistry.tokens.find(
       (token) => token.name === "--salt-container-primary-background",
     );
-    const paletteToken = builtTokensArtifact.tokens.find(
+    const paletteToken = loadedRegistry.tokens.find(
       (token) => token.name === "--salt-palette-accent-border",
     );
 
@@ -732,155 +702,5 @@ describe("generated token policy", () => {
       });
 
     expect(docsWithoutEvidence).toEqual([]);
-  });
-});
-
-describe("token tools", () => {
-  // Fixture-only registry: verifies tool serializers trust registry token docs
-  // instead of adding Salt docs routes outside registry evidence.
-  const registry: SaltRegistry = {
-    generated_at: "2026-03-26T00:00:00Z",
-    version: "1.0.0",
-    build_info: null,
-    packages: [],
-    components: [],
-    icons: [],
-    country_symbols: [],
-    pages: [],
-    patterns: [],
-    guides: [],
-    tokens: [
-      {
-        name: "--salt-size-fixed-100",
-        category: "size",
-        type: "dimension",
-        value: "1px",
-        semantic_intent: "Fixed border and separator thickness.",
-        themes: ["salt", "next"],
-        densities: [],
-        applies_to: [],
-        guidance: ["Use for border and separator thickness."],
-        aliases: [],
-        policy: {
-          usage_tier: "foundation",
-          direct_component_use: "conditional",
-          preferred_for: ["border thickness"],
-          avoid_for: ["semantic component styling"],
-          notes: [
-            "Fixed size tokens are the correct choice for border thickness.",
-          ],
-          docs: ["/fixture/token-policy/size"],
-        },
-        deprecated: false,
-        last_verified_at: "2026-03-26T00:00:00Z",
-      },
-      {
-        name: "--salt-fixture-deprecated-gap",
-        category: "fixture",
-        type: "dimension",
-        value: "12px",
-        semantic_intent: "Fixture deprecated gap token.",
-        themes: ["salt"],
-        densities: [],
-        applies_to: [],
-        guidance: ["Fixture deprecated gap token."],
-        aliases: [],
-        policy: null,
-        policy_gap: {
-          reason:
-            "Fixture deprecated token policy is unsupported from source-backed metadata.",
-          missing: ["token policy", "source-backed replacement token"],
-          evidence_refs: [
-            {
-              contract: SALT_EVIDENCE_REF_CONTRACT,
-              id: "fixture-deprecated-gap.policy.unsupported.0.source-ref",
-              source_kind: "token",
-              claim_kind: "token",
-              source: {
-                repo_path:
-                  "packages/theme/css/deprecated/token-replacements.json",
-                section: "Fixture unsupported policy metadata.",
-                line_start: 2,
-                line_end: 2,
-              },
-              confidence: "high",
-            },
-          ],
-        },
-        deprecated: true,
-        last_verified_at: "2026-03-26T00:00:00Z",
-      },
-    ],
-    deprecations: [],
-    examples: [],
-  };
-
-  it("does not reintroduce the summary route in getToken output when policy docs omit it", () => {
-    const result = getToken(registry, {
-      name: "--salt-size-fixed-100",
-      max_results: 1,
-    });
-
-    expect(result.tokens[0]).toMatchObject({
-      docs: ["/fixture/token-policy/size"],
-    });
-    expect(result.source_url).toBe("/fixture/token-policy/size");
-  });
-
-  it("returns fixture token policy gaps from getToken without inventing policy", () => {
-    const result = getToken(registry, {
-      name: "--salt-fixture-deprecated-gap",
-      include_deprecated: true,
-      max_results: 1,
-    });
-
-    expect(result.tokens[0]).toMatchObject({
-      name: "--salt-fixture-deprecated-gap",
-      policy: null,
-      policy_gap: expect.objectContaining({
-        reason:
-          "Fixture deprecated token policy is unsupported from source-backed metadata.",
-        missing: ["token policy", "source-backed replacement token"],
-        evidence_refs: [
-          expect.objectContaining({
-            id: "fixture-deprecated-gap.policy.unsupported.0.source-ref",
-            source_kind: "token",
-            claim_kind: "token",
-          }),
-        ],
-      }),
-    });
-  });
-
-  it("does not reintroduce the summary route in recommendTokens output when policy docs omit it", () => {
-    const result = recommendTokens(registry, {
-      query: "border thickness",
-      category: "size",
-      top_k: 1,
-    });
-
-    expect(result.recommended).toMatchObject({
-      docs: ["/fixture/token-policy/size"],
-    });
-    expect(result.source_url).toBe("/fixture/token-policy/size");
-  });
-
-  it("returns fixture token policy gaps from recommendTokens without inventing policy", () => {
-    const result = recommendTokens(registry, {
-      query: "deprecated gap",
-      category: "fixture",
-      include_deprecated: true,
-      top_k: 1,
-    });
-
-    expect(result.recommended).toMatchObject({
-      name: "--salt-fixture-deprecated-gap",
-      policy: null,
-      policy_gap: expect.objectContaining({
-        reason:
-          "Fixture deprecated token policy is unsupported from source-backed metadata.",
-        missing: ["token policy", "source-backed replacement token"],
-      }),
-    });
   });
 });

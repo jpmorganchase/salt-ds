@@ -1,8 +1,8 @@
 import path from "node:path";
-import fg from "fast-glob";
-import matter from "gray-matter";
+import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
 import { toPosixPath } from "../registry/paths.js";
 import type {
+  ComponentRecord,
   ExampleRecord,
   GuideRecord,
   GuideSnippet,
@@ -24,22 +24,17 @@ import {
   toKebabCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import { globCatalogInputs } from "./catalogInputInventory.js";
 import { extractMdxTextBlocks } from "./pageTextExtractor.js";
-
-interface SiteSearchPageShape {
-  title?: unknown;
-  route?: unknown;
-  content?: unknown;
-  keywords?: unknown;
-}
+import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
+import {
+  normalizeSiteRoute,
+  siteDocsRouteFromRelativePath,
+} from "./siteDocsRoutes.js";
 
 interface MarkdownPageMetadata {
   summary: string | null;
   section_headings: string[];
-}
-
-interface MarkdownPageSource extends MarkdownPageMetadata {
-  content: string[];
 }
 
 function buildGuideStep(
@@ -77,14 +72,6 @@ function createGuideSnippet(
 
 function normalizeGuideStepTitle(title: string): string {
   return title.replace(/^\d+\.\s*/, "").trim();
-}
-
-function toTitleCaseWords(value: string): string {
-  return value
-    .split(/[-_\s]+/)
-    .filter((part) => part.length > 0)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
 }
 
 function normalizeGuideAlias(candidate: string): string {
@@ -134,22 +121,96 @@ function inferGettingStartedGuidePackages(content: string): string[] {
   );
 }
 
-function inferGettingStartedGuideRelatedComponents(content: string): string[] {
+type GuideComponentRoute = Pick<ComponentRecord, "name"> & {
+  related_docs: Pick<ComponentRecord["related_docs"], "overview">;
+};
+
+function buildGuideComponentNameByRoute(
+  components: readonly GuideComponentRoute[],
+): ReadonlyMap<string, string> {
+  const componentNameByRoute = new Map<string, string>();
+  for (const component of components) {
+    const overview = component.related_docs.overview;
+    if (!overview) {
+      throw new Error(
+        `Component '${component.name}' has no canonical guide relation route.`,
+      );
+    }
+    const normalizedRoute = normalizeSiteRoute(overview);
+    const componentRoutePrefix = "salt/components/";
+    if (!normalizedRoute.startsWith(componentRoutePrefix)) {
+      throw new Error(
+        `Component '${component.name}' has a non-canonical guide relation route '${overview}'.`,
+      );
+    }
+    const route = normalizedRoute
+      .slice(componentRoutePrefix.length)
+      .toLowerCase();
+    if (!route) {
+      throw new Error(
+        `Component '${component.name}' has a non-canonical guide relation route '${overview}'.`,
+      );
+    }
+    const existingName = componentNameByRoute.get(route);
+    if (existingName) {
+      throw new Error(
+        `Component guide relation route '${overview}' is shared by '${existingName}' and '${component.name}'.`,
+      );
+    }
+    componentNameByRoute.set(route, component.name);
+  }
+  return componentNameByRoute;
+}
+
+function guideComponentRouteFromHref(
+  href: string,
+  guideRoute: string,
+): string | null {
+  let resolved: URL;
+  try {
+    resolved = new URL(href, `https://salt.local${guideRoute}`);
+  } catch {
+    return null;
+  }
+  if (resolved.origin !== "https://salt.local") return null;
+  const normalizedRoute = normalizeSiteRoute(resolved.pathname);
+  const componentRoutePrefix = "salt/components/";
+  if (!normalizedRoute.startsWith(componentRoutePrefix)) return null;
+  const route = normalizedRoute
+    .slice(componentRoutePrefix.length)
+    .replace(/\/(?:usage|accessibility|examples|index)$/iu, "")
+    .replace(/^\/+|\/+$/gu, "")
+    .toLowerCase();
+  return route && route !== "layouts" ? route : null;
+}
+
+function inferGettingStartedGuideRelatedComponents(
+  content: string,
+  componentNameByRoute: ReadonlyMap<string, string>,
+  guidePath: string,
+): string[] {
+  const guideBasename = path.basename(guidePath, path.extname(guidePath));
+  const guideRoute = `/salt/getting-started/${guideBasename}`;
   return uniqueStrings(
     [...content.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)]
       .map((match) => match[1]?.trim() ?? "")
-      .filter((href) =>
-        /(?:^\/salt\/components\/|^\.\.?\/components\/)/i.test(href),
+      .map((href) => ({
+        href,
+        route: guideComponentRouteFromHref(href, guideRoute),
+      }))
+      .filter(
+        (candidate): candidate is { href: string; route: string } =>
+          candidate.route !== null,
       )
-      .map((href) => href.split(/[?#]/)[0]?.replace(/\\/g, "/") ?? "")
-      .map((href) =>
-        href.match(
-          /(?:^|\/)components\/([^/]+)(?:\/(?:usage|accessibility|examples|index))?$/i,
-        ),
-      )
-      .map((match) => match?.[1] ?? "")
-      .filter((slug) => slug.length > 0 && slug !== "layouts")
-      .map((slug) => toTitleCaseWords(slug)),
+      .map(({ href, route }) => {
+        const componentName = componentNameByRoute.get(route);
+        if (!componentName) {
+          throw new Error(
+            `Guide '${toPosixPath(guidePath)}' links unknown component route '${route}' through '${href}'.`,
+          );
+        }
+        return componentName;
+      }),
   );
 }
 
@@ -167,9 +228,9 @@ function inferGettingStartedGuideStepHeadingDepth(content: string): number {
 function buildGettingStartedGuideRecord(
   filePath: string,
   source: string,
-  verifiedAt: string,
+  componentNameByRoute: ReadonlyMap<string, string>,
 ): GuideRecord | null {
-  const parsed = matter(source);
+  const parsed = parseYamlFrontmatter(source);
   const title = asString(parsed.data.title);
 
   if (!title) {
@@ -211,6 +272,8 @@ function buildGettingStartedGuideRecord(
   const packages = inferGettingStartedGuidePackages(parsed.content);
   const relatedComponents = inferGettingStartedGuideRelatedComponents(
     parsed.content,
+    componentNameByRoute,
+    filePath,
   );
 
   return {
@@ -228,17 +291,8 @@ function buildGettingStartedGuideRecord(
       related_components: relatedComponents,
       related_packages: packages,
     },
-    last_verified_at: verifiedAt,
+    last_verified_at: null,
   };
-}
-
-function normalizeSiteRoute(route: string): string {
-  return route
-    .trim()
-    .replace(/\\/g, "/")
-    .replace(/^\/+/, "")
-    .replace(/\/+/g, "/")
-    .replace(/\/$/, "");
 }
 
 function createNormalizedSiteRouteKey(route: string): string {
@@ -368,65 +422,33 @@ function extractRouteKeywords(route: string): string[] {
   ]);
 }
 
-async function readPageSnapshotMetadata(
-  repoRoot: string,
-  route: string,
-): Promise<MarkdownPageMetadata> {
-  const normalizedRoute = normalizeSiteRoute(route);
-  if (!normalizedRoute.startsWith("salt/")) {
-    return {
-      summary: null,
-      section_headings: [],
-    };
-  }
-
-  const snapshotPath = path.join(
-    repoRoot,
-    "site",
-    "snapshots",
-    "latest",
-    `${normalizedRoute}.mdx`,
-  );
-  const snapshotSource = await readFileOrNull(snapshotPath);
-  if (!snapshotSource) {
-    return {
-      summary: null,
-      section_headings: [],
-    };
-  }
-
-  const parsed = matter(snapshotSource);
-  return extractMarkdownPageMetadata(
-    parsed.content,
-    asString(parsed.data.description),
-  );
-}
-
 async function buildSiteDocsRouteMap(
   repoRoot: string,
 ): Promise<Map<string, string>> {
   const docsRoot = path.join(repoRoot, "site", "docs");
-  const docPaths = await fg("**/*.mdx", {
+  const docPaths = await globCatalogInputs("**/*.mdx", {
     absolute: true,
     cwd: docsRoot,
     onlyFiles: true,
   });
   const routeMap = new Map<string, string>();
+  const routeByPortableIdentity = new Map<string, string>();
 
-  for (const docPath of docPaths) {
+  for (const docPath of docPaths.sort(compareOrdinalStrings)) {
     const relativePath = toPosixPath(path.relative(docsRoot, docPath));
-    const route =
-      relativePath === "index.mdx"
-        ? "salt/index"
-        : `salt/${relativePath.replace(/\.mdx$/i, "")}`;
-    routeMap.set(createNormalizedSiteRouteKey(route), docPath);
-
-    if (/\/index$/i.test(route)) {
-      routeMap.set(
-        createNormalizedSiteRouteKey(route.replace(/\/index$/i, "")),
-        docPath,
+    const route = siteDocsRouteFromRelativePath(relativePath);
+    const routeKey = createNormalizedSiteRouteKey(route);
+    const existingRoute = routeByPortableIdentity.get(routeKey);
+    if (existingRoute) {
+      const existing = routeMap.get(existingRoute);
+      throw new Error(
+        `Duplicate live MDX route ${route}: ${toPosixPath(
+          path.relative(repoRoot, existing as string),
+        )} and ${relativePath}`,
       );
     }
+    routeByPortableIdentity.set(routeKey, route);
+    routeMap.set(route, docPath);
   }
 
   return routeMap;
@@ -440,130 +462,117 @@ function extractMarkdownContentBlocks(content: string): string[] {
   }
 }
 
-async function readSiteDocsPageSource(
-  route: string,
-  docsRouteMap: Map<string, string>,
-): Promise<MarkdownPageSource | null> {
-  const docPath = docsRouteMap.get(createNormalizedSiteRouteKey(route));
-  if (!docPath) {
-    return null;
-  }
-
-  const docSource = await readFileOrNull(docPath);
-  if (!docSource) {
-    return null;
-  }
-
-  const parsed = matter(docSource);
-  const metadata = extractMarkdownPageMetadata(
-    parsed.content,
-    asString(parsed.data.description),
-  );
-
-  return {
-    ...metadata,
-    content: extractMarkdownContentBlocks(parsed.content),
-  };
-}
-
-export async function extractPages(
-  repoRoot: string,
-  verifiedAt: string,
-): Promise<PageRecord[]> {
-  const searchDataPath = path.join(
-    repoRoot,
-    "site",
-    "public",
-    "search-data.json",
-  );
-  const searchDataSource = await readFileOrNull(searchDataPath);
-  if (!searchDataSource) {
-    return [];
-  }
-
-  let parsedSearchData: unknown;
-  try {
-    parsedSearchData = JSON.parse(searchDataSource);
-  } catch {
-    return [];
-  }
-
-  if (!Array.isArray(parsedSearchData)) {
-    return [];
-  }
-
+export async function extractPages(repoRoot: string): Promise<PageRecord[]> {
   const docsRouteMap = await buildSiteDocsRouteMap(repoRoot);
+  const docsRoot = path.join(repoRoot, "site", "docs");
+  const parsedByPath = new Map<
+    string,
+    { data: Record<string, unknown>; content: string }
+  >();
+  for (const docPath of docsRouteMap.values()) {
+    const source = await readFileOrNull(docPath);
+    if (source == null) {
+      throw new Error(`Required live MDX page disappeared: ${docPath}`);
+    }
+    const parsed = parseYamlFrontmatter(source);
+    parsedByPath.set(path.resolve(docPath), {
+      data: parsed.data as Record<string, unknown>,
+      content: parsed.content,
+    });
+  }
 
-  const pages = await Promise.all(
-    parsedSearchData.map(async (entry): Promise<PageRecord | null> => {
-      const page = entry as SiteSearchPageShape;
-      const title = asString(page.title);
-      const route = asString(page.route);
-      if (!title || !route) {
-        return null;
+  const resolvePageTitle = (
+    docPath: string,
+    parsed: { data: Record<string, unknown>; content: string },
+  ): string | null => {
+    const direct =
+      asString(parsed.data.title) ??
+      /^#\s+(.+)$/mu.exec(parsed.content)?.[1]?.trim() ??
+      null;
+    if (direct) return direct;
+
+    let currentDir = path.dirname(docPath);
+    while (
+      currentDir === docsRoot ||
+      (!path.relative(docsRoot, currentDir).startsWith("..") &&
+        !path.isAbsolute(path.relative(docsRoot, currentDir)))
+    ) {
+      const parentIndexPath = path.join(currentDir, "index.mdx");
+      if (parentIndexPath !== docPath) {
+        const parent = parsedByPath.get(path.resolve(parentIndexPath));
+        const inherited =
+          parent &&
+          (asString(parent.data.title) ??
+            /^#\s+(.+)$/mu.exec(parent.content)?.[1]?.trim() ??
+            null);
+        if (inherited) return inherited;
       }
+      if (currentDir === docsRoot) break;
+      currentDir = path.dirname(currentDir);
+    }
+    return null;
+  };
 
-      const fallbackContent = mergePageContentBlocks(
-        asStringArray(page.content),
+  const pages: PageRecord[] = [];
+  for (const [route, docPath] of [...docsRouteMap.entries()].sort(
+    ([left], [right]) => compareOrdinalStrings(left, right),
+  )) {
+    const parsed = parsedByPath.get(path.resolve(docPath));
+    if (!parsed) throw new Error(`Live MDX parse cache missed ${docPath}`);
+    const title = resolvePageTitle(docPath, parsed);
+    if (!title) {
+      throw new Error(
+        `Live MDX page is missing a deterministic title: ${toPosixPath(
+          path.relative(repoRoot, docPath),
+        )}`,
       );
-      const docsSource = await readSiteDocsPageSource(route, docsRouteMap);
-      const snapshotMetadata = docsSource
-        ? null
-        : await readPageSnapshotMetadata(repoRoot, route);
-      const summary =
-        docsSource?.summary ??
-        snapshotMetadata?.summary ??
-        fallbackContent[0] ??
-        cleanMarkdownText(title);
-
-      return {
-        id: createPageId(route),
-        title: cleanMarkdownText(title),
-        route,
-        page_kind: classifyPageKind(route),
-        summary,
-        keywords: uniqueStrings([
-          ...asStringArray(page.keywords).map((keyword) =>
-            normalizeWhitespace(cleanMarkdownText(keyword)),
-          ),
-          ...extractRouteKeywords(route),
-          title,
-        ]).filter((keyword) => keyword.length > 0),
-        content:
-          docsSource && docsSource.content.length > 0
-            ? docsSource.content
-            : fallbackContent,
-        section_headings:
-          docsSource?.section_headings ??
-          snapshotMetadata?.section_headings ??
-          [],
-        last_verified_at: verifiedAt,
-      };
-    }),
-  );
-
-  return pages
-    .filter((page): page is PageRecord => page !== null)
-    .sort(
-      (left, right) =>
-        left.title.localeCompare(right.title) ||
-        left.route.localeCompare(right.route),
+    }
+    const metadata = extractMarkdownPageMetadata(
+      parsed.content,
+      asString(parsed.data.description),
     );
+    const content = extractMarkdownContentBlocks(parsed.content);
+    pages.push({
+      id: createPageId(route),
+      title: cleanMarkdownText(title),
+      route,
+      page_kind: classifyPageKind(route),
+      summary: metadata.summary ?? content[0] ?? cleanMarkdownText(title),
+      keywords: uniqueStrings([
+        ...asStringArray(parsed.data.keywords).map((keyword) =>
+          normalizeWhitespace(cleanMarkdownText(keyword)),
+        ),
+        ...extractRouteKeywords(route),
+        title,
+      ]).filter((keyword) => keyword.length > 0),
+      content,
+      section_headings: metadata.section_headings,
+      source_path: toPosixPath(path.relative(repoRoot, docPath)),
+      last_verified_at: null,
+    });
+  }
+
+  return pages.sort(
+    (left, right) =>
+      compareOrdinalStrings(left.title, right.title) ||
+      compareOrdinalStrings(left.route, right.route),
+  );
 }
 
 export async function extractGuides(
   repoRoot: string,
-  verifiedAt: string,
+  components: readonly GuideComponentRoute[],
 ): Promise<GuideRecord[]> {
   const guides: GuideRecord[] = [];
+  const componentNameByRoute = buildGuideComponentNameByRoute(components);
   const gettingStartedPaths = (
-    await fg("site/docs/getting-started/*.mdx", {
+    await globCatalogInputs("site/docs/getting-started/*.mdx", {
       cwd: repoRoot,
       absolute: true,
     })
   )
     .filter((filePath) => path.basename(filePath) !== "index.mdx")
-    .sort((left, right) => left.localeCompare(right));
+    .sort(compareOrdinalStrings);
 
   for (const guidePath of gettingStartedPaths) {
     const guideSource = await readFileOrNull(guidePath);
@@ -571,7 +580,7 @@ export async function extractGuides(
       continue;
     }
 
-    const parsedGuide = matter(guideSource);
+    const parsedGuide = parseYamlFrontmatter(guideSource);
     if (parsedGuide.data.salt_ai_guide !== true) {
       continue;
     }
@@ -579,7 +588,7 @@ export async function extractGuides(
     const guide = buildGettingStartedGuideRecord(
       guidePath,
       guideSource,
-      verifiedAt,
+      componentNameByRoute,
     );
     if (guide) {
       guides.push(guide);
@@ -589,7 +598,7 @@ export async function extractGuides(
   const themesPath = path.join(repoRoot, "site/docs/themes/index.mdx");
   const themesSource = await readFileOrNull(themesPath);
   if (themesSource) {
-    const parsed = matter(themesSource);
+    const parsed = parseYamlFrontmatter(themesSource);
     const sections = parseMarkdownSections(parsed.content, 3);
     const sourceBackedSteps = sections
       .map((section) =>
@@ -631,16 +640,18 @@ export async function extractGuides(
         related_components: [],
         related_packages: [],
       },
-      last_verified_at: verifiedAt,
+      last_verified_at: null,
     });
   }
 
-  return guides.sort((left, right) => left.name.localeCompare(right.name));
+  return guides.sort((left, right) =>
+    compareOrdinalStrings(left.name, right.name),
+  );
 }
 
 /**
  * Extract one canonical `ExampleRecord` per foundation page so the
- * registry-coverage audit and theme-aware `create_salt_ui` follow-ups can
+ * registry-coverage audit and downstream catalog consumers can
  * resolve foundations through the same `target_name` lookup used for
  * components and patterns.
  *
@@ -663,7 +674,7 @@ export async function extractFoundationExamples(
   repoRoot: string,
 ): Promise<ExampleRecord[]> {
   const foundationDocPaths = (
-    await fg("site/docs/foundations/**/*.mdx", {
+    await globCatalogInputs("site/docs/foundations/**/*.mdx", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
@@ -674,7 +685,7 @@ export async function extractFoundationExamples(
         "site/docs/foundations/**/fragments/**",
       ],
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   const examples: ExampleRecord[] = [];
 
@@ -684,7 +695,7 @@ export async function extractFoundationExamples(
       continue;
     }
 
-    const parsed = matter(source);
+    const parsed = parseYamlFrontmatter(source);
     const title = asString(parsed.data.title);
     if (!title) {
       continue;
@@ -709,7 +720,7 @@ export async function extractFoundationExamples(
       ),
     );
     const routeSuffix = relativePath.replace(/\.mdx$/i, "");
-    const route = `/salt/foundations/${routeSuffix}`;
+    const route = siteDocsRouteFromRelativePath(`foundations/${relativePath}`);
 
     const codeBlocks = extractFencedCodeBlocks(parsed.content);
     const firstSnippet = codeBlocks.find((block) => block.code.length > 0);
@@ -734,6 +745,7 @@ export async function extractFoundationExamples(
       complexity: "basic",
       code: firstSnippet?.code ?? fallbackBody,
       source_url: route,
+      source_path: null,
       package: null,
       target_type: "foundation",
       target_name: title,

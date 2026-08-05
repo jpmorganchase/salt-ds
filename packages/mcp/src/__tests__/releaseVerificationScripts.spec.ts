@@ -10,7 +10,9 @@ interface RootPackageJson {
 const POST_BUILD_STEPS = [
   "yarn typecheck:mcp",
   "yarn test:ai-tooling",
-  "yarn eval:evidence-sprint",
+  "yarn eval:deterministic",
+  "yarn workspace @salt-ds/mcp measure:runtime-loc",
+  "yarn workspace @salt-ds/mcp measure:surface",
   "yarn check:ai-tooling:pack",
   "yarn smoke:consumer --skip-build",
 ];
@@ -59,6 +61,15 @@ describe("MCP release verification scripts", () => {
     expect(scripts["release:verify:mcp:after-build"]).not.toContain(
       "smoke:consumer:published",
     );
+  });
+
+  it("keeps Biome responsible for lint and Prettier responsible for format", async () => {
+    const scripts = await readScripts();
+
+    expect(scripts["lint:check:error"]).toBe(
+      "biome lint --diagnostic-level=error",
+    );
+    expect(scripts["prettier:ci"]).toBe("prettier --check .");
   });
 
   it("keeps live evaluation, provider, post-publish, and publish work out of verification", async () => {

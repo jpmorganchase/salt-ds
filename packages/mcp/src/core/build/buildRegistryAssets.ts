@@ -1,5 +1,5 @@
 import path from "node:path";
-import fg from "fast-glob";
+import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
 import { toPosixPath } from "../registry/paths.js";
 import type {
   CountrySymbolRecord,
@@ -19,6 +19,11 @@ import {
   toMatchKey,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import {
+  assertUniquePackageValueExportOrigin,
+  buildPackageValueExportGraph,
+} from "./catalogExportGraph.js";
+import { globCatalogInputs } from "./catalogInputInventory.js";
 
 interface IconSynonymMetadata {
   iconName: string;
@@ -155,7 +160,9 @@ async function loadCountrySymbolMetadata(
         entry.countryCode.trim().length > 0 &&
         entry.countryName.trim().length > 0,
     )
-    .sort((left, right) => left.countryCode.localeCompare(right.countryCode));
+    .sort((left, right) =>
+      compareOrdinalStrings(left.countryCode, right.countryCode),
+    );
 }
 
 function countryCodeToExportBase(countryCode: string): string {
@@ -246,7 +253,10 @@ function countrySymbolDeprecationMatches(
   countryName: string,
   deprecation: DeprecationRecord,
 ): boolean {
-  if (deprecation.package !== "@salt-ds/countries") {
+  if (
+    deprecation.package !== "@salt-ds/countries" ||
+    deprecation.subject.member_path.length > 0
+  ) {
     return false;
   }
 
@@ -273,7 +283,10 @@ function iconDeprecationMatches(
   figmaName: string,
   deprecation: DeprecationRecord,
 ): boolean {
-  if (deprecation.package !== "@salt-ds/icons") {
+  if (
+    deprecation.package !== "@salt-ds/icons" ||
+    deprecation.subject.member_path.length > 0
+  ) {
     return false;
   }
 
@@ -294,7 +307,6 @@ export async function extractIcons(
   repoRoot: string,
   packageByName: Map<string, PackageRecord>,
   deprecations: DeprecationRecord[],
-  generatedAt: string,
 ): Promise<IconRecord[]> {
   const iconsPackage = packageByName.get("@salt-ds/icons");
   if (!iconsPackage) {
@@ -303,14 +315,18 @@ export async function extractIcons(
 
   const synonymMetadata = await loadIconSynonymMetadata(repoRoot);
   const iconPaths = (
-    await fg("packages/icons/src/components/*.tsx", {
+    await globCatalogInputs("packages/icons/src/components/*.tsx", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
   )
     .filter((filePath) => path.parse(filePath).name !== "index")
-    .sort((left, right) => left.localeCompare(right));
+    .sort(compareOrdinalStrings);
+  const iconExportGraph = await buildPackageValueExportGraph(
+    repoRoot,
+    "@salt-ds/icons",
+  );
 
   return iconPaths.map((iconPath) => {
     const sourcePath = toPosixPath(path.relative(repoRoot, iconPath));
@@ -319,6 +335,11 @@ export async function extractIcons(
     const unqualifiedBaseName =
       variant === "solid" ? baseName.replace(/Solid$/, "") : baseName;
     const exportName = `${baseName}Icon`;
+    const exportedSourcePath = assertUniquePackageValueExportOrigin(
+      iconExportGraph,
+      exportName,
+      sourcePath,
+    );
     const figmaName =
       synonymMetadata.find((entry) =>
         isIconBaseNameMatch(baseName, entry.iconName),
@@ -335,7 +356,7 @@ export async function extractIcons(
         iconDeprecationMatches(exportName, baseName, figmaName, deprecation),
       )
       .map((deprecation) => deprecation.id)
-      .sort((left, right) => left.localeCompare(right));
+      .sort(compareOrdinalStrings);
     const status: SaltStatus =
       matchedDeprecations.length > 0 ? "deprecated" : iconsPackage.status;
 
@@ -371,14 +392,14 @@ export async function extractIcons(
       related_docs: {
         overview: "/salt/components/icon",
         examples: "/salt/components/icon/examples",
-        foundation: "/salt/foundations/assets/index",
+        foundation: "/salt/foundations/assets",
       },
       source: {
-        repo_path: sourcePath,
+        repo_path: exportedSourcePath,
         export_name: exportName,
       },
       deprecations: matchedDeprecations,
-      last_verified_at: generatedAt,
+      last_verified_at: null,
     } satisfies IconRecord;
   });
 }
@@ -387,7 +408,6 @@ export async function extractCountrySymbols(
   repoRoot: string,
   packageByName: Map<string, PackageRecord>,
   deprecations: DeprecationRecord[],
-  generatedAt: string,
 ): Promise<CountrySymbolRecord[]> {
   const countriesPackage = packageByName.get("@salt-ds/countries");
   if (!countriesPackage) {
@@ -395,17 +415,31 @@ export async function extractCountrySymbols(
   }
 
   const countryMetadata = await loadCountrySymbolMetadata(repoRoot);
+  const countryExportGraph = await buildPackageValueExportGraph(
+    repoRoot,
+    "@salt-ds/countries",
+  );
 
   return countryMetadata.map(({ countryCode, countryName }) => {
     const exportBase = countryCodeToExportBase(countryCode);
-    const circleRepoPath = `packages/countries/src/components/${exportBase}.tsx`;
-    const sharpRepoPath = `packages/countries/src/components/${exportBase}_Sharp.tsx`;
+    const circleRepoPath = `packages/countries/src/components/${countryCode}.tsx`;
+    const sharpRepoPath = `packages/countries/src/components/${countryCode}_Sharp.tsx`;
+    const exportedCircleRepoPath = assertUniquePackageValueExportOrigin(
+      countryExportGraph,
+      exportBase,
+      circleRepoPath,
+    );
+    const exportedSharpRepoPath = assertUniquePackageValueExportOrigin(
+      countryExportGraph,
+      `${exportBase}_Sharp`,
+      sharpRepoPath,
+    );
     const matchedDeprecations = deprecations
       .filter((deprecation) =>
         countrySymbolDeprecationMatches(countryCode, countryName, deprecation),
       )
       .map((deprecation) => deprecation.id)
-      .sort((left, right) => left.localeCompare(right));
+      .sort(compareOrdinalStrings);
     const status: SaltStatus =
       matchedDeprecations.length > 0 ? "deprecated" : countriesPackage.status;
 
@@ -424,11 +458,11 @@ export async function extractCountrySymbols(
       variants: {
         circle: {
           export_name: exportBase,
-          repo_path: circleRepoPath,
+          repo_path: exportedCircleRepoPath,
         },
         sharp: {
           export_name: `${exportBase}_Sharp`,
-          repo_path: sharpRepoPath,
+          repo_path: exportedSharpRepoPath,
         },
       },
       related_docs: {
@@ -439,7 +473,7 @@ export async function extractCountrySymbols(
         foundation: "/salt/foundations/assets/country-symbols",
       },
       deprecations: matchedDeprecations,
-      last_verified_at: generatedAt,
+      last_verified_at: null,
     } satisfies CountrySymbolRecord;
   });
 }

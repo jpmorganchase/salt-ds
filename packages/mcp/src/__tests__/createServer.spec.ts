@@ -1,1878 +1,1594 @@
+import { Buffer } from "node:buffer";
+import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
-import { Client } from "@modelcontextprotocol/sdk/client/index.js";
-import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import Ajv from "ajv";
-import { describe, expect, it } from "vitest";
+import {
+  Client,
+  InMemoryTransport,
+  ProtocolError,
+  ProtocolErrorCode,
+} from "@modelcontextprotocol/client";
+import { McpServer, Server } from "@modelcontextprotocol/server";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import * as z from "zod/v4";
-import { loadRegistry } from "../core/registry/loadRegistry.js";
-import { createSaltUi } from "../core/tools/createSaltUi.js";
+import {
+  catalogManifestResourceUri,
+  catalogRecordResourceTemplate,
+  catalogRecordResourceUri,
+} from "../core/catalog/catalogResourceIdentity.js";
+import {
+  projectPolicyResourceTemplate,
+  projectPolicyResourceUri,
+} from "../core/policy/projectPolicyResourceIdentity.js";
+import {
+  canonicalCatalogRuntimeFamilies,
+  loadCatalogRuntimeContext,
+  MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
+  MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
+  MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
+  type SaltCatalogRuntimeContext,
+} from "../core/runtime.js";
+import { MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES } from "../core/search/searchSalt.js";
+import {
+  MAX_CATALOG_RESOURCE_LIST_PAGE_UTF8_BYTES,
+  MAX_CATALOG_RESOURCES_PER_PAGE,
+} from "../server/catalogResourceListing.js";
 import { createSaltMcpServer } from "../server/createServer.js";
+import type { ProjectAccessOptions } from "../server/projectAccess.js";
+import { MAX_CATALOG_RESOURCE_READ_UTF8_BYTES } from "../server/registerResources.js";
+import { MAX_SEARCH_TOOL_RESULT_UTF8_BYTES } from "../server/registerTools.js";
 import {
   buildSaltMcpInstructions,
-  getSaltMcpRuntimeMetadata,
-  SALT_MCP_CAPABILITY_MANIFEST_URI,
-  SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
-  SALT_MCP_CATALOG_MANIFEST_URI,
+  getSaltMcpPackageManifest,
+  SALT_MCP_PROTOCOL_ERA,
+  SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS,
 } from "../server/serverMetadata.js";
 import {
+  REGISTERED_SALT_TOOL_NAMES,
   TOOL_DEFINITIONS,
-  type ToolDefinition,
 } from "../server/toolDefinitions.js";
-import { withChooseWorkflowGuidance } from "../server/workflowOutputs.js";
 import {
-  copyV1CatalogArtifactsFromGenerated,
+  createBuiltCatalogV2Fixture,
   REPO_ROOT,
-  V1_EXCLUDED_CATALOG_ARTIFACT_FILES,
-  withRegistryDir,
-  writeBaseArtifacts,
+  SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS,
 } from "./registryTestUtils.js";
 
-const V1_TOOL_ORDER = [
+const REMOVED_TOOL_NAMES = [
+  "create_salt_ui",
+  "migrate_to_salt",
   "get_salt_project_context",
   "get_salt_reference",
   "review_salt_ui",
-  "create_salt_ui",
-  "migrate_to_salt",
 ] as const;
+const MAX_INSTRUCTIONS_UTF8_BYTES = 1_000;
+const JSON_SCHEMA_2020_12 = "https://json-schema.org/draft/2020-12/schema";
+const PACKAGE_VERSIONS_SCHEMA_PATH =
+  "review_salt_code.input.properties.package_versions";
+let catalogFixtureDirectory = "";
+let runtimeContext: SaltCatalogRuntimeContext;
 
-const V1_RESOURCE_NAMES = [
-  SALT_MCP_CAPABILITY_MANIFEST_URI,
-  SALT_MCP_CATALOG_MANIFEST_URI,
-] as const;
-
-const V1_RESOURCE_TEMPLATE_NAMES = ["salt_catalog_entity"] as const;
-
-// The strict create continuation repeats the complete nine-field public input
-// schema so hosts can safely execute the advertised follow-up without losing
-// request intent. Keep an explicit, still-bounded allowance for that contract.
-const MAX_ADVERTISED_TOOL_SCHEMA_BYTES = 45_000;
-
-function objectSchemaKeys(definitionName: string): string[] {
-  return Object.keys(getInputObjectSchema(definitionName).shape).sort();
+function assertStrictNestedObjects(
+  value: unknown,
+  schemaPath = "schema",
+): void {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return;
+  const record = value as Record<string, unknown>;
+  if (
+    record.type === "object" ||
+    (Array.isArray(record.type) && record.type.includes("object"))
+  ) {
+    const properties = Object.keys(
+      (record.properties as object | undefined) ?? {},
+    );
+    if (schemaPath === PACKAGE_VERSIONS_SCHEMA_PATH) {
+      expect(properties, schemaPath).toHaveLength(0);
+      expect(record.maxProperties, schemaPath).toBe(32);
+      expect(record.propertyNames, schemaPath).toEqual({
+        type: "string",
+        minLength: 1,
+        maxLength: 214,
+        pattern: "^@salt-ds\\/[a-z0-9][a-z0-9._-]*$",
+      });
+      expect(record.additionalProperties, schemaPath).toEqual({
+        type: "string",
+        minLength: 1,
+        maxLength: 128,
+      });
+    } else {
+      expect(record.additionalProperties, schemaPath).toBe(false);
+      expect(properties, schemaPath).not.toHaveLength(0);
+    }
+  }
+  for (const [key, child] of Object.entries(record)) {
+    assertStrictNestedObjects(child, `${schemaPath}.${key}`);
+  }
 }
 
-function getToolDefinition(definitionName: string) {
-  const definition = TOOL_DEFINITIONS.find(
-    (toolDefinition) => toolDefinition.name === definitionName,
+function assertRequiredObjectProperty(
+  schema: Record<string, unknown>,
+  propertyName: string,
+  schemaPath: string,
+): void {
+  const propertyNames = Object.keys(
+    (schema.properties as Record<string, unknown> | undefined) ?? {},
   );
-  if (!definition) {
-    throw new Error(`Expected ${definitionName} to be registered.`);
+  expect(propertyNames, schemaPath).toContain(propertyName);
+  if (Array.isArray(schema.required)) {
+    expect(schema.required, schemaPath).toContain(propertyName);
+  } else {
+    expect(schema.minProperties, schemaPath).toBe(propertyNames.length);
   }
-  return definition;
 }
 
-function getInputObjectSchema(definitionName: string): z.ZodObject {
-  const inputSchema = getToolDefinition(definitionName).inputSchema;
-  const schema =
-    inputSchema instanceof z.ZodType ? inputSchema : z.object(inputSchema);
-  if (!(schema instanceof z.ZodObject)) {
-    throw new Error(`Expected object input schema for ${definitionName}.`);
+beforeAll(async () => {
+  catalogFixtureDirectory = await createBuiltCatalogV2Fixture(
+    "salt-create-server-v2-",
+  );
+  runtimeContext = await loadCatalogRuntimeContext({
+    registryDir: catalogFixtureDirectory,
+    prefetch: true,
+  });
+}, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
+
+afterAll(async () => {
+  if (catalogFixtureDirectory) {
+    await fs.rm(catalogFixtureDirectory, {
+      recursive: true,
+      force: true,
+    });
   }
-  return schema;
+});
+
+function toolPayload(result: unknown): Record<string, unknown> {
+  if (!result || typeof result !== "object") {
+    throw new Error("Expected an MCP tool result object.");
+  }
+  const payload = result as {
+    content?: Array<{ type: string; text?: string }>;
+    structuredContent?: unknown;
+  };
+  const structured = payload.structuredContent;
+  if (structured && typeof structured === "object") {
+    return structured as Record<string, unknown>;
+  }
+  const text = payload.content?.find((part) => part.type === "text")?.text;
+  if (typeof text !== "string") {
+    throw new Error("Tool result omitted structured and text content.");
+  }
+  return JSON.parse(text) as Record<string, unknown>;
 }
 
-function buildValidCreateOutputSchemaFixture() {
-  const rerunArgs = {
-    query: "profile page with tabs and avatar",
-    resolved_entities: ["Tabs", "Avatar"],
-  };
-  return {
-    contract: "salt_workflow_v1",
-    workflow: "create",
-    status: "partial",
-    request: {
-      entity: "profile page with tabs and avatar",
-      resolved_entity: "Tabs",
-      match_status: "broadened",
-    },
-    safety: {
-      canonical_complete: false,
-      exact_request_safe: false,
-      blocking_reasons: ["required follow-through remains: Avatar"],
-    },
-    action: {
-      kind: "retrieve_reference",
-      tool: "get_salt_reference",
-      args: { names: ["Avatar"] },
-      rule_ids: [],
-      post_action: {
-        kind: "rerun_workflow",
-        tool: "create_salt_ui",
-        args: rerunArgs,
-      },
-    },
-    guidance: {
-      kind: "create",
-      decision: {
-        name: "Tabs",
-        why: "Use Tabs with an Avatar follow-through.",
-        solution_type: "component",
-      },
-      starter_guidance: {
-        plan: ["Ground Avatar before implementing the profile page."],
-        snippets: [],
-      },
-      review_targets: {
-        components: ["Tabs", "Avatar"],
-        patterns: [],
-        composition_contract: null,
-        source: "create_report",
-      },
-    },
-    questions: [],
-    evidence: {
-      status: "partial",
-      items: [],
-      source_urls: [],
-      missing: ["follow-through evidence for Avatar"],
-      heuristic_fallback: false,
-    },
-    internal_limitations: {
-      unsupported_claim_count: 0,
-      unsupported_rule_kinds: [],
-    },
-    summary: "Ground Avatar before implementing.",
-  };
+function valueAtFieldPath(
+  record: Record<string, unknown>,
+  fieldPath: string,
+): unknown {
+  return fieldPath.split(".").reduce<unknown>((value, segment) => {
+    if (Array.isArray(value) && /^\d+$/u.test(segment)) {
+      return value[Number(segment)];
+    }
+    return value && typeof value === "object"
+      ? (value as Record<string, unknown>)[segment]
+      : undefined;
+  }, record);
 }
 
-describe("createSaltMcpServer", () => {
-  it("exposes exactly the v1 public MCP tool contract", async () => {
-    expect(TOOL_DEFINITIONS.map((definition) => definition.name)).toEqual([
-      ...V1_TOOL_ORDER,
-    ]);
+async function withProtocolClient(
+  run: (client: Client) => Promise<void>,
+  projectAccess: ProjectAccessOptions = {
+    mode: "restricted",
+    allowedRoots: [REPO_ROOT],
+    defaultRoot: REPO_ROOT,
+  },
+): Promise<void> {
+  const server = await createSaltMcpServer({
+    registryDir: catalogFixtureDirectory,
+    projectAccess,
+  });
+  await withConnectedProtocolClient(server, run);
+}
 
-    for (const definition of TOOL_DEFINITIONS) {
-      expect(definition.annotations).toEqual(
+interface DirectResourcePage {
+  resources: Array<{ uri: string; name: string; mimeType?: string }>;
+  nextCursor?: string;
+}
+
+async function directResourcePage(
+  client: Client,
+  cursor?: string,
+): Promise<DirectResourcePage> {
+  return client.request({
+    method: "resources/list",
+    params: cursor === undefined ? {} : { cursor },
+  }) as Promise<DirectResourcePage>;
+}
+
+async function withConnectedProtocolClient(
+  server: McpServer | Server,
+  run: (client: Client) => Promise<void>,
+): Promise<void> {
+  const client = new Client({
+    name: "salt-mcp-v2-protocol-test",
+    version: "1.0.0",
+  });
+  const [clientTransport, serverTransport] =
+    InMemoryTransport.createLinkedPair();
+  await server.connect(serverTransport);
+  await client.connect(clientTransport);
+
+  try {
+    await run(client);
+  } finally {
+    await client.close();
+    await server.close();
+  }
+}
+
+describe("createSaltMcpServer final public boundary", () => {
+  it("selects the documented legacy protocol era explicitly", async () => {
+    await withProtocolClient(async (client) => {
+      expect(client.getProtocolEra()).toBe(SALT_MCP_PROTOCOL_ERA);
+      expect(client.getNegotiatedProtocolVersion()).toBe(
+        SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS[0],
+      );
+    });
+  });
+
+  it("advertises exactly the three read-only adapter tools", async () => {
+    await withProtocolClient(async (client) => {
+      const listed = await client.listTools();
+      expect(listed.tools.map((tool) => tool.name)).toEqual([
+        ...REGISTERED_SALT_TOOL_NAMES,
+      ]);
+      expect(REGISTERED_SALT_TOOL_NAMES).toEqual([
+        "search_salt",
+        "inspect_salt_project",
+        "review_salt_code",
+      ]);
+
+      for (const tool of listed.tools) {
+        expect(tool.annotations).toEqual(
+          expect.objectContaining({
+            readOnlyHint: true,
+            destructiveHint: false,
+            idempotentHint: true,
+            openWorldHint: false,
+          }),
+        );
+        expect(tool.inputSchema.additionalProperties).toBe(false);
+        expect(tool.outputSchema?.additionalProperties).toBe(false);
+        expect(tool.inputSchema.$schema).toBe(JSON_SCHEMA_2020_12);
+        expect(tool.outputSchema?.$schema).toBe(JSON_SCHEMA_2020_12);
+        assertStrictNestedObjects(tool.inputSchema, `${tool.name}.input`);
+        assertStrictNestedObjects(tool.outputSchema, `${tool.name}.output`);
+        assertRequiredObjectProperty(
+          tool.outputSchema!,
+          "provenance",
+          `${tool.name}.output`,
+        );
+      }
+      expect(
+        Buffer.byteLength(JSON.stringify(listed), "utf8"),
+      ).toBeLessThanOrEqual(15_000);
+    });
+  });
+
+  it("returns typed v2 protocol errors for removed, unknown, and disabled tools", async () => {
+    await withProtocolClient(async (client) => {
+      for (const name of [...REMOVED_TOOL_NAMES, "unknown_salt_tool"]) {
+        const error = await client
+          .callTool({ name, arguments: {} })
+          .then(() => undefined)
+          .catch((caught: unknown) => caught);
+        expect(error).toBeInstanceOf(ProtocolError);
+        expect(error).toMatchObject({ code: ProtocolErrorCode.InvalidParams });
+      }
+    });
+
+    const server = new McpServer(
+      { name: "disabled-tool-probe", version: "1.0.0" },
+      { supportedProtocolVersions: [...SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS] },
+    );
+    const disabledTool = server.registerTool(
+      "disabled_probe",
+      { inputSchema: z.object({}).strict() },
+      () => ({ content: [{ type: "text", text: "unreachable" }] }),
+    );
+    disabledTool.disable();
+
+    await withConnectedProtocolClient(server, async (client) => {
+      const error = await client
+        .callTool({ name: "disabled_probe", arguments: {} })
+        .then(() => undefined)
+        .catch((caught: unknown) => caught);
+      expect(error).toBeInstanceOf(ProtocolError);
+      expect(error).toMatchObject({ code: ProtocolErrorCode.InvalidParams });
+      expect((error as Error).message).toMatch(/disabled_probe.*disabled/iu);
+    });
+  });
+
+  it("distinguishes direct server pages from typed-client aggregation", async () => {
+    const server = new Server(
+      { name: "pagination-probe", version: "1.0.0" },
+      { supportedProtocolVersions: [...SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS] },
+    );
+    server.registerCapabilities({ tools: {} });
+    const observedCursors: Array<string | undefined> = [];
+    server.setRequestHandler("tools/list", (request) => {
+      const cursor = request.params?.cursor;
+      observedCursors.push(cursor);
+      if (cursor === "page-2") {
+        return {
+          tools: [
+            {
+              name: "second_page",
+              inputSchema: { type: "object", additionalProperties: false },
+            },
+          ],
+        };
+      }
+      return {
+        tools: [
+          {
+            name: "first_page",
+            inputSchema: { type: "object", additionalProperties: false },
+          },
+        ],
+        nextCursor: "page-2",
+      };
+    });
+
+    await withConnectedProtocolClient(server, async (client) => {
+      const firstPage = await client.listTools({ cursor: "page-1" });
+      expect(firstPage).toMatchObject({
+        tools: [{ name: "first_page" }],
+        nextCursor: "page-2",
+      });
+
+      const secondPage = await client.listTools({
+        cursor: firstPage.nextCursor,
+      });
+      expect(secondPage).toMatchObject({
+        tools: [{ name: "second_page" }],
+      });
+      expect(secondPage.nextCursor).toBeUndefined();
+
+      const aggregated = await client.listTools();
+      expect(aggregated.tools.map((tool) => tool.name)).toEqual([
+        "first_page",
+        "second_page",
+      ]);
+      expect(aggregated.nextCursor).toBeUndefined();
+    });
+
+    expect(observedCursors).toEqual(["page-1", "page-2", undefined, "page-2"]);
+  });
+
+  it("searches summaries and links exact digest-bound resources", async () => {
+    await withProtocolClient(async (client) => {
+      const result = await client.callTool({
+        name: "search_salt",
+        arguments: {
+          query: "Button",
+          families: ["component"],
+          statuses: ["stable"],
+          limit: 3,
+        },
+      });
+      expect(result.isError).not.toBe(true);
+      const payload = toolPayload(result) as {
+        data?: {
+          matches?: Array<{
+            title?: string;
+            uri?: string;
+            evidence?: { matched_fields?: string[] };
+            provenance?: { resource_uri?: string };
+          }>;
+          ambiguity?: {
+            candidate_count?: number;
+            top_score_tie_count?: number;
+            is_ambiguous?: boolean;
+          };
+        };
+        scope?: {
+          kind?: string;
+          returned?: number;
+          searched_statuses?: string[] | null;
+        };
+        coverage?: { matched_documents?: number };
+        provenance?: { semantic_digest?: string };
+      };
+      const button = payload.data?.matches?.find(
+        (match) => match.title === "Button",
+      );
+      expect(button?.uri).toMatch(
+        /^salt:\/\/catalog\/v2\/sha256-[0-9a-f]{64}\/components\//u,
+      );
+      expect(payload.scope).toMatchObject({
+        kind: "catalog_search",
+        returned: expect.any(Number),
+        searched_statuses: ["stable"],
+      });
+      expect(payload.provenance?.semantic_digest).toBe(
+        runtimeContext.store.manifest.semantic_digest,
+      );
+      expect(button?.evidence?.matched_fields).toContain("title");
+      expect(button?.provenance?.resource_uri).toBe(button?.uri);
+      expect(payload.data?.ambiguity).toEqual(
         expect.objectContaining({
-          readOnlyHint: true,
-          destructiveHint: false,
+          candidate_count: expect.any(Number),
+          top_score_tie_count: expect.any(Number),
+          is_ambiguous: expect.any(Boolean),
         }),
       );
-    }
+      expect(payload.coverage?.matched_documents).toBe(
+        payload.data?.ambiguity?.candidate_count,
+      );
+      expect(
+        Buffer.byteLength(JSON.stringify(result), "utf8"),
+      ).toBeLessThanOrEqual(MAX_SEARCH_TOOL_RESULT_UTF8_BYTES);
+      expect(result.content).toContainEqual(
+        expect.objectContaining({
+          type: "resource_link",
+          uri: button?.uri,
+        }),
+      );
 
-    await withRegistryDir(
-      async (registryDir) => {
-        await writeBaseArtifacts(registryDir);
-      },
-      async (registryDir) => {
-        const server = await createSaltMcpServer({ registryDir });
-        const registeredTools = Object.keys(
-          (
-            server as unknown as {
-              _registeredTools: Record<string, unknown>;
-            }
-          )._registeredTools,
-        );
+      const resource = await client.readResource({ uri: button?.uri ?? "" });
+      expect(JSON.stringify(resource.contents)).toContain("Button");
+      expect(JSON.stringify(resource.contents)).toContain(
+        runtimeContext.store.manifest.semantic_digest,
+      );
+      expect(
+        Buffer.byteLength(JSON.stringify(resource), "utf8"),
+      ).toBeLessThanOrEqual(MAX_CATALOG_RESOURCE_READ_UTF8_BYTES);
+      const recordContent = resource.contents[0];
+      if (!recordContent || !("text" in recordContent)) {
+        throw new Error("Button resource did not return a JSON record.");
+      }
+      const recordEnvelope = JSON.parse(recordContent.text) as {
+        content_resources?: Array<{ uri?: string }>;
+      };
+      expect(recordEnvelope).not.toHaveProperty("content");
+      const contentUri = recordEnvelope.content_resources?.[0]?.uri;
+      expect(contentUri).toMatch(
+        /^salt:\/\/catalog\/v2\/sha256-[0-9a-f]{64}\/content\//u,
+      );
+      const linkedContent = await client.readResource({
+        uri: contentUri ?? "",
+      });
+      expect(linkedContent.contents[0]).toEqual(
+        expect.objectContaining({ uri: contentUri }),
+      );
+    });
+  }, 30_000);
 
-        expect(registeredTools).toEqual([...V1_TOOL_ORDER]);
-      },
-    );
-  });
-
-  it("keeps v1 workflow schemas narrow and read-only", () => {
-    expect(objectSchemaKeys("create_salt_ui")).toEqual([
-      "a11y_required",
-      "include_starter_code",
-      "package",
-      "prefer_stable",
-      "query",
-      "resolved_entities",
-      "root_dir",
-      "solution_type",
-      "status",
-    ]);
-    expect(objectSchemaKeys("migrate_to_salt")).toEqual([
-      "a11y_required",
-      "code",
-      "include_starter_code",
-      "package",
-      "prefer_stable",
-      "query",
-      "root_dir",
-      "source_outline",
-    ]);
-    expect(objectSchemaKeys("review_salt_ui")).toEqual([
-      "code",
-      "expected_targets",
-      "fidelity",
-      "framework",
-      "from_version",
-      "max_issues",
-      "package_version",
-      "root_dir",
-      "to_version",
-    ]);
-  });
-
-  it("keeps create input and continuation rerun schemas in exact parity", () => {
-    const inputSchema = getInputObjectSchema("create_salt_ui");
-    const outputSchema = getToolDefinition("create_salt_ui")
-      .outputSchema as z.ZodType;
-    const validArgs = {
-      query: "  profile page with tabs and avatar  ",
-      solution_type: "component",
-      package: "@salt-ds/core",
-      status: "beta",
-      prefer_stable: false,
-      a11y_required: false,
-      include_starter_code: false,
-      resolved_entities: ["Tabs", "Avatar"],
-      root_dir: "C:\\workspace\\consumer",
-    };
-    const acceptsRerunArgs = (args: Record<string, unknown>) => {
-      const fixture = buildValidCreateOutputSchemaFixture();
-      return outputSchema.safeParse({
-        ...fixture,
-        action: {
-          ...fixture.action,
-          post_action: {
-            ...fixture.action.post_action,
-            args,
-          },
-        },
-      }).success;
-    };
-    const acceptsExactRetryArgs = (args: Record<string, unknown>) => {
-      const fixture = buildValidCreateOutputSchemaFixture();
-      return outputSchema.safeParse({
-        ...fixture,
-        action: {
-          kind: "tool_call",
-          tool: "create_salt_ui",
-          mode: "exact_name",
-          args,
-          rule_ids: [],
-          post_action: null,
-        },
-      }).success;
-    };
-
-    expect(inputSchema.safeParse(validArgs).success).toBe(true);
-    expect(acceptsRerunArgs(validArgs)).toBe(true);
-    expect(acceptsExactRetryArgs(validArgs)).toBe(true);
-
-    const invalidArgs = [
-      { ...validArgs, query: "x".repeat(10_001) },
-      { ...validArgs, query: "   " },
-      { ...validArgs, package: "p".repeat(257) },
-      { ...validArgs, root_dir: "r".repeat(4_097) },
-      {
-        ...validArgs,
-        resolved_entities: Array.from(
-          { length: 26 },
-          (_, index) => `Entity ${index}`,
-        ),
-      },
-      { ...validArgs, resolved_entities: ["e".repeat(257)] },
-      { ...validArgs, undeclared: true },
-    ];
-
-    for (const args of invalidArgs) {
-      expect(inputSchema.safeParse(args).success).toBe(false);
-      expect(acceptsRerunArgs(args)).toBe(false);
-      expect(acceptsExactRetryArgs(args)).toBe(false);
-    }
-  });
-
-  it("rejects invented live-evaluation arguments before workflow execution", () => {
-    const toStrictInputSchema = (name: string) => {
-      const inputSchema = getToolDefinition(name).inputSchema;
-      return inputSchema instanceof z.ZodType
-        ? inputSchema
-        : z.object(inputSchema).strict();
-    };
-    const createSchema = toStrictInputSchema("create_salt_ui");
-    const referenceSchema = toStrictInputSchema("get_salt_reference");
-
-    expect(
-      createSchema.safeParse({
-        task: "Create a dashboard",
-        target_file: "Dashboard.tsx",
-      }).success,
-    ).toBe(false);
-    expect(
-      createSchema.safeParse({
-        target_type: "component",
-        target_name: "Table",
-      }).success,
-    ).toBe(false);
-    expect(
-      createSchema.safeParse({
-        query: "Create a dashboard with a transaction table",
-        resolved_entities: ["Table"],
-      }).success,
-    ).toBe(true);
-
-    expect(referenceSchema.safeParse({ names: ["Table"] }).success).toBe(true);
-    expect(referenceSchema.safeParse({ names: ["   "] }).success).toBe(false);
-    expect(
-      referenceSchema.safeParse({
-        names: ["Table"],
-        query: "dashboard",
-      }).success,
-    ).toBe(false);
-    expect(
-      referenceSchema.safeParse({ names: ["Table", "Card", "Input", "Link"] })
-        .success,
-    ).toBe(false);
-    expect(
-      referenceSchema.safeParse({
-        names: ["Table"],
-        package: "@salt-ds/core",
-      }).success,
-    ).toBe(false);
-    expect(
-      referenceSchema.safeParse({ names: ["Table"], entity_type: "auto" })
-        .success,
-    ).toBe(false);
-    expect(
-      referenceSchema.safeParse({ names: ["Table"], include: ["tokens"] })
-        .success,
-    ).toBe(false);
-    expect(referenceSchema.safeParse({}).success).toBe(false);
-  });
-
-  it("enforces strict inputs through the real MCP transport", async () => {
-    await withRegistryDir(
-      copyV1CatalogArtifactsFromGenerated,
-      async (registryDir) => {
-        const server = await createSaltMcpServer({ registryDir });
-        const client = new Client({
-          name: "salt-mcp-contract-test",
-          version: "1.0.0",
+  it("keeps representative search responses compact and fallback-equivalent", async () => {
+    await withProtocolClient(async (client) => {
+      const sizes: number[] = [];
+      for (const query of [
+        "Button",
+        "border",
+        "text color",
+        "padding",
+        "disabled text",
+      ]) {
+        const result = await client.callTool({
+          name: "search_salt",
+          arguments: { query, limit: 8 },
         });
-        const [clientTransport, serverTransport] =
-          InMemoryTransport.createLinkedPair();
-        await server.connect(serverTransport);
-        await client.connect(clientTransport);
-
-        try {
-          const listedTools = await client.listTools();
-          expect(listedTools.tools.map((tool) => tool.name)).toEqual([
-            ...V1_TOOL_ORDER,
-          ]);
-          expect(
-            Buffer.byteLength(JSON.stringify(listedTools.tools), "utf8"),
-          ).toBeLessThanOrEqual(MAX_ADVERTISED_TOOL_SCHEMA_BYTES);
-          for (const tool of listedTools.tools) {
-            expect(tool.inputSchema.additionalProperties).toBe(false);
-          }
-
-          const schemasByName = new Map(
-            listedTools.tools.map((tool) => [tool.name, tool.inputSchema]),
-          );
-          const ajv = new Ajv({ strict: false });
-          const listedSchemaAccepts = (
-            name: (typeof V1_TOOL_ORDER)[number],
-            args: object,
-          ) => {
-            const schema = schemasByName.get(name);
-            if (!schema) {
-              throw new Error(`Missing listed schema for ${name}.`);
-            }
-            return ajv.compile(schema)(args);
-          };
-
-          expect(
-            listedSchemaAccepts("get_salt_reference", { names: ["Table"] }),
-          ).toBe(true);
-          expect(listedSchemaAccepts("get_salt_reference", {})).toBe(false);
-          expect(
-            listedSchemaAccepts("get_salt_reference", { names: ["   "] }),
-          ).toBe(false);
-          expect(
-            listedSchemaAccepts("get_salt_reference", {
-              names: ["Table", "Card", "Input", "Link"],
-            }),
-          ).toBe(false);
-          expect(
-            listedSchemaAccepts("get_salt_reference", {
-              names: ["Table"],
-              query: "dashboard",
-            }),
-          ).toBe(false);
-          expect(
-            listedSchemaAccepts("get_salt_reference", {
-              names: ["Table"],
-              package: "@salt-ds/core",
-            }),
-          ).toBe(false);
-
-          expect(
-            listedSchemaAccepts("migrate_to_salt", {
-              query: "Migrate this screen to Salt",
-            }),
-          ).toBe(true);
-          expect(listedSchemaAccepts("migrate_to_salt", {})).toBe(false);
-          expect(listedSchemaAccepts("migrate_to_salt", { query: "   " })).toBe(
-            false,
-          );
-          expect(
-            listedSchemaAccepts("migrate_to_salt", {
-              query: "Migrate this screen to Salt",
-              source_outline: {
-                regions: ["header"],
-                invented: ["not part of the contract"],
-              },
-            }),
-          ).toBe(false);
-          expect(
-            listedSchemaAccepts("review_salt_ui", {
-              code: "export function Example() { return null; }",
-              expected_targets: {
-                components: ["Button"],
-                invented: true,
-              },
-            }),
-          ).toBe(false);
-
-          const validReference = await client.callTool({
-            name: "get_salt_reference",
-            arguments: { names: ["Table"] },
-          });
-          expect(validReference.isError).not.toBe(true);
-
-          const validMigrate = await client.callTool({
-            name: "migrate_to_salt",
-            arguments: { query: "Migrate this screen to Salt" },
-          });
-          expect(validMigrate.isError).not.toBe(true);
-
-          const invalidCreate = await client.callTool({
-            name: "create_salt_ui",
-            arguments: {
-              query: "Button",
-              task: "invented alias",
-              target_file: "Invented.tsx",
-            },
-          });
-          expect(invalidCreate.isError).toBe(true);
-          expect(JSON.stringify(invalidCreate.content)).toMatch(
-            /invalid|unrecognized/i,
-          );
-
-          const invalidReference = await client.callTool({
-            name: "get_salt_reference",
-            arguments: { name: "Table" },
-          });
-          expect(invalidReference.isError).toBe(true);
-          expect(JSON.stringify(invalidReference.content)).toMatch(
-            /invalid|required/i,
-          );
-
-          const invalidNestedReview = await client.callTool({
-            name: "review_salt_ui",
-            arguments: {
-              code: "export function Example() { return null; }",
-              expected_targets: {
-                components: ["Button"],
-                invented: true,
-              },
-            },
-          });
-          expect(invalidNestedReview.isError).toBe(true);
-          expect(JSON.stringify(invalidNestedReview.content)).toMatch(
-            /invalid|unrecognized/i,
-          );
-        } finally {
-          await client.close();
-          await server.close();
+        const payload = toolPayload(result) as {
+          data?: { matches?: Array<{ id?: string; uri?: string }> };
+        };
+        const fallback = result.content.find((part) => part.type === "text");
+        expect(fallback?.type).toBe("text");
+        if (fallback?.type !== "text") continue;
+        for (const match of payload.data?.matches ?? []) {
+          expect(fallback.text).toContain(match.id);
+          expect(fallback.text).toContain(match.uri);
         }
-      },
-    );
-  });
+        expect(fallback.text).toContain("Scope: families=");
+        expect(fallback.text).toContain("Coverage: indexed=");
+        expect(fallback.text).toContain("top-score ties=");
+        sizes.push(Buffer.byteLength(JSON.stringify(result), "utf8"));
+      }
+      sizes.sort((left, right) => left - right);
+      const p95 = sizes[Math.ceil(sizes.length * 0.95) - 1] ?? 0;
+      expect(p95).toBeLessThanOrEqual(8_000);
+      expect(sizes.at(-1)).toBeLessThanOrEqual(
+        MAX_SEARCH_TOOL_RESULT_UTF8_BYTES,
+      );
+    });
+  }, 30_000);
 
-  it("carries create review targets through a real MCP create-to-review handoff", async () => {
-    await withRegistryDir(
-      copyV1CatalogArtifactsFromGenerated,
-      async (registryDir) => {
-        const server = await createSaltMcpServer({ registryDir });
-        const client = new Client({
-          name: "salt-mcp-handoff-test",
-          version: "1.0.0",
+  it("uses schema-valid adversarial search queries without exceeding public budgets", async () => {
+    await withProtocolClient(async (client) => {
+      for (const query of [
+        "漢".repeat(2_000),
+        `A${"\u0000".repeat(1_999)}`,
+        `A${"\ud800".repeat(1_999)}`,
+      ]) {
+        const result = await client.callTool({
+          name: "search_salt",
+          arguments: { query },
         });
-        const [clientTransport, serverTransport] =
-          InMemoryTransport.createLinkedPair();
-        await server.connect(serverTransport);
-        await client.connect(clientTransport);
+        expect(result.isError).not.toBe(true);
+        const payload = toolPayload(result) as {
+          data: { query: string };
+          scope: { truncated: boolean };
+          limitations: string[];
+        };
+        expect(
+          Buffer.byteLength(JSON.stringify(payload), "utf8"),
+        ).toBeLessThanOrEqual(MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES);
+        expect(
+          Buffer.byteLength(JSON.stringify(result), "utf8"),
+        ).toBeLessThanOrEqual(MAX_SEARCH_TOOL_RESULT_UTF8_BYTES);
+        expect(payload.data.query.length).toBeLessThan(query.length);
+        expect(payload.scope.truncated).toBe(true);
+        expect(payload.limitations.join(" ")).toMatch(
+          /used in full for search.*public echo was truncated/iu,
+        );
+        const fallback = result.content.find((part) => part.type === "text");
+        expect(fallback?.type === "text" ? fallback.text : "").toContain(
+          payload.data.query,
+        );
+        expect(
+          TOOL_DEFINITIONS.find(
+            (candidate) => candidate.name === "search_salt",
+          )?.outputValidationSchema.safeParse(payload).success,
+        ).toBe(true);
+      }
 
-        try {
-          const createResponse = await client.callTool({
-            name: "create_salt_ui",
-            arguments: {
-              query: "Button",
-              resolved_entities: ["Button"],
-            },
+      const asciiQuery = "x".repeat(2_000);
+      const asciiResult = await client.callTool({
+        name: "search_salt",
+        arguments: { query: asciiQuery },
+      });
+      expect(asciiResult.isError).not.toBe(true);
+      expect(
+        (toolPayload(asciiResult) as { data: { query: string } }).data.query,
+      ).toBe(asciiQuery);
+    });
+  }, 30_000);
+
+  it("inspects only the caller-selected project and makes no readiness claim", async () => {
+    await withProtocolClient(async (client) => {
+      const result = await client.callTool({
+        name: "inspect_salt_project",
+        arguments: {
+          root_dir: REPO_ROOT,
+          include_policy_ir: false,
+        },
+      });
+      expect(result.isError).not.toBe(true);
+      const payload = toolPayload(result) as {
+        data?: { root_dir?: string; package_manifest?: { name?: string } };
+        scope?: { kind?: string; filesystem_access?: string };
+        provenance?: { project_policy_digest?: string | null };
+      };
+      expect(payload.data?.root_dir?.replaceAll("\\", "/")).toBe(
+        REPO_ROOT.replaceAll("\\", "/"),
+      );
+      expect(payload.scope).toEqual(
+        expect.objectContaining({
+          kind: "configured_project_inspection",
+          filesystem_access: "read_only",
+          authorization: "restricted",
+        }),
+      );
+      expect(payload.provenance).toEqual({ project_policy_digest: null });
+      expect(JSON.stringify(payload)).not.toMatch(
+        /implementation_ready|canonical_complete|exact_request_safe|finish_without_changes|post_action/iu,
+      );
+      expect(
+        Buffer.byteLength(JSON.stringify(result), "utf8"),
+      ).toBeLessThanOrEqual(MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES);
+      const fallback = result.content.find((part) => part.type === "text");
+      expect(
+        fallback?.type === "text" ? JSON.parse(fallback.text) : null,
+      ).toEqual(payload);
+      const invalidPayload = structuredClone(payload);
+      (invalidPayload.data as Record<string, unknown>).invented = true;
+      const definition = TOOL_DEFINITIONS.find(
+        (candidate) => candidate.name === "inspect_salt_project",
+      );
+      expect(
+        definition?.outputValidationSchema.safeParse(invalidPayload).success,
+      ).toBe(false);
+    });
+  }, 30_000);
+
+  it("bounds caller-controlled inspection fields without turning valid input into a tool error", async () => {
+    const projectRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-inspect-public-budget-"),
+    );
+    try {
+      await fs.writeFile(
+        path.join(projectRoot, "package.json"),
+        JSON.stringify({
+          name: "漢".repeat(14_000),
+          packageManager: "manager".repeat(6_000),
+          dependencies: {
+            "@salt-ds/core": `workspace:${"\u0000".repeat(20_000)}`,
+          },
+        }),
+        "utf8",
+      );
+
+      await withProtocolClient(
+        async (client) => {
+          const result = await client.callTool({
+            name: "inspect_salt_project",
+            arguments: { root_dir: projectRoot, include_policy_ir: false },
           });
-          const createContent = createResponse.structuredContent as {
-            contract?: string;
-            workflow?: string;
-            guidance?: {
-              review_targets?: {
-                components?: string[];
-                patterns?: string[];
-                composition_contract?: unknown;
-                source?: string;
+          expect(result.isError).not.toBe(true);
+          const payload = toolPayload(result) as {
+            data: {
+              package_manifest: {
+                name: string | null;
+                package_manager: string;
+              } | null;
+            };
+            coverage: {
+              result_budget: {
+                max_utf8_bytes: number;
+                truncated: boolean;
+                omissions: Array<{
+                  section: string;
+                  available: number;
+                  returned: number;
+                }>;
               };
             };
           };
-          const reviewTargets = createContent.guidance?.review_targets;
-
-          expect(createContent).toMatchObject({
-            contract: "salt_workflow_v1",
-            workflow: "create",
+          expect(payload.data.package_manifest).toMatchObject({
+            name: null,
+            package_manager: "unknown",
           });
-          expect(reviewTargets).toMatchObject({
-            components: expect.arrayContaining(["Button"]),
-            source: "create_report",
+          expect(payload.coverage.result_budget).toMatchObject({
+            max_utf8_bytes: MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
+            truncated: true,
           });
+          expect(payload.coverage.result_budget.omissions).toEqual(
+            expect.arrayContaining([
+              expect.objectContaining({
+                section: "package_manifest.name",
+                available: 1,
+                returned: 0,
+              }),
+              expect.objectContaining({
+                section: "installation.resolved_packages",
+                available: 1,
+                returned: 0,
+              }),
+            ]),
+          );
+          expect(
+            Buffer.byteLength(JSON.stringify(payload), "utf8"),
+          ).toBeLessThanOrEqual(MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES);
+          expect(
+            Buffer.byteLength(JSON.stringify(result), "utf8"),
+          ).toBeLessThanOrEqual(MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES);
+          const fallback = result.content.find((part) => part.type === "text");
+          expect(
+            fallback?.type === "text" ? JSON.parse(fallback.text) : null,
+          ).toEqual(payload);
+          expect(
+            TOOL_DEFINITIONS.find(
+              (candidate) => candidate.name === "inspect_salt_project",
+            )?.outputValidationSchema.safeParse(payload).success,
+          ).toBe(true);
+        },
+        {
+          mode: "restricted",
+          allowedRoots: [projectRoot],
+          defaultRoot: projectRoot,
+        },
+      );
+    } finally {
+      await fs.rm(projectRoot, { recursive: true, force: true });
+    }
+  }, 30_000);
 
-          const reviewResponse = await client.callTool({
-            name: "review_salt_ui",
-            arguments: {
-              code: [
-                'import { Button } from "@salt-ds/core";',
-                "",
-                "export function SaveAction() {",
-                "  return <Button onClick={() => undefined}>Save</Button>;",
-                "}",
-              ].join("\n"),
-              framework: "react",
-              expected_targets: reviewTargets,
+  it("budgets the exact escape-heavy inspection wrapper without a tool error", async () => {
+    const projectRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-inspect-escape-budget-"),
+    );
+    try {
+      await fs.mkdir(path.join(projectRoot, ".salt"), { recursive: true });
+      await fs.writeFile(
+        path.join(projectRoot, "package.json"),
+        JSON.stringify({ name: "escape-heavy-fixture" }),
+        "utf8",
+      );
+      await fs.writeFile(
+        path.join(projectRoot, ".salt", "team.json"),
+        JSON.stringify({
+          contract: "project_conventions_v1",
+          version: "1.0.0",
+          approved_wrappers: [
+            {
+              name: "\\".repeat(4_096),
+              wraps: "Button",
+              reason: '\\"\u0001'.repeat(800),
             },
+          ],
+        }),
+        "utf8",
+      );
+
+      await withProtocolClient(
+        async (client) => {
+          const result = await client.callTool({
+            name: "inspect_salt_project",
+            arguments: { root_dir: projectRoot, include_policy_ir: true },
           });
-          const reviewContent = reviewResponse.structuredContent as {
-            contract?: string;
-            workflow?: string;
-            status?: string;
-            safety?: { blocking_reasons?: string[] };
-            guidance?: {
-              findings?: Array<{ rule?: string | null; title?: string }>;
+          expect(result.isError).not.toBe(true);
+          const payload = toolPayload(result) as {
+            data: { policy: { ir: { untrusted_ir: unknown } | null } };
+            coverage: {
+              result_budget: {
+                omissions: Array<{
+                  section: string;
+                  available: number;
+                  returned: number;
+                }>;
+              };
             };
           };
-
-          expect(reviewContent).toMatchObject({
-            contract: "salt_workflow_v1",
-            workflow: "review",
-          });
-          expect(reviewContent.safety?.blocking_reasons ?? []).toEqual([]);
+          expect(payload.data.policy.ir?.untrusted_ir).toBeNull();
+          expect(payload.coverage.result_budget.omissions).toEqual(
+            expect.arrayContaining([
+              {
+                section: "policy.ir",
+                available: 1,
+                returned: 0,
+              },
+            ]),
+          );
           expect(
-            reviewContent.guidance?.findings?.filter((finding) =>
-              finding.rule?.startsWith("workflow-expected"),
-            ) ?? [],
-          ).toEqual([]);
+            Buffer.byteLength(JSON.stringify(result), "utf8"),
+          ).toBeLessThanOrEqual(MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES);
+          const fallback = result.content.find((part) => part.type === "text");
           expect(
-            (
-              getToolDefinition("review_salt_ui").outputSchema as z.ZodType
-            ).safeParse(reviewContent).success,
+            fallback?.type === "text" ? JSON.parse(fallback.text) : null,
+          ).toEqual(payload);
+          expect(
+            TOOL_DEFINITIONS.find(
+              (candidate) => candidate.name === "inspect_salt_project",
+            )?.outputValidationSchema.safeParse(payload).success,
           ).toBe(true);
-        } finally {
-          await client.close();
-          await server.close();
-        }
-      },
-    );
-  });
+        },
+        {
+          mode: "restricted",
+          allowedRoots: [projectRoot],
+          defaultRoot: projectRoot,
+        },
+      );
+    } finally {
+      await fs.rm(projectRoot, { recursive: true, force: true });
+    }
+  }, 30_000);
 
-  it("uses declared approved wrapper imports when reviewing canonical component targets", async () => {
-    await withRegistryDir(
-      async (registryDir) => {
-        await copyV1CatalogArtifactsFromGenerated(registryDir);
-        await fs.writeFile(
-          path.join(registryDir, "package.json"),
-          JSON.stringify({
-            name: "policy-review-fixture",
-            private: true,
-            dependencies: { "@salt-ds/core": "2.0.0" },
-          }),
-          "utf8",
-        );
-        const policyDir = path.join(registryDir, ".salt");
-        await fs.mkdir(policyDir, { recursive: true });
-        await fs.writeFile(
-          path.join(policyDir, "team.json"),
-          JSON.stringify(
+  it("publishes digest-bound authorized policy resources and applies established policy facts", async () => {
+    const projectRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-policy-resource-"),
+    );
+    try {
+      await fs.mkdir(path.join(projectRoot, ".salt"), { recursive: true });
+      await fs.mkdir(path.join(projectRoot, "src"), { recursive: true });
+      await fs.writeFile(
+        path.join(projectRoot, "package.json"),
+        JSON.stringify({ name: "policy-resource-fixture" }),
+        "utf8",
+      );
+      await fs.writeFile(
+        path.join(projectRoot, "src", "ActionButton.tsx"),
+        "export const ActionButton = () => null;\n",
+        "utf8",
+      );
+      await fs.writeFile(
+        path.join(projectRoot, ".salt", "team.json"),
+        JSON.stringify({
+          contract: "project_conventions_v1",
+          version: "1.0.0",
+          approved_wrappers: [
             {
+              name: "ActionButton",
+              wraps: "Button",
+              reason: "Bound fixture convention.",
+              import: {
+                from: "./src/ActionButton",
+                name: "ActionButton",
+              },
+            },
+          ],
+          token_family_policies: [
+            {
+              family: "spacing",
+              mode: "allow-local-aliases",
+              reason: "Aliases are permitted, not required.",
+            },
+          ],
+        }),
+        "utf8",
+      );
+
+      await withProtocolClient(
+        async (client) => {
+          const inspected = await client.callTool({
+            name: "inspect_salt_project",
+            arguments: { root_dir: projectRoot, include_policy_ir: true },
+          });
+          expect(inspected.isError).not.toBe(true);
+          const inspectedPayload = toolPayload(inspected) as {
+            data: {
+              policy: {
+                ir: {
+                  digest: string;
+                  manifest_uri: string;
+                } | null;
+              };
+            };
+          };
+          const policyIr = inspectedPayload.data.policy.ir;
+          expect(policyIr).not.toBeNull();
+          const manifestUri = policyIr!.manifest_uri;
+          expect(inspected.content).toEqual(
+            expect.arrayContaining([
+              expect.objectContaining({
+                type: "resource_link",
+                uri: manifestUri,
+              }),
+            ]),
+          );
+          const manifestResource = await client.readResource({
+            uri: manifestUri,
+          });
+          const manifestContent = manifestResource.contents[0];
+          if (!manifestContent || !("text" in manifestContent)) {
+            throw new Error("Project-policy manifest omitted text content.");
+          }
+          const manifest = JSON.parse(manifestContent.text) as {
+            policy_digest: string;
+            canonical_utf8_bytes: number;
+            chunk_count: number;
+            chunk_uri_template: string;
+          };
+          expect(manifest.policy_digest).toBe(policyIr!.digest);
+          const chunks = await Promise.all(
+            Array.from({ length: manifest.chunk_count }, async (_, index) => {
+              const chunkResource = await client.readResource({
+                uri: manifest.chunk_uri_template.replace(
+                  "{index}",
+                  String(index),
+                ),
+              });
+              const content = chunkResource.contents[0];
+              if (!content || !("text" in content)) {
+                throw new Error("Project-policy chunk omitted text content.");
+              }
+              return JSON.parse(content.text) as { data: string };
+            }),
+          );
+          const canonicalBytes = Buffer.concat(
+            chunks.map((chunk) => Buffer.from(chunk.data, "base64url")),
+          );
+          expect(canonicalBytes.byteLength).toBe(manifest.canonical_utf8_bytes);
+          expect(
+            `sha256:${createHash("sha256").update(canonicalBytes).digest("hex")}`,
+          ).toBe(policyIr!.digest);
+          const reconstructed = JSON.parse(canonicalBytes.toString("utf8")) as {
+            occurrences: Array<{ occurrence_id: string }>;
+          };
+          expect(reconstructed.occurrences.length).toBeGreaterThanOrEqual(2);
+
+          const reviewed = await client.callTool({
+            name: "review_salt_code",
+            arguments: {
+              root_dir: projectRoot,
+              artifacts: [
+                {
+                  id: "policy.tsx",
+                  language: "tsx",
+                  text: [
+                    'import { Button } from "@salt-ds/core";',
+                    "export const Demo = () => <Button>Save</Button>;",
+                  ].join("\n"),
+                },
+              ],
+            },
+          });
+          expect(reviewed.isError).not.toBe(true);
+          const reviewedPayload = toolPayload(reviewed) as {
+            data: {
+              results: Array<{
+                findings: Array<{
+                  rule_id: string;
+                  parsed_fact: { subject: string };
+                  evidence: {
+                    references: Array<{ locator: string; field_path: string }>;
+                  };
+                }>;
+              }>;
+            };
+            coverage: { project_policy: { digest: string } };
+          };
+          expect(reviewedPayload.coverage.project_policy.digest).toBe(
+            policyIr!.digest,
+          );
+          const policyFinding = reviewedPayload.data.results[0]!.findings.find(
+            (finding) =>
+              finding.rule_id === "salt.project_policy.approved_wrapper",
+          );
+          expect(policyFinding).toBeDefined();
+          const claimReference = policyFinding!.evidence.references[0]!;
+          expect(claimReference.field_path).toBe("claim.declaration.name");
+          expect(reviewed.content).toEqual(
+            expect.arrayContaining([
+              expect.objectContaining({
+                type: "resource_link",
+                uri: claimReference.locator,
+              }),
+            ]),
+          );
+          const claim = await client.readResource({
+            uri: claimReference.locator,
+          });
+          const claimContent = claim.contents[0];
+          const claimBody =
+            claimContent && "text" in claimContent
+              ? (JSON.parse(claimContent.text) as Record<string, unknown>)
+              : null;
+          expect(
+            claimContent && "text" in claimContent ? claimContent.text : "",
+          ).not.toContain(projectRoot);
+          expect(
+            claimBody
+              ? valueAtFieldPath(claimBody, claimReference.field_path)
+              : null,
+          ).toBe("ActionButton");
+          expect(
+            policyFinding!.evidence.references.map(
+              (reference) => reference.field_path,
+            ),
+          ).toEqual(
+            expect.arrayContaining([
+              "claim.selector",
+              "claim.applicability",
+              "claim.source",
+              "claim.applicability.import_validation",
+            ]),
+          );
+          for (const reference of policyFinding!.evidence.references) {
+            expect(
+              claimBody
+                ? valueAtFieldPath(claimBody, reference.field_path)
+                : undefined,
+              reference.field_path,
+            ).toBeDefined();
+          }
+          expect(policyFinding!.parsed_fact.subject.split("#").at(-1)).toBe(
+            claimBody
+              ? valueAtFieldPath(claimBody, "claim.selector.value")
+              : null,
+          );
+          expect(
+            claimBody
+              ? valueAtFieldPath(
+                  claimBody,
+                  "claim.applicability.import_validation",
+                )
+              : null,
+          ).toEqual({
+            status: "resolved",
+            from: "./src/ActionButton",
+            name: "ActionButton",
+          });
+
+          await fs.writeFile(
+            path.join(projectRoot, ".salt", "team.json"),
+            JSON.stringify({
               contract: "project_conventions_v1",
               version: "1.0.0",
               approved_wrappers: [
                 {
-                  name: "AppButton",
+                  name: "ChangedButton",
                   wraps: "Button",
-                  reason: "Adds approved product defaults.",
-                  import: {
-                    from: "@/components/AppButton",
-                    name: "AppButton",
-                  },
+                  reason: "Changed after the cited snapshot was issued.",
                 },
               ],
-            },
-            null,
-            2,
-          ),
-          "utf8",
-        );
-        await fs.mkdir(path.join(registryDir, "src", "components"), {
-          recursive: true,
-        });
-        await fs.writeFile(
-          path.join(registryDir, "tsconfig.json"),
-          JSON.stringify({
-            compilerOptions: {
-              paths: {
-                "@/*": ["./src/*"],
-              },
-            },
-          }),
-          "utf8",
-        );
-        await fs.writeFile(
-          path.join(registryDir, "src", "components", "AppButton.tsx"),
-          "export function AppButton() { return null; }\n",
-          "utf8",
-        );
-      },
-      async (registryDir) => {
-        const server = await createSaltMcpServer({ registryDir });
-        const client = new Client({
-          name: "salt-mcp-policy-review-test",
-          version: "1.0.0",
-        });
-        const [clientTransport, serverTransport] =
-          InMemoryTransport.createLinkedPair();
-        await server.connect(serverTransport);
-        await client.connect(clientTransport);
-
-        try {
-          const contextResponse = await client.callTool({
-            name: "get_salt_project_context",
-            arguments: {
-              root_dir: registryDir,
-              include_policy_diagnostics: true,
-            },
-          });
-          expect(contextResponse.structuredContent).toMatchObject({
-            result: {
-              policy: {
-                import_targets: {
-                  status: "ready",
-                  declared_count: 1,
-                  resolved_count: 1,
-                  blocking_count: 0,
-                },
-              },
-            },
-            artifacts: {
-              summary: {
-                context_health: {
-                  repo_specific_workflows_ready: true,
-                },
-              },
-            },
-          });
-          expect(
-            (
-              getToolDefinition("get_salt_project_context")
-                .outputSchema as z.ZodType
-            ).safeParse(contextResponse.structuredContent).success,
-          ).toBe(true);
-
-          const reviewResponse = await client.callTool({
-            name: "review_salt_ui",
-            arguments: {
-              code: [
-                'import { AppButton } from "@/components/AppButton";',
-                "",
-                "export function SaveAction() {",
-                "  return <AppButton>Save</AppButton>;",
-                "}",
-              ].join("\n"),
-              framework: "react",
-              expected_targets: {
-                components: ["Button"],
-                source: "create_report",
-              },
-              root_dir: registryDir,
-            },
-          });
-          const reviewContent = reviewResponse.structuredContent as {
-            guidance?: {
-              findings?: Array<{ rule?: string | null }>;
-            };
-          };
-
-          expect(reviewContent.guidance?.findings ?? []).not.toEqual(
-            expect.arrayContaining([
-              expect.objectContaining({
-                rule: "workflow-expected-component-not-imported",
-              }),
-            ]),
+            }),
+            "utf8",
           );
-
-          const canonicalInsteadOfWrapper = await client.callTool({
-            name: "review_salt_ui",
-            arguments: {
-              code: [
-                'import { Button } from "@salt-ds/core";',
-                "",
-                "export function SaveAction() {",
-                "  return <Button>Save</Button>;",
-                "}",
-              ].join("\n"),
-              framework: "react",
-              root_dir: registryDir,
-            },
+          const retainedManifest = await client.readResource({
+            uri: manifestUri,
           });
-          expect(canonicalInsteadOfWrapper.structuredContent).toMatchObject({
-            status: expect.stringMatching(/^(partial|blocked)$/),
-            guidance: {
-              fixes: expect.arrayContaining([
-                expect.objectContaining({
-                  recommendation: expect.stringContaining("AppButton"),
-                }),
-              ]),
-            },
-          });
-
-          const wrongRootReview = await client.callTool({
-            name: "review_salt_ui",
-            arguments: {
-              code: [
-                'import { Button } from "@salt-ds/core";',
-                "export function SaveAction() {",
-                "  return <Button>Save</Button>;",
-                "}",
-              ].join("\n"),
-              root_dir: path.join(registryDir, "does-not-exist"),
-            },
-          });
-          expect(wrongRootReview.structuredContent).toMatchObject({
-            status: "blocked",
-            safety: {
-              exact_request_safe: false,
-              blocking_reasons: expect.arrayContaining([
-                "required project context is missing",
-              ]),
-            },
-            action: {
-              kind: "fix_context",
-              tool: "get_salt_project_context",
-              mode: "stop_and_fix_context",
-              args: { root_dir: registryDir.replaceAll("\\", "/") },
-              post_action: null,
-            },
-          });
+          const retainedManifestContent = retainedManifest.contents[0];
           expect(
-            JSON.stringify(wrongRootReview.structuredContent),
-          ).not.toContain("AppButton");
+            retainedManifestContent && "text" in retainedManifestContent
+              ? (
+                  JSON.parse(retainedManifestContent.text) as {
+                    policy_digest: string;
+                  }
+                ).policy_digest
+              : null,
+          ).toBe(policyIr!.digest);
+          const retainedClaim = await client.readResource({
+            uri: claimReference.locator,
+          });
+          const retainedClaimContent = retainedClaim.contents[0];
           expect(
-            (
-              getToolDefinition("review_salt_ui").outputSchema as z.ZodType
-            ).safeParse(wrongRootReview.structuredContent).success,
-          ).toBe(true);
+            retainedClaimContent && "text" in retainedClaimContent
+              ? valueAtFieldPath(
+                  JSON.parse(retainedClaimContent.text) as Record<
+                    string,
+                    unknown
+                  >,
+                  claimReference.field_path,
+                )
+              : null,
+          ).toBe("ActionButton");
 
-          const wrongRootCreate = await client.callTool({
-            name: "create_salt_ui",
-            arguments: {
-              query: "Button",
-              root_dir: path.join(registryDir, "does-not-exist"),
-            },
-          });
-          expect(wrongRootCreate.structuredContent).toMatchObject({
-            status: "blocked",
-            safety: {
-              exact_request_safe: false,
-              blocking_reasons: expect.arrayContaining([
-                "required project context is missing",
-              ]),
-            },
-            action: {
-              kind: "fix_context",
-              tool: "get_salt_project_context",
-              mode: "stop_and_fix_context",
-              args: { root_dir: registryDir.replaceAll("\\", "/") },
-              post_action: null,
-            },
-          });
+          const occurrenceId = reconstructed.occurrences[0]!.occurrence_id;
           expect(
-            (
-              getToolDefinition("create_salt_ui").outputSchema as z.ZodType
-            ).safeParse(wrongRootCreate.structuredContent).success,
-          ).toBe(true);
-        } finally {
-          await client.close();
-          await server.close();
-        }
-      },
-    );
-  });
-
-  it("does not ask for a Salt provider when repo policy declares one", async () => {
-    await withRegistryDir(
-      copyV1CatalogArtifactsFromGenerated,
-      async (registryDir) => {
-        const server = await createSaltMcpServer({ registryDir });
-        const client = new Client({
-          name: "salt-mcp-theme-policy-test",
-          version: "1.0.0",
-        });
-        const [clientTransport, serverTransport] =
-          InMemoryTransport.createLinkedPair();
-        await server.connect(serverTransport);
-        await client.connect(clientTransport);
-
-        try {
-          const response = await client.callTool({
-            name: "create_salt_ui",
-            arguments: {
-              query:
-                "Create a branded application theme with rounded corners and a teal accent",
-              root_dir: path.join(
-                REPO_ROOT,
-                "workflow-examples",
-                "consumer-repo",
-              ),
-            },
-          });
-          const content = response.structuredContent as {
-            action?: { question?: string };
-            questions?: string[];
-          };
-          const serializedQuestions = [
-            content.action?.question,
-            ...(content.questions ?? []),
-          ]
-            .filter(Boolean)
-            .join(" ");
-
-          expect(serializedQuestions).not.toContain("SaltProviderNext");
-          expect(serializedQuestions).not.toContain(
-            "pick the stable SaltProvider",
+            projectPolicyResourceUri({
+              rootDir: projectRoot,
+              digest: policyIr!.digest,
+              kind: "claim",
+              id: occurrenceId,
+            }),
+          ).toMatch(/^salt:\/\/project-policy\/v2\//u);
+          const staleUri = manifestUri.replace(
+            /[0-9a-f](?=\/manifest\/index$)/u,
+            (value) => (value === "0" ? "1" : "0"),
           );
-          expect(
-            (
-              getToolDefinition("create_salt_ui").outputSchema as z.ZodType
-            ).safeParse(response.structuredContent).success,
-          ).toBe(true);
-        } finally {
-          await client.close();
-          await server.close();
-        }
-      },
-    );
-  });
-
-  it("does not apply project policy whose declared runtime or theme imports are missing", async () => {
-    await withRegistryDir(
-      async (registryDir) => {
-        await copyV1CatalogArtifactsFromGenerated(registryDir);
-        await fs.mkdir(path.join(registryDir, ".salt"), { recursive: true });
-        await fs.mkdir(path.join(registryDir, "src", "theme"), {
-          recursive: true,
-        });
-        await fs.writeFile(
-          path.join(registryDir, "tsconfig.json"),
-          JSON.stringify({
-            compilerOptions: {
-              paths: {
-                "@/*": ["./src/*"],
-              },
-            },
-          }),
-          "utf8",
-        );
-        await fs.writeFile(
-          path.join(registryDir, ".salt", "team.json"),
-          JSON.stringify({
-            contract: "project_conventions_v1",
-            version: "1.0.0",
-            approved_wrappers: [
-              {
-                name: "AppButton",
-                wraps: "Button",
-                reason: "Adds approved product defaults.",
-                import: {
-                  from: "@/components/AppButton",
-                  name: "AppButton",
-                },
-              },
-            ],
-            theme_defaults: {
-              provider: "BrandProvider",
-              provider_import: {
-                from: "@/theme/BrandProvider",
-                name: "BrandProvider",
-              },
-              imports: ["@/theme/missing-brand.css"],
-              reason: "Use the repo brand provider.",
-            },
-          }),
-          "utf8",
-        );
-        await fs.writeFile(
-          path.join(registryDir, "src", "theme", "BrandProvider.tsx"),
-          "export function BrandProvider({ children }: { children: unknown }) { return children; }\n",
-          "utf8",
-        );
-      },
-      async (registryDir) => {
-        const server = await createSaltMcpServer({ registryDir });
-        const client = new Client({
-          name: "salt-mcp-invalid-policy-import-test",
-          version: "1.0.0",
-        });
-        const [clientTransport, serverTransport] =
-          InMemoryTransport.createLinkedPair();
-        await server.connect(serverTransport);
-        await client.connect(clientTransport);
-
-        try {
-          const contextResponse = await client.callTool({
-            name: "get_salt_project_context",
-            arguments: {
-              root_dir: registryDir,
-              include_policy_diagnostics: true,
-            },
-          });
-          expect(contextResponse.structuredContent).toMatchObject({
-            result: {
-              policy: {
-                import_targets: {
-                  status: "blocked",
-                  declared_count: 3,
-                  resolved_count: 1,
-                  blocking_count: 2,
-                  targets: expect.arrayContaining([
-                    expect.objectContaining({
-                      owner: "AppButton",
-                      status: "missing_module",
-                    }),
-                    expect.objectContaining({
-                      kind: "theme_import",
-                      owner: "BrandProvider",
-                      from: "@/theme/missing-brand.css",
-                      name: null,
-                      status: "missing_module",
-                    }),
-                  ]),
-                },
-              },
-            },
-            artifacts: {
-              summary: {
-                context_health: {
-                  repo_specific_workflows_ready: false,
-                },
-              },
-              notes: expect.arrayContaining([
-                expect.stringContaining(
-                  "no supported repo-local module exists",
-                ),
-              ]),
-            },
-          });
-
-          const reviewResponse = await client.callTool({
-            name: "review_salt_ui",
-            arguments: {
-              code: [
-                'import { AppButton } from "@/components/AppButton";',
-                'import { SaltProvider } from "@salt-ds/core";',
-                "",
-                "export function SaveAction() {",
-                "  return <SaltProvider><AppButton>Save</AppButton></SaltProvider>;",
-                "}",
-              ].join("\n"),
-              framework: "react",
-              expected_targets: {
-                components: ["Button"],
-                source: "create_report",
-              },
-              root_dir: registryDir,
-            },
-          });
-          const reviewContent = reviewResponse.structuredContent as {
-            guidance?: {
-              findings?: Array<{ rule?: string | null }>;
-            };
-          };
-
-          expect(reviewContent.guidance?.findings ?? []).toEqual(
-            expect.arrayContaining([
-              expect.objectContaining({
-                rule: "workflow-expected-component-not-imported",
-              }),
-            ]),
-          );
-          expect(reviewContent.guidance?.findings ?? []).not.toEqual(
-            expect.arrayContaining([
-              expect.objectContaining({
-                rule: "review-project-policy-theme-default",
-              }),
-            ]),
-          );
-        } finally {
-          await client.close();
-          await server.close();
-        }
-      },
-    );
-  });
-
-  it("keeps repeated workflow output schemas within a compact tools/list budget", () => {
-    const workflowNames = [
-      "create_salt_ui",
-      "review_salt_ui",
-      "migrate_to_salt",
-    ] as const;
-    const toJsonSchema = (schema: ToolDefinition["inputSchema"]) =>
-      z.toJSONSchema(schema instanceof z.ZodType ? schema : z.object(schema));
-    const schemaBytes = workflowNames.map((name) => {
-      const outputSchema = getToolDefinition(name).outputSchema;
-      if (!(outputSchema instanceof z.ZodType)) {
-        throw new Error(`Expected object output schema for ${name}.`);
-      }
-      return Buffer.byteLength(
-        JSON.stringify(z.toJSONSchema(outputSchema)),
-        "utf8",
-      );
-    });
-
-    const advertisedBytes = Buffer.byteLength(
-      JSON.stringify(
-        TOOL_DEFINITIONS.map((definition) => ({
-          name: definition.name,
-          description: definition.description,
-          inputSchema: toJsonSchema(definition.inputSchema),
-          outputSchema:
-            definition.outputSchema instanceof z.ZodType
-              ? z.toJSONSchema(definition.outputSchema)
-              : undefined,
-          annotations: definition.annotations,
-        })),
-      ),
-      "utf8",
-    );
-
-    // The retired duplicate-action contract advertised roughly 106 KB. Keep
-    // the strict five-tool contract compact without coupling the gate to an
-    // exact prose byte snapshot; the transport test measures actual tools/list.
-    expect(Math.max(...schemaBytes)).toBeLessThanOrEqual(13_000);
-    expect(
-      schemaBytes.reduce((total, bytes) => total + bytes, 0),
-    ).toBeLessThanOrEqual(32_000);
-    expect(advertisedBytes).toBeLessThanOrEqual(
-      MAX_ADVERTISED_TOOL_SCHEMA_BYTES,
-    );
-  });
-
-  it("uses one exact entity lookup shape for details and examples", () => {
-    const referenceSchema = getInputObjectSchema("get_salt_reference");
-    const entityTypeSchema = referenceSchema.shape.entity_type as z.ZodType;
-    expect(entityTypeSchema.safeParse("component").success).toBe(true);
-    expect(entityTypeSchema.safeParse("icon").success).toBe(true);
-    expect(entityTypeSchema.safeParse("country_symbol").success).toBe(true);
-    expect(entityTypeSchema.safeParse("auto").success).toBe(false);
-
-    expect(objectSchemaKeys("get_salt_reference")).toEqual([
-      "entity_type",
-      "include",
-      "include_starter_code",
-      "names",
-    ]);
-
-    const createTool = TOOL_DEFINITIONS.find(
-      (definition) => definition.name === "create_salt_ui",
-    );
-    const createSchema = createTool?.outputSchema as z.ZodType;
-    expect(
-      createSchema.safeParse(buildValidCreateOutputSchemaFixture()).success,
-    ).toBe(true);
-
-    const typedReferenceFixture = buildValidCreateOutputSchemaFixture() as {
-      action: { args: { entity_type?: string } };
-    };
-    typedReferenceFixture.action.args.entity_type = "pattern";
-    expect(createSchema.safeParse(typedReferenceFixture).success).toBe(true);
-
-    typedReferenceFixture.action.args.entity_type = "auto";
-    expect(createSchema.safeParse(typedReferenceFixture).success).toBe(false);
-  });
-
-  it("bounds reference packets to three exact targets", async () => {
-    const registry = await loadRegistry();
-    const referenceTool = getToolDefinition("get_salt_reference");
-    const referenceSchema = getInputObjectSchema("get_salt_reference");
-
-    expect(
-      referenceSchema.safeParse({
-        names: ["Button", "Card", "Input", "Link"],
-        include: ["examples", "props"],
-      }).success,
-    ).toBe(false);
-
-    const bounded = (await referenceTool.execute(registry, {
-      names: ["Mega menu", "File upload", "Vertical navigation"],
-      entity_type: "component",
-      include: ["examples", "props", "accessibility", "deprecations"],
-      include_starter_code: true,
-    })) as {
-      results?: Array<{
-        result?: {
-          entity?: {
-            examples?: Array<{ code?: string }>;
-          };
-        };
-      }>;
-    };
-    const examples = (bounded.results ?? []).flatMap(
-      (row) => row.result?.entity?.examples ?? [],
-    );
-    const exampleCodes = examples
-      .map((example) => example.code)
-      .filter((code): code is string => typeof code === "string");
-
-    for (const row of bounded.results ?? []) {
-      expect(row.result?.entity?.examples?.length ?? 0).toBeLessThanOrEqual(1);
-    }
-    expect(new Set(exampleCodes).size).toBe(exampleCodes.length);
-    expect(Buffer.byteLength(JSON.stringify(bounded), "utf8")).toBeLessThan(
-      80_000,
-    );
-  });
-
-  it("preserves create inputs through a bounded all-found continuation", async () => {
-    const registry = await loadRegistry();
-    const createTool = getToolDefinition("create_salt_ui");
-    const referenceTool = getToolDefinition("get_salt_reference");
-    const query =
-      "  Build a financial dashboard with an app header, key metrics, a chart, and a transaction table.  ";
-    const firstArgs = {
-      query,
-      solution_type: "pattern" as const,
-      package: "@salt-ds/core",
-      status: "stable" as const,
-      prefer_stable: false,
-      a11y_required: false,
-      include_starter_code: false,
-      resolved_entities: [],
-      root_dir: `${REPO_ROOT}${path.sep}.`,
-    };
-    const first = (await createTool.execute(registry, firstArgs)) as {
-      action: {
-        kind: string;
-        args?: { names?: string[] };
-        post_action?: {
-          kind: string;
-          tool: string;
-          args: Record<string, unknown>;
-        } | null;
-      };
-    };
-
-    expect(first.action.kind).toBe("retrieve_reference");
-    const names = first.action.args?.names ?? [];
-    expect(names.length).toBeGreaterThan(0);
-    expect(names.length).toBeLessThanOrEqual(3);
-
-    const reference = (await referenceTool.execute(registry, {
-      names,
-    })) as {
-      decision?: { status?: string };
-      requested_count?: number;
-      found_count?: number;
-      not_found_count?: number;
-      ambiguous_count?: number;
-      unresolved_names?: string[];
-      results?: Array<{ result?: { decision?: { status?: string } } }>;
-    };
-    expect(reference).toMatchObject({
-      decision: { status: "results" },
-      requested_count: names.length,
-      found_count: names.length,
-      not_found_count: 0,
-      ambiguous_count: 0,
-      unresolved_names: [],
-    });
-    expect(
-      reference.results?.every(
-        (row) => row.result?.decision?.status === "found",
-      ),
-    ).toBe(true);
-
-    const postAction = first.action.post_action;
-    const { root_dir: _rawRoot, ...expectedPreservedArgs } = firstArgs;
-    expect(postAction).toMatchObject({
-      kind: "rerun_workflow",
-      tool: "create_salt_ui",
-      args: {
-        ...expectedPreservedArgs,
-        resolved_entities: names,
-      },
-    });
-    expect(postAction?.args.query).toBe(query);
-    expect(path.resolve(String(postAction?.args.root_dir))).toBe(
-      path.resolve(REPO_ROOT),
-    );
-    const second = (await createTool.execute(
-      registry,
-      postAction?.args ?? {},
-    )) as { action?: { kind?: string } };
-    expect(second.action?.kind).toBeDefined();
-
-    const missingName = "Definitely Missing Salt Thing";
-    const missingReference = (await referenceTool.execute(registry, {
-      names: [missingName],
-    })) as {
-      decision?: { status?: string };
-      found_count?: number;
-    };
-    expect(missingReference).toMatchObject({
-      decision: { status: "not_found" },
-      found_count: 0,
-    });
-    const unsafeRerun = (await createTool.execute(registry, {
-      ...firstArgs,
-      root_dir: REPO_ROOT,
-      resolved_entities: [missingName],
-    })) as { status?: string; action?: { kind?: string } };
-    expect(unsafeRerun.status).not.toBe("success");
-    expect(unsafeRerun.action?.kind).not.toBe("implement");
-  });
-
-  it("preserves canonical project identity through an executable exact-name retry", async () => {
-    const registry = await loadRegistry();
-    const createTool = getToolDefinition("create_salt_ui");
-    const args = {
-      query: "Header block",
-      solution_type: "pattern" as const,
-      status: "stable" as const,
-      prefer_stable: false,
-      a11y_required: false,
-      include_starter_code: true,
-      resolved_entities: [],
-      root_dir: `${REPO_ROOT}${path.sep}.`,
-    };
-    const firstPass = createSaltUi(registry, {
-      ...args,
-      view: "compact",
-    });
-    firstPass.decision = {
-      name: "App header",
-      why: "Fixture simulates a nearby result instead of the exact Header block request.",
-    };
-    const first = withChooseWorkflowGuidance(registry, firstPass, {
-      create_rerun_args: {
-        ...args,
-        root_dir: path.resolve(REPO_ROOT),
-      },
-      context_checked: true,
-    }) as {
-      action?: {
-        kind?: string;
-        mode?: string;
-        args?: Record<string, unknown>;
-        post_action?: unknown;
-      };
-    };
-    const {
-      root_dir: _rawRoot,
-      resolved_entities: _emptyResolvedEntities,
-      ...preservedArgs
-    } = args;
-
-    expect(first.action).toEqual({
-      kind: "tool_call",
-      tool: "create_salt_ui",
-      mode: "exact_name",
-      args: {
-        ...preservedArgs,
-        query: "Header block",
-        root_dir: path.resolve(REPO_ROOT),
-      },
-      rule_ids: [],
-      post_action: null,
-    });
-    const second = (await createTool.execute(
-      registry,
-      first.action?.args ?? {},
-    )) as { workflow?: string; action?: { kind?: string } };
-    expect(second.workflow).toBe("create");
-    expect(second.action?.kind).toBeDefined();
-  });
-
-  it("rejects branch-invalid workflow actions and post-action pairings", () => {
-    const createSchema = getToolDefinition("create_salt_ui")
-      .outputSchema as z.ZodType;
-    const valid = buildValidCreateOutputSchemaFixture();
-    const rerun = valid.action.post_action;
-    const invalidActions = [
-      {
-        kind: "ask_user",
-        rule_ids: [],
-        post_action: null,
-      },
-      {
-        kind: "ask_user",
-        question: "Which provider should the repo use?",
-        rule_ids: [],
-        post_action: rerun,
-      },
-      {
-        kind: "complete",
-        rule_ids: [],
-        post_action: null,
-      },
-      {
-        kind: "retrieve_reference",
-        tool: "get_salt_reference",
-        args: { names: ["Avatar"] },
-        rule_ids: [],
-        post_action: null,
-      },
-      {
-        ...valid.action,
-        tool: "migrate_to_salt",
-      },
-    ];
-
-    for (const action of invalidActions) {
-      expect(
-        createSchema.safeParse({
-          ...valid,
-          action,
-        }).success,
-      ).toBe(false);
-    }
-  });
-
-  it("stops for user input when invalid starter evidence has no safe continuation", async () => {
-    await withRegistryDir(
-      copyV1CatalogArtifactsFromGenerated,
-      async (registryDir) => {
-        const registry = await loadRegistry({ registryDir });
-        const result = createSaltUi(registry, {
-          query: "Button",
-          include_starter_code: true,
-        });
-        result.starter_code = [
-          {
-            label: "Invalid Button starter",
-            language: "tsx",
-            code: [
-              'import { Button } from "@salt-ds/core";',
-              "export function Demo() {",
-              '  return <Button style={{ color: "var(--salt-not-a-real-token)" }}>Save</Button>;',
-              "}",
-            ].join("\n"),
-            source_urls: result.starter_code?.flatMap(
-              (snippet) => snippet.source_urls ?? [],
-            ),
-          },
-        ];
-
-        const output = withChooseWorkflowGuidance(registry, result, {
-          create_rerun_args: { query: "Button" },
-          context_checked: true,
-        });
-
-        expect(output.action).toMatchObject({
-          kind: "ask_user",
-          question: expect.any(String),
-          post_action: null,
-        });
-        expect(
-          (
-            getToolDefinition("create_salt_ui").outputSchema as z.ZodType
-          ).safeParse(output).success,
-        ).toBe(true);
-      },
-    );
-  });
-
-  it("runs public v1 calls against the slim catalog without excluded artifacts", async () => {
-    await withRegistryDir(
-      copyV1CatalogArtifactsFromGenerated,
-      async (registryDir) => {
-        for (const fileName of V1_EXCLUDED_CATALOG_ARTIFACT_FILES) {
           await expect(
-            fs.access(path.join(registryDir, fileName)),
-          ).rejects.toMatchObject({
-            code: "ENOENT",
-          });
-        }
+            client.readResource({ uri: staleUri }),
+          ).rejects.toThrow();
+          await expect(
+            client.readResource({
+              uri: projectPolicyResourceUri({
+                rootDir: `${projectRoot}${path.sep}.`,
+                digest: policyIr!.digest,
+                kind: "manifest",
+              }),
+            }),
+          ).rejects.toThrow();
+          await expect(
+            client.readResource({
+              uri: manifestUri.replace(
+                /manifest\/index$/u,
+                `claim/${"x".repeat(1_025)}`,
+              ),
+            }),
+          ).rejects.toThrow();
+          await expect(
+            client.readResource({
+              uri: projectPolicyResourceUri({
+                rootDir: projectRoot,
+                digest: policyIr!.digest,
+                kind: "claim",
+                id: "policy-occurrence.missing",
+              }),
+            }),
+          ).rejects.toThrow();
+          await expect(
+            client.readResource({
+              uri: projectPolicyResourceUri({
+                rootDir: path.dirname(projectRoot),
+                digest: policyIr!.digest,
+                kind: "manifest",
+              }),
+            }),
+          ).rejects.toThrow();
+        },
+        {
+          mode: "restricted",
+          allowedRoots: [projectRoot],
+          defaultRoot: projectRoot,
+        },
+      );
+    } finally {
+      await fs.rm(projectRoot, { recursive: true, force: true });
+    }
+  }, 30_000);
 
-        const registry = await loadRegistry({ registryDir });
-        const callPublicTool = (name: string, args: object) =>
-          getToolDefinition(name).execute(registry, args);
-
-        const entityCases = [
-          { entity_type: "component", name: "Button" },
-          { entity_type: "pattern", name: "Search" },
-          { entity_type: "foundation", name: "Density" },
-          { entity_type: "page", name: "Components" },
-          { entity_type: "guide", name: "Developing with Salt" },
-          { entity_type: "package", name: "@salt-ds/core" },
-          { entity_type: "icon", name: "WorkflowIcon" },
-          { entity_type: "country_symbol", name: "US" },
-          { entity_type: "token", name: "--salt-accent-background" },
-        ] as const;
-
-        for (const { name, ...entityFilters } of entityCases) {
-          const result = (await callPublicTool("get_salt_reference", {
-            ...entityFilters,
-            names: [name],
-          })) as {
-            decision?: { status?: string };
-            found_count?: number;
-            registry_context?: {
-              source?: string;
-              registry_version?: string;
-              registry_generated_at?: string;
-              note?: string;
-            };
-          };
-
-          expect(result.decision?.status).toBe("results");
-          expect(result.found_count).toBeGreaterThanOrEqual(1);
-          expect(result.registry_context).toEqual({
-            source: "bundled_package",
-            registry_version: registry.version,
-            registry_generated_at: registry.generated_at,
-            note: expect.stringContaining(
-              "not directly from the consumer repo",
-            ),
-          });
-        }
-
-        const missingAuto = (await callPublicTool("get_salt_reference", {
-          names: ["Definitely Missing Salt Thing"],
-        })) as { decision?: { status?: string }; found_count?: number };
-        expect(missingAuto.decision?.status).toBe("not_found");
-        expect(missingAuto.found_count).toBe(0);
-
-        const overviewAuto = (await callPublicTool("get_salt_reference", {
-          names: ["Overview"],
-        })) as {
-          decision?: { status?: string };
+  it("reviews only submitted text and reports the bounded scope", async () => {
+    await withProtocolClient(async (client) => {
+      const submitted = [
+        'import { Button } from "@salt-ds/core";',
+        "export function Demo() {",
+        '  return <Button href="/next">Go</Button>;',
+        "}",
+      ].join("\n");
+      const result = await client.callTool({
+        name: "review_salt_code",
+        arguments: {
+          artifacts: [{ id: "demo.tsx", language: "tsx", text: submitted }],
+        },
+      });
+      expect(result.isError).not.toBe(true);
+      const payload = toolPayload(result) as {
+        data?: {
           results?: Array<{
-            result?: { entity_type?: string; entity?: { id?: string } };
+            artifact?: { id?: string; utf8_bytes?: number };
+            outcome?: string;
           }>;
         };
-        expect(overviewAuto.decision?.status).toBe("results");
-        expect(overviewAuto.results?.[0]?.result).toMatchObject({
-          entity_type: "page",
-          entity: { id: "page.salt-components-layouts-index" },
-        });
-
-        for (const target of [
-          { entity_type: "component", name: "Button" },
-          { entity_type: "pattern", name: "Search" },
-        ] as const) {
-          const result = (await callPublicTool("get_salt_reference", {
-            names: [target.name],
-            entity_type: target.entity_type,
-            include: ["examples"],
-            include_starter_code: true,
-          })) as {
-            results?: Array<{
-              result?: {
-                entity?: { examples?: unknown[]; starter_code?: unknown[] };
-              };
-            }>;
-          };
-          const entity = result.results?.[0]?.result?.entity;
-          expect(
-            (entity?.starter_code?.length ?? 0) > 0 ||
-              (entity?.examples?.length ?? 0) > 0,
-          ).toBeTruthy();
-        }
-
-        const context = (await callPublicTool("get_salt_project_context", {
-          root_dir: REPO_ROOT,
-        })) as {
-          workflow?: { id?: string };
-          result?: Record<string, unknown>;
-          artifacts?: {
-            summary?: { retry_with?: Record<string, unknown> };
-          };
-        };
-        expect(context.workflow?.id).toBe("get_salt_project_context");
-        expect(context.result).not.toHaveProperty("context_id");
-        expect(context.artifacts?.summary?.retry_with).not.toHaveProperty(
-          "context_id",
-        );
-
-        const createResult = (await callPublicTool("create_salt_ui", {
-          query: "search toolbar with filter action and settings menu",
-          include_starter_code: true,
-        })) as {
-          contract?: string;
-          workflow?: string;
-          evidence?: Record<string, unknown>;
-        };
-        expect(createResult).toEqual(
-          expect.objectContaining({
-            contract: "salt_workflow_v1",
-            workflow: "create",
-          }),
-        );
-        expect(
-          (
-            getToolDefinition("create_salt_ui").outputSchema as z.ZodType
-          ).safeParse(createResult).success,
-        ).toBe(true);
-        expect(
-          (
-            getToolDefinition("create_salt_ui").outputSchema as z.ZodType
-          ).safeParse({
-            ...createResult,
-            guidance: {
-              kind: "create",
-              decision: {
-                name: "Search",
-                why: "Use the canonical Salt search direction.",
-                solution_type: "pattern",
-              },
-              starter_guidance: {
-                plan: [],
-                snippets: [{}],
-              },
-            },
-          }).success,
-        ).toBe(false);
-        expect(
-          (
-            getToolDefinition("create_salt_ui").outputSchema as z.ZodType
-          ).safeParse({
-            ...createResult,
-            evidence: {
-              ...createResult.evidence,
-              undeclared_protocol_field: true,
-            },
-          }).success,
-        ).toBe(false);
-
-        const reviewResult = (await callPublicTool("review_salt_ui", {
-          code: [
-            'import { Button } from "@salt-ds/core";',
-            'import { SearchThingIcon } from "@salt-ds/icons";',
-            "",
-            "export function Demo() {",
-            '  return <Button href="/next"><SearchThingIcon aria-hidden /> Go</Button>;',
-            "}",
-          ].join("\n"),
-          framework: "react",
-          package_version: "2.0.0",
-        })) as { contract?: string; workflow?: string };
-        expect(reviewResult).toEqual(
-          expect.objectContaining({
-            contract: "salt_workflow_v1",
-            workflow: "review",
-          }),
-        );
-        expect(
-          (
-            getToolDefinition("review_salt_ui").outputSchema as z.ZodType
-          ).safeParse(reviewResult).success,
-        ).toBe(true);
-        expect(
-          (
-            getToolDefinition("review_salt_ui").outputSchema as z.ZodType
-          ).safeParse({
-            ...reviewResult,
-            guidance: {
-              kind: "review",
-              findings: [{}],
-              fixes: [{}],
-            },
-          }).success,
-        ).toBe(false);
-
-        const groundedReviewResult = (await callPublicTool("review_salt_ui", {
-          code: [
-            'import { Text } from "@salt-ds/core";',
-            "",
-            "export function DemoText() {",
-            '  return <Text variant="secondary">Projected revenue</Text>;',
-            "}",
-          ].join("\n"),
-          framework: "react",
-          package_version: "2.0.0",
-        })) as {
-          action?: { kind?: string; rule_ids?: string[] };
-          guidance?: {
-            kind?: string;
-            fixes?: Array<{
-              rule_id?: string | null;
-              source_urls?: string[];
-            }>;
-          };
-        };
-        expect(groundedReviewResult.action?.kind).toBe("apply_fixes");
-        expect(groundedReviewResult.guidance?.fixes?.length).toBeGreaterThan(0);
-        expect(
-          groundedReviewResult.guidance?.fixes?.every((fix) =>
-            fix.source_urls?.some((sourceUrl) => sourceUrl.trim().length > 0),
-          ),
-        ).toBe(true);
-        expect(groundedReviewResult.action?.rule_ids).toEqual([
-          ...new Set(
-            groundedReviewResult.guidance?.fixes
-              ?.map((fix) => fix.rule_id?.trim())
-              .filter((ruleId): ruleId is string => Boolean(ruleId)) ?? [],
-          ),
-        ]);
-        expect(
-          (
-            getToolDefinition("review_salt_ui").outputSchema as z.ZodType
-          ).safeParse(groundedReviewResult).success,
-        ).toBe(true);
-
-        const migrateResult = (await callPublicTool("migrate_to_salt", {
-          query:
-            "Convert a non-Salt toolbar with a search icon, filter icon, settings menu, loading state, and error message into Salt.",
-        })) as {
-          contract?: string;
-          workflow?: string;
-          questions?: string[];
-          guidance?: {
-            post_migration_verification?: {
-              preserve_checks?: string[];
-              confirmation_checks?: string[];
+        scope?: { kind?: string; artifact_count?: number; statement?: string };
+        limitations?: string[];
+      };
+      expect(payload.data?.results?.[0]).toMatchObject({
+        artifact: {
+          id: "demo.tsx",
+          utf8_bytes: Buffer.byteLength(submitted, "utf8"),
+        },
+        outcome: expect.stringMatching(
+          /^(findings|no_findings_in_evaluated_scope)$/u,
+        ),
+      });
+      expect(payload.scope).toEqual(
+        expect.objectContaining({
+          kind: "submitted_text_only",
+          artifact_count: 1,
+        }),
+      );
+      expect(payload.limitations?.join(" ")).toMatch(/not submitted/iu);
+      for (const finding of payload.data?.results?.flatMap((entry) => {
+        const candidate = entry as {
+          findings?: Array<{
+            rule_id?: string;
+            evidence?: {
+              references?: Array<{ locator: string; field_path: string }>;
             };
+          }>;
+        };
+        return candidate.findings ?? [];
+      }) ?? []) {
+        for (const reference of finding.evidence?.references ?? []) {
+          expect(reference.locator).toMatch(
+            /^salt:\/(?:\/catalog\/v2\/|\/project-policy\/v2\/)/u,
+          );
+          const resource = await client.readResource({
+            uri: reference.locator,
+          });
+          const textContent = resource.contents.find(
+            (content) => "text" in content,
+          );
+          const text =
+            textContent && "text" in textContent ? textContent.text : null;
+          expect(text).toBeTruthy();
+          const body = JSON.parse(text ?? "{}") as {
+            record?: Record<string, unknown>;
+          };
+          const evidenceRecord = body.record ?? body;
+          const evidenceValue = valueAtFieldPath(
+            evidenceRecord,
+            reference.field_path,
+          );
+          expect(evidenceValue).toBeDefined();
+          if (finding.rule_id === "salt.component.action_navigation_target") {
+            expect(evidenceValue).toEqual(
+              expect.stringMatching(/another page or window/iu),
+            );
+          }
+        }
+      }
+      expect(JSON.stringify(payload)).not.toMatch(
+        /implementation_ready|canonical_complete|exact_request_safe|finish_without_changes|post_action/iu,
+      );
+      expect(
+        Buffer.byteLength(JSON.stringify(result), "utf8"),
+      ).toBeLessThanOrEqual(MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES);
+      const fallback = result.content.find((part) => part.type === "text");
+      expect(
+        fallback?.type === "text" ? JSON.parse(fallback.text) : null,
+      ).toEqual(payload);
+      const invalidPayload = structuredClone(payload);
+      (invalidPayload.scope as Record<string, unknown>).invented = true;
+      const definition = TOOL_DEFINITIONS.find(
+        (candidate) => candidate.name === "review_salt_code",
+      );
+      expect(
+        definition?.outputValidationSchema.safeParse(invalidPayload).success,
+      ).toBe(false);
+
+      const stressText = [
+        'import { Button } from "@salt-ds/core";',
+        "export function Stress() {",
+        "  return <>",
+        ...Array.from(
+          { length: 80 },
+          (_, index) =>
+            `    <Button href="/next-${index}" style={{ color: "#fff", padding: "4px" }}>Go</Button>`,
+        ),
+        "  </>;",
+        "}",
+      ].join("\n");
+      const stressed = await client.callTool({
+        name: "review_salt_code",
+        arguments: {
+          artifacts: Array.from({ length: 8 }, (_, index) => ({
+            id: `stress-${index}.tsx`,
+            language: "tsx",
+            text: stressText,
+          })),
+          max_findings: 50,
+        },
+      });
+      const stressedPayload = toolPayload(stressed) as {
+        data: {
+          results: Array<{ coverage: { returned_findings: number } }>;
+        };
+        coverage: {
+          returned_findings: number;
+          detected_findings: number;
+          truncated: boolean;
+          result_budget: { max_utf8_bytes: number };
+        };
+      };
+      expect(
+        Buffer.byteLength(JSON.stringify(stressed), "utf8"),
+      ).toBeLessThanOrEqual(MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES);
+      expect(stressedPayload.coverage.returned_findings).toBeLessThanOrEqual(
+        50,
+      );
+      expect(
+        stressedPayload.data.results.reduce(
+          (total, entry) => total + entry.coverage.returned_findings,
+          0,
+        ),
+      ).toBe(stressedPayload.coverage.returned_findings);
+      expect(stressedPayload.coverage.result_budget.max_utf8_bytes).toBe(
+        MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
+      );
+
+      const escapeHeavyIds = Array.from(
+        { length: 8 },
+        (_, index) => `${"\u0001".repeat(84)}xxxxx${index}`,
+      );
+      expect(
+        escapeHeavyIds.map((id) =>
+          Buffer.byteLength(JSON.stringify(id), "utf8"),
+        ),
+      ).toEqual(
+        Array.from({ length: 8 }, () => MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES),
+      );
+      const escapeHeavy = await client.callTool({
+        name: "review_salt_code",
+        arguments: {
+          artifacts: escapeHeavyIds.map((id) => ({
+            id,
+            language: "tsx",
+            text: stressText,
+          })),
+          max_findings: 50,
+        },
+      });
+      expect(escapeHeavy.isError).not.toBe(true);
+      const escapeHeavyPayload = toolPayload(escapeHeavy) as {
+        data: {
+          results: Array<{
+            findings: unknown[];
+            coverage: {
+              detected_findings: number;
+              returned_findings: number;
+              truncated: boolean;
+            };
+          }>;
+        };
+        coverage: {
+          returned_findings: number;
+          detected_findings: number;
+          truncated: boolean;
+          result_budget: {
+            truncated: boolean;
+            omissions: Array<{
+              section: string;
+              available: number;
+              returned: number;
+            }>;
           };
         };
-        expect(migrateResult).toEqual(
-          expect.objectContaining({
-            contract: "salt_workflow_v1",
-            workflow: "migrate",
-          }),
+      };
+      expect(
+        Buffer.byteLength(JSON.stringify(escapeHeavyPayload), "utf8"),
+      ).toBeLessThanOrEqual(MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES);
+      expect(
+        Buffer.byteLength(JSON.stringify(escapeHeavy), "utf8"),
+      ).toBeLessThanOrEqual(MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES);
+      expect(escapeHeavyPayload.coverage.returned_findings).toBeLessThanOrEqual(
+        50,
+      );
+      expect(escapeHeavyPayload.coverage.detected_findings).toBeGreaterThan(
+        escapeHeavyPayload.coverage.returned_findings,
+      );
+      expect(escapeHeavyPayload.coverage.truncated).toBe(true);
+      for (const result of escapeHeavyPayload.data.results) {
+        expect(result.findings).toHaveLength(result.coverage.returned_findings);
+        expect(result.coverage.returned_findings).toBeLessThanOrEqual(
+          result.coverage.detected_findings,
         );
-        expect(
-          (
-            getToolDefinition("migrate_to_salt").outputSchema as z.ZodType
-          ).safeParse(migrateResult).success,
-        ).toBe(true);
-        expect(JSON.stringify(migrateResult.questions ?? [])).not.toMatch(
-          /What must remain familiar|Which loading, empty, error, or validation states are critical|Salt-native recomposition change the layout/,
+        expect(result.coverage.truncated).toBe(
+          result.coverage.returned_findings < result.coverage.detected_findings,
         );
-        expect(
-          migrateResult.guidance?.post_migration_verification?.preserve_checks,
-        ).toEqual(
-          expect.arrayContaining([
-            expect.stringContaining("core task flow and information hierarchy"),
-            expect.stringContaining(
-              "loading, empty, error, and validation states",
-            ),
-          ]),
-        );
-        expect(
-          migrateResult.guidance?.post_migration_verification
-            ?.confirmation_checks,
-        ).toEqual(
-          expect.arrayContaining([
-            expect.stringContaining("Merged, split, or removed steps"),
-            expect.stringContaining("state visibility"),
-          ]),
-        );
-        const migrateGuidance = (
-          migrateResult as unknown as {
-            guidance: Record<string, unknown>;
-          }
-        ).guidance;
-        expect(
-          (
-            getToolDefinition("migrate_to_salt").outputSchema as z.ZodType
-          ).safeParse({
-            ...migrateResult,
-            guidance: {
-              ...migrateGuidance,
-              translations: [{}],
-            },
-          }).success,
-        ).toBe(false);
+      }
+      expect(
+        escapeHeavyPayload.data.results.reduce(
+          (total, entry) => total + entry.coverage.detected_findings,
+          0,
+        ),
+      ).toBe(escapeHeavyPayload.coverage.detected_findings);
+      expect(
+        escapeHeavyPayload.data.results.reduce(
+          (total, entry) => total + entry.coverage.returned_findings,
+          0,
+        ),
+      ).toBe(escapeHeavyPayload.coverage.returned_findings);
+      expect(escapeHeavyPayload.coverage.truncated).toBe(
+        escapeHeavyPayload.coverage.returned_findings <
+          escapeHeavyPayload.coverage.detected_findings,
+      );
+      expect(escapeHeavyPayload.coverage.result_budget.truncated).toBe(
+        escapeHeavyPayload.coverage.truncated,
+      );
+      expect(
+        escapeHeavyPayload.coverage.result_budget.omissions,
+      ).toContainEqual({
+        section: "findings",
+        available: escapeHeavyPayload.coverage.detected_findings,
+        returned: escapeHeavyPayload.coverage.returned_findings,
+      });
+    });
+  }, 60_000);
 
-        const server = await createSaltMcpServer({ registryDir });
-        const registrations = server as unknown as {
-          _registeredResources: Record<
-            string,
-            {
-              readCallback: (
-                uri: URL,
-                extra: unknown,
-              ) => Promise<{ contents: Array<{ text?: string }> }>;
-            }
-          >;
-          _registeredResourceTemplates: Record<
-            string,
-            {
-              readCallback: (
-                uri: URL,
-                variables: Record<string, string>,
-                extra: unknown,
-              ) => Promise<{ contents: Array<{ text?: string }> }>;
-            }
-          >;
-        };
+  it("enforces strict input schemas over the real transport", async () => {
+    await withProtocolClient(async (client) => {
+      const invalidSearch = await client.callTool({
+        name: "search_salt",
+        arguments: { query: "Button", invented: true },
+      });
+      expect(invalidSearch.isError).toBe(true);
 
-        await expect(
-          registrations._registeredResources[
-            SALT_MCP_CAPABILITY_MANIFEST_URI
-          ].readCallback(new URL(SALT_MCP_CAPABILITY_MANIFEST_URI), {}),
-        ).resolves.toEqual(
-          expect.objectContaining({ contents: expect.any(Array) }),
-        );
-        await expect(
-          registrations._registeredResources[
-            SALT_MCP_CATALOG_MANIFEST_URI
-          ].readCallback(new URL(SALT_MCP_CATALOG_MANIFEST_URI), {}),
-        ).resolves.toEqual(
-          expect.objectContaining({ contents: expect.any(Array) }),
-        );
-        await expect(
-          registrations._registeredResourceTemplates.salt_catalog_entity.readCallback(
-            new URL("salt://catalog/entity/Button"),
-            { name: "Button" },
-            {},
-          ),
-        ).resolves.toEqual(
-          expect.objectContaining({ contents: expect.any(Array) }),
-        );
-      },
-    );
-  }, 20_000);
-
-  it("registers only the v1 capability and catalog resource surface", async () => {
-    await withRegistryDir(
-      async (registryDir) => {
-        await writeBaseArtifacts(registryDir);
-      },
-      async (registryDir) => {
-        const server = await createSaltMcpServer({ registryDir });
-        const registrations = server as unknown as {
-          _registeredResources: Record<
-            string,
-            {
-              readCallback: (
-                uri: URL,
-                extra: unknown,
-              ) => Promise<{
-                contents: Array<{ text?: string }>;
-              }>;
-            }
-          >;
-          _registeredResourceTemplates: Record<
-            string,
-            {
-              readCallback: (
-                uri: URL,
-                variables: Record<string, string>,
-                extra: unknown,
-              ) => Promise<{
-                contents: Array<{ text?: string }>;
-              }>;
-            }
-          >;
-        };
-
-        expect(Object.keys(registrations._registeredResources).sort()).toEqual([
-          ...V1_RESOURCE_NAMES,
-        ]);
-        expect(
-          Object.keys(registrations._registeredResourceTemplates).sort(),
-        ).toEqual([...V1_RESOURCE_TEMPLATE_NAMES]);
-
-        const manifestResult = await registrations._registeredResources[
-          SALT_MCP_CAPABILITY_MANIFEST_URI
-        ].readCallback(new URL(SALT_MCP_CAPABILITY_MANIFEST_URI), {});
-        const capabilityManifest = JSON.parse(
-          manifestResult.contents[0]?.text ?? "null",
-        ) as {
-          public_surface?: { default_surface_ids?: string[] };
-          support_tools?: { tool_ids?: string[]; default_exposed?: boolean };
-          capabilities?: { repo_bootstrap?: boolean };
-          resources?: Record<string, string>;
-        };
-
-        expect(capabilityManifest.public_surface?.default_surface_ids).toEqual([
-          ...V1_TOOL_ORDER,
-        ]);
-        expect(capabilityManifest.support_tools).toEqual(
-          expect.objectContaining({
-            default_exposed: true,
-            tool_ids: ["get_salt_reference"],
-          }),
-        );
-        expect(capabilityManifest.capabilities?.repo_bootstrap).toBe(false);
-        expect(capabilityManifest.resources).toEqual({
-          capability_manifest_uri: SALT_MCP_CAPABILITY_MANIFEST_URI,
-          catalog_manifest_uri: SALT_MCP_CATALOG_MANIFEST_URI,
-          catalog_entity_template_uri: SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
+      for (const artifacts of [
+        [],
+        [{ id: "empty.tsx", language: "tsx", text: "" }],
+        [{ id: "blank.tsx", language: "tsx", text: " \n\t" }],
+        [
+          {
+            id: "\0".repeat(512),
+            language: "javascript",
+            text: "export {};",
+          },
+        ],
+      ]) {
+        const invalidReview = await client.callTool({
+          name: "review_salt_code",
+          arguments: { artifacts },
         });
-        expect(
-          Object.values(capabilityManifest.resources ?? {}).filter(Boolean),
-        ).toEqual([
-          SALT_MCP_CAPABILITY_MANIFEST_URI,
-          SALT_MCP_CATALOG_MANIFEST_URI,
-          SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
-        ]);
-
-        const catalogManifestResult = await registrations._registeredResources[
-          SALT_MCP_CATALOG_MANIFEST_URI
-        ].readCallback(new URL(SALT_MCP_CATALOG_MANIFEST_URI), {});
-        const catalogManifest = JSON.parse(
-          catalogManifestResult.contents[0]?.text ?? "null",
-        ) as Record<string, unknown>;
-
-        expect(catalogManifest).toEqual(
-          expect.objectContaining({
-            contract_version: "salt_create_catalog_v1",
-            resources: {
-              manifest_uri: SALT_MCP_CATALOG_MANIFEST_URI,
-              entity_template_uri: SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
-            },
-          }),
-        );
-      },
-    );
+        expect(invalidReview.isError).toBe(true);
+      }
+    });
   });
 
-  it("keeps server metadata and instructions aligned to the v1 story", () => {
-    const metadata = getSaltMcpRuntimeMetadata({
-      version: "test",
-      generated_at: "2026-04-01T00:00:00Z",
-    } as Parameters<typeof getSaltMcpRuntimeMetadata>[0]);
-    const instructions = buildSaltMcpInstructions({
-      version: "test",
-      generated_at: "2026-04-01T00:00:00Z",
-    } as Parameters<typeof buildSaltMcpInstructions>[0]);
+  it("lists every canonical record with bounded cursor pages and typed aggregation", async () => {
+    await withProtocolClient(async (client) => {
+      const manifestUri = catalogManifestResourceUri(
+        runtimeContext.store.manifest,
+      );
+      const expectedUris = [
+        manifestUri,
+        ...canonicalCatalogRuntimeFamilies().flatMap((family) =>
+          runtimeContext.store
+            .getFamily(family)
+            .map((record) =>
+              catalogRecordResourceUri(
+                runtimeContext.store.manifest,
+                family,
+                record.id,
+              ),
+            ),
+        ),
+      ];
 
-    expect(
-      metadata.capability_manifest.public_surface.default_surface_ids,
-    ).toEqual([...V1_TOOL_ORDER]);
-    expect(instructions).toContain("get_salt_reference");
-    expect(instructions).toContain(
-      "apply_fixes action identifies grounded review fixes but does not authorize file mutation",
+      const directUris: string[] = [];
+      let cursor: string | undefined;
+      let pageCount = 0;
+      do {
+        const page = await directResourcePage(client, cursor);
+        expect(page.resources.length).toBeGreaterThan(0);
+        expect(page.resources.length).toBeLessThanOrEqual(
+          MAX_CATALOG_RESOURCES_PER_PAGE,
+        );
+        expect(
+          Buffer.byteLength(JSON.stringify(page), "utf8"),
+        ).toBeLessThanOrEqual(MAX_CATALOG_RESOURCE_LIST_PAGE_UTF8_BYTES);
+        directUris.push(...page.resources.map((resource) => resource.uri));
+        cursor = page.nextCursor;
+        pageCount += 1;
+      } while (cursor);
+
+      expect(pageCount).toBeGreaterThan(1);
+      expect(directUris).toEqual(expectedUris);
+      expect(new Set(directUris).size).toBe(directUris.length);
+      expect(directUris[25]).toBe(expectedUris[25]);
+      expect(directUris[26]).toBe(expectedUris[26]);
+      expect(directUris[103]).toBe(expectedUris[103]);
+
+      const resources = await client.listResources();
+      expect(resources.nextCursor).toBeUndefined();
+      expect(resources.resources.map((resource) => resource.uri)).toEqual(
+        expectedUris,
+      );
+
+      const templates = await client.listResourceTemplates();
+      expect(
+        templates.resourceTemplates.map((template) => template.uriTemplate),
+      ).toEqual(
+        expect.arrayContaining([
+          catalogRecordResourceTemplate(runtimeContext.store.manifest),
+          projectPolicyResourceTemplate(),
+        ]),
+      );
+      expect(templates.resourceTemplates).toHaveLength(2);
+
+      const manifest = await client.readResource({ uri: manifestUri });
+      expect(manifest.contents[0]).toEqual(
+        expect.objectContaining({
+          uri: manifestUri,
+          mimeType: "application/json",
+        }),
+      );
+      const manifestContent = manifest.contents[0];
+      if (!manifestContent || !("text" in manifestContent)) {
+        throw new Error("Catalog manifest did not return text content.");
+      }
+      const publicManifest = JSON.parse(manifestContent.text) as Record<
+        string,
+        unknown
+      >;
+      expect(publicManifest).toMatchObject({
+        server_version: getSaltMcpPackageManifest().version,
+        catalog_version: runtimeContext.store.manifest.catalog_version,
+        semantic_digest: runtimeContext.store.manifest.semantic_digest,
+        negotiated_mcp_protocol_revision:
+          SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS[0],
+      });
+      expect((publicManifest.families as unknown[]).length).toBe(
+        canonicalCatalogRuntimeFamilies().length,
+      );
+
+      const representativeUris = canonicalCatalogRuntimeFamilies().map(
+        (family) => {
+          const record = runtimeContext.store.getFamily(family)[0];
+          if (!record) throw new Error(`Missing '${family}' fixture record.`);
+          return catalogRecordResourceUri(
+            runtimeContext.store.manifest,
+            family,
+            record.id,
+          );
+        },
+      );
+      const representativeReads = await Promise.all(
+        representativeUris.map((uri) => client.readResource({ uri })),
+      );
+      expect(representativeReads).toHaveLength(
+        canonicalCatalogRuntimeFamilies().length,
+      );
+      await expect(
+        client.readResource({ uri: "salt://capabilities/manifest" }),
+      ).rejects.toThrow();
+    });
+  }, 60_000);
+
+  it("rejects malformed, stale, and out-of-range resource cursors", async () => {
+    await withProtocolClient(async (client) => {
+      const firstPage = await directResourcePage(client);
+      const validCursor = firstPage.nextCursor;
+      expect(validCursor).toBeTruthy();
+      const stalePayload = JSON.parse(
+        Buffer.from(validCursor ?? "", "base64url").toString("utf8"),
+      ) as Record<string, unknown>;
+      stalePayload.digest = `sha256:${"0".repeat(64)}`;
+      const staleCursor = Buffer.from(
+        JSON.stringify(stalePayload),
+        "utf8",
+      ).toString("base64url");
+
+      for (const cursor of ["%%%", staleCursor]) {
+        await expect(client.listResources({ cursor })).rejects.toMatchObject({
+          code: ProtocolErrorCode.InvalidParams,
+        });
+      }
+    });
+  });
+
+  it("completes retained resource-template arguments through the protocol", async () => {
+    await withProtocolClient(async (client) => {
+      const uri = catalogRecordResourceTemplate(runtimeContext.store.manifest);
+      const families = await client.complete({
+        ref: { type: "ref/resource", uri },
+        argument: { name: "family", value: "comp" },
+      });
+      expect(families.completion.values).toContain("components");
+
+      const ids = await client.complete({
+        ref: { type: "ref/resource", uri },
+        argument: { name: "id", value: "component.but" },
+        context: { arguments: { family: "components" } },
+      });
+      expect(ids.completion.values).toContain("component.button");
+
+      const evidenceIds = runtimeContext.store
+        .getFamily("evidence")
+        .map((record) => record.id);
+      const allEvidence = await client.complete({
+        ref: { type: "ref/resource", uri },
+        argument: { name: "id", value: "" },
+        context: { arguments: { family: "evidence" } },
+      });
+      expect(allEvidence.completion.total).toBe(evidenceIds.length);
+      expect(allEvidence.completion.hasMore).toBe(true);
+      expect(allEvidence.completion.values).toContain(evidenceIds[25]);
+      expect(allEvidence.completion.values).toContain(evidenceIds[26]);
+      expect(allEvidence.completion.values).not.toContain(evidenceIds[103]);
+
+      const afterOneHundred = await client.complete({
+        ref: { type: "ref/resource", uri },
+        argument: { name: "id", value: evidenceIds[103] ?? "" },
+        context: { arguments: { family: "evidence" } },
+      });
+      expect(afterOneHundred.completion).toMatchObject({
+        values: [evidenceIds[103]],
+        total: 1,
+        hasMore: false,
+      });
+    });
+  });
+
+  it("advertises immutable resources without subscriptions or list changes", async () => {
+    await withProtocolClient(async (client) => {
+      expect(client.getServerCapabilities()?.resources).toEqual(
+        expect.objectContaining({
+          subscribe: false,
+          listChanged: false,
+        }),
+      );
+    });
+  });
+
+  it("rejects malformed and noncanonical aliases as resource misses", async () => {
+    await withProtocolClient(async (client) => {
+      const canonical = catalogRecordResourceUri(
+        runtimeContext.store.manifest,
+        "component",
+        "Button",
+      );
+      const aliases = [
+        canonical.replace(/\/Button$/u, "/%42utton"),
+        canonical.replace(/\/Button$/u, "/%ZZ"),
+      ];
+
+      for (const uri of aliases) {
+        await expect(client.readResource({ uri })).rejects.toMatchObject({
+          code: -32602,
+          data: { uri },
+        });
+      }
+    });
+  });
+
+  it("keeps instructions bounded and non-prescriptive", () => {
+    const instructions = buildSaltMcpInstructions(runtimeContext);
+
+    expect(Buffer.byteLength(instructions, "utf8")).toBeLessThanOrEqual(
+      MAX_INSTRUCTIONS_UTF8_BYTES,
     );
-    expect(instructions).toContain(
-      "obtain host or user authorization before applying fixes",
+    expect(instructions).not.toMatch(
+      /create_salt_ui|migrate_to_salt|salt_workflow_v1|post_action|ask_user|implementation_ready|canonical_complete|exact_request_safe|finish_without_changes|authoritative next step/iu,
     );
-    expect(instructions).toContain(
-      "A create reference action may request one to three names",
-    );
-    expect(instructions).toContain(
-      "execute the complete action.args object unchanged",
-    );
-    expect(instructions).toContain(
-      "Never add unrelated entities to resolved_entities as helpful evidence",
-    );
-    expect(instructions).toContain(
-      "requested_count and found_count equal the action's requested-name count",
-    );
-    expect(instructions).toContain(
-      "never treat the post-action's requested names as evidence",
-    );
+    expect(instructions).toContain("never edits files");
   });
 });

@@ -1,0 +1,281 @@
+{
+  "scenario": {
+    "id": "token_query_border",
+    "kind": "tool_call",
+    "tool": "create_salt_ui",
+    "arguments": {
+      "query": "border",
+      "solution_type": "token"
+    },
+    "purpose": "Preserve direct-use-forbidden palette-token recommendation.",
+    "semantic_task_result": "failure"
+  },
+  "request": {
+    "method": "tools/call",
+    "params": {
+      "name": "create_salt_ui",
+      "arguments": {
+        "query": "border",
+        "solution_type": "token"
+      }
+    }
+  },
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"create\",\"status\":\"blocked\",\"request\":{\"entity\":\"border\",\"resolved_entity\":null,\"match_status\":\"no_match\",\"exact_match_required\":false},\"safety\":{\"canonical_complete\":false,\"exact_request_safe\":false,\"blocking_reasons\":[\"Salt could not resolve the requested entity\",\"No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code.\"]},\"action\":{\"kind\":\"retrieve_reference\",\"tool\":\"get_salt_reference\",\"args\":{\"names\":[\"Button\"],\"entity_type\":\"component\"},\"rule_ids\":[],\"post_action\":{\"kind\":\"rerun_workflow\",\"tool\":\"create_salt_ui\",\"args\":{\"query\":\"border\",\"solution_type\":\"token\",\"root_dir\":\"<TEMP_ROOT>/existing-salt-app\",\"resolved_entities\":[\"Button\"]}}},\"guidance\":{\"kind\":\"create\",\"decision\":{\"name\":\"--salt-palette-error-border\",\"why\":\"Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value.\",\"solution_type\":\"token\"},\"starter_guidance\":{\"plan\":[\"Binding check (primary target): the final reviewed artifact implements --salt-palette-error-border.\",\"Do not apply --salt-palette-error-border directly in component code; choose a semantic characteristic token instead.\"],\"snippets\":[]},\"review_targets\":{\"components\":[],\"patterns\":[],\"composition_contract\":{\"primary_target\":{\"solution_type\":\"token\",\"name\":\"--salt-palette-error-border\"},\"expected_patterns\":[],\"expected_components\":[],\"slots\":[],\"avoid\":[],\"source_urls\":[]},\"source\":\"create_report\"}},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"entity\":\"--salt-palette-error-border\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/themes/design-tokens/index\"],\"summary\":\"Canonical Salt docs or registry sources support the create decision.\"}],\"source_urls\":[\"/salt/themes/design-tokens/index\"],\"missing\":[],\"heuristic_fallback\":false},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt could not resolve the requested border.\"}"
+      }
+    ],
+    "structuredContent": {
+      "contract": "salt_workflow_v1",
+      "workflow": "create",
+      "status": "blocked",
+      "request": {
+        "entity": "border",
+        "resolved_entity": null,
+        "match_status": "no_match",
+        "exact_match_required": false
+      },
+      "safety": {
+        "canonical_complete": false,
+        "exact_request_safe": false,
+        "blocking_reasons": [
+          "Salt could not resolve the requested entity",
+          "No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code."
+        ]
+      },
+      "action": {
+        "kind": "retrieve_reference",
+        "tool": "get_salt_reference",
+        "args": {
+          "names": [
+            "Button"
+          ],
+          "entity_type": "component"
+        },
+        "rule_ids": [],
+        "post_action": {
+          "kind": "rerun_workflow",
+          "tool": "create_salt_ui",
+          "args": {
+            "query": "border",
+            "solution_type": "token",
+            "root_dir": "<TEMP_ROOT>/existing-salt-app",
+            "resolved_entities": [
+              "Button"
+            ]
+          }
+        }
+      },
+      "guidance": {
+        "kind": "create",
+        "decision": {
+          "name": "--salt-palette-error-border",
+          "why": "Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value.",
+          "solution_type": "token"
+        },
+        "starter_guidance": {
+          "plan": [
+            "Binding check (primary target): the final reviewed artifact implements --salt-palette-error-border.",
+            "Do not apply --salt-palette-error-border directly in component code; choose a semantic characteristic token instead."
+          ],
+          "snippets": []
+        },
+        "review_targets": {
+          "components": [],
+          "patterns": [],
+          "composition_contract": {
+            "primary_target": {
+              "solution_type": "token",
+              "name": "--salt-palette-error-border"
+            },
+            "expected_patterns": [],
+            "expected_components": [],
+            "slots": [],
+            "avoid": [],
+            "source_urls": []
+          },
+          "source": "create_report"
+        }
+      },
+      "questions": [],
+      "evidence": {
+        "status": "complete",
+        "items": [
+          {
+            "kind": "docs",
+            "source": "canonical_salt",
+            "entity": "--salt-palette-error-border",
+            "field": "source_urls",
+            "source_urls": [
+              "/salt/themes/design-tokens/index"
+            ],
+            "summary": "Canonical Salt docs or registry sources support the create decision."
+          }
+        ],
+        "source_urls": [
+          "/salt/themes/design-tokens/index"
+        ],
+        "missing": [],
+        "heuristic_fallback": false
+      },
+      "internal_limitations": {
+        "unsupported_claim_count": 0,
+        "unsupported_rule_kinds": []
+      },
+      "summary": "Salt could not resolve the requested border."
+    }
+  },
+  "error": null,
+  "frames": [
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "create_salt_ui",
+          "arguments": {
+            "query": "border",
+            "solution_type": "token"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 21
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 21,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"create\",\"status\":\"blocked\",\"request\":{\"entity\":\"border\",\"resolved_entity\":null,\"match_status\":\"no_match\",\"exact_match_required\":false},\"safety\":{\"canonical_complete\":false,\"exact_request_safe\":false,\"blocking_reasons\":[\"Salt could not resolve the requested entity\",\"No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code.\"]},\"action\":{\"kind\":\"retrieve_reference\",\"tool\":\"get_salt_reference\",\"args\":{\"names\":[\"Button\"],\"entity_type\":\"component\"},\"rule_ids\":[],\"post_action\":{\"kind\":\"rerun_workflow\",\"tool\":\"create_salt_ui\",\"args\":{\"query\":\"border\",\"solution_type\":\"token\",\"root_dir\":\"<TEMP_ROOT>/existing-salt-app\",\"resolved_entities\":[\"Button\"]}}},\"guidance\":{\"kind\":\"create\",\"decision\":{\"name\":\"--salt-palette-error-border\",\"why\":\"Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value.\",\"solution_type\":\"token\"},\"starter_guidance\":{\"plan\":[\"Binding check (primary target): the final reviewed artifact implements --salt-palette-error-border.\",\"Do not apply --salt-palette-error-border directly in component code; choose a semantic characteristic token instead.\"],\"snippets\":[]},\"review_targets\":{\"components\":[],\"patterns\":[],\"composition_contract\":{\"primary_target\":{\"solution_type\":\"token\",\"name\":\"--salt-palette-error-border\"},\"expected_patterns\":[],\"expected_components\":[],\"slots\":[],\"avoid\":[],\"source_urls\":[]},\"source\":\"create_report\"}},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"entity\":\"--salt-palette-error-border\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/themes/design-tokens/index\"],\"summary\":\"Canonical Salt docs or registry sources support the create decision.\"}],\"source_urls\":[\"/salt/themes/design-tokens/index\"],\"missing\":[],\"heuristic_fallback\":false},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt could not resolve the requested border.\"}"
+            }
+          ],
+          "structuredContent": {
+            "contract": "salt_workflow_v1",
+            "workflow": "create",
+            "status": "blocked",
+            "request": {
+              "entity": "border",
+              "resolved_entity": null,
+              "match_status": "no_match",
+              "exact_match_required": false
+            },
+            "safety": {
+              "canonical_complete": false,
+              "exact_request_safe": false,
+              "blocking_reasons": [
+                "Salt could not resolve the requested entity",
+                "No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code."
+              ]
+            },
+            "action": {
+              "kind": "retrieve_reference",
+              "tool": "get_salt_reference",
+              "args": {
+                "names": [
+                  "Button"
+                ],
+                "entity_type": "component"
+              },
+              "rule_ids": [],
+              "post_action": {
+                "kind": "rerun_workflow",
+                "tool": "create_salt_ui",
+                "args": {
+                  "query": "border",
+                  "solution_type": "token",
+                  "root_dir": "<TEMP_ROOT>/existing-salt-app",
+                  "resolved_entities": [
+                    "Button"
+                  ]
+                }
+              }
+            },
+            "guidance": {
+              "kind": "create",
+              "decision": {
+                "name": "--salt-palette-error-border",
+                "why": "Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value.",
+                "solution_type": "token"
+              },
+              "starter_guidance": {
+                "plan": [
+                  "Binding check (primary target): the final reviewed artifact implements --salt-palette-error-border.",
+                  "Do not apply --salt-palette-error-border directly in component code; choose a semantic characteristic token instead."
+                ],
+                "snippets": []
+              },
+              "review_targets": {
+                "components": [],
+                "patterns": [],
+                "composition_contract": {
+                  "primary_target": {
+                    "solution_type": "token",
+                    "name": "--salt-palette-error-border"
+                  },
+                  "expected_patterns": [],
+                  "expected_components": [],
+                  "slots": [],
+                  "avoid": [],
+                  "source_urls": []
+                },
+                "source": "create_report"
+              }
+            },
+            "questions": [],
+            "evidence": {
+              "status": "complete",
+              "items": [
+                {
+                  "kind": "docs",
+                  "source": "canonical_salt",
+                  "entity": "--salt-palette-error-border",
+                  "field": "source_urls",
+                  "source_urls": [
+                    "/salt/themes/design-tokens/index"
+                  ],
+                  "summary": "Canonical Salt docs or registry sources support the create decision."
+                }
+              ],
+              "source_urls": [
+                "/salt/themes/design-tokens/index"
+              ],
+              "missing": [],
+              "heuristic_fallback": false
+            },
+            "internal_limitations": {
+              "unsupported_claim_count": 0,
+              "unsupported_rule_kinds": []
+            },
+            "summary": "Salt could not resolve the requested border."
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "latency_ms": 173.243,
+    "response_utf8_bytes": 4938,
+    "structured_content_utf8_bytes": 2338,
+    "text_content_utf8_bytes": 2338,
+    "response_sha256": "a22afae5531138cc7e70443c9ef6d9e812eb7471ced13d8b2c05155e3ce4d39b"
+  },
+  "call_count": 1,
+  "transport_success": true,
+  "schema_or_envelope_success": true,
+  "reproduction_assertion": {
+    "passed": true,
+    "details": "Expected the audited token query border failure signature."
+  },
+  "semantic_task_result": "failure",
+  "semantic_task_reason": null,
+  "agent_edits": null,
+  "user_corrections": null,
+  "host_capture_status": "not_available"
+}

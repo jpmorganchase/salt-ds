@@ -1,5 +1,6 @@
 import type { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
+import { isApiSymbolSpaceAvailable } from "../catalog/catalogApiSymbolV2.js";
 import {
   SALT_EVIDENCE_REF_CONTRACT,
   type SaltEvidenceRef,
@@ -17,17 +18,23 @@ import { buildValidationReportEvidenceGate } from "../validationReportArtifacts.
 import type { SaltValidationRulePack } from "../validationRulePacks.js";
 import {
   analyzeParsedSaltCode,
+  apiSymbolModuleSpecifier,
+  assertSaltCodeAnalysisIsReliable,
   buildPropDeprecationIndex,
+  catalogedMethodDeprecationOwners,
   createVersionContext,
   type ImportedSaltSymbol,
   isDeprecationRelevant,
+  isImportedSaltBindingVisible,
   normalizeComponentKey,
   resolveImportedSaltSymbol,
   resolveNamespaceMemberImportedSaltSymbol,
+  resolveTypeNamespaceMemberImportedSaltSymbol,
   type SaltCodeAnalysis,
   traverseAst,
+  tsQualifiedNameUsageSpace,
 } from "./codeAnalysisCommon.js";
-import { findComponentByPackageAndLookupName } from "./utils.js";
+import { findComponentByPackageAndExportName } from "./utils.js";
 import type { ValidationIssue } from "./validation/shared.js";
 import {
   buildAccessibleNameValidationIssue,
@@ -108,13 +115,13 @@ export interface ValidateSaltUsageInput {
   max_issues?: number;
   analysis?: SaltCodeAnalysis;
   validation_rule_pack?: SaltValidationRulePack;
-  generated_at?: string;
+  generated_at?: string | null;
   generator?: SaltGeneratedArtifactGenerator;
-  registry_hash?: string | null;
 }
 
 export interface ValidateSaltUsageEvidenceValidation {
   status: SerializedGeneratedSaltArtifactSurfaceGate["status"];
+  validation_scope: SerializedGeneratedSaltArtifactSurfaceGate["validation_scope"];
   issues: SaltEvidenceValidationIssue[];
   missing: string[];
   unsupported_claim_count: number;
@@ -138,7 +145,9 @@ export interface ValidateSaltUsageResult {
 const PROP_DEPRECATION_EXCLUDES = new Set(["error", "unknown"]);
 
 function getImportedSaltSymbolKey(symbol: ImportedSaltSymbol): string {
-  return `${symbol.packageName}:${symbol.imported}`;
+  return `${symbol.packageName}:${symbol.imported}:${
+    symbol.typeOnly ? "type" : "value"
+  }`;
 }
 
 function toEvidenceValidationMirror(
@@ -146,6 +155,7 @@ function toEvidenceValidationMirror(
 ): ValidateSaltUsageEvidenceValidation {
   return {
     status: surfaceGate.status,
+    validation_scope: surfaceGate.validation_scope,
     issues: surfaceGate.validation_issues,
     missing: surfaceGate.missing,
     unsupported_claim_count: surfaceGate.unsupported_claim_count,
@@ -157,16 +167,14 @@ export function buildValidateSaltUsageResult(input: {
   summary: ValidateSaltUsageResult["summary"];
   issues: ValidationIssue[];
   missing_data: string[];
-  generated_at?: string;
+  generated_at?: string | null;
   generator?: SaltGeneratedArtifactGenerator;
-  registry_hash?: string | null;
 }): ValidateSaltUsageResult {
   const evidenceGate = buildValidationReportEvidenceGate({
     registry: input.registry,
-    registry_hash: input.registry_hash,
     issues: input.issues,
     missing_data: input.missing_data,
-    generated_at: input.generated_at ?? input.registry.generated_at,
+    generated_at: input.generated_at ?? null,
     generator: input.generator ?? {
       name: "validateSaltUsage",
     },
@@ -204,7 +212,6 @@ export function validateSaltUsage(
       missing_data: ["No code was provided."],
       generated_at: input.generated_at,
       generator: input.generator,
-      registry_hash: input.registry_hash,
     });
   }
 
@@ -227,6 +234,7 @@ export function validateSaltUsage(
   let analysis: SaltCodeAnalysis;
   try {
     analysis = input.analysis ?? analyzeParsedSaltCode(code);
+    assertSaltCodeAnalysisIsReliable(analysis);
   } catch (error) {
     mergeTokenPolicyCounts(
       tokenCounts,
@@ -253,7 +261,6 @@ export function validateSaltUsage(
       missing_data: missingData,
       generated_at: input.generated_at,
       generator: input.generator,
-      registry_hash: input.registry_hash,
     });
   }
 
@@ -271,13 +278,14 @@ export function validateSaltUsage(
 
   const collectResolvedUsage = (
     name: t.JSXIdentifier | t.JSXMemberExpression | t.JSXNamespacedName,
+    path: NodePath,
   ): ImportedSaltSymbol | null => {
     const imported = resolveImportedSaltSymbol(
       name,
       directImportByLocal,
       namespaceImportByLocal,
     );
-    if (!imported) {
+    if (!imported || !isImportedSaltBindingVisible(path, imported)) {
       return null;
     }
 
@@ -287,12 +295,13 @@ export function validateSaltUsage(
 
   const collectResolvedNamespaceMemberUsage = (
     node: t.MemberExpression,
+    path: NodePath,
   ): ImportedSaltSymbol | null => {
     const imported = resolveNamespaceMemberImportedSaltSymbol(
       node,
       namespaceImportByLocal,
     );
-    if (!imported) {
+    if (!imported || !isImportedSaltBindingVisible(path, imported)) {
       return null;
     }
 
@@ -305,22 +314,76 @@ export function validateSaltUsage(
       .filter((item) => !item.typeOnly && item.imported !== "*")
       .map((item) => [getImportedSaltSymbolKey(item), item] as const),
   );
+  const importedSymbolsForDeprecationChecks = new Map<
+    string,
+    ImportedSaltSymbol
+  >(
+    saltImports
+      .filter((item) => item.imported !== "*")
+      .map((item) => [getImportedSaltSymbolKey(item), item] as const),
+  );
+  const allNamespaceImportByLocal = new Map(
+    saltImports
+      .filter((item) => item.namespace)
+      .map((item) => [item.local, item] as const),
+  );
+  const resolvedTypeSymbolUsage = new Map<string, ImportedSaltSymbol>();
 
   traverseAst(ast, {
     JSXOpeningElement(path) {
-      collectResolvedUsage(path.node.name);
+      collectResolvedUsage(path.node.name, path);
     },
     MemberExpression(path) {
-      collectResolvedNamespaceMemberUsage(path.node);
+      collectResolvedNamespaceMemberUsage(path.node, path);
+    },
+    TSQualifiedName(path) {
+      const usageSpace = tsQualifiedNameUsageSpace(path);
+      const imported = resolveTypeNamespaceMemberImportedSaltSymbol(
+        path.node,
+        allNamespaceImportByLocal,
+        usageSpace,
+      );
+      if (imported && isImportedSaltBindingVisible(path, imported)) {
+        resolvedTypeSymbolUsage.set(
+          getImportedSaltSymbolKey(imported),
+          imported,
+        );
+      }
     },
   });
 
   for (const [symbolKey, imported] of resolvedUsageBySymbolKey) {
     importedSymbolsForCatalogChecks.set(symbolKey, imported);
+    importedSymbolsForDeprecationChecks.set(symbolKey, imported);
+  }
+  for (const [symbolKey, imported] of resolvedTypeSymbolUsage) {
+    importedSymbolsForDeprecationChecks.set(symbolKey, imported);
+  }
+
+  const methodDeprecationOwners = catalogedMethodDeprecationOwners(
+    registry.deprecations,
+    versionContext,
+    [
+      ...saltImports,
+      ...resolvedUsageBySymbolKey.values(),
+      ...resolvedTypeSymbolUsage.values(),
+    ],
+  );
+  incompleteVersionMetadata ||=
+    methodDeprecationOwners.incompleteVersionMetadata;
+  for (const imported of methodDeprecationOwners.owners) {
+    missingData.push(
+      `Cataloged method deprecations for imported API owner '${imported.exportName}' from '${imported.packageName}' require manual call-site review because validation cannot safely resolve instance or static member usage.`,
+    );
+  }
+  if (methodDeprecationOwners.omittedCount > 0) {
+    missingData.push(
+      `${methodDeprecationOwners.omittedCount} additional imported API owner(s) with cataloged method deprecations were omitted to keep validation missing-data output bounded; review their instance and static member usage manually.`,
+    );
   }
 
   for (const imported of importedSymbolsForCatalogChecks.values()) {
-    const component = findComponentByPackageAndLookupName(
+    const component = findComponentByPackageAndExportName(
       registry,
       imported.packageName,
       imported.imported,
@@ -339,7 +402,7 @@ export function validateSaltUsage(
     }
 
     addIssue({
-      id: `component-status.${slugify(component.name)}.${component.status}`,
+      id: `component-status.${slugify(component.name)}.${component.status}.${slugify(component.id)}`,
       category: "catalog-status",
       rule: "prefer-stable-catalog-status",
       severity: component.status === "deprecated" ? "error" : "warning",
@@ -383,38 +446,46 @@ export function validateSaltUsage(
 
   const nonPropDeprecations = registry.deprecations.filter(
     (deprecation) =>
-      deprecation.kind !== "prop" &&
+      deprecation.subject.member_path.length === 0 &&
       isDeprecationRelevant(deprecation, versionContext),
   );
   const matchedImportDeprecations = new Set<string>();
-  for (const imported of importedSymbolsForCatalogChecks.values()) {
+  for (const imported of importedSymbolsForDeprecationChecks.values()) {
     const deprecations = nonPropDeprecations.filter(
       (deprecation) =>
-        deprecation.package === imported.packageName &&
-        deprecation.name === imported.imported,
+        apiSymbolModuleSpecifier(deprecation.subject) ===
+          imported.packageName &&
+        deprecation.name === imported.imported &&
+        isApiSymbolSpaceAvailable(
+          deprecation.subject.symbol_space,
+          imported.typeOnly ? "type" : "value",
+        ),
     );
 
     for (const deprecation of deprecations) {
       if (versionContext.normalized && !deprecation.deprecated_in) {
         incompleteVersionMetadata = true;
       }
-      const depKey = `${deprecation.package}:${deprecation.kind}:${deprecation.name}`;
+      const depKey = deprecation.id;
       if (matchedImportDeprecations.has(depKey)) {
         continue;
       }
       matchedImportDeprecations.add(depKey);
+      const moduleSpecifier = apiSymbolModuleSpecifier(deprecation.subject);
 
       addIssue({
-        id: `deprecated.import.${slugify(deprecation.package)}.${slugify(deprecation.name)}`,
+        id: `deprecated.import.${slugify(moduleSpecifier)}.${slugify(
+          deprecation.name,
+        )}.${slugify(deprecation.id)}`,
         category: "deprecated",
         rule: "deprecated-import-replacement",
         severity: deprecationSeverity(deprecation, versionContext),
         title: `Deprecated API imported: ${deprecation.name}`,
         message:
           deprecation.replacement.notes ??
-          `${deprecation.name} is deprecated in ${deprecation.package}.`,
+          `${deprecation.name} is deprecated in ${moduleSpecifier}.`,
         evidence: buildEvidence(
-          `Imported deprecated API ${deprecation.name} from ${deprecation.package}`,
+          `Imported deprecated API ${deprecation.name} from ${moduleSpecifier}`,
           1,
         ),
         canonical_source: deprecation.source_urls[0] ?? null,
@@ -503,7 +574,7 @@ export function validateSaltUsage(
   const getImportedComponent = (
     imported: ImportedSaltSymbol,
   ): SaltRegistry["components"][number] | null =>
-    findComponentByPackageAndLookupName(
+    findComponentByPackageAndExportName(
       registry,
       imported.packageName,
       imported.imported,
@@ -550,6 +621,8 @@ export function validateSaltUsage(
           namespaceImportByLocal,
         );
         if (
+          imported &&
+          isImportedSaltBindingVisible(current, imported) &&
           isImportedSaltName(
             imported,
             "@salt-ds/core",
@@ -737,7 +810,7 @@ export function validateSaltUsage(
   traverseAst(ast, {
     JSXOpeningElement(path) {
       const tagName = getJsxTagName(path.node.name);
-      const imported = collectResolvedUsage(path.node.name);
+      const imported = collectResolvedUsage(path.node.name, path);
       const attributes = path.node.attributes.filter(
         (attribute): attribute is t.JSXAttribute => t.isJSXAttribute(attribute),
       );
@@ -842,7 +915,7 @@ export function validateSaltUsage(
       const packageDeprecations = propDeprecationIndex.get(
         imported.packageName,
       );
-      if (!packageDeprecations) {
+      if (!component || !packageDeprecations) {
         return;
       }
 
@@ -874,7 +947,7 @@ export function validateSaltUsage(
     },
     JSXElement(path) {
       const opening = path.node.openingElement;
-      const imported = collectResolvedUsage(opening.name);
+      const imported = collectResolvedUsage(opening.name, path);
       if (!imported) {
         return;
       }
@@ -1257,7 +1330,7 @@ export function validateSaltUsage(
   }
 
   if (verticalNavigationTriggerWithoutContentMatches > 0) {
-    const component = findComponentByPackageAndLookupName(
+    const component = findComponentByPackageAndExportName(
       registry,
       "@salt-ds/core",
       "VerticalNavigation",
@@ -1301,14 +1374,12 @@ export function validateSaltUsage(
           : []),
         {
           contract: SALT_EVIDENCE_REF_CONTRACT,
-          id: "composition.vertical-navigation-item-content.workflow-input.code.validation-ref",
-          source_kind: "workflow_input",
-          claim_kind: "workflow",
-          workflow_input: {
+          id: "composition.vertical-navigation-item-content.submitted-text.code.validation-ref",
+          source_kind: "submitted_text",
+          claim_kind: "composition",
+          submitted_text: {
             field_path: "code",
           },
-          confidence: "high",
-          verified_at: null,
           note: "Review input contained a VerticalNavigationItemTrigger missing the required content wrapper.",
         },
       ],
@@ -1317,14 +1388,14 @@ export function validateSaltUsage(
         related_components: ["Vertical navigation"],
         guide_lookups: [],
         extra_steps: [
-          "Rerun get_salt_reference for VerticalNavigation with examples before editing the navigation tree.",
+          "Search for VerticalNavigation and read its linked canonical resource before editing the navigation tree.",
         ],
       },
     });
   }
 
   if (verticalNavigationPlaceholderHrefMatches > 0) {
-    const component = findComponentByPackageAndLookupName(
+    const component = findComponentByPackageAndExportName(
       registry,
       "@salt-ds/core",
       "VerticalNavigation",
@@ -1364,14 +1435,12 @@ export function validateSaltUsage(
           : []),
         {
           contract: SALT_EVIDENCE_REF_CONTRACT,
-          id: "navigation.fake-href.workflow-input.code.validation-ref",
-          source_kind: "workflow_input",
-          claim_kind: "workflow",
-          workflow_input: {
+          id: "navigation.fake-href.submitted-text.code.validation-ref",
+          source_kind: "submitted_text",
+          claim_kind: "accessibility",
+          submitted_text: {
             field_path: "code",
           },
-          confidence: "high",
-          verified_at: null,
           note: 'Review input contained VerticalNavigationItemTrigger with href="#".',
         },
       ],
@@ -1399,7 +1468,9 @@ export function validateSaltUsage(
     }
 
     addIssue({
-      id: `deprecated.prop.${slugify(deprecation.package)}.${slugify(deprecation.name)}`,
+      id: `deprecated.prop.${slugify(deprecation.package)}.${slugify(
+        deprecation.name,
+      )}.${slugify(deprecation.id)}`,
       category: "deprecated",
       rule: "deprecated-prop-replacement",
       severity: deprecationSeverity(deprecation, versionContext),
@@ -1446,6 +1517,5 @@ export function validateSaltUsage(
     missing_data: missingData,
     generated_at: input.generated_at,
     generator: input.generator,
-    registry_hash: input.registry_hash,
   });
 }

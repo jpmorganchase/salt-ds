@@ -15,19 +15,6 @@ data:
   components: ["Icon", "Link", "Stack layout", "Text"]
   ai:
     aliases: ["large metric", "kpi", "key metric", "dashboard metric"]
-    starterScaffold:
-      sourceUrls: ["/salt/patterns/metric"]
-      template: "metric"
-      semantics:
-        regions: ["metric-title", "metric-value", "metric-supporting-context"]
-        optionalRegions: ["metric-supporting-context"]
-        buildAround: ["Metric title", "Metric value", "Metric supporting context"]
-        preserveConstraints:
-          [
-            "Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.",
-            "Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.",
-            "Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information.",
-          ]
 ---
 
   <Diagram

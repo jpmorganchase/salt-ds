@@ -5,12 +5,14 @@ import type {
   GuideRecord,
   PackageRecord,
   PageRecord,
+  RegistrySourceLocator,
   SaltRegistry,
 } from "../types.js";
 
 export interface RegistryIndexes {
   packagesByNormalizedName: Map<string, PackageRecord>;
   componentsByNormalizedName: Map<string, ComponentRecord[]>;
+  componentsByNormalizedPublicExport: Map<string, ComponentRecord[]>;
   componentsByNormalizedAlias: Map<string, ComponentRecord[]>;
   componentById: Map<string, ComponentRecord>;
   deprecationById: Map<string, DeprecationRecord>;
@@ -30,18 +32,16 @@ export interface CanonicalComponentExportOwner {
   source_urls: string[];
   example: {
     id: string;
-    source_url: string;
-  };
+  } & RegistrySourceLocator;
 }
 
-export interface CanonicalPackageExportSource {
+export type CanonicalPackageExportSource = {
   entity_type: "component" | "pattern";
   entity_id: string;
   entity_name: string;
   example_id: string;
-  source_url: string;
-  verified_at: string;
-}
+  verified_at: string | null;
+} & RegistrySourceLocator;
 
 export interface CanonicalPackageExportEvidence {
   package_name: string;
@@ -53,7 +53,7 @@ function canonicalPackageExportKey(
   packageName: string,
   exportName: string,
 ): string {
-  return `${normalizeRegistryLookupKey(packageName)}\u0000${normalizeRegistryLookupKey(exportName)}`;
+  return `${packageName}\u0000${exportName}`;
 }
 
 function readNamedValueImports(
@@ -85,6 +85,17 @@ function readNamedValueImports(
   return imports;
 }
 
+function getRegisteredScopedPackageRoot(
+  moduleSpecifier: string,
+  registeredPackageNames: ReadonlySet<string>,
+): string | null {
+  const match = /^(@[^/]+\/[^/]+)(?:\/|$)/u.exec(moduleSpecifier);
+  const packageRoot = match?.[1] ?? null;
+  return packageRoot && registeredPackageNames.has(packageRoot)
+    ? packageRoot
+    : null;
+}
+
 function getCanonicalPackageExports(
   registry: SaltRegistry,
 ): Map<string, CanonicalPackageExportEvidence> {
@@ -94,6 +105,9 @@ function getCanonicalPackageExports(
   }
 
   const exports = new Map<string, CanonicalPackageExportEvidence>();
+  const registeredPackageNames = new Set(
+    registry.packages.map((record) => record.name),
+  );
   const records = [
     ...registry.components.map((record) => ({
       entity_type: "component" as const,
@@ -107,11 +121,13 @@ function getCanonicalPackageExports(
 
   for (const { entity_type: entityType, record } of records) {
     for (const example of record.examples) {
-      if (!example.source_url) {
-        continue;
-      }
       for (const imported of readNamedValueImports(example.code)) {
-        if (!imported.packageName.startsWith("@salt-ds/")) {
+        if (
+          !getRegisteredScopedPackageRoot(
+            imported.packageName,
+            registeredPackageNames,
+          )
+        ) {
           continue;
         }
 
@@ -119,12 +135,22 @@ function getCanonicalPackageExports(
           imported.packageName,
           imported.exportName,
         );
+        const locator: RegistrySourceLocator =
+          example.source_url !== null
+            ? {
+                source_url: example.source_url,
+                source_path: null,
+              }
+            : {
+                source_url: null,
+                source_path: example.source_path,
+              };
         const source: CanonicalPackageExportSource = {
           entity_type: entityType,
           entity_id: record.id,
           entity_name: record.name,
           example_id: example.id,
-          source_url: example.source_url,
+          ...locator,
           verified_at: record.last_verified_at,
         };
         const current = exports.get(key);
@@ -186,22 +212,15 @@ export function findCanonicalComponentExportOwner(
   packageName: string,
   exportName: string,
 ): CanonicalComponentExportOwner | null {
-  const normalizedPackageName = normalizeRegistryLookupKey(packageName);
-  const normalizedExportName = normalizeRegistryLookupKey(exportName);
   let owner: CanonicalComponentExportOwner | null = null;
 
   for (const component of registry.components) {
-    if (
-      normalizeRegistryLookupKey(component.package.name) !==
-      normalizedPackageName
-    ) {
+    if (component.package.name !== packageName) {
       continue;
     }
 
     const canonicalExport = component.canonical_example_exports?.find(
-      (candidate) =>
-        normalizeRegistryLookupKey(candidate.export_name) ===
-        normalizedExportName,
+      (candidate) => candidate.export_name === exportName,
     );
     if (!canonicalExport) {
       continue;
@@ -218,12 +237,20 @@ export function findCanonicalComponentExportOwner(
       source_urls: [
         ...new Set([
           ...componentCanonicalSourceUrls(component),
-          canonicalExport.source_url,
+          ...(canonicalExport.source_url ? [canonicalExport.source_url] : []),
         ]),
       ],
       example: {
         id: canonicalExport.example_id,
-        source_url: canonicalExport.source_url,
+        ...(canonicalExport.source_url !== null
+          ? {
+              source_url: canonicalExport.source_url,
+              source_path: null,
+            }
+          : {
+              source_url: null,
+              source_path: canonicalExport.source_path,
+            }),
       },
     };
   }
@@ -247,33 +274,15 @@ function appendIndexedValue<T>(map: Map<string, T[]>, key: string, value: T) {
   map.set(key, [value]);
 }
 
-const COMPONENT_EXPORT_ALIASES_BY_ID: Record<string, string[]> = {
-  "component.text": [
-    "Code",
-    "Display1",
-    "Display2",
-    "Display3",
-    "H1",
-    "H2",
-    "H3",
-    "H4",
-    "Label",
-    "TextAction",
-    "TextNotation",
-  ],
-};
-
-export function getComponentExportAliases(
-  component: Pick<ComponentRecord, "id">,
-): string[] {
-  return COMPONENT_EXPORT_ALIASES_BY_ID[component.id] ?? [];
-}
-
 function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
   const packagesByNormalizedName = new Map(
     registry.packages.map((pkg) => [normalizeRegistryLookupKey(pkg.name), pkg]),
   );
   const componentsByNormalizedName = new Map<string, ComponentRecord[]>();
+  const componentsByNormalizedPublicExport = new Map<
+    string,
+    ComponentRecord[]
+  >();
   const componentsByNormalizedAlias = new Map<string, ComponentRecord[]>();
 
   for (const component of registry.components) {
@@ -283,6 +292,11 @@ function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
       component,
     );
     if (component.source.export_name) {
+      appendIndexedValue(
+        componentsByNormalizedPublicExport,
+        normalizeRegistryLookupKey(component.source.export_name),
+        component,
+      );
       appendIndexedValue(
         componentsByNormalizedAlias,
         normalizeRegistryLookupKey(component.source.export_name),
@@ -296,17 +310,15 @@ function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
         component,
       );
     }
-    for (const alias of getComponentExportAliases(component)) {
-      appendIndexedValue(
-        componentsByNormalizedAlias,
-        normalizeRegistryLookupKey(alias),
-        component,
-      );
-    }
     // Index sub-component export names as aliases so that lookups for
     // e.g. "DialogHeader" or "AccordionPanel" resolve to the parent.
     if (component.sub_components) {
       for (const sub of component.sub_components) {
+        appendIndexedValue(
+          componentsByNormalizedPublicExport,
+          normalizeRegistryLookupKey(sub.export_name),
+          component,
+        );
         appendIndexedValue(
           componentsByNormalizedAlias,
           normalizeRegistryLookupKey(sub.export_name),
@@ -314,11 +326,19 @@ function buildRegistryIndexes(registry: SaltRegistry): RegistryIndexes {
         );
       }
     }
+    for (const canonicalExport of component.canonical_example_exports ?? []) {
+      appendIndexedValue(
+        componentsByNormalizedPublicExport,
+        normalizeRegistryLookupKey(canonicalExport.export_name),
+        component,
+      );
+    }
   }
 
   return {
     packagesByNormalizedName,
     componentsByNormalizedName,
+    componentsByNormalizedPublicExport,
     componentsByNormalizedAlias,
     componentById: new Map(
       registry.components.map((component) => [component.id, component]),

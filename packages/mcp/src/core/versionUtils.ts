@@ -37,10 +37,9 @@ export function normalizeComparableVersion(
     return (
       semver.valid(comparableValue) ??
       semver.minVersion(comparableValue)?.version ??
-      semver.coerce(comparableValue)?.version ??
       null
     );
   } catch {
-    return semver.coerce(comparableValue)?.version ?? null;
+    return null;
   }
 }

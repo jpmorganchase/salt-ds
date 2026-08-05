@@ -308,7 +308,7 @@ const generateIconComponents = async ({
         // note: triple mustache is used here for unescaped version
         JSDoc: deprecatedIconMap.has(componentName)
           ? `
-/** @deprecated since ${deprecatedIconMap.get(componentName).since}. Use \`${deprecatedIconMap.get(componentName).replacement}Icon\` instead. */`
+/** @deprecated since ${deprecatedIconMap.get(componentName).since}. Use {@link ${deprecatedIconMap.get(componentName).replacement}Icon} instead. */`
           : "",
       });
 

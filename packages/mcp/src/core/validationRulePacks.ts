@@ -1,8 +1,12 @@
 import {
+  deduplicateSaltEvidenceRefs,
   type SaltEvidenceRef,
   type SaltEvidenceValidationIssue,
-  validateEvidenceRef,
+  type SaltEvidenceValidationIssueCode,
+  saltEvidenceRefsEqual,
 } from "./evidence.js";
+import { validateSaltEvidenceRefAgainstRegistry } from "./generatedArtifactValidation.js";
+import { getSaltRegistryFingerprint } from "./registry/fingerprint.js";
 import type {
   ValidationCategory,
   ValidationIssue,
@@ -21,6 +25,11 @@ interface SaltValidationRuleComponentJsxAttributeMatch {
 
 type SaltValidationRuleMatch = SaltValidationRuleComponentJsxAttributeMatch;
 
+export interface SaltValidationRuleConfidence {
+  basis: "deterministic_match";
+  score: 1;
+}
+
 export interface SaltValidationRuleRecord {
   id: string;
   category: ValidationCategory;
@@ -29,7 +38,7 @@ export interface SaltValidationRuleRecord {
   title: string;
   message: string;
   suggested_fix: string | null;
-  confidence: number;
+  confidence: SaltValidationRuleConfidence;
   match: SaltValidationRuleMatch;
   evidence_refs: SaltEvidenceRef[];
   canonical_source?: string | null;
@@ -42,28 +51,29 @@ export interface SaltValidationRulePackGenerator {
 }
 
 export interface SaltValidationRulePackRegistry {
-  version?: string | null;
-  hash?: string | null;
-  generated_at?: string | null;
+  version: string;
+  hash: string;
+  generated_at: string | null;
 }
 
 export interface SaltValidationRulePack {
   contract: typeof SALT_VALIDATION_RULE_PACK_CONTRACT;
   id: string;
-  generated_at: string;
+  generated_at: string | null;
   generator: SaltValidationRulePackGenerator;
   registry: SaltValidationRulePackRegistry;
   rules: SaltValidationRuleRecord[];
 }
 
 type SaltValidationRulePackIssueCode =
+  | SaltEvidenceValidationIssueCode
   | "invalid_rule_pack_contract"
   | "missing_rule_evidence"
-  | "invalid_rule_evidence_ref"
   | "missing_component_match_target"
   | "missing_component_match_attribute"
   | "unknown_component_match_attribute"
-  | "unknown_component_match_target";
+  | "unknown_component_match_target"
+  | "invalid_rule_confidence";
 
 interface SaltValidationRulePackIssue {
   code: SaltValidationRulePackIssueCode;
@@ -88,18 +98,11 @@ function unique<T>(values: T[]): T[] {
   return [...new Set(values)];
 }
 
-function uniqueEvidenceRefs(refs: SaltEvidenceRef[]): SaltEvidenceRef[] {
-  return refs.filter(
-    (ref, index) =>
-      refs.findIndex((candidate) => candidate.id === ref.id) === index,
-  );
-}
-
 function toRulePackIssue(
   issue: SaltEvidenceValidationIssue,
 ): SaltValidationRulePackIssue {
   return {
-    code: "invalid_rule_evidence_ref",
+    code: issue.code,
     message: issue.message,
     path: issue.path,
   };
@@ -117,24 +120,14 @@ function getFirstEvidenceSourceUrl(refs: SaltEvidenceRef[]): string | null {
   return getEvidenceSourceUrls(refs)[0] ?? null;
 }
 
-function hasSourceBackedRuleEvidence(refs: SaltEvidenceRef[]): boolean {
-  return refs.some(
-    (ref) =>
-      (ref.source_kind === "docs" ||
-        ref.source_kind === "source" ||
-        ref.source_kind === "example") &&
-      (hasText(ref.source?.url) || hasText(ref.source?.repo_path)),
-  );
-}
-
 function validateRuleMatch(
   rule: SaltValidationRuleRecord,
   rulePath: string,
-  registry?: Pick<SaltRegistry, "components">,
+  registry: SaltRegistry,
 ): SaltValidationRulePackIssue[] {
   const issues: SaltValidationRulePackIssue[] = [];
   const component =
-    registry?.components.find((item) => item.id === rule.match.component_id) ??
+    registry.components.find((item) => item.id === rule.match.component_id) ??
     null;
 
   if (!hasText(rule.match.component_id)) {
@@ -143,7 +136,7 @@ function validateRuleMatch(
       message: `Validation rule '${rule.id}' must include match.component_id.`,
       path: `${rulePath}.match.component_id`,
     });
-  } else if (registry && !component) {
+  } else if (!component) {
     issues.push({
       code: "unknown_component_match_target",
       message: `Validation rule '${rule.id}' references missing registry component '${rule.match.component_id}'.`,
@@ -159,7 +152,7 @@ function validateRuleMatch(
     });
   }
 
-  if (component && !hasSourceBackedRuleEvidence(rule.evidence_refs)) {
+  if (component) {
     for (const attributeName of rule.match.attribute_names) {
       if (component.props.some((prop) => prop.name === attributeName)) {
         continue;
@@ -178,9 +171,10 @@ function validateRuleMatch(
 
 export function validateValidationRulePackEvidence(
   pack: SaltValidationRulePack,
-  registry?: Pick<SaltRegistry, "components">,
+  registry: SaltRegistry,
 ): SaltValidationRulePackIssue[] {
   const issues: SaltValidationRulePackIssue[] = [];
+  const activeRegistryHash = getSaltRegistryFingerprint(registry);
 
   if (pack.contract !== SALT_VALIDATION_RULE_PACK_CONTRACT) {
     issues.push({
@@ -190,8 +184,42 @@ export function validateValidationRulePackEvidence(
     });
   }
 
+  if (!hasText(pack.registry?.version) || !hasText(pack.registry?.hash)) {
+    issues.push({
+      code: "missing_registry_identity",
+      message: `Validation rule pack '${pack.id}' must declare the active registry version and hash.`,
+      path: "registry",
+    });
+  } else if (
+    pack.registry.version !== registry.version ||
+    pack.registry.hash !== activeRegistryHash
+  ) {
+    issues.push({
+      code: "stale_registry",
+      message: `Validation rule pack '${pack.id}' does not match the active registry identity.`,
+      path: "registry",
+    });
+  }
+
+  const evidenceRefById = new Map<string, SaltEvidenceRef>();
   pack.rules.forEach((rule, ruleIndex) => {
     const rulePath = `rules[${ruleIndex}]`;
+    const confidence = rule.confidence as unknown;
+
+    if (
+      typeof confidence !== "object" ||
+      confidence === null ||
+      Array.isArray(confidence) ||
+      (confidence as { basis?: unknown }).basis !== "deterministic_match" ||
+      (confidence as { score?: unknown }).score !== 1 ||
+      Object.keys(confidence).some((key) => key !== "basis" && key !== "score")
+    ) {
+      issues.push({
+        code: "invalid_rule_confidence",
+        message: `Validation rule '${rule.id}' may only claim confidence derived from an exact deterministic match.`,
+        path: `${rulePath}.confidence`,
+      });
+    }
 
     if (rule.evidence_refs.length === 0) {
       issues.push({
@@ -202,11 +230,21 @@ export function validateValidationRulePackEvidence(
     }
 
     rule.evidence_refs.forEach((ref, refIndex) => {
+      const refPath = `${rulePath}.evidence_refs[${refIndex}]`;
+      const existing = evidenceRefById.get(ref.id);
+      if (existing && !saltEvidenceRefsEqual(existing, ref)) {
+        issues.push({
+          code: "conflicting_evidence_ref",
+          message: `Evidence ref id '${ref.id}' is reused for conflicting provenance across validation rules.`,
+          path: `${refPath}.id`,
+        });
+      } else if (!existing) {
+        evidenceRefById.set(ref.id, ref);
+      }
       issues.push(
-        ...validateEvidenceRef(
-          ref,
-          `${rulePath}.evidence_refs[${refIndex}]`,
-        ).map(toRulePackIssue),
+        ...validateSaltEvidenceRefAgainstRegistry(ref, refPath, registry).map(
+          toRulePackIssue,
+        ),
       );
     });
 
@@ -219,7 +257,7 @@ export function validateValidationRulePackEvidence(
 export function buildValidationIssueFromValidationRule(
   input: BuildValidationIssueFromRuleInput,
 ): ValidationIssue {
-  const evidenceRefs = uniqueEvidenceRefs([
+  const evidenceRefs = deduplicateSaltEvidenceRefs([
     ...input.rule.evidence_refs,
     ...(input.evidence_refs ?? []),
   ]);
@@ -242,7 +280,7 @@ export function buildValidationIssueFromValidationRule(
       input.rule.canonical_source ??
       getFirstEvidenceSourceUrl(evidenceRefs),
     suggested_fix: input.rule.suggested_fix,
-    confidence: input.rule.confidence,
+    confidence: input.rule.confidence.score,
     source_urls: sourceUrls,
     evidence_refs: evidenceRefs,
     matches: input.matches,

@@ -1,24 +1,36 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import type { CatalogManifest } from "../core/catalog/catalogSchemaV2.js";
 import { loadRegistry } from "../core/registry/loadRegistry.js";
 import { getPackageRoot } from "../core/registry/paths.js";
 import {
-  GENERATED_AT,
-  VERSION,
+  catalogFamilyArtifactPath,
+  copyCatalogV2Artifacts,
+  createBuiltCatalogV2Fixture,
+  SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS,
   withRegistryDir,
-  writeBaseArtifacts,
 } from "./registryTestUtils.js";
 
-// loadRegistry is lazy by default after Phase 0 task 0.2: per-artifact
-// validation fires on first property touch, not during the loadRegistry
-// call itself. These two tests assert the eager-validation contract via
-// `prefetch: true`, which is the option hosts choose when they want a
-// single bounded warm-up cost and want every consistency error surfaced
-// at load time. The lazy/property-touch validation path is covered by
-// packages/mcp/src/core/__tests__/lazyRegistry.spec.ts.
-describe("loadRegistry (prefetch mode — eager validation)", () => {
+let catalogFixtureDirectory = "";
+
+beforeAll(async () => {
+  catalogFixtureDirectory = await createBuiltCatalogV2Fixture(
+    "salt-load-registry-source-",
+  );
+}, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
+
+afterAll(async () => {
+  if (catalogFixtureDirectory) {
+    await fs.rm(catalogFixtureDirectory, {
+      recursive: true,
+      force: true,
+    });
+  }
+});
+
+describe("loadRegistry", () => {
   it("skips nested module-format markers when locating the package root", async () => {
     await withRegistryDir(
       async (tempRoot) => {
@@ -77,41 +89,50 @@ describe("loadRegistry (prefetch mode — eager validation)", () => {
     );
   });
 
-  it("fails when an artifact has an invalid array field", async () => {
+  it("fails prefetch when a manifest-bound artifact digest changes", async () => {
     await withRegistryDir(
       async (registryDir) => {
-        await writeBaseArtifacts(registryDir, {
-          "components.json": {
-            generated_at: GENERATED_AT,
-            version: VERSION,
-            components: null,
-          },
-        });
+        await copyCatalogV2Artifacts(catalogFixtureDirectory, registryDir);
+        await fs.appendFile(
+          await catalogFamilyArtifactPath(registryDir, "component"),
+          " ",
+          "utf8",
+        );
       },
       async (registryDir) => {
         await expect(
           loadRegistry({ registryDir, prefetch: true }),
-        ).rejects.toThrow("components.json");
+        ).rejects.toThrow(/digest mismatch.*components\.json/iu);
       },
     );
-  });
+  }, 30_000);
 
-  it("fails when artifact metadata is inconsistent", async () => {
+  it("fails before family access when manifest metadata diverges from the descriptor", async () => {
     await withRegistryDir(
       async (registryDir) => {
-        await writeBaseArtifacts(registryDir, {
-          "tokens.json": {
-            generated_at: GENERATED_AT,
-            version: "2.0.0",
-            tokens: [],
-          },
-        });
+        await copyCatalogV2Artifacts(catalogFixtureDirectory, registryDir);
+        const manifestPath = path.join(registryDir, "catalog-manifest.json");
+        const manifest = JSON.parse(
+          await fs.readFile(manifestPath, "utf8"),
+        ) as CatalogManifest;
+        const components = manifest.artifacts.find(
+          (entry) => entry.family === "component",
+        );
+        if (!components) {
+          throw new Error("Generated fixture has no component family.");
+        }
+        components.codec = "salt.catalog.v2.invalid";
+        await fs.writeFile(
+          manifestPath,
+          `${JSON.stringify(manifest)}\n`,
+          "utf8",
+        );
       },
       async (registryDir) => {
-        await expect(
-          loadRegistry({ registryDir, prefetch: true }),
-        ).rejects.toThrow(/version mismatch/i);
+        await expect(loadRegistry({ registryDir })).rejects.toThrow(
+          /metadata does not match descriptor.*component/iu,
+        );
       },
     );
-  });
+  }, 30_000);
 });

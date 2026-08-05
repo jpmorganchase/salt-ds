@@ -75,7 +75,7 @@
     }
   ],
   "notes": [
-    "Keep canonical Salt guidance and project conventions separate in final recommendations.",
+    "Keep canonical Salt evidence and project convention declarations separate.",
     "Do not present project wrappers as if they were part of the official Salt registry."
   ]
 }

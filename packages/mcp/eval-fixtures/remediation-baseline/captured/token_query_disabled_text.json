@@ -1,0 +1,285 @@
+{
+  "scenario": {
+    "id": "token_query_disabled_text",
+    "kind": "tool_call",
+    "tool": "create_salt_ui",
+    "arguments": {
+      "query": "disabled text",
+      "solution_type": "token"
+    },
+    "purpose": "Preserve token-type/state mismatch.",
+    "semantic_task_result": "failure"
+  },
+  "request": {
+    "method": "tools/call",
+    "params": {
+      "name": "create_salt_ui",
+      "arguments": {
+        "query": "disabled text",
+        "solution_type": "token"
+      }
+    }
+  },
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"create\",\"status\":\"blocked\",\"request\":{\"entity\":\"disabled text\",\"resolved_entity\":null,\"match_status\":\"no_match\",\"exact_match_required\":false},\"safety\":{\"canonical_complete\":false,\"exact_request_safe\":false,\"blocking_reasons\":[\"Salt could not resolve the requested entity\",\"No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code.\"]},\"action\":{\"kind\":\"retrieve_reference\",\"tool\":\"get_salt_reference\",\"args\":{\"names\":[\"Text\"],\"entity_type\":\"component\"},\"rule_ids\":[],\"post_action\":{\"kind\":\"rerun_workflow\",\"tool\":\"create_salt_ui\",\"args\":{\"query\":\"disabled text\",\"solution_type\":\"token\",\"root_dir\":\"<TEMP_ROOT>/existing-salt-app\",\"resolved_entities\":[\"Text\"]}}},\"guidance\":{\"kind\":\"create\",\"decision\":{\"name\":\"--salt-text-action-fontFamily\",\"why\":\"Characteristics are groups of semantic tokens that serve a specific purpose or intent, such as styling error, warning, info, and success states. These tokens are always referenced in components and patterns, defining design elements by their meaning or use. This makes it easy to adapt styles without altering the underlying logic. Characteristics typically reference palette tokens, and may reference foundation tokens when needed—for example, when styling typography where mode switching isn’t required. Learn more about how to read semantic tokens.\",\"solution_type\":\"token\"},\"starter_guidance\":{\"plan\":[\"Binding check (primary target): the final reviewed artifact implements --salt-text-action-fontFamily.\",\"Apply --salt-text-action-fontFamily and verify it fits the relevant theme and density.\"],\"snippets\":[]},\"review_targets\":{\"components\":[],\"patterns\":[],\"composition_contract\":{\"primary_target\":{\"solution_type\":\"token\",\"name\":\"--salt-text-action-fontFamily\"},\"expected_patterns\":[],\"expected_components\":[],\"slots\":[],\"avoid\":[],\"source_urls\":[]},\"source\":\"create_report\"}},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"entity\":\"--salt-text-action-fontFamily\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/themes/design-tokens/how-to-read-tokens\",\"/salt/themes/design-tokens/index\"],\"summary\":\"Canonical Salt docs or registry sources support the create decision.\"}],\"source_urls\":[\"/salt/themes/design-tokens/how-to-read-tokens\",\"/salt/themes/design-tokens/index\"],\"missing\":[],\"heuristic_fallback\":false},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt could not resolve the requested disabled text.\"}"
+      }
+    ],
+    "structuredContent": {
+      "contract": "salt_workflow_v1",
+      "workflow": "create",
+      "status": "blocked",
+      "request": {
+        "entity": "disabled text",
+        "resolved_entity": null,
+        "match_status": "no_match",
+        "exact_match_required": false
+      },
+      "safety": {
+        "canonical_complete": false,
+        "exact_request_safe": false,
+        "blocking_reasons": [
+          "Salt could not resolve the requested entity",
+          "No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code."
+        ]
+      },
+      "action": {
+        "kind": "retrieve_reference",
+        "tool": "get_salt_reference",
+        "args": {
+          "names": [
+            "Text"
+          ],
+          "entity_type": "component"
+        },
+        "rule_ids": [],
+        "post_action": {
+          "kind": "rerun_workflow",
+          "tool": "create_salt_ui",
+          "args": {
+            "query": "disabled text",
+            "solution_type": "token",
+            "root_dir": "<TEMP_ROOT>/existing-salt-app",
+            "resolved_entities": [
+              "Text"
+            ]
+          }
+        }
+      },
+      "guidance": {
+        "kind": "create",
+        "decision": {
+          "name": "--salt-text-action-fontFamily",
+          "why": "Characteristics are groups of semantic tokens that serve a specific purpose or intent, such as styling error, warning, info, and success states. These tokens are always referenced in components and patterns, defining design elements by their meaning or use. This makes it easy to adapt styles without altering the underlying logic. Characteristics typically reference palette tokens, and may reference foundation tokens when needed—for example, when styling typography where mode switching isn’t required. Learn more about how to read semantic tokens.",
+          "solution_type": "token"
+        },
+        "starter_guidance": {
+          "plan": [
+            "Binding check (primary target): the final reviewed artifact implements --salt-text-action-fontFamily.",
+            "Apply --salt-text-action-fontFamily and verify it fits the relevant theme and density."
+          ],
+          "snippets": []
+        },
+        "review_targets": {
+          "components": [],
+          "patterns": [],
+          "composition_contract": {
+            "primary_target": {
+              "solution_type": "token",
+              "name": "--salt-text-action-fontFamily"
+            },
+            "expected_patterns": [],
+            "expected_components": [],
+            "slots": [],
+            "avoid": [],
+            "source_urls": []
+          },
+          "source": "create_report"
+        }
+      },
+      "questions": [],
+      "evidence": {
+        "status": "complete",
+        "items": [
+          {
+            "kind": "docs",
+            "source": "canonical_salt",
+            "entity": "--salt-text-action-fontFamily",
+            "field": "source_urls",
+            "source_urls": [
+              "/salt/themes/design-tokens/how-to-read-tokens",
+              "/salt/themes/design-tokens/index"
+            ],
+            "summary": "Canonical Salt docs or registry sources support the create decision."
+          }
+        ],
+        "source_urls": [
+          "/salt/themes/design-tokens/how-to-read-tokens",
+          "/salt/themes/design-tokens/index"
+        ],
+        "missing": [],
+        "heuristic_fallback": false
+      },
+      "internal_limitations": {
+        "unsupported_claim_count": 0,
+        "unsupported_rule_kinds": []
+      },
+      "summary": "Salt could not resolve the requested disabled text."
+    }
+  },
+  "error": null,
+  "frames": [
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "create_salt_ui",
+          "arguments": {
+            "query": "disabled text",
+            "solution_type": "token"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 24
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 24,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"create\",\"status\":\"blocked\",\"request\":{\"entity\":\"disabled text\",\"resolved_entity\":null,\"match_status\":\"no_match\",\"exact_match_required\":false},\"safety\":{\"canonical_complete\":false,\"exact_request_safe\":false,\"blocking_reasons\":[\"Salt could not resolve the requested entity\",\"No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code.\"]},\"action\":{\"kind\":\"retrieve_reference\",\"tool\":\"get_salt_reference\",\"args\":{\"names\":[\"Text\"],\"entity_type\":\"component\"},\"rule_ids\":[],\"post_action\":{\"kind\":\"rerun_workflow\",\"tool\":\"create_salt_ui\",\"args\":{\"query\":\"disabled text\",\"solution_type\":\"token\",\"root_dir\":\"<TEMP_ROOT>/existing-salt-app\",\"resolved_entities\":[\"Text\"]}}},\"guidance\":{\"kind\":\"create\",\"decision\":{\"name\":\"--salt-text-action-fontFamily\",\"why\":\"Characteristics are groups of semantic tokens that serve a specific purpose or intent, such as styling error, warning, info, and success states. These tokens are always referenced in components and patterns, defining design elements by their meaning or use. This makes it easy to adapt styles without altering the underlying logic. Characteristics typically reference palette tokens, and may reference foundation tokens when needed—for example, when styling typography where mode switching isn’t required. Learn more about how to read semantic tokens.\",\"solution_type\":\"token\"},\"starter_guidance\":{\"plan\":[\"Binding check (primary target): the final reviewed artifact implements --salt-text-action-fontFamily.\",\"Apply --salt-text-action-fontFamily and verify it fits the relevant theme and density.\"],\"snippets\":[]},\"review_targets\":{\"components\":[],\"patterns\":[],\"composition_contract\":{\"primary_target\":{\"solution_type\":\"token\",\"name\":\"--salt-text-action-fontFamily\"},\"expected_patterns\":[],\"expected_components\":[],\"slots\":[],\"avoid\":[],\"source_urls\":[]},\"source\":\"create_report\"}},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"entity\":\"--salt-text-action-fontFamily\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/themes/design-tokens/how-to-read-tokens\",\"/salt/themes/design-tokens/index\"],\"summary\":\"Canonical Salt docs or registry sources support the create decision.\"}],\"source_urls\":[\"/salt/themes/design-tokens/how-to-read-tokens\",\"/salt/themes/design-tokens/index\"],\"missing\":[],\"heuristic_fallback\":false},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt could not resolve the requested disabled text.\"}"
+            }
+          ],
+          "structuredContent": {
+            "contract": "salt_workflow_v1",
+            "workflow": "create",
+            "status": "blocked",
+            "request": {
+              "entity": "disabled text",
+              "resolved_entity": null,
+              "match_status": "no_match",
+              "exact_match_required": false
+            },
+            "safety": {
+              "canonical_complete": false,
+              "exact_request_safe": false,
+              "blocking_reasons": [
+                "Salt could not resolve the requested entity",
+                "No starter code was validated, so this result is planning guidance rather than implementation-ready Salt code."
+              ]
+            },
+            "action": {
+              "kind": "retrieve_reference",
+              "tool": "get_salt_reference",
+              "args": {
+                "names": [
+                  "Text"
+                ],
+                "entity_type": "component"
+              },
+              "rule_ids": [],
+              "post_action": {
+                "kind": "rerun_workflow",
+                "tool": "create_salt_ui",
+                "args": {
+                  "query": "disabled text",
+                  "solution_type": "token",
+                  "root_dir": "<TEMP_ROOT>/existing-salt-app",
+                  "resolved_entities": [
+                    "Text"
+                  ]
+                }
+              }
+            },
+            "guidance": {
+              "kind": "create",
+              "decision": {
+                "name": "--salt-text-action-fontFamily",
+                "why": "Characteristics are groups of semantic tokens that serve a specific purpose or intent, such as styling error, warning, info, and success states. These tokens are always referenced in components and patterns, defining design elements by their meaning or use. This makes it easy to adapt styles without altering the underlying logic. Characteristics typically reference palette tokens, and may reference foundation tokens when needed—for example, when styling typography where mode switching isn’t required. Learn more about how to read semantic tokens.",
+                "solution_type": "token"
+              },
+              "starter_guidance": {
+                "plan": [
+                  "Binding check (primary target): the final reviewed artifact implements --salt-text-action-fontFamily.",
+                  "Apply --salt-text-action-fontFamily and verify it fits the relevant theme and density."
+                ],
+                "snippets": []
+              },
+              "review_targets": {
+                "components": [],
+                "patterns": [],
+                "composition_contract": {
+                  "primary_target": {
+                    "solution_type": "token",
+                    "name": "--salt-text-action-fontFamily"
+                  },
+                  "expected_patterns": [],
+                  "expected_components": [],
+                  "slots": [],
+                  "avoid": [],
+                  "source_urls": []
+                },
+                "source": "create_report"
+              }
+            },
+            "questions": [],
+            "evidence": {
+              "status": "complete",
+              "items": [
+                {
+                  "kind": "docs",
+                  "source": "canonical_salt",
+                  "entity": "--salt-text-action-fontFamily",
+                  "field": "source_urls",
+                  "source_urls": [
+                    "/salt/themes/design-tokens/how-to-read-tokens",
+                    "/salt/themes/design-tokens/index"
+                  ],
+                  "summary": "Canonical Salt docs or registry sources support the create decision."
+                }
+              ],
+              "source_urls": [
+                "/salt/themes/design-tokens/how-to-read-tokens",
+                "/salt/themes/design-tokens/index"
+              ],
+              "missing": [],
+              "heuristic_fallback": false
+            },
+            "internal_limitations": {
+              "unsupported_claim_count": 0,
+              "unsupported_rule_kinds": []
+            },
+            "summary": "Salt could not resolve the requested disabled text."
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "latency_ms": 155.071,
+    "response_utf8_bytes": 5498,
+    "structured_content_utf8_bytes": 2616,
+    "text_content_utf8_bytes": 2616,
+    "response_sha256": "b414fb6a67b033503b57738be213e6b6c506a1e75aa6c1a67116859f7bd5f723"
+  },
+  "call_count": 1,
+  "transport_success": true,
+  "schema_or_envelope_success": true,
+  "reproduction_assertion": {
+    "passed": true,
+    "details": "Expected the audited token query disabled text failure signature."
+  },
+  "semantic_task_result": "failure",
+  "semantic_task_reason": null,
+  "agent_edits": null,
+  "user_corrections": null,
+  "host_capture_status": "not_available"
+}

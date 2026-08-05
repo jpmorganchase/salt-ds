@@ -9,6 +9,14 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
+  "saltSourceEntrypoints": {
+    ".": "src/types/index.ts",
+    "./date-fns": "src/date-fns-adapter/index.ts",
+    "./date-fns-tz": "src/date-fns-tz-adapter/index.ts",
+    "./dayjs": "src/dayjs-adapter/index.ts",
+    "./luxon": "src/luxon-adapter/index.ts",
+    "./moment": "src/moment-adapter/index.ts"
+  },
   "sideEffects": false,
   "peerDependencies": {
     "@date-fns/tz": "^1.4.1",

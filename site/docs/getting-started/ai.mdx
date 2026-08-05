@@ -1,141 +1,83 @@
 ---
 title: AI with Salt
-description: "MCP-first AI workflows for reviewing, creating, and migrating Salt UI in real repos."
+description: "Status and responsibility boundaries for Salt's read-only AI tooling."
 layout: DetailTechnical
 sidebar:
   label: AI with Salt
 ---
 
-Salt gives AI hosts a small, source-backed way to make Salt design-system decisions inside real repos.
+Salt's MCP package is undergoing a breaking redesign. Public onboarding and
+release are paused until the minimal surface and its packed release path are
+verified.
 
-The first-release product model is intentionally narrow:
+## What Salt MCP will own
 
-- one public MCP package: `@salt-ds/mcp`
-- one authored optional skill: `salt-ds`, withheld from public `0.1.0` setup until it has an immutable reviewed source
-- three implementation workflows: `review`, `create`, and `migrate`
-- one reference path: `get_salt_reference` plus catalog resources
-- no public CLI workflow fallback
+The server owns:
 
-Use Salt when you want design-system-aware help in an existing codebase. Do not use Salt for generic React or CSS advice, full-stack app generation, or guessed answers that ignore Salt evidence.
+- canonical Salt facts and content;
+- deterministic search and exact resources;
+- bounded inspection of caller-authorized project state;
+- bounded analysis of submitted code; and
+- claim-level evidence and provenance.
 
-## Setup
+The host agent owns:
 
-### 1. Connect Salt MCP
+- dialogue and intent resolution;
+- planning and design choices;
+- code generation and editing;
+- implementation authorization;
+- iteration; and
+- decisions about file, repository, implementation, or task completion.
 
-Install Node.js 22 or newer first. Then add the exact reviewed Salt MCP beta package to your AI host:
+## Read-only surface
 
-```json
-{
-  "mcpServers": {
-    "Salt": {
-      "command": "npx",
-      "args": ["-y", "@salt-ds/mcp@0.1.0"]
-    }
-  }
-}
-```
+The server exposes exactly three tools:
 
-The MCP server is read-only. It does not write repo policy, persist generated artifacts, run browser sessions, or install packages. `.salt/team.json` is optional and remains repo/user-owned; when it and the advanced optional `.salt/stack.json` are absent, Salt gives canonical-only guidance and does not invent durable team conventions.
+- `search_salt` for bounded catalog discovery and digest-bound resource links;
+- `inspect_salt_project` for caller-authorized package, installation,
+  workspace, and policy facts; and
+- `review_salt_code` for analysis of submitted source text only.
 
-#### Local Filesystem Trust
+Read the current digest-bound catalog manifest and exact record resources from
+the cursor-paginated URIs returned by MCP resource discovery. Every canonical
+record is listable by exact family and ID. Record reads link larger payloads to
+verified `content` resources rather than embedding them by default. Completion
+is only a bounded convenience and reports when more matches exist; resource
+listing is exhaustive. The immutable packaged catalog has no resource
+subscriptions or list-change notifications.
 
-The CLI runs locally with the filesystem permissions of the account that launches it. `root_dir` selects where context discovery starts; it is not a sandbox or authorization boundary. Invalid package or tsconfig markers fail repo-specific workflows closed, while valid ancestor and inherited-config resolution may read outside `root_dir`.
+The manifest keeps the server package version, catalog version and digests, and
+negotiated MCP protocol revision distinct. The server does not expose a
+capability manifest or server-owned creation or migration workflow.
 
-Use the least practical privileges and sandbox the process for untrusted repositories. Remote or shared hosts must add authentication, tenant isolation, and path confinement. The complete trust model and inspection limits are documented in the package's `CORE_ARCHITECTURE.md`.
+Creation and migration remain possible as agent-owned procedures: inspect the
+project, retrieve exact Salt evidence, make only authorized edits, submit changed
+text for bounded review, and run the repository's real compile, runtime,
+interaction, and accessibility checks. No MCP response authorizes edits or proves
+the broader task complete.
 
-### 2. Optional Skill Status
+## Trust boundary
 
-The authored `salt-ds` skill is not part of public `0.1.0` setup. It will only be exposed from a full immutable commit whose skill tree has been reviewed and verified against the release. A mutable `main` or branch URL is not a reproducible substitute.
+The current CLI runs locally with the filesystem permissions of the account that
+launches it. `root_dir` selects where discovery starts; it is not yet a sandbox
+or authorization boundary. Use the least practical privileges and sandbox the
+process for untrusted repositories.
 
-The MCP package remains the complete public path: connect it directly and ask the host to use the Salt workflow tools. No public skill-behavior or skill-effect claim is made for this beta.
+Repository policy is untrusted project data. It must not be treated as
+server-authored instructions, safety claims, or mutation authorization.
 
-### 3. Smoke Test
+Remote/shared embedding and named-host interoperability are not advertised until
+allowed-root containment and host evaluation have passed.
 
-In a consumer repo, ask your MCP-connected host:
+## Release status
 
-```text
-Use the Salt MCP to review this file.
-Lead with the review outcome, evidence-backed fixes, and anything still blocked.
-```
+Do not install or recommend this branch as a public release. Public setup
+instructions will return only after:
 
-A good response leads with the user outcome. It should not invent Salt APIs, cite generic React advice as Salt policy, dump the workflow payload, or edit code without both user authorization and an executable workflow action.
+- the minimal final protocol surface is verified from the exact tarball;
+- catalog and resource correctness gates pass;
+- no expected failure is counted as success; and
+- real-host/model evaluation is available.
 
-## Workflows
-
-### Review
-
-Use review for existing Salt UI, changed Salt code, deprecated usage, accessibility issues, primitive choice, and layout ownership.
-
-Expected MCP path:
-
-1. Call `review_salt_ui` with the known `root_dir`; the workflow collects repo context.
-2. Treat workflow evidence as grounding. Call `get_salt_reference` only when the workflow asks for it, the user requests an exact reference, or an intended API remains ungrounded.
-
-Use `get_salt_project_context` separately only to diagnose a disputed root. Pass `root_dir` to each repo-aware workflow call; diagnostic results are not reusable workflow state.
-
-### Create
-
-Use create for bounded new Salt UI: components, forms, panels, dialogs, dashboards, pages, and small workflow surfaces.
-
-Expected MCP path:
-
-1. Call `create_salt_ui` with the known `root_dir`; the workflow collects repo context.
-2. Perform the returned action, calling `action.tool` with `action.args` exactly when supplied. For reference retrieval, call `action.post_action.tool` with `action.post_action.args` when present. Dependency installation remains a normal host/repo step outside the semantic workflow contract.
-3. Review every changed Salt file's complete contents after edits. Pass `guidance.review_targets` unchanged only to a composition-root file that owns the complete target set; review leaf files without them.
-
-### Migrate
-
-Use migrate for non-Salt UI code, foreign component libraries, or structured screen outlines that should become Salt while preserving task flow and important states.
-
-Expected MCP path:
-
-1. Call `migrate_to_salt` with the active package `root_dir` and a concise migration-goal `query`; add source code or an outline as evidence when available. The workflow collects repo context.
-2. Follow the returned action. Workflow evidence counts as grounding; use `get_salt_reference` only under the same narrow conditions as review and create.
-3. Review every changed Salt file's complete contents after edits. Pass `guidance.review_targets` unchanged only to a composition-root file that owns the complete target set; review leaf files without them.
-
-Raw screenshots and Figma nodes are not first-class MCP inputs in v1. Hosts should normalize visual evidence into code, source outlines, regions, actions, states, and notes before calling Salt.
-
-## Workflow Gate
-
-For create and migrate implementation work, edit only when the workflow returns all of:
-
-- `status: "success"`
-- `action.kind: "implement"`
-- `safety.exact_request_safe: true`
-- `evidence.status: "complete"`
-
-If the workflow returns `ask_user`, ask the returned question and stop; its `action.post_action` is `null`. When an action includes a tool and concrete arguments, treat `action.tool` and `action.post_action.tool` as stable server-local semantic IDs while recognizing that a host may expose bare or qualified function names. Inspect live tools grouped under the configured Salt server and select the unique exact bare name or qualified name whose final semantic segment equals the returned ID. Preserve `action.args` exactly and never suffix-match across unrelated or unidentified servers. If no unique Salt match exists, refresh that server's live surface once, then report the ambiguity and stop. For `retrieve_reference`, run the post-action only when the immediately preceding response has `decision.status: "results"`, requested and found counts equal the action's requested-name count, zero not-found and ambiguous counts, no unresolved names, and every nested result decision is `found`. Otherwise stop. For `fix_context`, diagnose and correct the explicit root or policy problem, then rerun the original workflow fresh.
-
-For review, `action.kind: "apply_fixes"` with `scope: "grounded_findings"` identifies source-backed fixes. It does not authorize mutation. Apply only those fixes when the user already requested edits, then review the complete updated file through the returned post-action; otherwise report the findings and request authorization.
-
-## Completion Protocol
-
-Workflow evidence counts as grounding. Obtain extra exact reference evidence only when a returned action requires it or an intended API remains ungrounded.
-
-Submit every changed Salt source file's complete current contents separately to `review_salt_ui`; never use a diff or excerpt. The v1 limit is 524,288 characters per file. Pass source-backed `guidance.review_targets` unchanged only to a composition-root file that owns the complete target set, and omit them for leaf files. If no single file owns a target or composition contract distributed across files, review the files but disclose that v1 cannot prove aggregate coverage and do not claim that check complete.
-
-Rerun after grounded fixes or source gaps. A file is deterministically clean only when its latest result has `status: success`, `action.kind: complete`, `evidence.status: complete`, and no source blocker. Disclose nonzero `internal_limitations.unsupported_claim_count` and `unsupported_rule_kinds`; run the repo's existing typecheck, focused tests, and relevant browser or Storybook checks for claims outside semantic review.
-
-## Recovery
-
-On a schema rejection or unknown action, refresh the live tool surface and originating workflow once. If server-returned arguments still fail their target schema, report a Salt contract defect and stop; replaying invalid arguments cannot repair it. For context failures, correct or obtain the explicit root or policy decision, then rerun the original workflow fresh. A diagnostic context result is never reusable workflow state.
-
-## Public MCP Contract
-
-Tools:
-
-- `get_salt_project_context`
-- `get_salt_reference`
-- `review_salt_ui`
-- `create_salt_ui`
-- `migrate_to_salt`
-
-Resources:
-
-- `salt://capabilities/manifest`
-- `salt://catalog/manifest`
-- `salt://catalog/entity/{name}`
-
-Read the capability manifest only when the live surface or contract version disagrees with these instructions. Catalog resources support lightweight discovery but do not replace workflow evidence or `get_salt_reference`.
-
-Everything else is internal, experimental, or deferred until usage proves the need.
+The implementation baseline and known semantic failures are recorded in
+[`../../../plans/AI_MCP_PHASE0_BASELINE.md`](../../../plans/AI_MCP_PHASE0_BASELINE.md).

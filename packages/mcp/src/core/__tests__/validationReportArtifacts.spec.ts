@@ -6,6 +6,7 @@ import {
   type SaltEvidenceRegistryEntityType,
 } from "../evidence.js";
 import { validateGeneratedArtifactRegistryEvidence } from "../generatedArtifactValidation.js";
+import { getSaltRegistryFingerprint } from "../registry/fingerprint.js";
 import type { ValidationIssue } from "../tools/validation/shared.js";
 import type {
   ComponentRecord,
@@ -62,6 +63,7 @@ function buildFixtureComponent(): ComponentRecord {
         complexity: "basic",
         code: "<FixtureAction />",
         source_url: "https://example.test/salt/fixture-action/examples",
+        source_path: null,
         package: "@salt-ds/fixture",
         target_type: "component",
         target_name: "FixtureAction",
@@ -122,6 +124,13 @@ function buildFixtureToken(): TokenRecord {
 function buildFixtureDeprecation(): DeprecationRecord {
   return {
     id: "fixture-action.legacy-fixture-prop.deprecation",
+    subject: {
+      package: "@salt-ds/fixture",
+      entrypoint: ".",
+      export_name: "FixtureActionProps",
+      symbol_space: "type",
+      member_path: [{ kind: "prop", name: "legacyFixtureProp" }],
+    },
     package: "@salt-ds/fixture",
     component: "FixtureAction",
     kind: "prop",
@@ -129,12 +138,30 @@ function buildFixtureDeprecation(): DeprecationRecord {
     deprecated_in: "1.0.0",
     removed_in: null,
     replacement: {
+      mode: "single",
+      target: {
+        package: "@salt-ds/fixture",
+        entrypoint: ".",
+        export_name: "FixtureActionProps",
+        symbol_space: "type",
+        member_path: [{ kind: "prop", name: "fixtureProp" }],
+      },
+      targets: [
+        {
+          package: "@salt-ds/fixture",
+          entrypoint: ".",
+          export_name: "FixtureActionProps",
+          symbol_space: "type",
+          member_path: [{ kind: "prop", name: "fixtureProp" }],
+        },
+      ],
       type: "prop",
       name: "fixtureProp",
       notes: "Use fixtureProp for fixture tests.",
     },
     migration: {
       strategy: "replace",
+      value_map: null,
       details: [
         {
           from: "legacyFixtureProp",
@@ -142,6 +169,19 @@ function buildFixtureDeprecation(): DeprecationRecord {
         },
       ],
     },
+    source_occurrences: [
+      {
+        source_path: "packages/fixture/src/FixtureAction.tsx",
+        source_range: {
+          start_offset: 0,
+          end_offset: 1,
+          start_line: 1,
+          start_column: 1,
+          end_line: 1,
+          end_column: 2,
+        },
+      },
+    ],
     source_urls: ["https://example.test/salt/fixture-action/deprecations"],
   };
 }
@@ -195,13 +235,16 @@ function buildFixtureRegistry(): SaltRegistry {
   };
 }
 
-function buildEvidenceRef(input: {
-  claimKind: SaltEvidenceClaimKind;
-  entityType: SaltEvidenceRegistryEntityType;
-  entityId: string;
-  entityName: string;
-  fieldPath: string;
-}): SaltEvidenceRef {
+function buildEvidenceRef(
+  registry: SaltRegistry,
+  input: {
+    claimKind: SaltEvidenceClaimKind;
+    entityType: SaltEvidenceRegistryEntityType;
+    entityId: string;
+    entityName: string;
+    fieldPath: string;
+  },
+): SaltEvidenceRef {
   return {
     contract: SALT_EVIDENCE_REF_CONTRACT,
     id: `fixture.${input.claimKind}.validation-ref`,
@@ -212,14 +255,13 @@ function buildEvidenceRef(input: {
       entity_id: input.entityId,
       entity_name: input.entityName,
       field_path: input.fieldPath,
-      registry_version: "fixture-registry",
+      registry_version: registry.version,
+      registry_hash: getSaltRegistryFingerprint(registry),
     },
     source: {
       url: "https://example.test/salt/fixture",
       repo_path: "packages/fixture/src/FixtureAction.tsx",
     },
-    confidence: "high",
-    verified_at: "2026-04-30T00:00:00.000Z",
   };
 }
 
@@ -245,11 +287,12 @@ function buildIssue(
 
 describe("validation report artifacts", () => {
   it("turns source-backed validator issues into validation-report claims", () => {
+    const registry = buildFixtureRegistry();
     const artifact = buildValidationReportArtifact({
-      registry: buildFixtureRegistry(),
+      registry,
       issues: [
         buildIssue([
-          buildEvidenceRef({
+          buildEvidenceRef(registry, {
             claimKind: "prop",
             entityType: "component",
             entityId: "fixture-action",
@@ -258,17 +301,19 @@ describe("validation report artifacts", () => {
           }),
         ]),
       ],
-      generated_at: "2026-04-30T00:00:00.000Z",
       generator: {
         name: "mcp-core validation report fixture",
       },
     });
 
+    expect(artifact.generated_at).toBeNull();
+    expect(artifact.registry).toEqual({
+      version: "fixture-registry",
+      hash: getSaltRegistryFingerprint(registry),
+      generated_at: "2026-04-30T00:00:00.000Z",
+    });
     expect(
-      validateGeneratedArtifactRegistryEvidence(
-        artifact,
-        buildFixtureRegistry(),
-      ),
+      validateGeneratedArtifactRegistryEvidence(artifact, registry),
     ).toEqual([]);
     expect(artifact).toEqual(
       expect.objectContaining({
@@ -366,11 +411,12 @@ describe("validation report artifacts", () => {
     fieldPath,
     expectedCode,
   }) => {
+    const registry = buildFixtureRegistry();
     const gate = buildValidationReportEvidenceGate({
-      registry: buildFixtureRegistry(),
+      registry,
       issues: [
         buildIssue([
-          buildEvidenceRef({
+          buildEvidenceRef(registry, {
             claimKind,
             entityType,
             entityId,
@@ -417,5 +463,32 @@ describe("validation report artifacts", () => {
         }),
       ]),
     );
+  });
+
+  it("rejects conflicting provenance that reuses one EvidenceRef id", () => {
+    const registry = buildFixtureRegistry();
+    const first = buildEvidenceRef(registry, {
+      claimKind: "prop",
+      entityType: "component",
+      entityId: "fixture-action",
+      entityName: "FixtureAction",
+      fieldPath: "props.fixtureProp",
+    });
+    const conflicting: SaltEvidenceRef = {
+      ...first,
+      source: {
+        repo_path: "packages/fixture/src/OtherFixtureAction.tsx",
+      },
+    };
+
+    expect(() =>
+      buildValidationReportArtifact({
+        registry,
+        issues: [buildIssue([first, conflicting])],
+        generator: {
+          name: "mcp-core validation report fixture",
+        },
+      }),
+    ).toThrow(/Conflicting Salt evidence references share id/u);
   });
 });

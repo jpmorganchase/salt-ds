@@ -1,54 +1,205 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { SaltRegistry } from "../core/runtime.js";
+import type {
+  ContentBlock,
+  McpServer,
+  ResourceLink,
+} from "@modelcontextprotocol/server";
 import {
-  buildStructuredToolContent,
-  type SourceAttributionOptions,
-} from "./sourceAttribution.js";
-import { TOOL_DEFINITIONS, type ToolDefinition } from "./toolDefinitions.js";
+  createNonSearchToolResult,
+  MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
+  type SaltCatalogRuntimeContext,
+} from "../core/runtime.js";
+import type { ProjectAccessPolicy } from "./projectAccess.js";
+import type { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
+import { TOOL_DEFINITIONS } from "./toolDefinitions.js";
 
-function toToolResult(
-  payload: unknown,
-  options: SourceAttributionOptions = {},
-) {
-  const structuredContent = buildStructuredToolContent(payload, options);
-  const serialized = JSON.stringify(structuredContent);
+export const MAX_SEARCH_TOOL_RESULT_UTF8_BYTES = 16 * 1024;
 
-  return {
-    content: [
-      {
-        type: "text" as const,
-        text: serialized,
-      },
-    ],
-    structuredContent,
-  };
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
-function registerTool(
-  server: McpServer,
-  registry: SaltRegistry,
-  definition: ToolDefinition,
-  options: SourceAttributionOptions = {},
-) {
-  server.registerTool(
-    definition.name,
-    {
-      description: definition.description,
-      inputSchema: definition.inputSchema,
-      outputSchema: definition.outputSchema,
-      annotations: definition.annotations,
-    },
-    async (args: object) =>
-      toToolResult(await definition.execute(registry, args), options),
+function searchResourceLinks(payload: Record<string, unknown>): ResourceLink[] {
+  const data = isRecord(payload.data) ? payload.data : null;
+  const matches = Array.isArray(data?.matches) ? data.matches : [];
+  return matches.flatMap((match) => {
+    if (!isRecord(match) || typeof match.uri !== "string") return [];
+    return [
+      {
+        type: "resource_link" as const,
+        uri: match.uri,
+        name:
+          typeof match.family === "string" && typeof match.id === "string"
+            ? `${match.family}:${match.id}`
+            : typeof match.id === "string"
+              ? match.id
+              : match.uri,
+        mimeType: "application/json",
+      },
+    ];
+  });
+}
+
+function nonSearchResourceLinks(
+  payload: Record<string, unknown>,
+): ResourceLink[] {
+  const uris = new Set<string>();
+  const data = isRecord(payload.data) ? payload.data : null;
+  const policy = isRecord(data?.policy) ? data.policy : null;
+  const policyIr = isRecord(policy?.ir) ? policy.ir : null;
+  if (typeof policyIr?.manifest_uri === "string") {
+    uris.add(policyIr.manifest_uri);
+  }
+  const results = Array.isArray(data?.results) ? data.results : [];
+  for (const result of results) {
+    if (!isRecord(result) || !Array.isArray(result.findings)) continue;
+    for (const finding of result.findings) {
+      if (!isRecord(finding)) continue;
+      const evidence = isRecord(finding.evidence) ? finding.evidence : null;
+      const references = Array.isArray(evidence?.references)
+        ? evidence.references
+        : [];
+      for (const reference of references) {
+        if (
+          isRecord(reference) &&
+          typeof reference.locator === "string" &&
+          reference.locator.startsWith("salt://")
+        ) {
+          uris.add(reference.locator);
+        }
+      }
+    }
+  }
+  return [...uris].map((uri, index) => ({
+    type: "resource_link" as const,
+    uri,
+    name: `salt-evidence-${index + 1}`,
+    mimeType: "application/json",
+  }));
+}
+
+function searchTextFallback(payload: Record<string, unknown>): string {
+  const data = isRecord(payload.data) ? payload.data : {};
+  const scope = isRecord(payload.scope) ? payload.scope : {};
+  const coverage = isRecord(payload.coverage) ? payload.coverage : {};
+  const provenance = isRecord(payload.provenance) ? payload.provenance : {};
+  const ambiguity = isRecord(data.ambiguity) ? data.ambiguity : {};
+  const matches = Array.isArray(data.matches) ? data.matches : [];
+  const lines = [
+    `Salt catalog search: ${String(data.query ?? "")}`,
+    `Returned ${String(scope.returned ?? matches.length)} of ${String(
+      ambiguity.candidate_count ?? coverage.matched_documents ?? matches.length,
+    )} matches; truncated=${String(scope.truncated ?? false)}; ambiguous=${String(ambiguity.is_ambiguous ?? false)}; top-score ties=${String(ambiguity.top_score_tie_count ?? 0)}.`,
+    `Scope: families=${Array.isArray(scope.searched_families) ? scope.searched_families.join(",") : ""}; statuses=${Array.isArray(scope.searched_statuses) ? scope.searched_statuses.join(",") : "all"}; total=${String(scope.total_documents ?? "")}.`,
+    `Coverage: indexed=${String(coverage.indexed_documents ?? "")}; evaluated=${String(coverage.evaluated_documents ?? "")}; matched=${String(coverage.matched_documents ?? "")}; ranking=${String(coverage.ranking ?? "")}.`,
+  ];
+  for (const match of matches) {
+    if (!isRecord(match)) continue;
+    const evidence = isRecord(match.evidence) ? match.evidence : {};
+    const fields = Array.isArray(evidence.matched_fields)
+      ? evidence.matched_fields.join(",")
+      : "";
+    const terms = Array.isArray(evidence.matched_terms)
+      ? evidence.matched_terms.join(",")
+      : "";
+    lines.push(
+      `${String(match.family ?? "catalog")}:${String(match.id ?? "unknown")} — ${String(match.title ?? "")}`,
+      String(match.summary ?? ""),
+      `${String(match.uri ?? "")} (score=${String(evidence.score ?? "")}; fields=${fields}; terms=${terms})`,
+    );
+  }
+  lines.push(
+    `Catalog ${String(provenance.catalog_version ?? "unknown")} (${String(provenance.semantic_digest ?? "unknown")}).`,
   );
+  const limitations = Array.isArray(payload.limitations)
+    ? payload.limitations.map(String)
+    : [];
+  if (limitations.length > 0) {
+    lines.push(`Limitations: ${limitations.join(" ")}`);
+  }
+  return lines.join("\n");
+}
+
+function resultBytes(value: unknown): number {
+  return Buffer.byteLength(JSON.stringify(value), "utf8");
+}
+
+function toToolResult(name: string, payload: unknown) {
+  if (!isRecord(payload)) {
+    throw new TypeError(`${name} returned a non-object result.`);
+  }
+  if (name !== "search_salt") {
+    const result = createNonSearchToolResult(payload);
+    const content: ContentBlock[] = [...result.content];
+    const linkedResult = { ...result, content };
+    for (const link of nonSearchResourceLinks(payload)) {
+      const candidate = { ...result, content: [...content, link] };
+      if (resultBytes(candidate) > MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES) break;
+      content.push(link);
+    }
+    if (resultBytes(linkedResult) > MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES) {
+      throw new Error(
+        `${name} exceeded its ${MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES}-byte public result limit.`,
+      );
+    }
+    return linkedResult;
+  }
+  const text = searchTextFallback(payload);
+  const content: ContentBlock[] = [
+    {
+      type: "text",
+      text,
+    },
+  ];
+  if (name === "search_salt") {
+    for (const link of searchResourceLinks(payload)) {
+      const candidate = {
+        content: [...content, link],
+        structuredContent: payload,
+      };
+      if (resultBytes(candidate) > MAX_SEARCH_TOOL_RESULT_UTF8_BYTES) break;
+      content.push(link);
+    }
+  }
+  const result = { content, structuredContent: payload };
+  if (resultBytes(result) > MAX_SEARCH_TOOL_RESULT_UTF8_BYTES) {
+    throw new Error(
+      `search_salt exceeded its ${MAX_SEARCH_TOOL_RESULT_UTF8_BYTES}-byte public result limit.`,
+    );
+  }
+  if (resultBytes(result) > MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES) {
+    throw new Error(
+      `${name} exceeded its ${MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES}-byte public result limit.`,
+    );
+  }
+  return result;
 }
 
 export function registerSaltTools(
   server: McpServer,
-  registry: SaltRegistry,
-  options: SourceAttributionOptions = {},
+  context: SaltCatalogRuntimeContext & {
+    projectAccess: ProjectAccessPolicy;
+    projectPolicySnapshots: ProjectPolicySnapshotCache;
+  },
 ) {
   for (const definition of TOOL_DEFINITIONS) {
-    registerTool(server, registry, definition, options);
+    server.registerTool(
+      definition.name,
+      {
+        description: definition.description,
+        inputSchema: definition.inputSchema,
+        outputSchema: definition.outputSchema,
+        annotations: definition.annotations,
+      },
+      async (args: Record<string, unknown>) => {
+        const payload = await definition.execute(context, args as never);
+        const validated = definition.outputValidationSchema.safeParse(payload);
+        if (!validated.success) {
+          throw new Error(
+            `${definition.name} returned a result that failed its strict internal output contract.`,
+          );
+        }
+        return toToolResult(definition.name, validated.data);
+      },
+    );
   }
 }

@@ -1,0 +1,19 @@
+{
+  "contract": "salt_phase5_preregistration_lock_v1",
+  "preregistration_path": "packages/mcp/eval-fixtures/phase5/preregistration.json",
+  "preregistration_digest": "sha256:ad9fdab9a8a8cb19a2e81241a4862b50520fcf3138ab815593455b0104ac970b",
+  "frozen_at": "2026-08-04T09:30:18.197Z",
+  "task_count": 30,
+  "category_counts": {
+    "create": 10,
+    "migration": 10,
+    "review_retrieval_policy": 10
+  },
+  "primary_session_count": 180,
+  "run_schedule_sha256": "sha256:1cce0c90e05861df43a623d1abec7ed2d07e2ad63c327057814859c7ab63c3a1",
+  "architecture_package_sha256": {
+    "baseline_f0f6d86": "dd3b3bd1af3ccc55a21afbcd1e844cc1d4ee31b80bce5b2caa900329ddbb8f59",
+    "minimal_phase4_verified": "038897f787308449ef4a7706ee29ca1ce902b98ecc5aa2101ac6a187003f5be9"
+  },
+  "runtime_capability_lock_sha256": "3a3d92627fd10bebfb7cf541eb7713027d8a0865b479843b319376aa419dc5d6"
+}

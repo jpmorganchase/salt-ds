@@ -1,3 +1,4 @@
+import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
 import { toPosixPath } from "../registry/paths.js";
 import type {
   ComponentDeprecationInference,
@@ -14,17 +15,105 @@ function componentMatchKey(value: string | null): string {
   return toMatchKey(value.replace(/props$/i, ""));
 }
 
+function componentSourceRoot(component: ComponentRecord): string | null {
+  if (!component.source.repo_path) return null;
+  const sourcePath = toPosixPath(component.source.repo_path);
+  if (!component.source.export_name) return sourcePath;
+  const lastSeparator = sourcePath.lastIndexOf("/");
+  return sourcePath.slice(0, Math.max(0, lastSeparator));
+}
+
+function componentPrimarySourcePath(component: ComponentRecord): string | null {
+  if (!component.source.repo_path || !component.source.export_name) return null;
+  return toPosixPath(component.source.repo_path);
+}
+
+function componentHasExactPropSubject(
+  component: ComponentRecord,
+  deprecation: DeprecationRecord,
+): boolean {
+  const member = deprecation.subject.member_path[0];
+  if (member?.kind !== "prop") return false;
+  return (
+    component.prop_subjects?.some(
+      (subject) =>
+        subject.package === deprecation.subject.package &&
+        subject.entrypoint === deprecation.subject.entrypoint &&
+        subject.export_name === deprecation.subject.export_name &&
+        subject.symbol_space === deprecation.subject.symbol_space &&
+        subject.member_path.length === 1 &&
+        subject.member_path[0]?.kind === "prop" &&
+        subject.member_path[0].name === member.name,
+    ) === true
+  );
+}
+
+function deprecationHasComponentSourceProvenance(
+  component: ComponentRecord,
+  deprecation: DeprecationRecord,
+): boolean {
+  const sourceRoot = componentSourceRoot(component);
+  if (!sourceRoot) return false;
+  const deprecationSourcePaths = uniqueStrings([
+    ...(deprecation.source_paths ?? []),
+    ...deprecation.source_occurrences.map(
+      (occurrence) => occurrence.source_path,
+    ),
+  ]).map(toPosixPath);
+  return deprecationSourcePaths.some(
+    (sourcePath) =>
+      sourcePath === sourceRoot || sourcePath.startsWith(`${sourceRoot}/`),
+  );
+}
+
 function deprecationMatchesComponent(
   component: ComponentRecord,
   deprecation: DeprecationRecord,
 ): boolean {
-  if (component.package.name !== deprecation.package) {
+  if (
+    component.package.name !== deprecation.package ||
+    !deprecationHasComponentSourceProvenance(component, deprecation)
+  ) {
     return false;
   }
 
   const componentKey = componentMatchKey(component.name);
+  if (deprecation.subject.member_path.length > 0) {
+    if (
+      deprecation.subject.member_path[0]?.kind === "prop" &&
+      !componentHasExactPropSubject(component, deprecation)
+    ) {
+      return false;
+    }
+    const declaredComponentKey = componentMatchKey(deprecation.component);
+    if (declaredComponentKey.length > 0) {
+      return declaredComponentKey === componentKey;
+    }
+    if (deprecation.subject.symbol_space === "type") {
+      return false;
+    }
+    return componentMatchKey(deprecation.subject.export_name) === componentKey;
+  }
   const deprecationComponentKey = componentMatchKey(deprecation.component);
   const deprecationNameKey = componentMatchKey(deprecation.name);
+  const primarySourcePath = componentPrimarySourcePath(component);
+  const componentExportName = component.source.export_name;
+  const deprecationSourcePaths = uniqueStrings([
+    ...(deprecation.source_paths ?? []),
+    ...deprecation.source_occurrences.map(
+      (occurrence) => occurrence.source_path,
+    ),
+  ]).map(toPosixPath);
+
+  if (
+    deprecation.subject.symbol_space === "type" ||
+    !primarySourcePath ||
+    !componentExportName ||
+    deprecation.subject.export_name !== componentExportName ||
+    !deprecationSourcePaths.includes(primarySourcePath)
+  ) {
+    return false;
+  }
 
   if (
     deprecationComponentKey.length > 0 &&
@@ -35,20 +124,6 @@ function deprecationMatchesComponent(
 
   if (deprecationNameKey.length > 0 && deprecationNameKey === componentKey) {
     return true;
-  }
-
-  const sourcePath = deprecation.source_urls.find((entry) =>
-    entry.startsWith("packages/"),
-  );
-  if (sourcePath && component.source.repo_path) {
-    const normalizedSourcePath = toPosixPath(sourcePath);
-    const normalizedComponentPath = toPosixPath(component.source.repo_path);
-    if (
-      normalizedSourcePath.startsWith(`${normalizedComponentPath}/`) ||
-      normalizedSourcePath === normalizedComponentPath
-    ) {
-      return true;
-    }
   }
 
   return false;
@@ -98,7 +173,7 @@ export function linkDeprecationsToComponents(
       );
       const matchedComponentNames = matched
         .map((component) => component.name)
-        .sort((left, right) => left.localeCompare(right));
+        .sort(compareOrdinalStrings);
       const componentInferred = !deprecation.component && matched.length === 1;
       const ambiguousComponentMatch = matched.length > 1;
       const inference = {
@@ -119,16 +194,19 @@ export function linkDeprecationsToComponents(
 
         return {
           ...deprecation,
-          component: componentInferred ? component.name : deprecation.component,
+          component: component.name,
+          kind:
+            deprecation.kind === "other" &&
+            deprecation.subject.member_path.length === 0 &&
+            deprecation.subject.symbol_space !== "type"
+              ? "component"
+              : deprecation.kind,
           inference,
         };
       }
 
       if (matched.length > 1) {
         for (const component of matched) {
-          const depIds = componentDeprecationIds.get(component.id) ?? [];
-          depIds.push(deprecation.id);
-          componentDeprecationIds.set(component.id, depIds);
           incrementComponentDeprecationInference(component.id, {
             matched_count: 1,
             ambiguous_match_count: 1,
@@ -138,6 +216,7 @@ export function linkDeprecationsToComponents(
 
       return {
         ...deprecation,
+        component: null,
         inference,
       };
     },
@@ -147,7 +226,7 @@ export function linkDeprecationsToComponents(
     ...component,
     deprecations: uniqueStrings(
       componentDeprecationIds.get(component.id) ?? [],
-    ).sort((left, right) => left.localeCompare(right)),
+    ).sort(compareOrdinalStrings),
     inference: {
       ...component.inference,
       deprecations:

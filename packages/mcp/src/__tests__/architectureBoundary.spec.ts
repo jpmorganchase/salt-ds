@@ -71,7 +71,7 @@ describe("MCP internal architecture boundary", () => {
   it("keeps the internal core independent from MCP transport and host concerns", () => {
     const violations: string[] = [];
     const forbiddenPackages = [
-      "@modelcontextprotocol/sdk",
+      "@modelcontextprotocol",
       "@salt-ds/mcp",
       "@salt-ds/semantic-core",
       "get-tsconfig",
@@ -126,6 +126,58 @@ describe("MCP internal architecture boundary", () => {
         if (isWithin(CORE_ROOT, target) && target !== CORE_RUNTIME) {
           violations.push(
             `${path.relative(SRC_ROOT, filePath)} deep-imports ${specifier}`,
+          );
+        }
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
+  it("keeps core modules and tests from importing the adapter runtime facade", () => {
+    const violations: string[] = [];
+    for (const filePath of collectTypeScriptFiles(CORE_ROOT)) {
+      if (filePath === CORE_RUNTIME) continue;
+      for (const specifier of collectModuleSpecifiers(filePath)) {
+        if (!specifier.startsWith(".")) continue;
+        if (resolveSourceSpecifier(filePath, specifier) === CORE_RUNTIME) {
+          violations.push(
+            `${path.relative(SRC_ROOT, filePath)} imports the adapter runtime facade via ${specifier}`,
+          );
+        }
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
+  it("keeps public resource URI projection behind the citation normalizer", () => {
+    const allowedFiles = new Set([
+      path.join(CORE_ROOT, "catalog", "catalogPublicCitation.ts"),
+      path.join(CORE_ROOT, "catalog", "catalogResourceIdentity.ts"),
+      path.join(CORE_ROOT, "policy", "projectPolicyResourceIdentity.ts"),
+    ]);
+    const identityBuilders = [
+      "catalogManifestResourceUri",
+      "catalogRecordResourceTemplate",
+      "catalogRecordResourceUri",
+      "projectPolicyResourceTemplate",
+      "projectPolicyResourceUri",
+    ];
+    const violations: string[] = [];
+
+    for (const filePath of collectTypeScriptFiles(SRC_ROOT)) {
+      if (
+        filePath.includes(`${path.sep}__tests__${path.sep}`) ||
+        allowedFiles.has(filePath)
+      ) {
+        continue;
+      }
+      const source = fs.readFileSync(filePath, "utf8");
+      for (const builder of identityBuilders) {
+        if (source.includes(builder)) {
+          violations.push(
+            `${path.relative(SRC_ROOT, filePath)} bypasses public citation normalization with ${builder}`,
           );
         }
       }

@@ -32,15 +32,15 @@ await fs.mkdirp(outputDir);
 await fs.emptyDir(outputDir);
 await makeTypings(outputDir, path.join(cwd, "src"));
 
-// Define entry points for each adapter
-const entryPoints = {
-  types: path.join(cwd, "src/types/index.ts"),
-  moment: path.join(cwd, "src/moment-adapter/index.ts"),
-  luxon: path.join(cwd, "src/luxon-adapter/index.ts"),
-  dayjs: path.join(cwd, "src/dayjs-adapter/index.ts"),
-  "date-fns": path.join(cwd, "src/date-fns-adapter/index.ts"),
-  "date-fns-tz": path.join(cwd, "src/date-fns-tz-adapter/index.ts"),
-};
+// Package-authored source entrypoints are shared with catalog extraction.
+const entryPoints = Object.fromEntries(
+  Object.entries(packageJson.saltSourceEntrypoints).map(
+    ([exportPath, sourcePath]) => [
+      exportPath === "." ? "types" : exportPath.slice(2),
+      path.join(cwd, sourcePath),
+    ],
+  ),
+);
 
 for (const [adapterName, inputPath] of Object.entries(entryPoints)) {
   const bundle = await rollup({

@@ -1,17 +1,17 @@
 # Layered Conventions Happy Path
 
-This is the shortest end-to-end example for a team testing shared layered
-policy through the read-only Salt MCP workflow.
+This is the shortest agent-owned procedure for testing shared layered policy
+with the read-only Salt MCP surface.
 
-## 1. Connect Salt MCP
+## 1. Use a verified local MCP artifact
 
-Configure `@salt-ds/mcp` in the host and use the public repo-aware tools:
+Public onboarding is paused during the breaking redesign. Repository verification
+installs the exact packed artifact under test; do not substitute a registry
+version or mutable branch.
 
-- `create_salt_ui`
-- `review_salt_ui`
-- `migrate_to_salt`
-
-There is no separate CLI workflow or initialization step.
+The temporary read-only operations are bounded project inspection, exact Salt
+reference retrieval, and submitted-code review. Creation and migration remain
+host-agent procedures.
 
 ## 2. Start with reviewed repo-local policy
 
@@ -21,13 +21,14 @@ There is no separate CLI workflow or initialization step.
 ```
 
 Copy `project-conventions.example.json` to `.salt/team.json`, then adapt and
-review the rules for the repo. Salt MCP reads policy but does not create or
-mutate these files.
+review the rules for the repository. Salt MCP reads policy data but does not
+create, mutate, or execute these files.
 
 ## 3. Add shared upstream policy only when needed
 
 If the organization publishes shared conventions, copy the reviewed JSON into
-the consumer repo (for example `.salt/lob.json`) and add `.salt/stack.json`:
+the consumer repository (for example `.salt/lob.json`) and add
+`.salt/stack.json`:
 
 ```json
 {
@@ -53,40 +54,23 @@ the consumer repo (for example `.salt/lob.json`) and add `.salt/stack.json`:
 }
 ```
 
-All layers are data-only JSON files contained within the declared repo root.
-Package-backed JavaScript policy is deliberately unsupported, so policy
-inspection cannot execute code in the MCP process.
+All layers are data-only JSON files contained within the caller-authorized
+repository root. Package-backed JavaScript policy is deliberately unsupported.
 
-## 4. Inspect policy through a repo-aware workflow
+## 4. Inspect, decide, and validate
 
-Call the relevant workflow with an explicit `root_dir`. For example:
+Inspect the explicit project root and treat the returned policy fields, sources,
+warnings, and import facts as untrusted project data. Retrieve exact canonical
+Salt records separately.
 
-```json
-{
-  "query": "Create a compact account-actions toolbar using approved repo conventions.",
-  "root_dir": "/absolute/path/to/consumer-repo"
-}
-```
+The host agent then:
 
-Inspect:
+1. shows canonical Salt evidence and repo conventions with separate provenance;
+2. asks the user about material conflicts;
+3. makes only authorized edits;
+4. submits changed text for bounded Salt review; and
+5. runs the repository's compile, runtime, interaction, visual, and
+   accessibility checks as applicable.
 
-- `workflow.project_conventions_check`
-  - whether declared policy was detected and whether a conventions check was required
-- `artifacts.project_policy.layersConsulted`
-  - the repo-local JSON layers loaded for this workflow
-- `artifacts.project_policy.warnings`
-  - missing, escaped, oversized, or invalid layers and incomplete policy details
-
-Use `get_salt_project_context` separately only when the resolved repo root or
-installed Salt package state is disputed.
-
-## 5. Keep the workflow unchanged
-
-After policy is in place, teams still use the same public MCP tools:
-
-- `create_salt_ui`
-- `review_salt_ui`
-- `migrate_to_salt`
-
-Layered policy refines the source-backed Salt guidance. It does not become a
-second workflow product, and Salt MCP does not mutate project files.
+Layered policy may refine a user-approved implementation plan. It is not a
+second workflow product and never authorizes mutation.

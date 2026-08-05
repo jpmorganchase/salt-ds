@@ -1,3 +1,4 @@
+import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
 import type {
   RetrievalContrastRelation,
   RetrievalContrastTarget,
@@ -113,11 +114,9 @@ export function buildRetrievalSignals(input: {
     .map((target) => ({
       target: target.target,
       relation: target.relation,
-      evidence: [...target.evidence].sort((left, right) =>
-        left.localeCompare(right),
-      ),
+      evidence: [...target.evidence].sort(compareOrdinalStrings),
     }))
-    .sort((left, right) => left.target.localeCompare(right.target));
+    .sort((left, right) => compareOrdinalStrings(left.target, right.target));
 
   if (contrastTargets.length === 0) {
     return undefined;

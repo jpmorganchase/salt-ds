@@ -6,7 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type ErrorExecuteIconProps = IconProps;
 
-/** @deprecated since 1.17.0. Use `NotAllowedIcon` instead. */
+/** @deprecated since 1.17.0. Use {@link NotAllowedIcon} instead. */
 export const ErrorExecuteIcon = forwardRef<
   SVGSVGElement,
   ErrorExecuteIconProps

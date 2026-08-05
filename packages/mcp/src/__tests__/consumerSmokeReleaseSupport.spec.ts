@@ -2,7 +2,13 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { parseArgs } from "../../../../scripts/consumer-smoke/shared.mjs";
+import { assertBoundedMcpToolPayload } from "../../../../scripts/consumer-smoke/checks.mjs";
+import { verifyPackedReadmeLocalLinks } from "../../../../scripts/consumer-smoke/fixture.mjs";
+import {
+  createWindowsCmdInvocation,
+  parseArgs,
+  runCommand,
+} from "../../../../scripts/consumer-smoke/shared.mjs";
 import {
   canonicalizeSkillRecords,
   hashCanonicalSkillTree,
@@ -114,6 +120,158 @@ describe("consumer smoke arguments", () => {
         treeHash,
       ]),
     ).toMatchObject({ expectedSkillTreeHash: treeHash });
+  });
+});
+
+describe("consumer smoke Windows command invocation", () => {
+  it("escapes cmd metacharacters before invoking package-manager shims", () => {
+    const invocation = createWindowsCmdInvocation("yarn.cmd", [
+      "C:\\consumer & proof\\100%\\(fixture)^.tgz",
+    ]);
+    expect(invocation.windowsVerbatimArguments).toBe(true);
+    expect(invocation.args).toHaveLength(4);
+    expect(invocation.args[3]).toContain("^^^&");
+    expect(invocation.args[3]).toContain("^^^%");
+    expect(invocation.args[3]).toContain("^^^(");
+    expect(invocation.args[3]).toContain("^^^)");
+    expect(invocation.args[3]).toContain("^^^");
+  });
+
+  it.skipIf(process.platform !== "win32")(
+    "round-trips a metacharacter path through a real cmd shim",
+    async () => {
+      const root = await fs.mkdtemp(
+        path.join(os.tmpdir(), "salt & 100% (cmd-proof)-"),
+      );
+      tempRoots.push(root);
+      const shim = path.join(root, "echo-arg.cmd");
+      await fs.writeFile(
+        shim,
+        '@echo off\r\nnode -e "process.stdout.write(process.argv[1])" %*\r\n',
+        "utf8",
+      );
+      const value = path.join(root, "artifact & 100% (proof)^.tgz");
+      const result = await runCommand(shim, [value], {
+        cwd: root,
+        label: "Windows cmd metacharacter proof",
+      });
+      expect(result.stdout).toBe(value);
+    },
+  );
+});
+
+describe("consumer smoke bounded outcomes", () => {
+  const validPayload = {
+    data: { results: [] },
+    scope: { kind: "submitted_text_only" },
+    coverage: { submitted_artifacts: 0, evaluated_artifacts: 0 },
+    limitations: ["Only submitted text was evaluated."],
+  };
+
+  it("requires data, explicit scope, limitations, and no completion claims", () => {
+    expect(() =>
+      assertBoundedMcpToolPayload(
+        { ...validPayload, scope: { kind: "catalog_search" } },
+        "submitted_text_only",
+        "Expected a bounded review payload.",
+      ),
+    ).toThrow(/bounded review/iu);
+    expect(() =>
+      assertBoundedMcpToolPayload(
+        validPayload,
+        "submitted_text_only",
+        "Expected a bounded review payload.",
+      ),
+    ).not.toThrow();
+  });
+});
+
+describe("consumer smoke packed-install coverage", () => {
+  it("verifies package-local README targets without claiming to fetch external URLs", async () => {
+    const root = await createTree({
+      "README.md": [
+        "[architecture](./CORE_ARCHITECTURE.md#local-filesystem-trust-model)",
+        "[website](https://www.saltdesignsystem.com/)",
+      ].join("\n"),
+      "CORE_ARCHITECTURE.md": "## Local filesystem trust model\n",
+    });
+
+    await expect(verifyPackedReadmeLocalLinks(root)).resolves.toEqual({
+      local_targets_verified: 1,
+      external_urls_not_fetched: 1,
+    });
+  });
+
+  it("rejects missing, escaping, and unsupported packed README targets", async () => {
+    const missing = await createTree({
+      "README.md": "[architecture](./CORE_ARCHITECTURE.md)",
+    });
+    await expect(verifyPackedReadmeLocalLinks(missing)).rejects.toThrow(
+      /does not exist in the installed package/iu,
+    );
+
+    const escaping = await createTree({
+      "README.md": "[outside](../outside.md)",
+    });
+    await expect(verifyPackedReadmeLocalLinks(escaping)).rejects.toThrow(
+      /escapes the installed package/iu,
+    );
+
+    const unsupported = await createTree({
+      "README.md": "[custom](custom:target)",
+    });
+    await expect(verifyPackedReadmeLocalLinks(unsupported)).rejects.toThrow(
+      /unsupported URI scheme/iu,
+    );
+  });
+
+  it("keeps local-only scripts out of the package and verifies the configured standalone binary", async () => {
+    const [manifestText, fixtureSource, runnerSource] = await Promise.all([
+      fs.readFile(
+        path.resolve(import.meta.dirname, "../../package.json"),
+        "utf8",
+      ),
+      fs.readFile(
+        path.resolve(
+          import.meta.dirname,
+          "../../../../scripts/consumer-smoke/fixture.mjs",
+        ),
+        "utf8",
+      ),
+      fs.readFile(
+        path.resolve(
+          import.meta.dirname,
+          "../../../../scripts/consumerRepoSmoke.mjs",
+        ),
+        "utf8",
+      ),
+    ]);
+    const manifest = JSON.parse(manifestText) as {
+      publishScriptExcludes?: string[];
+    };
+
+    expect(manifest.publishScriptExcludes).toContain("measure:runtime-loc");
+    expect(fixtureSource).not.toContain("siteBaseUrl");
+    expect(fixtureSource).toContain(
+      "export async function verifyStandaloneConsumerExample(",
+    );
+    expect(fixtureSource).toContain(
+      "installSpec = `@salt-ds/mcp@file:./$" + "{localTarballName}`",
+    );
+    expect(fixtureSource).toContain(
+      "Standalone Yarn lock is not bound to the exact local tarball and checksum.",
+    );
+    expect(fixtureSource).toContain("verifyIsolatedConsumerBrowserArtifact(");
+    expect(fixtureSource).toContain(
+      "npm ci replay of packed Salt MCP dependency tree",
+    );
+    expect(fixtureSource).toContain(
+      "Standalone example MCP configuration did not resolve to the installed binary.",
+    );
+    expect(runnerSource).toContain("standaloneMcpSpec");
+    expect(runnerSource).toContain(
+      "expectedVersion: standaloneExpectedVersion",
+    );
   });
 });
 
