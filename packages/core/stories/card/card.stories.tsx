@@ -240,3 +240,53 @@ export const Variants: StoryFn<typeof Card> = (args) => {
     </StackLayout>
   );
 };
+
+export const Elevation: StoryFn<typeof Card> = (args) => {
+  const elevations = ["flat", "raised"] as const;
+  return (
+    <StackLayout direction="row">
+      {elevations.map((elevation) => (
+        <StackLayout align="end" key={elevation} style={{ width: "260px" }}>
+          <Card {...args} elevation={elevation}>
+            <CardContent>
+              <StackLayout gap={1}>
+                <H3>Sustainable investing products</H3>
+                <Text>
+                  We have a commitment to provide a wide range of investment
+                  solutions to enable you to align your financial goals to your
+                  values.
+                </Text>
+              </StackLayout>
+            </CardContent>
+          </Card>
+          <Label>Elevation: {elevation}</Label>
+        </StackLayout>
+      ))}
+    </StackLayout>
+  );
+};
+
+export const BorderColor: StoryFn<typeof Card> = (args) => {
+  const borderColors = ["strong", "default", "subtle", "none"] as const;
+  return (
+    <StackLayout direction="row">
+      {borderColors.map((borderColor) => (
+        <StackLayout align="end" key={borderColor} style={{ width: "260px" }}>
+          <Card {...args} borderColor={borderColor}>
+            <CardContent>
+              <StackLayout gap={1}>
+                <H3>Sustainable investing products</H3>
+                <Text>
+                  We have a commitment to provide a wide range of investment
+                  solutions to enable you to align your financial goals to your
+                  values.
+                </Text>
+              </StackLayout>
+            </CardContent>
+          </Card>
+          <Label>Border color: {borderColor}</Label>
+        </StackLayout>
+      ))}
+    </StackLayout>
+  );
+};
