@@ -542,7 +542,10 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
 
   const showLabels = !collapsed || animating;
 
-  const toggleLabel = collapsed ? "Expand navigation" : "Minimize navigation";
+  // Keep the accessible name static so it isn't re-announced on toggle;
+  // aria-expanded conveys the state.
+  const toggleLabel = "Navigation labels";
+  const toggleTooltip = collapsed ? "Expand navigation" : "Minimize navigation";
 
   // With reduced motion there is no transition, so no animation to track.
   const startWidthAnimation = () => {
@@ -566,10 +569,12 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
       })}
     >
       <div className="collapsibleNavigationExample-sidebar">
-        <Tooltip content={toggleLabel} placement="right">
+        {/* Hover-only so the tooltip isn't announced as a description on focus. */}
+        <Tooltip content={toggleTooltip} placement="right" disableFocusListener>
           <Button
             appearance="transparent"
             aria-label={toggleLabel}
+            aria-expanded={!collapsed}
             onClick={handleToggle}
           >
             {collapsed ? (
