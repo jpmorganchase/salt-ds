@@ -13,6 +13,7 @@ import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(cardStories);
 const { Default, AccentVariations } = composedStories;
+const transparentBorderColor = "rgba(0, 0, 0, 0)";
 
 function DynamicCard() {
   const [showContent, setShowContent] = useState(true);
@@ -67,6 +68,82 @@ describe("Given a Card", () => {
   it("should apply hover styling if hoverable", () => {
     cy.mount(<AccentVariations />);
     cy.get(".saltCard").should("have.class", "saltCard-hoverable");
+  });
+
+  it("should apply appearance styling", () => {
+    cy.mount(
+      <>
+        <Card data-testid="flat-card" appearance="flat">
+          Flat card
+        </Card>
+        <Card data-testid="raised-card" appearance="raised">
+          Raised card
+        </Card>
+      </>,
+    );
+
+    cy.findByTestId("flat-card")
+      .should("have.class", "saltCard-flat")
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).boxShadow).to.equal("none");
+      });
+    cy.findByTestId("raised-card").should("have.class", "saltCard-raised");
+  });
+
+  it("should apply borderColor styling for non-ghost variants", () => {
+    cy.mount(
+      <>
+        <Card data-testid="strong-card" borderColor="strong">
+          Strong border
+        </Card>
+        <Card data-testid="default-card" borderColor="default">
+          Default border
+        </Card>
+        <Card data-testid="subtle-card" borderColor="subtle">
+          Subtle border
+        </Card>
+        <Card data-testid="none-card" borderColor="none">
+          No border
+        </Card>
+      </>,
+    );
+
+    cy.findByTestId("strong-card").should(
+      "have.class",
+      "saltCard-borderColorStrong",
+    );
+    cy.findByTestId("default-card").should(
+      "have.class",
+      "saltCard-borderColorDefault",
+    );
+    cy.findByTestId("subtle-card").should(
+      "have.class",
+      "saltCard-borderColorSubtle",
+    );
+    cy.findByTestId("none-card")
+      .should("have.class", "saltCard-borderColorNone")
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).borderColor).to.equal(
+          transparentBorderColor,
+        );
+      });
+  });
+
+  it("should not apply borderColor styling for ghost cards", () => {
+    cy.mount(
+      <Card data-testid="ghost-card" variant="ghost" borderColor="none">
+        Ghost card
+      </Card>,
+    );
+
+    cy.findByTestId("ghost-card")
+      .should("have.class", "saltCard-ghost")
+      .and("not.have.class", "saltCard-borderColorNone")
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).borderColor).not.to.equal(
+          transparentBorderColor,
+        );
+      });
   });
 
   it("should apply sectioned layout for direct sections", () => {

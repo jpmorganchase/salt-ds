@@ -3,6 +3,7 @@
   border-radius: var(--saltLinkCard-borderRadius, var(--salt-palette-corner, 0));
   border-style: var(--saltLinkCard-borderStyle, var(--salt-borderStyle-solid));
   border-width: var(--saltLinkCard-borderWidth, var(--salt-size-fixed-100));
+  border-color: var(--saltLinkCard-borderColor, var(--linkCard-borderColor));
   box-shadow: var(--salt-overlayable-shadow);
   display: block;
   overflow: hidden;
@@ -31,19 +32,49 @@
 /* Styles applied to LinkCard when variant="primary" */
 .saltLinkCard-primary {
   background: var(--saltLinkCard-background, var(--salt-container-primary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --linkCard-borderColor: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to LinkCard when variant="secondary" */
 .saltLinkCard-secondary {
   background: var(--saltLinkCard-background, var(--salt-container-secondary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --linkCard-borderColor: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to LinkCard when variant="tertiary" */
 .saltLinkCard-tertiary {
   background: var(--saltLinkCard-background, var(--salt-container-tertiary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --linkCard-borderColor: var(--salt-container-bold-borderColor);
+}
+
+/* Styles applied when appearance="flat" */
+.saltLinkCard-flat {
+  box-shadow: var(--saltLinkCard-boxShadow-flat, none);
+}
+
+/* Styles applied when appearance="raised" */
+.saltLinkCard-raised {
+  box-shadow: var(--saltLinkCard-boxShadow, var(--salt-overlayable-shadow));
+}
+
+/* Styles applied when borderColor="strong" */
+.saltLinkCard-borderColorStrong {
+  --linkCard-borderColor: var(--salt-container-bold-borderColor);
+}
+
+/* Styles applied when borderColor="default" */
+.saltLinkCard-borderColorDefault {
+  --linkCard-borderColor: var(--salt-container-borderColor);
+}
+
+/* Styles applied when borderColor="subtle" */
+.saltLinkCard-borderColorSubtle {
+  --linkCard-borderColor: var(--salt-container-subtle-borderColor);
+}
+
+/* Styles applied when borderColor="none" */
+.saltLinkCard-borderColorNone {
+  --linkCard-borderColor: transparent;
 }
 
 /* Styles applied to create accent */

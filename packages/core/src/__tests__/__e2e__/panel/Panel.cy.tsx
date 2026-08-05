@@ -35,4 +35,13 @@ describe("GIVEN a Panel", () => {
       });
     });
   });
+
+  describe("appearance prop", () => {
+    describe('WHEN the "raised" appearance is input', () => {
+      it('THEN should display "raised" appearance', () => {
+        cy.mount(<Panel appearance="raised">Content</Panel>);
+        cy.get("div").should("have.class", "saltPanel-raised");
+      });
+    });
+  });
 });

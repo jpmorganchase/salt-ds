@@ -2,6 +2,7 @@
 .saltCard {
   border-width: var(--saltCard-borderWidth, var(--salt-size-fixed-100));
   border-style: var(--salt-borderStyle-solid);
+  border-color: var(--saltCard-borderColor, var(--card-borderColor));
   padding: var(--saltCard-padding, var(--card-padding));
   position: relative;
   box-shadow: var(--salt-overlayable-shadow);
@@ -29,22 +30,52 @@
 
 .saltCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --card-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --card-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-tertiary {
   background: var(--saltCard-background, var(--salt-container-tertiary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --card-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-ghost {
   background: var(--saltCard-background, var(--salt-container-ghost-background));
-  border-color: var(--salt-container-ghost-borderColor);
+  --card-borderColor: var(--salt-container-ghost-borderColor);
+}
+
+/* Styles applied when appearance="flat" */
+.saltCard-flat {
+  box-shadow: var(--saltCard-boxShadow-flat, none);
+}
+
+/* Styles applied when appearance="raised" */
+.saltCard-raised {
+  box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
+}
+
+/* Styles applied when borderColor="strong" */
+.saltCard-borderColorStrong {
+  --card-borderColor: var(--salt-container-bold-borderColor);
+}
+
+/* Styles applied when borderColor="default" */
+.saltCard-borderColorDefault {
+  --card-borderColor: var(--salt-container-borderColor);
+}
+
+/* Styles applied when borderColor="subtle" */
+.saltCard-borderColorSubtle {
+  --card-borderColor: var(--salt-container-subtle-borderColor);
+}
+
+/* Styles applied when borderColor="none" */
+.saltCard-borderColorNone {
+  --card-borderColor: transparent;
 }
 
 /* Styles applied to create accent */

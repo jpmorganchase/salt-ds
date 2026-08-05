@@ -19,6 +19,10 @@ import panelCss from "./Panel.css";
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   /**
+   * Visual appearance.
+   */
+  appearance?: "flat" | "raised";
+  /**
    * Styling variant; defaults to "primary".
    */
   variant?: "primary" | "secondary" | "tertiary";
@@ -27,7 +31,7 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltPanel");
 
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
-  { className, children, variant = "primary", ...restProps },
+  { appearance, className, children, variant = "primary", ...restProps },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -39,7 +43,12 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
 
   return (
     <div
-      className={clsx(withBaseName(), withBaseName(variant), className)}
+      className={clsx(
+        withBaseName(),
+        withBaseName(variant),
+        appearance && withBaseName(appearance),
+        className,
+      )}
       ref={ref}
       {...restProps}
     >
