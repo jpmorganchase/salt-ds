@@ -17,6 +17,7 @@ import { DoubleChevronLeftIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
+// refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/vertical-navigation/CollapsibleNavigation.module.css
 import styles from "./CollapsibleNavigation.module.css";
 import { flatNavData, type Item } from "./data";
 import { MockHistory } from "./MockHistory";
