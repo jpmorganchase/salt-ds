@@ -1,0 +1,75 @@
+:root {
+  --appHeaderPattern-height: calc(var(--salt-size-base) + var(--salt-spacing-200));
+}
+
+.appHeaderPattern-header {
+  position: sticky;
+  top: 0;
+  /* Sits below the drawer (`--salt-zIndex-drawer`) so the drawer and its scrim
+     overlay the header when open. */
+  z-index: var(--salt-zIndex-appHeader);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--salt-spacing-300);
+  height: var(--appHeaderPattern-height);
+  padding-inline: var(--salt-layout-page-margin);
+  background: var(--salt-container-primary-background);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
+}
+
+/* On small viewports the header only holds the menu button and logo, grouped
+   at the start. */
+.appHeaderPattern-header[data-small-viewport="true"] {
+  justify-content: flex-start;
+}
+
+/* The scroll shadow is applied via `position: sticky` on the header itself, so
+   it is not clipped by an `overflow` on an ancestor. */
+.appHeaderPattern-header[data-scrolled="true"] {
+  box-shadow: var(--salt-overlayable-shadow-scroll);
+}
+
+.appHeaderPattern-logo {
+  display: block;
+  height: calc(var(--salt-size-base) - var(--salt-spacing-150));
+}
+
+.appHeaderPattern-navList {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Brand row at the top of the drawer, aligned to the app header height. */
+.appHeaderPattern-drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--salt-spacing-300);
+  min-height: var(--appHeaderPattern-height);
+}
+
+/* Utility actions are pinned to the bottom of the flex-column drawer, below the
+   primary navigation. */
+.appHeaderPattern-drawerUtilities {
+  margin-top: auto;
+}
+
+.appHeaderPattern-heading {
+  margin: var(--salt-spacing-400);
+}
+
+/* Placeholder content blocks to demonstrate scrolling under the sticky header. */
+.appHeaderPattern-block {
+  margin: var(--salt-spacing-400);
+  padding: var(--salt-spacing-400);
+  background: var(--salt-container-secondary-background);
+}
+
+.appHeaderPattern-footer {
+  margin: var(--salt-spacing-200);
+  padding: var(--salt-spacing-200);
+  background: var(--salt-container-secondary-background);
+}
