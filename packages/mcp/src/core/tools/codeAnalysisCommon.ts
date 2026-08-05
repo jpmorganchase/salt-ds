@@ -1,7 +1,8 @@
 import { parse } from "@babel/parser";
-import traverse from "@babel/traverse";
+import traverse, { type NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import semver from "semver";
+import { isApiSymbolSpaceAvailable } from "../catalog/catalogApiSymbolV2.js";
 import type { DeprecationRecord } from "../types.js";
 import { normalizeComparableVersion } from "../versionUtils.js";
 
@@ -28,6 +29,18 @@ export interface SaltCodeAnalysis extends SaltImportAnalysis {
   ast: t.File;
 }
 
+export interface CatalogedMethodDeprecationOwner {
+  packageName: string;
+  exportName: string;
+  incompleteVersionMetadata: boolean;
+}
+
+export interface CatalogedMethodDeprecationOwners {
+  owners: CatalogedMethodDeprecationOwner[];
+  omittedCount: number;
+  incompleteVersionMetadata: boolean;
+}
+
 export type PropDeprecationIndex = Map<
   string,
   Map<string, Map<string, DeprecationRecord[]>>
@@ -42,21 +55,61 @@ export const traverseAst: typeof traverse =
         }
       ).default;
 
-const SALT_CODE_PARSE_PLUGINS = [
-  "jsx",
-  "typescript",
+const SALT_CODE_BASE_PARSE_PLUGINS = [
   "classProperties",
   "classPrivateProperties",
   "classPrivateMethods",
   "decorators-legacy",
 ] as const;
 
-export function parseSaltCode(code: string): t.File {
+export type SaltCodeSyntax = "javascript" | "jsx" | "typescript" | "tsx";
+
+export function parseSaltCode(
+  code: string,
+  syntax: SaltCodeSyntax = "tsx",
+): t.File {
+  const syntaxPlugins =
+    syntax === "tsx"
+      ? (["jsx", "typescript"] as const)
+      : syntax === "typescript"
+        ? (["typescript"] as const)
+        : syntax === "jsx"
+          ? (["jsx"] as const)
+          : ([] as const);
   return parse(code, {
     sourceType: "unambiguous",
     errorRecovery: true,
-    plugins: [...SALT_CODE_PARSE_PLUGINS],
+    plugins: [...syntaxPlugins, ...SALT_CODE_BASE_PARSE_PLUGINS],
   }) as t.File;
+}
+
+function recoveredParseErrors(ast: t.File): readonly unknown[] {
+  const errors = (ast as t.File & { errors?: unknown }).errors;
+  return Array.isArray(errors) ? errors : [];
+}
+
+function parseErrorMessage(error: unknown): string {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "message" in error &&
+    typeof error.message === "string"
+  ) {
+    return error.message;
+  }
+  return String(error);
+}
+
+export function assertSaltCodeAnalysisIsReliable(
+  analysis: SaltCodeAnalysis,
+): void {
+  const errors = recoveredParseErrors(analysis.ast);
+  if (errors.length === 0) return;
+  throw new Error(
+    `Code parser recovered from ${errors.length} syntax ${
+      errors.length === 1 ? "error" : "errors"
+    }; structural analysis was suppressed. ${parseErrorMessage(errors[0])}`.trim(),
+  );
 }
 
 export function normalizeVersion(
@@ -71,7 +124,10 @@ export function createVersionContext(
   const input = rawVersion?.trim() ?? null;
   return {
     input,
-    normalized: normalizeVersion(input),
+    // Tool callers report an observed package version, not a dependency range.
+    // Keep range normalization for catalog metadata, but require exact SemVer at
+    // this trust boundary so inputs such as `^1.2.3` cannot broaden findings.
+    normalized: input === null ? null : semver.valid(input),
   };
 }
 
@@ -89,6 +145,92 @@ export function isDeprecationRelevant(
   }
 
   return semver.lte(deprecatedIn, version.normalized);
+}
+
+export function deprecationSeverity(
+  deprecation: DeprecationRecord,
+  version: VersionContext,
+): "error" | "warning" {
+  const removedIn = normalizeVersion(deprecation.removed_in);
+  return version.normalized &&
+    removedIn &&
+    semver.gte(version.normalized, removedIn)
+    ? "error"
+    : "warning";
+}
+
+export function apiSymbolModuleSpecifier(
+  identity: DeprecationRecord["subject"],
+): string {
+  return identity.entrypoint === "."
+    ? identity.package
+    : `${identity.package}${identity.entrypoint.slice(1)}`;
+}
+
+const METHOD_DEPRECATION_OWNER_DISCLOSURE_LIMIT = 8;
+
+export function catalogedMethodDeprecationOwners(
+  deprecations: readonly DeprecationRecord[],
+  version: VersionContext,
+  importedSymbols: Iterable<ImportedSaltSymbol>,
+): CatalogedMethodDeprecationOwners {
+  const importedOwners = new Map<string, ImportedSaltSymbol>();
+  for (const imported of importedSymbols) {
+    if (imported.imported === "*") continue;
+    importedOwners.set(
+      `${imported.packageName}\0${imported.imported}\0${
+        imported.typeOnly ? "type" : "value"
+      }`,
+      imported,
+    );
+  }
+
+  const matchedOwners = new Map<string, CatalogedMethodDeprecationOwner>();
+  for (const deprecation of deprecations) {
+    const memberKind = deprecation.subject.member_path.at(-1)?.kind;
+    if (
+      (memberKind !== "method" && memberKind !== "static_method") ||
+      !isDeprecationRelevant(deprecation, version)
+    ) {
+      continue;
+    }
+
+    const packageName = apiSymbolModuleSpecifier(deprecation.subject);
+    const ownerKey = `${packageName}\0${deprecation.subject.export_name}`;
+    const matchesImportedSpace = (["type", "value"] as const).some(
+      (usageSpace) =>
+        isApiSymbolSpaceAvailable(
+          deprecation.subject.symbol_space,
+          usageSpace,
+        ) && importedOwners.has(`${ownerKey}\0${usageSpace}`),
+    );
+    if (!matchesImportedSpace) continue;
+
+    const existing = matchedOwners.get(ownerKey);
+    matchedOwners.set(ownerKey, {
+      packageName,
+      exportName: deprecation.subject.export_name,
+      incompleteVersionMetadata:
+        (existing?.incompleteVersionMetadata ?? false) ||
+        (version.normalized !== null && !deprecation.deprecated_in),
+    });
+  }
+
+  const owners = [...matchedOwners.values()].sort((left, right) => {
+    const leftKey = `${left.packageName}\0${left.exportName}`;
+    const rightKey = `${right.packageName}\0${right.exportName}`;
+    return leftKey < rightKey ? -1 : leftKey > rightKey ? 1 : 0;
+  });
+  return {
+    owners: owners.slice(0, METHOD_DEPRECATION_OWNER_DISCLOSURE_LIMIT),
+    omittedCount: Math.max(
+      0,
+      owners.length - METHOD_DEPRECATION_OWNER_DISCLOSURE_LIMIT,
+    ),
+    incompleteVersionMetadata: owners.some(
+      (owner) => owner.incompleteVersionMetadata,
+    ),
+  };
 }
 
 export function normalizeComponentKey(value: string | null): string {
@@ -185,9 +327,17 @@ export function collectSaltImportsFromAst(ast: t.File): SaltImportAnalysis {
   };
 }
 
-export function analyzeParsedSaltCode(code: string): SaltCodeAnalysis {
-  const ast = parseSaltCode(code);
-
+export function analyzeParsedSaltCode(
+  code: string,
+  syntax: SaltCodeSyntax = "tsx",
+): SaltCodeAnalysis {
+  const ast = parseSaltCode(code, syntax);
+  assertSaltCodeAnalysisIsReliable({
+    ast,
+    saltImports: [],
+    directImportByLocal: new Map(),
+    namespaceImportByLocal: new Map(),
+  });
   return {
     ast,
     ...collectSaltImportsFromAst(ast),
@@ -249,6 +399,63 @@ export function resolveNamespaceMemberImportedSaltSymbol(
   };
 }
 
+export function resolveTypeNamespaceMemberImportedSaltSymbol(
+  node: t.TSQualifiedName,
+  namespaceImportByLocal: Map<string, ImportedSaltSymbol>,
+  usageSpace: "type" | "value",
+): ImportedSaltSymbol | null {
+  if (!t.isIdentifier(node.left) || !t.isIdentifier(node.right)) {
+    return null;
+  }
+
+  const namespaceImport = namespaceImportByLocal.get(node.left.name);
+  if (
+    !namespaceImport ||
+    (usageSpace === "value" && namespaceImport.typeOnly)
+  ) {
+    return null;
+  }
+
+  return {
+    packageName: namespaceImport.packageName,
+    imported: node.right.name,
+    local: `${node.left.name}.${node.right.name}`,
+    typeOnly: usageSpace === "type",
+  };
+}
+
+export function tsQualifiedNameUsageSpace(
+  path: NodePath<t.TSQualifiedName>,
+): "type" | "value" {
+  let outermostPath: NodePath = path;
+  while (outermostPath.parentPath?.isTSQualifiedName()) {
+    outermostPath = outermostPath.parentPath;
+  }
+
+  return outermostPath.parentPath?.isTSTypeQuery() &&
+    outermostPath.parentPath.node.exprName === outermostPath.node
+    ? "value"
+    : "type";
+}
+
+export function isImportedSaltBindingVisible(
+  path: NodePath,
+  imported: ImportedSaltSymbol,
+): boolean {
+  const rootLocal = imported.local.split(".", 1)[0];
+  if (!rootLocal) {
+    return false;
+  }
+
+  const binding = path.scope.getBinding(rootLocal);
+  return (
+    binding?.kind === "module" ||
+    binding?.path.isImportNamespaceSpecifier() === true ||
+    binding?.path.isImportSpecifier() === true ||
+    binding?.path.isImportDefaultSpecifier() === true
+  );
+}
+
 export function buildPropDeprecationIndex(
   deprecations: DeprecationRecord[],
   version: VersionContext,
@@ -271,7 +478,8 @@ export function buildPropDeprecationIndex(
       continue;
     }
 
-    const packageMap = byPackage.get(deprecation.package) ?? new Map();
+    const moduleSpecifier = apiSymbolModuleSpecifier(deprecation.subject);
+    const packageMap = byPackage.get(moduleSpecifier) ?? new Map();
     const componentKey = normalizeComponentKey(deprecation.component);
     if (componentKey === "*") {
       continue;
@@ -282,7 +490,7 @@ export function buildPropDeprecationIndex(
     current.push(deprecation);
     componentMap.set(deprecation.name, current);
     packageMap.set(componentKey, componentMap);
-    byPackage.set(deprecation.package, packageMap);
+    byPackage.set(moduleSpecifier, packageMap);
   }
 
   return byPackage;

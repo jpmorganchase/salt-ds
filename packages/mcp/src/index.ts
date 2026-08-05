@@ -1,10 +1,23 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+/// <reference types="node" preserve="true" />
+
+import type { McpServer } from "@modelcontextprotocol/server";
 import { runCli as runCliImplementation } from "./cli.js";
 import { createSaltMcpServer as createSaltMcpServerImplementation } from "./server/createServer.js";
 
+export type ProjectAccessOptions =
+  | {
+      mode: "restricted";
+      allowedRoots: string[];
+      defaultRoot?: string;
+    }
+  | {
+      mode: "unrestricted_local_stdio";
+      defaultRoot?: string;
+    };
+
 export interface CreateSaltMcpServerOptions {
   registryDir?: string;
-  siteBaseUrl?: string;
+  projectAccess?: ProjectAccessOptions;
 }
 
 export const runCli: (argv?: string[]) => Promise<void> = runCliImplementation;

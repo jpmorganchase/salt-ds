@@ -2,9 +2,14 @@ import {
   SALT_EVIDENCE_REF_CONTRACT,
   type SaltEvidenceRef,
   type SaltEvidenceValidationIssue,
+  type SaltTokenPolicyEvidenceRef,
   validateEvidenceRef,
 } from "./evidence.js";
-import type { TokenRecord } from "./types.js";
+import {
+  createSaltRegistryFingerprint,
+  getSaltRegistryFingerprint,
+} from "./registry/fingerprint.js";
+import type { SaltRegistry, TokenRecord } from "./types.js";
 
 export const SALT_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_CONTRACT =
   "salt_token_policy_structural_role_rule_pack_v1" as const;
@@ -59,7 +64,7 @@ export interface SaltTokenPolicyStructuralRoleRuleRecord {
   emits: SaltTokenPolicyStructuralRoleRuleEmits;
   evidence_text: string;
   evidence_terms: string[];
-  evidence_refs: SaltEvidenceRef[];
+  evidence_refs: SaltTokenPolicyEvidenceRef[];
   canonical_source?: string | null;
   source_urls?: string[];
 }
@@ -70,22 +75,28 @@ export interface SaltTokenPolicyStructuralRoleRulePackGenerator {
 }
 
 export interface SaltTokenPolicyStructuralRoleRulePackRegistry {
-  version?: string | null;
-  hash?: string | null;
-  generated_at?: string | null;
+  version: string;
+  hash: string;
+  generated_at: string | null;
 }
 
-export interface SaltTokenPolicyStructuralRoleRulePack {
+export interface SaltTokenPolicyStructuralRoleRulePackBody {
   contract: typeof SALT_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_CONTRACT;
   id: string;
-  generated_at: string;
   generator: SaltTokenPolicyStructuralRoleRulePackGenerator;
-  registry: SaltTokenPolicyStructuralRoleRulePackRegistry;
   rules: SaltTokenPolicyStructuralRoleRuleRecord[];
+}
+
+export interface SaltTokenPolicyStructuralRoleRulePack
+  extends SaltTokenPolicyStructuralRoleRulePackBody {
+  generated_at: string | null;
+  registry: SaltTokenPolicyStructuralRoleRulePackRegistry;
 }
 
 export type SaltTokenPolicyStructuralRoleRulePackIssueCode =
   | "invalid_rule_pack_contract"
+  | "missing_registry_identity"
+  | "stale_registry"
   | "missing_rule_evidence"
   | "invalid_rule_evidence_ref"
   | "missing_source_backed_rule_evidence"
@@ -169,7 +180,7 @@ function hasSourceLocator(ref: SaltEvidenceRef): boolean {
 function toRuleEvidenceRef(
   rule: TokenPolicyStructuralRoleRuleInput,
   index: number,
-): SaltEvidenceRef {
+): SaltTokenPolicyEvidenceRef {
   return {
     contract: SALT_EVIDENCE_REF_CONTRACT,
     id: `${slugify(rule.id)}.structural-role-rule.${index}.source-ref`,
@@ -179,7 +190,6 @@ function toRuleEvidenceRef(
       url: rule.source.route,
       repo_path: rule.source.repo_path,
     },
-    confidence: "high",
     note: "Source-backed docs evidence for generated token structural-role rules.",
   };
 }
@@ -310,21 +320,76 @@ function toRuleRecord(
   };
 }
 
+export function buildTokenPolicyStructuralRoleRulePackBody(input: {
+  structural_role_rules: readonly TokenPolicyStructuralRoleRuleInput[];
+  generator: SaltTokenPolicyStructuralRoleRulePackGenerator;
+  id?: string;
+}): SaltTokenPolicyStructuralRoleRulePackBody {
+  return {
+    contract: SALT_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_CONTRACT,
+    id: input.id ?? "token-policy-structural-role-rules",
+    generator: input.generator,
+    rules: input.structural_role_rules.map(toRuleRecord),
+  };
+}
+
+export function bindTokenPolicyStructuralRoleRulePack(
+  body: SaltTokenPolicyStructuralRoleRulePackBody,
+  input: {
+    generated_at: string | null;
+    registry: SaltTokenPolicyStructuralRoleRulePackRegistry;
+  },
+): SaltTokenPolicyStructuralRoleRulePack {
+  return {
+    ...body,
+    generated_at: input.generated_at,
+    registry: input.registry,
+  };
+}
+
+export function bindTokenPolicyStructuralRoleRulePackToInMemoryRegistry(
+  body: SaltTokenPolicyStructuralRoleRulePackBody,
+  registry: SaltRegistry,
+  generatedAt: string | null = null,
+): SaltTokenPolicyStructuralRoleRulePack {
+  const placeholderPack = bindTokenPolicyStructuralRoleRulePack(body, {
+    generated_at: generatedAt,
+    registry: {
+      version: registry.version,
+      hash: `sha256:${"0".repeat(64)}`,
+      generated_at: registry.generated_at,
+    },
+  });
+  const fingerprint = createSaltRegistryFingerprint({
+    ...registry,
+    semantic_hash: null,
+    token_policy_structural_role_rule_pack: placeholderPack,
+  });
+
+  return bindTokenPolicyStructuralRoleRulePack(body, {
+    generated_at: generatedAt,
+    registry: {
+      version: registry.version,
+      hash: fingerprint,
+      generated_at: registry.generated_at,
+    },
+  });
+}
+
 export function buildTokenPolicyStructuralRoleRulePack(input: {
   structural_role_rules: readonly TokenPolicyStructuralRoleRuleInput[];
-  generated_at: string;
+  generated_at: string | null;
   generator: SaltTokenPolicyStructuralRoleRulePackGenerator;
   registry: SaltTokenPolicyStructuralRoleRulePackRegistry;
   id?: string;
 }): SaltTokenPolicyStructuralRoleRulePack {
-  return {
-    contract: SALT_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_CONTRACT,
-    id: input.id ?? "token-policy-structural-role-rules",
-    generated_at: input.generated_at,
-    generator: input.generator,
-    registry: input.registry,
-    rules: input.structural_role_rules.map(toRuleRecord),
-  };
+  return bindTokenPolicyStructuralRoleRulePack(
+    buildTokenPolicyStructuralRoleRulePackBody(input),
+    {
+      generated_at: input.generated_at,
+      registry: input.registry,
+    },
+  );
 }
 
 function toRulePackIssue(
@@ -339,6 +404,7 @@ function toRulePackIssue(
 
 export function validateTokenPolicyStructuralRoleRulePackEvidence(
   pack: SaltTokenPolicyStructuralRoleRulePack,
+  registry?: SaltRegistry,
 ): SaltTokenPolicyStructuralRoleRulePackIssue[] {
   const issues: SaltTokenPolicyStructuralRoleRulePackIssue[] = [];
 
@@ -348,6 +414,26 @@ export function validateTokenPolicyStructuralRoleRulePackEvidence(
       message: `Token policy structural-role rule pack '${pack.id}' must use ${SALT_TOKEN_POLICY_STRUCTURAL_ROLE_RULE_PACK_CONTRACT}.`,
       path: "contract",
     });
+  }
+
+  if (registry) {
+    const activeRegistryHash = getSaltRegistryFingerprint(registry);
+    if (!hasText(pack.registry?.version) || !hasText(pack.registry?.hash)) {
+      issues.push({
+        code: "missing_registry_identity",
+        message: `Token policy structural-role rule pack '${pack.id}' must declare the active registry version and hash.`,
+        path: "registry",
+      });
+    } else if (
+      pack.registry.version !== registry.version ||
+      pack.registry.hash !== activeRegistryHash
+    ) {
+      issues.push({
+        code: "stale_registry",
+        message: `Token policy structural-role rule pack '${pack.id}' does not match the active registry identity.`,
+        path: "registry",
+      });
+    }
   }
 
   pack.rules.forEach((rule, ruleIndex) => {
@@ -364,9 +450,7 @@ export function validateTokenPolicyStructuralRoleRulePackEvidence(
     if (
       !rule.evidence_refs.some(
         (ref) =>
-          (ref.source_kind === "docs" ||
-            ref.source_kind === "source" ||
-            ref.source_kind === "token") &&
+          (ref.source_kind === "docs" || ref.source_kind === "token") &&
           hasSourceLocator(ref),
       )
     ) {

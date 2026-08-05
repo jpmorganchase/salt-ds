@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "f0f6d86db9a5f7b6db434e2b0be4e6d3f57f4f4b",
+  "scenarios": [
+    {
+      "id": "surface_discovery",
+      "kind": "protocol_surface",
+      "purpose": "Capture instructions, exact tools/list, resources, templates, and the 25-of-103 completion truncation.",
+      "semantic_task_result": "failure",
+      "failure_reason": "Entity completion silently truncates the catalog while reporting hasMore=false."
+    },
+    {
+      "id": "create_toolbar_link",
+      "kind": "tool_call",
+      "tool": "create_salt_ui",
+      "arguments": {
+        "query": "link to another page from a toolbar action",
+        "include_starter_code": true
+      },
+      "purpose": "Representative create capture.",
+      "semantic_task_result": "not_evaluated",
+      "failure_reason": "No real agent artifact compile, render, interaction, or accessibility verification is available."
+    },
+    {
+      "id": "migrate_primary_action",
+      "kind": "tool_call",
+      "tool": "migrate_to_salt",
+      "arguments": {
+        "code": "import { Button } from \"@example/external-ui\";\n\nexport function LegacyPage() {\n  return <Button variant=\"contained\">Save</Button>;\n}\n",
+        "query": "Migrate this primary action to Salt",
+        "include_starter_code": true,
+        "root_dir": "<NON_SALT_ROOT>"
+      },
+      "purpose": "Representative migration capture.",
+      "semantic_task_result": "not_evaluated",
+      "failure_reason": "No real agent artifact compile, runtime, or behavioral-equivalence verification is available."
+    },
+    {
+      "id": "reference_matrix",
+      "kind": "tool_call",
+      "tool": "get_salt_reference",
+      "purpose": "Representative exact retrieval, family retrieval, and known-missing behavior.",
+      "semantic_task_result": "success"
+    },
+    {
+      "id": "project_inspection",
+      "kind": "tool_call",
+      "tool": "get_salt_project_context",
+      "arguments": {
+        "root_dir": ".",
+        "include_policy_diagnostics": true
+      },
+      "purpose": "Representative authorized project inspection.",
+      "semantic_task_result": "success"
+    },
+    {
+      "id": "review_grounded_findings",
+      "kind": "tool_call",
+      "tool": "review_salt_ui",
+      "arguments": {
+        "code": "import { Button } from \"@salt-ds/core\";\n\nexport function Demo() {\n  return <Button style={{ color: \"#ff0000\", borderColor: \"var(--salt-container-borderColor)\" }}>Save</Button>;\n}\n",
+        "framework": "react",
+        "package_version": "2.0.0"
+      },
+      "purpose": "Representative review with grounded token findings.",
+      "semantic_task_result": "success"
+    },
+    {
+      "id": "review_generic_react_false_block",
+      "kind": "tool_call",
+      "tool": "review_salt_ui",
+      "arguments": {
+        "code": "function Example() {\n  return <button>Open</button>;\n}",
+        "framework": "react"
+      },
+      "purpose": "Preserve the generic React false-block/no-remediation contradiction.",
+      "semantic_task_result": "failure",
+      "failure_reason": "No findings in supported scope becomes blocked/ask_user and is mislabeled as a blocking reason."
+    },
+    {
+      "id": "review_false_completion",
+      "kind": "tool_call",
+      "tool": "review_salt_ui",
+      "arguments": {
+        "code": "const fragment = <Button>Save</Button>;",
+        "framework": "react"
+      },
+      "purpose": "Preserve terminal completion from an unbound parseable fragment.",
+      "semantic_task_result": "failure",
+      "failure_reason": "The tool cannot establish complete-file, repository, implementation, or task completion from this fragment."
+    },
+    {
+      "id": "policy_prose_trust_boundary",
+      "kind": "tool_call",
+      "tool": "review_salt_ui",
+      "purpose": "Preserve repository-authored instruction-like prose crossing into authoritative safety output.",
+      "semantic_task_result": "failure",
+      "failure_reason": "Untrusted project prose is promoted into server-authored control/safety fields."
+    },
+    {
+      "id": "r1_border_button_non_convergence",
+      "kind": "multi_call",
+      "purpose": "Preserve border -> instructed Button -> resolved Button -> rejected Button non-convergence.",
+      "semantic_task_result": "failure",
+      "failure_reason": "A host following the server's exact continuation cannot converge."
+    },
+    {
+      "id": "token_query_border",
+      "kind": "tool_call",
+      "tool": "create_salt_ui",
+      "arguments": {
+        "query": "border",
+        "solution_type": "token"
+      },
+      "purpose": "Preserve direct-use-forbidden palette-token recommendation.",
+      "semantic_task_result": "failure"
+    },
+    {
+      "id": "token_query_text_color",
+      "kind": "tool_call",
+      "tool": "create_salt_ui",
+      "arguments": {
+        "query": "text color",
+        "solution_type": "token"
+      },
+      "purpose": "Preserve token-type mismatch.",
+      "semantic_task_result": "failure"
+    },
+    {
+      "id": "token_query_padding",
+      "kind": "tool_call",
+      "tool": "create_salt_ui",
+      "arguments": {
+        "query": "padding",
+        "solution_type": "token"
+      },
+      "purpose": "Preserve the empty common-intent result.",
+      "semantic_task_result": "failure"
+    },
+    {
+      "id": "token_query_disabled_text",
+      "kind": "tool_call",
+      "tool": "create_salt_ui",
+      "arguments": {
+        "query": "disabled text",
+        "solution_type": "token"
+      },
+      "purpose": "Preserve token-type/state mismatch.",
+      "semantic_task_result": "failure"
+    },
+    {
+      "id": "offline_esm_guard_bypass",
+      "kind": "process_reproduction",
+      "purpose": "Preserve ESM node:http availability under the current offline guard.",
+      "semantic_task_result": "failure",
+      "failure_reason": "The guard does not enforce offline behavior for ESM network built-ins."
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "meta": {
     "source": "site/public/search-data.json",
     "generatedOn": "2026-03-20",
-    "componentCount": 76,
+    "componentCount": 77,
     "categoryCount": 12
   },
   "categoryOrder": [
@@ -22,398 +22,398 @@
   "components": {
     "accordion": {
       "title": "Accordion",
-      "route": "/salt/components/accordion/index",
+      "route": "/salt/components/accordion",
       "category": "Containers and disclosure"
     },
     "ag-grid-theme": {
       "title": "Data grid",
-      "route": "/salt/components/ag-grid-theme/index",
+      "route": "/salt/components/ag-grid-theme",
       "category": "Data display and visualization"
     },
     "avatar": {
       "title": "Avatar",
-      "route": "/salt/components/avatar/index",
+      "route": "/salt/components/avatar",
       "category": "Content and identity"
     },
     "badge": {
       "title": "Badge",
-      "route": "/salt/components/badge/index",
+      "route": "/salt/components/badge",
       "category": "Feedback and status"
     },
     "banner": {
       "title": "Banner",
-      "route": "/salt/components/banner/index",
+      "route": "/salt/components/banner",
       "category": "Feedback and status"
     },
     "breadcrumbs": {
       "title": "Breadcrumbs",
-      "route": "/salt/components/breadcrumbs/index",
+      "route": "/salt/components/breadcrumbs",
       "category": "Navigation"
     },
     "button": {
       "title": "Button",
-      "route": "/salt/components/button/index",
+      "route": "/salt/components/button",
       "category": "Actions"
     },
     "calendar": {
       "title": "Calendar",
-      "route": "/salt/components/calendar/index",
+      "route": "/salt/components/calendar",
       "category": "Date and time"
     },
     "card": {
       "title": "Card",
-      "route": "/salt/components/card/index",
+      "route": "/salt/components/card",
       "category": "Containers and disclosure"
     },
     "carousel": {
       "title": "Carousel",
-      "route": "/salt/components/carousel/index",
+      "route": "/salt/components/carousel",
       "category": "Containers and disclosure"
     },
     "chart": {
       "title": "Chart",
-      "route": "/salt/components/chart/index",
+      "route": "/salt/components/chart",
       "category": "Data display and visualization"
     },
     "checkbox": {
       "title": "Checkbox",
-      "route": "/salt/components/checkbox/index",
+      "route": "/salt/components/checkbox",
       "category": "Selection controls"
     },
     "collapsible": {
       "title": "Collapsible",
-      "route": "/salt/components/collapsible/index",
+      "route": "/salt/components/collapsible",
       "category": "Containers and disclosure"
     },
     "combo-box": {
       "title": "Combo box",
-      "route": "/salt/components/combo-box/index",
+      "route": "/salt/components/combo-box",
       "category": "Selection controls"
     },
     "country-symbol": {
       "title": "Country symbol",
-      "route": "/salt/components/country-symbol/index",
+      "route": "/salt/components/country-symbol",
       "category": "Content and identity"
     },
     "date-input": {
       "title": "Date input",
-      "route": "/salt/components/date-input/index",
+      "route": "/salt/components/date-input",
       "category": "Date and time"
     },
     "date-picker": {
       "title": "Date picker",
-      "route": "/salt/components/date-picker/index",
+      "route": "/salt/components/date-picker",
       "category": "Date and time"
     },
     "range-date-picker": {
       "title": "Range date picker",
-      "route": "/salt/components/date-picker/range-date-picker/index",
+      "route": "/salt/components/date-picker/range-date-picker",
       "category": "Date and time",
       "parent": "date-picker"
     },
     "dialog": {
       "title": "Dialog",
-      "route": "/salt/components/dialog/index",
+      "route": "/salt/components/dialog",
       "category": "Overlays"
     },
     "divider": {
       "title": "Divider",
-      "route": "/salt/components/divider/index",
+      "route": "/salt/components/divider",
       "category": "Layout"
     },
     "drawer": {
       "title": "Drawer",
-      "route": "/salt/components/drawer/index",
+      "route": "/salt/components/drawer",
       "category": "Overlays"
     },
     "dropdown": {
       "title": "Dropdown",
-      "route": "/salt/components/dropdown/index",
+      "route": "/salt/components/dropdown",
       "category": "Selection controls"
     },
     "file-drop-zone": {
       "title": "File drop zone",
-      "route": "/salt/components/file-drop-zone/index",
+      "route": "/salt/components/file-drop-zone",
       "category": "Data entry"
     },
     "form-field": {
       "title": "Form field",
-      "route": "/salt/components/form-field/index",
+      "route": "/salt/components/form-field",
       "category": "Data entry"
     },
     "icon": {
       "title": "Icon",
-      "route": "/salt/components/icon/index",
+      "route": "/salt/components/icon",
       "category": "Content and identity"
     },
     "input": {
       "title": "Input",
-      "route": "/salt/components/input/index",
+      "route": "/salt/components/input",
       "category": "Data entry"
     },
     "kbd": {
       "title": "Kbd",
-      "route": "/salt/components/kbd/index",
+      "route": "/salt/components/kbd",
       "category": "Content and identity"
     },
     "border-layout": {
       "title": "Border layout",
-      "route": "/salt/components/layouts/border-layout/index",
+      "route": "/salt/components/layouts/border-layout",
       "category": "Layout",
       "section": "layouts"
     },
     "flex-layout": {
       "title": "Flex layout",
-      "route": "/salt/components/layouts/flex-layout/index",
+      "route": "/salt/components/layouts/flex-layout",
       "category": "Layout",
       "section": "layouts"
     },
     "flow-layout": {
       "title": "Flow layout",
-      "route": "/salt/components/layouts/flow-layout/index",
+      "route": "/salt/components/layouts/flow-layout",
       "category": "Layout",
       "section": "layouts"
     },
     "grid-layout": {
       "title": "Grid layout",
-      "route": "/salt/components/layouts/grid-layout/index",
+      "route": "/salt/components/layouts/grid-layout",
       "category": "Layout",
       "section": "layouts"
     },
     "parent-child-layout": {
       "title": "Parent-child layout",
-      "route": "/salt/components/layouts/parent-child-layout/index",
+      "route": "/salt/components/layouts/parent-child-layout",
       "category": "Layout",
       "section": "layouts"
     },
     "split-layout": {
       "title": "Split layout",
-      "route": "/salt/components/layouts/split-layout/index",
+      "route": "/salt/components/layouts/split-layout",
       "category": "Layout",
       "section": "layouts"
     },
     "stack-layout": {
       "title": "Stack layout",
-      "route": "/salt/components/layouts/stack-layout/index",
+      "route": "/salt/components/layouts/stack-layout",
       "category": "Layout",
       "section": "layouts"
     },
     "link": {
       "title": "Link",
-      "route": "/salt/components/link/index",
+      "route": "/salt/components/link",
       "category": "Navigation"
     },
     "list-box": {
       "title": "List box",
-      "route": "/salt/components/list-box/index",
+      "route": "/salt/components/list-box",
       "category": "Selection controls"
     },
     "localization-provider": {
       "title": "Localization provider",
-      "route": "/salt/components/localization-provider/index",
+      "route": "/salt/components/localization-provider",
       "category": "Providers"
     },
     "mega-menu": {
       "title": "Mega menu",
-      "route": "/salt/components/mega-menu/index",
+      "route": "/salt/components/mega-menu",
       "category": "Navigation"
     },
     "menu": {
       "title": "Menu",
-      "route": "/salt/components/menu/index",
+      "route": "/salt/components/menu",
       "category": "Overlays"
     },
     "multiline-input": {
       "title": "Multiline input",
-      "route": "/salt/components/multiline-input/index",
+      "route": "/salt/components/multiline-input",
       "category": "Data entry"
     },
     "navigation-item": {
       "title": "Navigation item",
-      "route": "/salt/components/navigation-item/index",
+      "route": "/salt/components/navigation-item",
       "category": "Navigation"
     },
     "number-input": {
       "title": "Number input",
-      "route": "/salt/components/number-input/index",
+      "route": "/salt/components/number-input",
       "category": "Data entry"
     },
     "overlay": {
       "title": "Overlay",
-      "route": "/salt/components/overlay/index",
+      "route": "/salt/components/overlay",
       "category": "Overlays"
     },
     "pagination": {
       "title": "Pagination",
-      "route": "/salt/components/pagination/index",
+      "route": "/salt/components/pagination",
       "category": "Navigation"
     },
     "panel": {
       "title": "Panel",
-      "route": "/salt/components/panel/index",
+      "route": "/salt/components/panel",
       "category": "Layout"
     },
     "pill": {
       "title": "Pill",
-      "route": "/salt/components/pill/index",
+      "route": "/salt/components/pill",
       "category": "Selection controls",
       "secondaryCategories": ["Actions"]
     },
     "progress": {
       "title": "Progress",
-      "route": "/salt/components/progress/index",
+      "route": "/salt/components/progress",
       "category": "Feedback and status"
     },
     "radio-button": {
       "title": "Radio button",
-      "route": "/salt/components/radio-button/index",
+      "route": "/salt/components/radio-button",
       "category": "Selection controls"
     },
     "rating": {
       "title": "Rating",
-      "route": "/salt/components/rating/index",
+      "route": "/salt/components/rating",
       "category": "Selection controls"
     },
     "salt-provider": {
       "title": "Salt provider",
-      "route": "/salt/components/salt-provider/index",
+      "route": "/salt/components/salt-provider",
       "category": "Providers"
     },
     "salt-provider-next": {
       "title": "SaltProviderNext",
-      "route": "/salt/components/salt-provider-next/index",
+      "route": "/salt/components/salt-provider-next",
       "category": "Providers"
     },
     "scrim": {
       "title": "Scrim",
-      "route": "/salt/components/scrim/index",
+      "route": "/salt/components/scrim",
       "category": "Overlays"
     },
     "segmented-button-group": {
       "title": "Segmented button group",
-      "route": "/salt/components/segmented-button-group/index",
+      "route": "/salt/components/segmented-button-group",
       "category": "Actions"
     },
     "semantic-icon-provider": {
       "title": "Semantic icon provider",
-      "route": "/salt/components/semantic-icon-provider/index",
+      "route": "/salt/components/semantic-icon-provider",
       "category": "Providers"
     },
     "skip-link": {
       "title": "Skip link",
-      "route": "/salt/components/skip-link/index",
+      "route": "/salt/components/skip-link",
       "category": "Navigation"
     },
     "side-panel": {
       "title": "Side panel",
-      "route": "/salt/components/side-panel/index",
+      "route": "/salt/components/side-panel",
       "category": "Layout"
     },
     "slider": {
       "title": "Slider",
-      "route": "/salt/components/slider/index",
+      "route": "/salt/components/slider",
       "category": "Selection controls"
     },
     "range-slider": {
       "title": "Range slider",
-      "route": "/salt/components/slider/range-slider/index",
+      "route": "/salt/components/slider/range-slider",
       "category": "Selection controls",
       "parent": "slider"
     },
     "spinner": {
       "title": "Spinner",
-      "route": "/salt/components/spinner/index",
+      "route": "/salt/components/spinner",
       "category": "Feedback and status"
     },
     "splitter": {
       "title": "Splitter",
-      "route": "/salt/components/splitter/index",
+      "route": "/salt/components/splitter",
       "category": "Layout"
     },
     "static-list": {
       "title": "Static list",
-      "route": "/salt/components/static-list/index",
+      "route": "/salt/components/static-list",
       "category": "Data display and visualization"
     },
     "status-indicator": {
       "title": "Status indicator",
-      "route": "/salt/components/status-indicator/index",
+      "route": "/salt/components/status-indicator",
       "category": "Feedback and status"
     },
     "stepper": {
       "title": "Stepper",
-      "route": "/salt/components/stepper/index",
+      "route": "/salt/components/stepper",
       "category": "Feedback and status"
     },
     "switch": {
       "title": "Switch",
-      "route": "/salt/components/switch/index",
+      "route": "/salt/components/switch",
       "category": "Selection controls"
     },
     "system-status": {
       "title": "System status",
-      "route": "/salt/components/system-status/index",
+      "route": "/salt/components/system-status",
       "category": "Feedback and status"
     },
     "table": {
       "title": "Table",
-      "route": "/salt/components/table/index",
+      "route": "/salt/components/table",
       "category": "Data display and visualization"
     },
     "tabs": {
       "title": "Tabs",
-      "route": "/salt/components/tabs/index",
+      "route": "/salt/components/tabs",
       "category": "Selection controls"
     },
     "tag": {
       "title": "Tag",
-      "route": "/salt/components/tag/index",
+      "route": "/salt/components/tag",
       "category": "Content and identity"
     },
     "text": {
       "title": "Text",
-      "route": "/salt/components/text/index",
+      "route": "/salt/components/text",
       "category": "Content and identity"
     },
     "toast": {
       "title": "Toast",
-      "route": "/salt/components/toast/index",
+      "route": "/salt/components/toast",
       "category": "Feedback and status"
     },
     "toggletip": {
       "title": "Toggletip",
-      "route": "/salt/components/toggletip/index",
+      "route": "/salt/components/toggletip",
       "category": "Overlays"
     },
     "toggle-button": {
       "title": "Toggle button",
-      "route": "/salt/components/toggle-button/index",
+      "route": "/salt/components/toggle-button",
       "category": "Selection controls"
     },
     "toolbar": {
       "title": "Toolbar",
-      "route": "/salt/components/toolbar/index",
+      "route": "/salt/components/toolbar",
       "category": "Containers and disclosure",
       "secondaryCategories": ["Actions"]
     },
     "tokenized-input-next": {
       "title": "Tokenized input",
-      "route": "/salt/components/tokenized-input-next/index",
+      "route": "/salt/components/tokenized-input-next",
       "category": "Data entry"
     },
     "tooltip": {
       "title": "Tooltip",
-      "route": "/salt/components/tooltip/index",
+      "route": "/salt/components/tooltip",
       "category": "Overlays"
     },
     "tree": {
       "title": "Tree",
-      "route": "/salt/components/tree/index",
+      "route": "/salt/components/tree",
       "category": "Selection controls"
     },
     "vertical-navigation": {
       "title": "Vertical navigation",
-      "route": "/salt/components/vertical-navigation/index",
+      "route": "/salt/components/vertical-navigation",
       "category": "Navigation"
     }
   }

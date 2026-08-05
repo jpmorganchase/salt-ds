@@ -9,7 +9,6 @@ import {
 } from "../build/buildRegistryPatterns.js";
 
 // All Salt-looking strings in this file are intentionally tiny fixture facts.
-const GENERATED_AT = "2026-05-04T00:00:00.000Z";
 async function writeFixturePatternRepo(
   repoRoot: string,
   content: string,
@@ -21,9 +20,12 @@ async function writeFixturePatternRepo(
     path.join(repoRoot, "site/pattern-category-map.json"),
     `${JSON.stringify(
       {
+        meta: {
+          patternCount: 1,
+        },
         patterns: {
           fixtureFlow: {
-            route: "/salt/patterns/fixture-flow/index",
+            route: "/salt/patterns/fixture-flow",
             category: "Fixture",
           },
         },
@@ -41,6 +43,133 @@ async function writeFixturePatternRepo(
 }
 
 describe("pattern registry extraction", () => {
+  it("does not promote incidental documentation prose into structural component roles", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-role-prose-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+---
+
+## How to build
+
+Use FixturePart in the owning flow.
+
+<Diagram alt="FixturePart next to SiblingPart" />
+
+## When not to use
+
+Do not use SiblingPart when FixturePart is unavailable.
+`,
+      );
+
+      const patterns = await extractPatterns(repoRoot);
+
+      expect(patterns[0].composed_of).toEqual([
+        {
+          component: "FixturePart",
+          role: null,
+        },
+      ]);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("round-trips only explicitly authored structural component roles", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-authored-role-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+  ai:
+    componentRoles:
+      FixturePart: "Provides the explicitly curated fixture role."
+---
+
+## How to build
+
+Incidental FixturePart prose must not replace the authored role.
+`,
+      );
+
+      const patterns = await extractPatterns(repoRoot);
+
+      expect(patterns[0].composed_of).toEqual([
+        {
+          component: "FixturePart",
+          role: "Provides the explicitly curated fixture role.",
+        },
+      ]);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it.each([
+    {
+      name: "an undeclared key",
+      declaration: '      OtherPart: "Unknown role."',
+      error: /references undeclared component 'OtherPart'/u,
+    },
+    {
+      name: "a wrong-case key",
+      declaration: '      fixturepart: "Wrong-case role."',
+      error: /must use the exact component name 'FixturePart'/u,
+    },
+    {
+      name: "a non-string value",
+      declaration: "      FixturePart: 42",
+      error: /must be a non-empty string/u,
+    },
+  ])("rejects $name in data.ai.componentRoles", async ({
+    declaration,
+    error,
+  }) => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-invalid-role-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Fixture flow
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["FixturePart"]
+  ai:
+    componentRoles:
+${declaration}
+---
+
+Fixture content.
+`,
+      );
+
+      await expect(extractPatterns(repoRoot)).rejects.toThrow(error);
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
   it("extracts fixture behavior guidance from source-backed non-generic sections and preserves EvidenceRefs", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-registry-fixture-"),
@@ -79,7 +208,7 @@ The fixture flow shows source-backed completion text when fixture work is done.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
 
       expect(patterns).toHaveLength(1);
       const pattern = patterns[0];
@@ -129,7 +258,7 @@ Fallback fixture behavior must not replace explicit fixture behavior.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
 
       expect(patterns[0].how_it_works).toEqual([
         "The fixture flow uses the explicit source-backed behavior section.",
@@ -177,7 +306,7 @@ Fixture urgency explains the fixture priority.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
 
       expect(pattern.when_to_use).toEqual([]);
@@ -234,7 +363,7 @@ The fixture flow keeps source-backed state visible while fixture work is active.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
 
       expect(pattern.when_not_to_use).toEqual([
@@ -285,7 +414,7 @@ For accessibility, fixture workflows must keep fixture controls reachable to key
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
 
       expect(pattern.accessibility.summary).toEqual([
@@ -330,7 +459,7 @@ Fixture actions remain easily accessible from any fixture page.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
       expect(pattern.accessibility.summary).toEqual([]);
     } finally {
@@ -368,7 +497,7 @@ Add the fixture part to the fixture flow.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
       const storySource =
         "packages/core/stories/patterns/fixture-flow/fixture-flow.stories.tsx";
@@ -387,7 +516,8 @@ export const FixtureStory = () => (
   </button>
 );
 `,
-          source_url: storySource,
+          source_url: null,
+          source_path: storySource,
           package: "@salt-ds/fixture",
           target_type: "pattern",
           target_name: "Fixture flow",
@@ -404,7 +534,8 @@ export const FixtureStory = () => (
           kind: "aria_attribute",
           values: ["aria-hidden", "aria-label"],
           source_kind: "example",
-          source_url: storySource,
+          source_url: null,
+          source_path: storySource,
         },
       ]);
     } finally {
@@ -442,7 +573,7 @@ Add the fixture part to the fixture flow.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
       const storySource =
         "packages/core/stories/patterns/fixture-flow/fixture-flow.stories.tsx";
@@ -461,7 +592,8 @@ export const FixtureStory = () => (
   </nav>
 );
 `,
-          source_url: storySource,
+          source_url: null,
+          source_path: storySource,
           package: "@salt-ds/fixture",
           target_type: "pattern",
           target_name: "Fixture flow",
@@ -476,7 +608,8 @@ export const FixtureStory = () => (
           kind: "semantic_element",
           values: ["nav"],
           source_kind: "example",
-          source_url: storySource,
+          source_url: null,
+          source_path: storySource,
         },
       ]);
     } finally {
@@ -536,7 +669,7 @@ export function FixtureFlow() {
         "utf8",
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
       const accessibilitySignals =
         await derivePatternImplementationAccessibilitySignals(
@@ -552,19 +685,22 @@ export function FixtureFlow() {
           kind: "aria_attribute",
           values: ["aria-labelledby"],
           source_kind: "source",
-          source_url: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
+          source_url: null,
+          source_path: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
         },
         {
           kind: "aria_role",
           values: ["region"],
           source_kind: "source",
-          source_url: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
+          source_url: null,
+          source_path: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
         },
         {
           kind: "aria_announcement",
           values: ["useAriaAnnouncer"],
           source_kind: "source",
-          source_url: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
+          source_url: null,
+          source_path: "packages/lab/src/fixture-flow/FixtureFlow.tsx",
         },
       ]);
     } finally {
@@ -602,7 +738,7 @@ Add the fixture part to the fixture flow.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
       pattern.examples = [
         {
@@ -618,7 +754,8 @@ export const FixtureStory = () => (
   </div>
 );
 `,
-          source_url:
+          source_url: null,
+          source_path:
             "packages/core/stories/patterns/fixture-flow/fixture-flow.stories.tsx",
           package: "@salt-ds/fixture",
           target_type: "pattern",
@@ -667,7 +804,7 @@ Add the fixture part to the fixture flow.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
 
       expect(pattern.examples).toEqual([
@@ -711,7 +848,7 @@ Add the fixture part to the fixture flow.
 `,
       );
 
-      const patterns = await extractPatterns(repoRoot, GENERATED_AT);
+      const patterns = await extractPatterns(repoRoot);
       const pattern = patterns[0];
 
       expect(pattern.examples).toEqual([]);

@@ -1,6 +1,8 @@
 import * as t from "@babel/types";
 import {
+  deduplicateSaltEvidenceRefs,
   SALT_EVIDENCE_REF_CONTRACT,
+  type SaltEvidenceClaimKind,
   type SaltEvidenceRef,
 } from "../../evidence.js";
 import type { SaltRegistry } from "../../types.js";
@@ -14,7 +16,7 @@ import {
   resolveImportedSaltSymbol,
   traverseAst,
 } from "../codeAnalysisCommon.js";
-import type { ValidationIssue } from "./shared.js";
+import type { ValidationCategory, ValidationIssue } from "./shared.js";
 import {
   buildComponentRegistryEvidenceRef,
   buildEvidence,
@@ -42,17 +44,37 @@ function matchesImportedComponent(
   );
 }
 
-function buildWorkflowInputEvidenceRef(ruleId: string): SaltEvidenceRef {
+function claimKindForCategory(
+  category: ValidationCategory,
+): SaltEvidenceClaimKind {
+  switch (category) {
+    case "primitive-choice":
+      return "component";
+    case "composition":
+      return "composition";
+    case "accessibility":
+      return "accessibility";
+    case "tokens":
+      return "token";
+    case "deprecated":
+      return "prop";
+    case "catalog-status":
+      return "status";
+  }
+}
+
+function buildSubmittedTextEvidenceRef(
+  ruleId: string,
+  category: ValidationCategory,
+): SaltEvidenceRef {
   return {
     contract: SALT_EVIDENCE_REF_CONTRACT,
-    id: `${ruleId}.workflow-input.code.validation-ref`,
-    source_kind: "workflow_input",
-    claim_kind: "workflow",
-    workflow_input: {
+    id: `${ruleId}.submitted-text.code.validation-ref`,
+    source_kind: "submitted_text",
+    claim_kind: claimKindForCategory(category),
+    submitted_text: {
       field_path: "code",
     },
-    confidence: "high",
-    verified_at: null,
     note: "Validator matched source code supplied to validateSaltUsage.",
   };
 }
@@ -80,6 +102,37 @@ export function addValidationRulePackIssues(
   const componentById = new Map(
     input.registry.components.map((component) => [component.id, component]),
   );
+  const generatedEvidenceRefsByRuleId = new Map<string, SaltEvidenceRef[]>();
+  for (const rule of input.rulePack.rules) {
+    const component = componentById.get(rule.match.component_id);
+    if (!component) {
+      continue;
+    }
+    const generatedEvidenceRefs = [
+      buildComponentRegistryEvidenceRef({
+        registry: input.registry,
+        component,
+        claim_kind: "component",
+        field_path: "id",
+        id_suffix: `${rule.id}.component-target`,
+      }),
+      buildSubmittedTextEvidenceRef(rule.id, rule.category),
+    ];
+    try {
+      deduplicateSaltEvidenceRefs([
+        ...rule.evidence_refs,
+        ...generatedEvidenceRefs,
+      ]);
+    } catch (error) {
+      input.missingData.push(
+        `Validation rule pack '${input.rulePack.id}' skipped: conflicting_evidence_ref for rule '${rule.id}'. ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+      return;
+    }
+    generatedEvidenceRefsByRuleId.set(rule.id, generatedEvidenceRefs);
+  }
   const matchCounts = new Map<string, number>();
 
   traverseAst(input.ast, {
@@ -140,16 +193,7 @@ export function addValidationRulePackIssues(
           `Validation rule pack '${input.rulePack.id}' matched supplied code for rule '${rule.id}'`,
           matches,
         ),
-        evidence_refs: [
-          buildComponentRegistryEvidenceRef({
-            registry: input.registry,
-            component,
-            claim_kind: "component",
-            field_path: "id",
-            id_suffix: `${rule.id}.component-target`,
-          }),
-          buildWorkflowInputEvidenceRef(rule.id),
-        ],
+        evidence_refs: generatedEvidenceRefsByRuleId.get(rule.id) ?? [],
       }),
     );
   }

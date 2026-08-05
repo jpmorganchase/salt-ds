@@ -1,32 +1,25 @@
 # Salt Skills
 
-`packages/skills` is the Salt-owned workflow layer for external consumer repos.
+`packages/skills` contains the Salt-owned, agent-facing procedures for external
+consumer repositories.
 
-This README is the skill authoring reference. Keep the consumer setup path in the main AI page.
+The `salt-ds` skill keeps creation, migration, and review orchestration in the
+host agent while using Salt MCP only for canonical facts, bounded inspection,
+and submitted-code analysis.
 
-Keep canonical Salt decisions in Salt MCP. Keep repo-specific wrappers, shells, and banned choices in declared repo policy when it already exists.
+## Release status
 
-## Consumer Docs
+Public installation is withheld while the MCP package undergoes its breaking
+redesign. There is no reviewed immutable public skill reference yet, and a
+mutable branch, `main`, or short commit reference must not be presented as a
+release substitute.
 
-Use [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx) as the canonical consumer guidance.
+The canonical remediation status is documented in
+[`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
+Local repository checks may validate `./packages/skills`, but that is development
+verification rather than public onboarding.
 
-This README stays intentionally thin so the workflow story only needs to be maintained in one place.
-
-## Authored Skill
-
-- `salt-ds`
-  - the single authored workflow skill for external consumers
-  - routes Salt review, create, and migrate work through the v1 MCP surface
-
-## Install Source
-
-The skill is deliberately omitted from public `@salt-ds/mcp@0.1.0` onboarding because no immutable reviewed skill commit exists yet. Do not publish a mutable `main`, branch, or short-SHA install URL as a substitute. The current public setup and the condition for exposing the skill live in [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx).
-
-If you are working from a local checkout, validate `./packages/skills` with `npx skills add ./packages/skills --list` before pointing other docs at it.
-
-## Source Layout
-
-`packages/skills` is the authoring source in this monorepo.
+## Source layout
 
 ```text
 packages/skills/

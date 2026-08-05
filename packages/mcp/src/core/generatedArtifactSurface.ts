@@ -3,23 +3,23 @@ import type {
   SaltGeneratedArtifact,
   SaltGeneratedArtifactKind,
 } from "./evidence.js";
-import {
-  type GeneratedArtifactRegistryEvidenceOptions,
-  validateGeneratedArtifactRegistryEvidence,
-} from "./generatedArtifactValidation.js";
+import { validateGeneratedArtifactRegistryEvidence } from "./generatedArtifactValidation.js";
 import type { SaltRegistry } from "./types.js";
 
-export type GeneratedSaltArtifactSurfaceStatus = "validated" | "unsupported";
+export type GeneratedSaltArtifactSurfaceStatus =
+  | "evidence_linked"
+  | "unsupported";
+export type GeneratedSaltArtifactValidationScope = "structural_provenance";
 
 export interface ValidateGeneratedSaltArtifactSurfaceInput {
   artifact: SaltGeneratedArtifact;
   registry: SaltRegistry;
   artifact_label?: string;
-  registry_evidence_options?: GeneratedArtifactRegistryEvidenceOptions;
 }
 
 export interface GeneratedSaltArtifactSurfaceGate {
   status: GeneratedSaltArtifactSurfaceStatus;
+  validation_scope: GeneratedSaltArtifactValidationScope;
   artifact: SaltGeneratedArtifact;
   validation_issues: SaltEvidenceValidationIssue[];
   unsupported_claim_count: number;
@@ -28,6 +28,7 @@ export interface GeneratedSaltArtifactSurfaceGate {
 
 export interface SerializedGeneratedSaltArtifactSurfaceGate {
   status: GeneratedSaltArtifactSurfaceStatus;
+  validation_scope: GeneratedSaltArtifactValidationScope;
   validation_issues: SaltEvidenceValidationIssue[];
   missing: string[];
   unsupported_claim_count: number;
@@ -46,6 +47,7 @@ export function serializeGeneratedSaltArtifactSurfaceGate(
 ): SerializedGeneratedSaltArtifactSurfaceGate {
   return {
     status: gate.status,
+    validation_scope: gate.validation_scope,
     validation_issues: gate.validation_issues,
     missing: gate.missing,
     unsupported_claim_count: gate.unsupported_claim_count,
@@ -61,7 +63,6 @@ export function validateGeneratedSaltArtifactSurface(
   const validationIssues = validateGeneratedArtifactRegistryEvidence(
     input.artifact,
     input.registry,
-    input.registry_evidence_options,
   );
   const unsupportedClaimCount = input.artifact.unsupported_claims?.length ?? 0;
   const missing = uniqueStrings([
@@ -70,15 +71,16 @@ export function validateGeneratedSaltArtifactSurface(
       : []),
     ...validationIssues.map(
       (issue) =>
-        `${artifactLabel} evidence validation failed: ${issue.code} at ${issue.path}`,
+        `${artifactLabel} structural provenance validation failed: ${issue.code} at ${issue.path}`,
     ),
   ]);
 
   return {
     status:
       unsupportedClaimCount === 0 && validationIssues.length === 0
-        ? "validated"
+        ? "evidence_linked"
         : "unsupported",
+    validation_scope: "structural_provenance",
     artifact: input.artifact,
     validation_issues: validationIssues,
     unsupported_claim_count: unsupportedClaimCount,

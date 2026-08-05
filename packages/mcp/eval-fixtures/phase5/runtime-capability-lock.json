@@ -1,0 +1,201 @@
+{
+  "contract": "salt_phase5_runtime_capability_lock_v1",
+  "entrypoints": [
+    "packages/mcp/src/index.ts"
+  ],
+  "phase6_exceptions": [],
+  "files": [
+    {
+      "path": "packages/mcp/src/cli.ts",
+      "sha256": "c284662621c52705798bddec03ff753235ba082aadb5b5afe9dbce062f7573a9"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/accessibilityImplementationSignal.ts",
+      "sha256": "117e66c4f65908b548bb3d37da7e588245f1c0e303e9d4b7057cd37135c67b41"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogApiSymbolV2.ts",
+      "sha256": "ab1bcfe687ad4b65110538d8d66ca5ac37610a75e90d8a6f9b6e227a924327b7"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogHttpsUrl.ts",
+      "sha256": "932a1112546564ecee8aecfdd13a609be8074b47a75d5aa17ad84dc0dd03b1ce"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogImmutability.ts",
+      "sha256": "77975f1bc2f56abaf5c93b3400ac06ab3dadeafaba2e8f021b7d423e93e79af9"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogPayloadSchemaV2.ts",
+      "sha256": "12aa552f1bf98ba57e0fbc72a7c289c1d98e49ae465692e1885f3c000b9a0478"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogPortablePath.ts",
+      "sha256": "e60bb5eb7f38619c20a7366ccc75fb55af4d667c722ef3c841301a9534274760"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogPublicCitation.ts",
+      "sha256": "284810cf952163d7dc7e82789383999fc30879358f927c98935f599eb9a9246d"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogPublicEntrypoint.ts",
+      "sha256": "f47c50c58a549fe4e358abd55ec677e2f53d46abf8b93c6a51b7c4c9954f3b85"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogRegistryProjection.ts",
+      "sha256": "9b058a5a39d6cc12e6b130dddb48d1678437ee602421e9b615e3fb3070f8f328"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogResourceIdentity.ts",
+      "sha256": "469f46104f13ac98eb2007443aae2247e6701ae3fa41fdee4ecd7ba5aa03009e"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogSchemaV2.ts",
+      "sha256": "0faedfd43793c783919808852a99842ea0ff765f43c101196089efd2e1c90f14"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogSerialization.ts",
+      "sha256": "dddad88024acca1b699aa435f00da717ec8c1fde0bc46f4fb933c918d9e26f8a"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogSiteRoute.ts",
+      "sha256": "3b3f456abc50eb77dbc0bc7ffc9dd094e521877738319cfe4cf81ffb44219b52"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogStoreV2.ts",
+      "sha256": "a463bea906c69755996426ed173d86d7f35f99d38fe0f01e3213fd94e1de51e4"
+    },
+    {
+      "path": "packages/mcp/src/core/catalog/catalogTokenSurfaceV2.ts",
+      "sha256": "4c9aab398a75329f88bb75395f1f682f4773a53ec2f72aae6f97d2296dba55fa"
+    },
+    {
+      "path": "packages/mcp/src/core/policy/detection.ts",
+      "sha256": "479ee89e5ad6549d84eea8d986a0806751ecdf33dca763ce101e53cbb8532a5e"
+    },
+    {
+      "path": "packages/mcp/src/core/policy/layerDiagnostics.ts",
+      "sha256": "a8a03b1bb3f45709948d5e9909264314244e5ab5b7e5ee242b55f8b4c8be93fc"
+    },
+    {
+      "path": "packages/mcp/src/core/policy/projectPolicyIr.ts",
+      "sha256": "b59ccfda483b9146b2e70a8a63fec489a43cea43c40e33b26fc4b3308b3b13f7"
+    },
+    {
+      "path": "packages/mcp/src/core/policy/projectPolicyResourceIdentity.ts",
+      "sha256": "9d022ad24786f898927147499feb3166d1951de8a74ea6869aa8f43ac1291157"
+    },
+    {
+      "path": "packages/mcp/src/core/project/boundedProjectFile.ts",
+      "sha256": "8325b2ab024378e07b1cea51f80a3354bdc56d3085b73a37535a787d3758f359"
+    },
+    {
+      "path": "packages/mcp/src/core/publicResultBudget.ts",
+      "sha256": "884abca92294177c52c47db33202ca8991f96c9430c2ba667297a29617e9cfcf"
+    },
+    {
+      "path": "packages/mcp/src/core/registry/fingerprint.ts",
+      "sha256": "1d6cf5b0e8e29dbbf67c3749b14c993a0b794cf3a6a4f390b6cdb1931bac204e"
+    },
+    {
+      "path": "packages/mcp/src/core/registry/lazyRegistry.ts",
+      "sha256": "eeb9465f7fa64f50d3b81d54a79b383b7aeace93e931a6c3e2aff8bf948fa104"
+    },
+    {
+      "path": "packages/mcp/src/core/registry/loadRegistry.ts",
+      "sha256": "9c6025e7f7e20b1fbf23588d3f48476162e03e356c41fee0497f478fb069965b"
+    },
+    {
+      "path": "packages/mcp/src/core/registry/paths.ts",
+      "sha256": "1065408cc527456dd0658424b090d50675415bf2fb6669dd4d30402e89a9b772"
+    },
+    {
+      "path": "packages/mcp/src/core/review/reviewRuleRegistry.ts",
+      "sha256": "a02a4f1e9aa3f082e11424d6588061096faf44c80da5f07470ea449030bae9fb"
+    },
+    {
+      "path": "packages/mcp/src/core/review/reviewSaltCode.ts",
+      "sha256": "74498e9230edb5b1b28e5dd51938d0c813155e3a56b7981484a7260c3236512d"
+    },
+    {
+      "path": "packages/mcp/src/core/review/submittedArtifactFacts.ts",
+      "sha256": "981dae4c59ced3a8d291fd9cd29ad27e25ecb64cca16695af22e38f0486f3d83"
+    },
+    {
+      "path": "packages/mcp/src/core/runtime.ts",
+      "sha256": "1ebb9fd7fe8ac3a2678ae3920ccaf7875b26a57de755009138c5c668abb514e0"
+    },
+    {
+      "path": "packages/mcp/src/core/search/searchSalt.ts",
+      "sha256": "e5a5d2a89cbd6e250e817551ed3b05e39f50f481a3b5b74be446489c8a79fad9"
+    },
+    {
+      "path": "packages/mcp/src/core/tools/codeAnalysisCommon.ts",
+      "sha256": "f90e6ef44ba665a83663b2d10e559d083077e4c63f4938aa794d4ac863d040dd"
+    },
+    {
+      "path": "packages/mcp/src/core/versionUtils.ts",
+      "sha256": "ebe36844e41da6bf9e221661324e28b1f2bb95cd3beb00dc31fe07662de62def"
+    },
+    {
+      "path": "packages/mcp/src/index.ts",
+      "sha256": "c05c016721e091db8ecbf47bf62b34d44de2eeb2f2e3c3ff6769fbdf77fac289"
+    },
+    {
+      "path": "packages/mcp/src/server/catalogResourceListing.ts",
+      "sha256": "2facec3aafc5e06b38ec219a928318dec61e1a2f006393242de91cdbc9274065"
+    },
+    {
+      "path": "packages/mcp/src/server/compactStandardSchema.ts",
+      "sha256": "aa34bdc26d243dde2753870960892317aed3db53a744231ea7225b3412962feb"
+    },
+    {
+      "path": "packages/mcp/src/server/createServer.ts",
+      "sha256": "ad4e90e8b95da5daf0390dc74a9e187fb02e2c37f75a2de52f3803419ff827f0"
+    },
+    {
+      "path": "packages/mcp/src/server/inspectSaltProject.ts",
+      "sha256": "5557f6db948c740f718a9a64526d150160b0a3ee6711d5187bc488728cfe1e8b"
+    },
+    {
+      "path": "packages/mcp/src/server/projectAccess.ts",
+      "sha256": "51851fb0be7110bea274f23ceb15a2728b3304ee0f9deb75742f053abc1ec64f"
+    },
+    {
+      "path": "packages/mcp/src/server/projectContext/boundedTsconfig.ts",
+      "sha256": "43136f3eb929b318d394c5464e5d5093c6328d1c5afd49d5fbd73d85a721dbee"
+    },
+    {
+      "path": "packages/mcp/src/server/projectContext/saltInstallation.ts",
+      "sha256": "44ef11f7ed886fe892c96fc3778513286a47813b08fade3c1433b8ce4433350c"
+    },
+    {
+      "path": "packages/mcp/src/server/projectPolicyImports.ts",
+      "sha256": "788f6611c4f1e9c8336ade4a24439cb9fcce0da814d3213a0040529545703077"
+    },
+    {
+      "path": "packages/mcp/src/server/projectPolicyInspection.ts",
+      "sha256": "2e71ca12e16be838f54ad1d1923f8f5902e4d1719c814b3ee59b851ea632d627"
+    },
+    {
+      "path": "packages/mcp/src/server/projectPolicySnapshot.ts",
+      "sha256": "5a55f94e0504a29664bef5ea6de5d17fdadaaf089f4543cde55a3ab5c3856f76"
+    },
+    {
+      "path": "packages/mcp/src/server/registerResources.ts",
+      "sha256": "e48ae0ed6d5a9a1e714b1e0c088fb93a2111d6123a8187774438aa0459ed0431"
+    },
+    {
+      "path": "packages/mcp/src/server/registerTools.ts",
+      "sha256": "87a349337730346ade8d348826021cfce4cec6d9f569e38152560e7e212d408a"
+    },
+    {
+      "path": "packages/mcp/src/server/serverMetadata.ts",
+      "sha256": "353cc7f523abb896836d5c05cfcc05175e74a9e4b9b25e5b1da0f524253f2836"
+    },
+    {
+      "path": "packages/mcp/src/server/toolDefinitions.ts",
+      "sha256": "f4f1141eb61fcf91d69960f453219915c283ce15601cf2f5e35ffb83b491f815"
+    }
+  ]
+}

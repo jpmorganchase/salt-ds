@@ -1,8 +1,8 @@
 # MCP internal core
 
-`src/core` is the deterministic reasoning layer inside `@salt-ds/mcp`. It owns
-registry construction and loading, exact catalog retrieval, project-policy
-evaluation, and pure create/review/migrate reasoning.
+`src/core` is the deterministic catalog and analysis layer inside
+`@salt-ds/mcp`. It owns registry construction and loading, catalog search and
+retrieval, submitted-source review, and factual project-policy parsing.
 
 `src/server`, `src/cli.ts`, and `src/index.ts` own MCP protocol registration,
 transport, process integration, and host compatibility. Production code crosses
@@ -11,57 +11,78 @@ into the core through `src/core/runtime.ts`; registry-build code targets
 
 ## Local filesystem trust model
 
-The supported CLI runs as a local, read-only stdio process with the filesystem
-permissions of the OS account that launched it. The published
-`createSaltMcpServer` factory is transport-agnostic; an embedder that exposes it
-remotely or shares it between users owns authentication, tenant isolation, and
-path confinement. The local CLI trust statement does not transfer to that
-deployment.
+The published `createSaltMcpServer` factory is transport-agnostic and
+restricted by default. Without configured allowed roots, project inspection
+fails closed. In restricted mode the server canonicalizes configured roots and
+the optional default root, then enforces path-component containment after
+`realpath`. Caller text is never an authorization grant. Embedders still own
+authentication and tenant isolation.
 
-`root_dir` selects the active repo or package where bounded project-context
-discovery begins. It is not an authorization grant, sandbox, or allowed-root
-boundary. When omitted it resolves from the MCP process working directory, and
-discovery may inspect readable ancestors for workspace manifests and tsconfig.
-In a monorepo, callers should pass the active workspace-package root when the
-repo root would be ambiguous.
+`root_dir` selects an active repo or package only inside a configured authority.
+With one allowed root, omission selects that root. With multiple allowed roots,
+the server requires a configured default; otherwise omission fails closed.
+Workspace ancestor discovery stops at the selected authority root.
+
+The supported CLI explicitly selects `unrestricted_local_stdio`, uses the
+filesystem permissions of the OS account that launched it, and defaults an
+omitted root to the process working directory. This is a deliberate local-only
+mode, not a suitable remote/shared configuration.
 
 A discovered marker path is diagnostic evidence, not proof that the marker is
-usable. Package and tsconfig markers contribute to root signals, framework or
-workspace conclusions, import aliases, trust, and repo-specific workflow
-readiness only after validation. A malformed, non-file, unreadable, escaping,
-oversized, or parser-rejected discovered marker keeps repo-specific create,
-review, and migrate actions fail-closed until the marker is fixed or removed.
-This validation boundary does not turn `root_dir` into authorization or
-containment. Valid monorepo-ancestor and package-based tsconfig inheritance may
-resolve outside `root_dir`.
+usable. Package, policy, and tsconfig data is reported only after bounded
+validation. Invalid or unreadable inputs are returned as limitations rather
+than converted into workflow decisions or remediation commands. All
+marker/config readers share a regular-file, byte-bounded, lexical and canonical
+containment primitive. The primitive opens the caller-named path, rechecks
+canonical containment, and compares opened-handle and named-path filesystem
+identity before and after reading. Observable replacement is rejected.
+
+This is not a complete TOCTOU sandbox: Node does not provide a portable
+directory-handle-relative, no-follow traversal for every path component.
+Repositories writable by an attacker during inspection require OS-level
+permissions, an immutable mount, or process sandbox isolation. Allowed roots
+define intended scope; they do not replace those controls.
 
 Project-context inspection is limited to:
 
-- package and workspace manifests, with a 1 MiB content cap;
-- the nearest discovered tsconfig and its standard `get-tsconfig` inheritance
-  resolution;
-- Salt policy and installation data;
-- up to 16 policy-declared wrapper or theme source targets, capped at 256 KiB
-  each; and
-- presence and path checks for AGENTS/CLAUDE instructions and framework
-  configuration.
+- the package manifest at the requested root, with a 1 MiB content cap;
+- authority-bounded declared Salt package resolution, package.json workspaces,
+  pnpm workspace globs, catalogs, local workspace-protocol signals, and
+  ambiguity/validity checks across package-manager lockfile families;
+- `.salt` policy JSON and its complete policy IR;
+- bounded tsconfig resolution only when validating declared policy import
+  aliases;
+- up to 16 policy-declared wrapper or theme source targets, capped at 128 KiB
+  each, with 25,000 AST
+  nodes, depth 128, 4,096 top-level statements, a 100,000 aggregate AST-node
+  budget, and one cached parse per unique resolved module.
 
 There is no general recursive source crawl. Review source is supplied explicitly
-in tool arguments. `needs_explicit_root` and `mismatch` report context
-confidence; they are not access-control decisions.
+in tool arguments. Project inspection reports facts and limitations; the host
+decides what action, if any, to take.
 
-An unreadable, non-file, escaping, or parser-rejected discovered tsconfig fails
-closed and exposes no partial aliases or validated tsconfig path. Broader
-resource containment for inherited tsconfig graphs is not claimed by this
-release and should be handled by the local process sandbox for untrusted repos.
+Review additionally caps each submitted artifact at 256 KiB, the aggregate at
+512 KiB, structural traversal at 50,000 nodes/depth 128, normalized facts at
+10,000, and rule comparisons at 250,000. Exceeding a structural or rule budget
+discards partial analysis. Babel and PostCSS parsing is synchronous, so these
+post-parse structural limits are not a wall-clock or heap sandbox. Remote/shared
+embedders must isolate parsing in a resource-limited worker or process and apply
+request deadlines before exposing it to untrusted tenants.
 
-Operators should launch the local process with the least practical privileges,
-from an intended working directory, and sandbox it when repositories are
-untrusted. Stricter containment requires a separately agreed authority such as
-server-configured roots or verified MCP client roots, plus both lexical and
-canonical/`realpath` containment checks to prevent symlink or junction escapes.
-Do not treat caller-provided `root_dir` or a lexical `startsWith` check as that
-authority.
+An invalid or escaping policy import target is reported as a limitation and is
+not treated as resolved evidence. Project policy prose remains labeled
+untrusted data; only server-owned condition and rule identities are executable.
+Digest-bound policy snapshots are retained per server in a bounded LRU cache
+(eight entries, 64 MiB total, 32 MiB per entry). Reads always reauthorize the
+root; retained digests remain byte-stable across edits, while eviction or a
+server restart expires old snapshots. Claim records expose only the exact
+bounded declaration fields used by citations; canonical chunks carry the full
+policy IR.
+
+Operators should launch the local CLI with the least practical privileges and
+sandbox it when repositories are untrusted. Remote/shared embedders must use
+restricted mode with tenant-specific roots; never treat caller-provided
+`root_dir` or a lexical `startsWith` check as authority.
 
 The core is an internal architecture boundary, not a workspace package or a
 supported public API. A separate package should only be reconsidered when there

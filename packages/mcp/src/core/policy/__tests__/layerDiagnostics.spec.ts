@@ -6,9 +6,9 @@ import {
   deriveComparableSaltVersion,
   evaluatePackCompatibility,
   MAX_PROJECT_POLICY_FILE_BYTES,
+  parseProjectConventionsStackPayload,
   readProjectConventionsStackFile,
   resolveProjectConventionsFileLayer,
-  resolveProjectConventionsPackageLayer,
 } from "../layerDiagnostics.js";
 
 const tempDirs: string[] = [];
@@ -28,20 +28,50 @@ afterEach(async () => {
 });
 
 describe("layerDiagnostics version normalization", () => {
-  it("treats bare workspace protocol ranges as unknown comparable versions", () => {
+  it("uses only an exact observed @salt-ds/core version", () => {
     expect(
       deriveComparableSaltVersion({
-        declaredVersion: "workspace:^",
+        resolvedPackages: [
+          { name: "@salt-ds/core", resolvedVersion: "1.2.3" },
+          { name: "@salt-ds/lab", resolvedVersion: "9.9.9" },
+        ],
+      }),
+    ).toBe("1.2.3");
+  });
+
+  it("does not infer compatibility from another Salt package", () => {
+    expect(
+      deriveComparableSaltVersion({
+        resolvedPackages: [
+          { name: "@salt-ds/lab", resolvedVersion: "1.2.3" },
+        ],
       }),
     ).toBeNull();
   });
 
-  it("normalizes workspace protocol specs that include a real semver range", () => {
+  it("treats unresolved, range-like, or conflicting Core versions as unknown", () => {
     expect(
       deriveComparableSaltVersion({
-        declaredVersion: "workspace:^1.2.3",
+        resolvedPackages: [
+          { name: "@salt-ds/core", resolvedVersion: null },
+        ],
       }),
-    ).toBe("1.2.3");
+    ).toBeNull();
+    expect(
+      deriveComparableSaltVersion({
+        resolvedPackages: [
+          { name: "@salt-ds/core", resolvedVersion: "^1.2.3" },
+        ],
+      }),
+    ).toBeNull();
+    expect(
+      deriveComparableSaltVersion({
+        resolvedPackages: [
+          { name: "@salt-ds/core", resolvedVersion: "1.2.3" },
+          { name: "@salt-ds/core", resolvedVersion: "2.0.0" },
+        ],
+      }),
+    ).toBeNull();
   });
 
   it("does not throw when compatibility checks see workspace protocol versions", () => {
@@ -58,33 +88,21 @@ describe("layerDiagnostics version normalization", () => {
 });
 
 describe("layerDiagnostics policy boundary", () => {
-  it("never imports or requires package-backed policy code", async () => {
-    const rootDir = await createTempDir("salt-policy-package");
-    const markerPath = path.join(rootDir, "executed.txt");
-    const packageDir = path.join(rootDir, "node_modules", "example-policy");
-    await fs.mkdir(packageDir, { recursive: true });
-    await fs.writeFile(
-      path.join(packageDir, "package.json"),
-      JSON.stringify({ name: "example-policy", main: "index.js" }),
-    );
-    await fs.writeFile(
-      path.join(packageDir, "index.js"),
-      `require("node:fs").writeFileSync(${JSON.stringify(markerPath)}, "executed"); module.exports = {};`,
-    );
-
-    const result = await resolveProjectConventionsPackageLayer({
-      rootDir,
-      specifier: "example-policy",
-      currentSaltVersion: "2.0.0",
+  it("rejects package-backed policy layers as data before resolution", () => {
+    const result = parseProjectConventionsStackPayload({
+      contract: "project_conventions_stack_v1",
+      layers: [
+        {
+          id: "package-policy",
+          scope: "team",
+          source: { type: "package", specifier: "example-policy" },
+        },
+      ],
     });
 
     expect(result).toMatchObject({
-      status: "invalid",
-      conventions: null,
-      reason: expect.stringContaining("data-only JSON"),
-    });
-    await expect(fs.access(markerPath)).rejects.toMatchObject({
-      code: "ENOENT",
+      stack: null,
+      reason: expect.stringContaining("invalid source"),
     });
   });
 
@@ -104,7 +122,7 @@ describe("layerDiagnostics policy boundary", () => {
     });
     expect(lexical).toMatchObject({
       status: "invalid",
-      reason: expect.stringContaining("leaves the declared root_dir"),
+      reason: expect.stringContaining("outside the authorized root"),
     });
 
     const linkDir = path.join(rootDir, ".salt", "linked");
@@ -117,7 +135,7 @@ describe("layerDiagnostics policy boundary", () => {
     });
     expect(symlinked).toMatchObject({
       status: "invalid",
-      reason: expect.stringContaining("Symlink escapes are not supported"),
+      reason: expect.stringContaining("outside the authorized root"),
     });
   });
 

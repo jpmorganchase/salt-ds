@@ -3,13 +3,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-// Phase 0 task 0.12 / PR 20: repository-schema vendor-name regression test.
-//
 // Repository schemas describe what data *means*, never how a particular CI
-// integration, host editor, or env-var convention consumes it. The
-// `SALT_REVIEW_HUMAN_REVIEWED_LABEL` leak into `project-conventions.schema.json`
-// (closed by PR 8, see `packages/mcp/docs/implementation-handoff.md` §8.6) was
-// the trigger; this test makes the leak class impossible.
+// integration, host editor, or env-var convention consumes it. This test keeps
+// those vendor-specific details out of the published contract.
 //
 // Audited surface: every `*.schema.json` under `packages/mcp/schemas/`.
 // The complementary Zod-side audit lives in
@@ -44,10 +40,8 @@ const FORBIDDEN_LITERALS: readonly string[] = [
 // inside unrelated words.
 const FORBIDDEN_CASE_SENSITIVE: readonly string[] = ["AGENTS.md"];
 
-// Env-var-style identifiers. `SALT_FOO_BAR` is an env-var convention; the
-// lowercase `salt_workflow_v1` form is the contract-name convention and is
-// allowed in schema text. Restricting to uppercase keeps the test focused on
-// the env-var leak that motivated this regression test.
+// Restrict this check to uppercase env-var-style identifiers such as
+// `SALT_FOO_BAR`, which is the leak this regression test guards against.
 const SALT_ENV_VAR_PATTERN = /\bSALT_[A-Z][A-Z0-9_]*\b/g;
 
 // JSON Schema fields that carry human-readable prose. Enum values, `const`

@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "Salt": {
-      "command": "npx",
-      "args": ["-y", "@salt-ds/mcp@0.1.0"]
+      "command": "node",
+      "args": ["./node_modules/@salt-ds/mcp/bin/salt-mcp.js"]
     }
   }
 }

@@ -23,6 +23,12 @@ const fixtureRule = {
   token_family: "fixture",
 };
 
+const fixtureRegistryIdentity = {
+  version: "fixture-registry",
+  hash: `sha256:${"a".repeat(64)}`,
+  generated_at: null,
+};
+
 describe("token policy structural role rule packs", () => {
   it("serializes fixture source-backed rules with EvidenceRefs", () => {
     const pack = buildTokenPolicyStructuralRoleRulePack({
@@ -31,9 +37,7 @@ describe("token policy structural role rule packs", () => {
       generator: {
         name: "mcp-core fixture",
       },
-      registry: {
-        version: "fixture-registry",
-      },
+      registry: fixtureRegistryIdentity,
     });
 
     expect(pack.contract).toBe(
@@ -73,9 +77,7 @@ describe("token policy structural role rule packs", () => {
       generator: {
         name: "mcp-core fixture",
       },
-      registry: {
-        version: "fixture-registry",
-      },
+      registry: fixtureRegistryIdentity,
     });
     const invalidPack: SaltTokenPolicyStructuralRoleRulePack = {
       ...pack,
@@ -108,9 +110,7 @@ describe("token policy structural role rule packs", () => {
       generator: {
         name: "mcp-core fixture",
       },
-      registry: {
-        version: "fixture-registry",
-      },
+      registry: fixtureRegistryIdentity,
     });
 
     expect(
@@ -146,9 +146,7 @@ describe("token policy structural role rule packs", () => {
       generator: {
         name: "mcp-core fixture",
       },
-      registry: {
-        version: "fixture-registry",
-      },
+      registry: fixtureRegistryIdentity,
     });
 
     expect(pack.rules[0].emits.structural_role_templates).toEqual([

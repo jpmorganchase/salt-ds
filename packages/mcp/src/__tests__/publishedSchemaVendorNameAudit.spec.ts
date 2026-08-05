@@ -2,9 +2,6 @@ import { describe, expect, it } from "vitest";
 import * as z from "zod/v4";
 import { TOOL_DEFINITIONS } from "../server/toolDefinitions.js";
 
-// Phase 0 task 0.12 / PR 20: published-schema vendor-name regression test
-// (Zod side).
-//
 // Audited surface: every MCP tool definition exported from
 // `packages/mcp/src/server/toolDefinitions.ts`. For each tool we check both
 // the tool-level `description` string (surfaced to MCP hosts as the tool's
@@ -36,10 +33,8 @@ const FORBIDDEN_LITERALS: readonly string[] = [
 // inside unrelated words.
 const FORBIDDEN_CASE_SENSITIVE: readonly string[] = ["AGENTS.md"];
 
-// Env-var-style identifiers. `SALT_FOO_BAR` is an env-var convention; the
-// lowercase `salt_workflow_v1` form is the contract-name convention and is
-// allowed in schema text. Restricting to uppercase keeps the test focused on
-// the env-var leak that motivated this regression test.
+// Restrict this check to uppercase env-var-style identifiers such as
+// `SALT_FOO_BAR`, which is the leak this regression test guards against.
 const SALT_ENV_VAR_PATTERN = /\bSALT_[A-Z][A-Z0-9_]*\b/g;
 
 // JSON Schema fields that carry human-readable prose, as produced by
@@ -218,15 +213,13 @@ describe("published Zod tool schemas — vendor-name regression test (PR 20 / ta
       );
 
       // 3. Output-schema descriptions, if declared.
-      if (definition.outputSchema !== undefined) {
-        allHits.push(
-          ...auditSchema(
-            definition.name,
-            "outputSchema",
-            definition.outputSchema,
-          ),
-        );
-      }
+      allHits.push(
+        ...auditSchema(
+          definition.name,
+          "outputSchema",
+          definition.outputValidationSchema,
+        ),
+      );
     }
 
     if (allHits.length > 0) {

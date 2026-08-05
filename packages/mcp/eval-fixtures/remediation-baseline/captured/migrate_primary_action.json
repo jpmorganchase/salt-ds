@@ -1,0 +1,402 @@
+{
+  "scenario": {
+    "id": "migrate_primary_action",
+    "kind": "tool_call",
+    "tool": "migrate_to_salt",
+    "arguments": {
+      "code": "import { Button } from \"@example/external-ui\";\n\nexport function LegacyPage() {\n  return <Button variant=\"contained\">Save</Button>;\n}\n",
+      "query": "Migrate this primary action to Salt",
+      "include_starter_code": true,
+      "root_dir": "<NON_SALT_ROOT>"
+    },
+    "purpose": "Representative migration capture.",
+    "semantic_task_result": "not_evaluated",
+    "failure_reason": "No real agent artifact compile, runtime, or behavioral-equivalence verification is available."
+  },
+  "request": {
+    "method": "tools/call",
+    "params": {
+      "name": "migrate_to_salt",
+      "arguments": {
+        "code": "import { Button } from \"@example/external-ui\";\n\nexport function LegacyPage() {\n  return <Button variant=\"contained\">Save</Button>;\n}\n",
+        "query": "Migrate this primary action to Salt",
+        "include_starter_code": true,
+        "root_dir": "C:\\Users\\Joshu\\AppData\\Local\\Temp\\salt-mcp-remediation-baseline-ItKuNn\\non-salt-app"
+      }
+    }
+  },
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"migrate\",\"status\":\"success\",\"request\":{},\"safety\":{\"canonical_complete\":true,\"exact_request_safe\":true,\"blocking_reasons\":[]},\"action\":{\"kind\":\"implement\",\"scope\":\"exact_request\",\"rule_ids\":[\"migrate-preserve-task-flow\",\"migrate-preserve-interaction-anchors\",\"migrate-move-toward-canonical-salt\",\"migrate-apply-conventions-after-canonical\"],\"post_action\":{\"kind\":\"review\",\"tool\":\"review_salt_ui\",\"required_input\":[\"complete_updated_file\"]}},\"guidance\":{\"kind\":\"migrate\",\"translations\":[{\"source_model_ref\":\"source-ui-1\",\"label\":\"Action trigger\",\"implementation\":{\"readiness\":\"high\",\"next_action\":\"Swap this action trigger to Button and keep the surrounding structure minimal.\",\"validation_step\":\"Confirm action trigger usage with canonical component details and examples before polishing the migrated code.\"},\"salt_target\":{\"name\":\"Button\",\"solution_type\":\"component\",\"why\":\"To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as dialogs, cards and forms.\",\"docs\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/accessibility\",\"/salt/components/button/examples\"]}}],\"migration_plan\":[\"Replace the clearest primitive-level pieces first: action -> Button.\",\"After the first translation pass, run review_salt_ui on the migrated Salt code to validate primitives, composition, and tokens.\"],\"starter_guidance\":{\"plan\":[\"Start with Swap this action trigger to Button and keep the surrounding structure minimal..\",\"Use Button starter as the first scaffold.\",\"Use Accented example as the first scaffold.\",\"Use Grounded Salt icon slots as the first scaffold.\",\"Start with the translation map, implement action trigger -> Button, then validate the migrated code with examples and review_salt_ui. Then confirm approved repo wrappers for analytics, defaults, or shared behavior and approved page patterns and workflow scaffolds through project conventions before finalizing the implementation.\"],\"snippets\":[{\"label\":\"Translated Salt scaffold starter\",\"language\":\"tsx\",\"code\":\"import { Button } from \\\"@salt-ds/core\\\";\\n\\nexport function TranslatedSaltScaffold() {\\n  return (\\n    <>\\n    <section aria-label=\\\"Other translated targets\\\">\\n      <Button appearance=\\\"solid\\\">Action trigger</Button>\\n    </section>\\n    </>\\n  );\\n}\",\"notes\":[\"Built from the translated workstreams and page regions. Replace placeholder sections with the linked starter snippets or canonical examples.\",\"Start with: Swap this action trigger to Button and keep the surrounding structure minimal.\",\"Build around: the translated workstreams\",\"Run review_salt_ui after the first translated scaffold is in place.\"],\"source_urls\":[]}]},\"post_migration_verification\":{\"source_checks\":[\"Run the review_salt_ui MCP tool on the migrated files after the first implementation pass.\",\"Confirm the migrated code is using canonical Salt primitives, patterns, and tokens.\"],\"runtime_checks\":[\"Run the host repo's existing runtime, interaction, or Storybook checks after implementation when landmarks, visible states, or runtime behavior still need verification.\"],\"preserve_checks\":[\"Preserve the core task flow and information hierarchy users rely on today.\",\"Preserve the primary action hierarchy, destination cues, and supporting action order.\"],\"confirmation_checks\":[\"Reordered primary and secondary tasks or actions.\",\"Merged, split, or removed steps in the current flow.\"],\"suggested_workflow\":\"review_salt_ui\",\"suggested_command\":\"review_salt_ui via the @salt-ds/mcp server (args: { code: \\\"<file contents>\\\" })\"},\"review_targets\":{\"components\":[\"Button\"],\"patterns\":[],\"composition_contract\":null,\"source\":\"workflow_context\"}},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/accessibility\",\"/salt/components/button/examples\"],\"summary\":\"Canonical Salt documentation or registry sources support this workflow decision.\"}],\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/accessibility\",\"/salt/components/button/examples\"],\"missing\":[],\"heuristic_fallback\":false,\"input_context\":{\"source_outline_provided\":false,\"source_outline_signal_counts\":{\"regions\":0,\"actions\":0,\"states\":0,\"notes\":0},\"derived_outline_available\":false,\"derived_outline_signal_counts\":{\"regions\":0,\"actions\":0,\"states\":0,\"notes\":0},\"visual_input_count\":0,\"visual_input_kinds\":[]}},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt produced a migration direction for the requested source UI.\"}"
+      }
+    ],
+    "structuredContent": {
+      "contract": "salt_workflow_v1",
+      "workflow": "migrate",
+      "status": "success",
+      "request": {},
+      "safety": {
+        "canonical_complete": true,
+        "exact_request_safe": true,
+        "blocking_reasons": []
+      },
+      "action": {
+        "kind": "implement",
+        "scope": "exact_request",
+        "rule_ids": [
+          "migrate-preserve-task-flow",
+          "migrate-preserve-interaction-anchors",
+          "migrate-move-toward-canonical-salt",
+          "migrate-apply-conventions-after-canonical"
+        ],
+        "post_action": {
+          "kind": "review",
+          "tool": "review_salt_ui",
+          "required_input": [
+            "complete_updated_file"
+          ]
+        }
+      },
+      "guidance": {
+        "kind": "migrate",
+        "translations": [
+          {
+            "source_model_ref": "source-ui-1",
+            "label": "Action trigger",
+            "implementation": {
+              "readiness": "high",
+              "next_action": "Swap this action trigger to Button and keep the surrounding structure minimal.",
+              "validation_step": "Confirm action trigger usage with canonical component details and examples before polishing the migrated code."
+            },
+            "salt_target": {
+              "name": "Button",
+              "solution_type": "component",
+              "why": "To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as dialogs, cards and forms.",
+              "docs": [
+                "/salt/components/button",
+                "/salt/components/button/usage",
+                "/salt/components/button/accessibility",
+                "/salt/components/button/examples"
+              ]
+            }
+          }
+        ],
+        "migration_plan": [
+          "Replace the clearest primitive-level pieces first: action -> Button.",
+          "After the first translation pass, run review_salt_ui on the migrated Salt code to validate primitives, composition, and tokens."
+        ],
+        "starter_guidance": {
+          "plan": [
+            "Start with Swap this action trigger to Button and keep the surrounding structure minimal..",
+            "Use Button starter as the first scaffold.",
+            "Use Accented example as the first scaffold.",
+            "Use Grounded Salt icon slots as the first scaffold.",
+            "Start with the translation map, implement action trigger -> Button, then validate the migrated code with examples and review_salt_ui. Then confirm approved repo wrappers for analytics, defaults, or shared behavior and approved page patterns and workflow scaffolds through project conventions before finalizing the implementation."
+          ],
+          "snippets": [
+            {
+              "label": "Translated Salt scaffold starter",
+              "language": "tsx",
+              "code": "import { Button } from \"@salt-ds/core\";\n\nexport function TranslatedSaltScaffold() {\n  return (\n    <>\n    <section aria-label=\"Other translated targets\">\n      <Button appearance=\"solid\">Action trigger</Button>\n    </section>\n    </>\n  );\n}",
+              "notes": [
+                "Built from the translated workstreams and page regions. Replace placeholder sections with the linked starter snippets or canonical examples.",
+                "Start with: Swap this action trigger to Button and keep the surrounding structure minimal.",
+                "Build around: the translated workstreams",
+                "Run review_salt_ui after the first translated scaffold is in place."
+              ],
+              "source_urls": []
+            }
+          ]
+        },
+        "post_migration_verification": {
+          "source_checks": [
+            "Run the review_salt_ui MCP tool on the migrated files after the first implementation pass.",
+            "Confirm the migrated code is using canonical Salt primitives, patterns, and tokens."
+          ],
+          "runtime_checks": [
+            "Run the host repo's existing runtime, interaction, or Storybook checks after implementation when landmarks, visible states, or runtime behavior still need verification."
+          ],
+          "preserve_checks": [
+            "Preserve the core task flow and information hierarchy users rely on today.",
+            "Preserve the primary action hierarchy, destination cues, and supporting action order."
+          ],
+          "confirmation_checks": [
+            "Reordered primary and secondary tasks or actions.",
+            "Merged, split, or removed steps in the current flow."
+          ],
+          "suggested_workflow": "review_salt_ui",
+          "suggested_command": "review_salt_ui via the @salt-ds/mcp server (args: { code: \"<file contents>\" })"
+        },
+        "review_targets": {
+          "components": [
+            "Button"
+          ],
+          "patterns": [],
+          "composition_contract": null,
+          "source": "workflow_context"
+        }
+      },
+      "questions": [],
+      "evidence": {
+        "status": "complete",
+        "items": [
+          {
+            "kind": "docs",
+            "source": "canonical_salt",
+            "field": "source_urls",
+            "source_urls": [
+              "/salt/components/button",
+              "/salt/components/button/usage",
+              "/salt/components/button/accessibility",
+              "/salt/components/button/examples"
+            ],
+            "summary": "Canonical Salt documentation or registry sources support this workflow decision."
+          }
+        ],
+        "source_urls": [
+          "/salt/components/button",
+          "/salt/components/button/usage",
+          "/salt/components/button/accessibility",
+          "/salt/components/button/examples"
+        ],
+        "missing": [],
+        "heuristic_fallback": false,
+        "input_context": {
+          "source_outline_provided": false,
+          "source_outline_signal_counts": {
+            "regions": 0,
+            "actions": 0,
+            "states": 0,
+            "notes": 0
+          },
+          "derived_outline_available": false,
+          "derived_outline_signal_counts": {
+            "regions": 0,
+            "actions": 0,
+            "states": 0,
+            "notes": 0
+          },
+          "visual_input_count": 0,
+          "visual_input_kinds": []
+        }
+      },
+      "internal_limitations": {
+        "unsupported_claim_count": 0,
+        "unsupported_rule_kinds": []
+      },
+      "summary": "Salt produced a migration direction for the requested source UI."
+    }
+  },
+  "error": null,
+  "frames": [
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "migrate_to_salt",
+          "arguments": {
+            "code": "import { Button } from \"@example/external-ui\";\n\nexport function LegacyPage() {\n  return <Button variant=\"contained\">Save</Button>;\n}\n",
+            "query": "Migrate this primary action to Salt",
+            "include_starter_code": true,
+            "root_dir": "C:\\Users\\Joshu\\AppData\\Local\\Temp\\salt-mcp-remediation-baseline-ItKuNn\\non-salt-app"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 9
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 9,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"migrate\",\"status\":\"success\",\"request\":{},\"safety\":{\"canonical_complete\":true,\"exact_request_safe\":true,\"blocking_reasons\":[]},\"action\":{\"kind\":\"implement\",\"scope\":\"exact_request\",\"rule_ids\":[\"migrate-preserve-task-flow\",\"migrate-preserve-interaction-anchors\",\"migrate-move-toward-canonical-salt\",\"migrate-apply-conventions-after-canonical\"],\"post_action\":{\"kind\":\"review\",\"tool\":\"review_salt_ui\",\"required_input\":[\"complete_updated_file\"]}},\"guidance\":{\"kind\":\"migrate\",\"translations\":[{\"source_model_ref\":\"source-ui-1\",\"label\":\"Action trigger\",\"implementation\":{\"readiness\":\"high\",\"next_action\":\"Swap this action trigger to Button and keep the surrounding structure minimal.\",\"validation_step\":\"Confirm action trigger usage with canonical component details and examples before polishing the migrated code.\"},\"salt_target\":{\"name\":\"Button\",\"solution_type\":\"component\",\"why\":\"To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as dialogs, cards and forms.\",\"docs\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/accessibility\",\"/salt/components/button/examples\"]}}],\"migration_plan\":[\"Replace the clearest primitive-level pieces first: action -> Button.\",\"After the first translation pass, run review_salt_ui on the migrated Salt code to validate primitives, composition, and tokens.\"],\"starter_guidance\":{\"plan\":[\"Start with Swap this action trigger to Button and keep the surrounding structure minimal..\",\"Use Button starter as the first scaffold.\",\"Use Accented example as the first scaffold.\",\"Use Grounded Salt icon slots as the first scaffold.\",\"Start with the translation map, implement action trigger -> Button, then validate the migrated code with examples and review_salt_ui. Then confirm approved repo wrappers for analytics, defaults, or shared behavior and approved page patterns and workflow scaffolds through project conventions before finalizing the implementation.\"],\"snippets\":[{\"label\":\"Translated Salt scaffold starter\",\"language\":\"tsx\",\"code\":\"import { Button } from \\\"@salt-ds/core\\\";\\n\\nexport function TranslatedSaltScaffold() {\\n  return (\\n    <>\\n    <section aria-label=\\\"Other translated targets\\\">\\n      <Button appearance=\\\"solid\\\">Action trigger</Button>\\n    </section>\\n    </>\\n  );\\n}\",\"notes\":[\"Built from the translated workstreams and page regions. Replace placeholder sections with the linked starter snippets or canonical examples.\",\"Start with: Swap this action trigger to Button and keep the surrounding structure minimal.\",\"Build around: the translated workstreams\",\"Run review_salt_ui after the first translated scaffold is in place.\"],\"source_urls\":[]}]},\"post_migration_verification\":{\"source_checks\":[\"Run the review_salt_ui MCP tool on the migrated files after the first implementation pass.\",\"Confirm the migrated code is using canonical Salt primitives, patterns, and tokens.\"],\"runtime_checks\":[\"Run the host repo's existing runtime, interaction, or Storybook checks after implementation when landmarks, visible states, or runtime behavior still need verification.\"],\"preserve_checks\":[\"Preserve the core task flow and information hierarchy users rely on today.\",\"Preserve the primary action hierarchy, destination cues, and supporting action order.\"],\"confirmation_checks\":[\"Reordered primary and secondary tasks or actions.\",\"Merged, split, or removed steps in the current flow.\"],\"suggested_workflow\":\"review_salt_ui\",\"suggested_command\":\"review_salt_ui via the @salt-ds/mcp server (args: { code: \\\"<file contents>\\\" })\"},\"review_targets\":{\"components\":[\"Button\"],\"patterns\":[],\"composition_contract\":null,\"source\":\"workflow_context\"}},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/accessibility\",\"/salt/components/button/examples\"],\"summary\":\"Canonical Salt documentation or registry sources support this workflow decision.\"}],\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/accessibility\",\"/salt/components/button/examples\"],\"missing\":[],\"heuristic_fallback\":false,\"input_context\":{\"source_outline_provided\":false,\"source_outline_signal_counts\":{\"regions\":0,\"actions\":0,\"states\":0,\"notes\":0},\"derived_outline_available\":false,\"derived_outline_signal_counts\":{\"regions\":0,\"actions\":0,\"states\":0,\"notes\":0},\"visual_input_count\":0,\"visual_input_kinds\":[]}},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt produced a migration direction for the requested source UI.\"}"
+            }
+          ],
+          "structuredContent": {
+            "contract": "salt_workflow_v1",
+            "workflow": "migrate",
+            "status": "success",
+            "request": {},
+            "safety": {
+              "canonical_complete": true,
+              "exact_request_safe": true,
+              "blocking_reasons": []
+            },
+            "action": {
+              "kind": "implement",
+              "scope": "exact_request",
+              "rule_ids": [
+                "migrate-preserve-task-flow",
+                "migrate-preserve-interaction-anchors",
+                "migrate-move-toward-canonical-salt",
+                "migrate-apply-conventions-after-canonical"
+              ],
+              "post_action": {
+                "kind": "review",
+                "tool": "review_salt_ui",
+                "required_input": [
+                  "complete_updated_file"
+                ]
+              }
+            },
+            "guidance": {
+              "kind": "migrate",
+              "translations": [
+                {
+                  "source_model_ref": "source-ui-1",
+                  "label": "Action trigger",
+                  "implementation": {
+                    "readiness": "high",
+                    "next_action": "Swap this action trigger to Button and keep the surrounding structure minimal.",
+                    "validation_step": "Confirm action trigger usage with canonical component details and examples before polishing the migrated code."
+                  },
+                  "salt_target": {
+                    "name": "Button",
+                    "solution_type": "component",
+                    "why": "To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as dialogs, cards and forms.",
+                    "docs": [
+                      "/salt/components/button",
+                      "/salt/components/button/usage",
+                      "/salt/components/button/accessibility",
+                      "/salt/components/button/examples"
+                    ]
+                  }
+                }
+              ],
+              "migration_plan": [
+                "Replace the clearest primitive-level pieces first: action -> Button.",
+                "After the first translation pass, run review_salt_ui on the migrated Salt code to validate primitives, composition, and tokens."
+              ],
+              "starter_guidance": {
+                "plan": [
+                  "Start with Swap this action trigger to Button and keep the surrounding structure minimal..",
+                  "Use Button starter as the first scaffold.",
+                  "Use Accented example as the first scaffold.",
+                  "Use Grounded Salt icon slots as the first scaffold.",
+                  "Start with the translation map, implement action trigger -> Button, then validate the migrated code with examples and review_salt_ui. Then confirm approved repo wrappers for analytics, defaults, or shared behavior and approved page patterns and workflow scaffolds through project conventions before finalizing the implementation."
+                ],
+                "snippets": [
+                  {
+                    "label": "Translated Salt scaffold starter",
+                    "language": "tsx",
+                    "code": "import { Button } from \"@salt-ds/core\";\n\nexport function TranslatedSaltScaffold() {\n  return (\n    <>\n    <section aria-label=\"Other translated targets\">\n      <Button appearance=\"solid\">Action trigger</Button>\n    </section>\n    </>\n  );\n}",
+                    "notes": [
+                      "Built from the translated workstreams and page regions. Replace placeholder sections with the linked starter snippets or canonical examples.",
+                      "Start with: Swap this action trigger to Button and keep the surrounding structure minimal.",
+                      "Build around: the translated workstreams",
+                      "Run review_salt_ui after the first translated scaffold is in place."
+                    ],
+                    "source_urls": []
+                  }
+                ]
+              },
+              "post_migration_verification": {
+                "source_checks": [
+                  "Run the review_salt_ui MCP tool on the migrated files after the first implementation pass.",
+                  "Confirm the migrated code is using canonical Salt primitives, patterns, and tokens."
+                ],
+                "runtime_checks": [
+                  "Run the host repo's existing runtime, interaction, or Storybook checks after implementation when landmarks, visible states, or runtime behavior still need verification."
+                ],
+                "preserve_checks": [
+                  "Preserve the core task flow and information hierarchy users rely on today.",
+                  "Preserve the primary action hierarchy, destination cues, and supporting action order."
+                ],
+                "confirmation_checks": [
+                  "Reordered primary and secondary tasks or actions.",
+                  "Merged, split, or removed steps in the current flow."
+                ],
+                "suggested_workflow": "review_salt_ui",
+                "suggested_command": "review_salt_ui via the @salt-ds/mcp server (args: { code: \"<file contents>\" })"
+              },
+              "review_targets": {
+                "components": [
+                  "Button"
+                ],
+                "patterns": [],
+                "composition_contract": null,
+                "source": "workflow_context"
+              }
+            },
+            "questions": [],
+            "evidence": {
+              "status": "complete",
+              "items": [
+                {
+                  "kind": "docs",
+                  "source": "canonical_salt",
+                  "field": "source_urls",
+                  "source_urls": [
+                    "/salt/components/button",
+                    "/salt/components/button/usage",
+                    "/salt/components/button/accessibility",
+                    "/salt/components/button/examples"
+                  ],
+                  "summary": "Canonical Salt documentation or registry sources support this workflow decision."
+                }
+              ],
+              "source_urls": [
+                "/salt/components/button",
+                "/salt/components/button/usage",
+                "/salt/components/button/accessibility",
+                "/salt/components/button/examples"
+              ],
+              "missing": [],
+              "heuristic_fallback": false,
+              "input_context": {
+                "source_outline_provided": false,
+                "source_outline_signal_counts": {
+                  "regions": 0,
+                  "actions": 0,
+                  "states": 0,
+                  "notes": 0
+                },
+                "derived_outline_available": false,
+                "derived_outline_signal_counts": {
+                  "regions": 0,
+                  "actions": 0,
+                  "states": 0,
+                  "notes": 0
+                },
+                "visual_input_count": 0,
+                "visual_input_kinds": []
+              }
+            },
+            "internal_limitations": {
+              "unsupported_claim_count": 0,
+              "unsupported_rule_kinds": []
+            },
+            "summary": "Salt produced a migration direction for the requested source UI."
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "latency_ms": 331.676,
+    "response_utf8_bytes": 9918,
+    "structured_content_utf8_bytes": 4770,
+    "text_content_utf8_bytes": 4770,
+    "response_sha256": "10d82c32df0b7bb53c7e77907228d0cefffa9103e42454082b8670732ccb78e5"
+  },
+  "call_count": 1,
+  "transport_success": true,
+  "schema_or_envelope_success": true,
+  "reproduction_assertion": {
+    "passed": true,
+    "details": "Capture should preserve the v1 migration envelope and its Button translation evidence; semantic preservation is evaluated separately."
+  },
+  "semantic_task_result": "not_evaluated",
+  "semantic_task_reason": "No real agent artifact compile, runtime, or behavioral-equivalence verification is available.",
+  "agent_edits": null,
+  "user_corrections": null,
+  "host_capture_status": "not_available"
+}

@@ -1,4 +1,5 @@
 import {
+  deduplicateSaltEvidenceRefs,
   SALT_GENERATED_ARTIFACT_CONTRACT,
   type SaltEvidenceClaimKind,
   type SaltEvidenceRef,
@@ -11,27 +12,19 @@ import {
   type GeneratedSaltArtifactSurfaceGate,
   validateGeneratedSaltArtifactSurface,
 } from "./generatedArtifactSurface.js";
-import { getSaltRegistryFingerprint } from "./registry/fingerprint.js";
+import { toSaltGeneratedArtifactRegistry } from "./registry/fingerprint.js";
 import type { ValidationIssue } from "./tools/validation/shared.js";
 import type { SaltRegistry } from "./types.js";
 
 export interface BuildValidationReportArtifactInput {
-  registry: Pick<SaltRegistry, "version" | "generated_at">;
+  registry: SaltRegistry;
   issues: ValidationIssue[];
   missing_data?: string[];
-  generated_at: string;
+  generated_at?: string | null;
   generator: SaltGeneratedArtifactGenerator;
-  registry_hash?: string | null;
 }
 
 export type ValidationReportEvidenceGate = GeneratedSaltArtifactSurfaceGate;
-
-function uniqueEvidenceRefs(refs: SaltEvidenceRef[]): SaltEvidenceRef[] {
-  return refs.filter(
-    (ref, index) =>
-      refs.findIndex((candidate) => candidate.id === ref.id) === index,
-  );
-}
 
 function issueClaimKind(issue: ValidationIssue): SaltEvidenceClaimKind {
   const [firstEvidenceRef] = issue.evidence_refs ?? [];
@@ -40,14 +33,18 @@ function issueClaimKind(issue: ValidationIssue): SaltEvidenceClaimKind {
   }
 
   switch (issue.category) {
+    case "primitive-choice":
+      return "component";
+    case "composition":
+      return "composition";
     case "accessibility":
       return "accessibility";
     case "catalog-status":
       return "status";
     case "tokens":
       return "token";
-    default:
-      return "workflow";
+    case "deprecated":
+      return "prop";
   }
 }
 
@@ -63,7 +60,9 @@ export function buildValidationReportArtifact(
   const unsupportedClaims: SaltUnsupportedClaim[] = [];
 
   input.issues.forEach((issue, index) => {
-    const issueEvidenceRefs = uniqueEvidenceRefs(issue.evidence_refs ?? []);
+    const issueEvidenceRefs = deduplicateSaltEvidenceRefs(
+      issue.evidence_refs ?? [],
+    );
     const fieldPath = `issues.${issue.id}`;
 
     if (issueEvidenceRefs.length === 0) {
@@ -91,7 +90,7 @@ export function buildValidationReportArtifact(
   input.missing_data?.forEach((message, index) => {
     unsupportedClaims.push({
       id: `validation-report.missing-data.${index}.unsupported`,
-      kind: "workflow",
+      kind: "status",
       text: message,
       field_path: `missing_data.${index}`,
       reason:
@@ -103,29 +102,19 @@ export function buildValidationReportArtifact(
     contract: SALT_GENERATED_ARTIFACT_CONTRACT,
     artifact_kind: "validation-report",
     id: "validation-report.validate-salt-usage",
-    generated_at: input.generated_at,
+    generated_at: input.generated_at ?? null,
     generator: input.generator,
-    registry: {
-      version: input.registry.version,
-      hash: input.registry_hash ?? null,
-      generated_at: input.registry.generated_at,
-    },
+    registry: toSaltGeneratedArtifactRegistry(input.registry),
     claims,
-    evidence_refs: uniqueEvidenceRefs(evidenceRefs),
+    evidence_refs: deduplicateSaltEvidenceRefs(evidenceRefs),
     unsupported_claims: unsupportedClaims,
   };
 }
 
 export function buildValidationReportEvidenceGate(
-  input: BuildValidationReportArtifactInput & {
-    registry: SaltRegistry;
-  },
+  input: BuildValidationReportArtifactInput,
 ): ValidationReportEvidenceGate {
-  const artifact = buildValidationReportArtifact({
-    ...input,
-    registry_hash:
-      input.registry_hash ?? getSaltRegistryFingerprint(input.registry),
-  });
+  const artifact = buildValidationReportArtifact(input);
   return validateGeneratedSaltArtifactSurface({
     artifact,
     registry: input.registry,

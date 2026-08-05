@@ -4,6 +4,7 @@ import {
   validateGeneratedArtifactEvidence,
 } from "../../evidence.js";
 import { validateGeneratedArtifactRegistryEvidence } from "../../generatedArtifactValidation.js";
+import { getSaltRegistryFingerprint } from "../../registry/fingerprint.js";
 import type {
   ComponentRecord,
   DeprecationRecord,
@@ -97,6 +98,13 @@ function buildFixtureDeprecations(): DeprecationRecord[] {
   return [
     {
       id: "fixture-deprecated-action.deprecation",
+      subject: {
+        package: "@salt-ds/fixture",
+        entrypoint: ".",
+        export_name: "FixtureDeprecatedAction",
+        symbol_space: "value",
+        member_path: [],
+      },
       package: "@salt-ds/fixture",
       component: "FixtureDeprecatedAction",
       kind: "component",
@@ -104,12 +112,30 @@ function buildFixtureDeprecations(): DeprecationRecord[] {
       deprecated_in: "1.0.0",
       removed_in: null,
       replacement: {
+        mode: "single",
+        target: {
+          package: "@salt-ds/fixture",
+          entrypoint: ".",
+          export_name: "FixtureAction",
+          symbol_space: "value",
+          member_path: [],
+        },
+        targets: [
+          {
+            package: "@salt-ds/fixture",
+            entrypoint: ".",
+            export_name: "FixtureAction",
+            symbol_space: "value",
+            member_path: [],
+          },
+        ],
         type: "component",
         name: "FixtureAction",
         notes: "Use FixtureAction for fixture tests.",
       },
       migration: {
         strategy: "replace",
+        value_map: null,
         details: [
           {
             from: "FixtureDeprecatedAction",
@@ -117,10 +143,30 @@ function buildFixtureDeprecations(): DeprecationRecord[] {
           },
         ],
       },
+      source_occurrences: [
+        {
+          source_path: "packages/fixture/src/FixtureDeprecatedAction.tsx",
+          source_range: {
+            start_offset: 0,
+            end_offset: 1,
+            start_line: 1,
+            start_column: 1,
+            end_line: 1,
+            end_column: 2,
+          },
+        },
+      ],
       source_urls: ["https://example.test/salt/fixture-deprecated-action"],
     },
     {
       id: "fixture-action.legacy-fixture-prop.deprecation",
+      subject: {
+        package: "@salt-ds/fixture",
+        entrypoint: ".",
+        export_name: "FixtureActionProps",
+        symbol_space: "type",
+        member_path: [{ kind: "prop", name: "legacyFixtureProp" }],
+      },
       package: "@salt-ds/fixture",
       component: "FixtureAction",
       kind: "prop",
@@ -128,12 +174,30 @@ function buildFixtureDeprecations(): DeprecationRecord[] {
       deprecated_in: "1.0.0",
       removed_in: null,
       replacement: {
+        mode: "single",
+        target: {
+          package: "@salt-ds/fixture",
+          entrypoint: ".",
+          export_name: "FixtureActionProps",
+          symbol_space: "type",
+          member_path: [{ kind: "prop", name: "fixtureProp" }],
+        },
+        targets: [
+          {
+            package: "@salt-ds/fixture",
+            entrypoint: ".",
+            export_name: "FixtureActionProps",
+            symbol_space: "type",
+            member_path: [{ kind: "prop", name: "fixtureProp" }],
+          },
+        ],
         type: "prop",
         name: "fixtureProp",
         notes: "Use fixtureProp for fixture tests.",
       },
       migration: {
         strategy: "replace",
+        value_map: null,
         details: [
           {
             from: "legacyFixtureProp",
@@ -141,6 +205,19 @@ function buildFixtureDeprecations(): DeprecationRecord[] {
           },
         ],
       },
+      source_occurrences: [
+        {
+          source_path: "packages/fixture/src/FixtureAction.tsx",
+          source_range: {
+            start_offset: 0,
+            end_offset: 1,
+            start_line: 1,
+            start_column: 1,
+            end_line: 1,
+            end_column: 2,
+          },
+        },
+      ],
       source_urls: ["https://example.test/salt/fixture-action/deprecations"],
     },
   ];
@@ -164,7 +241,7 @@ function buildFixtureRegistry(): SaltRegistry {
   };
 }
 
-function buildFixtureRulePack(): SaltValidationRulePack {
+function buildFixtureRulePack(registry: SaltRegistry): SaltValidationRulePack {
   return {
     contract: SALT_VALIDATION_RULE_PACK_CONTRACT,
     id: "fixture-validation-rules",
@@ -173,7 +250,9 @@ function buildFixtureRulePack(): SaltValidationRulePack {
       name: "mcp-core validation report fixture",
     },
     registry: {
-      version: "fixture-registry",
+      version: registry.version,
+      hash: getSaltRegistryFingerprint(registry),
+      generated_at: null,
     },
     rules: [
       {
@@ -184,7 +263,10 @@ function buildFixtureRulePack(): SaltValidationRulePack {
         title: "Fixture rule matched",
         message: "Fixture rule message.",
         suggested_fix: null,
-        confidence: 0.9,
+        confidence: {
+          basis: "deterministic_match",
+          score: 1,
+        },
         match: {
           kind: "component_jsx_attribute",
           component_id: "fixture-action",
@@ -199,8 +281,6 @@ function buildFixtureRulePack(): SaltValidationRulePack {
             source: {
               url: "https://example.test/salt/fixture-action/rule",
             },
-            confidence: "high",
-            verified_at: "2026-04-30T00:00:00.000Z",
           },
         ],
       },
@@ -219,7 +299,7 @@ describe("validateSaltUsage report artifact", () => {
         '  return <FixtureAction fixtureProp="yes" />;',
         "}",
       ].join("\n"),
-      validation_rule_pack: buildFixtureRulePack(),
+      validation_rule_pack: buildFixtureRulePack(registry),
     });
 
     expect(result.generated_artifact).toEqual(
@@ -230,7 +310,8 @@ describe("validateSaltUsage report artifact", () => {
     );
     expect(result.surface_gate).toEqual(
       expect.objectContaining({
-        status: "validated",
+        status: "evidence_linked",
+        validation_scope: "structural_provenance",
         validation_issues: [],
         unsupported_claim_count: 0,
         artifact_kind: "validation-report",
@@ -238,6 +319,7 @@ describe("validateSaltUsage report artifact", () => {
     );
     expect(result.evidence_validation).toEqual({
       status: result.surface_gate.status,
+      validation_scope: result.surface_gate.validation_scope,
       issues: result.surface_gate.validation_issues,
       missing: result.surface_gate.missing,
       unsupported_claim_count: result.surface_gate.unsupported_claim_count,
@@ -257,7 +339,7 @@ describe("validateSaltUsage report artifact", () => {
         evidence_ref_ids: expect.arrayContaining([
           "fixture-rule.docs.validation-ref",
           "fixture-action.fixture-rule.component-target.validation-ref",
-          "fixture-rule.workflow-input.code.validation-ref",
+          "fixture-rule.submitted-text.code.validation-ref",
         ]),
       }),
     ]);
@@ -334,7 +416,8 @@ describe("validateSaltUsage report artifact", () => {
     );
     expect(result.surface_gate).toEqual(
       expect.objectContaining({
-        status: "validated",
+        status: "evidence_linked",
+        validation_scope: "structural_provenance",
         validation_issues: [],
         unsupported_claim_count: 0,
       }),

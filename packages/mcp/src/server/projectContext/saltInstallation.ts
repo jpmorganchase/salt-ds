@@ -1,11 +1,11 @@
 import fs from "node:fs/promises";
-import { createRequire } from "node:module";
 import path from "node:path";
+import { JSON_SCHEMA, load as parseYaml } from "js-yaml";
+import micromatch from "micromatch";
 import { satisfies, valid, validRange } from "semver";
+import { readBoundedProjectFile } from "../../core/runtime.js";
 import type {
   SaltInstallationDiagnostics,
-  SaltInstallationHealthSummary,
-  SaltInstallationRemediation,
   SaltInstallationWorkspace,
   SaltPackageDescriptor,
   SaltPackageManagerInspection,
@@ -23,46 +23,44 @@ export interface SaltPackageJsonLike {
   pnpm?: { overrides?: unknown };
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
+  optionalDependencies?: Record<string, string>;
   peerDependencies?: Record<string, string>;
 }
 
 export interface CollectSaltInstallationOptions {
   packageManager?: string;
+  authorityRoot?: string;
+  workspaceScope?: SaltWorkspaceScope;
 }
 
 export const MAX_PACKAGE_JSON_BYTES = 1024 * 1024;
+export const MAX_PNPM_WORKSPACE_BYTES = 512 * 1024;
+export const MAX_WORKSPACE_ANCESTOR_DIRECTORIES = 32;
+export const MAX_WORKSPACE_PATTERNS = 128;
+export const MAX_WORKSPACE_PATTERN_UTF8_BYTES = 1_024;
 const MAX_RESOLVED_SALT_PACKAGES = 128;
-const SALT_PACKAGE_NAME_PATTERN = /^@salt-ds\/[a-z0-9][a-z0-9._-]*$/;
+const MAX_MARKER_BYTES = 8 * 1024 * 1024;
+const SALT_PACKAGE_NAME_PATTERN = /^@salt-ds\/[a-z0-9][a-z0-9._-]{0,204}$/;
 const GRAPH_LIMITATION =
-  "Salt inspected only declared packages through bounded manifest resolution. Use the host package manager for full dependency-graph and duplicate-install diagnosis.";
+  "Salt inspected only declared packages through bounded manifest resolution; full dependency-graph and duplicate-install diagnosis is outside this inspection scope.";
 
 export type MarkerInspectionReason =
   | "outside_root"
   | "not_file"
   | "unreadable"
   | "oversized"
-  | "parse_error";
+  | "changed_during_inspection"
+  | "identity_unavailable"
+  | "parse_error"
+  | "workspace_pattern_error";
 
 export type MarkerInspection<T> =
   | { status: "absent"; path: null }
   | { status: "valid"; path: string; value: T }
   | { status: "invalid"; path: string; reason: MarkerInspectionReason };
 
-async function pathExists(targetPath: string): Promise<boolean> {
-  try {
-    await fs.access(targetPath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
-}
-
-function hasWorkspaceDeclaration(value: unknown): boolean {
-  return workspacePatterns(value).some((pattern) => !pattern.startsWith("!"));
 }
 
 function workspacePatterns(value: unknown): string[] {
@@ -78,27 +76,96 @@ function workspacePatterns(value: unknown): string[] {
   );
 }
 
-function workspacePatternMatches(
-  pattern: string,
-  relativePath: string,
-): boolean {
-  const tokens = pattern.split(/(\*\*|\*)/g);
-  const source = tokens
-    .map((token) =>
-      token === "**"
-        ? ".*"
-        : token === "*"
-          ? "[^/]+"
-          : token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+export interface CompiledWorkspacePatterns {
+  status: "valid";
+  patterns: string[];
+  hasPositivePattern: boolean;
+  matches: (relativePath: string) => boolean;
+}
+
+type WorkspacePatternCompilation =
+  | { status: "absent" }
+  | { status: "invalid" }
+  | CompiledWorkspacePatterns;
+
+function hasExcessiveNumericRange(pattern: string): boolean {
+  for (const match of pattern.matchAll(
+    /\{(-?\d+)\.\.(-?\d+)(?:\.\.(-?\d+))?\}/gu,
+  )) {
+    const start = Number(match[1]);
+    const end = Number(match[2]);
+    const step = Math.abs(Number(match[3] ?? 1));
+    if (
+      !Number.isSafeInteger(start) ||
+      !Number.isSafeInteger(end) ||
+      !Number.isSafeInteger(step) ||
+      step === 0 ||
+      Math.floor(Math.abs(end - start) / step) + 1 > 1_000
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function compileWorkspacePatterns(value: unknown): WorkspacePatternCompilation {
+  const candidates = Array.isArray(value)
+    ? value
+    : isRecord(value) && Array.isArray(value.packages)
+      ? value.packages
+      : null;
+  if (candidates === null) return { status: "absent" };
+  if (
+    candidates.length > MAX_WORKSPACE_PATTERNS ||
+    candidates.some(
+      (entry) =>
+        typeof entry !== "string" ||
+        entry.trim().length === 0 ||
+        Buffer.byteLength(entry, "utf8") > MAX_WORKSPACE_PATTERN_UTF8_BYTES ||
+        hasExcessiveNumericRange(entry),
     )
-    .join("");
-  return new RegExp(`^${source}/?$`).test(relativePath);
+  ) {
+    return { status: "invalid" };
+  }
+  const patterns = workspacePatterns(candidates);
+  try {
+    const positive = patterns
+      .filter((pattern) => !pattern.startsWith("!"))
+      .map((pattern) =>
+        micromatch.matcher(pattern, {
+          dot: false,
+          nocase: false,
+          nonegate: true,
+          maxLength: MAX_WORKSPACE_PATTERN_UTF8_BYTES,
+        }),
+      );
+    const negative = patterns
+      .filter((pattern) => pattern.startsWith("!"))
+      .map((pattern) =>
+        micromatch.matcher(pattern.slice(1), {
+          dot: false,
+          nocase: false,
+          nonegate: true,
+          maxLength: MAX_WORKSPACE_PATTERN_UTF8_BYTES,
+        }),
+      );
+    return {
+      status: "valid",
+      patterns,
+      hasPositivePattern: positive.length > 0,
+      matches: (relativePath) =>
+        positive.some((matches) => matches(relativePath)) &&
+        !negative.some((matches) => matches(relativePath)),
+    };
+  } catch {
+    return { status: "invalid" };
+  }
 }
 
 function workspaceContainsPackage(
   workspaceRoot: string,
   packageRoot: string,
-  workspaces: unknown,
+  workspaces: CompiledWorkspacePatterns,
 ): boolean {
   const relativePath = path
     .relative(workspaceRoot, packageRoot)
@@ -107,14 +174,7 @@ function workspaceContainsPackage(
   return (
     relativePath.length > 0 &&
     !relativePath.startsWith("../") &&
-    workspacePatterns(workspaces)
-      .filter((pattern) => !pattern.startsWith("!"))
-      .some((pattern) => workspacePatternMatches(pattern, relativePath)) &&
-    !workspacePatterns(workspaces)
-      .filter((pattern) => pattern.startsWith("!"))
-      .some((pattern) =>
-        workspacePatternMatches(pattern.slice(1), relativePath),
-      )
+    workspaces.matches(relativePath)
   );
 }
 
@@ -132,6 +192,7 @@ function dependencyEntries(value: unknown): Array<[string, string]> {
 export async function inspectPackageJsonFile(
   packageJsonPath: string | null,
   containingRoot?: string,
+  authorityRoot?: string,
 ): Promise<MarkerInspection<SaltPackageJsonLike>> {
   if (!packageJsonPath) return { status: "absent", path: null };
   const absolutePath = path.resolve(packageJsonPath);
@@ -142,54 +203,232 @@ export async function inspectPackageJsonFile(
   if (!isPathInside(absoluteRoot, absolutePath)) {
     return { status: "invalid", path: normalizedPath, reason: "outside_root" };
   }
+  const file = await readBoundedProjectFile({
+    authorityRoot: authorityRoot ?? absoluteRoot,
+    rootDir: absoluteRoot,
+    filePath: absolutePath,
+    maxUtf8Bytes: MAX_PACKAGE_JSON_BYTES,
+  });
+  if (file.status === "absent") return { status: "absent", path: null };
+  if (file.status === "invalid") {
+    return { status: "invalid", path: normalizedPath, reason: file.reason };
+  }
   try {
-    const [realRoot, realPath] = await Promise.all([
-      fs.realpath(absoluteRoot),
-      fs.realpath(absolutePath),
-    ]);
-    if (!isPathInside(realRoot, realPath)) {
-      return {
-        status: "invalid",
-        path: normalizedPath,
-        reason: "outside_root",
-      };
-    }
-    const stats = await fs.stat(realPath);
-    if (!stats.isFile()) {
-      return { status: "invalid", path: normalizedPath, reason: "not_file" };
-    }
-    if (stats.size > MAX_PACKAGE_JSON_BYTES) {
-      return { status: "invalid", path: normalizedPath, reason: "oversized" };
-    }
-    const contents = await fs.readFile(realPath, "utf8");
-    if (Buffer.byteLength(contents, "utf8") > MAX_PACKAGE_JSON_BYTES) {
-      return { status: "invalid", path: normalizedPath, reason: "oversized" };
-    }
-    const parsed = JSON.parse(contents) as unknown;
+    const parsed = JSON.parse(file.text) as unknown;
     return isRecord(parsed)
-      ? { status: "valid", path: normalizedPath, value: parsed }
+      ? { status: "valid", path: file.path, value: parsed }
       : { status: "invalid", path: normalizedPath, reason: "parse_error" };
-  } catch (error) {
-    const code = (error as NodeJS.ErrnoException).code;
-    if (code === "ENOENT") {
-      return { status: "absent", path: null };
-    }
+  } catch {
+    return { status: "invalid", path: normalizedPath, reason: "parse_error" };
+  }
+}
+
+interface PnpmWorkspaceConfiguration {
+  packages: string[];
+  catalog: Record<string, string>;
+  catalogs: Record<string, Record<string, string>>;
+}
+
+async function inspectPnpmWorkspaceConfiguration(
+  rootDir: string,
+  authorityRoot: string = rootDir,
+): Promise<MarkerInspection<PnpmWorkspaceConfiguration>> {
+  const file = await readBoundedProjectFile({
+    authorityRoot,
+    rootDir,
+    filePath: path.join(rootDir, "pnpm-workspace.yaml"),
+    maxUtf8Bytes: MAX_PNPM_WORKSPACE_BYTES,
+  });
+  if (file.status === "absent") return { status: "absent", path: null };
+  if (file.status === "invalid") {
+    return { status: "invalid", path: file.path, reason: file.reason };
+  }
+  let parsed: unknown;
+  try {
+    parsed = parseYaml(file.text, { schema: JSON_SCHEMA });
+  } catch {
+    return { status: "invalid", path: file.path, reason: "parse_error" };
+  }
+  if (!isRecord(parsed)) {
+    return { status: "invalid", path: file.path, reason: "parse_error" };
+  }
+  const packagePatterns = compileWorkspacePatterns(parsed.packages);
+  if (packagePatterns.status === "invalid") {
     return {
       status: "invalid",
-      path: normalizedPath,
-      reason:
-        error instanceof SyntaxError ? "parse_error" : "unreadable",
+      path: file.path,
+      reason: "workspace_pattern_error",
     };
   }
+  const packages =
+    packagePatterns.status === "valid" ? packagePatterns.patterns : [];
+  const collectCatalog = (value: unknown): Record<string, string> =>
+    isRecord(value)
+      ? Object.fromEntries(
+          Object.entries(value).flatMap(([name, version]) =>
+            typeof version === "string" && version.trim().length > 0
+              ? [[name, version.trim()]]
+              : [],
+          ),
+        )
+      : {};
+  const catalogs = isRecord(parsed.catalogs)
+    ? Object.fromEntries(
+        Object.entries(parsed.catalogs).map(([name, value]) => [
+          name,
+          collectCatalog(value),
+        ]),
+      )
+    : {};
+  return {
+    status: "valid",
+    path: file.path,
+    value: { packages, catalog: collectCatalog(parsed.catalog), catalogs },
+  };
+}
+
+async function isRegularMarker(
+  rootDir: string,
+  targetPath: string,
+  authorityRoot: string = rootDir,
+): Promise<boolean> {
+  return (
+    (await inspectPackageManagerMarker(rootDir, targetPath, authorityRoot))
+      .status === "valid"
+  );
+}
+
+export interface PackageManagerDetection {
+  packageManager: string;
+  status: SaltPackageManagerInspection["packageManagerDetectionStatus"];
+  detectedManagers: string[];
+  invalidMarkers: Array<{ fileName: string; reason: MarkerInspectionReason }>;
+  issues: string[];
+}
+
+async function inspectPackageManagerMarker(
+  rootDir: string,
+  targetPath: string,
+  authorityRoot: string = rootDir,
+): Promise<MarkerInspection<true>> {
+  const file = await readBoundedProjectFile({
+    authorityRoot,
+    rootDir,
+    filePath: targetPath,
+    maxUtf8Bytes: MAX_MARKER_BYTES,
+  });
+  if (file.status === "absent") return { status: "absent", path: null };
+  if (file.status === "invalid") {
+    return { status: "invalid", path: file.path, reason: file.reason };
+  }
+  return { status: "valid", path: file.path, value: true };
+}
+
+function declaredPackageManagerName(
+  packageJson: SaltPackageJsonLike | null,
+): string | null {
+  const declared =
+    typeof packageJson?.packageManager === "string"
+      ? packageJson.packageManager.trim()
+      : "";
+  if (!declared) return null;
+  const separator = declared.indexOf("@");
+  const name = separator === -1 ? declared : declared.slice(0, separator);
+  return /^[a-z0-9][a-z0-9._-]*$/iu.test(name) ? name : null;
+}
+
+export async function detectPackageManager(
+  rootDir: string,
+  packageJson: SaltPackageJsonLike | null,
+  authorityRoot: string = rootDir,
+): Promise<PackageManagerDetection> {
+  const declared = declaredPackageManagerName(packageJson);
+
+  const markers = [
+    { fileName: "pnpm-lock.yaml", manager: "pnpm" },
+    { fileName: "yarn.lock", manager: "yarn" },
+    { fileName: "bun.lock", manager: "bun" },
+    { fileName: "bun.lockb", manager: "bun" },
+    { fileName: "package-lock.json", manager: "npm" },
+  ] as const;
+  const detected = new Set<string>();
+  const invalidMarkers: PackageManagerDetection["invalidMarkers"] = [];
+  for (const marker of markers) {
+    const inspection = await inspectPackageManagerMarker(
+      rootDir,
+      path.join(rootDir, marker.fileName),
+      authorityRoot,
+    );
+    if (inspection.status === "valid") detected.add(marker.manager);
+    if (inspection.status === "invalid") {
+      invalidMarkers.push({
+        fileName: marker.fileName,
+        reason: inspection.reason,
+      });
+    }
+  }
+  const detectedManagers = [...detected].sort((left, right) =>
+    left.localeCompare(right),
+  );
+  const declaredConflict =
+    declared !== null &&
+    detectedManagers.some((manager) => manager !== declared);
+  const ambiguous = detectedManagers.length > 1 || declaredConflict;
+  const issues = [
+    ...(ambiguous
+      ? [
+          declaredConflict
+            ? `Declared package manager ${declared} conflicts with detected lockfile families: ${detectedManagers.join(", ")}.`
+            : `Multiple package-manager lockfile families were detected: ${detectedManagers.join(", ")}.`,
+        ]
+      : []),
+    ...invalidMarkers.map(
+      (marker) =>
+        `Package-manager marker ${marker.fileName} could not be inspected (${marker.reason}).`,
+    ),
+  ];
+  if (invalidMarkers.length > 0) {
+    return {
+      packageManager:
+        declared ??
+        (ambiguous ? "unknown" : (detectedManagers[0] ?? "unknown")),
+      status: "invalid",
+      detectedManagers,
+      invalidMarkers,
+      issues,
+    };
+  }
+  if (ambiguous) {
+    return {
+      packageManager: declared ?? "unknown",
+      status: "ambiguous",
+      detectedManagers,
+      invalidMarkers,
+      issues,
+    };
+  }
+  return {
+    packageManager: declared ?? detectedManagers[0] ?? "unknown",
+    status: declared
+      ? "declared"
+      : detectedManagers.length === 1
+        ? "marker"
+        : "absent",
+    detectedManagers,
+    invalidMarkers,
+    issues,
+  };
 }
 
 export async function readPackageJsonFile(
   packageJsonPath: string | null,
   containingRoot?: string,
+  authorityRoot?: string,
 ): Promise<SaltPackageJsonLike | null> {
   const inspection = await inspectPackageJsonFile(
     packageJsonPath,
     containingRoot,
+    authorityRoot,
   );
   return inspection.status === "valid" ? inspection.value : null;
 }
@@ -214,60 +453,183 @@ function isPathInside(rootDir: string, candidatePath: string): boolean {
   );
 }
 
-export async function detectSaltWorkspaceScope(rootDir: string): Promise<{
+export interface SaltWorkspaceScope {
   kind: SaltInstallationWorkspace["kind"];
   workspaceRoot: string | null;
-}> {
+  pnpmWorkspace: PnpmWorkspaceConfiguration | null;
+  workspacePatterns: CompiledWorkspacePatterns | null;
+  workspacePatternIssue: boolean;
+  pnpmWorkspaceIssue: MarkerInspectionReason | null;
+  ancestorSearchLimited: boolean;
+}
+
+export async function detectSaltWorkspaceScope(
+  rootDir: string,
+  authorityRoot?: string,
+): Promise<SaltWorkspaceScope> {
   const absoluteRoot = path.resolve(rootDir);
+  const absoluteAuthority = path.resolve(
+    authorityRoot ?? path.parse(absoluteRoot).root,
+  );
   const rootManifest = await readPackageJsonFile(
     path.join(absoluteRoot, "package.json"),
     absoluteRoot,
+    absoluteAuthority,
   );
-  if (hasWorkspaceDeclaration(rootManifest?.workspaces)) {
-    return { kind: "workspace-root", workspaceRoot: absoluteRoot };
+  const rootPnpmInspection = await inspectPnpmWorkspaceConfiguration(
+    absoluteRoot,
+    absoluteAuthority,
+  );
+  const rootPnpmWorkspace =
+    rootPnpmInspection.status === "valid" ? rootPnpmInspection.value : null;
+  const rootManifestPatterns = compileWorkspacePatterns(
+    rootManifest?.workspaces,
+  );
+  const rootPnpmPatterns = compileWorkspacePatterns(
+    rootPnpmWorkspace?.packages,
+  );
+  if (rootPnpmInspection.status === "invalid") {
+    return {
+      kind: "single-package",
+      workspaceRoot: null,
+      pnpmWorkspace: null,
+      workspacePatterns: null,
+      workspacePatternIssue:
+        rootPnpmInspection.reason === "workspace_pattern_error",
+      pnpmWorkspaceIssue: rootPnpmInspection.reason,
+      ancestorSearchLimited: false,
+    };
   }
-
+  if (
+    (rootManifestPatterns.status === "valid" &&
+      rootManifestPatterns.hasPositivePattern) ||
+    rootPnpmWorkspace !== null
+  ) {
+    return {
+      kind: "workspace-root",
+      workspaceRoot: absoluteRoot,
+      pnpmWorkspace: rootPnpmWorkspace,
+      workspacePatterns:
+        rootPnpmPatterns.status === "valid"
+          ? rootPnpmPatterns
+          : rootManifestPatterns.status === "valid"
+            ? rootManifestPatterns
+            : null,
+      workspacePatternIssue:
+        rootManifestPatterns.status === "invalid" ||
+        rootPnpmPatterns.status === "invalid",
+      pnpmWorkspaceIssue: null,
+      ancestorSearchLimited: false,
+    };
+  }
+  if (rootManifestPatterns.status === "invalid") {
+    return {
+      kind: "single-package",
+      workspaceRoot: null,
+      pnpmWorkspace: null,
+      workspacePatterns: null,
+      workspacePatternIssue: true,
+      pnpmWorkspaceIssue: null,
+      ancestorSearchLimited: false,
+    };
+  }
+  let pnpmWorkspaceIssue: MarkerInspectionReason | null = null;
   let current = path.dirname(absoluteRoot);
-  while (true) {
+  let inspectedDirectories = 1;
+  let ancestorSearchLimited = false;
+  while (isPathInside(absoluteAuthority, current)) {
+    if (inspectedDirectories >= MAX_WORKSPACE_ANCESTOR_DIRECTORIES) {
+      ancestorSearchLimited = true;
+      break;
+    }
+    inspectedDirectories += 1;
     const manifest = await readPackageJsonFile(
       path.join(current, "package.json"),
       current,
+      absoluteAuthority,
     );
+    const pnpmInspection = await inspectPnpmWorkspaceConfiguration(
+      current,
+      absoluteAuthority,
+    );
+    const pnpmWorkspace =
+      pnpmInspection.status === "valid" ? pnpmInspection.value : null;
+    const manifestPatterns = compileWorkspacePatterns(manifest?.workspaces);
+    const pnpmPatterns = compileWorkspacePatterns(pnpmWorkspace?.packages);
+    if (pnpmWorkspaceIssue === null && pnpmInspection.status === "invalid") {
+      pnpmWorkspaceIssue = pnpmInspection.reason;
+    }
+    if (pnpmInspection.status === "invalid") {
+      return {
+        kind: "single-package",
+        workspaceRoot: null,
+        pnpmWorkspace: null,
+        workspacePatterns: null,
+        workspacePatternIssue:
+          pnpmInspection.reason === "workspace_pattern_error",
+        pnpmWorkspaceIssue,
+        ancestorSearchLimited: false,
+      };
+    }
     if (
-      hasWorkspaceDeclaration(manifest?.workspaces) &&
-      workspaceContainsPackage(current, absoluteRoot, manifest?.workspaces)
+      manifestPatterns.status === "invalid" ||
+      pnpmPatterns.status === "invalid"
     ) {
-      return { kind: "workspace-package", workspaceRoot: current };
+      return {
+        kind: "single-package",
+        workspaceRoot: null,
+        pnpmWorkspace: null,
+        workspacePatterns: null,
+        workspacePatternIssue: true,
+        pnpmWorkspaceIssue,
+        ancestorSearchLimited: false,
+      };
+    }
+    const manifestMatch =
+      manifestPatterns.status === "valid" &&
+      manifestPatterns.hasPositivePattern &&
+      workspaceContainsPackage(current, absoluteRoot, manifestPatterns);
+    const pnpmMatch =
+      pnpmPatterns.status === "valid" &&
+      pnpmPatterns.hasPositivePattern &&
+      workspaceContainsPackage(current, absoluteRoot, pnpmPatterns);
+    if (manifestMatch || pnpmMatch) {
+      return {
+        kind: "workspace-package",
+        workspaceRoot: current,
+        pnpmWorkspace,
+        workspacePatterns: pnpmMatch
+          ? pnpmPatterns.status === "valid"
+            ? pnpmPatterns
+            : null
+          : manifestPatterns.status === "valid"
+            ? manifestPatterns
+            : null,
+        workspacePatternIssue: false,
+        pnpmWorkspaceIssue,
+        ancestorSearchLimited: false,
+      };
     }
     const parent = path.dirname(current);
-    if (parent === current) break;
+    if (parent === current || current === absoluteAuthority) break;
     current = parent;
   }
-  return { kind: "single-package", workspaceRoot: null };
+  return {
+    kind: "single-package",
+    workspaceRoot: null,
+    pnpmWorkspace: null,
+    workspacePatterns: null,
+    workspacePatternIssue: false,
+    pnpmWorkspaceIssue,
+    ancestorSearchLimited,
+  };
 }
 
 export async function detectPackageManagerName(
   rootDir: string,
   packageJson: SaltPackageJsonLike | null,
 ): Promise<string> {
-  const declared =
-    typeof packageJson?.packageManager === "string"
-      ? packageJson.packageManager.trim()
-      : "";
-  if (declared) {
-    const separator = declared.indexOf("@");
-    return separator === -1 ? declared : declared.slice(0, separator);
-  }
-  if (await pathExists(path.join(rootDir, "pnpm-lock.yaml"))) return "pnpm";
-  if (await pathExists(path.join(rootDir, "yarn.lock"))) return "yarn";
-  if (
-    (await pathExists(path.join(rootDir, "bun.lock"))) ||
-    (await pathExists(path.join(rootDir, "bun.lockb")))
-  ) {
-    return "bun";
-  }
-  if (await pathExists(path.join(rootDir, "package-lock.json"))) return "npm";
-  return "unknown";
+  return (await detectPackageManager(rootDir, packageJson)).packageManager;
 }
 
 export function collectSaltPackages(
@@ -277,6 +639,7 @@ export function collectSaltPackages(
   for (const section of [
     packageJson?.dependencies,
     packageJson?.devDependencies,
+    packageJson?.optionalDependencies,
     packageJson?.peerDependencies,
   ]) {
     for (const [name, version] of dependencyEntries(section)) {
@@ -318,6 +681,7 @@ function collectDuplicateDeclarations(
   for (const section of [
     packageJson?.dependencies,
     packageJson?.devDependencies,
+    packageJson?.optionalDependencies,
     packageJson?.peerDependencies,
   ]) {
     for (const [name, version] of dependencyEntries(section)) {
@@ -346,91 +710,182 @@ function collectManifestOverrideFields(
   return unique(fields);
 }
 
+function resolveEffectiveDeclaration(input: {
+  packageName: string;
+  declaredVersion: string;
+  resolvedVersion: string | null;
+  resolvedManifestPath: string | null;
+  allowedRoot: string;
+  workspacePatterns: CompiledWorkspacePatterns | null;
+  pnpmWorkspace: PnpmWorkspaceConfiguration | null;
+}): { effective: string | null; resolution: "verified" | "unverifiable" } {
+  const declared = input.declaredVersion.trim();
+  if (declared.startsWith("workspace:")) {
+    const isLocalWorkspacePackage =
+      input.resolvedVersion !== null &&
+      input.resolvedManifestPath !== null &&
+      input.workspacePatterns !== null &&
+      workspaceContainsPackage(
+        input.allowedRoot,
+        path.dirname(input.resolvedManifestPath),
+        input.workspacePatterns,
+      );
+    if (!isLocalWorkspacePackage) {
+      return { effective: null, resolution: "unverifiable" };
+    }
+    const selector = declared.slice("workspace:".length);
+    const effective =
+      selector === "" || selector === "*"
+        ? input.resolvedVersion
+        : selector === "^" || selector === "~"
+          ? `${selector}${input.resolvedVersion}`
+          : validRange(selector)
+            ? selector
+            : null;
+    return effective
+      ? { effective, resolution: "verified" }
+      : { effective: null, resolution: "unverifiable" };
+  }
+  if (declared.startsWith("catalog:")) {
+    const catalogName = declared.slice("catalog:".length);
+    const effective =
+      catalogName.length === 0 || catalogName === "default"
+        ? (input.pnpmWorkspace?.catalog[input.packageName] ?? null)
+        : (input.pnpmWorkspace?.catalogs[catalogName]?.[input.packageName] ??
+          null);
+    return effective && validRange(effective)
+      ? { effective, resolution: "verified" }
+      : { effective: null, resolution: "unverifiable" };
+  }
+  return validRange(declared)
+    ? { effective: declared, resolution: "verified" }
+    : { effective: null, resolution: "unverifiable" };
+}
+
 function satisfiesDeclaration(
-  declaredVersion: string,
+  effectiveDeclaredVersion: string | null,
   resolvedVersion: string | null,
 ): boolean | null {
   if (!resolvedVersion) return null;
   const normalizedVersion = valid(resolvedVersion);
-  const normalizedRange = validRange(declaredVersion.trim());
+  const normalizedRange = effectiveDeclaredVersion
+    ? validRange(effectiveDeclaredVersion)
+    : null;
   if (normalizedVersion && normalizedRange) {
     return satisfies(normalizedVersion, normalizedRange, {
       includePrerelease: true,
     });
   }
-  return declaredVersion.trim() === resolvedVersion ? true : null;
+  return null;
 }
 
 async function resolveDeclaredPackageManifestPath(input: {
+  authorityRoot: string;
   rootDir: string;
   allowedRoot: string;
   packageName: string;
-  resolver: ReturnType<typeof createRequire>;
 }): Promise<string> {
-  try {
-    return input.resolver.resolve(`${input.packageName}/package.json`);
-  } catch {
-    const packageSegments = input.packageName.split("/");
-    const candidates = unique([
-      path.join(
-        input.rootDir,
-        "node_modules",
-        ...packageSegments,
-        "package.json",
-      ),
-      path.join(
-        input.allowedRoot,
-        "node_modules",
-        ...packageSegments,
-        "package.json",
-      ),
-    ]);
-    for (const candidate of candidates) {
-      if (await pathExists(candidate)) return candidate;
-    }
-    throw new Error("package-manifest-not-found");
+  const absoluteRoot = path.resolve(input.rootDir);
+  const absoluteAllowedRoot = path.resolve(input.allowedRoot);
+  const absoluteAuthorityRoot = path.resolve(input.authorityRoot);
+  if (
+    !isPathInside(absoluteAuthorityRoot, absoluteAllowedRoot) ||
+    !isPathInside(absoluteAllowedRoot, absoluteRoot)
+  ) {
+    throw new Error("package-root-outside-authority");
   }
+  const packageSegments = input.packageName.split("/");
+  let current = absoluteRoot;
+  for (;;) {
+    const candidate = path.join(
+      current,
+      "node_modules",
+      ...packageSegments,
+      "package.json",
+    );
+    const inspection = await inspectPackageJsonFile(
+      candidate,
+      absoluteAllowedRoot,
+      input.authorityRoot,
+    );
+    if (inspection.status === "valid") return inspection.path;
+    if (current === absoluteAllowedRoot) break;
+    const parent = path.dirname(current);
+    if (parent === current || !isPathInside(absoluteAllowedRoot, parent)) {
+      break;
+    }
+    current = parent;
+  }
+  throw new Error("package-manifest-not-found");
 }
 
 async function resolveDeclaredPackages(input: {
+  authorityRoot: string;
   rootDir: string;
   allowedRoot: string;
   saltPackages: SaltPackageDescriptor[];
+  pnpmWorkspace: PnpmWorkspaceConfiguration | null;
+  workspacePatterns: CompiledWorkspacePatterns | null;
 }): Promise<SaltInstallationDiagnostics["resolvedPackages"]> {
-  const rootManifestPath = path.join(
-    path.resolve(input.rootDir),
-    "package.json",
-  );
-  const resolver = createRequire(rootManifestPath);
   const realAllowedRoot = await fs
     .realpath(input.allowedRoot)
     .catch(() => path.resolve(input.allowedRoot));
+  const absoluteAuthorityRoot = path.resolve(input.authorityRoot);
+  if (!isPathInside(absoluteAuthorityRoot, realAllowedRoot)) {
+    return input.saltPackages.map((saltPackage) => ({
+      name: saltPackage.name,
+      declaredVersion: saltPackage.version,
+      effectiveDeclaredVersion: null,
+      declarationResolution: "unverifiable" as const,
+      resolvedVersion: null,
+      resolvedPath: null,
+      satisfiesDeclaredVersion: null,
+    }));
+  }
 
   return Promise.all(
     input.saltPackages.map(async (saltPackage) => {
       try {
         const resolved = await resolveDeclaredPackageManifestPath({
+          authorityRoot: input.authorityRoot,
           rootDir: input.rootDir,
           allowedRoot: input.allowedRoot,
           packageName: saltPackage.name,
-          resolver,
         });
         const realResolved = await fs.realpath(resolved);
-        if (!isPathInside(realAllowedRoot, realResolved))
+        if (
+          !isPathInside(absoluteAuthorityRoot, realResolved) ||
+          !isPathInside(realAllowedRoot, realResolved)
+        )
           throw new Error("outside-root");
-        const manifest = await readPackageJsonFile(realResolved);
+        const manifest = await readPackageJsonFile(
+          realResolved,
+          realAllowedRoot,
+          input.authorityRoot,
+        );
         const resolvedVersion =
           manifest?.name === saltPackage.name &&
           typeof manifest.version === "string"
             ? manifest.version.trim() || null
             : null;
+        const declaration = resolveEffectiveDeclaration({
+          packageName: saltPackage.name,
+          declaredVersion: saltPackage.version,
+          resolvedVersion,
+          resolvedManifestPath: resolvedVersion ? realResolved : null,
+          allowedRoot: realAllowedRoot,
+          workspacePatterns: input.workspacePatterns,
+          pnpmWorkspace: input.pnpmWorkspace,
+        });
         return {
           name: saltPackage.name,
           declaredVersion: saltPackage.version,
+          effectiveDeclaredVersion: declaration.effective,
+          declarationResolution: declaration.resolution,
           resolvedVersion,
           resolvedPath: resolvedVersion ? toPosix(realResolved) : null,
           satisfiesDeclaredVersion: satisfiesDeclaration(
-            saltPackage.version,
+            declaration.effective,
             resolvedVersion,
           ),
         };
@@ -438,6 +893,8 @@ async function resolveDeclaredPackages(input: {
         return {
           name: saltPackage.name,
           declaredVersion: saltPackage.version,
+          effectiveDeclaredVersion: null,
+          declarationResolution: "unverifiable" as const,
           resolvedVersion: null,
           resolvedPath: null,
           satisfiesDeclaredVersion: null,
@@ -458,50 +915,19 @@ function nodeModulesRoot(packageJsonPath: string): string | null {
 async function detectPackageLayout(
   allowedRoot: string,
   nodeModulesRoots: string[],
+  authorityRoot: string = allowedRoot,
 ): Promise<SaltPackageManagerInspection["packageLayout"]> {
   for (const fileName of [".pnp.cjs", ".pnp.js", ".pnp.loader.mjs"]) {
-    if (await pathExists(path.join(allowedRoot, fileName))) return "pnp";
+    if (
+      await isRegularMarker(
+        allowedRoot,
+        path.join(allowedRoot, fileName),
+        authorityRoot,
+      )
+    )
+      return "pnp";
   }
   return nodeModulesRoots.length > 0 ? "node-modules" : "unknown";
-}
-
-function remediationFor(
-  packageManager: string,
-  saltPackages: SaltPackageDescriptor[],
-): SaltInstallationRemediation {
-  const target = saltPackages[0]?.name ?? "@salt-ds/core";
-  switch (packageManager) {
-    case "npm":
-      return {
-        explainCommand: `npm ls ${target}`,
-        dedupeCommand: "npm dedupe",
-        reinstallCommand: "npm install",
-      };
-    case "pnpm":
-      return {
-        explainCommand: `pnpm why ${target}`,
-        dedupeCommand: "pnpm dedupe",
-        reinstallCommand: "pnpm install",
-      };
-    case "yarn":
-      return {
-        explainCommand: `yarn why ${target}`,
-        dedupeCommand: "yarn dedupe",
-        reinstallCommand: "yarn install",
-      };
-    case "bun":
-      return {
-        explainCommand: "bun pm ls",
-        dedupeCommand: null,
-        reinstallCommand: "bun install",
-      };
-    default:
-      return {
-        explainCommand: null,
-        dedupeCommand: null,
-        reinstallCommand: null,
-      };
-  }
 }
 
 function buildWorkspaceDiagnostics(input: {
@@ -563,74 +989,31 @@ function buildWorkspaceDiagnostics(input: {
   };
 }
 
-function buildHealthSummary(input: {
-  unresolvedCount: number;
-  pnp: boolean;
-  mismatchCount: number;
-  inspectionTruncated: boolean;
-  warnings: string[];
-}): SaltInstallationHealthSummary {
-  const blockingReasons: string[] = [];
-  if (input.unresolvedCount > 0 && !input.pnp) {
-    blockingReasons.push(
-      "Some declared Salt packages could not be resolved within the selected repo or workspace root.",
-    );
-  }
-  if (input.mismatchCount > 0) {
-    blockingReasons.push(
-      "Some declared Salt packages resolve to incompatible installed versions.",
-    );
-  }
-  if (input.inspectionTruncated) {
-    blockingReasons.push(
-      `Declared Salt packages exceed the bounded resolution limit of ${MAX_RESOLVED_SALT_PACKAGES}.`,
-    );
-  }
-  if (blockingReasons.length > 0) {
-    return {
-      health: "fail",
-      recommendedAction:
-        input.unresolvedCount > 0
-          ? "reinstall-dependencies"
-          : "inspect-dependency-drift",
-      blockingWorkflows: ["review", "migrate"],
-      reasons: [...blockingReasons, ...input.warnings],
-    };
-  }
-  if (input.warnings.length > 0) {
-    return {
-      health: "warn",
-      recommendedAction: "inspect-dependency-drift",
-      blockingWorkflows: [],
-      reasons: input.warnings,
-    };
-  }
-  return {
-    health: "pass",
-    recommendedAction: "none",
-    blockingWorkflows: [],
-    reasons: [],
-  };
-}
-
 export async function collectSaltInstallationDiagnostics(
   rootDir: string,
   saltPackages: SaltPackageDescriptor[],
   options: CollectSaltInstallationOptions = {},
 ): Promise<SaltInstallationDiagnostics> {
   const absoluteRoot = path.resolve(rootDir);
+  const authorityRoot = path.resolve(
+    options.authorityRoot ?? path.parse(absoluteRoot).root,
+  );
   const declaredSaltPackages = normalizeSaltPackageDescriptors(saltPackages);
   const currentManifest = await readPackageJsonFile(
     path.join(absoluteRoot, "package.json"),
     absoluteRoot,
+    authorityRoot,
   );
-  const scope = await detectSaltWorkspaceScope(absoluteRoot);
+  const scope =
+    options.workspaceScope ??
+    (await detectSaltWorkspaceScope(absoluteRoot, options.authorityRoot));
   const allowedRoot = scope.workspaceRoot ?? absoluteRoot;
   const workspaceManifest =
     scope.workspaceRoot && scope.workspaceRoot !== absoluteRoot
       ? await readPackageJsonFile(
           path.join(scope.workspaceRoot, "package.json"),
           scope.workspaceRoot,
+          authorityRoot,
         )
       : currentManifest;
   const workspaceSaltPackages = collectSaltPackages(workspaceManifest);
@@ -641,9 +1024,12 @@ export async function collectSaltInstallationDiagnostics(
     MAX_RESOLVED_SALT_PACKAGES,
   );
   const resolvedPackages = await resolveDeclaredPackages({
+    authorityRoot,
     rootDir: absoluteRoot,
     allowedRoot,
     saltPackages: inspectedSaltPackages,
+    pnpmWorkspace: scope.pnpmWorkspace,
+    workspacePatterns: scope.workspacePatterns,
   });
   const nodeModulesRoots = unique(
     resolvedPackages.flatMap((entry) => {
@@ -656,12 +1042,44 @@ export async function collectSaltInstallationDiagnostics(
   const packageLayout = await detectPackageLayout(
     allowedRoot,
     nodeModulesRoots,
+    authorityRoot,
   );
   const requestedPackageManager = options.packageManager?.trim() || "unknown";
-  const packageManager =
+  const detectedPackageManager = await detectPackageManager(
+    allowedRoot,
+    workspaceManifest,
+    authorityRoot,
+  );
+  const providedConflict =
+    requestedPackageManager !== "unknown" &&
+    (detectedPackageManager.status === "declared"
+      ? detectedPackageManager.packageManager !== requestedPackageManager
+      : detectedPackageManager.detectedManagers.some(
+          (manager) => manager !== requestedPackageManager,
+        ));
+  const packageManagerDetection: PackageManagerDetection =
     requestedPackageManager === "unknown"
-      ? await detectPackageManagerName(allowedRoot, workspaceManifest)
-      : requestedPackageManager;
+      ? detectedPackageManager
+      : {
+          ...detectedPackageManager,
+          packageManager: requestedPackageManager,
+          status:
+            detectedPackageManager.status === "invalid"
+              ? "invalid"
+              : detectedPackageManager.status === "ambiguous" ||
+                  providedConflict
+                ? "ambiguous"
+                : "provided",
+          issues: [
+            ...detectedPackageManager.issues,
+            ...(providedConflict
+              ? [
+                  `Provided package manager ${requestedPackageManager} conflicts with detected package-manager evidence.`,
+                ]
+              : []),
+          ],
+        };
+  const packageManager = packageManagerDetection.packageManager;
   const manifestOverrideFields = unique([
     ...collectManifestOverrideFields(currentManifest),
     ...(workspaceManifest !== currentManifest
@@ -685,6 +1103,18 @@ export async function collectSaltInstallationDiagnostics(
       resolvedVersion: entry.resolvedVersion,
       resolvedPath: entry.resolvedPath,
     }));
+  const unverifiablePackages = resolvedPackages
+    .filter(
+      (entry) =>
+        entry.declarationResolution === "unverifiable" ||
+        entry.satisfiesDeclaredVersion === null,
+    )
+    .map((entry) => ({
+      name: entry.name,
+      declaredVersion: entry.declaredVersion,
+      resolvedVersion: entry.resolvedVersion,
+      resolvedPath: entry.resolvedPath,
+    }));
   const unresolvedPackages = resolvedPackages.filter(
     (entry) => !entry.resolvedVersion || !entry.resolvedPath,
   );
@@ -696,10 +1126,27 @@ export async function collectSaltInstallationDiagnostics(
     packageLocalIssues:
       duplicateDeclarations.length > 0 ||
       mismatchedPackages.length > 0 ||
+      unverifiablePackages.length > 0 ||
       (packageLayout !== "pnp" && unresolvedPackages.length > 0) ||
       inspectionTruncated,
   });
   const issues: string[] = [];
+  issues.push(...packageManagerDetection.issues);
+  if (scope.pnpmWorkspaceIssue !== null) {
+    issues.push(
+      `A pnpm workspace marker could not be inspected (${scope.pnpmWorkspaceIssue}); workspace and catalog resolution may be incomplete.`,
+    );
+  }
+  if (scope.workspacePatternIssue) {
+    issues.push(
+      "Workspace membership patterns were invalid or exceeded the bounded matcher limits; ancestor workspace reuse was disabled.",
+    );
+  }
+  if (scope.ancestorSearchLimited) {
+    issues.push(
+      `Workspace ancestor discovery inspected at most ${MAX_WORKSPACE_ANCESTOR_DIRECTORIES} directories; workspace and dependency resolution may be incomplete.`,
+    );
+  }
   for (const duplicate of duplicateDeclarations) {
     issues.push(
       `${duplicate.name} is declared with multiple version ranges: ${duplicate.versions.join(", ")}.`,
@@ -708,6 +1155,11 @@ export async function collectSaltInstallationDiagnostics(
   for (const mismatch of mismatchedPackages) {
     issues.push(
       `${mismatch.name} declares ${mismatch.declaredVersion} but resolves to ${mismatch.resolvedVersion ?? "an unknown version"}.`,
+    );
+  }
+  for (const unverifiable of unverifiablePackages) {
+    issues.push(
+      `${unverifiable.name} has a declaration whose effective version could not be verified against the resolved package.`,
     );
   }
   if (packageLayout !== "pnp") {
@@ -745,41 +1197,48 @@ export async function collectSaltInstallationDiagnostics(
           `Salt package resolution was limited to ${MAX_RESOLVED_SALT_PACKAGES} declared packages.`,
         ]
       : []),
+    ...(scope.pnpmWorkspaceIssue !== null
+      ? [
+          `pnpm-workspace.yaml inspection was limited (${scope.pnpmWorkspaceIssue}).`,
+        ]
+      : []),
+    ...(scope.workspacePatternIssue
+      ? [
+          "Workspace membership patterns were invalid or exceeded the bounded matcher limits; workspace reuse was disabled.",
+        ]
+      : []),
+    ...(scope.ancestorSearchLimited
+      ? [
+          `Workspace ancestor discovery was limited to ${MAX_WORKSPACE_ANCESTOR_DIRECTORIES} directories.`,
+        ]
+      : []),
   ];
   const inspection: SaltPackageManagerInspection = {
     packageManager,
+    packageManagerDetectionStatus: packageManagerDetection.status,
     strategy: "manifest-resolution",
     status:
-      unresolvedPackages.length === 0 && !inspectionTruncated
+      unresolvedPackages.length === 0 &&
+      unverifiablePackages.length === 0 &&
+      scope.pnpmWorkspaceIssue === null &&
+      !scope.workspacePatternIssue &&
+      !scope.ancestorSearchLimited &&
+      packageManagerDetection.status !== "ambiguous" &&
+      packageManagerDetection.status !== "invalid" &&
+      !inspectionTruncated
         ? "succeeded"
         : "limited",
     packageLayout,
     limitations: [GRAPH_LIMITATION, ...inspectionWarnings],
     manifestOverrideFields,
   };
-  const warningReasons = unique([
-    ...duplicateDeclarations.map(
-      ({ name }) => `${name} has inconsistent declarations.`,
-    ),
-    ...workspace.workspaceIssues,
-    ...(manifestOverrideFields.length > 0
-      ? ["Dependency override fields require package-manager verification."]
-      : []),
-    ...(packageLayout === "pnp" && unresolvedPackages.length > 0
-      ? ["Salt package resolution is incomplete under Yarn PnP."]
-      : []),
-    ...(inspectionTruncated
-      ? [
-          `Salt package resolution was limited to ${MAX_RESOLVED_SALT_PACKAGES} declared packages.`,
-        ]
-      : []),
-  ]);
   const versionHealth: SaltPackageVersionHealth = {
     declaredVersions,
     resolvedVersions,
     multipleDeclaredVersions: duplicateDeclarations.length > 0,
     multipleResolvedVersions: resolvedVersions.length > 1,
     mismatchedPackages,
+    unverifiablePackages,
     issues,
   };
 
@@ -787,14 +1246,6 @@ export async function collectSaltInstallationDiagnostics(
     resolvedPackages,
     versionHealth,
     inspection,
-    remediation: remediationFor(packageManager, declaredSaltPackages),
     workspace,
-    healthSummary: buildHealthSummary({
-      unresolvedCount: unresolvedPackages.length,
-      pnp: packageLayout === "pnp",
-      mismatchCount: mismatchedPackages.length,
-      inspectionTruncated,
-      warnings: warningReasons,
-    }),
   };
 }

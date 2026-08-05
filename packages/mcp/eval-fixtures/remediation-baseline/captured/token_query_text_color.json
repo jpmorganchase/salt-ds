@@ -1,0 +1,363 @@
+{
+  "scenario": {
+    "id": "token_query_text_color",
+    "kind": "tool_call",
+    "tool": "create_salt_ui",
+    "arguments": {
+      "query": "text color",
+      "solution_type": "token"
+    },
+    "purpose": "Preserve token-type mismatch.",
+    "semantic_task_result": "failure"
+  },
+  "request": {
+    "method": "tools/call",
+    "params": {
+      "name": "create_salt_ui",
+      "arguments": {
+        "query": "text color",
+        "solution_type": "token"
+      }
+    }
+  },
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"create\",\"status\":\"success\",\"request\":{\"entity\":\"Text\",\"resolved_entity\":\"Text\",\"match_status\":\"exact\",\"exact_match_required\":true},\"safety\":{\"canonical_complete\":true,\"exact_request_safe\":true,\"blocking_reasons\":[]},\"action\":{\"kind\":\"implement\",\"scope\":\"exact_request\",\"rule_ids\":[],\"post_action\":{\"kind\":\"review\",\"tool\":\"review_salt_ui\",\"required_input\":[\"complete_updated_file\"]}},\"guidance\":{\"kind\":\"create\",\"decision\":{\"name\":\"Text\",\"why\":\"Text component facilitates use of Salt typography styles throughout a product or application, ensuring consistency and unified look and feel. It includes attributes such as font size, weight, letter spacing, line height and decoration.\",\"solution_type\":\"component\"},\"starter_guidance\":{\"plan\":[\"Binding check (primary target): the final reviewed artifact implements Text.\",\"Start from Text starter.\",\"Start from Styles example.\",\"Review examples for Text and confirm it fits your task. Then confirm approved repo wrappers for analytics, defaults, or shared behavior through project conventions before finalizing the implementation.\"],\"snippets\":[{\"label\":\"Text starter\",\"language\":\"tsx\",\"code\":\"import { Text } from \\\"@salt-ds/core\\\";\\n\\nexport function Example() {\\n  return (\\n    <Text />\\n  );\\n}\",\"notes\":[],\"source_urls\":[\"./team.json\"]},{\"label\":\"Styles example\",\"language\":\"tsx\",\"code\":\"import {\\n  Code,\\n  Display1,\\n  Display2,\\n  Display3,\\n  H1,\\n  H2,\\n  H3,\\n  H4,\\n  Label,\\n  StackLayout,\\n  Text,\\n  TextAction,\\n  TextNotation,\\n} from \\\"@salt-ds/core\\\";\\nimport type { ReactElement } from \\\"react\\\";\\n\\nexport const Styles = (): ReactElement => (\\n  <StackLayout>\\n    <Display1>Display 1</Display1>\\n    <Display2>Display 2</Display2>\\n    <Display3>Display 3</Display3>\\n    <H1>H1</H1>\\n    <H2>H2</H2>\\n    <H3>H3</H3>\\n    <H4>H4</H4>\\n    <Text>Text</Text>\\n    <Label>Label</Label>\\n    <Code>Code</Code>\\n    <TextNotation>Notation</TextNotation>\\n    <TextAction>Action</TextAction>\\n  </StackLayout>\\n);\\n\",\"notes\":[\"Derived from the closest example currently attached to this component in the registry.\",\"Source: /salt/components/text/examples\"],\"source_urls\":[\"./team.json\"]}]},\"review_targets\":{\"components\":[\"Text\"],\"patterns\":[],\"composition_contract\":{\"primary_target\":{\"solution_type\":\"component\",\"name\":\"Text\"},\"expected_patterns\":[],\"expected_components\":[\"Text\"],\"slots\":[],\"avoid\":[],\"source_urls\":[\"/salt/components/text\",\"/salt/components/text/usage\",\"/salt/components/text/accessibility\",\"/salt/components/text/examples\"]},\"source\":\"create_report\"}},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"entity\":\"Text\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/components/text\",\"/salt/components/text/usage\",\"/salt/components/text/accessibility\",\"/salt/components/text/examples\",\"/salt/getting-started/composition-pitfalls\",\"/salt/getting-started/custom-wrappers\"],\"summary\":\"Canonical Salt docs or registry sources support the create decision.\"},{\"kind\":\"examples\",\"source\":\"canonical_salt\",\"entity\":\"Text\",\"field\":\"examples\",\"source_urls\":[\"/salt/components/text/examples\"],\"summary\":\"Canonical examples are available for implementation grounding.\"}],\"source_urls\":[\"/salt/components/text\",\"/salt/components/text/usage\",\"/salt/components/text/accessibility\",\"/salt/components/text/examples\",\"/salt/getting-started/composition-pitfalls\",\"/salt/getting-started/custom-wrappers\",\"/salt/getting-started/developing\",\"/salt/getting-started/choosing-the-right-primitive\"],\"missing\":[],\"heuristic_fallback\":false},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt grounded the exact requested entity Text.\"}"
+      }
+    ],
+    "structuredContent": {
+      "contract": "salt_workflow_v1",
+      "workflow": "create",
+      "status": "success",
+      "request": {
+        "entity": "Text",
+        "resolved_entity": "Text",
+        "match_status": "exact",
+        "exact_match_required": true
+      },
+      "safety": {
+        "canonical_complete": true,
+        "exact_request_safe": true,
+        "blocking_reasons": []
+      },
+      "action": {
+        "kind": "implement",
+        "scope": "exact_request",
+        "rule_ids": [],
+        "post_action": {
+          "kind": "review",
+          "tool": "review_salt_ui",
+          "required_input": [
+            "complete_updated_file"
+          ]
+        }
+      },
+      "guidance": {
+        "kind": "create",
+        "decision": {
+          "name": "Text",
+          "why": "Text component facilitates use of Salt typography styles throughout a product or application, ensuring consistency and unified look and feel. It includes attributes such as font size, weight, letter spacing, line height and decoration.",
+          "solution_type": "component"
+        },
+        "starter_guidance": {
+          "plan": [
+            "Binding check (primary target): the final reviewed artifact implements Text.",
+            "Start from Text starter.",
+            "Start from Styles example.",
+            "Review examples for Text and confirm it fits your task. Then confirm approved repo wrappers for analytics, defaults, or shared behavior through project conventions before finalizing the implementation."
+          ],
+          "snippets": [
+            {
+              "label": "Text starter",
+              "language": "tsx",
+              "code": "import { Text } from \"@salt-ds/core\";\n\nexport function Example() {\n  return (\n    <Text />\n  );\n}",
+              "notes": [],
+              "source_urls": [
+                "./team.json"
+              ]
+            },
+            {
+              "label": "Styles example",
+              "language": "tsx",
+              "code": "import {\n  Code,\n  Display1,\n  Display2,\n  Display3,\n  H1,\n  H2,\n  H3,\n  H4,\n  Label,\n  StackLayout,\n  Text,\n  TextAction,\n  TextNotation,\n} from \"@salt-ds/core\";\nimport type { ReactElement } from \"react\";\n\nexport const Styles = (): ReactElement => (\n  <StackLayout>\n    <Display1>Display 1</Display1>\n    <Display2>Display 2</Display2>\n    <Display3>Display 3</Display3>\n    <H1>H1</H1>\n    <H2>H2</H2>\n    <H3>H3</H3>\n    <H4>H4</H4>\n    <Text>Text</Text>\n    <Label>Label</Label>\n    <Code>Code</Code>\n    <TextNotation>Notation</TextNotation>\n    <TextAction>Action</TextAction>\n  </StackLayout>\n);\n",
+              "notes": [
+                "Derived from the closest example currently attached to this component in the registry.",
+                "Source: /salt/components/text/examples"
+              ],
+              "source_urls": [
+                "./team.json"
+              ]
+            }
+          ]
+        },
+        "review_targets": {
+          "components": [
+            "Text"
+          ],
+          "patterns": [],
+          "composition_contract": {
+            "primary_target": {
+              "solution_type": "component",
+              "name": "Text"
+            },
+            "expected_patterns": [],
+            "expected_components": [
+              "Text"
+            ],
+            "slots": [],
+            "avoid": [],
+            "source_urls": [
+              "/salt/components/text",
+              "/salt/components/text/usage",
+              "/salt/components/text/accessibility",
+              "/salt/components/text/examples"
+            ]
+          },
+          "source": "create_report"
+        }
+      },
+      "questions": [],
+      "evidence": {
+        "status": "complete",
+        "items": [
+          {
+            "kind": "docs",
+            "source": "canonical_salt",
+            "entity": "Text",
+            "field": "source_urls",
+            "source_urls": [
+              "/salt/components/text",
+              "/salt/components/text/usage",
+              "/salt/components/text/accessibility",
+              "/salt/components/text/examples",
+              "/salt/getting-started/composition-pitfalls",
+              "/salt/getting-started/custom-wrappers"
+            ],
+            "summary": "Canonical Salt docs or registry sources support the create decision."
+          },
+          {
+            "kind": "examples",
+            "source": "canonical_salt",
+            "entity": "Text",
+            "field": "examples",
+            "source_urls": [
+              "/salt/components/text/examples"
+            ],
+            "summary": "Canonical examples are available for implementation grounding."
+          }
+        ],
+        "source_urls": [
+          "/salt/components/text",
+          "/salt/components/text/usage",
+          "/salt/components/text/accessibility",
+          "/salt/components/text/examples",
+          "/salt/getting-started/composition-pitfalls",
+          "/salt/getting-started/custom-wrappers",
+          "/salt/getting-started/developing",
+          "/salt/getting-started/choosing-the-right-primitive"
+        ],
+        "missing": [],
+        "heuristic_fallback": false
+      },
+      "internal_limitations": {
+        "unsupported_claim_count": 0,
+        "unsupported_rule_kinds": []
+      },
+      "summary": "Salt grounded the exact requested entity Text."
+    }
+  },
+  "error": null,
+  "frames": [
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "create_salt_ui",
+          "arguments": {
+            "query": "text color",
+            "solution_type": "token"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 22
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 22,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"create\",\"status\":\"success\",\"request\":{\"entity\":\"Text\",\"resolved_entity\":\"Text\",\"match_status\":\"exact\",\"exact_match_required\":true},\"safety\":{\"canonical_complete\":true,\"exact_request_safe\":true,\"blocking_reasons\":[]},\"action\":{\"kind\":\"implement\",\"scope\":\"exact_request\",\"rule_ids\":[],\"post_action\":{\"kind\":\"review\",\"tool\":\"review_salt_ui\",\"required_input\":[\"complete_updated_file\"]}},\"guidance\":{\"kind\":\"create\",\"decision\":{\"name\":\"Text\",\"why\":\"Text component facilitates use of Salt typography styles throughout a product or application, ensuring consistency and unified look and feel. It includes attributes such as font size, weight, letter spacing, line height and decoration.\",\"solution_type\":\"component\"},\"starter_guidance\":{\"plan\":[\"Binding check (primary target): the final reviewed artifact implements Text.\",\"Start from Text starter.\",\"Start from Styles example.\",\"Review examples for Text and confirm it fits your task. Then confirm approved repo wrappers for analytics, defaults, or shared behavior through project conventions before finalizing the implementation.\"],\"snippets\":[{\"label\":\"Text starter\",\"language\":\"tsx\",\"code\":\"import { Text } from \\\"@salt-ds/core\\\";\\n\\nexport function Example() {\\n  return (\\n    <Text />\\n  );\\n}\",\"notes\":[],\"source_urls\":[\"./team.json\"]},{\"label\":\"Styles example\",\"language\":\"tsx\",\"code\":\"import {\\n  Code,\\n  Display1,\\n  Display2,\\n  Display3,\\n  H1,\\n  H2,\\n  H3,\\n  H4,\\n  Label,\\n  StackLayout,\\n  Text,\\n  TextAction,\\n  TextNotation,\\n} from \\\"@salt-ds/core\\\";\\nimport type { ReactElement } from \\\"react\\\";\\n\\nexport const Styles = (): ReactElement => (\\n  <StackLayout>\\n    <Display1>Display 1</Display1>\\n    <Display2>Display 2</Display2>\\n    <Display3>Display 3</Display3>\\n    <H1>H1</H1>\\n    <H2>H2</H2>\\n    <H3>H3</H3>\\n    <H4>H4</H4>\\n    <Text>Text</Text>\\n    <Label>Label</Label>\\n    <Code>Code</Code>\\n    <TextNotation>Notation</TextNotation>\\n    <TextAction>Action</TextAction>\\n  </StackLayout>\\n);\\n\",\"notes\":[\"Derived from the closest example currently attached to this component in the registry.\",\"Source: /salt/components/text/examples\"],\"source_urls\":[\"./team.json\"]}]},\"review_targets\":{\"components\":[\"Text\"],\"patterns\":[],\"composition_contract\":{\"primary_target\":{\"solution_type\":\"component\",\"name\":\"Text\"},\"expected_patterns\":[],\"expected_components\":[\"Text\"],\"slots\":[],\"avoid\":[],\"source_urls\":[\"/salt/components/text\",\"/salt/components/text/usage\",\"/salt/components/text/accessibility\",\"/salt/components/text/examples\"]},\"source\":\"create_report\"}},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"entity\":\"Text\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/components/text\",\"/salt/components/text/usage\",\"/salt/components/text/accessibility\",\"/salt/components/text/examples\",\"/salt/getting-started/composition-pitfalls\",\"/salt/getting-started/custom-wrappers\"],\"summary\":\"Canonical Salt docs or registry sources support the create decision.\"},{\"kind\":\"examples\",\"source\":\"canonical_salt\",\"entity\":\"Text\",\"field\":\"examples\",\"source_urls\":[\"/salt/components/text/examples\"],\"summary\":\"Canonical examples are available for implementation grounding.\"}],\"source_urls\":[\"/salt/components/text\",\"/salt/components/text/usage\",\"/salt/components/text/accessibility\",\"/salt/components/text/examples\",\"/salt/getting-started/composition-pitfalls\",\"/salt/getting-started/custom-wrappers\",\"/salt/getting-started/developing\",\"/salt/getting-started/choosing-the-right-primitive\"],\"missing\":[],\"heuristic_fallback\":false},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt grounded the exact requested entity Text.\"}"
+            }
+          ],
+          "structuredContent": {
+            "contract": "salt_workflow_v1",
+            "workflow": "create",
+            "status": "success",
+            "request": {
+              "entity": "Text",
+              "resolved_entity": "Text",
+              "match_status": "exact",
+              "exact_match_required": true
+            },
+            "safety": {
+              "canonical_complete": true,
+              "exact_request_safe": true,
+              "blocking_reasons": []
+            },
+            "action": {
+              "kind": "implement",
+              "scope": "exact_request",
+              "rule_ids": [],
+              "post_action": {
+                "kind": "review",
+                "tool": "review_salt_ui",
+                "required_input": [
+                  "complete_updated_file"
+                ]
+              }
+            },
+            "guidance": {
+              "kind": "create",
+              "decision": {
+                "name": "Text",
+                "why": "Text component facilitates use of Salt typography styles throughout a product or application, ensuring consistency and unified look and feel. It includes attributes such as font size, weight, letter spacing, line height and decoration.",
+                "solution_type": "component"
+              },
+              "starter_guidance": {
+                "plan": [
+                  "Binding check (primary target): the final reviewed artifact implements Text.",
+                  "Start from Text starter.",
+                  "Start from Styles example.",
+                  "Review examples for Text and confirm it fits your task. Then confirm approved repo wrappers for analytics, defaults, or shared behavior through project conventions before finalizing the implementation."
+                ],
+                "snippets": [
+                  {
+                    "label": "Text starter",
+                    "language": "tsx",
+                    "code": "import { Text } from \"@salt-ds/core\";\n\nexport function Example() {\n  return (\n    <Text />\n  );\n}",
+                    "notes": [],
+                    "source_urls": [
+                      "./team.json"
+                    ]
+                  },
+                  {
+                    "label": "Styles example",
+                    "language": "tsx",
+                    "code": "import {\n  Code,\n  Display1,\n  Display2,\n  Display3,\n  H1,\n  H2,\n  H3,\n  H4,\n  Label,\n  StackLayout,\n  Text,\n  TextAction,\n  TextNotation,\n} from \"@salt-ds/core\";\nimport type { ReactElement } from \"react\";\n\nexport const Styles = (): ReactElement => (\n  <StackLayout>\n    <Display1>Display 1</Display1>\n    <Display2>Display 2</Display2>\n    <Display3>Display 3</Display3>\n    <H1>H1</H1>\n    <H2>H2</H2>\n    <H3>H3</H3>\n    <H4>H4</H4>\n    <Text>Text</Text>\n    <Label>Label</Label>\n    <Code>Code</Code>\n    <TextNotation>Notation</TextNotation>\n    <TextAction>Action</TextAction>\n  </StackLayout>\n);\n",
+                    "notes": [
+                      "Derived from the closest example currently attached to this component in the registry.",
+                      "Source: /salt/components/text/examples"
+                    ],
+                    "source_urls": [
+                      "./team.json"
+                    ]
+                  }
+                ]
+              },
+              "review_targets": {
+                "components": [
+                  "Text"
+                ],
+                "patterns": [],
+                "composition_contract": {
+                  "primary_target": {
+                    "solution_type": "component",
+                    "name": "Text"
+                  },
+                  "expected_patterns": [],
+                  "expected_components": [
+                    "Text"
+                  ],
+                  "slots": [],
+                  "avoid": [],
+                  "source_urls": [
+                    "/salt/components/text",
+                    "/salt/components/text/usage",
+                    "/salt/components/text/accessibility",
+                    "/salt/components/text/examples"
+                  ]
+                },
+                "source": "create_report"
+              }
+            },
+            "questions": [],
+            "evidence": {
+              "status": "complete",
+              "items": [
+                {
+                  "kind": "docs",
+                  "source": "canonical_salt",
+                  "entity": "Text",
+                  "field": "source_urls",
+                  "source_urls": [
+                    "/salt/components/text",
+                    "/salt/components/text/usage",
+                    "/salt/components/text/accessibility",
+                    "/salt/components/text/examples",
+                    "/salt/getting-started/composition-pitfalls",
+                    "/salt/getting-started/custom-wrappers"
+                  ],
+                  "summary": "Canonical Salt docs or registry sources support the create decision."
+                },
+                {
+                  "kind": "examples",
+                  "source": "canonical_salt",
+                  "entity": "Text",
+                  "field": "examples",
+                  "source_urls": [
+                    "/salt/components/text/examples"
+                  ],
+                  "summary": "Canonical examples are available for implementation grounding."
+                }
+              ],
+              "source_urls": [
+                "/salt/components/text",
+                "/salt/components/text/usage",
+                "/salt/components/text/accessibility",
+                "/salt/components/text/examples",
+                "/salt/getting-started/composition-pitfalls",
+                "/salt/getting-started/custom-wrappers",
+                "/salt/getting-started/developing",
+                "/salt/getting-started/choosing-the-right-primitive"
+              ],
+              "missing": [],
+              "heuristic_fallback": false
+            },
+            "internal_limitations": {
+              "unsupported_claim_count": 0,
+              "unsupported_rule_kinds": []
+            },
+            "summary": "Salt grounded the exact requested entity Text."
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "latency_ms": 134.023,
+    "response_utf8_bytes": 7841,
+    "structured_content_utf8_bytes": 3725,
+    "text_content_utf8_bytes": 3725,
+    "response_sha256": "19a967b9dd4c7b7e68ec1293b56ae914cd9484932ddb24a63716a98ac4c35e41"
+  },
+  "call_count": 1,
+  "transport_success": true,
+  "schema_or_envelope_success": true,
+  "reproduction_assertion": {
+    "passed": true,
+    "details": "Expected the audited token query text color failure signature."
+  },
+  "semantic_task_result": "failure",
+  "semantic_task_reason": null,
+  "agent_edits": null,
+  "user_corrections": null,
+  "host_capture_status": "not_available"
+}

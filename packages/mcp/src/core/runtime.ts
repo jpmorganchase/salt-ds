@@ -1,72 +1,69 @@
 /**
- * Deliberate boundary between MCP transport/orchestration and the internal
- * Salt reasoning core. Code outside this directory imports core capabilities
- * through this module; core code must not depend on MCP protocol concerns.
+ * Runtime boundary between the MCP adapter and the retained Salt catalog and
+ * analysis primitives. Server code imports through this module; registry
+ * builders and core modules do not depend on MCP protocol types.
  */
 
-export type {
-  SaltEvidenceValidationIssueCode,
-  SaltGeneratedArtifactKind,
-} from "./evidence.js";
-export type { ProjectPolicyDetailLevel } from "./policy/detection.js";
-export { detectProjectPolicy } from "./policy/detection.js";
-export type {
-  ProjectConventions,
-  ProjectConventionsLayerReference,
-  ProjectConventionsStack,
-} from "./policy/index.js";
-
+export { normalizeCatalogPublicCitation } from "./catalog/catalogPublicCitation.js";
 export {
-  composeProjectConventionLayers,
-  composeProjectConventionStack,
-} from "./policy/index.js";
+  canonicalCatalogRuntimeFamilies,
+  catalogFamilyFromUriSegment,
+  catalogFamilyUriSegment,
+} from "./catalog/catalogResourceIdentity.js";
+export type {
+  CatalogManifest,
+  CatalogRuntimeFamilyName,
+} from "./catalog/catalogSchemaV2.js";
+export {
+  CATALOG_SEARCH_TARGET_FAMILY_NAMES,
+  resolveCatalogRecordContentReferences,
+} from "./catalog/catalogSchemaV2.js";
+export { canonicalJson } from "./catalog/catalogSerialization.js";
+export type { DetectedProjectPolicy } from "./policy/detection.js";
+export { detectProjectPolicy } from "./policy/detection.js";
 export {
   deriveComparableSaltVersion,
   readProjectConventionsStackFile,
   resolveProjectConventionsFileLayer,
-  resolveProjectConventionsPackageLayer,
 } from "./policy/layerDiagnostics.js";
-export { loadRegistry } from "./registry/loadRegistry.js";
+export type {
+  ProjectPolicyConditionV2,
+  ProjectPolicyImportCheckV2,
+  ProjectPolicyIrLayerInputV2,
+  ProjectPolicyOccurrenceV2,
+  SaltProjectPolicyIrV2,
+} from "./policy/projectPolicyIr.js";
+export {
+  attachProjectPolicyImportChecks,
+  compileSaltProjectPolicyIrV2,
+} from "./policy/projectPolicyIr.js";
+export {
+  decodeProjectPolicyRootToken,
+  MAX_PROJECT_POLICY_ENCODED_RESOURCE_ID_CHARS,
+  MAX_PROJECT_POLICY_RESOURCE_ID_CHARS,
+} from "./policy/projectPolicyResourceIdentity.js";
+export { readBoundedProjectFile } from "./project/boundedProjectFile.js";
+export type { ResultBudgetOmission } from "./publicResultBudget.js";
+export {
+  createNonSearchToolResult,
+  jsonUtf8Bytes,
+  MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
+  MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
+  nonSearchToolResultUtf8Bytes,
+} from "./publicResultBudget.js";
+export type { SaltCatalogRuntimeContext } from "./registry/loadRegistry.js";
+export { loadCatalogRuntimeContext } from "./registry/loadRegistry.js";
 export { getPackageRoot } from "./registry/paths.js";
-export type { SaltCapabilityManifest } from "./tools/capabilityManifest.js";
-export { buildSaltCapabilityManifest } from "./tools/capabilityManifest.js";
 export {
-  buildCreateCatalogSupportManifest,
-  listCreateCatalogEntityNames,
-  lookupCreateCatalogEntity,
-} from "./tools/createCatalogSupport.js";
-export type { CreateSaltUiResult } from "./tools/createSaltUi.js";
-export { createSaltUi } from "./tools/createSaltUi.js";
-export { getSaltEntities } from "./tools/getSaltEntities.js";
-export type { MigrateToSaltResult } from "./tools/migrateToSalt.js";
-export { migrateToSalt } from "./tools/migrateToSalt.js";
-export type {
-  PublicCreateRerunArgs,
-  PublicReferenceEntityType,
-} from "./tools/publicContract.js";
+  MAX_REVIEW_ARTIFACT_ID_CHARS,
+  MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
+  MAX_REVIEW_ARTIFACT_UTF8_BYTES,
+  MAX_REVIEW_ARTIFACTS,
+  MAX_REVIEW_PACKAGE_VERSIONS,
+  MAX_REVIEW_SUBMITTED_UTF8_BYTES,
+  reviewSaltCode,
+} from "./review/reviewSaltCode.js";
 export {
-  buildCreatePublicContract,
-  buildMigratePublicContract,
-  buildReviewPublicContract,
-  PUBLIC_CREATE_REFERENCE_BATCH_MAX,
-  PUBLIC_CREATE_RESOLVED_ENTITY_MAX,
-  PUBLIC_REFERENCE_ENTITY_TYPES,
-} from "./tools/publicContract.js";
-export type {
-  ReviewExpectedTargets,
-  ReviewSaltUiResult,
-} from "./tools/reviewSaltUi.js";
-export { reviewSaltUi } from "./tools/reviewSaltUi.js";
-export type {
-  NormalizedVisualEvidenceInput,
-  SourceUiOutlineInput,
-} from "./tools/translation/sourceUiTypes.js";
-export {
-  buildCreateSaltUiWorkflowContract,
-  buildMigrateToSaltWorkflowContract,
-  buildReviewSaltUiWorkflowContract,
-} from "./tools/workflowContracts.js";
-export type { WorkflowProjectPolicyArtifact } from "./tools/workflowProjectPolicy.js";
-export { buildWorkflowProjectPolicyArtifact } from "./tools/workflowProjectPolicy.js";
-export { applyProjectPolicyToStarterCodeSnippets } from "./tools/workflowProjectPolicyApplication.js";
-export type { LoadRegistryOptions, SaltRegistry } from "./types.js";
+  MAX_SEARCH_RESULTS,
+  searchSalt,
+} from "./search/searchSalt.js";

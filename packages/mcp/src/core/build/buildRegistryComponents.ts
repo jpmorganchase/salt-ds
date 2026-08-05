@@ -1,16 +1,16 @@
 import path from "node:path";
-import fg from "fast-glob";
-import matter from "gray-matter";
+import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
+import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
+import { assertCanonicalSiteRoute } from "../catalog/catalogSiteRoute.js";
 import { toPosixPath } from "../registry/paths.js";
 import type {
-  AccessibilityRule,
+  AccessibilityImplementationSignal,
   ComponentCanonicalExampleExport,
-  ComponentComposition,
   ComponentImplementationRequirements,
   ComponentRecord,
-  ComponentSubComponent,
   ExampleRecord,
   PackageRecord,
+  RegistrySourceLocator,
   SaltStatus,
 } from "../types.js";
 import {
@@ -18,6 +18,7 @@ import {
   selectDocgenComponent,
   selectSubComponents,
   selectSubComponentsBySourceExports,
+  toComponentPropSubjects,
   toComponentProps,
 } from "./buildRegistryDocgen.js";
 import {
@@ -39,6 +40,13 @@ import {
   toPascalCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import {
+  buildPackageValueExportGraph,
+  type PackageValueExportGraph,
+  resolveUniquePackageValueExport,
+} from "./catalogExportGraph.js";
+import { globCatalogInputs } from "./catalogInputInventory.js";
+import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
 
 function inferStatusFromPackage(name: string, version: string): SaltStatus {
   if (name === "@salt-ds/lab") {
@@ -60,6 +68,7 @@ function inferDocsRoot(packageName: string): string | null {
   if (
     packageName === "@salt-ds/core" ||
     packageName === "@salt-ds/lab" ||
+    packageName === "@salt-ds/date-components" ||
     packageName === "@salt-ds/countries" ||
     packageName === "@salt-ds/icons" ||
     packageName === "@salt-ds/ag-grid-theme" ||
@@ -78,13 +87,30 @@ function parseSourceRepoPath(sourceCodeUrl: string | null): string | null {
     return null;
   }
 
-  const normalized = sourceCodeUrl.replace(/\\/g, "/");
-  const branchPathMatch = normalized.match(/\/(?:blob|tree)\/[^/]+\/(.+)$/);
-  if (!branchPathMatch) {
+  let parsed: URL;
+  try {
+    parsed = new URL(sourceCodeUrl);
+  } catch {
     return null;
   }
 
-  return branchPathMatch[1];
+  if (
+    parsed.protocol !== "https:" ||
+    parsed.hostname !== "github.com" ||
+    parsed.username !== "" ||
+    parsed.password !== "" ||
+    parsed.search !== "" ||
+    parsed.hash !== ""
+  ) {
+    return null;
+  }
+  const branchPathMatch = parsed.pathname.match(
+    /^\/jpmorganchase\/salt-ds\/(?:blob|tree)\/[^/]+\/(.+)$/u,
+  );
+  const repositoryPath = branchPathMatch?.[1] ?? null;
+  return repositoryPath && isPortableRepositoryPath(repositoryPath)
+    ? repositoryPath
+    : null;
 }
 
 function parsePackageNameFromRepoPath(repoPath: string | null): string | null {
@@ -101,6 +127,98 @@ function parsePackageNameFromRepoPath(repoPath: string | null): string | null {
   return `@salt-ds/${match[1]}`;
 }
 
+interface AuthoredComponentExportAlias {
+  exportName: string;
+  sourceRepoPath: string | null;
+}
+
+function parseComponentExportAliases(
+  title: string,
+  value: unknown,
+  defaultSourceRepoPath: string | null,
+  packageName: string,
+): AuthoredComponentExportAlias[] {
+  if (value === undefined) {
+    return [];
+  }
+  if (!Array.isArray(value)) {
+    throw new Error(
+      `Component '${title}' data.componentExportAliases must be an array of export names or source-scoped export records.`,
+    );
+  }
+
+  const aliases: AuthoredComponentExportAlias[] = [];
+  const seenExportNames = new Set<string>();
+  for (const entry of value) {
+    let exportName: unknown;
+    let sourceRepoPath = defaultSourceRepoPath;
+
+    if (typeof entry === "string") {
+      exportName = entry;
+    } else if (
+      typeof entry === "object" &&
+      entry !== null &&
+      !Array.isArray(entry)
+    ) {
+      const record = entry as Record<string, unknown>;
+      const keys = Object.keys(record).sort(compareOrdinalStrings);
+      if (
+        keys.length !== 2 ||
+        keys[0] !== "exportName" ||
+        keys[1] !== "sourceCodeUrl"
+      ) {
+        throw new Error(
+          `Component '${title}' data.componentExportAliases records must contain exactly exportName and sourceCodeUrl.`,
+        );
+      }
+      exportName = record.exportName;
+      const aliasSourceCodeUrl = record.sourceCodeUrl;
+      sourceRepoPath =
+        typeof aliasSourceCodeUrl === "string"
+          ? parseSourceRepoPath(aliasSourceCodeUrl)
+          : null;
+      if (
+        typeof aliasSourceCodeUrl !== "string" ||
+        aliasSourceCodeUrl !== aliasSourceCodeUrl.trim() ||
+        sourceRepoPath === null
+      ) {
+        throw new Error(
+          `Component '${title}' export alias '${String(exportName)}' has a non-canonical Salt sourceCodeUrl '${String(aliasSourceCodeUrl)}'.`,
+        );
+      }
+      const aliasPackageName = parsePackageNameFromRepoPath(sourceRepoPath);
+      if (aliasPackageName !== packageName) {
+        throw new Error(
+          `Component '${title}' export alias '${String(exportName)}' sourceCodeUrl belongs to '${String(aliasPackageName)}', not '${packageName}'.`,
+        );
+      }
+    } else {
+      throw new Error(
+        `Component '${title}' data.componentExportAliases entries must be export-name strings or source-scoped export records.`,
+      );
+    }
+
+    if (
+      typeof exportName !== "string" ||
+      exportName !== exportName.trim() ||
+      !/^[A-Za-z_$][A-Za-z0-9_$]*$/u.test(exportName)
+    ) {
+      throw new Error(
+        `Component '${title}' data.componentExportAliases contains invalid export name '${String(exportName)}'.`,
+      );
+    }
+    if (seenExportNames.has(exportName)) {
+      throw new Error(
+        `Component '${title}' data.componentExportAliases contains duplicate export name '${exportName}'.`,
+      );
+    }
+    seenExportNames.add(exportName);
+    aliases.push({ exportName, sourceRepoPath });
+  }
+
+  return aliases;
+}
+
 function removeKeyboardReferenceContent(content: string): string {
   return content
     .replace(/^#{2,4}\s+Keyboard interactions?\s*$/gim, "")
@@ -109,88 +227,145 @@ function removeKeyboardReferenceContent(content: string): string {
 }
 
 function parseAccessibilitySummaryStatements(content: string | null): string[] {
-  const bestPractices = parseSectionStatements(content, "Best practices");
-  if (bestPractices.length > 0 || !content) {
-    return bestPractices;
+  if (!content) {
+    return [];
   }
 
-  const parsed = matter(content);
+  const parsed = parseYamlFrontmatter(content);
   const bodyWithoutKeyboardControls = removeKeyboardReferenceContent(
     parsed.content,
   );
+  const bestPractices = parseSectionStatements(
+    bodyWithoutKeyboardControls,
+    "Best practices",
+  );
+  if (bestPractices.length > 0) {
+    return bestPractices;
+  }
 
   return extractStatementsFromSection(bodyWithoutKeyboardControls).slice(0, 12);
 }
 
-interface ComponentSourceAccessibilitySignals {
-  ariaAttributes: string[];
-  roles: string[];
-  usesAriaAnnouncer: boolean;
+interface ComponentSourceFile {
+  repoPath: string;
+  content: string;
 }
 
 async function readComponentSourceFiles(
   repoRoot: string,
   sourceRepoPath: string | null,
-): Promise<string[]> {
+): Promise<ComponentSourceFile[]> {
   if (!sourceRepoPath) {
     return [];
   }
 
   const sourcePath = path.join(repoRoot, sourceRepoPath);
-  const sourceFile = await readFileOrNull(sourcePath);
-  if (sourceFile) {
-    return [sourceFile];
+  const directSourceFile = await readFileOrNull(sourcePath);
+  if (directSourceFile !== null) {
+    return [
+      {
+        repoPath: toPosixPath(path.relative(repoRoot, sourcePath)),
+        content: directSourceFile,
+      },
+    ];
   }
 
-  const sourceFilePaths = await fg("**/*.{ts,tsx}", {
-    cwd: sourcePath,
-    absolute: true,
-    onlyFiles: true,
-    ignore: [
-      "**/*.spec.*",
-      "**/*.test.*",
-      "**/*.stories.*",
-      "**/*.css.ts",
-      "**/*.d.ts",
-    ],
-  });
-
-  const files = await Promise.all(
-    sourceFilePaths
-      .sort((left, right) => left.localeCompare(right))
-      .map(async (filePath) => readFileOrNull(filePath)),
+  const relativeSourcePath = toPosixPath(path.relative(repoRoot, sourcePath));
+  const sourceFilePaths = await globCatalogInputs(
+    `${relativeSourcePath}/**/*.{ts,tsx}`,
+    {
+      cwd: repoRoot,
+      absolute: true,
+      onlyFiles: true,
+      ignore: [
+        "**/*.spec.*",
+        "**/*.test.*",
+        "**/*.stories.*",
+        "**/*.css.ts",
+        "**/*.d.ts",
+      ],
+    },
   );
 
-  return files.filter((file): file is string => file !== null);
+  const files = await Promise.all(
+    sourceFilePaths.sort(compareOrdinalStrings).map(async (filePath) => {
+      const content = await readFileOrNull(filePath);
+      return content
+        ? {
+            repoPath: toPosixPath(path.relative(repoRoot, filePath)),
+            content,
+          }
+        : null;
+    }),
+  );
+
+  return files.filter((file): file is ComponentSourceFile => file !== null);
 }
 
 function collectSourceAccessibilitySignals(
-  sourceFiles: string[],
-): ComponentSourceAccessibilitySignals {
-  const source = sourceFiles.join("\n");
-  const ariaAttributes = uniqueStrings(
-    [...source.matchAll(/["']?(aria-[a-z0-9-]+)["']?\s*[:=]/gi)].map(
-      (match) => match[1],
-    ),
-  ).sort((left, right) => left.localeCompare(right));
-  const roles = uniqueStrings(
-    [...source.matchAll(/\brole\s*(?:=|:)\s*\{?\s*["']([^"']+)["']/g)].map(
-      (match) => match[1],
-    ),
-  ).sort((left, right) => left.localeCompare(right));
-
-  return {
-    ariaAttributes,
-    roles,
-    usesAriaAnnouncer:
-      /\buseAriaAnnouncer\s*\(/.test(source) ||
-      /<AriaAnnouncerProvider\b/.test(source),
-  };
+  sourceFiles: ComponentSourceFile[],
+): AccessibilityImplementationSignal[] {
+  const signals: AccessibilityImplementationSignal[] = [];
+  for (const sourceFile of sourceFiles) {
+    const ariaAttributes = uniqueStrings(
+      [
+        ...sourceFile.content.matchAll(/["']?(aria-[a-z0-9-]+)["']?\s*[:=]/gi),
+      ].map((match) => match[1]),
+    ).sort(compareOrdinalStrings);
+    const roles = uniqueStrings(
+      [
+        ...sourceFile.content.matchAll(
+          /\brole\s*(?:=|:)\s*\{?\s*["']([^"']+)["']/g,
+        ),
+      ].map((match) => match[1]),
+    ).sort(compareOrdinalStrings);
+    if (ariaAttributes.length > 0) {
+      signals.push({
+        kind: "aria_attribute",
+        values: ariaAttributes,
+        source_kind: "source",
+        source_url: null,
+        source_path: sourceFile.repoPath,
+      });
+    }
+    if (roles.length > 0) {
+      signals.push({
+        kind: "aria_role",
+        values: roles,
+        source_kind: "source",
+        source_url: null,
+        source_path: sourceFile.repoPath,
+      });
+    }
+    if (
+      /\buseAriaAnnouncer\s*\(/.test(sourceFile.content) ||
+      /<AriaAnnouncerProvider\b/.test(sourceFile.content)
+    ) {
+      signals.push({
+        kind: "aria_announcement",
+        values: ["ARIA announcer utility"],
+        source_kind: "source",
+        source_url: null,
+        source_path: sourceFile.repoPath,
+      });
+    }
+  }
+  return signals.sort(
+    (left, right) =>
+      compareOrdinalStrings(
+        left.source_url ?? left.source_path,
+        right.source_url ?? right.source_path,
+      ) ||
+      compareOrdinalStrings(left.kind, right.kind) ||
+      compareOrdinalStrings(left.values.join("\0"), right.values.join("\0")),
+  );
 }
 
-interface CanonicalExampleExportCandidate
-  extends ComponentCanonicalExampleExport {
+interface CanonicalExampleExportCandidate {
   component_id: string;
+  export_name: string;
+  example_id: string;
+  source_locator: RegistrySourceLocator;
   score: number;
 }
 
@@ -233,6 +408,45 @@ function canonicalExportOwnerScore(
   return score;
 }
 
+function isWithinRepositoryScope(
+  repoPath: string,
+  authoredSourceScope: string,
+): boolean {
+  return (
+    repoPath === authoredSourceScope ||
+    repoPath.startsWith(`${authoredSourceScope}/`)
+  );
+}
+
+function canonicalExportSourceScopeDepth(
+  exportGraph: PackageValueExportGraph,
+  exportName: string,
+  authoredSourceScope: string | null,
+): number {
+  if (!authoredSourceScope) {
+    return 0;
+  }
+
+  const origins = exportGraph.valueExportOrigins.get(exportName) ?? [];
+  if (
+    origins.length !== 1 ||
+    !isWithinRepositoryScope(origins[0].repoPath, authoredSourceScope)
+  ) {
+    return 0;
+  }
+
+  const sites = exportGraph.valueExportSites.get(exportName) ?? [];
+  if (
+    !sites.some((site) =>
+      isWithinRepositoryScope(site.repoPath, authoredSourceScope),
+    )
+  ) {
+    return 0;
+  }
+
+  return authoredSourceScope.split("/").length;
+}
+
 function readNamedValueImports(code: string): Array<{
   packageName: string;
   exportName: string;
@@ -265,69 +479,145 @@ function canonicalExampleExportKey(
   packageName: string,
   exportName: string,
 ): string {
-  return `${packageName.trim().toLowerCase()}\u0000${exportName
-    .trim()
-    .toLowerCase()}`;
+  return `${packageName}\u0000${exportName}`;
 }
 
 /**
  * Resolve canonical child-export ownership while the source-backed examples
- * are already in memory. Ambiguous same-score owners are omitted so the
- * generated registry never turns a heuristic tie into false evidence.
+ * are already in memory. Ownership requires a unique public value origin
+ * within the component's authored source scope plus either an authored export
+ * alias or a component-related export name. Ambiguous same-score owners fail
+ * closed so the generated registry never turns a heuristic tie into evidence.
  */
-function attachCanonicalExampleExports(
+async function attachCanonicalExampleExports(
+  repoRoot: string,
   components: ComponentRecord[],
-): ComponentRecord[] {
+  exportGraphs: Map<string, Promise<PackageValueExportGraph>>,
+  authoredSourceScopeByComponentId: ReadonlyMap<string, string | null>,
+  authoredExportAliasesByComponentId: ReadonlyMap<
+    string,
+    ReadonlyMap<string, string | null>
+  >,
+): Promise<ComponentRecord[]> {
   const candidatesByKey = new Map<string, CanonicalExampleExportCandidate[]>();
+  const representedExportOwners = new Map<string, string>();
+  for (const component of components) {
+    for (const exportName of [
+      component.source.export_name,
+      ...(component.sub_components ?? []).map(
+        (subComponent) => subComponent.export_name,
+      ),
+    ].filter((value): value is string => Boolean(value))) {
+      const key = canonicalExampleExportKey(component.package.name, exportName);
+      const existingOwner = representedExportOwners.get(key);
+      if (existingOwner && existingOwner !== component.id) {
+        throw new Error(
+          `Public component export '${exportName}' has conflicting component owners: ${existingOwner}, ${component.id}.`,
+        );
+      }
+      representedExportOwners.set(key, component.id);
+    }
+  }
+
+  const authoredExportOwners = new Map<string, string>();
+  for (const component of components) {
+    const aliases = authoredExportAliasesByComponentId.get(component.id);
+    if (!aliases) {
+      continue;
+    }
+    for (const exportName of aliases.keys()) {
+      const key = canonicalExampleExportKey(component.package.name, exportName);
+      const representedOwner = representedExportOwners.get(key);
+      if (representedOwner && representedOwner !== component.id) {
+        throw new Error(
+          `Authored export alias '${exportName}' for '${component.id}' conflicts with public component owner '${representedOwner}'.`,
+        );
+      }
+      const existingOwner = authoredExportOwners.get(key);
+      if (existingOwner && existingOwner !== component.id) {
+        throw new Error(
+          `Authored export alias '${exportName}' has conflicting component owners: ${existingOwner}, ${component.id}.`,
+        );
+      }
+      authoredExportOwners.set(key, component.id);
+    }
+  }
 
   for (const component of [...components].sort((left, right) =>
-    left.id.localeCompare(right.id),
+    compareOrdinalStrings(left.id, right.id),
   )) {
-    const representedExports = new Set(
-      [
-        component.source.export_name,
-        ...(component.sub_components ?? []).map(
-          (subComponent) => subComponent.export_name,
-        ),
-      ]
-        .filter((value): value is string => Boolean(value))
-        .map(normalizeCanonicalExportName),
-    );
+    let exportGraph: PackageValueExportGraph | null = null;
+    const authoredSourceScope =
+      authoredSourceScopeByComponentId.get(component.id) ?? null;
+    const authoredExportAliases =
+      authoredExportAliasesByComponentId.get(component.id) ?? new Map();
 
     for (const example of [...component.examples].sort((left, right) =>
-      left.id.localeCompare(right.id),
+      compareOrdinalStrings(left.id, right.id),
     )) {
-      if (!example.source_url) {
-        continue;
-      }
-
       for (const imported of readNamedValueImports(example.code)) {
         if (imported.packageName !== component.package.name) {
           continue;
         }
-        if (
-          representedExports.has(
-            normalizeCanonicalExportName(imported.exportName),
-          )
-        ) {
-          continue;
-        }
-
-        const score = canonicalExportOwnerScore(component, imported.exportName);
-        if (score === 0) {
-          continue;
-        }
-
         const key = canonicalExampleExportKey(
           imported.packageName,
           imported.exportName,
         );
+        if (representedExportOwners.has(key)) {
+          continue;
+        }
+        const authoredOwner = authoredExportOwners.get(key);
+        if (authoredOwner && authoredOwner !== component.id) {
+          continue;
+        }
+
+        const isAuthoredExportAlias = authoredExportAliases.has(
+          imported.exportName,
+        );
+        if (
+          !isAuthoredExportAlias &&
+          canonicalExportOwnerScore(component, imported.exportName) === 0
+        ) {
+          continue;
+        }
+
+        if (!exportGraph) {
+          let graphPromise = exportGraphs.get(component.package.name);
+          if (!graphPromise) {
+            graphPromise = buildPackageValueExportGraph(
+              repoRoot,
+              component.package.name,
+            );
+            exportGraphs.set(component.package.name, graphPromise);
+          }
+          exportGraph = await graphPromise;
+        }
+        const scopeDepth = canonicalExportSourceScopeDepth(
+          exportGraph,
+          imported.exportName,
+          isAuthoredExportAlias
+            ? (authoredExportAliases.get(imported.exportName) ?? null)
+            : authoredSourceScope,
+        );
+        if (scopeDepth === 0) {
+          continue;
+        }
+
         const candidate: CanonicalExampleExportCandidate = {
           component_id: component.id,
           export_name: imported.exportName,
           example_id: example.id,
-          source_url: example.source_url,
-          score,
+          source_locator:
+            example.source_url !== null
+              ? {
+                  source_url: example.source_url,
+                  source_path: null,
+                }
+              : {
+                  source_url: null,
+                  source_path: example.source_path,
+                },
+          score: scopeDepth * 2 + (isAuthoredExportAlias ? 1 : 0),
         };
         const current = candidatesByKey.get(key);
         if (current) {
@@ -354,19 +644,43 @@ function attachCanonicalExampleExports(
       strongestCandidates.map((candidate) => candidate.component_id),
     );
     if (ownerIds.size !== 1) {
-      continue;
+      throw new Error(
+        `Canonical example export '${strongestCandidates[0]?.export_name}' has ambiguous component owners: ${[...ownerIds].join(", ")}.`,
+      );
     }
 
     const selected = [...strongestCandidates].sort((left, right) =>
-      `${left.example_id}:${left.export_name}`.localeCompare(
+      compareOrdinalStrings(
+        `${left.example_id}:${left.export_name}`,
         `${right.example_id}:${right.export_name}`,
       ),
     )[0];
+    const component = components.find(
+      (candidate) => candidate.id === selected.component_id,
+    );
+    if (!component) {
+      throw new Error(
+        `Canonical example export owner '${selected.component_id}' is missing.`,
+      );
+    }
+    let graphPromise = exportGraphs.get(component.package.name);
+    if (!graphPromise) {
+      graphPromise = buildPackageValueExportGraph(
+        repoRoot,
+        component.package.name,
+      );
+      exportGraphs.set(component.package.name, graphPromise);
+    }
+    const repoPath = resolveUniquePackageValueExport(
+      await graphPromise,
+      selected.export_name,
+    );
     const componentExports = exportsByComponentId.get(selected.component_id);
     const canonicalExport = {
       export_name: selected.export_name,
       example_id: selected.example_id,
-      source_url: selected.source_url,
+      ...selected.source_locator,
+      export_repo_path: repoPath,
     };
     if (componentExports) {
       componentExports.push(canonicalExport);
@@ -386,54 +700,18 @@ function attachCanonicalExampleExports(
     return {
       ...component,
       canonical_example_exports: canonicalExports.sort((left, right) =>
-        left.export_name.localeCompare(right.export_name),
+        compareOrdinalStrings(left.export_name, right.export_name),
       ),
     };
   });
 }
 
-function formatInlineCodeList(values: string[]): string {
-  return values.map((value) => `\`${value}\``).join(", ");
-}
-
-function formatPlural(label: string, values: string[]): string {
-  return values.length === 1 ? label : `${label}s`;
-}
-
-async function extractComponentSourceAccessibilitySummary(
+async function extractComponentSourceAccessibilitySignals(
   repoRoot: string,
   sourceRepoPath: string | null,
-  componentName: string,
-): Promise<string[]> {
+): Promise<AccessibilityImplementationSignal[]> {
   const sourceFiles = await readComponentSourceFiles(repoRoot, sourceRepoPath);
-  if (sourceFiles.length === 0) {
-    return [];
-  }
-
-  const signals = collectSourceAccessibilitySignals(sourceFiles);
-  const summaries: string[] = [];
-
-  if (signals.roles.length > 0) {
-    summaries.push(
-      `${componentName} source declares ARIA ${formatPlural(
-        "role",
-        signals.roles,
-      )}: ${formatInlineCodeList(signals.roles)}.`,
-    );
-  }
-  if (signals.ariaAttributes.length > 0) {
-    summaries.push(
-      `${componentName} source declares ARIA ${formatPlural(
-        "attribute",
-        signals.ariaAttributes,
-      )}: ${formatInlineCodeList(signals.ariaAttributes)}.`,
-    );
-  }
-  if (signals.usesAriaAnnouncer) {
-    summaries.push(`${componentName} source uses the ARIA announcer utility.`);
-  }
-
-  return summaries;
+  return collectSourceAccessibilitySignals(sourceFiles);
 }
 
 function parseLivePreviewTags(mdx: string): Array<{
@@ -523,12 +801,12 @@ export async function extractPackages(
   excludedPackageNames: ReadonlySet<string>,
 ): Promise<PackageRecord[]> {
   const packageManifestPaths = (
-    await fg("packages/*/package.json", {
+    await globCatalogInputs("packages/*/package.json", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   const packages: PackageRecord[] = [];
 
@@ -574,7 +852,9 @@ export async function extractPackages(
     });
   }
 
-  return packages.sort((left, right) => left.name.localeCompare(right.name));
+  return packages.sort((left, right) =>
+    compareOrdinalStrings(left.name, right.name),
+  );
 }
 
 const INTENT_STOPWORDS = new Set([
@@ -680,7 +960,6 @@ function inferExampleComplexity(code: string): ExampleRecord["complexity"] {
 
 async function extractComponentExamples(
   repoRoot: string,
-  componentRoute: string,
   examplesMdx: string | null,
   packageName: string,
   componentName: string,
@@ -701,14 +980,22 @@ async function extractComponentExamples(
     );
 
     const sourceCode = await readFileOrNull(examplePath);
+    if (sourceCode === null) {
+      throw new Error(
+        `Missing component example source ${toPosixPath(
+          path.relative(repoRoot, examplePath),
+        )}.`,
+      );
+    }
     examples.push({
       id: `${preview.componentName}.${toKebabCase(preview.exampleName)}`,
       title: preview.title,
       description: preview.description,
       intent: deriveExampleIntent(preview.title, preview.description),
-      complexity: inferExampleComplexity(sourceCode ?? ""),
-      code: sourceCode ?? "",
-      source_url: `${componentRoute}/examples`,
+      complexity: inferExampleComplexity(sourceCode),
+      code: sourceCode,
+      source_url: null,
+      source_path: toPosixPath(path.relative(repoRoot, examplePath)),
       package: packageName,
       target_type: "component",
       target_name: componentName,
@@ -727,10 +1014,6 @@ interface ComponentCategoryMapEntry {
 function normalizeComponentCategoryLabel(label: string): string {
   const normalized = toKebabCase(label);
   return normalized === "data-entry" ? "inputs" : normalized;
-}
-
-function normalizeComponentDocsRoute(route: string): string {
-  return route.replace(/\/index$/, "");
 }
 
 async function loadComponentCategoryMap(repoRoot: string): Promise<
@@ -752,8 +1035,22 @@ async function loadComponentCategoryMap(repoRoot: string): Promise<
   }
 
   const parsed = JSON.parse(source) as {
+    meta?: {
+      componentCount?: unknown;
+    };
     components?: Record<string, ComponentCategoryMapEntry>;
   };
+  const entries = Object.values(parsed.components ?? {});
+  if (
+    !Number.isInteger(parsed.meta?.componentCount) ||
+    parsed.meta?.componentCount !== entries.length
+  ) {
+    throw new Error(
+      `Component category map count '${String(
+        parsed.meta?.componentCount,
+      )}' does not match its ${entries.length} component entries.`,
+    );
+  }
   const byRoute = new Map<
     string,
     {
@@ -762,13 +1059,17 @@ async function loadComponentCategoryMap(repoRoot: string): Promise<
     }
   >();
 
-  for (const entry of Object.values(parsed.components ?? {})) {
+  for (const entry of entries) {
+    const route = assertCanonicalSiteRoute(entry.route);
+    if (byRoute.has(route)) {
+      throw new Error(`Duplicate component category route '${route}'.`);
+    }
     const categoryLabels = [
       entry.category,
       ...(entry.secondaryCategories ?? []),
     ].filter((value) => value.length > 0);
 
-    byRoute.set(normalizeComponentDocsRoute(entry.route), {
+    byRoute.set(route, {
       categoryIds: uniqueStrings(
         categoryLabels.map((label) => normalizeComponentCategoryLabel(label)),
       ),
@@ -777,97 +1078,6 @@ async function loadComponentCategoryMap(repoRoot: string): Promise<
   }
 
   return byRoute;
-}
-
-/**
- * Suffixes that indicate a parent/wrapper component rather than a child.
- * These components wrap or group instances of the root component, so they
- * belong in `typical_parent` rather than `required_children`/`optional_children`.
- */
-const PARENT_WRAPPER_SUFFIXES = /^(Group|Container|Provider|OverlayProvider)$/;
-
-/**
- * Derive composition rules for a compound component from its sub-components
- * and example code. Sub-components whose names suggest structural roles
- * (Content, Panel, Body) are marked as required; Group/Container/Provider
- * entries are classified as typical parents instead of children.
- */
-function deriveComposition(
-  subComponents: ComponentSubComponent[],
-  exampleRecords: ExampleRecord[],
-): ComponentComposition | undefined {
-  if (subComponents.length === 0) {
-    return undefined;
-  }
-
-  // Separate parent wrappers from actual children.
-  const parentWrappers: string[] = [];
-  const childSubs: ComponentSubComponent[] = [];
-  for (const sub of subComponents) {
-    if (PARENT_WRAPPER_SUFFIXES.test(sub.name)) {
-      parentWrappers.push(sub.export_name);
-    } else {
-      childSubs.push(sub);
-    }
-  }
-
-  // If every sub-component is a parent wrapper, there are no children to compose.
-  if (childSubs.length === 0) {
-    return {
-      typical_parent:
-        parentWrappers.length === 1 ? parentWrappers[0] : undefined,
-    };
-  }
-
-  // Names that strongly imply required structural children.
-  const requiredSuffixes = new Set(["Content", "Panel", "Body"]);
-
-  // Use the default/first example to check which child sub-components actually appear.
-  const defaultExample = exampleRecords.find(
-    (example) => example.title === "Default",
-  );
-  const exampleCode = defaultExample?.code ?? "";
-
-  const requiredChildren: string[] = [];
-  const optionalChildren: string[] = [];
-
-  for (const sub of childSubs) {
-    const appearsInDefault = exampleCode.includes(`<${sub.export_name}`);
-    const isStructural = requiredSuffixes.has(sub.name);
-
-    if (isStructural || appearsInDefault) {
-      requiredChildren.push(sub.export_name);
-    } else {
-      optionalChildren.push(sub.export_name);
-    }
-  }
-
-  // If nothing ended up required, promote everything that appears in
-  // any example to required, rest to optional.
-  if (requiredChildren.length === 0 && optionalChildren.length > 0) {
-    const anyExampleCode = exampleRecords.map((e) => e.code).join("\n");
-    for (const sub of childSubs) {
-      if (anyExampleCode.includes(`<${sub.export_name}`)) {
-        requiredChildren.push(sub.export_name);
-      } else {
-        optionalChildren.push(sub.export_name);
-      }
-    }
-    optionalChildren.length = 0;
-    for (const sub of childSubs) {
-      if (!requiredChildren.includes(sub.export_name)) {
-        optionalChildren.push(sub.export_name);
-      }
-    }
-  }
-
-  return {
-    required_children:
-      requiredChildren.length > 0 ? requiredChildren : undefined,
-    optional_children:
-      optionalChildren.length > 0 ? optionalChildren : undefined,
-    typical_parent: parentWrappers.length === 1 ? parentWrappers[0] : undefined,
-  };
 }
 
 function extractImplementationRequirements(
@@ -910,18 +1120,24 @@ export async function extractComponents(
   repoRoot: string,
   packageByName: Map<string, PackageRecord>,
   propMetadata: PropMetadata,
-  verifiedAt: string,
 ): Promise<ComponentRecord[]> {
   const componentIndexPaths = (
-    await fg("site/docs/components/**/index.mdx", {
+    await globCatalogInputs("site/docs/components/**/index.mdx", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   const componentCategoryByRoute = await loadComponentCategoryMap(repoRoot);
+  const consumedCategoryRoutes = new Set<string>();
   const components: ComponentRecord[] = [];
+  const exportGraphs = new Map<string, Promise<PackageValueExportGraph>>();
+  const authoredSourceScopeByComponentId = new Map<string, string | null>();
+  const authoredExportAliasesByComponentId = new Map<
+    string,
+    ReadonlyMap<string, string | null>
+  >();
 
   for (const componentIndexPath of componentIndexPaths) {
     const indexContent = await readFileOrNull(componentIndexPath);
@@ -929,7 +1145,7 @@ export async function extractComponents(
       continue;
     }
 
-    const parsed = matter(indexContent);
+    const parsed = parseYamlFrontmatter(indexContent);
     if (asString(parsed.data.layout) !== "DetailComponent") {
       continue;
     }
@@ -951,6 +1167,11 @@ export async function extractComponents(
     const packageData = data?.package as Record<string, unknown> | undefined;
     const sourceCodeUrl = asString(data?.sourceCodeUrl);
     const sourceRepoPath = parseSourceRepoPath(sourceCodeUrl);
+    if (sourceCodeUrl && !sourceRepoPath) {
+      throw new Error(
+        `Component '${title}' has a non-canonical Salt sourceCodeUrl '${sourceCodeUrl}'.`,
+      );
+    }
     const packageNameFromDocs = asString(packageData?.name);
     const packageNameFromSource = parsePackageNameFromRepoPath(sourceRepoPath);
     const packageName = packageNameFromDocs ?? packageNameFromSource;
@@ -970,16 +1191,26 @@ export async function extractComponents(
     const description =
       asString(data?.description) ?? extractFirstParagraph(parsed.content);
 
-    const componentRoute = `/salt/components/${routeSuffix}`;
-    const categoryRecord = componentCategoryByRoute.get(
-      normalizeComponentDocsRoute(componentRoute),
+    const componentRoute = assertCanonicalSiteRoute(
+      `/salt/components/${routeSuffix}`,
     );
+    const categoryRecord = componentCategoryByRoute.get(componentRoute);
     if (!categoryRecord) {
       throw new Error(
-        `Missing component category map entry for '${title}' (${componentRoute}/index).`,
+        `Missing component category map entry for '${title}' (${componentRoute}).`,
       );
     }
-    const aliases = asStringArray(data?.alsoKnownAs);
+    consumedCategoryRoutes.add(componentRoute);
+    const componentExportAliases = parseComponentExportAliases(
+      title,
+      data?.componentExportAliases,
+      sourceRepoPath,
+      packageName,
+    );
+    const aliases = uniqueStrings([
+      ...asStringArray(data?.alsoKnownAs),
+      ...componentExportAliases.map((alias) => alias.exportName),
+    ]);
     const usageContent = await readFileOrNull(
       path.join(componentDir, "usage.mdx"),
     );
@@ -989,6 +1220,25 @@ export async function extractComponents(
     const examplesMdx = await readFileOrNull(
       path.join(componentDir, "examples.mdx"),
     );
+    if (data == null || !Object.hasOwn(data, "primaryExport")) {
+      throw new Error(
+        `Component '${title}' must explicitly declare data.primaryExport as a public export name or null.`,
+      );
+    }
+    const rawPrimaryExport = data.primaryExport;
+    const primaryExportName =
+      rawPrimaryExport === null
+        ? null
+        : typeof rawPrimaryExport === "string" &&
+            rawPrimaryExport === rawPrimaryExport.trim() &&
+            /^[A-Za-z_$][A-Za-z0-9_$]*$/u.test(rawPrimaryExport)
+          ? rawPrimaryExport
+          : undefined;
+    if (primaryExportName === undefined) {
+      throw new Error(
+        `Component '${title}' data.primaryExport must be a non-empty JavaScript export name or null.`,
+      );
+    }
     const docgenSelection = selectDocgenComponent(
       propMetadata,
       packageName,
@@ -996,26 +1246,28 @@ export async function extractComponents(
       aliases,
       routeSuffix,
       sourceRepoPath,
+      primaryExportName,
     );
     const props = toComponentProps(docgenSelection.candidate?.props);
     const exampleRecords = await extractComponentExamples(
       repoRoot,
-      componentRoute,
       examplesMdx,
       packageName,
       title,
     );
 
-    // Extract sub-components and derive composition rules for compound components.
+    // Extract source-declared sub-components. Example occurrence is evidence,
+    // never a normative required-child contract.
     const rootDisplayName =
       docgenSelection.inference.selected_display_name ?? toPascalCase(title);
-    const prefixSubComponents = selectSubComponents(
-      propMetadata,
-      packageName,
-      rootDisplayName,
-    );
-    const subComponents =
-      prefixSubComponents.length > 0
+    const resolvedPrimaryExportName = primaryExportName;
+    const suppressSingleExportInference = primaryExportName === null;
+    const prefixSubComponents = suppressSingleExportInference
+      ? []
+      : selectSubComponents(propMetadata, packageName, rootDisplayName);
+    let subComponents = suppressSingleExportInference
+      ? []
+      : prefixSubComponents.length > 0
         ? prefixSubComponents
         : selectSubComponentsBySourceExports(
             propMetadata,
@@ -1024,7 +1276,85 @@ export async function extractComponents(
             sourceRepoPath,
             repoRoot,
           );
-    const composition = deriveComposition(subComponents, exampleRecords);
+    let primarySourceRepoPath = sourceRepoPath;
+    let exportGraph: PackageValueExportGraph | null = null;
+    if (
+      resolvedPrimaryExportName ||
+      subComponents.length > 0 ||
+      componentExportAliases.length > 0 ||
+      props.length > 0
+    ) {
+      let exportGraphPromise = exportGraphs.get(packageName);
+      if (!exportGraphPromise) {
+        exportGraphPromise = buildPackageValueExportGraph(
+          repoRoot,
+          packageName,
+        );
+        exportGraphs.set(packageName, exportGraphPromise);
+      }
+      exportGraph = await exportGraphPromise;
+      primarySourceRepoPath = resolvedPrimaryExportName
+        ? resolveUniquePackageValueExport(
+            exportGraph,
+            resolvedPrimaryExportName,
+          )
+        : sourceRepoPath;
+      if (
+        sourceRepoPath &&
+        primarySourceRepoPath &&
+        primarySourceRepoPath !== sourceRepoPath &&
+        !primarySourceRepoPath.startsWith(`${sourceRepoPath}/`)
+      ) {
+        throw new Error(
+          `Component '${title}' primary export '${resolvedPrimaryExportName}' resolves to '${primarySourceRepoPath}', outside its authored sourceCodeUrl path '${sourceRepoPath}'.`,
+        );
+      }
+      for (const exportAlias of componentExportAliases) {
+        if (
+          canonicalExportSourceScopeDepth(
+            exportGraph,
+            exportAlias.exportName,
+            exportAlias.sourceRepoPath,
+          ) === 0
+        ) {
+          throw new Error(
+            `Component '${title}' export alias '${exportAlias.exportName}' is not a unique public value export within its authored sourceCodeUrl scope '${exportAlias.sourceRepoPath}'.`,
+          );
+        }
+      }
+      const authoredExportAliasScopes = new Map(
+        componentExportAliases.map((alias) => [
+          alias.exportName,
+          alias.sourceRepoPath,
+        ]),
+      );
+      subComponents = subComponents.filter(
+        (subComponent) =>
+          canonicalExportSourceScopeDepth(
+            exportGraph as PackageValueExportGraph,
+            subComponent.export_name,
+            authoredExportAliasScopes.has(subComponent.export_name)
+              ? (authoredExportAliasScopes.get(subComponent.export_name) ??
+                  null)
+              : sourceRepoPath,
+          ) > 0,
+      );
+    }
+    const resolvedSubComponents = subComponents.map((subComponent) => ({
+      ...subComponent,
+      repo_path: resolveUniquePackageValueExport(
+        exportGraph as PackageValueExportGraph,
+        subComponent.export_name,
+      ),
+    }));
+    const propSubjects = exportGraph
+      ? toComponentPropSubjects(
+          docgenSelection.candidate?.props,
+          repoRoot,
+          exportGraph,
+          ".",
+        )
+      : [];
 
     const relatedPatterns = asStringArray(data?.relatedPatterns);
     const whenToUse = parseSectionStatements(usageContent, "When to use");
@@ -1074,27 +1404,25 @@ export async function extractComponents(
 
     const docsAccessibilitySummaries =
       parseAccessibilitySummaryStatements(accessibilityContent);
-    const sourceAccessibilitySummaries =
-      docsAccessibilitySummaries.length === 0
-        ? await extractComponentSourceAccessibilitySummary(
-            repoRoot,
-            sourceRepoPath,
-            title,
-          )
-        : [];
-    const accessibilitySummaries = uniqueStrings([
-      ...docsAccessibilitySummaries,
-      ...sourceAccessibilitySummaries,
-    ]);
-    const accessibilityRules: AccessibilityRule[] =
-      docsAccessibilitySummaries.map((ruleText, index) => ({
-        id: `${toKebabCase(title)}-a11y-${index + 1}`,
-        severity: "warning",
-        rule: ruleText,
-      }));
+    const sourceAccessibilitySignals =
+      await extractComponentSourceAccessibilitySignals(
+        repoRoot,
+        sourceRepoPath,
+      );
 
+    const componentId = `component.${toKebabCase(title)}`;
+    authoredSourceScopeByComponentId.set(componentId, sourceRepoPath);
+    authoredExportAliasesByComponentId.set(
+      componentId,
+      new Map(
+        componentExportAliases.map((alias) => [
+          alias.exportName,
+          alias.sourceRepoPath,
+        ]),
+      ),
+    );
     components.push({
-      id: `component.${toKebabCase(title)}`,
+      id: componentId,
       name: title,
       aliases,
       package: {
@@ -1114,11 +1442,13 @@ export async function extractComponents(
       when_not_to_use: whenNotToUse,
       alternatives,
       props,
-      sub_components: subComponents.length > 0 ? subComponents : undefined,
-      composition,
+      prop_subjects: propSubjects,
+      sub_components:
+        resolvedSubComponents.length > 0 ? resolvedSubComponents : undefined,
       accessibility: {
-        summary: accessibilitySummaries,
-        rules: accessibilityRules,
+        summary: docsAccessibilitySummaries,
+        rules: [],
+        implementation_signals: sourceAccessibilitySignals,
       },
       patterns: relatedPatterns,
       deprecations: [],
@@ -1137,17 +1467,34 @@ export async function extractComponents(
       semantics,
       retrieval_signals: retrievalSignals,
       source: {
-        repo_path: sourceRepoPath,
-        export_name: rootDisplayName,
+        repo_path: primarySourceRepoPath,
+        export_name: resolvedPrimaryExportName,
       },
       inference: {
         docgen: docgenSelection.inference,
       },
-      last_verified_at: verifiedAt,
+      last_verified_at: null,
     });
   }
 
+  const orphanCategoryRoutes = [...componentCategoryByRoute.keys()].filter(
+    (route) => !consumedCategoryRoutes.has(route),
+  );
+  if (orphanCategoryRoutes.length > 0) {
+    throw new Error(
+      `Component category map contains routes without DetailComponent docs: ${orphanCategoryRoutes.join(
+        ", ",
+      )}.`,
+    );
+  }
+
   return attachCanonicalExampleExports(
-    components.sort((left, right) => left.name.localeCompare(right.name)),
+    repoRoot,
+    components.sort((left, right) =>
+      compareOrdinalStrings(left.name, right.name),
+    ),
+    exportGraphs,
+    authoredSourceScopeByComponentId,
+    authoredExportAliasesByComponentId,
   );
 }

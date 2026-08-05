@@ -2,18 +2,23 @@ import {
   type SaltEvidenceRef,
   type SaltEvidenceValidationIssue,
   type SaltGeneratedArtifact,
+  validateEvidenceRef,
   validateGeneratedArtifactEvidence,
 } from "./evidence.js";
+import { getSaltRegistryFingerprint } from "./registry/fingerprint.js";
 import {
   findTokenStructuralRoleRuleEvidence,
   type SaltTokenPolicyStructuralRoleRulePack,
+  validateTokenPolicyStructuralRoleRulePackEvidence,
 } from "./tokenPolicyStructuralRoleRules.js";
 import type {
+  ApiSymbolIdentity,
   ComponentRecord,
   DeprecationRecord,
   ExampleRecord,
   GuideRecord,
   PackageRecord,
+  PageRecord,
   PatternRecord,
   SaltRegistry,
   TokenRecord,
@@ -25,12 +30,9 @@ type RegistryRecord =
   | ExampleRecord
   | GuideRecord
   | PackageRecord
+  | PageRecord
   | PatternRecord
   | TokenRecord;
-
-export interface GeneratedArtifactRegistryEvidenceOptions {
-  tokenPolicyStructuralRoleRulePack?: SaltTokenPolicyStructuralRoleRulePack | null;
-}
 
 function hasText(value: string | null | undefined): value is string {
   return typeof value === "string" && value.trim().length > 0;
@@ -46,74 +48,92 @@ function parseArrayIndex(fieldPath: string, prefix: string): number | null {
   }
 
   const rawIndex = fieldPath.slice(prefix.length);
-  if (!/^\d+$/.test(rawIndex)) {
+  if (!/^(?:0|[1-9]\d*)$/.test(rawIndex)) {
     return null;
   }
 
   return Number.parseInt(rawIndex, 10);
 }
 
+interface RegistryRecordResolution {
+  record: RegistryRecord | null;
+  ambiguous: boolean;
+}
+
+function resolvedRegistryRecord(
+  record: RegistryRecord | null,
+): RegistryRecordResolution {
+  return { record, ambiguous: false };
+}
+
 function findRegistryRecord(
   registry: SaltRegistry,
   ref: SaltEvidenceRef,
-): RegistryRecord | null {
+): RegistryRecordResolution {
   const registryRef = ref.registry;
   if (!registryRef) {
-    return null;
+    return resolvedRegistryRecord(null);
   }
 
   switch (registryRef.entity_type) {
     case "component":
-      return (
+      return resolvedRegistryRecord(
         registry.components.find(
           (component) => component.id === registryRef.entity_id,
-        ) ?? null
+        ) ?? null,
       );
     case "deprecation":
-      return (
+      return resolvedRegistryRecord(
         registry.deprecations.find(
           (deprecation) => deprecation.id === registryRef.entity_id,
-        ) ?? null
+        ) ?? null,
       );
-    case "example":
-      return (
-        registry.examples.find(
-          (example) => example.id === registryRef.entity_id,
-        ) ??
-        registry.components
-          .flatMap((component) => component.examples)
-          .find((example) => example.id === registryRef.entity_id) ??
-        registry.patterns
-          .flatMap((pattern) => pattern.examples)
-          .find((example) => example.id === registryRef.entity_id) ??
-        null
-      );
+    case "example": {
+      const matches = [
+        ...registry.examples,
+        ...registry.components.flatMap((component) => component.examples),
+        ...registry.patterns.flatMap((pattern) => pattern.examples),
+      ].filter((example) => example.id === registryRef.entity_id);
+      const uniqueMatches = [
+        ...new Map(
+          matches.map((example) => [JSON.stringify(example), example] as const),
+        ).values(),
+      ];
+      return uniqueMatches.length === 1
+        ? resolvedRegistryRecord(uniqueMatches[0]!)
+        : { record: null, ambiguous: uniqueMatches.length > 1 };
+    }
     case "guide":
-      return (
+      return resolvedRegistryRecord(
         registry.guides.find((guide) => guide.id === registryRef.entity_id) ??
-        null
+          null,
       );
     case "package":
-      return (
+      return resolvedRegistryRecord(
         registry.packages.find(
           (packageRecord) =>
             packageRecord.id === registryRef.entity_id ||
             packageRecord.name === registryRef.entity_id,
-        ) ?? null
+        ) ?? null,
+      );
+    case "page":
+      return resolvedRegistryRecord(
+        registry.pages.find((page) => page.id === registryRef.entity_id) ??
+          null,
       );
     case "pattern":
-      return (
+      return resolvedRegistryRecord(
         registry.patterns.find(
           (pattern) => pattern.id === registryRef.entity_id,
-        ) ?? null
+        ) ?? null,
       );
     case "token":
-      return (
+      return resolvedRegistryRecord(
         registry.tokens.find((token) => token.name === registryRef.entity_id) ??
-        null
+          null,
       );
     default:
-      return null;
+      return resolvedRegistryRecord(null);
   }
 }
 
@@ -145,14 +165,28 @@ function componentFieldExists(
         (component.implementation_requirements?.required_imports.length ?? 0) >
         0
       );
+    case "composition":
+      return Boolean(
+        component.composition &&
+          ((component.composition.required_children?.some(hasText) ?? false) ||
+            (component.composition.optional_children?.some(hasText) ?? false) ||
+            hasText(component.composition.typical_parent)),
+      );
+    case "related_docs.usage":
+      return hasText(component.related_docs.usage);
     default:
       break;
   }
 
-  if (fieldPath.startsWith("props.")) {
-    const propName = fieldPath.slice("props.".length).split(".")[0];
+  if (/^props\.[^.]+$/u.test(fieldPath)) {
+    const propName = fieldPath.slice("props.".length);
     return component.props.some((prop) => prop.name === propName);
   }
+
+  const categoryIndex = parseArrayIndex(fieldPath, "category.");
+  if (categoryIndex != null) return hasText(component.category[categoryIndex]);
+  const tagIndex = parseArrayIndex(fieldPath, "tags.");
+  if (tagIndex != null) return hasText(component.tags[tagIndex]);
 
   const whenToUseIndex = parseArrayIndex(fieldPath, "when_to_use.");
   if (whenToUseIndex != null) {
@@ -239,6 +273,8 @@ function exampleFieldExists(
       return hasText(example.code);
     case "source_url":
       return hasText(example.source_url);
+    case "source_path":
+      return hasText(example.source_path);
     case "package":
       return hasText(example.package);
     case "target_name":
@@ -250,15 +286,30 @@ function exampleFieldExists(
 
 function guideFieldExists(guide: GuideRecord, fieldPath: string): boolean {
   switch (fieldPath) {
+    case "id":
+      return hasText(guide.id);
     case "name":
       return hasText(guide.name);
+    case "kind":
+      return hasText(guide.kind);
     case "summary":
       return hasText(guide.summary);
     case "related_docs.overview":
       return hasText(guide.related_docs.overview);
     default:
-      return false;
+      break;
   }
+  const packageIndex = parseArrayIndex(fieldPath, "packages.");
+  if (packageIndex != null) return hasText(guide.packages[packageIndex]);
+  const stepStatementMatch = fieldPath.match(
+    /^steps\.(0|[1-9]\d*)\.statements\.(0|[1-9]\d*)$/u,
+  );
+  if (!stepStatementMatch) return false;
+  return hasText(
+    guide.steps[Number.parseInt(stepStatementMatch[1]!, 10)]?.statements[
+      Number.parseInt(stepStatementMatch[2]!, 10)
+    ],
+  );
 }
 
 function packageFieldExists(
@@ -277,6 +328,35 @@ function packageFieldExists(
     default:
       return false;
   }
+}
+
+function pageFieldExists(page: PageRecord, fieldPath: string): boolean {
+  switch (fieldPath) {
+    case "id":
+      return hasText(page.id);
+    case "title":
+      return hasText(page.title);
+    case "route":
+      return hasText(page.route);
+    case "page_kind":
+      return hasText(page.page_kind);
+    case "summary":
+      return hasText(page.summary);
+    case "source_path":
+      return hasText(page.source_path);
+    default:
+      break;
+  }
+
+  for (const [prefix, values] of [
+    ["keywords.", page.keywords],
+    ["content.", page.content],
+    ["section_headings.", page.section_headings],
+  ] as const) {
+    const index = parseArrayIndex(fieldPath, prefix);
+    if (index !== null) return hasText(values[index]);
+  }
+  return false;
 }
 
 function patternFieldExists(
@@ -342,10 +422,12 @@ function patternFieldExists(
   }
 
   const accessibilitySignalMatch = fieldPath.match(
-    /^accessibility\.implementation_signals\.(\d+)(?:\.(kind|source_kind|source_url|values)(?:\.(\d+))?)?$/,
+    /^accessibility\.implementation_signals\.(0|[1-9]\d*)(?:\.(?:(kind|source_kind|source_url|source_path)|(values)(?:\.(0|[1-9]\d*))?))?$/u,
   );
   if (accessibilitySignalMatch) {
-    const [, rawIndex, key, rawValueIndex] = accessibilitySignalMatch;
+    const [, rawIndex, scalarKey, valuesKey, rawValueIndex] =
+      accessibilitySignalMatch;
+    const key = scalarKey ?? valuesKey;
     const signal =
       pattern.accessibility.implementation_signals?.[
         Number.parseInt(rawIndex, 10)
@@ -360,7 +442,7 @@ function patternFieldExists(
         hasText(signal.kind) &&
         signal.values.some(hasText) &&
         hasText(signal.source_kind) &&
-        hasText(signal.source_url)
+        (hasText(signal.source_url) || hasText(signal.source_path))
       );
     }
 
@@ -376,6 +458,10 @@ function patternFieldExists(
       return hasText(signal.source_url);
     }
 
+    if (key === "source_path") {
+      return hasText(signal.source_path);
+    }
+
     if (key === "values") {
       if (rawValueIndex == null) {
         return signal.values.some(hasText);
@@ -383,118 +469,6 @@ function patternFieldExists(
 
       return hasText(signal.values[Number.parseInt(rawValueIndex, 10)]);
     }
-  }
-
-  const starterSourceUrlIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.source_urls.",
-  );
-  if (starterSourceUrlIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.source_urls?.[starterSourceUrlIndex],
-    );
-  }
-
-  const starterExampleSourceUrlIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.example_source_urls.",
-  );
-  if (starterExampleSourceUrlIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.example_source_urls?.[
-        starterExampleSourceUrlIndex
-      ],
-    );
-  }
-
-  const starterRegionsIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.semantics.regions.",
-  );
-  if (starterRegionsIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.semantics.regions[starterRegionsIndex],
-    );
-  }
-
-  const starterRequiredRegionsIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.semantics.required_regions.",
-  );
-  if (starterRequiredRegionsIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.semantics.required_regions?.[
-        starterRequiredRegionsIndex
-      ],
-    );
-  }
-
-  const starterOptionalRegionsIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.semantics.optional_regions.",
-  );
-  if (starterOptionalRegionsIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.semantics.optional_regions?.[
-        starterOptionalRegionsIndex
-      ],
-    );
-  }
-
-  const starterBuildAroundIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.semantics.build_around.",
-  );
-  if (starterBuildAroundIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.semantics.build_around[starterBuildAroundIndex],
-    );
-  }
-
-  const starterPreserveConstraintsIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.semantics.preserve_constraints.",
-  );
-  if (starterPreserveConstraintsIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.semantics.preserve_constraints[
-        starterPreserveConstraintsIndex
-      ],
-    );
-  }
-
-  const starterTemplateImportMatch = fieldPath.match(
-    /^starter_scaffold\.template\.imports\.(\d+)\.(name|package)$/,
-  );
-  if (starterTemplateImportMatch) {
-    const [, rawIndex, key] = starterTemplateImportMatch;
-    const index = Number.parseInt(rawIndex, 10);
-    const importRecord = pattern.starter_scaffold?.template?.imports[index];
-    return key === "name"
-      ? hasText(importRecord?.name)
-      : hasText(importRecord?.package);
-  }
-
-  const starterTemplateJsxLineIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.template.jsx_lines.",
-  );
-  if (starterTemplateJsxLineIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.template?.jsx_lines[
-        starterTemplateJsxLineIndex
-      ],
-    );
-  }
-
-  const starterTemplateNoteIndex = parseArrayIndex(
-    fieldPath,
-    "starter_scaffold.template.notes.",
-  );
-  if (starterTemplateNoteIndex != null) {
-    return hasText(
-      pattern.starter_scaffold?.template?.notes?.[starterTemplateNoteIndex],
-    );
   }
 
   if (fieldPath.startsWith("examples.")) {
@@ -593,12 +567,30 @@ function deprecationFieldExists(
       return hasText(deprecation.kind);
     case "name":
       return hasText(deprecation.name);
+    case "subject":
+      return true;
+    case "subject.package":
+      return hasText(deprecation.subject.package);
+    case "subject.entrypoint":
+      return hasText(deprecation.subject.entrypoint);
+    case "subject.export_name":
+      return hasText(deprecation.subject.export_name);
+    case "subject.symbol_space":
+      return hasText(deprecation.subject.symbol_space);
+    case "subject.member_path":
+      return true;
     case "deprecated_in":
       return hasText(deprecation.deprecated_in);
     case "removed_in":
       return hasText(deprecation.removed_in);
     case "replacement.type":
       return hasText(deprecation.replacement.type);
+    case "replacement.mode":
+      return hasText(deprecation.replacement.mode);
+    case "replacement.target":
+      return deprecation.replacement.target !== null;
+    case "replacement.targets":
+      return true;
     case "replacement.name":
       return hasText(deprecation.replacement.name);
     case "replacement.notes":
@@ -609,8 +601,60 @@ function deprecationFieldExists(
       break;
   }
 
+  const identityFieldExists = (
+    identity: ApiSymbolIdentity,
+    relativePath: string,
+  ): boolean => {
+    switch (relativePath) {
+      case "package":
+        return hasText(identity.package);
+      case "entrypoint":
+        return hasText(identity.entrypoint);
+      case "export_name":
+        return hasText(identity.export_name);
+      case "symbol_space":
+        return hasText(identity.symbol_space);
+      case "member_path":
+        return true;
+      default:
+        break;
+    }
+    const memberMatch = relativePath.match(
+      /^member_path\.(0|[1-9]\d*)(?:\.(kind|name))?$/u,
+    );
+    if (!memberMatch) return false;
+    const [, rawIndex, property] = memberMatch;
+    const member = identity.member_path[Number.parseInt(rawIndex, 10)];
+    if (!member) return false;
+    if (property === undefined) return true;
+    return property === "kind" ? hasText(member.kind) : hasText(member.name);
+  };
+
+  if (fieldPath.startsWith("subject.")) {
+    return identityFieldExists(deprecation.subject, fieldPath.slice(8));
+  }
+  if (fieldPath.startsWith("replacement.target.")) {
+    return deprecation.replacement.target
+      ? identityFieldExists(
+          deprecation.replacement.target,
+          fieldPath.slice("replacement.target.".length),
+        )
+      : false;
+  }
+  const replacementTargetMatch = fieldPath.match(
+    /^replacement\.targets\.(0|[1-9]\d*)(?:\.(.+))?$/u,
+  );
+  if (replacementTargetMatch) {
+    const [, rawIndex, relativePath] = replacementTargetMatch;
+    const target =
+      deprecation.replacement.targets[Number.parseInt(rawIndex, 10)];
+    return target
+      ? relativePath === undefined || identityFieldExists(target, relativePath)
+      : false;
+  }
+
   const migrationDetailMatch = fieldPath.match(
-    /^migration\.details\.(\d+)\.(from|to)$/,
+    /^migration\.details\.(0|[1-9]\d*)\.(from|to)$/u,
   );
   if (migrationDetailMatch) {
     const [, rawIndex, key] = migrationDetailMatch;
@@ -622,6 +666,10 @@ function deprecationFieldExists(
   const sourceUrlIndex = parseArrayIndex(fieldPath, "source_urls.");
   if (sourceUrlIndex != null) {
     return hasText(deprecation.source_urls[sourceUrlIndex]);
+  }
+  const sourcePathIndex = parseArrayIndex(fieldPath, "source_paths.");
+  if (sourcePathIndex != null) {
+    return hasText(deprecation.source_paths?.[sourcePathIndex]);
   }
 
   return false;
@@ -643,6 +691,8 @@ function registryFieldExists(
       return guideFieldExists(record as GuideRecord, fieldPath);
     case "package":
       return packageFieldExists(record as PackageRecord, fieldPath);
+    case "page":
+      return pageFieldExists(record as PageRecord, fieldPath);
     case "pattern":
       return patternFieldExists(record as PatternRecord, fieldPath);
     case "token":
@@ -675,7 +725,7 @@ function validateTokenStructuralRoleRuleEvidence(
   ref: SaltEvidenceRef,
   path: string,
   record: RegistryRecord,
-  options: GeneratedArtifactRegistryEvidenceOptions,
+  rulePack: SaltTokenPolicyStructuralRoleRulePack | null,
 ): SaltEvidenceValidationIssue[] {
   if (ref.registry?.entity_type !== "token" || !ref.registry.field_path) {
     return [];
@@ -690,7 +740,6 @@ function validateTokenStructuralRoleRuleEvidence(
     return [];
   }
 
-  const rulePack = options.tokenPolicyStructuralRoleRulePack;
   const evidenceRefs = rulePack
     ? findTokenStructuralRoleRuleEvidence({
         rule_pack: rulePack,
@@ -716,15 +765,51 @@ function validateRegistryRef(
   ref: SaltEvidenceRef,
   path: string,
   registry: SaltRegistry,
-  options: GeneratedArtifactRegistryEvidenceOptions,
+  activeRegistryHash: string,
+  structuralRoleRulePack: SaltTokenPolicyStructuralRoleRulePack | null,
 ): SaltEvidenceValidationIssue[] {
   const issues: SaltEvidenceValidationIssue[] = [];
 
-  if (ref.source_kind !== "registry" || !ref.registry) {
+  if (!ref.registry) {
     return issues;
   }
+  if (!hasText(ref.registry.registry_version)) {
+    issues.push({
+      code: "missing_registry_identity",
+      message: `Registry evidence ref '${ref.id}' must declare registry.registry_version.`,
+      path: `${path}.registry.registry_version`,
+    });
+  } else if (ref.registry.registry_version !== registry.version) {
+    issues.push({
+      code: "stale_registry",
+      message: `Registry evidence ref '${ref.id}' targets version '${ref.registry.registry_version}', but the active registry is '${registry.version}'.`,
+      path: `${path}.registry.registry_version`,
+    });
+  }
+  if (!hasText(ref.registry.registry_hash)) {
+    issues.push({
+      code: "missing_registry_identity",
+      message: `Registry evidence ref '${ref.id}' must declare registry.registry_hash.`,
+      path: `${path}.registry.registry_hash`,
+    });
+  } else if (ref.registry.registry_hash !== activeRegistryHash) {
+    issues.push({
+      code: "stale_registry",
+      message: `Registry evidence ref '${ref.id}' targets hash '${ref.registry.registry_hash}', but the active registry hash is '${activeRegistryHash}'.`,
+      path: `${path}.registry.registry_hash`,
+    });
+  }
 
-  const record = findRegistryRecord(registry, ref);
+  const resolution = findRegistryRecord(registry, ref);
+  if (resolution.ambiguous) {
+    issues.push({
+      code: "ambiguous_registry_entity",
+      message: `Registry evidence ref '${ref.id}' points to non-unique ${ref.registry.entity_type} id '${ref.registry.entity_id}'; cite the owning component or pattern instead.`,
+      path: `${path}.registry.entity_id`,
+    });
+    return issues;
+  }
+  const record = resolution.record;
   if (!record) {
     issues.push({
       code: "missing_registry_entity",
@@ -752,7 +837,12 @@ function validateRegistryRef(
   }
 
   issues.push(
-    ...validateTokenStructuralRoleRuleEvidence(ref, path, record, options),
+    ...validateTokenStructuralRoleRuleEvidence(
+      ref,
+      path,
+      record,
+      structuralRoleRulePack,
+    ),
   );
 
   if (
@@ -773,19 +863,110 @@ function validateRegistryRef(
   return issues;
 }
 
+function requiresStructuralRoleRulePack(ref: SaltEvidenceRef): boolean {
+  return (
+    ref.registry?.entity_type === "token" &&
+    (ref.registry.field_path === "policy.pairing" ||
+      ref.registry.field_path?.startsWith("policy.structural_roles.") === true)
+  );
+}
+
+function validateActiveStructuralRoleRulePack(
+  registry: SaltRegistry,
+  required: boolean,
+): {
+  rulePack: SaltTokenPolicyStructuralRoleRulePack | null;
+  issues: SaltEvidenceValidationIssue[];
+} {
+  if (!required) {
+    return { rulePack: null, issues: [] };
+  }
+  const rulePack = registry.token_policy_structural_role_rule_pack ?? null;
+  if (!rulePack) {
+    return { rulePack: null, issues: [] };
+  }
+  const rulePackIssues = validateTokenPolicyStructuralRoleRulePackEvidence(
+    rulePack,
+    registry,
+  );
+  return {
+    rulePack: rulePackIssues.length === 0 ? rulePack : null,
+    issues: rulePackIssues.map(
+      (issue): SaltEvidenceValidationIssue => ({
+        code:
+          issue.code === "missing_registry_identity" ||
+          issue.code === "stale_registry"
+            ? issue.code
+            : "invalid_structural_role_rule_pack",
+        message: issue.message,
+        path: `token_policy_structural_role_rule_pack.${issue.path}`,
+      }),
+    ),
+  };
+}
+
+export function validateSaltEvidenceRefAgainstRegistry(
+  ref: SaltEvidenceRef,
+  path: string,
+  registry: SaltRegistry,
+): SaltEvidenceValidationIssue[] {
+  const activeRegistryHash = getSaltRegistryFingerprint(registry);
+  const structuralRoleRulePack = validateActiveStructuralRoleRulePack(
+    registry,
+    requiresStructuralRoleRulePack(ref),
+  );
+  return [
+    ...validateEvidenceRef(ref, path),
+    ...structuralRoleRulePack.issues,
+    ...validateRegistryRef(
+      ref,
+      path,
+      registry,
+      activeRegistryHash,
+      structuralRoleRulePack.rulePack,
+    ),
+  ];
+}
+
 export function validateGeneratedArtifactRegistryEvidence(
   artifact: SaltGeneratedArtifact,
   registry: SaltRegistry,
-  options: GeneratedArtifactRegistryEvidenceOptions = {},
 ): SaltEvidenceValidationIssue[] {
   const issues = validateGeneratedArtifactEvidence(artifact);
-  const resolvedOptions: GeneratedArtifactRegistryEvidenceOptions = {
-    ...options,
-    tokenPolicyStructuralRoleRulePack:
-      options.tokenPolicyStructuralRoleRulePack ??
-      registry.token_policy_structural_role_rule_pack ??
-      null,
-  };
+  const activeRegistryHash = getSaltRegistryFingerprint(registry);
+  if (!hasText(artifact.registry.version)) {
+    issues.push({
+      code: "missing_registry_identity",
+      message:
+        "Generated artifacts validated against a registry must declare registry.version.",
+      path: "registry.version",
+    });
+  } else if (artifact.registry.version !== registry.version) {
+    issues.push({
+      code: "stale_registry",
+      message: `Generated artifact targets registry version '${artifact.registry.version}', but the active registry is '${registry.version}'.`,
+      path: "registry.version",
+    });
+  }
+  if (!hasText(artifact.registry.hash)) {
+    issues.push({
+      code: "missing_registry_identity",
+      message:
+        "Generated artifacts validated against a registry must declare registry.hash.",
+      path: "registry.hash",
+    });
+  } else if (artifact.registry.hash !== activeRegistryHash) {
+    issues.push({
+      code: "stale_registry",
+      message: `Generated artifact targets registry hash '${artifact.registry.hash}', but the active registry hash is '${activeRegistryHash}'.`,
+      path: "registry.hash",
+    });
+  }
+  const structuralRoleRulePack = validateActiveStructuralRoleRulePack(
+    registry,
+    artifact.evidence_refs.some(requiresStructuralRoleRulePack),
+  );
+  issues.push(...structuralRoleRulePack.issues);
 
   artifact.evidence_refs.forEach((ref, refIndex) => {
     issues.push(
@@ -793,7 +974,8 @@ export function validateGeneratedArtifactRegistryEvidence(
         ref,
         `evidence_refs[${refIndex}]`,
         registry,
-        resolvedOptions,
+        activeRegistryHash,
+        structuralRoleRulePack.rulePack,
       ),
     );
   });

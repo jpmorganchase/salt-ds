@@ -35,7 +35,8 @@ consumer-app/
 - `package.json`
   - minimal React app dependencies that consume Salt, plus a working `ui:verify` TypeScript check
 - `mcp.config.example.json`
-  - example Salt MCP configuration
+  - local-development configuration used only after repository tooling installs
+    the exact packed tarball under test
 - `AGENTS.md`
   - the shared repo workflow contract for Salt UI tasks
 - `.salt/team.json`
@@ -48,9 +49,9 @@ consumer-app/
 
 ## What This Example Shows
 
-- Salt MCP as the only public v1 workflow path
-- the exact reviewed `@salt-ds/mcp@0.1.0` beta package, never `latest`
-- an IDE-first workflow order of `review`, `migrate`, then `create`
+- a consumer-owned project and policy fixture used by the MCP verification suite
+- a locally packed `@salt-ds/mcp` install, not a public release claim
+- agent-owned create and migration work grounded by read-only Salt retrieval
 - zero-config canonical Salt value before repo policy exists
 - optional `.salt/team.json` as the default conventions layer when a team chooses repo policy
 - root `AGENTS.md` as the shared cross-IDE workflow contract
@@ -59,9 +60,14 @@ consumer-app/
 ## Important Boundary
 
 - Salt MCP stays canonical for Salt decisions.
+- Salt MCP is read-only and does not authorize edits or prove task completion;
+  the host agent owns those decisions.
 - `.salt/team.json` is optional, stays repo-local, and remains host/user-owned. Without it, Salt stays canonical-only and does not invent durable team policy.
 - `.salt/stack.json` is optional and advanced, not the default.
-- The optional `salt-ds` skill is not part of public `0.1.0` onboarding because this release does not yet have a separately verified immutable skill commit. A mutable branch URL is not an acceptable substitute.
+- Public onboarding is paused during the breaking MCP redesign. A mutable branch
+  URL is not an acceptable substitute for a verified release.
+- The MCP config deliberately contains no registry install command or public
+  version claim. It resolves only a locally installed packed artifact.
 - There is no public CLI fallback. Runtime capture, durable attestation,
   bootstrap automation, and artifact persistence remain host- or repo-owned.
 

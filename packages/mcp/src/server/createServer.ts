@@ -1,27 +1,47 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { loadRegistry } from "../core/runtime.js";
+import { McpServer } from "@modelcontextprotocol/server";
+import { loadCatalogRuntimeContext } from "../core/runtime.js";
+import {
+  createProjectAccessPolicy,
+  type ProjectAccessOptions,
+} from "./projectAccess.js";
 import { registerSaltResources } from "./registerResources.js";
 import { registerSaltTools } from "./registerTools.js";
+import { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 import {
   buildSaltMcpInstructions,
   buildSaltMcpServerInfo,
+  SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS,
 } from "./serverMetadata.js";
-import type { SourceAttributionOptions } from "./sourceAttribution.js";
 
-interface CreateServerOptions extends SourceAttributionOptions {
+interface CreateServerOptions {
   registryDir?: string;
+  projectAccess?: ProjectAccessOptions;
 }
 
 export async function createSaltMcpServer(options: CreateServerOptions = {}) {
-  const registry = await loadRegistry({ registryDir: options.registryDir });
+  const context = await loadCatalogRuntimeContext({
+    registryDir: options.registryDir,
+  });
+  const projectAccess = await createProjectAccessPolicy(options.projectAccess);
+  const projectPolicySnapshots = new ProjectPolicySnapshotCache();
 
-  const server = new McpServer(buildSaltMcpServerInfo(registry), {
-    instructions: buildSaltMcpInstructions(registry),
+  const server = new McpServer(buildSaltMcpServerInfo(context), {
+    instructions: buildSaltMcpInstructions(context),
+    supportedProtocolVersions: [...SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS],
+    capabilities: {
+      resources: { listChanged: false, subscribe: false },
+    },
   });
 
-  registerSaltResources(server, registry);
-  registerSaltTools(server, registry, {
-    siteBaseUrl: options.siteBaseUrl,
+  registerSaltResources(server, {
+    ...context,
+    projectAccess,
+    projectPolicySnapshots,
+  });
+  registerSaltTools(server, {
+    ...context,
+    projectAccess,
+    projectPolicySnapshots,
   });
 
   return server;

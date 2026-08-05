@@ -1,13 +1,14 @@
-import fs from "node:fs/promises";
 import path from "node:path";
-import { satisfies, validRange } from "semver";
-import { normalizeComparableVersion } from "../versionUtils.js";
+import { satisfies, valid, validRange } from "semver";
+import { readBoundedProjectFile } from "../project/boundedProjectFile.js";
 import type { ProjectConventions, ProjectConventionsStack } from "./index.js";
 
 export const MAX_PROJECT_POLICY_FILE_BYTES = 512 * 1024;
 const MAX_PROJECT_POLICY_ENTRIES = 100;
-const MAX_PROJECT_CONVENTION_LAYERS = 64;
-const MAX_PROJECT_POLICY_STRING_LENGTH = 4_096;
+const MAX_PROJECT_CONVENTION_LAYERS = 8;
+export const MAX_PROJECT_POLICY_STACK_BYTES =
+  MAX_PROJECT_POLICY_FILE_BYTES * (MAX_PROJECT_CONVENTION_LAYERS + 1);
+export const MAX_PROJECT_POLICY_STRING_LENGTH = 4_096;
 
 export type ProjectConventionsLayerResolutionStatus =
   | "resolved"
@@ -61,29 +62,10 @@ function hasOnlyKeys(
   return Object.keys(value).every((key) => allowed.has(key));
 }
 
-function isMissingFileError(error: unknown): boolean {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "code" in error &&
-    error.code === "ENOENT"
-  );
-}
-
-function isPathInside(rootDir: string, candidatePath: string): boolean {
-  const relativePath = path.relative(rootDir, candidatePath);
-  return (
-    relativePath === "" ||
-    (!relativePath.startsWith(`..${path.sep}`) &&
-      relativePath !== ".." &&
-      !path.isAbsolute(relativePath))
-  );
-}
-
 function isBoundedString(value: unknown, allowEmpty = false): value is string {
   return (
     typeof value === "string" &&
-    value.length <= MAX_PROJECT_POLICY_STRING_LENGTH &&
+    Array.from(value).length <= MAX_PROJECT_POLICY_STRING_LENGTH &&
     (allowEmpty || value.trim().length > 0)
   );
 }
@@ -297,6 +279,19 @@ function validateProjectConventionsPayload(
   return true;
 }
 
+export function parseProjectConventionsPayload(input: unknown): {
+  conventions: ProjectConventions | null;
+  reason: string | null;
+} {
+  return validateProjectConventionsPayload(input)
+    ? { conventions: input, reason: null }
+    : {
+        conventions: null,
+        reason:
+          "Project conventions do not match the bounded project_conventions_v1 data contract.",
+      };
+}
+
 export function parseProjectConventionsStackPayload(input: unknown): {
   stack: ProjectConventionsStack | null;
   reason: string | null;
@@ -375,13 +370,9 @@ export function parseProjectConventionsStackPayload(input: unknown): {
 
     const source = layer.source;
     const validSource =
-      (source.type === "file" &&
-        hasOnlyKeys(source, ["type", "path"]) &&
-        isBoundedString(source.path)) ||
-      (source.type === "package" &&
-        hasOnlyKeys(source, ["type", "specifier", "export"]) &&
-        isBoundedString(source.specifier) &&
-        isOptionalBoundedString(source.export));
+      source.type === "file" &&
+      hasOnlyKeys(source, ["type", "path"]) &&
+      isBoundedString(source.path);
     if (!validSource) {
       return {
         stack: null,
@@ -395,6 +386,7 @@ export function parseProjectConventionsStackPayload(input: unknown): {
 }
 
 export async function readProjectConventionsStackFile(input: {
+  authorityRoot?: string;
   filePath: string;
   rootDir: string;
 }): Promise<{
@@ -426,8 +418,8 @@ export async function readProjectConventionsStackFile(input: {
     };
   }
 }
-
 async function resolveBoundedPolicyFile(input: {
+  authorityRoot?: string;
   filePath: string;
   rootDir?: string;
 }): Promise<{
@@ -437,96 +429,52 @@ async function resolveBoundedPolicyFile(input: {
   reason: string | null;
 }> {
   const absolutePath = path.resolve(input.filePath);
-  let realRootDir: string | null = null;
-  if (input.rootDir) {
-    const absoluteRootDir = path.resolve(input.rootDir);
-    if (!isPathInside(absoluteRootDir, absolutePath)) {
-      return {
-        contents: null,
-        resolvedPath: absolutePath,
-        missing: false,
-        reason: `Project conventions path ${absolutePath} leaves the declared root_dir. Only repo-local JSON policy files are supported.`,
-      };
-    }
-    realRootDir = await fs.realpath(absoluteRootDir).catch(() => null);
-    if (!realRootDir) {
-      return {
-        contents: null,
-        resolvedPath: absolutePath,
-        missing: false,
-        reason: `Could not resolve the declared root_dir ${absoluteRootDir} before reading project conventions.`,
-      };
-    }
-  }
-
-  let realPath: string;
-  try {
-    realPath = await fs.realpath(absolutePath);
-  } catch (error) {
+  const rootDir = input.rootDir ?? path.dirname(absolutePath);
+  const file = await readBoundedProjectFile({
+    authorityRoot: input.authorityRoot ?? rootDir,
+    rootDir,
+    filePath: absolutePath,
+    maxUtf8Bytes: MAX_PROJECT_POLICY_FILE_BYTES,
+  });
+  if (file.status === "absent") {
     return {
       contents: null,
       resolvedPath: absolutePath,
-      missing: isMissingFileError(error),
-      reason: `Could not read project conventions at ${absolutePath}.`,
+      missing: true,
+      reason: "The project policy file is absent.",
     };
   }
-
-  if (realRootDir && !isPathInside(realRootDir, realPath)) {
+  if (file.status === "invalid") {
+    const reason = {
+      outside_root:
+        "The project policy file is outside the authorized root after realpath resolution.",
+      not_file: "The project policy marker is not a regular file.",
+      unreadable: "The project policy file is unreadable.",
+      oversized: `The project policy file exceeds the ${MAX_PROJECT_POLICY_FILE_BYTES}-byte inspection limit.`,
+      changed_during_inspection:
+        "The project policy file changed during bounded inspection.",
+      identity_unavailable:
+        "The project policy file has no stable filesystem identity for bounded inspection.",
+    }[file.reason];
     return {
       contents: null,
-      resolvedPath: realPath,
+      resolvedPath: absolutePath,
       missing: false,
-      reason: `Project conventions path ${absolutePath} resolves outside the declared root_dir. Symlink escapes are not supported.`,
+      reason,
     };
   }
-
-  try {
-    const stats = await fs.stat(realPath);
-    if (!stats.isFile()) {
-      return {
-        contents: null,
-        resolvedPath: realPath,
-        missing: false,
-        reason: `Project conventions path ${realPath} is not a file.`,
-      };
-    }
-    if (stats.size > MAX_PROJECT_POLICY_FILE_BYTES) {
-      return {
-        contents: null,
-        resolvedPath: realPath,
-        missing: false,
-        reason: `Project conventions at ${realPath} exceed the ${MAX_PROJECT_POLICY_FILE_BYTES}-byte inspection limit.`,
-      };
-    }
-    const contents = await fs.readFile(realPath, "utf8");
-    if (Buffer.byteLength(contents, "utf8") > MAX_PROJECT_POLICY_FILE_BYTES) {
-      return {
-        contents: null,
-        resolvedPath: realPath,
-        missing: false,
-        reason: `Project conventions at ${realPath} exceed the ${MAX_PROJECT_POLICY_FILE_BYTES}-byte inspection limit.`,
-      };
-    }
-    return {
-      contents,
-      resolvedPath: realPath,
-      missing: false,
-      reason: null,
-    };
-  } catch {
-    return {
-      contents: null,
-      resolvedPath: realPath,
-      missing: false,
-      reason: `Could not read project conventions at ${realPath}.`,
-    };
-  }
+  return {
+    contents: file.text,
+    resolvedPath: file.path,
+    missing: false,
+    reason: null,
+  };
 }
 
 function normalizeSaltVersion(
   version: string | null | undefined,
 ): string | null {
-  return normalizeComparableVersion(version);
+  return version ? valid(version.trim()) : null;
 }
 
 export function getProjectConventionsMetadata(
@@ -548,15 +496,21 @@ export function getProjectConventionsMetadata(
 }
 
 export function deriveComparableSaltVersion(input: {
-  declaredVersion?: string | null;
-  resolvedVersions?: string[];
+  resolvedPackages?: readonly {
+    name: string;
+    resolvedVersion: string | null;
+  }[];
 }): string | null {
-  const uniqueResolved = [...new Set(input.resolvedVersions ?? [])];
-  if (uniqueResolved.length === 1) {
-    return normalizeSaltVersion(uniqueResolved[0]);
-  }
-
-  return normalizeSaltVersion(input.declaredVersion ?? null);
+  const observedCore = (input.resolvedPackages ?? []).filter(
+    (entry) => entry.name === "@salt-ds/core",
+  );
+  if (observedCore.length === 0) return null;
+  const exactVersions = observedCore.map((entry) =>
+    entry.resolvedVersion ? valid(entry.resolvedVersion.trim()) : null,
+  );
+  if (exactVersions.some((version) => version === null)) return null;
+  const uniqueExactVersions = [...new Set(exactVersions as string[])];
+  return uniqueExactVersions.length === 1 ? uniqueExactVersions[0]! : null;
 }
 
 export function evaluatePackCompatibility(input: {
@@ -591,7 +545,7 @@ export function evaluatePackCompatibility(input: {
       currentSaltVersion: input.currentSaltVersion,
       checkedVersion: null,
       reason:
-        "Salt version compatibility could not be verified because no comparable Salt package version was detected for the repo.",
+        "Salt version compatibility could not be verified because no exact resolved @salt-ds/core version was observed for the repo.",
     };
   }
 
@@ -613,6 +567,7 @@ export function evaluatePackCompatibility(input: {
 }
 
 export async function resolveProjectConventionsFileLayer(input: {
+  authorityRoot?: string;
   filePath: string;
   rootDir?: string;
   currentSaltVersion: string | null;
@@ -699,27 +654,4 @@ export async function resolveProjectConventionsFileLayer(input: {
       reason: `Could not parse project conventions at ${file.resolvedPath ?? input.filePath}.`,
     };
   }
-}
-
-export async function resolveProjectConventionsPackageLayer(input: {
-  rootDir: string;
-  specifier: string;
-  exportName?: string;
-  currentSaltVersion: string | null;
-  optional?: boolean;
-}): Promise<ProjectConventionsLayerResolution> {
-  const descriptor = input.exportName
-    ? `${input.specifier}#${input.exportName}`
-    : input.specifier;
-  return {
-    status: "invalid",
-    resolvedPath: null,
-    packageName: input.specifier,
-    exportName: input.exportName ?? null,
-    packageVersion: null,
-    conventions: null,
-    metadata: getProjectConventionsMetadata(null),
-    compatibility: null,
-    reason: `Package-backed project-conventions layer ${descriptor} is unsupported. Salt MCP v1 treats project policy as data-only JSON and never imports or requires policy package code. Replace this layer with source.type "file" pointing to a repo-local JSON policy file.`,
-  };
 }

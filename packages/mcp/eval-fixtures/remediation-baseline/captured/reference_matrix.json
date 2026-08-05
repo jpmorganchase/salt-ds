@@ -1,0 +1,1862 @@
+{
+  "scenario": {
+    "id": "reference_matrix",
+    "kind": "tool_call",
+    "tool": "get_salt_reference",
+    "purpose": "Representative exact retrieval, family retrieval, and known-missing behavior.",
+    "semantic_task_result": "success"
+  },
+  "request": {
+    "method": "tools/call",
+    "params": {
+      "name": "get_salt_reference",
+      "arguments": "reference matrix recorded in response.calls"
+    }
+  },
+  "response": {
+    "calls": [
+      {
+        "arguments": {
+          "names": [
+            "Button",
+            "Search",
+            "Definitely Missing Salt Thing"
+          ]
+        },
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}},\"decision\":{\"status\":\"partial\",\"why\":\"Resolved 2 of 3 requested entities; 1 still need attention.\"},\"requested_count\":3,\"found_count\":2,\"not_found_count\":1,\"ambiguous_count\":0,\"results\":[{\"name\":\"Button\",\"result\":{\"entity_type\":\"component\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved Button as a Salt component.\"},\"entity\":{\"name\":\"Button\",\"summary\":\"Button is an interactive component that allows the user to execute an action. Button comes in three distinct appearances: solid, bordered, and transparent. These styles provide greater choice and flexibility for establishing hierarchy and affordance within a UI. You can display a button with or without a text description or icon.\",\"why\":\"To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as dialogs, cards and forms.\",\"tradeoffs\":[\"When the primary action is to take the user to another page or window rather than to trigger a function. Instead, use Link.\"],\"alternatives\":[{\"use\":\"Link\",\"reason\":\"Related component (similarTo).\"},{\"use\":\"Pill\",\"reason\":\"Related component (similarTo).\"},{\"use\":\"Icon\",\"reason\":\"Related component (contains).\"},{\"use\":\"Status indicator\",\"reason\":\"Related component (contains).\"}],\"docs\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/accessibility\",\"/salt/components/button/examples\"],\"examples\":[\"/salt/components/button/examples\"],\"related_guides\":[{\"name\":\"Composition pitfalls\",\"kind\":\"getting-started\",\"summary\":\"Review the most common Salt composition mistakes, including nested interactive primitives, pass-through wrappers, and rebuilding standard primitives.\",\"overview\":\"/salt/getting-started/composition-pitfalls\"},{\"name\":\"Custom wrappers\",\"kind\":\"getting-started\",\"summary\":\"Learn when a wrapper over a Salt primitive adds value and when it is only hiding the underlying component behind prop forwarding.\",\"overview\":\"/salt/getting-started/custom-wrappers\"},{\"name\":\"Choosing the right primitive\",\"kind\":\"getting-started\",\"summary\":\"Choose Salt components, layouts, and patterns by user intent first, then prefer the most constrained Salt option before creating custom UI.\",\"overview\":\"/salt/getting-started/choosing-the-right-primitive\"},{\"name\":\"Developing with Salt\",\"kind\":\"getting-started\",\"summary\":\"Learn how to use Salt’s UI components in your React web applications.\",\"overview\":\"/salt/getting-started/developing\"}],\"guidance_sources\":[\"component-category-map\",\"usage-docs\"],\"next_step\":\"Review examples for Button before implementing.\",\"key_props\":[{\"name\":\"appearance\",\"type\":\"keyof ButtonAppearances\",\"description\":\"The appearance of the button. Options are 'solid', 'bordered', and 'transparent'. 'solid' is the default value. @since 1.36.0.\"},{\"name\":\"disabled\",\"type\":\"boolean\",\"description\":\"If true, the button will be disabled.\"},{\"name\":\"focusableWhenDisabled\",\"type\":\"boolean\",\"description\":\"If true, the button will be focusable when disabled.\"},{\"name\":\"loading\",\"type\":\"boolean\",\"description\":\"If true, the button will be in a loading state. This allows a spinner to be nested inside the button. @since 1.38.0.\"},{\"name\":\"loadingAnnouncement\",\"type\":\"string\",\"description\":\"Text to be announced by screen readers, intended to be used in conjunction with the loading prop. @since 1.38.0.\"}],\"prop_count\":7,\"deprecated_prop_count\":1},\"suggested_follow_ups\":[{\"workflow\":\"get_salt_reference\",\"reason\":\"Find the best implementation example for Button.\",\"args\":{\"names\":[\"Button\"],\"entity_type\":\"component\",\"include\":[\"examples\"],\"include_starter_code\":true},\"follow_up_mode\":\"exact_name\"},{\"workflow\":\"create_salt_ui\",\"reason\":\"Compare Button with Link before committing.\",\"args\":{\"query\":\"Compare Button with Link\",\"solution_type\":\"component\"},\"follow_up_mode\":\"broad_query\"}],\"next_step\":\"Review examples for Button before implementing. Then confirm approved repo wrappers for analytics, defaults, or shared behavior through project conventions before finalizing the implementation.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":true,\"topics\":[\"wrappers\"],\"reason\":\"This lookup resolves canonical Salt component guidance. Confirm whether the repo wraps or narrows this primitive through project conventions before treating it as the final project answer.\"}}}},{\"name\":\"Search\",\"result\":{\"entity_type\":\"pattern\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved Search as a Salt pattern.\"},\"entity\":{\"id\":\"pattern.search\",\"name\":\"Search\",\"aliases\":[\"/salt/patterns/search\",\"search\"],\"status\":\"stable\",\"summary\":\"The Search pattern offers users an intuitive way to explore content quickly by using keywords. Search is essential to discover information in apps that support large amounts of information. This pattern supports a basic menu driven search behavior, with optional free text behavior and configurable search result items.\",\"when_to_use\":[\"Locate information in applications with large amounts of data.\",\"Look through a catalog of items, like a product catalog or a library.\",\"Navigate to a page or resource.\"],\"when_not_to_use\":[\"When users already know the destination and only need a direct navigation control, use a link, button, or navigation item instead.\",\"When the task is filtering a visible data set in place, use filters or a data grid instead of Search.\",\"When the scope is a small, fixed set of options, use a Combo box or Select control instead of Search.\"],\"composed_of\":[{\"component\":\"Combo box\",\"role\":\"Use Combo box to display the search field.\"}],\"related_patterns\":[],\"how_to_build\":[\"**Search input field:** A single input field where users type their queries.\",\"**Search icon:** The magnifying glass icon indicates search.\",\"**Placeholder text:** Hints to users what information can be searched for. Placeholder text should be clear and tell the user exactly what can be searched for if results are limited. For example, if only page titles can be searched, placeholder text should read “Search page titles.”\",\"**Close button:** A close button that appears within the search input field, allowing users to quickly clear their current query and start a new search.\",\"**Expand button:** A chevron icon button typically used to indicate that a dropdown menu can be expanded or collapsed.\",\"**Section header:** A label used to organize search results into distinct categories within the dropdown list. It helps users quickly identify and navigate different types of results, such as recent searches, suggestions, pages, and people.\",\"**Result item:** An individual entry within the search results dropdown. It can include various elements such as secondary labels, icons, or avatars.\",\"Use Combo box to display the search field.\",\"Use Option Group to group the search results.\",\"Use Option to display a search result.\"],\"how_it_works\":[\"Basic menu-driven search Initial interaction: Search field displays with \\\"Search\\\" text, inviting the user to begin their search.\",\"Basic menu-driven search Activating the search: When the user clicks the search field, a search button appears and a dropdown emerges.\",\"Basic menu-driven search Recent searches: If there are recent searches, a list of past queries appears, providing quick access to previous results.\",\"Basic menu-driven search Typing the query: As the user types, a close button appears for easy clearing of the input. The dropdown updates in real-time, offering suggestions that match the input, with bolded text for clarity.\",\"Basic menu-driven search Direct to the results: Once the user submits a search, they are directed to the results page. The search field remains visible, showing the entered query, ready for new searches.\",\"Basic menu-driven search Direct submission: Pressing \\\"Enter\\\" after entering a search query will lead the user to the page of the first result in the dropdown.\",\"Basic menu-driven search Selecting suggestion: Choosing a suggestion from the dropdown takes the user directly to the page of the selected result.\",\"Free text search capability Direct submission: Pressing the \\\"Enter\\\" key initiates the search based on the user's input.\",\"Free text search capability Selecting suggestion: Users can navigate through the menu using arrow keys or click on a result to select from the dropdown.\",\"Free text search capability Optional search button: A search button can also be added as an optional element, providing a clear call to action and visual cue for more explicit search experiences.\",\"Search result item types: The search pattern currently supports basic search result items that comprise non-focusable elements: text, icons, country symbols, and avatars.\",\"Search result item types: The following are examples of the types of results items you can create.\",\"Search result item types: **Basic search result:** Displays only the primary search result value, ideal for straightforward results where no additional context is needed.\",\"Search result item types: **Search result with icon:** Combines a descriptive icon with the primary search result value, useful for visually differentiating results by category or type.\",\"Search Loading results: Indicates that search results are being fetched, typically shown with a spinner used when there is a delay in retrieving results to inform users that processing is ongoing.\",\"Search result groups: Organizes search results into clear categories, such as recent searches, suggestions, pages, and people. This structure helps users quickly find and identify relevant information, making navigation easier and more efficient. By grouping results, users can access all necessary information in a straightforward and user-friendly way, effectively managing complex search scenarios. Within these categories, consider ordering items alphabetically, chronologically, or by relevance, depending on what makes the most sense for the content type. This approach helps users quickly identify and navigate to the type of result they are looking for.\",\"Search result order: This section provides guidelines for organizing and prioritizing search results in a dropdown menu.\",\"Search result order: **Relevance first:** Prioritize results based on relevance to the user's query, showing the most closely matching items at the top. Context is determined using user preferences, application section, keyword analysis, and session data, helping tailor results to better match user intent.\",\"Search result order: **Recent searches:** If applicable, display recent searches at the top. This allows users to quickly access queries they've made before.\",\"Search result order: **Suggestions:** Provide suggested search terms or autocomplete options that are closely related to the input string. These can help guide users to popular or common searches.\",\"Search placement: Search is typically located in three key areas for easy access.\",\"Search placement: **Header:** Accessible from any page, ideal for global search.\",\"Search placement: **Center:** Prominent on homepages, used when search is a primary function.\",\"Search placement: **Expandable search:** Starts as an icon button, expanding to a search field or dialog, saving space in minimalist designs.\"],\"resources\":[],\"related_docs\":{\"overview\":\"/salt/patterns/search\"},\"docs\":[\"/salt/patterns/search\"],\"related_guides\":[],\"guidance_sources\":[\"pattern-category-map\",\"pattern-docs\"],\"next_step\":\"Review examples for Search before implementing.\"},\"suggested_follow_ups\":[{\"workflow\":\"get_salt_reference\",\"reason\":\"Find examples that illustrate Search.\",\"args\":{\"names\":[\"Search\"],\"entity_type\":\"pattern\",\"include\":[\"examples\"],\"include_starter_code\":true},\"follow_up_mode\":\"exact_name\"}],\"next_step\":\"Review examples for Search before implementing. Then confirm approved page patterns and workflow scaffolds and local layout containers and screen skeletons through project conventions before finalizing the implementation.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":true,\"topics\":[\"page-patterns\",\"local-layout\"],\"reason\":\"This lookup resolves canonical Salt flow or page guidance. Confirm whether the repo has approved page patterns or shell conventions before treating it as the final project structure.\"}}}},{\"name\":\"Definitely Missing Salt Thing\",\"result\":{\"entity_type\":null,\"decision\":{\"status\":\"not_found\",\"why\":\"No exact Salt entity match was found in the public v1 catalog surface.\"},\"entity\":null,\"next_step\":\"Retry with an exact component, pattern, foundation, token, guide, page, or package name, or use create_salt_ui for broader routing.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}}}}],\"unresolved_names\":[\"Definitely Missing Salt Thing\"],\"next_step\":\"Inspect the per-name rows for \\\"Definitely Missing Salt Thing\\\" (each row carries its own did_you_mean and ambiguity payload), then retry just the unresolved names or use create_salt_ui for the broader intent.\",\"registry_context\":{\"source\":\"bundled_package\",\"registry_version\":\"0.1.0\",\"registry_generated_at\":\"2026-07-29T09:39:42.802Z\",\"note\":\"Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.\"},\"sources\":[{\"original\":\"/salt/components/button\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/button\",\"kind\":\"site\"},{\"original\":\"/salt/components/button/usage\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/button/usage\",\"kind\":\"site\"},{\"original\":\"/salt/components/button/accessibility\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/button/accessibility\",\"kind\":\"site\"},{\"original\":\"/salt/components/button/examples\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/button/examples\",\"kind\":\"site\"},{\"original\":\"/salt/patterns/search\",\"resolved\":\"https://www.saltdesignsystem.com/salt/patterns/search\",\"kind\":\"site\"}]}"
+            }
+          ],
+          "structuredContent": {
+            "guidance_boundary": {
+              "guidance_source": "canonical_salt",
+              "scope": "official_salt_only",
+              "project_conventions": {
+                "supported": true,
+                "contract": "project_conventions_v1",
+                "check_recommended": false,
+                "topics": [],
+                "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+              }
+            },
+            "decision": {
+              "status": "partial",
+              "why": "Resolved 2 of 3 requested entities; 1 still need attention."
+            },
+            "requested_count": 3,
+            "found_count": 2,
+            "not_found_count": 1,
+            "ambiguous_count": 0,
+            "results": [
+              {
+                "name": "Button",
+                "result": {
+                  "entity_type": "component",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved Button as a Salt component."
+                  },
+                  "entity": {
+                    "name": "Button",
+                    "summary": "Button is an interactive component that allows the user to execute an action. Button comes in three distinct appearances: solid, bordered, and transparent. These styles provide greater choice and flexibility for establishing hierarchy and affordance within a UI. You can display a button with or without a text description or icon.",
+                    "why": "To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as dialogs, cards and forms.",
+                    "tradeoffs": [
+                      "When the primary action is to take the user to another page or window rather than to trigger a function. Instead, use Link."
+                    ],
+                    "alternatives": [
+                      {
+                        "use": "Link",
+                        "reason": "Related component (similarTo)."
+                      },
+                      {
+                        "use": "Pill",
+                        "reason": "Related component (similarTo)."
+                      },
+                      {
+                        "use": "Icon",
+                        "reason": "Related component (contains)."
+                      },
+                      {
+                        "use": "Status indicator",
+                        "reason": "Related component (contains)."
+                      }
+                    ],
+                    "docs": [
+                      "/salt/components/button",
+                      "/salt/components/button/usage",
+                      "/salt/components/button/accessibility",
+                      "/salt/components/button/examples"
+                    ],
+                    "examples": [
+                      "/salt/components/button/examples"
+                    ],
+                    "related_guides": [
+                      {
+                        "name": "Composition pitfalls",
+                        "kind": "getting-started",
+                        "summary": "Review the most common Salt composition mistakes, including nested interactive primitives, pass-through wrappers, and rebuilding standard primitives.",
+                        "overview": "/salt/getting-started/composition-pitfalls"
+                      },
+                      {
+                        "name": "Custom wrappers",
+                        "kind": "getting-started",
+                        "summary": "Learn when a wrapper over a Salt primitive adds value and when it is only hiding the underlying component behind prop forwarding.",
+                        "overview": "/salt/getting-started/custom-wrappers"
+                      },
+                      {
+                        "name": "Choosing the right primitive",
+                        "kind": "getting-started",
+                        "summary": "Choose Salt components, layouts, and patterns by user intent first, then prefer the most constrained Salt option before creating custom UI.",
+                        "overview": "/salt/getting-started/choosing-the-right-primitive"
+                      },
+                      {
+                        "name": "Developing with Salt",
+                        "kind": "getting-started",
+                        "summary": "Learn how to use Salt’s UI components in your React web applications.",
+                        "overview": "/salt/getting-started/developing"
+                      }
+                    ],
+                    "guidance_sources": [
+                      "component-category-map",
+                      "usage-docs"
+                    ],
+                    "next_step": "Review examples for Button before implementing.",
+                    "key_props": [
+                      {
+                        "name": "appearance",
+                        "type": "keyof ButtonAppearances",
+                        "description": "The appearance of the button. Options are 'solid', 'bordered', and 'transparent'. 'solid' is the default value. @since 1.36.0."
+                      },
+                      {
+                        "name": "disabled",
+                        "type": "boolean",
+                        "description": "If true, the button will be disabled."
+                      },
+                      {
+                        "name": "focusableWhenDisabled",
+                        "type": "boolean",
+                        "description": "If true, the button will be focusable when disabled."
+                      },
+                      {
+                        "name": "loading",
+                        "type": "boolean",
+                        "description": "If true, the button will be in a loading state. This allows a spinner to be nested inside the button. @since 1.38.0."
+                      },
+                      {
+                        "name": "loadingAnnouncement",
+                        "type": "string",
+                        "description": "Text to be announced by screen readers, intended to be used in conjunction with the loading prop. @since 1.38.0."
+                      }
+                    ],
+                    "prop_count": 7,
+                    "deprecated_prop_count": 1
+                  },
+                  "suggested_follow_ups": [
+                    {
+                      "workflow": "get_salt_reference",
+                      "reason": "Find the best implementation example for Button.",
+                      "args": {
+                        "names": [
+                          "Button"
+                        ],
+                        "entity_type": "component",
+                        "include": [
+                          "examples"
+                        ],
+                        "include_starter_code": true
+                      },
+                      "follow_up_mode": "exact_name"
+                    },
+                    {
+                      "workflow": "create_salt_ui",
+                      "reason": "Compare Button with Link before committing.",
+                      "args": {
+                        "query": "Compare Button with Link",
+                        "solution_type": "component"
+                      },
+                      "follow_up_mode": "broad_query"
+                    }
+                  ],
+                  "next_step": "Review examples for Button before implementing. Then confirm approved repo wrappers for analytics, defaults, or shared behavior through project conventions before finalizing the implementation.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": true,
+                      "topics": [
+                        "wrappers"
+                      ],
+                      "reason": "This lookup resolves canonical Salt component guidance. Confirm whether the repo wraps or narrows this primitive through project conventions before treating it as the final project answer."
+                    }
+                  }
+                }
+              },
+              {
+                "name": "Search",
+                "result": {
+                  "entity_type": "pattern",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved Search as a Salt pattern."
+                  },
+                  "entity": {
+                    "id": "pattern.search",
+                    "name": "Search",
+                    "aliases": [
+                      "/salt/patterns/search",
+                      "search"
+                    ],
+                    "status": "stable",
+                    "summary": "The Search pattern offers users an intuitive way to explore content quickly by using keywords. Search is essential to discover information in apps that support large amounts of information. This pattern supports a basic menu driven search behavior, with optional free text behavior and configurable search result items.",
+                    "when_to_use": [
+                      "Locate information in applications with large amounts of data.",
+                      "Look through a catalog of items, like a product catalog or a library.",
+                      "Navigate to a page or resource."
+                    ],
+                    "when_not_to_use": [
+                      "When users already know the destination and only need a direct navigation control, use a link, button, or navigation item instead.",
+                      "When the task is filtering a visible data set in place, use filters or a data grid instead of Search.",
+                      "When the scope is a small, fixed set of options, use a Combo box or Select control instead of Search."
+                    ],
+                    "composed_of": [
+                      {
+                        "component": "Combo box",
+                        "role": "Use Combo box to display the search field."
+                      }
+                    ],
+                    "related_patterns": [],
+                    "how_to_build": [
+                      "**Search input field:** A single input field where users type their queries.",
+                      "**Search icon:** The magnifying glass icon indicates search.",
+                      "**Placeholder text:** Hints to users what information can be searched for. Placeholder text should be clear and tell the user exactly what can be searched for if results are limited. For example, if only page titles can be searched, placeholder text should read “Search page titles.”",
+                      "**Close button:** A close button that appears within the search input field, allowing users to quickly clear their current query and start a new search.",
+                      "**Expand button:** A chevron icon button typically used to indicate that a dropdown menu can be expanded or collapsed.",
+                      "**Section header:** A label used to organize search results into distinct categories within the dropdown list. It helps users quickly identify and navigate different types of results, such as recent searches, suggestions, pages, and people.",
+                      "**Result item:** An individual entry within the search results dropdown. It can include various elements such as secondary labels, icons, or avatars.",
+                      "Use Combo box to display the search field.",
+                      "Use Option Group to group the search results.",
+                      "Use Option to display a search result."
+                    ],
+                    "how_it_works": [
+                      "Basic menu-driven search Initial interaction: Search field displays with \"Search\" text, inviting the user to begin their search.",
+                      "Basic menu-driven search Activating the search: When the user clicks the search field, a search button appears and a dropdown emerges.",
+                      "Basic menu-driven search Recent searches: If there are recent searches, a list of past queries appears, providing quick access to previous results.",
+                      "Basic menu-driven search Typing the query: As the user types, a close button appears for easy clearing of the input. The dropdown updates in real-time, offering suggestions that match the input, with bolded text for clarity.",
+                      "Basic menu-driven search Direct to the results: Once the user submits a search, they are directed to the results page. The search field remains visible, showing the entered query, ready for new searches.",
+                      "Basic menu-driven search Direct submission: Pressing \"Enter\" after entering a search query will lead the user to the page of the first result in the dropdown.",
+                      "Basic menu-driven search Selecting suggestion: Choosing a suggestion from the dropdown takes the user directly to the page of the selected result.",
+                      "Free text search capability Direct submission: Pressing the \"Enter\" key initiates the search based on the user's input.",
+                      "Free text search capability Selecting suggestion: Users can navigate through the menu using arrow keys or click on a result to select from the dropdown.",
+                      "Free text search capability Optional search button: A search button can also be added as an optional element, providing a clear call to action and visual cue for more explicit search experiences.",
+                      "Search result item types: The search pattern currently supports basic search result items that comprise non-focusable elements: text, icons, country symbols, and avatars.",
+                      "Search result item types: The following are examples of the types of results items you can create.",
+                      "Search result item types: **Basic search result:** Displays only the primary search result value, ideal for straightforward results where no additional context is needed.",
+                      "Search result item types: **Search result with icon:** Combines a descriptive icon with the primary search result value, useful for visually differentiating results by category or type.",
+                      "Search Loading results: Indicates that search results are being fetched, typically shown with a spinner used when there is a delay in retrieving results to inform users that processing is ongoing.",
+                      "Search result groups: Organizes search results into clear categories, such as recent searches, suggestions, pages, and people. This structure helps users quickly find and identify relevant information, making navigation easier and more efficient. By grouping results, users can access all necessary information in a straightforward and user-friendly way, effectively managing complex search scenarios. Within these categories, consider ordering items alphabetically, chronologically, or by relevance, depending on what makes the most sense for the content type. This approach helps users quickly identify and navigate to the type of result they are looking for.",
+                      "Search result order: This section provides guidelines for organizing and prioritizing search results in a dropdown menu.",
+                      "Search result order: **Relevance first:** Prioritize results based on relevance to the user's query, showing the most closely matching items at the top. Context is determined using user preferences, application section, keyword analysis, and session data, helping tailor results to better match user intent.",
+                      "Search result order: **Recent searches:** If applicable, display recent searches at the top. This allows users to quickly access queries they've made before.",
+                      "Search result order: **Suggestions:** Provide suggested search terms or autocomplete options that are closely related to the input string. These can help guide users to popular or common searches.",
+                      "Search placement: Search is typically located in three key areas for easy access.",
+                      "Search placement: **Header:** Accessible from any page, ideal for global search.",
+                      "Search placement: **Center:** Prominent on homepages, used when search is a primary function.",
+                      "Search placement: **Expandable search:** Starts as an icon button, expanding to a search field or dialog, saving space in minimalist designs."
+                    ],
+                    "resources": [],
+                    "related_docs": {
+                      "overview": "/salt/patterns/search"
+                    },
+                    "docs": [
+                      "/salt/patterns/search"
+                    ],
+                    "related_guides": [],
+                    "guidance_sources": [
+                      "pattern-category-map",
+                      "pattern-docs"
+                    ],
+                    "next_step": "Review examples for Search before implementing."
+                  },
+                  "suggested_follow_ups": [
+                    {
+                      "workflow": "get_salt_reference",
+                      "reason": "Find examples that illustrate Search.",
+                      "args": {
+                        "names": [
+                          "Search"
+                        ],
+                        "entity_type": "pattern",
+                        "include": [
+                          "examples"
+                        ],
+                        "include_starter_code": true
+                      },
+                      "follow_up_mode": "exact_name"
+                    }
+                  ],
+                  "next_step": "Review examples for Search before implementing. Then confirm approved page patterns and workflow scaffolds and local layout containers and screen skeletons through project conventions before finalizing the implementation.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": true,
+                      "topics": [
+                        "page-patterns",
+                        "local-layout"
+                      ],
+                      "reason": "This lookup resolves canonical Salt flow or page guidance. Confirm whether the repo has approved page patterns or shell conventions before treating it as the final project structure."
+                    }
+                  }
+                }
+              },
+              {
+                "name": "Definitely Missing Salt Thing",
+                "result": {
+                  "entity_type": null,
+                  "decision": {
+                    "status": "not_found",
+                    "why": "No exact Salt entity match was found in the public v1 catalog surface."
+                  },
+                  "entity": null,
+                  "next_step": "Retry with an exact component, pattern, foundation, token, guide, page, or package name, or use create_salt_ui for broader routing.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": false,
+                      "topics": [],
+                      "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+                    }
+                  }
+                }
+              }
+            ],
+            "unresolved_names": [
+              "Definitely Missing Salt Thing"
+            ],
+            "next_step": "Inspect the per-name rows for \"Definitely Missing Salt Thing\" (each row carries its own did_you_mean and ambiguity payload), then retry just the unresolved names or use create_salt_ui for the broader intent.",
+            "registry_context": {
+              "source": "bundled_package",
+              "registry_version": "0.1.0",
+              "registry_generated_at": "2026-07-29T09:39:42.802Z",
+              "note": "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files."
+            },
+            "sources": [
+              {
+                "original": "/salt/components/button",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/button",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/button/usage",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/button/usage",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/button/accessibility",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/button/accessibility",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/button/examples",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/button/examples",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/patterns/search",
+                "resolved": "https://www.saltdesignsystem.com/salt/patterns/search",
+                "kind": "site"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "arguments": {
+          "names": [
+            "--salt-accent-background"
+          ],
+          "entity_type": "token"
+        },
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}},\"decision\":{\"status\":\"results\",\"why\":\"Resolved all 1 requested Salt entity.\"},\"requested_count\":1,\"found_count\":1,\"not_found_count\":0,\"ambiguous_count\":0,\"results\":[{\"name\":\"--salt-accent-background\",\"result\":{\"entity_type\":\"token\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved --salt-accent-background as a Salt design token.\"},\"entity\":{\"name\":\"--salt-accent-background\",\"category\":\"accent\",\"type\":\"string\",\"value\":\"var(--salt-palette-accent)\",\"semantic_intent\":\"Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.\",\"guidance\":[\"Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.\"],\"applies_to\":[],\"docs\":[\"/salt/themes/design-tokens/index\"],\"policy\":{\"usage_tier\":\"palette\",\"direct_component_use\":\"never\",\"preferred_for\":[],\"avoid_for\":[\"Palette tokens are never referenced directly in components or patterns.\"],\"notes\":[\"Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value.\"],\"structural_roles\":[],\"pairing\":null,\"docs\":[\"/salt/themes/design-tokens/index\"],\"evidence_refs\":[{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.docs.0.source-ref\",\"source_kind\":\"docs\",\"claim_kind\":\"token\",\"source\":{\"url\":\"/salt/themes/design-tokens/index\",\"repo_path\":\"site/docs/themes/design-tokens/index.mdx\"},\"confidence\":\"high\",\"note\":\"Source-backed docs evidence for generated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.token-source.0.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/deprecated/characteristics.css\"},\"confidence\":\"high\",\"note\":\"Source-backed token evidence for generated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.token-source.1.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/deprecated/characteristics.css\"},\"confidence\":\"high\",\"note\":\"Source-backed token evidence for generated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.deprecated-replacement.0.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/deprecated/characteristics.css\",\"section\":\"--salt-accent-background: var(--salt-palette-accent);\",\"line_start\":93,\"line_end\":93},\"confidence\":\"high\",\"note\":\"Source-backed deprecated token replacement evidence for generated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.0.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/legacy/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-blue-500);\",\"line_start\":2,\"line_end\":2},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.1.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/legacy/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-blue-500);\",\"line_start\":8,\"line_end\":8},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.2.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-blue-500);\",\"line_start\":2,\"line_end\":2},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.3.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-blue-500);\",\"line_start\":14,\"line_end\":14},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.4.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-teal-500);\",\"line_start\":26,\"line_end\":26},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.5.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-teal-500);\",\"line_start\":38,\"line_end\":38},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"}]},\"themes\":[\"next\",\"salt\"],\"deprecated\":true},\"next_step\":\"--salt-accent-background is deprecated. Do not use it in new code. This record has no source-backed replacement; consult authoritative Salt migration guidance before choosing one.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}}}}],\"unresolved_names\":[],\"registry_context\":{\"source\":\"bundled_package\",\"registry_version\":\"0.1.0\",\"registry_generated_at\":\"2026-07-29T09:39:42.802Z\",\"note\":\"Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.\"},\"sources\":[{\"original\":\"/salt/themes/design-tokens/index\",\"resolved\":\"https://www.saltdesignsystem.com/salt/themes/design-tokens/index\",\"kind\":\"site\"},{\"original\":\"site/docs/themes/design-tokens/index.mdx\",\"resolved\":\"site/docs/themes/design-tokens/index.mdx\",\"kind\":\"repo\"},{\"original\":\"packages/theme/css/deprecated/characteristics.css\",\"resolved\":\"packages/theme/css/deprecated/characteristics.css\",\"kind\":\"repo\"},{\"original\":\"packages/theme/css/next/deprecated/characteristics.css\",\"resolved\":\"packages/theme/css/next/deprecated/characteristics.css\",\"kind\":\"repo\"},{\"original\":\"packages/theme/css/legacy/palette/accent.css\",\"resolved\":\"packages/theme/css/legacy/palette/accent.css\",\"kind\":\"repo\"},{\"original\":\"packages/theme/css/next/palette/accent.css\",\"resolved\":\"packages/theme/css/next/palette/accent.css\",\"kind\":\"repo\"}]}"
+            }
+          ],
+          "structuredContent": {
+            "guidance_boundary": {
+              "guidance_source": "canonical_salt",
+              "scope": "official_salt_only",
+              "project_conventions": {
+                "supported": true,
+                "contract": "project_conventions_v1",
+                "check_recommended": false,
+                "topics": [],
+                "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+              }
+            },
+            "decision": {
+              "status": "results",
+              "why": "Resolved all 1 requested Salt entity."
+            },
+            "requested_count": 1,
+            "found_count": 1,
+            "not_found_count": 0,
+            "ambiguous_count": 0,
+            "results": [
+              {
+                "name": "--salt-accent-background",
+                "result": {
+                  "entity_type": "token",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved --salt-accent-background as a Salt design token."
+                  },
+                  "entity": {
+                    "name": "--salt-accent-background",
+                    "category": "accent",
+                    "type": "string",
+                    "value": "var(--salt-palette-accent)",
+                    "semantic_intent": "Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.",
+                    "guidance": [
+                      "Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention."
+                    ],
+                    "applies_to": [],
+                    "docs": [
+                      "/salt/themes/design-tokens/index"
+                    ],
+                    "policy": {
+                      "usage_tier": "palette",
+                      "direct_component_use": "never",
+                      "preferred_for": [],
+                      "avoid_for": [
+                        "Palette tokens are never referenced directly in components or patterns."
+                      ],
+                      "notes": [
+                        "Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value."
+                      ],
+                      "structural_roles": [],
+                      "pairing": null,
+                      "docs": [
+                        "/salt/themes/design-tokens/index"
+                      ],
+                      "evidence_refs": [
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.docs.0.source-ref",
+                          "source_kind": "docs",
+                          "claim_kind": "token",
+                          "source": {
+                            "url": "/salt/themes/design-tokens/index",
+                            "repo_path": "site/docs/themes/design-tokens/index.mdx"
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed docs evidence for generated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.token-source.0.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/deprecated/characteristics.css"
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed token evidence for generated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.token-source.1.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/deprecated/characteristics.css"
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed token evidence for generated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.deprecated-replacement.0.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/deprecated/characteristics.css",
+                            "section": "--salt-accent-background: var(--salt-palette-accent);",
+                            "line_start": 93,
+                            "line_end": 93
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed deprecated token replacement evidence for generated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.0.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/legacy/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-blue-500);",
+                            "line_start": 2,
+                            "line_end": 2
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.1.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/legacy/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-blue-500);",
+                            "line_start": 8,
+                            "line_end": 8
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.2.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-blue-500);",
+                            "line_start": 2,
+                            "line_end": 2
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.3.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-blue-500);",
+                            "line_start": 14,
+                            "line_end": 14
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.4.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-teal-500);",
+                            "line_start": 26,
+                            "line_end": 26
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.5.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-teal-500);",
+                            "line_start": 38,
+                            "line_end": 38
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        }
+                      ]
+                    },
+                    "themes": [
+                      "next",
+                      "salt"
+                    ],
+                    "deprecated": true
+                  },
+                  "next_step": "--salt-accent-background is deprecated. Do not use it in new code. This record has no source-backed replacement; consult authoritative Salt migration guidance before choosing one.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": false,
+                      "topics": [],
+                      "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+                    }
+                  }
+                }
+              }
+            ],
+            "unresolved_names": [],
+            "registry_context": {
+              "source": "bundled_package",
+              "registry_version": "0.1.0",
+              "registry_generated_at": "2026-07-29T09:39:42.802Z",
+              "note": "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files."
+            },
+            "sources": [
+              {
+                "original": "/salt/themes/design-tokens/index",
+                "resolved": "https://www.saltdesignsystem.com/salt/themes/design-tokens/index",
+                "kind": "site"
+              },
+              {
+                "original": "site/docs/themes/design-tokens/index.mdx",
+                "resolved": "site/docs/themes/design-tokens/index.mdx",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/theme/css/deprecated/characteristics.css",
+                "resolved": "packages/theme/css/deprecated/characteristics.css",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/theme/css/next/deprecated/characteristics.css",
+                "resolved": "packages/theme/css/next/deprecated/characteristics.css",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/theme/css/legacy/palette/accent.css",
+                "resolved": "packages/theme/css/legacy/palette/accent.css",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/theme/css/next/palette/accent.css",
+                "resolved": "packages/theme/css/next/palette/accent.css",
+                "kind": "repo"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "arguments": {
+          "names": [
+            "WorkflowIcon"
+          ],
+          "entity_type": "icon"
+        },
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}},\"decision\":{\"status\":\"results\",\"why\":\"Resolved all 1 requested Salt entity.\"},\"requested_count\":1,\"found_count\":1,\"not_found_count\":0,\"ambiguous_count\":0,\"results\":[{\"name\":\"WorkflowIcon\",\"result\":{\"entity_type\":\"icon\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved WorkflowIcon as a Salt icon.\"},\"entity\":{\"id\":\"icon.workflow-icon\",\"name\":\"WorkflowIcon\",\"base_name\":\"Workflow\",\"figma_name\":\"workflow\",\"package\":\"@salt-ds/icons\",\"status\":\"stable\",\"category\":\"organize\",\"variant\":\"outline\",\"summary\":\"Workflow icon for organize concepts such as nodes, process, sequence.\",\"synonyms\":[\"nodes\",\"process\",\"sequence\"],\"related_docs\":{\"overview\":\"/salt/components/icon\",\"examples\":\"/salt/components/icon/examples\",\"foundation\":\"/salt/foundations/assets/index\"}},\"next_step\":\"Confirm WorkflowIcon is the right visual metaphor before using it.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}}}}],\"unresolved_names\":[],\"registry_context\":{\"source\":\"bundled_package\",\"registry_version\":\"0.1.0\",\"registry_generated_at\":\"2026-07-29T09:39:42.802Z\",\"note\":\"Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.\"},\"sources\":[{\"original\":\"/salt/components/icon\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/icon\",\"kind\":\"site\"},{\"original\":\"/salt/components/icon/examples\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/icon/examples\",\"kind\":\"site\"},{\"original\":\"/salt/foundations/assets/index\",\"resolved\":\"https://www.saltdesignsystem.com/salt/foundations/assets/index\",\"kind\":\"site\"}]}"
+            }
+          ],
+          "structuredContent": {
+            "guidance_boundary": {
+              "guidance_source": "canonical_salt",
+              "scope": "official_salt_only",
+              "project_conventions": {
+                "supported": true,
+                "contract": "project_conventions_v1",
+                "check_recommended": false,
+                "topics": [],
+                "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+              }
+            },
+            "decision": {
+              "status": "results",
+              "why": "Resolved all 1 requested Salt entity."
+            },
+            "requested_count": 1,
+            "found_count": 1,
+            "not_found_count": 0,
+            "ambiguous_count": 0,
+            "results": [
+              {
+                "name": "WorkflowIcon",
+                "result": {
+                  "entity_type": "icon",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved WorkflowIcon as a Salt icon."
+                  },
+                  "entity": {
+                    "id": "icon.workflow-icon",
+                    "name": "WorkflowIcon",
+                    "base_name": "Workflow",
+                    "figma_name": "workflow",
+                    "package": "@salt-ds/icons",
+                    "status": "stable",
+                    "category": "organize",
+                    "variant": "outline",
+                    "summary": "Workflow icon for organize concepts such as nodes, process, sequence.",
+                    "synonyms": [
+                      "nodes",
+                      "process",
+                      "sequence"
+                    ],
+                    "related_docs": {
+                      "overview": "/salt/components/icon",
+                      "examples": "/salt/components/icon/examples",
+                      "foundation": "/salt/foundations/assets/index"
+                    }
+                  },
+                  "next_step": "Confirm WorkflowIcon is the right visual metaphor before using it.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": false,
+                      "topics": [],
+                      "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+                    }
+                  }
+                }
+              }
+            ],
+            "unresolved_names": [],
+            "registry_context": {
+              "source": "bundled_package",
+              "registry_version": "0.1.0",
+              "registry_generated_at": "2026-07-29T09:39:42.802Z",
+              "note": "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files."
+            },
+            "sources": [
+              {
+                "original": "/salt/components/icon",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/icon",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/icon/examples",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/icon/examples",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/foundations/assets/index",
+                "resolved": "https://www.saltdesignsystem.com/salt/foundations/assets/index",
+                "kind": "site"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "arguments": {
+          "names": [
+            "US"
+          ],
+          "entity_type": "country_symbol"
+        },
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}},\"decision\":{\"status\":\"results\",\"why\":\"Resolved all 1 requested Salt entity.\"},\"requested_count\":1,\"found_count\":1,\"not_found_count\":0,\"ambiguous_count\":0,\"results\":[{\"name\":\"US\",\"result\":{\"entity_type\":\"country_symbol\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved United States of America (the) as a Salt country symbol.\"},\"entity\":{\"id\":\"country_symbol.us\",\"code\":\"US\",\"name\":\"United States of America (the)\",\"package\":\"@salt-ds/countries\",\"status\":\"stable\",\"summary\":\"Asset for United States of America (the); available in circle and sharp variants.\",\"aliases\":[\"US\",\"US_Sharp\",\"United States of America (the)\",\"United States of America\",\"The United States of America\",\"United States\"],\"variants\":{\"circle\":{\"export_name\":\"US\",\"repo_path\":\"packages/countries/src/components/US.tsx\"},\"sharp\":{\"export_name\":\"US_Sharp\",\"repo_path\":\"packages/countries/src/components/US_Sharp.tsx\"}},\"related_docs\":{\"overview\":\"/salt/components/country-symbol\",\"usage\":\"/salt/components/country-symbol/usage\",\"accessibility\":\"/salt/components/country-symbol/accessibility\",\"examples\":\"/salt/components/country-symbol/examples\",\"foundation\":\"/salt/foundations/assets/country-symbols\"}},\"next_step\":\"Confirm the US symbol variant you need before using it.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}}}}],\"unresolved_names\":[],\"registry_context\":{\"source\":\"bundled_package\",\"registry_version\":\"0.1.0\",\"registry_generated_at\":\"2026-07-29T09:39:42.802Z\",\"note\":\"Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.\"},\"sources\":[{\"original\":\"packages/countries/src/components/US.tsx\",\"resolved\":\"packages/countries/src/components/US.tsx\",\"kind\":\"repo\"},{\"original\":\"packages/countries/src/components/US_Sharp.tsx\",\"resolved\":\"packages/countries/src/components/US_Sharp.tsx\",\"kind\":\"repo\"},{\"original\":\"/salt/components/country-symbol\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/country-symbol\",\"kind\":\"site\"},{\"original\":\"/salt/components/country-symbol/usage\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/country-symbol/usage\",\"kind\":\"site\"},{\"original\":\"/salt/components/country-symbol/accessibility\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/country-symbol/accessibility\",\"kind\":\"site\"},{\"original\":\"/salt/components/country-symbol/examples\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/country-symbol/examples\",\"kind\":\"site\"},{\"original\":\"/salt/foundations/assets/country-symbols\",\"resolved\":\"https://www.saltdesignsystem.com/salt/foundations/assets/country-symbols\",\"kind\":\"site\"}]}"
+            }
+          ],
+          "structuredContent": {
+            "guidance_boundary": {
+              "guidance_source": "canonical_salt",
+              "scope": "official_salt_only",
+              "project_conventions": {
+                "supported": true,
+                "contract": "project_conventions_v1",
+                "check_recommended": false,
+                "topics": [],
+                "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+              }
+            },
+            "decision": {
+              "status": "results",
+              "why": "Resolved all 1 requested Salt entity."
+            },
+            "requested_count": 1,
+            "found_count": 1,
+            "not_found_count": 0,
+            "ambiguous_count": 0,
+            "results": [
+              {
+                "name": "US",
+                "result": {
+                  "entity_type": "country_symbol",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved United States of America (the) as a Salt country symbol."
+                  },
+                  "entity": {
+                    "id": "country_symbol.us",
+                    "code": "US",
+                    "name": "United States of America (the)",
+                    "package": "@salt-ds/countries",
+                    "status": "stable",
+                    "summary": "Asset for United States of America (the); available in circle and sharp variants.",
+                    "aliases": [
+                      "US",
+                      "US_Sharp",
+                      "United States of America (the)",
+                      "United States of America",
+                      "The United States of America",
+                      "United States"
+                    ],
+                    "variants": {
+                      "circle": {
+                        "export_name": "US",
+                        "repo_path": "packages/countries/src/components/US.tsx"
+                      },
+                      "sharp": {
+                        "export_name": "US_Sharp",
+                        "repo_path": "packages/countries/src/components/US_Sharp.tsx"
+                      }
+                    },
+                    "related_docs": {
+                      "overview": "/salt/components/country-symbol",
+                      "usage": "/salt/components/country-symbol/usage",
+                      "accessibility": "/salt/components/country-symbol/accessibility",
+                      "examples": "/salt/components/country-symbol/examples",
+                      "foundation": "/salt/foundations/assets/country-symbols"
+                    }
+                  },
+                  "next_step": "Confirm the US symbol variant you need before using it.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": false,
+                      "topics": [],
+                      "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+                    }
+                  }
+                }
+              }
+            ],
+            "unresolved_names": [],
+            "registry_context": {
+              "source": "bundled_package",
+              "registry_version": "0.1.0",
+              "registry_generated_at": "2026-07-29T09:39:42.802Z",
+              "note": "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files."
+            },
+            "sources": [
+              {
+                "original": "packages/countries/src/components/US.tsx",
+                "resolved": "packages/countries/src/components/US.tsx",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/countries/src/components/US_Sharp.tsx",
+                "resolved": "packages/countries/src/components/US_Sharp.tsx",
+                "kind": "repo"
+              },
+              {
+                "original": "/salt/components/country-symbol",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/country-symbol",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/country-symbol/usage",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/country-symbol/usage",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/country-symbol/accessibility",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/country-symbol/accessibility",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/country-symbol/examples",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/country-symbol/examples",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/foundations/assets/country-symbols",
+                "resolved": "https://www.saltdesignsystem.com/salt/foundations/assets/country-symbols",
+                "kind": "site"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "error": null,
+  "frames": [
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "get_salt_reference",
+          "arguments": {
+            "names": [
+              "Button",
+              "Search",
+              "Definitely Missing Salt Thing"
+            ]
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 10
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 10,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}},\"decision\":{\"status\":\"partial\",\"why\":\"Resolved 2 of 3 requested entities; 1 still need attention.\"},\"requested_count\":3,\"found_count\":2,\"not_found_count\":1,\"ambiguous_count\":0,\"results\":[{\"name\":\"Button\",\"result\":{\"entity_type\":\"component\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved Button as a Salt component.\"},\"entity\":{\"name\":\"Button\",\"summary\":\"Button is an interactive component that allows the user to execute an action. Button comes in three distinct appearances: solid, bordered, and transparent. These styles provide greater choice and flexibility for establishing hierarchy and affordance within a UI. You can display a button with or without a text description or icon.\",\"why\":\"To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as dialogs, cards and forms.\",\"tradeoffs\":[\"When the primary action is to take the user to another page or window rather than to trigger a function. Instead, use Link.\"],\"alternatives\":[{\"use\":\"Link\",\"reason\":\"Related component (similarTo).\"},{\"use\":\"Pill\",\"reason\":\"Related component (similarTo).\"},{\"use\":\"Icon\",\"reason\":\"Related component (contains).\"},{\"use\":\"Status indicator\",\"reason\":\"Related component (contains).\"}],\"docs\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/accessibility\",\"/salt/components/button/examples\"],\"examples\":[\"/salt/components/button/examples\"],\"related_guides\":[{\"name\":\"Composition pitfalls\",\"kind\":\"getting-started\",\"summary\":\"Review the most common Salt composition mistakes, including nested interactive primitives, pass-through wrappers, and rebuilding standard primitives.\",\"overview\":\"/salt/getting-started/composition-pitfalls\"},{\"name\":\"Custom wrappers\",\"kind\":\"getting-started\",\"summary\":\"Learn when a wrapper over a Salt primitive adds value and when it is only hiding the underlying component behind prop forwarding.\",\"overview\":\"/salt/getting-started/custom-wrappers\"},{\"name\":\"Choosing the right primitive\",\"kind\":\"getting-started\",\"summary\":\"Choose Salt components, layouts, and patterns by user intent first, then prefer the most constrained Salt option before creating custom UI.\",\"overview\":\"/salt/getting-started/choosing-the-right-primitive\"},{\"name\":\"Developing with Salt\",\"kind\":\"getting-started\",\"summary\":\"Learn how to use Salt’s UI components in your React web applications.\",\"overview\":\"/salt/getting-started/developing\"}],\"guidance_sources\":[\"component-category-map\",\"usage-docs\"],\"next_step\":\"Review examples for Button before implementing.\",\"key_props\":[{\"name\":\"appearance\",\"type\":\"keyof ButtonAppearances\",\"description\":\"The appearance of the button. Options are 'solid', 'bordered', and 'transparent'. 'solid' is the default value. @since 1.36.0.\"},{\"name\":\"disabled\",\"type\":\"boolean\",\"description\":\"If true, the button will be disabled.\"},{\"name\":\"focusableWhenDisabled\",\"type\":\"boolean\",\"description\":\"If true, the button will be focusable when disabled.\"},{\"name\":\"loading\",\"type\":\"boolean\",\"description\":\"If true, the button will be in a loading state. This allows a spinner to be nested inside the button. @since 1.38.0.\"},{\"name\":\"loadingAnnouncement\",\"type\":\"string\",\"description\":\"Text to be announced by screen readers, intended to be used in conjunction with the loading prop. @since 1.38.0.\"}],\"prop_count\":7,\"deprecated_prop_count\":1},\"suggested_follow_ups\":[{\"workflow\":\"get_salt_reference\",\"reason\":\"Find the best implementation example for Button.\",\"args\":{\"names\":[\"Button\"],\"entity_type\":\"component\",\"include\":[\"examples\"],\"include_starter_code\":true},\"follow_up_mode\":\"exact_name\"},{\"workflow\":\"create_salt_ui\",\"reason\":\"Compare Button with Link before committing.\",\"args\":{\"query\":\"Compare Button with Link\",\"solution_type\":\"component\"},\"follow_up_mode\":\"broad_query\"}],\"next_step\":\"Review examples for Button before implementing. Then confirm approved repo wrappers for analytics, defaults, or shared behavior through project conventions before finalizing the implementation.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":true,\"topics\":[\"wrappers\"],\"reason\":\"This lookup resolves canonical Salt component guidance. Confirm whether the repo wraps or narrows this primitive through project conventions before treating it as the final project answer.\"}}}},{\"name\":\"Search\",\"result\":{\"entity_type\":\"pattern\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved Search as a Salt pattern.\"},\"entity\":{\"id\":\"pattern.search\",\"name\":\"Search\",\"aliases\":[\"/salt/patterns/search\",\"search\"],\"status\":\"stable\",\"summary\":\"The Search pattern offers users an intuitive way to explore content quickly by using keywords. Search is essential to discover information in apps that support large amounts of information. This pattern supports a basic menu driven search behavior, with optional free text behavior and configurable search result items.\",\"when_to_use\":[\"Locate information in applications with large amounts of data.\",\"Look through a catalog of items, like a product catalog or a library.\",\"Navigate to a page or resource.\"],\"when_not_to_use\":[\"When users already know the destination and only need a direct navigation control, use a link, button, or navigation item instead.\",\"When the task is filtering a visible data set in place, use filters or a data grid instead of Search.\",\"When the scope is a small, fixed set of options, use a Combo box or Select control instead of Search.\"],\"composed_of\":[{\"component\":\"Combo box\",\"role\":\"Use Combo box to display the search field.\"}],\"related_patterns\":[],\"how_to_build\":[\"**Search input field:** A single input field where users type their queries.\",\"**Search icon:** The magnifying glass icon indicates search.\",\"**Placeholder text:** Hints to users what information can be searched for. Placeholder text should be clear and tell the user exactly what can be searched for if results are limited. For example, if only page titles can be searched, placeholder text should read “Search page titles.”\",\"**Close button:** A close button that appears within the search input field, allowing users to quickly clear their current query and start a new search.\",\"**Expand button:** A chevron icon button typically used to indicate that a dropdown menu can be expanded or collapsed.\",\"**Section header:** A label used to organize search results into distinct categories within the dropdown list. It helps users quickly identify and navigate different types of results, such as recent searches, suggestions, pages, and people.\",\"**Result item:** An individual entry within the search results dropdown. It can include various elements such as secondary labels, icons, or avatars.\",\"Use Combo box to display the search field.\",\"Use Option Group to group the search results.\",\"Use Option to display a search result.\"],\"how_it_works\":[\"Basic menu-driven search Initial interaction: Search field displays with \\\"Search\\\" text, inviting the user to begin their search.\",\"Basic menu-driven search Activating the search: When the user clicks the search field, a search button appears and a dropdown emerges.\",\"Basic menu-driven search Recent searches: If there are recent searches, a list of past queries appears, providing quick access to previous results.\",\"Basic menu-driven search Typing the query: As the user types, a close button appears for easy clearing of the input. The dropdown updates in real-time, offering suggestions that match the input, with bolded text for clarity.\",\"Basic menu-driven search Direct to the results: Once the user submits a search, they are directed to the results page. The search field remains visible, showing the entered query, ready for new searches.\",\"Basic menu-driven search Direct submission: Pressing \\\"Enter\\\" after entering a search query will lead the user to the page of the first result in the dropdown.\",\"Basic menu-driven search Selecting suggestion: Choosing a suggestion from the dropdown takes the user directly to the page of the selected result.\",\"Free text search capability Direct submission: Pressing the \\\"Enter\\\" key initiates the search based on the user's input.\",\"Free text search capability Selecting suggestion: Users can navigate through the menu using arrow keys or click on a result to select from the dropdown.\",\"Free text search capability Optional search button: A search button can also be added as an optional element, providing a clear call to action and visual cue for more explicit search experiences.\",\"Search result item types: The search pattern currently supports basic search result items that comprise non-focusable elements: text, icons, country symbols, and avatars.\",\"Search result item types: The following are examples of the types of results items you can create.\",\"Search result item types: **Basic search result:** Displays only the primary search result value, ideal for straightforward results where no additional context is needed.\",\"Search result item types: **Search result with icon:** Combines a descriptive icon with the primary search result value, useful for visually differentiating results by category or type.\",\"Search Loading results: Indicates that search results are being fetched, typically shown with a spinner used when there is a delay in retrieving results to inform users that processing is ongoing.\",\"Search result groups: Organizes search results into clear categories, such as recent searches, suggestions, pages, and people. This structure helps users quickly find and identify relevant information, making navigation easier and more efficient. By grouping results, users can access all necessary information in a straightforward and user-friendly way, effectively managing complex search scenarios. Within these categories, consider ordering items alphabetically, chronologically, or by relevance, depending on what makes the most sense for the content type. This approach helps users quickly identify and navigate to the type of result they are looking for.\",\"Search result order: This section provides guidelines for organizing and prioritizing search results in a dropdown menu.\",\"Search result order: **Relevance first:** Prioritize results based on relevance to the user's query, showing the most closely matching items at the top. Context is determined using user preferences, application section, keyword analysis, and session data, helping tailor results to better match user intent.\",\"Search result order: **Recent searches:** If applicable, display recent searches at the top. This allows users to quickly access queries they've made before.\",\"Search result order: **Suggestions:** Provide suggested search terms or autocomplete options that are closely related to the input string. These can help guide users to popular or common searches.\",\"Search placement: Search is typically located in three key areas for easy access.\",\"Search placement: **Header:** Accessible from any page, ideal for global search.\",\"Search placement: **Center:** Prominent on homepages, used when search is a primary function.\",\"Search placement: **Expandable search:** Starts as an icon button, expanding to a search field or dialog, saving space in minimalist designs.\"],\"resources\":[],\"related_docs\":{\"overview\":\"/salt/patterns/search\"},\"docs\":[\"/salt/patterns/search\"],\"related_guides\":[],\"guidance_sources\":[\"pattern-category-map\",\"pattern-docs\"],\"next_step\":\"Review examples for Search before implementing.\"},\"suggested_follow_ups\":[{\"workflow\":\"get_salt_reference\",\"reason\":\"Find examples that illustrate Search.\",\"args\":{\"names\":[\"Search\"],\"entity_type\":\"pattern\",\"include\":[\"examples\"],\"include_starter_code\":true},\"follow_up_mode\":\"exact_name\"}],\"next_step\":\"Review examples for Search before implementing. Then confirm approved page patterns and workflow scaffolds and local layout containers and screen skeletons through project conventions before finalizing the implementation.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":true,\"topics\":[\"page-patterns\",\"local-layout\"],\"reason\":\"This lookup resolves canonical Salt flow or page guidance. Confirm whether the repo has approved page patterns or shell conventions before treating it as the final project structure.\"}}}},{\"name\":\"Definitely Missing Salt Thing\",\"result\":{\"entity_type\":null,\"decision\":{\"status\":\"not_found\",\"why\":\"No exact Salt entity match was found in the public v1 catalog surface.\"},\"entity\":null,\"next_step\":\"Retry with an exact component, pattern, foundation, token, guide, page, or package name, or use create_salt_ui for broader routing.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}}}}],\"unresolved_names\":[\"Definitely Missing Salt Thing\"],\"next_step\":\"Inspect the per-name rows for \\\"Definitely Missing Salt Thing\\\" (each row carries its own did_you_mean and ambiguity payload), then retry just the unresolved names or use create_salt_ui for the broader intent.\",\"registry_context\":{\"source\":\"bundled_package\",\"registry_version\":\"0.1.0\",\"registry_generated_at\":\"2026-07-29T09:39:42.802Z\",\"note\":\"Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.\"},\"sources\":[{\"original\":\"/salt/components/button\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/button\",\"kind\":\"site\"},{\"original\":\"/salt/components/button/usage\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/button/usage\",\"kind\":\"site\"},{\"original\":\"/salt/components/button/accessibility\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/button/accessibility\",\"kind\":\"site\"},{\"original\":\"/salt/components/button/examples\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/button/examples\",\"kind\":\"site\"},{\"original\":\"/salt/patterns/search\",\"resolved\":\"https://www.saltdesignsystem.com/salt/patterns/search\",\"kind\":\"site\"}]}"
+            }
+          ],
+          "structuredContent": {
+            "guidance_boundary": {
+              "guidance_source": "canonical_salt",
+              "scope": "official_salt_only",
+              "project_conventions": {
+                "supported": true,
+                "contract": "project_conventions_v1",
+                "check_recommended": false,
+                "topics": [],
+                "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+              }
+            },
+            "decision": {
+              "status": "partial",
+              "why": "Resolved 2 of 3 requested entities; 1 still need attention."
+            },
+            "requested_count": 3,
+            "found_count": 2,
+            "not_found_count": 1,
+            "ambiguous_count": 0,
+            "results": [
+              {
+                "name": "Button",
+                "result": {
+                  "entity_type": "component",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved Button as a Salt component."
+                  },
+                  "entity": {
+                    "name": "Button",
+                    "summary": "Button is an interactive component that allows the user to execute an action. Button comes in three distinct appearances: solid, bordered, and transparent. These styles provide greater choice and flexibility for establishing hierarchy and affordance within a UI. You can display a button with or without a text description or icon.",
+                    "why": "To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as dialogs, cards and forms.",
+                    "tradeoffs": [
+                      "When the primary action is to take the user to another page or window rather than to trigger a function. Instead, use Link."
+                    ],
+                    "alternatives": [
+                      {
+                        "use": "Link",
+                        "reason": "Related component (similarTo)."
+                      },
+                      {
+                        "use": "Pill",
+                        "reason": "Related component (similarTo)."
+                      },
+                      {
+                        "use": "Icon",
+                        "reason": "Related component (contains)."
+                      },
+                      {
+                        "use": "Status indicator",
+                        "reason": "Related component (contains)."
+                      }
+                    ],
+                    "docs": [
+                      "/salt/components/button",
+                      "/salt/components/button/usage",
+                      "/salt/components/button/accessibility",
+                      "/salt/components/button/examples"
+                    ],
+                    "examples": [
+                      "/salt/components/button/examples"
+                    ],
+                    "related_guides": [
+                      {
+                        "name": "Composition pitfalls",
+                        "kind": "getting-started",
+                        "summary": "Review the most common Salt composition mistakes, including nested interactive primitives, pass-through wrappers, and rebuilding standard primitives.",
+                        "overview": "/salt/getting-started/composition-pitfalls"
+                      },
+                      {
+                        "name": "Custom wrappers",
+                        "kind": "getting-started",
+                        "summary": "Learn when a wrapper over a Salt primitive adds value and when it is only hiding the underlying component behind prop forwarding.",
+                        "overview": "/salt/getting-started/custom-wrappers"
+                      },
+                      {
+                        "name": "Choosing the right primitive",
+                        "kind": "getting-started",
+                        "summary": "Choose Salt components, layouts, and patterns by user intent first, then prefer the most constrained Salt option before creating custom UI.",
+                        "overview": "/salt/getting-started/choosing-the-right-primitive"
+                      },
+                      {
+                        "name": "Developing with Salt",
+                        "kind": "getting-started",
+                        "summary": "Learn how to use Salt’s UI components in your React web applications.",
+                        "overview": "/salt/getting-started/developing"
+                      }
+                    ],
+                    "guidance_sources": [
+                      "component-category-map",
+                      "usage-docs"
+                    ],
+                    "next_step": "Review examples for Button before implementing.",
+                    "key_props": [
+                      {
+                        "name": "appearance",
+                        "type": "keyof ButtonAppearances",
+                        "description": "The appearance of the button. Options are 'solid', 'bordered', and 'transparent'. 'solid' is the default value. @since 1.36.0."
+                      },
+                      {
+                        "name": "disabled",
+                        "type": "boolean",
+                        "description": "If true, the button will be disabled."
+                      },
+                      {
+                        "name": "focusableWhenDisabled",
+                        "type": "boolean",
+                        "description": "If true, the button will be focusable when disabled."
+                      },
+                      {
+                        "name": "loading",
+                        "type": "boolean",
+                        "description": "If true, the button will be in a loading state. This allows a spinner to be nested inside the button. @since 1.38.0."
+                      },
+                      {
+                        "name": "loadingAnnouncement",
+                        "type": "string",
+                        "description": "Text to be announced by screen readers, intended to be used in conjunction with the loading prop. @since 1.38.0."
+                      }
+                    ],
+                    "prop_count": 7,
+                    "deprecated_prop_count": 1
+                  },
+                  "suggested_follow_ups": [
+                    {
+                      "workflow": "get_salt_reference",
+                      "reason": "Find the best implementation example for Button.",
+                      "args": {
+                        "names": [
+                          "Button"
+                        ],
+                        "entity_type": "component",
+                        "include": [
+                          "examples"
+                        ],
+                        "include_starter_code": true
+                      },
+                      "follow_up_mode": "exact_name"
+                    },
+                    {
+                      "workflow": "create_salt_ui",
+                      "reason": "Compare Button with Link before committing.",
+                      "args": {
+                        "query": "Compare Button with Link",
+                        "solution_type": "component"
+                      },
+                      "follow_up_mode": "broad_query"
+                    }
+                  ],
+                  "next_step": "Review examples for Button before implementing. Then confirm approved repo wrappers for analytics, defaults, or shared behavior through project conventions before finalizing the implementation.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": true,
+                      "topics": [
+                        "wrappers"
+                      ],
+                      "reason": "This lookup resolves canonical Salt component guidance. Confirm whether the repo wraps or narrows this primitive through project conventions before treating it as the final project answer."
+                    }
+                  }
+                }
+              },
+              {
+                "name": "Search",
+                "result": {
+                  "entity_type": "pattern",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved Search as a Salt pattern."
+                  },
+                  "entity": {
+                    "id": "pattern.search",
+                    "name": "Search",
+                    "aliases": [
+                      "/salt/patterns/search",
+                      "search"
+                    ],
+                    "status": "stable",
+                    "summary": "The Search pattern offers users an intuitive way to explore content quickly by using keywords. Search is essential to discover information in apps that support large amounts of information. This pattern supports a basic menu driven search behavior, with optional free text behavior and configurable search result items.",
+                    "when_to_use": [
+                      "Locate information in applications with large amounts of data.",
+                      "Look through a catalog of items, like a product catalog or a library.",
+                      "Navigate to a page or resource."
+                    ],
+                    "when_not_to_use": [
+                      "When users already know the destination and only need a direct navigation control, use a link, button, or navigation item instead.",
+                      "When the task is filtering a visible data set in place, use filters or a data grid instead of Search.",
+                      "When the scope is a small, fixed set of options, use a Combo box or Select control instead of Search."
+                    ],
+                    "composed_of": [
+                      {
+                        "component": "Combo box",
+                        "role": "Use Combo box to display the search field."
+                      }
+                    ],
+                    "related_patterns": [],
+                    "how_to_build": [
+                      "**Search input field:** A single input field where users type their queries.",
+                      "**Search icon:** The magnifying glass icon indicates search.",
+                      "**Placeholder text:** Hints to users what information can be searched for. Placeholder text should be clear and tell the user exactly what can be searched for if results are limited. For example, if only page titles can be searched, placeholder text should read “Search page titles.”",
+                      "**Close button:** A close button that appears within the search input field, allowing users to quickly clear their current query and start a new search.",
+                      "**Expand button:** A chevron icon button typically used to indicate that a dropdown menu can be expanded or collapsed.",
+                      "**Section header:** A label used to organize search results into distinct categories within the dropdown list. It helps users quickly identify and navigate different types of results, such as recent searches, suggestions, pages, and people.",
+                      "**Result item:** An individual entry within the search results dropdown. It can include various elements such as secondary labels, icons, or avatars.",
+                      "Use Combo box to display the search field.",
+                      "Use Option Group to group the search results.",
+                      "Use Option to display a search result."
+                    ],
+                    "how_it_works": [
+                      "Basic menu-driven search Initial interaction: Search field displays with \"Search\" text, inviting the user to begin their search.",
+                      "Basic menu-driven search Activating the search: When the user clicks the search field, a search button appears and a dropdown emerges.",
+                      "Basic menu-driven search Recent searches: If there are recent searches, a list of past queries appears, providing quick access to previous results.",
+                      "Basic menu-driven search Typing the query: As the user types, a close button appears for easy clearing of the input. The dropdown updates in real-time, offering suggestions that match the input, with bolded text for clarity.",
+                      "Basic menu-driven search Direct to the results: Once the user submits a search, they are directed to the results page. The search field remains visible, showing the entered query, ready for new searches.",
+                      "Basic menu-driven search Direct submission: Pressing \"Enter\" after entering a search query will lead the user to the page of the first result in the dropdown.",
+                      "Basic menu-driven search Selecting suggestion: Choosing a suggestion from the dropdown takes the user directly to the page of the selected result.",
+                      "Free text search capability Direct submission: Pressing the \"Enter\" key initiates the search based on the user's input.",
+                      "Free text search capability Selecting suggestion: Users can navigate through the menu using arrow keys or click on a result to select from the dropdown.",
+                      "Free text search capability Optional search button: A search button can also be added as an optional element, providing a clear call to action and visual cue for more explicit search experiences.",
+                      "Search result item types: The search pattern currently supports basic search result items that comprise non-focusable elements: text, icons, country symbols, and avatars.",
+                      "Search result item types: The following are examples of the types of results items you can create.",
+                      "Search result item types: **Basic search result:** Displays only the primary search result value, ideal for straightforward results where no additional context is needed.",
+                      "Search result item types: **Search result with icon:** Combines a descriptive icon with the primary search result value, useful for visually differentiating results by category or type.",
+                      "Search Loading results: Indicates that search results are being fetched, typically shown with a spinner used when there is a delay in retrieving results to inform users that processing is ongoing.",
+                      "Search result groups: Organizes search results into clear categories, such as recent searches, suggestions, pages, and people. This structure helps users quickly find and identify relevant information, making navigation easier and more efficient. By grouping results, users can access all necessary information in a straightforward and user-friendly way, effectively managing complex search scenarios. Within these categories, consider ordering items alphabetically, chronologically, or by relevance, depending on what makes the most sense for the content type. This approach helps users quickly identify and navigate to the type of result they are looking for.",
+                      "Search result order: This section provides guidelines for organizing and prioritizing search results in a dropdown menu.",
+                      "Search result order: **Relevance first:** Prioritize results based on relevance to the user's query, showing the most closely matching items at the top. Context is determined using user preferences, application section, keyword analysis, and session data, helping tailor results to better match user intent.",
+                      "Search result order: **Recent searches:** If applicable, display recent searches at the top. This allows users to quickly access queries they've made before.",
+                      "Search result order: **Suggestions:** Provide suggested search terms or autocomplete options that are closely related to the input string. These can help guide users to popular or common searches.",
+                      "Search placement: Search is typically located in three key areas for easy access.",
+                      "Search placement: **Header:** Accessible from any page, ideal for global search.",
+                      "Search placement: **Center:** Prominent on homepages, used when search is a primary function.",
+                      "Search placement: **Expandable search:** Starts as an icon button, expanding to a search field or dialog, saving space in minimalist designs."
+                    ],
+                    "resources": [],
+                    "related_docs": {
+                      "overview": "/salt/patterns/search"
+                    },
+                    "docs": [
+                      "/salt/patterns/search"
+                    ],
+                    "related_guides": [],
+                    "guidance_sources": [
+                      "pattern-category-map",
+                      "pattern-docs"
+                    ],
+                    "next_step": "Review examples for Search before implementing."
+                  },
+                  "suggested_follow_ups": [
+                    {
+                      "workflow": "get_salt_reference",
+                      "reason": "Find examples that illustrate Search.",
+                      "args": {
+                        "names": [
+                          "Search"
+                        ],
+                        "entity_type": "pattern",
+                        "include": [
+                          "examples"
+                        ],
+                        "include_starter_code": true
+                      },
+                      "follow_up_mode": "exact_name"
+                    }
+                  ],
+                  "next_step": "Review examples for Search before implementing. Then confirm approved page patterns and workflow scaffolds and local layout containers and screen skeletons through project conventions before finalizing the implementation.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": true,
+                      "topics": [
+                        "page-patterns",
+                        "local-layout"
+                      ],
+                      "reason": "This lookup resolves canonical Salt flow or page guidance. Confirm whether the repo has approved page patterns or shell conventions before treating it as the final project structure."
+                    }
+                  }
+                }
+              },
+              {
+                "name": "Definitely Missing Salt Thing",
+                "result": {
+                  "entity_type": null,
+                  "decision": {
+                    "status": "not_found",
+                    "why": "No exact Salt entity match was found in the public v1 catalog surface."
+                  },
+                  "entity": null,
+                  "next_step": "Retry with an exact component, pattern, foundation, token, guide, page, or package name, or use create_salt_ui for broader routing.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": false,
+                      "topics": [],
+                      "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+                    }
+                  }
+                }
+              }
+            ],
+            "unresolved_names": [
+              "Definitely Missing Salt Thing"
+            ],
+            "next_step": "Inspect the per-name rows for \"Definitely Missing Salt Thing\" (each row carries its own did_you_mean and ambiguity payload), then retry just the unresolved names or use create_salt_ui for the broader intent.",
+            "registry_context": {
+              "source": "bundled_package",
+              "registry_version": "0.1.0",
+              "registry_generated_at": "2026-07-29T09:39:42.802Z",
+              "note": "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files."
+            },
+            "sources": [
+              {
+                "original": "/salt/components/button",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/button",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/button/usage",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/button/usage",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/button/accessibility",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/button/accessibility",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/button/examples",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/button/examples",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/patterns/search",
+                "resolved": "https://www.saltdesignsystem.com/salt/patterns/search",
+                "kind": "site"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "get_salt_reference",
+          "arguments": {
+            "names": [
+              "--salt-accent-background"
+            ],
+            "entity_type": "token"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 11
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 11,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}},\"decision\":{\"status\":\"results\",\"why\":\"Resolved all 1 requested Salt entity.\"},\"requested_count\":1,\"found_count\":1,\"not_found_count\":0,\"ambiguous_count\":0,\"results\":[{\"name\":\"--salt-accent-background\",\"result\":{\"entity_type\":\"token\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved --salt-accent-background as a Salt design token.\"},\"entity\":{\"name\":\"--salt-accent-background\",\"category\":\"accent\",\"type\":\"string\",\"value\":\"var(--salt-palette-accent)\",\"semantic_intent\":\"Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.\",\"guidance\":[\"Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.\"],\"applies_to\":[],\"docs\":[\"/salt/themes/design-tokens/index\"],\"policy\":{\"usage_tier\":\"palette\",\"direct_component_use\":\"never\",\"preferred_for\":[],\"avoid_for\":[\"Palette tokens are never referenced directly in components or patterns.\"],\"notes\":[\"Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value.\"],\"structural_roles\":[],\"pairing\":null,\"docs\":[\"/salt/themes/design-tokens/index\"],\"evidence_refs\":[{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.docs.0.source-ref\",\"source_kind\":\"docs\",\"claim_kind\":\"token\",\"source\":{\"url\":\"/salt/themes/design-tokens/index\",\"repo_path\":\"site/docs/themes/design-tokens/index.mdx\"},\"confidence\":\"high\",\"note\":\"Source-backed docs evidence for generated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.token-source.0.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/deprecated/characteristics.css\"},\"confidence\":\"high\",\"note\":\"Source-backed token evidence for generated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.token-source.1.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/deprecated/characteristics.css\"},\"confidence\":\"high\",\"note\":\"Source-backed token evidence for generated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.deprecated-replacement.0.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/deprecated/characteristics.css\",\"section\":\"--salt-accent-background: var(--salt-palette-accent);\",\"line_start\":93,\"line_end\":93},\"confidence\":\"high\",\"note\":\"Source-backed deprecated token replacement evidence for generated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.0.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/legacy/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-blue-500);\",\"line_start\":2,\"line_end\":2},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.1.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/legacy/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-blue-500);\",\"line_start\":8,\"line_end\":8},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.2.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-blue-500);\",\"line_start\":2,\"line_end\":2},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.3.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-blue-500);\",\"line_start\":14,\"line_end\":14},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.4.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-teal-500);\",\"line_start\":26,\"line_end\":26},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"},{\"contract\":\"salt_evidence_ref_v1\",\"id\":\"salt-accent-background.policy.replacement-token-source.5.source-ref\",\"source_kind\":\"token\",\"claim_kind\":\"token\",\"source\":{\"repo_path\":\"packages/theme/css/next/palette/accent.css\",\"section\":\"--salt-palette-accent: var(--salt-color-teal-500);\",\"line_start\":38,\"line_end\":38},\"confidence\":\"high\",\"note\":\"Source-backed current token declaration evidence for generated deprecated token policy metadata.\"}]},\"themes\":[\"next\",\"salt\"],\"deprecated\":true},\"next_step\":\"--salt-accent-background is deprecated. Do not use it in new code. This record has no source-backed replacement; consult authoritative Salt migration guidance before choosing one.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}}}}],\"unresolved_names\":[],\"registry_context\":{\"source\":\"bundled_package\",\"registry_version\":\"0.1.0\",\"registry_generated_at\":\"2026-07-29T09:39:42.802Z\",\"note\":\"Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.\"},\"sources\":[{\"original\":\"/salt/themes/design-tokens/index\",\"resolved\":\"https://www.saltdesignsystem.com/salt/themes/design-tokens/index\",\"kind\":\"site\"},{\"original\":\"site/docs/themes/design-tokens/index.mdx\",\"resolved\":\"site/docs/themes/design-tokens/index.mdx\",\"kind\":\"repo\"},{\"original\":\"packages/theme/css/deprecated/characteristics.css\",\"resolved\":\"packages/theme/css/deprecated/characteristics.css\",\"kind\":\"repo\"},{\"original\":\"packages/theme/css/next/deprecated/characteristics.css\",\"resolved\":\"packages/theme/css/next/deprecated/characteristics.css\",\"kind\":\"repo\"},{\"original\":\"packages/theme/css/legacy/palette/accent.css\",\"resolved\":\"packages/theme/css/legacy/palette/accent.css\",\"kind\":\"repo\"},{\"original\":\"packages/theme/css/next/palette/accent.css\",\"resolved\":\"packages/theme/css/next/palette/accent.css\",\"kind\":\"repo\"}]}"
+            }
+          ],
+          "structuredContent": {
+            "guidance_boundary": {
+              "guidance_source": "canonical_salt",
+              "scope": "official_salt_only",
+              "project_conventions": {
+                "supported": true,
+                "contract": "project_conventions_v1",
+                "check_recommended": false,
+                "topics": [],
+                "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+              }
+            },
+            "decision": {
+              "status": "results",
+              "why": "Resolved all 1 requested Salt entity."
+            },
+            "requested_count": 1,
+            "found_count": 1,
+            "not_found_count": 0,
+            "ambiguous_count": 0,
+            "results": [
+              {
+                "name": "--salt-accent-background",
+                "result": {
+                  "entity_type": "token",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved --salt-accent-background as a Salt design token."
+                  },
+                  "entity": {
+                    "name": "--salt-accent-background",
+                    "category": "accent",
+                    "type": "string",
+                    "value": "var(--salt-palette-accent)",
+                    "semantic_intent": "Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention.",
+                    "guidance": [
+                      "Accent highlights key elements by applying a theme's dominant color, helping important components—like active tabs or headings—stand out and draw attention."
+                    ],
+                    "applies_to": [],
+                    "docs": [
+                      "/salt/themes/design-tokens/index"
+                    ],
+                    "policy": {
+                      "usage_tier": "palette",
+                      "direct_component_use": "never",
+                      "preferred_for": [],
+                      "avoid_for": [
+                        "Palette tokens are never referenced directly in components or patterns."
+                      ],
+                      "notes": [
+                        "Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value."
+                      ],
+                      "structural_roles": [],
+                      "pairing": null,
+                      "docs": [
+                        "/salt/themes/design-tokens/index"
+                      ],
+                      "evidence_refs": [
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.docs.0.source-ref",
+                          "source_kind": "docs",
+                          "claim_kind": "token",
+                          "source": {
+                            "url": "/salt/themes/design-tokens/index",
+                            "repo_path": "site/docs/themes/design-tokens/index.mdx"
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed docs evidence for generated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.token-source.0.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/deprecated/characteristics.css"
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed token evidence for generated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.token-source.1.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/deprecated/characteristics.css"
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed token evidence for generated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.deprecated-replacement.0.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/deprecated/characteristics.css",
+                            "section": "--salt-accent-background: var(--salt-palette-accent);",
+                            "line_start": 93,
+                            "line_end": 93
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed deprecated token replacement evidence for generated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.0.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/legacy/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-blue-500);",
+                            "line_start": 2,
+                            "line_end": 2
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.1.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/legacy/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-blue-500);",
+                            "line_start": 8,
+                            "line_end": 8
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.2.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-blue-500);",
+                            "line_start": 2,
+                            "line_end": 2
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.3.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-blue-500);",
+                            "line_start": 14,
+                            "line_end": 14
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.4.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-teal-500);",
+                            "line_start": 26,
+                            "line_end": 26
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        },
+                        {
+                          "contract": "salt_evidence_ref_v1",
+                          "id": "salt-accent-background.policy.replacement-token-source.5.source-ref",
+                          "source_kind": "token",
+                          "claim_kind": "token",
+                          "source": {
+                            "repo_path": "packages/theme/css/next/palette/accent.css",
+                            "section": "--salt-palette-accent: var(--salt-color-teal-500);",
+                            "line_start": 38,
+                            "line_end": 38
+                          },
+                          "confidence": "high",
+                          "note": "Source-backed current token declaration evidence for generated deprecated token policy metadata."
+                        }
+                      ]
+                    },
+                    "themes": [
+                      "next",
+                      "salt"
+                    ],
+                    "deprecated": true
+                  },
+                  "next_step": "--salt-accent-background is deprecated. Do not use it in new code. This record has no source-backed replacement; consult authoritative Salt migration guidance before choosing one.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": false,
+                      "topics": [],
+                      "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+                    }
+                  }
+                }
+              }
+            ],
+            "unresolved_names": [],
+            "registry_context": {
+              "source": "bundled_package",
+              "registry_version": "0.1.0",
+              "registry_generated_at": "2026-07-29T09:39:42.802Z",
+              "note": "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files."
+            },
+            "sources": [
+              {
+                "original": "/salt/themes/design-tokens/index",
+                "resolved": "https://www.saltdesignsystem.com/salt/themes/design-tokens/index",
+                "kind": "site"
+              },
+              {
+                "original": "site/docs/themes/design-tokens/index.mdx",
+                "resolved": "site/docs/themes/design-tokens/index.mdx",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/theme/css/deprecated/characteristics.css",
+                "resolved": "packages/theme/css/deprecated/characteristics.css",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/theme/css/next/deprecated/characteristics.css",
+                "resolved": "packages/theme/css/next/deprecated/characteristics.css",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/theme/css/legacy/palette/accent.css",
+                "resolved": "packages/theme/css/legacy/palette/accent.css",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/theme/css/next/palette/accent.css",
+                "resolved": "packages/theme/css/next/palette/accent.css",
+                "kind": "repo"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "get_salt_reference",
+          "arguments": {
+            "names": [
+              "WorkflowIcon"
+            ],
+            "entity_type": "icon"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 12
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 12,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}},\"decision\":{\"status\":\"results\",\"why\":\"Resolved all 1 requested Salt entity.\"},\"requested_count\":1,\"found_count\":1,\"not_found_count\":0,\"ambiguous_count\":0,\"results\":[{\"name\":\"WorkflowIcon\",\"result\":{\"entity_type\":\"icon\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved WorkflowIcon as a Salt icon.\"},\"entity\":{\"id\":\"icon.workflow-icon\",\"name\":\"WorkflowIcon\",\"base_name\":\"Workflow\",\"figma_name\":\"workflow\",\"package\":\"@salt-ds/icons\",\"status\":\"stable\",\"category\":\"organize\",\"variant\":\"outline\",\"summary\":\"Workflow icon for organize concepts such as nodes, process, sequence.\",\"synonyms\":[\"nodes\",\"process\",\"sequence\"],\"related_docs\":{\"overview\":\"/salt/components/icon\",\"examples\":\"/salt/components/icon/examples\",\"foundation\":\"/salt/foundations/assets/index\"}},\"next_step\":\"Confirm WorkflowIcon is the right visual metaphor before using it.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}}}}],\"unresolved_names\":[],\"registry_context\":{\"source\":\"bundled_package\",\"registry_version\":\"0.1.0\",\"registry_generated_at\":\"2026-07-29T09:39:42.802Z\",\"note\":\"Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.\"},\"sources\":[{\"original\":\"/salt/components/icon\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/icon\",\"kind\":\"site\"},{\"original\":\"/salt/components/icon/examples\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/icon/examples\",\"kind\":\"site\"},{\"original\":\"/salt/foundations/assets/index\",\"resolved\":\"https://www.saltdesignsystem.com/salt/foundations/assets/index\",\"kind\":\"site\"}]}"
+            }
+          ],
+          "structuredContent": {
+            "guidance_boundary": {
+              "guidance_source": "canonical_salt",
+              "scope": "official_salt_only",
+              "project_conventions": {
+                "supported": true,
+                "contract": "project_conventions_v1",
+                "check_recommended": false,
+                "topics": [],
+                "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+              }
+            },
+            "decision": {
+              "status": "results",
+              "why": "Resolved all 1 requested Salt entity."
+            },
+            "requested_count": 1,
+            "found_count": 1,
+            "not_found_count": 0,
+            "ambiguous_count": 0,
+            "results": [
+              {
+                "name": "WorkflowIcon",
+                "result": {
+                  "entity_type": "icon",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved WorkflowIcon as a Salt icon."
+                  },
+                  "entity": {
+                    "id": "icon.workflow-icon",
+                    "name": "WorkflowIcon",
+                    "base_name": "Workflow",
+                    "figma_name": "workflow",
+                    "package": "@salt-ds/icons",
+                    "status": "stable",
+                    "category": "organize",
+                    "variant": "outline",
+                    "summary": "Workflow icon for organize concepts such as nodes, process, sequence.",
+                    "synonyms": [
+                      "nodes",
+                      "process",
+                      "sequence"
+                    ],
+                    "related_docs": {
+                      "overview": "/salt/components/icon",
+                      "examples": "/salt/components/icon/examples",
+                      "foundation": "/salt/foundations/assets/index"
+                    }
+                  },
+                  "next_step": "Confirm WorkflowIcon is the right visual metaphor before using it.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": false,
+                      "topics": [],
+                      "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+                    }
+                  }
+                }
+              }
+            ],
+            "unresolved_names": [],
+            "registry_context": {
+              "source": "bundled_package",
+              "registry_version": "0.1.0",
+              "registry_generated_at": "2026-07-29T09:39:42.802Z",
+              "note": "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files."
+            },
+            "sources": [
+              {
+                "original": "/salt/components/icon",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/icon",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/icon/examples",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/icon/examples",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/foundations/assets/index",
+                "resolved": "https://www.saltdesignsystem.com/salt/foundations/assets/index",
+                "kind": "site"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "get_salt_reference",
+          "arguments": {
+            "names": [
+              "US"
+            ],
+            "entity_type": "country_symbol"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 13
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 13,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}},\"decision\":{\"status\":\"results\",\"why\":\"Resolved all 1 requested Salt entity.\"},\"requested_count\":1,\"found_count\":1,\"not_found_count\":0,\"ambiguous_count\":0,\"results\":[{\"name\":\"US\",\"result\":{\"entity_type\":\"country_symbol\",\"decision\":{\"status\":\"found\",\"why\":\"Resolved United States of America (the) as a Salt country symbol.\"},\"entity\":{\"id\":\"country_symbol.us\",\"code\":\"US\",\"name\":\"United States of America (the)\",\"package\":\"@salt-ds/countries\",\"status\":\"stable\",\"summary\":\"Asset for United States of America (the); available in circle and sharp variants.\",\"aliases\":[\"US\",\"US_Sharp\",\"United States of America (the)\",\"United States of America\",\"The United States of America\",\"United States\"],\"variants\":{\"circle\":{\"export_name\":\"US\",\"repo_path\":\"packages/countries/src/components/US.tsx\"},\"sharp\":{\"export_name\":\"US_Sharp\",\"repo_path\":\"packages/countries/src/components/US_Sharp.tsx\"}},\"related_docs\":{\"overview\":\"/salt/components/country-symbol\",\"usage\":\"/salt/components/country-symbol/usage\",\"accessibility\":\"/salt/components/country-symbol/accessibility\",\"examples\":\"/salt/components/country-symbol/examples\",\"foundation\":\"/salt/foundations/assets/country-symbols\"}},\"next_step\":\"Confirm the US symbol variant you need before using it.\",\"guidance_boundary\":{\"guidance_source\":\"canonical_salt\",\"scope\":\"official_salt_only\",\"project_conventions\":{\"supported\":true,\"contract\":\"project_conventions_v1\",\"check_recommended\":false,\"topics\":[],\"reason\":\"This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity.\"}}}}],\"unresolved_names\":[],\"registry_context\":{\"source\":\"bundled_package\",\"registry_version\":\"0.1.0\",\"registry_generated_at\":\"2026-07-29T09:39:42.802Z\",\"note\":\"Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.\"},\"sources\":[{\"original\":\"packages/countries/src/components/US.tsx\",\"resolved\":\"packages/countries/src/components/US.tsx\",\"kind\":\"repo\"},{\"original\":\"packages/countries/src/components/US_Sharp.tsx\",\"resolved\":\"packages/countries/src/components/US_Sharp.tsx\",\"kind\":\"repo\"},{\"original\":\"/salt/components/country-symbol\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/country-symbol\",\"kind\":\"site\"},{\"original\":\"/salt/components/country-symbol/usage\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/country-symbol/usage\",\"kind\":\"site\"},{\"original\":\"/salt/components/country-symbol/accessibility\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/country-symbol/accessibility\",\"kind\":\"site\"},{\"original\":\"/salt/components/country-symbol/examples\",\"resolved\":\"https://www.saltdesignsystem.com/salt/components/country-symbol/examples\",\"kind\":\"site\"},{\"original\":\"/salt/foundations/assets/country-symbols\",\"resolved\":\"https://www.saltdesignsystem.com/salt/foundations/assets/country-symbols\",\"kind\":\"site\"}]}"
+            }
+          ],
+          "structuredContent": {
+            "guidance_boundary": {
+              "guidance_source": "canonical_salt",
+              "scope": "official_salt_only",
+              "project_conventions": {
+                "supported": true,
+                "contract": "project_conventions_v1",
+                "check_recommended": false,
+                "topics": [],
+                "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+              }
+            },
+            "decision": {
+              "status": "results",
+              "why": "Resolved all 1 requested Salt entity."
+            },
+            "requested_count": 1,
+            "found_count": 1,
+            "not_found_count": 0,
+            "ambiguous_count": 0,
+            "results": [
+              {
+                "name": "US",
+                "result": {
+                  "entity_type": "country_symbol",
+                  "decision": {
+                    "status": "found",
+                    "why": "Resolved United States of America (the) as a Salt country symbol."
+                  },
+                  "entity": {
+                    "id": "country_symbol.us",
+                    "code": "US",
+                    "name": "United States of America (the)",
+                    "package": "@salt-ds/countries",
+                    "status": "stable",
+                    "summary": "Asset for United States of America (the); available in circle and sharp variants.",
+                    "aliases": [
+                      "US",
+                      "US_Sharp",
+                      "United States of America (the)",
+                      "United States of America",
+                      "The United States of America",
+                      "United States"
+                    ],
+                    "variants": {
+                      "circle": {
+                        "export_name": "US",
+                        "repo_path": "packages/countries/src/components/US.tsx"
+                      },
+                      "sharp": {
+                        "export_name": "US_Sharp",
+                        "repo_path": "packages/countries/src/components/US_Sharp.tsx"
+                      }
+                    },
+                    "related_docs": {
+                      "overview": "/salt/components/country-symbol",
+                      "usage": "/salt/components/country-symbol/usage",
+                      "accessibility": "/salt/components/country-symbol/accessibility",
+                      "examples": "/salt/components/country-symbol/examples",
+                      "foundation": "/salt/foundations/assets/country-symbols"
+                    }
+                  },
+                  "next_step": "Confirm the US symbol variant you need before using it.",
+                  "guidance_boundary": {
+                    "guidance_source": "canonical_salt",
+                    "scope": "official_salt_only",
+                    "project_conventions": {
+                      "supported": true,
+                      "contract": "project_conventions_v1",
+                      "check_recommended": false,
+                      "topics": [],
+                      "reason": "This lookup resolves canonical Salt reference guidance. Project conventions usually matter later only if the repo layers local abstractions on top of the resolved entity."
+                    }
+                  }
+                }
+              }
+            ],
+            "unresolved_names": [],
+            "registry_context": {
+              "source": "bundled_package",
+              "registry_version": "0.1.0",
+              "registry_generated_at": "2026-07-29T09:39:42.802Z",
+              "note": "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files."
+            },
+            "sources": [
+              {
+                "original": "packages/countries/src/components/US.tsx",
+                "resolved": "packages/countries/src/components/US.tsx",
+                "kind": "repo"
+              },
+              {
+                "original": "packages/countries/src/components/US_Sharp.tsx",
+                "resolved": "packages/countries/src/components/US_Sharp.tsx",
+                "kind": "repo"
+              },
+              {
+                "original": "/salt/components/country-symbol",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/country-symbol",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/country-symbol/usage",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/country-symbol/usage",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/country-symbol/accessibility",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/country-symbol/accessibility",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/components/country-symbol/examples",
+                "resolved": "https://www.saltdesignsystem.com/salt/components/country-symbol/examples",
+                "kind": "site"
+              },
+              {
+                "original": "/salt/foundations/assets/country-symbols",
+                "resolved": "https://www.saltdesignsystem.com/salt/foundations/assets/country-symbols",
+                "kind": "site"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "latency_ms": 60.525,
+    "response_utf8_bytes": 58772,
+    "structured_content_utf8_bytes": 0,
+    "text_content_utf8_bytes": 0,
+    "response_sha256": "5d863b231c4ca05b8c4364de13c71c21213ed61e708f367183d990ed20785cd1"
+  },
+  "call_count": 4,
+  "transport_success": true,
+  "schema_or_envelope_success": true,
+  "reproduction_assertion": {
+    "passed": true,
+    "details": "Exact present and missing references across canonical families should all be represented."
+  },
+  "semantic_task_result": "success",
+  "semantic_task_reason": "The bounded deterministic task met its declared assertion.",
+  "agent_edits": null,
+  "user_corrections": null,
+  "host_capture_status": "not_available"
+}

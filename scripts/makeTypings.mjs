@@ -52,13 +52,13 @@ export function reportTSDiagnostics(diagnostics) {
 
 export async function makeTypings(
   outDir,
-  sourceConfig = path.join(cwd, "src"),
+  sourceConfig,
+  typescriptConfigOverride,
 ) {
   const normalizedSources = normalizeTypingSources(sourceConfig);
-  const typescriptConfig = await getTypescriptConfig(
-    cwd,
-    normalizedSources.tsConfigLookupDir,
-  );
+  const typescriptConfig =
+    typescriptConfigOverride ??
+    (await getTypescriptConfig(cwd, normalizedSources.tsConfigLookupDir));
 
   console.log("generating .d.ts files");
 

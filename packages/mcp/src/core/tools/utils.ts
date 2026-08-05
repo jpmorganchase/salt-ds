@@ -157,7 +157,6 @@ function porterStemmer(w: string): string {
 }
 
 import {
-  getComponentExportAliases,
   getRegistryIndexes,
   normalizeRegistryLookupKey,
 } from "../registry/runtimeCache.js";
@@ -262,7 +261,6 @@ export function getComponentLookupNames(component: ComponentRecord): string[] {
       component.name,
       component.source.export_name,
       ...component.aliases,
-      ...getComponentExportAliases(component),
       ...(component.sub_components?.map((sub) => sub.export_name) ?? []),
     ].filter((value): value is string => Boolean(value)),
   );
@@ -290,6 +288,68 @@ export function findComponentByPackageAndLookupName(
         componentMatchesLookupName(component, name),
     ) ?? null
   );
+}
+
+function getComponentPublicExportNames(component: ComponentRecord): string[] {
+  return unique(
+    [
+      component.source.export_name,
+      ...(component.sub_components?.map((sub) => sub.export_name) ?? []),
+      ...(component.canonical_example_exports?.map(
+        (candidate) => candidate.export_name,
+      ) ?? []),
+    ].filter((value): value is string => Boolean(value)),
+  );
+}
+
+/**
+ * Resolve parsed source imports against exact, source-backed public export
+ * identities. Free-text registry lookup remains intentionally
+ * case-insensitive through `componentMatchesLookupName`.
+ */
+export function findComponentByPackageAndExportName(
+  registry: Pick<SaltRegistry, "components">,
+  packageName: string,
+  exportName: string,
+): ComponentRecord | null {
+  return resolveComponentByPackageAndExportName(
+    registry,
+    packageName,
+    exportName,
+  ).component;
+}
+
+export type ComponentExportResolution =
+  | { status: "none"; component: null }
+  | { status: "resolved"; component: ComponentRecord }
+  | { status: "ambiguous"; component: null };
+
+export function resolveComponentByPackageAndExportName(
+  registry: Pick<SaltRegistry, "components">,
+  packageName: string,
+  exportName: string,
+): ComponentExportResolution {
+  let owner: ComponentRecord | null = null;
+
+  for (const component of registry.components) {
+    if (
+      component.package.name !== packageName ||
+      !getComponentPublicExportNames(component).includes(exportName)
+    ) {
+      continue;
+    }
+
+    // Generated registries omit ambiguous canonical owners. Preserve that
+    // fail-closed behavior for hand-authored and legacy registry fixtures.
+    if (owner && owner.id !== component.id) {
+      return { status: "ambiguous", component: null };
+    }
+    owner = component;
+  }
+
+  return owner
+    ? { status: "resolved", component: owner }
+    : { status: "none", component: null };
 }
 
 function findComponentForExample(

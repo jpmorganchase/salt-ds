@@ -1,5 +1,5 @@
 import path from "node:path";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { StdioServerTransport } from "@modelcontextprotocol/server/stdio";
 import { createSaltMcpServer } from "./server/createServer.js";
 import { getSaltMcpPackageManifest } from "./server/serverMetadata.js";
 
@@ -8,7 +8,7 @@ interface ParsedArgs {
   flags: Record<string, string>;
 }
 
-const VALUE_FLAGS = new Set(["registry-dir", "site-base-url"]);
+const VALUE_FLAGS = new Set(["registry-dir"]);
 
 const HELP_TEXT = `Usage: salt-mcp [serve] [options]
 
@@ -19,32 +19,42 @@ Commands:
 
 Options:
   --registry-dir <path>   Read the Salt registry from a custom directory
-  --site-base-url <url>   Use a custom Salt docs base URL
   -h, --help              Show this help message
   --version               Show the package version`;
 
-function waitForStdioShutdown(transport: StdioServerTransport): Promise<void> {
+function createObservedStdioTransport(): {
+  transport: StdioServerTransport;
+  closed: Promise<void>;
+} {
+  const transport = new StdioServerTransport();
+  let signalClosed!: () => void;
+  const closed = new Promise<void>((resolve) => {
+    signalClosed = resolve;
+  });
+  const close = transport.close.bind(transport);
+  transport.close = async () => {
+    try {
+      await close();
+    } finally {
+      signalClosed();
+    }
+  };
+  return { transport, closed };
+}
+
+function waitForStdioShutdown(transportClosed: Promise<void>): Promise<void> {
   return new Promise((resolve) => {
     const finish = () => {
       process.stdin.off("end", handleStdinClose);
       process.stdin.off("close", handleStdinClose);
-      if (transport.onclose === finish) {
-        transport.onclose = undefined;
-      }
       resolve();
     };
 
-    const handleStdinClose = () => {
-      if (typeof transport.close === "function") {
-        void transport.close();
-        return;
-      }
-      finish();
-    };
+    const handleStdinClose = () => finish();
 
-    transport.onclose = finish;
     process.stdin.once("end", handleStdinClose);
     process.stdin.once("close", handleStdinClose);
+    void transportClosed.then(finish, finish);
     process.stdin.resume();
   });
 }
@@ -127,14 +137,16 @@ async function runServe(flags: Record<string, string>): Promise<void> {
   const registryDir = flags["registry-dir"]
     ? path.resolve(flags["registry-dir"])
     : undefined;
-  const siteBaseUrl = flags["site-base-url"]?.trim() || undefined;
-  const server = await createSaltMcpServer({ registryDir, siteBaseUrl });
-  const transport = new StdioServerTransport();
-  const shutdownPromise = waitForStdioShutdown(transport);
+  const { transport, closed } = createObservedStdioTransport();
+  const server = await createSaltMcpServer({
+    registryDir,
+    projectAccess: { mode: "unrestricted_local_stdio" },
+  });
   await server.connect(transport);
 
   console.error("salt-mcp server running on stdio");
-  await shutdownPromise;
+  await waitForStdioShutdown(closed);
+  await server.close();
 }
 
 export async function runCli(

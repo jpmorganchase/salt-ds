@@ -1,0 +1,320 @@
+{
+  "scenario": {
+    "id": "review_grounded_findings",
+    "kind": "tool_call",
+    "tool": "review_salt_ui",
+    "arguments": {
+      "code": "import { Button } from \"@salt-ds/core\";\n\nexport function Demo() {\n  return <Button style={{ color: \"#ff0000\", borderColor: \"var(--salt-container-borderColor)\" }}>Save</Button>;\n}\n",
+      "framework": "react",
+      "package_version": "2.0.0"
+    },
+    "purpose": "Representative review with grounded token findings.",
+    "semantic_task_result": "success"
+  },
+  "request": {
+    "method": "tools/call",
+    "params": {
+      "name": "review_salt_ui",
+      "arguments": {
+        "code": "import { Button } from \"@salt-ds/core\";\n\nexport function Demo() {\n  return <Button style={{ color: \"#ff0000\", borderColor: \"var(--salt-container-borderColor)\" }}>Save</Button>;\n}\n",
+        "framework": "react",
+        "package_version": "2.0.0"
+      }
+    }
+  },
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"review\",\"status\":\"partial\",\"request\":{},\"safety\":{\"canonical_complete\":true,\"exact_request_safe\":false,\"blocking_reasons\":[\"Styling references registry-looking token names that were not found in the supplied registry: --salt-container-borderColor.\"]},\"action\":{\"kind\":\"apply_fixes\",\"scope\":\"grounded_findings\",\"authorization\":\"host_or_user_required\",\"rule_ids\":[\"review-canonical-mismatch\"],\"post_action\":{\"kind\":\"review\",\"tool\":\"review_salt_ui\",\"required_input\":[\"complete_updated_file\"]}},\"guidance\":{\"kind\":\"review\",\"findings\":[{\"title\":\"Unrecognized registry token name detected\",\"message\":\"Styling references registry-looking token names that were not found in the supplied registry: --salt-container-borderColor.\",\"severity\":\"warning\",\"rule\":\"only-use-known-salt-token-names\",\"source_urls\":[]},{\"title\":\"Hard-coded color value detected\",\"message\":\"Hard-coded color values were detected. --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.\",\"severity\":\"warning\",\"rule\":\"no-hardcoded-color-values\",\"source_urls\":[\"/salt/foundations/color/index\",\"/salt/themes/design-tokens/index\"]}],\"fixes\":[{\"rule_id\":\"review-canonical-mismatch\",\"title\":\"Hard-coded color values were detected. --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.\",\"recommendation\":\"Follow --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.\",\"safety\":\"manual_review\",\"source_urls\":[\"/salt/foundations/color/index\",\"/salt/themes/design-tokens/index\"]}]},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/examples\",\"/salt/foundations/color/index\",\"/salt/themes/design-tokens/index\"],\"summary\":\"Canonical Salt documentation or registry sources support this workflow decision.\"},{\"kind\":\"registry\",\"source\":\"canonical_salt\",\"entity\":\"Button\",\"field\":\"reviewed_artifact.imports.@salt-ds/core.Button\",\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/examples\"],\"summary\":\"The full reviewed artifact imports the source-backed Salt component Button.\"}],\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/examples\",\"/salt/foundations/color/index\",\"/salt/themes/design-tokens/index\"],\"missing\":[],\"heuristic_fallback\":false,\"surface_gate\":{\"status\":\"validated\",\"validation_issues\":[],\"missing\":[],\"unsupported_claim_count\":0,\"artifact_id\":\"review-report.validation\",\"artifact_kind\":\"review-report\"},\"unsupported_claim_count\":0,\"validation_issue_count\":0},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt review found issues that still need attention.\"}"
+      }
+    ],
+    "structuredContent": {
+      "contract": "salt_workflow_v1",
+      "workflow": "review",
+      "status": "partial",
+      "request": {},
+      "safety": {
+        "canonical_complete": true,
+        "exact_request_safe": false,
+        "blocking_reasons": [
+          "Styling references registry-looking token names that were not found in the supplied registry: --salt-container-borderColor."
+        ]
+      },
+      "action": {
+        "kind": "apply_fixes",
+        "scope": "grounded_findings",
+        "authorization": "host_or_user_required",
+        "rule_ids": [
+          "review-canonical-mismatch"
+        ],
+        "post_action": {
+          "kind": "review",
+          "tool": "review_salt_ui",
+          "required_input": [
+            "complete_updated_file"
+          ]
+        }
+      },
+      "guidance": {
+        "kind": "review",
+        "findings": [
+          {
+            "title": "Unrecognized registry token name detected",
+            "message": "Styling references registry-looking token names that were not found in the supplied registry: --salt-container-borderColor.",
+            "severity": "warning",
+            "rule": "only-use-known-salt-token-names",
+            "source_urls": []
+          },
+          {
+            "title": "Hard-coded color value detected",
+            "message": "Hard-coded color values were detected. --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.",
+            "severity": "warning",
+            "rule": "no-hardcoded-color-values",
+            "source_urls": [
+              "/salt/foundations/color/index",
+              "/salt/themes/design-tokens/index"
+            ]
+          }
+        ],
+        "fixes": [
+          {
+            "rule_id": "review-canonical-mismatch",
+            "title": "Hard-coded color values were detected. --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.",
+            "recommendation": "Follow --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.",
+            "safety": "manual_review",
+            "source_urls": [
+              "/salt/foundations/color/index",
+              "/salt/themes/design-tokens/index"
+            ]
+          }
+        ]
+      },
+      "questions": [],
+      "evidence": {
+        "status": "complete",
+        "items": [
+          {
+            "kind": "docs",
+            "source": "canonical_salt",
+            "field": "source_urls",
+            "source_urls": [
+              "/salt/components/button",
+              "/salt/components/button/usage",
+              "/salt/components/button/examples",
+              "/salt/foundations/color/index",
+              "/salt/themes/design-tokens/index"
+            ],
+            "summary": "Canonical Salt documentation or registry sources support this workflow decision."
+          },
+          {
+            "kind": "registry",
+            "source": "canonical_salt",
+            "entity": "Button",
+            "field": "reviewed_artifact.imports.@salt-ds/core.Button",
+            "source_urls": [
+              "/salt/components/button",
+              "/salt/components/button/usage",
+              "/salt/components/button/examples"
+            ],
+            "summary": "The full reviewed artifact imports the source-backed Salt component Button."
+          }
+        ],
+        "source_urls": [
+          "/salt/components/button",
+          "/salt/components/button/usage",
+          "/salt/components/button/examples",
+          "/salt/foundations/color/index",
+          "/salt/themes/design-tokens/index"
+        ],
+        "missing": [],
+        "heuristic_fallback": false,
+        "surface_gate": {
+          "status": "validated",
+          "validation_issues": [],
+          "missing": [],
+          "unsupported_claim_count": 0,
+          "artifact_id": "review-report.validation",
+          "artifact_kind": "review-report"
+        },
+        "unsupported_claim_count": 0,
+        "validation_issue_count": 0
+      },
+      "internal_limitations": {
+        "unsupported_claim_count": 0,
+        "unsupported_rule_kinds": []
+      },
+      "summary": "Salt review found issues that still need attention."
+    }
+  },
+  "error": null,
+  "frames": [
+    {
+      "direction": "client_to_server",
+      "message": {
+        "method": "tools/call",
+        "params": {
+          "name": "review_salt_ui",
+          "arguments": {
+            "code": "import { Button } from \"@salt-ds/core\";\n\nexport function Demo() {\n  return <Button style={{ color: \"#ff0000\", borderColor: \"var(--salt-container-borderColor)\" }}>Save</Button>;\n}\n",
+            "framework": "react",
+            "package_version": "2.0.0"
+          }
+        },
+        "jsonrpc": "2.0",
+        "id": 15
+      }
+    },
+    {
+      "direction": "server_to_client",
+      "message": {
+        "jsonrpc": "2.0",
+        "id": 15,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"contract\":\"salt_workflow_v1\",\"workflow\":\"review\",\"status\":\"partial\",\"request\":{},\"safety\":{\"canonical_complete\":true,\"exact_request_safe\":false,\"blocking_reasons\":[\"Styling references registry-looking token names that were not found in the supplied registry: --salt-container-borderColor.\"]},\"action\":{\"kind\":\"apply_fixes\",\"scope\":\"grounded_findings\",\"authorization\":\"host_or_user_required\",\"rule_ids\":[\"review-canonical-mismatch\"],\"post_action\":{\"kind\":\"review\",\"tool\":\"review_salt_ui\",\"required_input\":[\"complete_updated_file\"]}},\"guidance\":{\"kind\":\"review\",\"findings\":[{\"title\":\"Unrecognized registry token name detected\",\"message\":\"Styling references registry-looking token names that were not found in the supplied registry: --salt-container-borderColor.\",\"severity\":\"warning\",\"rule\":\"only-use-known-salt-token-names\",\"source_urls\":[]},{\"title\":\"Hard-coded color value detected\",\"message\":\"Hard-coded color values were detected. --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.\",\"severity\":\"warning\",\"rule\":\"no-hardcoded-color-values\",\"source_urls\":[\"/salt/foundations/color/index\",\"/salt/themes/design-tokens/index\"]}],\"fixes\":[{\"rule_id\":\"review-canonical-mismatch\",\"title\":\"Hard-coded color values were detected. --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.\",\"recommendation\":\"Follow --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.\",\"safety\":\"manual_review\",\"source_urls\":[\"/salt/foundations/color/index\",\"/salt/themes/design-tokens/index\"]}]},\"questions\":[],\"evidence\":{\"status\":\"complete\",\"items\":[{\"kind\":\"docs\",\"source\":\"canonical_salt\",\"field\":\"source_urls\",\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/examples\",\"/salt/foundations/color/index\",\"/salt/themes/design-tokens/index\"],\"summary\":\"Canonical Salt documentation or registry sources support this workflow decision.\"},{\"kind\":\"registry\",\"source\":\"canonical_salt\",\"entity\":\"Button\",\"field\":\"reviewed_artifact.imports.@salt-ds/core.Button\",\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/examples\"],\"summary\":\"The full reviewed artifact imports the source-backed Salt component Button.\"}],\"source_urls\":[\"/salt/components/button\",\"/salt/components/button/usage\",\"/salt/components/button/examples\",\"/salt/foundations/color/index\",\"/salt/themes/design-tokens/index\"],\"missing\":[],\"heuristic_fallback\":false,\"surface_gate\":{\"status\":\"validated\",\"validation_issues\":[],\"missing\":[],\"unsupported_claim_count\":0,\"artifact_id\":\"review-report.validation\",\"artifact_kind\":\"review-report\"},\"unsupported_claim_count\":0,\"validation_issue_count\":0},\"internal_limitations\":{\"unsupported_claim_count\":0,\"unsupported_rule_kinds\":[]},\"summary\":\"Salt review found issues that still need attention.\"}"
+            }
+          ],
+          "structuredContent": {
+            "contract": "salt_workflow_v1",
+            "workflow": "review",
+            "status": "partial",
+            "request": {},
+            "safety": {
+              "canonical_complete": true,
+              "exact_request_safe": false,
+              "blocking_reasons": [
+                "Styling references registry-looking token names that were not found in the supplied registry: --salt-container-borderColor."
+              ]
+            },
+            "action": {
+              "kind": "apply_fixes",
+              "scope": "grounded_findings",
+              "authorization": "host_or_user_required",
+              "rule_ids": [
+                "review-canonical-mismatch"
+              ],
+              "post_action": {
+                "kind": "review",
+                "tool": "review_salt_ui",
+                "required_input": [
+                  "complete_updated_file"
+                ]
+              }
+            },
+            "guidance": {
+              "kind": "review",
+              "findings": [
+                {
+                  "title": "Unrecognized registry token name detected",
+                  "message": "Styling references registry-looking token names that were not found in the supplied registry: --salt-container-borderColor.",
+                  "severity": "warning",
+                  "rule": "only-use-known-salt-token-names",
+                  "source_urls": []
+                },
+                {
+                  "title": "Hard-coded color value detected",
+                  "message": "Hard-coded color values were detected. --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.",
+                  "severity": "warning",
+                  "rule": "no-hardcoded-color-values",
+                  "source_urls": [
+                    "/salt/foundations/color/index",
+                    "/salt/themes/design-tokens/index"
+                  ]
+                }
+              ],
+              "fixes": [
+                {
+                  "rule_id": "review-canonical-mismatch",
+                  "title": "Hard-coded color values were detected. --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.",
+                  "recommendation": "Follow --salt-color-aqua-100: Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the Foundations section.",
+                  "safety": "manual_review",
+                  "source_urls": [
+                    "/salt/foundations/color/index",
+                    "/salt/themes/design-tokens/index"
+                  ]
+                }
+              ]
+            },
+            "questions": [],
+            "evidence": {
+              "status": "complete",
+              "items": [
+                {
+                  "kind": "docs",
+                  "source": "canonical_salt",
+                  "field": "source_urls",
+                  "source_urls": [
+                    "/salt/components/button",
+                    "/salt/components/button/usage",
+                    "/salt/components/button/examples",
+                    "/salt/foundations/color/index",
+                    "/salt/themes/design-tokens/index"
+                  ],
+                  "summary": "Canonical Salt documentation or registry sources support this workflow decision."
+                },
+                {
+                  "kind": "registry",
+                  "source": "canonical_salt",
+                  "entity": "Button",
+                  "field": "reviewed_artifact.imports.@salt-ds/core.Button",
+                  "source_urls": [
+                    "/salt/components/button",
+                    "/salt/components/button/usage",
+                    "/salt/components/button/examples"
+                  ],
+                  "summary": "The full reviewed artifact imports the source-backed Salt component Button."
+                }
+              ],
+              "source_urls": [
+                "/salt/components/button",
+                "/salt/components/button/usage",
+                "/salt/components/button/examples",
+                "/salt/foundations/color/index",
+                "/salt/themes/design-tokens/index"
+              ],
+              "missing": [],
+              "heuristic_fallback": false,
+              "surface_gate": {
+                "status": "validated",
+                "validation_issues": [],
+                "missing": [],
+                "unsupported_claim_count": 0,
+                "artifact_id": "review-report.validation",
+                "artifact_kind": "review-report"
+              },
+              "unsupported_claim_count": 0,
+              "validation_issue_count": 0
+            },
+            "internal_limitations": {
+              "unsupported_claim_count": 0,
+              "unsupported_rule_kinds": []
+            },
+            "summary": "Salt review found issues that still need attention."
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "latency_ms": 155.014,
+    "response_utf8_bytes": 7214,
+    "structured_content_utf8_bytes": 3455,
+    "text_content_utf8_bytes": 3455,
+    "response_sha256": "122f75628c3640ce0e4179a798032aa7bf778de9808d05621f4551fb9a6fd546"
+  },
+  "call_count": 1,
+  "transport_success": true,
+  "schema_or_envelope_success": true,
+  "reproduction_assertion": {
+    "passed": true,
+    "details": "The submitted code should produce the two known token findings."
+  },
+  "semantic_task_result": "success",
+  "semantic_task_reason": "The bounded deterministic task met its declared assertion.",
+  "agent_edits": null,
+  "user_corrections": null,
+  "host_capture_status": "not_available"
+}

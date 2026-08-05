@@ -43,6 +43,24 @@ Fixture tokens help manage fixture spacing in fixture layouts.
   );
 }
 
+async function writeFixtureThemeEntrypoints(repoRoot: string): Promise<void> {
+  const css = `@import "./foundations/fixture.css";
+@import "./deprecated/foundations.css";
+`;
+  await Promise.all([
+    fs.writeFile(
+      path.join(repoRoot, "packages/theme/css/theme.css"),
+      css,
+      "utf8",
+    ),
+    fs.writeFile(
+      path.join(repoRoot, "packages/theme/css/theme-next.css"),
+      css,
+      "utf8",
+    ),
+  ]);
+}
+
 async function writeFixtureThemeChangelog(
   repoRoot: string,
   content: string,
@@ -104,8 +122,8 @@ describe("token policy source registry", () => {
           usage_tier: "foundation",
           direct_component_use: "conditional",
           docs: [
-            "/salt/foundations/fixture-area/index",
-            "/salt/themes/design-tokens/index",
+            "/salt/foundations/fixture-area",
+            "/salt/themes/design-tokens",
           ],
           preferred_for: expect.arrayContaining([
             expect.stringContaining(
@@ -117,7 +135,7 @@ describe("token policy source registry", () => {
               source_kind: "docs",
               claim_kind: "token",
               source: expect.objectContaining({
-                url: "/salt/foundations/fixture-area/index",
+                url: "/salt/foundations/fixture-area",
                 repo_path: "site/docs/foundations/fixture-area/index.mdx",
               }),
             }),
@@ -237,15 +255,15 @@ Text fixture tokens define fixture typography roles.
 
       expect(targetPolicy?.docs).toEqual([
         "/salt/themes/design-tokens/container-characteristic",
-        "/salt/themes/design-tokens/index",
+        "/salt/themes/design-tokens",
       ]);
       expect(focusedPolicy?.docs).toEqual([
         "/salt/themes/design-tokens/how-to-read-tokens",
-        "/salt/themes/design-tokens/index",
+        "/salt/themes/design-tokens",
       ]);
       expect(textPolicy?.docs).toEqual([
         "/salt/themes/design-tokens/how-to-read-tokens",
-        "/salt/themes/design-tokens/index",
+        "/salt/themes/design-tokens",
       ]);
       expect(focusedPolicy?.preferred_for).toContain(
         "Focused fixture tokens define the shared fixture focus outline.",
@@ -315,8 +333,8 @@ Text fixture tokens define fixture typography roles.
           usage_tier: "foundation",
           direct_component_use: "conditional",
           docs: [
-            "/salt/foundations/fixture-area/index",
-            "/salt/themes/design-tokens/index",
+            "/salt/foundations/fixture-area",
+            "/salt/themes/design-tokens",
           ],
           notes: expect.arrayContaining([
             expect.stringContaining(
@@ -328,7 +346,7 @@ Text fixture tokens define fixture typography roles.
               source_kind: "docs",
               claim_kind: "token",
               source: expect.objectContaining({
-                url: "/salt/foundations/fixture-area/index",
+                url: "/salt/foundations/fixture-area",
               }),
             }),
             expect.objectContaining({
@@ -375,13 +393,10 @@ Text fixture tokens define fixture typography roles.
 `,
         "utf8",
       );
+      await writeFixtureThemeEntrypoints(repoRoot);
 
       const sources = await buildTokenPolicySourceRegistry(repoRoot);
-      const tokens = await extractTokens(
-        repoRoot,
-        "2026-05-04T00:00:00Z",
-        sources,
-      );
+      const tokens = await extractTokens(repoRoot, sources);
       const token = tokens.find(
         (candidate) => candidate.name === "--salt-legacyfixture-icon",
       );
@@ -391,8 +406,8 @@ Text fixture tokens define fixture typography roles.
           deprecated: true,
           policy: expect.objectContaining({
             docs: [
-              "/salt/foundations/fixture-area/index",
-              "/salt/themes/design-tokens/index",
+              "/salt/foundations/fixture-area",
+              "/salt/themes/design-tokens",
             ],
             evidence_refs: expect.arrayContaining([
               expect.objectContaining({
@@ -439,13 +454,10 @@ Text fixture tokens define fixture typography roles.
 `,
         "utf8",
       );
+      await writeFixtureThemeEntrypoints(repoRoot);
 
       const sources = await buildTokenPolicySourceRegistry(repoRoot);
-      const tokens = await extractTokens(
-        repoRoot,
-        "2026-05-04T00:00:00Z",
-        sources,
-      );
+      const tokens = await extractTokens(repoRoot, sources);
       const token = tokens.find(
         (candidate) => candidate.name === "--salt-legacyfixture-gap",
       );
@@ -455,8 +467,8 @@ Text fixture tokens define fixture typography roles.
           deprecated: true,
           policy: expect.objectContaining({
             docs: [
-              "/salt/foundations/fixture-area/index",
-              "/salt/themes/design-tokens/index",
+              "/salt/foundations/fixture-area",
+              "/salt/themes/design-tokens",
             ],
             evidence_refs: expect.arrayContaining([
               expect.objectContaining({
@@ -514,13 +526,10 @@ Text fixture tokens define fixture typography roles.
 `,
         "utf8",
       );
+      await writeFixtureThemeEntrypoints(repoRoot);
 
       const sources = await buildTokenPolicySourceRegistry(repoRoot);
-      const tokens = await extractTokens(
-        repoRoot,
-        "2026-05-04T00:00:00Z",
-        sources,
-      );
+      const tokens = await extractTokens(repoRoot, sources);
       const token = tokens.find(
         (candidate) => candidate.name === "--salt-legacyfixture-gap",
       );
@@ -577,13 +586,10 @@ Text fixture tokens define fixture typography roles.
 `,
         "utf8",
       );
+      await writeFixtureThemeEntrypoints(repoRoot);
 
       const sources = await buildTokenPolicySourceRegistry(repoRoot);
-      const tokens = await extractTokens(
-        repoRoot,
-        "2026-05-04T00:00:00Z",
-        sources,
-      );
+      const tokens = await extractTokens(repoRoot, sources);
       const token = tokens.find(
         (candidate) => candidate.name === "--salt-legacyfixture-gap",
       );
@@ -649,13 +655,10 @@ Text fixture tokens define fixture typography roles.
 `,
         "utf8",
       );
+      await writeFixtureThemeEntrypoints(repoRoot);
 
       const sources = await buildTokenPolicySourceRegistry(repoRoot);
-      const tokens = await extractTokens(
-        repoRoot,
-        "2026-05-04T00:00:00Z",
-        sources,
-      );
+      const tokens = await extractTokens(repoRoot, sources);
       const closedToken = tokens.find(
         (candidate) => candidate.name === "--salt-legacyfixture-gap",
       );
@@ -668,8 +671,8 @@ Text fixture tokens define fixture typography roles.
           deprecated: true,
           policy: expect.objectContaining({
             docs: [
-              "/salt/foundations/fixture-area/index",
-              "/salt/themes/design-tokens/index",
+              "/salt/foundations/fixture-area",
+              "/salt/themes/design-tokens",
             ],
             evidence_refs: expect.arrayContaining([
               expect.objectContaining({
@@ -769,8 +772,8 @@ Text fixture tokens define fixture typography roles.
       expect(policy).toEqual(
         expect.objectContaining({
           docs: [
-            "/salt/foundations/fixture-area/index",
-            "/salt/themes/design-tokens/index",
+            "/salt/foundations/fixture-area",
+            "/salt/themes/design-tokens",
           ],
           evidence_refs: expect.arrayContaining([
             expect.objectContaining({
@@ -837,8 +840,8 @@ Text fixture tokens define fixture typography roles.
       expect(policy).toEqual(
         expect.objectContaining({
           docs: [
-            "/salt/foundations/fixture-area/index",
-            "/salt/themes/design-tokens/index",
+            "/salt/foundations/fixture-area",
+            "/salt/themes/design-tokens",
           ],
           evidence_refs: expect.arrayContaining([
             expect.objectContaining({
@@ -1252,8 +1255,8 @@ Text fixture tokens define fixture typography roles.
       expect(policy).toEqual(
         expect.objectContaining({
           docs: [
-            "/salt/foundations/fixture-area/index",
-            "/salt/themes/design-tokens/index",
+            "/salt/foundations/fixture-area",
+            "/salt/themes/design-tokens",
           ],
           notes: expect.arrayContaining([
             expect.stringContaining(
@@ -1314,8 +1317,8 @@ Text fixture tokens define fixture typography roles.
       expect(policy).toEqual(
         expect.objectContaining({
           docs: [
-            "/salt/foundations/fixture-area/index",
-            "/salt/themes/design-tokens/index",
+            "/salt/foundations/fixture-area",
+            "/salt/themes/design-tokens",
           ],
           evidence_refs: expect.arrayContaining([
             expect.objectContaining({

@@ -4,31 +4,40 @@ import { fileURLToPath } from "node:url";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const {
-  connectMock,
   createSaltMcpServerMock,
+  serverCloseMock,
+  serverConnectMock,
+  serverInstance,
+  transportCloseMock,
   transportInstance,
   transportMock,
-} = vi.hoisted(() => ({
-  connectMock: vi.fn(),
-  createSaltMcpServerMock: vi.fn(),
-  transportInstance: { kind: "stdio" },
-  transportMock: vi.fn(),
-}));
+} = vi.hoisted(() => {
+  const transportClose = vi.fn(async () => {});
+  const serverClose = vi.fn(async () => {});
+  const serverConnect = vi.fn(
+    async (_transport: { close: () => Promise<void> }) => {},
+  );
+  return {
+    createSaltMcpServerMock: vi.fn(),
+    serverCloseMock: serverClose,
+    serverConnectMock: serverConnect,
+    serverInstance: { close: serverClose, connect: serverConnect },
+    transportCloseMock: transportClose,
+    transportInstance: { kind: "stdio", close: transportClose },
+    transportMock: vi.fn(),
+  };
+});
 
 vi.mock("../server/createServer.js", () => ({
   createSaltMcpServer: createSaltMcpServerMock,
 }));
 
-vi.mock("@modelcontextprotocol/sdk/server/stdio.js", () => ({
+vi.mock("@modelcontextprotocol/server/stdio", () => ({
   StdioServerTransport: transportMock,
 }));
 
 import { runCli } from "../cli.js";
 
-// Resolve packages/mcp/package.json relative to this spec so the test works
-// regardless of whether vitest is invoked from the repo root or from
-// packages/mcp directly. The previous path.resolve("packages/mcp/package.json")
-// only worked when cwd was the repo root.
 const packageVersion = JSON.parse(
   fs.readFileSync(
     path.resolve(
@@ -41,18 +50,20 @@ const packageVersion = JSON.parse(
 
 describe("runCli", () => {
   beforeEach(() => {
-    connectMock.mockReset();
     createSaltMcpServerMock.mockReset();
+    serverCloseMock.mockClear();
+    serverConnectMock.mockReset();
+    transportCloseMock.mockClear();
     transportMock.mockReset();
 
-    connectMock.mockImplementation(async (transport) => {
-      transport.onclose?.();
-    });
-    createSaltMcpServerMock.mockResolvedValue({ connect: connectMock });
+    createSaltMcpServerMock.mockResolvedValue(serverInstance);
     transportMock.mockImplementation(function MockTransport() {
+      transportInstance.close = transportCloseMock;
       return transportInstance;
     });
-
+    serverConnectMock.mockImplementation(async (transport) => {
+      queueMicrotask(() => void transport.close());
+    });
     vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
@@ -74,7 +85,7 @@ describe("runCli", () => {
       expect.stringContaining("Usage: salt-mcp"),
     );
     expect(createSaltMcpServerMock).not.toHaveBeenCalled();
-    expect(transportMock).not.toHaveBeenCalled();
+    expect(serverConnectMock).not.toHaveBeenCalled();
   });
 
   it.each([
@@ -88,7 +99,7 @@ describe("runCli", () => {
 
     expect(log).toHaveBeenCalledWith(packageVersion);
     expect(createSaltMcpServerMock).not.toHaveBeenCalled();
-    expect(transportMock).not.toHaveBeenCalled();
+    expect(serverConnectMock).not.toHaveBeenCalled();
   });
 
   it("rejects arguments combined with help", async () => {
@@ -99,8 +110,7 @@ describe("runCli", () => {
     );
 
     expect(log).not.toHaveBeenCalled();
-    expect(createSaltMcpServerMock).not.toHaveBeenCalled();
-    expect(transportMock).not.toHaveBeenCalled();
+    expect(serverConnectMock).not.toHaveBeenCalled();
   });
 
   it("rejects arguments combined with version", async () => {
@@ -111,47 +121,37 @@ describe("runCli", () => {
     );
 
     expect(log).not.toHaveBeenCalled();
-    expect(createSaltMcpServerMock).not.toHaveBeenCalled();
-    expect(transportMock).not.toHaveBeenCalled();
+    expect(serverConnectMock).not.toHaveBeenCalled();
   });
 
-  it("defaults to serve when no command is provided", async () => {
+  it("defaults to serve and exits when the owned transport closes", async () => {
     await runCli([]);
 
-    expect(createSaltMcpServerMock).toHaveBeenCalledWith({
-      registryDir: undefined,
-      siteBaseUrl: undefined,
-    });
     expect(transportMock).toHaveBeenCalledTimes(1);
-    expect(connectMock).toHaveBeenCalledWith(transportInstance);
+    expect(serverConnectMock).toHaveBeenCalledWith(transportInstance);
+    expect(createSaltMcpServerMock).toHaveBeenCalledWith({
+      projectAccess: { mode: "unrestricted_local_stdio" },
+      registryDir: undefined,
+    });
+    expect(transportCloseMock).toHaveBeenCalledTimes(1);
+    expect(serverCloseMock).toHaveBeenCalledTimes(1);
   });
 
-  it("treats leading flags as serve arguments", async () => {
-    await runCli([
-      "--registry-dir",
-      "packages/mcp/generated",
-      "--site-base-url",
-      "https://www.saltdesignsystem.com",
-    ]);
+  it("treats a leading registry flag as a serve argument", async () => {
+    await runCli(["--registry-dir", "packages/mcp/generated"]);
 
     expect(createSaltMcpServerMock).toHaveBeenCalledWith({
+      projectAccess: { mode: "unrestricted_local_stdio" },
       registryDir: path.resolve("packages/mcp/generated"),
-      siteBaseUrl: "https://www.saltdesignsystem.com",
     });
   });
 
-  it("accepts the explicit serve command with supported options", async () => {
-    await runCli([
-      "serve",
-      "--site-base-url",
-      " https://www.saltdesignsystem.com ",
-      "--registry-dir",
-      "./generated",
-    ]);
+  it("accepts the explicit serve command with the retained option", async () => {
+    await runCli(["serve", "--registry-dir", "./generated"]);
 
     expect(createSaltMcpServerMock).toHaveBeenCalledWith({
+      projectAccess: { mode: "unrestricted_local_stdio" },
       registryDir: path.resolve("./generated"),
-      siteBaseUrl: "https://www.saltdesignsystem.com",
     });
   });
 
@@ -164,17 +164,16 @@ describe("runCli", () => {
   it.each([
     ["--verbose"],
     ["-v"],
+    ["--site-base-url"],
   ])("rejects unknown option %s", async (flag) => {
     await expect(runCli([flag])).rejects.toThrow(`Unknown option: ${flag}.`);
   });
 
   it.each([
     ["--registry-dir"],
-    ["--site-base-url"],
-    ["--registry-dir", "--site-base-url", "https://example.com"],
-    ["--site-base-url", "   "],
+    ["--registry-dir", "--verbose"],
   ])("rejects a missing value in %j", async (...argv) => {
-    await expect(runCli(argv)).rejects.toThrow(/requires a value/);
+    await expect(runCli(argv)).rejects.toThrow(/requires a value/u);
   });
 
   it.each([
@@ -185,16 +184,14 @@ describe("runCli", () => {
     await expect(runCli(argv)).rejects.toThrow("Unexpected argument: extra.");
   });
 
-  it.each([
-    ["--registry-dir", "./generated", "--registry-dir", "./other-generated"],
-    [
-      "serve",
-      "--site-base-url",
-      "https://example.com",
-      "--site-base-url",
-      "https://other.example.com",
-    ],
-  ])("rejects duplicate options in %j", async (...argv) => {
-    await expect(runCli(argv)).rejects.toThrow(/Duplicate option:/);
+  it("rejects duplicate options", async () => {
+    await expect(
+      runCli([
+        "--registry-dir",
+        "./generated",
+        "--registry-dir",
+        "./other-generated",
+      ]),
+    ).rejects.toThrow("Duplicate option: --registry-dir.");
   });
 });

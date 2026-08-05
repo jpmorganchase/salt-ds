@@ -3,7 +3,9 @@ import {
   SALT_EVIDENCE_REF_CONTRACT,
   type SaltEvidenceClaimKind,
   type SaltEvidenceRef,
+  type SaltRegistryEvidenceRef,
 } from "../../evidence.js";
+import { toSaltEvidenceRegistryIdentity } from "../../registry/fingerprint.js";
 import type {
   AccessibilityRule,
   ComponentRecord,
@@ -12,7 +14,6 @@ import type {
   SaltRegistry,
 } from "../../types.js";
 import { normalizeVersion } from "../codeAnalysisCommon.js";
-import { findGuideByIdentifier } from "../guideLookup.js";
 import { unique } from "../utils.js";
 import {
   CHOOSING_PRIMITIVE_GUIDE_LOOKUP,
@@ -20,6 +21,38 @@ import {
   CUSTOM_WRAPPERS_GUIDE_LOOKUP,
 } from "./issueCatalog.js";
 import type { ValidationIssue, ValidationSeverity } from "./shared.js";
+
+function normalizeGuideIdentifier(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+function findGuideByIdentifier(
+  guides: GuideRecord[],
+  identifier: string,
+): GuideRecord | null {
+  const normalized = normalizeGuideIdentifier(identifier);
+  return (
+    guides.find((guide) => {
+      if (normalizeGuideIdentifier(guide.name) === normalized) return true;
+      if (
+        guide.aliases.some(
+          (alias) => normalizeGuideIdentifier(alias) === normalized,
+        )
+      ) {
+        return true;
+      }
+      const slug = guide.related_docs.overview
+        ?.split("/")
+        .filter(Boolean)
+        .at(-1);
+      return slug ? normalizeGuideIdentifier(slug) === normalized : false;
+    }) ?? null
+  );
+}
 
 export interface ComponentAccessibilityRuleEvidence {
   component: ComponentRecord;
@@ -183,12 +216,12 @@ export function componentDocUrls(
 }
 
 export function buildComponentRegistryEvidenceRef(input: {
-  registry: Pick<SaltRegistry, "version" | "generated_at">;
+  registry: SaltRegistry;
   component: ComponentRecord;
   claim_kind: SaltEvidenceClaimKind;
   field_path: string;
   id_suffix: string;
-}): SaltEvidenceRef {
+}): SaltRegistryEvidenceRef {
   const sourceUrl =
     input.component.related_docs.overview ?? input.component.related_docs.usage;
   const source =
@@ -209,22 +242,21 @@ export function buildComponentRegistryEvidenceRef(input: {
       entity_id: input.component.id,
       entity_name: input.component.name,
       field_path: input.field_path,
-      registry_version: input.registry.version,
+      ...toSaltEvidenceRegistryIdentity(input.registry),
     },
     source,
-    confidence: "high",
-    verified_at: input.component.last_verified_at,
   };
 }
 
 export function buildDeprecationRegistryEvidenceRef(input: {
-  registry: Pick<SaltRegistry, "version" | "generated_at">;
+  registry: SaltRegistry;
   deprecation: DeprecationRecord;
   claim_kind: SaltEvidenceClaimKind;
   field_path: string;
   id_suffix: string;
-}): SaltEvidenceRef {
+}): SaltRegistryEvidenceRef {
   const sourceUrl = input.deprecation.source_urls[0] ?? null;
+  const sourcePath = input.deprecation.source_paths?.[0] ?? null;
 
   return {
     contract: SALT_EVIDENCE_REF_CONTRACT,
@@ -236,16 +268,22 @@ export function buildDeprecationRegistryEvidenceRef(input: {
       entity_id: input.deprecation.id,
       entity_name: input.deprecation.name,
       field_path: input.field_path,
-      registry_version: input.registry.version,
+      ...toSaltEvidenceRegistryIdentity(input.registry),
     },
-    source: sourceUrl ? { url: sourceUrl } : null,
-    confidence: "high",
-    verified_at: null,
+    // The declaration occurrence is the strongest provenance for a source-
+    // extracted deprecation. Public documentation remains available through
+    // the issue's source_urls without flattening two distinct sources into
+    // one evidence reference.
+    source: sourcePath
+      ? { repo_path: sourcePath }
+      : sourceUrl
+        ? { url: sourceUrl }
+        : null,
   };
 }
 
 export function buildDeprecationEvidenceRefs(input: {
-  registry: Pick<SaltRegistry, "version" | "generated_at">;
+  registry: SaltRegistry;
   deprecation: DeprecationRecord;
   primary_claim_kind: SaltEvidenceClaimKind;
   id_suffix: string;
@@ -333,12 +371,12 @@ export function buildDeprecationEvidenceRefs(input: {
 }
 
 function buildComponentUsageEvidenceRef(input: {
-  registry: Pick<SaltRegistry, "version" | "generated_at">;
+  registry: SaltRegistry;
   component: ComponentRecord;
   claim_kind: SaltEvidenceClaimKind;
   field_path: string;
   id_suffix: string;
-}): SaltEvidenceRef {
+}): SaltRegistryEvidenceRef {
   const sourceUrl =
     input.component.related_docs.usage ?? input.component.related_docs.overview;
   const source =
@@ -359,21 +397,19 @@ function buildComponentUsageEvidenceRef(input: {
       entity_id: input.component.id,
       entity_name: input.component.name,
       field_path: input.field_path,
-      registry_version: input.registry.version,
+      ...toSaltEvidenceRegistryIdentity(input.registry),
     },
     source,
-    confidence: "high",
-    verified_at: input.component.last_verified_at,
   };
 }
 
 function buildGuideEvidenceRef(input: {
-  registry: Pick<SaltRegistry, "version" | "generated_at">;
+  registry: SaltRegistry;
   guide: GuideRecord;
   claim_kind: SaltEvidenceClaimKind;
   field_path: string;
   id_suffix: string;
-}): SaltEvidenceRef {
+}): SaltRegistryEvidenceRef {
   const sourceUrl = input.guide.related_docs.overview;
   const source = sourceUrl ? { url: sourceUrl } : null;
 
@@ -387,11 +423,9 @@ function buildGuideEvidenceRef(input: {
       entity_id: input.guide.id,
       entity_name: input.guide.name,
       field_path: input.field_path,
-      registry_version: input.registry.version,
+      ...toSaltEvidenceRegistryIdentity(input.registry),
     },
     source,
-    confidence: "high",
-    verified_at: input.guide.last_verified_at,
   };
 }
 
@@ -399,20 +433,19 @@ function hasSourceLocator(ref: SaltEvidenceRef): boolean {
   return Boolean(ref.source?.url || ref.source?.repo_path);
 }
 
-export function buildWorkflowInputCodeEvidenceRef(input: {
+export function buildSubmittedTextCodeEvidenceRef(input: {
   id: string;
+  claim_kind: SaltEvidenceClaimKind;
   note: string;
 }): SaltEvidenceRef {
   return {
     contract: SALT_EVIDENCE_REF_CONTRACT,
-    id: `${input.id}.workflow-input.code.validation-ref`,
-    source_kind: "workflow_input",
-    claim_kind: "workflow",
-    workflow_input: {
+    id: `${input.id}.submitted-text.code.validation-ref`,
+    source_kind: "submitted_text",
+    claim_kind: input.claim_kind,
+    submitted_text: {
       field_path: "code",
     },
-    confidence: "high",
-    verified_at: null,
     note: input.note,
   };
 }
@@ -700,7 +733,7 @@ function findActionComponentGuidance(
 }
 
 export function findActionNavigationRuleEvidence(
-  registry: Pick<SaltRegistry, "version" | "generated_at" | "components">,
+  registry: SaltRegistry,
   actionComponent: ComponentRecord,
 ): ComponentUsageContrastEvidence | null {
   const navigationComponent = findNavigationTargetComponent(
@@ -782,7 +815,7 @@ export function hasActionNavigationRuleCandidate(
 }
 
 export function findNavigationActionRuleEvidence(
-  registry: Pick<SaltRegistry, "version" | "generated_at" | "components">,
+  registry: SaltRegistry,
   navigationComponent: ComponentRecord,
 ): ComponentUsageContrastEvidence | null {
   const actionComponent = findActionTargetComponent(
@@ -988,10 +1021,7 @@ function primitiveRecreationIntent(
 }
 
 export function findPrimitiveRecreationRuleEvidence(
-  registry: Pick<
-    SaltRegistry,
-    "version" | "generated_at" | "components" | "guides"
-  >,
+  registry: SaltRegistry,
   surface: PrimitiveRecreationSurface,
 ): ComponentPrimitiveRecreationEvidence | null {
   const intent = primitiveRecreationIntent(surface);
@@ -1177,10 +1207,7 @@ function findTabularSurfaceComponents(
 }
 
 export function findTabularRecreationRuleEvidence(
-  registry: Pick<
-    SaltRegistry,
-    "version" | "generated_at" | "components" | "guides"
-  >,
+  registry: SaltRegistry,
 ): ComponentTabularRecreationEvidence | null {
   const components = findTabularSurfaceComponents(registry);
   const guide = findGuideByIdentifier(
@@ -1223,12 +1250,7 @@ export function findTabularRecreationRuleEvidence(
         },
       };
     })
-    .filter(
-      (
-        item,
-      ): item is ComponentTabularRecreationEvidence["components"][number] =>
-        Boolean(item),
-    );
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
   const guideRef = buildGuideEvidenceRef({
     registry,
@@ -1362,10 +1384,7 @@ function findNestedInteractiveGuideGuidance(
 }
 
 export function findNestedInteractiveRuleEvidence(
-  registry: Pick<
-    SaltRegistry,
-    "version" | "generated_at" | "components" | "guides"
-  >,
+  registry: SaltRegistry,
   outerComponent: ComponentRecord,
   innerComponent: ComponentRecord,
 ): ComponentNestedInteractiveEvidence | null {
@@ -1493,10 +1512,7 @@ function findPassThroughWrapperGuideGuidance(
 }
 
 export function findPassThroughWrapperRuleEvidence(
-  registry: Pick<
-    SaltRegistry,
-    "version" | "generated_at" | "components" | "guides"
-  >,
+  registry: SaltRegistry,
   component: ComponentRecord,
 ): ComponentPassThroughWrapperEvidence | null {
   const wrapperGuide = findGuideByIdentifier(
@@ -1588,7 +1604,7 @@ export function findPassThroughWrapperRuleEvidence(
 }
 
 export function findAccessibleNameRuleEvidence(
-  registry: Pick<SaltRegistry, "version" | "generated_at">,
+  registry: SaltRegistry,
   component: ComponentRecord,
 ): ComponentAccessibilityRuleEvidence | null {
   const rule = component.accessibility.rules.find((item) =>
@@ -1635,17 +1651,15 @@ export function findAccessibleNameRuleEvidence(
         entity_id: component.id,
         entity_name: component.name,
         field_path: fieldPath,
-        registry_version: registry.version,
+        ...toSaltEvidenceRegistryIdentity(registry),
       },
       source,
-      confidence: "high",
-      verified_at: component.last_verified_at,
-    },
+    } satisfies SaltRegistryEvidenceRef,
   };
 }
 
 export function findDecorativeIconRuleEvidence(
-  registry: Pick<SaltRegistry, "version" | "generated_at">,
+  registry: SaltRegistry,
   component: ComponentRecord,
 ): ComponentAccessibilityRuleEvidence | null {
   const rule = component.accessibility.rules.find(
@@ -1693,12 +1707,10 @@ export function findDecorativeIconRuleEvidence(
         entity_id: component.id,
         entity_name: component.name,
         field_path: fieldPath,
-        registry_version: registry.version,
+        ...toSaltEvidenceRegistryIdentity(registry),
       },
       source,
-      confidence: "high",
-      verified_at: component.last_verified_at,
-    },
+    } satisfies SaltRegistryEvidenceRef,
   };
 }
 
@@ -2082,8 +2094,9 @@ export function buildPassThroughWrapperValidationIssue(input: {
         evidence.supporting_guide_guidance?.evidence_ref,
         evidence.component_ref,
       ]),
-      buildWorkflowInputCodeEvidenceRef({
+      buildSubmittedTextCodeEvidenceRef({
         id: "composition.pass-through-wrapper",
+        claim_kind: "composition",
         note: "Validator matched pass-through wrapper source code supplied to validateSaltUsage.",
       }),
     ].filter((ref): ref is SaltEvidenceRef => Boolean(ref)),
@@ -2120,23 +2133,21 @@ export function buildPassThroughWrapperValidationIssue(input: {
 export function buildDeprecationFix(
   deprecation: DeprecationRecord,
 ): string | null {
-  const [firstMigration] = deprecation.migration.details;
-  if (firstMigration) {
-    return `Replace ${firstMigration.from} with ${firstMigration.to}.`;
+  if (
+    deprecation.migration.strategy === "replace" &&
+    deprecation.replacement.mode === "single" &&
+    deprecation.replacement.target
+  ) {
+    const replacementName =
+      deprecation.replacement.target.member_path.at(-1)?.name ??
+      deprecation.replacement.target.export_name;
+    return `Review replacing ${deprecation.name} with ${replacementName}; reconcile manually if the replacement is already present.`;
+  }
+  if (deprecation.migration.strategy === "remove") {
+    return `Review removing ${deprecation.name}.`;
   }
 
-  if (deprecation.replacement.name) {
-    const replacementType = deprecation.replacement.type
-      ? `${deprecation.replacement.type} `
-      : "";
-    return `Use ${replacementType}${deprecation.replacement.name}.`;
-  }
-
-  if (deprecation.replacement.notes) {
-    return deprecation.replacement.notes;
-  }
-
-  return null;
+  return deprecation.replacement.notes;
 }
 
 function severityRank(severity: ValidationSeverity): number {

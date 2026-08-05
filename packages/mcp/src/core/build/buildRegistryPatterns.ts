@@ -1,13 +1,12 @@
 import path from "node:path";
-import fg from "fast-glob";
-import matter from "gray-matter";
 import ts from "typescript";
+import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
+import { assertCanonicalSiteRoute } from "../catalog/catalogSiteRoute.js";
 import { toPosixPath } from "../registry/paths.js";
 import type {
   ExampleRecord,
-  PatternCompositionComponent,
-  PatternCompositionContract,
   PatternRecord,
+  RegistrySourceLocator,
 } from "../types.js";
 import {
   extractFirstParagraph,
@@ -26,6 +25,8 @@ import {
   toKebabCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import { globCatalogInputs } from "./catalogInputInventory.js";
+import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
 
 function isExportedStoryStatement(statement: ts.Statement): boolean {
   return Boolean(
@@ -62,21 +63,6 @@ function buildPatternStoryExampleCode(
   return snippets.filter((snippet) => snippet.length > 0).join("\n\n");
 }
 
-function findSectionContent(
-  content: string,
-  headingLevel: number,
-  title: string,
-): string {
-  const normalizedTitle = normalizePatternHeadingLabel(title).toLowerCase();
-  return (
-    parseMarkdownSections(content, headingLevel).find(
-      (section) =>
-        normalizePatternHeadingLabel(section.title).toLowerCase() ===
-        normalizedTitle,
-    )?.content ?? ""
-  );
-}
-
 function asRecord(value: unknown): Record<string, unknown> | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return null;
@@ -85,111 +71,41 @@ function asRecord(value: unknown): Record<string, unknown> | null {
   return value as Record<string, unknown>;
 }
 
-function extractListLabels(content: string): string[] {
-  const labels: string[] = [];
-
-  for (const line of content.split(/\r?\n/)) {
-    const boldMatch = line.trim().match(/^(?:[-*]|\d+\.)\s+\*\*(.+?)\*\*/);
-    const linkMatch = line.trim().match(/^(?:[-*]|\d+\.)\s+\[(.+?)\]\([^)]+\)/);
-    const colonMatch = line.trim().match(/^(?:[-*]|\d+\.)\s+([^:]+):/);
-    const simpleMatch = line.trim().match(/^(?:[-*]|\d+\.)\s+(.+?)$/);
-    const matchedLabel =
-      boldMatch?.[1] ?? linkMatch?.[1] ?? colonMatch?.[1] ?? simpleMatch?.[1];
-    if (!matchedLabel) {
-      continue;
-    }
-
-    const label = cleanMarkdownText(matchedLabel)
-      .replace(/[:.]+$/g, "")
-      .replace(
-        /\s+\((required|optional|contextual variants?|variants?)\)$/i,
-        "",
-      )
-      .trim();
-    if (label) {
-      labels.push(label);
-    }
-  }
-
-  return uniqueStrings(labels);
-}
-
-function inferComponentRoles(
-  content: string,
+function parseAuthoredComponentRoles(
+  aiConfig: Record<string, unknown> | null,
   componentNames: string[],
+  patternTitle: string,
 ): Map<string, string> {
   const roles = new Map<string, string>();
-  if (componentNames.length === 0) {
+  const rawRoles = aiConfig?.componentRoles;
+  if (rawRoles === undefined) {
     return roles;
   }
-
-  // Collect content from all sections that commonly describe component usage.
-  const howToBuild = findSectionContent(content, 2, "How to build");
-  const anatomyContent = findSectionContent(howToBuild, 3, "Anatomy");
-  const layoutContent = findSectionContent(howToBuild, 3, "Layout");
-  const dashboardLayout = findSectionContent(howToBuild, 3, "Dashboard layout");
-  const dashboardRegions = findSectionContent(content, 2, "Dashboard regions");
-  const combinedContent = [
-    anatomyContent,
-    layoutContent,
-    dashboardLayout,
-    dashboardRegions,
-    // Fall back to the full How to build and root content for any remaining
-    // unmatched components, but give priority to the targeted sections above.
-    howToBuild,
-    content,
-  ].join("\n");
-
-  // Build match variants for each component: display name ("Border layout"),
-  // PascalCase without spaces ("BorderLayout"), and lowercase no-space form.
-  const componentVariants = new Map<
-    string,
-    { original: string; patterns: string[] }
-  >();
-  for (const name of componentNames) {
-    const pascalCase = name.replace(/\s+/g, "");
-    const lowerNoSpace = pascalCase.toLowerCase();
-    const lowerWithSpace = name.toLowerCase();
-    componentVariants.set(name, {
-      original: name,
-      patterns: uniqueStrings([lowerWithSpace, lowerNoSpace]),
-    });
+  const roleRecord = asRecord(rawRoles);
+  if (!roleRecord) {
+    throw new Error(
+      `Pattern '${patternTitle}' data.ai.componentRoles must be an object.`,
+    );
   }
 
-  for (const line of combinedContent.split(/\r?\n/)) {
-    const trimmed = line.trim();
-    if (!trimmed) {
-      continue;
+  const componentSet = new Set(componentNames);
+  for (const [componentName, rawRole] of Object.entries(roleRecord)) {
+    if (!componentSet.has(componentName)) {
+      const caseMismatch = componentNames.find(
+        (candidate) => candidate.toLowerCase() === componentName.toLowerCase(),
+      );
+      throw new Error(
+        caseMismatch
+          ? `Pattern '${patternTitle}' data.ai.componentRoles key '${componentName}' must use the exact component name '${caseMismatch}'.`
+          : `Pattern '${patternTitle}' data.ai.componentRoles references undeclared component '${componentName}'.`,
+      );
     }
-
-    const lineLower = trimmed.toLowerCase();
-
-    for (const [, { original, patterns }] of componentVariants) {
-      if (roles.has(original)) {
-        continue;
-      }
-
-      const matched = patterns.some((pattern) => {
-        if (lineLower.includes(pattern)) {
-          return true;
-        }
-        // Also check backtick and link patterns case-insensitively.
-        const backtickRe = new RegExp(`\`${pattern}\``, "i");
-        const linkRe = new RegExp(`\\[\\s*\`?${pattern}\`?\\s*\\]\\(`, "i");
-        return backtickRe.test(trimmed) || linkRe.test(trimmed);
-      });
-
-      if (matched) {
-        const cleaned = cleanMarkdownText(trimmed)
-          .replace(/^(?:[-*]|\d+\.)\s+/, "")
-          .replace(/^\*\*[^*]+\*\*[:\s]*/g, "")
-          .trim();
-
-        if (cleaned.length > 0 && cleaned.length <= 300) {
-          roles.set(original, cleaned);
-        }
-      }
+    if (typeof rawRole !== "string" || rawRole.trim().length === 0) {
+      throw new Error(
+        `Pattern '${patternTitle}' data.ai.componentRoles['${componentName}'] must be a non-empty string.`,
+      );
     }
+    roles.set(componentName, rawRole.trim());
   }
 
   return roles;
@@ -374,373 +290,12 @@ function extractPatternDocsExamples(input: {
       complexity: tag.tagName === "LivePreview" ? "intermediate" : "basic",
       code: tag.raw,
       source_url: input.route,
+      source_path: null,
       package: null,
       target_type: "pattern",
       target_name: input.patternTitle,
     };
   });
-}
-
-type PatternStarterTemplateKind =
-  | "metric"
-  | "app-header"
-  | "vertical-navigation"
-  | "analytical-dashboard";
-
-function inferPatternStarterTemplateKind(
-  regions: string[],
-): PatternStarterTemplateKind | null {
-  const regionSet = new Set(regions);
-
-  if (regionSet.has("metric-title") || regionSet.has("metric-value")) {
-    return "metric";
-  }
-
-  if (regionSet.has("branding") && regionSet.has("utility-actions")) {
-    return "app-header";
-  }
-
-  if (regionSet.has("navigation-pane") && regionSet.has("content-context")) {
-    return "vertical-navigation";
-  }
-
-  if (
-    regionSet.has("dashboard-header") ||
-    regionSet.has("fixed-panel") ||
-    regionSet.has("key-metrics") ||
-    regionSet.has("content-modules") ||
-    regionSet.has("main-body")
-  ) {
-    return "analytical-dashboard";
-  }
-
-  return null;
-}
-
-function normalizePatternRegionId(label: string): string {
-  const normalized = normalizePatternHeadingLabel(label).toLowerCase();
-  switch (normalized) {
-    case "navigation":
-      return "primary-navigation";
-    case "utilities":
-      return "utility-actions";
-    case "header region":
-      return "dashboard-header";
-    case "fixed panel":
-    case "fixed panels":
-      return "fixed-panel";
-    case "main body region":
-      return "main-body";
-    default:
-      return toKebabCase(normalized);
-  }
-}
-
-function extractAnatomyLabels(content: string): string[] {
-  const howToBuild = findSectionContent(content, 2, "How to build");
-  const anatomy = findSectionContent(howToBuild, 3, "Anatomy");
-  return extractListLabels(anatomy);
-}
-
-function extractDashboardRegionLabels(content: string): string[] {
-  const dashboardRegions = findSectionContent(content, 2, "Dashboard regions");
-  const regionTitles = parseMarkdownSections(dashboardRegions, 3).map(
-    (section) => normalizePatternHeadingLabel(section.title),
-  );
-  return uniqueStrings([
-    ...extractListLabels(dashboardRegions),
-    ...regionTitles,
-  ]).filter((value) => value.length > 0);
-}
-
-function deriveDocsBackedBuildAround(input: {
-  content: string;
-  fallback: string[];
-}): string[] {
-  if (input.fallback.length > 0) {
-    return uniqueStrings(input.fallback);
-  }
-
-  const labels = uniqueStrings([
-    ...extractDashboardRegionLabels(input.content),
-    ...extractAnatomyLabels(input.content),
-  ]);
-
-  return labels.length > 0 ? labels : input.fallback;
-}
-
-function deriveDocsBackedRegions(input: {
-  content: string;
-  fallback: string[];
-}): string[] {
-  if (input.fallback.length > 0) {
-    return uniqueStrings(input.fallback);
-  }
-
-  const labels = uniqueStrings([
-    ...extractDashboardRegionLabels(input.content),
-    ...extractAnatomyLabels(input.content),
-  ]);
-  const mapped = labels
-    .map((label) => normalizePatternRegionId(label))
-    .filter((value) => value.length > 0);
-  return mapped.length > 0 ? uniqueStrings(mapped) : input.fallback;
-}
-
-function deriveDocsBackedPreserveConstraints(input: {
-  content: string;
-  fallback: string[];
-}): string[] {
-  if (input.fallback.length > 0) {
-    return uniqueStrings(input.fallback);
-  }
-
-  const structuredGuidance = parseStructuredGuidanceCallouts(input.content);
-  const candidateStatements = uniqueStrings([
-    ...structuredGuidance.preferred,
-    ...structuredGuidance.avoid,
-    ...parseSectionStatements(input.content, "How to build"),
-    ...parseSectionStatements(input.content, "Dashboard regions"),
-  ]);
-
-  const normativeStatements = candidateStatements.filter((statement) =>
-    /\b(always|never|avoid|don't|do not|won't|should|must|keep|remain)\b/i.test(
-      statement,
-    ),
-  );
-
-  return normativeStatements.length > 0
-    ? uniqueStrings(normativeStatements)
-    : input.fallback;
-}
-
-function buildPatternStarterTemplate(input: {
-  templateKind?: string | null;
-  regions: string[];
-}): NonNullable<PatternRecord["starter_scaffold"]>["template"] | undefined {
-  const templateKind =
-    (input.templateKind as PatternStarterTemplateKind | null | undefined) ??
-    inferPatternStarterTemplateKind(input.regions);
-
-  switch (templateKind) {
-    case "metric":
-      return {
-        kind: "fallback-template",
-        imports: [
-          { name: "Display1", package: "@salt-ds/core" },
-          { name: "StackLayout", package: "@salt-ds/core" },
-          { name: "Text", package: "@salt-ds/core" },
-        ],
-        jsx_lines: [
-          "<StackLayout>{/* Vertical metric */}",
-          "  <Text>{/* Metric title */}Portfolio value</Text>",
-          "  <Display1>{/* Large metric value */}GBP 124.8m</Display1>",
-          "  <Text>{/* Subtitle or subvalue */}+2.4% vs previous close</Text>",
-          "</StackLayout>",
-        ],
-      };
-    case "app-header":
-      return {
-        kind: "fallback-template",
-        imports: [
-          { name: "Button", package: "@salt-ds/core" },
-          { name: "FlexLayout", package: "@salt-ds/core" },
-          { name: "FlowLayout", package: "@salt-ds/core" },
-          { name: "Link", package: "@salt-ds/core" },
-          { name: "NavigationItem", package: "@salt-ds/core" },
-        ],
-        jsx_lines: [
-          "<header>",
-          '  <FlexLayout align="center" justify="space-between">',
-          '    <Link href="/">{/* Branding: logo or mark plus app name */}</Link>',
-          '    <nav aria-label="Primary">',
-          '      <NavigationItem href="/overview">Overview</NavigationItem>',
-          '      <NavigationItem href="/reports">Reports</NavigationItem>',
-          "    </nav>",
-          "    <FlowLayout>",
-          '      <Button appearance="transparent">Search</Button>',
-          '      <Button appearance="bordered">Settings</Button>',
-          "    </FlowLayout>",
-          "  </FlexLayout>",
-          "</header>",
-        ],
-        notes: [
-          "Replace the placeholder branding, navigation labels, and utility actions with the app-specific header content.",
-        ],
-      };
-    case "vertical-navigation":
-      return {
-        kind: "fallback-template",
-        imports: [
-          { name: "BorderItem", package: "@salt-ds/core" },
-          { name: "BorderLayout", package: "@salt-ds/core" },
-          { name: "Link", package: "@salt-ds/core" },
-          { name: "SkipLink", package: "@salt-ds/core" },
-          { name: "StackLayout", package: "@salt-ds/core" },
-          { name: "VerticalNavigation", package: "@salt-ds/core" },
-          { name: "VerticalNavigationItem", package: "@salt-ds/core" },
-          {
-            name: "VerticalNavigationItemContent",
-            package: "@salt-ds/core",
-          },
-          {
-            name: "VerticalNavigationItemLabel",
-            package: "@salt-ds/core",
-          },
-          {
-            name: "VerticalNavigationItemTrigger",
-            package: "@salt-ds/core",
-          },
-        ],
-        jsx_lines: [
-          "<BorderLayout>",
-          '  <BorderItem position="west" as="aside">',
-          "    {/* Navigation pane: fixed or responsive depending on the app shell */}",
-          '    <SkipLink targetId="main-content">Skip to main content</SkipLink>',
-          '    <VerticalNavigation aria-label="Primary" appearance="bordered">',
-          "      <VerticalNavigationItem active>",
-          "        <VerticalNavigationItemContent>",
-          '          <VerticalNavigationItemTrigger render={<Link href="/overview" />}>',
-          "            <VerticalNavigationItemLabel>Overview</VerticalNavigationItemLabel>",
-          "          </VerticalNavigationItemTrigger>",
-          "        </VerticalNavigationItemContent>",
-          "      </VerticalNavigationItem>",
-          "      <VerticalNavigationItem>",
-          "        <VerticalNavigationItemContent>",
-          '          <VerticalNavigationItemTrigger render={<Link href="/reports" />}>',
-          "            <VerticalNavigationItemLabel>Reports</VerticalNavigationItemLabel>",
-          "          </VerticalNavigationItemTrigger>",
-          "        </VerticalNavigationItemContent>",
-          "      </VerticalNavigationItem>",
-          "    </VerticalNavigation>",
-          "  </BorderItem>",
-          '  <BorderItem position="center" as="main" id="main-content" tabIndex={-1}>',
-          "    <StackLayout>{/* Main content area stays distinct from the navigation tree */}</StackLayout>",
-          "  </BorderItem>",
-          "</BorderLayout>",
-        ],
-        notes: [
-          "Replace the placeholder destinations with the app-specific navigation tree and content entry point.",
-        ],
-      };
-    case "analytical-dashboard":
-      return {
-        kind: "fallback-template",
-        imports: [
-          { name: "BorderLayout", package: "@salt-ds/core" },
-          { name: "BorderItem", package: "@salt-ds/core" },
-          { name: "Card", package: "@salt-ds/core" },
-          { name: "FlowLayout", package: "@salt-ds/core" },
-          { name: "GridItem", package: "@salt-ds/core" },
-          { name: "GridLayout", package: "@salt-ds/core" },
-          { name: "StackLayout", package: "@salt-ds/core" },
-          { name: "Text", package: "@salt-ds/core" },
-          { name: "Tabs", package: "@salt-ds/core" },
-        ],
-        jsx_lines: [
-          "<BorderLayout>",
-          '  <BorderItem position="north" as="header">',
-          "    <StackLayout>{/* Dashboard header region: title, context, and utilities */}</StackLayout>",
-          "  </BorderItem>",
-          '  <BorderItem position="west" as="aside">',
-          "    <StackLayout>{/* Fixed panel: filters, toggles, and controls */}</StackLayout>",
-          "  </BorderItem>",
-          '  <BorderItem position="center" as="main">',
-          "    <StackLayout>",
-          '      <section aria-label="Key metrics bar">',
-          "        <FlowLayout>{/* Key metrics bar: 3-5 concise metrics in one orientation */}",
-          "          <StackLayout>{/* Metric 1 */}",
-          "            <Text>{/* Metric title */}Net asset value</Text>",
-          "            <Text>{/* Large metric value */}GBP 124.8m</Text>",
-          "            <Text>{/* Metric subtitle or subvalue */}+2.4% vs previous close</Text>",
-          "          </StackLayout>",
-          "          <StackLayout>{/* Metric 2 */}",
-          "            <Text>{/* Metric title */}Daily P&L</Text>",
-          "            <Text>{/* Large metric value */}+GBP 3.1m</Text>",
-          "            <Text>{/* Metric subtitle or subvalue */}Above desk target</Text>",
-          "          </StackLayout>",
-          "          <StackLayout>{/* Metric 3 */}",
-          "            <Text>{/* Metric title */}Risk exposure</Text>",
-          "            <Text>{/* Large metric value */}12.4%</Text>",
-          "            <Text>{/* Metric subtitle or subvalue */}Within approved threshold</Text>",
-          "          </StackLayout>",
-          "        </FlowLayout>",
-          "      </section>",
-          '      <GridLayout columns={12} gap={3} aria-label="Dashboard modules">',
-          "        <GridItem colSpan={8}><Card>{/* Primary analytical module */}</Card></GridItem>",
-          "        <GridItem colSpan={4}><Card>{/* Secondary analytical module */}</Card></GridItem>",
-          "        <GridItem colSpan={6}><Card>{/* Data grid or table module */}</Card></GridItem>",
-          "        <GridItem colSpan={6}><Card>{/* Supporting analysis module */}</Card></GridItem>",
-          "      </GridLayout>",
-          "      <Tabs />",
-          "    </StackLayout>",
-          "  </BorderItem>",
-          "</BorderLayout>",
-        ],
-        notes: [
-          "Replace the placeholder dashboard modules with the closest production example from the linked docs.",
-        ],
-      };
-    default:
-      return undefined;
-  }
-}
-
-function getPatternStarterScaffold(input: {
-  content: string;
-  route: string;
-  data: Record<string, unknown> | undefined;
-  exampleSourceUrls?: string[];
-}): PatternRecord["starter_scaffold"] | undefined {
-  const aiConfig = asRecord(input.data?.ai);
-  const starterScaffoldConfig = asRecord(aiConfig?.starterScaffold);
-  const semanticsConfig = asRecord(starterScaffoldConfig?.semantics);
-  const fallbackRegions = asStringArray(semanticsConfig?.regions);
-  const docsBackedRegions = deriveDocsBackedRegions({
-    content: input.content,
-    fallback: fallbackRegions,
-  });
-
-  if (docsBackedRegions.length === 0) {
-    return undefined;
-  }
-
-  const starterTemplate = buildPatternStarterTemplate({
-    templateKind: asString(starterScaffoldConfig?.template),
-    regions: docsBackedRegions,
-  });
-  const starterFidelity = asString(starterScaffoldConfig?.fidelity) as
-    | "canonical"
-    | "hybrid"
-    | "draft"
-    | undefined;
-
-  return {
-    fidelity: starterFidelity ?? "hybrid",
-    source_urls:
-      asStringArray(starterScaffoldConfig?.sourceUrls).length > 0
-        ? asStringArray(starterScaffoldConfig?.sourceUrls)
-        : [input.route],
-    example_source_urls: input.exampleSourceUrls ?? [],
-    semantics: {
-      regions: docsBackedRegions,
-      required_regions: asStringArray(semanticsConfig?.requiredRegions),
-      optional_regions: asStringArray(semanticsConfig?.optionalRegions),
-      build_around: deriveDocsBackedBuildAround({
-        content: input.content,
-        fallback: asStringArray(semanticsConfig?.buildAround),
-      }),
-      preserve_constraints: deriveDocsBackedPreserveConstraints({
-        content: input.content,
-        fallback: asStringArray(semanticsConfig?.preserveConstraints),
-      }),
-    },
-    ...(starterTemplate
-      ? {
-          template: starterTemplate,
-        }
-      : {}),
-  };
 }
 
 function enrichPatternAliases(
@@ -984,7 +539,7 @@ function extractAriaAttributesFromCode(code: string): string[] {
   return uniqueStrings(
     [...code.matchAll(/\baria-[a-zA-Z0-9_-]+\b/g)]
       .map((match) => match[0])
-      .sort((left, right) => left.localeCompare(right)),
+      .sort(compareOrdinalStrings),
   );
 }
 
@@ -997,7 +552,7 @@ function extractAriaRoleValuesFromCode(code: string): string[] {
     ]
       .map((match) => match[1] ?? match[2] ?? match[3] ?? "")
       .filter((value) => /^[a-z][a-z0-9-]*$/i.test(value))
-      .sort((left, right) => left.localeCompare(right)),
+      .sort(compareOrdinalStrings),
   );
 }
 
@@ -1017,15 +572,15 @@ function mergePatternExampleAccessibilitySignals(
     ariaAttributes: uniqueStrings([
       ...left.ariaAttributes,
       ...right.ariaAttributes,
-    ]).sort((a, b) => a.localeCompare(b)),
+    ]).sort(compareOrdinalStrings),
     ariaRoles: uniqueStrings([...left.ariaRoles, ...right.ariaRoles]).sort(
-      (a, b) => a.localeCompare(b),
+      compareOrdinalStrings,
     ),
     ariaAnnouncements: left.ariaAnnouncements || right.ariaAnnouncements,
     semanticElements: uniqueStrings([
       ...left.semanticElements,
       ...right.semanticElements,
-    ]).sort((a, b) => a.localeCompare(b)),
+    ]).sort(compareOrdinalStrings),
   };
 }
 
@@ -1043,7 +598,7 @@ function extractPatternExampleAccessibilitySignals(
 function toPatternAccessibilitySignals(input: {
   signals: PatternExampleAccessibilitySignals;
   source_kind: PatternAccessibilitySignal["source_kind"];
-  source_url: string;
+  source: RegistrySourceLocator;
 }): PatternAccessibilitySignal[] {
   const entries: PatternAccessibilitySignal[] = [];
 
@@ -1052,7 +607,7 @@ function toPatternAccessibilitySignals(input: {
       kind: "aria_attribute",
       values: input.signals.ariaAttributes,
       source_kind: input.source_kind,
-      source_url: input.source_url,
+      ...input.source,
     });
   }
 
@@ -1061,7 +616,7 @@ function toPatternAccessibilitySignals(input: {
       kind: "aria_role",
       values: input.signals.ariaRoles,
       source_kind: input.source_kind,
-      source_url: input.source_url,
+      ...input.source,
     });
   }
 
@@ -1070,7 +625,7 @@ function toPatternAccessibilitySignals(input: {
       kind: "aria_announcement",
       values: ["useAriaAnnouncer"],
       source_kind: input.source_kind,
-      source_url: input.source_url,
+      ...input.source,
     });
   }
 
@@ -1079,7 +634,7 @@ function toPatternAccessibilitySignals(input: {
       kind: "semantic_element",
       values: input.signals.semanticElements,
       source_kind: input.source_kind,
-      source_url: input.source_url,
+      ...input.source,
     });
   }
 
@@ -1093,15 +648,25 @@ export function derivePatternExampleAccessibilitySignals(
     return [];
   }
 
-  const signalsBySourceUrl = new Map<
+  const signalsBySourceLocator = new Map<
     string,
-    PatternExampleAccessibilitySignals
+    {
+      source: RegistrySourceLocator;
+      signals: PatternExampleAccessibilitySignals;
+    }
   >();
 
   for (const example of pattern.examples) {
-    if (!example.source_url || !example.code.trim()) {
+    if (!example.code.trim()) {
       continue;
     }
+    const source: RegistrySourceLocator =
+      example.source_path !== null
+        ? { source_url: null, source_path: example.source_path }
+        : { source_url: example.source_url, source_path: null };
+    const sourceKey = example.source_url
+      ? `url:${example.source_url}`
+      : `path:${example.source_path}`;
 
     const signals = extractPatternExampleAccessibilitySignals(example.code);
     if (
@@ -1113,10 +678,11 @@ export function derivePatternExampleAccessibilitySignals(
       continue;
     }
 
-    signalsBySourceUrl.set(
-      example.source_url,
-      mergePatternExampleAccessibilitySignals(
-        signalsBySourceUrl.get(example.source_url) ?? {
+    const previous = signalsBySourceLocator.get(sourceKey);
+    signalsBySourceLocator.set(sourceKey, {
+      source,
+      signals: mergePatternExampleAccessibilitySignals(
+        previous?.signals ?? {
           ariaAttributes: [],
           ariaRoles: [],
           ariaAnnouncements: false,
@@ -1124,17 +690,17 @@ export function derivePatternExampleAccessibilitySignals(
         },
         signals,
       ),
-    );
+    });
   }
 
   const accessibilitySignals: PatternAccessibilitySignal[] = [];
 
-  for (const [source_url, signals] of signalsBySourceUrl) {
+  for (const { source, signals } of signalsBySourceLocator.values()) {
     accessibilitySignals.push(
       ...toPatternAccessibilitySignals({
         signals,
         source_kind: "example",
-        source_url,
+        source,
       }),
     );
   }
@@ -1152,13 +718,13 @@ export async function derivePatternImplementationAccessibilitySignals(
 
   const patternSlug = toKebabCase(pattern.name);
   const sourcePaths = (
-    await fg(`packages/*/src/${patternSlug}/**/*.{ts,tsx}`, {
+    await globCatalogInputs(`packages/*/src/${patternSlug}/**/*.{ts,tsx}`, {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
       ignore: ["**/__tests__/**", "**/*.test.*", "**/*.spec.*"],
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
   const accessibilitySignals: PatternAccessibilitySignal[] = [];
 
   for (const sourcePath of sourcePaths) {
@@ -1167,23 +733,24 @@ export async function derivePatternImplementationAccessibilitySignals(
       continue;
     }
 
-    const sourceUrl = toPosixPath(path.relative(repoRoot, sourcePath));
+    const sourceRepositoryPath = toPosixPath(
+      path.relative(repoRoot, sourcePath),
+    );
     const signals = extractPatternExampleAccessibilitySignals(source);
 
     accessibilitySignals.push(
       ...toPatternAccessibilitySignals({
         signals,
         source_kind: "source",
-        source_url: sourceUrl,
+        source: {
+          source_url: null,
+          source_path: sourceRepositoryPath,
+        },
       }),
     );
   }
 
   return accessibilitySignals.slice(0, 5);
-}
-
-function normalizePatternDocsRoute(route: string): string {
-  return route.replace(/\/index$/, "");
 }
 
 async function loadPatternCategoryMap(repoRoot: string): Promise<
@@ -1202,8 +769,22 @@ async function loadPatternCategoryMap(repoRoot: string): Promise<
   }
 
   const parsed = JSON.parse(source) as {
+    meta?: {
+      patternCount?: unknown;
+    };
     patterns?: Record<string, PatternCategoryMapEntry>;
   };
+  const entries = Object.values(parsed.patterns ?? {});
+  if (
+    !Number.isInteger(parsed.meta?.patternCount) ||
+    parsed.meta?.patternCount !== entries.length
+  ) {
+    throw new Error(
+      `Pattern category map count '${String(
+        parsed.meta?.patternCount,
+      )}' does not match its ${entries.length} pattern entries.`,
+    );
+  }
   const byRoute = new Map<
     string,
     {
@@ -1212,13 +793,17 @@ async function loadPatternCategoryMap(repoRoot: string): Promise<
     }
   >();
 
-  for (const entry of Object.values(parsed.patterns ?? {})) {
+  for (const entry of entries) {
+    const route = assertCanonicalSiteRoute(entry.route);
+    if (byRoute.has(route)) {
+      throw new Error(`Duplicate pattern category route '${route}'.`);
+    }
     const categoryLabels = [
       entry.category,
       ...(entry.secondaryCategories ?? []),
     ].filter((value) => value.length > 0);
 
-    byRoute.set(normalizePatternDocsRoute(entry.route), {
+    byRoute.set(route, {
       categoryIds: [
         ...new Set(categoryLabels.map(normalizePatternCategoryLabel)),
       ],
@@ -1234,12 +819,12 @@ export async function extractPatternExamplesFromStories(
   patternNameBySlug: Map<string, string>,
 ): Promise<ExampleRecord[]> {
   const storyPaths = (
-    await fg("packages/*/stories/patterns/**/*.stories.tsx", {
+    await globCatalogInputs("packages/*/stories/patterns/**/*.stories.tsx", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   const examples: ExampleRecord[] = [];
   for (const storyPath of storyPaths) {
@@ -1286,7 +871,8 @@ export async function extractPatternExamplesFromStories(
             intent: deriveStoryExampleIntent(declaration.name.text),
             complexity: inferStoryComplexity(storyCode),
             code: storyCode,
-            source_url: relativePath,
+            source_url: null,
+            source_path: relativePath,
             package: packageName,
             target_type: "pattern",
             target_name: patternName,
@@ -1306,7 +892,8 @@ export async function extractPatternExamplesFromStories(
           intent: deriveStoryExampleIntent(statement.name.text),
           complexity: inferStoryComplexity(storyCode),
           code: storyCode,
-          source_url: relativePath,
+          source_url: null,
+          source_path: relativePath,
           package: packageName,
           target_type: "pattern",
           target_name: patternName,
@@ -1325,96 +912,6 @@ function getRouteSlug(route: string | null): string | null {
 
   const parts = route.split("/").filter((part) => part.length > 0);
   return parts.at(-1) ?? null;
-}
-
-/**
- * Derive the machine-readable composition contract for a pattern from
- * its `composed_of` declarations, the starter-scaffold semantics, and
- * the code of every canonical example currently attached to the
- * pattern. Keep this upstream of the registry so agents branch on a real,
- * extracted contract instead of re-reading the pattern docs.
- *
- * - `components`: each entry in `composed_of`, classified `required` if
- *   the component name (or its PascalCase form) appears in any example
- *   code or in a fallback-template JSX line. `optional` otherwise.
- * - `regions` / `required_regions` / `optional_regions` /
- *   `build_around` / `preserve_constraints`: lifted verbatim from
- *   `starter_scaffold.semantics` when present so consumers only have to
- *   read one place.
- *
- * Returns `undefined` when both `composed_of` and the scaffold are
- * empty so the field stays unset for malformed pattern docs rather
- * than emitting an empty contract.
- */
-export function buildPatternCompositionContract(input: {
-  composed_of: PatternRecord["composed_of"];
-  starter_scaffold?: PatternRecord["starter_scaffold"];
-  examples: ExampleRecord[];
-}): PatternCompositionContract | undefined {
-  const composed = input.composed_of ?? [];
-  const scaffold = input.starter_scaffold;
-  const semantics = scaffold?.semantics;
-  const regions = semantics?.regions ?? [];
-  const requiredRegions = semantics?.required_regions ?? [];
-  const optionalRegions = semantics?.optional_regions ?? [];
-  const buildAround = semantics?.build_around ?? [];
-  const preserveConstraints = semantics?.preserve_constraints ?? [];
-
-  // Build the haystack of every observed canonical reference. JSX
-  // openings like `<Card` are the strongest signal a component is
-  // required by the pattern; the fallback-template JSX lines count
-  // because docs that lack story code still pin the structure.
-  const exampleCorpus = input.examples
-    .map((example) => example.code ?? "")
-    .filter((code) => code.length > 0)
-    .join("\n");
-  const templateLines = scaffold?.template?.jsx_lines ?? [];
-  const templateCorpus = templateLines.join("\n");
-  const haystack = `${exampleCorpus}\n${templateCorpus}`;
-
-  const components: PatternCompositionComponent[] = composed.map((entry) => {
-    const componentName = entry.component;
-    const pascal = componentName.replace(/\s+/g, "");
-    // Match an opening tag like `<Card` or `<BorderLayout direction`
-    // but never a substring inside another component name (so `<Card`
-    // does not match `<CardActions`).
-    const tagPattern = new RegExp(
-      `<(?:${escapeRegExpForComposition(componentName)}|${escapeRegExpForComposition(
-        pascal,
-      )})(?:\\s|>|/)`,
-    );
-    const requirement = tagPattern.test(haystack) ? "required" : "optional";
-    return {
-      component: componentName,
-      role: entry.role ?? null,
-      requirement,
-    };
-  });
-
-  const hasComponents = components.length > 0;
-  const hasScaffold =
-    regions.length > 0 ||
-    requiredRegions.length > 0 ||
-    optionalRegions.length > 0 ||
-    buildAround.length > 0 ||
-    preserveConstraints.length > 0;
-
-  if (!hasComponents && !hasScaffold) {
-    return undefined;
-  }
-
-  return {
-    components,
-    regions: uniqueStrings(regions),
-    required_regions: uniqueStrings(requiredRegions),
-    optional_regions: uniqueStrings(optionalRegions),
-    build_around: uniqueStrings(buildAround),
-    preserve_constraints: uniqueStrings(preserveConstraints),
-  };
-}
-
-function escapeRegExpForComposition(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 export function createPatternNameBySlug(
@@ -1436,17 +933,17 @@ export function createPatternNameBySlug(
 
 export async function extractPatterns(
   repoRoot: string,
-  verifiedAt: string,
 ): Promise<PatternRecord[]> {
   const patternMdxPaths = (
-    await fg("site/docs/patterns/**/*.mdx", {
+    await globCatalogInputs("site/docs/patterns/**/*.mdx", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   const patternCategoryByRoute = await loadPatternCategoryMap(repoRoot);
+  const consumedCategoryRoutes = new Set<string>();
   const patterns: PatternRecord[] = [];
   for (const patternPath of patternMdxPaths) {
     const relativePatternPath = toPosixPath(
@@ -1465,7 +962,7 @@ export async function extractPatterns(
       continue;
     }
 
-    const parsed = matter(source);
+    const parsed = parseYamlFrontmatter(source);
     const title = asString(parsed.data.title);
     if (!title) {
       continue;
@@ -1478,7 +975,9 @@ export async function extractPatterns(
     const resources = Array.isArray(data?.resources)
       ? (data?.resources as Array<Record<string, unknown>>)
       : [];
-    const route = `/salt/patterns/${relativePatternPath.replace(/\.mdx$/, "")}`;
+    const route = assertCanonicalSiteRoute(
+      `/salt/patterns/${relativePatternPath.replace(/\.mdx$/, "")}`,
+    );
     const routeSlug = getRouteSlug(route);
     const aliases = enrichPatternAliases(
       uniqueStrings([
@@ -1487,14 +986,13 @@ export async function extractPatterns(
       ]),
       asStringArray(aiConfig?.aliases),
     );
-    const categoryRecord = patternCategoryByRoute.get(
-      normalizePatternDocsRoute(route),
-    );
+    const categoryRecord = patternCategoryByRoute.get(route);
     if (!categoryRecord) {
       throw new Error(
-        `Missing pattern category map entry for '${title}' (${route}/index).`,
+        `Missing pattern category map entry for '${title}' (${route}).`,
       );
     }
+    consumedCategoryRoutes.add(route);
     const whenToUse = parseSectionStatements(parsed.content, "When to use");
     const explicitWhenNotToUse = parseSectionStatements(
       parsed.content,
@@ -1514,7 +1012,11 @@ export async function extractPatterns(
       ...structuredGuidance.avoid,
     ]);
     const topicSignals = extractPatternTopicSignals(title, parsed.content);
-    const componentRoles = inferComponentRoles(parsed.content, components);
+    const componentRoles = parseAuthoredComponentRoles(
+      aiConfig,
+      components,
+      title,
+    );
     const semantics = buildUsageSemantics({
       category: categoryRecord.categoryIds,
       preferred_for: [
@@ -1540,7 +1042,6 @@ export async function extractPatterns(
       asString(parsed.data.description) ??
       extractFirstParagraph(parsed.content);
 
-    const examples: ExampleRecord[] = [];
     const resourceRecords: PatternRecord["resources"] = [];
     resources.forEach((resource, index) => {
       const href = asString(resource.href);
@@ -1555,27 +1056,12 @@ export async function extractPatterns(
         href,
         internal,
       });
-      examples.push({
-        id: `pattern.${toKebabCase(title)}.resource.${index + 1}`,
-        title: label,
-        description: "",
-        intent: ["pattern resource"],
-        complexity: "basic",
-        code: `// Linked resource: ${href}`,
-        source_url: href,
-        package: null,
-        target_type: "pattern",
-        target_name: title,
-      });
     });
-    const docsExamples =
-      examples.length === 0
-        ? extractPatternDocsExamples({
-            patternTitle: title,
-            route,
-            content: parsed.content,
-          })
-        : [];
+    const docsExamples = extractPatternDocsExamples({
+      patternTitle: title,
+      route,
+      content: parsed.content,
+    });
 
     patterns.push({
       id: `pattern.${toKebabCase(title)}`,
@@ -1597,34 +1083,28 @@ export async function extractPatterns(
         summary: parsePatternAccessibilitySummary(parsed.content),
       },
       resources: resourceRecords,
-      examples: [...examples, ...docsExamples],
-      starter_scaffold: getPatternStarterScaffold({
-        content: parsed.content,
-        route,
-        data,
-        exampleSourceUrls: resourceRecords.map((resource) => resource.href),
-      }),
-      composition_contract: buildPatternCompositionContract({
-        composed_of: components.map((componentName) => ({
-          component: componentName,
-          role: componentRoles.get(componentName) ?? null,
-        })),
-        starter_scaffold: getPatternStarterScaffold({
-          content: parsed.content,
-          route,
-          data,
-          exampleSourceUrls: resourceRecords.map((resource) => resource.href),
-        }),
-        examples: [...examples, ...docsExamples],
-      }),
+      examples: docsExamples,
       related_docs: {
         overview: route,
       },
       semantics,
       retrieval_signals: retrievalSignals,
-      last_verified_at: verifiedAt,
+      last_verified_at: null,
     });
   }
 
-  return patterns.sort((left, right) => left.name.localeCompare(right.name));
+  const orphanCategoryRoutes = [...patternCategoryByRoute.keys()].filter(
+    (route) => !consumedCategoryRoutes.has(route),
+  );
+  if (orphanCategoryRoutes.length > 0) {
+    throw new Error(
+      `Pattern category map contains routes without pattern docs: ${orphanCategoryRoutes.join(
+        ", ",
+      )}.`,
+    );
+  }
+
+  return patterns.sort((left, right) =>
+    compareOrdinalStrings(left.name, right.name),
+  );
 }

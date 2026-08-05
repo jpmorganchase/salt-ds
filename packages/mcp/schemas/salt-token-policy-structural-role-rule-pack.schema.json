@@ -22,7 +22,7 @@
       "minLength": 1
     },
     "generated_at": {
-      "type": "string",
+      "type": ["string", "null"],
       "minLength": 1
     },
     "generator": {
@@ -42,12 +42,15 @@
     "registry": {
       "type": "object",
       "additionalProperties": false,
+      "required": ["version", "hash", "generated_at"],
       "properties": {
         "version": {
-          "type": ["string", "null"]
+          "type": "string",
+          "minLength": 1
         },
         "hash": {
-          "type": ["string", "null"]
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
         },
         "generated_at": {
           "type": ["string", "null"]

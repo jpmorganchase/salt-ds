@@ -13,6 +13,7 @@
       "!**/mockServiceWorker.js",
       "!**/*-props.json",
       "!**/.tmp",
+      "!**/packages/mcp/eval-fixtures/remediation-baseline",
       "!**/site/src/components/css-display/**/*.json",
       "!**/site/public/search-data.json",
       "!**/lab/src/color-chooser",

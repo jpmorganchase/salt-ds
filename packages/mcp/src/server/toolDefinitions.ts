@@ -1,1062 +1,687 @@
+import type {
+  StandardSchemaWithJSON,
+  ToolAnnotations,
+} from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import {
-  createSaltUi,
-  deriveComparableSaltVersion,
-  getSaltEntities,
-  migrateToSalt,
-  PUBLIC_CREATE_REFERENCE_BATCH_MAX,
-  PUBLIC_CREATE_RESOLVED_ENTITY_MAX,
-  PUBLIC_REFERENCE_ENTITY_TYPES,
-  reviewSaltUi,
-  type PublicCreateRerunArgs,
-  type SaltEvidenceValidationIssueCode,
-  type SaltGeneratedArtifactKind,
-  type SaltRegistry,
+  CATALOG_SEARCH_TARGET_FAMILY_NAMES,
+  MAX_REVIEW_ARTIFACT_UTF8_BYTES,
+  MAX_REVIEW_ARTIFACT_ID_CHARS,
+  MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
+  MAX_REVIEW_ARTIFACTS,
+  MAX_REVIEW_PACKAGE_VERSIONS,
+  MAX_REVIEW_SUBMITTED_UTF8_BYTES,
+  MAX_SEARCH_RESULTS,
+  reviewSaltCode,
+  type SaltCatalogRuntimeContext,
+  searchSalt,
 } from "../core/runtime.js";
+import { compactStandardOutputSchema } from "./compactStandardSchema.js";
+import { inspectSaltProject } from "./inspectSaltProject.js";
+import type { ProjectAccessPolicy } from "./projectAccess.js";
 import {
-  collectSaltProjectContextData,
-  collectSaltWorkflowContextBundle,
-  toSaltProjectContextResult,
-} from "./projectContext.js";
-import {
-  withAnalyzeWorkflowGuidance,
-  withChooseWorkflowGuidance,
-  withTranslateWorkflowGuidance,
-} from "./workflowOutputs.js";
+  isAuthorizedProjectPolicySnapshot,
+  loadAuthorizedProjectPolicySnapshot,
+} from "./projectPolicySnapshot.js";
+import type { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 
-const STATUSES = ["stable", "beta", "lab", "deprecated"] as const;
-const INCLUDE_SECTIONS = [
-  "examples",
-  "props",
-  "accessibility",
-  "deprecations",
-] as const;
-const MAX_SOURCE_CODE_CHARS = 512 * 1024;
-const MAX_QUERY_CHARS = 10_000;
-const MAX_OUTLINE_ENTRIES = 64;
-const MAX_OUTLINE_ENTRY_CHARS = 2_000;
+const MAX_QUERY_CHARS = 2_000;
 const MAX_PATH_CHARS = 4_096;
-const MAX_PACKAGE_NAME_CHARS = 256;
-const MAX_REFERENCE_NAME_CHARS = 256;
-const CONTAINS_NON_WHITESPACE = /\S/u;
-const REFERENCE_NAMES_SCHEMA = z
-  .array(
-    z
-      .string()
-      .min(1)
-      .max(MAX_REFERENCE_NAME_CHARS)
-      .regex(CONTAINS_NON_WHITESPACE),
-  )
-  .min(1)
-  .max(PUBLIC_CREATE_REFERENCE_BATCH_MAX);
-const OUTLINE_ENTRIES_SCHEMA = z
-  .array(
-    z
-      .string()
-      .min(1)
-      .max(MAX_OUTLINE_ENTRY_CHARS)
-      .regex(CONTAINS_NON_WHITESPACE),
-  )
-  .max(MAX_OUTLINE_ENTRIES);
-const CONTEXT_NEXT_TOOL_IDS = [
-  "create_salt_ui",
-  "review_salt_ui",
-  "migrate_to_salt",
-] as const;
-const UNKNOWN_RECORD_SCHEMA = z.record(z.string(), z.unknown());
-const UNKNOWN_RECORD_ARRAY_SCHEMA = z.array(UNKNOWN_RECORD_SCHEMA);
-const READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS = {
+const MAX_ARTIFACT_CHARS = 256 * 1024;
+const NON_WHITESPACE = /\S/u;
+const READ_ONLY_ANNOTATIONS: ToolAnnotations = {
   readOnlyHint: true,
   destructiveHint: false,
   idempotentHint: true,
   openWorldHint: false,
-} as const;
+};
 
-const WORKFLOW_COMPOSITION_CONTRACT_SCHEMA = z
+const SHA256_SCHEMA = z.string().regex(/^sha256:[0-9a-f]{64}$/u);
+const NULLABLE_PATH_SCHEMA = z.string().max(MAX_PATH_CHARS).nullable();
+const RESULT_BUDGET_SCHEMA = z
   .object({
-    primary_target: z
-      .object({
-        solution_type: z.enum(["component", "pattern", "foundation", "token"]),
-        name: z.string().nullable(),
-      })
-      .strict(),
-    expected_patterns: z.array(z.string()),
-    expected_components: z.array(z.string()),
-    slots: z.array(
+    max_utf8_bytes: z.number().int().positive(),
+    truncated: z.boolean(),
+    omissions: z.array(
       z
         .object({
-          id: z.string(),
-          label: z.string(),
-          certainty: z.enum([
-            "explicitly_requested",
-            "strongly_implied",
-            "optional",
-            "confirmation_needed",
-          ]),
-          preferred_patterns: z.array(z.string()),
-          preferred_components: z.array(z.string()),
-          reason: z.string(),
-          source_urls: z.array(z.string()),
-          notes: z.array(z.string()),
+          section: z.string(),
+          available: z.number().int().nonnegative(),
+          returned: z.number().int().nonnegative(),
         })
         .strict(),
     ),
-    avoid: z.array(z.string()),
-    source_urls: z.array(z.string()),
   })
   .strict();
 
-const REVIEW_EXPECTED_TARGETS_SCHEMA = z
+const CATALOG_RESOURCE_URI_SCHEMA = z
+  .string()
+  .regex(/^salt:\/\/catalog\/v2\/sha256-[0-9a-f]{64}\//u);
+const PROJECT_POLICY_RESOURCE_URI_SCHEMA = z
+  .string()
+  .regex(
+    /^salt:\/\/project-policy\/v2\/[A-Za-z0-9_-]+\/sha256-[0-9a-f]{64}\//u,
+  );
+const SEARCH_RESULT_SCHEMA = z
   .object({
-    components: z
-      .array(z.string().min(1).max(MAX_REFERENCE_NAME_CHARS))
-      .max(50)
-      .optional(),
-    patterns: z
-      .array(z.string().min(1).max(MAX_REFERENCE_NAME_CHARS))
-      .max(50)
-      .optional(),
-    composition_contract:
-      WORKFLOW_COMPOSITION_CONTRACT_SCHEMA.nullable().optional(),
-    source: z.enum(["create_report", "workflow_context"]).optional(),
-  })
-  .strict();
-const GET_SALT_REFERENCE_INPUT_SCHEMA = z
-  .object({
-    names: REFERENCE_NAMES_SCHEMA.describe(
-      "One to three exact Salt entity names to resolve or compare. Request examples through include: ['examples'].",
-    ),
-    entity_type: z
-      .enum(PUBLIC_REFERENCE_ENTITY_TYPES)
-      .optional()
-      .describe(
-        "Optional canonical entity family for names shared by multiple Salt record types; omission searches all families.",
-      ),
-    include_starter_code: z.boolean().optional(),
-    include: z
-      .array(z.enum(INCLUDE_SECTIONS))
-      .max(INCLUDE_SECTIONS.length)
-      .optional(),
-  })
-  .strict();
-function publicReviewTargetsSchema<
-  const Source extends "create_report" | "workflow_context",
->(source: Source) {
-  return z
-    .object({
-      components: z.array(z.string()),
-      patterns: z.array(z.string()),
-      composition_contract: WORKFLOW_COMPOSITION_CONTRACT_SCHEMA.nullable(),
-      source: z.literal(source),
-    })
-    .strict();
-}
-const PUBLIC_CREATE_REVIEW_TARGETS_SCHEMA =
-  publicReviewTargetsSchema("create_report");
-const PUBLIC_MIGRATE_REVIEW_TARGETS_SCHEMA =
-  publicReviewTargetsSchema("workflow_context");
-
-const TOOL_SOURCE_SCHEMA = z.object({
-  original: z.string(),
-  resolved: z.string(),
-  kind: z.enum(["site", "external", "repo"]),
-});
-
-const PROJECT_POLICY_IMPORT_TARGETS_SCHEMA = z.object({
-  status: z.enum(["not_declared", "ready", "blocked"]),
-  declared_count: z.number().int().nonnegative(),
-  resolved_count: z.number().int().nonnegative(),
-  blocking_count: z.number().int().nonnegative(),
-  targets: z.array(
-    z.object({
-      kind: z.enum(["approved_wrapper", "theme_provider", "theme_import"]),
-      owner: z.string(),
-      from: z.string(),
-      name: z.string().nullable(),
-      status: z.enum([
-        "resolved",
-        "missing_module",
-        "missing_export",
-        "unsupported",
-      ]),
-      resolved_path: z.string().nullable(),
-      reason: z.string().nullable(),
-    }),
-  ),
-  blocking_reasons: z.array(z.string()),
-});
-
-const CONTEXT_WORKFLOW_ENVELOPE_SCHEMA = z
-  .object({
-    workflow: z.object({
-      id: z.literal("get_salt_project_context"),
-    }),
-    // Publish only the stable routing surface in tools/list. The tool still
-    // returns richer diagnostics as passthrough fields when requested.
-    result: z
+    data: z
       .object({
-        root_dir: z.string(),
-        resolution: z
+        query: z.string(),
+        matches: z.array(
+          z
+            .object({
+              family: z.enum(CATALOG_SEARCH_TARGET_FAMILY_NAMES),
+              id: z.string().min(1),
+              title: z.string(),
+              summary: z.string().max(240),
+              uri: CATALOG_RESOURCE_URI_SCHEMA,
+              evidence: z
+                .object({
+                  matched_fields: z.array(
+                    z.enum(["title", "summary", "terms"]),
+                  ),
+                  matched_terms: z.array(z.string()).max(8),
+                  score: z.number().int().nonnegative(),
+                })
+                .strict(),
+              provenance: z
+                .object({ resource_uri: CATALOG_RESOURCE_URI_SCHEMA })
+                .strict(),
+            })
+            .strict(),
+        ),
+        ambiguity: z
           .object({
-            status: z.enum([
-              "resolved",
-              "fallback",
-              "needs_explicit_root",
-              "mismatch",
-            ]),
-            quality: z.enum(["ready", "needs_explicit_root"]),
-            reason: z.string().nullable(),
+            is_ambiguous: z.boolean(),
+            candidate_count: z.number().int().nonnegative(),
+            top_score_tie_count: z.number().int().nonnegative(),
           })
-          .passthrough(),
-        environment: z
+          .strict(),
+      })
+      .strict(),
+    scope: z
+      .object({
+        kind: z.literal("catalog_search"),
+        searched_families: z.array(z.enum(CATALOG_SEARCH_TARGET_FAMILY_NAMES)),
+        searched_statuses: z
+          .array(z.enum(["stable", "beta", "lab", "deprecated"]))
+          .nullable(),
+        total_documents: z.number().int().nonnegative(),
+        returned: z.number().int().nonnegative(),
+        truncated: z.boolean(),
+      })
+      .strict(),
+    coverage: z
+      .object({
+        indexed_documents: z.number().int().nonnegative(),
+        evaluated_documents: z.number().int().nonnegative(),
+        matched_documents: z.number().int().nonnegative(),
+        ranking: z.literal("deterministic_catalog_index"),
+      })
+      .strict(),
+    limitations: z.array(z.string()),
+    provenance: z
+      .object({
+        catalog_version: z.string().min(1),
+        semantic_digest: z.string().regex(/^sha256:[0-9a-f]{64}$/u),
+      })
+      .strict(),
+  })
+  .strict();
+
+const PUBLIC_POLICY_IR_SCHEMA = z
+  .object({
+    contract: z.literal("salt_project_policy_ir_v2"),
+    policy_mode: z.enum(["none", "team", "stack"]),
+    declared: z.boolean(),
+    digest: SHA256_SCHEMA,
+    manifest_uri: PROJECT_POLICY_RESOURCE_URI_SCHEMA,
+    counts: z
+      .object({
+        layers: z.number().int().nonnegative(),
+        occurrences: z.number().int().nonnegative(),
+        diagnostics: z.number().int().nonnegative(),
+      })
+      .strict(),
+    untrusted_ir: z
+      .object({ encoding: z.literal("json"), text: z.string() })
+      .strict()
+      .nullable(),
+  })
+  .strict();
+
+const INSPECT_RESULT_SCHEMA = z
+  .object({
+    data: z
+      .object({
+        root_dir: NULLABLE_PATH_SCHEMA,
+        package_manifest: z
           .object({
+            path: z.string().max(MAX_PATH_CHARS),
+            name: z.string().nullable(),
             package_manager: z.string(),
           })
-          .passthrough(),
-        framework: z
-          .object({
-            name: z.enum(["next", "vite-react", "vite", "react", "unknown"]),
-          })
-          .passthrough(),
-        salt: z
-          .object({
-            packages: z.array(
-              z.object({
-                name: z.string(),
-                version: z.string(),
-              }),
-            ),
-            package_version: z.string().nullable(),
-          })
-          .passthrough(),
-        repo_signals: z
-          .object({
-            storybook_detected: z.boolean(),
-            app_runtime_detected: z.boolean(),
-            salt_team_config_found: z.boolean(),
-            salt_stack_config_found: z.boolean(),
-          })
-          .passthrough(),
-        policy: z
-          .object({
-            import_targets: PROJECT_POLICY_IMPORT_TARGETS_SCHEMA,
-          })
-          .passthrough(),
-      })
-      .passthrough(),
-    artifacts: z
-      .object({
-        summary: z
-          .object({
-            recommended_next_tool: z.enum(CONTEXT_NEXT_TOOL_IDS).nullable(),
-            context_health: z
-              .object({
-                trusted: z.boolean(),
-                repo_specific_workflows_ready: z.boolean(),
-              })
-              .passthrough(),
-            retry_with: z.object({
-              root_dir: z.string().nullable(),
-            }),
-          })
-          .passthrough(),
-        notes: z.array(z.string()),
-      })
-      .passthrough(),
-    sources: z.array(TOOL_SOURCE_SCHEMA),
-  })
-  .passthrough();
-
-const CONTEXT_OUTPUT_SCHEMA = CONTEXT_WORKFLOW_ENVELOPE_SCHEMA;
-
-const PUBLIC_WORKFLOW_STATUSES = [
-  "success",
-  "partial",
-  "blocked",
-  "failed",
-] as const;
-const PUBLIC_MATCH_STATUSES = [
-  "exact",
-  "alias",
-  "broadened",
-  "misrouted",
-  "no_match",
-] as const;
-const PUBLIC_EVIDENCE_KINDS = [
-  "docs",
-  "examples",
-  "registry",
-  "project_policy",
-  "heuristic_fallback",
-] as const;
-const PUBLIC_EVIDENCE_VALIDATION_ISSUE_CODES = [
-  "invalid_evidence_contract",
-  "missing_registry_locator",
-  "missing_registry_entity",
-  "missing_registry_field_path",
-  "missing_registry_field",
-  "missing_source_locator",
-  "missing_project_policy_locator",
-  "missing_workflow_input_locator",
-  "missing_runtime_locator",
-  "missing_package_locator",
-  "stale_registry",
-  "missing_claim_evidence",
-  "unknown_claim_evidence_ref",
-  "missing_matching_claim_evidence_ref",
-  "invalid_claim_evidence_ref",
-  "missing_structural_role_rule_evidence",
-] as const satisfies readonly SaltEvidenceValidationIssueCode[];
-const PUBLIC_GENERATED_ARTIFACT_KINDS = [
-  "pattern-guidance",
-  "review-report",
-  "validation-report",
-] as const satisfies readonly SaltGeneratedArtifactKind[];
-type AssertExhaustive<T extends never> = T;
-type _AllEvidenceValidationIssueCodesAreDeclared = AssertExhaustive<
-  Exclude<
-    SaltEvidenceValidationIssueCode,
-    (typeof PUBLIC_EVIDENCE_VALIDATION_ISSUE_CODES)[number]
-  >
->;
-type _AllGeneratedArtifactKindsAreDeclared = AssertExhaustive<
-  Exclude<
-    SaltGeneratedArtifactKind,
-    (typeof PUBLIC_GENERATED_ARTIFACT_KINDS)[number]
-  >
->;
-
-const PUBLIC_CREATE_INPUT_SCHEMA = z
-  .object({
-    query: z
-      .string()
-      .min(1)
-      .max(MAX_QUERY_CHARS)
-      .regex(CONTAINS_NON_WHITESPACE)
-      .describe("User need, task, flow, or capability to build."),
-    solution_type: z
-      .enum(["auto", "component", "pattern", "foundation", "token"])
-      .optional()
-      .describe("Optional solution-family hint."),
-    package: z
-      .string()
-      .max(MAX_PACKAGE_NAME_CHARS)
-      .optional()
-      .describe("Restrict candidates to a Salt package."),
-    status: z
-      .enum(STATUSES)
-      .optional()
-      .describe("Restrict candidates by release status."),
-    prefer_stable: z.boolean().optional(),
-    a11y_required: z.boolean().optional(),
-    include_starter_code: z
-      .boolean()
-      .optional()
-      .describe("Include starter code; defaults to true."),
-    resolved_entities: z
-      .array(z.string().min(1).max(MAX_REFERENCE_NAME_CHARS))
-      .max(PUBLIC_CREATE_RESOLVED_ENTITY_MAX)
-      .optional()
-      .describe("Canonical entities already resolved for a create rerun."),
-    root_dir: z
-      .string()
-      .max(MAX_PATH_CHARS)
-      .optional()
-      .describe(
-        "Target project or workspace-package root; defaults to the MCP working directory.",
-      ),
-  })
-  .strict()
-  .meta({ id: "SaltPublicCreateInput" });
-const PUBLIC_CREATE_RERUN_ARGS_SCHEMA = PUBLIC_CREATE_INPUT_SCHEMA;
-const PUBLIC_REVIEW_POST_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("review"),
-    tool: z.literal("review_salt_ui"),
-    required_input: z.tuple([z.literal("complete_updated_file")]),
-  })
-  .strict()
-  .meta({ id: "SaltPublicReviewPostAction" });
-const PUBLIC_RERUN_POST_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("rerun_workflow"),
-    tool: z.literal("create_salt_ui"),
-    args: PUBLIC_CREATE_RERUN_ARGS_SCHEMA,
-  })
-  .strict()
-  .meta({ id: "SaltPublicRerunPostAction" });
-const PUBLIC_POST_ACTION_SCHEMA = z.discriminatedUnion("kind", [
-  PUBLIC_REVIEW_POST_ACTION_SCHEMA,
-  PUBLIC_RERUN_POST_ACTION_SCHEMA,
-]);
-const PUBLIC_REVIEW_POST_ACTION_ONLY_SCHEMA =
-  PUBLIC_POST_ACTION_SCHEMA.options[0];
-const PUBLIC_RERUN_POST_ACTION_ONLY_SCHEMA =
-  PUBLIC_POST_ACTION_SCHEMA.options[1];
-const PUBLIC_ACTION_COMMON_SHAPE = {
-  rule_ids: z.array(z.string()),
-};
-const PUBLIC_CREATE_TOOL_CALL_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("tool_call"),
-    tool: z.literal("create_salt_ui"),
-    mode: z.literal("exact_name"),
-    args: PUBLIC_CREATE_INPUT_SCHEMA,
-    post_action: z.null(),
-  })
-  .extend(PUBLIC_ACTION_COMMON_SHAPE)
-  .strict();
-const PUBLIC_RETRIEVE_REFERENCE_ARGS_SCHEMA = z.union([
-  z
-    .object({
-      names: REFERENCE_NAMES_SCHEMA,
-      entity_type: z.enum(PUBLIC_REFERENCE_ENTITY_TYPES).optional(),
-    })
-    .strict(),
-  z
-    .object({
-      names: REFERENCE_NAMES_SCHEMA,
-      entity_type: z.enum(PUBLIC_REFERENCE_ENTITY_TYPES).optional(),
-      include: z.tuple([z.literal("examples")]),
-      include_starter_code: z.literal(true),
-    })
-    .strict(),
-]);
-const PUBLIC_RETRIEVE_REFERENCE_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("retrieve_reference"),
-    tool: z.literal("get_salt_reference"),
-    args: PUBLIC_RETRIEVE_REFERENCE_ARGS_SCHEMA,
-    post_action: PUBLIC_RERUN_POST_ACTION_ONLY_SCHEMA,
-  })
-  .extend(PUBLIC_ACTION_COMMON_SHAPE)
-  .strict();
-const PUBLIC_ASK_USER_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("ask_user"),
-    question: z.string().min(1),
-    post_action: z.null(),
-  })
-  .extend(PUBLIC_ACTION_COMMON_SHAPE)
-  .strict();
-const PUBLIC_IMPLEMENT_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("implement"),
-    scope: z.literal("exact_request"),
-    post_action: PUBLIC_REVIEW_POST_ACTION_ONLY_SCHEMA,
-  })
-  .extend(PUBLIC_ACTION_COMMON_SHAPE)
-  .strict();
-const PUBLIC_COMPLETE_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("complete"),
-    outcome: z.literal("no_changes_required"),
-    post_action: z.null(),
-  })
-  .extend(PUBLIC_ACTION_COMMON_SHAPE)
-  .strict();
-const PUBLIC_APPLY_FIXES_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("apply_fixes"),
-    scope: z.literal("grounded_findings"),
-    authorization: z.literal("host_or_user_required"),
-    post_action: PUBLIC_REVIEW_POST_ACTION_ONLY_SCHEMA,
-  })
-  .extend(PUBLIC_ACTION_COMMON_SHAPE)
-  .strict();
-const PUBLIC_FIX_CONTEXT_ACTION_SCHEMA = z
-  .object({
-    kind: z.literal("fix_context"),
-    tool: z.literal("get_salt_project_context"),
-    mode: z.literal("stop_and_fix_context"),
-    args: z
-      .object({ root_dir: z.string().min(1) })
-      .strict()
-      .optional(),
-    post_action: z.null(),
-  })
-  .extend(PUBLIC_ACTION_COMMON_SHAPE)
-  .strict();
-const PUBLIC_CREATE_ACTION_SCHEMA = z.union([
-  PUBLIC_CREATE_TOOL_CALL_ACTION_SCHEMA,
-  PUBLIC_RETRIEVE_REFERENCE_ACTION_SCHEMA,
-  PUBLIC_ASK_USER_ACTION_SCHEMA,
-  PUBLIC_IMPLEMENT_ACTION_SCHEMA,
-  PUBLIC_FIX_CONTEXT_ACTION_SCHEMA,
-]);
-const PUBLIC_REVIEW_WORKFLOW_ACTION_SCHEMA = z.discriminatedUnion("kind", [
-  PUBLIC_ASK_USER_ACTION_SCHEMA,
-  PUBLIC_COMPLETE_ACTION_SCHEMA,
-  PUBLIC_APPLY_FIXES_ACTION_SCHEMA,
-  PUBLIC_FIX_CONTEXT_ACTION_SCHEMA,
-]);
-const PUBLIC_MIGRATE_ACTION_SCHEMA = z.discriminatedUnion("kind", [
-  PUBLIC_ASK_USER_ACTION_SCHEMA,
-  PUBLIC_IMPLEMENT_ACTION_SCHEMA,
-  PUBLIC_FIX_CONTEXT_ACTION_SCHEMA,
-]);
-const PUBLIC_EVIDENCE_ITEM_SCHEMA = z
-  .object({
-    kind: z.enum(PUBLIC_EVIDENCE_KINDS),
-    source: z.enum(["canonical_salt", "project_policy", "heuristic_fallback"]),
-    entity: z.string().optional(),
-    field: z.string().optional(),
-    source_urls: z.array(z.string()),
-    summary: z.string().optional(),
-  })
-  .strict();
-const PUBLIC_EVIDENCE_SIGNAL_COUNTS_SCHEMA = z
-  .object({
-    regions: z.number().int().nonnegative(),
-    actions: z.number().int().nonnegative(),
-    states: z.number().int().nonnegative(),
-    notes: z.number().int().nonnegative(),
-  })
-  .strict();
-const PUBLIC_EVIDENCE_INPUT_CONTEXT_SCHEMA = z
-  .object({
-    source_outline_provided: z.boolean().optional(),
-    source_outline_signal_counts:
-      PUBLIC_EVIDENCE_SIGNAL_COUNTS_SCHEMA.optional(),
-    derived_outline_available: z.boolean().optional(),
-    derived_outline_signal_counts:
-      PUBLIC_EVIDENCE_SIGNAL_COUNTS_SCHEMA.optional(),
-    visual_input_count: z.number().int().nonnegative().optional(),
-    visual_input_kinds: z.array(z.string()).optional(),
-    source_outline_summary: z.string().optional(),
-  })
-  .strict();
-const PUBLIC_EVIDENCE_VALIDATION_ISSUE_SCHEMA = z
-  .object({
-    code: z.enum(PUBLIC_EVIDENCE_VALIDATION_ISSUE_CODES),
-    message: z.string(),
-    path: z.string(),
-  })
-  .strict();
-const PUBLIC_EVIDENCE_SURFACE_GATE_SCHEMA = z
-  .object({
-    status: z.enum(["validated", "unsupported"]),
-    validation_issues: z.array(PUBLIC_EVIDENCE_VALIDATION_ISSUE_SCHEMA),
-    missing: z.array(z.string()),
-    unsupported_claim_count: z.number().int().nonnegative(),
-    artifact_id: z.string(),
-    artifact_kind: z.enum(PUBLIC_GENERATED_ARTIFACT_KINDS),
-  })
-  .strict();
-const PUBLIC_EVIDENCE_SCHEMA = z
-  .object({
-    status: z.enum(["complete", "partial", "missing"]),
-    items: z.array(PUBLIC_EVIDENCE_ITEM_SCHEMA),
-    source_urls: z.array(z.string()),
-    missing: z.array(z.string()),
-    heuristic_fallback: z.boolean(),
-    input_context: PUBLIC_EVIDENCE_INPUT_CONTEXT_SCHEMA.optional(),
-    surface_gate: PUBLIC_EVIDENCE_SURFACE_GATE_SCHEMA.optional(),
-    unsupported_claim_count: z.number().int().nonnegative().optional(),
-    validation_issue_count: z.number().int().nonnegative().optional(),
-  })
-  .strict();
-const PUBLIC_STARTER_SNIPPET_SCHEMA = z
-  .object({
-    label: z.string().min(1),
-    language: z.enum(["tsx", "css"]),
-    code: z.string().min(1),
-    notes: z.array(z.string()),
-    source_urls: z.array(z.string()),
-  })
-  .strict();
-const PUBLIC_REVIEW_FINDING_SCHEMA = z
-  .object({
-    title: z.string().min(1),
-    message: z.string().min(1),
-    severity: z.string().nullable(),
-    rule: z.string().nullable(),
-    source_urls: z.array(z.string()),
-  })
-  .strict();
-const PUBLIC_REVIEW_FIX_SCHEMA = z
-  .object({
-    rule_id: z.string().min(1).nullable(),
-    title: z.string().min(1),
-    recommendation: z.string().min(1),
-    safety: z.enum(["deterministic", "manual_review"]),
-    source_urls: z.array(z.string()),
-  })
-  .strict();
-const PUBLIC_MIGRATION_TRANSLATION_SCHEMA = z
-  .object({
-    source_model_ref: z.string().min(1),
-    label: z.string().min(1),
-    implementation: z
-      .object({
-        readiness: z.enum(["high", "medium", "review"]),
-        next_action: z.string().min(1),
-        validation_step: z.string().min(1),
-      })
-      .strict(),
-    salt_target: z
-      .object({
-        name: z.string().min(1).nullable(),
-        solution_type: z
-          .enum(["component", "pattern", "foundation"])
+          .strict()
           .nullable(),
-        why: z.string().min(1),
-        docs: z.array(z.string()),
-      })
-      .strict(),
-  })
-  .strict();
-const PUBLIC_STARTER_GUIDANCE_SCHEMA = z
-  .object({
-    plan: z.array(z.string().min(1)).max(12),
-    snippets: z.array(PUBLIC_STARTER_SNIPPET_SCHEMA).max(3),
-  })
-  .strict();
-const PUBLIC_CREATE_GUIDANCE_SCHEMA = z
-  .object({
-    kind: z.literal("create"),
-    decision: z
-      .object({
-        name: z.string().min(1).nullable(),
-        why: z.string().min(1),
-        solution_type: z.enum(["component", "pattern", "foundation", "token"]),
-      })
-      .strict(),
-    starter_guidance: PUBLIC_STARTER_GUIDANCE_SCHEMA,
-    review_targets: PUBLIC_CREATE_REVIEW_TARGETS_SCHEMA,
-  })
-  .strict();
-const PUBLIC_REVIEW_GUIDANCE_SCHEMA = z
-  .object({
-    kind: z.literal("review"),
-    findings: z.array(PUBLIC_REVIEW_FINDING_SCHEMA).max(12),
-    fixes: z.array(PUBLIC_REVIEW_FIX_SCHEMA).max(12),
-  })
-  .strict();
-const PUBLIC_MIGRATE_GUIDANCE_SCHEMA = z
-  .object({
-    kind: z.literal("migrate"),
-    translations: z.array(PUBLIC_MIGRATION_TRANSLATION_SCHEMA).max(12),
-    migration_plan: z.array(z.string().min(1)).max(12),
-    starter_guidance: PUBLIC_STARTER_GUIDANCE_SCHEMA,
-    post_migration_verification: z
-      .object({
-        source_checks: z.array(z.string().min(1)).max(8),
-        runtime_checks: z.array(z.string().min(1)).max(8),
-        preserve_checks: z.array(z.string().min(1)).max(8),
-        confirmation_checks: z.array(z.string().min(1)).max(8),
-        suggested_workflow: z.literal("review_salt_ui"),
-        suggested_command: z.string().min(1),
-      })
-      .strict(),
-    review_targets: PUBLIC_MIGRATE_REVIEW_TARGETS_SCHEMA,
-  })
-  .strict();
-const SUPPORT_FOLLOW_UPS_SCHEMA = UNKNOWN_RECORD_ARRAY_SCHEMA.optional();
-const GET_SALT_REFERENCE_OUTPUT_SCHEMA = z
-  .object({
-    guidance_boundary: UNKNOWN_RECORD_SCHEMA.optional(),
-    decision: z
-      .object({
-        status: z.enum(["results", "partial", "not_found", "empty"]),
-        why: z.string().min(1),
-      })
-      .strict(),
-    requested_count: z.number().int().nonnegative(),
-    found_count: z.number().int().nonnegative(),
-    not_found_count: z.number().int().nonnegative(),
-    ambiguous_count: z.number().int().nonnegative(),
-    results: z.array(
-      z
-        .object({
-          name: z.string(),
-          result: UNKNOWN_RECORD_SCHEMA,
-        })
-        .strict(),
-    ),
-    unresolved_names: z.array(z.string()),
-    suggested_follow_ups: SUPPORT_FOLLOW_UPS_SCHEMA.optional(),
-    next_step: z.string().optional(),
-  })
-  .passthrough();
-const MCP_WORKFLOW_OUTPUT_COMMON_SHAPE = {
-  contract: z.literal("salt_workflow_v1"),
-  status: z.enum(PUBLIC_WORKFLOW_STATUSES),
-  request: z
-    .object({
-      entity: z.string().optional(),
-      resolved_entity: z.string().nullable().optional(),
-      match_status: z.enum(PUBLIC_MATCH_STATUSES).optional(),
-      exact_match_required: z.boolean().optional(),
-      full_request_evidence_complete: z.boolean().optional(),
-    })
-    .strict(),
-  safety: z
-    .object({
-      canonical_complete: z.boolean(),
-      exact_request_safe: z.boolean(),
-      blocking_reasons: z.array(z.string()),
-    })
-    .strict(),
-  questions: z.array(z.string()),
-  evidence: PUBLIC_EVIDENCE_SCHEMA,
-  internal_limitations: z
-    .object({
-      unsupported_claim_count: z.number().int().nonnegative(),
-      unsupported_rule_kinds: z.array(z.string()),
-    })
-    .strict(),
-  summary: z.string().min(1),
-};
-const CHOOSE_OUTPUT_SCHEMA = z
-  .object({
-    ...MCP_WORKFLOW_OUTPUT_COMMON_SHAPE,
-    workflow: z.literal("create"),
-    action: PUBLIC_CREATE_ACTION_SCHEMA,
-    guidance: PUBLIC_CREATE_GUIDANCE_SCHEMA,
-  })
-  .strict();
-const ANALYZE_OUTPUT_SCHEMA = z
-  .object({
-    ...MCP_WORKFLOW_OUTPUT_COMMON_SHAPE,
-    workflow: z.literal("review"),
-    action: PUBLIC_REVIEW_WORKFLOW_ACTION_SCHEMA,
-    guidance: PUBLIC_REVIEW_GUIDANCE_SCHEMA,
-  })
-  .strict();
-const TRANSLATE_OUTPUT_SCHEMA = z
-  .object({
-    ...MCP_WORKFLOW_OUTPUT_COMMON_SHAPE,
-    workflow: z.literal("migrate"),
-    action: PUBLIC_MIGRATE_ACTION_SCHEMA,
-    guidance: PUBLIC_MIGRATE_GUIDANCE_SCHEMA,
-  })
-  .strict();
-
-type ToolSchema = Record<string, z.ZodType> | z.ZodType;
-
-interface ToolAnnotations {
-  readOnlyHint?: boolean;
-  destructiveHint?: boolean;
-  idempotentHint?: boolean;
-  openWorldHint?: boolean;
-}
-
-export interface ToolDefinition {
-  name: string;
-  description: string;
-  inputSchema: ToolSchema;
-  outputSchema?: ToolSchema;
-  annotations?: ToolAnnotations;
-  execute: (registry: SaltRegistry, args: object) => Promise<unknown> | unknown;
-}
-
-async function resolveOrCollectProjectContext(
-  registry: SaltRegistry,
-  options: { rootDir?: string } = {},
-) {
-  // Manifest-only workflow collection is deliberately fresh on every turn.
-  // Repo policy and its import targets are editable workflow inputs; keeping
-  // a cross-turn snapshot can make removed or newly added policy look ready.
-  return collectSaltWorkflowContextBundle(
-    registry,
-    options.rootDir ? { root_dir: options.rootDir } : {},
-  );
-}
-
-function defineTool<Args extends object>(
-  definition: Omit<ToolDefinition, "execute"> & {
-    execute: (registry: SaltRegistry, args: Args) => Promise<unknown> | unknown;
-  },
-): ToolDefinition {
-  return definition as ToolDefinition;
-}
-
-function withBundledRegistryContext(
-  registry: SaltRegistry,
-  value: unknown,
-): unknown {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return value;
-  }
-
-  return {
-    ...value,
-    registry_context: {
-      source: "bundled_package",
-      registry_version: registry.version,
-      registry_generated_at: registry.generated_at,
-      note: "Reference evidence comes from the registry bundled with this @salt-ds/mcp package, not directly from the consumer repo's installed Salt package files.",
-    },
-  };
-}
-
-const DEFAULT_TOOL_ORDER = [
-  "get_salt_project_context",
-  "get_salt_reference",
-  "review_salt_ui",
-  "create_salt_ui",
-  "migrate_to_salt",
-] as const;
-
-const ALL_TOOL_DEFINITIONS: readonly ToolDefinition[] = [
-  defineTool<{ root_dir?: string; include_policy_diagnostics?: boolean }>({
-    name: "get_salt_project_context",
-    description:
-      "Diagnose framework, Salt packages, policy, install health, and repo-root resolution. Workflows resolve context themselves.",
-    inputSchema: z
-      .object({
-        root_dir: z
-          .string()
-          .max(MAX_PATH_CHARS)
-          .optional()
-          .describe(
-            "Target project or workspace-package root; defaults to the MCP working directory.",
-          ),
-        include_policy_diagnostics: z
-          .boolean()
-          .optional()
-          .describe(
-            "Include stack-layer and shared-pack diagnostics; defaults to false.",
-          ),
-      })
-      .strict(),
-    outputSchema: CONTEXT_OUTPUT_SCHEMA,
-    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: async (registry, args) => {
-      const context = await collectSaltProjectContextData(registry, args);
-      return toSaltProjectContextResult(context);
-    },
-  }),
-  defineTool<z.infer<typeof GET_SALT_REFERENCE_INPUT_SCHEMA>>({
-    name: "get_salt_reference",
-    description:
-      "Resolve or compare up to three Salt entities by exact entity name (for example Button). Returns a canonical entity record with component or pattern details, props and prop schema, examples, and sample implementation code; optionally accessibility, deprecations, or starter code.",
-    inputSchema: GET_SALT_REFERENCE_INPUT_SCHEMA,
-    outputSchema: GET_SALT_REFERENCE_OUTPUT_SCHEMA,
-    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: (registry, args) => {
-      return withBundledRegistryContext(
-        registry,
-        getSaltEntities(registry, {
-          names: args.names,
-          entity_type: args.entity_type,
-          allowed_entity_types: [...PUBLIC_REFERENCE_ENTITY_TYPES],
-          include: args.include,
-          include_starter_code: args.include_starter_code,
-          max_results: 5,
-        }),
-      );
-    },
-  }),
-  defineTool<Parameters<typeof migrateToSalt>[1] & { root_dir?: string }>({
-    name: "migrate_to_salt",
-    description:
-      "Convert or migrate non-Salt, Material UI, Chakra UI, mockup, screen, code, or outline into source-backed Salt components and patterns. Returns migration, starter, and verification guidance.",
-    inputSchema: z
-      .object({
-        code: z
-          .string()
-          .max(MAX_SOURCE_CODE_CHARS)
-          .optional()
-          .describe("Optional source UI code to translate."),
-        query: z
-          .string()
-          .min(1)
-          .max(MAX_QUERY_CHARS)
-          .regex(CONTAINS_NON_WHITESPACE)
-          .describe("Required migration goal or source UI description."),
-        source_outline: z
+        workspace: z
           .object({
-            regions: OUTLINE_ENTRIES_SCHEMA.optional(),
-            actions: OUTLINE_ENTRIES_SCHEMA.optional(),
-            states: OUTLINE_ENTRIES_SCHEMA.optional(),
-            notes: OUTLINE_ENTRIES_SCHEMA.optional(),
+            kind: z.enum([
+              "single-package",
+              "workspace-root",
+              "workspace-package",
+            ]),
+            workspace_root: NULLABLE_PATH_SCHEMA,
           })
           .strict()
-          .optional()
-          .describe("Structured UI outline with regions, actions, and states."),
-        package: z
-          .string()
-          .max(MAX_PACKAGE_NAME_CHARS)
-          .optional()
-          .describe("Restrict targets to a Salt package."),
-        prefer_stable: z.boolean().optional(),
-        a11y_required: z.boolean().optional(),
-        include_starter_code: z
-          .boolean()
-          .optional()
-          .describe("Include starter code; defaults to true."),
-        root_dir: z
-          .string()
-          .max(MAX_PATH_CHARS)
-          .optional()
-          .describe(
-            "Target project or workspace-package root; defaults to the MCP working directory.",
-          ),
+          .nullable(),
+        installation: z
+          .object({
+            assessment: z
+              .object({
+                status: z.enum([
+                  "not_observed",
+                  "verified_healthy",
+                  "advisory_issues",
+                  "unverifiable",
+                  "limited",
+                ]),
+                blocking: z.literal(false),
+                advisory_issue_count: z.number().int().nonnegative(),
+                unverifiable_package_count: z.number().int().nonnegative(),
+              })
+              .strict(),
+            resolved_packages: z.array(
+              z
+                .object({
+                  name: z.string(),
+                  declared_version: z.string(),
+                  effective_declared_version: z.string().nullable(),
+                  declaration_resolution: z.enum(["verified", "unverifiable"]),
+                  resolved_version: z.string().nullable(),
+                  resolved_path: NULLABLE_PATH_SCHEMA,
+                  satisfies_declared_version: z.boolean().nullable(),
+                })
+                .strict(),
+            ),
+          })
+          .strict()
+          .nullable(),
+        policy: z
+          .object({
+            mode: z.enum(["none", "team", "stack"]),
+            team_config_path: NULLABLE_PATH_SCHEMA,
+            stack_config_path: NULLABLE_PATH_SCHEMA,
+            ir: PUBLIC_POLICY_IR_SCHEMA.nullable(),
+            import_targets: z
+              .object({
+                status: z.enum(["not_declared", "verified", "issues"]),
+                declared_count: z.number().int().nonnegative(),
+                resolved_count: z.number().int().nonnegative(),
+                issue_count: z.number().int().nonnegative(),
+                untrusted_diagnostics: z
+                  .object({ encoding: z.literal("json"), text: z.string() })
+                  .strict()
+                  .nullable(),
+              })
+              .strict()
+              .nullable(),
+          })
+          .strict()
+          .nullable(),
       })
       .strict(),
-    outputSchema: TRANSLATE_OUTPUT_SCHEMA,
-    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: async (registry, args) => {
-      const { root_dir, ...workflowArgs } = args;
-      const { context: projectContext, policyInspection } =
-        await resolveOrCollectProjectContext(registry, {
-          rootDir: root_dir,
-        });
-      const contextChecked =
-        projectContext.summary.context_health.repo_specific_workflows_ready;
-      return withTranslateWorkflowGuidance(
-        registry,
-        migrateToSalt(registry, {
-          ...workflowArgs,
-          view: "compact",
-        }),
-        {
-          source_outline: workflowArgs.source_outline,
-          context_checked: contextChecked,
-          context_retry_with_root_dir:
-            projectContext.summary.retry_with.root_dir,
-          project_policy: contextChecked ? policyInspection.artifact : null,
-        },
-      );
-    },
-  }),
-  defineTool<PublicCreateRerunArgs>({
-    name: "create_salt_ui",
-    description:
-      "Generate or scaffold a new Salt UI such as a dashboard, form, toolbar, action menu, or layout. Chooses the best source-backed component or pattern from a broad request.",
-    inputSchema: PUBLIC_CREATE_INPUT_SCHEMA,
-    outputSchema: CHOOSE_OUTPUT_SCHEMA,
-    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: async (registry, args) => {
-      const { root_dir, ...workflowArgs } = args;
-      const { context: projectContext, policyInspection } =
-        await resolveOrCollectProjectContext(registry, {
-          rootDir: root_dir,
-        });
-      const contextChecked =
-        projectContext.summary.context_health.repo_specific_workflows_ready;
-      const projectPolicy = contextChecked ? policyInspection.artifact : null;
-      const createRerunArgs: PublicCreateRerunArgs = {
-        ...workflowArgs,
-        root_dir: projectContext.root_dir,
-      };
-      return withChooseWorkflowGuidance(
-        registry,
-        createSaltUi(registry, {
-          ...workflowArgs,
-          view: "compact",
-          repo_has_theme_provider: contextChecked
-            ? Boolean(projectPolicy?.themeDefaults?.provider)
-            : undefined,
-        }),
-        {
-          create_rerun_args: createRerunArgs,
-          context_checked: contextChecked,
-          context_retry_with_root_dir:
-            projectContext.summary.retry_with.root_dir,
-          project_policy: projectPolicy,
-        },
-      );
-    },
-  }),
-  defineTool<Parameters<typeof reviewSaltUi>[1] & { root_dir?: string }>({
-    name: "review_salt_ui",
-    description:
-      "Review React and Salt source for API misuse, accessibility, composition, deprecated props, migration risk, and source-backed fixes. Semantic only: run repo typecheck and runtime verification separately. Defaults to production fidelity.",
-    inputSchema: z
+    scope: z
       .object({
-        code: z
-          .string()
-          .max(MAX_SOURCE_CODE_CHARS)
-          .describe(
-            "Complete current contents of one source file to analyze (maximum 524,288 characters). Review separate files independently; do not submit partial chunks.",
-          ),
-        framework: z.string().max(128).optional(),
-        fidelity: z.enum(["production", "prototype"]).optional(),
-        package_version: z
-          .string()
-          .max(128)
-          .optional()
-          .describe("Installed Salt version for validation."),
-        from_version: z
-          .string()
-          .max(128)
-          .optional()
-          .describe("Source version for migration suggestions."),
-        to_version: z
-          .string()
-          .max(128)
-          .optional()
-          .describe("Target version for migration suggestions."),
-        max_issues: z.number().int().min(1).max(12).optional(),
-        expected_targets: REVIEW_EXPECTED_TARGETS_SCHEMA.optional().describe(
-          "Source-backed targets from create or migrate guidance.",
-        ),
-        root_dir: z
-          .string()
-          .max(MAX_PATH_CHARS)
-          .optional()
-          .describe(
-            "Active project or package root; in a monorepo use the target workspace package. Defaults to the MCP working directory.",
-          ),
+        kind: z.literal("configured_project_inspection"),
+        filesystem_access: z.literal("read_only"),
+        inspected_root: NULLABLE_PATH_SCHEMA,
+        authorization: z.enum(["restricted", "unrestricted_local_stdio"]),
       })
       .strict(),
-    outputSchema: ANALYZE_OUTPUT_SCHEMA,
-    annotations: READ_ONLY_WORKFLOW_TOOL_ANNOTATIONS,
-    execute: async (registry, args) => {
-      const { root_dir, ...workflowArgs } = args;
-      const { context: projectContext, policyInspection } =
-        await resolveOrCollectProjectContext(registry, {
-          rootDir: root_dir,
-        });
-      const contextChecked =
-        projectContext.summary.context_health.repo_specific_workflows_ready;
-      const detectedPackageVersion = deriveComparableSaltVersion({
-        declaredVersion: projectContext.salt.package_version,
-        resolvedVersions:
-          projectContext.salt.installation.version_health.resolved_versions,
-      });
-      return withAnalyzeWorkflowGuidance(
-        registry,
-        reviewSaltUi(
-          registry,
-          {
-            ...workflowArgs,
-            package_version:
-              workflowArgs.package_version ??
-              detectedPackageVersion ??
-              undefined,
-            view: "compact",
-          },
-          {
-            approved_wrappers: contextChecked
-              ? policyInspection.artifact?.approvedWrapperDetails
-              : undefined,
-          },
+    coverage: z
+      .object({
+        requested_root: z.enum(["evaluated", "denied"]),
+        package_manifest: z.enum([
+          "valid",
+          "invalid",
+          "absent",
+          "not_evaluated",
+        ]),
+        installation: z.enum(["evaluated", "not_evaluated"]),
+        workspace: z.enum(["evaluated", "not_evaluated"]),
+        policy: z.enum([
+          "detection_only",
+          "policy_ir_evaluated",
+          "not_evaluated",
+        ]),
+        result_budget: RESULT_BUDGET_SCHEMA,
+      })
+      .strict(),
+    limitations: z.array(z.string()),
+    provenance: z
+      .object({ project_policy_digest: SHA256_SCHEMA.nullable() })
+      .strict(),
+  })
+  .strict();
+
+const REVIEW_EVIDENCE_REFERENCE_SCHEMA = z
+  .object({
+    locator: z.union([
+      CATALOG_RESOURCE_URI_SCHEMA,
+      PROJECT_POLICY_RESOURCE_URI_SCHEMA,
+    ]),
+    field_path: z.string(),
+  })
+  .strict();
+
+const REVIEW_LOCATION_SCHEMA = z
+  .object({
+    start_offset: z.number().int().nonnegative(),
+    end_offset: z.number().int().nonnegative(),
+    start_line: z.number().int().positive(),
+    start_column: z.number().int().positive(),
+    end_line: z.number().int().positive(),
+    end_column: z.number().int().positive(),
+  })
+  .strict();
+
+const REVIEW_PARSED_FACT_SCHEMA = z
+  .object({
+    kind: z.enum([
+      "import",
+      "jsx_element",
+      "jsx_prop",
+      "style_declaration",
+      "token_use",
+    ]),
+    subject: z.string(),
+    property: z.string().nullable(),
+    value_kind: z.enum([
+      "value_usage",
+      "type_usage",
+      "unused",
+      "boolean",
+      "static_string",
+      "static_number",
+      "dynamic",
+      "spread",
+      "token_reference",
+    ]),
+    certainty: z.enum(["known", "unknown"]),
+  })
+  .strict();
+
+const REVIEW_FINDING_SCHEMA = z
+  .object({
+    id: z.string(),
+    rule_id: z.string(),
+    rule_description: z.string(),
+    severity: z.enum(["info", "warning", "error"]),
+    parsed_fact: REVIEW_PARSED_FACT_SCHEMA,
+    location: REVIEW_LOCATION_SCHEMA,
+    remediation: z.string().nullable(),
+    policy_evaluation: z
+      .object({
+        digest: SHA256_SCHEMA,
+        applicability: z.literal("applicable"),
+        salt_version: z.string().nullable(),
+      })
+      .strict()
+      .nullable(),
+    evidence: z
+      .object({
+        submitted_artifact_id: z.string(),
+        references: z.array(REVIEW_EVIDENCE_REFERENCE_SCHEMA),
+        validation: z.literal("source_bound"),
+      })
+      .strict(),
+  })
+  .strict();
+
+const REVIEW_ARTIFACT_POLICY_COVERAGE_SCHEMA = z
+  .object({
+    status: z.enum(["not_supplied", "evaluated", "limited"]),
+    digest: SHA256_SCHEMA.nullable(),
+    unresolved_required_layers: z.number().int().nonnegative(),
+    evaluated_occurrences: z.number().int().nonnegative(),
+    applicable_occurrences: z.number().int().nonnegative(),
+    contradicted_occurrences: z.number().int().nonnegative(),
+    unknown_occurrences: z.number().int().nonnegative(),
+  })
+  .strict();
+
+const REVIEW_PROJECT_POLICY_COVERAGE_SCHEMA = z
+  .object({
+    status: z.enum(["not_supplied", "evaluated", "limited"]),
+    digest: SHA256_SCHEMA.nullable(),
+    unresolved_required_layers: z.number().int().nonnegative(),
+    evaluated_occurrence_artifact_pairs: z.number().int().nonnegative(),
+    applicable_occurrence_artifact_pairs: z.number().int().nonnegative(),
+    contradicted_occurrence_artifact_pairs: z.number().int().nonnegative(),
+    unknown_occurrence_artifact_pairs: z.number().int().nonnegative(),
+  })
+  .strict();
+
+const REVIEW_RESULT_SCHEMA = z
+  .object({
+    data: z
+      .object({
+        results: z.array(
+          z
+            .object({
+              artifact: z
+                .object({
+                  id: z.string(),
+                  language: z.enum([
+                    "javascript",
+                    "jsx",
+                    "typescript",
+                    "tsx",
+                    "css",
+                  ]),
+                  utf8_bytes: z.number().int().nonnegative(),
+                  content_digest: SHA256_SCHEMA,
+                })
+                .strict(),
+              outcome: z.enum([
+                "findings",
+                "no_findings_in_evaluated_scope",
+                "not_evaluated",
+              ]),
+              summary: z
+                .object({
+                  errors: z.number().int().nonnegative(),
+                  warnings: z.number().int().nonnegative(),
+                  infos: z.number().int().nonnegative(),
+                })
+                .strict(),
+              findings: z.array(REVIEW_FINDING_SCHEMA),
+              coverage: z
+                .object({
+                  parser: z.enum([
+                    "babel",
+                    "postcss",
+                    "failed",
+                    "limited",
+                    "not_run",
+                  ]),
+                  fact_counts: z.array(
+                    z
+                      .object({
+                        kind: z.enum([
+                          "import",
+                          "jsx_element",
+                          "jsx_prop",
+                          "style_declaration",
+                          "token_use",
+                        ]),
+                        count: z.number().int().nonnegative(),
+                      })
+                      .strict(),
+                  ),
+                  unknown_fact_count: z.number().int().nonnegative(),
+                  evaluated_rule_ids: z.array(z.string()),
+                  skipped_rule_matches: z.number().int().nonnegative(),
+                  detected_findings: z.number().int().nonnegative(),
+                  returned_findings: z.number().int().nonnegative(),
+                  truncated: z.boolean(),
+                  policy: REVIEW_ARTIFACT_POLICY_COVERAGE_SCHEMA,
+                })
+                .strict(),
+              limitations: z.array(z.string()),
+            })
+            .strict(),
         ),
-        {
-          code: workflowArgs.code,
-          expected_targets: workflowArgs.expected_targets,
-          project_policy: contextChecked ? policyInspection.artifact : null,
-          context_checked: contextChecked,
-          root_dir: contextChecked
-            ? projectContext.root_dir
-            : projectContext.summary.retry_with.root_dir,
-        },
+      })
+      .strict(),
+    scope: z
+      .object({
+        kind: z.literal("submitted_text_only"),
+        artifact_count: z.number().int().nonnegative(),
+        submitted_utf8_bytes: z.number().int().nonnegative(),
+      })
+      .strict(),
+    coverage: z
+      .object({
+        submitted_artifacts: z.number().int().nonnegative(),
+        evaluated_artifacts: z.number().int().nonnegative(),
+        analyzer: z.literal("salt_submitted_fact_rules_v1"),
+        semantic_validation: z.literal("source_bound_allowlist"),
+        location_encoding: z.literal("utf8_bytes_end_exclusive"),
+        project_policy: REVIEW_PROJECT_POLICY_COVERAGE_SCHEMA,
+        detected_findings: z.number().int().nonnegative(),
+        returned_findings: z.number().int().nonnegative(),
+        truncated: z.boolean(),
+        result_budget: RESULT_BUDGET_SCHEMA,
+      })
+      .strict(),
+    limitations: z.array(z.string()),
+    provenance: z
+      .object({
+        catalog_version: z.string(),
+        semantic_digest: SHA256_SCHEMA.nullable(),
+        project_policy_digest: SHA256_SCHEMA.nullable(),
+      })
+      .strict(),
+  })
+  .strict();
+
+const SEARCH_INPUT_SCHEMA = z
+  .object({
+    query: z.string().min(1).max(MAX_QUERY_CHARS).regex(NON_WHITESPACE),
+    families: z
+      .array(z.enum(CATALOG_SEARCH_TARGET_FAMILY_NAMES))
+      .min(1)
+      .max(CATALOG_SEARCH_TARGET_FAMILY_NAMES.length)
+      .optional(),
+    statuses: z
+      .array(z.enum(["stable", "beta", "lab", "deprecated"]))
+      .min(1)
+      .max(4)
+      .optional(),
+    limit: z.number().int().min(1).max(MAX_SEARCH_RESULTS).optional(),
+  })
+  .strict();
+
+const INSPECT_INPUT_SCHEMA = z
+  .object({
+    root_dir: z.string().min(1).max(MAX_PATH_CHARS).optional(),
+    include_policy_ir: z.boolean().optional(),
+  })
+  .strict();
+
+const REVIEW_ARTIFACT_SCHEMA = z
+  .object({
+    id: z
+      .string()
+      .min(1)
+      .max(MAX_REVIEW_ARTIFACT_ID_CHARS)
+      .regex(NON_WHITESPACE),
+    language: z.enum(["javascript", "jsx", "typescript", "tsx", "css"]),
+    text: z.string().min(1).max(MAX_ARTIFACT_CHARS).regex(NON_WHITESPACE),
+  })
+  .strict();
+
+const REVIEW_PACKAGE_VERSIONS_SCHEMA = z
+  .record(
+    z
+      .string()
+      .min(1)
+      .max(214)
+      .regex(/^@salt-ds\/[a-z0-9][a-z0-9._-]*$/u),
+    z.string().min(1).max(128),
+  )
+  .meta({ maxProperties: MAX_REVIEW_PACKAGE_VERSIONS });
+
+const REVIEW_INPUT_SCHEMA = z
+  .object({
+    artifacts: z.array(REVIEW_ARTIFACT_SCHEMA).min(1).max(MAX_REVIEW_ARTIFACTS),
+    root_dir: z.string().min(1).max(MAX_PATH_CHARS).optional(),
+    package_versions: REVIEW_PACKAGE_VERSIONS_SCHEMA.optional(),
+    max_findings: z.number().int().min(1).max(50).optional(),
+  })
+  .strict()
+  .superRefine((value, context) => {
+    const seenIds = new Set<string>();
+    value.artifacts.forEach((artifact, index) => {
+      if (
+        Buffer.byteLength(JSON.stringify(artifact.id), "utf8") >
+        MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: `Artifact ids cannot exceed ${MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES} JSON-encoded UTF-8 bytes.`,
+          path: ["artifacts", index, "id"],
+        });
+      }
+      if (seenIds.has(artifact.id)) {
+        context.addIssue({
+          code: "custom",
+          message: "Artifact ids must be unique within one review request.",
+          path: ["artifacts", index, "id"],
+        });
+      }
+      seenIds.add(artifact.id);
+      if (
+        Buffer.byteLength(artifact.text, "utf8") >
+        MAX_REVIEW_ARTIFACT_UTF8_BYTES
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: `Artifact text exceeds ${MAX_REVIEW_ARTIFACT_UTF8_BYTES} UTF-8 bytes.`,
+          path: ["artifacts", index, "text"],
+        });
+      }
+    });
+    if (
+      Object.keys(value.package_versions ?? {}).length >
+      MAX_REVIEW_PACKAGE_VERSIONS
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: `package_versions accepts at most ${MAX_REVIEW_PACKAGE_VERSIONS} Salt packages.`,
+        path: ["package_versions"],
+      });
+    }
+    const submittedBytes = value.artifacts.reduce(
+      (total, artifact) => total + Buffer.byteLength(artifact.text, "utf8"),
+      0,
+    );
+    if (submittedBytes > MAX_REVIEW_SUBMITTED_UTF8_BYTES) {
+      context.addIssue({
+        code: "custom",
+        message: `Aggregate submitted text exceeds ${MAX_REVIEW_SUBMITTED_UTF8_BYTES} UTF-8 bytes.`,
+        path: ["artifacts"],
+      });
+    }
+  });
+
+type ToolInputSchema =
+  | typeof SEARCH_INPUT_SCHEMA
+  | typeof INSPECT_INPUT_SCHEMA
+  | typeof REVIEW_INPUT_SCHEMA;
+
+export interface ToolDefinition {
+  name: (typeof REGISTERED_SALT_TOOL_NAMES)[number];
+  description: string;
+  inputSchema: ToolInputSchema;
+  outputSchema: StandardSchemaWithJSON;
+  outputValidationSchema: z.ZodType;
+  annotations: ToolAnnotations;
+  execute: (
+    context: SaltCatalogRuntimeContext & {
+      projectAccess: ProjectAccessPolicy;
+      projectPolicySnapshots: ProjectPolicySnapshotCache;
+    },
+    args: never,
+  ) => Promise<unknown> | unknown;
+}
+
+function defineTool<Schema extends ToolInputSchema>(definition: {
+  name: ToolDefinition["name"];
+  description: string;
+  inputSchema: Schema;
+  outputSchema: z.ZodType;
+  annotations: ToolAnnotations;
+  execute: (
+    context: SaltCatalogRuntimeContext & {
+      projectAccess: ProjectAccessPolicy;
+      projectPolicySnapshots: ProjectPolicySnapshotCache;
+    },
+    args: z.infer<Schema>,
+  ) => Promise<unknown> | unknown;
+}): ToolDefinition {
+  return {
+    ...definition,
+    outputSchema: compactStandardOutputSchema(definition.outputSchema),
+    outputValidationSchema: definition.outputSchema,
+  } as ToolDefinition;
+}
+
+export const REGISTERED_SALT_TOOL_NAMES = [
+  "search_salt",
+  "inspect_salt_project",
+  "review_salt_code",
+] as const;
+
+export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
+  defineTool({
+    name: "search_salt",
+    description: "Search Salt catalog records.",
+    inputSchema: SEARCH_INPUT_SCHEMA,
+    outputSchema: SEARCH_RESULT_SCHEMA,
+    annotations: READ_ONLY_ANNOTATIONS,
+    execute: (context, args) => searchSalt(context.store, args),
+  }),
+  defineTool({
+    name: "inspect_salt_project",
+    description: "Inspect an authorized local Salt project.",
+    inputSchema: INSPECT_INPUT_SCHEMA,
+    outputSchema: INSPECT_RESULT_SCHEMA,
+    annotations: READ_ONLY_ANNOTATIONS,
+    execute: (context, args) =>
+      inspectSaltProject(
+        args,
+        context.projectAccess,
+        context.projectPolicySnapshots,
+      ),
+  }),
+  defineTool({
+    name: "review_salt_code",
+    description: "Review submitted source against Salt rules.",
+    inputSchema: REVIEW_INPUT_SCHEMA,
+    outputSchema: REVIEW_RESULT_SCHEMA,
+    annotations: READ_ONLY_ANNOTATIONS,
+    execute: async (context, args) => {
+      const loadedPolicy = args.root_dir
+        ? await loadAuthorizedProjectPolicySnapshot(
+            context.projectAccess,
+            args.root_dir,
+            context.projectPolicySnapshots,
+          )
+        : null;
+      if (loadedPolicy?.authorization.status === "denied") {
+        throw new Error(
+          `review_salt_code project policy root was denied (${loadedPolicy.authorization.reason}).`,
+        );
+      }
+      const policyContext =
+        loadedPolicy &&
+        isAuthorizedProjectPolicySnapshot(loadedPolicy) &&
+        loadedPolicy.ir &&
+        loadedPolicy.digest
+          ? {
+              ir: loadedPolicy.ir,
+              root_dir: loadedPolicy.authorization.rootDir,
+              digest: loadedPolicy.digest,
+              salt_version: loadedPolicy.salt_version,
+            }
+          : null;
+      return reviewSaltCode(
+        { registry: context.registry, store: context.store },
+        args,
+        policyContext,
       );
     },
   }),
 ];
-
-export const TOOL_DEFINITIONS: readonly ToolDefinition[] =
-  DEFAULT_TOOL_ORDER.map((name) => {
-    const definition = ALL_TOOL_DEFINITIONS.find(
-      (candidate) => candidate.name === name,
-    );
-    if (!definition) {
-      throw new Error(`Missing Salt MCP tool definition: ${name}`);
-    }
-    return definition;
-  });

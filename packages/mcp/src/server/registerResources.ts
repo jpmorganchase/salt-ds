@@ -1,117 +1,436 @@
+import { Buffer } from "node:buffer";
 import {
   type McpServer,
+  ProtocolError,
+  ProtocolErrorCode,
+  ResourceNotFoundError,
   ResourceTemplate,
-} from "@modelcontextprotocol/sdk/server/mcp.js";
+} from "@modelcontextprotocol/server";
 import {
-  buildCreateCatalogSupportManifest,
-  listCreateCatalogEntityNames,
-  lookupCreateCatalogEntity,
-  type SaltRegistry,
+  canonicalCatalogRuntimeFamilies,
+  catalogFamilyFromUriSegment,
+  catalogFamilyUriSegment,
+  decodeProjectPolicyRootToken,
+  MAX_PROJECT_POLICY_ENCODED_RESOURCE_ID_CHARS,
+  MAX_PROJECT_POLICY_RESOURCE_ID_CHARS,
+  normalizeCatalogPublicCitation,
+  resolveCatalogRecordContentReferences,
+  type SaltCatalogRuntimeContext,
 } from "../core/runtime.js";
 import {
+  type CatalogResourceListingSource,
+  InvalidCatalogResourceCursorError,
+  listCatalogResourcePage,
+} from "./catalogResourceListing.js";
+import type { ProjectAccessPolicy } from "./projectAccess.js";
+import {
+  isAuthorizedProjectPolicySnapshot,
+  loadAuthorizedProjectPolicySnapshot,
+  type ProjectPolicySnapshotCache,
+  projectPolicyClaimRecord,
+} from "./projectPolicySnapshot.js";
+import {
   getSaltMcpRuntimeMetadata,
-  SALT_MCP_CAPABILITY_MANIFEST_URI,
-  SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
-  SALT_MCP_CATALOG_MANIFEST_URI,
+  SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS,
 } from "./serverMetadata.js";
+
+export const MAX_CATALOG_RESOURCE_READ_UTF8_BYTES = 64 * 1024;
+const CONTENT_DECODER = new TextDecoder("utf-8", { fatal: true });
+
+function boundedResourceText(uri: string, text: string): string {
+  const bytes = Buffer.byteLength(text, "utf8");
+  if (bytes > MAX_CATALOG_RESOURCE_READ_UTF8_BYTES) {
+    throw new Error(
+      `Resource '${uri}' is ${bytes} bytes; the public read limit is ${MAX_CATALOG_RESOURCE_READ_UTF8_BYTES} bytes.`,
+    );
+  }
+  return text;
+}
+
+function singleVariable(value: string | string[] | undefined): string | null {
+  return typeof value === "string" ? value : null;
+}
+
+function canonicalArtifact(
+  context: SaltCatalogRuntimeContext,
+  family: ReturnType<typeof canonicalCatalogRuntimeFamilies>[number],
+) {
+  const artifact = context.store.manifest.artifacts.find(
+    (candidate) => candidate.family === family && candidate.canonical,
+  );
+  if (!artifact) {
+    throw new Error(`Catalog manifest omitted canonical family '${family}'.`);
+  }
+  return artifact;
+}
+
+function publicCatalogManifest(
+  server: McpServer,
+  context: SaltCatalogRuntimeContext,
+) {
+  const metadata = getSaltMcpRuntimeMetadata(context);
+  return {
+    server_version: metadata.server_version,
+    schema_version: context.store.manifest.schema_version,
+    catalog_version: context.store.manifest.catalog_version,
+    semantic_digest: context.store.manifest.semantic_digest,
+    input_inventory_digest: context.store.manifest.input_inventory_digest,
+    generator_digest: context.store.manifest.generator.digest,
+    source_revision: context.store.manifest.source_revision,
+    negotiated_mcp_protocol_revision:
+      server.server.getNegotiatedProtocolVersion() ?? null,
+    supported_mcp_protocol_revisions: [...SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS],
+    families: canonicalCatalogRuntimeFamilies().map((family) => ({
+      family,
+      record_count: canonicalArtifact(context, family).record_count,
+      artifact_digest: canonicalArtifact(context, family).sha256,
+      uri_template: normalizeCatalogPublicCitation({
+        kind: "catalog_record_template",
+        manifest: context.store.manifest,
+        family,
+      }),
+    })),
+  };
+}
+
+function catalogResourceListingSource(
+  context: SaltCatalogRuntimeContext,
+): CatalogResourceListingSource {
+  return {
+    manifest: context.store.manifest,
+    manifestUri: normalizeCatalogPublicCitation({
+      kind: "catalog_manifest",
+      manifest: context.store.manifest,
+    }),
+    families: canonicalCatalogRuntimeFamilies().map((family) => ({
+      family,
+      count: canonicalArtifact(context, family).record_count,
+      idAt: (index: number) =>
+        context.store.getFamily(family)[index]?.id ?? null,
+      ...(family === "content"
+        ? {
+            mediaTypeAt: (index: number) =>
+              context.store.getFamily("content")[index]?.media_type ?? null,
+          }
+        : {}),
+    })),
+  };
+}
 
 export function registerSaltResources(
   server: McpServer,
-  registry: SaltRegistry,
+  context: SaltCatalogRuntimeContext & {
+    projectAccess: ProjectAccessPolicy;
+    projectPolicySnapshots: ProjectPolicySnapshotCache;
+  },
 ) {
-  const runtimeMetadata = getSaltMcpRuntimeMetadata(registry);
-  const manifestText = JSON.stringify(
-    runtimeMetadata.capability_manifest,
-    null,
-    2,
-  );
-  const catalogManifestText = JSON.stringify(
-    {
-      ...buildCreateCatalogSupportManifest(),
-      resources: {
-        manifest_uri: SALT_MCP_CATALOG_MANIFEST_URI,
-        entity_template_uri: SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI,
-      },
-    },
-    null,
-    2,
-  );
-
+  const manifestUri = normalizeCatalogPublicCitation({
+    kind: "catalog_manifest",
+    manifest: context.store.manifest,
+  });
   server.registerResource(
-    "salt_capability_manifest",
-    SALT_MCP_CAPABILITY_MANIFEST_URI,
+    "salt-catalog-manifest",
+    manifestUri,
     {
-      title: "Salt Capability Manifest",
+      title: "Salt catalog manifest",
       description:
-        "Machine-readable Salt MCP capability and contract manifest.",
+        "Digest-bound manifest for the verified Salt catalog and its canonical resource families.",
       mimeType: "application/json",
     },
     async (uri) => ({
       contents: [
         {
-          uri: uri.toString(),
+          uri: uri.href,
           mimeType: "application/json",
-          text: manifestText,
+          text: boundedResourceText(
+            uri.href,
+            JSON.stringify(publicCatalogManifest(server, context)),
+          ),
         },
       ],
     }),
   );
 
-  server.registerResource(
-    "salt_catalog_manifest",
-    SALT_MCP_CATALOG_MANIFEST_URI,
+  const projectPolicyTemplate = new ResourceTemplate(
+    normalizeCatalogPublicCitation({ kind: "project_policy_template" }),
     {
-      title: "Salt Catalog Manifest",
-      description:
-        "Machine-readable Salt retrieval catalog support contract and resource map.",
-      mimeType: "application/json",
-    },
-    async (uri) => ({
-      contents: [
-        {
-          uri: uri.toString(),
-          mimeType: "application/json",
-          text: catalogManifestText,
-        },
-      ],
-    }),
-  );
-
-  server.registerResource(
-    "salt_catalog_entity",
-    new ResourceTemplate(SALT_MCP_CATALOG_ENTITY_TEMPLATE_URI, {
       list: undefined,
       complete: {
-        name: (value) =>
-          listCreateCatalogEntityNames(registry)
-            .filter((name) =>
-              name.toLowerCase().startsWith(value.trim().toLowerCase()),
-            )
-            .slice(0, 25),
+        kind: (value) =>
+          ["manifest", "chunk", "claim"].filter((kind) =>
+            kind.startsWith(value),
+          ),
       },
-    }),
+    },
+  );
+  server.registerResource(
+    "salt-project-policy",
+    projectPolicyTemplate,
     {
-      title: "Salt Catalog Entity",
+      title: "Authorized Salt project policy",
       description:
-        "Resolve a canonical Salt component or pattern by name, alias, or route slug.",
+        "Exact retained digest-bound project-policy manifest, canonical IR chunks, or bounded claim records from an authorized local project.",
       mimeType: "application/json",
     },
     async (uri, variables) => {
-      const rawName = typeof variables.name === "string" ? variables.name : "";
-      const entitySummary = lookupCreateCatalogEntity(
-        registry,
-        decodeURIComponent(rawName),
+      const rootToken = singleVariable(variables.root);
+      const digestSegment = singleVariable(variables.digest);
+      const kind = singleVariable(variables.kind);
+      const encodedId = singleVariable(variables.id);
+      if (
+        !encodedId ||
+        encodedId.length > MAX_PROJECT_POLICY_ENCODED_RESOURCE_ID_CHARS
+      ) {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      const rootDir = rootToken
+        ? decodeProjectPolicyRootToken(rootToken)
+        : null;
+      const digest =
+        digestSegment && /^sha256-[0-9a-f]{64}$/u.test(digestSegment)
+          ? digestSegment.replace("sha256-", "sha256:")
+          : null;
+      let id: string | null = null;
+      try {
+        id = decodeURIComponent(encodedId);
+      } catch {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      if (
+        !rootDir ||
+        !digest ||
+        !id ||
+        id.length > MAX_PROJECT_POLICY_RESOURCE_ID_CHARS ||
+        !["manifest", "chunk", "claim"].includes(kind ?? "")
+      ) {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      const expectedUri = normalizeCatalogPublicCitation({
+        kind: "project_policy_resource",
+        rootDir,
+        digest,
+        resourceKind: kind as "manifest" | "chunk" | "claim",
+        ...(kind === "manifest" ? {} : { id }),
+      });
+      if (expectedUri !== uri.href || (kind === "manifest" && id !== "index")) {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      const loaded = await loadAuthorizedProjectPolicySnapshot(
+        context.projectAccess,
+        rootDir,
+        context.projectPolicySnapshots,
+        digest,
       );
+      if (
+        loaded.authorization.status !== "authorized" ||
+        rootDir !== loaded.authorization.rootDir
+      ) {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      if (!isAuthorizedProjectPolicySnapshot(loaded)) {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      if (!loaded.ir || loaded.digest !== digest) {
+        throw new ResourceNotFoundError(uri.href);
+      }
 
+      let payload: unknown;
+      if (kind === "manifest") {
+        payload = {
+          contract: "salt_project_policy_resource_v2",
+          policy_digest: digest,
+          policy_contract: loaded.ir.contract,
+          canonical_utf8_bytes: Buffer.byteLength(
+            loaded.canonical_json ?? "",
+            "utf8",
+          ),
+          chunk_count: loaded.chunks.length,
+          counts: {
+            layers: loaded.ir.layers.length,
+            occurrences: loaded.ir.occurrences.length,
+            diagnostics: loaded.ir.diagnostics.length,
+          },
+          retention: {
+            scope: "server_process_bounded_lru",
+            max_entries: context.projectPolicySnapshots.limits.maxEntries,
+            max_utf8_bytes: context.projectPolicySnapshots.limits.maxUtf8Bytes,
+            max_entry_utf8_bytes:
+              context.projectPolicySnapshots.limits.maxEntryUtf8Bytes,
+          },
+          chunk_uri_template: normalizeCatalogPublicCitation({
+            kind: "project_policy_chunk_template",
+            rootDir,
+            digest,
+          }),
+        };
+      } else if (kind === "chunk") {
+        if (!/^(0|[1-9][0-9]*)$/u.test(id)) {
+          throw new ResourceNotFoundError(uri.href);
+        }
+        const index = Number(id);
+        const data = loaded.chunks[index];
+        if (!Number.isSafeInteger(index) || data === undefined) {
+          throw new ResourceNotFoundError(uri.href);
+        }
+        payload = {
+          contract: "salt_project_policy_chunk_v2",
+          policy_digest: digest,
+          encoding: "base64url",
+          index,
+          chunk_count: loaded.chunks.length,
+          data,
+        };
+      } else {
+        const occurrence = loaded.ir.occurrences.find(
+          (candidate) => candidate.occurrence_id === id,
+        );
+        if (!occurrence) throw new ResourceNotFoundError(uri.href);
+        payload = {
+          contract: "salt_project_policy_claim_v2",
+          policy_digest: digest,
+          claim: projectPolicyClaimRecord(occurrence, rootDir),
+        };
+      }
       return {
         contents: [
           {
-            uri: uri.toString(),
+            uri: uri.href,
             mimeType: "application/json",
-            text: JSON.stringify(entitySummary, null, 2),
+            text: boundedResourceText(uri.href, JSON.stringify(payload)),
           },
         ],
       };
     },
   );
+
+  const template = new ResourceTemplate(
+    normalizeCatalogPublicCitation({
+      kind: "catalog_family_template",
+      manifest: context.store.manifest,
+    }),
+    {
+      list: undefined,
+      complete: {
+        family: (value) =>
+          canonicalCatalogRuntimeFamilies()
+            .map(catalogFamilyUriSegment)
+            .filter((family) => family.startsWith(value)),
+        id: (value, completionContext) => {
+          const familySegment = completionContext?.arguments?.family;
+          const family = familySegment
+            ? catalogFamilyFromUriSegment(familySegment)
+            : null;
+          return family
+            ? context.store
+                .getFamily(family)
+                .map((record) => record.id)
+                .filter((id) => id.startsWith(value))
+            : [];
+        },
+      },
+    },
+  );
+  server.registerResource(
+    "salt-catalog-record",
+    template,
+    {
+      title: "Salt canonical catalog record",
+      description:
+        "Exact digest-bound Salt catalog record with verified on-demand content payloads.",
+      mimeType: "application/json",
+    },
+    async (uri, variables) => {
+      const familySegment = singleVariable(variables.family);
+      const encodedId = singleVariable(variables.id);
+      const family = familySegment
+        ? catalogFamilyFromUriSegment(familySegment)
+        : null;
+      let id: string | null = null;
+      try {
+        id = encodedId ? decodeURIComponent(encodedId) : null;
+      } catch {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      if (!family || !id) {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      if (
+        normalizeCatalogPublicCitation({
+          kind: "catalog_record",
+          manifest: context.store.manifest,
+          family,
+          id,
+        }) !== uri.href
+      ) {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      const record = context.store.getRecord(family, id);
+      if (!record) {
+        throw new ResourceNotFoundError(uri.href);
+      }
+      if (family === "content" && record.family === "content") {
+        const reference = {
+          family: "content" as const,
+          codec: record.codec,
+          id: record.id,
+        };
+        void context.store.getContentValue(reference);
+        const text = CONTENT_DECODER.decode(
+          context.store.getContentBytes(reference),
+        );
+        return {
+          contents: [
+            {
+              uri: uri.href,
+              mimeType: record.media_type,
+              text: boundedResourceText(uri.href, text),
+            },
+          ],
+        };
+      }
+      const contentResources = resolveCatalogRecordContentReferences(
+        record,
+      ).map((reference) => ({
+        reference,
+        uri: normalizeCatalogPublicCitation({
+          kind: "catalog_record",
+          manifest: context.store.manifest,
+          family: "content",
+          id: reference.id,
+        }),
+      }));
+      return {
+        contents: [
+          {
+            uri: uri.href,
+            mimeType: "application/json",
+            text: boundedResourceText(
+              uri.href,
+              JSON.stringify({
+                resolved_catalog_digest: context.store.manifest.semantic_digest,
+                record,
+                content_resources: contentResources,
+              }),
+            ),
+          },
+        ],
+      };
+    },
+  );
+
+  const listingSource = catalogResourceListingSource(context);
+  server.server.setRequestHandler("resources/list", (request) => {
+    try {
+      return listCatalogResourcePage(listingSource, request.params?.cursor);
+    } catch (error) {
+      if (error instanceof InvalidCatalogResourceCursorError) {
+        throw new ProtocolError(
+          ProtocolErrorCode.InvalidParams,
+          error.message,
+          { cursor: request.params?.cursor ?? null },
+        );
+      }
+      throw error;
+    }
+  });
 }

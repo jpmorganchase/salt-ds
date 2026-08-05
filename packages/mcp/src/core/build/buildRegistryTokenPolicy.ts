@@ -1,8 +1,8 @@
 import path from "node:path";
-import fg from "fast-glob";
+import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
 import {
   SALT_EVIDENCE_REF_CONTRACT,
-  type SaltEvidenceRef,
+  type SaltTokenPolicyEvidenceRef,
 } from "../evidence.js";
 import { toPosixPath } from "../registry/paths.js";
 import type { TokenRecord } from "../types.js";
@@ -12,6 +12,8 @@ import {
   readFileOrNull,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import { globCatalogInputs } from "./catalogInputInventory.js";
+import { siteDocsRouteFromAbsolutePath } from "./siteDocsRoutes.js";
 
 export interface TokenPolicyDocSource {
   route: string;
@@ -140,13 +142,7 @@ function normalizeRouteCategory(route: string): string | null {
 }
 
 function toSiteDocsRoute(repoRoot: string, filePath: string): string | null {
-  const docsRoot = path.join(repoRoot, "site", "docs");
-  const relativePath = toPosixPath(path.relative(docsRoot, filePath));
-  if (relativePath.startsWith("..")) {
-    return null;
-  }
-
-  return `/salt/${relativePath.replace(/\.mdx$/i, "")}`;
+  return siteDocsRouteFromAbsolutePath(repoRoot, filePath);
 }
 
 async function createDocSource(
@@ -455,10 +451,13 @@ function extractListedCharacteristicCategories(
 async function collectCharacteristicCategories(
   repoRoot: string,
 ): Promise<Set<string>> {
-  const cssPaths = await fg("packages/theme/css/**/characteristics/*.css", {
-    cwd: repoRoot,
-    onlyFiles: true,
-  });
+  const cssPaths = await globCatalogInputs(
+    "packages/theme/css/**/characteristics/*.css",
+    {
+      cwd: repoRoot,
+      onlyFiles: true,
+    },
+  );
 
   return new Set(
     cssPaths.map((cssPath) =>
@@ -486,12 +485,12 @@ async function collectCharacteristicDocSources(
   const characteristicCategories =
     await collectCharacteristicCategories(repoRoot);
   const docPaths = (
-    await fg("site/docs/themes/design-tokens/*.mdx", {
+    await globCatalogInputs("site/docs/themes/design-tokens/*.mdx", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   for (const docPath of docPaths) {
     const docSource = await createDocSource(repoRoot, docPath);
@@ -532,12 +531,12 @@ async function collectFoundationDocSources(
 ): Promise<Map<string, TokenPolicyDocSource>> {
   const docs = new Map<string, TokenPolicyDocSource>();
   const docPaths = (
-    await fg("site/docs/foundations/**/*.mdx", {
+    await globCatalogInputs("site/docs/foundations/**/*.mdx", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   for (const docPath of docPaths) {
     const docSource = await createDocSource(repoRoot, docPath);
@@ -562,10 +561,13 @@ async function collectFoundationDocSources(
 async function collectFoundationCategories(
   repoRoot: string,
 ): Promise<Set<string>> {
-  const cssPaths = await fg("packages/theme/css/**/foundations/*.css", {
-    cwd: repoRoot,
-    onlyFiles: true,
-  });
+  const cssPaths = await globCatalogInputs(
+    "packages/theme/css/**/foundations/*.css",
+    {
+      cwd: repoRoot,
+      onlyFiles: true,
+    },
+  );
 
   return new Set(
     cssPaths.map((cssPath) =>
@@ -579,12 +581,12 @@ async function collectTokenDeclarationSources(
 ): Promise<Map<string, TokenDeclarationSource[]>> {
   const declarationsByToken = new Map<string, TokenDeclarationSource[]>();
   const cssPaths = (
-    await fg("packages/theme/css/**/*.css", {
+    await globCatalogInputs("packages/theme/css/**/*.css", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   for (const cssPath of cssPaths) {
     const content = await readFileOrNull(cssPath);
@@ -1144,8 +1146,8 @@ function collectDiffBlockDeprecatedReplacements(
         source_text: cleanMarkdownText(
           `${context} ${removedToken.text} ${addedToken.text}`,
         ),
-        line_start: removedToken.line,
-        line_end: addedToken.line,
+        line_start: Math.min(removedToken.line, addedToken.line),
+        line_end: Math.max(removedToken.line, addedToken.line),
       });
     }
 
@@ -1232,12 +1234,12 @@ async function collectDeprecatedTokenReplacements(
   }
 
   const cssPaths = (
-    await fg("packages/theme/css/**/*.css", {
+    await globCatalogInputs("packages/theme/css/**/*.css", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
     })
-  ).sort((left, right) => left.localeCompare(right));
+  ).sort(compareOrdinalStrings);
 
   for (const cssPath of cssPaths) {
     const sourcePath = toPosixPath(path.relative(repoRoot, cssPath));
@@ -1503,7 +1505,7 @@ function slugify(value: string): string {
 function buildPolicyEvidenceRefs(
   tokenName: string,
   docs: TokenPolicyDocSource[],
-): SaltEvidenceRef[] {
+): SaltTokenPolicyEvidenceRef[] {
   return docs.map((doc, index) => ({
     contract: SALT_EVIDENCE_REF_CONTRACT,
     id: `${slugify(tokenName)}.policy.docs.${index}.source-ref`,
@@ -1513,7 +1515,6 @@ function buildPolicyEvidenceRefs(
       url: doc.route,
       repo_path: doc.repo_path,
     },
-    confidence: "high",
     note: "Source-backed docs evidence for generated token policy metadata.",
   }));
 }
@@ -1521,7 +1522,7 @@ function buildPolicyEvidenceRefs(
 function buildTokenSourceEvidenceRefs(
   tokenName: string,
   sourcePaths: string[],
-): SaltEvidenceRef[] {
+): SaltTokenPolicyEvidenceRef[] {
   return uniqueStrings(sourcePaths).map((sourcePath, index) => ({
     contract: SALT_EVIDENCE_REF_CONTRACT,
     id: `${slugify(tokenName)}.policy.token-source.${index}.source-ref`,
@@ -1530,7 +1531,6 @@ function buildTokenSourceEvidenceRefs(
     source: {
       repo_path: sourcePath,
     },
-    confidence: "high",
     note: "Source-backed token evidence for generated token policy metadata.",
   }));
 }
@@ -1539,7 +1539,7 @@ function withPolicyEvidence(
   tokenName: string,
   policy: Omit<NonNullable<TokenRecord["policy"]>, "docs" | "evidence_refs">,
   docs: TokenPolicyDocSource[],
-  extraEvidenceRefs: SaltEvidenceRef[] = [],
+  extraEvidenceRefs: SaltTokenPolicyEvidenceRef[] = [],
 ): NonNullable<TokenRecord["policy"]> | null {
   if (docs.length === 0 && extraEvidenceRefs.length === 0) {
     return null;
@@ -2044,7 +2044,7 @@ function replacementTokenTier(
 function buildDeprecatedReplacementSourceEvidenceRefs(
   tokenName: string,
   replacementSources: readonly DeprecatedTokenReplacementSource[],
-): SaltEvidenceRef[] {
+): SaltTokenPolicyEvidenceRef[] {
   const uniqueSources = new Map<string, DeprecatedTokenReplacementSource>();
   for (const source of replacementSources) {
     uniqueSources.set(
@@ -2070,7 +2070,6 @@ function buildDeprecatedReplacementSourceEvidenceRefs(
       line_start: source.line_start ?? null,
       line_end: source.line_end ?? null,
     },
-    confidence: "high",
     note: "Source-backed deprecated token replacement evidence for generated token policy metadata.",
   }));
 }
@@ -2078,7 +2077,7 @@ function buildDeprecatedReplacementSourceEvidenceRefs(
 function buildDeprecatedUnsupportedPolicyEvidenceRefs(
   tokenName: string,
   unsupportedSources: readonly DeprecatedTokenUnsupportedPolicySource[],
-): SaltEvidenceRef[] {
+): SaltTokenPolicyEvidenceRef[] {
   const uniqueSources = new Map<
     string,
     DeprecatedTokenUnsupportedPolicySource
@@ -2108,7 +2107,6 @@ function buildDeprecatedUnsupportedPolicyEvidenceRefs(
       line_start: source.line_start ?? null,
       line_end: source.line_end ?? null,
     },
-    confidence: "high",
     note: "Source-backed unsupported deprecated token policy state.",
   }));
 }
@@ -2185,7 +2183,7 @@ function findReplacementPolicySupport(
 function buildReplacementTokenDeclarationEvidenceRefs(
   tokenName: string,
   replacementSupports: readonly ReplacementPolicySupport[],
-): SaltEvidenceRef[] {
+): SaltTokenPolicyEvidenceRef[] {
   const uniqueDeclarations = new Map<string, TokenDeclarationSource>();
   for (const support of replacementSupports) {
     for (const declaration of support.tokenDeclarations) {
@@ -2212,7 +2210,6 @@ function buildReplacementTokenDeclarationEvidenceRefs(
       line_start: source.line_start,
       line_end: source.line_end,
     },
-    confidence: "high",
     note: "Source-backed current token declaration evidence for generated deprecated token policy metadata.",
   }));
 }
