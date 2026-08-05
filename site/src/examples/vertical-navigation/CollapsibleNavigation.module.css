@@ -1,4 +1,3 @@
-/*TODO: add that file to the site example by linking to github*/
 .nav {
   --collapsibleNavigation-expandedWidth: 30ch;
   --collapsibleNavigation-collapsedWidth: calc(var(--salt-size-icon) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
