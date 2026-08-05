@@ -22,10 +22,14 @@ export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
    * Callback function triggered when open state changes.
    */
   onOpenChange?: (open: boolean) => void;
-  /*
+  /**
    * Set the placement of the Overlay component relative to the trigger element. Defaults to `top`.
    */
   placement?: "top" | "bottom" | "left" | "right";
+  /**
+   * When `true`, the arrow indicator is hidden
+   */
+  hideArrow?: boolean;
 }
 
 export const Overlay = ({
@@ -33,6 +37,7 @@ export const Overlay = ({
   open,
   onOpenChange,
   placement: placementProp = "top",
+  hideArrow = false,
 }: OverlayProps) => {
   const arrowRef = useRef<SVGSVGElement | null>(null);
 
@@ -89,6 +94,7 @@ export const Overlay = ({
         floatingStyles,
         context,
         arrowProps,
+        hideArrow,
         floating,
         reference,
         getFloatingProps,

@@ -3,8 +3,16 @@ import * as overlayStories from "~stories/overlay/overlay.stories";
 import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, CloseButton, LongContent, WithTooltip } =
-  composedStories;
+const {
+  Default,
+  Right,
+  Bottom,
+  Left,
+  CloseButton,
+  HideArrow,
+  LongContent,
+  WithTooltip,
+} = composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -124,6 +132,16 @@ describe("GIVEN an Overlay", () => {
           expect($el[0].getBoundingClientRect().x).greaterThan(textPosition);
         });
       });
+    });
+  });
+
+  describe("WHEN hideArrow", () => {
+    it('THEN the arrow is not displayed when "hideArrow=true"', () => {
+      cy.mount(<HideArrow />);
+
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.get(".saltOverlayPanel-arrow").should("not.exist");
     });
   });
 
