@@ -24,3 +24,9 @@
   border-radius: var(--saltPanel-borderRadius, var(--salt-palette-corner, 0));
   box-sizing: border-box;
 }
+
+/* Styles applied when elevation="raised" */
+.saltPanel-raised {
+  border-radius: var(--saltPanel-borderRadius, var(--salt-palette-corner, 0));
+  box-shadow: var(--saltPanel-boxShadow, var(--salt-overlayable-shadow));
+}
