@@ -9,11 +9,15 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { type ComponentPropsWithoutRef, useMemo, useRef } from "react";
+import { type ReactNode, useMemo, useRef } from "react";
 import { useControlled, useFloatingUI } from "../utils";
-import { OverlayContext } from "./OverlayContext";
+import { OverlayContext, type OverlayContextValue } from "./OverlayContext";
 
-export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
+export interface OverlayProps {
+  /**
+   * The content of the Overlay, typically an `OverlayTrigger` and `OverlayPanel`.
+   */
+  children?: ReactNode;
   /**
    * Display or hide the component.
    */
@@ -53,17 +57,22 @@ export const Overlay = ({
     onOpenChange?.(newOpen);
   };
 
+  const middleware = useMemo(
+    () => [
+      offset(8),
+      flip(),
+      shift({ limiter: limitShift() }),
+      arrow({ element: arrowRef }),
+    ],
+    [],
+  );
+
   const { x, y, strategy, context, elements, floating, reference } =
     useFloatingUI({
       open: openState,
       onOpenChange: handleOpenChange,
       placement: placementProp,
-      middleware: [
-        offset(11),
-        flip(),
-        shift({ limiter: limitShift() }),
-        arrow({ element: arrowRef }),
-      ],
+      middleware,
     });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -73,34 +82,52 @@ export const Overlay = ({
   ]);
 
   const floatingStyles = useMemo(() => {
+    const floatingElement = elements.floating;
+
     return {
       top: y ?? 0,
       left: x ?? 0,
       position: strategy,
-      width: elements.floating?.offsetWidth,
-      height: elements.floating?.offsetHeight,
+      width: floatingElement?.offsetWidth,
+      height: floatingElement?.offsetHeight,
     };
   }, [elements.floating, strategy, x, y]);
 
-  const arrowProps = {
-    ref: arrowRef,
-    context,
-  };
+  const arrowProps = useMemo(
+    () => ({
+      ref: arrowRef,
+      context,
+    }),
+    [context],
+  );
+
+  const contextValue = useMemo<OverlayContextValue>(
+    () => ({
+      openState,
+      floatingStyles,
+      context,
+      arrowProps,
+      hideArrow,
+      floating,
+      reference,
+      getFloatingProps,
+      getReferenceProps,
+    }),
+    [
+      openState,
+      floatingStyles,
+      context,
+      arrowProps,
+      hideArrow,
+      floating,
+      reference,
+      getFloatingProps,
+      getReferenceProps,
+    ],
+  );
 
   return (
-    <OverlayContext.Provider
-      value={{
-        openState,
-        floatingStyles,
-        context,
-        arrowProps,
-        hideArrow,
-        floating,
-        reference,
-        getFloatingProps,
-        getReferenceProps,
-      }}
-    >
+    <OverlayContext.Provider value={contextValue}>
       {children}
     </OverlayContext.Provider>
   );
