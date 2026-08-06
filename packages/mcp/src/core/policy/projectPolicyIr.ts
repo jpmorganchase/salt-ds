@@ -194,7 +194,7 @@ export function evaluateProjectPolicyConditionV2(
           : null;
         const range = validRange(candidate.range);
         if (!version || !range) return "unknown";
-        return satisfies(version, range, { includePrerelease: true })
+        return satisfies(version, range)
           ? "applicable"
           : "contradicted";
       }
@@ -928,7 +928,6 @@ export function compileSaltProjectPolicyIrV2(input: {
       overrideKey: string;
       declaration: Declaration;
       optionalFields: readonly string[];
-      rulePrecedence: 1 | 2 | 3 | 4 | null;
       condition: ProjectPolicyConditionV2;
     }): void => {
       const occurrenceBaseId = occurrenceIdentity(
@@ -971,7 +970,7 @@ export function compileSaltProjectPolicyIrV2(input: {
             options.entryIndex,
           ],
         },
-        rule_precedence: options.rulePrecedence,
+        rule_precedence: null,
         condition: options.condition,
         import_checks: [],
       } as ProjectPolicyOccurrenceV2;
@@ -990,7 +989,6 @@ export function compileSaltProjectPolicyIrV2(input: {
             overrideKey: declaration.salt_name,
             declaration,
             optionalFields: ["docs"],
-            rulePrecedence: 2,
             condition: conditionAll([
               ...versionConditions,
               selectorCondition("canonical_name", declaration.salt_name),
@@ -1013,7 +1011,6 @@ export function compileSaltProjectPolicyIrV2(input: {
               "migration_shim",
               "docs",
             ],
-            rulePrecedence: 3,
             condition: wrapperCondition(declaration, versionConditions),
           });
         },
@@ -1026,7 +1023,6 @@ export function compileSaltProjectPolicyIrV2(input: {
           overrideKey: declaration.salt_name,
           declaration,
           optionalFields: ["docs"],
-          rulePrecedence: null,
           condition: conditionAll([
             ...versionConditions,
             selectorCondition("source_token", declaration.salt_name),
@@ -1047,7 +1043,6 @@ export function compileSaltProjectPolicyIrV2(input: {
             "props",
             "docs",
           ],
-          rulePrecedence: null,
           condition: conditionAll(versionConditions),
         });
       }
@@ -1060,7 +1055,6 @@ export function compileSaltProjectPolicyIrV2(input: {
             overrideKey: declaration.family,
             declaration,
             optionalFields: ["docs"],
-            rulePrecedence: null,
             condition: conditionAll([
               ...versionConditions,
               selectorCondition("token_family", declaration.family),
@@ -1077,7 +1071,6 @@ export function compileSaltProjectPolicyIrV2(input: {
             overrideKey: declaration.canonical_salt_start ?? declaration.intent,
             declaration,
             optionalFields: ["canonical_salt_start", "docs"],
-            rulePrecedence: 4,
             condition: conditionAll([
               ...versionConditions,
               declaration.canonical_salt_start
@@ -1102,7 +1095,6 @@ export function compileSaltProjectPolicyIrV2(input: {
           overrideKey: declaration.name,
           declaration,
           optionalFields: ["replacement", "docs"],
-          rulePrecedence: 1,
           condition: conditionAll([
             ...versionConditions,
             selectorCondition("canonical_name", declaration.name),

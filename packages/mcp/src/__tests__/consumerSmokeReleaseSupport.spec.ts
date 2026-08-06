@@ -160,6 +160,17 @@ describe("consumer smoke Windows command invocation", () => {
   );
 });
 
+describe("consumer smoke process bounds", () => {
+  it("terminates a child process that exceeds its declared timeout", async () => {
+    await expect(
+      runCommand(process.execPath, ["-e", "setInterval(() => {}, 1000)"], {
+        label: "timeout fixture",
+        timeoutMs: 25,
+      }),
+    ).rejects.toThrow(/exceeded its 25ms timeout/iu);
+  });
+});
+
 describe("consumer smoke bounded outcomes", () => {
   const validPayload = {
     data: { results: [] },

@@ -10,11 +10,9 @@ interface RootPackageJson {
 const POST_BUILD_STEPS = [
   "yarn typecheck:mcp",
   "yarn test:ai-tooling",
-  "yarn eval:deterministic",
   "yarn workspace @salt-ds/mcp measure:runtime-loc",
   "yarn workspace @salt-ds/mcp measure:surface",
   "yarn check:ai-tooling:pack",
-  "yarn smoke:consumer --skip-build",
 ];
 
 async function readScripts(): Promise<Record<string, string>> {
@@ -36,11 +34,17 @@ describe("MCP release verification scripts", () => {
     );
   });
 
-  it("retains the deterministic post-build checks in order", async () => {
+  it("retains each distinct post-build check once and in dependency order", async () => {
     const scripts = await readScripts();
     const postBuild = scripts["release:verify:mcp:after-build"];
 
-    expect(postBuild).toBe(POST_BUILD_STEPS.join(" && "));
+    const positions = POST_BUILD_STEPS.map((step) => postBuild.indexOf(step));
+    expect(positions.every((position) => position >= 0)).toBe(true);
+    expect(positions).toEqual([...positions].sort((left, right) => left - right));
+    for (const step of POST_BUILD_STEPS) {
+      expect(postBuild.split(step)).toHaveLength(2);
+    }
+    expect(postBuild).not.toContain("yarn eval:deterministic");
     expect(postBuild).not.toContain("release:verify:mcp:after-build");
   });
 
@@ -60,6 +64,12 @@ describe("MCP release verification scripts", () => {
     );
     expect(scripts["release:verify:mcp:after-build"]).not.toContain(
       "smoke:consumer:published",
+    );
+    expect(scripts["smoke:consumer:network"]).toBe(
+      "node ./scripts/consumerRepoSmoke.mjs",
+    );
+    expect(scripts["release:verify:mcp:after-build"]).not.toContain(
+      "smoke:consumer",
     );
   });
 

@@ -161,6 +161,25 @@ describe("MCP project-context installation diagnostics", () => {
     expect(result.installation.versionHealth.issues).toEqual([]);
   });
 
+  it("does not satisfy a stable declaration with an implicit prerelease", async () => {
+    const rootDir = await createTempDir("salt-mcp-prerelease-resolution");
+    const packageJson = {
+      dependencies: { "@salt-ds/core": "^2.0.0" },
+    };
+    await writeJson(path.join(rootDir, "package.json"), packageJson);
+    await writeJson(
+      path.join(rootDir, "node_modules", "@salt-ds", "core", "package.json"),
+      { name: "@salt-ds/core", version: "2.1.0-beta.1" },
+    );
+
+    const result = await inspectInstallation(rootDir, packageJson);
+
+    expect(result.installation.resolvedPackages[0]).toMatchObject({
+      resolvedVersion: "2.1.0-beta.1",
+      satisfiesDeclaredVersion: false,
+    });
+  });
+
   it("reads a contained package manifest when exports hide the package.json subpath", async () => {
     const rootDir = await createTempDir("salt-mcp-hidden-package-manifest");
     const packageJson = {

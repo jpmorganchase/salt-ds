@@ -13,6 +13,7 @@ import { performance } from "node:perf_hooks";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { Client, InMemoryTransport } from "@modelcontextprotocol/client";
 import { build } from "esbuild";
+import publicSurfaceBudgets from "../public-surface-budgets.json" with { type: "json" };
 import {
   assertCatalogInputBytes,
   assertCatalogManifestBytes,
@@ -42,7 +43,8 @@ const catalogStoreEntry = path.join(
 );
 const BASELINE_TOKEN_ARTIFACT_BYTES = 4_705_658;
 const MAX_PUBLIC_TOOL_COUNT = 3;
-const MAX_TOOL_DISCOVERY_UTF8_BYTES = 15_000;
+const MAX_TOOL_DISCOVERY_UTF8_BYTES =
+  publicSurfaceBudgets.toolDiscoveryUtf8Bytes;
 const MAX_INSTRUCTIONS_UTF8_BYTES = 1_000;
 const MIN_TOKEN_OWNED_REDUCTION_PERCENT = 50;
 

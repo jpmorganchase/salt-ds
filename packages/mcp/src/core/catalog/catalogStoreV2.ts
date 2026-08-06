@@ -1,10 +1,6 @@
-import crypto from "node:crypto";
 import {
-  closeSync,
   lstatSync,
-  openSync,
   readFileSync,
-  readSync,
   realpathSync,
 } from "node:fs";
 import path from "node:path";
@@ -171,31 +167,6 @@ function readJsonCounted(absolutePath: string): unknown {
       { cause: error },
     );
   }
-}
-
-function sha256FileSync(absolutePath: string): {
-  sha256: string;
-  bytes: number;
-} {
-  countRead(path.resolve(absolutePath));
-  const descriptor = openSync(absolutePath, "r");
-  const hash = crypto.createHash("sha256");
-  const buffer = Buffer.allocUnsafe(64 * 1024);
-  let bytes = 0;
-  try {
-    let read = readSync(descriptor, buffer, 0, buffer.byteLength, null);
-    while (read > 0) {
-      hash.update(buffer.subarray(0, read));
-      bytes += read;
-      read = readSync(descriptor, buffer, 0, buffer.byteLength, null);
-    }
-  } finally {
-    closeSync(descriptor);
-  }
-  return {
-    sha256: `sha256:${hash.digest("hex")}`,
-    bytes,
-  };
 }
 
 function assertExactManifestCoverage(manifest: CatalogManifest): string {
@@ -686,6 +657,8 @@ export class CatalogStoreV2 {
   >();
   private readonly loadingFamilies = new Set<CatalogRuntimeFamilyName>();
   private readonly decodedContentCache = new Map<string, unknown>();
+  private readonly contentTextCache = new Map<string, string>();
+  private readonly verifiedContentObjects = new Set<string>();
   private readonly verifiedSupport = new Set<string>();
   private readonly verifiedBuildArtifactRecordCounts = new Map<
     CatalogBuildOnlyFamilyName,
@@ -693,6 +666,7 @@ export class CatalogStoreV2 {
   >();
   private verifiedCatalogMetrics: CatalogValidationMetrics | null = null;
   private catalogValidationInProgress = false;
+  private contentPackBytes: Buffer | null = null;
 
   constructor(options: CatalogStoreV2Options) {
     this.registryDir = path.resolve(options.registryDir);
@@ -931,13 +905,19 @@ export class CatalogStoreV2 {
     if (this.verifiedSupport.has("content_pack")) return;
     const entry = this.getSupportEntry("content_pack");
     const absolutePath = safeArtifactPath(this.registryDir, entry.file);
-    const actual = sha256FileSync(absolutePath);
+    const bytes = readFileCounted(absolutePath);
+    safeArtifactPath(this.registryDir, entry.file);
+    const actual = {
+      sha256: sha256Bytes(bytes),
+      bytes: bytes.byteLength,
+    };
     safeArtifactPath(this.registryDir, entry.file);
     if (actual.sha256 !== entry.sha256 || actual.bytes !== entry.bytes) {
       throw new Error(
         `Catalog content pack digest mismatch: expected ${entry.sha256}/${entry.bytes}, received ${actual.sha256}/${actual.bytes}.`,
       );
     }
+    this.contentPackBytes = bytes;
     this.verifiedSupport.add("content_pack");
   }
 
@@ -967,38 +947,47 @@ export class CatalogStoreV2 {
         `Catalog content '${reference.id}' has an invalid byte range.`,
       );
     }
-    const absolutePath = safeArtifactPath(this.registryDir, packEntry.file);
-    countRead(path.resolve(absolutePath));
-    const fileDescriptor = openSync(absolutePath, "r");
-    const bytes = Buffer.alloc(contentRecord.length);
-    try {
-      const actualRead = readSync(
-        fileDescriptor,
+    const packBytes = this.contentPackBytes;
+    if (!packBytes) {
+      throw new Error("Catalog content pack verification did not retain its bytes.");
+    }
+    const bytes = packBytes.subarray(
+      contentRecord.offset,
+      contentRecord.offset + contentRecord.length,
+    );
+    if (!this.verifiedContentObjects.has(reference.id)) {
+      const identity = Buffer.concat([
+        Buffer.from(`${contentRecord.media_type}\0`, "utf8"),
         bytes,
-        0,
-        bytes.byteLength,
-        contentRecord.offset,
-      );
-      if (actualRead !== bytes.byteLength) {
+      ]);
+      const actualId = sha256Bytes(identity);
+      if (actualId !== reference.id) {
         throw new Error(
-          `Catalog content '${reference.id}' could not be read completely.`,
+          `Catalog content object digest mismatch for '${reference.id}': received ${actualId}.`,
         );
       }
-    } finally {
-      closeSync(fileDescriptor);
+      this.verifiedContentObjects.add(reference.id);
     }
-    safeArtifactPath(this.registryDir, packEntry.file);
-    const identity = Buffer.concat([
-      Buffer.from(`${contentRecord.media_type}\0`, "utf8"),
-      bytes,
-    ]);
-    const actualId = sha256Bytes(identity);
-    if (actualId !== reference.id) {
-      throw new Error(
-        `Catalog content object digest mismatch for '${reference.id}': received ${actualId}.`,
-      );
+    return Buffer.from(bytes);
+  }
+
+  getContentSourceText<Codec extends CatalogContentCodecName>(
+    reference: CatalogContentReference<Codec>,
+  ): string {
+    const cacheKey = `${reference.id}\0${reference.codec}`;
+    const cached = this.contentTextCache.get(cacheKey);
+    if (cached !== undefined) return cached;
+    const bytes = this.getContentBytes(reference);
+    let text: string;
+    try {
+      text = fatalUtf8Decoder.decode(bytes);
+    } catch (error) {
+      throw new Error(`Catalog content '${reference.id}' is not valid UTF-8.`, {
+        cause: error,
+      });
     }
-    return bytes;
+    this.contentTextCache.set(cacheKey, text);
+    return text;
   }
 
   getContentValue<Codec extends CatalogContentCodecName>(
@@ -1010,15 +999,7 @@ export class CatalogStoreV2 {
         cacheKey,
       ) as CatalogPayloadForCodec<Codec>;
     }
-    const bytes = this.getContentBytes(reference);
-    let text: string;
-    try {
-      text = fatalUtf8Decoder.decode(bytes);
-    } catch (error) {
-      throw new Error(`Catalog content '${reference.id}' is not valid UTF-8.`, {
-        cause: error,
-      });
-    }
+    const text = this.getContentSourceText(reference);
     const mediaType = catalogContentCodecs[reference.codec].mediaType;
     let raw: unknown = text;
     if (!mediaType.startsWith("text/")) {

@@ -387,7 +387,12 @@ export async function runCommand(command, args, options = {}) {
     env = {},
     label = `${command} ${args.join(" ")}`,
     acceptableExitCodes = [0],
+    timeoutMs = 5 * 60 * 1000,
   } = options;
+
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1) {
+    throw new Error(`Command timeout must be a positive integer; received ${timeoutMs}.`);
+  }
 
   return new Promise((resolve, reject) => {
     const useWindowsCmdShim =
@@ -413,6 +418,19 @@ export async function runCommand(command, args, options = {}) {
 
     let stdout = "";
     let stderr = "";
+    let timedOut = false;
+    let settled = false;
+    const finish = (callback) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      callback();
+    };
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      child.kill();
+    }, timeoutMs);
+    timeout.unref();
 
     child.stdout.on("data", (chunk) => {
       stdout += chunk.toString();
@@ -420,16 +438,28 @@ export async function runCommand(command, args, options = {}) {
     child.stderr.on("data", (chunk) => {
       stderr += chunk.toString();
     });
-    child.on("error", reject);
+    child.on("error", (error) => finish(() => reject(error)));
     child.on("close", (code) => {
+      if (timedOut) {
+        finish(() =>
+          reject(
+            new Error(
+              `${label} exceeded its ${timeoutMs}ms timeout and was terminated.\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+            ),
+          ),
+        );
+        return;
+      }
       if (acceptableExitCodes.includes(code ?? -1)) {
-        resolve({ stdout, stderr, exitCode: code ?? 0 });
+        finish(() => resolve({ stdout, stderr, exitCode: code ?? 0 }));
         return;
       }
 
-      reject(
-        new Error(
-          `${label} failed with exit code ${code}\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+      finish(() =>
+        reject(
+          new Error(
+            `${label} failed with exit code ${code}\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+          ),
         ),
       );
     });

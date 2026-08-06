@@ -20,11 +20,15 @@ import {
   inspectPackageJsonFile,
 } from "./projectContext/saltInstallation.js";
 import { inspectProjectPolicy } from "./projectPolicyInspection.js";
-import { createProjectPolicySnapshot } from "./projectPolicySnapshot.js";
+import {
+  createProjectContextHandle,
+  createProjectPolicySnapshot,
+} from "./projectPolicySnapshot.js";
 import type { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 
 export interface InspectSaltProjectInput {
   root_dir?: string;
+  evaluate_policy?: boolean;
   include_policy_ir?: boolean;
 }
 
@@ -105,6 +109,7 @@ export async function inspectSaltProject(
     }[authorization.reason];
     return {
       data: {
+        context: null,
         root_dir: null,
         package_manifest: null,
         workspace: null,
@@ -130,7 +135,10 @@ export async function inspectSaltProject(
         },
       },
       limitations: [reason],
-      provenance: { project_policy_digest: null },
+      provenance: {
+        project_context_digest: null,
+        project_policy_digest: null,
+      },
     };
   }
   const rootDir = authorization.rootDir;
@@ -172,7 +180,7 @@ export async function inspectSaltProject(
     authorization.authorityRoot,
   );
   const policyInspection =
-    input.include_policy_ir === false
+    input.evaluate_policy === false
       ? null
       : await inspectProjectPolicy({
           rootDir,
@@ -192,6 +200,11 @@ export async function inspectSaltProject(
         authorization,
         inspection: policyInspection,
         saltVersion: currentSaltVersion,
+        packageVersions: Object.fromEntries(
+          installation.resolvedPackages.flatMap((entry) =>
+            entry.resolvedVersion ? [[entry.name, entry.resolvedVersion]] : [],
+          ),
+        ),
       })
     : null;
   if (policySnapshot) projectPolicySnapshots?.remember(policySnapshot);
@@ -263,6 +276,13 @@ export async function inspectSaltProject(
   );
   const response = {
     data: {
+      context: policySnapshot
+        ? {
+            handle: createProjectContextHandle(policySnapshot),
+            digest: policySnapshot.context_digest,
+            retention: "process_local_bounded_lru" as const,
+          }
+        : null,
       root_dir: publicRootDir,
       package_manifest:
         packageInspection.status === "valid" && publicPackagePath
@@ -357,7 +377,7 @@ export async function inspectSaltProject(
       installation: "evaluated" as const,
       workspace: "evaluated" as const,
       policy:
-        input.include_policy_ir === false
+        input.evaluate_policy === false
           ? ("detection_only" as const)
           : ("policy_ir_evaluated" as const),
       result_budget: {
@@ -368,6 +388,7 @@ export async function inspectSaltProject(
     },
     limitations: [] as string[],
     provenance: {
+      project_context_digest: policySnapshot?.context_digest ?? null,
       project_policy_digest: policySnapshot?.digest ?? null,
     },
   };
@@ -408,7 +429,7 @@ export async function inspectSaltProject(
       ) &&
       stringFitsBudget(entry.resolved_path, MAX_PUBLIC_PATH_JSON_UTF8_BYTES),
   );
-  if (policyIr && response.data.policy.ir) {
+  if (policyIr && response.data.policy.ir && input.include_policy_ir === true) {
     const irOmission = omission("policy.ir");
     irOmission.available = 1;
     response.data.policy.ir.untrusted_ir = {
@@ -426,7 +447,11 @@ export async function inspectSaltProject(
       irOmission.returned = 0;
     }
   }
-  if (policyImportTargets && response.data.policy.import_targets) {
+  if (
+    policyImportTargets &&
+    response.data.policy.import_targets &&
+    input.include_policy_ir === true
+  ) {
     const targetsOmission = omission("policy.import_targets");
     targetsOmission.available = 1;
     response.data.policy.import_targets.untrusted_diagnostics = {

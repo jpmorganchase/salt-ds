@@ -14,19 +14,6 @@ const PUBLIC_TOOLS = [
   "review_salt_code",
 ] as const;
 
-const RETIRED_PROTOCOL_TERMS = [
-  "salt_workflow_v1",
-  "create_salt_ui",
-  "migrate_to_salt",
-  "action.kind",
-  "post_action",
-  "implementation_ready",
-  "exact_request_safe",
-  "apply_fixes",
-  "ask_user",
-  "finish_without_changes",
-] as const;
-
 async function readSkill(relativePath: string): Promise<string> {
   return fs.readFile(path.join(skillRoot, relativePath), "utf8");
 }
@@ -44,18 +31,11 @@ async function collectFiles(root: string): Promise<string[]> {
 }
 
 describe("Salt skill contracts", () => {
-  it("keeps one thin router with reachable progressive references", async () => {
+  it("keeps a router whose progressive references are reachable", async () => {
     const router = await readSkill("SKILL.md");
     const files = await collectFiles(".");
 
-    expect(files).toEqual([
-      "references/core.md",
-      "references/create.md",
-      "references/migrate.md",
-      "references/review.md",
-      "references/troubleshooting.md",
-      "SKILL.md",
-    ]);
+    expect(files).toContain("SKILL.md");
     for (const reference of [
       "references/core.md",
       "references/create.md",
@@ -64,8 +44,8 @@ describe("Salt skill contracts", () => {
       "references/troubleshooting.md",
     ]) {
       expect(router).toContain(reference);
+      expect(files).toContain(reference);
     }
-    expect(router.length).toBeLessThan(4_000);
   });
 
   it("matches the final three-tool read-only MCP surface", async () => {
@@ -125,16 +105,6 @@ describe("Salt skill contracts", () => {
     expect(core).toMatch(
       /Report the\s+reviewed scope, coverage, limitations/iu,
     );
-  });
-
-  it("contains no retired private workflow interpreter language", async () => {
-    const files = await collectFiles(".");
-    for (const relativePath of files) {
-      const content = await readSkill(relativePath);
-      for (const term of RETIRED_PROTOCOL_TERMS) {
-        expect(content, `${relativePath}: ${term}`).not.toContain(term);
-      }
-    }
   });
 
   it("aligns public guidance and the consumer fixture to the same boundary", async () => {

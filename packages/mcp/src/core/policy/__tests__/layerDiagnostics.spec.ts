@@ -85,6 +85,21 @@ describe("layerDiagnostics version normalization", () => {
       checkedVersion: null,
     });
   });
+
+  it("requires an explicit prerelease comparator for prerelease compatibility", () => {
+    expect(
+      evaluatePackCompatibility({
+        supportedSaltRange: "^2.0.0",
+        currentSaltVersion: "2.1.0-beta.1",
+      }),
+    ).toMatchObject({ status: "unsupported" });
+    expect(
+      evaluatePackCompatibility({
+        supportedSaltRange: ">=2.1.0-beta.1 <2.1.0",
+        currentSaltVersion: "2.1.0-beta.1",
+      }),
+    ).toMatchObject({ status: "compatible" });
+  });
 });
 
 describe("layerDiagnostics policy boundary", () => {

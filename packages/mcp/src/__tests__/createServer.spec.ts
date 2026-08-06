@@ -8,8 +8,10 @@ import {
   InMemoryTransport,
   ProtocolError,
   ProtocolErrorCode,
+  type VersionNegotiationMode,
 } from "@modelcontextprotocol/client";
 import { McpServer, Server } from "@modelcontextprotocol/server";
+import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import * as z from "zod/v4";
 import {
@@ -30,10 +32,6 @@ import {
   type SaltCatalogRuntimeContext,
 } from "../core/runtime.js";
 import { MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES } from "../core/search/searchSalt.js";
-import {
-  MAX_CATALOG_RESOURCE_LIST_PAGE_UTF8_BYTES,
-  MAX_CATALOG_RESOURCES_PER_PAGE,
-} from "../server/catalogResourceListing.js";
 import { createSaltMcpServer } from "../server/createServer.js";
 import type { ProjectAccessOptions } from "../server/projectAccess.js";
 import { MAX_CATALOG_RESOURCE_READ_UTF8_BYTES } from "../server/registerResources.js";
@@ -41,6 +39,8 @@ import { MAX_SEARCH_TOOL_RESULT_UTF8_BYTES } from "../server/registerTools.js";
 import {
   buildSaltMcpInstructions,
   getSaltMcpPackageManifest,
+  SALT_MCP_CURRENT_PROTOCOL_VERSION,
+  SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
   SALT_MCP_PROTOCOL_ERA,
   SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS,
 } from "../server/serverMetadata.js";
@@ -48,6 +48,7 @@ import {
   REGISTERED_SALT_TOOL_NAMES,
   TOOL_DEFINITIONS,
 } from "../server/toolDefinitions.js";
+import { MAX_TOOL_DISCOVERY_UTF8_BYTES } from "../publicSurfaceBudgets.js";
 import {
   createBuiltCatalogV2Fixture,
   REPO_ROOT,
@@ -90,11 +91,14 @@ function assertStrictNestedObjects(
         maxLength: 214,
         pattern: "^@salt-ds\\/[a-z0-9][a-z0-9._-]*$",
       });
-      expect(record.additionalProperties, schemaPath).toEqual({
-        type: "string",
-        minLength: 1,
-        maxLength: 128,
-      });
+      expect(record.additionalProperties, schemaPath).toEqual(
+        expect.objectContaining({
+          type: "string",
+          minLength: 1,
+          maxLength: 128,
+          pattern: expect.any(String),
+        }),
+      );
     } else {
       expect(record.additionalProperties, schemaPath).toBe(false);
       expect(properties, schemaPath).not.toHaveLength(0);
@@ -224,15 +228,73 @@ async function withConnectedProtocolClient(
   }
 }
 
+async function withNegotiatedStdioClient(
+  mode: VersionNegotiationMode,
+  run: (client: Client, constructedEras: string[]) => Promise<void>,
+): Promise<void> {
+  const [clientTransport, serverTransport] =
+    InMemoryTransport.createLinkedPair();
+  const constructedEras: string[] = [];
+  const handle = serveStdio(
+    async ({ era }) => {
+      constructedEras.push(era);
+      return createSaltMcpServer({
+        registryDir: catalogFixtureDirectory,
+        projectAccess: {
+          mode: "restricted",
+          allowedRoots: [REPO_ROOT],
+          defaultRoot: REPO_ROOT,
+        },
+      });
+    },
+    { transport: serverTransport, legacy: "serve" },
+  );
+  const client = new Client(
+    { name: "salt-mcp-negotiation-test", version: "1.0.0" },
+    { versionNegotiation: { mode } },
+  );
+
+  try {
+    await client.connect(clientTransport);
+    await run(client, constructedEras);
+  } finally {
+    await client.close();
+    await handle.close();
+  }
+}
+
 describe("createSaltMcpServer final public boundary", () => {
-  it("selects the documented legacy protocol era explicitly", async () => {
+  it("retains a direct legacy handshake for reusable-factory callers", async () => {
     await withProtocolClient(async (client) => {
-      expect(client.getProtocolEra()).toBe(SALT_MCP_PROTOCOL_ERA);
+      expect(SALT_MCP_PROTOCOL_ERA).toBe("dual");
+      expect(client.getProtocolEra()).toBe("legacy");
       expect(client.getNegotiatedProtocolVersion()).toBe(
-        SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS[0],
+        SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
       );
     });
   });
+
+  it.each([
+    ["modern-pinned", { pin: SALT_MCP_CURRENT_PROTOCOL_VERSION }, "modern"],
+    ["auto", "auto", "modern"],
+    ["legacy-pinned", "legacy", "legacy"],
+  ] as const)(
+    "serves the %s negotiation path through one dual-era factory",
+    async (_label, mode, expectedEra) => {
+      await withNegotiatedStdioClient(mode, async (client, constructedEras) => {
+        expect(client.getProtocolEra()).toBe(expectedEra);
+        expect(client.getNegotiatedProtocolVersion()).toBe(
+          expectedEra === "modern"
+            ? SALT_MCP_CURRENT_PROTOCOL_VERSION
+            : SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
+        );
+        expect(constructedEras.at(-1)).toBe(expectedEra);
+        expect((await client.listTools()).tools.map((tool) => tool.name)).toEqual(
+          [...REGISTERED_SALT_TOOL_NAMES],
+        );
+      });
+    },
+  );
 
   it("advertises exactly the three read-only adapter tools", async () => {
     await withProtocolClient(async (client) => {
@@ -269,7 +331,7 @@ describe("createSaltMcpServer final public boundary", () => {
       }
       expect(
         Buffer.byteLength(JSON.stringify(listed), "utf8"),
-      ).toBeLessThanOrEqual(15_000);
+      ).toBeLessThanOrEqual(MAX_TOOL_DISCOVERY_UTF8_BYTES);
     });
   });
 
@@ -558,6 +620,7 @@ describe("createSaltMcpServer final public boundary", () => {
         name: "inspect_salt_project",
         arguments: {
           root_dir: REPO_ROOT,
+          evaluate_policy: false,
           include_policy_ir: false,
         },
       });
@@ -565,7 +628,10 @@ describe("createSaltMcpServer final public boundary", () => {
       const payload = toolPayload(result) as {
         data?: { root_dir?: string; package_manifest?: { name?: string } };
         scope?: { kind?: string; filesystem_access?: string };
-        provenance?: { project_policy_digest?: string | null };
+        provenance?: {
+          project_context_digest?: string | null;
+          project_policy_digest?: string | null;
+        };
       };
       expect(payload.data?.root_dir?.replaceAll("\\", "/")).toBe(
         REPO_ROOT.replaceAll("\\", "/"),
@@ -577,7 +643,10 @@ describe("createSaltMcpServer final public boundary", () => {
           authorization: "restricted",
         }),
       );
-      expect(payload.provenance).toEqual({ project_policy_digest: null });
+      expect(payload.provenance).toEqual({
+        project_context_digest: null,
+        project_policy_digest: null,
+      });
       expect(JSON.stringify(payload)).not.toMatch(
         /implementation_ready|canonical_complete|exact_request_safe|finish_without_changes|post_action/iu,
       );
@@ -597,6 +666,78 @@ describe("createSaltMcpServer final public boundary", () => {
         definition?.outputValidationSchema.safeParse(invalidPayload).success,
       ).toBe(false);
     });
+  }, 30_000);
+
+  it("discovers an ancestor workspace for a CLI-selected child package", async () => {
+    const workspaceRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-cli-workspace-"),
+    );
+    const packageRoot = path.join(workspaceRoot, "packages", "app");
+    try {
+      await fs.mkdir(packageRoot, { recursive: true });
+      await fs.writeFile(
+        path.join(workspaceRoot, "package.json"),
+        JSON.stringify({ private: true, workspaces: ["packages/*"] }),
+        "utf8",
+      );
+      await fs.writeFile(
+        path.join(packageRoot, "package.json"),
+        JSON.stringify({
+          name: "workspace-app",
+          dependencies: { "@salt-ds/core": "^2.0.0" },
+        }),
+        "utf8",
+      );
+      const installedCore = path.join(
+        workspaceRoot,
+        "node_modules",
+        "@salt-ds",
+        "core",
+      );
+      await fs.mkdir(installedCore, { recursive: true });
+      await fs.writeFile(
+        path.join(installedCore, "package.json"),
+        JSON.stringify({ name: "@salt-ds/core", version: "2.1.0" }),
+        "utf8",
+      );
+
+      await withProtocolClient(
+        async (client) => {
+          const result = await client.callTool({
+            name: "inspect_salt_project",
+            arguments: { root_dir: packageRoot, include_policy_ir: false },
+          });
+          expect(result.isError).not.toBe(true);
+          const payload = toolPayload(result) as {
+            data: {
+              workspace: { kind: string; workspace_root: string | null };
+              installation: {
+                resolved_packages: Array<{
+                  name: string;
+                  resolved_version: string | null;
+                }>;
+              };
+            };
+          };
+          expect(payload.data.workspace).toMatchObject({
+            kind: "workspace-package",
+            workspace_root: workspaceRoot.replaceAll("\\", "/"),
+          });
+          expect(payload.data.installation.resolved_packages).toContainEqual(
+            expect.objectContaining({
+              name: "@salt-ds/core",
+              resolved_version: "2.1.0",
+            }),
+          );
+        },
+        {
+          mode: "unrestricted_local_stdio",
+          defaultRoot: workspaceRoot,
+        },
+      );
+    } finally {
+      await fs.rm(workspaceRoot, { recursive: true, force: true });
+    }
   }, 30_000);
 
   it("bounds caller-controlled inspection fields without turning valid input into a tool error", async () => {
@@ -824,6 +965,7 @@ describe("createSaltMcpServer final public boundary", () => {
           expect(inspected.isError).not.toBe(true);
           const inspectedPayload = toolPayload(inspected) as {
             data: {
+              context: { handle: string; digest: string } | null;
               policy: {
                 ir: {
                   digest: string;
@@ -833,7 +975,9 @@ describe("createSaltMcpServer final public boundary", () => {
             };
           };
           const policyIr = inspectedPayload.data.policy.ir;
+          const projectContext = inspectedPayload.data.context;
           expect(policyIr).not.toBeNull();
+          expect(projectContext).not.toBeNull();
           const manifestUri = policyIr!.manifest_uri;
           expect(inspected.content).toEqual(
             expect.arrayContaining([
@@ -884,10 +1028,12 @@ describe("createSaltMcpServer final public boundary", () => {
           };
           expect(reconstructed.occurrences.length).toBeGreaterThanOrEqual(2);
 
+          await fs.rm(path.join(projectRoot, ".salt", "team.json"));
+
           const reviewed = await client.callTool({
             name: "review_salt_code",
             arguments: {
-              root_dir: projectRoot,
+              project_context_handle: projectContext!.handle,
               artifacts: [
                 {
                   id: "policy.tsx",
@@ -914,9 +1060,13 @@ describe("createSaltMcpServer final public boundary", () => {
               }>;
             };
             coverage: { project_policy: { digest: string } };
+            provenance: { project_context_digest: string | null };
           };
           expect(reviewedPayload.coverage.project_policy.digest).toBe(
             policyIr!.digest,
+          );
+          expect(reviewedPayload.provenance.project_context_digest).toBe(
+            projectContext!.digest,
           );
           const policyFinding = reviewedPayload.data.results[0]!.findings.find(
             (finding) =>
@@ -950,12 +1100,18 @@ describe("createSaltMcpServer final public boundary", () => {
               : null,
           ).toBe("ActionButton");
           expect(
+            claimBody
+              ? valueAtFieldPath(claimBody, "claim.declaration.reason")
+              : null,
+          ).toBe("Bound fixture convention.");
+          expect(
             policyFinding!.evidence.references.map(
               (reference) => reference.field_path,
             ),
           ).toEqual(
             expect.arrayContaining([
               "claim.selector",
+              "claim.declaration.reason",
               "claim.applicability",
               "claim.source",
               "claim.applicability.import_validation",
@@ -1352,6 +1508,12 @@ describe("createSaltMcpServer final public boundary", () => {
       });
       expect(invalidSearch.isError).toBe(true);
 
+      const invalidInspection = await client.callTool({
+        name: "inspect_salt_project",
+        arguments: { evaluate_policy: false, include_policy_ir: true },
+      });
+      expect(invalidInspection.isError).toBe(true);
+
       for (const artifacts of [
         [],
         [{ id: "empty.tsx", language: "tsx", text: "" }],
@@ -1370,58 +1532,55 @@ describe("createSaltMcpServer final public boundary", () => {
         });
         expect(invalidReview.isError).toBe(true);
       }
+      for (const packageVersion of [" ", "^2.0.0", "workspace:^2.0.0"] ) {
+        const invalidReview = await client.callTool({
+          name: "review_salt_code",
+          arguments: {
+            artifacts: [
+              { id: "version.tsx", language: "tsx", text: "export {};" },
+            ],
+            package_versions: { "@salt-ds/core": packageVersion },
+          },
+        });
+        expect(invalidReview.isError).toBe(true);
+      }
+      for (const extraContext of [
+        { project_context_handle: "not-a-context-handle" },
+        {
+          root_dir: REPO_ROOT,
+          project_context_handle: "salt-project-context-v1.e30",
+        },
+      ]) {
+        const invalidReview = await client.callTool({
+          name: "review_salt_code",
+          arguments: {
+            artifacts: [
+              { id: "context.tsx", language: "tsx", text: "export {};" },
+            ],
+            ...extraContext,
+          },
+        });
+        expect(invalidReview.isError).toBe(true);
+      }
     });
   });
 
-  it("lists every canonical record with bounded cursor pages and typed aggregation", async () => {
+  it("lists a curated manifest while exact linked records remain retrievable", async () => {
     await withProtocolClient(async (client) => {
       const manifestUri = catalogManifestResourceUri(
         runtimeContext.store.manifest,
       );
-      const expectedUris = [
-        manifestUri,
-        ...canonicalCatalogRuntimeFamilies().flatMap((family) =>
-          runtimeContext.store
-            .getFamily(family)
-            .map((record) =>
-              catalogRecordResourceUri(
-                runtimeContext.store.manifest,
-                family,
-                record.id,
-              ),
-            ),
-        ),
-      ];
-
-      const directUris: string[] = [];
-      let cursor: string | undefined;
-      let pageCount = 0;
-      do {
-        const page = await directResourcePage(client, cursor);
-        expect(page.resources.length).toBeGreaterThan(0);
-        expect(page.resources.length).toBeLessThanOrEqual(
-          MAX_CATALOG_RESOURCES_PER_PAGE,
-        );
-        expect(
-          Buffer.byteLength(JSON.stringify(page), "utf8"),
-        ).toBeLessThanOrEqual(MAX_CATALOG_RESOURCE_LIST_PAGE_UTF8_BYTES);
-        directUris.push(...page.resources.map((resource) => resource.uri));
-        cursor = page.nextCursor;
-        pageCount += 1;
-      } while (cursor);
-
-      expect(pageCount).toBeGreaterThan(1);
-      expect(directUris).toEqual(expectedUris);
-      expect(new Set(directUris).size).toBe(directUris.length);
-      expect(directUris[25]).toBe(expectedUris[25]);
-      expect(directUris[26]).toBe(expectedUris[26]);
-      expect(directUris[103]).toBe(expectedUris[103]);
+      const directPage = await directResourcePage(client);
+      expect(directPage).toMatchObject({
+        resources: [expect.objectContaining({ uri: manifestUri })],
+      });
+      expect(directPage.nextCursor).toBeUndefined();
 
       const resources = await client.listResources();
       expect(resources.nextCursor).toBeUndefined();
-      expect(resources.resources.map((resource) => resource.uri)).toEqual(
-        expectedUris,
-      );
+      expect(resources.resources.map((resource) => resource.uri)).toEqual([
+        manifestUri,
+      ]);
 
       const templates = await client.listResourceTemplates();
       expect(
@@ -1454,7 +1613,7 @@ describe("createSaltMcpServer final public boundary", () => {
         catalog_version: runtimeContext.store.manifest.catalog_version,
         semantic_digest: runtimeContext.store.manifest.semantic_digest,
         negotiated_mcp_protocol_revision:
-          SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS[0],
+          SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
       });
       expect((publicManifest.families as unknown[]).length).toBe(
         canonicalCatalogRuntimeFamilies().length,
@@ -1482,28 +1641,6 @@ describe("createSaltMcpServer final public boundary", () => {
       ).rejects.toThrow();
     });
   }, 60_000);
-
-  it("rejects malformed, stale, and out-of-range resource cursors", async () => {
-    await withProtocolClient(async (client) => {
-      const firstPage = await directResourcePage(client);
-      const validCursor = firstPage.nextCursor;
-      expect(validCursor).toBeTruthy();
-      const stalePayload = JSON.parse(
-        Buffer.from(validCursor ?? "", "base64url").toString("utf8"),
-      ) as Record<string, unknown>;
-      stalePayload.digest = `sha256:${"0".repeat(64)}`;
-      const staleCursor = Buffer.from(
-        JSON.stringify(stalePayload),
-        "utf8",
-      ).toString("base64url");
-
-      for (const cursor of ["%%%", staleCursor]) {
-        await expect(client.listResources({ cursor })).rejects.toMatchObject({
-          code: ProtocolErrorCode.InvalidParams,
-        });
-      }
-    });
-  });
 
   it("completes retained resource-template arguments through the protocol", async () => {
     await withProtocolClient(async (client) => {

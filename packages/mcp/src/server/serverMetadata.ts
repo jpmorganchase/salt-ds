@@ -9,13 +9,19 @@ import { REGISTERED_SALT_TOOL_NAMES } from "./toolDefinitions.js";
 
 const SALT_MCP_SERVER_NAME = "salt-mcp";
 
-export const SALT_MCP_PROTOCOL_ERA = "legacy" as const;
-export const SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS = [
-  "2025-11-25",
+export const SALT_MCP_PROTOCOL_ERA = "dual" as const;
+export const SALT_MCP_CURRENT_PROTOCOL_VERSION = "2026-07-28" as const;
+export const SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION = "2025-11-25" as const;
+export const SALT_MCP_SUPPORTED_LEGACY_PROTOCOL_VERSIONS = [
+  SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
   "2025-06-18",
   "2025-03-26",
   "2024-11-05",
   "2024-10-07",
+] as const;
+export const SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS = [
+  SALT_MCP_CURRENT_PROTOCOL_VERSION,
+  ...SALT_MCP_SUPPORTED_LEGACY_PROTOCOL_VERSIONS,
 ] as const;
 
 interface SaltMcpPackageManifest {

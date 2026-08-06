@@ -29,6 +29,27 @@ export const MAX_PROJECT_POLICY_SNAPSHOT_CACHE_ENTRIES = 8;
 export const MAX_PROJECT_POLICY_SNAPSHOT_CACHE_UTF8_BYTES = 64 * 1024 * 1024;
 export const MAX_PROJECT_POLICY_SNAPSHOT_CACHE_ENTRY_UTF8_BYTES =
   32 * 1024 * 1024;
+export const MAX_PROJECT_CONTEXT_HANDLE_CHARS = 8 * 1024;
+const PROJECT_CONTEXT_HANDLE_PREFIX = "salt-project-context-v1.";
+const MAX_PROJECT_POLICY_CLAIM_REASON_UTF8_BYTES = 2 * 1024;
+const MAX_PROJECT_POLICY_CLAIM_DOCS = 16;
+const MAX_PROJECT_POLICY_CLAIM_DOC_UTF8_BYTES = 512;
+const MAX_PROJECT_POLICY_CLAIM_OPAQUE_TEXT_UTF8_BYTES = 256;
+
+function boundedClaimText(value: string, maxUtf8Bytes: number): string {
+  if (Buffer.byteLength(value, "utf8") <= maxUtf8Bytes) return value;
+  const suffix = "…";
+  const contentBudget = maxUtf8Bytes - Buffer.byteLength(suffix, "utf8");
+  let bytes = 0;
+  let result = "";
+  for (const character of value) {
+    const characterBytes = Buffer.byteLength(character, "utf8");
+    if (bytes + characterBytes > contentBudget) break;
+    result += character;
+    bytes += characterBytes;
+  }
+  return `${result}${suffix}`;
+}
 
 export interface AuthorizedProjectPolicySnapshot {
   authorization: Extract<ProjectRootAuthorization, { status: "authorized" }>;
@@ -36,8 +57,10 @@ export interface AuthorizedProjectPolicySnapshot {
   ir: SaltProjectPolicyIrV2 | null;
   canonical_json: string | null;
   digest: string | null;
+  context_digest: string;
   chunks: string[];
   salt_version: string | null;
+  package_versions: Readonly<Record<string, string>>;
 }
 
 export type ProjectPolicySnapshotLoadResult =
@@ -94,7 +117,6 @@ export class ProjectPolicySnapshotCache {
   }
 
   remember(snapshot: AuthorizedProjectPolicySnapshot): void {
-    if (!snapshot.ir || !snapshot.digest) return;
     const utf8Bytes = Buffer.byteLength(JSON.stringify(snapshot), "utf8");
     if (utf8Bytes > this.limits.maxEntryUtf8Bytes) {
       throw new Error(
@@ -104,7 +126,7 @@ export class ProjectPolicySnapshotCache {
     const retainedSnapshot = immutableSnapshot(snapshot);
     const key = snapshotCacheKey(
       retainedSnapshot.authorization.rootDir,
-      retainedSnapshot.digest!,
+      retainedSnapshot.context_digest,
     );
     const existing = this.#entries.get(key);
     if (existing) {
@@ -135,11 +157,71 @@ export class ProjectPolicySnapshotCache {
 
   get(rootDir: string, digest: string): AuthorizedProjectPolicySnapshot | null {
     const key = snapshotCacheKey(rootDir, digest);
-    const entry = this.#entries.get(key);
+    let entry = this.#entries.get(key);
+    let retainedKey = key;
+    if (!entry) {
+      for (const [candidateKey, candidate] of this.#entries) {
+        if (
+          candidate.snapshot.authorization.rootDir === rootDir &&
+          candidate.snapshot.digest === digest
+        ) {
+          entry = candidate;
+          retainedKey = candidateKey;
+          break;
+        }
+      }
+    }
     if (!entry) return null;
-    this.#entries.delete(key);
-    this.#entries.set(key, entry);
+    this.#entries.delete(retainedKey);
+    this.#entries.set(retainedKey, entry);
     return entry.snapshot;
+  }
+}
+
+export function createProjectContextHandle(
+  snapshot: AuthorizedProjectPolicySnapshot,
+): string {
+  const payload = Buffer.from(
+    canonicalJson({
+      root_dir: snapshot.authorization.rootDir,
+      context_digest: snapshot.context_digest,
+    }),
+    "utf8",
+  ).toString("base64url");
+  return `${PROJECT_CONTEXT_HANDLE_PREFIX}${payload}`;
+}
+
+export function parseProjectContextHandle(handle: string): {
+  rootDir: string;
+  contextDigest: string;
+} {
+  if (
+    handle.length > MAX_PROJECT_CONTEXT_HANDLE_CHARS ||
+    !handle.startsWith(PROJECT_CONTEXT_HANDLE_PREFIX)
+  ) {
+    throw new Error("Invalid project context handle.");
+  }
+  try {
+    const value = JSON.parse(
+      Buffer.from(
+        handle.slice(PROJECT_CONTEXT_HANDLE_PREFIX.length),
+        "base64url",
+      ).toString("utf8"),
+    ) as Record<string, unknown>;
+    if (
+      Object.keys(value).length !== 2 ||
+      typeof value.root_dir !== "string" ||
+      typeof value.context_digest !== "string" ||
+      !/^sha256:[0-9a-f]{64}$/u.test(value.context_digest)
+    ) {
+      throw new Error("invalid payload");
+    }
+    return {
+      rootDir: value.root_dir,
+      contextDigest: value.context_digest,
+    };
+  } catch {
+    throw new Error("Invalid project context handle.");
   }
 }
 
@@ -165,8 +247,29 @@ export function createProjectPolicySnapshot(input: {
   authorization: Extract<ProjectRootAuthorization, { status: "authorized" }>;
   inspection: ProjectPolicyInspection;
   saltVersion: string | null;
+  packageVersions?: Readonly<Record<string, string>>;
 }): AuthorizedProjectPolicySnapshot {
   const ir = input.inspection.ir;
+  const packageVersions = Object.fromEntries(
+    Object.entries(input.packageVersions ?? {}).sort(([left], [right]) =>
+      left.localeCompare(right),
+    ),
+  );
+  const policyDigest = ir
+    ? `sha256:${createHash("sha256").update(canonicalJson(ir), "utf8").digest("hex")}`
+    : null;
+  const contextDigest = `sha256:${createHash("sha256")
+    .update(
+      canonicalJson({
+        contract: "salt_project_context_v1",
+        root_dir: input.authorization.rootDir,
+        project_policy_digest: policyDigest,
+        salt_version: input.saltVersion,
+        package_versions: packageVersions,
+      }),
+      "utf8",
+    )
+    .digest("hex")}`;
   if (!ir) {
     return {
       authorization: input.authorization,
@@ -174,8 +277,10 @@ export function createProjectPolicySnapshot(input: {
       ir: null,
       canonical_json: null,
       digest: null,
+      context_digest: contextDigest,
       chunks: [],
       salt_version: input.saltVersion,
+      package_versions: packageVersions,
     };
   }
   const canonical = canonicalJson(ir);
@@ -197,9 +302,11 @@ export function createProjectPolicySnapshot(input: {
     inspection: input.inspection,
     ir,
     canonical_json: canonical,
-    digest: `sha256:${createHash("sha256").update(bytes).digest("hex")}`,
+    digest: policyDigest,
+    context_digest: contextDigest,
     chunks,
     salt_version: input.saltVersion,
+    package_versions: packageVersions,
   };
 }
 
@@ -251,6 +358,11 @@ export async function loadAuthorizedProjectPolicySnapshot(
     authorization,
     inspection,
     saltVersion: currentSaltVersion,
+    packageVersions: Object.fromEntries(
+      installation.resolvedPackages.flatMap((entry) =>
+        entry.resolvedVersion ? [[entry.name, entry.resolvedVersion]] : [],
+      ),
+    ),
   });
   cache?.remember(snapshot);
   return snapshot;
@@ -309,32 +421,53 @@ export function projectPolicyClaimRecord(
     }
   })();
   const declaration = (() => {
+    const sourceDocs = occurrence.declaration.docs ?? [];
+    const boundedReason = boundedClaimText(
+      occurrence.declaration.reason,
+      MAX_PROJECT_POLICY_CLAIM_REASON_UTF8_BYTES,
+    );
+    const authoredContext = {
+      reason: boundedReason,
+      reason_truncated: boundedReason !== occurrence.declaration.reason,
+      docs: sourceDocs
+        .slice(0, MAX_PROJECT_POLICY_CLAIM_DOCS)
+        .map((entry) =>
+          boundedClaimText(entry, MAX_PROJECT_POLICY_CLAIM_DOC_UTF8_BYTES),
+        ),
+      docs_available: sourceDocs.length,
+      docs_returned: Math.min(sourceDocs.length, MAX_PROJECT_POLICY_CLAIM_DOCS),
+    };
     switch (occurrence.category) {
       case "approved_wrapper":
         return {
           name: occurrence.declaration.name,
+          ...authoredContext,
         };
       case "banned_choice":
         return {
           name: occurrence.declaration.name,
           replacement: occurrence.declaration.replacement ?? null,
+          ...authoredContext,
         };
       case "preferred_component":
       case "token_alias":
         return {
           prefer: occurrence.declaration.prefer,
+          ...authoredContext,
         };
       case "token_family_policy":
         return {
           family: occurrence.declaration.family,
           mode: occurrence.declaration.mode,
+          ...authoredContext,
         };
       case "pattern_preference":
         return {
           prefer: occurrence.declaration.prefer,
+          ...authoredContext,
         };
       case "theme_defaults":
-        return {};
+        return authoredContext;
     }
   })();
   const applicabilitySummary = summarizeClaimApplicability(occurrence);
@@ -420,10 +553,15 @@ function claimConditionShape(
         origin: condition.origin,
       };
     case "opaque":
+      const text = boundedClaimText(
+        condition.text,
+        MAX_PROJECT_POLICY_CLAIM_OPAQUE_TEXT_UTF8_BYTES,
+      );
       return {
         type: "opaque",
         origin: condition.origin,
-        text_omitted: true,
+        text,
+        text_truncated: text !== condition.text,
       };
   }
 }

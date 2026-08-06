@@ -5,26 +5,18 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const {
   createSaltMcpServerMock,
+  serveStdioMock,
   serverCloseMock,
-  serverConnectMock,
   serverInstance,
-  transportCloseMock,
-  transportInstance,
-  transportMock,
+  stdioHandleCloseMock,
 } = vi.hoisted(() => {
-  const transportClose = vi.fn(async () => {});
   const serverClose = vi.fn(async () => {});
-  const serverConnect = vi.fn(
-    async (_transport: { close: () => Promise<void> }) => {},
-  );
   return {
     createSaltMcpServerMock: vi.fn(),
+    serveStdioMock: vi.fn(),
     serverCloseMock: serverClose,
-    serverConnectMock: serverConnect,
-    serverInstance: { close: serverClose, connect: serverConnect },
-    transportCloseMock: transportClose,
-    transportInstance: { kind: "stdio", close: transportClose },
-    transportMock: vi.fn(),
+    serverInstance: { close: serverClose },
+    stdioHandleCloseMock: vi.fn(async () => {}),
   };
 });
 
@@ -33,7 +25,7 @@ vi.mock("../server/createServer.js", () => ({
 }));
 
 vi.mock("@modelcontextprotocol/server/stdio", () => ({
-  StdioServerTransport: transportMock,
+  serveStdio: serveStdioMock,
 }));
 
 import { runCli } from "../cli.js";
@@ -52,17 +44,14 @@ describe("runCli", () => {
   beforeEach(() => {
     createSaltMcpServerMock.mockReset();
     serverCloseMock.mockClear();
-    serverConnectMock.mockReset();
-    transportCloseMock.mockClear();
-    transportMock.mockReset();
+    serveStdioMock.mockReset();
+    stdioHandleCloseMock.mockClear();
 
     createSaltMcpServerMock.mockResolvedValue(serverInstance);
-    transportMock.mockImplementation(function MockTransport() {
-      transportInstance.close = transportCloseMock;
-      return transportInstance;
-    });
-    serverConnectMock.mockImplementation(async (transport) => {
-      queueMicrotask(() => void transport.close());
+    serveStdioMock.mockImplementation((factory) => {
+      void factory({ era: "modern" });
+      queueMicrotask(() => process.stdin.emit("end"));
+      return { close: stdioHandleCloseMock };
     });
     vi.spyOn(console, "error").mockImplementation(() => {});
   });
@@ -85,7 +74,7 @@ describe("runCli", () => {
       expect.stringContaining("Usage: salt-mcp"),
     );
     expect(createSaltMcpServerMock).not.toHaveBeenCalled();
-    expect(serverConnectMock).not.toHaveBeenCalled();
+    expect(serveStdioMock).not.toHaveBeenCalled();
   });
 
   it.each([
@@ -99,7 +88,7 @@ describe("runCli", () => {
 
     expect(log).toHaveBeenCalledWith(packageVersion);
     expect(createSaltMcpServerMock).not.toHaveBeenCalled();
-    expect(serverConnectMock).not.toHaveBeenCalled();
+    expect(serveStdioMock).not.toHaveBeenCalled();
   });
 
   it("rejects arguments combined with help", async () => {
@@ -110,7 +99,7 @@ describe("runCli", () => {
     );
 
     expect(log).not.toHaveBeenCalled();
-    expect(serverConnectMock).not.toHaveBeenCalled();
+    expect(serveStdioMock).not.toHaveBeenCalled();
   });
 
   it("rejects arguments combined with version", async () => {
@@ -121,20 +110,23 @@ describe("runCli", () => {
     );
 
     expect(log).not.toHaveBeenCalled();
-    expect(serverConnectMock).not.toHaveBeenCalled();
+    expect(serveStdioMock).not.toHaveBeenCalled();
   });
 
-  it("defaults to serve and exits when the owned transport closes", async () => {
+  it("defaults to a dual-era stdio factory and closes its serving handle", async () => {
     await runCli([]);
 
-    expect(transportMock).toHaveBeenCalledTimes(1);
-    expect(serverConnectMock).toHaveBeenCalledWith(transportInstance);
+    expect(serveStdioMock).toHaveBeenCalledTimes(1);
+    expect(serveStdioMock).toHaveBeenCalledWith(expect.any(Function), {
+      legacy: "serve",
+      onerror: expect.any(Function),
+    });
     expect(createSaltMcpServerMock).toHaveBeenCalledWith({
       projectAccess: { mode: "unrestricted_local_stdio" },
       registryDir: undefined,
     });
-    expect(transportCloseMock).toHaveBeenCalledTimes(1);
-    expect(serverCloseMock).toHaveBeenCalledTimes(1);
+    expect(stdioHandleCloseMock).toHaveBeenCalledTimes(1);
+    expect(serverCloseMock).not.toHaveBeenCalled();
   });
 
   it("treats a leading registry flag as a serve argument", async () => {
@@ -155,6 +147,18 @@ describe("runCli", () => {
     });
   });
 
+  it("accepts an explicit workspace boundary for child-package inspection", async () => {
+    await runCli(["serve", "--workspace-root", "./workspace"]);
+
+    expect(createSaltMcpServerMock).toHaveBeenCalledWith({
+      projectAccess: {
+        mode: "unrestricted_local_stdio",
+        defaultRoot: path.resolve("./workspace"),
+      },
+      registryDir: undefined,
+    });
+  });
+
   it("rejects build-registry as a public CLI command", async () => {
     await expect(runCli(["build-registry"])).rejects.toThrow(
       "Unknown command: build-registry. Supported commands: serve, help, version.",
@@ -172,6 +176,7 @@ describe("runCli", () => {
   it.each([
     ["--registry-dir"],
     ["--registry-dir", "--verbose"],
+    ["--workspace-root"],
   ])("rejects a missing value in %j", async (...argv) => {
     await expect(runCli(argv)).rejects.toThrow(/requires a value/u);
   });

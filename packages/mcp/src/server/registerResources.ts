@@ -1,8 +1,6 @@
 import { Buffer } from "node:buffer";
 import {
   type McpServer,
-  ProtocolError,
-  ProtocolErrorCode,
   ResourceNotFoundError,
   ResourceTemplate,
 } from "@modelcontextprotocol/server";
@@ -17,11 +15,6 @@ import {
   resolveCatalogRecordContentReferences,
   type SaltCatalogRuntimeContext,
 } from "../core/runtime.js";
-import {
-  type CatalogResourceListingSource,
-  InvalidCatalogResourceCursorError,
-  listCatalogResourcePage,
-} from "./catalogResourceListing.js";
 import type { ProjectAccessPolicy } from "./projectAccess.js";
 import {
   isAuthorizedProjectPolicySnapshot,
@@ -35,7 +28,6 @@ import {
 } from "./serverMetadata.js";
 
 export const MAX_CATALOG_RESOURCE_READ_UTF8_BYTES = 64 * 1024;
-const CONTENT_DECODER = new TextDecoder("utf-8", { fatal: true });
 
 function boundedResourceText(uri: string, text: string): string {
   const bytes = Buffer.byteLength(text, "utf8");
@@ -89,30 +81,6 @@ function publicCatalogManifest(
         manifest: context.store.manifest,
         family,
       }),
-    })),
-  };
-}
-
-function catalogResourceListingSource(
-  context: SaltCatalogRuntimeContext,
-): CatalogResourceListingSource {
-  return {
-    manifest: context.store.manifest,
-    manifestUri: normalizeCatalogPublicCitation({
-      kind: "catalog_manifest",
-      manifest: context.store.manifest,
-    }),
-    families: canonicalCatalogRuntimeFamilies().map((family) => ({
-      family,
-      count: canonicalArtifact(context, family).record_count,
-      idAt: (index: number) =>
-        context.store.getFamily(family)[index]?.id ?? null,
-      ...(family === "content"
-        ? {
-            mediaTypeAt: (index: number) =>
-              context.store.getFamily("content")[index]?.media_type ?? null,
-          }
-        : {}),
     })),
   };
 }
@@ -375,9 +343,7 @@ export function registerSaltResources(
           id: record.id,
         };
         void context.store.getContentValue(reference);
-        const text = CONTENT_DECODER.decode(
-          context.store.getContentBytes(reference),
-        );
+        const text = context.store.getContentSourceText(reference);
         return {
           contents: [
             {
@@ -417,20 +383,4 @@ export function registerSaltResources(
       };
     },
   );
-
-  const listingSource = catalogResourceListingSource(context);
-  server.server.setRequestHandler("resources/list", (request) => {
-    try {
-      return listCatalogResourcePage(listingSource, request.params?.cursor);
-    } catch (error) {
-      if (error instanceof InvalidCatalogResourceCursorError) {
-        throw new ProtocolError(
-          ProtocolErrorCode.InvalidParams,
-          error.message,
-          { cursor: request.params?.cursor ?? null },
-        );
-      }
-      throw error;
-    }
-  });
 }

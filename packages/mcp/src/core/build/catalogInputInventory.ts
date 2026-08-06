@@ -51,6 +51,7 @@ export const CATALOG_INPUT_PATTERNS = [
   "scripts/transformWorkspaceDeps.mjs",
   "scripts/utils.mjs",
   "packages/mcp/tsconfig.json",
+  "packages/mcp/public-surface-budgets.json",
   "packages/mcp/scripts/buildRegistry.mjs",
   "packages/mcp/scripts/measurePublicSurface.mjs",
 ] as const;
