@@ -1,7 +1,7 @@
-import carouselSlide1 from "@stories/assets/carouselSlide1.png";
-import carouselSlide2 from "@stories/assets/carouselSlide2.png";
-import carouselSlide3 from "@stories/assets/carouselSlide3.png";
-import carouselSlide4 from "@stories/assets/carouselSlide4.png";
+import carouselSlide1 from "~stories/assets/carouselSlide1.png";
+import carouselSlide2 from "~stories/assets/carouselSlide2.png";
+import carouselSlide3 from "~stories/assets/carouselSlide3.png";
+import carouselSlide4 from "~stories/assets/carouselSlide4.png";
 
 export const sliderData = [
   {
