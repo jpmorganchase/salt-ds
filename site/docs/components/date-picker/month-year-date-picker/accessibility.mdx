@@ -1,0 +1,85 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Wrap the `DatePicker` in [`FormField`](/salt/components/form-field) so the input receives a visible label, help text and a status message. Screen reader users rely on the label to understand which month value they are entering.
+- Clearly indicate months that cannot be selected — via `minDate` / `maxDate` on the parent `DatePicker`, or via `isMonthUnselectable` on the panel. The rejection message you return from `isMonthUnselectable` is surfaced to assistive technology.
+- Match the input `format` (typically `MMMM YYYY`) with the panel's rendered value so screen reader users hear consistent phrasing between the typed and picked value.
+- Consider a `Dropdown` of pre-formatted month options instead of a picker when the set of months is small and fixed.
+
+### Focus
+
+- When the overlay opens, focus lands on the currently-selected month button, or January when there is no selection. This is wired via `useDatePickerOverlay().state.initialFocusRef`.
+- Closing the overlay (Escape, apply, outside-press) returns focus to the triggering input, handled by `DatePickerOverlayProvider`.
+- Within the grid, roving `tabindex` means only the focused month is in the tab order; arrow keys move focus between months.
+
+### Provide instructions and feedback
+
+- Include clear instructions in the input's helper text (for example, "Select a month and year (e.g. January 2026)").
+- Display validation messages via `FormField` `validationStatus`; the message is announced by screen readers when the status changes.
+
+### Announce changes dynamically
+
+- Selection changes are announced through Salt's shared `aria-live` announcer as "Selected: {Month YYYY}".
+- The grid uses ARIA `role="grid"` with `aria-rowcount` / `aria-colcount`, and each month button has an `aria-label` of the form "January 2026" so it is understandable in isolation.
+
+## Keyboard interactions
+
+<KeyboardControls>
+  <KeyboardControl keyOrCombos="Tab">
+    - If focus is above the input, Tab moves focus onto the input. - If the
+    input has focus, Tab moves focus to the calendar button. If the panel is
+    open and the input holds a valid month/year, Tab formats the value. - If
+    focus is on the calendar button and the panel is open, Tab moves focus to
+    the focused month in the grid. - If focus is within the panel, Tab moves
+    focus to the next focusable element (previous year button, year dropdown,
+    next year button, then out of the overlay).
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Shift + Tab">
+    - If focus is on the input, Shift + Tab moves focus out of the component. -
+    If focus is on the calendar button, Shift + Tab moves focus back to the
+    input. - If focus is within the panel, Shift + Tab moves focus to the
+    previous focusable element.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Enter / Space">
+    - If focus is on a month button, Enter or Space selects that month. - If
+    focus is on the previous/next year button, Enter or Space navigates to the
+    adjacent year. - If focus is on the year dropdown, Enter or Space opens the
+    year list; arrow keys move between years and Enter commits the selection. -
+    If focus is on the calendar button, Enter or Space toggles the panel.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Left Arrow / Right Arrow">
+    When focus is on a month button, moves focus to the previous / next month.
+    On the first month of the year, Left Arrow rolls over to December of the
+    previous year; on December, Right Arrow rolls over to January of the next
+    year.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Up Arrow / Down Arrow">
+    When focus is on a month button, moves focus by one row (three months) in
+    the grid. Crossing the top or bottom edge rolls the year over so the
+    corresponding month in the previous / next year receives focus.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Home / End">
+    When focus is on a month button, moves focus to the first / last month of
+    the current row.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Page Up / Page Down">
+    When focus is on a month button, decreases / increases the visible year by
+    one. Focus stays on the same month index.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Shift + Page Up / Shift + Page Down">
+    When focus is on a month button, decreases / increases the visible year by
+    ten.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Escape">
+    Closes the overlay and returns focus to the triggering input.
+  </KeyboardControl>
+</KeyboardControls>
