@@ -3,15 +3,15 @@
 }
 
 .appHeaderPattern-header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  /* Sits below the drawer (`--salt-zIndex-drawer`) so the drawer and its scrim
-     overlay the header when open. */
-  z-index: var(--salt-zIndex-appHeader);
+  z-index: calc(var(--salt-zIndex-drawer) + 1);
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--salt-spacing-300);
+  width: 100%;
   height: var(--appHeaderPattern-height);
   padding-inline: var(--salt-layout-page-margin);
   background: var(--salt-container-primary-background);
@@ -24,10 +24,14 @@
   justify-content: flex-start;
 }
 
-/* The scroll shadow is applied via `position: sticky` on the header itself, so
-   it is not clipped by an `overflow` on an ancestor. */
+/* The scroll shadow is applied to the fixed header itself, so it is not clipped
+   by an `overflow` on an ancestor. */
 .appHeaderPattern-header[data-scrolled="true"] {
   box-shadow: var(--salt-overlayable-shadow-scroll);
+}
+
+.appHeaderPattern-header[data-small-viewport="true"][data-scrolled="true"] {
+  box-shadow: var(--salt-shadow-1);
 }
 
 .appHeaderPattern-logo {
@@ -42,34 +46,27 @@
   list-style: none;
 }
 
-/* Brand row at the top of the drawer, aligned to the app header height. */
-.appHeaderPattern-drawerHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--salt-spacing-300);
-  min-height: var(--appHeaderPattern-height);
+.appHeaderPattern-drawer {
+  padding-top: calc(var(--appHeaderPattern-height) + var(--salt-spacing-300));
 }
 
-/* Utility actions are pinned to the bottom of the flex-column drawer, below the
-   primary navigation. */
-.appHeaderPattern-drawerUtilities {
-  margin-top: auto;
+.appHeaderPattern-firstUtilityItem {
+  margin-top: var(--salt-spacing-300);
 }
 
-.appHeaderPattern-heading {
-  margin: var(--salt-spacing-400);
+.appHeaderPattern-main {
+  margin-top: var(--appHeaderPattern-height);
 }
 
-/* Placeholder content blocks to demonstrate scrolling under the sticky header. */
+/* Placeholder content blocks to demonstrate scrolling under the fixed header. */
 .appHeaderPattern-block {
-  margin: var(--salt-spacing-400);
+  margin: var(--salt-spacing-400) var(--salt-layout-page-margin);
   padding: var(--salt-spacing-400);
   background: var(--salt-container-secondary-background);
 }
 
 .appHeaderPattern-footer {
-  margin: var(--salt-spacing-200);
+  margin: var(--salt-spacing-200) var(--salt-layout-page-margin);
   padding: var(--salt-spacing-200);
   background: var(--salt-container-secondary-background);
 }

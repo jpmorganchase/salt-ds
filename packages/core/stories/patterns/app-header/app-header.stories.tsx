@@ -3,7 +3,6 @@ import {
   BorderLayout,
   Button,
   Drawer,
-  H1,
   NavigationItem,
   SkipLink,
   StackLayout,
@@ -17,10 +16,10 @@ import {
 } from "@salt-ds/core";
 import {
   CloseIcon,
-  GithubIcon,
   MenuIcon,
+  SearchIcon,
+  SettingsIcon,
   StackoverflowIcon,
-  SymphonyIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type FC, type ReactNode, useEffect, useState } from "react";
@@ -48,31 +47,28 @@ const mainContentId = "app-header-main-content";
 
 type NavItem = { href: string; label: string };
 
-const navigationItems: NavItem[] = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/contact", label: "Contact" },
-  { href: "/blog", label: "Blog" },
-];
+const navigationItems: NavItem[] = Array.from({ length: 5 }, (_, index) => ({
+  href: index === 0 ? "/" : `/item-${index + 1}`,
+  label: `Item ${index + 1}`,
+}));
 
 type Utility = { icon: ReactNode; key: string; label: string };
 
 const utilities: Utility[] = [
   {
-    icon: <SymphonyIcon aria-hidden />,
-    key: "Symphony",
-    label: "Open Symphony",
+    icon: <SearchIcon aria-hidden />,
+    key: "Utility action 1",
+    label: "Utility action 1",
   },
   {
     icon: <StackoverflowIcon aria-hidden />,
-    key: "Stack Overflow",
-    label: "Open Stack Overflow",
+    key: "Utility action 2",
+    label: "Utility action 2",
   },
   {
-    icon: <GithubIcon aria-hidden />,
-    key: "GitHub",
-    label: "Open GitHub",
+    icon: <SettingsIcon aria-hidden />,
+    key: "Utility action 3",
+    label: "Utility action 3",
   },
 ];
 
@@ -139,8 +135,9 @@ const DrawerNavigation: FC<{
   activePath: string;
   items: NavItem[];
   onNavigate: () => void;
-}> = ({ activePath, items, onNavigate }) => (
-  <VerticalNavigation aria-label="Main navigation" appearance="indicator">
+  utilities: Utility[];
+}> = ({ activePath, items, onNavigate, utilities }) => (
+  <VerticalNavigation aria-label="Main navigation">
     {items.map((item) => (
       <VerticalNavigationItem key={item.href} active={activePath === item.href}>
         <VerticalNavigationItemContent>
@@ -155,39 +152,30 @@ const DrawerNavigation: FC<{
         </VerticalNavigationItemContent>
       </VerticalNavigationItem>
     ))}
+    {utilities.map((utility, index) => (
+      <VerticalNavigationItem
+        key={utility.key}
+        className={
+          index === 0 ? "appHeaderPattern-firstUtilityItem" : undefined
+        }
+      >
+        <VerticalNavigationItemContent>
+          <VerticalNavigationItemTrigger onClick={onNavigate}>
+            {utility.icon}
+            <VerticalNavigationItemLabel>
+              {utility.key}
+            </VerticalNavigationItemLabel>
+          </VerticalNavigationItemTrigger>
+        </VerticalNavigationItemContent>
+      </VerticalNavigationItem>
+    ))}
   </VerticalNavigation>
-);
-
-const DrawerUtilities: FC<{
-  onNavigate: () => void;
-  utilities: Utility[];
-}> = ({ onNavigate, utilities }) => (
-  // Utility actions sit at the bottom of the drawer (pinned via CSS), below the
-  // primary navigation.
-  <div className="appHeaderPattern-drawerUtilities">
-    <VerticalNavigation aria-label="Utilities" appearance="indicator">
-      {utilities.map((utility) => (
-        <VerticalNavigationItem key={utility.key}>
-          <VerticalNavigationItemContent>
-            {/* Utilities are actions rather than routes, so the trigger renders
-                a button (no `href`/`render`). */}
-            <VerticalNavigationItemTrigger onClick={onNavigate}>
-              {utility.icon}
-              <VerticalNavigationItemLabel>
-                {utility.key}
-              </VerticalNavigationItemLabel>
-            </VerticalNavigationItemTrigger>
-          </VerticalNavigationItemContent>
-        </VerticalNavigationItem>
-      ))}
-    </VerticalNavigation>
-  </div>
 );
 
 // Hosts the app header within a page (BorderLayout + main + footer) so it can be
 // shown in context. The app header itself is the `<header>` region below (plus
 // its drawer on small viewports); the main/footer/placeholder content is only
-// scaffolding to demonstrate the sticky header and scroll shadow.
+// scaffolding to demonstrate the fixed header and scroll shadow.
 const AppHeaderPage: FC = () => {
   // The header collapses into a drawer on small viewports (xs and sm), matching
   // the Salt breakpoints. This is driven by viewport width, not density —
@@ -225,11 +213,15 @@ const AppHeaderPage: FC = () => {
           {isSmallViewport ? (
             <>
               <Button
-                aria-label="Open navigation"
+                aria-label={drawerOpen ? "Close navigation" : "Open navigation"}
                 appearance="transparent"
-                onClick={() => setDrawerOpen(true)}
+                onClick={() => setDrawerOpen((open) => !open)}
               >
-                <MenuIcon aria-hidden />
+                {drawerOpen ? (
+                  <CloseIcon aria-hidden />
+                ) : (
+                  <MenuIcon aria-hidden />
+                )}
               </Button>
               <LogoLink />
             </>
@@ -241,10 +233,12 @@ const AppHeaderPage: FC = () => {
             </>
           )}
         </BorderItem>
-        <BorderItem as="main" position="center">
-          <H1 id={mainContentId} className="appHeaderPattern-heading">
-            Explore our offering
-          </H1>
+        <BorderItem
+          as="main"
+          id={mainContentId}
+          position="center"
+          className="appHeaderPattern-main"
+        >
           {Array.from({ length: 12 }, (_, index) => (
             <div
               // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
@@ -259,31 +253,21 @@ const AppHeaderPage: FC = () => {
           </div>
         </BorderItem>
       </BorderLayout>
-      {/* The drawer is a modal overlay: its scrim covers and inerts everything
-          behind it (including the header), so the close control lives inside
-          the drawer rather than in the now-inert header. */}
+      {/* The drawer content is offset below the fixed app header to preserve the
+          original small-viewport example layout. */}
       {isSmallViewport && (
         <Drawer
-          aria-label="Navigation menu"
+          aria-label="Main navigation"
+          className="appHeaderPattern-drawer"
           open={drawerOpen}
           onOpenChange={setDrawerOpen}
         >
-          <div className="appHeaderPattern-drawerHeader">
-            <LogoLink onNavigate={closeDrawer} />
-            <Button
-              aria-label="Close navigation"
-              appearance="transparent"
-              onClick={closeDrawer}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
-          </div>
           <DrawerNavigation
             activePath={pathname}
             items={navigationItems}
             onNavigate={closeDrawer}
+            utilities={utilities}
           />
-          <DrawerUtilities onNavigate={closeDrawer} utilities={utilities} />
         </Drawer>
       )}
     </>
@@ -307,5 +291,16 @@ export const AppHeader: StoryFn = () => <AppHeaderPage />;
 export const SmallViewport: StoryFn = AppHeader.bind({});
 
 SmallViewport.globals = {
+  viewport: { value: "xs" },
+};
+
+/**
+ * Emulates a mobile device by combining the extra small viewport with mobile
+ * density.
+ */
+export const Mobile: StoryFn = AppHeader.bind({});
+
+Mobile.globals = {
+  density: "mobile",
   viewport: { value: "xs" },
 };
