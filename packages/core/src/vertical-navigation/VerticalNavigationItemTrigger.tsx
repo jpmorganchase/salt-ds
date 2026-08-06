@@ -13,9 +13,11 @@ import { useVerticalNavigationItem } from "./VerticalNavigationItem";
 import verticalNavigationItemTriggerCss from "./VerticalNavigationItemTrigger.css";
 
 // biome-ignore lint/suspicious/noExplicitAny: We don't know the exact type here
-function ItemAction(props: ComponentPropsWithoutRef<any>) {
-  return renderProps("a", props);
-}
+const ItemAction = forwardRef<HTMLAnchorElement, ComponentPropsWithoutRef<any>>(
+  function ItemAction(props, ref) {
+    return renderProps("a", { ...props, ref });
+  },
+);
 
 export interface VerticalNavigationItemTriggerProps
   extends ComponentPropsWithoutRef<"a"> {
