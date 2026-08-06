@@ -236,6 +236,31 @@ describe("bounded tsconfig alias loading", () => {
     expect(result.pathsMatcher?.("@fixture-0/Button")).toEqual([]);
   });
 
+  it("resolves each branch of a diamond extends graph independently", async () => {
+    const root = await tempDir("salt-tsconfig-diamond");
+    await writeJson(path.join(root, "base.json"), {
+      compilerOptions: { paths: { "@app/*": ["base/*"] } },
+    });
+    await writeJson(path.join(root, "left.json"), {
+      extends: "./base.json",
+      compilerOptions: { paths: { "@app/*": ["left/*"] } },
+    });
+    await writeJson(path.join(root, "right.json"), {
+      extends: "./base.json",
+    });
+    await writeJson(path.join(root, "tsconfig.json"), {
+      extends: ["./left.json", "./right.json"],
+    });
+
+    const result = await loadBoundedTsconfigAliases(root);
+
+    expect(result.limitations).toEqual([]);
+    expect(result.pathsMatcher?.("@app/Button")).toEqual([
+      path.join(root, "base", "Button"),
+    ]);
+    expect(result.filesRead).toBe(4);
+  });
+
   it("inherits baseUrl for child-defined paths and rejects malformed config fields", async () => {
     const root = await tempDir("salt-tsconfig-inherited-base-url");
     await writeJson(path.join(root, "base.json"), {

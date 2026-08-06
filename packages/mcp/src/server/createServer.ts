@@ -10,7 +10,7 @@ import { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 import {
   buildSaltMcpInstructions,
   buildSaltMcpServerInfo,
-  SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS,
+  SALT_MCP_SUPPORTED_LEGACY_PROTOCOL_VERSIONS,
 } from "./serverMetadata.js";
 
 interface CreateServerOptions {
@@ -27,7 +27,7 @@ export async function createSaltMcpServer(options: CreateServerOptions = {}) {
 
   const server = new McpServer(buildSaltMcpServerInfo(context), {
     instructions: buildSaltMcpInstructions(context),
-    supportedProtocolVersions: [...SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS],
+    supportedProtocolVersions: [...SALT_MCP_SUPPORTED_LEGACY_PROTOCOL_VERSIONS],
     capabilities: {
       resources: { listChanged: false, subscribe: false },
     },

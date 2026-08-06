@@ -42,6 +42,14 @@ export interface EvaluatedReviewFinding {
     digest: string;
     applicability: "applicable";
     salt_version: string | null;
+    trust: "untrusted_advisory";
+    category: SaltProjectPolicyIrV2["occurrences"][number]["category"];
+    conflict_group: string | null;
+    competing_claims: Array<{
+      occurrence_id: string;
+      category: SaltProjectPolicyIrV2["occurrences"][number]["category"];
+      locator: string;
+    }>;
   } | null;
   evidence: {
     references: ReviewEvidenceReference[];
@@ -867,60 +875,53 @@ function policyFinding(
   occurrence: SaltProjectPolicyIrV2["occurrences"][number],
   fact: ParsedSubmittedFact,
   effectiveSaltVersion: string | null,
+  conflict: {
+    group: string | null;
+    competing: SaltProjectPolicyIrV2["occurrences"][number][];
+  },
 ): EvaluatedReviewFinding | null {
-  let severity: EvaluatedReviewFinding["severity"] = "info";
-  let remediation: string | null = null;
   let fieldPath = "declaration";
   switch (occurrence.category) {
     case "approved_wrapper":
       if (!approvedWrapperImportVerified(occurrence)) {
         return null;
       }
-      severity = "warning";
-      remediation =
-        "Review the cited project-policy claim and use its applicable approved wrapper.";
       fieldPath = "claim.declaration.name";
       break;
     case "preferred_component":
-      severity = "warning";
-      remediation =
-        "Review the cited project-policy claim and use its applicable component preference.";
       fieldPath = "claim.declaration.prefer";
       break;
     case "token_alias":
-      severity = "info";
-      remediation =
-        "Review the cited project-policy claim and use its applicable explicit token alias.";
       fieldPath = "claim.declaration.prefer";
       break;
     case "banned_choice":
-      severity = "error";
-      remediation = occurrence.declaration.replacement
-        ? "Review the cited project-policy claim and use its declared replacement for this banned choice."
-        : null;
       fieldPath = occurrence.declaration.replacement
         ? "claim.declaration.replacement"
         : "claim.declaration.name";
       break;
     case "pattern_preference":
-      severity = "info";
-      remediation =
-        "Review the cited project-policy claim and use its applicable pattern preference.";
       fieldPath = "claim.declaration.prefer";
       break;
     case "token_family_policy":
     case "theme_defaults":
       return null;
   }
-  const claimLocator = normalizeCatalogPublicCitation({
-    kind: "project_policy_resource",
-    rootDir: policy.root_dir,
-    digest: policy.digest,
-    resourceKind: "claim",
-    id: occurrence.occurrence_id,
-  });
+  const claimLocator = (
+    candidate: SaltProjectPolicyIrV2["occurrences"][number],
+  ) =>
+    normalizeCatalogPublicCitation({
+      kind: "project_policy_resource",
+      rootDir: policy.root_dir,
+      digest: policy.digest,
+      resourceKind: "claim",
+      id: candidate.occurrence_id,
+    });
   const referencePaths = [
     fieldPath,
+    "claim.declaration.reason",
+    ...(occurrence.declaration.docs?.length
+      ? ["claim.declaration.docs"]
+      : []),
     "claim.selector",
     "claim.applicability",
     "claim.source",
@@ -933,19 +934,27 @@ function policyFinding(
     id: `${occurrence.policy_type_id}.${occurrence.occurrence_id}.${fact.fact_id}`,
     rule_id: occurrence.policy_type_id,
     rule_description:
-      "An explicitly declared project-policy occurrence applies to a parsed submitted fact.",
-    severity,
+      "An untrusted repository-policy claim applies to a parsed submitted fact and is returned as advisory evidence for host arbitration.",
+    severity: "info",
     parsed_fact: publicParsedFact(fact),
     location: fact.location,
-    remediation,
+    remediation: null,
     policy_evaluation: {
       digest: policy.digest,
       applicability: "applicable",
       salt_version: effectiveSaltVersion,
+      trust: "untrusted_advisory",
+      category: occurrence.category,
+      conflict_group: conflict.group,
+      competing_claims: conflict.competing.map((candidate) => ({
+        occurrence_id: candidate.occurrence_id,
+        category: candidate.category,
+        locator: claimLocator(candidate),
+      })),
     },
     evidence: {
       references: referencePaths.map((field_path) => ({
-        locator: claimLocator,
+        locator: claimLocator(occurrence),
         field_path,
       })),
       validation: "source_bound",
@@ -1101,30 +1110,31 @@ function evaluateProjectPolicyRules(input: {
       return { occurrence, fact };
     }),
   );
-  const winningPrecedenceByFact = new Map<string, number>();
+  const candidatesByFact = new Map<string, typeof findingCandidates>();
   for (const candidate of findingCandidates) {
-    const precedence = candidate.occurrence.rule_precedence ?? 99;
-    winningPrecedenceByFact.set(
-      candidate.fact.fact_id,
-      Math.min(
-        winningPrecedenceByFact.get(candidate.fact.fact_id) ?? 99,
-        precedence,
-      ),
-    );
+    const candidates = candidatesByFact.get(candidate.fact.fact_id) ?? [];
+    candidates.push(candidate);
+    candidatesByFact.set(candidate.fact.fact_id, candidates);
   }
   const findings = findingCandidates.flatMap(({ occurrence, fact }) => {
-    if (
-      (occurrence.rule_precedence ?? 99) !==
-      winningPrecedenceByFact.get(fact.fact_id)
-    ) {
-      return [];
-    }
+    const candidates = candidatesByFact.get(fact.fact_id) ?? [];
     consumeReviewBudget(input.budget);
     const finding = policyFinding(
       policy,
       occurrence,
       fact,
       effectiveSaltVersion,
+      {
+        group:
+          candidates.length > 1
+            ? `project-policy-conflict:${fact.fact_id}`
+            : null,
+        competing: candidates
+          .map((candidate) => candidate.occurrence)
+          .filter(
+            (candidate) => candidate.occurrence_id !== occurrence.occurrence_id,
+          ),
+      },
     );
     return finding ? [finding] : [];
   });
@@ -1142,7 +1152,7 @@ function evaluateProjectPolicyRules(input: {
         : []),
       ...(unresolvedPrecedenceCount > 0
         ? [
-            `${unresolvedPrecedenceCount} otherwise-effective project-policy occurrence${unresolvedPrecedenceCount === 1 ? " was" : "s were"} withheld because a required higher-precedence policy layer was unresolved.`,
+            `${unresolvedPrecedenceCount} otherwise-effective project-policy occurrence${unresolvedPrecedenceCount === 1 ? " was" : "s were"} withheld because a required later policy layer was unresolved.`,
           ]
         : []),
       ...(unresolvedRequiredLayerCount > 0

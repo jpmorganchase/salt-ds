@@ -33,13 +33,24 @@ an uncached stale digest is rejected. Claim resources are minimal exact-field
 projections, while the manifest chunks reconstruct the complete canonical IR.
 The manifest and claim links are returned as MCP resource links; large policy
 IR is therefore recoverable even when omitted from the bounded inline result.
+Policy evaluation is enabled by default and is independent of delivery:
+`include_policy_ir: true` explicitly requests a bounded inline copy, while
+`evaluate_policy: false` selects detection-only inspection.
 
-Resource discovery cursor-pages every canonical record in descriptor order.
-Exact record reads return compact metadata plus digest-bound links to larger
-content; reading a `content` resource returns its verified payload and media
-type. Resource-template completion is a convenience capped by the negotiated
-protocol response and reports `total`/`hasMore`; exhaustive discovery always
-uses resource listing. The packaged catalog is immutable, so the server does
+Inspection also returns an opaque `project_context_handle` backed by the same
+bounded process-local cache. Passing it to `review_salt_code` reuses the exact
+policy snapshot and resolved exact package versions without rereading the
+project. The handle expires on eviction or server restart and never bypasses
+root authorization. Passing `root_dir` to review instead explicitly requests a
+fresh reinspection; passing neither keeps review limited to submitted text and
+caller-supplied exact `package_versions`.
+
+Resource discovery lists the curated catalog manifest rather than materializing
+the internal graph. Exact records remain addressable through the digest-bound
+resource template and links returned by search and parent records. Exact record
+reads return compact metadata plus links to larger content; reading a `content`
+resource returns its verified payload and media type. Resource-template
+completion is bounded. The packaged catalog is immutable, so the server does
 not advertise resource subscriptions or list-change notifications.
 
 The manifest reports the package `server_version`, catalog version and digests,
@@ -47,13 +58,13 @@ and the negotiated MCP protocol revision as separate identities.
 
 There is no capability manifest or server-owned creation or migration workflow.
 
-The stdio server and reusable factory deliberately use the SDK v2 legacy
-protocol era. They advertise, in preference order, MCP `2025-11-25`,
-`2025-06-18`, `2025-03-26`, `2024-11-05`, and `2024-10-07`; they do not
-advertise MCP `2026-07-28`. The public factory now returns the concrete
-`McpServer` type from
-`@modelcontextprotocol/server`, which is an intentional breaking type change
-from the former v1 SDK surface.
+The stdio entry uses the SDK v2 dual-era server factory. It negotiates MCP
+`2026-07-28` with modern or auto-negotiating clients and retains the legacy
+`2025-11-25`, `2025-06-18`, `2025-03-26`, `2024-11-05`, and `2024-10-07`
+handshake for existing clients. The public factory returns the concrete
+`McpServer` type from `@modelcontextprotocol/server`; callers that need
+dual-era negotiation should serve a fresh instance through the SDK's serving
+entry, as the CLI does.
 
 ## Responsibility boundary
 

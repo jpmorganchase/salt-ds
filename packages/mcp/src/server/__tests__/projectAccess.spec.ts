@@ -97,12 +97,28 @@ describe("server-configured project access", () => {
       defaultRoot: localRoot,
     });
 
-    await expect(
-      authorizeProjectRoot(policy, undefined),
-    ).resolves.toMatchObject({
+    await expect(authorizeProjectRoot(policy, undefined)).resolves.toMatchObject({
       status: "authorized",
       mode: "unrestricted_local_stdio",
       rootDir: await fs.realpath(localRoot),
+      authorityRoot: await fs.realpath(localRoot),
+    });
+  });
+
+  it("retains the launch root as the authority boundary for a selected child package", async () => {
+    const workspaceRoot = await tempDir("salt-project-workspace-");
+    const packageRoot = path.join(workspaceRoot, "packages", "app");
+    await fs.mkdir(packageRoot, { recursive: true });
+    const policy = await createProjectAccessPolicy({
+      mode: "unrestricted_local_stdio",
+      defaultRoot: workspaceRoot,
+    });
+
+    await expect(authorizeProjectRoot(policy, packageRoot)).resolves.toEqual({
+      status: "authorized",
+      mode: "unrestricted_local_stdio",
+      rootDir: await fs.realpath(packageRoot),
+      authorityRoot: await fs.realpath(workspaceRoot),
     });
   });
 });

@@ -16,6 +16,11 @@ interface AliasDefinition {
   targets: string[];
 }
 
+interface ResolvedTsconfig {
+  baseUrl: string | null;
+  definitions: Map<string, AliasDefinition> | null;
+}
+
 export interface BoundedTsconfigAliases {
   pathsMatcher: ((specifier: string) => string[]) | null;
   aliasPatterns: string[];
@@ -83,36 +88,48 @@ export async function loadBoundedTsconfigAliases(
   rootDir: string,
   authorityRoot: string = rootDir,
 ): Promise<BoundedTsconfigAliases> {
-  const definitions = new Map<string, AliasDefinition>();
-  const visited = new Set<string>();
   const attempted = new Set<string>();
+  const canonicalByLexicalPath = new Map<string, string>();
+  const resolvedByCanonicalPath = new Map<
+    string,
+    ResolvedTsconfig | null
+  >();
   const limitations = new Set<BoundedTsconfigAliases["limitations"][number]>();
   let filesRead = 0;
-  let effectiveBaseUrl: string | null = null;
 
-  const visit = async (
+  const resolveConfig = async (
     configPath: string,
     depth: number,
     ancestry: ReadonlySet<string> = new Set(),
     canonicalAncestry: ReadonlySet<string> = new Set(),
-  ): Promise<void> => {
+  ): Promise<ResolvedTsconfig | null> => {
     if (depth > MAX_TSCONFIG_DEPTH) {
       limitations.add("tsconfig_depth_limit");
-      return;
-    }
-    if (filesRead >= MAX_TSCONFIG_FILES) {
-      limitations.add("tsconfig_file_limit");
-      return;
+      return null;
     }
     const lexicalPath = path.resolve(configPath);
     if (ancestry.has(lexicalPath)) {
       limitations.add("tsconfig_invalid");
-      return;
+      return null;
     }
-    if (attempted.has(lexicalPath)) return;
+    const knownCanonicalPath = canonicalByLexicalPath.get(lexicalPath);
+    if (knownCanonicalPath) {
+      if (canonicalAncestry.has(knownCanonicalPath)) {
+        limitations.add("tsconfig_invalid");
+        return null;
+      }
+      if (resolvedByCanonicalPath.has(knownCanonicalPath)) {
+        return resolvedByCanonicalPath.get(knownCanonicalPath) ?? null;
+      }
+    }
+    if (attempted.has(lexicalPath)) return null;
+    if (filesRead >= MAX_TSCONFIG_FILES) {
+      limitations.add("tsconfig_file_limit");
+      return null;
+    }
     if (attempted.size >= MAX_TSCONFIG_ATTEMPTS) {
       limitations.add("tsconfig_attempt_limit");
-      return;
+      return null;
     }
     attempted.add(lexicalPath);
     const file = await readBoundedProjectFile({
@@ -124,18 +141,20 @@ export async function loadBoundedTsconfigAliases(
     if (file.status === "absent") {
       if (depth === 0) limitations.add("tsconfig_unavailable");
       else limitations.add("tsconfig_invalid");
-      return;
+      return null;
     }
     if (file.status === "invalid") {
       limitations.add("tsconfig_invalid");
-      return;
+      return null;
     }
+    canonicalByLexicalPath.set(lexicalPath, file.path);
     if (canonicalAncestry.has(file.path)) {
       limitations.add("tsconfig_invalid");
-      return;
+      return null;
     }
-    if (visited.has(file.path)) return;
-    visited.add(file.path);
+    if (resolvedByCanonicalPath.has(file.path)) {
+      return resolvedByCanonicalPath.get(file.path) ?? null;
+    }
     filesRead += 1;
 
     const parseErrors: ParseError[] = [];
@@ -145,7 +164,8 @@ export async function loadBoundedTsconfigAliases(
     }) as unknown;
     if (parseErrors.length > 0 || !isRecord(parsed)) {
       limitations.add("tsconfig_invalid");
-      return;
+      resolvedByCanonicalPath.set(file.path, null);
+      return null;
     }
 
     const extended =
@@ -166,18 +186,27 @@ export async function loadBoundedTsconfigAliases(
     if (extended.length > MAX_TSCONFIG_EXTENDS_ENTRIES) {
       limitations.add("tsconfig_attempt_limit");
     }
+    let effectiveBaseUrl: string | null = null;
+    let effectiveDefinitions: Map<string, AliasDefinition> | null = null;
     for (const entry of extended.slice(0, MAX_TSCONFIG_EXTENDS_ENTRIES)) {
       const extendedPath = resolveExtends(file.path, entry);
       if (!extendedPath) {
         limitations.add("tsconfig_extends_unsupported");
         continue;
       }
-      await visit(
+      const inherited = await resolveConfig(
         extendedPath,
         depth + 1,
         new Set(ancestry).add(lexicalPath),
         new Set(canonicalAncestry).add(file.path),
       );
+      if (!inherited) continue;
+      if (inherited.baseUrl !== null) {
+        effectiveBaseUrl = inherited.baseUrl;
+      }
+      if (inherited.definitions !== null) {
+        effectiveDefinitions = new Map(inherited.definitions);
+      }
     }
 
     const compilerOptions = isRecord(parsed.compilerOptions)
@@ -185,7 +214,8 @@ export async function loadBoundedTsconfigAliases(
       : null;
     if (Object.hasOwn(parsed, "compilerOptions") && !compilerOptions) {
       limitations.add("tsconfig_invalid");
-      return;
+      resolvedByCanonicalPath.set(file.path, null);
+      return null;
     }
     if (compilerOptions && Object.hasOwn(compilerOptions, "baseUrl")) {
       if (
@@ -200,45 +230,52 @@ export async function loadBoundedTsconfigAliases(
         );
       }
     }
-    if (!compilerOptions || !Object.hasOwn(compilerOptions, "paths")) return;
-    if (!isRecord(compilerOptions.paths)) {
-      limitations.add("tsconfig_invalid");
-      definitions.clear();
-      return;
-    }
-    const paths = compilerOptions.paths;
-    const baseUrl = effectiveBaseUrl ?? path.dirname(file.path);
-    // TypeScript replaces compilerOptions.paths as a whole across extends.
-    definitions.clear();
-    for (const [pattern, rawTargets] of Object.entries(paths)) {
-      if (
-        definitions.size >= MAX_TSCONFIG_ALIAS_PATTERNS &&
-        !definitions.has(pattern)
-      ) {
-        limitations.add("tsconfig_alias_limit");
-        continue;
-      }
-      if (
-        pattern.length === 0 ||
-        pattern.split("*").length > 2 ||
-        !Array.isArray(rawTargets) ||
-        rawTargets.some((target) => typeof target !== "string")
-      ) {
+    if (compilerOptions && Object.hasOwn(compilerOptions, "paths")) {
+      if (!isRecord(compilerOptions.paths)) {
         limitations.add("tsconfig_invalid");
-        continue;
+        effectiveDefinitions = null;
+      } else {
+        const paths = compilerOptions.paths;
+        const baseUrl = effectiveBaseUrl ?? path.dirname(file.path);
+        // TypeScript replaces compilerOptions.paths as a whole across extends.
+        effectiveDefinitions = new Map<string, AliasDefinition>();
+        for (const [pattern, rawTargets] of Object.entries(paths)) {
+          if (
+            effectiveDefinitions.size >= MAX_TSCONFIG_ALIAS_PATTERNS &&
+            !effectiveDefinitions.has(pattern)
+          ) {
+            limitations.add("tsconfig_alias_limit");
+            continue;
+          }
+          if (
+            pattern.length === 0 ||
+            pattern.split("*").length > 2 ||
+            !Array.isArray(rawTargets) ||
+            rawTargets.some((target) => typeof target !== "string")
+          ) {
+            limitations.add("tsconfig_invalid");
+            continue;
+          }
+          const targets = rawTargets
+            .slice(0, MAX_TSCONFIG_ALIAS_TARGETS)
+            .map((target) => path.resolve(baseUrl, target));
+          if (rawTargets.length > MAX_TSCONFIG_ALIAS_TARGETS) {
+            limitations.add("tsconfig_alias_limit");
+          }
+          effectiveDefinitions.set(pattern, { pattern, targets });
+        }
       }
-      const targets = rawTargets
-        .slice(0, MAX_TSCONFIG_ALIAS_TARGETS)
-        .map((target) => path.resolve(baseUrl, target));
-      if (rawTargets.length > MAX_TSCONFIG_ALIAS_TARGETS) {
-        limitations.add("tsconfig_alias_limit");
-      }
-      definitions.set(pattern, { pattern, targets });
     }
+    const resolved = {
+      baseUrl: effectiveBaseUrl,
+      definitions: effectiveDefinitions,
+    } satisfies ResolvedTsconfig;
+    resolvedByCanonicalPath.set(file.path, resolved);
+    return resolved;
   };
 
-  await visit(path.join(rootDir, "tsconfig.json"), 0);
-  const aliases = [...definitions.values()];
+  const resolved = await resolveConfig(path.join(rootDir, "tsconfig.json"), 0);
+  const aliases = [...(resolved?.definitions?.values() ?? [])];
   const trustworthy = limitations.size === 0;
   return {
     pathsMatcher:

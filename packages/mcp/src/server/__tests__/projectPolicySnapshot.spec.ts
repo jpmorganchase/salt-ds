@@ -36,8 +36,10 @@ function cachedSnapshot(
     } as AuthorizedProjectPolicySnapshot["ir"],
     canonical_json: canonical,
     digest,
+    context_digest: digest,
     chunks: [],
     salt_version: null,
+    package_versions: {},
   };
 }
 
@@ -219,7 +221,10 @@ describe("project-policy snapshots", () => {
       64 * 1024,
     );
     expect(claim).toMatchObject({
-      declaration: { name: "ActionButton" },
+      declaration: {
+        name: "ActionButton",
+        reason_truncated: true,
+      },
       selector: {
         fact: "canonical_name",
         value: "Button",
@@ -233,9 +238,11 @@ describe("project-policy snapshots", () => {
         json_pointer: "/approved_wrappers/0",
       },
     });
-    expect(JSON.stringify(claim)).not.toContain("u".repeat(1_024));
-    expect(JSON.stringify(claim)).not.toContain('"text":');
-    expect(JSON.stringify(claim)).not.toContain('"reason"');
+    const serializedClaim = JSON.stringify(claim);
+    expect(serializedClaim).not.toContain("u".repeat(1_024));
+    expect(serializedClaim).toContain('"text":');
+    expect(serializedClaim).toContain('"text_truncated":true');
+    expect(serializedClaim).toContain('"reason":');
   });
 
   it("projects selectors and applicability evidence for every policy category", () => {
@@ -363,7 +370,10 @@ describe("project-policy snapshots", () => {
     });
     expect(
       JSON.stringify(projectPolicyClaimRecord(approvedWrapper, claimRoot)),
-    ).not.toMatch(/Wrapper\.|resolved_path/iu);
+    ).toContain('"reason":"Wrapper."');
+    expect(
+      JSON.stringify(projectPolicyClaimRecord(approvedWrapper, claimRoot)),
+    ).not.toMatch(/resolved_path/iu);
     expect(
       JSON.stringify(projectPolicyClaimRecord(approvedWrapper, claimRoot)),
     ).not.toContain(claimRoot);

@@ -123,10 +123,13 @@ export async function authorizeProjectRoot(
   }
 
   if (policy.mode === "unrestricted_local_stdio") {
+    const authorityRoot = isPathInside(policy.defaultRoot, realCandidate)
+      ? policy.defaultRoot
+      : realCandidate;
     return {
       status: "authorized",
       rootDir: realCandidate,
-      authorityRoot: realCandidate,
+      authorityRoot,
       mode: policy.mode,
     };
   }

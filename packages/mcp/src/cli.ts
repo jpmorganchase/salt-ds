@@ -1,5 +1,5 @@
 import path from "node:path";
-import { StdioServerTransport } from "@modelcontextprotocol/server/stdio";
+import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { createSaltMcpServer } from "./server/createServer.js";
 import { getSaltMcpPackageManifest } from "./server/serverMetadata.js";
 
@@ -8,7 +8,7 @@ interface ParsedArgs {
   flags: Record<string, string>;
 }
 
-const VALUE_FLAGS = new Set(["registry-dir"]);
+const VALUE_FLAGS = new Set(["registry-dir", "workspace-root"]);
 
 const HELP_TEXT = `Usage: salt-mcp [serve] [options]
 
@@ -19,30 +19,11 @@ Commands:
 
 Options:
   --registry-dir <path>   Read the Salt registry from a custom directory
+  --workspace-root <path> Bound ancestor workspace discovery to this directory
   -h, --help              Show this help message
   --version               Show the package version`;
 
-function createObservedStdioTransport(): {
-  transport: StdioServerTransport;
-  closed: Promise<void>;
-} {
-  const transport = new StdioServerTransport();
-  let signalClosed!: () => void;
-  const closed = new Promise<void>((resolve) => {
-    signalClosed = resolve;
-  });
-  const close = transport.close.bind(transport);
-  transport.close = async () => {
-    try {
-      await close();
-    } finally {
-      signalClosed();
-    }
-  };
-  return { transport, closed };
-}
-
-function waitForStdioShutdown(transportClosed: Promise<void>): Promise<void> {
+function waitForStdioShutdown(): Promise<void> {
   return new Promise((resolve) => {
     const finish = () => {
       process.stdin.off("end", handleStdinClose);
@@ -54,7 +35,6 @@ function waitForStdioShutdown(transportClosed: Promise<void>): Promise<void> {
 
     process.stdin.once("end", handleStdinClose);
     process.stdin.once("close", handleStdinClose);
-    void transportClosed.then(finish, finish);
     process.stdin.resume();
   });
 }
@@ -137,16 +117,30 @@ async function runServe(flags: Record<string, string>): Promise<void> {
   const registryDir = flags["registry-dir"]
     ? path.resolve(flags["registry-dir"])
     : undefined;
-  const { transport, closed } = createObservedStdioTransport();
-  const server = await createSaltMcpServer({
-    registryDir,
-    projectAccess: { mode: "unrestricted_local_stdio" },
-  });
-  await server.connect(transport);
+  const workspaceRoot = flags["workspace-root"]
+    ? path.resolve(flags["workspace-root"])
+    : undefined;
+  const handle = serveStdio(
+    () =>
+      createSaltMcpServer({
+        registryDir,
+        projectAccess: {
+          mode: "unrestricted_local_stdio",
+          ...(workspaceRoot ? { defaultRoot: workspaceRoot } : {}),
+        },
+      }),
+    {
+      legacy: "serve",
+      onerror: (error) => console.error(`salt-mcp stdio error: ${error.message}`),
+    },
+  );
 
-  console.error("salt-mcp server running on stdio");
-  await waitForStdioShutdown(closed);
-  await server.close();
+  console.error("salt-mcp server running on stdio (MCP 2026 and legacy)");
+  try {
+    await waitForStdioShutdown();
+  } finally {
+    await handle.close();
+  }
 }
 
 export async function runCli(

@@ -772,9 +772,7 @@ function satisfiesDeclaration(
     ? validRange(effectiveDeclaredVersion)
     : null;
   if (normalizedVersion && normalizedRange) {
-    return satisfies(normalizedVersion, normalizedRange, {
-      includePrerelease: true,
-    });
+    return satisfies(normalizedVersion, normalizedRange);
   }
   return null;
 }

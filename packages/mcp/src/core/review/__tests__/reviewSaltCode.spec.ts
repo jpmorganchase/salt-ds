@@ -326,7 +326,14 @@ describe("bounded public review", () => {
       expect.arrayContaining([
         expect.objectContaining({
           rule_id: "salt.project_policy.approved_wrapper",
-          remediation: expect.stringContaining("cited project-policy claim"),
+          severity: "info",
+          remediation: null,
+          policy_evaluation: expect.objectContaining({
+            trust: "untrusted_advisory",
+            category: "approved_wrapper",
+            conflict_group: null,
+            competing_claims: [],
+          }),
           evidence: expect.objectContaining({
             references: expect.arrayContaining([
               expect.objectContaining({
@@ -334,6 +341,9 @@ describe("bounded public review", () => {
                   /^salt:\/\/project-policy\/v2\//u,
                 ),
                 field_path: "claim.declaration.name",
+              }),
+              expect.objectContaining({
+                field_path: "claim.declaration.reason",
               }),
               expect.objectContaining({ field_path: "claim.selector" }),
               expect.objectContaining({ field_path: "claim.applicability" }),
@@ -423,6 +433,69 @@ describe("bounded public review", () => {
         (finding) => finding.rule_id === "salt.project_policy.approved_wrapper",
       )?.policy_evaluation?.salt_version,
     ).toBe("2.4.0");
+  });
+
+  it("returns cross-category policy conflicts for host arbitration", () => {
+    const policy = reviewPolicy({
+      contract: "project_conventions_v1",
+      version: "1.0.0",
+      preferred_components: [
+        {
+          salt_name: "Button",
+          prefer: "PrimaryButton",
+          reason: "Prefer the product wrapper.",
+        },
+      ],
+      approved_wrappers: [
+        {
+          name: "ActionButton",
+          wraps: "Button",
+          reason: "Use the team wrapper.",
+        },
+      ],
+    });
+    const result = reviewSaltCode(
+      registry(),
+      {
+        artifacts: [
+          {
+            id: "policy-conflict.tsx",
+            language: "tsx",
+            text: [
+              'import { Button } from "@salt-ds/core";',
+              "export const Demo = () => <Button>Save</Button>;",
+            ].join("\n"),
+          },
+        ],
+      },
+      policy,
+    );
+
+    const findings = result.data.results[0]!.findings.filter((finding) =>
+      finding.rule_id.startsWith("salt.project_policy."),
+    );
+    expect(findings).toHaveLength(2);
+    const conflictGroups = new Set(
+      findings.map((finding) => finding.policy_evaluation?.conflict_group),
+    );
+    expect(conflictGroups.size).toBe(1);
+    expect([...conflictGroups][0]).toMatch(/^project-policy-conflict:/u);
+    for (const finding of findings) {
+      expect(finding).toMatchObject({
+        severity: "info",
+        remediation: null,
+        policy_evaluation: {
+          trust: "untrusted_advisory",
+          competing_claims: [
+            expect.objectContaining({
+              locator: expect.stringMatching(
+                /^salt:\/\/project-policy\/v2\//u,
+              ),
+            }),
+          ],
+        },
+      });
+    }
   });
 
   it("binds project-policy component selectors to one canonical package identity", () => {
@@ -592,7 +665,7 @@ describe("bounded public review", () => {
     ).toBe(false);
     expect(result.data.results[0]!.coverage.policy.unknown_occurrences).toBe(1);
     expect(result.data.results[0]!.limitations.join(" ")).toMatch(
-      /required higher-precedence policy layer was unresolved/iu,
+      /required later policy layer was unresolved/iu,
     );
   });
 

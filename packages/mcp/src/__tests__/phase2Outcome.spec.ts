@@ -231,7 +231,7 @@ describe("Phase 2 negative outcomes", () => {
     expect(JSON.stringify(result)).not.toMatch(PRIVATE_CONTROL_PATTERN);
   });
 
-  it("R4 can omit the detailed policy IR without inventing a projection", async () => {
+  it("R4 evaluates policy while omitting inline details by default", async () => {
     const result = await inspectSaltProject(
       {
         root_dir: projectRoot,
@@ -246,9 +246,15 @@ describe("Phase 2 negative outcomes", () => {
 
     expect(result.data.policy).toMatchObject({
       mode: "team",
-      ir: null,
-      import_targets: null,
+      ir: {
+        contract: "salt_project_policy_ir_v2",
+        untrusted_ir: null,
+      },
+      import_targets: {
+        untrusted_diagnostics: null,
+      },
     });
+    expect(result.coverage.policy).toBe("policy_ir_evaluated");
     expect(JSON.stringify(result)).not.toMatch(PRIVATE_CONTROL_PATTERN);
   });
 

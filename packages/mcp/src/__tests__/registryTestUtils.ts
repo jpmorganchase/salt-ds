@@ -2,7 +2,6 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildRegistry } from "../core/build/buildRegistry.js";
 import {
   type CatalogFamilyName,
   type CatalogManifest,
@@ -105,13 +104,13 @@ export async function createBuiltCatalogV2Fixture(
 ): Promise<string> {
   const registryDir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
   try {
-    await buildRegistry({
-      sourceRoot: REPO_ROOT,
-      outputDir: registryDir,
-      sourceRevision: "catalog-v2-test-source",
-      generatorVersion: "2.0.0-test",
-      generatorDigest: `sha256:${"1".repeat(64)}`,
-    });
+    // CI builds and digest-validates this immutable registry once. Protocol,
+    // policy, and loader suites copy that artifact instead of independently
+    // repeating the multi-minute source extraction path.
+    await copyCatalogV2Artifacts(
+      path.join(REPO_ROOT, "packages", "mcp", "generated"),
+      registryDir,
+    );
     return registryDir;
   } catch (error) {
     await fs.rm(registryDir, { recursive: true, force: true });

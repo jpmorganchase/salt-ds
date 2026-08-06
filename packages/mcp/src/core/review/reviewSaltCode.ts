@@ -109,6 +109,7 @@ export function reviewSaltCode(
   context: { registry: SaltRegistry; store: CatalogStoreV2 },
   input: ReviewSaltCodeInput,
   policy: ReviewProjectPolicyContext | null = null,
+  projectContextDigest: string | null = null,
 ) {
   const { registry, store } = context;
   if (
@@ -431,6 +432,7 @@ export function reviewSaltCode(
     provenance: {
       catalog_version: registry.version,
       semantic_digest: registry.semantic_hash ?? null,
+      project_context_digest: projectContextDigest,
       project_policy_digest: policy?.digest ?? null,
     },
   };

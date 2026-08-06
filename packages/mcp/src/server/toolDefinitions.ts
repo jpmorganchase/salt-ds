@@ -20,6 +20,8 @@ import { compactStandardOutputSchema } from "./compactStandardSchema.js";
 import { inspectSaltProject } from "./inspectSaltProject.js";
 import type { ProjectAccessPolicy } from "./projectAccess.js";
 import {
+  MAX_PROJECT_CONTEXT_HANDLE_CHARS,
+  parseProjectContextHandle,
   isAuthorizedProjectPolicySnapshot,
   loadAuthorizedProjectPolicySnapshot,
 } from "./projectPolicySnapshot.js";
@@ -29,6 +31,8 @@ const MAX_QUERY_CHARS = 2_000;
 const MAX_PATH_CHARS = 4_096;
 const MAX_ARTIFACT_CHARS = 256 * 1024;
 const NON_WHITESPACE = /\S/u;
+const EXACT_SEMVER =
+  /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/u;
 const READ_ONLY_ANNOTATIONS: ToolAnnotations = {
   readOnlyHint: true,
   destructiveHint: false,
@@ -154,6 +158,14 @@ const INSPECT_RESULT_SCHEMA = z
   .object({
     data: z
       .object({
+        context: z
+          .object({
+            handle: z.string().max(MAX_PROJECT_CONTEXT_HANDLE_CHARS),
+            digest: SHA256_SCHEMA,
+            retention: z.literal("process_local_bounded_lru"),
+          })
+          .strict()
+          .nullable(),
         root_dir: NULLABLE_PATH_SCHEMA,
         package_manifest: z
           .object({
@@ -259,7 +271,10 @@ const INSPECT_RESULT_SCHEMA = z
       .strict(),
     limitations: z.array(z.string()),
     provenance: z
-      .object({ project_policy_digest: SHA256_SCHEMA.nullable() })
+      .object({
+        project_context_digest: SHA256_SCHEMA.nullable(),
+        project_policy_digest: SHA256_SCHEMA.nullable(),
+      })
       .strict(),
   })
   .strict();
@@ -325,6 +340,34 @@ const REVIEW_FINDING_SCHEMA = z
         digest: SHA256_SCHEMA,
         applicability: z.literal("applicable"),
         salt_version: z.string().nullable(),
+        trust: z.literal("untrusted_advisory"),
+        category: z.enum([
+          "preferred_component",
+          "approved_wrapper",
+          "token_alias",
+          "theme_defaults",
+          "token_family_policy",
+          "pattern_preference",
+          "banned_choice",
+        ]),
+        conflict_group: z.string().nullable(),
+        competing_claims: z.array(
+          z
+            .object({
+              occurrence_id: z.string(),
+              category: z.enum([
+                "preferred_component",
+                "approved_wrapper",
+                "token_alias",
+                "theme_defaults",
+                "token_family_policy",
+                "pattern_preference",
+                "banned_choice",
+              ]),
+              locator: PROJECT_POLICY_RESOURCE_URI_SCHEMA,
+            })
+            .strict(),
+        ),
       })
       .strict()
       .nullable(),
@@ -460,6 +503,7 @@ const REVIEW_RESULT_SCHEMA = z
       .object({
         catalog_version: z.string(),
         semantic_digest: SHA256_SCHEMA.nullable(),
+        project_context_digest: SHA256_SCHEMA.nullable(),
         project_policy_digest: SHA256_SCHEMA.nullable(),
       })
       .strict(),
@@ -468,27 +512,61 @@ const REVIEW_RESULT_SCHEMA = z
 
 const SEARCH_INPUT_SCHEMA = z
   .object({
-    query: z.string().min(1).max(MAX_QUERY_CHARS).regex(NON_WHITESPACE),
+    query: z
+      .string()
+      .min(1)
+      .max(MAX_QUERY_CHARS)
+      .regex(NON_WHITESPACE)
+      .describe("Non-blank Salt concept, component, token, or API query."),
     families: z
       .array(z.enum(CATALOG_SEARCH_TARGET_FAMILY_NAMES))
       .min(1)
       .max(CATALOG_SEARCH_TARGET_FAMILY_NAMES.length)
+      .describe("Optional catalog-family filter; all searchable families are used by default.")
       .optional(),
     statuses: z
       .array(z.enum(["stable", "beta", "lab", "deprecated"]))
       .min(1)
       .max(4)
+      .describe("Optional lifecycle-status filter; all statuses are used by default.")
       .optional(),
-    limit: z.number().int().min(1).max(MAX_SEARCH_RESULTS).optional(),
+    limit: z
+      .number()
+      .int()
+      .min(1)
+      .max(MAX_SEARCH_RESULTS)
+      .describe(`Maximum ranked summaries to return; defaults to 10 and cannot exceed ${MAX_SEARCH_RESULTS}.`)
+      .optional(),
   })
   .strict();
 
 const INSPECT_INPUT_SCHEMA = z
   .object({
-    root_dir: z.string().min(1).max(MAX_PATH_CHARS).optional(),
-    include_policy_ir: z.boolean().optional(),
+    root_dir: z
+      .string()
+      .min(1)
+      .max(MAX_PATH_CHARS)
+      .describe("Authorized local project directory; the configured default is used when omitted.")
+      .optional(),
+    evaluate_policy: z
+      .boolean()
+      .describe("Compile policy and inspect policy imports; defaults to true. Set false for detection only.")
+      .optional(),
+    include_policy_ir: z
+      .boolean()
+      .describe("Inline the bounded untrusted policy IR and diagnostics when true; defaults to resource links only.")
+      .optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((value, context) => {
+    if (value.evaluate_policy === false && value.include_policy_ir === true) {
+      context.addIssue({
+        code: "custom",
+        message: "include_policy_ir requires evaluate_policy to be enabled.",
+        path: ["include_policy_ir"],
+      });
+    }
+  });
 
 const REVIEW_ARTIFACT_SCHEMA = z
   .object({
@@ -496,9 +574,17 @@ const REVIEW_ARTIFACT_SCHEMA = z
       .string()
       .min(1)
       .max(MAX_REVIEW_ARTIFACT_ID_CHARS)
-      .regex(NON_WHITESPACE),
-    language: z.enum(["javascript", "jsx", "typescript", "tsx", "css"]),
-    text: z.string().min(1).max(MAX_ARTIFACT_CHARS).regex(NON_WHITESPACE),
+      .regex(NON_WHITESPACE)
+      .describe("Caller-stable artifact identifier used in finding locations."),
+    language: z
+      .enum(["javascript", "jsx", "typescript", "tsx", "css"])
+      .describe("Parser mode for the submitted source text."),
+    text: z
+      .string()
+      .min(1)
+      .max(MAX_ARTIFACT_CHARS)
+      .regex(NON_WHITESPACE)
+      .describe("Submitted source text only; the review tool never reads this artifact from disk."),
   })
   .strict();
 
@@ -509,16 +595,39 @@ const REVIEW_PACKAGE_VERSIONS_SCHEMA = z
       .min(1)
       .max(214)
       .regex(/^@salt-ds\/[a-z0-9][a-z0-9._-]*$/u),
-    z.string().min(1).max(128),
+    z.string().min(1).max(128).regex(EXACT_SEMVER),
   )
   .meta({ maxProperties: MAX_REVIEW_PACKAGE_VERSIONS });
 
 const REVIEW_INPUT_SCHEMA = z
   .object({
-    artifacts: z.array(REVIEW_ARTIFACT_SCHEMA).min(1).max(MAX_REVIEW_ARTIFACTS),
-    root_dir: z.string().min(1).max(MAX_PATH_CHARS).optional(),
-    package_versions: REVIEW_PACKAGE_VERSIONS_SCHEMA.optional(),
-    max_findings: z.number().int().min(1).max(50).optional(),
+    artifacts: z
+      .array(REVIEW_ARTIFACT_SCHEMA)
+      .min(1)
+      .max(MAX_REVIEW_ARTIFACTS)
+      .describe("One to eight submitted artifacts; aggregate text is bounded to 512 KiB."),
+    root_dir: z
+      .string()
+      .min(1)
+      .max(MAX_PATH_CHARS)
+      .describe("Explicit fresh-inspection mode: reread policy and installed exact Salt versions from this authorized root.")
+      .optional(),
+    project_context_handle: z
+      .string()
+      .min(1)
+      .max(MAX_PROJECT_CONTEXT_HANDLE_CHARS)
+      .describe("Opaque handle returned by inspect_salt_project; reuses that exact process-local snapshot without rereading the project.")
+      .optional(),
+    package_versions: REVIEW_PACKAGE_VERSIONS_SCHEMA.describe(
+      "Exact installed SemVer values keyed by @salt-ds package name; ranges and workspace specifiers are rejected.",
+    ).optional(),
+    max_findings: z
+      .number()
+      .int()
+      .min(1)
+      .max(50)
+      .describe("Maximum findings returned after deterministic evaluation; defaults to 20.")
+      .optional(),
   })
   .strict()
   .superRefine((value, context) => {
@@ -561,6 +670,13 @@ const REVIEW_INPUT_SCHEMA = z
         code: "custom",
         message: `package_versions accepts at most ${MAX_REVIEW_PACKAGE_VERSIONS} Salt packages.`,
         path: ["package_versions"],
+      });
+    }
+    if (value.root_dir && value.project_context_handle) {
+      context.addIssue({
+        code: "custom",
+        message: "Choose either root_dir for fresh inspection or project_context_handle for exact snapshot reuse.",
+        path: ["project_context_handle"],
       });
     }
     const submittedBytes = value.artifacts.reduce(
@@ -627,7 +743,8 @@ export const REGISTERED_SALT_TOOL_NAMES = [
 export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   defineTool({
     name: "search_salt",
-    description: "Search Salt catalog records.",
+    description:
+      "Search the immutable Salt catalog and return bounded ranked summaries with digest-bound resource links for exact evidence.",
     inputSchema: SEARCH_INPUT_SCHEMA,
     outputSchema: SEARCH_RESULT_SCHEMA,
     annotations: READ_ONLY_ANNOTATIONS,
@@ -635,7 +752,8 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   }),
   defineTool({
     name: "inspect_salt_project",
-    description: "Inspect an authorized local Salt project.",
+    description:
+      "Read an authorized local project to report package, workspace, installation, and untrusted policy facts. Policy details default to bounded summaries and resource links.",
     inputSchema: INSPECT_INPUT_SCHEMA,
     outputSchema: INSPECT_RESULT_SCHEMA,
     annotations: READ_ONLY_ANNOTATIONS,
@@ -648,12 +766,23 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
   }),
   defineTool({
     name: "review_salt_code",
-    description: "Review submitted source against Salt rules.",
+    description:
+      "Analyze only submitted source text against source-bound Salt catalog rules and optional untrusted project policy. Exact package versions enable version-specific deprecation checks; findings are bounded and do not prove repository correctness.",
     inputSchema: REVIEW_INPUT_SCHEMA,
     outputSchema: REVIEW_RESULT_SCHEMA,
     annotations: READ_ONLY_ANNOTATIONS,
     execute: async (context, args) => {
-      const loadedPolicy = args.root_dir
+      const parsedHandle = args.project_context_handle
+        ? parseProjectContextHandle(args.project_context_handle)
+        : null;
+      const loadedPolicy = parsedHandle
+        ? await loadAuthorizedProjectPolicySnapshot(
+            context.projectAccess,
+            parsedHandle.rootDir,
+            context.projectPolicySnapshots,
+            parsedHandle.contextDigest,
+          )
+        : args.root_dir
         ? await loadAuthorizedProjectPolicySnapshot(
             context.projectAccess,
             args.root_dir,
@@ -661,8 +790,21 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           )
         : null;
       if (loadedPolicy?.authorization.status === "denied") {
+        if (parsedHandle) {
+          throw new Error(
+            "review_salt_code project context handle is expired, evicted, or unauthorized; inspect the project again for a new handle.",
+          );
+        }
         throw new Error(
           `review_salt_code project policy root was denied (${loadedPolicy.authorization.reason}).`,
+        );
+      }
+      if (
+        parsedHandle &&
+        (!loadedPolicy || !isAuthorizedProjectPolicySnapshot(loadedPolicy))
+      ) {
+        throw new Error(
+          "review_salt_code project context handle is expired or evicted; inspect the project again for a new handle.",
         );
       }
       const policyContext =
@@ -677,10 +819,27 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
               salt_version: loadedPolicy.salt_version,
             }
           : null;
+      const packageVersions = {
+        ...(loadedPolicy && isAuthorizedProjectPolicySnapshot(loadedPolicy)
+          ? loadedPolicy.package_versions
+          : {}),
+        ...(args.package_versions ?? {}),
+      };
       return reviewSaltCode(
         { registry: context.registry, store: context.store },
-        args,
+        {
+          artifacts: args.artifacts,
+          ...(Object.keys(packageVersions).length > 0
+            ? { package_versions: packageVersions }
+            : {}),
+          ...(args.max_findings === undefined
+            ? {}
+            : { max_findings: args.max_findings }),
+        },
         policyContext,
+        loadedPolicy && isAuthorizedProjectPolicySnapshot(loadedPolicy)
+          ? loadedPolicy.context_digest
+          : null,
       );
     },
   }),

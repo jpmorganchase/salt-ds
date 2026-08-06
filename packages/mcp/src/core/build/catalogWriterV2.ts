@@ -38,6 +38,7 @@ import {
   type CatalogValidationMetrics,
 } from "../catalog/catalogStoreV2.js";
 import { measureTokenOwnedCatalogSurface } from "../catalog/catalogTokenSurfaceV2.js";
+import { TOKEN_OWNED_ARTIFACT_BYTE_BUDGET } from "../../publicSurfaceBudgets.js";
 import {
   type CatalogInputInventory,
   isCatalogInputTrackingActive,
@@ -47,7 +48,7 @@ import type {
   NormalizedCatalogV2,
 } from "./normalizeCatalogV2.js";
 
-export const TOKEN_OWNED_ARTIFACT_BYTE_BUDGET = 2_352_829;
+export { TOKEN_OWNED_ARTIFACT_BYTE_BUDGET };
 export const SEARCH_ARTIFACT_BYTE_BUDGET = 3_000_000;
 
 export type CatalogGeneratorIdentity = CatalogManifest["generator"];

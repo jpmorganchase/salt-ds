@@ -549,7 +549,7 @@ export function evaluatePackCompatibility(input: {
     };
   }
 
-  if (satisfies(checkedVersion, normalizedRange, { includePrerelease: true })) {
+  if (satisfies(checkedVersion, normalizedRange)) {
     return {
       status: "compatible",
       currentSaltVersion: input.currentSaltVersion,

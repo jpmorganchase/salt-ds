@@ -117,6 +117,26 @@ describe("Salt project-policy IR v2", () => {
           range: "^2.0.0",
           origin: "supported_salt_range",
         },
+        { ...context, salt_version: "2.1.0-beta.1" },
+      ),
+    ).toBe("contradicted");
+    expect(
+      evaluateProjectPolicyConditionV2(
+        {
+          type: "salt_version_satisfies",
+          range: ">=2.1.0-beta.1 <2.1.0",
+          origin: "supported_salt_range",
+        },
+        { ...context, salt_version: "2.1.0-beta.1" },
+      ),
+    ).toBe("applicable");
+    expect(
+      evaluateProjectPolicyConditionV2(
+        {
+          type: "salt_version_satisfies",
+          range: "^2.0.0",
+          origin: "supported_salt_range",
+        },
         { ...context, salt_version: "^2.0.0" },
       ),
     ).toBe("unknown");

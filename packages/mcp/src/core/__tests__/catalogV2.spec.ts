@@ -14,6 +14,7 @@ import {
 } from "vitest";
 import { SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS } from "../../__tests__/registryTestUtils.js";
 import { buildRegistry } from "../build/buildRegistry.js";
+import { TOKEN_OWNED_ARTIFACT_BYTE_BUDGET } from "../build/catalogWriterV2.js";
 import { linkDeprecationsToComponents } from "../build/buildRegistryComponentDeprecations.js";
 import { extractDeprecations } from "../build/buildRegistryDeprecations.js";
 import {
@@ -2285,8 +2286,13 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
       (entry) => entry.family === "token",
     );
     const buildEntry = manifest.build_artifacts[0];
-    if (!tokenEntry || !buildEntry) {
-      throw new Error("Fixture is missing token or build artifact metadata.");
+    const packEntry = manifest.support_artifacts.find(
+      (entry) => entry.kind === "content_pack",
+    );
+    if (!tokenEntry || !buildEntry || !packEntry) {
+      throw new Error(
+        "Fixture is missing token, build artifact, or content pack metadata.",
+      );
     }
     const tokenPath = path.join(
       generatedDirectory,
@@ -2296,6 +2302,10 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
       generatedDirectory,
       ...buildEntry.file.split("/"),
     );
+    const packPath = path.join(
+      generatedDirectory,
+      ...packEntry.file.split("/"),
+    );
     expect(__getCatalogFileReadCountForTests(manifestPath)).toBe(1);
     expect(__getCatalogFileReadCountForTests(tokenPath)).toBe(0);
     expect(__getCatalogFileReadCountForTests(buildPath)).toBe(0);
@@ -2304,6 +2314,9 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
     expect(store.getRecord("token", "--salt-accent-background")).not.toBeNull();
     expect(__getCatalogFileReadCountForTests(tokenPath)).toBe(1);
     store.prefetch();
+    expect(__getCatalogFileReadCountForTests(packPath)).toBe(1);
+    store.ensureCatalogVerified();
+    expect(__getCatalogFileReadCountForTests(packPath)).toBe(1);
     expect(__getCatalogFileReadCountForTests(buildPath)).toBe(0);
     store.validateBuildArtifacts();
     expect(__getCatalogFileReadCountForTests(buildPath)).toBe(1);
@@ -4094,7 +4107,9 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
     expect(metrics.familyRecordCounts.token).toBe(1_973);
     expect(metrics.familyRecordCounts.token_declaration).toBe(3_803);
     expect(metrics.searchArtifactBytes).toBeLessThanOrEqual(3_000_000);
-    expect(metrics.tokenOwnedArtifactBytes).toBeLessThanOrEqual(2_352_829);
+    expect(metrics.tokenOwnedArtifactBytes).toBeLessThanOrEqual(
+      TOKEN_OWNED_ARTIFACT_BYTE_BUDGET,
+    );
     const tokenSurface = measureTokenOwnedCatalogSurface(store);
     expect(tokenSurface.record_counts.token_facts).toBe(1_973);
     expect(tokenSurface.record_counts.token_search_projection).toBe(1_973);
