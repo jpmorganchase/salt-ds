@@ -11,6 +11,7 @@ import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(cardStories);
 const { Default } = composedStories;
+const transparentBorderColor = "rgba(0, 0, 0, 0)";
 
 const ControlledGroup = ({
   onChange,
@@ -51,6 +52,86 @@ describe("Given an Interactable Card", () => {
     cy.findByText(
       "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.",
     ).should("be.visible");
+  });
+
+  it("should apply appearance styling", () => {
+    cy.mount(
+      <>
+        <InteractableCard data-testid="flat-card" appearance="flat">
+          Flat card
+        </InteractableCard>
+        <InteractableCard data-testid="raised-card" appearance="raised">
+          Raised card
+        </InteractableCard>
+      </>,
+    );
+
+    cy.findByTestId("flat-card")
+      .should("have.class", "saltInteractableCard-flat")
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).boxShadow).to.equal("none");
+      });
+    cy.findByTestId("raised-card").should(
+      "have.class",
+      "saltInteractableCard-raised",
+    );
+  });
+
+  it("should apply borderColor styling to the default state", () => {
+    cy.mount(
+      <>
+        <InteractableCard data-testid="strong-card" borderColor="strong">
+          Strong border
+        </InteractableCard>
+        <InteractableCard data-testid="default-card" borderColor="default">
+          Default border
+        </InteractableCard>
+        <InteractableCard data-testid="subtle-card" borderColor="subtle">
+          Subtle border
+        </InteractableCard>
+        <InteractableCard data-testid="none-card" borderColor="none">
+          No border
+        </InteractableCard>
+      </>,
+    );
+
+    cy.findByTestId("strong-card").should(
+      "have.class",
+      "saltInteractableCard-borderColorStrong",
+    );
+    cy.findByTestId("default-card").should(
+      "have.class",
+      "saltInteractableCard-borderColorDefault",
+    );
+    cy.findByTestId("subtle-card").should(
+      "have.class",
+      "saltInteractableCard-borderColorSubtle",
+    );
+    cy.findByTestId("none-card")
+      .should("have.class", "saltInteractableCard-borderColorNone")
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).borderColor).to.equal(
+          transparentBorderColor,
+        );
+      });
+  });
+
+  it("should not apply borderColor styling to selected state", () => {
+    cy.mount(
+      <InteractableCardGroup defaultValue="one">
+        <InteractableCard data-testid="card" value="one" borderColor="none">
+          Card
+        </InteractableCard>
+      </InteractableCardGroup>,
+    );
+
+    cy.findByTestId("card")
+      .should("have.class", "saltInteractableCard-selected")
+      .and(($card) => {
+        expect(getComputedStyle($card[0]).borderColor).not.to.equal(
+          transparentBorderColor,
+        );
+      });
   });
 });
 

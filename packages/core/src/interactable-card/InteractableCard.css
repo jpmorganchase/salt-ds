@@ -2,6 +2,7 @@
 .saltInteractableCard {
   border-width: var(--saltInteractableCard-borderWidth, var(--salt-size-fixed-100));
   border-style: var(--saltInteractableCard-borderStyle, var(--salt-borderStyle-solid));
+  border-color: var(--saltInteractableCard-borderColor, var(--interactableCard-borderColor));
   border-radius: var(--saltInteractableCard-borderRadius, var(--salt-palette-corner, 0));
   box-shadow: var(--salt-overlayable-shadow);
   display: block;
@@ -31,19 +32,49 @@
 /* Styles applied to InteractableCard when variant="primary" */
 .saltInteractableCard-primary {
   background: var(--saltInteractableCard-background, var(--salt-container-primary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --interactableCard-borderColor: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to InteractableCard when variant="secondary" */
 .saltInteractableCard-secondary {
   background: var(--saltInteractableCard-background, var(--salt-container-secondary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --interactableCard-borderColor: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to InteractableCard when variant="tertiary" */
 .saltInteractableCard-tertiary {
   background: var(--saltInteractableCard-background, var(--salt-container-tertiary-background));
-  border-color: var(--salt-container-bold-borderColor);
+  --interactableCard-borderColor: var(--salt-container-bold-borderColor);
+}
+
+/* Styles applied when appearance="flat" */
+.saltInteractableCard-flat {
+  box-shadow: var(--saltInteractableCard-boxShadow-flat, none);
+}
+
+/* Styles applied when appearance="raised" */
+.saltInteractableCard-raised {
+  box-shadow: var(--saltInteractableCard-boxShadow, var(--salt-overlayable-shadow));
+}
+
+/* Styles applied when borderColor="strong" */
+.saltInteractableCard-borderColorStrong {
+  --interactableCard-borderColor: var(--salt-container-bold-borderColor);
+}
+
+/* Styles applied when borderColor="default" */
+.saltInteractableCard-borderColorDefault {
+  --interactableCard-borderColor: var(--salt-container-borderColor);
+}
+
+/* Styles applied when borderColor="subtle" */
+.saltInteractableCard-borderColorSubtle {
+  --interactableCard-borderColor: var(--salt-container-subtle-borderColor);
+}
+
+/* Styles applied when borderColor="none" */
+.saltInteractableCard-borderColorNone {
+  --interactableCard-borderColor: transparent;
 }
 
 /* Styles applied to create accent */
